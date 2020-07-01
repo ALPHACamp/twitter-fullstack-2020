@@ -78,6 +78,16 @@ describe('# Admin::Tweet request', () => {
             })
           });
       })
+      it('cant go to /tweets page', (done) => {
+        request(app)
+          .get('/tweets')
+          .expect(302)
+          .expect('Location', '/admin/tweets')
+          .end(function(err, res) {
+            if (err) return done(err);
+            done();
+          });
+      })
 
       after(async () => {
         

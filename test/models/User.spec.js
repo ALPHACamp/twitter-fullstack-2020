@@ -27,7 +27,7 @@ describe('# User Model', () => {
 
   context('properties', () => {
     ;[
-      'name', 'email', 'password', 'account', 'image'
+      'name', 'email', 'password', 'account',  'cover', 'avator'
     ].forEach(checkPropertyExists(user))
   })
 

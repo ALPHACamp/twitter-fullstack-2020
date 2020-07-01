@@ -20,7 +20,7 @@ index a1bbfdc..f3b6a6f 100644
    context('properties', () => {
      ;[
 -      'name', 'email', 'password'
-+      'name', 'email', 'password', 'account', 'image'
++      'name', 'email', 'password', 'account', 'cover', 'avator'
      ].forEach(checkPropertyExists(user))
    })
  

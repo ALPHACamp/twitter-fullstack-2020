@@ -48,7 +48,6 @@ describe('# Admin::User login request', () => {
             })
       });
 
-
       it('login fail', (done) => {
         request(app)
           .post('/admin/signin')
