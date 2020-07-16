@@ -12,7 +12,7 @@ module.exports = {
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.paragraph(),
+        introduction: faker.lorem.sentences(),
         role: 'admin',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -24,7 +24,7 @@ module.exports = {
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.paragraph(),
+        introduction: faker.lorem.sentences(),
         role: 'user',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -36,7 +36,7 @@ module.exports = {
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.paragraph(),
+        introduction: faker.lorem.sentences(),
         role: 'user',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -48,7 +48,7 @@ module.exports = {
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.paragraph(),
+        introduction: faker.lorem.sentences(),
         role: 'user',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -60,7 +60,7 @@ module.exports = {
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.paragraph(),
+        introduction: faker.lorem.sentences(),
         role: 'user',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -72,7 +72,7 @@ module.exports = {
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.paragraph(),
+        introduction: faker.lorem.sentences(),
         role: 'user',
         createdAt: new Date(),
         updatedAt: new Date()
@@ -82,7 +82,7 @@ module.exports = {
     await queryInterface.bulkInsert('Tweets',
       Array.from({ length: 60 }).map((_, index) => ({
         UserId: (index % 6) + 1,
-        description: faker.lorem.paragraph(),
+        description: faker.lorem.sentences(),
         createdAt: new Date(),
         updatedAt: new Date()
       }))
