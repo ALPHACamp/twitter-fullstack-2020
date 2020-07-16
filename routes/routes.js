@@ -1,9 +1,13 @@
-const express = require('express')
-const tweetController = require('../controllers/tweetController')
-const router = express.Router()
+const express = require("express");
+const tweetController = require("../controllers/tweetController");
+const userController = require("../controllers/userController");
 
-router.get('/', (req, res) => { res.redirect('/home') })
-router.get('/home', tweetController.getTweets)
+const router = express.Router();
 
-
-module.exports = router
+router.get("/", (req, res) => {
+  res.redirect("/home");
+});
+router.get("/home", tweetController.getTweets);
+//user routes
+router.get("/users/:id", userController.getUser);
+module.exports = router;
