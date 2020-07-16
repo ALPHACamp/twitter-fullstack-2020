@@ -78,20 +78,20 @@ module.exports = {
         updatedAt: new Date()
       }]
     )
-
+    // 總共有6人，每人10篇tweets
     await queryInterface.bulkInsert('Tweets',
-      Array.from({ length: 10 }).map(() => ({
-        UserId: 1,
+      Array.from({ length: 60 }).map((_, index) => ({
+        UserId: (index % 6) + 1,
         description: faker.lorem.paragraph(),
         createdAt: new Date(),
         updatedAt: new Date()
       }))
     )
-
+    // 每篇tweets有3則隨機留言
     await queryInterface.bulkInsert('Replies',
-      Array.from({ length: 3 }).map(() => ({
-        UserId: Math.floor(Math.random() * 6),
-        TweetId: 1,
+      Array.from({ length: 180 }).map((_, index) => ({
+        UserId: Math.floor(Math.random() * 6) + 1,
+        TweetId: (index % 60) + 1,
         comment: faker.lorem.sentences(),
         createdAt: new Date(),
         updatedAt: new Date()
