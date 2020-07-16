@@ -35,7 +35,13 @@ module.exports = app => {
     cb(null, user.id)
   })
   passport.deserializeUser((id, cb) => {
-    User.findByPk(id)
+    User.findByPk(id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followings' },
+
+      ]
+    })
       .then(user => {
         user = user.toJSON()
         return cb(null, user)
