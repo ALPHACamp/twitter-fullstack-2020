@@ -1,9 +1,10 @@
 const moment = require('moment')
 module.exports = {
-  ifCond: function (a, b, options) {
-    if (a === b)
+  // a,b檢查是否相等
+  ifEqual: function (a, b, options) {
+    if (a === b) {
       return options.fn(this)
-    else {
+    } else {
       return options.inverse(this)
     }
   },
