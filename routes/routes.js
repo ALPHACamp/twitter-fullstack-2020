@@ -11,7 +11,7 @@ router.get('/', (req, res) => res.redirect('/signin'))
 router.get('/home', tweetController.getHomePage)
 router.post('/tweet', tweetController.postTweet)
 router.get('/tweets/:tweetId', tweetController.getReplyPage)
-router.post('/tweets/:tweetId/reply', tweetController)
+router.post('/tweets/:tweetId/reply', tweetController.replyTweet)
 // 前台登入頁面
 router.get('/signin', userController.userSigninPage)
 // 前台註冊頁面
@@ -34,9 +34,7 @@ router.get('/admin/tweets', adminController.adminTweetsPage)
 router.get('/admin/users', adminController.adminUsersPage)
 
 // USER
-// 前台登入頁面
-router.get('/signin', userController.userSigninPage)
-// 使用者登入
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', successRedirect: '/home' }))
+// 取得個人頁面
+router.get('/users/:id', userController.getUser)
 
 module.exports = router
