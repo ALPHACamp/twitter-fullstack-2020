@@ -35,6 +35,9 @@ const userController = {
   userSigninPage: (req, res) => {
     res.render("userSigninPage");
   },
+  userSignupPage: (req, res) => {
+    res.render("userSignupPage");
+  },
 };
 
 module.exports = userController;

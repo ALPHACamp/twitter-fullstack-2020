@@ -10,10 +10,12 @@ const userController = require('../controllers/userController')
 router.get('/', (req, res) => res.redirect('/signin'))
 router.get('/home', tweetController.getHomePage)
 router.post('/tweet', tweetController.postTweet)
+router.get('/tweets/:tweetId', tweetController.getReplyPage)
+router.post('/tweets/:tweetId/reply', tweetController.replyTweet)
 // 前台登入頁面
 router.get('/signin', userController.userSigninPage)
 // 前台註冊頁面
-router.get('/register')
+router.get('/signup', userController.userSignupPage)
 // 帳號設定頁面
 router.get('/setting')
 // 使用者登入
@@ -22,17 +24,17 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 // 後台登入頁面
 router.get('/admin', (req, res) => res.redirect('/admin/signin'))
 router.get('/admin/signin', adminController.adminSigninPage)
-// 後台推文清單
-router.get('/admin/tweets', adminController.adminTweetsPage)
-// 後台使用者列表
-router.get('/admin/users', adminController.adminUsersPage)
 // 後台登入
 router.post('/admin/signin', adminController.adminSignIn)
 // 後台登出
 router.post('/admin/signout', adminController.adminSignOut)
+// 後台推文清單
+router.get('/admin/tweets', adminController.adminTweetsPage)
+// 後台使用者列表
+router.get('/admin/users', adminController.adminUsersPage)
 
 // USER
-// 單一使用者
+// 取得個人頁面
 router.get('/users/:id', userController.getUser)
 
 module.exports = router
