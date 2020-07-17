@@ -10,14 +10,23 @@ const userController = {
       include: [
         { model: Tweet, include: [Reply] },
         { model: Tweet, include: [Like] },
-        // { model: Tweet, as: "LikedTweets" },
         { model: User, as: "Followers" },
         { model: User, as: "Followings" },
       ],
     }).then((user) => {
-      let results = user.toJSON()
-      // let tweetsCont = user.
-      return res.json(results)
+      let results = user.toJSON();
+      results["followingCount"] = results.Followings.length;
+      results["followerCount"] = results.Followers.length;
+      console.log(results["Tweets"][0]["Replies"].length);
+
+      for (i = 0; i < results["Tweets"].length; i++) {
+        results["Tweets"][i]["repliesCount"] =
+          results["Tweets"][i]["Replies"].length;
+        results["Tweets"][i]["likeCount"] =
+          results["Tweets"][i]["Likes"].length;
+      }
+
+      return res.json(results);
     })
   },
   userSigninPage: (req, res) => {
