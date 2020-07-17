@@ -8,9 +8,9 @@ const userController = require('../controllers/userController')
 
 // 主畫面
 router.get('/', (req, res) => res.redirect('/home'))
-router.get('/home', tweetController.getTweets)
+router.get('/home', tweetController.getHomePage)
+router.post('/tweet', tweetController.postTweet)
 
-// ADMIN
 // 後台登入頁面
 router.get('/admin', (req, res) => res.redirect('/admin/signin'))
 router.get('/admin/signin', adminController.adminSigninPage)

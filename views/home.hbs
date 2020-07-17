@@ -1,0 +1,45 @@
+<div class="row w-100">
+  <div class="col-1"></div>
+  <div class="col-10">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#createTweet">推文</button>
+    {{#each tweets}}
+    <div class="card" style="">
+      <div class="row no-gutters">
+        <div class="col-md-1">
+          <img src="..." class="card-img" alt="...">
+        </div>
+        <div class="col-md-11">
+          <div class="card-body">
+            <h5 class="card-title" style="display:inline-block">{{this.User.name}}</h5>
+            <small class="text-muted ml-3">Last updated 3 mins ago</small>
+            <p class="card-text">{{this.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  <div class="col-1"></div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="createTweet" tabindex="-1" role="dialog" aria-labelledby="createTweet" aria-hidden="true">
+  <form action="/tweet" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createTweetLabel">新增一則Tweet</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea name="tweet" id="" cols="30" rows="10">有什麼新鮮事...</textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">推文</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
