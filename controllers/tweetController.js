@@ -14,9 +14,9 @@ const tweetController = {
       .catch(err => res.send(err))
     // 尚未完成: 推薦追蹤名單
   },
-  // createTweet: (req, res) => {
-
-  // } 
+  postTweet: (req, res) => {
+    res.json(req.body)
+  }
 }
 
 module.exports = tweetController

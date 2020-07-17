@@ -21,3 +21,25 @@
   </div>
   <div class="col-1"></div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="createTweet" tabindex="-1" role="dialog" aria-labelledby="createTweet" aria-hidden="true">
+  <form action="/tweet" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createTweetLabel">新增一則Tweet</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <textarea name="tweet" id="" cols="30" rows="10">有什麼新鮮事...</textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">推文</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
