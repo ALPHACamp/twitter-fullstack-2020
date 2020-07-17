@@ -1,12 +1,16 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('../config/passport')
 
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
+const userController = require('../controllers/userController')
 
 // 主畫面
 router.get('/', (req, res) => res.redirect('/home'))
 router.get('/home', tweetController.getTweets)
+
+// ADMIN
 // 後台登入頁面
 router.get('/admin', (req, res) => res.redirect('/admin/signin'))
 router.get('/admin/signin', adminController.adminSigninPage)
@@ -18,5 +22,11 @@ router.post('/admin/signout', adminController.adminSignOut)
 router.get('/admin/tweets', adminController.adminTweetsPage)
 // 後台使用者列表
 router.get('/admin/users', adminController.adminUsersPage)
+
+// USER
+// 前台登入頁面
+router.get('/signin', userController.userSigninPage)
+// 使用者登入
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', successRedirect: '/home' }))
 
 module.exports = router
