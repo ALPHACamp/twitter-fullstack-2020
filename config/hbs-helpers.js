@@ -1,4 +1,5 @@
 const moment = require('moment')
+
 module.exports = {
   // a,b檢查是否相等
   ifEqual: function (a, b, options) {
