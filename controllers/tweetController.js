@@ -1,6 +1,7 @@
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Reply = db.Reply
 
 const tweetController = {
   getHomePage: (req, res) => {
@@ -36,6 +37,29 @@ const tweetController = {
   },
   postTweet: (req, res) => {
     res.json(req.body)
+  },
+  getReplyPage: (req, res) => {
+    const tweetId = req.params.tweetId
+    Tweet.findByPk(tweetId, {
+      raw: true, nest: true,
+      include: [User, Reply]
+    })
+      .then((tweet) => {
+        Reply.findAll({
+          where: { tweetId: tweet.id },
+          raw: true,
+          nest: true,
+          include: [User],
+          order: [['createdAt', 'ASC']]
+        })
+          .then((replies) => {
+            res.render('reply', { tweet, replies })
+          })
+      })
+      .catch(err => res.send(err))
+  },
+  replyTweet: (req, res) => {
+    res.send(req.body)
   }
 }
 
