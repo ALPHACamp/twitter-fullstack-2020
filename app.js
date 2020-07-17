@@ -6,15 +6,15 @@ const methodOverride = require('method-override')
 const flash = require('connect-flash')
 
 const helpers = require('./_helpers')
-const usePassport = require('./config/passport')
+const passport = require('./config/passport')
 const useHbsHelper = require('./config/hbs-helpers')
 const useRoutes = require('./routes')
 
 const app = express()
-const { PORT } = process.env
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+const { PORT } = process.env
 
 app.engine('hbs', hbs({ defaultLayout: 'main', extname: 'hbs', helpers: useHbsHelper }))
 app.set('view engine', 'hbs')
@@ -22,7 +22,8 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUniniti
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(flash())
-usePassport(app)
+app.use(passport.initialize())
+app.use(passport.session())
 app.use((req, res, next) => {
   res.locals.isAuth = helpers.ensureAuthenticated(req)
   res.locals.user = helpers.getUser(req)
