@@ -6,7 +6,8 @@ const adminController = require('../controllers/adminController')
 
 // 主畫面
 router.get('/', (req, res) => res.redirect('/home'))
-router.get('/home', tweetController.getTweets)
+router.get('/home', tweetController.getHomePage)
+// router.get('/tweets/create', tweetController.createTweet)
 // 後台登入頁面
 router.get('/admin', (req, res) => res.redirect('/admin/signin'))
 router.get('/admin/signin', adminController.adminSigninPage)
