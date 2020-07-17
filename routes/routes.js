@@ -31,4 +31,11 @@ router.get('/admin/tweets', adminController.adminTweetsPage)
 // 後台使用者列表
 router.get('/admin/users', adminController.adminUsersPage)
 
+// USER
+router.get("/users/:id", userController.getUser);
+// 前台登入頁面
+router.get('/signin', userController.userSigninPage)
+// 使用者登入
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', successRedirect: '/home' }))
+
 module.exports = router
