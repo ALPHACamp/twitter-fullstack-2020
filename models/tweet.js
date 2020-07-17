@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Tweet.belongsTo(models.User)
       Tweet.hasMany(models.Reply)
+      Tweet.belongsToMany(models.User, {
+        through: models.Like,
+        foreignKey: 'tweetId',
+        as: 'LikedUser'
+      })
     }
   };
   Tweet.init({
