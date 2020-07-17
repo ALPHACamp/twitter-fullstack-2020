@@ -10,7 +10,8 @@ const userController = require('../controllers/userController')
 router.get('/', (req, res) => res.redirect('/signin'))
 router.get('/home', tweetController.getHomePage)
 router.post('/tweet', tweetController.postTweet)
-
+router.get('/tweets/:tweetId', tweetController.getReplyPage)
+router.post('/tweets/:tweetId/reply', tweetController.replyTweet)
 // 後台登入頁面
 router.get('/admin', (req, res) => res.redirect('/admin/signin'))
 router.get('/admin/signin', adminController.adminSigninPage)
