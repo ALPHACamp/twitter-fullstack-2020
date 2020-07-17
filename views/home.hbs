@@ -1,12 +1,12 @@
-<div class="row w-100">
+<div class="row justify-content-center">
   <div class="col-1"></div>
   <div class="col-10">
     <button class="btn btn-primary" data-toggle="modal" data-target="#createTweet">推文</button>
     {{#each tweets}}
-    <div class="card" style="">
+    <div class="card " style="">
       <div class="row no-gutters">
         <div class="col-md-1">
-          <img src="..." class="card-img" alt="...">
+          <img src="..." class="card-img" alt="img">
         </div>
         <div class="col-md-11">
           <div class="card-body">
@@ -19,7 +19,32 @@
     </div>
     {{/each}}
   </div>
-  <div class="col-1"></div>
+  <div class="col-1">
+    {{#each recommendFollowings}}
+    <div class="card " style="width:350px">
+      <div class="row no-gutters">
+        <div class="col-md-1">
+          <img src="..." class="card-img" alt="img">
+        </div>
+        <div class="col-md-6">
+          <div class="card-body">
+            <h5 class="card-title">{{this.name}}</h5>
+            <small>{{this.account}}</small>
+          </div>
+        </div>
+        {{#if this.isFollowed}}
+        <div class="col ml-auto align-self-center">
+          <a class="btn btn-primary" style="color: white">取消跟隨</a>
+        </div>
+        {{else}}
+        <div class="col ml-auto align-self-center">
+          <a class="btn btn-outline-primary" style="color: blue">跟隨</a>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
 </div>
 
 <!-- Modal -->

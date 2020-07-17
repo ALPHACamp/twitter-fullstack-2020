@@ -7,7 +7,7 @@ const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 
 // 主畫面
-router.get('/', (req, res) => res.redirect('/home'))
+router.get('/', (req, res) => res.redirect('/signin'))
 router.get('/home', tweetController.getHomePage)
 router.post('/tweet', tweetController.postTweet)
 
