@@ -4,8 +4,8 @@ const faker = require('faker')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users',
-      [{
+    await queryInterface.bulkInsert('Users', [
+      {
         account: '@root',
         name: 'root',
         email: 'root@example.com',
@@ -76,10 +76,11 @@ module.exports = {
         role: 'user',
         createdAt: new Date(),
         updatedAt: new Date()
-      }]
-    )
+      }
+    ])
     // 總共有6人，每人10篇tweets
-    await queryInterface.bulkInsert('Tweets',
+    await queryInterface.bulkInsert(
+      'Tweets',
       Array.from({ length: 60 }).map((_, index) => ({
         UserId: (index % 6) + 1,
         description: faker.lorem.sentences(),
@@ -88,7 +89,8 @@ module.exports = {
       }))
     )
     // 每篇tweets有3則隨機留言
-    await queryInterface.bulkInsert('Replies',
+    await queryInterface.bulkInsert(
+      'Replies',
       Array.from({ length: 180 }).map((_, index) => ({
         UserId: Math.floor(Math.random() * 6) + 1,
         TweetId: (index % 60) + 1,
