@@ -15,7 +15,7 @@ router.post('/tweets/:tweetId/reply', tweetController)
 // 前台登入頁面
 router.get('/signin', userController.userSigninPage)
 // 前台註冊頁面
-router.get('/register')
+router.get('/signup', userController.userSignupPage)
 // 帳號設定頁面
 router.get('/setting')
 // 使用者登入

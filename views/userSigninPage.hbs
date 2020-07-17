@@ -19,14 +19,14 @@
   {{!-- title --}}
   <h3 class="text-center mt-4 mb-3 font-weight-bold">登入 Alphitter</h3>
   {{!-- form --}}
-  <form class="form-signin" action="/signin" method="POST">
+  <form action="/signin" method="POST">
     <div class="form-group">
       <label for="email">帳號</label>
-      <input type="email" name="email" class="form-control" id="email" placeholder="Email" required autofocus>
+      <input type="email" name="email" class="form-control" id="email" placeholder="Email" autofocus>
     </div>
     <div class="form-group">
       <label for="password">密碼</label>
-      <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
+      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
     </div>
     <br />
     <button class="btn btn-light btn-lg btn-block rounded-pill" style="background-color:#FF6600 ;" type="submit"><span
@@ -34,8 +34,8 @@
   </form>
   {{!-- link --}}
   <div class="mt-4 d-flex justify-content-end flex-no-wrap">
-    <a href=""><span class="font-weight-bold">登入 Alphitter</span></a>
-    <span class="font-weight-bold">·</span>
-    <a href=""><span class="font-weight-bold">後臺登入</span></a>
+    <a href="/signup"><span class="font-weight-bold">註冊Alphitter</span></a>
+    <span class="font-weight-bold mx-2">·</span>
+    <a href="/admin/signin"><span class="font-weight-bold">後台登入</span></a>
   </div>
 </div>
