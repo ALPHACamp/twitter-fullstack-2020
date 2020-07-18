@@ -56,7 +56,6 @@ const userController = {
     res.render('userSigninPage')
   },
   userSignupPage: (req, res) => {
-
     res.render('userSignupPage')
   },
   // 使用者進入passport前檢查關卡
