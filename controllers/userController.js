@@ -7,6 +7,8 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
+
 
 const userController = {
   getUser: (req, res) => {
@@ -21,7 +23,7 @@ const userController = {
         { model: User, as: 'Followings' }
       ]
     }).then((user) => {
-      const results = user.toJSON()
+     const results = user.toJSON()
       results['followingCount'] = results.Followings.length
       results['followerCount'] = results.Followers.length
       console.log(results['Tweets'][0]['Replies'].length)
@@ -35,10 +37,28 @@ const userController = {
       return res.json(results)
     })
   },
+  addFollowing: (req, res) => {
+    const userId = req.params.userId
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: userId,
+    })
+      .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({ where: { followerId: req.user.id, followingId: req.params.userId } })
+      .then(followship => {
+        followship.destroy()
+          .then(() => res.redirect('back'))
+      })
+      .catch(err => res.send(err))
+  },
   userSigninPage: (req, res) => {
-    res.render("userSigninPage");
+    res.render("userSigninPage")
   },
   userSignupPage: (req, res) => {
+
     res.render('userSignupPage')
   },
   // 使用者進入passport前檢查關卡
@@ -97,4 +117,4 @@ const userController = {
   }
 }
 
-module.exports = userController;
+module.exports = userController
