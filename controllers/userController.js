@@ -1,8 +1,8 @@
-const db = require("../models");
-const User = db.User;
-const Tweet = db.Tweet;
-const Reply = db.Reply;
-const Like = db.Like;
+const db = require("../models")
+const User = db.User
+const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
 const Followship = db.Followship
 
 const userController = {
@@ -18,19 +18,19 @@ const userController = {
         { model: User, as: "Followings" },
       ],
     }).then((user) => {
-      let results = user.toJSON();
-      results["followingCount"] = results.Followings.length;
-      results["followerCount"] = results.Followers.length;
+      let results = user.toJSON()
+      results["followingCount"] = results.Followings.length
+      results["followerCount"] = results.Followers.length
 
       for (i = 0; i < results["Tweets"].length; i++) {
         results["Tweets"][i]["repliesCount"] =
-          results["Tweets"][i]["Replies"].length;
+          results["Tweets"][i]["Replies"].length
         results["Tweets"][i]["likeCount"] =
-          results["Tweets"][i]["LikedUser"].length;
+          results["Tweets"][i]["LikedUser"].length
       }
 
-      return res.json(results);
-    });
+      return res.json(results)
+    })
   },
   addFollowing: (req, res) => {
     const userId = req.params.userId
@@ -50,11 +50,11 @@ const userController = {
       .catch(err => res.send(err))
   },
   userSigninPage: (req, res) => {
-    res.render("userSigninPage");
+    res.render("userSigninPage")
   },
   userSignupPage: (req, res) => {
-    res.render("userSignupPage");
+    res.render("userSignupPage")
   },
-};
+}
 
-module.exports = userController;
+module.exports = userController
