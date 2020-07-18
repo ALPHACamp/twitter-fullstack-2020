@@ -6,9 +6,7 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
-const Like = db.Like
 const Followship = db.Followship
-
 
 const userController = {
   getUser: (req, res) => {
@@ -23,14 +21,14 @@ const userController = {
         { model: User, as: 'Followings' }
       ]
     }).then((user) => {
-     const results = user.toJSON()
-      results['followingCount'] = results.Followings.length
-      results['followerCount'] = results.Followers.length
+      const results = user.toJSON()
+      results.followingCount = results.Followings.length
+      results.followerCount = results.Followers.length
       console.log(results['Tweets'][0]['Replies'].length)
 
       for (let i = 0; i < results['Tweets'].length; i++) {
         results['Tweets'][i]['repliesCount'] =
-          results['Tweets"][i]['Replies'].length
+          results['Tweets'][i]['Replies'].length
         results['Tweets'][i]['likeCount'] =
           results['Tweets'][i]['Likes'].length
       }
@@ -41,7 +39,7 @@ const userController = {
     const userId = req.params.userId
     return Followship.create({
       followerId: req.user.id,
-      followingId: userId,
+      followingId: userId
     })
       .then(() => res.redirect('back'))
       .catch(err => res.send(err))
@@ -55,7 +53,7 @@ const userController = {
       .catch(err => res.send(err))
   },
   userSigninPage: (req, res) => {
-    res.render("userSigninPage")
+    res.render('userSigninPage')
   },
   userSignupPage: (req, res) => {
 
