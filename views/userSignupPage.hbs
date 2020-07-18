@@ -1,4 +1,4 @@
-<div class="mx-auto mt-5" style="max-width: 540px;">
+<div class="mx-auto mt-5" style="max-width: 560px; padding:0px 10px;">
   {{!-- svg-container --}}
   <div class="d-flex flex-nowrap justify-content-center">
     <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -21,23 +21,24 @@
   {{!-- form --}}
   <form action="/signup" method="POST">
     <div class="form-group">
-      <label for="account">帳號</label>
-      <input type="text" name="account" class="form-control" id="account" placeholder="Account" autofocus>
+      <label for="account">帳號<span class="text-danger">(必填)</span></label>
+      <input type="text" name="account" class="form-control" id="account" placeholder="Account" value="{{account}}"
+        autofocus>
     </div>
     <div class="form-group">
-      <label for="name">名稱</label>
-      <input type="text" name="name" class="form-control" id="name" placeholder="Name">
+      <label for="name">名稱<span class="text-danger">(必填)</span></label>
+      <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{name}}">
     </div>
     <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+      <label for="email">Email<span class="text-danger">(必填)</span></label>
+      <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{email}}">
     </div>
     <div class="form-group">
-      <label for="password">密碼</label>
+      <label for="password">密碼<span class="text-danger">(必填)</span></label>
       <input type="password" name="password" class="form-control" id="password" placeholder="Password">
     </div>
     <div class="form-group">
-      <label for="checkPassword">確認密碼</label>
+      <label for="checkPassword">確認密碼<span class="text-danger">(必填)</span></label>
       <input type="password" name="checkPassword" class="form-control" id="checkPassword" placeholder="Password">
     </div>
     <br />
@@ -45,7 +46,7 @@
         class="font-weight-bold text-white">註冊</span></button>
   </form>
   {{!-- link --}}
-  <div class="mt-4 d-flex justify-content-center flex-nowrap">
+  <div class="mt-2 d-flex justify-content-center flex-nowrap">
     <a href="/signin"><span class="font-weight-bold">取消</span></a>
   </div>
 </div>
