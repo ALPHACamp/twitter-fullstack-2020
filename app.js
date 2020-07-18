@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express();
 const port = 3000;
-
+const passport = require('./config/passport');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -39,6 +39,9 @@ app.use(
     saveUninitialized: false
   })
 );
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
 //flash
 app.use(flash());
 app.use((req, res, next) => {

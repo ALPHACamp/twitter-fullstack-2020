@@ -6,6 +6,10 @@ let userController = {
   loginPage: (req, res) => {
     return res.render('login');
   },
+  login: (req, res) => {
+    req.flash('success_messages', 'Login successfully');
+    res.redirect('/tweets');
+  },
   signupPage: (req, res) => {
     return res.render('signup');
   },
