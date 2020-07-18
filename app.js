@@ -32,7 +32,7 @@ app.use(methodOverrice('_method'));
 // session
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: 'secret',
     resave: false,
     saveUninitialized: false
   })
