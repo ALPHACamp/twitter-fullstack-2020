@@ -14,15 +14,45 @@ let userController = {
     return res.render('signup');
   },
   signup: (req, res) => {
+    //check if all the fields are filled
+    if (
+      !req.body.name ||
+      !req.body.account ||
+      !req.body.email ||
+      !req.body.password ||
+      !req.body.confirmPassword
+    ) {
+      return req.render('signup', {
+        error_messages: 'Please complete',
+        name: req.body.name,
+        account: req.body.account,
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword
+      });
+    }
     //password and confirmPassword must be the same
     if (req.body.password !== req.body.confirmPassword) {
-      req.flash('error_messages', 'Please check your confirm password');
-      return res.redirect('/signup');
+      return res.render('signup', {
+        error_messages: 'Please check your confirm password',
+        name: req.body.name,
+        account: req.body.account,
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword
+      });
     }
     //check if this email has been registered
     User.findOne({ where: { email: req.body.email } }).then((user) => {
       if (user) {
-        return req.flash('error_messages', 'This email has been registered');
+        return res.render('signup', {
+          error_messages: 'This email has been registered',
+          name: req.body.name,
+          account: req.body.account,
+          email: req.body.email,
+          password: req.body.password,
+          confirmPassword: req.body.confirmPassword
+        });
       }
       User.create({
         name: req.body.name,
