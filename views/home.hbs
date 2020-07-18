@@ -35,13 +35,17 @@
           </div>
         </div>
         {{#if this.isFollowed}}
-        <div class="col ml-auto align-self-center">
-          <a class="btn btn-primary" style="color: white">取消跟隨</a>
-        </div>
+        <form action="/following/{{this.id}}?_method=DELETE" method="post">
+          <div class="col ml-auto align-self-center">
+            <button type="submit" class="btn btn-primary" style="color: white">取消跟隨</button>
+          </div>
+        </form>
         {{else}}
-        <div class="col ml-auto align-self-center">
-          <a class="btn btn-outline-primary" style="color: blue">跟隨</a>
-        </div>
+        <form action="/following/{{this.id}}" method="post">
+          <div class="col ml-auto align-self-center">
+            <button class="btn btn-outline-primary" style="color: blue">跟隨</button>
+          </div>
+        </form>
         {{/if}}
       </div>
     </div>

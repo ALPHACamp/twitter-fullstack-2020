@@ -3,6 +3,7 @@ const User = db.User;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
 const Like = db.Like;
+const Followship = db.Followship
 
 const userController = {
   getUser: (req, res) => {
@@ -31,7 +32,16 @@ const userController = {
       return res.json(results);
     });
   },
-
+  addFollowing: (req, res) => {
+    const userId = req.params.userId
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: userId,
+    })
+      .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
+  }
+  ,
   userSigninPage: (req, res) => {
     res.render("userSigninPage");
   },
