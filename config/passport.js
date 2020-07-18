@@ -7,30 +7,26 @@ const User = db.User
 const Tweet = db.Tweet
 
 passport.use(new LocalStrategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password',
-    passReqToCallback: true
-  },
-  (req, email, password, cb) => {
+  { usernameField: 'email', passReqToCallback: true },
+  (req, email, password, done) => {
     User.findOne({ where: { email } })
       .then(user => {
         if (!user) {
-          return cb(null, false)
+          return done(null, false, req.flash('error_messages', '此帳號尚未註冊！'))
         }
         if (!bcrypt.compareSync(password, user.password)) {
-          return cb(null, false)
+          return done(null, false, req.flash('error_messages', '密碼錯誤，請重新輸入！'))
         }
-        return cb(null, user)
+        return done(null, user)
       })
   }
 ))
 
 // serialize and deserialize user
-passport.serializeUser((user, cb) => {
-  cb(null, user.id)
+passport.serializeUser((user, done) => {
+  done(null, user.id)
 })
-passport.deserializeUser((id, cb) => {
+passport.deserializeUser((id, done) => {
   User.findByPk(id, {
     include: [
       Tweet,
@@ -39,9 +35,9 @@ passport.deserializeUser((id, cb) => {
   })
     .then(user => {
       user = user.toJSON()
-      return cb(null, user)
+      return done(null, user)
     })
-    .catch((err) => cb(err))
+    .catch((err) => done(err))
 })
 
 module.exports = passport

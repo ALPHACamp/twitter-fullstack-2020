@@ -21,13 +21,22 @@ router.get('/signup', userController.userSignupPage)
 // 帳號設定頁面
 router.get('/setting')
 // 使用者登入
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', successRedirect: '/home' }))
+router.post('/signin',
+  userController.userCheckRequired,
+  passport.authenticate('local', { failureRedirect: '/signin' }),
+  userController.userSigninSuccess)
+// 使用者註冊
+router.post('/signup', userController.userSignup)
 
+// ADMIN
 // 後台登入頁面
 router.get('/admin', (req, res) => res.redirect('/admin/signin'))
 router.get('/admin/signin', adminController.adminSigninPage)
 // 後台登入
-router.post('/admin/signin', adminController.adminSignIn)
+router.post('/admin/signin',
+  adminController.adminCheckRequired,
+  passport.authenticate('local', { failureRedirect: '/admin/signin' }),
+  adminController.adminSigninSuccess) // 之後要再加上檢查是否為管理者?
 // 後台登出
 router.post('/admin/signout', adminController.adminSignOut)
 // 後台推文清單
