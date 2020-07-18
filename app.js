@@ -21,7 +21,8 @@ app.engine(
   'hbs',
   exphbs({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: require('./config/handlebars-helper')
   })
 );
 app.set('view engine', 'hbs');
