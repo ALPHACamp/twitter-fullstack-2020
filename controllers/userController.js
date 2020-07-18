@@ -40,8 +40,15 @@ const userController = {
     })
       .then(() => res.redirect('back'))
       .catch(err => res.send(err))
-  }
-  ,
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({ where: { followerId: req.user.id, followingId: req.params.userId } })
+      .then(followship => {
+        followship.destroy()
+          .then(() => res.redirect('back'))
+      })
+      .catch(err => res.send(err))
+  },
   userSigninPage: (req, res) => {
     res.render("userSigninPage");
   },
