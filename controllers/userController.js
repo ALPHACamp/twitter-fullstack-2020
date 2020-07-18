@@ -11,10 +11,6 @@ let userController = {
   },
   signup: (req, res) => {
     //password and confirmPassword must be the same
-    console.log(req.body.password);
-    console.log(req.body.confirmPassword);
-    console.log(req.body);
-    //return;
     if (req.body.password !== req.body.confirmPassword) {
       req.flash('error_messages', 'Please check your confirm password');
       return res.redirect('/signup');
