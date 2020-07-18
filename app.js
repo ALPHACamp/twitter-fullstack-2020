@@ -6,6 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express();
 const port = 3000;
+
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -28,7 +29,7 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //method override
-app.use(methodOverrice('_method'));
+app.use(methodOverride('_method'));
 // session
 app.use(
   session({
@@ -45,7 +46,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => res.send('Hello World!'));
+//app.get('/', (req, res) => res.send('Hello World!'));
+require('./routes')(app);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 module.exports = app;
