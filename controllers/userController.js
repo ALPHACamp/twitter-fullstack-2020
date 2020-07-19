@@ -76,13 +76,15 @@ const userController = {
     const { account, name, email, password, checkPassword } = req.body
     // 必填檢查
     if (!account || !name || !email || !password || !checkPassword) {
-      res.locals.error_messages = '親~~別偷懶~全部欄位均為必填呦！'
-      return res.render('userSignupPage', { account, name, email }) // 密碼因安全性問題，要重新填寫
+      return res.render('userSignupPage', {
+        account, name, email, error_messages: '別偷懶~全部欄位均為必填呦！'
+      }) // 密碼因安全性問題，要重新填寫
     }
     // 密碼 & 確認密碼檢查
     if (password !== checkPassword) {
-      res.locals.error_messages = '密碼與確認密碼不符，請重新確認！'
-      return res.render('userSignupPage', { account, name, email })
+      return res.render('userSignupPage', {
+        account, name, email, error_messages: '密碼與確認密碼不符，請重新確認！'
+      })
     }
     // 檢查 account & email 是否為唯一值
     User.findOne({ where: { [or]: { account, email } }, raw: true })
@@ -102,12 +104,14 @@ const userController = {
             .catch(err => res.send(err))
         }
         if (user.account === account) {
-          res.locals.error_messages = '帳號已存在，請更改成其他帳號！'
-          return res.render('userSignupPage', { account, name, email })
+          return res.render('userSignupPage', {
+            account, name, email, error_messages: '帳號已存在，請更改成其他帳號！'
+          })
         }
         if (user.email === email) {
-          res.locals.error_messages = 'Email已存在，請更改成其他Email！'
-          return res.render('userSignupPage', { account, name, email })
+          return res.render('userSignupPage', {
+            account, name, email, error_messages: 'Email已存在，請更改成其他Email！'
+          })
         }
       })
       .catch(err => res.send(err))
