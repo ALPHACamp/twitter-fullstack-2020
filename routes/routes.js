@@ -16,8 +16,30 @@ const authenticated = (req, res, next) => {
   res.redirect('/login');
 };
 
+const authenticatedAdmin = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    if (req.user.role === 'admin') {
+      return next();
+    }
+    return res.redirect('/admin/login');
+  }
+  res.redirect('/admin/login');
+};
+
 //router.get('/', (req, res) => res.send('test'));
 router.get('/admin/login', adminController.adminLoginPage);
+router.post(
+  '/admin/login',
+  passport.authenticate('local', {
+    failureRedirect: '/admin/login',
+    failureFlash: true
+  }),
+  adminController.login
+);
+router.get('/admin/tweets', authenticatedAdmin, (req, res) =>
+  res.send('admin tweets')
+);
+
 router.get('/login', userController.loginPage);
 router.post(
   '/login',
