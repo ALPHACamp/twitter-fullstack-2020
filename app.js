@@ -6,7 +6,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express();
 const port = 3000;
-const passport = require('./config/passport');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -21,8 +20,7 @@ app.engine(
   'hbs',
   exphbs({
     defaultLayout: 'main',
-    extname: '.hbs',
-    helpers: require('./config/handlebars-helper')
+    extname: '.hbs'
   })
 );
 app.set('view engine', 'hbs');
@@ -30,7 +28,7 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //method override
-app.use(methodOverride('_method'));
+app.use(methodOverrice('_method'));
 // session
 app.use(
   session({
@@ -39,9 +37,6 @@ app.use(
     saveUninitialized: false
   })
 );
-//passport
-app.use(passport.initialize());
-app.use(passport.session());
 //flash
 app.use(flash());
 app.use((req, res, next) => {
@@ -50,8 +45,7 @@ app.use((req, res, next) => {
   next();
 });
 
-//app.get('/', (req, res) => res.send('Hello World!'));
-require('./routes')(app);
+app.get('/', (req, res) => res.send('Hello World!'));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 module.exports = app;
