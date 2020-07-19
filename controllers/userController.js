@@ -111,6 +111,9 @@ const userController = {
         }
       })
       .catch(err => res.send(err))
+  },
+  accountSettingPage: (req, res) => {
+    res.render('accountSettingPage')
   }
 }
 
