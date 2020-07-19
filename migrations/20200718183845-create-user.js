@@ -17,11 +17,14 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      avatar: {
+      account: {
         type: Sequelize.STRING
       },
       introduction: {
         type: Sequelize.TEXT
+      },
+      avatar: {
+        type: Sequelize.STRING
       },
       role: {
         type: Sequelize.STRING

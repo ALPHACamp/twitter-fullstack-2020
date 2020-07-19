@@ -1,0 +1,78 @@
+const db = require('../models');
+const User = db.User;
+const bcrypt = require('bcryptjs');
+
+let userController = {
+  loginPage: (req, res) => {
+    return res.render('login');
+  },
+  login: (req, res) => {
+    req.flash('success_messages', 'Login successfully');
+    res.redirect('/tweets');
+  },
+  signupPage: (req, res) => {
+    return res.render('signup');
+  },
+  signup: (req, res) => {
+    //check if all the fields are filled
+    if (
+      !req.body.name ||
+      !req.body.account ||
+      !req.body.email ||
+      !req.body.password ||
+      !req.body.confirmPassword
+    ) {
+      return req.render('signup', {
+        error_messages: 'Please complete',
+        name: req.body.name,
+        account: req.body.account,
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword
+      });
+    }
+    //password and confirmPassword must be the same
+    if (req.body.password !== req.body.confirmPassword) {
+      return res.render('signup', {
+        error_messages: 'Please check your confirm password',
+        name: req.body.name,
+        account: req.body.account,
+        email: req.body.email,
+        password: req.body.password,
+        confirmPassword: req.body.confirmPassword
+      });
+    }
+    //check if this email has been registered
+    User.findOne({ where: { email: req.body.email } }).then((user) => {
+      if (user) {
+        return res.render('signup', {
+          error_messages: 'This email has been registered',
+          name: req.body.name,
+          account: req.body.account,
+          email: req.body.email,
+          password: req.body.password,
+          confirmPassword: req.body.confirmPassword
+        });
+      }
+      User.create({
+        name: req.body.name,
+        account: req.body.account,
+        email: req.body.email,
+        password: bcrypt.hashSync(
+          req.body.password,
+          bcrypt.genSaltSync(10, null)
+        ),
+        avatar:
+          'https://loremflickr.com/cache/resized/65535_49534054127_ef7d5544b9_320_240_nofilter.jpg',
+        role: 'user'
+      })
+        .then((user) => {
+          req.flash('success_messages', 'Signuped successfully');
+          return res.redirect('/login');
+        })
+        .catch((err) => console.log(err));
+    });
+  }
+};
+
+module.exports = userController;
