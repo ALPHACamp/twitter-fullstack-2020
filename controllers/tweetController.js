@@ -30,13 +30,30 @@ const tweetController = {
         order: [['createdAt', 'DESC']]
       })
         .then((tweets) => {
-          res.render('home', { tweets: tweets, recommendFollowings: users })
+          res.render('home', {
+            tweets: tweets,
+            recommendFollowings: users,
+            currentUserId: Number(req.user.id)
+          })
         })
         .catch((err) => res.send(err))
     })
   },
   postTweet: (req, res) => {
-    res.json(req.body)
+    return Tweet.create({
+      UserId: req.user.id,
+      description: req.body.tweet
+    })
+      .then(() => res.redirect('/home'))
+      .catch((err) => res.send(err))
+  },
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.tweetId)
+      .then((tweet) => {
+        tweet.destroy()
+          .then(() => res.redirect('back'))
+      })
+      .catch((err) => res.send(err))
   },
   getReplyPage: (req, res) => {
     const tweetId = req.params.tweetId

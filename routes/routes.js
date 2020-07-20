@@ -12,6 +12,7 @@ router.get('/home', tweetController.getHomePage)
 router.post('/tweet', tweetController.postTweet)
 router.get('/tweets/:tweetId', tweetController.getReplyPage)
 router.post('/tweets/:tweetId/reply', tweetController.replyTweet)
+router.delete('/tweets/:tweetId', tweetController.deleteTweet)
 router.post('/following/:userId', userController.addFollowing)
 router.delete('/following/:userId', userController.removeFollowing)
 // 前台登入頁面
