@@ -97,6 +97,7 @@ a p:hover {
   color: #657786;
 }
 .sign-message {
+  display: flex;
   position: absolute;
   z-index: 999;
   top: 5px;
