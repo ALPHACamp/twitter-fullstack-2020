@@ -6,7 +6,7 @@ const helpers = require('./_helpers');
 
 const app = express();
 const port = 3000;
-//const passport = require('./config/passport');
+const passport = require('./config/passport');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
