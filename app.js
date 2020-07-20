@@ -1,8 +1,8 @@
 const express = require('express');
 const helpers = require('./_helpers');
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config();
+// }
 
 const app = express();
 const port = 3000;
@@ -28,7 +28,7 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //method override
-app.use(methodOverrice('_method'));
+app.use(methodOverride('_method'));
 // session
 app.use(
   session({
