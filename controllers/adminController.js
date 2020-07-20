@@ -7,7 +7,6 @@ let adminController = {
   adminLoginPage: (req, res) => {
     return res.render('admin/login');
   },
-
   getTweets: (req, res) => {
     return Tweet.findAll({ raw: true, nest: true, include: [User] }).then(result => {
       const data = result.rows.map(r => ({
