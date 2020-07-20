@@ -71,6 +71,8 @@ const userController = {
       })
       .catch((err) => res.send(err))
   },
+  editUser: (req, res) => {},
+  putUser: (req, res) => {},
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({
