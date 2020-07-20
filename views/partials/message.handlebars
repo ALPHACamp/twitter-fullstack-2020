@@ -26,3 +26,30 @@
   </button>
 </div>
 {{/if}}
+
+
+<!-- 推文Modal-->
+{{#if user}}
+<div class="modal" tabindex="-1" role="dialog" id="tweetModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="tweet-modal">
+        <div class="tweet-modal-header">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="close-button">
+            &times;
+          </button>
+        </div>
+        <div class="tweet-modal-body">
+          <div>
+            <img src="" alt="" class="avtar">
+          </div>
+          <form method="POST">
+            <textarea class="modal-textarea" name="" id="" cols="30" rows="10" placeholder="有什麼新鮮事？"></textarea>
+            <button type="submit" class="modal-button">推文</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}

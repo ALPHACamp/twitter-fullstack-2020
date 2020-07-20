@@ -1,1 +1,133 @@
+<div class="container-fluid">
+  {{> message}}
+  <!-- 左邊導覽選單區塊 -->
+  <div class="left-content">
+    <div class="left-column">
+      <img class="logo" src="/images/icon.svg" alt="">
+      <div class="nav">
+        <div class="nav-item">
+          <a href="#">
+            <img class="home-icon" src="/images/icon-home.svg" alt="">首頁
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#">
+            <img class="pr-1" src="/images/icon-user.svg" alt="">
+            個人資料
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#">
+            <img src="/images/icon-setting.svg" alt="">
+            設定
+          </a>
+        </div>
+      </div>
+      <button type="button" class="tweet-button" data-toggle="modal" data-target="#tweetModal">
+        推文
+      </button>
+    </div>
+    <div class="logout">
+      <a href="#">
+        <img class="logout-icon" src="/images/icon-logout.svg" alt="">登出
+      </a>
+    </div>
+  </div>
+
+  <!-- 中間主要區塊 -->
+  <div class="main-content">
+    <div class="main-title">
+      首頁
+    </div>
+    <div class="main-text">
+      <img src="/images/test-user-icon.png" alt="" class="avtar">
+      <form method="POST">
+        <textarea name="" id="" cols="30" rows="10" placeholder="有什麼新鮮事？"></textarea>
+        <button class="tweet-post-button" type="submit">推文</button>
+      </form>
+    </div>
+    <div class="main-tweet-list">
+      <!-- 推文清單列表迴圈 -->
+      <div class="tweet-item" onclick="location.href='/'">
+        <div class="tweet-item-left">
+          <img src="" alt="" class="avtar">
+        </div>
+        <div class="tweet-item-right">
+          <div class="tweet-item-title">
+            <span class="mt-1 user-name">Apple</span>
+            <span class="user-account">
+              @apple．3小時
+            </span>
+          </div>
+          <div class="tweet-item-text">
+            <p>quis vel eros donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue lacus viverra
+              vitaecongue euconsequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas
+              egestassque
+            </p>
+          </div>
+          <div class="tweet-item-footer">
+            <a href="/reply" class="reply-link ">
+              <img class="icon-s" src="/images/icon-reply.svg" alt="">
+              18
+            </a>
+            <form method="POST">
+              <button href="/like" class="like-link button">
+                <img class="icon-s" src="/images/icon-like-solid.svg" alt="">
+                {{!-- <img class="icon-s" src="/images/icon-like.svg" alt=""> --}}
+                23
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- 迴圈結束 -->
+    </div>
+  </div>
+
+  <!-- 右邊區塊 -->
+  <div class="right-content">
+    <div class="right-column">
+      <div class="right-column-title">
+        跟隨誰
+      </div>
+      <div class="user-list">
+
+        <!-- 6個使用者清單迴圈 -->
+        <div class="user-list-item">
+          <img src="" alt="" class="avtar">
+          <div class="user-list-item-name">
+            <a href="" class="user-name">
+              Pineapple
+            </a>
+            <div class="user-account">@pineapple</div>
+          </div>
+          <a href=""><button class="unfollow-button">正在跟隨</button></a>
+          {{!-- <a href=""><button class="follow-button">跟隨</button>
+                    </a> --}}
+        </div>
+
+        <div class="user-list-item">
+          <img src="" alt="" class="avtar">
+          <div class="user-list-item-name">
+            <a href="" class="user-name">
+              Orange
+            </a>
+            <div class="user-account">@orange</div>
+          </div>
+          {{!-- <a href=""><button class="unfollow-button">正在跟隨</button></a> --}}
+          <a href=""><button class="follow-button">跟隨</button>
+          </a>
+        </div>
+
+        <!-- 迴圈結束 -->
+
+      </div>
+      <a href="" class="more-users">
+        顯示更多
+      </a>
+    </div>
+  </div>
+
+</div>
+
 {{> message}}
