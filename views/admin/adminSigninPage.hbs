@@ -17,9 +17,9 @@
     </svg>
   </div>
   {{!-- title --}}
-  <h3 class="text-center mt-4 mb-3 font-weight-bold">登入 Alphitter</h3>
+  <h3 class="text-center mt-4 mb-3 font-weight-bold">後台登入</h3>
   {{!-- form --}}
-  <form action="/signin" method="POST">
+  <form action="/admin/signin" method="POST">
     <div class="form-group">
       <label for="email">帳號</label>
       <input type="email" name="email" class="form-control" id="email" placeholder="Email" autofocus>
@@ -34,8 +34,6 @@
   </form>
   {{!-- link --}}
   <div class="mt-4 d-flex justify-content-end flex-no-wrap">
-    <a href="/signup"><span class="font-weight-bold">註冊Alphitter</span></a>
-    <span class="font-weight-bold mx-2">·</span>
-    <a href="/admin/signin"><span class="font-weight-bold">後台登入</span></a>
+    <a href="/signin"><span class="font-weight-bold">前台登入</span></a>
   </div>
 </div>
