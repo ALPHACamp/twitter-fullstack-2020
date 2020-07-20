@@ -1,14 +1,32 @@
 const db = require('../models');
 const User = db.User;
 const bcrypt = require('bcryptjs');
+const { use } = require('chai');
 
 let userController = {
   loginPage: (req, res) => {
     return res.render('login');
   },
   login: (req, res) => {
-    req.flash('success_messages', 'Login successfully');
-    res.redirect('/tweets');
+    User.findAll({
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then((users) => {
+      console.log(users);
+      users = users.map((user) => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: req.user.Followings//.map((d) => d.id).includes(user.id)
+      }));
+      users = users
+        .sort((a, b) => b.FollowerCount - a.FollowerCount)
+        .slice(0, 6);
+      res.locals.topUsers = users;
+      req.flash('success_messages', 'Login successfully');
+      return res.redirect('/tweets');
+    });
   },
   signUpPage: (req, res) => {
     return res.render('signup');
