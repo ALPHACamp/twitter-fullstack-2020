@@ -34,6 +34,7 @@ const userController = {
       })
       .catch((err) => res.send(err))
   },
+  getUserLikeContent: (req, res) => {},
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({

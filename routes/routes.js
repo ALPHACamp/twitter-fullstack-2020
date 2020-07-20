@@ -21,10 +21,12 @@ router.get('/signup', userController.userSignupPage)
 // 帳號設定頁面
 router.get('/setting', userController.accountSettingPage)
 // 使用者登入
-router.post('/signin',
+router.post(
+  '/signin',
   userController.userCheckRequired,
   passport.authenticate('local', { failureRedirect: '/signin' }),
-  userController.userSigninSuccess)
+  userController.userSigninSuccess
+)
 // 使用者註冊
 router.post('/signup', userController.userSignup)
 
@@ -33,10 +35,12 @@ router.post('/signup', userController.userSignup)
 router.get('/admin', (req, res) => res.redirect('/admin/signin'))
 router.get('/admin/signin', adminController.adminSigninPage)
 // 後台登入
-router.post('/admin/signin',
+router.post(
+  '/admin/signin',
   adminController.adminCheckRequired,
   passport.authenticate('local', { failureRedirect: '/admin/signin' }),
-  adminController.adminSigninSuccess) // 之後要再加上檢查是否為管理者?
+  adminController.adminSigninSuccess
+) // 之後要再加上檢查是否為管理者?
 // 後台登出
 router.post('/admin/signout', adminController.adminSignOut)
 // 後台推文清單
@@ -47,5 +51,6 @@ router.get('/admin/users', adminController.adminUsersPage)
 // USER
 // 取得個人頁面
 router.get('/users/:id', userController.getUser)
+router.get('/users/:id/like', userController.getUserLikeContent)
 
 module.exports = router
