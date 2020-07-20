@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Reply.associate = function(models) {
     Reply.belongsTo(models.Tweet)
+    Reply.belongsTo(models.User)
   };
   return Reply;
 };
