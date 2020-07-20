@@ -8,6 +8,9 @@ a p {
 a p:hover {
   text-decoration: none;
 }
+.alert {
+  border: none !important;
+}
 /* 共用元素 */
 .button {
   border: none;
@@ -49,12 +52,17 @@ a p:hover {
   margin-bottom: 20px;
 }
 .sign-form input::placeholder{
-  position: relative;
-  top: -10px;
-  left: 5px;
+  padding-right: 10px;
+  text-align: right;
   bottom: 10px;
   font-size: 15px;
-  color: #657786;
+  color: #c7d2db;
+}
+.at-span {
+  position: relative;
+  color: #1C1C1C;
+  top: 23px;
+  left: -35px;
 }
 .sign-button {
   height: 50px;
@@ -80,12 +88,16 @@ a p:hover {
   color: #0099FF;
   text-decoration-line: underline;
 }
-
 .sign-form label{
   position: relative;
   margin-top: -34px;
-  top: 22px;
-  left: 20px;
+  top: 20px;
+  left: 18px;
   font-size: 15px;
   color: #657786;
+}
+.sign-message {
+  position: absolute;
+  z-index: 999;
+  top: 5px;
 }

@@ -19,6 +19,11 @@ app.use(bodyPaser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(session({ secret: 'twittercat', resave: false, saveUninitialized: false }))
 app.use(flash())
+app.use((req, res, next) => {
+  res.locals.errorMessage = req.flash('errorMessage')
+  res.locals.successMessage = req.flash('successMessage')
+  next()
+})
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
