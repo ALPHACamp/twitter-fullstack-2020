@@ -19,7 +19,7 @@ router.get('/signin', userController.userSigninPage)
 // 前台註冊頁面
 router.get('/signup', userController.userSignupPage)
 // 帳號設定頁面
-router.get('/setting')
+router.get('/setting', userController.accountSettingPage)
 // 使用者登入
 router.post('/signin',
   userController.userCheckRequired,
