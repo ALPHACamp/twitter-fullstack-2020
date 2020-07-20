@@ -8,14 +8,14 @@ let adminController = {
     return res.render('admin/login');
   },
   getTweets: (req, res) => {
-    return Tweet.findAll({ raw: true, nest: true, include: [User] }).then(result => {
-      const data = result.rows.map(r => ({
-        ...r.dataValues,
-        description: r.dataValues.description.substring(0, 50),
-        userName: r.dataValues.User.name,
-        userAvatar: r.dataValues.User.avatar,
-        createdAt: r.dataValues.createdAt
+   Tweet.findAll({ raw: true, nest: true, include: User, }).then(tweets => {          
+      const data = tweets.map(r => ({               
+        userName: r.User.name,
+        userAvatar: r.User.avatar,
+        description: r.description.substring(0, 50),
+        createdAt: r.createdAt
       }))
+      console.log(data)
       return res.render('admin/tweetsHome', { tweets: data })
     })
   },

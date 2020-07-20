@@ -12,7 +12,7 @@
             </td>
             <td>{{this.userName}}</td>
             <td>{{this.description}}</td>
-            <td>{{this.createdAt}}</td>
+            <td>{{moment this.createdAt}}</td>
             <td>
                 <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
                     <button type="submit" class="btn btn-link">Delete</button>

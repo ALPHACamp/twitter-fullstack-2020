@@ -1,4 +1,7 @@
 'use strict';
+
+const tweet = require("./tweet");
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     email: DataTypes.STRING,
@@ -9,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.STRING
   }, {});
   User.associate = function(models) {
+    User.hasMany(models.Tweet)
   };
   return User;
 };
