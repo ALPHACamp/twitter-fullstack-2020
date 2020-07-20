@@ -13,7 +13,7 @@ const port = 3000
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine('handlebars', exhbs({ defaultLayout: 'main' }))
+app.engine('handlebars', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 app.use(bodyPaser.urlencoded({ extended: true }))
