@@ -26,8 +26,6 @@ const tweetController = {
       const totalCount = {
         totalLike, totalComment
       }
-
-      console.log(totalLike, totalComment)
       res.render('tweet',{ tweet: tweet.toJSON(), totalCount })
     }
   }
