@@ -1,12 +1,15 @@
-<div class="sign-containet">
+<div class="sign-container">
+  <div class="sign-message">
+    {{> message}}
+  </div>
   <img class="sign-icon" src="/images/icon.svg" alt="">
   <div class="sign-title ">後台登入</div>
-  <form>
+  <form action="/admin/signin" method="POST">
     <div class="sign-form">
-      <input type="text" class="form-control" id="account" name="account" placeholder="帳號">
-
-      <input type="password" class="form-control" id="account" name="password" placeholder="密碼">
-
+      <label for="account">帳號 <span class="at-span">@</span></label>
+      <input type="text" id="account" name="account" value="{{account}}" style="padding-left: 35px;">
+      <label for="password">密碼</label>
+      <input type="password" id="password" name="password">
       <button class="sign-button" type="submit">登入</button>
     </div>
   </form>
