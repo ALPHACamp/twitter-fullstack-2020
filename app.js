@@ -6,6 +6,7 @@ const helpers = require('./_helpers');
 
 const app = express();
 const port = 3000;
+//const passport = require('./config/passport');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -44,7 +45,7 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages');
   next();
 });
-
+require('./routes')(app);
 app.get('/', (req, res) => res.send('Hello World!'));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
