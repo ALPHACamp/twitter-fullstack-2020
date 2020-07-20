@@ -39,7 +39,13 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id);
 });
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then((user) => {
+  User.findByPk(id, {
+    include: [
+      { model: db.Restaurant, as: 'FavoritedRestaurants' },
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' }
+    ]
+  }).then((user) => {
     user = user.toJSON();
     return cb(null, user);
   });

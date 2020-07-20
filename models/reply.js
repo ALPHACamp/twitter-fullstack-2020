@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     TweetId: DataTypes.INTEGER,
     comment: DataTypes.STRING
   }, {});
-  Reply.associate = function(models) {
+  Reply.associate = function(models) {    
   };
   return Reply;
 };

@@ -16,6 +16,8 @@ router.get('/admin', (req, res) => res.redirect('/admin/tweets'))
 
 router.get('/admin/tweets', adminController.getTweets)
 
+router.get('/admin/tweetsUser', adminController.getUsers)
+
 router.delete('/admin/tweets/:id', adminController.deleteTweet)
 
 module.exports = router;
