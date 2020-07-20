@@ -34,7 +34,43 @@ const userController = {
       })
       .catch((err) => res.send(err))
   },
-  getUserLikeContent: (req, res) => {},
+  getUserLikeContent: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Tweet,
+          as: 'LikedTweets',
+          include: { model: User, as: 'LikedUser' }
+        },
+        {
+          model: Tweet,
+          as: 'LikedTweets',
+          include: Reply
+        },
+        {
+          model: Tweet,
+          as: 'LikedTweets',
+          include: User
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then((user) => {
+        user = user.toJSON()
+        user.followingCount = user.Followings.length
+        user.followerCount = user.Followers.length
+
+        for (let i = 0; i < user.LikedTweets.length; i++) {
+          user.LikedTweets[i].repliesCount =
+            user.LikedTweets[i].LikedUser.length
+          user.LikedTweets[i].likeCount = user.LikedTweets[i].Replies.length
+        }
+
+        res.json(user)
+      })
+      .catch((err) => res.send(err))
+  },
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({
