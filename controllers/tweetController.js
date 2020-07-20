@@ -1,5 +1,5 @@
 const tweetController = {
-    getweets: (req, res) => {
+    getTweets: (req, res) => {
       return res.render('tweetsHome')
     }
   }
