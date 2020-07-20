@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const { Sequelize } = require('../models')
 const { or } = Sequelize.Op
 const db = require('../models')
+const helpers = require('../_helpers')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -107,7 +108,7 @@ const userController = {
   // 使用者成功登入後訊息提示
   userSigninSuccess: (req, res) => {
     req.flash('success_messages', '登入成功！')
-    res.redirect('/home')
+    res.redirect('/tweets')
   },
   userSignup: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
@@ -143,7 +144,10 @@ const userController = {
             introduction: `Hi Guys,I'm ${name},nice to meet you!`,
             role: 'user'
           })
-            .then(() => res.redirect('/signin'))
+            .then(() => {
+              req.flash('success_messages', '已成功註冊，請登入！')
+              res.redirect('/signin')
+            })
             .catch((err) => res.send(err))
         }
         if (user.account === account) {
@@ -166,7 +170,65 @@ const userController = {
       .catch((err) => res.send(err))
   },
   accountSettingPage: (req, res) => {
-    res.render('accountSettingPage')
+    const { account, name, email } = helpers.getUser(req)
+    res.render('accountSettingPage', { account, name, email })
+  },
+  accountSetting: (req, res) => {
+    const { account, name, email, password, checkPassword } = req.body
+    const { id } = helpers.getUser(req)
+    // 檢查必填
+    if (!account || !name || !email) {
+      req.flash('error_messages', '請填寫必填項目:帳戶、名稱、E-mail')
+      return res.redirect('/setting')
+    }
+    // 不更改密碼的情況
+    if (!password && !checkPassword) {
+      return updateAccount()
+    }
+    // 更改密碼，但缺其中一個
+    if (!password || !checkPassword) {
+      req.flash('error_messages', '欲更改密碼，請填入新密碼與確認新密碼！')
+      return res.redirect('/setting')
+    }
+    // 密碼不相符
+    if (password !== checkPassword) {
+      req.flash('error_messages', '新密碼與確認新密碼不符，請重新確認！')
+      return res.redirect('/setting')
+    }
+    return updateAccountAndPassword()
+
+    function updateAccount () {
+      User.findByPk(id)
+        .then(user => user.update({
+          account,
+          name,
+          email
+        }))
+        .then(() => {
+          req.flash('success_messages', '成功修改帳戶設定！')
+          res.redirect('/setting')
+        })
+        .catch(err => console.log(err))
+    }
+    function updateAccountAndPassword () {
+      User.findByPk(id)
+        .then(user => user.update({
+          account,
+          name,
+          email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+        }))
+        .then(() => {
+          req.flash('success_messages', '成功修改帳戶設定！')
+          res.redirect('/setting')
+        })
+        .catch(err => console.log(err))
+    }
+  },
+  signout: (req, res) => {
+    req.logout()
+    req.flash('success_messages', '已成功登出！')
+    res.redirect('/signin')
   }
 }
 

@@ -1,14 +1,30 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
+const helper = require('../_helpers')
 
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 
+// 判定登入者權限
+const authenticated = (req, res, next) => {
+  if (helper.ensureAuthenticated(req)) return next()
+  req.flash('error_messages', '請先進行登入！')
+  return res.redirect('/signin')
+}
+// 判斷是否為管理者
+const adminAuthenticated = (req, res, next) => {
+  if (helper.ensureAuthenticated(req)) {
+    if (helper.getUser(req).role === 'admin') return next()
+    req.flash('error_messages', '禁止訪問！請向管理者申請管理者權限！')
+    return res.redirect('/admin/signin')
+  }
+}
+
 // 主畫面
-router.get('/', (req, res) => res.redirect('/signin'))
-router.get('/home', tweetController.getHomePage)
+router.get('/', (req, res) => res.redirect('/tweets'))
+router.get('/tweets', authenticated, tweetController.getHomePage)
 router.post('/tweet', tweetController.postTweet)
 router.get('/tweets/:tweetId', tweetController.getReplyPage)
 router.post('/tweets/:tweetId/reply', tweetController.replyTweet)
@@ -19,8 +35,10 @@ router.delete('/following/:userId', userController.removeFollowing)
 router.get('/signin', userController.userSigninPage)
 // 前台註冊頁面
 router.get('/signup', userController.userSignupPage)
+// 登出
+router.get('/signout', userController.signout)
 // 帳號設定頁面
-router.get('/setting', userController.accountSettingPage)
+router.get('/setting', authenticated, userController.accountSettingPage)
 // 使用者登入
 router.post(
   '/signin',
@@ -30,6 +48,8 @@ router.post(
 )
 // 使用者註冊
 router.post('/signup', userController.userSignup)
+// 儲存新帳號設定
+router.post('/setting', authenticated, userController.accountSetting)
 
 // ADMIN
 // 後台登入頁面
@@ -40,8 +60,9 @@ router.post(
   '/admin/signin',
   adminController.adminCheckRequired,
   passport.authenticate('local', { failureRedirect: '/admin/signin' }),
+  adminAuthenticated,
   adminController.adminSigninSuccess
-) // 之後要再加上檢查是否為管理者?
+)
 // 後台登出
 router.post('/admin/signout', adminController.adminSignOut)
 // 後台推文清單
