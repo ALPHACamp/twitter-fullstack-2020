@@ -36,7 +36,12 @@ const tweetController = {
     })
   },
   postTweet: (req, res) => {
-    res.json(req.body)
+    return Tweet.create({
+      UserId: req.user.id,
+      description: req.body.tweet
+    })
+      .then(() => res.redirect('/home'))
+      .catch((err) => res.send(err))
   },
   getReplyPage: (req, res) => {
     const tweetId = req.params.tweetId
