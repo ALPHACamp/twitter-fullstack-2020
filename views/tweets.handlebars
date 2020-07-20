@@ -40,7 +40,7 @@
       首頁
     </div>
     <div class="main-text">
-      <img src="/images/test-user-icon.png" alt="" class="avtar">
+      <img src="{{user.avatar}}" alt="" class="avtar">
       <form method="POST">
         <textarea name="" id="" cols="30" rows="10" placeholder="有什麼新鮮事？"></textarea>
         <button class="tweet-post-button" type="submit">推文</button>
@@ -48,38 +48,38 @@
     </div>
     <div class="main-tweet-list">
       <!-- 推文清單列表迴圈 -->
+      {{#each tweets}}
       <div class="tweet-item" onclick="location.href='/'">
         <div class="tweet-item-left">
-          <img src="" alt="" class="avtar">
+          <img src="{{this.User.avatar}}" alt="" class="avtar">
         </div>
         <div class="tweet-item-right">
           <div class="tweet-item-title">
-            <span class="mt-1 user-name">Apple</span>
+            <span class="mt-1 user-name">{{this.User.name}}</span>
             <span class="user-account">
-              @apple．3小時
+              {{this.User.account}}．{{moment this.createdAt}}
             </span>
           </div>
           <div class="tweet-item-text">
-            <p>quis vel eros donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue lacus viverra
-              vitaecongue euconsequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas
-              egestassque
+            <p>{{this.description}}
             </p>
           </div>
           <div class="tweet-item-footer">
             <a href="/reply" class="reply-link ">
               <img class="icon-s" src="/images/icon-reply.svg" alt="">
-              18
+              {{this.Replies.length}}
             </a>
             <form method="POST">
               <button href="/like" class="like-link button">
                 <img class="icon-s" src="/images/icon-like-solid.svg" alt="">
                 {{!-- <img class="icon-s" src="/images/icon-like.svg" alt=""> --}}
-                23
+                {{this.likedUser.length}}
               </button>
             </form>
           </div>
         </div>
       </div>
+      {{/each}}
       <!-- 迴圈結束 -->
     </div>
   </div>
