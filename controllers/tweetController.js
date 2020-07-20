@@ -9,7 +9,7 @@ const tweetController = {
       include: [
         User,
         Reply,
-        { model: User, as: 'likedUser' }
+        { model: User, as: 'likedUsers' }
       ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
