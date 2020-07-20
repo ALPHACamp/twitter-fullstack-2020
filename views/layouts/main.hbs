@@ -69,12 +69,13 @@
       {{{body}}}
     </div>
 
-    {{#if user}}
+    {{#if topUser}}
     <div class="right-sec mt-4 col-lg-3" style="min-width: 300px;">
       <ul class="list-group list-group-flush bg-light rounded-lg">
 
         {{!-- 使用hbs each 產生使用者 --}}
         <li class="list-group-item font-weight-bold h5 bg-light">跟隨誰</li>
+        {{#each topUser}}
         <li class="list-group-item d-flex justify-content-between bg-light">
           <div class="user-wrap d-flex">
             <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
@@ -83,19 +84,23 @@
               Marc
             </div>
             {{!-- 連結到user 頁面 --}}
-            <a href="/users/{{topUser.id}}" class="user-account">
+            <a href="/users/{{this.id}}" class="user-account">
               @marc
             </a>
 
           </div>
           </div>
 
-          {{!-- 需要依照followship 切換跟隨和正在跟隨 --}}
-          <form action="/users/{{topUser.id}}/followings" method="post" class="d-flex align-items-center ml-4">
+          {{!-- 未完成 需要依照followship 切換跟隨和正在跟隨 --}}
+          <form action="/users/{{this.id}}/followings" method="post" class="d-flex align-items-center ml-4">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
           </form>
 
+          {{/each}}
 
+        </li>
+        <li class="list-group-item bg-light">
+          <a href="#">顯示更多</a>
         </li>
       </ul>
   </div>
