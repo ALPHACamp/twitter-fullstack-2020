@@ -1,8 +1,9 @@
 const express = require('express');
 const helpers = require('./_helpers');
-if (process.env.NODE_ENV !== 'production') {
+
+/* if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
-}
+} */
 
 const app = express();
 const port = 3000;
@@ -11,7 +12,7 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
-
+const passport = require('./config/passport')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
@@ -20,7 +21,8 @@ app.engine(
   'hbs',
   exphbs({
     defaultLayout: 'main',
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: require('./config/handlebars-helpers')
   })
 );
 app.set('view engine', 'hbs');
@@ -28,7 +30,7 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 //method override
-app.use(methodOverrice('_method'));
+app.use(methodOverride('_method'));
 // session
 app.use(
   session({
@@ -44,8 +46,8 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages');
   next();
 });
+require('./routes')(app);
 
-app.get('/', (req, res) => res.send('Hello World!'));
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 module.exports = app;

@@ -1,0 +1,26 @@
+{{> message}}
+
+<div class="font-weight-bold h4">推文清單</div>
+<br />
+<br />
+
+<table class="table">
+    <tbody>
+        {{#each tweets}}
+        <tr>
+            <td>
+                <img class="img-responsive center-block" src="{{this.userAvatar}}"
+                    style="width: 50px;margin-bottom: 25px;">
+            </td>
+            <td>{{this.userName}}</td>
+            <td>{{this.description}}</td>
+            <td>{{moment this.createdAt}}</td>
+            <td>
+                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-link">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

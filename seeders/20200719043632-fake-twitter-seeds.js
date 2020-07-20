@@ -12,6 +12,7 @@ module.exports = {
       introduction:'',
       avatar:'https://i.imgur.com/73A1th4.png',
       role:'Admin',
+      account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -23,6 +24,7 @@ module.exports = {
       introduction: '',
       avatar: 'https://i.imgur.com/73A1th4.png',
       role: 'user',
+      account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
     }, 
@@ -34,6 +36,7 @@ module.exports = {
       introduction: '',
       avatar: 'https://i.imgur.com/73A1th4.png',
       role: 'user',
+      account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -45,6 +48,7 @@ module.exports = {
       introduction: '',
       avatar: 'https://i.imgur.com/73A1th4.png',
       role: 'user',
+      account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -56,6 +60,7 @@ module.exports = {
       introduction: '',
       avatar: 'https://i.imgur.com/73A1th4.png',
       role: 'user',
+      account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -67,6 +72,7 @@ module.exports = {
       introduction: '',
       avatar: 'https://i.imgur.com/73A1th4.png',
       role: 'user',
+      account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
     }], {})
