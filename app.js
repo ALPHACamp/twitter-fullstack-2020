@@ -5,6 +5,7 @@ const bodyPaser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
+const passport = require('./config/passport')
 
 const app = express()
 const port = 3000
@@ -18,6 +19,8 @@ app.use(express.static('public'))
 app.use(bodyPaser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(session({ secret: 'twittercat', resave: false, saveUninitialized: false }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.errorMessage = req.flash('errorMessage')
@@ -27,4 +30,4 @@ app.use((req, res, next) => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes/index')(app)
+require('./routes/index')(app, passport)
