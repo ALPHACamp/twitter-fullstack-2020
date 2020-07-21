@@ -15,6 +15,17 @@ const tweetController = {
     }).then(tweets => {
       res.render('tweets', { user: req.user, tweets })
     })
+  },
+  postTweet: (req, res) => {
+    if (!req.body.description) {
+      return res.redirect('/')
+    }
+    return Tweet.create({
+      UserId: req.user.id,
+      description: req.body.description,
+    }).then(tweet => {
+      return res.redirect('/')
+    })
   }
 }
 
