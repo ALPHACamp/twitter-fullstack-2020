@@ -11,18 +11,20 @@ const adminController = {
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
         { model: Reply, include: Tweet },
-        // { model: Like, include: Tweet }
+        { model: Like, include: Tweet }
       ],
       order: [['createdAt', 'DESC']],
-      raw: true,
-      nest: true
     })
-      .then(users => {
-        const followersCount = users.Followers.length
-        const followingsCount = users.Followings.length
-        const repliesCount = users.Replies.length
+      .then(result => {
+        const users = result.map(item => ({
+          ...item.dataValues,
+          followingsCount: item.Followings.length,
+          followersCount: item.Followers.length,
+          likesCount: item.Likes.length,
+          repliesCount: item.Replies.length
+        }))
 
-        res.render('admin/users', { users, followersCount, followingsCount, repliesCount })
+        res.render('admin/users', { users })
       })
   }
 }
