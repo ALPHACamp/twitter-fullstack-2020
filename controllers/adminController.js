@@ -5,21 +5,24 @@ const Followships = db.Followships
 const Reply = db.Reply
 const Like = db.Like
 
+
 let adminController = {
   adminLoginPage: (req, res) => {
     return res.render('admin/login');
   },
-
+  login: (req, res) => {
+    req.flash('success_messages', 'Login successfully');
+    res.redirect('/admin/tweets');
+  },
   getTweets: (req, res) => {
-    Tweet.findAll({ raw: true, nest: true, include: User, }).then(tweets => {
-      const data = tweets.map(r => ({
+    Tweet.findAll({ raw: true, nest: true, include: User }).then((tweets) => {
+      const data = tweets.map((r) => ({
         ...r,
         userName: r.User.name,
         userAvatar: r.User.avatar,
         description: r.description.substring(0, 50),
         createdA: r.createdAt
       }))
-      console.log(data)
       return res.render('admin/tweetsHome', { tweets: data })
     })
   },
@@ -51,16 +54,14 @@ let adminController = {
   },
 
   deleteTweet: (req, res) => {
-    Tweet.findByPk(req.params.id)
-      .then((Tweet) => {
-        Tweet.destroy()
-          .then((Tweet) => {
-            req.flash('success_messages', '刪除成功！')
-            return res.redirect('/admin/tweets')
-          })
-      })
-  },
-}
+    Tweet.findByPk(req.params.id).then((Tweet) => {
+      Tweet.destroy().then((Tweet) => {
+        req.flash('success_messages', '刪除成功！');
+        return res.redirect('/admin/tweets');
+      });
+    });
+  }
+};
 
 
 module.exports = adminController;

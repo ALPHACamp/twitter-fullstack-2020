@@ -1,6 +1,6 @@
 'use strict';
 
-const tweet = require("./tweet");
+const tweet = require('./tweet');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.Tweet, {
       through: models.Like,
       foreignKey: 'UserId',
-      as: 'whoLikeTweet'
+      as: 'userLike'
     })
 
     User.belongsToMany(models.Tweet, {
@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'UserReply'
     })
+
 
     User.belongsToMany(User, {
       through: models.Followship,
@@ -38,9 +39,8 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Followship,
       foreignKey: 'followerId',
       as: 'Followings'
-    })
-    
-   
+
+    });
   };
   return User;
 };
