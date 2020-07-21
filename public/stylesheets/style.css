@@ -593,3 +593,29 @@ width: 600px;
   text-align: right;
   color: #657786;
 }
+
+/* 帳號設定與管理員頁面 */
+.setting-form {
+  margin: 50px 0px 0px 30px;
+}
+.setting-form div button{
+  width: 122px;
+  height: 45px;
+  float: right;
+}
+.admin-main-content,
+.setting-main-content 
+ {
+  grid-column: 2 / 4;
+  border-left: 1px solid #E6ECF0;
+}
+.admin-main-title,
+.setting-main-title {
+  height: 55px;
+  font-size: 18px;
+  color: #1C1C1C;
+  display: flex;
+  align-items: center;
+  padding-left: 26px;
+  border-bottom: 1px solid #E6ECF0;
+}
