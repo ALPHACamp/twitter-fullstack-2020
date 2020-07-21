@@ -63,4 +63,6 @@ router.post('/signup', userController.signup);
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
 
+router.get('/users/:userId/edit', authenticated, userController.editUser);
+
 module.exports = router;
