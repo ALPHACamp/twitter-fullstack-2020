@@ -84,6 +84,7 @@ module.exports = {
       Array.from({ length: 60 }).map((_, index) => ({
         UserId: (index % 6) + 1,
         description: faker.lorem.sentences(),
+        replyCount: 3,
         createdAt: new Date(),
         updatedAt: new Date()
       }))

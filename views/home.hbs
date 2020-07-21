@@ -1,19 +1,21 @@
 <div class="row justify-content-center">
-  <div class="col-3"></div>
+  <div class="col-3">
+
+  </div>
   <div class="col-5">
     <button class="btn btn-primary" data-toggle="modal" data-target="#createTweet">推文</button>
     {{#each tweets}}
-    <a href="/tweets/{{this.id}}">
-      <div class="card " style="">
+    <a href="/tweets/{{this.id}}" style="text-decoration: none;">
+      <div class="card" style="color:black">
         <div class="row no-gutters">
-          <div class="col-md-1">
-            <img src="{{this.User.avatar}}" class="card-img" alt="img">
+          <div class="col-md-1 mt-3">
+            <img src="{{this.User.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
           </div>
           <div class="col-md-11">
             <div class="card-body">
-              <div class="row ml-2">
-                <h5 class="card-title" style="">{{this.User.name}}</h5>
-                <small class="text-muted ml-3 mr-auto">Last updated 3 mins ago</small>
+              <div class="row ml-1 align-items-center">
+                <span>{{this.User.name}}</span>
+                <small class="text-muted mr-auto">．{{moment this.createdAt}}</small>
                 {{#ifEqual this.UserId ../currentUserId}}
                 <form action="/tweets/{{this.id}}?_method=DELETE" method="post" id="deleteTweet">
                   <button type="submit" class="btn btn-outline-danger ml-auto">&times;</button>
@@ -21,6 +23,10 @@
                 {{/ifEqual}}
               </div>
               <p class="card-text">{{this.description}}</p>
+            </div>
+            <div class="col-12">
+              <i class="far fa-comment"></i>
+              <i class="far fa-heart"></i>
             </div>
           </div>
         </div>
