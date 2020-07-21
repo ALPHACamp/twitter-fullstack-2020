@@ -72,6 +72,38 @@ const userController = {
       })
       .catch((err) => res.send(err))
   },
+  editUser: (req, res) => {
+    console.log(req._passport.session.user)
+    if (Number(req.params.id) === Number(req._passport.session.user)) {
+      return User.findByPk(req.params.id).then((user) => {
+        user = user.toJSON()
+        return res.json(user)
+      })
+    } else {
+      req.flash(
+        'error_message',
+        "You don't have the authority to do this action"
+      )
+      return res.redirect('back')
+    }
+  },
+  putUser: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_message', "name didn't exist")
+      return res.redirect('back')
+    }
+    return User.findByPk(req.params.id).then((user) => {
+      user
+        .update({
+          name: req.body.name,
+          introduction: req.body.introduction
+        })
+        .then((user) => {
+          req.flash('success_message', 'user was successfully to update')
+          res.json(user)
+        })
+    })
+  },
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({
@@ -199,30 +231,34 @@ const userController = {
 
     function updateAccount () {
       User.findByPk(id)
-        .then(user => user.update({
-          account,
-          name,
-          email
-        }))
+        .then((user) =>
+          user.update({
+            account,
+            name,
+            email
+          })
+        )
         .then(() => {
           req.flash('success_messages', '成功修改帳戶設定！')
           res.redirect('/setting')
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err))
     }
     function updateAccountAndPassword () {
       User.findByPk(id)
-        .then(user => user.update({
-          account,
-          name,
-          email,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-        }))
+        .then((user) =>
+          user.update({
+            account,
+            name,
+            email,
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+          })
+        )
         .then(() => {
           req.flash('success_messages', '成功修改帳戶設定！')
           res.redirect('/setting')
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err))
     }
   },
   signout: (req, res) => {
