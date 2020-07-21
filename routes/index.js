@@ -19,7 +19,7 @@ module.exports = (app, passport) => {
     userController.signIn)
 
   app.get('/admin/signin', (req, res) => res.render('admin/signin'))
-  app.get('/admin/tweets', (req, res) => res.render('admin/tweets'))
+  app.get('/admin/tweets', adminController.getTweets)
   app.get('/admin/users', adminController.getUsers)
 
   app.get('/', (req, res) => res.redirect('/tweets'))

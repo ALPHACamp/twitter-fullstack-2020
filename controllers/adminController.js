@@ -27,6 +27,20 @@ const adminController = {
 
         res.render('admin/users', { users })
       })
+  },
+  getTweets: (req, res) => {
+    return Tweet.findAll({
+      include: [
+        User
+      ]
+    })
+      .then(tweets => {
+        tweets = tweets.map(item => ({
+          ...item.dataValues,
+          description: item.description.substring(0, 50)
+        }))
+        res.render('admin/tweets', { tweets })
+      })
   }
 }
 
