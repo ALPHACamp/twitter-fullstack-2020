@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="left-content">
+    <div class="left-column">
+      <img class="logo" src="/images/icon.svg" alt="">
+      <div class="nav">
+        <div class="nav-item">
+          <a href="#">
+            <img class="home-icon" src="/images/icon-home.svg" alt="">推文清單
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#">
+            <img class="pr-1" src="/images/icon-user.svg" alt="">
+            使用者列表
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#">
+            <img src="/images/icon-setting.svg" alt="">
+            設定
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="logout">
+      <a href="#">
+        <img class="logout-icon" src="/images/icon-logout.svg" alt="">登出
+      </a>
+    </div>
+  </div>
+
+  <div class="admin-main-content">
+    <div class="admin-main-title">
+      推文清單
+    </div>
+
+    <div class="admin-tweets-list">
+      <!-- 推文清單迴圈 -->
+      <div class="admin-tweets-list-item">
+        <div class="admin-tweets-list-item-left">
+          <img src="" alt="" class="avtar">
+        </div>
+        <div class="admin-tweets-list-item-right">
+          <div class="top">
+            <div>
+              <a href="/users/:id" class="user-name">Banana</a>
+              <span class="user-account">@banana．59分鐘</span>
+            </div>
+            <form method="POST" onsubmit="return confirm('確定要刪除推文嗎？')">
+              <button type="submit" class="button delete-tweet-item">✕</button>
+            </form>
+          </div>
+          <p>
+            quis vel eros donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue lacus viverra
+            vitaecongueeuconsequat ac felis donec et odio pellentesque diam volutpat commodo dapibus ultrices in iaculis
+          </p>
+        </div>
+      </div>
+      <!-- 迴圈結束 -->
+    </div>
+
+  </div>
+</div>

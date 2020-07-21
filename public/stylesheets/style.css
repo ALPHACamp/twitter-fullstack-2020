@@ -619,3 +619,28 @@ width: 600px;
   padding-left: 26px;
   border-bottom: 1px solid #E6ECF0;
 }
+.admin-tweets-list-item {
+  display: flex;
+  height: 120px;
+  border-bottom: 1px solid #E6ECF0;
+}
+.admin-tweets-list-item-left {
+  padding: 15px 15px 0px 15px;
+}
+.admin-tweets-list-item-right {
+  width: 100%;
+}
+.admin-tweets-list-item-right .top {
+  padding: 15px 15px 6px 0px;
+  display: flex;
+  justify-content: space-between;
+}
+.admin-tweets-list-item-right p {
+  font-size: 15px;
+  line-height: 22px;
+  color: #1C1C1C;
+  padding-right: 100px;
+}
+.delete-tweet-item {
+  color: #657786;
+}
