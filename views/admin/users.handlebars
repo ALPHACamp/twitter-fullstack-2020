@@ -36,24 +36,28 @@
 
     <div class="admin-users-list pl-3">
       <!-- 使用者清單迴圈 -->
+      {{#each users}}
       <div class="admin-users-list-item">
-        <div class="user-cover" style="background: url(.jpg),url(.jpg), #C4C4C4;">
+        <div class="user-cover"
+          style="background: url({{this.cover}}), #C4C4C4;background-size: cover; background-repeat:no-repeat; background-position: center;">
         </div>
-        <div class="user-avtar" style="background: url(.jpg),url(.jpg), #C4C4C4;">
+        <div class="user-avtar" style="background: url('{{this.avatar}}'), #C4C4C4;
+          background-size: cover; background-repeat:no-repeat; background-position: center;">
         </div>
         <div class="user-data">
-          <a href="/users/:id" class="user-name">John Doe</a>
-          <div class="user-account pr-2 mb-2 pt-1">@heyjohn</div>
+          <a href="/users/{{this.id}}" class="user-name">{{this.name}}</a>
+          <div class="user-account pr-2 mb-2 pt-1">@{{this.account}}</div>
           <div class="reply-data mb-4">
-            <img src="/images/icon-reply.svg" alt="" class="icon-s mr-1"><span>3.5k</span>
+            <img src="/images/icon-reply.svg" alt="" class="icon-s mr-1"><span>{{repliesCount}}</span>
             <img src="/images/icon-like.svg" alt="" class="icon-s">
-            <span>214</span>
+            <span>{{likesCount}}</span>
           </div>
           <div class="follow-data">
-            34個 <span>跟隨中</span> 329位 <span>追隨者</span>
+            {{followingsCount}} 個<span>跟隨中</span> {{followersCount}} 位<span>追隨者</span>
           </div>
         </div>
       </div>
+      {{/each}}
       <!-- 迴圈結束 -->
 
     </div>
