@@ -33,7 +33,7 @@ const tweetController = {
           res.render('home', {
             tweets: tweets,
             recommendFollowings: users,
-            currentUserId: Number(req.user.id)
+            currentUserId: req.user.id
           })
         })
         .catch((err) => res.send(err))
@@ -44,7 +44,7 @@ const tweetController = {
       UserId: req.user.id,
       description: req.body.tweet
     })
-      .then(() => res.redirect('/home'))
+      .then(() => res.redirect('/tweets'))
       .catch((err) => res.send(err))
   },
   deleteTweet: (req, res) => {
