@@ -1,1 +1,39 @@
-<div>123</div>
+<div class="font-weight-bold h4">使用者清單</div>
+<br />
+<br />
+
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">名子</th>
+        <th scope="col">帳號</th>
+      <th scope="col">頭像</th> 
+      <th scope="col">背景</th>      
+      <th scope="col">回復數</th>
+      <th scope="col">喜歡的推文數</th>
+      <th scope="col">追隨數</th>
+      <th scope="col">跟隨數</th>
+    </tr>
+  </thead>
+    <tbody>
+        {{#each users}}
+        <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.account}}</td>
+            <td>
+                <img class="img-responsive center-block" src="{{this.avatar}}"
+                    style="width: 50px;margin-bottom: 25px;">
+            </td>
+            <td>
+                <img class="img-responsive center-block" src="{{this.backgrund}}"
+                    style="width: 50px;margin-bottom: 25px;">
+            </td>
+            <td>{{this.ReplyCount}}</td>
+            <td>{{this.LikeCount}}</td>
+            <td>{{this.FollowerCount}}</td>
+             <td>{{this.FollowingCount}}</td>
+           
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

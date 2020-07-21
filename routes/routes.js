@@ -8,6 +8,7 @@ const adminController = require('../controllers/adminController.js')
 router.get('/', (req, res) => res.redirect('/tweets'))
 
 router.get('/tweets', tweetController.getTweets)
+router.get('/tweets/:id', tweetController.getTweet)
 
 router.get('/login', userController.loginPage);
 

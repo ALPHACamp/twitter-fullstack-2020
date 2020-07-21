@@ -1,9 +1,9 @@
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
-const Likes = db.Like
-const Reply = db.Replies
-const Followers = db.Followships
+const Followships = db.Followships
+const Reply = db.Reply
+const Like = db.Like
 
 let adminController = {
   adminLoginPage: (req, res) => {
@@ -13,34 +13,36 @@ let adminController = {
   getTweets: (req, res) => {
     Tweet.findAll({ raw: true, nest: true, include: User, }).then(tweets => {
       const data = tweets.map(r => ({
-        ...r,
+        ...r.dataValues,
         userName: r.User.name,
         userAvatar: r.User.avatar,
         description: r.description.substring(0, 50),
-        createdAt: r.createdAt
+        createdA: r.createdAt
       }))
+      
       return res.render('admin/tweetsHome', { tweets: data })
     })
   },
 
   getUsers: (req, res) => {
     User.findAll({
-      raw: true, nest: true,
       include: [
-        { model: Tweet, as: 'Replyer' },
-        { model: Tweet, as: 'Liker' },
-        { model: User, as: 'Followers' }
+        { model: Tweet, as: 'whoLikeTweet' },
+        { model: Tweet, as: 'UserReply' }, 
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' } 
       ]
-    }).then(tweets => {
-      tweets = tweets.map(r => ({
-        ...r,        
-        ReplyerCount: r.User.Replyer.length,
-        LikerCount: r.User.Liker.length,
-        FollowerCount: r.User.Followers.length,
-      }))
-      console.log(tweets)
-      return res.render('admin/tweetsUser', { users: data })
     })
+      .then(users => {
+        const data = users.map(r => ({
+          ...r.dataValues,
+          LikeCount: r.whoLikeTweet.length,
+          ReplyCount:r.UserReply.length,
+          FollowerCount: r.Followers.length,
+          FollowingCount: r.Followings.length,
+        }))
+        return res.render('admin/tweetsUser', { users: data })
+      })
   },
 
   deleteTweet: (req, res) => {
