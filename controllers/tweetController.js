@@ -26,6 +26,17 @@ const tweetController = {
     }).then(tweet => {
       return res.redirect('/')
     })
+  },
+  getTweet: (req, res) => {
+    Tweet.findByPk(req.params.id, {
+      include: [
+        User,
+        { model: User, as: 'likedUsers' },
+        { model: Reply, include: [User] }
+      ]
+    }).then(tweet => {
+      res.render('tweet', { tweet: tweet.toJSON() })
+    })
   }
 }
 
