@@ -7,19 +7,21 @@ const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 
-// 判定登入者權限
+// 判斷是否已登入
 const authenticated = (req, res, next) => {
   if (helper.ensureAuthenticated(req)) return next()
   req.flash('error_messages', '請先進行登入！')
   return res.redirect('/signin')
 }
-// 判斷是否為管理者
+// 判斷是否以登入且為管理者
 const adminAuthenticated = (req, res, next) => {
   if (helper.ensureAuthenticated(req)) {
     if (helper.getUser(req).role === 'admin') return next()
     req.flash('error_messages', '禁止訪問！請向管理者申請管理者權限！')
     return res.redirect('/admin/signin')
   }
+  req.flash('error_messages', '請先進行登入！')
+  return res.redirect('/signin')
 }
 
 // 主畫面
@@ -55,20 +57,19 @@ router.post('/setting', authenticated, userController.accountSetting)
 // 後台登入頁面
 router.get('/admin', (req, res) => res.redirect('/admin/signin'))
 router.get('/admin/signin', adminController.adminSigninPage)
+// 後台推文清單
+router.get('/admin/tweets', adminAuthenticated, adminController.adminTweetsPage)
+// 後台使用者列表
+router.get('/admin/users', adminAuthenticated, adminController.adminUsersPage)
 // 後台登入
 router.post(
   '/admin/signin',
   adminController.adminCheckRequired,
   passport.authenticate('local', { failureRedirect: '/admin/signin' }),
   adminAuthenticated,
-  adminController.adminSigninSuccess
-)
-// 後台登出
-router.post('/admin/signout', adminController.adminSignOut)
-// 後台推文清單
-router.get('/admin/tweets', adminController.adminTweetsPage)
-// 後台使用者列表
-router.get('/admin/users', adminController.adminUsersPage)
+  adminController.adminSigninSuccess)
+// 後臺刪除tweets
+router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.adminDeleteTweets)
 
 // USER
 // 取得個人頁面
