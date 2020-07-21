@@ -1,4 +1,5 @@
 const moment = require('moment')
+moment.locale('zh-tw')
 
 module.exports = {
   // a,b檢查是否相等
