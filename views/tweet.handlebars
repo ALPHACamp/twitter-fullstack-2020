@@ -1,0 +1,180 @@
+<div class="container-fluid">
+  <!-- 左邊導覽選單區塊 -->
+  <div class="left-content">
+    <div class="left-column">
+      <img class="logo" src="/images/icon.svg" alt="">
+      <div class="nav">
+        <div class="nav-item">
+          <a href="#">
+            <img class="home-icon" src="/images/icon-home.svg" alt="">首頁
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#">
+            <img class="pr-1" src="/images/icon-user.svg" alt="">
+            個人資料
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="#">
+            <img src="/images/icon-setting.svg" alt="">
+            設定
+          </a>
+        </div>
+      </div>
+      <button class="tweet-button">推文</button>
+    </div>
+    <div class="logout">
+      <a href="#">
+        <img class="logout-icon" src="/images/icon-logout.svg" alt="">登出
+      </a>
+    </div>
+  </div>
+
+  <!-- 中間主要區塊 -->
+  <div class="main-content">
+    <div class="main-title">
+      <a href="/" class="ml-1 mr-5"><img src="/images/icon-back.png" alt=""></a>
+      推文
+    </div>
+
+    <div class="tweet-content">
+
+      <div class="tweet-content-top">
+        <img src="" alt="" class="avtar">
+        <div class="column ml-1">
+          <a href="/users/:id" class="mt-1 mb-1 user-name">Apple</a>
+          <div class="user-account">
+            @apple
+          </div>
+        </div>
+      </div>
+      <div class="tweet-content-main">
+        <p>quis vel eros donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue lacus viverra
+          vitaecongue euconsequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas egestassque</p>
+      </div>
+      <div class="tweet-content-footer">
+        <div class="tweet-time">上午 10:05 . 2020年6月10日
+        </div>
+        <div class="tweet-data">
+          35 回覆 808 喜歡次數
+        </div>
+        <div class="tweet-like-reply-link">
+          <a href="/reply" class="reply-link ml-1">
+            <img class="icon-m" src="/images/icon-reply.svg" alt="">
+          </a>
+          <form method="POST">
+            <button type="submit" class="button like-link">
+              {{!-- <img class="icon-m" src="/images/icon-like-solid.svg" alt=""> --}}
+              <img class="icon-m" src="/images/icon-like.svg" alt="">
+            </button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reply-list">
+      <!-- 推文作者回覆 -->
+      <div class="reply-author-command">
+        <div class="left">
+          <img src="" alt="" class="avtar">
+          <div class="extention-line"></div>
+        </div>
+        <div class="right">
+          <div>
+            <a href="" class="user-name">Pineapple</a><span class="user-account">@pineapple．3小時</span>
+          </div>
+          <div>
+            <span class="replyto-span-m">回覆</span> <span class="user-account-color-span">@apple</span>
+          </div>
+          <div>
+            <p class="pt-1">ue euconsequat ac felis donec et odio pellentes
+              vitaecongue euconsequat ac felis donec et odio pellpellentes
+              vitaecongue euconsequat ac felis donec et ec et odio pellngue euconsequa
+            </p>
+            <div class="reply-like-post">
+              <a href="/reply" class="reply-link reply-to-comment ml-2 mr-4">
+                <img class="icon-s" src="/images/icon-reply.svg" alt="">
+                <span>34</span>
+              </a>
+              <form method="POST">
+                <button type="submit" class="button like-link">
+                  {{!-- <img class="icon-s" src="/images/icon-like-solid.svg" alt=""> --}}
+                  <img class="icon-s" src="/images/icon-like.svg" alt="">
+                  <span>12</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="author-reply" style="display: flex;">
+        <div class="left">
+          <img src="" alt="" class="avtar">
+        </div>
+        <div class="right">
+          <div>
+            <a href="" class="user-name">Apple</a><span class="user-account">@apple．3小時</span>
+          </div>
+          <div>
+            <p class="pt-1">ue euconsequat ac felis donec et odio pellentes
+              vitaecongus donec et ec et odio pellngue euconsequa
+            </p>
+            <div class="reply-like-post">
+              <a href="/reply" class="reply-link reply-to-comment ml-2 mr-4">
+                <img class="icon-s" src="/images/icon-reply.svg" alt="">
+                <span>34</span>
+              </a>
+              <form method="POST">
+                <button type="submit" class="button like-link">
+                  {{!-- <img class="icon-s" src="/images/icon-like-solid.svg" alt=""> --}}
+                  <img class="icon-s" src="/images/icon-like.svg" alt="">
+                  <span>12</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 留言回覆迴圈 -->
+      <div class="reply-item">
+        <div class="left">
+          <img class="avtar" src="" alt="">
+        </div>
+        <div class="right">
+          <div><a href="/users:id" class="user-name mt-1">Mango</a>
+            <sapn class="user-account">@mango．13小時</sapn>
+          </div>
+          <div>
+
+            <span class="replyto-span-m">回覆</span> <span class="user-account-color-span">@apple</span>
+          </div>
+
+          <p>quis vel eros donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue lacus viverra
+            vitaecongue euconsequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas egestassque
+          </p>
+
+          <div class="reply-like-post">
+            <a href="/reply" class="reply-link reply-to-comment ml-2 mr-4">
+              <img class="icon-s" src="/images/icon-reply.svg" alt="">
+              <span>34</span>
+            </a>
+            <form method="POST">
+              <button type="submit" class="button like-link">
+                {{!-- <img class="icon-s" src="/images/icon-like-solid.svg" alt=""> --}}
+                <img class="icon-s" src="/images/icon-like.svg" alt="">
+                <span>12</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- 迴圈結束 -->
+    </div>
+  </div>
+
+  {{> right-content}}
+</div>
