@@ -7,10 +7,10 @@ module.exports = {
     await queryInterface.bulkInsert('Users', [{
       id: 1,
       email: 'root@example.com',
-      password: bcrypt.hashSync('12345678',bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('123456710',bcrypt.genSaltSync(10), null),
       name: 'Admin',
-      introduction:'',
-      avatar:'https://i.imgur.com/73A1th4.png',
+      introduction:faker.lorem.sentences(5),
+      avatar: faker.image.animals(),
       role:'Admin',
       account: faker.name.firstName(),
       createdAt: new Date(),
@@ -19,10 +19,10 @@ module.exports = {
     {
       id: 2,
       email: 'user1@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
-      introduction: '',
-      avatar: 'https://i.imgur.com/73A1th4.png',
+      introduction: faker.lorem.sentences(5),
+      avatar: faker.image.animals(),
       role: 'user',
       account: faker.name.firstName(),
       createdAt: new Date(),
@@ -31,10 +31,10 @@ module.exports = {
     {
       id: 3,
       email: 'user2@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
-      introduction: '',
-      avatar: 'https://i.imgur.com/73A1th4.png',
+      introduction: faker.lorem.sentences(5),
+      avatar: faker.image.animals(),
       role: 'user',
       account: faker.name.firstName(),
       createdAt: new Date(),
@@ -43,10 +43,10 @@ module.exports = {
     {
       id: 4,
       email: 'user3@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
-      introduction: '',
-      avatar: 'https://i.imgur.com/73A1th4.png',
+      introduction: faker.lorem.sentences(5),
+      avatar: faker.image.animals(),
       role: 'user',
       account: faker.name.firstName(),
       createdAt: new Date(),
@@ -55,10 +55,10 @@ module.exports = {
     {
       id: 5,
       email: 'user4@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
-      introduction: '',
-      avatar: 'https://i.imgur.com/73A1th4.png',
+      introduction: faker.lorem.sentences(5),
+      avatar: faker.image.animals(),
       role: 'user',
       account: faker.name.firstName(),
       createdAt: new Date(),
@@ -67,10 +67,10 @@ module.exports = {
     {
       id: 6,
       email: 'user5@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
-      introduction: '',
-      avatar: 'https://i.imgur.com/73A1th4.png',
+      introduction: faker.lorem.sentences(5),
+      avatar: faker.image.animals(),
       role: 'user',
       account: faker.name.firstName(),
       createdAt: new Date(),
@@ -85,7 +85,7 @@ module.exports = {
       return {
         id: index + 1,
         UserId: user,
-        description: faker.lorem.sentences(2),
+        description: faker.lorem.sentences(5),
         createdAt: new Date(),
         updatedAt: new Date()
       }
@@ -110,21 +110,21 @@ module.exports = {
       replies.push({
         UserId: user[0],
         TweetId: index + 1,
-        comment: faker.lorem.sentence(Math.floor(Math.random() * 8)),
+        comment: faker.lorem.sentence(Math.floor(Math.random() * 10)),
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         UserId: user[1],
         TweetId: index + 1,
-        comment: faker.lorem.sentence(Math.floor(Math.random() * 8)),
+        comment: faker.lorem.sentence(Math.floor(Math.random() * 10)),
         createdAt: new Date(),
          updatedAt: new Date()
       },
       {
         UserId: user[2],
         TweetId: index + 1,
-        comment: faker.lorem.sentence(Math.floor(Math.random() * 8)),
+        comment: faker.lorem.sentence(Math.floor(Math.random() * 10)),
         createdAt: new Date(),
         updatedAt: new Date()
         })
