@@ -49,18 +49,18 @@
       </form>
     </div>
     <div class="main-tweet-list">
-      <!-- 推文清單列表迴圈 -->
       {{#each tweets}}
-      <div class="tweet-item" onclick="location.href='/'">
+      <div class="tweet-item" onclick="location.href='/tweets/{{this.id}}'">
         <div class="tweet-item-left">
-          <img src="{{this.User.avatar}}" alt="" class="avtar">
+          <a href="/users/{{this.User.id}}"><img src="{{this.User.avatar}}" alt="" class="avtar"></a>
         </div>
         <div class="tweet-item-right">
           <div class="tweet-item-title">
-            <span class="mt-1 user-name">{{this.User.name}}</span>
+            <span class="mt-1 user-name"><a href="/users/{{this.User.id}}">{{this.User.name}}</a></span>
             <span class="user-account">
               {{this.User.account}}．{{moment this.createdAt}}
             </span>
+
           </div>
           <div class="tweet-item-text">
             <p>{{this.description}}
@@ -81,7 +81,6 @@
         </div>
       </div>
       {{/each}}
-      <!-- 迴圈結束 -->
     </div>
   </div>
 
