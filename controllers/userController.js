@@ -1,5 +1,8 @@
 const db = require('../models');
 const User = db.User;
+const Tweet = db.Tweet
+const Like = db.Like
+const Reply = db.Reply
 const bcrypt = require('bcryptjs');
 const { use } = require('chai');
 
@@ -87,6 +90,33 @@ let userController = {
         });
       }
     });
+  },
+  getUserTweet: async (req, res) => {
+    const id = req.params.id
+    //user table
+    const user = await User.findOne({
+      where: { id },
+      include: [
+        Tweet,
+        { model: Tweet, as: 'userLike' },
+        { model: Tweet, include:[User], as: 'UserReply' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+    console.log(user.toJSON().Followers)
+    const tweetsCount = user.toJSON().Tweets.length
+    const followersCount = user.toJSON().Followers.length
+    const followingsCount = user.toJSON().Followings.length
+    const count = {
+      tweetsCount,
+      followersCount, 
+      followingsCount
+    } 
+    // all user's tweets
+    // all user's likes
+    // all user's replies
+    res.render('userPage', { user: user.toJSON(), count })
   }
 };
 

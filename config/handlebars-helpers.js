@@ -1,6 +1,5 @@
 const moment = require('moment')
 moment.locale('zh-tw', {
-  
   longDateFormat: {
     L: 'M月D日'
   }
