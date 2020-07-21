@@ -7,6 +7,7 @@
   <title>Simple Twitter</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
 <body >
@@ -24,7 +25,7 @@
   </div>
   <div class="container col-10 d-flex flex-column flex-lg-row justify-content-around" style="min-width: 760px;">
 
-    {{#if user}}
+    {{#if myUser}}
     <div class="left-sec col-lg-3 d-flex flex-lg-column flex-md-row align-items-lg-center justify-content-lg-start justify-content-md-around">
       <div class="logo mt-3 d-flex flex-column flex-lg-row justify-content-center justify-content-lg-start 
       align-items-center" style="min-width: 260px;">
@@ -48,7 +49,7 @@
             <path fill-rule="evenodd" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
           </svg>
           {{!-- 等資料確定放入user id --}}
-          <a href="/users/{{user.id}}/profile" class="nav-link h4 text-dark">個人資料</a>
+          <a href="/users/{{myUser.id}}/profile" class="nav-link h4 text-dark">個人資料</a>
         </li>
         <li class="nav-item d-flex mt-4">
           <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-gear mt-2" fill="currentColor"
@@ -58,7 +59,7 @@
             <path fill-rule="evenodd"
               d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
           </svg>
-          <a href="/users/{{user.id}}/edit" class="nav-link h4 text-dark">設定</a>
+          <a href="/users/{{myUser.id}}/edit" class="nav-link h4 text-dark">設定</a>
         </li>
         <button type="button" class="btn btn-danger rounded-pill w-100 mt-3">推文</button>
       </ul>
@@ -69,13 +70,13 @@
       {{{body}}}
     </div>
 
-    {{#if topUser}}
+    {{#if topUsers}}
     <div class="right-sec mt-4 col-lg-3" style="min-width: 300px;">
       <ul class="list-group list-group-flush bg-light rounded-lg shadow">
 
         {{!-- 使用hbs each 產生使用者 --}}
         <li class="list-group-item font-weight-bold h5 bg-light">跟隨誰</li>
-        {{#each topUser}}
+        {{#each topUsers}}
         <li class="list-group-item d-flex justify-content-between bg-light">
           <div class="user-wrap d-flex">
             <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">

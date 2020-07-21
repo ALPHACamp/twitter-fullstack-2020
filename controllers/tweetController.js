@@ -6,6 +6,7 @@ const Like = db.Like
 
 const tweetController = {
     getTweets: (req, res) => {
+      console.log(req.topUsers)
       return res.render('tweetsHome')
     },
     getTweet: async (req, res) => {
@@ -22,12 +23,9 @@ const tweetController = {
       })
       
       const totalComment = tweet.toJSON().whoReply.length
-
       const totalCount = {
         totalLike, totalComment
       }
-      console.log(tweet.toJSON())
-      console.log(tweet.toJSON().whoReply)
       res.render('tweet',{ tweet: tweet.toJSON(), totalCount })
     }
   }

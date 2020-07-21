@@ -29,6 +29,8 @@ router.get('/', (req, res) => res.redirect('/tweets'));
 router.get('/tweets', authenticated, tweetController.getTweets);
 router.get('/tweets/:id', authenticated, tweetController.getTweet);
 
+router.get('/signup', userController.signUpPage);
+router.post('/signup', userController.signup);
 router.get('/login', userController.loginPage);
 router.post(
   '/login',
@@ -57,8 +59,8 @@ router.delete(
   adminController.deleteTweet
 );
 
-router.get('/signup', userController.signUpPage);
-router.post('/signup', userController.signup);
+router.get('/users/:id', userController.getUserTweet)
+
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);

@@ -14,8 +14,7 @@
 
     <li class="list-group-item">
       <div class="user-wrap d-flex">
-        <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle mr-4"
-          style="width: 60px; height: 60px;">
+        <img src="{{tweet.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
         <div class="user d-flex flex-column justify-content-center">
           <div class="user-name font-weight-bold">
             {{tweet.User.name}}
@@ -66,8 +65,8 @@
     <li class="list-group-item list-group-item-action">
 
       <div class="user-wrap d-flex">
-        <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle mr-4"
-          style="width: 60px; height: 60px;">
+
+        <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
 
         <div class="d-flex flex-column">
           <div class="d-flex flex-column">
