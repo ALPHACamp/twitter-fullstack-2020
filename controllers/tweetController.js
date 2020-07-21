@@ -76,13 +76,20 @@ const tweetController = {
       .catch((err) => res.send(err))
   },
   replyTweet: (req, res) => {
-    console.log()
     return Reply.create({
       UserId: req.user.id,
       TweetId: Number(req.params.tweetId),
       comment: req.body.reply
     })
       .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
+  },
+  deleteReply: (req, res) => {
+    return Reply.findByPk(req.params.replyId)
+      .then((reply) => {
+        reply.destroy()
+          .then(() => res.redirect('back'))
+      })
       .catch(err => res.send(err))
   }
 }
