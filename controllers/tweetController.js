@@ -7,12 +7,12 @@ const tweetController = {
   getHomePage: (req, res) => {
     // 推薦追蹤名單 (follower人數top6)
     User.findAll({
-      include: [{ model: User, as: 'Followers' }]
+      include: [{ model: User, as: 'Followers' }],
     }).then((users) => {
       users = users.map((user) => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: user.Followers.map((er) => er.id).includes(req.user.id)
+        isFollowed: user.Followers.map((er) => er.id).includes(req.user.id),
       }))
       // 去除掉自己
       users = users.filter((user) => user.id !== req.user.id)
@@ -27,13 +27,13 @@ const tweetController = {
         raw: true,
         nest: true,
         include: [User],
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
       })
         .then((tweets) => {
           res.render('home', {
             tweets: tweets,
             recommendFollowings: users,
-            currentUserId: req.user.id
+            currentUserId: Number(req.user.id),
           })
         })
         .catch((err) => res.send(err))
@@ -42,7 +42,7 @@ const tweetController = {
   postTweet: (req, res) => {
     return Tweet.create({
       UserId: req.user.id,
-      description: req.body.tweet
+      description: req.body.tweet,
     })
       .then(() => res.redirect('/tweets'))
       .catch((err) => res.send(err))
@@ -50,8 +50,7 @@ const tweetController = {
   deleteTweet: (req, res) => {
     return Tweet.findByPk(req.params.tweetId)
       .then((tweet) => {
-        tweet.destroy()
-          .then(() => res.redirect('back'))
+        tweet.destroy().then(() => res.redirect('back'))
       })
       .catch((err) => res.send(err))
   },
@@ -60,7 +59,7 @@ const tweetController = {
     Tweet.findByPk(tweetId, {
       raw: true,
       nest: true,
-      include: [User, Reply]
+      include: [User, Reply],
     })
       .then((tweet) => {
         Reply.findAll({
@@ -68,7 +67,7 @@ const tweetController = {
           raw: true,
           nest: true,
           include: [User],
-          order: [['createdAt', 'ASC']]
+          order: [['createdAt', 'ASC']],
         }).then((replies) => {
           res.render('reply', { tweet, replies, currentUserId: req.user.id })
         })

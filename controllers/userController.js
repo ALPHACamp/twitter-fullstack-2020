@@ -73,7 +73,6 @@ const userController = {
       .catch((err) => res.send(err))
   },
   editUser: (req, res) => {
-    console.log(req._passport.session.user)
     if (Number(req.params.id) === Number(req._passport.session.user)) {
       return User.findByPk(req.params.id).then((user) => {
         user = user.toJSON()
@@ -102,6 +101,35 @@ const userController = {
           req.flash('success_message', 'user was successfully to update')
           res.json(user)
         })
+    })
+  },
+  getUserFollowerList: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+    }).then((user) => {
+      const Followers = user.Followers.map((follower) => ({
+        ...follower.dataValues,
+        isFollowed: req.user.Followings.map((er) => er.id).includes(
+          follower.id
+        )
+      }))
+      const results = {
+        user: user,
+        tweetCount: user.Tweets.length,
+        Followers: Followers
+      }
+      res.json(results)
+    })
+  },
+  getUserFollowingList: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+    }).then((user) => {
+      const results = {
+        user: user,
+        tweetCount: user.Tweets.length
+      }
+      res.json(results)
     })
   },
   addFollowing: (req, res) => {
