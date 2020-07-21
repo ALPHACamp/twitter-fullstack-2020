@@ -14,18 +14,20 @@ const tweetController = {
         where: { id },
         include: [
           User, 
-          {model: Reply, include: [User]}
+          { model: User, as: 'whoReply'}
         ]
       })
-
       const totalLike = await Like.count({
         where: { UserId: id }
       })
-      const totalComment = tweet.toJSON().Replies.length
+      
+      const totalComment = tweet.toJSON().whoReply.length
 
       const totalCount = {
         totalLike, totalComment
       }
+      console.log(tweet.toJSON())
+      console.log(tweet.toJSON().whoReply)
       res.render('tweet',{ tweet: tweet.toJSON(), totalCount })
     }
   }
