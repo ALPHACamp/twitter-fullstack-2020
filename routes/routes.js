@@ -81,5 +81,7 @@ router.get('/users/:id/edit', userController.editUser)
 router.put('/users/:id/edit', userController.putUser)
 // 查看跟隨者名單
 router.get('/users/:id/followers', userController.getUserFollowerList)
+// 查看追隨者名單
+router.get('/users/:id/followings', userController.getUserFollowingList)
 
 module.exports = router
