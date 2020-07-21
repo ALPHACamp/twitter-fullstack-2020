@@ -74,6 +74,11 @@ router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.admi
 // USER
 // 取得個人頁面
 router.get('/users/:id', userController.getUser)
+// 取得個人like內容頁面
 router.get('/users/:id/like', userController.getUserLikeContent)
+// 編輯個人資料業面
+router.get('/users/:id/edit', userController.editUser)
+// 編輯個人資料
+router.put('/users/:id/edit', userController.putUser)
 
 module.exports = router
