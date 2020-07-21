@@ -5,6 +5,7 @@ const tweetController = require('../controllers/tweetController');
 const adminController = require('../controllers/adminController.js');
 const helpers = require('../_helpers');
 const passport = require('passport');
+
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     return next();
@@ -58,5 +59,8 @@ router.delete(
 
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signup);
+
+router.post('/likes/:tweetId', authenticated, userController.addLike);
+router.delete('/likes/:tweetId', authenticated, userController.removeLike);
 
 module.exports = router;
