@@ -26,6 +26,9 @@ const tweetController = {
     }).then(tweet => {
       return res.redirect('/')
     })
+  },
+  getTweet: (req, res) => {
+    res.render('tweet')
   }
 }
 

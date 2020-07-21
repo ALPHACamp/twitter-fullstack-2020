@@ -698,3 +698,61 @@ width: 600px;
   color: #657786;
   margin-right: 5px;
 }
+/*單一頁面中間列*/
+.tweet-content {
+  padding: 15px 15px 0 15px;
+  border-bottom: 1px solid #E6ECF0;
+}
+.tweet-content-top {
+ margin-bottom: 10px;
+}
+.tweet-content-top .column a {
+  display: block;
+}
+.tweet-content-top .column a:last-child {
+   color: #657786;
+}
+.tweet-content-top .avtar {
+  margin-right: 10px;
+}
+.tweet-content-top .user-account {
+ margin: 0;
+}
+.tweet-content-footer .tweet-time{
+  margin-bottom: 10px;
+  color: #657786;
+  font-size: 15px;
+}
+.tweet-content-footer .tweet-data{
+  color: #657786;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 10px 3px;
+  border-top: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+}
+.tweet-content-footer .tweet-data .number{
+  color: black;
+}
+.tweet-like-reply-link {
+  padding: 10px 0px;
+}
+.tweet-like-reply-link .reply-link{
+  margin-right: 100px;
+}
+.reply-author-command , .author-relply, .reply-item{
+  padding: 10px;
+}
+.reply-like-post a,.reply-like-post span{
+  color: #657786;
+}
+.reply-like-post img {
+  margin-right: 10px;
+}
+.reply-item {
+  border-bottom: 1px solid #E6ECF0;
+}
+.reply-item:last-child {
+  border-bottom: 0px solid #E6ECF0;
+}
+
