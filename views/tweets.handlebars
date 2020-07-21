@@ -43,8 +43,9 @@
     <div class="main-text">
       <img src="{{user.avatar}}" alt="" class="avtar">
       <form method="POST" action="/tweets">
-        <textarea name="description" id="description" cols="30" rows="10" placeholder="有什麼新鮮事？"></textarea>
-        <button class="tweet-post-button" type="submit" disabled style="background: rgba(255,102,0,.6);">推文</button>
+        <textarea name="description" id="description" cols="30" rows="10" placeholder="有什麼新鮮事？"
+          maxlength="140"></textarea>
+        <button class="tweet-post-button" type="submit">推文</button>
       </form>
     </div>
     <div class="main-tweet-list">
@@ -66,12 +67,11 @@
             </p>
           </div>
           <div class="tweet-item-footer">
-            <button class="button reply-link" data-target="#tweetModal">
-              <img class="icon-s" src="/images/icon-reply.svg" alt="">
-              {{this.Replies.length}}
+            <button type="button" class="button reply-link pt-1" data-toggle="modal" data-target="#replyModal">
+              <img class="icon-s" src="/images/icon-reply.svg" alt=""> {{this.Replies.length}}
             </button>
-            <form method="POST">
-              <button href="/like" class="like-link button">
+            <form action="/tweets/{{this.id}}/like" method="POST">
+              <button type="submit" class="like-link button">
                 <img class="icon-s" src="/images/icon-like-solid.svg" alt="">
                 {{!-- <img class="icon-s" src="/images/icon-like.svg" alt=""> --}}
                 {{this.likedUsers.length}}

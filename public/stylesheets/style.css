@@ -45,6 +45,8 @@ a p:hover {
 }
 .icon-s {
   width: 13px;
+  height: 13px;
+  margin-top: -1px;
 }
 .icon-m {
   width: 25px;
@@ -296,7 +298,6 @@ width: 600px;
   overflow-x: hidden
 }
 .tweet-item {
-  height: 145px;
   border-bottom: 1px solid #E6ECF0;
   display: flex;
 }
@@ -321,20 +322,21 @@ width: 600px;
   margin: 1px 0px 0px 6px;
 }
 .tweet-item-text {
-  padding-top: 6px;
-  max-height: 66px;
+  max-height: 100px;
+  margin-top: 5px;
+  padding: 6px 15px 0px 0px;
   font-size: 15px;
   line-height: 18px;
-  padding-right: 15px;
 }
 .tweet-item-footer {
-  height: 45px;
+  height: 25px;
+  margin: 5px 0px 15px 0px;
   display: flex;
+  align-items: center;
 }
 .tweet-item-footer .reply-link,
 .tweet-item-footer .like-link {
-  padding-top: 10px;
-  width: 80px;
+  width: 70px;
   font-weight: 500;
   font-size: 13px;
   color: #657786;
