@@ -43,6 +43,7 @@ app.use(
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static('public'))
 //flash
 app.use(flash());
 app.use((req, res, next) => {

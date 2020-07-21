@@ -7,7 +7,7 @@ module.exports = {
     await queryInterface.bulkInsert('Users', [{
       id: 1,
       email: 'root@example.com',
-      password: bcrypt.hashSync('123456710',bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('12345678',bcrypt.genSaltSync(10), null),
       name: 'Admin',
       introduction:faker.lorem.sentences(5),
       avatar: faker.image.people(),
@@ -20,7 +20,7 @@ module.exports = {
     {
       id: 2,
       email: 'user1@example.com',
-      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
@@ -33,7 +33,7 @@ module.exports = {
     {
       id: 3,
       email: 'user2@example.com',
-      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
@@ -46,7 +46,7 @@ module.exports = {
     {
       id: 4,
       email: 'user3@example.com',
-      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
@@ -59,7 +59,7 @@ module.exports = {
     {
       id: 5,
       email: 'user4@example.com',
-      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
@@ -72,7 +72,7 @@ module.exports = {
     {
       id: 6,
       email: 'user5@example.com',
-      password: bcrypt.hashSync('123456710', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: faker.name.lastName(),
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),

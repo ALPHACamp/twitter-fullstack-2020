@@ -120,6 +120,7 @@ let userController = {
     }
   getUserTweet: async (req, res) => {
     const id = req.params.id
+    console.log(req.topUsers)
     //user table
     const user = await User.findOne({
       where: { id },
