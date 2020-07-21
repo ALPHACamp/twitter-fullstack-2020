@@ -22,12 +22,9 @@ const tweetController = {
       })
       
       const totalComment = tweet.toJSON().whoReply.length
-
       const totalCount = {
         totalLike, totalComment
       }
-      console.log(tweet.toJSON())
-      console.log(tweet.toJSON().whoReply)
       res.render('tweet',{ tweet: tweet.toJSON(), totalCount })
     }
   }
