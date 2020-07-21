@@ -27,25 +27,28 @@ let adminController = {
     })
   },
 
-  getUsers: (req, res) => {
-    User.findAll({
+  getUsers: async (req, res) => {
+
+    let users = await User.findAll({
       include: [
-        { model: Tweet, as: 'whoLikeTweet' },
-        { model: Tweet, as: 'UserReply' }, 
+        Tweet,
+        { model: Tweet, as: 'userLike' },
+        { model: Tweet, as: 'UserReply' },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' } 
+        { model: User, as: 'Followings' },
       ]
-    })
-      .then(users => {
-        const data = users.map(r => ({
-          ...r.dataValues,
-          LikeCount: r.whoLikeTweet.length,
-          ReplyCount:r.UserReply.length,
-          FollowerCount: r.Followers.length,
-          FollowingCount: r.Followings.length,
-        }))
-        return res.render('admin/tweetsUser', { users: data })
-      })
+    })  
+      data = users.map(r => ({
+        ...r.dataValues,
+        LikeCount: r.userLike.length,
+        ReplyCount: r.UserReply.length,
+        FollowerCount: r.Followers.length,
+        FollowingCount: r.Followings.length,
+        TweetCount: r.Tweets.length
+      }))      
+      data = data.sort((a, b) => (b.TweetCount - a.TweetCount))
+      res.render('admin/tweetsUser', { users: data })
+    
   },
 
   deleteTweet: (req, res) => {
@@ -57,5 +60,7 @@ let adminController = {
     });
   }
 };
+
+
 
 module.exports = adminController;

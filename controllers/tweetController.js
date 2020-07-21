@@ -6,6 +6,7 @@ const Like = db.Like
 
 const tweetController = {
     getTweets: (req, res) => {
+      console.log(req.topUsers)
       return res.render('tweetsHome')
     },
     getTweet: async (req, res) => {

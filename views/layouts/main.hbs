@@ -70,13 +70,13 @@
       {{{body}}}
     </div>
 
-    {{#if topUser}}
+    {{#if topUsers}}
     <div class="right-sec mt-4 col-lg-3" style="min-width: 300px;">
       <ul class="list-group list-group-flush bg-light rounded-lg shadow">
 
         {{!-- 使用hbs each 產生使用者 --}}
         <li class="list-group-item font-weight-bold h5 bg-light">跟隨誰</li>
-        {{#each topUser}}
+        {{#each topUsers}}
         <li class="list-group-item d-flex justify-content-between bg-light">
           <div class="user-wrap d-flex">
             <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">

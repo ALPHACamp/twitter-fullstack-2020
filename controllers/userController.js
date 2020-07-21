@@ -4,7 +4,6 @@ const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
 const bcrypt = require('bcryptjs');
-const { use } = require('chai');
 
 let userController = {
   loginPage: (req, res) => {
@@ -17,11 +16,12 @@ let userController = {
         { model: User, as: 'Followings' }
       ]
     }).then((users) => {
-      console.log(users);
+      //console.log(users);
+      //console.log(req.user.id);
       users = users.map((user) => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: req.user.Followings//.map((d) => d.id).includes(user.id)
+        isFollowed: user.Followings.map((d) => d.id).includes(req.user.id)
       }));
       users = users
         .sort((a, b) => b.FollowerCount - a.FollowerCount)
@@ -30,6 +30,8 @@ let userController = {
       req.flash('success_messages', 'Login successfully');
       return res.redirect('/tweets');
     });
+    // req.flash('success_messages', 'Login successfully');
+    // return res.redirect('/tweets');
   },
   signUpPage: (req, res) => {
     return res.render('signup');
@@ -93,6 +95,7 @@ let userController = {
   },
   getUserTweet: async (req, res) => {
     const id = req.params.id
+    console.log(req.topUsers)
     //user table
     const user = await User.findOne({
       where: { id },
@@ -117,6 +120,32 @@ let userController = {
     // all user's likes
     // all user's replies
     res.render('userPage', { user: user.toJSON(), count })
+  },
+  addLike: async (req, res) => {
+    try {
+      const newLike = await Like.create({
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      });
+      res.redirect('back');
+    } catch (err) {
+      console.log(err);
+      res.send('something is wrong');
+    }
+  },
+  removeLike: async (req, res) => {
+    try {
+      const toRemove = await Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId: req.params.tweetId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
   }
 };
 
