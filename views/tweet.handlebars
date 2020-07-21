@@ -40,19 +40,19 @@
 
     <div class="tweet-content w-100">
       <div class="tweet-content-top d-flex justify-content-start align-items-center">
-        <a href="/users/:id" class="mt-1 mb-1 user-name">
+        <a href="/users/{{tweet.User.id}}" class="mt-1 mb-1 user-name">
           <img src="" alt="" class="avtar">
         </a>
         <div class="column ml-1">
-          <a href="/users/:id" class="mt-1 mb-1 user-name">{{tweet.User.name}}</a>
-          <a class="user-account">{{tweet.User.account}}</a>
+          <a href="/users/{{tweet.User.id}}" class="mt-1 mb-1 user-name">{{tweet.User.name}}</a>
+          <a href="/users/{{tweet.User.id}}" class="user-account">{{tweet.User.account}}</a>
         </div>
       </div>
       <div class="tweet-content-main">
         <p>{{tweet.description}}</p>
       </div>
       <div class="tweet-content-footer">
-        <div class="tweet-time">{{tweet.createdAt}}
+        <div class="tweet-time">{{changeTime tweet.createdAt}}
         </div>
         <div class="tweet-data">
           <span class="number">{{tweet.Replies.length}}</span> 回覆 <span
@@ -79,18 +79,18 @@
       {{#each tweet.Replies}}
       <div class="reply-item d-flex justify-content-start align-items-start">
         <div class="left mr-2">
-          <a href="/users/:id" class="mt-1 mb-1 user-name">
+          <a href="/users/{{this.User.id}}" class="mt-1 mb-1 user-name">
             <img src="{{this.User.avatar}}" alt="" class="avtar">
           </a>
         </div>
         <div class="right">
-          <div><a href="/users:id" class="user-name mt-1">{{this.User.name}}
+          <div><a href="/users/{{this.User.id}}" class="user-name mt-1">{{this.User.name}}
               <sapn class="user-account">{{this.User.account}}．{{moment this.createdAt}}</sapn></a>
           </div>
           <div>
 
-            <span class="replyto-span-m">回覆</span> <span
-              class="user-account-color-span">{{../tweet.User.account}}</span>
+            <span class="replyto-span-m">回覆</span> <span class="user-account-color-span"><a
+                href="/users/{{../tweet.User.id}}" style="color: #ff6600;">{{../tweet.User.account}}</a></span>
           </div>
           <p>{{this.comment}}
           </p>
