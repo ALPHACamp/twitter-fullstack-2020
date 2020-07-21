@@ -1,8 +1,9 @@
 const db = require('../models');
 const User = db.User;
 const Tweet = db.Tweet
-const Like = db.Like
 const Reply = db.Reply
+const Like = db.Like;
+const Followship = db.Followship;
 const bcrypt = require('bcryptjs');
 
 let userController = {
@@ -118,6 +119,7 @@ let userController = {
     } catch (err) {
       res.send('something is wrong');
     }
+  },
   getUserTweet: async (req, res) => {
     const id = req.params.id
     console.log(req.topUsers)
@@ -145,8 +147,77 @@ let userController = {
     // all user's likes
     // all user's replies
     res.render('userPage', { user: user.toJSON(), count })
+  },
+  addLike: async (req, res) => {
+    try {
+      const newLike = await Like.create({
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      });
+      res.redirect('back');
+    } catch (err) {
+      console.log(err);
+      res.send('something is wrong');
+    }
+  },
+  removeLike: async (req, res) => {
+    try {
+      const toRemove = await Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId: req.params.tweetId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
+  },
+  editUser: async (req, res) => {
+    try {
+      //check if it's the current user who intends to edit. If not, back to last page
+      if (req.user.id !== Number(req.params.userId)) {
+        return res.redirect('back');
+      }
+      const toEdit = await User.findByPk(req.params.userId);
+      res.render('user_edit', { user: toEdit.toJSON() });
+    } catch (err) {
+      console.log(err);
+      res.send(err);
+    }
+  },
+  addFollowing: async (req, res) => {
+    try {
+      //check if the user if trying to follow himself
+      if (req.user.id == Number(req.params.userId)) {
+        req.flash('error_messages', 'you cannot follow yourself');
+        return res.redirect('back');
+      }
+      const newFollowship = await Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.userId
+      });
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
+  },
+  removeFollowing: async (req, res) => {
+    try {
+      const toRemove = await Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.userId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
   }
-}
+
 };
 
 module.exports = userController;
