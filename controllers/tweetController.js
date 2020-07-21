@@ -76,7 +76,14 @@ const tweetController = {
       .catch((err) => res.send(err))
   },
   replyTweet: (req, res) => {
-    res.send(req.body)
+    console.log()
+    return Reply.create({
+      UserId: req.user.id,
+      TweetId: Number(req.params.tweetId),
+      comment: req.body.reply
+    })
+      .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
   }
 }
 
