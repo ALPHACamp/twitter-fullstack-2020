@@ -208,9 +208,9 @@ a p:hover {
   margin-right: 21px;
 }
 .nav-item a:hover {
-  position: relative;
-  left: -350px;
-  filter: drop-shadow(#FF6600 350px 0);
+  width: 600px;
+  filter: drop-shadow(#FF6600 330px 0);
+  transform: translateX(-330px);
   text-decoration: none;
 }
 .tweet-button{
