@@ -1,7 +1,6 @@
 const db = require('../models');
 const User = db.User;
 const bcrypt = require('bcryptjs');
-const { use } = require('chai');
 
 let userController = {
   loginPage: (req, res) => {
@@ -14,11 +13,12 @@ let userController = {
         { model: User, as: 'Followings' }
       ]
     }).then((users) => {
-      console.log(users);
+      //console.log(users);
+      //console.log(req.user.id);
       users = users.map((user) => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: req.user.Followings//.map((d) => d.id).includes(user.id)
+        isFollowed: user.Followings.map((d) => d.id).includes(req.user.id)
       }));
       users = users
         .sort((a, b) => b.FollowerCount - a.FollowerCount)
@@ -27,6 +27,8 @@ let userController = {
       req.flash('success_messages', 'Login successfully');
       return res.redirect('/tweets');
     });
+    // req.flash('success_messages', 'Login successfully');
+    // return res.redirect('/tweets');
   },
   signUpPage: (req, res) => {
     return res.render('signup');
