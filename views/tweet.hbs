@@ -58,7 +58,7 @@
       </form>
     </li>
 
-    {{#each tweet.Replies}}
+    {{#each tweet.whoReply}}
     <li class="list-group-item list-group-item-action">
 
       <div class="user-wrap d-flex">
@@ -68,13 +68,13 @@
           <div class="d-flex flex-column">
             <div class="user d-flex justify-content-start">
               <div class="user-name font-weight-bold mr-2">
-                {{this.User.name}}
+                {{this.name}}
               </div>
-              <a href="/users/{{this.User.id}}" class="user-account text-secondary">
-                @{{this.User.account}}
+              <a href="/users/{{this.id}}" class="user-account text-secondary">
+                @{{this.account}}
               </a>
               {{!-- 要改 --}}
-              <span>・3小時前</span>
+              <span>・{{moment this.Reply.createdAt}}</span>
             </div>
             <div>
               <div> 回覆  
@@ -82,7 +82,7 @@
               </div>
             </div>
           </div>
-          <p class="mt-2 ">{{this.comment}}</p>
+          <p class="mt-2 ">{{this.Reply.comment}}</p>
           <div class="d-flex justify-content-start">
             <a href="" class="mt-1 mr-5 text-dark">
               <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor"
