@@ -79,5 +79,7 @@ router.get('/users/:id/like', userController.getUserLikeContent)
 router.get('/users/:id/edit', userController.editUser)
 // 編輯個人資料
 router.put('/users/:id/edit', userController.putUser)
+// 查看跟隨者名單
+router.get('/users/:id/followers', userController.getUserFollowerList)
 
 module.exports = router
