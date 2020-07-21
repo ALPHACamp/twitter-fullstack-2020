@@ -1,0 +1,27 @@
+<form action="/users/{{user.id}}?_method=PUT" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+
+    <label for="backgroundImg">Background Image</label>
+    <input type="file" class="form-control-file" id="backgroundImg" name="backgroundImg" files="{{user.backgroundImg}}">
+  </div>
+  <div class="form-group">
+    <label for="image">Avatar</label>
+    <input type="file" class="form-control-file" id="image" name="image" files="{{user.avatar}}">
+  </div>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="name" value="{{user.name}}" required>
+  </div>
+  <div class="form-group">
+    <label for="account">Account</label>
+    <input type="text" class="form-control" id="account" name="account" placeholder="account" value="{{user.account}}"
+      required>
+  </div>
+  <div class="form-group">
+    <label for="introduction">Introduction</label>
+    <textarea class="form-control" id="introduction" name="introduction" rows="3">{{user.introduction}}</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="/users/{{user.id}}">back</a>
+</form>
