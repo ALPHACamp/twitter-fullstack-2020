@@ -20,13 +20,29 @@ const adminController = {
     req.flash('success_messages', '登入成功！')
     res.redirect('/admin/tweets')
   },
-  adminSignOut: (req, res) => {
-    // 登出
-  },
   adminTweetsPage: (req, res) => {
-    Tweet.findAll({ raw: true, nest: true })
-      .then(tweets => res.json({ tweets }))
+    Tweet.findAll({ raw: true, nest: true, include: [User], order: [['createdAt', 'DESC']] })
+      .then(tweets => {
+        const data = tweets.map(tweets => ({
+          ...tweets,
+          description: tweets.description.substring(0, 50)
+        }))
+        return data
+      })
+      .then(data => {
+        res.render('admin/adminTweetsPage', { tweets: data })
+      })
       .catch(err => console.log(err))
+  },
+  adminDeleteTweets: (req, res) => {
+    const { tweetId } = req.params
+    Tweet.findByPk(tweetId)
+      .then(tweet => tweet.destroy())
+      .then(() => {
+        req.flash('success_messages', '成功刪除文章！')
+        res.redirect('/admin/tweets')
+      })
+      .catch(err => res.send(err))
   },
   adminUsersPage: (req, res) => {
     User.findAll({ raw: true, nest: true })
