@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     comment: DataTypes.STRING
   }, {});
   Reply.associate = function(models) {  
-    Reply.belongsTo(models.User)  
+    
   };
   return Reply;
 };

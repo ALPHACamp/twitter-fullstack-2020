@@ -13,13 +13,13 @@ let adminController = {
   getTweets: (req, res) => {
     Tweet.findAll({ raw: true, nest: true, include: User, }).then(tweets => {
       const data = tweets.map(r => ({
-        ...r.dataValues,
+        ...r,
         userName: r.User.name,
         userAvatar: r.User.avatar,
         description: r.description.substring(0, 50),
         createdA: r.createdAt
       }))
-      
+      console.log(data)
       return res.render('admin/tweetsHome', { tweets: data })
     })
   },
