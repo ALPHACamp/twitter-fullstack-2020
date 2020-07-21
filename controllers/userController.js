@@ -14,12 +14,12 @@ const userController = {
       include: [
         {
           model: Tweet,
-          include: { model: User, as: 'LikedUser' }
+          include: { model: User, as: 'LikedUser' },
         },
         { model: Tweet, include: Reply },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
+        { model: User, as: 'Followings' },
+      ],
     })
       .then((user) => {
         const results = user.toJSON()
@@ -41,21 +41,21 @@ const userController = {
         {
           model: Tweet,
           as: 'LikedTweets',
-          include: { model: User, as: 'LikedUser' }
+          include: { model: User, as: 'LikedUser' },
         },
         {
           model: Tweet,
           as: 'LikedTweets',
-          include: Reply
+          include: Reply,
         },
         {
           model: Tweet,
           as: 'LikedTweets',
-          include: User
+          include: User,
         },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
+        { model: User, as: 'Followings' },
+      ],
     })
       .then((user) => {
         user = user.toJSON()
@@ -72,20 +72,34 @@ const userController = {
       })
       .catch((err) => res.send(err))
   },
-  editUser: (req, res) => {},
+  editUser: (req, res) => {
+    console.log(req._passport.session.user)
+    if (Number(req.params.id) === Number(req._passport.session.user)) {
+      return User.findByPk(req.params.id).then((user) => {
+        user = user.toJSON()
+        return res.json(user)
+      })
+    } else {
+      req.flash(
+        'error_message',
+        "You don't have the authority to do this action"
+      )
+      return res.redirect('back')
+    }
+  },
   putUser: (req, res) => {},
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({
       followerId: req.user.id,
-      followingId: userId
+      followingId: userId,
     })
       .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   },
   removeFollowing: (req, res) => {
     return Followship.findOne({
-      where: { followerId: req.user.id, followingId: req.params.userId }
+      where: { followerId: req.user.id, followingId: req.params.userId },
     })
       .then((followship) => {
         followship.destroy().then(() => res.redirect('back'))
@@ -120,7 +134,7 @@ const userController = {
         account,
         name,
         email,
-        error_messages: '別偷懶~全部欄位均為必填呦！'
+        error_messages: '別偷懶~全部欄位均為必填呦！',
       }) // 密碼因安全性問題，要重新填寫
     }
     // 密碼 & 確認密碼檢查
@@ -129,7 +143,7 @@ const userController = {
         account,
         name,
         email,
-        error_messages: '密碼與確認密碼不符，請重新確認！'
+        error_messages: '密碼與確認密碼不符，請重新確認！',
       })
     }
     // 檢查 account & email 是否為唯一值
@@ -144,7 +158,7 @@ const userController = {
             avatar: 'https://image.flaticon.com/icons/svg/2948/2948062.svg',
             cover: 'https://unsplash.com/photos/mWRR1xj95hg',
             introduction: `Hi Guys,I'm ${name},nice to meet you!`,
-            role: 'user'
+            role: 'user',
           })
             .then(() => {
               req.flash('success_messages', '已成功註冊，請登入！')
@@ -157,7 +171,7 @@ const userController = {
             account,
             name,
             email,
-            error_messages: '帳號已存在，請更改成其他帳號！'
+            error_messages: '帳號已存在，請更改成其他帳號！',
           })
         }
         if (user.email === email) {
@@ -165,7 +179,7 @@ const userController = {
             account,
             name,
             email,
-            error_messages: 'Email已存在，請更改成其他Email！'
+            error_messages: 'Email已存在，請更改成其他Email！',
           })
         }
       })
@@ -199,39 +213,43 @@ const userController = {
     }
     return updateAccountAndPassword()
 
-    function updateAccount () {
+    function updateAccount() {
       User.findByPk(id)
-        .then(user => user.update({
-          account,
-          name,
-          email
-        }))
+        .then((user) =>
+          user.update({
+            account,
+            name,
+            email,
+          })
+        )
         .then(() => {
           req.flash('success_messages', '成功修改帳戶設定！')
           res.redirect('/setting')
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err))
     }
-    function updateAccountAndPassword () {
+    function updateAccountAndPassword() {
       User.findByPk(id)
-        .then(user => user.update({
-          account,
-          name,
-          email,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-        }))
+        .then((user) =>
+          user.update({
+            account,
+            name,
+            email,
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+          })
+        )
         .then(() => {
           req.flash('success_messages', '成功修改帳戶設定！')
           res.redirect('/setting')
         })
-        .catch(err => console.log(err))
+        .catch((err) => console.log(err))
     }
   },
   signout: (req, res) => {
     req.logout()
     req.flash('success_messages', '已成功登出！')
     res.redirect('/signin')
-  }
+  },
 }
 
 module.exports = userController
