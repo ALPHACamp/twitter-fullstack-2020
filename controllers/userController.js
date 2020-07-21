@@ -1,5 +1,6 @@
 const db = require('../models');
 const User = db.User;
+const Like = db.Like;
 const bcrypt = require('bcryptjs');
 
 let userController = {
@@ -89,6 +90,32 @@ let userController = {
         });
       }
     });
+  },
+  addLike: async (req, res) => {
+    try {
+      const newLike = await Like.create({
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      });
+      res.redirect('back');
+    } catch (err) {
+      console.log(err);
+      res.send('something is wrong');
+    }
+  },
+  removeLike: async (req, res) => {
+    try {
+      const toRemove = await Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId: req.params.tweetId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
   }
 };
 
