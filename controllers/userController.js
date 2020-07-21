@@ -1,6 +1,7 @@
 const db = require('../models');
 const User = db.User;
 const Like = db.Like;
+const Followship = db.Followship;
 const bcrypt = require('bcryptjs');
 
 let userController = {
@@ -128,6 +129,36 @@ let userController = {
     } catch (err) {
       console.log(err);
       res.send(err);
+    }
+  },
+  addFollowing: async (req, res) => {
+    try {
+      //check if the user if trying to follow himself
+      if (req.user.id == Number(req.params.userId)) {
+        req.flash('error_messages', 'you cannot follow yourself');
+        return res.redirect('back');
+      }
+      const newFollowship = await Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.userId
+      });
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
+  },
+  removeFollowing: async (req, res) => {
+    try {
+      const toRemove = await Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.userId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
     }
   }
 };
