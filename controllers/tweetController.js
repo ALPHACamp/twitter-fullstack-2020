@@ -70,7 +70,7 @@ const tweetController = {
           include: [User],
           order: [['createdAt', 'ASC']]
         }).then((replies) => {
-          res.render('reply', { tweet, replies })
+          res.render('reply', { tweet, replies, currentUserId: req.user.id })
         })
       })
       .catch((err) => res.send(err))
