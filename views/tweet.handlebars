@@ -75,8 +75,45 @@
     </div>
 
     <div class="reply-list">
-      <!-- 推文作者回覆 -->
-      <div class="reply-item">
+      <!-- 留言回覆迴圈 -->
+      <div class="reply-item d-flex justify-content-start align-items-start">
+        <div class="left mr-2">
+          <a href="/users/:id" class="mt-1 mb-1 user-name">
+            <img src="" alt="" class="avtar">
+          </a>
+        </div>
+        <div class="right">
+          <div><a href="/users:id" class="user-name mt-1">Mango
+              <sapn class="user-account">@mango．13小時</sapn></a>
+          </div>
+          <div>
+
+            <span class="replyto-span-m">回覆</span> <span class="user-account-color-span">@apple</span>
+          </div>
+
+          <p>quis vel eros donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue lacus viverra
+            vitaecongue euconsequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas egestassque
+          </p>
+
+          <div class="reply-like-post d-flex justify-content-start align-items-center">
+            <a href="/reply"
+              class="reply-link reply-to-comment ml-2 mr-4 d-flex justify-content-start align-items-center">
+              <img class="icon-s" src="/images/icon-reply.svg" alt="">
+              <span>34</span>
+            </a>
+            <form method="POST">
+              <button type="submit" class="button like-link d-flex justify-content-start align-items-center">
+                {{!-- <img class="icon-s" src="/images/icon-like-solid.svg" alt=""> --}}
+                <img class="icon-s" src="/images/icon-like.svg" alt="">
+                <span>12</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- 迴圈結束 -->
+      <!-- 推文作者回覆 先註解掉，如果要做回覆再用 -->
+      <!--<div class="reply-item">
         <div class="reply-author-command d-flex justify-content-start align-items-start">
           <div class="left mr-2">
             <a href="/users/:id" class="mt-1 mb-1 user-name">
@@ -142,44 +179,8 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- 留言回覆迴圈 -->
-      <div class="reply-item d-flex justify-content-start align-items-start">
-        <div class="left mr-2">
-          <a href="/users/:id" class="mt-1 mb-1 user-name">
-            <img src="" alt="" class="avtar">
-          </a>
-        </div>
-        <div class="right">
-          <div><a href="/users:id" class="user-name mt-1">Mango
-              <sapn class="user-account">@mango．13小時</sapn></a>
-          </div>
-          <div>
-
-            <span class="replyto-span-m">回覆</span> <span class="user-account-color-span">@apple</span>
-          </div>
-
-          <p>quis vel eros donec ac odio tempor orci dapibus ultrices in iaculis nunc sed augue lacus viverra
-            vitaecongue euconsequat ac felis donec et odio pellentesque diam volutpat commodo sed egestas egestassque
-          </p>
-
-          <div class="reply-like-post d-flex justify-content-start align-items-center">
-            <a href="/reply"
-              class="reply-link reply-to-comment ml-2 mr-4 d-flex justify-content-start align-items-center">
-              <img class="icon-s" src="/images/icon-reply.svg" alt="">
-              <span>34</span>
-            </a>
-            <form method="POST">
-              <button type="submit" class="button like-link d-flex justify-content-start align-items-center">
-                {{!-- <img class="icon-s" src="/images/icon-like-solid.svg" alt=""> --}}
-                <img class="icon-s" src="/images/icon-like.svg" alt="">
-                <span>12</span>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <!-- 迴圈結束 -->
+      
+      </div> -->
     </div>
   </div>
 
