@@ -17,6 +17,12 @@ module.exports = (app, passport) => {
     passport.authenticate('local', { successRedirect: '/', failureRedirect: '/signin', failureFlash: true }),
     userController.signIn)
 
+  app.get('/admin/signin', (req, res) => res.render('admin/signin'))
+  app.get('/admin/tweets', (req, res) => res.render('admin/tweets'))
+  app.get('/admin/users', (req, res) => res.render('admin/users'))
+
   app.get('/', (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
+
+  app.get('/api/users/:id', (req, res) => res.render('setting'))
 }

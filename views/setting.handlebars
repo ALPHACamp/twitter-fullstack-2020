@@ -4,27 +4,29 @@
       <img class="logo" src="/images/icon.svg" alt="">
       <div class="nav">
         <div class="nav-item">
-          <a href="#">
+          <a href="/tweets">
             <img class="home-icon" src="/images/icon-home.svg" alt="">首頁
           </a>
         </div>
         <div class="nav-item">
-          <a href="#">
+          <a href="/users/:id/tweets">
             <img class="pr-1" src="/images/icon-user.svg" alt="">
             個人資料
           </a>
         </div>
         <div class="nav-item">
-          <a href="#">
+          <a href="/api/users/:id">
             <img src="/images/icon-setting.svg" alt="">
             設定
           </a>
         </div>
       </div>
-      <button class="tweet-button">推文</button>
+      <button type="button" class="tweet-button" data-toggle="modal" data-target="#tweetModal">
+        推文
+      </button>
     </div>
     <div class="logout">
-      <a href="#">
+      <a href="/logout">
         <img class="logout-icon" src="/images/icon-logout.svg" alt="">登出
       </a>
     </div>
