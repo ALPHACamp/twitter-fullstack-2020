@@ -116,6 +116,19 @@ let userController = {
     } catch (err) {
       res.send('something is wrong');
     }
+  },
+  editUser: async (req, res) => {
+    try {
+      //check if it's the current user who intends to edit. If not, back to last page
+      if (req.user.id !== Number(req.params.userId)) {
+        return res.redirect('back');
+      }
+      const toEdit = await User.findByPk(req.params.userId);
+      res.render('user_edit', { user: toEdit.toJSON() });
+    } catch (err) {
+      console.log(err);
+      res.send(err);
+    }
   }
 };
 
