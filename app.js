@@ -17,6 +17,7 @@ const passport = require('./config/passport')
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 //iew engine
+app.use( express.static(__dirname + 'css'))
 app.engine(
   'hbs',
   exphbs({
