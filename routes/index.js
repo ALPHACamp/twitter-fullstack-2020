@@ -45,4 +45,8 @@ module.exports = (app, passport) => {
 
   app.get('/api/users/:id', authenticated, (req, res) => res.render('setting'))
   app.get('/api/admin/users/:id', adminAuthenticated, (req, res) => res.render('admin/setting'))
+
+  app.get('/users/:id/tweets', authenticated, userController.getTweets)
+  app.get('/users/:id/likes', authenticated, userController.getLikes)
+  app.get('/users/:id/replies', authenticated, userController.getReplies)
 }

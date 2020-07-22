@@ -1,0 +1,45 @@
+<div class="container-fluid">
+  {{> left-content}}
+
+  <!-- 中間主要區塊 -->
+  <div>
+    <div>
+      <a href="/tweets"><img src="/images/icon-back.png" alt=""></a>
+      <h3>{{user.name}}</h3>{{tweets.length}}推文
+    </div>
+    <div>
+      <img src="{{user.cover}}" alt="" width="598px" height="200px">
+    </div>
+    <div>
+      <img src="{{user.avatar}}" alt="" class="avtar">
+      <a href="/api/users/{{user.id}}">編輯個人資料</a>
+    </div>
+    <div>
+      <h3>{{user.name}}</h3>
+    </div>
+    <div>
+      {{user.account}}
+    </div>
+    <div>
+      {{user.introduction}}
+    </div>
+    <div>
+      {{user.Followers.length}}個跟隨者
+      {{user.Followings.length}}位跟隨中
+    </div>
+    <!-- 導覽列 -->
+    <nav class="navbar navbar-expand-lg navbar-light ">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-item nav-link active" href="/users/{{user.id}}/tweets">推文 <span
+              class="sr-only">(current)</span></a>
+          <a style=" color:#FF6600" class="nav-item nav-link" href="#">推文與回覆</a>
+          <a class="nav-item nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+        </div>
+      </div>
+    </nav>
+    <!-- 推文與回覆 -->
+  </div>
+
+  {{> right-content}}
+</div>

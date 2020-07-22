@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  {{> left-content}}
+
+  <!-- 中間主要區塊 -->
+  <div>
+    <div>
+      <div>
+        <a href="/tweets"><img src="/images/icon-back.png" alt=""></a>
+      </div>
+      <div>
+        <h3>{{user.name}}</h3>
+        <h6 style="color: #657786;">{{tweets.length}}則推文</h6>
+      </div>
+    </div>
+    <div>
+      <img src="{{user.cover}}" alt="" width="598px" height="200px">
+    </div>
+    <div class="user-profile">
+      <div><img src="{{user.avatar}}" alt="" class="main-avatar"></div>
+      <div class="rectangle">
+        <div><a class="edit-Profile" href="/api/users/{{user.id}}">編輯個人資料</a></div>
+      </div>
+
+    </div>
+    <div>
+      <h3>{{user.name}}</h3>
+    </div>
+    <div>
+      {{user.account}}
+    </div>
+    <div>
+      {{user.introduction}}
+    </div>
+    <div>
+      {{user.Followers.length}}個跟隨者
+      {{user.Followings.length}}位跟隨中
+    </div>
+    <!-- 導覽列 -->
+    <nav class="navbar navbar-expand-lg navbar-light ">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a style=" color:#FF6600" class="nav-item nav-link active" href="#">推文 <span
+              class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
+          <a class="nav-item nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+        </div>
+      </div>
+    </nav>
+    <!-- 推文 -->
+    <div class="main-tweet-list">
+      {{#each tweets }}
+      <div class="divider">
+        <img src="{{../user.avatar}}" alt="" class="avtar">
+        <span style="font-size:larger;">{{../user.name}}</span><span
+          style="color:#657786">{{../user.account}}.{{moment this.createdAt}}</span>
+        <div class="tweet-description">{{this.description}}</div>
+        <div class="like-reply"><a href="/reply" class="reply-link ">
+            <img class="icon-s" src="/images/icon-reply.svg" alt="">
+            {{this.Replies.length}}
+          </a>
+          <button href="/like" class="like-link button">
+            <img class="icon-s" src="/images/icon-like-solid.svg" alt="">
+            {{!-- <img class="icon-s" src="/images/icon-like.svg" alt=""> --}}
+            {{this.likedUsers.length}}
+          </button>
+        </div>
+
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{> right-content}}
+</div>
