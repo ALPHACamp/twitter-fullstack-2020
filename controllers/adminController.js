@@ -5,6 +5,10 @@ const Tweet = db.Tweet
 const Like = db.Like
 
 const adminController = {
+  signInPage: (req, res) => res.render('admin/signin'),
+  signIn: (req, res) => {
+    req.flash('successMessages', '登入成功')
+    res.redirect('/admin/tweets'),
   getUsers: (req, res) => {
     return User.findAll({
       include: [
