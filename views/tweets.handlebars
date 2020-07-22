@@ -43,9 +43,12 @@
     <div class="main-text">
       <img src="{{user.avatar}}" alt="" class="avtar">
       <form method="POST" action="/tweets">
-        <textarea name="description" id="description" cols="30" rows="10" placeholder="有什麼新鮮事？"
+        <textarea name="description" id="description" class="tweetTextarea" cols="30" rows="10" placeholder="有什麼新鮮事？"
           maxlength="140"></textarea>
-        <button class="tweet-post-button" type="submit">推文</button>
+        <button class="tweet-post-button" type="submit" style="display: none;">推文</button>
+        <button type="button" class="tweet-post-error" data-toggle="modal" data-target="#postError">
+          推文
+        </button>
       </form>
     </div>
     <div class="main-tweet-list">

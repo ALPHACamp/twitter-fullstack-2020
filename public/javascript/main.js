@@ -1,18 +1,19 @@
-//推文有輸入內容，按鈕才可以按
-const input = document.querySelector('#description');
-const tweetButton = document.querySelector('.tweet-post-button');
-input.addEventListener('input', updateValue);
+//根據使用者輸入的內容，會跳出不同按鈕
+const tweetTextarea = document.querySelector('.tweetTextarea')
+const tweetButton = document.querySelector('.tweet-post-button')
+const tweetError = document.querySelector('.tweet-post-error')
+tweetTextarea.addEventListener('input', updateValue);
 function updateValue(e) {
   const re = new RegExp("^[ ]+$")
-  const isSpace = re.test(e.srcElement.value)
+  const isSpace = re.test(e.target.value)
   if (isSpace) {
-    tweetButton.disabled = true
-    tweetButton.style.background = 'rgba(255,102,0,.6)'
+    tweetError.style.display = 'inline'
+    tweetButton.style.display = 'none'
   } else if (e.srcElement.value) {
-    tweetButton.disabled = false
-    tweetButton.style.background = '#ff6600'
+    tweetError.style.display = 'none'
+    tweetButton.style.display = 'inline'
   } else {
-    tweetButton.disabled = true
-    tweetButton.style.background = 'rgba(255,102,0,.6)'
+    tweetError.style.display = 'inline'
+    tweetButton.style.display = 'none'
   }
 }
