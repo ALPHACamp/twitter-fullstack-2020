@@ -21,23 +21,23 @@
           </svg>
         </a>
         <div class="d-flex mt-5">
-          <a class="text-decoration-none" href="/admin/tweets">
+          <a class="text-decoration-none" href="/tweets">
             <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M22.58 6.34998L12.475 0.896978C12.178 0.736978 11.821 0.736978 11.525 0.896978L1.42502 6.34998C0.939018 6.61398 0.758018 7.21998 1.02002 7.70598C1.20002 8.04098 1.54502 8.23098 1.90002 8.23098C2.06002 8.23098 2.22402 8.19298 2.37502 8.11098L3.10902 7.71498L4.69902 18.965C4.91502 20.179 6.00902 21.027 7.35902 21.027H16.641C17.991 21.027 19.085 20.179 19.303 18.939L20.891 7.71398L21.628 8.11198C22.113 8.37498 22.72 8.19398 22.982 7.70798C23.245 7.22198 23.062 6.61498 22.578 6.35298L22.58 6.34998ZM12 14.435C10.205 14.435 8.75002 12.98 8.75002 11.185C8.75002 9.38998 10.205 7.93498 12 7.93498C13.795 7.93498 15.25 9.38998 15.25 11.185C15.25 12.98 13.795 14.435 12 14.435Z"
                 fill="#1C1C1C" />
             </svg>
-            <span class="ml-3">推文清單</span>
+            <span class="ml-3">首頁</span>
           </a>
         </div>
         <div class="d-flex mt-4">
-          <a class="text-decoration-none" href="/admin/users">
+          <a class="text-decoration-none" href="/users/{{user.id}}">
             <svg width="24" height="22" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M9.00003 10.816C10.355 10.816 11.872 10.666 12.84 9.56001C13.654 8.63001 13.918 7.19201 13.646 5.16801C13.266 2.34301 11.529 0.656006 9.00003 0.656006C6.47103 0.656006 4.73403 2.34301 4.35403 5.17001C4.08203 7.19201 4.34603 8.63001 5.16003 9.56001C6.12803 10.667 7.64503 10.816 9.00003 10.816ZM5.84003 5.36801C6.00203 4.16801 6.62703 2.15601 9.00003 2.15601C11.373 2.15601 11.998 4.16901 12.16 5.36801C12.367 6.91801 12.217 7.99501 11.71 8.57301C11.255 9.09301 10.444 9.31601 9.00003 9.31601C7.55603 9.31601 6.74503 9.09301 6.29003 8.57301C5.78303 7.99501 5.63303 6.91701 5.84003 5.36801ZM17.28 18.236C16.403 14.71 12.998 12.246 9.00003 12.246C5.00203 12.246 1.59703 14.71 0.720027 18.236C0.548027 18.928 0.692027 19.636 1.11503 20.176C1.52303 20.696 2.15503 20.996 2.84803 20.996H15.152C15.845 20.996 16.477 20.696 16.885 20.176C17.309 19.636 17.452 18.929 17.279 18.236H17.28ZM15.704 19.252C15.578 19.412 15.388 19.498 15.152 19.498H2.84803C2.61303 19.498 2.42203 19.413 2.29603 19.252C2.15903 19.078 2.11603 18.84 2.17603 18.598C2.88603 15.743 5.69303 13.748 9.00003 13.748C12.307 13.748 15.114 15.742 15.824 18.598C15.884 18.84 15.841 19.078 15.704 19.252Z"
                 fill="black" />
             </svg>
-            <span class="ml-3">使用者列表</span>
+            <span class="ml-3">個人資料</span>
           </a>
         </div>
         <div class="d-flex mt-4">
@@ -77,15 +77,16 @@
       <form class="ml-3 mt-3" action="/setting" method="POST" style="width: 642px;">
         <div class="form-group">
           <label for="account">帳號<span class="text-danger">(必填)</span></label>
-          <input type="text" name="account" class="form-control" id="account" placeholder="Account" value="{{account}}">
+          <input type="text" name="account" class="form-control" id="account" placeholder="Account"
+            value="{{user.account}}">
         </div>
         <div class="form-group">
           <label for="name">名稱<span class="text-danger">(必填)</span></label>
-          <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{name}}">
+          <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{user.name}}">
         </div>
         <div class="form-group">
           <label for="email">Email<span class="text-danger">(必填)</span></label>
-          <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{email}}">
+          <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{user.email}}">
         </div>
         <div class="form-group">
           <label for="password">新密碼<span class="text-danger"></span></label>
