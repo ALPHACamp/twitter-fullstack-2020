@@ -11,12 +11,18 @@
           <div class="col-12">{{tweet.User.account}}</div>
         </div>
       </div>
-      <p>
-        {{tweet.description}}
-      </p>
-      <small class="mr-auto">
-        {{moment_format tweet.createdAt}}
-      </small>
+      <div class="col-12">
+        <p>
+          {{tweet.description}}
+        </p>
+        <small class="mr-auto">
+          {{moment_format tweet.createdAt}}
+        </small>
+        <hr>
+      </div>
+      <div class="col-12">
+        {{tweet.replyCount}} 回覆 喜歡次數
+      </div>
     </div>
     <button class="btn btn-primary" data-toggle="modal" data-target="#replyTweet">留言</button>
     <a href="" class="btn btn-outline-danger">Like</a>
