@@ -23,9 +23,12 @@
       <div class="col-12">
         {{tweet.replyCount}} 回覆 {{likeCount}}喜歡次數
       </div>
+      <div class="col-12">
+        <i class="far fa-comment" data-toggle="modal" data-target="#replyTweet"></i>
+        <a href="/like/{{tweet.id}}"><i class="far fa-heart"></i></a>
+      </div>
     </div>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#replyTweet">留言</button>
-    <a href="" class="btn btn-outline-danger">Like</a>
+
 
     <div class="row" id="reply-list">
       {{#each replies}}

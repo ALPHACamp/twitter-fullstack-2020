@@ -35,6 +35,7 @@ router.delete('/tweets/:tweetId/:replyId', tweetController.deleteReply)
 router.delete('/tweets/:tweetId', tweetController.deleteTweet)
 router.post('/following/:userId', userController.addFollowing)
 router.delete('/following/:userId', userController.removeFollowing)
+router.get('/like/:tweetId', tweetController.likeTweet)
 // 取得登入頁面
 router.get('/signin', userController.userSigninPage)
 // 取得註冊頁面

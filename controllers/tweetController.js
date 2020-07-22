@@ -2,6 +2,7 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
 
 const tweetController = {
   getHomePage: (req, res) => {
@@ -23,7 +24,7 @@ const tweetController = {
       const followings = req.user.Followings.map((user) => user.id)
       followings.push(req.user.id)
       Tweet.findAll({
-        where: { userId: followings },
+        where: { UserId: followings },
         raw: true,
         nest: true,
         include: [User],
@@ -67,17 +68,18 @@ const tweetController = {
     })
       .then((tweet) => {
         Reply.findAll({
-          where: { tweetId: tweet.id },
+          where: { TweetId: tweet.id },
           raw: true,
           nest: true,
           include: [User],
           order: [['createdAt', 'ASC']],
         }).then((replies) => {
+          console.log(tweet.LikedUser)
           res.render('reply', {
             tweet,
             replies,
             currentUserId: req.user.id,
-            likeCount: tweet.LikedUser.length || 0
+            likeCount: tweet.LikedUser.Like.length || 0
           })
         })
       })
@@ -114,7 +116,15 @@ const tweetController = {
           .catch(err => res.send(err))
       })
       .catch(err => res.send(err))
-  }
+  },
+  likeTweet: (req, res) => {
+    return Like.create({
+      UserId: req.user.id,
+      TweetId: Number(req.params.tweetId),
+    })
+      .then(() => res.redirect(`back`))
+      .catch((err) => res.send(err))
+  },
 }
 
 module.exports = tweetController

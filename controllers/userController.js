@@ -135,15 +135,15 @@ const userController = {
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({
-      followerId: req.user.id,
-      followingId: userId
+      FollowerId: req.user.id,
+      FollowingId: userId
     })
       .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   },
   removeFollowing: (req, res) => {
     return Followship.findOne({
-      where: { followerId: req.user.id, followingId: req.params.userId }
+      where: { FollowerId: req.user.id, FollowingId: req.params.userId }
     })
       .then((followship) => {
         followship.destroy().then(() => res.redirect('back'))
