@@ -9,7 +9,7 @@ module.exports = {
   //...
   moment: function (a) {
     const b = new Date()
-    const dateFromNow = b - a / (1000 * 60 * 60 * 24)
+    const dateFromNow = (b - a) / (1000 * 60 * 60 * 24)
     if (dateFromNow < 5 ){
       return moment(a).fromNow()
     } else {
