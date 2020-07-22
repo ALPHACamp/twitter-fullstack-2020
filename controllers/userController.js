@@ -107,7 +107,7 @@ let userController = {
       include: [
         Tweet,
         { model: Tweet, as: 'userLike' },
-        { model: Tweet, include:[User], as: 'UserReply' },
+        { model: Tweet, include: [User], as: 'UserReply' },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -118,9 +118,9 @@ let userController = {
     const followingsCount = user.toJSON().Followings.length
     const count = {
       tweetsCount,
-      followersCount, 
+      followersCount,
       followingsCount
-    } 
+    }
     // all user's tweets
     // all user's likes
     // all user's replies
@@ -194,6 +194,53 @@ let userController = {
     } catch (err) {
       res.send('something is wrong');
     }
+  },
+
+  getUser: async (req, res) => {
+    const id = 2/* req.params.id */
+
+    let userDate = await User.findOne({
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
+      where: { id },
+    }).then(u => ({
+      ...u.dataValues
+    }))
+
+    const followersCount = userDate.Followers.length
+    const followingsCount = userDate.Followings.length
+    const count = {
+      followersCount,
+      followingsCount
+    }
+
+
+    let data = await Tweet.findAll({
+      include: [
+        User,
+        { model: User, as: 'TweetWhoLike' },
+        { model: User, as: 'whoReply' },
+      ],
+      where: { UserId: id },
+      order: [['createdAt', 'DESC']],
+    })
+
+    let tweetData = data.map(r => ({
+      ...r.dataValues,
+      userId: r.User.id,
+      userName: r.User.name,
+      userAvatar: r.User.avatar,
+      userAccount: r.User.account,
+      description: r.description,
+      createdA: r.createdAt,
+      likeCount: r.TweetWhoLike.length,
+      replayCount: r.whoReply.length,
+    }))
+    let TweetCount = data.length
+console.log(userDate)
+    res.render('profile', { user: userDate, tweets: tweetData, followShip: count, TweetCount: TweetCount })
   }
 };
 
