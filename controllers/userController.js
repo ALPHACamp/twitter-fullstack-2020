@@ -134,7 +134,6 @@ let userController = {
         { model: User, as: 'Followings' }
       ]
     })
-    console.log(user.toJSON().Followers)
     const tweetsCount = user.toJSON().Tweets.length
     const followersCount = user.toJSON().Followers.length
     const followingsCount = user.toJSON().Followings.length
@@ -143,10 +142,11 @@ let userController = {
       followersCount, 
       followingsCount
     } 
+    console.log(req.user.id)
     // all user's tweets
     // all user's likes
     // all user's replies
-    res.render('userPage', { user: user.toJSON(), count })
+    res.render('userPage', { userPage: user.toJSON(), count })
   },
   addLike: async (req, res) => {
     try {
@@ -216,6 +216,44 @@ let userController = {
     } catch (err) {
       res.send('something is wrong');
     }
+  },
+  getFollowShip: async (req, res) => {
+    //req.params.followship 判斷顯示哪個資料
+    //不是follower & following 倒回上一頁
+    //user 頁面是否改同樣方法？
+    const { id, followship } = req.params
+    const user = await User.findOne({
+      where: { id },
+      include:[
+        Tweet,
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ]
+    })
+    const count = { 
+      tweetsCount: user.toJSON().Tweets.length
+    }
+
+    if (followship === 'followings') {
+      let followings = user.toJSON().Followings
+      followings = followings.map(i => ({
+        ...i,
+        isFollowed: req.user.Followings.map(d => d.id).includes(i.id)
+      }))
+      res.render('followship', 
+      { user: user.toJSON(), followings , count} 
+      )
+    } else if (followship === 'followers') {
+      let followers = user.toJSON().Followers
+      followers = followers.map(i => ({
+        ...i,
+        isFollowed: req.user.Followers.map(d => d.id).includes(i.id)
+      }))
+      res.render('followship',
+        { user: user.toJSON(), followers, count }
+      )
+    }
+    
   }
 
 };
