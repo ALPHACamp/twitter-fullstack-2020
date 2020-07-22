@@ -59,7 +59,11 @@ const tweetController = {
     Tweet.findByPk(tweetId, {
       raw: true,
       nest: true,
-      include: [User, Reply],
+      include: [
+        User,
+        Reply,
+        { model: User, as: 'LikedUser' }
+      ],
     })
       .then((tweet) => {
         Reply.findAll({
@@ -69,12 +73,17 @@ const tweetController = {
           include: [User],
           order: [['createdAt', 'ASC']],
         }).then((replies) => {
-          res.render('reply', { tweet, replies, currentUserId: req.user.id })
+          res.render('reply', {
+            tweet,
+            replies,
+            currentUserId: req.user.id,
+            likeCount: tweet.LikedUser.length || 0
+          })
         })
       })
       .catch((err) => res.send(err))
   },
-  replyTweet: (req, res) => {
+  postReply: (req, res) => {
     const tweetId = Number(req.params.tweetId)
 
     return Reply.create({
