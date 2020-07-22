@@ -73,6 +73,6 @@ router.delete(
   
 router.get('/users/:userId/edit', authenticated, userController.editUser);
 router.get('/users/:id/:followship', authenticated, userController.getFollowShip)
-router.get('/users/:id', authenticated,userController.getUserTweet)
+router.get('/users/:id', authenticated,userController.getUserPage)
   
 module.exports = router;

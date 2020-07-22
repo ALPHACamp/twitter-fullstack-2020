@@ -120,7 +120,7 @@ let userController = {
       res.send('something is wrong');
     }
   },
-  getUserTweet: async (req, res) => {
+  getUserPage: async (req, res) => {
     const id = req.params.id
     console.log(req.topUsers)
     //user table
@@ -142,7 +142,6 @@ let userController = {
       followersCount, 
       followingsCount
     } 
-    console.log(req.user.id)
     // all user's tweets
     // all user's likes
     // all user's replies
