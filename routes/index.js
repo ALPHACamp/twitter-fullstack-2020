@@ -15,6 +15,7 @@ const adminAuthenticated = (req, res, next) => {
     req.flash('errorMessage', '非管理員請從前台登入')
     res.redirect('/admin/signin')
   }
+  res.redirect('/signin')
 }
 
 module.exports = (app, passport) => {
