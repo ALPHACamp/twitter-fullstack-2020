@@ -1,5 +1,7 @@
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
+const Reply = db.Reply
 const bcrypt = require('bcryptjs')
 
 const userController = {
@@ -34,7 +36,36 @@ const userController = {
   signIn: (req, res) => {
     req.flash('successMessages', '登入成功')
     res.redirect('/tweets')
-  }
+  },
+  //該名使用者的所有推文
+  getTweets: (req, res) => {
+    Tweet.findAll({
+      where: { UserId: req.params.id },
+      include: [
+        Reply,
+        { model: User, as: 'likedUsers' },
+      ],
+      order: [['createdAt', 'DESC']]
+    }).then(tweets => {
+      res.render('userTweets', { tweets })
+    })
+  },
+  //該名使用者的所有喜歡內容
+  getLikes: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Reply,
+        Tweet,
+        { model: Tweet, as: 'LikedTweets' },
+      ]
+    })
+      .then(user => {
+        console.log(user.toJSON())
+        res.render('userLikes', { user: user.toJSON() })
+      })
+  },
+  //該名使用者的所有回覆內容
+  getReplies: (req, res) => res.render('userReplies'),
 }
 
 module.exports = userController

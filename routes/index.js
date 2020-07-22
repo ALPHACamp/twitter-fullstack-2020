@@ -25,4 +25,9 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   app.get('/api/users/:id', (req, res) => res.render('setting'))
+
+  //和個人資料相關
+  app.get('/users/:id/tweets', authenticated, userController.getTweets)
+  app.get('/users/:id/likes', authenticated, userController.getLikes)
+  app.get('/users/:id/replies', authenticated, userController.getReplies)
 }
