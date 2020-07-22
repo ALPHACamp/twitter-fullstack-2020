@@ -7,6 +7,13 @@ const authenticated = (req, res, next) => {
   res.redirect('/signin')
 }
 
+const adminAuthenticated = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    if (req.user.role === 'admin') { return next() }
+    res.redirect('/')
+  }
+}
+
 module.exports = (app, passport) => {
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
