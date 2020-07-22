@@ -24,6 +24,7 @@ module.exports = (app, passport) => {
 
   app.get('/', (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
+  app.delete('/tweets/:id', adminController.deleteTweet)
 
   app.get('/api/users/:id', (req, res) => res.render('setting'))
 }

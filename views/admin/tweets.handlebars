@@ -47,7 +47,7 @@
               <a href="/users/:id" class="user-name">Banana</a>
               <span class="user-account">@banana．59分鐘</span>
             </div>
-            <form method="POST" onsubmit="return confirm('確定要刪除推文嗎？')">
+            <form action="/tweets/{{this.id}}?_method=DELETE" method="POST" onsubmit="return confirm('確定要刪除推文嗎？')">
               <button type="submit" class="button delete-tweet-item">✕</button>
             </form>
           </div>

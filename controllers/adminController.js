@@ -41,6 +41,15 @@ const adminController = {
         }))
         res.render('admin/tweets', { tweets })
       })
+  },
+  deleteTweet: (req, res) => {
+    const id = req.params.id
+    return Tweet.findById(id, { include: [Reply] })
+      .then(tweet => {
+        if (tweet.Replies.length !== 0) { tweet.Replies.destroy() }
+        tweet.destroy()
+      })
+      .then(() => res.redirect('/admin/tweets'))
   }
 }
 
