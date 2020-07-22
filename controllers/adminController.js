@@ -27,6 +27,29 @@ const adminController = {
 
         res.render('admin/users', { users })
       })
+  },
+  getTweets: (req, res) => {
+    return Tweet.findAll({
+      include: [
+        User
+      ]
+    })
+      .then(tweets => {
+        tweets = tweets.map(item => ({
+          ...item.dataValues,
+          description: item.description.substring(0, 50)
+        }))
+        res.render('admin/tweets', { tweets })
+      })
+  },
+  deleteTweet: (req, res) => {
+    const id = req.params.id
+    return Tweet.findById(id, { include: [Reply] })
+      .then(tweet => {
+        if (tweet.Replies.length !== 0) { tweet.Replies.destroy() }
+        tweet.destroy()
+      })
+      .then(() => res.redirect('/admin/tweets'))
   }
 }
 

@@ -26,12 +26,15 @@ module.exports = (app, passport) => {
     userController.signIn)
 
   app.get('/admin/signin', (req, res) => res.render('admin/signin'))
-  app.get('/admin/tweets', (req, res) => res.render('admin/tweets'))
+  app.get('/admin/tweets', adminController.getTweets)
   app.get('/admin/users', adminController.getUsers)
 
   app.get('/', (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
+
   app.post('/tweets', authenticated, tweetController.postTweet)
   app.get('/tweets/:id', authenticated, tweetController.getTweet)
+  app.delete('/tweets/:id', adminController.deleteTweet)
+
   app.get('/api/users/:id', (req, res) => res.render('setting'))
 }
