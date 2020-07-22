@@ -40,4 +40,5 @@ module.exports = (app, passport) => {
   app.delete('/tweets/:id', adminAuthenticated, adminController.deleteTweet)
 
   app.get('/api/users/:id', authenticated, (req, res) => res.render('setting'))
+  app.get('/api/admin/users/:id', adminAuthenticated, (req, res) => res.render('admin/setting'))
 }

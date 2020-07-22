@@ -4,26 +4,23 @@
       <img class="logo" src="/images/icon.svg" alt="">
       <div class="nav">
         <div class="nav-item">
-          <a href="/tweets">
-            <img class="home-icon" src="/images/icon-home.svg" alt="">首頁
+          <a href="/admin/tweets">
+            <img class="home-icon" src="/images/icon-home.svg" alt="">推文清單
           </a>
         </div>
         <div class="nav-item">
-          <a href="/users/:id/tweets">
+          <a href="/admin/users">
             <img class="pr-1" src="/images/icon-user.svg" alt="">
-            個人資料
+            使用者列表
           </a>
         </div>
         <div class="nav-item">
-          <a href="/api/users/:id">
+          <a href="/api/admin/users/:id">
             <img src="/images/icon-setting.svg" alt="">
             設定
           </a>
         </div>
       </div>
-      <button type="button" class="tweet-button" data-toggle="modal" data-target="#tweetModal">
-        推文
-      </button>
     </div>
     <div class="logout">
       <a href="/logout">
@@ -34,7 +31,7 @@
 
   <div class="setting-main-content">
     <div class="setting-main-title">
-      帳戶設定
+      管理員帳戶設定
     </div>
     <form method="POST" class="setting-form sign-form">
       <label for="account">帳號</label>
@@ -56,5 +53,4 @@
       </div>
     </form>
   </div>
-
 </div>
