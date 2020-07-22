@@ -44,7 +44,7 @@ const tweetController = {
       UserId: req.user.id,
       description: req.body.tweet,
     })
-      .then(() => res.redirect('/home'))
+      .then(() => res.redirect('/tweets'))
       .catch((err) => res.send(err))
   },
   deleteTweet: (req, res) => {
@@ -69,14 +69,28 @@ const tweetController = {
           include: [User],
           order: [['createdAt', 'ASC']],
         }).then((replies) => {
-          res.render('reply', { tweet, replies })
+          res.render('reply', { tweet, replies, currentUserId: req.user.id })
         })
       })
       .catch((err) => res.send(err))
   },
   replyTweet: (req, res) => {
-    res.send(req.body)
+    return Reply.create({
+      UserId: req.user.id,
+      TweetId: Number(req.params.tweetId),
+      comment: req.body.reply
+    })
+      .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
   },
+  deleteReply: (req, res) => {
+    return Reply.findByPk(req.params.replyId)
+      .then((reply) => {
+        reply.destroy()
+          .then(() => res.redirect('back'))
+      })
+      .catch(err => res.send(err))
+  }
 }
 
 module.exports = tweetController
