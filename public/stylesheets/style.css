@@ -45,11 +45,13 @@ a p:hover {
 }
 .icon-s {
   width: 13px;
+  height: 13px;
+  margin-top: -1px;
 }
 .icon-m {
   width: 25px;
 }
-.tweet-post-button {
+.tweet-post-button,.tweet-post-error {
   width: 64px;
   height: 30px;
   background: #FF6600;
@@ -88,6 +90,13 @@ a p:hover {
   height: 100%;
   margin-top: 5px;
   background-color: #CCD6DD;
+}
+#postError .modal-dialog {
+  background-color: rgba(255,255,255);
+  color: black;
+  padding: 20px;
+  box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.2);
+  border-radius: 10px;
 }
 
 .cover{position: absolute;
@@ -261,12 +270,6 @@ border-radius: 100%;
 .nav-item a img{
   margin-right: 21px;
 }
-.nav-item a:hover {
-  width: 600px;
-  filter: drop-shadow(#FF6600 330px 0);
-  transform: translateX(-330px);
-  text-decoration: none;
-}
 .tweet-button{
   width: 210px;
   height: 45px;
@@ -279,7 +282,7 @@ border-radius: 100%;
   background: rgba(255,102,0,.8);
 }
 .logout {
-margin: 500px 0px 0px 104px;
+  margin: 370px 0px 0px 104px;
 }
 .logout a{
   display: flex;
@@ -291,10 +294,11 @@ margin: 500px 0px 0px 104px;
 .logout a img {
   margin-right: 21px;
 }
-.logout a:hover{
-  position: relative;
-  left: -350px;
-  filter: drop-shadow(#FF6600 350px 0);
+.nav-item a:hover,
+.logout a:hover {
+  width: 600px;
+  filter: drop-shadow(#FF6600 330px 0);
+  transform: translateX(-330px);
   text-decoration: none;
 }
 
@@ -350,9 +354,11 @@ width: 600px;
   overflow-x: hidden
 }
 .tweet-item {
-  height: 145px;
   border-bottom: 1px solid #E6ECF0;
   display: flex;
+}
+.tweet-item:hover {
+  background-color: #f5f8fa;
 }
 .tweet-item-left {
   width: 80px;
@@ -371,24 +377,32 @@ width: 600px;
   padding-top: 10px;
   display: flex;
 }
+.tweet-item-title a {
+  color: #000;
+}
+.tweet-item-title a:hover {
+  color: #000;
+  text-decoration: none;
+}
 .user-account {
   margin: 1px 0px 0px 6px;
 }
 .tweet-item-text {
-  padding-top: 6px;
-  max-height: 66px;
+  max-height: 100px;
+  margin-top: 5px;
+  padding: 6px 15px 0px 0px;
   font-size: 15px;
   line-height: 18px;
-  padding-right: 15px;
 }
 .tweet-item-footer {
-  height: 45px;
+  height: 25px;
+  margin: 5px 0px 15px 0px;
   display: flex;
+  align-items: center;
 }
 .tweet-item-footer .reply-link,
 .tweet-item-footer .like-link {
-  padding-top: 10px;
-  width: 80px;
+  width: 70px;
   font-weight: 500;
   font-size: 13px;
   color: #657786;
@@ -752,3 +766,68 @@ width: 600px;
   color: #657786;
   margin-right: 5px;
 }
+/*單一頁面中間列*/
+.tweet-content {
+  padding: 15px 15px 0 15px;
+  border-bottom: 1px solid #E6ECF0;
+}
+.tweet-content-top {
+ margin-bottom: 10px;
+}
+.tweet-content-top .column span {
+  display: block;
+}
+.tweet-content-top .column a,.reply-item a{
+  color: black;
+}
+.tweet-content-top .column a:hover ,.reply-item a:hover {
+  color: black;
+  text-decoration: none;
+}
+.tweet-content-top .avtar {
+  margin-right: 10px;
+}
+.tweet-content-top .user-account {
+ margin: 0;
+}
+.tweet-content-footer .tweet-time{
+  margin-bottom: 10px;
+  color: #657786;
+  font-size: 15px;
+}
+.tweet-content-footer .tweet-data{
+  color: #657786;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 10px 3px;
+  border-top: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+}
+.tweet-content-footer .tweet-data .number{
+  color: black;
+}
+.tweet-like-reply-link {
+  padding: 10px 0px;
+}
+.tweet-like-reply-link .reply-link{
+  margin-right: 100px;
+}
+.reply-author-command , .author-relply, .reply-item{
+  padding: 10px;
+}
+.reply-like-post a,.reply-like-post span{
+  color: #657786;
+}
+.reply-like-post img {
+  margin-right: 10px;
+}
+.reply-item {
+  border-bottom: 1px solid #E6ECF0;
+}
+.reply-item:last-child {
+  border-bottom: 0px solid #E6ECF0;
+}
+.reply-item .left {
+  margin-right: 10px;
+}
+

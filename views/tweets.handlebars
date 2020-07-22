@@ -1,76 +1,47 @@
+{{> message}}
 <div class="container-fluid">
-  {{> message}}
-  <!-- 左邊導覽選單區塊 -->
-  <div class="left-content">
-    <div class="left-column">
-      <img class="logo" src="/images/icon.svg" alt="">
-      <div class="nav">
-        <div class="nav-item">
-          <a href="/tweets">
-            <img class="home-icon" src="/images/icon-home.svg" alt="">首頁
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="/users/:id/tweets">
-            <img class="pr-1" src="/images/icon-user.svg" alt="">
-            個人資料
-          </a>
-        </div>
-        <div class="nav-item">
-          <a href="/api/users/:id">
-            <img src="/images/icon-setting.svg" alt="">
-            設定
-          </a>
-        </div>
-      </div>
-      <button type="button" class="tweet-button" data-toggle="modal" data-target="#tweetModal">
-        推文
-      </button>
-    </div>
-    <div class="logout">
-      <a href="/logout">
-        <img class="logout-icon" src="/images/icon-logout.svg" alt="">登出
-      </a>
-    </div>
-  </div>
+  {{> modal}}
+  {{> left-content}}
 
-  <!-- 中間主要區塊 -->
   <div class="main-content">
     <div class="main-title">
       首頁
     </div>
     <div class="main-text">
       <img src="{{user.avatar}}" alt="" class="avtar">
-      <form method="POST">
-        <textarea name="" id="" cols="30" rows="10" placeholder="有什麼新鮮事？"></textarea>
-        <button class="tweet-post-button" type="submit">推文</button>
+      <form method="POST" action="/tweets">
+        <textarea name="description" id="description" class="tweetTextarea" cols="30" rows="10" placeholder="有什麼新鮮事？"
+          maxlength="140"></textarea>
+        <button class="tweet-post-button" type="submit" style="display: none;">推文</button>
+        <button type="button" class="tweet-post-error" data-toggle="modal" data-target="#postError">
+          推文
+        </button>
       </form>
     </div>
     <div class="main-tweet-list">
-      <!-- 推文清單列表迴圈 -->
       {{#each tweets}}
-      <div class="tweet-item" onclick="location.href='/'">
+      <div class="tweet-item" onclick="location.href='/tweets/{{this.id}}'">
         <div class="tweet-item-left">
-          <img src="{{this.User.avatar}}" alt="" class="avtar">
+          <a href="/users/{{this.User.id}}"><img src="{{this.User.avatar}}" alt="" class="avtar"></a>
         </div>
         <div class="tweet-item-right">
           <div class="tweet-item-title">
-            <span class="mt-1 user-name">{{this.User.name}}</span>
+            <span class="mt-1 user-name"><a href="/users/{{this.User.id}}">{{this.User.name}}</a></span>
             <span class="user-account">
               {{this.User.account}}．{{moment this.createdAt}}
             </span>
+
           </div>
           <div class="tweet-item-text">
             <p>{{this.description}}
             </p>
           </div>
           <div class="tweet-item-footer">
-            <a href="/reply" class="reply-link ">
-              <img class="icon-s" src="/images/icon-reply.svg" alt="">
-              {{this.Replies.length}}
-            </a>
-            <form method="POST">
-              <button href="/like" class="like-link button">
+            <button type="button" class="button reply-link pt-1" data-toggle="modal" data-target="#replyModal">
+              <img class="icon-s" src="/images/icon-reply.svg" alt=""> {{this.Replies.length}}
+            </button>
+            <form action="/tweets/{{this.id}}/like" method="POST">
+              <button type="submit" class="like-link button">
                 <img class="icon-s" src="/images/icon-like-solid.svg" alt="">
                 {{!-- <img class="icon-s" src="/images/icon-like.svg" alt=""> --}}
                 {{this.likedUsers.length}}
@@ -80,54 +51,8 @@
         </div>
       </div>
       {{/each}}
-      <!-- 迴圈結束 -->
     </div>
   </div>
 
-  <!-- 右邊區塊 -->
-  <div class="right-content">
-    <div class="right-column">
-      <div class="right-column-title">
-        跟隨誰
-      </div>
-      <div class="user-list">
-
-        <!-- 6個使用者清單迴圈 -->
-        <div class="user-list-item">
-          <img src="" alt="" class="avtar">
-          <div class="user-list-item-name">
-            <a href="" class="user-name">
-              Pineapple
-            </a>
-            <div class="user-account">@pineapple</div>
-          </div>
-          <a href=""><button class="unfollow-button">正在跟隨</button></a>
-          {{!-- <a href=""><button class="follow-button">跟隨</button>
-                    </a> --}}
-        </div>
-
-        <div class="user-list-item">
-          <img src="" alt="" class="avtar">
-          <div class="user-list-item-name">
-            <a href="" class="user-name">
-              Orange
-            </a>
-            <div class="user-account">@orange</div>
-          </div>
-          {{!-- <a href=""><button class="unfollow-button">正在跟隨</button></a> --}}
-          <a href=""><button class="follow-button">跟隨</button>
-          </a>
-        </div>
-
-        <!-- 迴圈結束 -->
-
-      </div>
-      <a href="" class="more-users">
-        顯示更多
-      </a>
-    </div>
-  </div>
-
+  {{> right-content}}
 </div>
-
-{{> message}}
