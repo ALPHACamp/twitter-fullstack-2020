@@ -59,7 +59,6 @@ router.delete(
   adminController.deleteTweet
 );
 
-router.get('/users/:id', userController.getUserTweet)
 
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
@@ -70,8 +69,10 @@ router.delete(
   '/followings/:userId',
   authenticated,
   userController.removeFollowing
-);
-
+  );
+  
 router.get('/users/:userId/edit', authenticated, userController.editUser);
-
+router.get('/users/:id/:followship', authenticated, userController.getFollowShip)
+router.get('/users/:id', authenticated,userController.getUserTweet)
+  
 module.exports = router;
