@@ -25,8 +25,7 @@ const tweetController = {
       createdA: r.createdAt,
       likeCount: r.TweetWhoLike.length,
       replayCount: r.whoReply.length,
-    }))
-    console.log(data[1])
+    }))      
     return res.render('tweetsHome', { tweets: data })
 
   },
@@ -46,7 +45,7 @@ const tweetController = {
     const totalComment = tweet.toJSON().whoReply.length
     const totalCount = {
       totalLike, totalComment
-    }
+    }    
     res.render('tweet', { tweet: tweet.toJSON(), totalCount })
   }
 }
