@@ -31,7 +31,9 @@
 
           <a href="/users/{{userPage.id}}/profile" class="btn btn-outline-danger rounded-pill">編輯個人資料</a>
           {{else}}
-          <h1>hi</h1>
+          <div class="d-flex justify-content-around">
+            <form action="/follow"></form>
+          </div>
 
           {{/ifCond}}
 
@@ -62,7 +64,7 @@
           <a href="#userLikes" data-toggle="tab" class="user-nav nav-link text-center" style="width: 130px;">喜歡的內容</a>
         </div>
 
-        <div class="tab-content">
+        <div class="tab-content mt-2">
           <div id="userTweets" class="tab-pane active">
 
             <ul class="list-group list-group-flush">
