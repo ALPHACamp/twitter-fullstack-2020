@@ -46,7 +46,8 @@ const adminController = {
   },
   adminUsersPage: (req, res) => {
     User.findAll({ raw: true, nest: true })
-      .then(users => res.json({ users }))
+      .then(users => res.render('admin/adminUsersPage', { users })
+      )
       .catch(err => console.log(err))
   }
 }
