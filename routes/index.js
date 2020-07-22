@@ -1,3 +1,4 @@
+const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 
@@ -32,5 +33,11 @@ module.exports = (app, passport) => {
   app.get('/admin/users', adminAuthenticated, adminController.getUsers)
 
   app.get('/', (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, (req, res) => res.render('tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
+
+  app.post('/tweets', authenticated, tweetController.postTweet)
+  app.get('/tweets/:id', authenticated, tweetController.getTweet)
+  app.delete('/tweets/:id', adminAuthenticated, adminController.deleteTweet)
+
+  app.get('/api/users/:id', authenticated, (req, res) => res.render('setting'))
 }
