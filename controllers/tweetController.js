@@ -30,15 +30,11 @@ const tweetController = {
         order: [['createdAt', 'DESC']]
       })
         .then((tweets) => {
-<<<<<<< HEAD
-          res.render('home', { tweets: tweets, recommendFollowings: users })
-=======
           res.render('home', {
             tweets: tweets,
             recommendFollowings: users,
             currentUserId: Number(req.user.id)
           })
->>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
         })
         .catch((err) => res.send(err))
     })
@@ -73,19 +69,12 @@ const tweetController = {
           include: [User],
           order: [['createdAt', 'ASC']]
         }).then((replies) => {
-<<<<<<< HEAD
-          res.render('reply', { tweet, replies })
-=======
           res.render('reply', { tweet, replies, currentUserId: req.user.id })
->>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
         })
       })
       .catch((err) => res.send(err))
   },
   replyTweet: (req, res) => {
-<<<<<<< HEAD
-    res.send(req.body)
-=======
     const tweetId = Number(req.params.tweetId)
     return Reply.create({
       UserId: req.user.id,
@@ -116,7 +105,6 @@ const tweetController = {
           .catch((err) => res.send(err))
       })
       .catch((err) => res.send(err))
->>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
   }
 }
 

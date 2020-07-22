@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-5">
+    <div class="card" style="background: #FFFFFF; border: 1px solid #E6ECF0; box-sizing: border-box;">
+      <div class="row">
+        <div class="col-2">
+          <a href="/" class="m-3">
+            <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16 5.99988H3.41399L7.70699 1.70687C8.09699 1.31687 8.09699 0.683875 7.70699 0.292875C7.31699 -0.0981249 6.68399 -0.0971249 6.29299 0.292875L0.292988 6.29288C-0.0970117 6.68288 -0.0970117 7.31588 0.292988 7.70687L6.29299 13.7069C6.48799 13.9019 6.74299 13.9999 6.99999 13.9999C7.25699 13.9999 7.51199 13.9019 7.70699 13.7069C8.09699 13.3169 8.09699 12.6839 7.70699 12.2929L3.41399 7.99988H16C16.553 7.99988 17 7.55288 17 6.99988C17 6.44688 16.553 5.99988 16 5.99988Z"
+                fill="black" />
+            </svg>
+          </a>
+        </div>
+        <div class="col-10">
+          <h4>{{results.name}}</h4>
+          <p>{{results.tweetCount}} 推文</p>
+        </div>
+        <img src="{{results.cover}}" alt="background" style="width: 598px;height: 200px;">
+        <img src="{{results.avatar}}" alt="avatar">
+        <div class="card-body">
+          <h5 class="card-title">{{results.name}}</h5>
+          <p>{{results.account}}</p>
+          <p>{{results.introduction}}</p>
+          <div class="row">
+            <div class="col-6">
+              <p>{{results.followingCount}} 個追隨中</p>
+            </div>
+            <div class="col-6">
+              <p>{{results.followerCount}} 位追隨者</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4"></div>
+  </div>
