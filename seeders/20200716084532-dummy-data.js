@@ -85,6 +85,7 @@ module.exports = {
         UserId: (index % 6) + 1,
         description: faker.lorem.sentences(),
         replyCount: 3,
+        likeCount: 0,
         createdAt: new Date(),
         updatedAt: new Date()
       }))
