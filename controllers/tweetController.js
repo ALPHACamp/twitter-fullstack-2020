@@ -16,7 +16,8 @@ const tweetController = {
     
     
        data = tweets.map( r => ({
-        ...r,
+        ...r.dataValues,
+        userId:r.User.id,
         userName: r.User.name,
         userAvatar: r.User.avatar,
         userAccount: r.User.account,
