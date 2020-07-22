@@ -15,6 +15,28 @@ const tweetController = {
     }).then(tweets => {
       res.render('tweets', { user: req.user, tweets })
     })
+  },
+  postTweet: (req, res) => {
+    if (!req.body.description) {
+      return res.redirect('/')
+    }
+    return Tweet.create({
+      UserId: req.user.id,
+      description: req.body.description,
+    }).then(tweet => {
+      return res.redirect('/')
+    })
+  },
+  getTweet: (req, res) => {
+    Tweet.findByPk(req.params.id, {
+      include: [
+        User,
+        { model: User, as: 'likedUsers' },
+        { model: Reply, include: [User] }
+      ]
+    }).then(tweet => {
+      res.render('tweet', { tweet: tweet.toJSON() })
+    })
   }
 }
 
