@@ -16,7 +16,7 @@ const userController = {
           model: Tweet,
           include: { model: User, as: 'LikedUser' }
         },
-        { model: Tweet, include: Reply },
+        { model: Tweet },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -27,7 +27,7 @@ const userController = {
         results.followerCount = results.Followers.length
 
         for (let i = 0; i < results.Tweets.length; i++) {
-          results.Tweets[i].repliesCount = results.Tweets[i].Replies.length
+          results.Tweets[i].repliesCount = results.Tweets[i].replyCount
           results.Tweets[i].likeCount = results.Tweets[i].LikedUser.length
         }
 
@@ -63,8 +63,7 @@ const userController = {
         user.followerCount = user.Followers.length
 
         for (let i = 0; i < user.LikedTweets.length; i++) {
-          user.LikedTweets[i].repliesCount =
-            user.LikedTweets[i].LikedUser.length
+          user.LikedTweets[i].repliesCount = user.LikedTweets[i].replyCount
           user.LikedTweets[i].likeCount = user.LikedTweets[i].Replies.length
         }
 
