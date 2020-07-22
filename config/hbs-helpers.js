@@ -12,5 +12,8 @@ module.exports = {
   },
   moment: function (a) {
     return moment(a).fromNow()
+  },
+  moment_format: function (a) {
+    return moment(a).format('a h:mm．YYYY年MMMDo')
   }
 }

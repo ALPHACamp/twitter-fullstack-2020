@@ -14,10 +14,10 @@ const userController = {
       include: [
         {
           model: Tweet,
-          include: { model: User, as: 'LikedUser' },
+          include: { model: User, as: 'LikedUser' }
         },
-        { model: Tweet },
-      ],
+        { model: Tweet }
+      ]
     })
       .then((user) => {
         const results = user.toJSON()
@@ -37,19 +37,19 @@ const userController = {
         {
           model: Tweet,
           as: 'LikedTweets',
-          include: { model: User, as: 'LikedUser' },
+          include: { model: User, as: 'LikedUser' }
         },
         {
           model: Tweet,
           as: 'LikedTweets',
-          include: Reply,
+          include: Reply
         },
         {
           model: Tweet,
           as: 'LikedTweets',
-          include: User,
-        },
-      ],
+          include: User
+        }
+      ]
     })
       .then((user) => {
         user = user.toJSON()
@@ -84,7 +84,7 @@ const userController = {
       user
         .update({
           name: req.body.name,
-          introduction: req.body.introduction,
+          introduction: req.body.introduction
         })
         .then((user) => {
           req.flash('success_message', 'user was successfully to update')
@@ -94,30 +94,30 @@ const userController = {
   },
   getUserFollowerList: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'Followers' }, { model: Tweet }],
+      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
     }).then((user) => {
       const Followers = user.Followers.map((follower) => ({
         ...follower.dataValues,
         isFollowed: req.user.Followings.map((er) => er.id).includes(
           follower.id
-        ),
+        )
       }))
       const results = {
         user: user,
         tweetCount: user.Tweets.length,
-        Followers: Followers,
+        Followers: Followers
       }
       res.json(results)
     })
   },
   getUserFollowingList: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'Followings' }, { model: Tweet }],
+      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
     })
       .then((user) => {
         const results = {
           user: user,
-          tweetCount: user.Tweets.length,
+          tweetCount: user.Tweets.length
         }
         res.json(results)
       })
@@ -137,8 +137,8 @@ const userController = {
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({
-      followerId: req.user.id,
-      followingId: userId,
+      FollowerId: req.user.id,
+      FollowingId: userId
     })
       .then(() => {
         User.findByPk(req.user.id).then((user) => {
@@ -155,7 +155,7 @@ const userController = {
   },
   removeFollowing: (req, res) => {
     return Followship.findOne({
-      where: { followerId: req.user.id, followingId: req.params.userId },
+      where: { FollowerId: req.user.id, FollowingId: req.params.userId }
     })
       .then((followship) => {
         followship.destroy()
@@ -201,7 +201,7 @@ const userController = {
         account,
         name,
         email,
-        error_messages: '別偷懶~全部欄位均為必填呦！',
+        error_messages: '別偷懶~全部欄位均為必填呦！'
       }) // 密碼因安全性問題，要重新填寫
     }
     // 密碼 & 確認密碼檢查
@@ -210,7 +210,7 @@ const userController = {
         account,
         name,
         email,
-        error_messages: '密碼與確認密碼不符，請重新確認！',
+        error_messages: '密碼與確認密碼不符，請重新確認！'
       })
     }
     // 檢查 account & email 是否為唯一值
@@ -225,7 +225,7 @@ const userController = {
             avatar: 'https://image.flaticon.com/icons/svg/2948/2948062.svg',
             cover: 'https://unsplash.com/photos/mWRR1xj95hg',
             introduction: `Hi Guys,I'm ${name},nice to meet you!`,
-            role: 'user',
+            role: 'user'
           })
             .then(() => {
               req.flash('success_messages', '已成功註冊，請登入！')
@@ -238,7 +238,7 @@ const userController = {
             account,
             name,
             email,
-            error_messages: '帳號已存在，請更改成其他帳號！',
+            error_messages: '帳號已存在，請更改成其他帳號！'
           })
         }
         if (user.email === email) {
@@ -246,7 +246,7 @@ const userController = {
             account,
             name,
             email,
-            error_messages: 'Email已存在，請更改成其他Email！',
+            error_messages: 'Email已存在，請更改成其他Email！'
           })
         }
       })
@@ -279,13 +279,13 @@ const userController = {
     }
     return updateAccountAndPassword()
 
-    function updateAccount() {
+    function updateAccount () {
       User.findByPk(id)
         .then((user) =>
           user.update({
             account,
             name,
-            email,
+            email
           })
         )
         .then(() => {
@@ -294,14 +294,14 @@ const userController = {
         })
         .catch((err) => console.log(err))
     }
-    function updateAccountAndPassword() {
+    function updateAccountAndPassword () {
       User.findByPk(id)
         .then((user) =>
           user.update({
             account,
             name,
             email,
-            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
           })
         )
         .then(() => {
@@ -315,7 +315,7 @@ const userController = {
     req.logout()
     req.flash('success_messages', '已成功登出！')
     res.redirect('/signin')
-  },
+  }
 }
 
 module.exports = userController

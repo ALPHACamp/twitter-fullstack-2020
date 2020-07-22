@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Followship.init(
     {
-      followerId: DataTypes.INTEGER,
-      followingId: DataTypes.INTEGER
+      FollowerId: DataTypes.INTEGER,
+      FollowingId: DataTypes.INTEGER
     },
     {
       sequelize,

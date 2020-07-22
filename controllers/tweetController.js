@@ -2,6 +2,7 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
 
 const tweetController = {
   getHomePage: (req, res) => {
@@ -23,10 +24,13 @@ const tweetController = {
       const followings = req.user.Followings.map((user) => user.id)
       followings.push(req.user.id)
       Tweet.findAll({
-        where: { userId: followings },
+        where: { UserId: followings },
         raw: true,
         nest: true,
-        include: [User],
+        include: [
+          User,
+          { model: User, as: 'LikedUser' }
+        ],
         order: [['createdAt', 'DESC']]
       })
         .then((tweets) => {
@@ -55,27 +59,41 @@ const tweetController = {
       .catch((err) => res.send(err))
   },
   getReplyPage: (req, res) => {
-    const tweetId = req.params.tweetId
-    Tweet.findByPk(tweetId, {
+    const tweetId = Number(req.params.tweetId)
+    Tweet.findAll({
+      where: { id: tweetId },
       raw: true,
       nest: true,
-      include: [User, Reply]
+      include: [
+        User,
+        { model: User, as: 'LikedUser' }
+      ],
     })
       .then((tweet) => {
+        const isLiked = tweet.map(t => t.LikedUser.Like.UserId).includes(req.user.id)
+        tweet = tweet[0]
         Reply.findAll({
-          where: { tweetId: tweet.id },
+          where: { TweetId: tweetId },
           raw: true,
           nest: true,
           include: [User],
           order: [['createdAt', 'ASC']]
-        }).then((replies) => {
-          res.render('reply', { tweet, replies, currentUserId: req.user.id })
         })
+          .then((replies) => {
+            console.log(isLiked)
+            res.render('reply', {
+              tweet,
+              replies,
+              currentUserId: req.user.id,
+              isLiked
+            })
+          })
       })
       .catch((err) => res.send(err))
   },
-  replyTweet: (req, res) => {
+  postReply: (req, res) => {
     const tweetId = Number(req.params.tweetId)
+
     return Reply.create({
       UserId: req.user.id,
       TweetId: tweetId,
@@ -104,6 +122,37 @@ const tweetController = {
           })
           .catch((err) => res.send(err))
       })
+      .catch(err => res.send(err))
+  },
+  likeTweet: (req, res) => {
+    const tweetId = Number(req.params.tweetId)
+    return Like.create({
+      UserId: req.user.id,
+      TweetId: tweetId,
+    })
+      .then(() => {
+        return Tweet.findByPk(tweetId)
+          .then(tweet => tweet.increment('likeCount'))
+      })
+      .then(() => res.redirect('back'))
+      .catch((err) => res.send(err))
+  },
+  removeLike: (req, res) => {
+    const tweetId = Number(req.params.tweetId)
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: tweetId,
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+          .then(() => {
+            return Tweet.findByPk(tweetId)
+              .then(tweet => tweet.decrement('likeCount'))
+          })
+      })
+      .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   }
 }
