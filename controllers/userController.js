@@ -34,6 +34,11 @@ const userController = {
   signIn: (req, res) => {
     req.flash('successMessages', '登入成功')
     res.redirect('/tweets')
+  },
+  logout: (req, res) => {
+    req.flash('successMessage', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   }
 }
 

@@ -12,7 +12,8 @@ const authenticated = (req, res, next) => {
 const adminAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.role === 'admin') { return next() }
-    res.redirect('/')
+    req.flash('errorMessage', '非管理員請從前台登入')
+    res.redirect('/admin/signin')
   }
 }
 
@@ -31,6 +32,8 @@ module.exports = (app, passport) => {
     adminController.signIn)
   app.get('/admin/tweets', adminAuthenticated, adminController.getTweets)
   app.get('/admin/users', adminAuthenticated, adminController.getUsers)
+
+  app.get('/logout', userController.logout)
 
   app.get('/', (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
