@@ -240,7 +240,7 @@ let userController = {
     }))
     let TweetCount = data.length
 console.log(userDate)
-    res.render('profile', { user: userDate, tweets: tweetData, followShip: count, TweetCount: TweetCount })
+    res.render('userPage', { user: userDate, tweets: tweetData, followShip: count, TweetCount: TweetCount })
   }
 };
 
