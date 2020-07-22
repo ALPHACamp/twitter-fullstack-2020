@@ -11,10 +11,12 @@
             <div class="card-body">
                 <p class="card-text"> {{this.name}} </p>
                 <p class="card-text"> {{this.account}} </p>
-                <p class="card-text-left"> 文字方塊{{this.TweetCount}} </p>              
-                <p class="card-text-right"> 愛心{{this.LikeCount}} </p>
-                <p class="card-text"> {{this.FollowerCount}} 位追隨者</p>
-                <p class="card-text"> {{this.FollowingCount}} 位跟隨者</p>                
+                <a> 文字方塊{{this.TweetCount}} </a>
+                <a> 愛心{{this.LikeCount}} </a>
+                <div>
+                    <a> {{this.FollowerCount}} 位追隨者</a>
+                    <a> {{this.FollowingCount}} 位跟隨者</a>
+                </div>
             </div>
         </div>
     </div>
