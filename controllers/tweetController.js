@@ -60,14 +60,18 @@ const tweetController = {
   },
   getReplyPage: (req, res) => {
     const tweetId = Number(req.params.tweetId)
-    Tweet.findByPk(tweetId, {
+    Tweet.findAll({
+      where: { id: tweetId },
       raw: true,
       nest: true,
       include: [
-        User
+        User,
+        { model: User, as: 'LikedUser' }
       ],
     })
       .then((tweet) => {
+        const isLiked = tweet.map(t => t.LikedUser.Like.UserId).includes(req.user.id)
+        tweet = tweet[0]
         Reply.findAll({
           where: { TweetId: tweetId },
           raw: true,
@@ -76,10 +80,12 @@ const tweetController = {
           order: [['createdAt', 'ASC']]
         })
           .then((replies) => {
+            console.log(isLiked)
             res.render('reply', {
               tweet,
               replies,
-              currentUserId: req.user.id
+              currentUserId: req.user.id,
+              isLiked
             })
           })
       })
@@ -128,9 +134,27 @@ const tweetController = {
         return Tweet.findByPk(tweetId)
           .then(tweet => tweet.increment('likeCount'))
       })
-      .then(() => res.redirect(`back`))
+      .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   },
+  removeLike: (req, res) => {
+    const tweetId = Number(req.params.tweetId)
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: tweetId,
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+          .then(() => {
+            return Tweet.findByPk(tweetId)
+              .then(tweet => tweet.decrement('likeCount'))
+          })
+      })
+      .then(() => res.redirect('back'))
+      .catch((err) => res.send(err))
+  }
 }
 
 module.exports = tweetController

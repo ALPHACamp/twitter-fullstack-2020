@@ -24,13 +24,17 @@
         {{tweet.replyCount}} 回覆 {{tweet.likeCount}}喜歡次數
       </div>
       <div class="col-12">
-        <i class="far fa-comment" data-toggle="modal" data-target="#replyTweet"></i>
-        <a href="/like/{{tweet.id}}"><i class="far fa-heart"></i></a>
+        <i class="far fa-comment fa-2x mr-5" data-toggle="modal" data-target="#replyTweet"></i>
+        {{#if isLiked}}
+        <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart fa-2x" style="color: salmon;"></i></a>
+        {{else}}
+        <a href="/like/{{tweet.id}}"><i class="far fa-heart fa-2x" style="color: salmon;"></i></a>
+        {{/if}}
       </div>
     </div>
 
 
-    <div class="row" id="reply-list">
+    <div class=" row" id="reply-list">
       {{#each replies}}
       <div class="row w-100" style="border: 1px solid grey;">
         <div class="col-1">

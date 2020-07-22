@@ -6,6 +6,7 @@ const helper = require('../_helpers')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
+const tweet = require('../models/tweet')
 
 // 判斷是否已登入
 const authenticated = (req, res, next) => {
@@ -36,6 +37,7 @@ router.delete('/tweets/:tweetId', tweetController.deleteTweet)
 router.post('/following/:userId', userController.addFollowing)
 router.delete('/following/:userId', userController.removeFollowing)
 router.get('/like/:tweetId', tweetController.likeTweet)
+router.get('/unlike/:tweetId', tweetController.removeLike)
 // 取得登入頁面
 router.get('/signin', userController.userSigninPage)
 // 取得註冊頁面
