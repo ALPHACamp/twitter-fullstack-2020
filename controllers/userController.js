@@ -52,7 +52,7 @@ const userController = {
       ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
-      res.render('userTweets', { tweets })
+      res.render('user-tweets', { tweets })
     })
   },
   //該名使用者的所有喜歡內容
@@ -66,11 +66,11 @@ const userController = {
     })
       .then(user => {
         console.log(user.toJSON())
-        res.render('userLikes', { user: user.toJSON() })
+        res.render('user-likes', { user: user.toJSON() })
       })
   },
   //該名使用者的所有回覆內容
-  getReplies: (req, res) => res.render('userReplies'),
+  getReplies: (req, res) => res.render('user-replies'),
 }
 
 module.exports = userController
