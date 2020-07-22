@@ -76,6 +76,7 @@ const tweetController = {
   },
   replyTweet: (req, res) => {
     const tweetId = Number(req.params.tweetId)
+
     return Reply.create({
       UserId: req.user.id,
       TweetId: tweetId,
