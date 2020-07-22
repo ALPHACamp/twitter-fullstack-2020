@@ -230,8 +230,7 @@ const userController = {
       .catch((err) => res.send(err))
   },
   accountSettingPage: (req, res) => {
-    const { account, name, email } = helpers.getUser(req)
-    res.render('accountSettingPage', { account, name, email })
+    res.render('accountSettingPage')
   },
   accountSetting: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
