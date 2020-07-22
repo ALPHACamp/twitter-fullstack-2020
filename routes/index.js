@@ -1,4 +1,5 @@
 const userController = require('../controllers/userController')
+const adminController = require('../controllers/adminController')
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
@@ -20,8 +21,15 @@ module.exports = (app, passport) => {
 
   app.get('/signin', userController.signInPage)
   app.post('/signin',
-    passport.authenticate('local', { successRedirect: '/', failureRedirect: '/signin', failureFlash: true }),
+    passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }),
     userController.signIn)
+
+  app.get('/admin/signin', adminController.signInPage)
+  app.post('/admin/signin',
+    passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }),
+    adminController.signIn)
+  app.get('/admin/tweets', adminAuthenticated, adminController.getTweets)
+  app.get('/admin/users', adminAuthenticated, adminController.getUsers)
 
   app.get('/', (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, (req, res) => res.render('tweets'))
