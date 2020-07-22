@@ -8,12 +8,12 @@ const tweetController = {
   getHomePage: (req, res) => {
     // 推薦追蹤名單 (follower人數top6)
     User.findAll({
-      include: [{ model: User, as: 'Followers' }],
+      include: [{ model: User, as: 'Followers' }]
     }).then((users) => {
       users = users.map((user) => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: user.Followers.map((er) => er.id).includes(req.user.id),
+        isFollowed: user.Followers.map((er) => er.id).includes(req.user.id)
       }))
       // 去除掉自己
       users = users.filter((user) => user.id !== req.user.id)
@@ -27,14 +27,17 @@ const tweetController = {
         where: { UserId: followings },
         raw: true,
         nest: true,
-        include: [User],
-        order: [['createdAt', 'DESC']],
+        include: [
+          User,
+          { model: User, as: 'LikedUser' }
+        ],
+        order: [['createdAt', 'DESC']]
       })
         .then((tweets) => {
           res.render('home', {
             tweets: tweets,
             recommendFollowings: users,
-            currentUserId: Number(req.user.id),
+            currentUserId: Number(req.user.id)
           })
         })
         .catch((err) => res.send(err))
@@ -43,7 +46,7 @@ const tweetController = {
   postTweet: (req, res) => {
     return Tweet.create({
       UserId: req.user.id,
-      description: req.body.tweet,
+      description: req.body.tweet
     })
       .then(() => res.redirect('/tweets'))
       .catch((err) => res.send(err))
@@ -56,32 +59,29 @@ const tweetController = {
       .catch((err) => res.send(err))
   },
   getReplyPage: (req, res) => {
-    const tweetId = req.params.tweetId
+    const tweetId = Number(req.params.tweetId)
     Tweet.findByPk(tweetId, {
       raw: true,
       nest: true,
       include: [
-        User,
-        Reply,
-        { model: User, as: 'LikedUser' }
+        User
       ],
     })
       .then((tweet) => {
         Reply.findAll({
-          where: { TweetId: tweet.id },
+          where: { TweetId: tweetId },
           raw: true,
           nest: true,
           include: [User],
-          order: [['createdAt', 'ASC']],
-        }).then((replies) => {
-          console.log(tweet.LikedUser)
-          res.render('reply', {
-            tweet,
-            replies,
-            currentUserId: req.user.id,
-            likeCount: tweet.LikedUser.Like.length || 0
-          })
+          order: [['createdAt', 'ASC']]
         })
+          .then((replies) => {
+            res.render('reply', {
+              tweet,
+              replies,
+              currentUserId: req.user.id
+            })
+          })
       })
       .catch((err) => res.send(err))
   },
@@ -95,33 +95,39 @@ const tweetController = {
     })
       .then(() => {
         return Tweet.findByPk(tweetId)
-          .then(tweet => {
+          .then((tweet) => {
             tweet.increment('replyCount')
           })
           .then(() => res.redirect('back'))
       })
-      .catch(err => res.send(err))
+      .catch((err) => res.send(err))
   },
   deleteReply: (req, res) => {
     return Reply.findByPk(req.params.replyId)
       .then((reply) => {
-        reply.destroy()
+        reply
+          .destroy()
           .then(() => {
             return Tweet.findByPk(req.params.tweetId)
-              .then(tweet => {
+              .then((tweet) => {
                 tweet.decrement('replyCount')
               })
               .then(() => res.redirect('back'))
           })
-          .catch(err => res.send(err))
+          .catch((err) => res.send(err))
       })
       .catch(err => res.send(err))
   },
   likeTweet: (req, res) => {
+    const tweetId = Number(req.params.tweetId)
     return Like.create({
       UserId: req.user.id,
-      TweetId: Number(req.params.tweetId),
+      TweetId: tweetId,
     })
+      .then(() => {
+        return Tweet.findByPk(tweetId)
+          .then(tweet => tweet.increment('likeCount'))
+      })
       .then(() => res.redirect(`back`))
       .catch((err) => res.send(err))
   },
