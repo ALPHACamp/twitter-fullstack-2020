@@ -71,6 +71,20 @@ const userController = {
   },
   //該名使用者的所有回覆內容
   getReplies: (req, res) => res.render('user-replies'),
+  editUser: (req, res) => res.render('setting'),
+  putUser: (req, res) => {
+    const id = Number(req.params.id)
+    const userId = req.user.id
+    if (userId !== id) {
+      req.flash('errorMessage', 'error')
+      res.redirect('/tweets')
+    }
+    const { name, avtar, cover, introduction } = req.body
+    return User.findByPk(id)
+      .then(user => {
+      })
+      .then(() => res.redirect('/tweets'))
+  }
 }
 
 module.exports = userController

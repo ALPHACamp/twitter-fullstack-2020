@@ -37,14 +37,15 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
   app.get('/', (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetController.getTweets)
 
+  app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweet)
   app.get('/tweets/:id', authenticated, tweetController.getTweet)
   app.delete('/tweets/:id', adminAuthenticated, adminController.deleteTweet)
 
-  app.get('/api/users/:id', authenticated, (req, res) => res.render('setting'))
-  app.get('/api/admin/users/:id', adminAuthenticated, (req, res) => res.render('admin/setting'))
+  app.get('/api/admin/users/:id', adminAuthenticated, adminController.editUser)
+  app.get('/api/users/:id', authenticated, userController.editUser)
+  app.post('/api/users/:id', authenticated, userController.putUser)
 
   app.get('/users/:id/tweets', authenticated, userController.getTweets)
   app.get('/users/:id/likes', authenticated, userController.getLikes)
