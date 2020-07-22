@@ -37,7 +37,9 @@ module.exports = (sequelize, DataTypes) => {
       avatar: DataTypes.STRING,
       cover: DataTypes.STRING,
       introduction: DataTypes.STRING,
-      role: DataTypes.STRING
+      role: DataTypes.STRING,
+      followerCount: DataTypes.INTEGER,
+      followingCount: DataTypes.INTEGER
     },
     {
       sequelize,

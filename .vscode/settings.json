@@ -4,6 +4,5 @@
   "editor.tabSize": 2,
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
   "javascript.format.insertSpaceAfterConstructor": true,
-  "standard.autoFixOnSave": true,
-  "editor.formatOnSave": true
+  "standard.autoFixOnSave": true
 }

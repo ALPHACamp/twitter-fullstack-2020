@@ -16,18 +16,13 @@ const userController = {
           model: Tweet,
           include: { model: User, as: 'LikedUser' }
         },
-        { model: Tweet, include: Reply },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        { model: Tweet }
       ]
     })
       .then((user) => {
         const results = user.toJSON()
-        results.followingCount = results.Followings.length
-        results.followerCount = results.Followers.length
-
         for (let i = 0; i < results.Tweets.length; i++) {
-          results.Tweets[i].repliesCount = results.Tweets[i].Replies.length
+          results.Tweets[i].repliesCount = results.Tweets[i].replyCount
           results.Tweets[i].likeCount = results.Tweets[i].LikedUser.length
         }
 
@@ -52,22 +47,15 @@ const userController = {
           model: Tweet,
           as: 'LikedTweets',
           include: User
-        },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        }
       ]
     })
       .then((user) => {
         user = user.toJSON()
-        user.followingCount = user.Followings.length
-        user.followerCount = user.Followers.length
-
         for (let i = 0; i < user.LikedTweets.length; i++) {
-          user.LikedTweets[i].repliesCount =
-            user.LikedTweets[i].LikedUser.length
+          user.LikedTweets[i].repliesCount = user.LikedTweets[i].replyCount
           user.LikedTweets[i].likeCount = user.LikedTweets[i].Replies.length
         }
-
         res.json(user)
       })
       .catch((err) => res.send(err))
@@ -138,6 +126,16 @@ const userController = {
       followerId: req.user.id,
       followingId: userId
     })
+      .then(() => {
+        User.findByPk(req.user.id).then((user) => {
+          user.increment('followingCount')
+        })
+      })
+      .then(() => {
+        User.findByPk(userId).then((user) => {
+          user.increment('followerCount')
+        })
+      })
       .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   },
@@ -146,8 +144,19 @@ const userController = {
       where: { followerId: req.user.id, followingId: req.params.userId }
     })
       .then((followship) => {
-        followship.destroy().then(() => res.redirect('back'))
+        followship.destroy()
       })
+      .then(() => {
+        User.findByPk(req.user.id).then((user) => {
+          user.decrement('followingCount')
+        })
+      })
+      .then(() => {
+        User.findByPk(req.params.userId).then((user) => {
+          user.decrement('followerCount')
+        })
+      })
+      .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   },
   userSigninPage: (req, res) => {
