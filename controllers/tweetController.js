@@ -30,13 +30,33 @@ const tweetController = {
         order: [['createdAt', 'DESC']]
       })
         .then((tweets) => {
+<<<<<<< HEAD
           res.render('home', { tweets: tweets, recommendFollowings: users })
+=======
+          res.render('home', {
+            tweets: tweets,
+            recommendFollowings: users,
+            currentUserId: Number(req.user.id)
+          })
+>>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
         })
         .catch((err) => res.send(err))
     })
   },
   postTweet: (req, res) => {
-    res.json(req.body)
+    return Tweet.create({
+      UserId: req.user.id,
+      description: req.body.tweet
+    })
+      .then(() => res.redirect('/tweets'))
+      .catch((err) => res.send(err))
+  },
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.tweetId)
+      .then((tweet) => {
+        tweet.destroy().then(() => res.redirect('back'))
+      })
+      .catch((err) => res.send(err))
   },
   getReplyPage: (req, res) => {
     const tweetId = req.params.tweetId
@@ -53,13 +73,50 @@ const tweetController = {
           include: [User],
           order: [['createdAt', 'ASC']]
         }).then((replies) => {
+<<<<<<< HEAD
           res.render('reply', { tweet, replies })
+=======
+          res.render('reply', { tweet, replies, currentUserId: req.user.id })
+>>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
         })
       })
       .catch((err) => res.send(err))
   },
   replyTweet: (req, res) => {
+<<<<<<< HEAD
     res.send(req.body)
+=======
+    const tweetId = Number(req.params.tweetId)
+    return Reply.create({
+      UserId: req.user.id,
+      TweetId: tweetId,
+      comment: req.body.reply
+    })
+      .then(() => {
+        return Tweet.findByPk(tweetId)
+          .then((tweet) => {
+            tweet.increment('replyCount')
+          })
+          .then(() => res.redirect('back'))
+      })
+      .catch((err) => res.send(err))
+  },
+  deleteReply: (req, res) => {
+    return Reply.findByPk(req.params.replyId)
+      .then((reply) => {
+        reply
+          .destroy()
+          .then(() => {
+            return Tweet.findByPk(req.params.tweetId)
+              .then((tweet) => {
+                tweet.decrement('replyCount')
+              })
+              .then(() => res.redirect('back'))
+          })
+          .catch((err) => res.send(err))
+      })
+      .catch((err) => res.send(err))
+>>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
   }
 }
 

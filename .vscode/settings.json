@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "editor.tabSize": 2,
   "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
   "javascript.format.insertSpaceAfterConstructor": true,
@@ -6,4 +7,12 @@
   "editor.formatOnSave": true,
   "prettier.singleQuote": true,
   "prettier.semi": false
+=======
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "editor.tabSize": 2,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "standard.autoFixOnSave": true
+>>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
 }

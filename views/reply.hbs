@@ -23,12 +23,19 @@
 
     <div class="row" id="reply-list">
       {{#each replies}}
-      <div class="row" style="border: 1px solid grey;">
+      <div class="row w-100" style="border: 1px solid grey;">
         <div class="col-1">
           <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px">
         </div>
-        <div class="col-10">
-          <div class="col-12">{{this.User.name}} <small class="ml-3">{{this.User.account}}</small></div>
+        <div class="col-11">
+          <div class="row">
+            <div class="col">{{this.User.name}} <small class="ml-3">{{this.User.account}}</small></div>
+            {{#ifEqual this.User.id ../currentUserId}}
+            <form action="/tweets/{{this.TweetId}}/{{this.id}}?_method=DELETE" method="post" class=" ml-auto">
+              <button class="btn btn-outline-danger pull-right" type="submit">&times;</button>
+            </form>
+            {{/ifEqual}}
+          </div>
           <div class="col-12">回覆{{../tweet.User.account}}</div>
           <div class="col-12">{{this.comment}}</div>
         </div>

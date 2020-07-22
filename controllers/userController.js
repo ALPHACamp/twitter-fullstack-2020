@@ -1,8 +1,8 @@
 const bcrypt = require('bcryptjs')
 const { Sequelize } = require('../models')
 const { or } = Sequelize.Op
-
 const db = require('../models')
+const helpers = require('../_helpers')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -16,10 +16,111 @@ const userController = {
           model: Tweet,
           include: { model: User, as: 'LikedUser' }
         },
-        { model: Tweet, include: Reply },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        { model: Tweet }
       ]
+<<<<<<< HEAD
+=======
+    })
+      .then((user) => {
+        const results = user.toJSON()
+        for (let i = 0; i < results.Tweets.length; i++) {
+          results.Tweets[i].repliesCount = results.Tweets[i].replyCount
+          results.Tweets[i].likeCount = results.Tweets[i].LikedUser.length
+        }
+
+        return res.json(results)
+      })
+      .catch((err) => res.send(err))
+  },
+  getUserLikeContent: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Tweet,
+          as: 'LikedTweets',
+          include: { model: User, as: 'LikedUser' }
+        },
+        {
+          model: Tweet,
+          as: 'LikedTweets',
+          include: Reply
+        },
+        {
+          model: Tweet,
+          as: 'LikedTweets',
+          include: User
+        }
+      ]
+    })
+      .then((user) => {
+        user = user.toJSON()
+        for (let i = 0; i < user.LikedTweets.length; i++) {
+          user.LikedTweets[i].repliesCount = user.LikedTweets[i].replyCount
+          user.LikedTweets[i].likeCount = user.LikedTweets[i].Replies.length
+        }
+        res.json(user)
+      })
+      .catch((err) => res.send(err))
+  },
+  editUser: (req, res) => {
+    if (Number(req.params.id) === Number(req._passport.session.user)) {
+      return User.findByPk(req.params.id).then((user) => {
+        user = user.toJSON()
+        return res.json(user)
+      })
+    } else {
+      req.flash(
+        'error_message',
+        "You don't have the authority to do this action"
+      )
+      return res.redirect('back')
+    }
+  },
+  putUser: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_message', "name didn't exist")
+      return res.redirect('back')
+    }
+    return User.findByPk(req.params.id).then((user) => {
+      user
+        .update({
+          name: req.body.name,
+          introduction: req.body.introduction
+        })
+        .then((user) => {
+          req.flash('success_message', 'user was successfully to update')
+          res.json(user)
+        })
+    })
+  },
+  getUserFollowerList: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+    }).then((user) => {
+      const Followers = user.Followers.map((follower) => ({
+        ...follower.dataValues,
+        isFollowed: req.user.Followings.map((er) => er.id).includes(
+          follower.id
+        )
+      }))
+      const results = {
+        user: user,
+        tweetCount: user.Tweets.length,
+        Followers: Followers
+      }
+      res.json(results)
+    })
+  },
+  getUserFollowingList: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+    }).then((user) => {
+      const results = {
+        user: user,
+        tweetCount: user.Tweets.length
+      }
+      res.json(results)
+>>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
     })
       .then((user) => {
         const results = user.toJSON()
@@ -40,6 +141,16 @@ const userController = {
       followerId: req.user.id,
       followingId: userId
     })
+      .then(() => {
+        User.findByPk(req.user.id).then((user) => {
+          user.increment('followingCount')
+        })
+      })
+      .then(() => {
+        User.findByPk(userId).then((user) => {
+          user.increment('followerCount')
+        })
+      })
       .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   },
@@ -48,8 +159,24 @@ const userController = {
       where: { followerId: req.user.id, followingId: req.params.userId }
     })
       .then((followship) => {
+<<<<<<< HEAD
         followship.destroy().then(() => res.redirect('back'))
       })
+=======
+        followship.destroy()
+      })
+      .then(() => {
+        User.findByPk(req.user.id).then((user) => {
+          user.decrement('followingCount')
+        })
+      })
+      .then(() => {
+        User.findByPk(req.params.userId).then((user) => {
+          user.decrement('followerCount')
+        })
+      })
+      .then(() => res.redirect('back'))
+>>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
       .catch((err) => res.send(err))
   },
   userSigninPage: (req, res) => {
@@ -70,7 +197,7 @@ const userController = {
   // 使用者成功登入後訊息提示
   userSigninSuccess: (req, res) => {
     req.flash('success_messages', '登入成功！')
-    res.redirect('/home')
+    res.redirect('/tweets')
   },
   userSignup: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
@@ -106,7 +233,14 @@ const userController = {
             introduction: `Hi Guys,I'm ${name},nice to meet you!`,
             role: 'user'
           })
+<<<<<<< HEAD
             .then(() => res.redirect('/signin'))
+=======
+            .then(() => {
+              req.flash('success_messages', '已成功註冊，請登入！')
+              res.redirect('/signin')
+            })
+>>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
             .catch((err) => res.send(err))
         }
         if (user.account === account) {
@@ -130,6 +264,67 @@ const userController = {
   },
   accountSettingPage: (req, res) => {
     res.render('accountSettingPage')
+  },
+  accountSetting: (req, res) => {
+    const { account, name, email, password, checkPassword } = req.body
+    const { id } = helpers.getUser(req)
+    // 檢查必填
+    if (!account || !name || !email) {
+      req.flash('error_messages', '請填寫必填項目:帳戶、名稱、E-mail')
+      return res.redirect('/setting')
+    }
+    // 不更改密碼的情況
+    if (!password && !checkPassword) {
+      return updateAccount()
+    }
+    // 更改密碼，但缺其中一個
+    if (!password || !checkPassword) {
+      req.flash('error_messages', '欲更改密碼，請填入新密碼與確認新密碼！')
+      return res.redirect('/setting')
+    }
+    // 密碼不相符
+    if (password !== checkPassword) {
+      req.flash('error_messages', '新密碼與確認新密碼不符，請重新確認！')
+      return res.redirect('/setting')
+    }
+    return updateAccountAndPassword()
+
+    function updateAccount () {
+      User.findByPk(id)
+        .then((user) =>
+          user.update({
+            account,
+            name,
+            email
+          })
+        )
+        .then(() => {
+          req.flash('success_messages', '成功修改帳戶設定！')
+          res.redirect('/setting')
+        })
+        .catch((err) => console.log(err))
+    }
+    function updateAccountAndPassword () {
+      User.findByPk(id)
+        .then((user) =>
+          user.update({
+            account,
+            name,
+            email,
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+          })
+        )
+        .then(() => {
+          req.flash('success_messages', '成功修改帳戶設定！')
+          res.redirect('/setting')
+        })
+        .catch((err) => console.log(err))
+    }
+  },
+  signout: (req, res) => {
+    req.logout()
+    req.flash('success_messages', '已成功登出！')
+    res.redirect('/signin')
   }
 }
 

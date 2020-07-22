@@ -35,3 +35,5 @@ app.use((req, res, next) => {
 app.listen(PORT, () => console.log(`The server is running on http://localhost:${PORT}`))
 
 useRoutes(app)
+
+module.exports = app

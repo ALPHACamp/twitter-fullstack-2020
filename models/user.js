@@ -37,7 +37,13 @@ module.exports = (sequelize, DataTypes) => {
       avatar: DataTypes.STRING,
       cover: DataTypes.STRING,
       introduction: DataTypes.STRING,
+<<<<<<< HEAD
       role: DataTypes.STRING
+=======
+      role: DataTypes.STRING,
+      followerCount: DataTypes.INTEGER,
+      followingCount: DataTypes.INTEGER
+>>>>>>> ccb3f4f97d97e5bade1f58769b61690252664e76
     },
     {
       sequelize,
