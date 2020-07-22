@@ -17,15 +17,10 @@ const userController = {
           include: { model: User, as: 'LikedUser' },
         },
         { model: Tweet },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
       ],
     })
       .then((user) => {
         const results = user.toJSON()
-        results.followingCount = results.Followings.length
-        results.followerCount = results.Followers.length
-
         for (let i = 0; i < results.Tweets.length; i++) {
           results.Tweets[i].repliesCount = results.Tweets[i].replyCount
           results.Tweets[i].likeCount = results.Tweets[i].LikedUser.length
