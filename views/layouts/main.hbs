@@ -79,23 +79,28 @@
         {{#each topUsers}}
         <li class="list-group-item d-flex justify-content-between bg-light">
           <div class="user-wrap d-flex">
-            <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+            <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
           <div class="user d-flex flex-column justify-content-center">
             <div class="user-name font-weight-bold">
-              Marc
+              {{this.name}}
             </div>
             {{!-- 連結到user 頁面 --}}
             <a href="/users/{{this.id}}" class="user-account text-secondary">
-              @marc
+              @ {{this.account}}
             </a>
 
           </div>
           </div>
 
-          {{!-- 未完成 需要依照followship 切換跟隨和正在跟隨 --}}
-          <form action="/users/{{this.id}}/followings" method="post" class="d-flex align-items-center ml-4">
+          {{#if this.isFollowed}}
+          <form action="/followings/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
+            <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
+          </form>
+          {{else}}
+          <form action="/followings/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
           </form>
+          {{/if}}
 
           {{/each}}
 
