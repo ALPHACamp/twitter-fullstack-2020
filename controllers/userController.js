@@ -1,7 +1,14 @@
 const db = require('../models');
 const User = db.User;
+
+const Tweet = db.Tweet
+
+const Reply = db.Reply
+
+const Like = db.Like;
+const Followship = db.Followship;
+
 const bcrypt = require('bcryptjs');
-const { use } = require('chai');
 
 let userController = {
   loginPage: (req, res) => {
@@ -14,11 +21,12 @@ let userController = {
         { model: User, as: 'Followings' }
       ]
     }).then((users) => {
-      console.log(users);
+      //console.log(users);
+      //console.log(req.user.id);
       users = users.map((user) => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: req.user.Followings//.map((d) => d.id).includes(user.id)
+        isFollowed: user.Followings.map((d) => d.id).includes(req.user.id)
       }));
       users = users
         .sort((a, b) => b.FollowerCount - a.FollowerCount)
@@ -27,6 +35,8 @@ let userController = {
       req.flash('success_messages', 'Login successfully');
       return res.redirect('/tweets');
     });
+    // req.flash('success_messages', 'Login successfully');
+    // return res.redirect('/tweets');
   },
   signUpPage: (req, res) => {
     return res.render('signup');
@@ -87,6 +97,103 @@ let userController = {
         });
       }
     });
+  },
+  getUserTweet: async (req, res) => {
+    const id = req.params.id
+    console.log(req.topUsers)
+    //user table
+    const user = await User.findOne({
+      where: { id },
+      include: [
+        Tweet,
+        { model: Tweet, as: 'userLike' },
+        { model: Tweet, include:[User], as: 'UserReply' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+    console.log(user.toJSON().Followers)
+    const tweetsCount = user.toJSON().Tweets.length
+    const followersCount = user.toJSON().Followers.length
+    const followingsCount = user.toJSON().Followings.length
+    const count = {
+      tweetsCount,
+      followersCount, 
+      followingsCount
+    } 
+    // all user's tweets
+    // all user's likes
+    // all user's replies
+    res.render('userPage', { user: user.toJSON(), count })
+  },
+  addLike: async (req, res) => {
+    try {
+      const newLike = await Like.create({
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      });
+      res.redirect('back');
+    } catch (err) {
+      console.log(err);
+      res.send('something is wrong');
+    }
+  },
+  removeLike: async (req, res) => {
+    try {
+      const toRemove = await Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId: req.params.tweetId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
+  },
+  editUser: async (req, res) => {
+    try {
+      //check if it's the current user who intends to edit. If not, back to last page
+      if (req.user.id !== Number(req.params.userId)) {
+        return res.redirect('back');
+      }
+      const toEdit = await User.findByPk(req.params.userId);
+      res.render('user_edit', { user: toEdit.toJSON() });
+    } catch (err) {
+      console.log(err);
+      res.send(err);
+    }
+  },
+  addFollowing: async (req, res) => {
+    try {
+      //check if the user if trying to follow himself
+      if (req.user.id == Number(req.params.userId)) {
+        req.flash('error_messages', 'you cannot follow yourself');
+        return res.redirect('back');
+      }
+      const newFollowship = await Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.userId
+      });
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
+  },
+  removeFollowing: async (req, res) => {
+    try {
+      const toRemove = await Followship.findOne({
+        where: {
+          followerId: req.user.id,
+          followingId: req.params.userId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
   }
 };
 

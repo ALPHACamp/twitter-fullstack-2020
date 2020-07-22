@@ -12,11 +12,12 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
-const passport = require('./config/passport')
+const passport = require('./config/passport');
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 //iew engine
+app.use( express.static(__dirname + 'css'))
 app.engine(
   'hbs',
   exphbs({
@@ -42,11 +43,13 @@ app.use(
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static('public'))
 //flash
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');
+  res.locals.myUser = req.user;
   next();
 });
 require('./routes')(app);

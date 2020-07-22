@@ -5,6 +5,7 @@ const tweetController = require('../controllers/tweetController');
 const adminController = require('../controllers/adminController.js');
 const helpers = require('../_helpers');
 const passport = require('passport');
+
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     return next();
@@ -25,11 +26,15 @@ const authenticatedAdmin = (req, res, next) => {
 
 router.get('/', (req, res) => res.redirect('/tweets'));
 
-router.get('/tweets', tweetController.getTweets);
-router.get('/tweets/:id', tweetController.getTweet);
+router.get('/tweets', authenticated, tweetController.getTweets);
+router.get('/tweets/:id', authenticated, tweetController.getTweet);
 
+router.get('/signup', userController.signUpPage);
+router.post('/signup', userController.signup);
 router.get('/login', userController.loginPage);
-router.post('/login', passport.authenticate('local', {
+router.post(
+  '/login',
+  passport.authenticate('local', {
     failureRedirect: '/login',
     failureFlash: true
   }),
@@ -37,20 +42,36 @@ router.post('/login', passport.authenticate('local', {
 );
 
 router.get('/admin/login', adminController.adminLoginPage);
-router.post('/admin/login', passport.authenticate('local', {
+router.post(
+  '/admin/login',
+  passport.authenticate('local', {
     failureRedirect: '/admin/login',
     failureFlash: true
   }),
   adminController.login
 );
-router.get('/admin', (req, res) => res.redirect('/admin/tweets'))
-router.get('/admin/tweets', adminController.getTweets)
-router.get('/admin/tweetsUser', adminController.getUsers)
-router.delete('/admin/tweets/:id', adminController.deleteTweet)
+router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
+router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
+router.get('/admin/tweetsUser', authenticatedAdmin, adminController.getUsers);
+router.delete(
+  '/admin/tweets/:id',
+  authenticatedAdmin,
+  adminController.deleteTweet
+);
 
-router.get('/signup', userController.signUpPage);
-router.post('/signup', userController.signup);
+router.get('/users/:id', userController.getUserTweet)
 
 
+router.post('/likes/:tweetId', authenticated, userController.addLike);
+router.delete('/likes/:tweetId', authenticated, userController.removeLike);
+
+router.post('/followings/:userId', authenticated, userController.addFollowing);
+router.delete(
+  '/followings/:userId',
+  authenticated,
+  userController.removeFollowing
+);
+
+router.get('/users/:userId/edit', authenticated, userController.editUser);
 
 module.exports = router;
