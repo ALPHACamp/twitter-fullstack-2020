@@ -33,3 +33,16 @@ modalTweetTextarea.addEventListener('input', function (e) {
     modalTweetButton.style.display = 'none'
   }
 })
+
+// profile modal count input
+const nameInput = document.querySelector('.username-input')
+const nameInputCount = document.querySelector('.username-input-count')
+const briefInput = document.querySelector('.brief-input')
+const briefInputCount = document.querySelector('.brief-input-count')
+
+function nameWordCount () {
+  return nameInputCount.innerHTML = nameInput.value.length
+}
+function briefWordCount () {
+  return briefInputCount.innerHTML = briefInput.value.length
+}
