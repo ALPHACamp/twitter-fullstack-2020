@@ -29,24 +29,24 @@ const tweetController = {
     return res.render('tweetsHome', { tweets: data })
 
   },
-  getTweet: async (req, res) => {
-    const id = req.params.id
-    const tweet = await Tweet.findOne({
-      where: { id },
-      include: [
-        User,
-        { model: User, as: 'whoReply' }
-      ]
-    })
-    const totalLike = await Like.count({
-      where: { UserId: id }
-    })
-
-    const totalComment = tweet.toJSON().whoReply.length
-    const totalCount = {
-      totalLike, totalComment
-    }    
-    res.render('tweet', { tweet: tweet.toJSON(), totalCount })
-  }
+    getTweet: async (req, res) => {
+      const id = req.params.id
+      const tweet = await Tweet.findOne({
+        where: { id },
+        include: [
+          User, 
+          { model: User, as: 'whoReply'}
+        ]
+      })
+      const totalLike = await Like.count({
+        where: { UserId: id }
+      })
+      
+      const totalComment = tweet.toJSON().whoReply.length
+      const totalCount = {
+        totalLike, totalComment
+      }
+      res.render('tweet',{ tweet: tweet.toJSON(), totalCount })
+    }   
 }
 module.exports = tweetController
