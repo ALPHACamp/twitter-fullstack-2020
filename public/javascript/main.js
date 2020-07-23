@@ -56,3 +56,19 @@ removeCoverButton.addEventListener('click', () => {
   cover.style.background = `url("")`
   inputCover.value = null
 })
+
+// preview upload file
+function previewFile (input) {
+  const coverPreview = document.querySelector('#editModalCover')
+  const avatarPreview = document.querySelector('#editModalAvatar')
+  const reader = new FileReader()
+  reader.onload = (event) => {
+    if (input.id === 'cover') {
+      coverPreview.style = `background:url("${event.target.result}"); background-position: center; background-size: cover;`
+    }
+    if (input.id === 'avatar') {
+      avatarPreview.style = `background:url("${event.target.result}"); background-position: center; background-size: cover;`
+    }
+  }
+  reader.readAsDataURL(input.files[0])
+}

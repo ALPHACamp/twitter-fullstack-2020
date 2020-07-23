@@ -91,17 +91,17 @@
         <div class="edit-modal-body">
           <form actoin="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
 
-            <div class="edit-modal-cover"
+            <div class="edit-modal-cover" id="editModalCover"
               style="background: url({{user.cover}}); background-position:center;background-size:cover;">
               <label for="cover"><i class="fac fa-cus-upload-image cover-upload"></i></label>
-              <input type="file" name="cover" id="cover">
+              <input type="file" name="cover" id="cover" onchange="previewFile(this)">
               <button type="button" class="button cover-remove"><i class="fac fa-cus-close remove-icon"></i></button>
             </div>
 
-            <div class="edit-modal-avtar"
+            <div class="edit-modal-avatar" id="editModalAvatar"
               style="background: url({{user.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
-              <label for="avtar"><i class="fac fa-cus-upload-image avatar-upload"></i></label>
-              <input type="file" id="avtar" name="avatar">
+              <label for="avatar"><i class="fac fa-cus-upload-image avatar-upload"></i></label>
+              <input type="file" id="avatar" name="avatar" onchange="previewFile(this)">
             </div>
 
             <div class="edit-modal-username">
