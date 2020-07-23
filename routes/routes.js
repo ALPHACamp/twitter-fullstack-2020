@@ -6,7 +6,6 @@ const helper = require('../_helpers')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
-const tweet = require('../models/tweet')
 
 // 判斷是否已登入
 const authenticated = (req, res, next) => {
