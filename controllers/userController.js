@@ -1,7 +1,7 @@
 const db = require('../models');
 const User = db.User;
-const Tweet = db.Tweet
-const Reply = db.Reply
+const Tweet = db.Tweet;
+const Reply = db.Reply;
 const Like = db.Like;
 const Followship = db.Followship;
 const bcrypt = require('bcryptjs');
@@ -11,28 +11,8 @@ let userController = {
     return res.render('login');
   },
   login: (req, res) => {
-    User.findAll({
-      include: [
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    }).then((users) => {
-      //console.log(users);
-      //console.log(req.user.id);
-      users = users.map((user) => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        isFollowed: user.Followings.map((d) => d.id).includes(req.user.id)
-      }));
-      users = users
-        .sort((a, b) => b.FollowerCount - a.FollowerCount)
-        .slice(0, 6);
-      res.locals.topUsers = users;
-      req.flash('success_messages', 'Login successfully');
-      return res.redirect('/tweets');
-    });
-    // req.flash('success_messages', 'Login successfully');
-    // return res.redirect('/tweets');
+    req.flash('success_messages', 'Login successfully');
+    return res.redirect('/tweets');
   },
   signUpPage: (req, res) => {
     return res.render('signup');
@@ -121,9 +101,25 @@ let userController = {
     }
   },
   getUserPage: async (req, res) => {
-    const id = req.params.id
-    console.log(req.topUsers)
+    //console.log('req.user======', req.user);
+    const id = req.params.id;
+    //console.log(req.topUsers);
     //user table
+    const topUsers = await User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    }).then((allUsers) => {
+      //console.log('allUser', allUsers);
+      allUsers = allUsers.map((user) => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        // 判斷目前登入使用者是否已追蹤該 User 物件
+        isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
+      }));
+      allUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
+      return allUsers.slice(0, 6);
+    });
+    //console.log('========');
+    //console.log(topUsers);
     const user = await User.findOne({
       where: { id },
       include: [
@@ -133,19 +129,19 @@ let userController = {
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
-    })
-    const tweetsCount = user.toJSON().Tweets.length
-    const followersCount = user.toJSON().Followers.length
-    const followingsCount = user.toJSON().Followings.length
+    });
+    const tweetsCount = user.toJSON().Tweets.length;
+    const followersCount = user.toJSON().Followers.length;
+    const followingsCount = user.toJSON().Followings.length;
     const count = {
       tweetsCount,
       followersCount,
       followingsCount
-    }
+    };
     // all user's tweets
     // all user's likes
     // all user's replies
-    res.render('userPage', { userPage: user.toJSON(), count })
+    res.render('userPage', { userPage: user.toJSON(), count, topUsers });
   },
   addLike: async (req, res) => {
     try {
@@ -220,41 +216,35 @@ let userController = {
     //req.params.followship 判斷顯示哪個資料
     //不是follower & following 倒回上一頁
     //user 頁面是否改同樣方法？
-    const { id, followship } = req.params
+    const { id, followship } = req.params;
     const user = await User.findOne({
       where: { id },
-      include:[
+      include: [
         Tweet,
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
       ]
-    })
-    const count = { 
+    });
+    const count = {
       tweetsCount: user.toJSON().Tweets.length
-    }
+    };
 
     if (followship === 'followings') {
-      let followings = user.toJSON().Followings
-      followings = followings.map(i => ({
+      let followings = user.toJSON().Followings;
+      followings = followings.map((i) => ({
         ...i,
-        isFollowed: req.user.Followings.map(d => d.id).includes(i.id)
-      }))
-      res.render('followship', 
-      { user: user.toJSON(), followings , count} 
-      )
+        isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
+      }));
+      res.render('followship', { user: user.toJSON(), followings, count });
     } else if (followship === 'followers') {
-      let followers = user.toJSON().Followers
-      followers = followers.map(i => ({
+      let followers = user.toJSON().Followers;
+      followers = followers.map((i) => ({
         ...i,
-        isFollowed: req.user.Followers.map(d => d.id).includes(i.id)
-      }))
-      res.render('followship',
-        { user: user.toJSON(), followers, count }
-      )
+        isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
+      }));
+      res.render('followship', { user: user.toJSON(), followers, count });
     }
-    
   }
-
 };
 
 module.exports = userController;

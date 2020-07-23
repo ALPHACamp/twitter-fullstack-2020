@@ -17,7 +17,7 @@ const passport = require('./config/passport');
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 //iew engine
-app.use( express.static(__dirname + 'css'))
+app.use(express.static(__dirname + 'css'));
 app.engine(
   'hbs',
   exphbs({
@@ -43,13 +43,13 @@ app.use(
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static('public'))
+app.use(express.static('public'));
 //flash
 app.use(flash());
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');
-  res.locals.myUser = req.user;
+  res.locals.myUser = helpers.getUser(req);
   next();
 });
 require('./routes')(app);
