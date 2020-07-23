@@ -72,7 +72,10 @@ router.delete(
   );
   
 router.get('/users/:userId/edit', authenticated, userController.editUser);
+router.get('/users/:id/tweets', authenticated, userController.getUserPage)
+router.get('/users/:id/comments', authenticated, userController.getUserReply)
+router.get('/users/:id/likes', authenticated, userController.getUserLike)
 router.get('/users/:id/:followship', authenticated, userController.getFollowShip)
-router.get('/users/:id', authenticated,userController.getUserPage)
-  
+router.get('/users/:id', authenticated ,userController.getUserPage)
+
 module.exports = router;
