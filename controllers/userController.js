@@ -172,10 +172,10 @@ let userController = {
   editUser: async (req, res) => {
     try {
       //check if it's the current user who intends to edit. If not, back to last page
-      if (req.user.id !== Number(req.params.userId)) {
+      if (req.user.id !== Number(req.params.id)) {
         return res.redirect('back');
       }
-      const toEdit = await User.findByPk(req.params.userId);
+      const toEdit = await User.findByPk(req.params.id);
       res.render('user_edit', { user: toEdit.toJSON() });
     } catch (err) {
       console.log(err);
@@ -244,7 +244,26 @@ let userController = {
       }));
       res.render('followship', { user: user.toJSON(), followers, count });
     }
-  }
+  },
+
+  putEditUser: (req, res) => {
+    User.findByPk(req.params.id)
+      .then((user) => {
+        user.update({
+          name: req.body.name,
+          account: req.body.account,
+          email: req.body.email,
+          password: bcrypt.hashSync(
+            req.body.password,
+            bcrypt.genSaltSync(10, null)
+          )
+        })
+          .then((user) => {
+            req.flash('success_messages', '修改成功!!!')
+            res.redirect(`/users/${user.id}/edit`);
+          })
+      })
+  },
 };
 
 module.exports = userController;
