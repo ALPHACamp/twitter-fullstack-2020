@@ -12,10 +12,12 @@
       <form method="POST" action="/tweets">
         <textarea name="description" id="description" class="tweetTextarea" cols="30" rows="10" placeholder="有什麼新鮮事？"
           maxlength="140"></textarea>
-        <button class="tweet-post-button" type="submit" style="display: none;">推文</button>
-        <button type="button" class="tweet-post-error" data-toggle="modal" data-target="#postError">
-          推文
-        </button>
+        <div class="buttons">
+          <button class="tweet-post-button 2" type="submit" style="display: none;">推文</button>
+          <button type="button" class="tweet-post-error 2" data-toggle="modal" data-target="#postError">
+            modal
+          </button>
+        </div>
       </form>
     </div>
     <div class="main-tweet-list">
