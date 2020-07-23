@@ -1,7 +1,7 @@
 <div class="single-tweet">
   <ul class="list-group list-group-flush">
     <li class="list-group-item d-flex align-items-center">
-      <a href="javascript:history.back()" class="back">
+      <a href="/tweets" class="back">
         <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-arrow-left-short font-weight-bold text-dark"
           fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd"
@@ -51,16 +51,16 @@
               </div>
               <div class="modal-body">
 
-                <form action="/users/{{user.id}}/profile?_method=PUT" method="post" enctype="multipart/form-data">
+                <form action="/users/{{user.id}}/profile?_method=PUT" method="post">
                   <br>
                   <br>
                   <div class="form-group">
                     <label for="backgroundImg">Background Image</label>
-                    <input type="file" class="form-control-file" id="backgroundImg" name="image">
+                    <input type="file" class="form-control-file" id="backgroundImg" name="backgroundImg">
                   </div>
                   <div class="form-group">
                     <label for="avatar">Avatar</label>
-                    <input type="file" class="form-control-file" id="avatar" name="image">
+                    <input type="file" class="form-control-file" id="avatar" name="avatar">
                   </div>
                   <div class="form-group">
                     <label for="introduction">Introduction</label>
@@ -232,6 +232,9 @@
 
                     {{else}}
                     <form action="/likes/{{this.id}}" method="post">
+                      <span>
+                        {{this.likeCount}}
+                      </span>
                       <button type="submit" class="btn btn-link text-dark p-0 ">
                         <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-heart " fill="currentColor"
                           xmlns="http://www.w3.org/2000/svg">
