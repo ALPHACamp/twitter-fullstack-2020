@@ -96,7 +96,7 @@ router.put(
   '/users/:id/profile',
   authenticated,
   //upload.single('image'),
-  //upload.array('image', 2),
+  upload.array('image', 2),
   // upload.fields([
   //   { name: 'backgroundImg', maxCount: 1 },
   //   { name: 'avatar', maxCount: 1 }

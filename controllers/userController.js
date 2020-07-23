@@ -333,46 +333,35 @@ let userController = {
   putEditProfile: (req, res) => {
     //console.log('req===========', req);
     const { files } = req;
-    console.log('req.body===========', req.body);
-    if (files) {
-      files.map((file, i) => {
-        if (i === 0) {
-          imgur.setClientID(IMGUR_CLIENT_ID);
-          imgur.upload(file.path, (err, img) => {
-            User.findByPk(req.params.id).then((user) => {
-              user.update({
-                introduction: req.body.introduction,
-                backgroundImg: img.data.link
-              });
-            });
+    //console.log('req.files', req.files);
+    if (files.length) {
+      console.log(files);
+      //files.map((file, i) => {
+      //if (i == 0) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files[0].path, (err, img) => {
+        User.findByPk(req.params.id).then((user) => {
+          user.update({
+            introduction: req.body.introduction,
+            backgroundImg: img.data.link
           });
-        }
-        if (i === 1) {
-          imgur.setClientID(IMGUR_CLIENT_ID);
-          imgur.upload(file.path, (err, img) => {
-            User.findByPk(req.params.id).then((user) => {
-              user.update({
-                introduction: req.body.introduction,
-                avatar: img.data.link
-              });
-            });
-          });
-        }
-        // console.log(i);
-        // console.log('file====', file);
-        // imgur.setClientID(IMGUR_CLIENT_ID);
-        // imgur.upload(file.path, (err, img) => {
-        //   console.log('file.path', file.path);
-        //   return User.findByPk(req.params.id).then((user) => {
-        //     user.update({
-        //       introduction: req.body.introduction,
-        //       backgraoundImg: file ? img.data.link : user.backgraoundImg,
-        //       avatar: file ? img.data.link : user.avatar
-        //     });
-        //   });
-        // });
-        res.redirect(`/users/${req.params.id}`);
+        });
       });
+      //}
+      //if (i == 1) {
+      //imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files[1].path, (err, img) => {
+        User.findByPk(req.params.id).then((user) => {
+          user.update({
+            introduction: req.body.introduction,
+            avatar: img.data.link
+          });
+        });
+      });
+      //}
+      //});
+      return res.redirect(`/users/${req.params.id}`);
+      //return res.send('has files');
     } else {
       console.log('req.body=====', req.body);
       User.findByPk(req.params.id).then((user) => {
@@ -385,6 +374,8 @@ let userController = {
           });
       });
     }
+
+    //}
 
     //console.log('req.files======', req.files);
 
