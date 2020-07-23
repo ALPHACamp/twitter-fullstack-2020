@@ -8,13 +8,17 @@ const passport = require('passport');
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    return next();
+    if (req.user.role === 'user') {
+      return next();
+    }
+    req.flash('error_messages', 'You are not an user, please login here');
+    return res.redirect('/admin/login');
   }
   req.flash('error_messages', 'Please login first');
   res.redirect('/login');
 };
 const authenticatedAdmin = (req, res, next) => {
-  if (req.isAuthenticated()) {
+  if (helpers.ensureAuthenticated(req)) {
     if (req.user.role === 'Admin') {
       return next();
     }
@@ -55,11 +59,7 @@ router.post(
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/admin/tweetsUser', authenticatedAdmin, adminController.getUsers);
-router.delete(
-  '/admin/tweets/:id',
-  authenticatedAdmin,
-  adminController.deleteTweet
-);
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
 
 
 
@@ -71,10 +71,11 @@ router.delete(
   '/followings/:userId',
   authenticated,
   userController.removeFollowing
-  );
-  
-router.get('/users/:userId/edit', authenticated, userController.editUser);
+);
+
+router.get('/users/:id/edit', authenticated, userController.editUser);
+router.put('/users/:id/edit', authenticated, userController.putEditUser);
 router.get('/users/:id/:followship', authenticated, userController.getFollowShip)
-router.get('/users/:id', authenticated,userController.getUserPage)
-  
+router.get('/users/:id', authenticated, userController.getUserPage)
+
 module.exports = router;
