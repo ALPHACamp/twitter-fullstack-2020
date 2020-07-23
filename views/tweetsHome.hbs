@@ -3,18 +3,19 @@
 <br />
 
 <form action="" method="POST">
-  <div class="form-group">   
+  <div class="form-group">
     <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="有什麼新鮮事?"></textarea>
   </div>
-  <button type="submit" class="btn btn-primary">推文</button>   
+  <button type="submit" class="btn btn-primary">推文</button>
 </form>
 
 {{#each tweets}}
 <li class="list-group-item list-group-item-action">
 
   <div class="user-wrap d-flex">
-
-    <img src="{{this.userAvatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+    <a href="/users/{{userId}}">
+      <img src="{{this.userAvatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+    </a>
 
     <div class="d-flex flex-column">
       <div class="d-flex flex-column">
