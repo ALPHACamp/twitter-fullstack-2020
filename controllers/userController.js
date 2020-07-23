@@ -37,7 +37,7 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', 'Signed in.')
-    res.redirect('/newsFeed')
+    res.redirect('/')
   },
 
   signOut: (req, res) => {
