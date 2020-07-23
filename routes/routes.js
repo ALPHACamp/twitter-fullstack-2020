@@ -29,12 +29,21 @@ const authenticatedAdmin = (req, res, next) => {
   }
   res.redirect('/login');
 };
-
 router.get('/', (req, res) => res.redirect('/tweets'));
 
-router.get('/tweets', authenticated, tweetController.getTweets);
+router.get(
+  '/tweets',
+  authenticated,
+  userController.topUserForLayout,
+  tweetController.getTweets
+);
 router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
-router.get('/tweets/:id', authenticated, tweetController.getTweet);
+router.get(
+  '/tweets/:id',
+  userController.topUserForLayout,
+  authenticated,
+  tweetController.getTweet
+);
 
 /* router.get('/users/:id/personal',authenticated, userController.getFollowShip); */
 router.get('/signup', userController.signUpPage);
@@ -87,7 +96,7 @@ router.put(
   '/users/:id/profile',
   authenticated,
   //upload.single('image'),
-  upload.array('image', 2),
+  //upload.array('image', 2),
   // upload.fields([
   //   { name: 'backgroundImg', maxCount: 1 },
   //   { name: 'avatar', maxCount: 1 }
@@ -100,5 +109,38 @@ router.get(
   userController.getFollowShip
 );
 router.get('/users/:id', authenticated, userController.getUserPage);
+
+router.get(
+  '/users/:id/tweets',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getUserPage
+);
+router.get(
+  '/users/:id/comments',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getUserReply
+);
+router.get(
+  '/users/:id/likes',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getUserLike
+);
+router.get('/users/:id/edit', authenticated, userController.editUser);
+router.put('/users/:id/edit', authenticated, userController.putEditUser);
+router.get(
+  '/users/:id/:followship',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getFollowShip
+);
+router.get(
+  '/users/:id',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getUserPage
+);
 
 module.exports = router;
