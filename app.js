@@ -1,4 +1,6 @@
 const express = require('express')
+const helpers = require('./_helpers')
+
 const exphbs = require('express-handlebars')
 const db = require('./models')
 const bodyParser = require('body-parser')
@@ -10,17 +12,19 @@ const methodOverride = require('method-override')
 //   require('dotenv').config()
 // }
 
+
 const app = express()
 const port = process.env.PORT || 3000
 
-app.engine('.hbs', exphbs({ 
-  extname: '.hbs', 
+// use helpers.getUser(req) to replace req.user
+// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+app.engine('hbs', exphbs({
   defaultLayout: 'main',
-  helpers: require('./config/handlebars-helpers')
+  extname: 'hbs',
+  helpers: helpers
 }))
-app.set('view engine', '.hbs')
-
-app.use(bodyParser.urlencoded({ extended: true }))
+app.set('view engine', 'hbs')
+app.use(bodyParer.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -32,9 +36,7 @@ app.use((req, res, next) => {
   next()
 })
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
 app.listen(port, () => console.log(`App listening on port ${port}!`))
 
 require('./routes')(app, passport)
+

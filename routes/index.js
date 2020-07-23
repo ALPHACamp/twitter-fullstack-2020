@@ -1,4 +1,5 @@
 const userController = require('../controllers/userController')
+const tweetController = require('../controllers/tweetController')
 const passport = require('passport')
 
 module.exports = (app, passport) => {
@@ -17,8 +18,10 @@ module.exports = (app, passport) => {
   }
 
   // Index page
-  app.get('/', authenticated, (req, res) => res.redirect('/newsFeed'))
-  app.get('/newsFeed', authenticated, (req, res) => res.render('newsFeed'))
+  //app.get('/newsFeed', authenticated, (req, res) => res.render('newsFeed'))
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.post('/tweets', authenticated, tweetController.postTweet)
 
   // sign in / sign out / sign up
   app.get('/signUp', userController.signUpPage)
