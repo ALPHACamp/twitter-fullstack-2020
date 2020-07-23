@@ -27,6 +27,7 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/', (req, res) => res.redirect('/tweets'));
 
 router.get('/tweets', authenticated, tweetController.getTweets);
+router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
 router.get('/tweets/:id', authenticated, tweetController.getTweet);
 /* router.get('/users/:id/profile',authenticated, userController.getUser); */
 router.get('/signup', userController.signUpPage);
