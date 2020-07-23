@@ -78,47 +78,45 @@
 
 <!-- 編輯個人資料Modal-->
 <div class="modal" tabindex="-1" role="dialog" id="editProfileModal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="dialog">
     <div class="modal-content">
 
       <div class="edit-modal">
         <div class="edit-modal-header">
-          <button type="button" data-dismiss="modal" aria-label="Close" class="close-button mr-3">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="close-button">
             &times;
           </button> 編輯個人資料
         </div>
 
         <div class="edit-modal-body">
-          <form action="POST">
+          <form actoin="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
 
-            <div class="edit-modal-cover" style="background: url();">
-              <label for="cover" class="cover-upload"><img src="/images/icon-upload.png" alt=""></label>
-              <input type="file" name="" id="cover">
-              <form action="POST">
-                <button type="submit" class="button cover-delete"><img src="/images/icon-delete.png" alt=""></button>
-              </form>
+            <div class="edit-modal-cover"
+              style="background: url({{user.cover}}); background-position:center;background-size:cover;">
+              <label for="cover"><i class="fac fa-cus-upload-image cover-upload"></i></label>
+              <input type="file" name="cover" id="cover">
+              <button type="button" class="button cover-remove"><i class="fac fa-cus-close remove-icon"></i></button>
             </div>
 
-            <div class="edit-modal-avtar">
-              <img src="" alt="" class="profile-avtar">
-              <label for="avtar" class="avtar-upload"><img src="/images/icon-upload.png" alt=""></label>
-              <input type="file" id="avtar">
+            <div class="edit-modal-avtar"
+              style="background: url({{user.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+              <label for="avtar"><i class="fac fa-cus-upload-image avatar-upload"></i></label>
+              <input type="file" id="avtar" name="avatar">
             </div>
 
-            <label for="username"></label>
-            <input class="username-input" type="text" id="username" placeholder="名稱" value="" onkeyup="nameWordCount()"
-              maxlength="50">
-            <div class="word-count">
-              <span class="username-input-count">0</span>/50
+            <div class="edit-modal-username">
+              <input class="username-input" type="text" id="username" placeholder="名稱" maxlength="50">
+              <div class="word-count">
+                <span class="username-input-count">0</span>/50
+              </div>
             </div>
-
-            <label for="brief"></label>
-            <textarea class="brief-input" name="" id="brief" cols="30" rows="10" placeholder="自我介紹"
-              onkeyup="briefWordCount()" maxlength="160"></textarea>
-            <div class="word-count">
-              <span class="brief-input-count">0</span>/160
+            <div class="edit-modal-brief">
+              <textarea class="brief-input" name="" id="brief" cols="30" rows="10" placeholder="自我介紹"
+                maxlength="160"></textarea>
+              <div class="word-count">
+                <span class="brief-input-count">0</span>/160
+              </div>
             </div>
-
             <button type="submit" class="modal-button profile-save-button">儲存</button>
           </form>
         </div>

@@ -40,9 +40,19 @@ const nameInputCount = document.querySelector('.username-input-count')
 const briefInput = document.querySelector('.brief-input')
 const briefInputCount = document.querySelector('.brief-input-count')
 
-function nameWordCount () {
+nameInput.addEventListener('keyup', () => {
   return nameInputCount.innerHTML = nameInput.value.length
-}
-function briefWordCount () {
+})
+briefInput.addEventListener('keyup', () => {
   return briefInputCount.innerHTML = briefInput.value.length
-}
+})
+
+// remove cover
+const removeCoverButton = document.querySelector('.cover-remove')
+const cover = document.querySelector('.edit-modal-cover')
+const inputCover = document.querySelector('#cover-upload')
+
+removeCoverButton.addEventListener('click', () => {
+  cover.style.background = `url("")`
+  inputCover.value = null
+})
