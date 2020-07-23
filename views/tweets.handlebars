@@ -15,7 +15,7 @@
         <div class="buttons">
           <button class="tweet-post-button 2" type="submit" style="display: none;">推文</button>
           <button type="button" class="tweet-post-error 2" data-toggle="modal" data-target="#postError">
-            modal
+            推文
           </button>
         </div>
       </form>
@@ -36,15 +36,21 @@
 
             </div>
             <div class="tweet-item-text">
-              <p>{{this.description}}
-              </p>
+              <p>{{this.description}}</p>
             </div>
           </div>
         </div>
         <div class="tweet-item-footer">
-          <button type="button" class="button reply-link pt-1" data-toggle="modal" data-target="#replyModal">
+          <button type="button" class="button reply-link pt-1  reply-modal-open">
             <i class="fac fa-cus-reply"></i> {{this.Replies.length}}
           </button>
+          <div class="hidden-info" style="display:none;">
+            <p class="tweet-user-name">{{this.User.name}}</p>
+            <p class="tweet-user-account">{{this.User.account}}</p>
+            <p class="tweet-description">{{this.description}}</p>
+            <p class="tweet-id">{{this.id}}</p>
+            <p class="tweet-createdAt">{{moment this.createdAt}} </p>
+          </div>
           <form action="/tweets/{{this.id}}/like" method="POST">
             <button type="submit" class="like-link button">
               <i class="fac fa-cus-like"></i>

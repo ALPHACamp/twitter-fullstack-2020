@@ -46,6 +46,7 @@ module.exports = (app, passport) => {
   app.post('/tweets', authenticated, tweetController.postTweet)
   app.get('/tweets/:id', authenticated, tweetController.getTweet)
   app.delete('/tweets/:id', adminAuthenticated, adminController.deleteTweet)
+  app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 
   app.get('/api/admin/users/:id', adminAuthenticated, adminController.editUser)
   app.get('/api/users/:id', authenticated, userController.editUser)

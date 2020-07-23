@@ -19,7 +19,7 @@
             <div class="buttons d-flex justify-content-end">
               <button class="tweet-post-button-modal" type="submit" style="display: none;">推文</button>
               <button type="button" class="tweet-post-error-modal" data-toggle="modal" data-target="#postError">
-                modal
+                推文
               </button>
             </div>
           </form>
@@ -30,7 +30,7 @@
 </div>
 
 <!-- 回覆Modal-->
-<div class="modal" tabindex="-1" role="dialog" id="replyModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="replyModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="reply-modal">
@@ -46,28 +46,23 @@
               <img src="" alt="" class="avtar">
               <div class="extention-line"></div>
             </div>
-
             <div class="reply-modal-tweet-right column">
-              <a href="" class="user-name">Apple</a><span class="user-account">@apple 3小時</span>
-              <div>
-                <p class="pt-1">ue euconsequat ac felis donec et odio pellentes
-                  vitaecongue euconsequat ac felis donec et odio pellngue euconsequat ac felis donec et odioam volutpat
-                  commodo sed egestas
-                  egestassque
-                </p>
-              </div>
-              <span class="replyto-span">回覆給</span> <span class="user-account-color-span">@apple</span>
+              <!-- 這裡的內容會從js傳資料過來 -->
             </div>
           </div>
-
           <div class="reply-modal-textarea mt-3">
             <div>
               <img src="" alt="" class="avtar">
             </div>
-
-            <form method="POST">
-              <textarea class="modal-textarea" name="" id="" cols="30" rows="10" placeholder="推你的回覆"></textarea>
-              <button type="submit" class="modal-button">回覆</button>
+            <form method="POST" class="reply-modal-form">
+              <textarea class="modal-textarea" name="comment" id="comment" cols="30" rows="10"
+                placeholder="推你的回覆"></textarea>
+              <div class="buttons d-flex justify-content-end">
+                <button class="tweet-post-button" type="submit" style="display: none;">回覆</button>
+                <button type="button" class="tweet-post-error" data-toggle="modal" data-target="#postError">
+                  回覆
+                </button>
+              </div>
             </form>
 
           </div>
@@ -134,7 +129,7 @@
 <div class="modal fade" id="postError" tabindex="-1" role="dialog" aria-labelledby="postError" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
-      <p class="text-center m-0">要輸入內容才可以推文唷！
+      <p class="text-center m-0">要輸入內容才可以送出唷！
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" style="font-size: 30px; color:#fff;">&times;</span>
         </button>

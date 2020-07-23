@@ -863,7 +863,7 @@ width: 600px;
 }
 
 .reply-author-command , .author-relply, .reply-item{
-  padding: 10px;
+  padding: 15px;
 }
 .reply-like-post a,.reply-like-post span{
   color: #657786;
@@ -874,10 +874,12 @@ width: 600px;
 .reply-item {
   border-bottom: 1px solid #E6ECF0;
 }
-.reply-item:last-child {
-  border-bottom: 0px solid #E6ECF0;
-}
+
 .reply-item .left {
   margin-right: 10px;
+}
+.reply-comment{
+  margin-bottom: 0;
+  margin-top: 5px;
 }
 
