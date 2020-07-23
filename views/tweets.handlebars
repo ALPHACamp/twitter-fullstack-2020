@@ -49,7 +49,7 @@
             <p class="tweet-user-account">{{this.User.account}}</p>
             <p class="tweet-description">{{this.description}}</p>
             <p class="tweet-id">{{this.id}}</p>
-            <p class="tweet-createdAt">{{moment this.createdAt}}</p>
+            <p class="tweet-createdAt">{{moment this.createdAt}} </p>
           </div>
           <form action="/tweets/{{this.id}}/like" method="POST">
             <button type="submit" class="like-link button">

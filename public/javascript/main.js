@@ -31,7 +31,7 @@ body.addEventListener('click', (e) => {
 
     let TweetInfo =
       `
-              <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} ${tweetCreatedAt}}</span>
+              <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} · ${tweetCreatedAt}</span>
               <div>
                 <p class="pt-1">${tweetDescription}</p>
               </div>
