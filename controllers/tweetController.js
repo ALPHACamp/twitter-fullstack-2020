@@ -3,7 +3,9 @@ const Tweet = db.tweet
 
 const tweetController = {
   getTweets: (req, res) => {
-    res.render('tweets')
+    Tweet.findAll({ raw: true, nest: true }).then(tweets => {
+      return res.render('tweets', { tweets: tweets })
+    })
   }
 }
 

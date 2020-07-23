@@ -1,3 +1,81 @@
-<div>
-  tweet
+<div class="container">
+  <div class="row">
+    <div class="col mt-2 border-right">
+      <img style="width: 50px;height: 50PX;left: 103px;top: 4px;" src="https://bc3-production-blobs-us-east-2.s3.us-east-2.amazonaws.com/22413b7c-cb64-11ea-b15b-ecf4bbd6f9a0?response-content-disposition=inline%3B%20filename%3D%2294ffe51c-87fc-45b3-b8a5-ddfc6c1de850_200x200.png%22%3B%20filename%2A%3DUTF-8%27%2794ffe51c-87fc-45b3-b8a5-ddfc6c1de850_200x200.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS5PME4CT5QW2PJJU%2F20200722%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20200722T091315Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=2f62bfd5f415e8fcbd7508e3e548530f0540459bf1755097bd5b2d1b0df03e43" alt="">
+        <nav class="nav flex-column">
+          <div class="row row-cols-1">
+            <div class="col mt-4">
+              <i class="fas fa-home fa-2x"></i>
+              <a class="nav-link active" style="display: inline;" href="/tweets">
+                <h4 style="display: inline;">首頁</h4>
+              </a>
+            </div>
+            <div class="col mt-4">
+              <i class="fas fa-user fa-2x"></i>
+              <a class="nav-link" style="display: inline;" href="/users/{{user.id}}">
+                <h4 style="display: inline;">個人資料</h4>
+              </a>
+            </div>
+            <div class="col mt-4">
+              <i class="fas fa-cog fa-2x"></i>
+              <a class="nav-link" style="display: inline;" href="#">
+                <h4 style="display: inline;">設定</h4>
+              </a>
+            </div>
+            <div class="col mt-4">
+              <a class="nav-link" href="#">
+                <button style="border-radius: 100px;" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">推文</button>
+              </a>
+            </div>
+            <div class="col mt-4">
+              <i class="fas fa-sign-out-alt fa-2x"></i>
+              <a class="nav-link" style="display: inline;" href="#">
+                <h4 style="display: inline;">登出</h4>
+              </a>
+            </div>
+          </div>
+        </nav>
+    </div>
+    <div class="col-6 mt-2 border-right">
+      <div class="row row-cols-1">
+        <div class="col">首頁</div>
+        <form action="/tweets/create" method="post">
+          <div class="col mt-2 border-top">
+            <div class="input-group mb-3">
+              <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="https://loremflickr.com/320/240?random=1" />
+              <input style="display: inline;" type="text" class="form-control mt-3" placeholder="有甚麼新鮮事" aria-label="有甚麼新鮮事" aria-describedby="basic-addon1">
+            </div>
+            <button style="border-radius: 100px" type="submit" class="btn btn-primary">推文</button>
+          </div>
+        </form>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="/tweets/create" method="post">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">有甚麼新鮮事</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <img style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="https://loremflickr.com/320/240?random=1" />
+                <textarea class="form-control" aria-label="With textarea"></textarea>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">推文</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row mt-3 border-top">推文內容</div>
+    </div>
+    <div class="col">
+      跟隨誰
+    </div>
+  </div>
 </div>
+
