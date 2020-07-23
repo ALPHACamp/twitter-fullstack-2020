@@ -19,6 +19,10 @@ const adminAuthenticated = (req, res, next) => {
 }
 
 module.exports = (app, passport) => {
+  const multer = require('multer')
+  const upload = multer({ dest: 'temp/' })
+  const profileUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }])
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
 
@@ -45,7 +49,7 @@ module.exports = (app, passport) => {
 
   app.get('/api/admin/users/:id', adminAuthenticated, adminController.editUser)
   app.get('/api/users/:id', authenticated, userController.editUser)
-  app.post('/api/users/:id', authenticated, userController.putUser)
+  app.post('/api/users/:id', authenticated, profileUpload, userController.putUser)
 
   app.get('/users/:id/tweets', authenticated, userController.getTweets)
   app.get('/users/:id/likes', authenticated, userController.getLikes)

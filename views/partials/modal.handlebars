@@ -89,7 +89,7 @@
         </div>
 
         <div class="edit-modal-body">
-          <form actoin="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
+          <form action="/api/users/{{user.id}}" enctype="multipart/form-data" method="POST">
 
             <div class="edit-modal-cover" id="editModalCover"
               style="background: url({{user.cover}}); background-position:center;background-size:cover;">
@@ -105,14 +105,15 @@
             </div>
 
             <div class="edit-modal-username">
-              <input class="username-input" type="text" id="username" placeholder="名稱" maxlength="50">
+              <input class="username-input" type="text" id="name" name="name" placeholder="名稱" maxlength="50"
+                value="{{user.name}}">
               <div class="word-count">
                 <span class="username-input-count">0</span>/50
               </div>
             </div>
             <div class="edit-modal-brief">
-              <textarea class="brief-input" name="" id="brief" cols="30" rows="10" placeholder="自我介紹"
-                maxlength="160"></textarea>
+              <textarea class="brief-input" name="introduction" id="introduction" cols="30" rows="10" placeholder="自我介紹"
+                maxlength="160">{{user.introduction}}</textarea>
               <div class="word-count">
                 <span class="brief-input-count">0</span>/160
               </div>

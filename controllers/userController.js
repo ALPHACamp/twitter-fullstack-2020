@@ -3,6 +3,9 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const bcrypt = require('bcryptjs')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const fs = require('fs')
 
 const userController = {
   signUpPage: (req, res) => res.render('signup'),
@@ -74,16 +77,39 @@ const userController = {
   editUser: (req, res) => res.render('setting'),
   putUser: (req, res) => {
     const id = Number(req.params.id)
-    const userId = req.user.id
-    if (userId !== id) {
+    const { name, introduction } = req.body
+    const { avatar, cover } = req.files
+    const { files } = req
+
+    if (req.user.id !== id) {
       req.flash('errorMessage', 'error')
       res.redirect('/tweets')
     }
-    const { name, avtar, cover, introduction } = req.body
+
+    if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      if (avatar) {
+        avatarPath = avatar[0].path
+        imgur.upload(avatarPath, (err, img) => {
+          User.findByPk(id)
+            .then(user => user.update({ avatar: img.data.link }))
+        })
+      }
+      if (cover) {
+        coverPath = cover[0].path
+        imgur.upload(coverPath, (err, img) => {
+          User.findByPk(id)
+            .then(user => user.update({ cover: img.data.link }))
+        })
+      }
+    }
     return User.findByPk(id)
       .then(user => {
+        user.update({ name, introduction })
       })
-      .then(() => res.redirect('/tweets'))
+      .then(() => {
+        res.redirect('/tweets')
+      })
   }
 }
 
