@@ -774,6 +774,12 @@ width: 600px;
   margin-right: 5px;
 }
 /*單一頁面中間列*/
+.main-title .fa-cus-back {
+  color: #657786;
+}
+.main-title .fa-cus-back:hover {
+  color: black;
+}
 .tweet-content {
   padding: 15px 15px 0 15px;
   border-bottom: 1px solid #E6ECF0;
@@ -819,6 +825,17 @@ width: 600px;
 .tweet-like-reply-link .reply-link{
   margin-right: 100px;
 }
+.tweet-like-reply-link a, .tweet-like-reply-link .fa-cus-like {
+  color: #657786;
+  font-size: 25px;
+}
+.tweet-like-reply-link .fa-cus-like {
+  padding-top: 1px;   /*覺得愛心偏高，把他拉下來*/
+}
+.tweet-like-reply-link .fa-cus-like:hover {
+  color: red;  
+}
+
 .reply-author-command , .author-relply, .reply-item{
   padding: 10px;
 }
