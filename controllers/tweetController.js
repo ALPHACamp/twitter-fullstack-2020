@@ -59,7 +59,6 @@ const tweetController = {
     };
     res.render('tweet', { tweet: tweet.toJSON(), totalCount });
   },
-
   postTweet: (req, res) => {
     if (!req.body.newTweet) {
       req.flash('error_messages', "請輸入推文內容!!!")
@@ -73,6 +72,6 @@ const tweetController = {
         req.flash('success_messages', '推文成功!!!')
         res.redirect('/tweets')
       })  
-  },  
+  }, 
 };
 module.exports = tweetController;
