@@ -92,30 +92,121 @@ let userController = {
       allUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
       return allUsers.slice(0, 6);
     });
-    //console.log('========');
-    //console.log(topUsers);
-    const user = await User.findOne({
+   
+    let user = await User.findOne({
       where: { id },
       include: [
-        Tweet,
-        { model: Tweet, as: 'userLike' },
-        { model: Tweet, include: [User], as: 'UserReply' },
+        { model: Tweet, 
+          order: [
+            'createdAt', 'DESC'
+          ],
+          include: [
+            User,
+            { model: User, as: 'TweetWhoLike' },
+            { model: User, as: 'whoReply' }
+        ]},
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
     });
-    const tweetsCount = user.toJSON().Tweets.length;
-    const followersCount = user.toJSON().Followers.length;
-    const followingsCount = user.toJSON().Followings.length;
-    const count = {
-      tweetsCount,
-      followersCount,
-      followingsCount
-    };
+    user = user.toJSON()
+    const followShip = {
+      isTweet: true,
+      tweetsCount: user.Tweets.length,
+      followingsCount: user.Followings.length,
+      followersCount: user.Followers.length,
+      isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+    }
+    let tweets = user.Tweets
+    tweets = tweets.map(tweet => ({
+      ...tweet,
+      repliesCount: tweet.whoReply.length,
+      likeCount: tweet.TweetWhoLike.length,
+      // 用自己tweet 的UserId 判斷有沒有按讚過
+      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
+    }))
     // all user's tweets
     // all user's likes
     // all user's replies
-    res.render('userPage', { userPage: user.toJSON(), count, topUsers });
+    res.render('userPage', { user, followShip, content: tweets, topUsers });
+  },
+  getUserReply: async (req, res) => {
+    const id = req.params.id
+    let user = await User.findOne({
+      where: { id },
+      include: [
+        { model: Tweet, as: 'UserReply',
+          order: [
+            'createdAt', 'DESC'
+          ],
+          include: [
+            User,
+            { model: User, as: 'TweetWhoLike' },
+            { model: User, as: 'whoReply' }
+          ]},
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+    user = user.toJSON()
+    const followShip = {
+      isReply: true,
+      tweetsCount: user.UserReply.length,
+      followingsCount: user.Followings.length,
+      followersCount: user.Followers.length,
+      isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+    }
+    let replies = user.UserReply
+    replies = replies.map(reply => ({
+      ...reply,
+      repliesCount: reply.whoReply.length,
+      likeCount: reply.TweetWhoLike.length,
+      // 用自己tweet 的UserId 判斷有沒有按讚過
+      isLiked: reply.TweetWhoLike.map(d => d.id).includes(req.user.id)
+    }))
+
+    res.render('userPage', { user, followShip, content: replies });
+
+  },
+  getUserLike: async (req, res) => {
+    const id = req.params.id
+    let user = await User.findOne({
+      where: { id },
+      include: [
+        {
+          model: Tweet, as: 'userLike',
+          order: [
+            'createdAt', 'DESC'
+          ],
+          include: [
+            User,
+            { model: User, as: 'TweetWhoLike' },
+            { model: User, as: 'whoReply' }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+    user = user.toJSON()
+    const followShip = {
+      isLike: true,
+      tweetsCount: user.userLike.length,
+      followingsCount: user.Followings.length,
+      followersCount: user.Followers.length,
+      isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+    }
+    let likes = user.userLike
+    likes = likes.map(like => ({
+      ...like,
+      repliesCount: like.whoReply.length,
+      likeCount: like.TweetWhoLike.length,
+      // 用自己tweet 的UserId 判斷有沒有按讚過
+      isLiked: like.TweetWhoLike.map(d => d.id).includes(req.user.id)
+    }))
+
+    res.render('userPage', { user, followShip, content: likes });
+
   },
   addLike: async (req, res) => {
     try {
