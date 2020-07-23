@@ -6,7 +6,8 @@ const Like = db.Like;
 
 const tweetController = {
   getTweets: async (req, res) => {
-    let tweets = await Tweet.findAll({
+    let tweets = await Tweet.findAll({      
+      order: [['createdAt', 'DESC']],
       include: [
         User,
         { model: User, as: 'TweetWhoLike' },
@@ -57,6 +58,20 @@ const tweetController = {
       totalComment
     };
     res.render('tweet', { tweet: tweet.toJSON(), totalCount });
-  }
+  },
+  postTweet: (req, res) => {
+    if (!req.body.newTweet) {
+      req.flash('error_messages', "請輸入推文內容!!!")
+      return res.redirect('back')
+    }
+    return Tweet.create({
+      UserId:req.user.id,     
+      description: req.body.newTweet
+    })
+      .then((restaurant) => {
+        req.flash('success_messages', '推文成功!!!')
+        res.redirect('/tweets')
+      })  
+  }, 
 };
 module.exports = tweetController;
