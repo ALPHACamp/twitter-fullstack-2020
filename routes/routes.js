@@ -71,11 +71,16 @@ router.delete(
   '/followings/:userId',
   authenticated,
   userController.removeFollowing
-);
-
+  );
+  
+router.get('/users/:id/tweets', authenticated, userController.getUserPage)
+router.get('/users/:id/comments', authenticated, userController.getUserReply)
+router.get('/users/:id/likes', authenticated, userController.getUserLike)
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
 router.get('/users/:id/:followship', authenticated, userController.getFollowShip)
-router.get('/users/:id', authenticated, userController.getUserPage)
+router.get('/users/:id', authenticated ,userController.getUserPage)
+
+
 
 module.exports = router;
