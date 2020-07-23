@@ -5,6 +5,8 @@ const tweetController = require('../controllers/tweetController');
 const adminController = require('../controllers/adminController.js');
 const helpers = require('../_helpers');
 const passport = require('passport');
+const multer = require('multer');
+const upload = multer({ dest: 'temp/' });
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -59,9 +61,11 @@ router.post(
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/admin/tweetsUser', authenticatedAdmin, adminController.getUsers);
-router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
-
-
+router.delete(
+  '/admin/tweets/:id',
+  authenticatedAdmin,
+  adminController.deleteTweet
+);
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
@@ -71,16 +75,30 @@ router.delete(
   '/followings/:userId',
   authenticated,
   userController.removeFollowing
-  );
-  
-router.get('/users/:id/tweets', authenticated, userController.getUserPage)
-router.get('/users/:id/comments', authenticated, userController.getUserReply)
-router.get('/users/:id/likes', authenticated, userController.getUserLike)
+);
+
+router.get('/users/:id/tweets', authenticated, userController.getUserPage);
+router.get('/users/:id/comments', authenticated, userController.getUserReply);
+router.get('/users/:id/likes', authenticated, userController.getUserLike);
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
-router.get('/users/:id/:followship', authenticated, userController.getFollowShip)
-router.get('/users/:id', authenticated ,userController.getUserPage)
-
-
+router.get('/users/:id/profile', authenticated, userController.editProfile);
+router.put(
+  '/users/:id/profile',
+  authenticated,
+  //upload.single('image'),
+  upload.array('image', 2),
+  // upload.fields([
+  //   { name: 'backgroundImg', maxCount: 1 },
+  //   { name: 'avatar', maxCount: 1 }
+  // ]),
+  userController.putEditProfile
+);
+router.get(
+  '/users/:id/:followship',
+  authenticated,
+  userController.getFollowShip
+);
+router.get('/users/:id', authenticated, userController.getUserPage);
 
 module.exports = router;
