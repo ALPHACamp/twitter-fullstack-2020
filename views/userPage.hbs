@@ -1,7 +1,7 @@
 <div class="single-tweet">
   <ul class="list-group list-group-flush">
     <li class="list-group-item d-flex align-items-center">
-      <a href="javascript:history.back()" class="back">
+      <a href="/tweets" class="back">
         <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-arrow-left-short font-weight-bold text-dark"
           fill="currentColor" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd"
@@ -171,6 +171,9 @@
 
                       {{else}}
                       <form action="/likes/{{this.id}}" method="post">
+                      <span>
+                        {{this.likeCount}}
+                      </span>
                         <button type="submit" class="btn btn-link text-dark p-0 ">
                           <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-heart " fill="currentColor"
                             xmlns="http://www.w3.org/2000/svg">
