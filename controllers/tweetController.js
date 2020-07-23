@@ -6,7 +6,7 @@ const Like = db.Like;
 
 const tweetController = {
   getTweets: async (req, res) => {
-    let tweets = await Tweet.findAll({
+    let tweets = await Tweet.findAll({      
       order: [['createdAt', 'DESC']],
       include: [
         User,
