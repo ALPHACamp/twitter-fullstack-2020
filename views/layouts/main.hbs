@@ -7,10 +7,10 @@
   <title>Simple Twitter</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
 </head>
 
-<body >
+<body>
   <div class="container">
     {{#if success_messages}}
     <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
@@ -26,10 +26,11 @@
   <div class="container col-10 d-flex flex-column flex-lg-row justify-content-around" style="min-width: 760px;">
 
     {{#if myUser}}
-    <div class="left-sec col-lg-3 d-flex flex-lg-column flex-md-row align-items-lg-center justify-content-lg-start justify-content-md-around">
+    <div
+      class="left-sec col-lg-3 d-flex flex-lg-column flex-md-row align-items-lg-center justify-content-lg-start justify-content-md-around">
       <div class="logo mt-3 d-flex flex-column flex-lg-row justify-content-center justify-content-lg-start 
       align-items-center" style="min-width: 260px;">
-        <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle m-2" style="width: 60px; height: 60px;" >
+        <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle m-2" style="width: 60px; height: 60px;">
         <div class="font-weight-bold h3">Twitter 衝一波</div>
       </div>
       <ul class="nav flex-md-row flex-lg-column justify-content-md-around align-items-lg-start">
@@ -61,7 +62,35 @@
           </svg>
           <a href="/users/{{myUser.id}}/edit" class="nav-link h4 text-dark">設定</a>
         </li>
-        <button type="button" class="btn btn-danger rounded-pill w-100 mt-3">推文</button>
+
+        <div class="modal" tabindex="-1" role="dialog" id='getTweetPage'>
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+              <div class="modal-body">
+                <form action="/tweets/newTweets" method="POST">
+                  <div class="form-group">
+                    <textarea class="form-control" id="newTweet" name="newTweet" rows="3"
+                      placeholder="有什麼新鮮事?"></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">推文</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="#" onclick="getTweetPage()" class="btn btn-danger rounded-pill w-100 mt-3">推文</a>
+        <script>
+          function getTweetPage() {
+            $('#getTweetPage').modal('show');
+          }
+        </script>
+
       </ul>
     </div>
     {{/if}}
@@ -80,16 +109,16 @@
         <li class="list-group-item d-flex justify-content-between bg-light">
           <div class="user-wrap d-flex">
             <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
-          <div class="user d-flex flex-column justify-content-center">
-            <div class="user-name font-weight-bold">
-              {{this.name}}
-            </div>
-            {{!-- 連結到user 頁面 --}}
-            <a href="/users/{{this.id}}" class="user-account text-secondary">
-              @ {{this.account}}
-            </a>
+            <div class="user d-flex flex-column justify-content-center">
+              <div class="user-name font-weight-bold">
+                {{this.name}}
+              </div>
+              {{!-- 連結到user 頁面 --}}
+              <a href="/users/{{this.id}}" class="user-account text-secondary">
+                @ {{this.account}}
+              </a>
 
-          </div>
+            </div>
           </div>
 
           {{#if this.isFollowed}}
@@ -109,7 +138,7 @@
           <a href="#">顯示更多</a>
         </li>
       </ul>
-  </div>
+    </div>
     {{/if}}
 
   </div>
