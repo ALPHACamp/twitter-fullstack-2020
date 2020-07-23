@@ -20,34 +20,35 @@
     </div>
     <div class="main-tweet-list">
       {{#each tweets}}
-      <div class="tweet-item" onclick="location.href='/tweets/{{this.id}}'">
-        <div class="tweet-item-left">
-          <a href="/users/{{this.User.id}}"><img src="{{this.User.avatar}}" alt="" class="avtar"></a>
-        </div>
-        <div class="tweet-item-right">
-          <div class="tweet-item-title">
-            <span class="mt-1 user-name"><a href="/users/{{this.User.id}}">{{this.User.name}}</a></span>
-            <span class="user-account">
-              {{this.User.account}}．{{moment this.createdAt}}
-            </span>
+      <div class="tweet-box">
+        <div class="tweet-item" onclick="location.href='/tweets/{{this.id}}'">
+          <div class="tweet-item-left">
+            <a href="/users/{{this.User.id}}"><img src="{{this.User.avatar}}" alt="" class="avtar"></a>
+          </div>
+          <div class="tweet-item-right">
+            <div class="tweet-item-title">
+              <span class="mt-1 user-name"><a href="/users/{{this.User.id}}">{{this.User.name}}</a></span>
+              <span class="user-account">
+                {{this.User.account}}．{{moment this.createdAt}}
+              </span>
 
+            </div>
+            <div class="tweet-item-text">
+              <p>{{this.description}}
+              </p>
+            </div>
           </div>
-          <div class="tweet-item-text">
-            <p>{{this.description}}
-            </p>
-          </div>
-          <div class="tweet-item-footer">
-            <button type="button" class="button reply-link pt-1" data-toggle="modal" data-target="#replyModal">
-              <img class="icon-s" src="/images/icon-reply.svg" alt=""> {{this.Replies.length}}
+        </div>
+        <div class="tweet-item-footer">
+          <button type="button" class="button reply-link pt-1" data-toggle="modal" data-target="#replyModal">
+            <i class="fac fa-cus-reply"></i> {{this.Replies.length}}
+          </button>
+          <form action="/tweets/{{this.id}}/like" method="POST">
+            <button type="submit" class="like-link button">
+              <i class="fac fa-cus-like"></i>
+              {{this.likedUsers.length}}
             </button>
-            <form action="/tweets/{{this.id}}/like" method="POST">
-              <button type="submit" class="like-link button">
-                <img class="icon-s" src="/images/icon-like-solid.svg" alt="">
-                {{!-- <img class="icon-s" src="/images/icon-like.svg" alt=""> --}}
-                {{this.likedUsers.length}}
-              </button>
-            </form>
-          </div>
+          </form>
         </div>
       </div>
       {{/each}}

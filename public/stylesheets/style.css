@@ -350,8 +350,9 @@ width: 600px;
 .tweet-item {
   border-bottom: 1px solid #E6ECF0;
   display: flex;
+  padding-bottom: 30px;
 }
-.tweet-item:hover {
+.tweet-box:hover {
   background-color: #f5f8fa;
 }
 .tweet-item-left {
@@ -393,6 +394,12 @@ width: 600px;
   margin: 5px 0px 15px 0px;
   display: flex;
   align-items: center;
+  position: absolute;
+  bottom: -5px;
+  left: 58px;
+}
+.tweet-box {
+  position: relative;  /*給tweet-footer定位*/
 }
 .tweet-item-footer .reply-link,
 .tweet-item-footer .like-link {
@@ -404,14 +411,12 @@ width: 600px;
 .reply-link:hover {
   text-decoration: none;
   position: relative;
-  left: -700px;
-  filter: drop-shadow(#FF6600 700px 0);
+  color: black;
 }
 .like-link:hover {
   text-decoration: none;
   position: relative;
-  left: -700px;
-  filter: drop-shadow(rgb(167, 20, 20) 700px 0);
+  color: red;
 }
 
 /* 右側區塊 */
