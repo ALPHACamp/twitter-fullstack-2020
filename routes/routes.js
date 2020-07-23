@@ -28,6 +28,7 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/login');
 };
 
+
 router.get('/', (req, res) => res.redirect('/tweets'));
 
 router.get('/tweets', authenticated, tweetController.getTweets);
