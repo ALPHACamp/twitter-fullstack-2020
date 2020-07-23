@@ -6,7 +6,7 @@ const Like = db.Like;
 
 const tweetController = {
   getTweets: async (req, res) => {
-    let tweets = await Tweet.findAll({      
+    let tweets = await Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [
         User,
@@ -25,6 +25,7 @@ const tweetController = {
         isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
       }));
       allUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
+      allUsers = allUsers.filter((user) => user.role === 'user');
       return allUsers.slice(0, 6);
     });
 
@@ -61,17 +62,16 @@ const tweetController = {
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {
-      req.flash('error_messages', "請輸入推文內容!!!")
-      return res.redirect('back')
+      req.flash('error_messages', '請輸入推文內容!!!');
+      return res.redirect('back');
     }
     return Tweet.create({
-      UserId:req.user.id,     
+      UserId: req.user.id,
       description: req.body.newTweet
-    })
-      .then((restaurant) => {
-        req.flash('success_messages', '推文成功!!!')
-        res.redirect('/tweets')
-      })  
-  }, 
+    }).then((restaurant) => {
+      req.flash('success_messages', '推文成功!!!');
+      res.redirect('/tweets');
+    });
+  }
 };
 module.exports = tweetController;
