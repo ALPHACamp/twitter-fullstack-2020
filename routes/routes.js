@@ -72,7 +72,8 @@ router.delete(
   userController.removeFollowing
   );
   
-router.get('/users/:userId/edit', authenticated, userController.editUser);
+router.get('/users/:id/edit', authenticated, userController.editUser);
+router.put('/users/:id/edit', authenticated, userController.putEditUser);
 router.get('/users/:id/:followship', authenticated, userController.getFollowShip)
 router.get('/users/:id', authenticated,userController.getUserPage)
   
