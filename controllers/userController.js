@@ -75,24 +75,7 @@ let userController = {
     });
   },
   getUserPage: async (req, res) => {
-    //console.log('req.user======', req.user);
     const id = req.params.id;
-    //console.log(req.topUsers);
-    //user table
-    const topUsers = await User.findAll({
-      include: [{ model: User, as: 'Followers' }]
-    }).then((allUsers) => {
-      //console.log('allUser', allUsers);
-      allUsers = allUsers.map((user) => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
-      }));
-      allUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
-      return allUsers.slice(0, 6);
-    });
-   
     let user = await User.findOne({
       where: { id },
       include: [
@@ -128,10 +111,13 @@ let userController = {
     // all user's tweets
     // all user's likes
     // all user's replies
-    res.render('userPage', { user, followShip, content: tweets, topUsers });
+    res.render('userPage', { user, followShip, content: tweets });
   },
   getUserReply: async (req, res) => {
     const id = req.params.id
+    const tweetsCount = await Tweet.count({
+      where: { UserId: id }
+    })
     let user = await User.findOne({
       where: { id },
       include: [
@@ -151,7 +137,7 @@ let userController = {
     user = user.toJSON()
     const followShip = {
       isReply: true,
-      tweetsCount: user.UserReply.length,
+      tweetsCount,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
@@ -170,6 +156,9 @@ let userController = {
   },
   getUserLike: async (req, res) => {
     const id = req.params.id
+    const tweetsCount = await Tweet.count({
+      where: { UserId: id }
+    })
     let user = await User.findOne({
       where: { id },
       include: [
@@ -191,7 +180,7 @@ let userController = {
     user = user.toJSON()
     const followShip = {
       isLike: true,
-      tweetsCount: user.userLike.length,
+      tweetsCount,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
@@ -310,7 +299,6 @@ let userController = {
       res.render('followship', { user: user.toJSON(), followers, count });
     }
   },
-
   putEditUser: (req, res) => {
     User.findByPk(req.params.id)
       .then((user) => {
@@ -329,6 +317,21 @@ let userController = {
           })
       })
   },
+  topUserForLayout: async (req, res, next) => {
+    let topUsers = await User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+    topUsers = topUsers.map(user => ({
+      ...user.dataValues,
+      FollowerCount: user.Followers.length,
+      isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
+    }))
+    
+    topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
+    res.locals.topUsers = topUsers
+    return next()
+    
+  } 
 };
 
 module.exports = userController;
