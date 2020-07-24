@@ -5,8 +5,8 @@ const tweetController = require('../controllers/tweetController');
 const adminController = require('../controllers/adminController.js');
 const helpers = require('../_helpers');
 const passport = require('passport');
-const multer = require('multer');
-const upload = multer({ dest: 'temp/' });
+//const multer = require('multer');
+//const upload = multer({ dest: 'temp/' });
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -79,7 +79,7 @@ router.delete(
 router.get('/users/:id/profile', authenticated, userController.editProfile);
 router.put('/users/:id/profile', authenticated,
   //upload.single('image'),
-  upload.array('image', 2),
+  //upload.array('image', 2),
   // upload.fields([
   //   { name: 'backgroundImg', maxCount: 1 },
   //   { name: 'avatar', maxCount: 1 }
@@ -87,7 +87,7 @@ router.put('/users/:id/profile', authenticated,
   userController.putEditProfile
 );
 router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
-router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply)
+router.post('/tweets/:id/comments', authenticated, userController.topUserForLayout, tweetController.postComment)
 router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike)
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);

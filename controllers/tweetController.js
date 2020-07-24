@@ -23,7 +23,8 @@ const tweetController = {
       description: r.description,
       createdA: r.createdAt,
       likeCount: r.TweetWhoLike.length,
-      replayCount: r.whoReply.length
+      replayCount: r.whoReply.length,
+      isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
     }));
     return res.render('tweetsHome', { tweets: data });
   },
@@ -52,10 +53,27 @@ const tweetController = {
     return Tweet.create({
       UserId: req.user.id,
       description: req.body.newTweet
-    }).then((restaurant) => {
-      req.flash('success_messages', '推文成功!!!');
-      res.redirect('/tweets');
-    });
-  }
+    })
+      .then((tweet) => {
+        req.flash('success_messages', '推文成功!!!')
+        res.redirect('/tweets')
+      })
+  },
+  postComment: (req, res) => {
+    let whichTweet = req.params.id
+    if (!req.body.newComment) {
+      req.flash('error_messages', "請輸入推文內容!!!")
+      return res.redirect('back')
+    }
+    return Reply.create({
+      comment: req.body.newComment,
+      TweetId: whichTweet,
+      UserId: req.user.id
+    })
+      .then((tweet) => {
+        req.flash('success_messages', '回覆成功!!!')
+        res.redirect('/tweets')
+      })
+  },
 };
 module.exports = tweetController;
