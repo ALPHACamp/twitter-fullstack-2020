@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mt-3">
   {{>leftColumn}}
   <div class="col-5">
     <div class="row justify-content-center" id="tweet-detail" style="border: 1px solid black;">
@@ -25,7 +25,7 @@
       <div class="col-12">
         {{tweet.replyCount}} 回覆 {{tweet.likeCount}}喜歡次數
       </div>
-      <div class="col-12">
+      <div class="col-12 my-1">
         <i class="far fa-comment fa-2x mr-5" data-toggle="modal" data-target="#replyTweet"></i>
         {{#if isLiked}}
         <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart fa-2x" style="color: salmon;"></i></a>
@@ -35,36 +35,67 @@
       </div>
     </div>
 
-    <div class=" row" id="reply-list">
+    <div class="row" id="reply-list" style="border: 1px solid grey;">
       {{#each replies}}
-      <div class="row w-100" style="border: 1px solid grey;">
-        <div class="col-1">
-          <a href="/users/{{this.User.id}}">
-            <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
-          </a>
+      <div class=" col-1">
+        <a href="/users/{{this.User.id}}">
+          <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+        </a>
+      </div>
+      <div class="col-11">
+        <div class="row">
+          <div class="col ml-3">{{this.User.name}} <small
+              class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small></div>
+          {{#ifEqual this.User.id ../currentUserId}}
+          <form action="/tweets/{{this.TweetId}}/{{this.id}}?_method=DELETE" method="post" class=" ml-auto">
+            <button class="btn btn-outline-danger pull-right" type="submit">&times;</button>
+          </form>
+          {{/ifEqual}}
         </div>
-        <div class="col-11">
-          <div class="row">
-            <div class="col ml-3">{{this.User.name}} <small
-                class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small></div>
-            {{#ifEqual this.User.id ../currentUserId}}
-            <form action="/tweets/{{this.TweetId}}/{{this.id}}?_method=DELETE" method="post" class=" ml-auto">
-              <button class="btn btn-outline-danger pull-right" type="submit">&times;</button>
-            </form>
-            {{/ifEqual}}
-          </div>
-          <div class="col-12">回覆{{../tweet.User.account}}</div>
-          <div class="col-12">{{this.comment}}</div>
-          <div class="col-12">
-            <i class="far fa-comment mr-5" data-toggle="modal" data-target="#replyReply{{this.id}}"></i>
-            {{#if isLiked}}
-            <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
-            {{else}}
-            <a href="/like/{{tweet.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
-            {{/if}}
-          </div>
+        {{#if this.ReplyId}}
+        <div class="col-12">回覆{{this}}</div>
+        {{else}}
+        <div class="col-12">回覆{{../tweet.User.account}}</div>
+        {{/if}}
+        <div class="col-12">{{this.comment}}</div>
+        <div class="col-12">
+          <i class="far fa-comment mr-5" data-toggle="modal" data-target="#replyReply{{this.id}}"></i>
+          {{#if isLiked}}
+          <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          {{else}}
+          <a href="/like/{{tweet.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          {{/if}}
+        </div>
+        <hr>
+      </div>
+      {{#each this.secondReplies}}
+      <div class="col-1">
+        <a href="/users/{{this.User.id}}">
+          <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+        </a>
+      </div>
+      <div class="col-11">
+        <div class="row">
+          <div class="col ml-3">{{this.User.name}} <small
+              class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small></div>
+          {{#ifEqual this.User.id ../currentUserId}}
+          <form action="/tweets/{{this.TweetId}}/{{this.id}}?_method=DELETE" method="post" class=" ml-auto">
+            <button class="btn btn-outline-danger pull-right" type="submit">&times;</button>
+          </form>
+          {{/ifEqual}}
+        </div>
+        <div class="col-12">回覆{{this.replyTo}}</div>
+        <div class="col-12">{{this.comment}}</div>
+        <div class="col-12">
+          <i class="far fa-comment mr-5" data-toggle="modal" data-target="#replyReply{{this.ReplyId}}"></i>
+          {{#if isLiked}}
+          <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          {{else}}
+          <a href="/like/{{tweet.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          {{/if}}
         </div>
       </div>
+      {{/each}}
       {{/each}}
     </div>
   </div>
