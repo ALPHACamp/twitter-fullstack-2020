@@ -5,41 +5,37 @@
     <div class="right-column-title">
       跟隨誰
     </div>
-    <div class="user-list">
-
-      <!-- 6個使用者清單迴圈 -->
+    <div class="top-user-list" height="800px">
+      <!-- 10個推薦使用者清單迴圈 -->
+      {{#each user.TopUsers}}
       <div class="user-list-item">
         <img src="" alt="" class="avtar">
         <div class="user-list-item-name">
           <a href="" class="user-name">
-            Pineapple
+            {{this.name}}
           </a>
-          <div class="user-account">@pineapple</div>
+          <div class="user-account">{{this.account}}</div>
         </div>
-        <a href=""><button class="unfollow-button">正在跟隨</button></a>
-        {{!-- <a href=""><button class="follow-button">跟隨</button>
-                      </a> --}}
+        {{#ifEqual this.id ../user.id}}
+        {{else}}
+        {{#if isFollowed}}
+        <form action="/followship/{{this.id}}?_method=DELETE" method="POST">
+          <button class="unfollow-button">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followship/{{this.id}}" method="POST">
+          <button class="follow-button">跟隨</button>
+        </form>
+        {{/if}}
+        {{/ifEqual}}
       </div>
-
-      <div class="user-list-item">
-        <img src="" alt="" class="avtar">
-        <div class="user-list-item-name">
-          <a href="" class="user-name">
-            Orange
-          </a>
-          <div class="user-account">@orange</div>
-        </div>
-        {{!-- <a href=""><button class="unfollow-button">正在跟隨</button></a> --}}
-        <a href=""><button class="follow-button">跟隨</button>
-        </a>
-      </div>
-
+      {{/each}}
       <!-- 迴圈結束 -->
-
     </div>
-    <a href="" class="more-users">
+    <button class=" button more-users">
       顯示更多
-    </a>
+    </button>
+
   </div>
 </div>
 

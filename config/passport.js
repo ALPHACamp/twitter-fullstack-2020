@@ -21,21 +21,22 @@ passport.use(new LocalStrategy(
       })
   }
 ))
+
 passport.serializeUser((user, done) => {
   done(null, user.id)
 })
-passport.deserializeUser((id, done) => {
+passport.deserializeUser(async (id, done) => {
   User.findByPk(id, {
     include: [
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' },
     ]
-  }).then(user => {
-    user = user.toJSON()
-    return done(null, user)
   })
+    .then(user => {
+      user = user.toJSON()
+      return done(null, user)
+    })
 })
-
 module.exports = passport
 
 

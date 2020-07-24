@@ -8,6 +8,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('./config/passport')
+const middleware = require('./config/middleware')
 
 const app = express()
 const port = 3000
@@ -24,12 +25,8 @@ app.use(session({ secret: 'twittercat', resave: false, saveUninitialized: false 
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
-app.use((req, res, next) => {
-  res.locals.errorMessage = req.flash('errorMessage')
-  res.locals.successMessage = req.flash('successMessage')
-  res.locals.user = req.user
-  next()
-})
+app.use(middleware.topUsers)
+app.use(middleware.setLocals)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

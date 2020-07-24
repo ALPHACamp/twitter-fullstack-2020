@@ -93,7 +93,7 @@ removeCoverButton.addEventListener('click', () => {
 })
 
 // preview upload file
-function previewFile(input) {
+function previewFile (input) {
   const coverPreview = document.querySelector('#editModalCover')
   const avatarPreview = document.querySelector('#editModalAvatar')
   const reader = new FileReader()
@@ -108,4 +108,16 @@ function previewFile(input) {
   reader.readAsDataURL(input.files[0])
 }
 
+// more-users
+const moreUser = document.querySelector('.more-users')
+const topUserList = document.querySelector('.top-user-list')
+
+moreUser.addEventListener('click', () => {
+  event.preventDefault()
+  const orgHeight = parseInt(topUserList.style.height, 10)
+  topUserList.style.height = (orgHeight > 100) ? '284px' : topUserList.scrollHeight + 'px'
+  topUserList.style.transition = 'height .4s ease-out'
+  topUserList.style.overflow = 'scroll'
+  moreUser.style.visibility = 'hidden'
+})
 
