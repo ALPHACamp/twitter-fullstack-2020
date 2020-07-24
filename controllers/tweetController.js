@@ -26,7 +26,6 @@ const tweetController = {
       replayCount: r.whoReply.length,
       isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
     }));
-    console.log(data[0])
     return res.render('tweetsHome', { tweets: data });
   },
   getTweet: async (req, res) => {
@@ -61,9 +60,7 @@ const tweetController = {
       })
   },
   postComment: (req, res) => {
-    
-    let whichTweet = 50//req.body.commentId 
-    
+    let whichTweet = req.params.id
     if (!req.body.newComment) {
       req.flash('error_messages', "請輸入推文內容!!!")
       return res.redirect('back')

@@ -25,14 +25,15 @@
             <a href="/users/{{userId}}" class="text-danger">＠{{userAccount}}</a>
           </div>
 
-          <span>・{{moment this.tweets.createdAt}}</span>
+          <span>・{{moment this.createdAt}}</span>
         </div>
       </div>
       <p class="mt-2 ">{{this.description}}</p>
       <div class="d-flex justify-content-start">
 
 
-        <button type="submit" class="btn btn-link text-dark" onclick="postCommentPage('{{this.id}}')">
+        <button type="submit" class="btn btn-link text-dark"
+          onclick="postCommentPage('{{this.id}}','{{this.description}}')">
           <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -80,8 +81,11 @@
 {{/each}}
 
 <script>
-  function postCommentPage(id) {
-    $('#postCommentPage').modal('show').val(id);
+  function postCommentPage(id,description) {
+    $('#description').attr('value', `${description}`);
+    $('#postCommentPage').modal('show');
+    $('#modalForm').attr('action', `/tweets/${id}/comments`);
+    
   }
 </script>
 
@@ -91,13 +95,14 @@
       <div class="modal-header">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
+      <p id='description' class="mt-2 " value=" ">123</p>
       <div class="modal-body">
-        <form action="/comments" method="POST">
+        <form id="modalForm" action="/comments" method="POST">
           <div class="form-group">
-            <textarea class="form-control" id="newComment" name="newComment" rows="3" placeholder="寫點回覆吧!!!"></textarea>
+            <textarea class="form-control" id="newComment" form="modalForm" name="newComment" rows="3"
+              placeholder="寫點回覆吧!!!"></textarea>
           </div>
           <div class="modal-footer">
-            <input type="hidden" name="commentId" value="{{id}}" />
             <button type="submit" class="btn btn-primary">回覆</button>
           </div>
         </form>
