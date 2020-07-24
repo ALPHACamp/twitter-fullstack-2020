@@ -29,20 +29,24 @@ const tweetController = {
   },
   getTweet: async (req, res) => {
     const id = req.params.id;
-    const tweet = await Tweet.findOne({
+    let tweet = await Tweet.findOne({
       where: { id },
-      include: [User, { model: User, as: 'whoReply' }]
+      include: [User, 
+        { model: User, as: 'TweetWhoLike'},
+        { model: User, as: 'whoReply', order: ["createdAt", 'DESC'] },
+      ]
     });
-    const totalLike = await Like.count({
-      where: { UserId: id }
-    });
-
-    const totalComment = tweet.toJSON().whoReply.length;
+    tweet = tweet.toJSON()
+   
+    let replies = tweet.whoReply
     const totalCount = {
-      totalLike,
-      totalComment
-    };
-    res.render('tweet', { tweet: tweet.toJSON(), totalCount });
+      replyCount: replies.length,
+      likeCount: tweet.TweetWhoLike.length,
+      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
+    }
+    console.log(totalCount)
+
+    res.render('tweet', { tweet, totalCount });
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {
