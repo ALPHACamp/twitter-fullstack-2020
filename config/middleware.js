@@ -10,7 +10,7 @@ module.exports = {
           followerCont: item.Followers.length,
           isFollowed: req.user.Followings.map(item => item.id).includes(item.id)
         }))
-        req.user.TopUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 5)
+        req.user.TopUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
         return req.user
       })
     next()

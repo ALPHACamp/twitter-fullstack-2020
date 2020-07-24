@@ -425,7 +425,7 @@ width: 600px;
 }
 .right-column{
   width: 350px;
-  height: 512px;
+  /* height: 512px; */
   margin: 15px 0px 0px 15px;
   background: #F5F8FA;
   border-radius: 14px;
@@ -439,8 +439,8 @@ width: 600px;
   font-size: 18px;
   border-bottom: 1px solid #E6ECF0;
 }
-.user-list {
-  height: 426px;
+.top-user-list {
+  height: 284px;
   overflow: hidden;
 }
 .user-list-item {
@@ -487,10 +487,11 @@ width: 600px;
   float: right;
 }
 .more-users {
+  height: 45px;
   font-size: 15px;
-  line-height: 22px;
   color: #FF6600;
-  margin: 10px 0px 0px 15px;
+  padding-left: 20px;
+  text-align: left;
 }
 .more-users:hover {
   text-decoration: none;
