@@ -441,6 +441,7 @@ width: 600px;
 }
 .user-list {
   height: 426px;
+  overflow: hidden;
 }
 .user-list-item {
   height: 70px;

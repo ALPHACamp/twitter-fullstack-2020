@@ -55,4 +55,7 @@ module.exports = (app, passport) => {
   app.get('/users/:id/tweets', authenticated, userController.getTweets)
   app.get('/users/:id/likes', authenticated, userController.getLikes)
   app.get('/users/:id/replies', authenticated, userController.getReplies)
+
+  app.post('/followship/:id', authenticated, userController.follow)
+  app.delete('/followship/:id', authenticated, userController.unfollow)
 }
