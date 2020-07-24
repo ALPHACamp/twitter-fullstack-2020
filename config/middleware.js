@@ -3,16 +3,18 @@ const User = db.User
 
 module.exports = {
   topUsers: (req, res, next) => {
-    User.findAll({ include: [{ model: User, as: 'Followers' }] })
-      .then(users => {
-        users = users.map(item => ({
-          ...item.dataValues,
-          followerCont: item.Followers.length,
-          isFollowed: req.user.Followings.map(item => item.id).includes(item.id)
-        }))
-        req.user.TopUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-        return req.user
-      })
+    if (req.user) {
+      User.findAll({ include: [{ model: User, as: 'Followers' }] })
+        .then(users => {
+          users = users.map(item => ({
+            ...item.dataValues,
+            followerCont: item.Followers.length,
+            isFollowed: req.user.Followings.map(item => item.id).includes(item.id)
+          }))
+          req.user.TopUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
+          return req.user
+        })
+    }
     next()
   },
   setLocals: (req, res, next) => {
