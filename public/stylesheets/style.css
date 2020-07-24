@@ -424,6 +424,9 @@ width: 600px;
   position: relative;
   color: red;
 }
+.fa-cus-solid-like{
+  color: red;
+}
 
 /* 右側區塊 */
 .right-content {

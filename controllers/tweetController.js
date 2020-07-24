@@ -14,7 +14,14 @@ const tweetController = {
       ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
-      res.render('tweets', { user: req.user, tweets })
+      const data = tweets.map(t => ({
+        ...t.dataValues,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(t.id)
+      }))
+      res.render('tweets', {
+        user: req.user,
+        tweets: data
+      })
     })
   },
   postTweet: (req, res) => {

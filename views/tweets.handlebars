@@ -51,18 +51,18 @@
             <p class="tweet-id">{{this.id}}</p>
             <p class="tweet-createdAt">{{moment this.createdAt}} </p>
           </div>
-          <form action="/tweets/{{this.id}}/like" method="POST">
-            <button type="submit" class="like-link button">
-              <i class="fac fa-cus-like"></i>
-              {{this.likedUsers.length}}
-            </button>
-          </form>
+          {{#if isLiked}}
           <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
             <button type="submit" class="like-link button">
               <i class="fac fa-cus-solid-like"></i>
-              {{this.likedUsers.length}}
-            </button>
-          </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit" class="like-link button">
+                  <i class="fac fa-cus-like"></i>
+                  {{/if}}
+                  {{this.likedUsers.length}}
+                </button>
+              </form>
         </div>
       </div>
       {{/each}}
