@@ -43,7 +43,10 @@ const tweetController = {
         { model: Reply, include: [User] }
       ]
     }).then(tweet => {
-      res.render('tweet', { tweet: tweet.toJSON() })
+      res.render('tweet', {
+        tweet: tweet.toJSON(),
+        isLiked: tweet.likedUsers.map(d => d.id).includes(req.user.id)
+      })
     })
   },
   postReply: (req, res) => {

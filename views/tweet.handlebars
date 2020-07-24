@@ -40,12 +40,17 @@
             <p class="tweet-id">{{tweet.id}}</p>
             <p class="tweet-createdAt">{{moment tweet.createdAt}}</p>
           </div>
-          <form method="POST">
+          {{#if isLiked}}
+          <form method="POST" action="/tweets/{{tweet.id}}/like?_method=DELETE">
             <button type="submit" class="button like-link">
-              <i class="fac fa-cus-like"></i>
-            </button>
-          </form>
-
+              <i class="fac fa-cus-solid-like"></i>
+              {{else}}
+              <form method="POST" action="/tweets/{{tweet.id}}/like">
+                <button type="submit" class="button like-link">
+                  <i class="fac fa-cus-like"></i>
+                  {{/if}}
+                </button>
+              </form>
         </div>
       </div>
 
