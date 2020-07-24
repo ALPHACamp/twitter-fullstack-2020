@@ -73,7 +73,7 @@ router.delete(
   );
 
 router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
-router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply)
+router.post('/comments', authenticated, userController.topUserForLayout, tweetController.postComment)
 router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike)
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
