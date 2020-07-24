@@ -36,7 +36,7 @@
 
 
       <ul class="nav flex-md-row flex-lg-column justify-content-md-around align-items-lg-start">
-      {{#whoAreYou myUser.role}}
+        {{#whoAreYou myUser.role}}
         <li class="nav-item d-flex mt-4">
           <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house-fill mt-2" fill="currentColor"
             xmlns="http://www.w3.org/2000/svg">
@@ -64,14 +64,17 @@
           </svg>
           <a href="/users/{{myUser.id}}/edit" class="nav-link h4 text-dark">設定</a>
         </li>
+      
 
-        <div class="modal" tabindex="-1" role="dialog" id='getTweetPage'>
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               </div>
               <div class="modal-body">
+                
                 <form action="/tweets/newTweets" method="POST">
                   <div class="form-group">
                     <textarea class="form-control" id="newTweet" name="newTweet" rows="3"
@@ -85,13 +88,10 @@
             </div>
           </div>
         </div>
+        <button type="button" class="btn btn-danger rounded-pill w-100 mt-3" data-toggle="modal"
+          data-target="#exampleModal" onclick="getTweetPage()">推文</button>
 
-        <a href="#" onclick="getTweetPage()" class="btn btn-danger rounded-pill w-100 mt-3">推文</a>
-        <script>
-          function getTweetPage() {
-            $('#getTweetPage').modal('show');
-          }
-        </script>
+
         {{else}}
         <li class="nav-item d-flex mt-4">
           <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house-fill mt-2" fill="currentColor"
@@ -110,7 +110,7 @@
           </svg>
           <a href="/admin/users" class="nav-link h4 text-dark">使用者列表</a>
         </li>
-      {{/whoAreYou}}
+        {{/whoAreYou}}
 
       </ul>
     </div>

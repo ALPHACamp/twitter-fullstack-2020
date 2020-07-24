@@ -14,7 +14,7 @@ let adminController = {
     res.redirect('/admin/tweets');
   },
   getTweets: (req, res) => {
-    Tweet.findAll({ raw: true, nest: true, include: User }).then((tweets) => {
+    Tweet.findAll({ raw: true, nest: true, include: User ,order: [['createdAt', 'DESC']],}).then((tweets) => {
       const data = tweets.map((r) => ({
         ...r,
         userName: r.User.name,

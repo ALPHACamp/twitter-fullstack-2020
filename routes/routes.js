@@ -60,7 +60,7 @@ router.post(
 );
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
-router.get('/admin/tweetsUser', authenticatedAdmin, adminController.getUsers);
+router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
 router.delete(
   '/admin/tweets/:id',
   authenticatedAdmin,
