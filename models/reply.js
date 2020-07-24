@@ -5,9 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     TweetId: DataTypes.INTEGER,
     comment: DataTypes.STRING
   }, {});
-  Reply.associate = function(models) {
-    Reply.belongsTo(models.Tweet)
-    Reply.belongsTo(models.User)
+  Reply.associate = function(models) {  
+    
   };
   return Reply;
 };
