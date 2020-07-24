@@ -37,6 +37,15 @@ const tweetController = {
     }).then(tweet => {
       res.render('tweet', { tweet: tweet.toJSON() })
     })
+  },
+  postReply: (req, res) => {
+    Reply.create({
+      UserId: req.user.id,
+      TweetId: req.params.id,
+      comment: req.body.comment
+    }).then((reply => {
+      res.redirect('back')
+    }))
   }
 }
 

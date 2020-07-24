@@ -16,10 +16,12 @@
           <form method="POST" action="/tweets">
             <textarea class="modal-textarea modal-post-tweet" name="description" id="description" cols="30" rows="10"
               placeholder="有什麼新鮮事？" maxlength="140"></textarea>
-            <button class="tweet-post-button-modal" type="submit" style="display: none;">推文</button>
-            <button type="button" class="tweet-post-error-modal" data-toggle="modal" data-target="#postError">
-              推文
-            </button>
+            <div class="buttons d-flex justify-content-end">
+              <button class="tweet-post-button-modal" type="submit" style="display: none;">推文</button>
+              <button type="button" class="tweet-post-error-modal" data-toggle="modal" data-target="#postError">
+                推文
+              </button>
+            </div>
           </form>
         </div>
       </div>
@@ -28,7 +30,7 @@
 </div>
 
 <!-- 回覆Modal-->
-<div class="modal" tabindex="-1" role="dialog" id="replyModal">
+<div class="modal fade" tabindex="-1" role="dialog" id="replyModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="reply-modal">
@@ -44,28 +46,23 @@
               <img src="" alt="" class="avtar">
               <div class="extention-line"></div>
             </div>
-
             <div class="reply-modal-tweet-right column">
-              <a href="" class="user-name">Apple</a><span class="user-account">@apple 3小時</span>
-              <div>
-                <p class="pt-1">ue euconsequat ac felis donec et odio pellentes
-                  vitaecongue euconsequat ac felis donec et odio pellngue euconsequat ac felis donec et odioam volutpat
-                  commodo sed egestas
-                  egestassque
-                </p>
-              </div>
-              <span class="replyto-span">回覆給</span> <span class="user-account-color-span">@apple</span>
+              <!-- 這裡的內容會從js傳資料過來 -->
             </div>
           </div>
-
           <div class="reply-modal-textarea mt-3">
             <div>
               <img src="" alt="" class="avtar">
             </div>
-
-            <form method="POST">
-              <textarea class="modal-textarea" name="" id="" cols="30" rows="10" placeholder="推你的回覆"></textarea>
-              <button type="submit" class="modal-button">回覆</button>
+            <form method="POST" class="reply-modal-form">
+              <textarea class="modal-textarea" name="comment" id="comment" cols="30" rows="10"
+                placeholder="推你的回覆"></textarea>
+              <div class="buttons d-flex justify-content-end">
+                <button class="tweet-post-button" type="submit" style="display: none;">回覆</button>
+                <button type="button" class="tweet-post-error" data-toggle="modal" data-target="#postError">
+                  回覆
+                </button>
+              </div>
             </form>
 
           </div>
@@ -78,47 +75,46 @@
 
 <!-- 編輯個人資料Modal-->
 <div class="modal" tabindex="-1" role="dialog" id="editProfileModal">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog" role="dialog">
     <div class="modal-content">
 
       <div class="edit-modal">
         <div class="edit-modal-header">
-          <button type="button" data-dismiss="modal" aria-label="Close" class="close-button mr-3">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="close-button">
             &times;
           </button> 編輯個人資料
         </div>
 
         <div class="edit-modal-body">
-          <form action="POST">
+          <form action="/api/users/{{user.id}}" enctype="multipart/form-data" method="POST">
 
-            <div class="edit-modal-cover" style="background: url();">
-              <label for="cover" class="cover-upload"><img src="/images/icon-upload.png" alt=""></label>
-              <input type="file" name="" id="cover">
-              <form action="POST">
-                <button type="submit" class="button cover-delete"><img src="/images/icon-delete.png" alt=""></button>
-              </form>
+            <div class="edit-modal-cover" id="editModalCover"
+              style="background: url({{user.cover}}); background-position:center;background-size:cover;">
+              <label for="cover"><i class="fac fa-cus-upload-image cover-upload"></i></label>
+              <input type="file" name="cover" id="cover" onchange="previewFile(this)">
+              <button type="button" class="button cover-remove"><i class="fac fa-cus-close remove-icon"></i></button>
             </div>
 
-            <div class="edit-modal-avtar">
-              <img src="" alt="" class="profile-avtar">
-              <label for="avtar" class="avtar-upload"><img src="/images/icon-upload.png" alt=""></label>
-              <input type="file" id="avtar">
+            <div class="edit-modal-avatar" id="editModalAvatar"
+              style="background: url({{user.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+              <label for="avatar"><i class="fac fa-cus-upload-image avatar-upload"></i></label>
+              <input type="file" id="avatar" name="avatar" onchange="previewFile(this)">
             </div>
 
-            <label for="username"></label>
-            <input class="username-input" type="text" id="username" placeholder="名稱" value="{{user.name}}"
-              onkeyup="nameWordCount()" maxlength="50">
-            <div class="word-count">
-              <span class="username-input-count">0</span>/50
+            <div class="edit-modal-username">
+              <input class="username-input" type="text" id="name" name="name" placeholder="名稱" maxlength="50"
+                value="{{user.name}}">
+              <div class="word-count">
+                <span class="username-input-count">0</span>/50
+              </div>
             </div>
-
-            <label for="brief"></label>
-            <textarea class="brief-input" name="" id="brief" cols="30" rows="10" placeholder="自我介紹"
-              onkeyup="briefWordCount()" maxlength="160">{{user.introduction}}</textarea>
-            <div class="word-count">
-              <span class="brief-input-count">0</span>/160
+            <div class="edit-modal-brief">
+              <textarea class="brief-input" name="introduction" id="introduction" cols="30" rows="10" placeholder="自我介紹"
+                maxlength="160">{{user.introduction}}</textarea>
+              <div class="word-count">
+                <span class="brief-input-count">0</span>/160
+              </div>
             </div>
-
             <button type="submit" class="modal-button profile-save-button">儲存</button>
           </form>
         </div>
@@ -133,7 +129,7 @@
 <div class="modal fade" id="postError" tabindex="-1" role="dialog" aria-labelledby="postError" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
-      <p class="text-center m-0">要輸入內容才可以推文唷！
+      <p class="text-center m-0">要輸入內容才可以送出唷！
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" style="font-size: 30px; color:#fff;">&times;</span>
         </button>

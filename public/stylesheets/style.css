@@ -356,8 +356,9 @@ width: 600px;
 .tweet-item {
   border-bottom: 1px solid #E6ECF0;
   display: flex;
+  padding-bottom: 30px;
 }
-.tweet-item:hover {
+.tweet-box:hover {
   background-color: #f5f8fa;
 }
 .tweet-item-left {
@@ -399,6 +400,12 @@ width: 600px;
   margin: 5px 0px 15px 0px;
   display: flex;
   align-items: center;
+  position: absolute;
+  bottom: -5px;
+  left: 58px;
+}
+.tweet-box {
+  position: relative;  /*給tweet-footer定位*/
 }
 .tweet-item-footer .reply-link,
 .tweet-item-footer .like-link {
@@ -410,14 +417,12 @@ width: 600px;
 .reply-link:hover {
   text-decoration: none;
   position: relative;
-  left: -700px;
-  filter: drop-shadow(#FF6600 700px 0);
+  color: black;
 }
 .like-link:hover {
   text-decoration: none;
   position: relative;
-  left: -700px;
-  filter: drop-shadow(rgb(167, 20, 20) 700px 0);
+  color: red;
 }
 
 /* 右側區塊 */
@@ -502,7 +507,7 @@ width: 600px;
   border: none !important;
 }
 .close-button{
-  margin-left: 15px;
+  margin: 0px 30px 0px 15px;
   background-color: transparent;
   border: none;
   font-size: 32px;
@@ -535,6 +540,8 @@ width: 600px;
 .tweet-modal-header,
 .reply-modal-header,
 .edit-modal-header {
+  font-weight: bold;
+  font-size: 19px;
   height: 54px;
   border-bottom: 1px solid #E6ECF0;
 }
@@ -563,7 +570,8 @@ width: 600px;
 .reply-modal-body {
   padding: 15px;
 }
-.reply-modal-tweet, .reply-modal-textarea {
+.reply-modal-tweet, 
+.reply-modal-textarea {
   display: flex;
   flex: row wrap;
 }
@@ -592,52 +600,74 @@ width: 600px;
   width: 100%;
 }
 .edit-modal-cover input,
-.edit-modal-avtar input {
+.edit-modal-avatar input {
   visibility: hidden;
+}
+.edit-modal-cover label:hover,
+.edit-modal-avatar label:hover {
+  cursor: pointer;
 }
 .cover-upload {
   position: relative;
   top: 85px;
   left: 260px;
+  color: #FFFFFF;
+  font-size: 22px;
 }
-.cover-upload:hover {
-  cursor: pointer;
+.remove-icon {
+  color: #FFFFFF;
+  font-size: 18px;
 }
-.cover-delete {
+.cover-remove {
   position: relative;
-  top: 85px;
+  top: 21px;
+  left: 360px;
 }
-.edit-modal-avtar {
-  height: 80px;
-}
-.edit-modal-avtar .profile-avtar {
-  position: relative;
-  top: -60px;
-  left: 15px;
-}
-.avtar-upload {
+.edit-modal-avatar {
   position: relative;
   top: -60px;
-  left: -59px;
+  left: 40px;
+  height: 120px;
+  width: 120px;
+  border-radius: 100%; 
+  border: 4px solid #FFFFFF;
+  margin-bottom: -35px;
+}
+.edit-modal-avatar label {
+  border-radius: 100%;
+  width: 120px;
+  height: 120px;
+}
+.avatar-upload {
+  position: relative;
+  left: 45px;
+  top: 40px;
+  color: #FFFFFF;
+  font-size: 22px;
+}
+.edit-modal-username,
+.edit-modal-brief {
+  text-align: center;
 }
 .edit-modal-body input,
 .edit-modal-body textarea {
-  margin: 0px 15px;
+  width: 95%;
   background: #F5F8FA;
   border-radius: 4px;
   outline: 0;
   border: none;
-  padding-left: 15px;
   border-bottom: 2px solid #657786;
-  margin-bottom: 20px;
+  padding-left: 15px;
 }
 .edit-modal-body input {
   height: 50px;
+  margin-bottom: 15px;
 }
 .edit-modal-body textarea {
   height: 150px;
   resize: none;
-  padding-top: 15px;
+  padding-top: 20px;
+  margin-bottom: 10px;
 }
 .edit-modal-body input::placeholder,
 .edit-modal-body textarea::placeholder{
@@ -650,17 +680,18 @@ width: 600px;
 }
 .profile-save-button {
   position: relative;
-  top: -580px;
+  top: -630px;
   left: 100px;
   height: 30px;
 }
 .word-count {
-  margin: -15px 15px 15px 0px;
+  margin: -15px 30px 30px 0px;
   font-weight: 500;
   font-size: 15px;
   text-align: right;
   color: #657786;
 }
+
 #postError .modal-dialog {
   margin-top: 50px;
   background-color: rgba(0,0,0,.7);
@@ -775,6 +806,12 @@ width: 600px;
   margin-right: 5px;
 }
 /*單一頁面中間列*/
+.main-title .fa-cus-back {
+  color: #657786;
+}
+.main-title .fa-cus-back:hover {
+  color: black;
+}
 .tweet-content {
   padding: 15px 15px 0 15px;
   border-bottom: 1px solid #E6ECF0;
@@ -820,8 +857,19 @@ width: 600px;
 .tweet-like-reply-link .reply-link{
   margin-right: 100px;
 }
+.tweet-like-reply-link a, .tweet-like-reply-link .fa-cus-like {
+  color: #657786;
+  font-size: 25px;
+}
+.tweet-like-reply-link .fa-cus-like {
+  padding-top: 1px;   /*覺得愛心偏高，把他拉下來*/
+}
+.tweet-like-reply-link .fa-cus-like:hover {
+  color: red;  
+}
+
 .reply-author-command , .author-relply, .reply-item{
-  padding: 10px;
+  padding: 15px;
 }
 .reply-like-post a,.reply-like-post span{
   color: #657786;
@@ -832,10 +880,12 @@ width: 600px;
 .reply-item {
   border-bottom: 1px solid #E6ECF0;
 }
-.reply-item:last-child {
-  border-bottom: 0px solid #E6ECF0;
-}
+
 .reply-item .left {
   margin-right: 10px;
+}
+.reply-comment{
+  margin-bottom: 0;
+  margin-top: 5px;
 }
 

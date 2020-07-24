@@ -3,6 +3,9 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const bcrypt = require('bcryptjs')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const fs = require('fs')
 
 const userController = {
   signUpPage: (req, res) => res.render('signup'),
@@ -42,8 +45,8 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  //更新使用者資訊
-  putUser: (req, res) => {
+  //更新使用者基本資訊
+  putUserProfile: (req, res) => {
     const { account, name, email, password, passwordCheck } = req.body
     const error = []
     User.findOne({ where: { id: req.user.id } })
@@ -65,9 +68,6 @@ const userController = {
           res.redirect('/tweets')
         })
       })
-
-
-
   },
   //該名使用者的所有推文
   getTweets: (req, res) => {
@@ -113,6 +113,43 @@ const userController = {
       res.render('user-replies', { replies })
     })
   },
+  editUser: (req, res) => res.render('setting'),
+  putUser: (req, res) => {
+    const id = Number(req.params.id)
+    const { name, introduction } = req.body
+    const { avatar, cover } = req.files
+    const { files } = req
+
+    if (req.user.id !== id) {
+      req.flash('errorMessage', 'error')
+      res.redirect('/tweets')
+    }
+
+    if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      if (avatar) {
+        avatarPath = avatar[0].path
+        imgur.upload(avatarPath, (err, img) => {
+          User.findByPk(id)
+            .then(user => user.update({ avatar: img.data.link }))
+        })
+      }
+      if (cover) {
+        coverPath = cover[0].path
+        imgur.upload(coverPath, (err, img) => {
+          User.findByPk(id)
+            .then(user => user.update({ cover: img.data.link }))
+        })
+      }
+    }
+    return User.findByPk(id)
+      .then(user => {
+        user.update({ name, introduction })
+      })
+      .then(() => {
+        res.redirect('/tweets')
+      })
+  }
 }
 
 module.exports = userController
