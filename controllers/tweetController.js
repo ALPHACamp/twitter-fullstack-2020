@@ -2,6 +2,7 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -46,6 +47,27 @@ const tweetController = {
     }).then((reply => {
       res.redirect('back')
     }))
+  },
+  addLike: (req, res) => {
+    Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.id
+    }).then((tweet) => {
+      return res.redirect('back')
+    })
+  },
+  removeLike: (req, res) => {
+    Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.id
+      }
+    }).then(like => {
+      like.destroy()
+        .then(tweet => {
+          return res.redirect('back')
+        })
+    })
   }
 }
 

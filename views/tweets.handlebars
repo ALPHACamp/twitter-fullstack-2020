@@ -57,6 +57,12 @@
               {{this.likedUsers.length}}
             </button>
           </form>
+          <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+            <button type="submit" class="like-link button">
+              <i class="fac fa-cus-solid-like"></i>
+              {{this.likedUsers.length}}
+            </button>
+          </form>
         </div>
       </div>
       {{/each}}
