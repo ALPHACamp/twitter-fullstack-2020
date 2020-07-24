@@ -171,8 +171,17 @@ const userController = {
     if (!email || !password) {
       req.flash('error_messages', '請輸入帳號密碼！')
       return res.redirect('/signin')
+    } else {
+      User.findOne({ where: { email } })
+        .then(user => {
+          if (user.role === 'admin') {
+            req.flash('error_messages', '此帳號為管理者，無法登入前台，如需要，請註冊新帳號！')
+            return res.redirect('/signin')
+          }
+          return next()
+        })
+        .catch(err => res.send(err))
     }
-    return next()
   },
   // 使用者成功登入後訊息提示
   userSigninSuccess: (req, res) => {
