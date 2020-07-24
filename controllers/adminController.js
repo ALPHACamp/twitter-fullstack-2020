@@ -17,6 +17,7 @@ let adminController = {
     Tweet.findAll({ raw: true, nest: true, include: User ,order: [['createdAt', 'DESC']],}).then((tweets) => {
       const data = tweets.map((r) => ({
         ...r,
+        account: r.User.account,
         userName: r.User.name,
         userAvatar: r.User.avatar,
         description: r.description.substring(0, 50),

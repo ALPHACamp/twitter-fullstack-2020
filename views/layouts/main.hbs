@@ -23,11 +23,11 @@
     </div>
     {{/if}}
   </div>
-  <div class="container col-11 d-flex flex-column flex-lg-row justify-content-around"
+  <div class="container col col-lg-11 d-flex flex-column flex-lg-row justify-content-around"
     style="min-width: 760px; height: 900px;">
 
     {{#if myUser}}
-    <div class="left-sec col-lg-3 d-flex flex-row flex-lg-column justify-content-lg-between align-items-lg-center">
+    <div class="left-sec col-lg-3 border-right border-black-50 d-flex flex-row flex-lg-column justify-content-lg-between align-items-lg-center">
       <div class="d-flex flex-row flex-lg-column">
         <div class="logo mt-3 d-flex flex-column flex-lg-row justify-content-center justify-content-lg-start 
       align-items-center" style="min-width: 260px;">
@@ -117,12 +117,12 @@
 
     {{/if}}
 
-    <div class="main-sec col overflow-auto" style="min-width: 470px;">
+    <div class="main-sec col overflow-auto p-0" style="min-width: 470px;">
       {{{body}}}
     </div>
 
     {{#if topUsers}}
-    <div class="right-sec mt-4 col-lg-3 mb-md-3" style="min-width: 350px;">
+    <div class="right-sec mt-4 col-lg-3 mb-md-3 border-left border-black-50" style="min-width: 350px;">
       <ul
         class="list-group list-group-flush bg-light rounded-lg shadow d-inline-flex flex-row  flex-lg-column overflow-auto"
         style="max-width: 800px;">
