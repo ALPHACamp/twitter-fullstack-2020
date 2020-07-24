@@ -1,17 +1,17 @@
 <div class="row justify-content-center">
-  <div class="col-3">
-
-  </div>
+  {{>leftColumn}}
   <div class="col-5">
     <button class="btn btn-primary" data-toggle="modal" data-target="#createTweet">推文</button>
     {{#each tweets}}
-    <a href="/tweets/{{this.id}}" style="text-decoration: none;">
-      <div class="card" style="color:black">
-        <div class="row no-gutters">
-          <div class="col-md-1 mt-3">
+    <div class="card" style="color:black">
+      <div class="row no-gutters">
+        <div class="col-md-1 mt-3">
+          <a href="/users/{{this.User.id}}">
             <img src="{{this.User.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
-          </div>
-          <div class="col-md-11">
+          </a>
+        </div>
+        <div class="col-md-11">
+          <a href="/tweets/{{this.id}}" style="text-decoration: none; color:black">
             <div class="card-body">
               <div class="row ml-1 align-items-center">
                 <span>{{this.User.name}}</span>
@@ -28,42 +28,13 @@
               <i class="far fa-comment mr-1"> {{this.replyCount}}</i>
               <i class="far fa-heart"> {{this.likeCount}}</i>
             </div>
-          </div>
+          </a>
         </div>
-      </div>
-    </a>
-    {{/each}}
-  </div>
-  <div class="col-4">
-    {{#each recommendFollowings}}
-    <div class="card " style="width:350px">
-      <div class="row no-gutters">
-        <div class="col-md-1">
-          <img src="{{this.avatar}}" class="card-img" alt="img">
-        </div>
-        <div class="col-md-6">
-          <div class="card-body">
-            <h5 class="card-title">{{this.name}}</h5>
-            <small>{{this.account}}</small>
-          </div>
-        </div>
-        {{#if this.isFollowed}}
-        <form action="/following/{{this.id}}?_method=DELETE" method="post">
-          <div class="col ml-auto align-self-center">
-            <button type="submit" class="btn btn-primary" style="color: white">取消跟隨</button>
-          </div>
-        </form>
-        {{else}}
-        <form action="/following/{{this.id}}" method="post">
-          <div class="col ml-auto align-self-center">
-            <button class="btn btn-outline-primary" style="color: blue">跟隨</button>
-          </div>
-        </form>
-        {{/if}}
       </div>
     </div>
     {{/each}}
   </div>
+  {{>rightColumn}}
 </div>
 
 <!-- Modal -->

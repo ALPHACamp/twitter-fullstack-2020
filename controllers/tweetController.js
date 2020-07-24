@@ -3,45 +3,32 @@ const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
 const Like = db.Like
+const userController = require('./userController')
+const user = require('../models/user')
 
 const tweetController = {
   getHomePage: (req, res) => {
-    // 推薦追蹤名單 (follower人數top6)
-    User.findAll({
-      include: [{ model: User, as: 'Followers' }]
-    }).then((users) => {
-      users = users.map((user) => ({
-        ...user.dataValues,
-        followerCount: user.Followers.length,
-        isFollowed: user.Followers.map((er) => er.id).includes(req.user.id)
-      }))
-      // 去除掉自己
-      users = users.filter((user) => user.id !== req.user.id)
-      users = users
-        .sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 6)
-      // 顯示已追蹤人的tweets
-      const followings = req.user.Followings.map((user) => user.id)
-      followings.push(req.user.id)
-      Tweet.findAll({
-        where: { UserId: followings },
-        raw: true,
-        nest: true,
-        include: [
-          User,
-          { model: User, as: 'LikedUser' }
-        ],
-        order: [['createdAt', 'DESC']]
-      })
-        .then((tweets) => {
-          res.render('home', {
-            tweets: tweets,
-            recommendFollowings: users,
-            currentUserId: Number(req.user.id)
-          })
+    userController.getRecommendedUsers(req, res)
+      .then((users) => {
+        // 顯示所有tweets在首頁
+        Tweet.findAll({
+          raw: true,
+          nest: true,
+          include: [
+            User,
+            { model: User, as: 'LikedUsers' }
+          ],
+          order: [['createdAt', 'DESC']]
         })
-        .catch((err) => res.send(err))
-    })
+          .then((tweets) => {
+            res.render('home', {
+              tweets: tweets,
+              recommendFollowings: users,
+              currentUserId: req.user.id
+            })
+          })
+      })
+      .catch(err => res.send(err))
   },
   postTweet: (req, res) => {
     return Tweet.create({
@@ -66,28 +53,31 @@ const tweetController = {
       nest: true,
       include: [
         User,
-        { model: User, as: 'LikedUser' }
+        { model: Reply, include: User },
+        { model: User, as: 'LikedUsers' }
       ],
     })
-      .then((tweet) => {
-        const isLiked = tweet.map(t => t.LikedUser.Like.UserId).includes(req.user.id)
-        tweet = tweet[0]
-        Reply.findAll({
-          where: { TweetId: tweetId },
-          raw: true,
-          nest: true,
-          include: [User],
-          order: [['createdAt', 'ASC']]
-        })
-          .then((replies) => {
-            console.log(isLiked)
+      .then((tweets) => {
+        // 剔除重複query的 replies 和 likedUsers
+        const tweet = {
+          ...tweets[0],
+          replies: [...new Set(tweets.map(item => { return JSON.stringify(item.Replies) }))].map(item => JSON.parse(item)),
+          likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))]
+        }
+        const isLiked = tweet.likedUsers.includes(req.user.id)
+
+        userController.getRecommendedUsers(req, res)
+          .then(users => {
+            console.log(tweet)
             res.render('reply', {
               tweet,
-              replies,
+              replies: tweet.replies[0].id === null ? null : tweet.replies,
               currentUserId: req.user.id,
-              isLiked
+              isLiked,
+              recommendFollowings: users
             })
           })
+          .catch(err => res.send(err))
       })
       .catch((err) => res.send(err))
   },

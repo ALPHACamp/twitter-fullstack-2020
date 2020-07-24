@@ -1,9 +1,11 @@
 <div class="row">
-  <div class="col-3"></div>
+  {{>leftColumn}}
   <div class="col-5">
     <div class="row justify-content-center" id="tweet-detail" style="border: 1px solid black;">
       <div class="col-auto" id="person-img">
-        <img style="width: 50px;height:50px; border-radius: 50%" src="{{tweet.User.avatar}}" alt="pic">
+        <a href="/users/{{tweet.User.id}}">
+          <img style="width: 50px;height:50px; border-radius: 50%" src="{{tweet.User.avatar}}" alt="pic">
+        </a>
       </div>
       <div class="col" id="person-indo">
         <div class="row">
@@ -33,12 +35,13 @@
       </div>
     </div>
 
-
     <div class=" row" id="reply-list">
       {{#each replies}}
       <div class="row w-100" style="border: 1px solid grey;">
         <div class="col-1">
-          <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+          <a href="/users/{{this.User.id}}">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+          </a>
         </div>
         <div class="col-11">
           <div class="row">
@@ -57,7 +60,7 @@
       {{/each}}
     </div>
   </div>
-  <div class="col-4"></div>
+  {{>rightColumn}}
 </div>
 
 
