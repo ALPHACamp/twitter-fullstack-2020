@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Sequelize } = require('../models')
-const { or } = Sequelize.Op
+const { or, not } = Sequelize.Op
 const db = require('../models')
 const helpers = require('../_helpers')
 const User = db.User
@@ -221,7 +221,7 @@ const userController = {
       })
     }
     // 檢查 account & email 是否為唯一值
-    User.findOne({ where: { [or]: { account, email } }, raw: true })
+    User.findOne({ where: { [or]: [{ account }, { email }] }, raw: true })
       .then((user) => {
         if (!user) {
           return User.create({
@@ -265,28 +265,10 @@ const userController = {
   accountSetting: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
     const { id } = helpers.getUser(req)
-    // 檢查必填
-    if (!account || !name || !email) {
-      req.flash('error_messages', '請填寫必填項目:帳戶、名稱、E-mail')
-      return res.redirect('/setting')
-    }
-    // 不更改密碼的情況
-    if (!password && !checkPassword) {
-      return updateAccount()
-    }
-    // 更改密碼，但缺其中一個
-    if (!password || !checkPassword) {
-      req.flash('error_messages', '欲更改密碼，請填入新密碼與確認新密碼！')
-      return res.redirect('/setting')
-    }
-    // 密碼不相符
-    if (password !== checkPassword) {
-      req.flash('error_messages', '新密碼與確認新密碼不符，請重新確認！')
-      return res.redirect('/setting')
-    }
-    return updateAccountAndPassword()
-
-    function updateAccount () {
+    const loginAccount = helpers.getUser(req).account
+    const loginEmail = helpers.getUser(req).email
+    // hoisting issue
+    const updateAccount = () => {
       User.findByPk(id)
         .then((user) =>
           user.update({
@@ -301,7 +283,7 @@ const userController = {
         })
         .catch((err) => console.log(err))
     }
-    function updateAccountAndPassword () {
+    const updateAccountAndPassword = () => {
       User.findByPk(id)
         .then((user) =>
           user.update({
@@ -316,6 +298,49 @@ const userController = {
           res.redirect('/setting')
         })
         .catch((err) => console.log(err))
+    }
+
+    // 檢查必填
+    if (!account || !name || !email) {
+      req.flash('error_messages', '請填寫必填項目:帳戶、名稱、E-mail')
+      return res.redirect('/setting')
+    }
+    // 不更改密碼的情況
+    if (!password && !checkPassword) {
+      return findExistUser(updateAccount)
+    }
+    // 更改密碼，但缺其中一個
+    if (!password || !checkPassword) {
+      req.flash('error_messages', '欲更改密碼，請填入新密碼與確認新密碼！')
+      return res.redirect('/setting')
+    }
+    // 密碼不相符
+    if (password !== checkPassword) {
+      req.flash('error_messages', '新密碼與確認新密碼不符，請重新確認！')
+      return res.redirect('/setting')
+    }
+    findExistUser(updateAccountAndPassword)
+
+    function findExistUser (updateMethod) {
+      User.findOne({
+        // 除了當前使用者的資料以外，有沒有重複的
+        where: {
+          [not]: [{ account: loginAccount }, { email: loginEmail }],
+          [or]: [{ account: account }, { email: email }]
+        }
+      })
+        .then(user => {
+          if (!user) return updateMethod()
+          if (user.account === account) {
+            req.flash('error_messages', '帳號已存在，請更改成其他帳號！')
+            return res.redirect('/setting')
+          }
+          if (user.email === email) {
+            req.flash('error_messages', 'Email已存在，請更改成其他Email！')
+            return res.redirect('/setting')
+          }
+        })
+        .catch(err => console.log(err))
     }
   },
   signout: (req, res) => {
