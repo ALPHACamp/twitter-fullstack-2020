@@ -32,7 +32,7 @@
       <div class="d-flex justify-content-start">
 
 
-        <button type="submit" class="btn btn-link text-dark"  onclick="postCommentPage('{{this.id}}')">
+        <button type="submit" class="btn btn-link text-dark" onclick="postCommentPage('{{this.id}}')">
           <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -43,16 +43,34 @@
 
 
 
-        <form action="" method="post">
-          <button type="submit" class="btn btn-link text-dark">
+        {{#if this.isLiked}}
+        <form action="/likes/{{this.id}}?_method=DELETE" method="post">
+          <button type="submit" class="btn btn-link text-danger p-0 ml-1">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="currentColor"
+              xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+            </svg>
+            <span>
+              {{this.likeCount}}
+            </span>
+          </button>
+        </form>
+
+        {{else}}
+        <form action="/likes/{{this.id}}" method="post">
+          <button type="submit" class="btn btn-link text-dark p-0 ">
             <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-heart " fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
             </svg>
-            <a>{{this.likeCount}}</a>
+            <span>
+              {{this.likeCount}}
+            </span>
           </button>
         </form>
+
+        {{/if}}
 
       </div>
     </div>
@@ -62,8 +80,8 @@
 {{/each}}
 
 <script>
-  function postCommentPage(id) {    
-    $('#postCommentPage').modal('show').val(id);    
+  function postCommentPage(id) {
+    $('#postCommentPage').modal('show').val(id);
   }
 </script>
 
@@ -78,7 +96,7 @@
           <div class="form-group">
             <textarea class="form-control" id="newComment" name="newComment" rows="3" placeholder="寫點回覆吧!!!"></textarea>
           </div>
-          <div class="modal-footer">         
+          <div class="modal-footer">
             <input type="hidden" name="commentId" value="{{id}}" />
             <button type="submit" class="btn btn-primary">回覆</button>
           </div>
