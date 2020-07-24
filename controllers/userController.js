@@ -116,10 +116,11 @@ let userController = {
     res.render('userPage', { user, followShip, content: tweets });
   },
   getUserReply: async (req, res) => {
-    const id = req.params.id;
+
+    const id = req.params.id
     const tweetsCount = await Tweet.count({
       where: { UserId: id }
-    });
+    })
     let user = await User.findOne({
       where: { id },
       include: [
@@ -157,10 +158,11 @@ let userController = {
     res.render('userPage', { user, followShip, content: replies });
   },
   getUserLike: async (req, res) => {
-    const id = req.params.id;
+
+    const id = req.params.id
     const tweetsCount = await Tweet.count({
       where: { UserId: id }
-    });
+    })
     let user = await User.findOne({
       where: { id },
       include: [
@@ -381,6 +383,7 @@ let userController = {
 
     //res.redirect(`/users/${req.params.id}`);
   },
+  
   topUserForLayout: async (req, res, next) => {
     let topUsers = await User.findAll({
       include: [{ model: User, as: 'Followers' }]

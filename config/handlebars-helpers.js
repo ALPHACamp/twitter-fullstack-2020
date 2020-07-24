@@ -22,4 +22,10 @@ module.exports = {
     }
     return options.inverse(this)
   },
+  whoAreYou: function(a, options){
+    if (a === "user") {
+      return options.fn(this)
+    }
+    return options.inverse(this)
+  }
 }
