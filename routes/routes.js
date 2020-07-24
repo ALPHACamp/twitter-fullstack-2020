@@ -5,6 +5,8 @@ const tweetController = require('../controllers/tweetController');
 const adminController = require('../controllers/adminController.js');
 const helpers = require('../_helpers');
 const passport = require('passport');
+const multer = require('multer');
+const upload = multer({ dest: 'temp/' });
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -28,6 +30,7 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/login');
 };
 router.get('/', (req, res) => res.redirect('/tweets'));
+
 
 router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets);
 router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
@@ -58,9 +61,11 @@ router.post(
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/admin/tweetsUser', authenticatedAdmin, adminController.getUsers);
-router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
-
-
+router.delete(
+  '/admin/tweets/:id',
+  authenticatedAdmin,
+  adminController.deleteTweet
+);
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
@@ -71,7 +76,16 @@ router.delete(
   authenticated,
   userController.removeFollowing
   );
-
+router.get('/users/:id/profile', authenticated, userController.editProfile);
+router.put('/users/:id/profile', authenticated,
+  //upload.single('image'),
+  upload.array('image', 2),
+  // upload.fields([
+  //   { name: 'backgroundImg', maxCount: 1 },
+  //   { name: 'avatar', maxCount: 1 }
+  // ]),
+  userController.putEditProfile
+);
 router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
 router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply)
 router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike)
@@ -79,8 +93,6 @@ router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
 router.get('/users/:id/:followship', authenticated, userController.topUserForLayout, userController.getFollowShip)
 router.get('/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage)
-
-
 
 
 module.exports = router;
