@@ -2,10 +2,10 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const FollowShip = db.FollowShip
 const bcrypt = require('bcryptjs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
-const fs = require('fs')
 
 const userController = {
   signUpPage: (req, res) => res.render('signup'),
@@ -110,6 +110,19 @@ const userController = {
       .then(() => {
         res.redirect('/tweets')
       })
+  },
+  follow: (req, res) => {
+    const followingId = req.params.id
+    const followerId = req.user.id
+    return FollowShip.create({ followingId, followerId })
+      .then(() => res.redirect('back'))
+  },
+  unfollow: (req, res) => {
+    const followingId = req.params.id
+    const followerId = req.user.id
+    return FollowShip.findOne({ where: { followingId, followerId } })
+      .then(followship => followship.destroy())
+      .then(() => res.redirect('back'))
   }
 }
 
