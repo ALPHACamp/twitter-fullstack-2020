@@ -43,7 +43,7 @@ const userController = {
     res.redirect('/signin')
   },
   //更新使用者資訊
-  postUser: (req, res) => {
+  putUser: (req, res) => {
     const { account, name, email, password, passwordCheck } = req.body
     const error = []
     User.findOne({ where: { id: req.user.id } })
