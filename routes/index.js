@@ -1,5 +1,7 @@
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 const passport = require('passport')
 
 module.exports = (app, passport) => {
@@ -22,6 +24,11 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweet)
+
+  //user profile route controller
+  app.get('/api/users/:id', authenticated, userController.getUser)
+  app.get('/api/users/:id/edit', authenticated, userController.editUser)
+  app.post('/api/users/:id', authenticated, upload.single('avatar'), userController.postUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
 
   // sign in / sign out / sign up
   app.get('/signUp', userController.signUpPage)
