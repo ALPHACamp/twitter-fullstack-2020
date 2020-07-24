@@ -5,6 +5,8 @@ const Reply = db.Reply;
 const Like = db.Like;
 const Followship = db.Followship;
 const bcrypt = require('bcryptjs');
+//const imgur = require('imgur-node-api');
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 let userController = {
   loginPage: (req, res) => {
@@ -79,94 +81,9 @@ let userController = {
     let user = await User.findOne({
       where: { id },
       include: [
-        { model: Tweet, 
-          order: [
-            'createdAt', 'DESC'
-          ],
-          include: [
-            User,
-            { model: User, as: 'TweetWhoLike' },
-            { model: User, as: 'whoReply' }
-        ]},
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    });
-    user = user.toJSON()
-    const followShip = {
-      isTweet: true,
-      tweetsCount: user.Tweets.length,
-      followingsCount: user.Followings.length,
-      followersCount: user.Followers.length,
-      isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
-    }
-    let tweets = user.Tweets
-    tweets = tweets.map(tweet => ({
-      ...tweet,
-      repliesCount: tweet.whoReply.length,
-      likeCount: tweet.TweetWhoLike.length,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
-    }))
-    // all user's tweets
-    // all user's likes
-    // all user's replies
-    res.render('userPage', { user, followShip, content: tweets });
-  },
-  getUserReply: async (req, res) => {
-    const id = req.params.id
-    const tweetsCount = await Tweet.count({
-      where: { UserId: id }
-    })
-    let user = await User.findOne({
-      where: { id },
-      include: [
-        { model: Tweet, as: 'UserReply',
-          order: [
-            'createdAt', 'DESC'
-          ],
-          include: [
-            User,
-            { model: User, as: 'TweetWhoLike' },
-            { model: User, as: 'whoReply' }
-          ]},
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    })
-    user = user.toJSON()
-    const followShip = {
-      isReply: true,
-      tweetsCount,
-      followingsCount: user.Followings.length,
-      followersCount: user.Followers.length,
-      isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
-    }
-    let replies = user.UserReply
-    replies = replies.map(reply => ({
-      ...reply,
-      repliesCount: reply.whoReply.length,
-      likeCount: reply.TweetWhoLike.length,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: reply.TweetWhoLike.map(d => d.id).includes(req.user.id)
-    }))
-
-    res.render('userPage', { user, followShip, content: replies });
-
-  },
-  getUserLike: async (req, res) => {
-    const id = req.params.id
-    const tweetsCount = await Tweet.count({
-      where: { UserId: id }
-    })
-    let user = await User.findOne({
-      where: { id },
-      include: [
         {
-          model: Tweet, as: 'userLike',
-          order: [
-            'createdAt', 'DESC'
-          ],
+          model: Tweet,
+          order: ['createdAt', 'DESC'],
           include: [
             User,
             { model: User, as: 'TweetWhoLike' },
@@ -176,26 +93,111 @@ let userController = {
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
+    });
+    user = user.toJSON();
+    const followShip = {
+      isTweet: true,
+      tweetsCount: user.Tweets.length,
+      followingsCount: user.Followings.length,
+      followersCount: user.Followers.length,
+      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+    };
+    let tweets = user.Tweets;
+    tweets = tweets.map((tweet) => ({
+      ...tweet,
+      repliesCount: tweet.whoReply.length,
+      likeCount: tweet.TweetWhoLike.length,
+      // 用自己tweet 的UserId 判斷有沒有按讚過
+      isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+    }));
+    // all user's tweets
+    // all user's likes
+    // all user's replies
+    res.render('userPage', { user, followShip, content: tweets });
+  },
+  getUserReply: async (req, res) => {
+
+    const id = req.params.id
+    const tweetsCount = await Tweet.count({
+      where: { UserId: id }
     })
-    user = user.toJSON()
+    let user = await User.findOne({
+      where: { id },
+      include: [
+        {
+          model: Tweet,
+          as: 'UserReply',
+          order: ['createdAt', 'DESC'],
+          include: [
+            User,
+            { model: User, as: 'TweetWhoLike' },
+            { model: User, as: 'whoReply' }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    });
+    user = user.toJSON();
+    const followShip = {
+      isReply: true,
+      tweetsCount,
+      followingsCount: user.Followings.length,
+      followersCount: user.Followers.length,
+      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+    };
+    let replies = user.UserReply;
+    replies = replies.map((reply) => ({
+      ...reply,
+      repliesCount: reply.whoReply.length,
+      likeCount: reply.TweetWhoLike.length,
+      // 用自己tweet 的UserId 判斷有沒有按讚過
+      isLiked: reply.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+    }));
+
+    res.render('userPage', { user, followShip, content: replies });
+  },
+  getUserLike: async (req, res) => {
+
+    const id = req.params.id
+    const tweetsCount = await Tweet.count({
+      where: { UserId: id }
+    })
+    let user = await User.findOne({
+      where: { id },
+      include: [
+        {
+          model: Tweet,
+          as: 'userLike',
+          order: ['createdAt', 'DESC'],
+          include: [
+            User,
+            { model: User, as: 'TweetWhoLike' },
+            { model: User, as: 'whoReply' }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    });
+    user = user.toJSON();
     const followShip = {
       isLike: true,
       tweetsCount,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
-    }
-    let likes = user.userLike
-    likes = likes.map(like => ({
+      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+    };
+    let likes = user.userLike;
+    likes = likes.map((like) => ({
       ...like,
       repliesCount: like.whoReply.length,
       likeCount: like.TweetWhoLike.length,
       // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: like.TweetWhoLike.map(d => d.id).includes(req.user.id)
-    }))
+      isLiked: like.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+    }));
 
     res.render('userPage', { user, followShip, content: likes });
-
   },
   addLike: async (req, res) => {
     try {
@@ -309,9 +311,9 @@ let userController = {
     res.render('followship', { user: user.toJSON(), followShip: followers, followDetail });
   },
   putEditUser: (req, res) => {
-    User.findByPk(req.params.id)
-      .then((user) => {
-        user.update({
+    User.findByPk(req.params.id).then((user) => {
+      user
+        .update({
           name: req.body.name,
           account: req.body.account,
           email: req.body.email,
@@ -320,27 +322,92 @@ let userController = {
             bcrypt.genSaltSync(10, null)
           )
         })
-          .then((user) => {
-            req.flash('success_messages', '修改成功!!!')
-            res.redirect(`/users/${user.id}/edit`);
-          })
-      })
+        .then((user) => {
+          req.flash('success_messages', '修改成功!!!');
+          res.redirect(`/users/${user.id}/edit`);
+        });
+    });
   },
+  editProfile: async (req, res) => {
+    try {
+      //check if it's the current user who intends to edit. If not, back to last page
+      if (req.user.id !== Number(req.params.id)) {
+        return res.redirect('back');
+      }
+      const toEdit = await User.findByPk(req.params.id);
+      res.render('profile_edit', { user: toEdit.toJSON() });
+    } catch (err) {
+      console.log(err);
+      res.send(err);
+    }
+  },
+  putEditProfile: (req, res) => {
+    //console.log('req===========', req);
+    const { files } = req;
+    //console.log('req.files', req.files);
+    if (files.length) {
+      console.log(files);
+      //files.map((file, i) => {
+      //if (i == 0) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files[0].path, (err, img) => {
+        User.findByPk(req.params.id).then((user) => {
+          user.update({
+            introduction: req.body.introduction,
+            backgroundImg: img.data.link
+          });
+        });
+      });
+      //}
+      //if (i == 1) {
+      //imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files[1].path, (err, img) => {
+        User.findByPk(req.params.id).then((user) => {
+          user.update({
+            introduction: req.body.introduction,
+            avatar: img.data.link
+          });
+        });
+      });
+      //}
+      //});
+      return res.redirect(`/users/${req.params.id}`);
+      //return res.send('has files');
+    } else {
+      console.log('req.body=====', req.body);
+      User.findByPk(req.params.id).then((user) => {
+        user
+          .update({
+            introduction: req.body.introduction
+          })
+          .then(() => {
+            res.redirect(`/users/${req.params.id}`);
+          });
+      });
+    }
+
+    //}
+
+    //console.log('req.files======', req.files);
+
+    //res.redirect(`/users/${req.params.id}`);
+  },
+  
   topUserForLayout: async (req, res, next) => {
     let topUsers = await User.findAll({
       include: [{ model: User, as: 'Followers' }]
-    })
-    topUsers = topUsers.map(user => ({
+    });
+    topUsers = topUsers.map((user) => ({
       ...user.dataValues,
       FollowerCount: user.Followers.length,
       isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
-    }))
-    
-    topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
-    res.locals.topUsers = topUsers
-    return next()
-    
-  } 
+    }));
+
+    topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
+    topUsers.filter((user) => user.role === 'user');
+    res.locals.topUsers = topUsers;
+    return next();
+  }
 };
 
 module.exports = userController;
