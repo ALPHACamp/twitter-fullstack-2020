@@ -16,6 +16,11 @@ let userController = {
     req.flash('success_messages', 'Login successfully');
     return res.redirect('/tweets');
   },
+  logout: (req, res) => {
+    req.flash('success_messages', '已經成功登出')
+    req.logout()
+    res.redirect('/login')
+  },
   signUpPage: (req, res) => {
     return res.render('signup');
   },

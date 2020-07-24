@@ -40,6 +40,7 @@ userController.topUserForLayout,
   tweetController.getTweet);
 
 /* router.get('/users/:id/personal',authenticated, userController.getFollowShip); */
+router.get('/logout', userController.logout)
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signup);
 router.get('/login', userController.loginPage);
