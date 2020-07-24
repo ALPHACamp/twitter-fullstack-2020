@@ -1,0 +1,14 @@
+<form action="/api/users/{{user.id}} method=" POST" enctype="multipart/form-data">
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
+  </div>
+
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" class="form-control-file" id="image" name="image">
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
