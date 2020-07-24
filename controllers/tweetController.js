@@ -47,8 +47,8 @@ const tweetController = {
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {
-      req.flash('error_messages', "請輸入推文內容!!!")
-      return res.redirect('back')
+      req.flash('error_messages', '請輸入推文內容!!!');
+      return res.redirect('back');
     }
     return Tweet.create({
       UserId: req.user.id,
