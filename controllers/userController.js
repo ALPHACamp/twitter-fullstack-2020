@@ -45,6 +45,30 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+  //更新使用者基本資訊
+  putUserProfile: (req, res) => {
+    const { account, name, email, password, passwordCheck } = req.body
+    const error = []
+    User.findOne({ where: { id: req.user.id } })
+      .then(user => {
+        if (!account || !name || !email || !password || !passwordCheck) {
+          error.push({ message: '所有欄位皆為必填!' })
+          return res.render('setting', { error })
+        }
+        if (password !== passwordCheck) {
+          error.push({ message: '密碼與確認密碼必須相同' })
+          return res.render('setting', { error })
+        }
+        return user.update({
+          account,
+          name,
+          email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+        }).then(() => {
+          res.redirect('/tweets')
+        })
+      })
+  },
   //該名使用者的所有推文
   getTweets: (req, res) => {
     Tweet.findAll({
@@ -55,25 +79,40 @@ const userController = {
       ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
+      console.log(tweets)
       res.render('user-tweets', { tweets })
     })
   },
   //該名使用者的所有喜歡內容
   getLikes: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        Reply,
-        Tweet,
-        { model: Tweet, as: 'LikedTweets' },
-      ]
-    })
-      .then(user => {
-        console.log(user.toJSON())
-        res.render('user-likes', { user: user.toJSON() })
+    if (req.params.id == req.user.id.toString()) {
+      User.findByPk(req.params.id, {
+        include: [
+          Reply,
+          Tweet,
+          { model: Tweet, as: 'LikedTweets' },
+        ]
       })
+        .then(user => {
+          console.log(user.toJSON())
+          res.render('user-likes', { user: user.toJSON() })
+        })
+    } else {
+      res.redirect('back')
+    }
+
   },
   //該名使用者的所有回覆內容
-  getReplies: (req, res) => res.render('user-replies'),
+  getReplies: (req, res) => {
+    Reply.findAll({
+      raw: true,
+      nest: true,
+      where: { UserId: req.params.id },
+      order: [['createdAt', 'DESC']],
+    }).then(replies => {
+      res.render('user-replies', { replies })
+    })
+  },
   editUser: (req, res) => res.render('setting'),
   putUser: (req, res) => {
     const id = Number(req.params.id)

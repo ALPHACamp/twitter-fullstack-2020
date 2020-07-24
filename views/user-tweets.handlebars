@@ -1,6 +1,6 @@
 <div class="container-fluid">
   {{> left-content}}
-
+  {{>modal}}
   <!-- 中間主要區塊 -->
   <div>
     <div>
@@ -17,10 +17,7 @@
     </div>
     <div class="user-profile">
       <div><img src="{{user.avatar}}" alt="" class="main-avatar"></div>
-      <div class="rectangle">
-        <div><a class="edit-Profile" href="/api/users/{{user.id}}">編輯個人資料</a></div>
-      </div>
-
+      <button type="button" class="tweet-button" data-toggle="modal" data-target="#editProfileModal">編輯個人資訊</button>
     </div>
     <div>
       <h3>{{user.name}}</h3>
@@ -54,7 +51,7 @@
         <span style="font-size:larger;">{{../user.name}}</span><span
           style="color:#657786">{{../user.account}}.{{moment this.createdAt}}</span>
         <div class="tweet-description">{{this.description}}</div>
-        <div class="like-reply"><a href="/reply" class="reply-link ">
+        <div class="like-reply"><a href="#" class="reply-link ">
             <img class="icon-s" src="/images/icon-reply.svg" alt="">
             {{this.Replies.length}}
           </a>
