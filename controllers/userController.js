@@ -266,11 +266,8 @@ let userController = {
       res.send('something is wrong');
     }
   },
-  getFollowShip: async (req, res) => {
-    //req.params.followship 判斷顯示哪個資料
-    //不是follower & following 倒回上一頁
-    //user 頁面是否改同樣方法？
-    const { id, followship } = req.params;
+  getFollowings: async (req, res) => {
+    const id = req.params.id
     const user = await User.findOne({
       where: { id },
       include: [
@@ -278,26 +275,38 @@ let userController = {
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
       ]
-    });
-    const count = {
-      tweetsCount: user.toJSON().Tweets.length
-    };
-
-    if (followship === 'followings') {
-      let followings = user.toJSON().Followings;
-      followings = followings.map((i) => ({
-        ...i,
-        isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
-      }));
-      res.render('followship', { user: user.toJSON(), followings, count });
-    } else if (followship === 'followers') {
-      let followers = user.toJSON().Followers;
-      followers = followers.map((i) => ({
-        ...i,
-        isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
-      }));
-      res.render('followship', { user: user.toJSON(), followers, count });
+    })
+    const followDetail = {
+      tweetsCount: user.toJSON().Tweets.length,
+      followings: true
     }
+    let followings = user.toJSON().Followings;
+    followings = followings.map((i) => ({
+      ...i,
+      isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
+    }));
+    res.render('followship', { user: user.toJSON(), followShip: followings, followDetail });
+  },
+  getFollowers: async (req, res) => {
+    const id = req.params.id
+    const user = await User.findOne({
+      where: { id },
+      include: [
+        Tweet,
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ]
+    })
+    const followDetail = {
+      tweetsCount: user.toJSON().Tweets.length,
+      followers: true
+    }
+    let followers = user.toJSON().Followers;
+    followers = followers.map((i) => ({
+      ...i,
+      isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
+    }));
+    res.render('followship', { user: user.toJSON(), followShip: followers, followDetail });
   },
   putEditUser: (req, res) => {
     User.findByPk(req.params.id)
