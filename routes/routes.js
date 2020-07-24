@@ -34,9 +34,13 @@ router.get('/', (req, res) => res.redirect('/tweets'));
 
 router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets);
 router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
-router.get('/tweets/:id', userController.topUserForLayout, authenticated, tweetController.getTweet);
+router.get('/tweets/:id', 
+authenticated,
+userController.topUserForLayout,
+  tweetController.getTweet);
 
 /* router.get('/users/:id/personal',authenticated, userController.getFollowShip); */
+router.get('/logout', userController.logout)
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signup);
 router.get('/login', userController.loginPage);
@@ -86,6 +90,8 @@ router.put('/users/:id/profile', authenticated,
   // ]),
   userController.putEditProfile
 );
+
+router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply)
 router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
 router.post('/tweets/:id/comments', authenticated, userController.topUserForLayout, tweetController.postComment)
 router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike)
