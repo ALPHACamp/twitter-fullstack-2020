@@ -1,0 +1,31 @@
+<!-- 若要使用此導覽列，請載入userControlller.getRecommendedUsers  --->
+<div class="col-4">
+  {{#each recommendFollowings}}
+  <div class="card " style="width:350px">
+    <div class="row no-gutters">
+      <div class="col-md-1">
+        <img src="{{this.avatar}}" class="card-img" alt="img">
+      </div>
+      <div class="col-md-6">
+        <div class="card-body">
+          <h5 class="card-title">{{this.name}}</h5>
+          <small>{{this.account}}</small>
+        </div>
+      </div>
+      {{#if this.isFollowed}}
+      <form action="/following/{{this.id}}?_method=DELETE" method="post">
+        <div class="col ml-auto align-self-center">
+          <button type="submit" class="btn btn-primary" style="color: white">取消跟隨</button>
+        </div>
+      </form>
+      {{else}}
+      <form action="/following/{{this.id}}" method="post">
+        <div class="col ml-auto align-self-center">
+          <button class="btn btn-outline-primary" style="color: blue">跟隨</button>
+        </div>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+  {{/each}}
+</div>

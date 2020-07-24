@@ -4,6 +4,7 @@ const User = db.User
 const Reply = db.Reply
 const Like = db.Like
 const userController = require('./userController')
+const user = require('../models/user')
 
 const tweetController = {
   getHomePage: (req, res) => {
@@ -15,7 +16,7 @@ const tweetController = {
           nest: true,
           include: [
             User,
-            { model: User, as: 'LikedUser' }
+            { model: User, as: 'LikedUsers' }
           ],
           order: [['createdAt', 'DESC']]
         })
@@ -52,28 +53,29 @@ const tweetController = {
       nest: true,
       include: [
         User,
-        { model: User, as: 'LikedUser' }
+        { model: Reply, include: User },
+        { model: User, as: 'LikedUsers' }
       ],
     })
-      .then((tweet) => {
-        const isLiked = tweet.map(t => t.LikedUser.Like.UserId).includes(req.user.id)
-        tweet = tweet[0]
-        Reply.findAll({
-          where: { TweetId: tweetId },
-          raw: true,
-          nest: true,
-          include: [User],
-          order: [['createdAt', 'ASC']]
-        })
-          .then((replies) => {
-            console.log(isLiked)
+      .then((tweets) => {
+        // 剔除重複query的 replies 和 likedUsers
+        const tweet = {
+          ...tweets[0],
+          replies: [...new Set(tweets.map(item => { return JSON.stringify(item.Replies) }))].map(item => JSON.parse(item)),
+          likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))]
+        }
+        const isLiked = tweet.likedUsers.includes(req.user.id)
+
+        userController.getRecommendedUsers(req, res)
+          .then(users => {
             res.render('reply', {
               tweet,
-              replies,
               currentUserId: req.user.id,
-              isLiked
+              isLiked,
+              recommendFollowings: users
             })
           })
+          .catch(err => res.send(err))
       })
       .catch((err) => res.send(err))
   },

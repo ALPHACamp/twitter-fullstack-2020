@@ -14,7 +14,7 @@ const userController = {
       include: [
         {
           model: Tweet,
-          include: { model: User, as: 'LikedUser' }
+          include: { model: User, as: 'LikedUsers' }
         },
         { model: Tweet }
       ]
@@ -23,7 +23,7 @@ const userController = {
         const results = user.toJSON()
         for (let i = 0; i < results.Tweets.length; i++) {
           results.Tweets[i].repliesCount = results.Tweets[i].replyCount
-          results.Tweets[i].likeCount = results.Tweets[i].LikedUser.length
+          results.Tweets[i].likeCount = results.Tweets[i].LikedUsers.length
         }
 
         return res.json(results)
@@ -36,7 +36,7 @@ const userController = {
         {
           model: Tweet,
           as: 'LikedTweets',
-          include: { model: User, as: 'LikedUser' }
+          include: { model: User, as: 'LikedUsers' }
         },
         {
           model: Tweet,
