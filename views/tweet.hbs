@@ -14,7 +14,9 @@
 
     <li class="list-group-item">
       <div class="user-wrap d-flex">
-        <img src="{{tweet.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+        <a href="/users/{{tweet.User.id}}" class="">
+          <img src="{{tweet.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">   
+        </a>
         <div class="user d-flex flex-column justify-content-center">
           <div class="user-name font-weight-bold">
             {{tweet.User.name}}
