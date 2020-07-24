@@ -32,8 +32,7 @@
       <div class="d-flex justify-content-start">
 
 
-        <button type="submit" class="btn btn-link text-dark"
-          onclick="postCommentPage('{{this.id}}','{{this.description}}')">
+        <button type="submit" class="btn btn-link text-dark" onclick="postCommentPage({{this.id}})">
           <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -81,8 +80,7 @@
 {{/each}}
 
 <script>
-  function postCommentPage(id,description) {
-    $('#description').attr('value', `${description}`);
+  function postCommentPage(id) { 
     $('#postCommentPage').modal('show');
     $('#modalForm').attr('action', `/tweets/${id}/comments`);
     
