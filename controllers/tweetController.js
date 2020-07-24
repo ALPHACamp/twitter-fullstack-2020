@@ -83,10 +83,10 @@ const tweetController = {
   },
   postReply: (req, res) => {
     const tweetId = Number(req.params.tweetId)
-
     return Reply.create({
       UserId: req.user.id,
       TweetId: tweetId,
+      ReplyId: Number(req.params.replyId) | null,
       comment: req.body.reply
     })
       .then(() => {

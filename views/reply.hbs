@@ -55,6 +55,14 @@
           </div>
           <div class="col-12">回覆{{../tweet.User.account}}</div>
           <div class="col-12">{{this.comment}}</div>
+          <div class="col-12">
+            <i class="far fa-comment mr-5" data-toggle="modal" data-target="#replyReply{{this.id}}"></i>
+            {{#if isLiked}}
+            <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+            {{else}}
+            <a href="/like/{{tweet.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+            {{/if}}
+          </div>
         </div>
       </div>
       {{/each}}
@@ -64,7 +72,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- replyTweet Modal -->
 <div class="modal fade" id="replyTweet" tabindex="-1" role="dialog" aria-labelledby="replyTweet" aria-hidden="true">
   <form action="/tweets/{{tweet.id}}/reply" method="post">
     <div class="modal-dialog">
@@ -105,3 +113,48 @@
     </div>
   </form>
 </div>
+
+<!-- replyReply Modal -->
+{{#each replies}}
+<div class="modal fade" id="replyReply{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="replyReply"
+  aria-hidden="true">
+  <form action="/tweets/{{this.TweetId}}/replies/{{this.id}}" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="replyReplyLabel">回覆</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-center" id="reply-detail">
+            <div class="col-auto" id="person-img">
+              <img style="width: 50px;height:50px" src="{{this.User.avatar}}" alt="pic">
+            </div>
+            <div class="col" id="person-indo">
+              <div class="row">
+                <div class="col-12">{{this.User.name}}</div>
+                <div class="col-12">{{this.User.account}}</div>
+              </div>
+            </div>
+            <p>
+              {{this.comment}}
+            </p>
+            <small class="mr-auto">
+              回覆給 {{this.User.account}}
+            </small>
+          </div>
+          <hr>
+          <div class="row w-100">
+            <textarea name="reply" id="" cols="30" rows="10">回覆的內容</textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">回覆</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{{/each}}
