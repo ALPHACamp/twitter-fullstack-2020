@@ -91,7 +91,8 @@ router.get('/users/:id/comments', authenticated, userController.topUserForLayout
 router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike)
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
-router.get('/users/:id/:followship', authenticated, userController.topUserForLayout, userController.getFollowShip)
+router.get('/users/:id/followings', authenticated, userController.topUserForLayout, userController.getFollowings)
+router.get('/users/:id/followers', authenticated, userController.topUserForLayout, userController.getFollowers)
 router.get('/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage)
 
 
