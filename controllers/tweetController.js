@@ -13,21 +13,7 @@ const tweetController = {
         { model: User, as: 'TweetWhoLike' },
         { model: User, as: 'whoReply' }
       ]
-    });
-    const topUsers = await User.findAll({
-      include: [{ model: User, as: 'Followers' }]
-    }).then((allUsers) => {
-      //console.log('allUser', allUsers);
-      allUsers = allUsers.map((user) => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
-      }));
-      allUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
-      return allUsers.slice(0, 6);
-    });
-
+    })
     data = tweets.map((r) => ({
       ...r.dataValues,
       userId: r.User.id,
@@ -39,8 +25,7 @@ const tweetController = {
       likeCount: r.TweetWhoLike.length,
       replayCount: r.whoReply.length
     }));
-    console.log(data[1]);
-    return res.render('tweetsHome', { tweets: data, topUsers });
+    return res.render('tweetsHome', { tweets: data });
   },
   getTweet: async (req, res) => {
     const id = req.params.id;
