@@ -89,6 +89,8 @@ router.put('/users/:id/profile', authenticated,
   // ]),
   userController.putEditProfile
 );
+
+router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply)
 router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
 router.post('/tweets/:id/comments', authenticated, userController.topUserForLayout, tweetController.postComment)
 router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike)
