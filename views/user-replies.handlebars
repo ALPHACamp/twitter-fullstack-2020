@@ -1,18 +1,18 @@
 <div class="container-fluid">
   {{> left-content}}
-
+  {{>modal}}
   <!-- 中間主要區塊 -->
   <div>
     <div>
       <a href="/tweets"><img src="/images/icon-back.png" alt=""></a>
-      <h3>{{user.name}}</h3>{{tweets.length}}推文
+      <h3>{{user.name}}</h3>{{user.Tweets.length}}推文
     </div>
     <div>
       <img src="{{user.cover}}" alt="" width="598px" height="200px">
     </div>
-    <div>
-      <img src="{{user.avatar}}" alt="" class="avtar">
-      <a href="/api/users/{{user.id}}">編輯個人資料</a>
+    <div class="user-profile">
+      <div><img src="{{user.avatar}}" alt="" class="main-avatar"></div>
+      <button type="button" class="tweet-button" data-toggle="modal" data-target="#editProfileModal">編輯個人資訊</button>
     </div>
     <div>
       <h3>{{user.name}}</h3>
@@ -31,14 +31,23 @@
     <nav class="navbar navbar-expand-lg navbar-light ">
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="/users/{{user.id}}/tweets">推文 <span
-              class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link active" href="/users/{{user.id}}/tweets">推文</a>
           <a style=" color:#FF6600" class="nav-item nav-link" href="#">推文與回覆</a>
           <a class="nav-item nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
         </div>
       </div>
     </nav>
-    <!-- 推文與回覆 -->
+    <!-- 回覆 -->
+    <div class="main-tweet-list">
+      {{#each replies }}
+      <div class="divider">
+        <img src="{{../user.avatar}}" alt="" class="avtar">
+        <span style="font-size:larger;">{{../user.name}}</span><span
+          style="color:#657786">{{../user.account}}.{{moment this.createdAt}}</span>
+        <div class="tweet-description">{{this.comment}}</div>
+      </div>
+      {{/each}}
+    </div>
   </div>
 
   {{> right-content}}

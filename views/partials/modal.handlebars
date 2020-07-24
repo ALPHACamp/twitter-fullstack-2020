@@ -106,15 +106,15 @@
             </div>
 
             <label for="username"></label>
-            <input class="username-input" type="text" id="username" placeholder="名稱" value="" onkeyup="nameWordCount()"
-              maxlength="50">
+            <input class="username-input" type="text" id="username" placeholder="名稱" value="{{user.name}}"
+              onkeyup="nameWordCount()" maxlength="50">
             <div class="word-count">
               <span class="username-input-count">0</span>/50
             </div>
 
             <label for="brief"></label>
             <textarea class="brief-input" name="" id="brief" cols="30" rows="10" placeholder="自我介紹"
-              onkeyup="briefWordCount()" maxlength="160"></textarea>
+              onkeyup="briefWordCount()" maxlength="160">{{user.introduction}}</textarea>
             <div class="word-count">
               <span class="brief-input-count">0</span>/160
             </div>

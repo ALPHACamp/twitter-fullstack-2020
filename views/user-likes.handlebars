@@ -1,6 +1,6 @@
 <div class="container-fluid">
   {{> left-content}}
-
+  {{>modal}}
   <!-- 中間主要區塊 -->
   <div>
     <div>
@@ -17,7 +17,7 @@
     </div>
     <div class="user-profile">
       <div><img src="{{user.avatar}}" alt="" class="main-avatar"></div>
-      <div class="rectangle"><a class="edit-Profile" href="/api/users/{{user.id}}">編輯個人資料</a></div>
+      <button type="button" class="tweet-button" data-toggle="modal" data-target="#editProfileModal">編輯個人資訊</button>
     </div>
     <div>
       <h3>{{user.name}}</h3>
@@ -36,7 +36,7 @@
     <nav class="navbar navbar-expand-lg navbar-light ">
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link " href="/users/{{user.id}}/tweets">推文 <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link " href="/users/{{user.id}}/tweets">推文</a>
           <a class="nav-item nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
           <a style="color:#FF6600" class="nav-item nav-link " href="#">喜歡的內容</a>
         </div>
