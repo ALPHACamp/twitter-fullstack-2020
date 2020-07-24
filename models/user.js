@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Tweet)
       User.hasMany(models.Reply)
+      User.hasMany(models.Secondreply)
       User.belongsToMany(models.Tweet, {
         through: models.Like,
         foreignKey: 'UserId',

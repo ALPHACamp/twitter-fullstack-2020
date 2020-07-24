@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Reply.belongsTo(models.Tweet)
       Reply.belongsTo(models.User)
+      Reply.hasMany(models.Secondreply)
     }
   }
   Reply.init(
