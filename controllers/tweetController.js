@@ -68,8 +68,10 @@ const tweetController = {
 
         userController.getRecommendedUsers(req, res)
           .then(users => {
+            console.log(tweet)
             res.render('reply', {
               tweet,
+              replies: tweet.replies[0].id === null ? null : tweet.replies,
               currentUserId: req.user.id,
               isLiked,
               recommendFollowings: users
