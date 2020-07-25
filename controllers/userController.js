@@ -409,7 +409,7 @@ let userController = {
     }));
 
     topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
-    topUsers.filter((user) => user.role === 'user');
+    topUsers = topUsers.filter((user) => user.role === 'user');
     res.locals.topUsers = topUsers;
     return next();
   }
