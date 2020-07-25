@@ -11,6 +11,7 @@ const passport = require('passport');
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (req.user.role === 'user') {
+      res.locals.myUser = req.user
       return next();
     }
     req.flash('error_messages', 'You are not an user, please login here');
@@ -22,6 +23,7 @@ const authenticated = (req, res, next) => {
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (req.user.role === 'Admin') {
+      res.locals.myUser = req.user
       return next();
     }
     req.flash('error_messages', 'You are not an admin, please login here');
