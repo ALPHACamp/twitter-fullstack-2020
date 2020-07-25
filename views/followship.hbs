@@ -33,7 +33,10 @@
 
     {{#each followShip}}
     <li class="list-group-item d-flex bg-light">
-      <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+      <a href="/users/{{this.id}}">
+        <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+
+      </a>
     
       <div class="d-flex flex-column col">
         <div class="d-flex justify-content-between">
