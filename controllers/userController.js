@@ -58,7 +58,6 @@ const userController = {
   editUser: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
-        //console.log(user.toJSON())
         return res.render('profileEdit', { user: user.toJSON() })
       })
   },
@@ -70,51 +69,85 @@ const userController = {
     }
 
     const { files } = req
-    console.log('file====>', files)
-    console.log('file path====>', files.avatar[0].path)
-    if (files) {
+    if (files.avatar !== undefined & files.cover === undefined) {
       imgur.setClientID(IMGUR_CLIENT_ID);
       imgur.upload(files.avatar[0].path, (err, img) => {
-        console.log('img====>', img)
         return User.findByPk(req.params.id)
           .then((user) => {
             user.update({
               name: req.body.name,
+              introduction: req.body.introduction,
               avatar: files ? img.data.link : user.avatar,
-            })
-          })
-          .then(() => {
-            imgur.setClientID(IMGUR_CLIENT_ID);
-            imgur.upload(files.cover[0].path, (err, img) => {
-              console.log('img2====>', img)
-              return User.findByPk(req.params.id)
-                .then((user) => {
-                  user.update({
-                    name: req.body.name,
-                    cover: files ? img.data.link : user.cover,
-                  })
-                    .then((user) => {
-                      req.flash('success_messages', 'profile was successfully to update')
-                      res.redirect(`/api/users/${user.id}`)
-                    })
-                })
+            }).then((user) => {
+              req.flash('success_messages', 'profile was successfully to update')
+              res.redirect(`/api/users/${user.id}`)
             })
           })
       })
     }
-    else
+
+    if (files.avatar === undefined & files.cover !== undefined) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files.cover[0].path, (err, img) => {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              cover: files ? img.data.link : user.cover,
+            }).then((user) => {
+              req.flash('success_messages', 'profile was successfully to update')
+              res.redirect(`/api/users/${user.id}`)
+            })
+          })
+      })
+    }
+
+    if (files.avatar !== undefined & files.cover !== undefined) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files.avatar[0].path, (err, img) => {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              avatar: files ? img.data.link : user.avatar,
+            })
+              .then(() => {
+                imgur.setClientID(IMGUR_CLIENT_ID);
+                imgur.upload(files.cover[0].path, (err, img) => {
+                  return User.findByPk(req.params.id)
+                    .then((user) => {
+                      user.update({
+                        name: req.body.name,
+                        introduction: req.body.introduction,
+                        cover: files ? img.data.link : user.cover,
+                      }).then((user) => {
+                        req.flash('success_messages', 'profile was successfully to update')
+                        res.redirect(`/api/users/${user.id}`)
+                      })
+                    })
+                })
+              })
+          })
+      })
+    }
+
+    else {
       return User.findByPk(req.params.id)
         .then((user) => {
-          console.log('post User', user.toJSON())
           user.update({
             name: req.body.name,
+            introduction: req.body.introduction,
             avatar: user.avatar,
+            cover: user.cover,
           })
             .then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
               res.redirect(`/api/users/${user.id}`)
             })
         })
+    }
   },
 
 }
