@@ -33,12 +33,12 @@
       <a style="color:#FF6600" href="/users/{{user.id}}/followings">{{user.Followings.length}}位跟隨中</a>
     </div>
     <!-- 導覽列 -->
-    <nav class="navbar navbar-expand-lg navbar-light ">
+    <nav class="navbar-expand-lg navbar-light ">
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link " href="/users/{{user.id}}/tweets">推文</a>
-          <a class="nav-item nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
-          <a style="color:#FF6600" class="nav-item nav-link " href="#">喜歡的內容</a>
+          <a class="nav-link " style="padding-left: 0px" href="/users/{{user.id}}/tweets">推文</a>
+          <a class="nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
+          <a style="color:#FF6600" class="nav-link" href="#">喜歡的內容</a>
         </div>
       </div>
     </nav>
@@ -46,9 +46,9 @@
     <div>
       {{#each user.LikedTweets }}
       <div class="divider">
-        <img src="{{../user.avatar}}" alt="" class="avtar">
-        <span style="font-size:larger;">{{../user.name}}</span><span
-          style="color:#657786">{{../user.account}}.{{moment this.createdAt}}</span>
+        <img src="{{../user.avatar}}" style="width: 50px;height: 50px;border-radius: 100%">
+        <span style="font-size:larger;">{{../user.name}}</span><span style="color:#657786">{{../user.account}} •
+          {{moment this.createdAt}}</span>
         <div>{{this.description}}</div>
 
         <a href="/reply" class="reply-link ">
