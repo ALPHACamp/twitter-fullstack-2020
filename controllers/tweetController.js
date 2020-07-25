@@ -68,6 +68,7 @@ const tweetController = {
               likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))]
             }
             const isLiked = tweet.likedUsers.includes(req.user.id)
+            let secondReplies = []
             // 找出 secondReplies 放進 replies 以便於 template 巢狀讀取
             return Promise.all(Array.from(
               { length: tweet.replies.length },
@@ -80,18 +81,21 @@ const tweetController = {
                 })
                   .then((replies) => {
                     tweet.replies[i].secondReplies = replies
+                    secondReplies.push(replies)
                   })
                   .catch(err => console.log(err))
             ))
               .then(() => {
-                console.log('tweet', tweet)
-                console.log(tweet.replies[2])
+                // console.log('第一層回覆 replies：', tweet.replies)
+                // console.log('第二層回覆 secondReplies：', tweet.replies[0].secondReplies)
+                // console.log('變數secondReplies', secondReplies)
                 res.render('reply', {
                   tweet,
                   replies: tweet.replies[0].id === null ? null : tweet.replies,
                   currentUserId: req.user.id,
                   isLiked,
-                  recommendFollowings: users
+                  recommendFollowings: users,
+                  secondReplies: secondReplies.flat()
                 })
               })
               .catch(err => console.log(err))
