@@ -17,6 +17,16 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'UserId',
         as: 'LikedTweets'
       })
+      User.belongsToMany(models.Reply, {
+        through: models.Like,
+        foreignKey: 'UserId',
+        as: 'LikedReplies'
+      })
+      User.belongsToMany(models.Secondreply, {
+        through: models.Like,
+        foreignKey: 'UserId',
+        as: 'LikedSecondReplies'
+      })
       User.belongsToMany(models.User, {
         through: models.Followship,
         foreignKey: 'FollowingId',

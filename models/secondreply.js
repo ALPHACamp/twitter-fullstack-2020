@@ -13,7 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Secondreply.belongsTo(models.User)
       Secondreply.belongsTo(models.Reply)
-
+      Secondreply.belongsToMany(models.User, {
+        through: models.Like,
+        foreignKey: 'SecondreplyId',
+        as: 'LikedUsers'
+      })
     }
   };
   Secondreply.init({

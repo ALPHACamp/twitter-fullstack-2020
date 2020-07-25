@@ -14,7 +14,9 @@ module.exports = (sequelize, DataTypes) => {
   Like.init(
     {
       UserId: DataTypes.INTEGER,
-      TweetId: DataTypes.INTEGER
+      TweetId: DataTypes.INTEGER,
+      ReplyId: DataTypes.INTEGER,
+      SecondreplyId: DataTypes.INTEGER
     },
     {
       sequelize,
