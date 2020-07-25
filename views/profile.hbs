@@ -1,13 +1,68 @@
 <div class="row">
-  <div class="col-md-4">
-    <img class="img-responsive center-block" src="{{user.avatar}}" style="width: 250px;margin-bottom: 25px;">
-  </div>
+
   <div class="col-md-8">
-    <h3>{{user.name}}</h3>
-    <h4>{{user.email}}</h4>
-    <a class="btn btn-primary" href="/api/users/{{user.id}}/edit">
-      Edit
-    </a>
+    <div class="" style="">
+      <img class="rounded-top" src="{{user.cover}}" style="width:100%; height: 200px;">
+    </div>
+    <div class="row">
+      <div class="col-md-8 mb-4 ">
+        <img class="rounded-circle" src="{{user.avatar}}" style="width:50%; margin-top:-60px;">
+      </div>
+      <div class="col-md-4 d-flex align-items-center">
+        <a class="btn btn-primary" href="/api/users/{{user.id}}/edit">
+          編輯個人資料
+        </a>
+      </div>
+    </div>
+    <h6>{{user.name}}</h6>
+    <small>{{user.email}}</small>
+    <p>{{user.introduction}}</p>
+    <p>?個跟隨中 ?位跟隨者</p>
+
+    <ul class="nav nav-tabs bt-4">
+      <li class="nav-item">
+        <a class="nav-link active" href="/">推文</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">推文與回覆</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">喜歡的內容</a>
+      </li>
+    </ul>
+    <br />
+    <br />
+    <div class="row">
+      {{!-- {{#each tweets}}
+
+      {{/each}} --}}
+    </div>
+  </div>
+
+  {{!-- Top 10 user list --}}
+  <div class="col-md-4">
+    <ul class="list-group">
+      <li class="list-group-item">跟隨誰</li>
+      {{!-- {{#each}} --}}
+      <li class="list-group-item">
+        <div class="row">
+          <div class="col-3">
+            <img class="rounded-circle w-100" src="https://loremflickr.com/320/240?random=1" />
+          </div>
+          <div class="col-4">
+            <p>User's name</p>
+          </div>
+          <div class="col-4">
+            <form action="/followships/:userId" method="POST" style="display: contents;"><button type="submit"
+                class="btn btn-primary">跟隨</button></form>
+          </div>
+        </div>
+      </li>
+      {{!-- {{/each}} --}}
+      <li class="list-group-item">
+        <a class="link" href="/users/:id/followings">顯示更多</a>
+      </li>
+    </ul>
   </div>
   <hr>
 </div>
