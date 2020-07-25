@@ -33,15 +33,24 @@ const adminAuthenticated = (req, res, next) => {
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, tweetController.getHomePage)
 router.get('/tweets/:tweetId', tweetController.getReplyPage)
+// 發推
 router.post('/tweet', tweetController.postTweet)
+router.delete('/tweets/:tweetId', tweetController.deleteTweet)
+// 回應推文
 router.post('/tweets/:tweetId/reply', tweetController.postReply)
 router.delete('/tweets/:tweetId/:replyId', tweetController.deleteReply)
-router.post('/tweets/:tweetId/replies/:replyId', tweetController.postSecondReply)
-router.delete('/tweets/:tweetId', tweetController.deleteTweet)
+// 回應留言
+router.post('/tweets/:tweetId/:replyId/:replyTo', tweetController.postSecondReply)
+// 追隨
 router.post('/following/:userId', userController.addFollowing)
 router.delete('/following/:userId', userController.removeFollowing)
+// LIKE
 router.get('/like/:tweetId', tweetController.likeTweet)
 router.get('/unlike/:tweetId', tweetController.removeLike)
+router.get('/likeReply/:replyId', tweetController.likeReply)
+router.get('/unlikeReply/:replyId', tweetController.unlikeReply)
+router.get('/likeSecondReply/:secondReplyId', tweetController.likeSecondReply)
+router.get('/unlikeSecondReply/:secondReplyId', tweetController.unlikeSecondReply)
 // 取得登入頁面
 router.get('/signin', userController.userSigninPage)
 // 取得註冊頁面

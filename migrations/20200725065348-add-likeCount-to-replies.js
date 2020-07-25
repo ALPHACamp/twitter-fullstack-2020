@@ -1,14 +1,14 @@
-'use strict'
+'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('Tweets', 'replyCount', {
+    queryInterface.addColumn('Replies', 'likeCount', {
       type: Sequelize.INTEGER,
       defaultValue: 0
     })
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn('Tweets', 'replyCount')
+    queryInterface.removeColumn('Replies', 'likeCount')
   }
-}
+};

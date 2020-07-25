@@ -27,14 +27,14 @@
       </div>
       <div class="col-12 my-1">
         <i class="far fa-comment fa-2x mr-5" data-toggle="modal" data-target="#replyTweet"></i>
-        {{#if isLiked}}
+        {{#if tweetIsLiked}}
         <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart fa-2x" style="color: salmon;"></i></a>
         {{else}}
         <a href="/like/{{tweet.id}}"><i class="far fa-heart fa-2x" style="color: salmon;"></i></a>
         {{/if}}
       </div>
     </div>
-
+    <!--  第一層回覆  -->
     <div class="row" id="reply-list" style="border: 1px solid grey;">
       {{#each replies}}
       <div class=" col-1">
@@ -44,30 +44,26 @@
       </div>
       <div class="col-11">
         <div class="row">
-          <div class="col ml-3">{{this.User.name}} <small
-              class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small></div>
-          {{#ifEqual this.User.id ../currentUserId}}
-          <form action="/tweets/{{this.TweetId}}/{{this.id}}?_method=DELETE" method="post" class=" ml-auto">
-            <button class="btn btn-outline-danger pull-right" type="submit">&times;</button>
-          </form>
-          {{/ifEqual}}
+          <div class="col ml-3">{{this.User.name}}
+            <small class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small>
+          </div>
         </div>
-        {{#if this.ReplyId}}
-        <div class="col-12">回覆{{this}}</div>
-        {{else}}
         <div class="col-12">回覆{{../tweet.User.account}}</div>
-        {{/if}}
         <div class="col-12">{{this.comment}}</div>
+        <!-- 按讚與回應 -->
         <div class="col-12">
           <i class="far fa-comment mr-5" data-toggle="modal" data-target="#replyReply{{this.id}}"></i>
-          {{#if isLiked}}
-          <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          {{#if this.replyIsLiked}}
+          <a href="/unlikeReply/{{this.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          <small>{{this.likeCount}}</small>
           {{else}}
-          <a href="/like/{{tweet.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          <a href="/likeReply/{{this.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          <small>{{this.likeCount}}</small>
           {{/if}}
         </div>
         <hr>
       </div>
+      <!--  第二層回覆  -->
       {{#each this.secondReplies}}
       <div class="col-1">
         <a href="/users/{{this.User.id}}">
@@ -76,22 +72,21 @@
       </div>
       <div class="col-11">
         <div class="row">
-          <div class="col ml-3">{{this.User.name}} <small
-              class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small></div>
-          {{#ifEqual this.User.id ../currentUserId}}
-          <form action="/tweets/{{this.TweetId}}/{{this.id}}?_method=DELETE" method="post" class=" ml-auto">
-            <button class="btn btn-outline-danger pull-right" type="submit">&times;</button>
-          </form>
-          {{/ifEqual}}
+          <div class="col ml-3">{{this.User.name}}
+            <small class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small>
+          </div>
         </div>
         <div class="col-12">回覆{{this.replyTo}}</div>
         <div class="col-12">{{this.comment}}</div>
+        <!-- 第二層按讚與回應 -->
         <div class="col-12">
-          <i class="far fa-comment mr-5" data-toggle="modal" data-target="#replyReply{{this.ReplyId}}"></i>
-          {{#if isLiked}}
-          <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          <i class="far fa-comment mr-5" data-toggle="modal" data-target="#secondReply{{this.id}}"></i>
+          {{#if this.secondReplyIsLiked}}
+          <a href="/unlikeSecondReply/{{this.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          <small>{{this.likeCount}}</small>
           {{else}}
-          <a href="/like/{{tweet.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          <a href="/likeSecondReply/{{this.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          <small>{{this.likeCount}}</small>
           {{/if}}
         </div>
       </div>
@@ -144,16 +139,61 @@
     </div>
   </form>
 </div>
-
-<!-- replyReply Modal -->
+<!-- Replyreply Modal (幫第一層回覆做 Modal) -->
 {{#each replies}}
 <div class="modal fade" id="replyReply{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="replyReply"
   aria-hidden="true">
-  <form action="/tweets/{{this.TweetId}}/replies/{{this.id}}" method="post">
+  <!-- 透過 routes 傳送 /tweets/:tweetId/:replyId/:replyTo  -->
+  <form action="/tweets/{{this.TweetId}}/{{this.id}}/{{this.User.account}}" method="post">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="replyReplyLabel">回覆</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-center" id="reply-detail">
+            <div class="col-auto" id="person-img">
+              <img style="width: 50px;height:50px" src="{{this.User.avatar}}" alt="pic">
+            </div>
+            <div class="col" id="person-indo">
+              <div class="row">
+                <div class="col-12">{{this.User.name}}</div>
+                <div class="col-12">{{this.User.account}}</div>
+              </div>
+            </div>
+            <p>
+              {{this.comment}}
+            </p>
+            <small class="mr-auto">
+              回覆給 {{this.User.account}}
+            </small>
+          </div>
+          <hr>
+          <div class="row w-100">
+            <textarea name="reply" id="" cols="30" rows="10">回覆的內容</textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">回覆</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+{{/each}}
+
+<!-- SecondReply Modal （幫第二層回覆做 Modal） -->
+{{#each secondReplies}}
+<div class="modal fade" id="secondReply{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="secondReply"
+  aria-hidden="true">
+  <form action="/tweets/{{../tweet.id}}/{{this.ReplyId}}/{{this.User.account}}" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="secondReplyLabel">回覆</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

@@ -5,6 +5,7 @@ const Reply = db.Reply
 const Like = db.Like
 const Secondreply = db.Secondreply
 const userController = require('./userController')
+const e = require('express')
 
 
 const tweetController = {
@@ -56,7 +57,7 @@ const tweetController = {
           nest: true,
           include: [
             User,
-            { model: Reply, include: [User] },
+            { model: Reply, include: [User, { model: User, as: 'LikedUsers' }] },
             { model: User, as: 'LikedUsers' }
           ],
         })
@@ -65,33 +66,61 @@ const tweetController = {
             const tweet = {
               ...tweets[0],
               replies: [...new Set(tweets.map(item => { return JSON.stringify(item.Replies) }))].map(item => JSON.parse(item)),
-              likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))]
+              likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))],
             }
-            const isLiked = tweet.likedUsers.includes(req.user.id)
-            // 找出 secondReplies 放進 replies 以便於 template 巢狀讀取
+            const tweetIsLiked = tweet.likedUsers.includes(req.user.id)
+            let secondReplies = []  // 用於製作modal，與tweet.secondReplies 用途不同
+
             return Promise.all(Array.from(
               { length: tweet.replies.length },
               (_, i) =>
+                // 找到每個 replies 所有的 secondReply，加到tweet.replies.secondReplies，以便於 template 巢狀讀取
                 Secondreply.findAll({
                   where: { ReplyId: tweet.replies[i].id },
                   raw: true,
                   nest: true,
-                  include: [User]
+                  include: [
+                    User,
+                    { model: Reply, include: [User] },
+                    { model: User, as: 'LikedUsers' }
+                  ]
                 })
                   .then((replies) => {
+                    // replies 是某一個第一層回覆底下的所有回覆 root-1-many
+                    replies.forEach(index => {
+                      if (index.LikedUsers.Like.UserId === req.user.id)
+                        index.secondReplyIsLiked = true
+                      else {
+                        index.secondReplyIsLiked = false
+                      }
+                      delete index.LikedUsers
+                    })
+                    // 過濾掉重複資訊
+                    replies = [...new Set(replies.map(item => { return JSON.stringify(item) }))].map(item => JSON.parse(item))
                     tweet.replies[i].secondReplies = replies
+                    secondReplies.push(replies)  // 用於製作 Modal
+                  })
+                  .then(() => {
+                    // 把每個replies的id拿去Like查詢，看看user有沒有Like過，將結果紀錄在tweet.replies.replyIsLike中
+                    return Like.findAll({
+                      where: { ReplyId: tweet.replies[i].id }, raw: true, nest: true
+                    })
+                      .then((likes) => {
+                        likes = likes.map(like => like.UserId)
+                        const replyIsLiked = likes.includes(req.user.id)
+                        tweet.replies[i].replyIsLiked = replyIsLiked
+                      })
                   })
                   .catch(err => console.log(err))
             ))
               .then(() => {
-                console.log('tweet', tweet)
-                console.log(tweet.replies[2])
                 res.render('reply', {
-                  tweet,
-                  replies: tweet.replies[0].id === null ? null : tweet.replies,
+                  tweet, //內含 tweet 基本資料
+                  replies: tweet.replies[0].id === null ? null : tweet.replies,  // 第一層回覆 ＋ 第二層回覆
                   currentUserId: req.user.id,
-                  isLiked,
-                  recommendFollowings: users
+                  tweetIsLiked,  //是否喜歡過該 tweet
+                  recommendFollowings: users,  // 右欄
+                  secondReplies: secondReplies.flat()  // 第二層回覆
                 })
               })
               .catch(err => console.log(err))
@@ -105,7 +134,8 @@ const tweetController = {
     return Reply.create({
       UserId: req.user.id,
       TweetId: tweetId,
-      comment: req.body.reply
+      comment: req.body.reply,
+      replyTo: req.params.replyTo
     })
       .then(() => {
         return Tweet.findByPk(tweetId)
@@ -117,17 +147,19 @@ const tweetController = {
       .catch((err) => res.send(err))
   },
   postSecondReply: (req, res) => {
-    const replyId = Number(req.params.replyId)
-    return Reply.findByPk(replyId, { include: [User] })
-      .then((reply) => {
-        return Secondreply.create({
-          UserId: req.user.id,
-          ReplyId: Number(req.params.replyId),
-          comment: req.body.reply,
-          replyTo: reply.User.account
-        })
+    return Secondreply.create({
+      UserId: req.user.id,
+      ReplyId: Number(req.params.replyId),
+      comment: req.body.reply,
+      replyTo: req.params.replyTo
+    })
+      .then(() => {
+        return Tweet.findByPk(Number(req.params.tweetId))
+          .then((tweet) => {
+            tweet.increment('replyCount')
+          })
+          .then(() => res.redirect('back'))
       })
-      .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   },
   deleteReply: (req, res) => {
@@ -176,6 +208,69 @@ const tweetController = {
       })
       .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
+  },
+  likeReply: (req, res) => {
+    const replyId = Number(req.params.replyId)
+    return Like.create({
+      UserId: req.user.id,
+      ReplyId: replyId,
+    })
+      .then(() => {
+        return Reply.findByPk(replyId)
+          .then(reply => reply.increment('likeCount'))
+          .then(() => res.redirect('back'))
+      })
+      .catch(err => res.send(err))
+
+  },
+  likeSecondReply: (req, res) => {
+    const secondReplyId = Number(req.params.secondReplyId)
+    return Like.create({
+      UserId: req.user.id,
+      SecondreplyId: secondReplyId,
+    })
+      .then(() => {
+        return Secondreply.findByPk(secondReplyId)
+          .then(reply => reply.increment('likeCount'))
+          .then(() => res.redirect('back'))
+      })
+      .catch(err => res.send(err))
+  },
+  unlikeReply: (req, res) => {
+    const replyId = Number(req.params.replyId)
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        ReplyId: replyId,
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+          .then(() => {
+            return Reply.findByPk(replyId)
+              .then(reply => reply.decrement('likeCount'))
+          })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
+  },
+  unlikeSecondReply: (req, res) => {
+    const secondReplyId = Number(req.params.secondReplyId)
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        SecondReplyId: secondReplyId,
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+          .then(() => {
+            return Secondreply.findByPk(secondReplyId)
+              .then(reply => reply.decrement('likeCount'))
+          })
+      })
+      .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
   }
 }
 
