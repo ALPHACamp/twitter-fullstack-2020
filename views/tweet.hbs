@@ -41,7 +41,7 @@
         <div class="col">
           <a href="/tweets"><i class="fas fa-long-arrow-alt-left"></i>&nbsp;&nbsp;推文</a>
         </div>
-        <div class="col mt-3 border-top">
+        <div class="col mt-3 border-top text-break">
           <h6 class="card-title">
             <a href="/users/{{user.id}}">
               <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="https://loremflickr.com/320/240?random=1" />
@@ -104,7 +104,7 @@
 
         <div class="mt-3 border-top">
           {{#each tweet.Replies}}
-            <div class="col">
+            <div class="col border-top">
               <h6>
                 <a href="/users/{{user.id}}">
                   <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="https://loremflickr.com/320/240?random=1" />
