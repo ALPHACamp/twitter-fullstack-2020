@@ -1,0 +1,36 @@
+<div class="container-fluid">
+  {{> left-content}}
+  {{>modal}}
+  <!-- 中間主要區塊 -->
+  <div>
+    <div>
+      <div>
+        <a href="/users/{{user.id}}/tweets"><img src="/images/icon-back.png" alt=""></a>
+      </div>
+      <div>
+        <h3>{{user.name}}</h3>
+        <h6 style="color: #657786;">{{results.tweetCounts}}則推文</h6>
+      </div>
+    </div>
+    <!-- 主要內容 -->
+    <div class="main-tweet-list">
+      {{#each results.Followings }}
+      <div class="divider">
+        <div>
+          <img src="{{../user.avatar}}" alt="" class="avtar">
+          <span style="font-size:larger;">{{this.name}}</span><span style="color:#657786">{{this.account}}</span>
+          {{#if this.isFollowed }}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+            <button type="submit" class="user-following">正在跟隨</button></form>
+          {{else}}
+          <form action="/followships/{{this.id}}?_method=POST" method="POST" style="display: contents;">
+            <button type="submit" class="user-unfollowing">跟隨</button></form>
+          {{/if}}
+        </div>
+        <div class="tweet-description">{{this.introduction}}</div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{> right-content}}
+</div>
