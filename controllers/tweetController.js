@@ -88,12 +88,12 @@ const tweetController = {
               .then(() => {
                 console.log('tweet', tweet)
                 res.render('reply', {
-                  tweet,
-                  replies: tweet.replies[0].id === null ? null : tweet.replies,
+                  tweet, //內含 tweet 基本資料
+                  replies: tweet.replies[0].id === null ? null : tweet.replies,  // 第一層回覆 ＋ 第二層回覆
                   currentUserId: req.user.id,
-                  isLiked,
-                  recommendFollowings: users,
-                  secondReplies: secondReplies.flat()
+                  isLiked,  //是否喜歡過該 tweet
+                  recommendFollowings: users,  // 右欄
+                  secondReplies: secondReplies.flat()  // 第二層回覆
                 })
               })
               .catch(err => console.log(err))
@@ -181,6 +181,20 @@ const tweetController = {
       })
       .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
+  },
+  likeReply: (req, res) => {
+    const replyId = Number(req.params.replyId)
+    return Reply.findByPk(replyId)
+      .then(reply => reply.increment('likeCount'))
+      .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
+  },
+  likeSecondReply: (req, res) => {
+    const secondReplyId = Number(req.params.secondReplyId)
+    return Secondreply.findByPk(secondReplyId)
+      .then(reply => reply.increment('likeCount'))
+      .then(() => res.redirect('back'))
+      .catch(err => res.send(err))
   }
 }
 

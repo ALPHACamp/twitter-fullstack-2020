@@ -54,9 +54,11 @@
         <div class="col-12">
           <i class="far fa-comment mr-5" data-toggle="modal" data-target="#replyReply{{this.id}}"></i>
           {{#if isLiked}}
-          <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          <a href="/likeReply/{{this.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          <small>{{this.likeCount}}</small>
           {{else}}
-          <a href="/like/{{tweet.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          <a href="/likeReply/{{this.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          <small>{{this.likeCount}}</small>
           {{/if}}
         </div>
         <hr>
@@ -80,9 +82,11 @@
         <div class="col-12">
           <i class="far fa-comment mr-5" data-toggle="modal" data-target="#secondReply{{this.id}}"></i>
           {{#if isLiked}}
-          <a href="/unlike/{{tweet.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          <a href="/likeSecondReply/{{this.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          <small>{{this.likeCount}}</small>
           {{else}}
-          <a href="/like/{{tweet.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
+          <a href="/likeSecondReply/{{this.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
+          <small>{{this.likeCount}}</small>
           {{/if}}
         </div>
       </div>
