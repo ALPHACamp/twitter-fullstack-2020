@@ -4,8 +4,10 @@ const adminController = require('../controllers/adminController')
 const { authenticate } = require('passport')
 
 const authenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next()
+  if (req.isAuthenticated() && req.user.role === 'user') { return next() }
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    req.flash('errorMessage', '管理員請從後台登入')
+    return res.redirect('/signin')
   }
   res.redirect('/signin')
 }
@@ -14,7 +16,7 @@ const adminAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.role === 'admin') { return next() }
     req.flash('errorMessage', '非管理員請從前台登入')
-    res.redirect('/admin/signin')
+    return res.redirect('/admin/signin')
   }
   res.redirect('/signin')
 }
@@ -41,15 +43,16 @@ module.exports = (app, passport) => {
 
   app.get('/logout', userController.logout)
 
-  app.get('/', (req, res) => res.redirect('/tweets'))
+  app.get('/', userController.getIndexPage)
 
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweet)
+  app.post('/tweets/:id/like', authenticated, tweetController.addLike)
+  app.delete('/tweets/:id/like', authenticated, tweetController.removeLike)
   app.get('/tweets/:id', authenticated, tweetController.getTweet)
   app.delete('/tweets/:id', adminAuthenticated, adminController.deleteTweet)
   app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 
-  app.get('/api/admin/users/:id', adminAuthenticated, adminController.editUser)
   app.get('/api/users/:id', authenticated, userController.editUser)
   app.post('/api/users/:id', authenticated, profileUpload, userController.putUser)
   app.put('/api/users/:id', authenticated, userController.putUserProfile)
@@ -58,9 +61,12 @@ module.exports = (app, passport) => {
   app.get('/users/:id/likes', authenticated, userController.getLikes)
   app.get('/users/:id/replies', authenticated, userController.getReplies)
 
+
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
 
-  app.post('/followships/:id', authenticated, userController.addFollowing)
-  app.delete('/followships/:id', authenticated, userController.removeFollowing)
+
+  app.post('/followship/:id', authenticated, userController.follow)
+  app.delete('/followship/:id', authenticated, userController.unfollow)
+
 }

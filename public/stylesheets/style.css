@@ -31,14 +31,6 @@ a p:hover {
   color: #FF6600;
   font-size: 13px;
 }
-.avtar {
-  border-radius: 100%;
-  max-width: 50px;
-  min-width: 50px; /*???不設定有時候不顯示 */
-  min-height: 50px;
-  background: rgb(223, 223, 223); 
-  border: none;
-}
 .button {
   border: none;
   background-color: transparent;
@@ -51,7 +43,10 @@ a p:hover {
 .icon-m {
   width: 25px;
 }
-.tweet-post-button,.tweet-post-error,.tweet-post-button-modal, .tweet-post-error-modal{
+.tweet-post-button,
+.tweet-post-error,
+.tweet-post-button-modal, 
+.tweet-post-error-modal {
   width: 64px;
   height: 30px;
   background: #FF6600;
@@ -60,13 +55,13 @@ a p:hover {
   border: none;
   z-index: 999;
 }
-.container-fluid{
+.container-fluid {
   height: 800px;
   display: grid;
   grid-template-columns: 378px 600px 378px;
   overflow: scroll;
 }
-.replyto-span{
+.replyto-span {
   font-size: 13px;
   color: #657786;
 }
@@ -90,6 +85,11 @@ a p:hover {
   height: 100%;
   margin-top: 5px;
   background-color: #CCD6DD;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
 }
 
 
@@ -317,7 +317,7 @@ border-radius: 100%;
   text-decoration: none;
 }
 
-/* 中間區塊 */
+/* 首頁推文頁面 */
 .main-content {
   grid-column: 2 / 3;
   display: flex;
@@ -372,6 +372,7 @@ width: 600px;
   border-bottom: 1px solid #E6ECF0;
   display: flex;
   padding-bottom: 30px;
+  margin-bottom: -25px;
 }
 .tweet-box:hover {
   background-color: #f5f8fa;
@@ -379,9 +380,8 @@ width: 600px;
 .tweet-item-left {
   width: 80px;
 }
-.tweet-item-left img{
-  width: 50px;
-  margin: 10px 0px 0px 15px;
+.tweet-item-left .avatar {
+  margin: 15px 0px 0px 15px;
 }
 .tweet-item-right {
   width: 516px;
@@ -390,7 +390,7 @@ width: 600px;
 }
 .tweet-item-title {
   height: 34px; 
-  padding-top: 10px;
+  padding-top: 15px;
   display: flex;
 }
 .tweet-item-title a {
@@ -405,18 +405,16 @@ width: 600px;
 }
 .tweet-item-text {
   max-height: 100px;
-  margin-top: 5px;
+  margin: 5px 0px;
   padding: 6px 15px 0px 0px;
   font-size: 15px;
   line-height: 18px;
 }
 .tweet-item-footer {
-  height: 25px;
-  margin: 5px 0px 15px 0px;
   display: flex;
   align-items: center;
-  position: absolute;
-  bottom: -5px;
+  position: relative;
+  top: -10px;
   left: 58px;
 }
 .tweet-box {
@@ -439,6 +437,9 @@ width: 600px;
   position: relative;
   color: red;
 }
+.fa-cus-solid-like{
+  color: red;
+}
 
 /* 右側區塊 */
 .right-content {
@@ -446,7 +447,7 @@ width: 600px;
 }
 .right-column{
   width: 350px;
-  height: 512px;
+  /* height: 512px; */
   margin: 15px 0px 0px 15px;
   background: #F5F8FA;
   border-radius: 14px;
@@ -460,8 +461,9 @@ width: 600px;
   font-size: 18px;
   border-bottom: 1px solid #E6ECF0;
 }
-.user-list {
+.top-user-list {
   height: 426px;
+  overflow: hidden;
 }
 .user-list-item {
   height: 70px;
@@ -470,9 +472,7 @@ width: 600px;
   align-items: center;
   padding-right: 15px;
 }
-.user-list-item img {
-  width: 50px;
-  height: 50px;
+.user-list-item .avatar{
   margin-left: 15px;
 }
 .user-list-item-name {
@@ -507,10 +507,11 @@ width: 600px;
   float: right;
 }
 .more-users {
+  height: 45px;
   font-size: 15px;
-  line-height: 22px;
   color: #FF6600;
-  margin: 10px 0px 0px 15px;
+  padding-left: 20px;
+  text-align: left;
 }
 .more-users:hover {
   text-decoration: none;
@@ -595,6 +596,9 @@ width: 600px;
   flex-direction: column;
   align-items: center;
   margin-right: 10px;
+}
+.reply-modal-tweet-left .avatar{
+  min-height: 50px;
 }
 
 .edit-modal {
@@ -741,6 +745,10 @@ width: 600px;
   padding-left: 26px;
   border-bottom: 1px solid #E6ECF0;
 }
+.admin-tweets-list {
+  height: 700px;
+  overflow: scroll;
+}
 .admin-tweets-list-item {
   display: flex;
   height: 120px;
@@ -769,7 +777,7 @@ width: 600px;
 .admin-users-list {
   display: flex;
   flex-wrap: wrap;
-  max-height: 780px;
+  height: 625px;
   overflow: scroll;
   padding-bottom: 50px;
 }
@@ -820,7 +828,7 @@ width: 600px;
   color: #657786;
   margin-right: 5px;
 }
-/*單一頁面中間列*/
+/* 單一推文頁面 */
 .main-title .fa-cus-back {
   color: #657786;
 }
@@ -832,20 +840,27 @@ width: 600px;
   border-bottom: 1px solid #E6ECF0;
 }
 .tweet-content-top {
- margin-bottom: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.tweet-content-top .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  margin-right: 10px;
 }
 .tweet-content-top .column span {
   display: block;
 }
-.tweet-content-top .column a,.reply-item a{
+.tweet-content-top .column a,
+.reply-item a{
   color: black;
 }
-.tweet-content-top .column a:hover ,.reply-item a:hover {
+.tweet-content-top .column a:hover,
+.reply-item a:hover {
   color: black;
   text-decoration: none;
-}
-.tweet-content-top .avtar {
-  margin-right: 10px;
 }
 .tweet-content-top .user-account {
  margin: 0;
@@ -859,7 +874,7 @@ width: 600px;
   color: #657786;
   font-size: 16px;
   font-weight: 700;
-  padding: 10px 3px;
+  padding: 20px 3px;
   border-top: 1px solid #E6ECF0;
   border-bottom: 1px solid #E6ECF0;
 }
@@ -872,7 +887,8 @@ width: 600px;
 .tweet-like-reply-link .reply-link{
   margin-right: 100px;
 }
-.tweet-like-reply-link a, .tweet-like-reply-link .fa-cus-like {
+.tweet-like-reply-link a, 
+.tweet-like-reply-link .fa-cus-like {
   color: #657786;
   font-size: 25px;
 }
@@ -882,11 +898,17 @@ width: 600px;
 .tweet-like-reply-link .fa-cus-like:hover {
   color: red;  
 }
-
-.reply-author-command , .author-relply, .reply-item{
+.tweet-like-reply-link .fa-cus-solid-like{
+  color: red; 
+  font-size: 23px;
+}
+.reply-author-command , 
+.author-relply, 
+.reply-item{
   padding: 15px;
 }
-.reply-like-post a,.reply-like-post span{
+.reply-like-post a,
+.reply-like-post span{
   color: #657786;
 }
 .reply-like-post img {
@@ -895,7 +917,6 @@ width: 600px;
 .reply-item {
   border-bottom: 1px solid #E6ECF0;
 }
-
 .reply-item .left {
   margin-right: 10px;
 }

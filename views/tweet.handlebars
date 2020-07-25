@@ -10,11 +10,13 @@
 
     <div class="tweet-content w-100">
       <div class="tweet-content-top d-flex justify-content-start align-items-center">
-        <a href="/users/{{tweet.User.id}}" class="mt-1 mb-1 user-name">
-          <img src="" alt="" class="avtar">
+        <a href="/users/{{tweet.User.id}}/tweets">
+          <div class="avatar"
+            style="background: url({{tweet.User.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+          </div>
         </a>
         <div class="column ml-1">
-          <span class="mt-1 mb-1 user-name"><a href="/users/{{tweet.User.id}}">{{tweet.User.name}}</a></span>
+          <span class="mt-1 mb-1 user-name"><a href="/users/{{tweet.User.id}}/tweets">{{tweet.User.name}}</a></span>
           <span href="/users/{{tweet.User.id}}" class="user-account">{{tweet.User.account}}</span>
         </div>
       </div>
@@ -39,13 +41,19 @@
             <p class="tweet-description">{{tweet.description}}</p>
             <p class="tweet-id">{{tweet.id}}</p>
             <p class="tweet-createdAt">{{moment tweet.createdAt}}</p>
+            <p class="tweet-user-avatar">{{tweet.User.avatar}}</p>
           </div>
-          <form method="POST">
+          {{#if isLiked}}
+          <form method="POST" action="/tweets/{{tweet.id}}/like?_method=DELETE">
             <button type="submit" class="button like-link">
-              <i class="fac fa-cus-like"></i>
-            </button>
-          </form>
-
+              <i class="fac fa-cus-solid-like"></i>
+              {{else}}
+              <form method="POST" action="/tweets/{{tweet.id}}/like">
+                <button type="submit" class="button like-link">
+                  <i class="fac fa-cus-like"></i>
+                  {{/if}}
+                </button>
+              </form>
         </div>
       </div>
 
@@ -53,10 +61,12 @@
 
     <div class="reply-list w-100">
       {{#each tweet.Replies}}
-      <div class="reply-item d-flex justify-content-start align-items-start">
+      <div class="reply-item d-flex">
         <div class="left">
-          <a href="/users/{{this.User.id}}" class="mt-1 mb-1 user-name">
-            <img src="{{this.User.avatar}}" alt="" class="avtar">
+          <a href="/users/{{this.User.id}}">
+            <div class="avatar"
+              style="background: url({{this.User.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+            </div>
           </a>
         </div>
         <div class="right">
@@ -67,7 +77,6 @@
             <sapn class="user-account">{{this.User.account}}．{{moment this.createdAt}}</sapn>
           </div>
           <div>
-
             <span class="replyto-span-m">回覆</span> <span class="user-account-color-span"><a
                 href="/users/{{../tweet.User.id}}" style="color: #ff6600;">{{../tweet.User.account}}</a></span>
           </div>

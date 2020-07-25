@@ -1,4 +1,3 @@
-{{> message}}
 <div class="container-fluid">
   {{> modal}}
   {{> left-content}}
@@ -25,11 +24,15 @@
       <div class="tweet-box">
         <div class="tweet-item" onclick="location.href='/tweets/{{this.id}}'">
           <div class="tweet-item-left">
-            <a href="/users/{{this.User.id}}"><img src="{{this.User.avatar}}" alt="" class="avtar"></a>
+            <a href="/users/{{this.User.id}}/tweets">
+              <div class="avatar"
+                style="background: url({{this.User.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+              </div>
+            </a>
           </div>
           <div class="tweet-item-right">
             <div class="tweet-item-title">
-              <span class="mt-1 user-name"><a href="/users/{{this.User.id}}">{{this.User.name}}</a></span>
+              <span class="mt-1 user-name"><a href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a></span>
               <span class="user-account">
                 {{this.User.account}}．{{moment this.createdAt}}
               </span>
@@ -50,13 +53,20 @@
             <p class="tweet-description">{{this.description}}</p>
             <p class="tweet-id">{{this.id}}</p>
             <p class="tweet-createdAt">{{moment this.createdAt}} </p>
+            <p class="tweet-user-avatar">{{this.User.avatar}}</p>
           </div>
-          <form action="/tweets/{{this.id}}/like" method="POST">
+          {{#if isLiked}}
+          <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
             <button type="submit" class="like-link button">
-              <i class="fac fa-cus-like"></i>
-              {{this.likedUsers.length}}
-            </button>
-          </form>
+              <i class="fac fa-cus-solid-like"></i>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit" class="like-link button">
+                  <i class="fac fa-cus-like"></i>
+                  {{/if}}
+                  {{this.likedUsers.length}}
+                </button>
+              </form>
         </div>
       </div>
       {{/each}}

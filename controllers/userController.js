@@ -6,7 +6,6 @@ const Followship = db.Followship
 const bcrypt = require('bcryptjs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
-const fs = require('fs')
 
 const userController = {
   signUpPage: (req, res) => res.render('signup'),
@@ -36,7 +35,11 @@ const userController = {
         }
       })
   },
-  signInPage: (req, res) => res.render('signin'),
+  signInPage: (req, res) => {
+    //if (req.isAuthenticated() && req.user.role === 'user') { return res.redirect('/tweets') }
+    //if (req.isAuthenticated() && req.user.role === 'admin') { return res.redirect('/admin/tweets') }
+    res.render('signin')
+  },
   signIn: (req, res) => {
     req.flash('successMessages', '登入成功')
     res.redirect('/tweets')
@@ -44,6 +47,11 @@ const userController = {
   logout: (req, res) => {
     req.flash('successMessage', '登出成功！')
     req.logout()
+    res.redirect('/signin')
+  },
+  getIndexPage: (req, res) => {
+    if (req.isAuthenticated() && req.user.role === 'user') { return res.redirect('/tweets') }
+    if (req.isAuthenticated() && req.user.role === 'admin') { return res.redirect('/admin/tweets') }
     res.redirect('/signin')
   },
 
@@ -153,6 +161,7 @@ const userController = {
   },
 
 
+
   getFollowings: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [{ model: User, as: 'Followings' }, { model: Tweet }]
@@ -188,30 +197,18 @@ const userController = {
       res.render('user-followers', { results })
     })
   },
-
-  addFollowing: (req, res) => {
-    return Followship.create({
-      followerId: req.user.id,
-      followingId: req.params.id
-    })
-      .then(() => {
-        return res.redirect('back')
-      })
+  follow: (req, res) => {
+    const followingId = Number(req.params.id)
+    const followerId = req.user.id
+    return Followship.create({ followingId, followerId })
+      .then(() => res.redirect('back'))
   },
-
-  removeFollowing: (req, res) => {
-    return Followship.findOne({
-      where: {
-        followerId: req.user.id,
-        followingId: req.params.id
-      }
-    })
-      .then((followship) => {
-        followship.destroy()
-          .then(() => {
-            return res.redirect('back')
-          })
-      })
+  unfollow: (req, res) => {
+    const followingId = Number(req.params.id)
+    const followerId = req.user.id
+    return Followship.findOne({ where: { followingId, followerId } })
+      .then(followship => followship.destroy())
+      .then(() => res.redirect('back'))
   }
 }
 

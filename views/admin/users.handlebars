@@ -14,12 +14,6 @@
             使用者列表
           </a>
         </div>
-        <div class="nav-item">
-          <a href="/api/admin/users/:id">
-            <img src="/images/icon-setting.svg" alt="">
-            設定
-          </a>
-        </div>
       </div>
     </div>
     <div class="logout">
@@ -35,7 +29,7 @@
     </div>
 
     <div class="admin-users-list pl-3">
-      <!-- 使用者清單迴圈 -->
+
       {{#each users}}
       <div class="admin-users-list-item">
         <div class="user-cover"
@@ -45,7 +39,7 @@
           background-size: cover; background-repeat:no-repeat; background-position: center;">
         </div>
         <div class="user-data">
-          <a href="/users/{{this.id}}" class="user-name">{{this.name}}</a>
+          <a class="user-name">{{this.name}}</a>
           <div class="user-account pr-2 mb-2 pt-1">@{{this.account}}</div>
           <div class="reply-data mb-4">
             <img src="/images/icon-reply.svg" alt="" class="icon-s mr-1"><span>{{repliesCount}}</span>
@@ -58,7 +52,6 @@
         </div>
       </div>
       {{/each}}
-      <!-- 迴圈結束 -->
 
     </div>
   </div>
