@@ -35,7 +35,11 @@ const userController = {
         }
       })
   },
-  signInPage: (req, res) => res.render('signin'),
+  signInPage: (req, res) => {
+    //if (req.isAuthenticated() && req.user.role === 'user') { return res.redirect('/tweets') }
+    //if (req.isAuthenticated() && req.user.role === 'admin') { return res.redirect('/admin/tweets') }
+    res.render('signin')
+  },
   signIn: (req, res) => {
     req.flash('successMessages', '登入成功')
     res.redirect('/tweets')
@@ -43,6 +47,11 @@ const userController = {
   logout: (req, res) => {
     req.flash('successMessage', '登出成功！')
     req.logout()
+    res.redirect('/signin')
+  },
+  getIndexPage: (req, res) => {
+    if (req.isAuthenticated() && req.user.role === 'user') { return res.redirect('/tweets') }
+    if (req.isAuthenticated() && req.user.role === 'admin') { return res.redirect('/admin/tweets') }
     res.redirect('/signin')
   },
   //更新使用者基本資訊

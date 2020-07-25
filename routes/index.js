@@ -3,8 +3,10 @@ const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 
 const authenticated = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next()
+  if (req.isAuthenticated() && req.user.role === 'user') { return next() }
+  if (req.isAuthenticated() && req.user.role === 'admin') {
+    req.flash('errorMessage', '管理員請從後台登入')
+    return res.redirect('/signin')
   }
   res.redirect('/signin')
 }
@@ -40,7 +42,7 @@ module.exports = (app, passport) => {
 
   app.get('/logout', userController.logout)
 
-  app.get('/', (req, res) => res.redirect('/tweets'))
+  app.get('/', userController.getIndexPage)
 
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweet)
