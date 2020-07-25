@@ -88,7 +88,6 @@ const userController = {
       ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
-      console.log(tweets)
       res.render('user-tweets', { tweets })
     })
   },
@@ -100,11 +99,12 @@ const userController = {
           Reply,
           Tweet,
           { model: Tweet, as: 'LikedTweets' },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
         ]
       })
         .then(user => {
-          console.log(user.toJSON())
-          res.render('user-likes', { user: user.toJSON() })
+          res.render('user-likes', { user })
         })
     } else {
       res.redirect('back')
@@ -119,7 +119,14 @@ const userController = {
       where: { UserId: req.params.id },
       order: [['createdAt', 'DESC']],
     }).then(replies => {
-      res.render('user-replies', { replies })
+      User.findOne({
+        where: { id: req.params.id },
+        include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
+      })
+        .then(user => {
+          res.render('user-replies', { replies, user })
+        })
+
     })
   },
   editUser: (req, res) => res.render('setting'),
