@@ -48,8 +48,9 @@ router.delete('/following/:userId', userController.removeFollowing)
 router.get('/like/:tweetId', tweetController.likeTweet)
 router.get('/unlike/:tweetId', tweetController.removeLike)
 router.get('/likeReply/:replyId', tweetController.likeReply)
-// router.get('/likeSecondReply/:secondReplyId', tweetController.likeSecondReply)
+router.get('/unlikeReply/:replyId', tweetController.unlikeReply)
 router.get('/likeSecondReply/:secondReplyId', tweetController.likeSecondReply)
+router.get('/unlikeSecondReply/:secondReplyId', tweetController.unlikeSecondReply)
 // 取得登入頁面
 router.get('/signin', userController.userSigninPage)
 // 取得註冊頁面
