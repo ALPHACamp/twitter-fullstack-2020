@@ -410,6 +410,8 @@ let userController = {
 
     topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
     topUsers = topUsers.filter((user) => user.role === 'user');
+    topUsers = topUsers.slice(0, 10)
+    console.log(topUsers)
     res.locals.topUsers = topUsers;
     return next();
   }
