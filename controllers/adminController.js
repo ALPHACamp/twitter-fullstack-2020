@@ -23,7 +23,10 @@ let adminController = {
         description: r.description.substring(0, 50),
         createdA: r.createdAt
       }));
-      return res.render('admin/tweetsHome', { tweets: data });
+      return res.render('admin/tweetsHome', { 
+        tweets: data,
+        isAdminTweet: true
+      });
     });
   },
 
@@ -49,7 +52,10 @@ let adminController = {
     data = data.sort((a, b) => b.TweetCount - a.TweetCount);
     //remove admin in data
     data = data.filter((user) => user.role === 'user');
-    res.render('admin/tweetsUser', { users: data });
+    res.render('admin/tweetsUser', { 
+      users: data,
+      isAdminUser: true
+    });
   },
 
   deleteTweet: (req, res) => {
