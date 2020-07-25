@@ -1,5 +1,4 @@
 const express = require('express');
-const helpers = require('./_helpers');
 
 /* if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -50,7 +49,6 @@ app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');
   res.locals.isAuthenticated = req.isAuthenticated()
-  res.locals.myUser = helpers.getUser(req);
   next();
 });
 require('./routes')(app);
