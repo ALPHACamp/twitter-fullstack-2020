@@ -43,22 +43,29 @@
   <div class="col-md-4">
     <ul class="list-group">
       <li class="list-group-item">跟隨誰</li>
-      {{!-- {{#each}} --}}
+      {{#each users}}
       <li class="list-group-item">
         <div class="row">
           <div class="col-3">
-            <img class="rounded-circle w-100" src="https://loremflickr.com/320/240?random=1" />
+            <a href="/api/users/{{this.id}}">
+              <img class="rounded-circle w-100" src="{{this.avatar}}" />
+            </a>
           </div>
           <div class="col-4">
-            <p>User's name</p>
+            <p>{{this.name}}</p>
           </div>
           <div class="col-4">
-            <form action="/followships/:userId" method="POST" style="display: contents;"><button type="submit"
-                class="btn btn-primary">跟隨</button></form>
+            {{#if this.isFollowed }}
+            <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn btn-secondary">取消跟隨</button></form>
+            {{else}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+                type="submit" class="btn btn-primary">跟隨</button></form>
+            {{/if}}
           </div>
         </div>
       </li>
-      {{!-- {{/each}} --}}
+      {{/each}}
       <li class="list-group-item">
         <a class="link" href="/users/:id/followings">顯示更多</a>
       </li>
