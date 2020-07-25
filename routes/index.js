@@ -13,7 +13,7 @@ const adminAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.role === 'admin') { return next() }
     req.flash('errorMessage', '非管理員請從前台登入')
-    res.redirect('/admin/signin')
+    return res.redirect('/admin/signin')
   }
   res.redirect('/signin')
 }
