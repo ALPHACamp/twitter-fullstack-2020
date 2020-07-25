@@ -1,6 +1,7 @@
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
+const { authenticate } = require('passport')
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated() && req.user.role === 'user') { return next() }
@@ -60,6 +61,12 @@ module.exports = (app, passport) => {
   app.get('/users/:id/likes', authenticated, userController.getLikes)
   app.get('/users/:id/replies', authenticated, userController.getReplies)
 
+
+  app.get('/users/:id/followings', authenticated, userController.getFollowings)
+  app.get('/users/:id/followers', authenticated, userController.getFollowers)
+
+
   app.post('/followship/:id', authenticated, userController.follow)
   app.delete('/followship/:id', authenticated, userController.unfollow)
+
 }

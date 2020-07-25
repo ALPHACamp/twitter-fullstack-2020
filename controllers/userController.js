@@ -54,7 +54,7 @@ const userController = {
     if (req.isAuthenticated() && req.user.role === 'admin') { return res.redirect('/admin/tweets') }
     res.redirect('/signin')
   },
-  //更新使用者基本資訊
+
   putUserProfile: (req, res) => {
     const { account, name, email, password, passwordCheck } = req.body
     const error = []
@@ -78,7 +78,7 @@ const userController = {
         })
       })
   },
-  //該名使用者的所有推文
+
   getTweets: (req, res) => {
     Tweet.findAll({
       where: { UserId: req.params.id },
@@ -92,7 +92,7 @@ const userController = {
       res.render('user-tweets', { tweets })
     })
   },
-  //該名使用者的所有喜歡內容
+
   getLikes: (req, res) => {
     if (req.params.id == req.user.id.toString()) {
       User.findByPk(req.params.id, {
@@ -111,7 +111,7 @@ const userController = {
     }
 
   },
-  //該名使用者的所有回覆內容
+
   getReplies: (req, res) => {
     Reply.findAll({
       raw: true,
@@ -158,6 +158,44 @@ const userController = {
       .then(() => {
         res.redirect('/tweets')
       })
+  },
+
+
+
+  getFollowings: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+    }).then(user => {
+      const Followings = user.Followings.map(following => ({
+        ...following.dataValues,
+        isFollowed: user.Followings.map((i) => i.id).includes(following.id)
+      }))
+      const results = {
+        user,
+        tweetCounts: user.Tweets.length,
+        Followings
+      }
+      console.log(results)
+      res.render('user-followings', { results })
+    })
+  },
+
+  getFollowers: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+    }).then(user => {
+      const Followers = user.Followers.map(follower => ({
+        ...follower.dataValues,
+        isFollowed: req.user.Followings.map((i) => i.id).includes(follower.id)
+      }))
+      const results = {
+        user,
+        tweetCounts: user.Tweets.length,
+        Followers
+      }
+      console.log(results)
+      res.render('user-followers', { results })
+    })
   },
   follow: (req, res) => {
     const followingId = Number(req.params.id)

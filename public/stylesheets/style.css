@@ -111,6 +111,21 @@ padding:5px;
  justify-content: space-between;
  margin: 3px;
 }
+.user-following{
+ background: #FF6600;
+ border: 1px solid #FF6600;
+ box-sizing: border-box;
+ border-radius: 100px;
+ color: #FFFFFF;
+}
+.user-unfollowing{
+  background: #FFFFFF;
+  border: 1px solid #FF6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+  color: #FF6600;;
+}
+
 .rectangle{
 width: 122px;
 height: 40px;

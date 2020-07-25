@@ -29,8 +29,8 @@
       {{user.introduction}}
     </div>
     <div>
-      {{user.Followers.length}}個跟隨者
-      {{user.Followings.length}}位跟隨中
+      <a style="color:#FF6600" href="/users/{{user.id}}/followers">{{user.Followers.length}}個跟隨者</a>
+      <a style="color:#FF6600" href="/users/{{user.id}}/followings"> {{user.Followings.length}}位跟隨中</a>
     </div>
     <!-- 導覽列 -->
     <nav class="navbar navbar-expand-lg navbar-light ">
