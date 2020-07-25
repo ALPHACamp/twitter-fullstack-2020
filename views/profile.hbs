@@ -56,11 +56,11 @@
           </div>
           <div class="col-4">
             {{#if this.isFollowed }}
-            <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
-                class="btn btn-secondary">取消跟隨</button></form>
-            {{else}}
             <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-                type="submit" class="btn btn-primary">跟隨</button></form>
+                type="submit" class="btn btn-secondary">取消跟隨</button></form>
+            {{else}}
+            <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn btn-primary">跟隨</button></form>
             {{/if}}
           </div>
         </div>

@@ -29,6 +29,9 @@ module.exports = (app, passport) => {
   app.get('/api/users/:id', authenticated, userController.getUser)
   app.get('/api/users/:id/edit', authenticated, userController.editUser)
   app.post('/api/users/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
+  //user followship
+  app.post('/followships/:userId', authenticated, userController.addFollowing)
+  app.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
   // sign in / sign out / sign up
   app.get('/signUp', userController.signUpPage)
