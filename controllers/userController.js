@@ -69,21 +69,36 @@ const userController = {
       return res.redirect('back')
     }
 
-    const { file } = req
-    if (file) {
-      console.log('EVN===>', IMGUR_CLIENT_ID)
+    const { files } = req
+    console.log('file====>', files)
+    console.log('file path====>', files.avatar[0].path)
+    if (files) {
       imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(file.path, (err, img) => {
+      imgur.upload(files.avatar[0].path, (err, img) => {
+        console.log('img====>', img)
         return User.findByPk(req.params.id)
           .then((user) => {
             user.update({
               name: req.body.name,
-              avatar: file ? img.data.link : user.avatar,
+              avatar: files ? img.data.link : user.avatar,
             })
-              .then((user) => {
-                req.flash('success_messages', 'profile was successfully to update')
-                res.redirect(`/api/users/${user.id}`)
-              })
+          })
+          .then(() => {
+            imgur.setClientID(IMGUR_CLIENT_ID);
+            imgur.upload(files.cover[0].path, (err, img) => {
+              console.log('img2====>', img)
+              return User.findByPk(req.params.id)
+                .then((user) => {
+                  user.update({
+                    name: req.body.name,
+                    cover: files ? img.data.link : user.cover,
+                  })
+                    .then((user) => {
+                      req.flash('success_messages', 'profile was successfully to update')
+                      res.redirect(`/api/users/${user.id}`)
+                    })
+                })
+            })
           })
       })
     }

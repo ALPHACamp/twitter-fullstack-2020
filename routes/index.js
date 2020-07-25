@@ -28,7 +28,7 @@ module.exports = (app, passport) => {
   //user profile route controller
   app.get('/api/users/:id', authenticated, userController.getUser)
   app.get('/api/users/:id/edit', authenticated, userController.editUser)
-  app.post('/api/users/:id', authenticated, upload.single('avatar'), userController.postUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
+  app.post('/api/users/:id', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.postUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
 
   // sign in / sign out / sign up
   app.get('/signUp', userController.signUpPage)
