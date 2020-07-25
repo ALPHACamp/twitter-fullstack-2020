@@ -13,7 +13,7 @@ const adminAuthenticated = (req, res, next) => {
   if (req.isAuthenticated()) {
     if (req.user.role === 'admin') { return next() }
     req.flash('errorMessage', '非管理員請從前台登入')
-    res.redirect('/admin/signin')
+    return res.redirect('/admin/signin')
   }
   res.redirect('/signin')
 }
@@ -50,7 +50,6 @@ module.exports = (app, passport) => {
   app.delete('/tweets/:id', adminAuthenticated, adminController.deleteTweet)
   app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 
-  app.get('/api/admin/users/:id', adminAuthenticated, adminController.editUser)
   app.get('/api/users/:id', authenticated, userController.editUser)
   app.post('/api/users/:id', authenticated, profileUpload, userController.putUser)
   app.put('/api/users/:id', authenticated, userController.putUserProfile)

@@ -731,6 +731,10 @@ width: 600px;
   padding-left: 26px;
   border-bottom: 1px solid #E6ECF0;
 }
+.admin-tweets-list {
+  height: 700px;
+  overflow: scroll;
+}
 .admin-tweets-list-item {
   display: flex;
   height: 120px;
@@ -759,7 +763,7 @@ width: 600px;
 .admin-users-list {
   display: flex;
   flex-wrap: wrap;
-  max-height: 780px;
+  height: 625px;
   overflow: scroll;
   padding-bottom: 50px;
 }
