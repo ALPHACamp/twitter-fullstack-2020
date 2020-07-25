@@ -11,7 +11,9 @@
         </div>
         <div class="tweet-modal-body">
           <div>
-            <img src="{{user.avatar}}" alt="" class="avtar">
+            <div class="avatar"
+              style="background: url({{user.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+            </div>
           </div>
           <form method="POST" action="/tweets">
             <textarea class="modal-textarea modal-post-tweet" name="description" id="description" cols="30" rows="10"
@@ -43,16 +45,20 @@
 
           <div class="reply-modal-tweet">
             <div class="reply-modal-tweet-left">
-              <img src="" alt="" class="avtar">
+              <div class="avatar" style="background: url(),#C4C4C4; background-position:center; background-size:cover;">
+              </div>
               <div class="extention-line"></div>
             </div>
             <div class="reply-modal-tweet-right column">
               <!-- 這裡的內容會從js傳資料過來 -->
             </div>
           </div>
+
           <div class="reply-modal-textarea mt-3">
             <div>
-              <img src="" alt="" class="avtar">
+              <div class="avatar"
+                style="background: url({{user.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+              </div>
             </div>
             <form method="POST" class="reply-modal-form">
               <textarea class="modal-textarea" name="comment" id="comment" cols="30" rows="10"
@@ -64,7 +70,6 @@
                 </button>
               </div>
             </form>
-
           </div>
 
         </div>

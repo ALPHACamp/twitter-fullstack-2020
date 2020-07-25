@@ -28,6 +28,7 @@ body.addEventListener('click', (e) => {
     let tweetDescription = e.target.nextElementSibling.children[2].textContent
     let tweetId = e.target.nextElementSibling.children[3].textContent
     let tweetCreatedAt = e.target.nextElementSibling.children[4].textContent
+    let tweetUserAvatar = e.target.nextElementSibling.children[5].textContent
 
     let TweetInfo =
       `
@@ -51,6 +52,8 @@ body.addEventListener('click', (e) => {
     let tweetDescription = e.target.parentElement.nextElementSibling.children[2].textContent
     let tweetId = e.target.parentElement.nextElementSibling.children[3].textContent
     let tweetCreatedAt = e.target.parentElement.nextElementSibling.children[4].textContent
+    let tweetUserAvatar = e.target.parentElement.nextElementSibling.children[5].textContent
+
     let TweetInfo =
       `
               <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} ${tweetCreatedAt}}</span>
