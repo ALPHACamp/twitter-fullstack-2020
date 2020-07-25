@@ -26,7 +26,7 @@ const tweetController = {
       replayCount: r.whoReply.length,
       isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
     }));
-    return res.render('tweetsHome', { tweets: data });
+    return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
   getTweet: async (req, res) => {
     const id = req.params.id;
@@ -47,7 +47,9 @@ const tweetController = {
     }
     console.log(totalCount)
 
-    res.render('tweet', { tweet, totalCount });
+    res.render('tweet', { 
+      isHomePage: true,
+      tweet, totalCount });
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {

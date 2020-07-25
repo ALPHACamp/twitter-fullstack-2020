@@ -1,7 +1,6 @@
 const db = require('../models');
 const User = db.User;
 const Tweet = db.Tweet;
-const Reply = db.Reply;
 const Like = db.Like;
 const Followship = db.Followship;
 const bcrypt = require('bcryptjs');
@@ -118,7 +117,11 @@ let userController = {
     // all user's tweets
     // all user's likes
     // all user's replies
-    res.render('userPage', { user, followShip, content: tweets });
+    res.render('userPage', { 
+      user, 
+      followShip, 
+      isUserPage: true,
+      content: tweets });
   },
   getUserReply: async (req, res) => {
 
@@ -160,7 +163,11 @@ let userController = {
       isLiked: reply.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
 
-    res.render('userPage', { user, followShip, content: replies });
+    res.render('userPage', { 
+      user, 
+      followShip, 
+      isUserPage: true,
+      content: replies });
   },
   getUserLike: async (req, res) => {
 
@@ -202,7 +209,11 @@ let userController = {
       isLiked: like.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
 
-    res.render('userPage', { user, followShip, content: likes });
+    res.render('userPage', { 
+      user, 
+      followShip, 
+      isUserPage: true,
+      content: likes });
   },
   addLike: async (req, res) => {
     try {
@@ -237,7 +248,10 @@ let userController = {
         return res.redirect('back');
       }
       const toEdit = await User.findByPk(req.params.id);
-      res.render('user_edit', { user: toEdit.toJSON() });
+      res.render('user_edit', { 
+        user: toEdit.toJSON(),
+        isEditPage: true  
+      });
     } catch (err) {
       console.log(err);
       res.send(err);
@@ -292,7 +306,10 @@ let userController = {
       ...i,
       isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
     }));
-    res.render('followship', { user: user.toJSON(), followShip: followings, followDetail });
+    res.render('followship', { 
+      user: user.toJSON(), 
+      followShip: followings, 
+      followDetail });
   },
   getFollowers: async (req, res) => {
     const id = req.params.id
@@ -313,7 +330,10 @@ let userController = {
       ...i,
       isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
     }));
-    res.render('followship', { user: user.toJSON(), followShip: followers, followDetail });
+    res.render('followship', { 
+      user: user.toJSON(), 
+      followShip: followers,
+      followDetail });
   },
   putEditUser: (req, res) => {
     User.findByPk(req.params.id).then((user) => {
