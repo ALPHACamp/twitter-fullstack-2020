@@ -582,6 +582,9 @@ width: 600px;
   align-items: center;
   margin-right: 10px;
 }
+.reply-modal-tweet-left .avatar{
+  min-height: 50px;
+}
 
 .edit-modal {
   border-radius: 14px;

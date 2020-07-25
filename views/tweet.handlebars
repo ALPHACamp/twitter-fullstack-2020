@@ -41,6 +41,7 @@
             <p class="tweet-description">{{tweet.description}}</p>
             <p class="tweet-id">{{tweet.id}}</p>
             <p class="tweet-createdAt">{{moment tweet.createdAt}}</p>
+            <p class="tweet-user-avatar">{{tweet.User.avatar}}</p>
           </div>
           {{#if isLiked}}
           <form method="POST" action="/tweets/{{tweet.id}}/like?_method=DELETE">
