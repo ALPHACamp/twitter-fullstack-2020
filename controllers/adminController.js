@@ -55,8 +55,7 @@ const adminController = {
         tweet.destroy()
       })
       .then(() => res.redirect('/admin/tweets'))
-  },
-  editUser: (req, res) => res.render('admin/setting')
+  }
 }
 
 module.exports = adminController
