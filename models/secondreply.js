@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     ReplyId: DataTypes.INTEGER,
     comment: DataTypes.TEXT,
     replyTo: DataTypes.STRING,
+    likeCount: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Secondreply',

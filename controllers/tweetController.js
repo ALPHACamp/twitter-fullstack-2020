@@ -86,9 +86,7 @@ const tweetController = {
                   .catch(err => console.log(err))
             ))
               .then(() => {
-                console.log('第一層回覆 replies：', tweet.replies)
-                console.log('第二層回覆 secondReplies：', tweet.replies[0].secondReplies)
-                console.log('變數secondReplies', secondReplies)
+                console.log('tweet', tweet)
                 res.render('reply', {
                   tweet,
                   replies: tweet.replies[0].id === null ? null : tweet.replies,
