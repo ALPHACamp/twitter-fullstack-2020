@@ -14,14 +14,35 @@
     <small>{{user.email}}</small>
     <p>{{user.introduction}}</p>
     <p>?個跟隨中 ?位跟隨者</p>
+
+    <ul class="nav nav-tabs bt-4">
+      <li class="nav-item">
+        <a class="nav-link active" href="/">推文</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">推文與回覆</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/">喜歡的內容</a>
+      </li>
+    </ul>
+    <br />
+    <br />
+    <div class="row">
+      {{!-- {{#each tweets}}
+
+      {{/each}} --}}
+    </div>
   </div>
+
+  {{!-- Top 10 user list --}}
   <div class="col-md-4">
     <ul class="list-group">
       <li class="list-group-item">跟隨誰</li>
       <li class="list-group-item">
         <div class="row">
           <div class="col-3">
-            <img class="rounded-circle w-100" src="{{user.avatar}}" />
+            <img class="rounded-circle w-100" src="https://loremflickr.com/320/240?random=1" />
           </div>
           <div class="col-4">
             <p>User's name</p>
