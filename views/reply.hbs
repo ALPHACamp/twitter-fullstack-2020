@@ -44,13 +44,9 @@
       </div>
       <div class="col-11">
         <div class="row">
-          <div class="col ml-3">{{this.User.name}} <small
-              class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small></div>
-          {{#ifEqual this.User.id ../currentUserId}}
-          <form action="/tweets/{{this.TweetId}}/{{this.id}}?_method=DELETE" method="post" class=" ml-auto">
-            <button class="btn btn-outline-danger pull-right" type="submit">&times;</button>
-          </form>
-          {{/ifEqual}}
+          <div class="col ml-3">{{this.User.name}}
+            <small class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small>
+          </div>
         </div>
         <div class="col-12">回覆{{../tweet.User.account}}</div>
         <div class="col-12">{{this.comment}}</div>
@@ -74,15 +70,11 @@
       </div>
       <div class="col-11">
         <div class="row">
-          <div class="col ml-3">{{this.User.name}} <small
-              class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small></div>
-          {{#ifEqual this.User.id ../currentUserId}}
-          <form action="/tweets/{{this.TweetId}}/{{this.id}}?_method=DELETE" method="post" class=" ml-auto">
-            <button class="btn btn-outline-danger pull-right" type="submit">&times;</button>
-          </form>
-          {{/ifEqual}}
+          <div class="col ml-3">{{this.User.name}}
+            <small class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small>
+          </div>
         </div>
-        <div class="col-12">回覆{{this.Reply.User.account}}</div>
+        <div class="col-12">回覆{{this.replyTo}}</div>
         <div class="col-12">{{this.comment}}</div>
         <!-- 第二層按讚與回應 -->
         <div class="col-12">
@@ -147,7 +139,8 @@
 {{#each replies}}
 <div class="modal fade" id="replyReply{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="replyReply"
   aria-hidden="true">
-  <form action="/tweets/{{this.TweetId}}/replies/{{this.id}}" method="post">
+  <!-- 透過 routes 傳送 /tweets/:tweetId/:replyId/:replyTo  -->
+  <form action="/tweets/{{this.TweetId}}/{{this.id}}/{{this.User.account}}" method="post">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -192,7 +185,7 @@
 {{#each secondReplies}}
 <div class="modal fade" id="secondReply{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="secondReply"
   aria-hidden="true">
-  <form action="/tweets/{{../tweet.id}}/replies/{{this.ReplyId}}" method="post">
+  <form action="/tweets/{{../tweet.id}}/{{this.ReplyId}}/{{this.User.account}}" method="post">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">

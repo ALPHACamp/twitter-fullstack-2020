@@ -77,7 +77,7 @@ const tweetController = {
                   where: { ReplyId: tweet.replies[i].id },
                   raw: true,
                   nest: true,
-                  include: [User]
+                  include: [User, { model: Reply, include: [User] }]
                 })
                   .then((replies) => {
                     tweet.replies[i].secondReplies = replies
@@ -86,9 +86,9 @@ const tweetController = {
                   .catch(err => console.log(err))
             ))
               .then(() => {
-                // console.log('第一層回覆 replies：', tweet.replies)
-                // console.log('第二層回覆 secondReplies：', tweet.replies[0].secondReplies)
-                // console.log('變數secondReplies', secondReplies)
+                console.log('第一層回覆 replies：', tweet.replies)
+                console.log('第二層回覆 secondReplies：', tweet.replies[0].secondReplies)
+                console.log('變數secondReplies', secondReplies)
                 res.render('reply', {
                   tweet,
                   replies: tweet.replies[0].id === null ? null : tweet.replies,
@@ -109,7 +109,8 @@ const tweetController = {
     return Reply.create({
       UserId: req.user.id,
       TweetId: tweetId,
-      comment: req.body.reply
+      comment: req.body.reply,
+      replyTo: req.params.replyTo
     })
       .then(() => {
         return Tweet.findByPk(tweetId)
@@ -121,17 +122,19 @@ const tweetController = {
       .catch((err) => res.send(err))
   },
   postSecondReply: (req, res) => {
-    const replyId = Number(req.params.replyId)
-    return Reply.findByPk(replyId, { include: [User] })
-      .then((reply) => {
-        return Secondreply.create({
-          UserId: req.user.id,
-          ReplyId: Number(req.params.replyId),
-          comment: req.body.reply,
-          replyTo: reply.User.account
-        })
+    return Secondreply.create({
+      UserId: req.user.id,
+      ReplyId: Number(req.params.replyId),
+      comment: req.body.reply,
+      replyTo: req.params.replyTo
+    })
+      .then(() => {
+        return Tweet.findByPk(Number(req.params.tweetId))
+          .then((tweet) => {
+            tweet.increment('replyCount')
+          })
+          .then(() => res.redirect('back'))
       })
-      .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
   },
   deleteReply: (req, res) => {
