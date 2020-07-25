@@ -75,32 +75,40 @@
           </div>
         </form>
       </div>
-        <div class="row mt-3 border-top">
-          <div class="col">
-            {{#each tweets}}
-              <div class="">
+      <div class="row mt-3 border-top">
+        <div class="col">
+          {{#each tweets}}
+            <div class="">
+              <h6 class="card-title">
                 <a href="/users/{{user.id}}">
                   <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="https://loremflickr.com/320/240?random=1" />
-                </a>              
-              </div>
-              <div class="" style="display: inline;">
-                <h6 class="card-title">
-                  <a href="/users/{{user.id}}">
-                    this.name
-                  </a>
-                  <small class="text-muted">@帳號。{{moment this.createdAt}}</small>
-                </h6>
+                  this.name
+                </a> 
+                <small class="text-muted">@帳號。{{moment this.createdAt}}</small>
+              </h6>
+            </div>
+            <div class="" style="display: inline;">
+              <a href="/tweets/{{this.id}}">
                 <p class="card-text">{{this.description}}</p>
-                <p class="card-text">
-                  <small class="text-muted">
-                    <i class="far fa-comment"></i>
-                    <i class="far fa-heart"></i>
-                  </small>
-                </p>
-              </div>
-            {{/each}}
-          </div>
+              </a>
+              <p class="card-text">
+                <div class="row justify-content-around">
+                  <div class="col">
+                    <small class="text-muted">
+                      <i class="far fa-comment"> {{this.Replies.length}}</i>
+                    </small>
+                  </div>
+                  <div class="col">
+                    <small class="text-muted">
+                      <i class="far fa-heart"> {{this.likedUsers.length}}</i>
+                    </small>
+                  </div>
+                </div>
+              </p>
+            </div>
+          {{/each}}
         </div>
+      </div>
     </div>
     <div class="col">
       跟隨誰
