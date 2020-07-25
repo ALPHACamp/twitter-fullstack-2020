@@ -184,29 +184,64 @@ const tweetController = {
   },
   likeReply: (req, res) => {
     const replyId = Number(req.params.replyId)
-    return Reply.findByPk(replyId)
-      .then(reply => reply.increment('likeCount'))
-      .then(() => res.redirect('back'))
+    return Like.create({
+      UserId: req.user.id,
+      ReplyId: replyId,
+    })
+      .then(() => {
+        return Reply.findByPk(replyId)
+          .then(reply => reply.increment('likeCount'))
+          .then(() => res.redirect('back'))
+      })
       .catch(err => res.send(err))
+
   },
   likeSecondReply: (req, res) => {
     const secondReplyId = Number(req.params.secondReplyId)
-    return Secondreply.findByPk(secondReplyId)
-      .then(reply => reply.increment('likeCount'))
-      .then(() => res.redirect('back'))
+    return Like.create({
+      UserId: req.user.id,
+      SecondreplyId: secondReplyId,
+    })
+      .then(() => {
+        return Secondreply.findByPk(secondReplyId)
+          .then(reply => reply.increment('likeCount'))
+          .then(() => res.redirect('back'))
+      })
       .catch(err => res.send(err))
   },
   unlikeReply: (req, res) => {
     const replyId = Number(req.params.replyId)
-    return Reply.findByPk(replyId)
-      .then(reply => reply.decrement('likeCount'))
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        ReplyId: replyId,
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+          .then(() => {
+            return Reply.findByPk(replyId)
+              .then(reply => reply.decrement('likeCount'))
+          })
+      })
       .then(() => res.redirect('back'))
       .catch(err => res.send(err))
   },
   unlikeSecondReply: (req, res) => {
     const secondReplyId = Number(req.params.secondReplyId)
-    return Secondreply.findByPk(secondReplyId)
-      .then(reply => reply.decrement('likeCount'))
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        SecondReplyId: secondReplyId,
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+          .then(() => {
+            return Secondreply.findByPk(secondReplyId)
+              .then(reply => reply.decrement('likeCount'))
+          })
+      })
       .then(() => res.redirect('back'))
       .catch(err => res.send(err))
   }
