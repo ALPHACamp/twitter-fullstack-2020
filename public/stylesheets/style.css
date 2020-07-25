@@ -370,7 +370,7 @@ width: 600px;
 }
 .tweet-item-title {
   height: 34px; 
-  padding-top: 10px;
+  padding-top: 15px;
   display: flex;
 }
 .tweet-item-title a {
@@ -385,7 +385,7 @@ width: 600px;
 }
 .tweet-item-text {
   max-height: 100px;
-  margin-top: 5px;
+  margin: 5px 0px;
   padding: 6px 15px 0px 0px;
   font-size: 15px;
   line-height: 18px;
@@ -442,7 +442,7 @@ width: 600px;
   border-bottom: 1px solid #E6ECF0;
 }
 .top-user-list {
-  height: 284px;
+  height: 426px;
   overflow: hidden;
 }
 .user-list-item {
@@ -451,6 +451,12 @@ width: 600px;
   display: flex;
   align-items: center;
   padding-right: 15px;
+}
+.user-list-item .avatar{
+  margin-left: 15px;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
 }
 .user-list-item img {
   width: 50px;
