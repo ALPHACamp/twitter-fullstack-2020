@@ -93,7 +93,6 @@ const tweetController = {
                       else {
                         index.secondReplyIsLiked = false
                       }
-                      delete index.LikedUsers
                     })
                     // 過濾掉重複資訊
                     replies = [...new Set(replies.map(item => { return JSON.stringify(item) }))].map(item => JSON.parse(item))
@@ -178,100 +177,65 @@ const tweetController = {
       })
       .catch(err => res.send(err))
   },
-  likeTweet: (req, res) => {
-    const tweetId = Number(req.params.tweetId)
+  addLike: (req, res) => {
+    const UserId = req.user.id
+    const TweetId = Number(req.params.tweetId)
+    const ReplyId = Number(req.params.replyId)
+    const SecondreplyId = Number(req.params.secondReplyId)
+    console.log(TweetId, ReplyId, SecondreplyId)
+
     return Like.create({
-      UserId: req.user.id,
-      TweetId: tweetId,
+      UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId
     })
       .then(() => {
-        return Tweet.findByPk(tweetId)
-          .then(tweet => tweet.increment('likeCount'))
+        if (SecondreplyId) {
+          return Secondreply.findByPk(SecondreplyId)
+            .then(reply => reply.increment('likeCount'))
+        }
+        else if (ReplyId) {
+          return Reply.findByPk(ReplyId)
+            .then(reply => reply.increment('likeCount'))
+        }
+        else {
+          return Tweet.findByPk(TweetId)
+            .then(tweet => tweet.increment('likeCount'))
+        }
       })
       .then(() => res.redirect('back'))
-      .catch((err) => res.send(err))
-  },
-  removeLike: (req, res) => {
-    const tweetId = Number(req.params.tweetId)
-    return Like.findOne({
-      where: {
-        UserId: req.user.id,
-        TweetId: tweetId,
-      }
-    })
-      .then((like) => {
-        return like.destroy()
-          .then(() => {
-            return Tweet.findByPk(tweetId)
-              .then(tweet => tweet.decrement('likeCount'))
-          })
-      })
-      .then(() => res.redirect('back'))
-      .catch((err) => res.send(err))
-  },
-  likeReply: (req, res) => {
-    const replyId = Number(req.params.replyId)
-    return Like.create({
-      UserId: req.user.id,
-      ReplyId: replyId,
-    })
-      .then(() => {
-        return Reply.findByPk(replyId)
-          .then(reply => reply.increment('likeCount'))
-          .then(() => res.redirect('back'))
-      })
       .catch(err => res.send(err))
 
   },
-  likeSecondReply: (req, res) => {
-    const secondReplyId = Number(req.params.secondReplyId)
-    return Like.create({
-      UserId: req.user.id,
-      SecondreplyId: secondReplyId,
+  removeLike: (req, res) => {
+    const UserId = req.user.id
+    const TweetId = Number(req.params.tweetId)
+    const ReplyId = Number(req.params.replyId)
+    const SecondreplyId = Number(req.params.secondReplyId)
+    console.log(TweetId, ReplyId, SecondreplyId)
+    return Like.findOne({
+      where: {
+        UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId
+      }
     })
+      .then((like) => {
+        return like.destroy()
+      })
       .then(() => {
-        return Secondreply.findByPk(secondReplyId)
-          .then(reply => reply.increment('likeCount'))
-          .then(() => res.redirect('back'))
-      })
-      .catch(err => res.send(err))
-  },
-  unlikeReply: (req, res) => {
-    const replyId = Number(req.params.replyId)
-    return Like.findOne({
-      where: {
-        UserId: req.user.id,
-        ReplyId: replyId,
-      }
-    })
-      .then((like) => {
-        return like.destroy()
-          .then(() => {
-            return Reply.findByPk(replyId)
-              .then(reply => reply.decrement('likeCount'))
-          })
+        if (SecondreplyId) {
+          return Secondreply.findByPk(SecondreplyId)
+            .then(reply => reply.decrement('likeCount'))
+        }
+        else if (ReplyId) {
+          return Reply.findByPk(ReplyId)
+            .then(reply => reply.decrement('likeCount'))
+        }
+        else {
+          return Tweet.findByPk(TweetId)
+            .then(tweet => tweet.decrement('likeCount'))
+        }
       })
       .then(() => res.redirect('back'))
-      .catch(err => res.send(err))
+      .catch((err) => res.send(err))
   },
-  unlikeSecondReply: (req, res) => {
-    const secondReplyId = Number(req.params.secondReplyId)
-    return Like.findOne({
-      where: {
-        UserId: req.user.id,
-        SecondReplyId: secondReplyId,
-      }
-    })
-      .then((like) => {
-        return like.destroy()
-          .then(() => {
-            return Secondreply.findByPk(secondReplyId)
-              .then(reply => reply.decrement('likeCount'))
-          })
-      })
-      .then(() => res.redirect('back'))
-      .catch(err => res.send(err))
-  }
 }
 
 
