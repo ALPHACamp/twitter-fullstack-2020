@@ -36,20 +36,29 @@ const tweetController = {
       where: { id },
       include: [User,         
         { model: User, as: 'TweetWhoLike'},
-        { model: Reply, order: ["createdAt", 'DESC'] },
+        { model: Reply, order: ["createdAt", 'DESC'], include: [
+          User,
+          { model: User, as: 'ReplyWhoLike' }
+        ]},
       ]
     });
     tweet = tweet.toJSON()
-   console.log(tweet)
-    let replies = tweet.Replies.length  
+    let replies = tweet.Replies.map(reply => ({
+      ...reply,
+      RepliesLikeCount: reply.ReplyWhoLike.length,
+      isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(req.user.id)
+    }))
+    console.log(replies)
     const totalCount = {
-      replyCount: replies,
+      replyCount: tweet.Replies.length,
       likeCount: tweet.TweetWhoLike.length,
       isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
     }  
     res.render('tweet', { 
       isHomePage: true,
-      tweet, totalCount });
+      replies,
+      tweet, 
+      totalCount });
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {

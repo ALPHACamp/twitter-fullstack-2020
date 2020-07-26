@@ -4,6 +4,7 @@ const Tweet = db.Tweet;
 const Like = db.Like;
 const Reply = db.Reply;
 const Followship = db.Followship;
+const RepliesLike = db.RepliesLikes
 const bcrypt = require('bcryptjs');
 const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
@@ -372,10 +373,8 @@ let userController = {
     }
   },
   putEditProfile: async (req, res) => {
-    console.log('req.body===========', req.body);
-    console.log('req.files========', req.files);
     const id = req.params.id;
-    const { backgroundImg, avatar, userName, introduction } = req.body;
+    const { introduction } = req.body;
     const { files } = req;
     //console.log('req.files', req.files);
     imgur.setClientID(IMGUR_CLIENT_ID);
@@ -442,7 +441,33 @@ let userController = {
     topUsers = topUsers.slice(0, 10);
     res.locals.topUsers = topUsers;
     return next();
-  }
+  },
+  addReplyLike: async (req, res) => {
+    try{
+      await RepliesLike.create({
+        UserId: req.user.id,
+        ReplyId: req.params.ReplyId
+      });
+      res.redirect('back');
+    } catch (err) {
+      console.log(err);
+      res.send('something is wrong');
+    }
+  },
+  removeReplyLike: async (req, res) => {
+    try {
+      const toRemove = await RepliesLike.findOne({
+        where: {
+          UserId: req.user.id,
+          ReplyId: req.params.ReplyId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
+  },
 };
 
 module.exports = userController;

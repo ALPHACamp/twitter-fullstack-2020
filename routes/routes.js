@@ -75,6 +75,8 @@ router.delete(
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
+router.post('/replies/likes/:ReplyId', authenticated, userController.addReplyLike)
+router.delete('/replies/likes/:ReplyId', authenticated, userController.removeReplyLike)
 
 router.post('/followings/:userId', authenticated, userController.addFollowing);
 router.delete(
@@ -84,8 +86,6 @@ router.delete(
   );
 router.get('/users/:id/profile', authenticated, userController.editProfile);
 router.put('/users/:id/profile', authenticated,
-  //upload.single('image'),
-  // upload.array('image', 2),
   upload.fields([
     { name: 'backgroundImg', maxCount: 1 },
     { name: 'avatar', maxCount: 1 }
