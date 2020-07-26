@@ -50,9 +50,8 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    console.log('req.user===', req.user)
+    console.log('req.user===', Number(req.params.id))
     let loginUserId = req.user.id
-    if (req.user.id === req.params.id) { isSelf = true }
     return User.findByPk(req.params.id, {
       include: [
         { model: User, as: 'Followings' },
@@ -78,7 +77,13 @@ const userController = {
           //取得following/follower人數
           let followingNum = user.toJSON().Followings.length
           let followerNum = user.toJSON().Followers.length
-          return res.render('profile', { user: user.toJSON(), users: users, followingNum, followerNum, loginUserId })
+          function findIsFollowed(findUser) { return findUser.id === Number(req.params.id) }
+          console.log('find is followed===', users.find(findIsFollowed))
+          console.log('find is followed check===', users.find(findIsFollowed).isFollowed)
+
+          let loginUserisFollowed = users.find(findIsFollowed).isFollowed
+          console.log('print user===', user.toJSON())
+          return res.render('profile', { user: user.toJSON(), users: users, followingNum, followerNum, loginUserId, loginUserisFollowed })
         })
       })
   },

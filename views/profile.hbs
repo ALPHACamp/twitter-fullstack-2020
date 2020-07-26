@@ -14,6 +14,17 @@
           編輯個人資料
         </a>
         {{/ifCond}}
+        {{!-- followship button --}}
+        {{#ifNotCond loginUserId user.id}}
+        {{#if loginUserisFollowed }}
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+            type="submit" class="btn btn-primary" style="font-size:1px; margin:0px; padding:1px;">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/{{user.id}}" method="POST" style="display: contents;"><button type="submit"
+            class="btn btn-outline-primary" style="font-size:1px; margin:0px; padding:1px;">跟隨</button></form>
+        {{/if}}
+        {{/ifNotCond}}
       </div>
     </div>
     <h6>{{user.name}}</h6>
