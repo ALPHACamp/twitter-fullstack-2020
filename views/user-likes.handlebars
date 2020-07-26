@@ -8,43 +8,45 @@
         <a href="/tweets"><img src="/images/icon-back.png" alt=""></a>
       </div>
       <div>
-        <h3>{{user.name}}</h3>
-        <h6 style="color: #657786;">{{user.Tweets.length}}則推文</h6>
+        <h3>{{pageUser.name}}</h3>
+        <h6 style="color: #657786;">{{pageUser.Tweets.length}}則推文</h6>
       </div>
     </div>
     <div>
-      <img src="{{user.cover}}" alt="" width="598px" height="200px">
+      <img src="{{pageUser.cover}}" alt="" width="598px" height="200px">
     </div>
     <div class="user-profile">
-      <div><img src="{{user.avatar}}" alt="" class="main-avatar"></div>
+      <div><img src="{{pageUser.avatar}}" alt="" class="main-avatar"></div>
+      {{#ifEqual user.id pageUser.id}}
       <button type="button" class="tweet-button" data-toggle="modal" data-target="#editProfileModal">編輯個人資訊</button>
+      {{/ifEqual}}
     </div>
     <div>
-      <h3>{{user.name}}</h3>
+      <h3>{{pageUser.name}}</h3>
     </div>
     <div>
-      {{user.account}}
+      {{pageUser.account}}
     </div>
     <div>
-      {{user.introduction}}
+      {{pageUser.introduction}}
     </div>
     <div>
-      <a style="color:#FF6600" href="/users/{{user.id}}/followers">{{user.Followers.length}}個跟隨者</a>
-      <a style="color:#FF6600" href="/users/{{user.id}}/followings">{{user.Followings.length}}位跟隨中</a>
+      <a style="color:#FF6600" href="/users/{{pageUser.id}}/followers">{{pageUser.Followers.length}}個跟隨者</a>
+      <a style="color:#FF6600" href="/users/{{pageUser.id}}/followings">{{pageUser.Followings.length}}位跟隨中</a>
     </div>
     <!-- 導覽列 -->
     <nav class="navbar-expand-lg navbar-light ">
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link " style="padding-left: 0px" href="/users/{{user.id}}/tweets">推文</a>
-          <a class="nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
+          <a class="nav-link " style="padding-left: 0px" href="/users/{{pageUser.id}}/tweets">推文</a>
+          <a class="nav-link" href="/users/{{pageUser.id}}/replies">推文與回覆</a>
           <a style="color:#FF6600" class="nav-link" href="#">喜歡的內容</a>
         </div>
       </div>
     </nav>
     <!-- 喜歡的內容 -->
     <div class="main-tweet-list">
-      {{#each user.LikedTweets }}
+      {{#each pageUser.LikedTweets }}
       <div class="divider">
         <img src="{{this.User.avatar}}" style="width: 50px;height: 50px;border-radius: 100%">
         <span style="font-size:larger;">{{this.User.name}}</span><span style="color:#657786">{{this.User.account}} •

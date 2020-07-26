@@ -5,10 +5,10 @@
   <div>
     <div>
       <div>
-        <a href="/users/{{user.id}}/tweets"><img src="/images/icon-back.png" alt=""></a>
+        <a href="/users/{{results.user.id}}/tweets"><img src="/images/icon-back.png" alt=""></a>
       </div>
       <div>
-        <h3>{{user.name}}</h3>
+        <h3>{{results.user.name}}</h3>
         <h6 style="color: #657786;">{{results.tweetCounts}}則推文</h6>
       </div>
     </div>
@@ -17,7 +17,7 @@
       {{#each results.Followers }}
       <div class="divider">
         <div>
-          <img src="{{../user.avatar}}" alt="" style="width: 50px;height: 50px;border-radius: 100%">
+          <img src="{{this.avatar}}" alt="" style="width: 50px;height: 50px;border-radius: 100%">
           <span style="font-size:larger;">{{this.name}}</span><span style="color:#657786">{{this.account}}</span>
           {{#if this.isFollowed }}
           <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">

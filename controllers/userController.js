@@ -80,64 +80,51 @@ const userController = {
   },
 
   getTweets: (req, res) => {
-    if (req.params.id === req.user.id.toString()) {
-      Tweet.findAll({
-        where: { UserId: req.params.id },
-        include: [
-          Reply,
-          { model: User, as: 'likedUsers' },
-        ],
-        order: [['createdAt', 'DESC']]
-      }).then(tweets => {
-        res.render('user-tweets', { tweets })
+    const id = req.params.id
+    return User.findByPk(id, {
+      include: [
+        { model: Tweet, include: [Reply, { model: User, as: 'likedUsers' },] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      order: [['createdAt', 'DESC']]
+    })
+      .then(user => {
+        res.render('user-tweets', { pageUser: user.toJSON() })
       })
-    } else {
-      res.redirect('back')
-    }
-
   },
 
   getLikes: (req, res) => {
-    if (req.params.id === req.user.id.toString()) {
-      User.findByPk(req.params.id, {
-        include: [
-          Reply,
-          Tweet,
-          { model: Tweet, as: 'LikedTweets', include: [User, Reply, { model: User, as: 'likedUsers' }] },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-        ],
-        order: [['createdAt', 'DESC']],
+    User.findByPk(req.params.id, {
+      include: [
+        Reply,
+        Tweet,
+        { model: Tweet, as: 'LikedTweets', include: [User, Reply, { model: User, as: 'likedUsers' }] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      order: [['createdAt', 'DESC']],
+    })
+      .then(user => {
+        res.render('user-likes', { pageUser: user })
       })
-        .then(user => {
-          res.render('user-likes', { user })
-        })
-    } else {
-      res.redirect('back')
-    }
   },
 
   getReplies: (req, res) => {
-    if (req.params.id === req.user.id.toString()) {
-      Reply.findAll({
-        raw: true,
-        nest: true,
-        where: { UserId: req.params.id },
-        order: [['createdAt', 'DESC']],
-      }).then(replies => {
-        User.findOne({
-          where: { id: req.params.id },
-          include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
-        })
-          .then(user => {
-            res.render('user-replies', { replies, user })
-          })
-
+    Reply.findAll({
+      raw: true,
+      nest: true,
+      where: { UserId: req.params.id },
+      order: [['createdAt', 'DESC']],
+    }).then(replies => {
+      User.findOne({
+        where: { id: req.params.id },
+        include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
       })
-    } else {
-      res.redirect('back')
-    }
-
+        .then(user => {
+          res.render('user-replies', { replies, pageUser: user })
+        })
+    })
   },
   editUser: (req, res) => res.render('setting'),
   putUser: (req, res) => {
@@ -210,7 +197,6 @@ const userController = {
         tweetCounts: user.Tweets.length,
         Followers
       }
-      console.log(results)
       res.render('user-followers', { results })
     })
   },
