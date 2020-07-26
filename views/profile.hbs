@@ -9,15 +9,17 @@
         <img class="rounded-circle" src="{{user.avatar}}" style="width:50%; margin-top:-60px;">
       </div>
       <div class="col-md-4 d-flex align-items-center">
+        {{#ifCond user.id loginUserId}}
         <a class="btn btn-primary" href="/api/users/{{user.id}}/edit">
           編輯個人資料
         </a>
+        {{/ifCond}}
       </div>
     </div>
     <h6>{{user.name}}</h6>
     <small>{{user.email}}</small>
     <p>{{user.introduction}}</p>
-    <p>?個跟隨中 ?位跟隨者</p>
+    <p>{{followingNum}}個跟隨中 {{followerNum}}位跟隨者</p>
 
     <ul class="nav nav-tabs bt-4">
       <li class="nav-item">
@@ -55,13 +57,16 @@
             <p>{{this.name}}</p>
           </div>
           <div class="col-4">
+            {{#ifNotCond ../loginUserId this.id}}
             {{#if this.isFollowed }}
             <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-                type="submit" class="btn btn-secondary">取消跟隨</button></form>
+                type="submit" class="btn btn-secondary" style="font-size:1px; margin:0px; padding:1px;">取消跟隨</button>
+            </form>
             {{else}}
             <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
-                class="btn btn-primary">跟隨</button></form>
+                class="btn btn-primary" style="font-size:1px; margin:0px; padding:1px;">跟隨</button></form>
             {{/if}}
+            {{/ifNotCond}}
           </div>
         </div>
       </li>

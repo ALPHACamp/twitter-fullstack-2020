@@ -50,9 +50,13 @@ const userController = {
   },
 
   getUser: (req, res) => {
+    console.log('req.user===', req.user)
+    let loginUserId = req.user.id
+    if (req.user.id === req.params.id) { isSelf = true }
     return User.findByPk(req.params.id, {
       include: [
-        { model: User, as: 'Followings' }
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
       ]
     })
       .then(user => {
@@ -71,7 +75,10 @@ const userController = {
           }))
           // 依追蹤者人數排序清單
           users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-          return res.render('profile', { user: user.toJSON(), users: users })
+          //取得following/follower人數
+          let followingNum = user.toJSON().Followings.length
+          let followerNum = user.toJSON().Followers.length
+          return res.render('profile', { user: user.toJSON(), users: users, followingNum, followerNum, loginUserId })
         })
       })
   },
