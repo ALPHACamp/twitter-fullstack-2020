@@ -93,6 +93,7 @@ const tweetController = {
                       else {
                         index.secondReplyIsLiked = false
                       }
+                      delete index.LikedUsers
                     })
                     // 過濾掉重複資訊
                     replies = [...new Set(replies.map(item => { return JSON.stringify(item) }))].map(item => JSON.parse(item))
