@@ -75,8 +75,8 @@ router.delete(
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
-router.post('/replies/:replyId', authenticated, userController.addReplyLike)
-router.delete('/likes/:replyId', authenticated, userController.removeReplyLike)
+router.post('/replies/likes/:ReplyId', authenticated, userController.addReplyLike)
+router.delete('/replies/likes/:ReplyId', authenticated, userController.removeReplyLike)
 
 router.post('/followings/:userId', authenticated, userController.addFollowing);
 router.delete(
