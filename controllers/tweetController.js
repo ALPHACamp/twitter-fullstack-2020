@@ -10,8 +10,9 @@ const tweetController = {
       order: [['createdAt', 'DESC']],
       include: [
         User,
+        Reply,
         { model: User, as: 'TweetWhoLike' },
-        { model: User, as: 'whoReply' }
+        
       ]
     })
     data = tweets.map((r) => ({
@@ -23,9 +24,14 @@ const tweetController = {
       description: r.description,
       createdA: r.createdAt,
       likeCount: r.TweetWhoLike.length,
-      replayCount: r.whoReply.length,
+      //replayCount: r.Replies.length,
       isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
     }));
+
+    let replyCount = await Reply.findAll({
+      where:{}
+    })
+    console.log(data)
     return res.render('tweetsHome', { tweets: data });
   },
   getTweet: async (req, res) => {
