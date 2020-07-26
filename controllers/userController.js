@@ -109,7 +109,6 @@ const userController = {
     } else {
       res.redirect('back')
     }
-
   },
 
   getReplies: (req, res) => {
