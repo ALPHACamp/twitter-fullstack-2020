@@ -87,6 +87,8 @@ const userController = {
   },
 
   editUser: (req, res) => {
+    //only login user can enter edit profile page
+    if (req.user.id !== Number(req.params.id)) { return res.redirect(`/api/users/${req.params.id}`) }
     return User.findByPk(req.params.id)
       .then(user => {
         return res.render('profileEdit', { user: user.toJSON() })
@@ -182,6 +184,8 @@ const userController = {
   },
 
   addFollowing: (req, res) => {
+    //can not follow/unfollow self
+    if (req.user.id === Number(req.params.userId)) { return res.redirect('back') }
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId
@@ -192,6 +196,8 @@ const userController = {
   },
 
   removeFollowing: (req, res) => {
+    //can not follow/unfollow self
+    if (req.user.id === Number(req.params.userId)) { return res.redirect('back') }
     return Followship.findOne({
       where: {
         followerId: req.user.id,
