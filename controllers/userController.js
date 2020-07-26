@@ -140,7 +140,7 @@ let userController = {
       include: [
         {
           model: Reply, include: [
-            { model: Tweet, include: [Reply,{ model: User, as: 'TweetWhoLike' },] },
+            { model: Tweet, include: [Reply,User,{ model: User, as: 'TweetWhoLike' },] },
             User
           ]
         },
@@ -172,10 +172,10 @@ let userController = {
     repliesTweet = repliesTweet.map((r) => ({
       ...r,
       tweetId: r.Tweet.id,
-      userId: r.User.id,
-      userName: r.User.name,
-      userAvatar: r.User.avatar,
-      userAccount: r.User.account,
+      userId: r.Tweet.User.id,
+      userName: r.Tweet.User.name,
+      userAvatar: r.Tweet.User.avatar,
+      userAccount: r.Tweet.User.account,
       description: r.Tweet.description,
       likeCount: r.Tweet.TweetWhoLike.length,
       replayCount: r.Tweet.Replies.length,
@@ -183,7 +183,7 @@ let userController = {
       isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
 
     }))
-    console.log(repliesTweet)
+  
     res.render('userPage', {
       user,
       followShip,
@@ -199,14 +199,16 @@ let userController = {
     let user = await User.findOne({
       where: { id },
       include: [
+        Tweet,
         {
           model: Tweet,
           as: 'userLike',
           order: ['createdAt', 'DESC'],
           include: [
             User,
+            Reply,            
             { model: User, as: 'TweetWhoLike' },
-            { model: User, as: 'whoReply' }
+           
           ]
         },
         { model: User, as: 'Followers' },
@@ -222,13 +224,23 @@ let userController = {
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
     let likes = user.userLike;
-    likes = likes.map((like) => ({
-      ...like,
-      repliesCount: like.whoReply.length,
-      likeCount: like.TweetWhoLike.length,
+console.log(likes)
+    likes = likes.map((r) => ({
+      ...r,
+      tweetId: r.id,
+      userId: r.User.id,
+      userName: r.User.name,
+      userAvatar: r.User.avatar,
+      userAccount: r.User.account,
+      description: r.description,
+      likeCount: r.TweetWhoLike.length,
+      replayCount: r.Replies.length,
       // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: like.TweetWhoLike.map((d) => d.id).includes(req.user.id)
-    }));
+      isLiked: r.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+
+    }))
+
+    
     res.render('userPage', {
       user,
       followShip,
