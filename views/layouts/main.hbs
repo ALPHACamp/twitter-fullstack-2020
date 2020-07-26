@@ -37,7 +37,7 @@
         </div>
         <ul class="nav flex-row flex-lg-column justify-content-around align-items-lg-start">
           {{#whoAreYou myUser.role}}
-          <li class="nav-item d-flex mt-4 {{#if isHomePage}} text-dangergit {{else}} text-dark {{/if}}">
+          <li class="nav-item d-flex mt-4 {{#if isHomePage}} text-danger {{else}} text-dark {{/if}}">
             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house-fill mt-2" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -45,17 +45,17 @@
               <path fill-rule="evenodd"
                 d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
             </svg>
-            <a href="/tweets" class="nav-link h4 {{#if isHomePage}} text-dangergit {{else}} text-dark {{/if}}">首頁</a>
+            <a href="/tweets" class="nav-link h4 {{#if isHomePage}} text-danger {{else}} text-dark {{/if}}">首頁</a>
           </li>
-          <li class="nav-item d-flex mt-4 {{#if isUserPage}} text-dangergit {{else}} text-dark {{/if}}">
+          <li class="nav-item d-flex mt-4 {{#if isUserPage}} text-danger {{else}} text-dark {{/if}}">
             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-fill mt-2" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
             </svg>
-            <a href="/users/{{myUser.id}}" class="nav-link h4 {{#if isUserPage}} text-dangergit {{else}} text-dark {{/if}}">個人資料</a>
+            <a href="/users/{{myUser.id}}" class="nav-link h4 {{#if isUserPage}} text-danger {{else}} text-dark {{/if}}">個人資料</a>
           </li>
-          <li class="nav-item d-flex mt-4 {{#if isEditPage}} text-dangergit {{else}} text-dark {{/if}}">
+          <li class="nav-item d-flex mt-4 {{#if isEditPage}} text-danger {{else}} text-dark {{/if}}">
             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-gear mt-2" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -63,7 +63,7 @@
               <path fill-rule="evenodd"
                 d="M8 5.754a2.246 2.246 0 1 0 0 4.492 2.246 2.246 0 0 0 0-4.492zM4.754 8a3.246 3.246 0 1 1 6.492 0 3.246 3.246 0 0 1-6.492 0z" />
             </svg>
-            <a href="/users/{{myUser.id}}/edit" class="nav-link h4 {{#if isEditPage}} text-dangergit {{else}} text-dark {{/if}}">設定</a>
+            <a href="/users/{{myUser.id}}/edit" class="nav-link h4 {{#if isEditPage}} text-danger {{else}} text-dark {{/if}}">設定</a>
           </li>
 
           <div class="modal" tabindex="-1" role="dialog" id='getTweetPage'>
@@ -94,7 +94,7 @@
             }
           </script>
           {{else}}
-          <li class="nav-item d-flex mt-4 {{#if isAdminTweet}} text-dangergit {{else}} text-dark {{/if}}">
+          <li class="nav-item d-flex mt-4 {{#if isAdminTweet}} text-danger {{else}} text-dark {{/if}}">
             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house-fill mt-2" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
@@ -102,15 +102,15 @@
               <path fill-rule="evenodd"
                 d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
             </svg>
-            <a href="/admin/tweets" class="nav-link h4 {{#if isAdminTweet}} text-dangergit {{else}} text-dark {{/if}}">推文清單</a>
+            <a href="/admin/tweets" class="nav-link h4 {{#if isAdminTweet}} text-danger {{else}} text-dark {{/if}}">推文清單</a>
           </li>
-          <li class="nav-item d-flex mt-4 {{#if isAdminUser}} text-dangergit {{else}} text-dark {{/if}}">
+          <li class="nav-item d-flex mt-4 {{#if isAdminUser}} text-danger {{else}} text-dark {{/if}}">
             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-fill mt-2" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
             </svg>
-            <a href="/admin/users" class="nav-link h4 {{#if isAdminUser}} text-dangergit {{else}} text-dark {{/if}}">使用者列表</a>
+            <a href="/admin/users" class="nav-link h4 {{#if isAdminUser}} text-danger {{else}} text-dark {{/if}}">使用者列表</a>
           </li>
           {{/whoAreYou}}
 
