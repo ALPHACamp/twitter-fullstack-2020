@@ -9,15 +9,28 @@
         <img class="rounded-circle" src="{{user.avatar}}" style="width:50%; margin-top:-60px;">
       </div>
       <div class="col-md-4 d-flex align-items-center">
+        {{#ifCond user.id loginUserId}}
         <a class="btn btn-primary" href="/api/users/{{user.id}}/edit">
           編輯個人資料
         </a>
+        {{/ifCond}}
+        {{!-- followship button --}}
+        {{#ifNotCond loginUserId user.id}}
+        {{#if loginUserisFollowed }}
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+            type="submit" class="btn btn-primary" style="font-size:1px; margin:0px; padding:1px;">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/{{user.id}}" method="POST" style="display: contents;"><button type="submit"
+            class="btn btn-outline-primary" style="font-size:1px; margin:0px; padding:1px;">跟隨</button></form>
+        {{/if}}
+        {{/ifNotCond}}
       </div>
     </div>
     <h6>{{user.name}}</h6>
     <small>{{user.email}}</small>
     <p>{{user.introduction}}</p>
-    <p>?個跟隨中 ?位跟隨者</p>
+    <p>{{followingNum}}個跟隨中 {{followerNum}}位跟隨者</p>
 
     <ul class="nav nav-tabs bt-4">
       <li class="nav-item">
@@ -43,22 +56,32 @@
   <div class="col-md-4">
     <ul class="list-group">
       <li class="list-group-item">跟隨誰</li>
-      {{!-- {{#each}} --}}
+      {{#each users}}
       <li class="list-group-item">
         <div class="row">
           <div class="col-3">
-            <img class="rounded-circle w-100" src="https://loremflickr.com/320/240?random=1" />
+            <a href="/api/users/{{this.id}}">
+              <img class="rounded-circle w-100" src="{{this.avatar}}" />
+            </a>
           </div>
           <div class="col-4">
-            <p>User's name</p>
+            <p>{{this.name}}</p>
           </div>
           <div class="col-4">
-            <form action="/followships/:userId" method="POST" style="display: contents;"><button type="submit"
-                class="btn btn-primary">跟隨</button></form>
+            {{#ifNotCond ../loginUserId this.id}}
+            {{#if this.isFollowed }}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+                type="submit" class="btn btn-primary" style="font-size:1px; margin:0px; padding:1px;">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn btn-outline-primary" style="font-size:1px; margin:0px; padding:1px;">跟隨</button></form>
+            {{/if}}
+            {{/ifNotCond}}
           </div>
         </div>
       </li>
-      {{!-- {{/each}} --}}
+      {{/each}}
       <li class="list-group-item">
         <a class="link" href="/users/:id/followings">顯示更多</a>
       </li>

@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Followship = db.Followship
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -49,9 +50,39 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    return User.findByPk(req.params.id)
+    //loginUserId for 判斷編輯資訊頁/跟隨 button鈕是否出現
+    let loginUserId = req.user.id
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ]
+    })
       .then(user => {
-        return res.render('profile', { user: user.toJSON() })
+        return User.findAll({
+          include: [
+            { model: User, as: 'Followers' }
+          ]
+        }).then(users => {
+          // 整理 users 資料
+          users = users.map(user => ({
+            ...user.dataValues,
+            //計算追蹤者人數
+            FollowerCount: user.Followers.length,
+            // // 判斷目前登入使用者是否已追蹤該 User 物件, passport.js加入 followship以取得req.user.Followings
+            isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+          }))
+          // 依追蹤者人數排序清單
+          users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+          //取得following/follower人數
+          let followingNum = user.toJSON().Followings.length
+          let followerNum = user.toJSON().Followers.length
+          //確認get user page是否為跟隨中使用者
+          function findIsFollowed(findUser) { return findUser.id === Number(req.params.id) }
+          let loginUserisFollowed = users.find(findIsFollowed).isFollowed
+
+          return res.render('profile', { user: user.toJSON(), users: users, followingNum, followerNum, loginUserId, loginUserisFollowed })
+        })
       })
   },
 
@@ -148,6 +179,31 @@ const userController = {
             })
         })
     }
+  },
+
+  addFollowing: (req, res) => {
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.userId
+    })
+      .then((followship) => {
+        return res.redirect('back')
+      })
+  },
+
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then((followship) => {
+        followship.destroy()
+          .then((followship) => {
+            return res.redirect('back')
+          })
+      })
   },
 
 }
