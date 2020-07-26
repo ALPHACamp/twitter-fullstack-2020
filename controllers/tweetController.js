@@ -24,15 +24,11 @@ const tweetController = {
       description: r.description,
       createdA: r.createdAt,
       likeCount: r.TweetWhoLike.length,
-      //replayCount: r.Replies.length,
+      replayCount: r.Replies.length,
       isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
     }));
-
-    let replyCount = await Reply.findAll({
-      where:{}
-    })
-    console.log(data)
-    return res.render('tweetsHome', { tweets: data });
+    console.log(data[0])
+    return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
   getTweet: async (req, res) => {
     const id = req.params.id;
@@ -53,7 +49,9 @@ const tweetController = {
     }
     console.log(totalCount)
 
-    res.render('tweet', { tweet, totalCount });
+    res.render('tweet', { 
+      isHomePage: true,
+      tweet, totalCount });
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {

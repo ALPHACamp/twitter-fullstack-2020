@@ -1,13 +1,24 @@
-<div class="font-weight-bold h4">首頁</div>
-<br />
-<br />
+<div class="single-tweet">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex align-items-center">
+      <div class="font-weight-bold h5 ml-5 mt-2">推文</div>
+    </li>
+    <li class="list-group-item d-flex">
+      
+        <img src="{{myUser.avatar}}" alt="" width="75px" height="75px" class="rounded-circle mr-2">
+      
+      <form action="/tweets/newTweets" method="POST" class="flex-grow-1 d-flex flex-column">
+        <div class="form-group">
+          <textarea class="form-control tweet" id="newTweet" name="newTweet" rows="5" placeholder="有什麼新鮮事?"></textarea>
+        </div>
+        <div class="align-self-end">
+        <button type="submit" class="btn btn-danger rounded-pill">推文</button>
 
-<form action="/tweets/newTweets" method="POST">
-  <div class="form-group">
-    <textarea class="form-control" id="newTweet" name="newTweet" rows="3" placeholder="有什麼新鮮事?"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">推文</button>
-</form>
+        </div>
+      </form>   
+    </li>
+
+
 
 {{#each tweets}}
 <li class="list-group-item list-group-item-action">
@@ -28,7 +39,7 @@
           <span>・{{moment this.createdAt}}</span>
         </div>
       </div>
-      <p class="mt-2 ">{{this.description}}</p>
+      <a href="/tweets/{{this.id}}" class="mt-2 mb-2 text-dark" style="text-decoration: none;"> {{this.description}} </a>
       <div class="d-flex justify-content-start">
 
 
@@ -78,6 +89,9 @@
   </div>
 </li>
 {{/each}}
+  </ul>
+</div>
+
 
 <script>
   function postCommentPage(id) { 
@@ -96,7 +110,7 @@
       <div class="modal-body">
         <form id="modalForm" action="/comments" method="POST">
           <div class="form-group">
-            <textarea class="form-control" id="newComment" form="modalForm" name="newComment" rows="3"
+            <textarea class="form-control tweet" id="newComment" form="modalForm" name="newComment" rows="3"
               placeholder="寫點回覆吧!!!"></textarea>
           </div>
           <div class="modal-footer">

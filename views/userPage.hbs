@@ -189,7 +189,9 @@
             <li class="list-group-item list-group-item-action">
 
               <div class="user-wrap d-flex">
-                <img src="{{this.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+                <a href="/users/{{this.User.id}}">
+                  <img src="{{this.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">               
+                </a>
 
                 <div class="d-flex flex-column">
                   <div class="d-flex flex-column">
@@ -203,7 +205,7 @@
                       <span>・{{moment this.createdAt}}</span>
                     </div>
                   </div>
-                  <p class="mt-2 ">{{this.description}}</p>
+                  <a href="/tweets/{{this.id}}" class="mt-2 text-dark" style="text-decoration: none;"> {{this.description}} </a>
                   <div class="d-flex justify-content-start">
                     <a href="/tweets/{{this.id}}/comments" class=" mr-5 text-dark">
                       <span>
