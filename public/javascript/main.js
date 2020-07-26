@@ -18,7 +18,7 @@ body.addEventListener('input', (e) => {
 })
 
 //將放在前端藏起來的資訊，放到partial的回覆modal
-const replyModal = document.querySelector('.reply-modal-tweet-right')
+const replyModal = document.querySelector('.reply-modal-tweet')
 const replyForm = document.querySelector('.reply-modal-form')
 
 body.addEventListener('click', (e) => {
@@ -32,19 +32,25 @@ body.addEventListener('click', (e) => {
 
     let TweetInfo =
       `
-              <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} · ${tweetCreatedAt}</span>
-              <div>
-                <p class="pt-1">${tweetDescription}</p>
-              </div>
-              <span class="replyto-span">回覆給</span> 
-              <span class="user-account-color-span">${tweetUserAccount}</span>
-            </div>
-        `
+      <div class="reply-modal-tweet-left">
+        <div class="avatar" style="background: url('${tweetUserAvatar}'),#C4C4C4; background-position:center; background-size:cover;">
+         </div>
+      <div class="extention-line"></div>
+      </div>
+      <div class="reply-modal-tweet-right column">
+        <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} · ${tweetCreatedAt}</span>
+        <div>
+           <p class="pt-1">${tweetDescription}</p>
+        </div>
+         <span class="replyto-span">回覆給</span> 
+        <span class="user-account-color-span">${tweetUserAccount}</span>
+      </div>
+      `
     replyModal.innerHTML = TweetInfo
     replyForm.setAttribute('action', `/tweets/${tweetId}/replies`)
     setTimeout(function () {
       $('#replyModal').modal('toggle')   //因為會延遲而顯示成上一個按的tweet，所以加上這個
-    }, 0);
+    }, 1);
   }
   if (e.target.parentElement.classList.contains('reply-modal-open')) {
     let tweetUserName = e.target.parentElement.nextElementSibling.children[0].textContent
@@ -56,19 +62,25 @@ body.addEventListener('click', (e) => {
 
     let TweetInfo =
       `
-              <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} ${tweetCreatedAt}}</span>
-              <div>
-                <p class="pt-1">${tweetDescription}</p>
-              </div>
-              <span class="replyto-span">回覆給</span> 
-              <span class="user-account-color-span">${tweetUserAccount}</span>
-            </div>
-        `
+      <div class="reply-modal-tweet-left">
+        <div class="avatar" style="background: url('${tweetUserAvatar}'),#C4C4C4; background-position:center; background-size:cover;">
+         </div>
+      <div class="extention-line"></div>
+      </div>
+      <div class="reply-modal-tweet-right column">
+        <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} · ${tweetCreatedAt}</span>
+        <div>
+           <p class="pt-1">${tweetDescription}</p>
+        </div>
+         <span class="replyto-span">回覆給</span> 
+        <span class="user-account-color-span">${tweetUserAccount}</span>
+      </div>
+      `
     replyModal.innerHTML = TweetInfo
     replyForm.setAttribute('action', `/tweets/${tweetId}/replies`)
     setTimeout(function () {
       $('#replyModal').modal('toggle')   //因為會延遲而顯示成上一個按的tweet，所以加上這個
-    }, 0);
+    }, 10);
   }
 })
 
@@ -96,7 +108,7 @@ removeCoverButton.addEventListener('click', () => {
 })
 
 // preview upload file
-function previewFile (input) {
+function previewFile(input) {
   const coverPreview = document.querySelector('#editModalCover')
   const avatarPreview = document.querySelector('#editModalAvatar')
   const reader = new FileReader()
