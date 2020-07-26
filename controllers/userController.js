@@ -94,7 +94,6 @@ let userController = {
             User,
             Reply,
             { model: User, as: 'TweetWhoLike' },
-
           ]
         },
         { model: User, as: 'Followers' },
@@ -102,6 +101,7 @@ let userController = {
       ]
     });
     user = user.toJSON();
+    console.log(user)
     const followShip = {
       isTweet: true,
       tweetsCount: user.Tweets.length,
