@@ -26,8 +26,7 @@ const tweetController = {
       likeCount: r.TweetWhoLike.length,
       replayCount: r.Replies.length,
       isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
-    }));
-    console.log(data[0])
+    }));    
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
   getTweet: async (req, res) => {

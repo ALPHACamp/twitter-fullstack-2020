@@ -5,7 +5,7 @@ const Like = db.Like;
 const Reply = db.Reply;
 const Followship = db.Followship;
 const bcrypt = require('bcryptjs');
-const imgur = require('imgur-node-api');
+//const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 let userController = {
@@ -93,7 +93,7 @@ let userController = {
             User,
             Reply,
             { model: User, as: 'TweetWhoLike' },
-            
+
           ]
         },
         { model: User, as: 'Followers' },
@@ -111,37 +111,46 @@ let userController = {
     let tweets = user.Tweets;
     tweets = tweets.map((tweet) => ({
       ...tweet,
-      repliesCount: tweet.Replies.length,
+      tweetId: tweet.id,
+      userId: tweet.User.id,
+      userName: tweet.User.name,
+      userAvatar: tweet.User.avatar,
+      userAccount: tweet.User.account,
       likeCount: tweet.TweetWhoLike.length,
+      replayCount: tweet.Replies.length,
+      description: tweet.description,
       // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
     // all user's tweets
     // all user's likes
     // all user's replies
-    res.render('userPage', { 
-      user, 
-      followShip, 
+    res.render('userPage', {
+      user,
+      followShip,
       isUserPage: true,
-      content: tweets });
+      content: tweets
+    });
   },
   getUserReply: async (req, res) => {
-
-    const id = req.params.id
-    const tweetsCount = await Tweet.count({
-      where: { UserId: id }
-    })
+    const id = req.params.id;
     let user = await User.findOne({
       where: { id },
       include: [
         {
+          model: Reply, include: [
+            { model: Tweet, include: [Reply,{ model: User, as: 'TweetWhoLike' },] },
+            User
+          ]
+        },
+        { model: Tweet, as: 'userLike' },
+        {
           model: Tweet,
-          as: 'UserReply',
           order: ['createdAt', 'DESC'],
           include: [
             User,
             { model: User, as: 'TweetWhoLike' },
-            { model: User, as: 'whoReply' }
+
           ]
         },
         { model: User, as: 'Followers' },
@@ -151,25 +160,35 @@ let userController = {
     user = user.toJSON();
     const followShip = {
       isReply: true,
-      tweetsCount,
+      tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
-    let replies = user.UserReply;
-    replies = replies.map((reply) => ({
-      ...reply,
-      repliesCount: reply.whoReply.length,
-      likeCount: reply.TweetWhoLike.length,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: reply.TweetWhoLike.map((d) => d.id).includes(req.user.id)
-    }));
 
-    res.render('userPage', { 
-      user, 
-      followShip, 
+    let repliesTweet = user.Replies;
+
+    repliesTweet = repliesTweet.map((r) => ({
+      ...r,
+      tweetId: r.Tweet.id,
+      userId: r.User.id,
+      userName: r.User.name,
+      userAvatar: r.User.avatar,
+      userAccount: r.User.account,
+      description: r.Tweet.description,
+      likeCount: r.Tweet.TweetWhoLike.length,
+      replayCount: r.Tweet.Replies.length,
+      // 用自己tweet 的UserId 判斷有沒有按讚過
+      isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+
+    }))
+    console.log(repliesTweet)
+    res.render('userPage', {
+      user,
+      followShip,
       isUserPage: true,
-      content: replies });
+      content: repliesTweet
+    });
   },
   getUserLike: async (req, res) => {
 
@@ -210,12 +229,12 @@ let userController = {
       // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: like.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
-
-    res.render('userPage', { 
-      user, 
-      followShip, 
+    res.render('userPage', {
+      user,
+      followShip,
       isUserPage: true,
-      content: likes });
+      content: likes
+    });
   },
   addLike: async (req, res) => {
     try {
@@ -250,9 +269,9 @@ let userController = {
         return res.redirect('back');
       }
       const toEdit = await User.findByPk(req.params.id);
-      res.render('user_edit', { 
+      res.render('user_edit', {
         user: toEdit.toJSON(),
-        isEditPage: true  
+        isEditPage: true
       });
     } catch (err) {
       console.log(err);
@@ -308,10 +327,11 @@ let userController = {
       ...i,
       isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
     }));
-    res.render('followship', { 
-      user: user.toJSON(), 
-      followShip: followings, 
-      followDetail });
+    res.render('followship', {
+      user: user.toJSON(),
+      followShip: followings,
+      followDetail
+    });
   },
   getFollowers: async (req, res) => {
     const id = req.params.id
@@ -332,10 +352,11 @@ let userController = {
       ...i,
       isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
     }));
-    res.render('followship', { 
-      user: user.toJSON(), 
+    res.render('followship', {
+      user: user.toJSON(),
       followShip: followers,
-      followDetail });
+      followDetail
+    });
   },
   putEditUser: (req, res) => {
     User.findByPk(req.params.id).then((user) => {
@@ -368,85 +389,58 @@ let userController = {
       res.send(err);
     }
   },
-  putEditProfile: async (req, res) => {
+  putEditProfile: (req, res) => {
     //console.log('req===========', req);
-    const id = req.params.id
-    const { backgroundImg, avatar, userName, introduction } = req.body
     const { files } = req;
     //console.log('req.files', req.files);
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      const user = await User.findByPk(id)
-    if (files.backgroundImg){
-      imgur.upload(files.backgroundImg[0].path, async (err, img) => {
-        await user.update({
-          backgroundImg: img.data.link
-        })
-      })
-    }
-    if (files.avatar) {
-      imgur.upload(files.avatar[0].path, async (err, img) => {
-        await user.update({
-          avatar: img.data.link
-        })
-      })
-    }
-    await user.update({
-      name: userName,
-      introduction
-    })
-      
-      // files.forEach(file => {
-      //   if (true){}
-      //   imgur.upload(file.path, (err, img) => {
-          
-      //   })
-        
-      // });
+    if (files.length) {
+      console.log(files);
       //files.map((file, i) => {
       //if (i == 0) {
-      // imgur.upload(files[0].path, (err, img) => {
-      //   User.findByPk(req.params.id).then((user) => {
-      //     user.update({
-      //       introduction: req.body.introduction,
-      //       backgroundImg: img.data.link
-          // });
-        // });
-      // });
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files[0].path, (err, img) => {
+        User.findByPk(req.params.id).then((user) => {
+          user.update({
+            introduction: req.body.introduction,
+            backgroundImg: img.data.link
+          });
+        });
+      });
       //}
       //if (i == 1) {
       //imgur.setClientID(IMGUR_CLIENT_ID);
-    //   imgur.upload(files[1].path, (err, img) => {
-    //     User.findByPk(req.params.id).then((user) => {
-    //       user.update({
-    //         introduction: req.body.introduction,
-    //         avatar: img.data.link
-    //       });
-    //     });
-    //   });
-    //   //}
-    //   //});
-    //   return res.redirect(`/users/${req.params.id}`);
-    //   //return res.send('has files');
-    // } else {
-    //   console.log('req.body=====', req.body);
-    //   User.findByPk(req.params.id).then((user) => {
-    //     user
-    //       .update({
-    //         introduction: req.body.introduction
-    //       })
-    //       .then(() => {
-    //         res.redirect(`/users/${req.params.id}`);
-    //       });
-    //   });
-    // }
+      imgur.upload(files[1].path, (err, img) => {
+        User.findByPk(req.params.id).then((user) => {
+          user.update({
+            introduction: req.body.introduction,
+            avatar: img.data.link
+          });
+        });
+      });
+      //}
+      //});
+      return res.redirect(`/users/${req.params.id}`);
+      //return res.send('has files');
+    } else {
+      console.log('req.body=====', req.body);
+      User.findByPk(req.params.id).then((user) => {
+        user
+          .update({
+            introduction: req.body.introduction
+          })
+          .then(() => {
+            res.redirect(`/users/${req.params.id}`);
+          });
+      });
+    }
 
-    
+    //}
 
     //console.log('req.files======', req.files);
 
-    res.redirect(`/users/${req.params.id}`);
+    //res.redirect(`/users/${req.params.id}`);
   },
-  
+
   topUserForLayout: async (req, res, next) => {
     let topUsers = await User.findAll({
       include: [{ model: User, as: 'Followers' }]
@@ -460,6 +454,7 @@ let userController = {
     topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
     topUsers = topUsers.filter((user) => user.role === 'user');
     topUsers = topUsers.slice(0, 10)
+    console.log(topUsers)
     res.locals.topUsers = topUsers;
     return next();
   }
