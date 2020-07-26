@@ -20,16 +20,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'followerId',
         as: 'Followings'
       })
-
+      User.hasMany(models.Reply)
+      User.hasMany(models.Tweet)
     }
   };
   User.init({
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    role: DataTypes.BOOLEAN,
+    role: DataTypes.STRING,
     avatar: DataTypes.STRING,
-    introduction: DataTypes.STRING,
+    introduction: DataTypes.TEXT,
     cover: DataTypes.STRING
   }, {
     sequelize,
