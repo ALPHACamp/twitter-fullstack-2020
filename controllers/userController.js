@@ -6,7 +6,7 @@ const Reply = db.Reply;
 const Followship = db.Followship;
 const RepliesLike = db.RepliesLikes
 const bcrypt = require('bcryptjs');
-const imgur = require('imgur-node-api');
+//const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 let userController = {
@@ -94,7 +94,7 @@ let userController = {
             User,
             Reply,
             { model: User, as: 'TweetWhoLike' },
-            
+
           ]
         },
         { model: User, as: 'Followers' },
@@ -112,8 +112,14 @@ let userController = {
     let tweets = user.Tweets;
     tweets = tweets.map((tweet) => ({
       ...tweet,
-      repliesCount: tweet.Replies.length,
+      tweetId: tweet.id,
+      userId: tweet.User.id,
+      userName: tweet.User.name,
+      userAvatar: tweet.User.avatar,
+      userAccount: tweet.User.account,
       likeCount: tweet.TweetWhoLike.length,
+      replayCount: tweet.Replies.length,
+      description: tweet.description,
       // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
@@ -129,20 +135,23 @@ let userController = {
   },
   getUserReply: async (req, res) => {
     const id = req.params.id;
-    const tweetsCount = await Tweet.count({
-      where: { UserId: id }
-    });
     let user = await User.findOne({
       where: { id },
       include: [
         {
+          model: Reply, include: [
+            { model: Tweet, include: [Reply,{ model: User, as: 'TweetWhoLike' },] },
+            User
+          ]
+        },
+        { model: Tweet, as: 'userLike' },
+        {
           model: Tweet,
-          as: 'UserReply',
           order: ['createdAt', 'DESC'],
           include: [
             User,
             { model: User, as: 'TweetWhoLike' },
-            { model: User, as: 'whoReply' }
+
           ]
         },
         { model: User, as: 'Followers' },
@@ -152,25 +161,34 @@ let userController = {
     user = user.toJSON();
     const followShip = {
       isReply: true,
-      tweetsCount,
+      tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
-    let replies = user.UserReply;
-    replies = replies.map((reply) => ({
-      ...reply,
-      repliesCount: reply.whoReply.length,
-      likeCount: reply.TweetWhoLike.length,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: reply.TweetWhoLike.map((d) => d.id).includes(req.user.id)
-    }));
 
+    let repliesTweet = user.Replies;
+
+    repliesTweet = repliesTweet.map((r) => ({
+      ...r,
+      tweetId: r.Tweet.id,
+      userId: r.User.id,
+      userName: r.User.name,
+      userAvatar: r.User.avatar,
+      userAccount: r.User.account,
+      description: r.Tweet.description,
+      likeCount: r.Tweet.TweetWhoLike.length,
+      replayCount: r.Tweet.Replies.length,
+      // 用自己tweet 的UserId 判斷有沒有按讚過
+      isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+
+    }))
+    console.log(repliesTweet)
     res.render('userPage', {
       user,
       followShip,
       isUserPage: true,
-      content: replies
+      content: repliesTweet
     });
   },
   getUserLike: async (req, res) => {
@@ -211,7 +229,6 @@ let userController = {
       // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: like.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
-
     res.render('userPage', {
       user,
       followShip,
