@@ -43,23 +43,24 @@
       </div>
     </nav>
     <!-- 喜歡的內容 -->
-    <div>
+    <div class="main-tweet-list">
       {{#each user.LikedTweets }}
       <div class="divider">
-        <img src="{{../user.avatar}}" style="width: 50px;height: 50px;border-radius: 100%">
-        <span style="font-size:larger;">{{../user.name}}</span><span style="color:#657786">{{../user.account}} •
+        <img src="{{this.User.avatar}}" style="width: 50px;height: 50px;border-radius: 100%">
+        <span style="font-size:larger;">{{this.User.name}}</span><span style="color:#657786">{{this.User.account}} •
           {{moment this.createdAt}}</span>
-        <div>{{this.description}}</div>
-
-        <a href="/reply" class="reply-link ">
-          <img class="icon-s" src="/images/icon-reply.svg" alt="">
-          {{this.Replies.length}}
-        </a>
-        <button href="/like" class="like-link button">
-          <img class="icon-s" src="/images/icon-like-solid.svg" alt="">
-          {{!-- <img class="icon-s" src="/images/icon-like.svg" alt=""> --}}
-          {{this.likedUsers.length}}
-        </button>
+        <div class="tweet-description">{{this.description}}</div>
+        <div class="like-reply">
+          <a href="#" class="reply-link ">
+            <img class="icon-s" src="/images/icon-reply.svg" alt="">
+            {{this.Replies.length}}
+          </a>
+          <button href="#" class="like-link button">
+            <img class="icon-s" src="/images/icon-like-solid.svg" alt="">
+            {{!-- <img class="icon-s" src="/images/icon-like.svg" alt=""> --}}
+            {{this.likedUsers.length}}
+          </button>
+        </div>
       </div>
       {{/each}}
     </div>
