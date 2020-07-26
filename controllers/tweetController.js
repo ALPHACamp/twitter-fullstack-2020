@@ -34,21 +34,19 @@ const tweetController = {
     const id = req.params.id;
     let tweet = await Tweet.findOne({
       where: { id },
-      include: [User, 
+      include: [User,         
         { model: User, as: 'TweetWhoLike'},
-        { model: User, as: 'whoReply', order: ["createdAt", 'DESC'] },
+        { model: Reply, order: ["createdAt", 'DESC'] },
       ]
     });
     tweet = tweet.toJSON()
-   
-    let replies = tweet.whoReply
+   console.log(tweet)
+    let replies = tweet.Replies.length  
     const totalCount = {
-      replyCount: replies.length,
+      replyCount: replies,
       likeCount: tweet.TweetWhoLike.length,
       isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
-    }
-    console.log(totalCount)
-
+    }  
     res.render('tweet', { 
       isHomePage: true,
       tweet, totalCount });

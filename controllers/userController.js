@@ -2,6 +2,7 @@ const db = require('../models');
 const User = db.User;
 const Tweet = db.Tweet;
 const Like = db.Like;
+const Reply = db.Reply;
 const Followship = db.Followship;
 const bcrypt = require('bcryptjs');
 //const imgur = require('imgur-node-api');
@@ -90,8 +91,9 @@ let userController = {
           order: ['createdAt', 'DESC'],
           include: [
             User,
+            Reply,
             { model: User, as: 'TweetWhoLike' },
-            { model: User, as: 'whoReply' }
+            
           ]
         },
         { model: User, as: 'Followers' },
@@ -109,7 +111,7 @@ let userController = {
     let tweets = user.Tweets;
     tweets = tweets.map((tweet) => ({
       ...tweet,
-      repliesCount: tweet.whoReply.length,
+      repliesCount: tweet.Replies.length,
       likeCount: tweet.TweetWhoLike.length,
       // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
