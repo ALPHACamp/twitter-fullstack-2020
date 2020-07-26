@@ -1,13 +1,24 @@
-<div class="font-weight-bold h4">首頁</div>
-<br />
-<br />
+<div class="single-tweet">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex align-items-center">
+      <div class="font-weight-bold h5 ml-5 mt-2">推文</div>
+    </li>
+    <li class="list-group-item d-flex">
+      
+        <img src="{{myUser.avatar}}" alt="" width="75px" height="75px" class="rounded-circle mr-2">
+      
+      <form action="/tweets/newTweets" method="POST" class="flex-grow-1 d-flex flex-column">
+        <div class="form-group">
+          <textarea class="form-control tweet" id="newTweet" name="newTweet" rows="5" placeholder="有什麼新鮮事?"></textarea>
+        </div>
+        <div class="align-self-end">
+        <button type="submit" class="btn btn-danger rounded-pill">推文</button>
 
-<form action="/tweets/newTweets" method="POST">
-  <div class="form-group">
-    <textarea class="form-control" id="newTweet" name="newTweet" rows="3" placeholder="有什麼新鮮事?"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">推文</button>
-</form>
+        </div>
+      </form>   
+    </li>
+
+
 
 {{#each tweets}}
 <li class="list-group-item list-group-item-action">
@@ -28,12 +39,11 @@
           <span>・{{moment this.createdAt}}</span>
         </div>
       </div>
-      <p class="mt-2 ">{{this.description}}</p>
+      <a href="/tweets/{{this.id}}" class="mt-2 mb-2 text-dark" style="text-decoration: none;"> {{this.description}} </a>
       <div class="d-flex justify-content-start">
 
 
-        <button type="submit" class="btn btn-link text-dark"
-          onclick="postCommentPage({{this.id}})">
+        <button type="submit" class="btn btn-link text-dark" onclick="postCommentPage({{this.id}})">
           <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor"
             xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
@@ -79,9 +89,12 @@
   </div>
 </li>
 {{/each}}
+  </ul>
+</div>
+
 
 <script>
-  function postCommentPage(id) {   
+  function postCommentPage(id) { 
     $('#postCommentPage').modal('show');
     $('#modalForm').attr('action', `/tweets/${id}/comments`);
     
@@ -93,12 +106,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-      <p id='description' class="mt-2 " value=" ">123</p>
+      </div>      
       <div class="modal-body">
         <form id="modalForm" action="/comments" method="POST">
           <div class="form-group">
-            <textarea class="form-control" id="newComment" form="modalForm" name="newComment" rows="3"
+            <textarea class="form-control tweet" id="newComment" form="modalForm" name="newComment" rows="3"
               placeholder="寫點回覆吧!!!"></textarea>
           </div>
           <div class="modal-footer">
