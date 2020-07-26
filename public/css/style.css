@@ -1,0 +1,11 @@
+.navBar {
+  border-bottom: 2px solid orange;
+  color: orange;
+}
+textarea:focus {
+  outline: none!important;
+}
+textarea {
+  resize: none;
+  border: none!important; 
+}

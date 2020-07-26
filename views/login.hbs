@@ -1,0 +1,25 @@
+
+<div class="d-flex flex-column align-items-center">
+  <form class="form-signin mt-4 col-5" action="/login" method="POST">
+    <br>
+    <br>
+    <div class="text-center">
+      <h1 class="h3 mb-3 font-weight-bold">Twitter 衝一波</h1>
+    </div>
+    <br>
+    <div class="form-label-group my-4">
+      <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
+    </div>
+    <div class="form-label-group">
+      <input type="password" name="password" class="form-control my-4" placeholder="Password" required>
+    </div>
+    <br />
+    <button class="btn btn-lg btn-danger btn-block rounded-pill" type="submit">登入</button>
+    
+      <div class="d-flex justify-content-end mt-2">
+        <a class="mt-2 h5" href="/signup">註冊</a>
+        <p class="mt-2 h5">・</p>
+        <a class="mt-2 h5" href="/admin/login">後台登入</a>
+      </div>
+  </form>
+</div>
