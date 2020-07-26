@@ -73,32 +73,32 @@
       
     </li>
 
-    {{#each tweet.whoReply}}
+    {{#each tweet.Replies}}
     <li class="list-group-item list-group-item-action">
 
       <div class="user-wrap d-flex">
 
-        <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+        <img src="{{../tweet.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
 
         <div class="d-flex flex-column">
           <div class="d-flex flex-column">
             <div class="user d-flex justify-content-start">
               <div class="user-name font-weight-bold mr-2">
-                {{this.name}}
+                {{tweet.name}}
               </div>
-              <a href="/users/{{this.id}}" class="user-account text-secondary">
-                @{{this.account}}
+              <a href="/users/{{../tweet.User.id}}" class="user-account text-secondary">
+                @{{../tweet.User.account}}
               </a>
               {{!-- 要改 --}}
-              <span>・{{moment this.Reply.createdAt}}</span>
+              <span>・{{moment this.createdAt}}</span>
             </div>
             <div>
               <div> 回覆
-                <a href="/users/{{ ../tweet.User.id}}" class="text-danger">＠{{../tweet.User.account}}</a>
+                <a href="/users/{{../tweet.User.id}}" class="text-danger">＠{{../tweet.User.account}}</a>
               </div>
             </div>
           </div>
-          <p class="mt-2 ">{{this.Reply.comment}}</p>
+          <p class="mt-2 ">{{this.comment}}</p>
           <div class="d-flex justify-content-start">
             <a href="/tweet/{{this.id}}/reply" class="mt-1 mr-5 text-dark">
               <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor"
