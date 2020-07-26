@@ -372,10 +372,8 @@ let userController = {
     }
   },
   putEditProfile: async (req, res) => {
-    console.log('req.body===========', req.body);
-    console.log('req.files========', req.files);
     const id = req.params.id;
-    const { backgroundImg, avatar, userName, introduction } = req.body;
+    const { introduction } = req.body;
     const { files } = req;
     //console.log('req.files', req.files);
     imgur.setClientID(IMGUR_CLIENT_ID);
