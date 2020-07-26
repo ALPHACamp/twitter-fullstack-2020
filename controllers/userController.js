@@ -200,13 +200,14 @@ let userController = {
     let user = await User.findOne({
       where: { id },
       include: [
+        Tweet,
         {
           model: Tweet,
           as: 'userLike',
           order: ['createdAt', 'DESC'],
           include: [
             User,
-            Reply,
+            Reply,            
             { model: User, as: 'TweetWhoLike' },
            
           ]
@@ -224,19 +225,19 @@ let userController = {
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
     let likes = user.userLike;
-
+console.log(likes)
     likes = likes.map((r) => ({
       ...r,
-      tweetId: r.Tweet.id,
+      tweetId: r.id,
       userId: r.User.id,
       userName: r.User.name,
       userAvatar: r.User.avatar,
       userAccount: r.User.account,
-      description: r.Tweet.description,
-      likeCount: r.Tweet.TweetWhoLike.length,
-      replayCount: r.Tweet.Replies.length,
+      description: r.description,
+      likeCount: r.TweetWhoLike.length,
+      replayCount: r.Replies.length,
       // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      isLiked: r.TweetWhoLike.map((d) => d.id).includes(req.user.id)
 
     }))
 
