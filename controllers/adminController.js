@@ -14,7 +14,7 @@ let adminController = {
     res.redirect('/admin/tweets');
   },
   getTweets: (req, res) => {
-    Tweet.findAll({ raw: true, nest: true, include: User }).then((tweets) => {
+    Tweet.findAll({ raw: true, nest: true, include: User ,order: [['createdAt', 'DESC']],}).then((tweets) => {
       const data = tweets.map((r) => ({
         ...r,
         account: r.User.account,
@@ -33,9 +33,8 @@ let adminController = {
   getUsers: async (req, res) => {
     let users = await User.findAll({
       include: [
-        Tweet,
-        { model: Tweet, as: 'userLike' },
-        { model: Tweet, as: 'UserReply' },
+        Tweet,      
+        { model: Tweet, as: 'userLike' },       
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -43,12 +42,12 @@ let adminController = {
 
     data = users.map((r) => ({
       ...r.dataValues,
-      LikeCount: r.userLike.length,
-      ReplyCount: r.UserReply.length,
+      LikeCount: r.userLike.length,      
       FollowerCount: r.Followers.length,
       FollowingCount: r.Followings.length,
       TweetCount: r.Tweets.length
     }));
+    console.log(data)
     data = data.sort((a, b) => b.TweetCount - a.TweetCount);
     //remove admin in data
     data = data.filter((user) => user.role === 'user');
