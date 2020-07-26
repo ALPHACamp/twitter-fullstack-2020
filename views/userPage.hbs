@@ -64,10 +64,6 @@
                     <input type="file" class="form-control-file" id="avatar" name="avatar">
                   </div>
                   <div class="form-group">
-                    <label for="userName">userName</label>
-                    <input type="text" class="form-control-file" id="userName" name="userName">
-                  </div>
-                  <div class="form-group">
                     <label for="introduction">Introduction</label>
                     <textarea class="form-control" id="introduction" name="introduction"
                       rows="3">{{user.introduction}}</textarea>
@@ -195,7 +191,7 @@
 
               <div class="user-wrap d-flex">
                 <a href="/users/{{this.User.id}}">
-                  <img src="{{this.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">               
+                  <img src="{{this.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
                 </a>
 
                 <div class="d-flex flex-column">
@@ -210,7 +206,8 @@
                       <span>・{{moment this.createdAt}}</span>
                     </div>
                   </div>
-                  <a href="/tweets/{{this.id}}" class="mt-2 text-dark" style="text-decoration: none;"> {{this.description}} </a>
+                  <a href="/tweets/{{this.id}}" class="mt-2 text-dark" style="text-decoration: none;">
+                    {{this.description}} </a>
                   <div class="d-flex justify-content-start">
                     <a href="/tweets/{{this.id}}/comments" class=" mr-5 text-dark">
                       <span>
