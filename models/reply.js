@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
   Reply.associate = function(models) {  
     Reply.belongsTo(models.Tweet)
     Reply.belongsTo(models.User)  
+    Reply.belongsToMany(models.User, {
+      through: models.RepliesLikes,
+      foreignKey: 'ReplyId',
+      as: 'ReplyWhoLike'
+    })
   };
   return Reply;
 };

@@ -4,6 +4,7 @@ const Tweet = db.Tweet;
 const Like = db.Like;
 const Reply = db.Reply;
 const Followship = db.Followship;
+const RepliesLike = db.RepliesLikes
 const bcrypt = require('bcryptjs');
 //const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
@@ -17,9 +18,9 @@ let userController = {
     return res.redirect('/tweets');
   },
   logout: (req, res) => {
-    req.flash('success_messages', '已經成功登出')
-    req.logout()
-    res.redirect('/login')
+    req.flash('success_messages', '已經成功登出');
+    req.logout();
+    res.redirect('/login');
   },
   signUpPage: (req, res) => {
     return res.render('signup');
@@ -191,11 +192,10 @@ let userController = {
     });
   },
   getUserLike: async (req, res) => {
-
-    const id = req.params.id
+    const id = req.params.id;
     const tweetsCount = await Tweet.count({
       where: { UserId: id }
-    })
+    });
     let user = await User.findOne({
       where: { id },
       include: [
@@ -309,7 +309,7 @@ let userController = {
     }
   },
   getFollowings: async (req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
     const user = await User.findOne({
       where: { id },
       include: [
@@ -317,11 +317,11 @@ let userController = {
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
       ]
-    })
+    });
     const followDetail = {
       tweetsCount: user.toJSON().Tweets.length,
       followings: true
-    }
+    };
     let followings = user.toJSON().Followings;
     followings = followings.map((i) => ({
       ...i,
@@ -334,7 +334,7 @@ let userController = {
     });
   },
   getFollowers: async (req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
     const user = await User.findOne({
       where: { id },
       include: [
@@ -342,11 +342,11 @@ let userController = {
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
       ]
-    })
+    });
     const followDetail = {
       tweetsCount: user.toJSON().Tweets.length,
       followers: true
-    }
+    };
     let followers = user.toJSON().Followers;
     followers = followers.map((i) => ({
       ...i,
@@ -389,56 +389,58 @@ let userController = {
       res.send(err);
     }
   },
-  putEditProfile: (req, res) => {
-    //console.log('req===========', req);
+  putEditProfile: async (req, res) => {
+    const id = req.params.id;
+    const { introduction } = req.body;
     const { files } = req;
     //console.log('req.files', req.files);
-    if (files.length) {
-      console.log(files);
-      //files.map((file, i) => {
-      //if (i == 0) {
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(files[0].path, (err, img) => {
-        User.findByPk(req.params.id).then((user) => {
-          user.update({
-            introduction: req.body.introduction,
-            backgroundImg: img.data.link
-          });
-        });
-      });
-      //}
-      //if (i == 1) {
-      //imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(files[1].path, (err, img) => {
-        User.findByPk(req.params.id).then((user) => {
-          user.update({
-            introduction: req.body.introduction,
-            avatar: img.data.link
-          });
-        });
-      });
-      //}
-      //});
-      return res.redirect(`/users/${req.params.id}`);
-      //return res.send('has files');
-    } else {
-      console.log('req.body=====', req.body);
-      User.findByPk(req.params.id).then((user) => {
+    imgur.setClientID(IMGUR_CLIENT_ID);
+
+    const user = await User.findByPk(id);
+    if (files.backgroundImg) {
+      imgur.upload(files.backgroundImg[0].path, async (err, img) => {
         user
           .update({
-            introduction: req.body.introduction
+            backgroundImg: img.data.link,
+            introduction
           })
-          .then(() => {
-            res.redirect(`/users/${req.params.id}`);
+          .then((user) => {
+            if (files.avatar) {
+              imgur.upload(files.avatar[0].path, (err, img) => {
+                user
+                  .update({
+                    avatar: img.data.link,
+                    introduction
+                  })
+                  .then((user) => {
+                    return res.redirect(`/users/${req.params.id}`);
+                  });
+              });
+            } else {
+              user
+                .update({
+                  introduction
+                })
+                .then(() => res.redirect(`/users/${req.params.id}`));
+            }
           });
       });
+    } else if (files.avatar) {
+      imgur.upload(files.avatar[0].path, (err, img) => {
+        user
+          .update({
+            avatar: img.data.link,
+            introduction
+          })
+          .then(() => res.redirect(`/users/${req.params.id}`));
+      });
+    } else {
+      user
+        .update({
+          introduction
+        })
+        .then(() => res.redirect(`/users/${req.params.id}`));
     }
-
-    //}
-
-    //console.log('req.files======', req.files);
-
-    //res.redirect(`/users/${req.params.id}`);
   },
 
   topUserForLayout: async (req, res, next) => {
@@ -453,11 +455,36 @@ let userController = {
 
     topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
     topUsers = topUsers.filter((user) => user.role === 'user');
-    topUsers = topUsers.slice(0, 10)
-    console.log(topUsers)
+    topUsers = topUsers.slice(0, 10);
     res.locals.topUsers = topUsers;
     return next();
-  }
+  },
+  addReplyLike: async (req, res) => {
+    try{
+      await RepliesLike.create({
+        UserId: req.user.id,
+        ReplyId: req.params.ReplyId
+      });
+      res.redirect('back');
+    } catch (err) {
+      console.log(err);
+      res.send('something is wrong');
+    }
+  },
+  removeReplyLike: async (req, res) => {
+    try {
+      const toRemove = await RepliesLike.findOne({
+        where: {
+          UserId: req.user.id,
+          ReplyId: req.params.ReplyId
+        }
+      });
+      toRemove.destroy();
+      res.redirect('back');
+    } catch (err) {
+      res.send('something is wrong');
+    }
+  },
 };
 
 module.exports = userController;
