@@ -108,16 +108,17 @@ const userController = {
   getReplies: (req, res) => {
     Reply.findAll({
       where: { UserId: req.params.id },
-      order: [['createdAt', 'DESC']],
-    }).then(replies => {
-      User.findOne({
-        where: { id: req.params.id },
-        include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
-      })
-        .then(user => {
-          res.render('user-replies', { replies, pageUser: user })
-        })
+      include: [{ model: Tweet, include: [User] }],
+      order: [['createdAt', 'DESC']]
     })
+      .then(replies => {
+        User.findOne({
+          where: { id: req.params.id }
+        })
+          .then(pageUser => {
+            res.render('user-replies', { replies, pageUser })
+          })
+      })
   },
   putUserProfile: (req, res) => {
     const id = Number(req.params.id)

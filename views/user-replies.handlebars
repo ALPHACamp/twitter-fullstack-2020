@@ -75,28 +75,48 @@
       </div>
     </nav>
 
-    <!--列表-->
-    <div class="user-page-tweets-list">
+    <div class="user-page-replies-list w-100">
       {{#each replies}}
-      <div class="user-page-list-item">
-        <div class="left">
-          <div class="avatar"
-            style="background: url({{../pageUser.avatar}}); background-position:center;background-size:cover;">
+      <div class="reply-item">
+        <!--推文-->
+        <div class="reply-tweet row">
+          <div class="left">
+            <div class="avatar"
+              style="background: url({{this.Tweet.User.avatar}}); background-position:center;background-size:cover;">
+            </div>
+            <div class="extention-line"></div>
+          </div>
+          <div class="right">
+            <div class="user-name-account">
+              <span class="user-name">{{this.Tweet.User.name}}</span><span
+                class="user-account">{{this.Tweet.User.account}}．{{moment this.Tweet.createdAt}}</span>
+            </div>
+            <div class="reply-tweet-text">
+              {{this.Tweet.description}}
+            </div>
           </div>
         </div>
-        <div class="right">
-          <div class="user-name-account">
-            <span class="user-name">{{../pageUser.name}}</span><span
-              class="user-account">{{../pageUser.account}}．{{moment this.createdAt}}</span>
+        <!--回覆-->
+        <div class="reply-comment row">
+          <div class="left">
+            <div class="avatar"
+              style="background: url({{../pageUser.avatar}}); background-position:center;background-size:cover;">
+            </div>
           </div>
-          <div class="tweet-item-text">
-            {{this.comment}}
+          <div class="right">
+            <div class="user-name-account">
+              <span class="user-name">{{../pageUser.name}}</span><span
+                class="user-account">{{../pageUser.account}}．{{moment this.createdAt}}</span>
+            </div>
+            <div class="reply-comment-text">
+              {{this.comment}}
+            </div>
           </div>
         </div>
       </div>
       {{/each}}
     </div>
-
   </div>
+
   {{> right-content}}
 </div>
