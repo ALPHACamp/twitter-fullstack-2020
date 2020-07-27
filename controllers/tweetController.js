@@ -49,7 +49,7 @@ const tweetController = {
       RepliesLikeCount: reply.ReplyWhoLike.length,
       isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(req.user.id)
     }))
-    console.log(replies)
+    replies.sort((a, b) => b.createdAt - a.createdAt)
     const totalCount = {
       replyCount: tweet.Replies.length,
       likeCount: tweet.TweetWhoLike.length,
@@ -95,7 +95,7 @@ const tweetController = {
     })
       .then((tweet) => {
         req.flash('success_messages', '回覆成功!!!')
-        res.redirect('/tweets')
+        res.redirect('back')
       })
   },
 };
