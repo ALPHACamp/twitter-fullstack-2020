@@ -105,7 +105,7 @@ const userController = {
 
   editUser: (req, res) => {
     //only login user can enter edit profile page
-    if (req.user.id !== Number(req.params.id)) { return res.redirect(`/api/users/${req.params.id}`) }
+    if (req.user.id !== Number(req.params.id)) { return res.redirect(`/users/${req.params.id}/tweets`) }
     return User.findByPk(req.params.id)
       .then(user => {
         return res.render('profileEdit', { user: user.toJSON() })
@@ -130,7 +130,7 @@ const userController = {
               avatar: files ? img.data.link : user.avatar,
             }).then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
           })
       })
@@ -147,7 +147,7 @@ const userController = {
               cover: files ? img.data.link : user.cover,
             }).then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
           })
       })
@@ -174,7 +174,7 @@ const userController = {
                         cover: files ? img.data.link : user.cover,
                       }).then((user) => {
                         req.flash('success_messages', 'profile was successfully to update')
-                        res.redirect(`/api/users/${user.id}`)
+                        res.redirect(`/users/${user.id}/tweets`)
                       })
                     })
                 })
@@ -194,7 +194,7 @@ const userController = {
           })
             .then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
         })
     }

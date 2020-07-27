@@ -10,7 +10,7 @@
       </div>
       <div class="col-md-4 d-flex align-items-center">
         {{#ifCond user.id loginUserId}}
-        <a class="btn btn-primary" href="/api/users/{{user.id}}/edit">
+        <a class="btn btn-primary" href="/api/users/{{user.id}}">
           編輯個人資料
         </a>
         {{/ifCond}}
@@ -93,7 +93,7 @@
       <li class="list-group-item">
         <div class="row">
           <div class="col-3">
-            <a href="/api/users/{{this.id}}">
+            <a href="/users/{{this.id}}/tweets">
               <img class="rounded-circle w-100" src="{{this.avatar}}" />
             </a>
           </div>
