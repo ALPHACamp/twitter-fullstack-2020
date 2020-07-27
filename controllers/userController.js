@@ -85,7 +85,6 @@ let userController = {
       include: [
         {
           model: Tweet,
-          order: ['createdAt', 'DESC'],
           include: [
             User,
             Reply,
@@ -117,6 +116,7 @@ let userController = {
       description: tweet.description,
       isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
+    tweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
       user,
       followShip,
@@ -124,26 +124,21 @@ let userController = {
       content: tweets
     });
   },
-
   getUserReply: async (req, res) => {
     const id = req.params.id;
     let user = await User.findOne({
       where: { id },
       include: [
+        Tweet,
         {
           model: Reply, include: [
-            { model: Tweet, include: [Reply, User, { model: User, as: 'TweetWhoLike' },] },
+            {
+              model: Tweet, include: [
+                Reply,
+                User,
+                { model: User, as: 'TweetWhoLike' }]
+            },
             User
-          ]
-        },
-        { model: Tweet, as: 'userLike' },
-        {
-          model: Tweet,
-          order: ['createdAt', 'DESC'],
-          include: [
-            User,
-            { model: User, as: 'TweetWhoLike' },
-
           ]
         },
         { model: User, as: 'Followers' },
@@ -158,10 +153,13 @@ let userController = {
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
-
+    // console.log(user)
     let repliesTweet = user.Replies;
+    console.log(repliesTweet[0])
+    // console.log(repliesTweet[0])
 
-    repliesTweet = repliesTweet.map((r) => ({
+
+    repliesTweet = repliesTweet.map(r => ({
       ...r,
       tweetId: r.Tweet.id,
       userId: r.Tweet.User.id,
@@ -173,6 +171,9 @@ let userController = {
       replayCount: r.Tweet.Replies.length,
       isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }))
+
+    repliesTweet = repliesTweet.sort((a, b) => b.createdAt - a.createdAt)
+
     res.render('userPage', {
       user,
       followShip,
@@ -224,6 +225,8 @@ let userController = {
       replayCount: r.Replies.length,
       isLiked: r.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }))
+
+    likes = likes.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
     res.render('userPage', {
       user,
       followShip,

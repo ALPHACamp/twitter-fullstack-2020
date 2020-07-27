@@ -27,7 +27,6 @@ const tweetController = {
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
-
   getTweet: async (req, res) => {
     const id = req.params.id;
     let tweet = await Tweet.findOne({
@@ -100,6 +99,6 @@ const tweetController = {
         req.flash('success_messages', '回覆成功!!!')
         res.redirect('back')
       })
-  },
+  }
 };
 module.exports = tweetController;
