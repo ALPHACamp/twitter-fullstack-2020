@@ -70,20 +70,22 @@
           </li>
 
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
+            onclick="cleanTextarea()" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    onclick="cleanTextarea()">Close</button>
                 </div>
                 <div class="modal-body">
                   <form action="/tweets/newTweets" method="POST">
                     <div class="form-group">
-                      <textarea class="form-control" id="newTweet" name="newTweet" rows="3"
-                        placeholder="有什麼新鮮事?"></textarea>
+                      <textarea class="form-control" id="newTweetModalTextarea" name="newTweet" rows="3"
+                        placeholder="有什麼新鮮事?" oninput="showWordCountModal()" maxlength="140"></textarea>
+                      <p><span id="wordCountModal">0</span>/140</p>
                     </div>
                     <div class="modal-footer">
-                      <button type="submit" class="btn btn-primary">推文</button>
+                      <button type="submit" class="btn btn-danger rounded-pill">推文</button>
                     </div>
                   </form>
                 </div>
@@ -202,6 +204,21 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
+
+  <script>
+    const newTweetModalTextareaElement = document.getElementById('newTweetModalTextarea')
+    function cleanTextarea() {
+
+      newTweetModalTextareaElement.value = ''
+      wordCountModalElement.innerHTML = 0
+    }
+
+    const newTweetTextareaModalElement = document.getElementById('newTweetModalTextarea')
+    const wordCountModalElement = document.getElementById('wordCountModal')
+    function showWordCountModal() {
+      wordCountModalElement.innerHTML = newTweetTextareaModalElement.value.length
+    }
+  </script>
 
 </body>
 
