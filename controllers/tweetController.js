@@ -6,7 +6,10 @@ const Reply = db.Reply
 const tweetController = {
   getTweets: (req, res) => {
     return Tweet.findAll({
-      include: [Reply],
+      include: [
+        User,
+        Reply
+      ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
       return res.render('tweets', { tweets: tweets })
@@ -23,7 +26,7 @@ const tweetController = {
       return res.redirect('back')
     } else {
       return Tweet.create({
-        // userId: req.user.id,
+        UserId: req.user.id,
         description: req.body.description
       })
         .then(tweet => {
@@ -35,7 +38,8 @@ const tweetController = {
     return Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: Reply, include: [User] }
+        { model: Reply, include: [User] },
+        // { model: User, as: 'likedUsers' }
       ],
       order: [
         [Reply, 'createdAt', 'DESC']
@@ -57,7 +61,7 @@ const tweetController = {
       return Reply.create({
         comment: req.body.comment,
         TweetId: req.body.TweetId,
-        // UserId: req.user.id
+        UserId: req.user.id
       })
         .then(reply => {
           return res.redirect('back')

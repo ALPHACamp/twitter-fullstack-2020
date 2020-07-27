@@ -46,9 +46,37 @@
     <br />
     <br />
     <div class="row">
-      {{!-- {{#each tweets}}
-
-      {{/each}} --}}
+        <div class="mt-3 border-top">
+          {{#each user.Tweet}}
+            <div class="col border-top">
+              <h6>
+                <a href="/api/users/{{this.User.id}}">
+                  <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{this.avatar}}" />
+                  {{this.name}}
+                </a>
+                <small class="text-muted">@帳號。{{moment this.createdAt}}</small>
+              </h6>
+                
+              <small class="text-muted">回覆 @推文帳號</small>
+                 
+              <p class="card-text">{{this.Tweet.description}}</p>
+              <p class="card-text">
+              <div class="row justify-content-around">
+                <div class="col">
+                  <small class="text-muted">
+                    <i class="far fa-comment"> {{this.Replies.length}}</i>
+                  </small>
+                </div>
+                <div class="col">
+                  <small class="text-muted">
+                    <i class="far fa-heart"> {{this.likedUsers.length}}</i>
+                  </small>
+                </div>
+              </div>
+              </p>
+            </div>
+          {{/each}}
+        </div>
     </div>
   </div>
 

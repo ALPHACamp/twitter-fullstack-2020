@@ -25,8 +25,8 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweet)
 
-  app.get('/tweets/:id', tweetController.getTweet)
-  app.post('/tweets/:id/replies', tweetController.postReply)
+  app.get('/tweets/:id', authenticated, tweetController.getTweet)
+  app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 
   //user profile route controller
   app.get('/api/users/:id', authenticated, userController.getUser)
