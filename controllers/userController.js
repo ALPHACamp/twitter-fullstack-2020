@@ -169,7 +169,6 @@ const userController = {
         tweetCounts: user.Tweets.length,
         Followings
       }
-      console.log(results)
       res.render('user-followings', { results })
     })
   },
