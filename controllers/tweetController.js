@@ -16,18 +16,24 @@ const tweetController = {
           raw: true,
           nest: true,
           include: [
-            User,
-            { model: User, as: 'LikedUsers' }
+            User
           ],
           order: [['createdAt', 'DESC']]
         })
           .then((tweets) => {
-            res.render('home', {
-              user: req.user,
-              tweets: tweets,
-              recommendFollowings: users,
-              currentUserId: req.user.id
-            })
+            Like.findAll({ where: { UserId: req.user.id }, raw: true, nest: true })
+              .then((likes) => {
+                likes = likes.map(like => like.TweetId)
+                tweets.forEach(tweet => {
+                  tweet.tweetIsLiked = likes.includes(tweet.id)
+                })
+                res.render('home', {
+                  user: req.user,
+                  tweets: tweets,
+                  recommendFollowings: users,
+                  currentUserId: req.user.id
+                })
+              })
           })
       })
       .catch(err => res.send(err))
@@ -116,6 +122,7 @@ const tweetController = {
                   .catch(err => console.log(err))
             ))
               .then(() => {
+                console.log(secondReplies.flat())
                 res.render('reply', {
                   tweet, //內含 tweet 基本資料
                   replies: tweet.replies[0].id === null ? null : tweet.replies,  // 第一層回覆 ＋ 第二層回覆
@@ -213,7 +220,6 @@ const tweetController = {
     const TweetId = Number(req.params.tweetId)
     const ReplyId = Number(req.params.replyId)
     const SecondreplyId = Number(req.params.secondReplyId)
-    console.log(TweetId, ReplyId, SecondreplyId)
     return Like.findOne({
       where: {
         UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId

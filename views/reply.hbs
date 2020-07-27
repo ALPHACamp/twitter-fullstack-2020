@@ -1,139 +1,226 @@
-<div class="row mt-3">
+<div class="row">
   {{>leftColumn}}
-  <div class="col-5">
-    <div class="row justify-content-center" id="tweet-detail" style="border: 1px solid black;">
-      <div class="col-auto" id="person-img">
+  <div class="col-5 m-0 p-0" style="border:1px #E6ECF0 solid;">
+    <nav class="navbar navbar-light" style="border:1px #E6ECF0 solid;">
+      <svg class="mr-3" style="cursor: pointer;" onclick="history.back()" width="17" height="14" viewBox="0 0 17 14"
+        fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M16 5.99988H3.41399L7.70699 1.70687C8.09699 1.31687 8.09699 0.683875 7.70699 0.292875C7.31699 -0.0981249 6.68399 -0.0971249 6.29299 0.292875L0.292988 6.29288C-0.0970117 6.68288 -0.0970117 7.31588 0.292988 7.70687L6.29299 13.7069C6.48799 13.9019 6.74299 13.9999 6.99999 13.9999C7.25699 13.9999 7.51199 13.9019 7.70699 13.7069C8.09699 13.3169 8.09699 12.6839 7.70699 12.2929L3.41399 7.99988H16C16.553 7.99988 17 7.55288 17 6.99988C17 6.44688 16.553 5.99988 16 5.99988Z"
+          fill="black" />
+      </svg>
+      <span class="navbar-brand mb-0 h1 mr-auto">
+        推文
+      </span>
+    </nav>
+    <div class="row no-gutters">
+      <div class="m-2">
         <a href="/users/{{tweet.User.id}}">
           <img style="width: 50px;height:50px; border-radius: 50%" src="{{tweet.User.avatar}}" alt="pic">
         </a>
       </div>
-      <div class="col" id="person-indo">
-        <div class="row">
-          <div class="col-12">{{tweet.User.name}}</div>
-          <div class="col-12">{{tweet.User.account}}</div>
-        </div>
+      <div class="col d-flex flex-column justify-content-center ">
+        <span style="font-weight: bold;">{{tweet.User.name}}</span>
+        <span class="text-muted">{{tweet.User.account}}</span>
       </div>
       <div class="col-12">
-        <p>
+        <p class="mx-3 mt-1" style="font-size: 23px; font-weight:500">
           {{tweet.description}}
         </p>
-        <small class="mr-auto">
+        <small class="mr-auto ml-3 text-muted">
           {{moment_format tweet.createdAt}}
         </small>
-        <hr>
       </div>
       <div class="col-12">
-        {{tweet.replyCount}} 回覆 {{tweet.likeCount}}喜歡次數
+        <hr>
       </div>
+      <div class="col-12 ml-3">
+        <span class="mr-2" style="font-weight: bold;">{{tweet.replyCount}}</span> <span class="text-muted">回覆</span>
+        <span class="ml-2 mr-2" style="font-weight: bold;">{{tweet.likeCount}}</span><span
+          class="text-muted">喜歡次數</span>
+
+      </div>
+      <div class="col-12">
+        <hr>
+      </div>
+      <!-- 按讚與回應 -->
       <div class="col-12 my-1">
-        <i class="far fa-comment fa-2x mr-5" data-toggle="modal" data-target="#replyTweet"></i>
+        <svg class="ml-3" style="margin-right: 180px;" width="30" height="30" viewBox="0 0 30 30" fill="none"
+          xmlns="http://www.w3.org/2000/svg" data-toggle="modal" data-target="#replyTweet">
+          <path
+            d="M17.5576 2.80254L12.3726 2.79004H12.3701C6.90259 2.79004 2.62009 7.07379 2.62009 12.5425C2.62009 17.665 6.60259 21.55 11.9513 21.755V26.54C11.9513 26.675 12.0063 26.8975 12.1013 27.0438C12.2788 27.325 12.5813 27.4775 12.8913 27.4775C13.0638 27.4775 13.2376 27.43 13.3938 27.33C13.7238 27.12 21.4851 22.155 23.5038 20.4475C25.8813 18.435 27.3038 15.485 27.3076 12.5575V12.5363C27.3001 7.07754 23.0201 2.80254 17.5576 2.80129V2.80254ZM22.2913 19.0175C20.8738 20.2175 16.2138 23.2738 13.8263 24.8213V20.8375C13.8263 20.32 13.4076 19.9 12.8888 19.9H12.3938C7.81884 19.9 4.49634 16.805 4.49634 12.5425C4.49634 8.12504 7.95634 4.66504 12.3713 4.66504L17.5551 4.67754H17.5576C21.9726 4.67754 25.4326 8.13504 25.4351 12.5475C25.4313 14.935 24.2576 17.3525 22.2926 19.0175H22.2913Z"
+            fill="#657786" />
+        </svg>
         {{#if tweetIsLiked}}
-        <a href="/unlike/{{tweet.id}}/0/0"><i class="fas fa-heart fa-2x" style="color: salmon;"></i></a>
+        <a href="/unlike/{{tweet.id}}/0/0">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M12 21.6381H11.986C9.403 21.5901 1.95 14.8561 1.95 8.47812C1.95 5.41412 4.475 2.72412 7.353 2.72412C9.643 2.72412 11.183 4.30412 11.999 5.45412C12.813 4.30612 14.353 2.72412 16.644 2.72412C19.524 2.72412 22.048 5.41412 22.048 8.47912C22.048 14.8551 14.594 21.5891 12.011 21.6361H12V21.6381Z"
+              fill="#E0245E" />
+          </svg>
+        </a>
         {{else}}
-        <a href="/like/{{tweet.id}}/0/0"><i class="far fa-heart fa-2x" style="color: salmon;"></i></a>
+        <a href="/like/{{tweet.id}}/0/0">
+          <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15 27.0473H14.9825C11.7537 26.9873 2.4375 18.5698 2.4375 10.5973C2.4375 6.76728 5.59375 3.40479 9.19125 3.40479C12.0537 3.40479 13.9787 5.37979 14.9987 6.81729C16.0162 5.38229 17.9412 3.40479 20.805 3.40479C24.405 3.40479 27.56 6.76729 27.56 10.5985C27.56 18.5685 18.2425 26.986 15.0137 27.0448H15V27.0473ZM9.1925 5.28104C6.5925 5.28104 4.31375 7.76603 4.31375 10.5998C4.31375 17.7748 13.1062 25.0948 15.0012 25.1723C16.8987 25.0948 25.6887 17.776 25.6887 10.5998C25.6887 7.76603 23.41 5.28104 20.81 5.28104C17.65 5.28104 15.885 8.95104 15.87 8.98729C15.5825 9.68979 14.425 9.68979 14.1362 8.98729C14.1187 8.94979 12.355 5.28104 9.19375 5.28104H9.1925Z"
+              fill="#657786" />
+          </svg>
+        </a>
         {{/if}}
+      </div>
+      <div class="col-12">
+        <hr class="mt-2 p-0">
       </div>
     </div>
     <!--  第一層回覆  -->
-    <div class="row" id="reply-list" style="border: 1px solid grey;">
-      {{#each replies}}
-      <div class=" col-1">
-        <a href="/users/{{this.User.id}}">
-          <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
-        </a>
-      </div>
-      <div class="col-11">
-        <div class="row">
-          <div class="col ml-3">{{this.User.name}}
-            <small class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small>
-          </div>
-        </div>
-        <div class="col-12">回覆{{../tweet.User.account}}</div>
-        <div class="col-12">{{this.comment}}</div>
-        <!-- 按讚與回應 -->
-        <div class="col-12">
-          <i class="far fa-comment mr-5" data-toggle="modal" data-target="#replyReply{{this.id}}"></i>
-          {{#if this.replyIsLiked}}
-          <a href="/unlike/0/{{this.id}}/0"><i class="fas fa-heart" style="color: salmon;"></i></a>
-          <small>{{this.likeCount}}</small>
-          {{else}}
-          <a href="/like/0/{{this.id}}/0"><i class="far fa-heart" style="color: salmon;"></i></a>
-          <small>{{this.likeCount}}</small>
+    {{#each replies}}
+    <div class="card" style="color:black;border-radius:0;border-color:transparent">
+      <div class="row no-gutters">
+        <div class="col-1 ml-2 d-flex flex-column align-items-center">
+          <a href="/users/{{this.User.id}}">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+          </a>
+          {{#if secondReplies}}
+          <div class="vertical-line" style="width: 2px; height:100% ; background-color:#CCD6DD;"></div>
           {{/if}}
         </div>
-        <hr>
-      </div>
-      <!--  第二層回覆  -->
-      {{#each this.secondReplies}}
-      <div class="col-1">
-        <a href="/users/{{this.User.id}}">
-          <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
-        </a>
-      </div>
-      <div class="col-11">
-        <div class="row">
-          <div class="col ml-3">{{this.User.name}}
-            <small class="ml-3">{{this.User.account}}．{{moment this.createdAt}}</small>
+        <div class="col-10 mb-1">
+          <div class="ml-3">
+            <span style="font-size: 15px;">{{this.User.name}}
+              <span class="ml-1 text-muted">{{this.User.account}}．{{moment this.createdAt}}</span> <br>
+              <span class="text-muted">回覆
+                <a href="/users/{{../tweet.User.id}}" style="color: #FF6600;">{{../tweet.User.account}}</a>
+              </span> <br>
+              {{this.comment}}<br>
+            </span>
+          </div>
+          <!-- 按讚與回應 -->
+          <div class="col-12">
+            <svg width="15" style="cursor: pointer; margin-right:68px" height="15" viewBox="0 0 15 15" fill="none"
+              xmlns="http://www.w3.org/2000/svg" data-toggle="modal" data-target="#replyReply{{this.id}}">
+              <path
+                d="M8.77875 1.40127L6.18625 1.39502H6.185C3.45125 1.39502 1.31 3.53689 1.31 6.27127C1.31 8.83252 3.30125 10.775 5.97562 10.8775V13.27C5.97562 13.3375 6.00312 13.4488 6.05062 13.5219C6.13937 13.6625 6.29062 13.7388 6.44562 13.7388C6.53187 13.7388 6.61875 13.715 6.69687 13.665C6.86187 13.56 10.7425 11.0775 11.7519 10.2238C12.9406 9.21752 13.6519 7.74252 13.6537 6.27877V6.26814C13.65 3.53877 11.51 1.40127 8.77875 1.40064V1.40127ZM11.1456 9.50877C10.4369 10.1088 8.10687 11.6369 6.91312 12.4106V10.4188C6.91312 10.16 6.70375 9.95002 6.44437 9.95002H6.19687C3.90937 9.95002 2.24812 8.40252 2.24812 6.27127C2.24812 4.06252 3.97812 2.33252 6.18562 2.33252L8.7775 2.33877H8.77875C10.9862 2.33877 12.7162 4.06752 12.7175 6.27377C12.7156 7.46752 12.1287 8.67627 11.1462 9.50877H11.1456Z"
+                fill="#657786" />
+            </svg>
+            {{#if this.replyIsLiked}}
+            <a href="/unlike/0/{{this.id}}/0" style="text-decoration: none;">
+              <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M11 19.6381H10.986C8.403 19.5901 0.949997 12.8561 0.949997 6.47812C0.949997 3.41412 3.475 0.724121 6.353 0.724121C8.643 0.724121 10.183 2.30412 10.999 3.45412C11.813 2.30612 13.353 0.724121 15.644 0.724121C18.524 0.724121 21.048 3.41412 21.048 6.47912C21.048 12.8551 13.594 19.5891 11.011 19.6361H11V19.6381Z"
+                  fill="#E0245E" />
+              </svg>
+            </a>
+            <small class="text-muted">{{this.likeCount}}</small>
+            {{else}}
+            <a href="/like/0/{{this.id}}/0" style="text-decoration: none;">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M7.5 13.5239H7.49125C5.87687 13.4939 1.21875 9.28514 1.21875 5.29889C1.21875 3.38389 2.79687 1.70264 4.59562 1.70264C6.02687 1.70264 6.98937 2.69014 7.49937 3.40889C8.00812 2.69139 8.97062 1.70264 10.4025 1.70264C12.2025 1.70264 13.78 3.38389 13.78 5.29951C13.78 9.28451 9.12125 13.4933 7.50687 13.5226H7.5V13.5239ZM4.59625 2.64076C3.29625 2.64076 2.15687 3.88326 2.15687 5.30014C2.15687 8.88764 6.55312 12.5476 7.50062 12.5864C8.44937 12.5476 12.8444 8.88826 12.8444 5.30014C12.8444 3.88326 11.705 2.64076 10.405 2.64076C8.825 2.64076 7.9425 4.47576 7.935 4.49389C7.79125 4.84514 7.2125 4.84514 7.06812 4.49389C7.05937 4.47514 6.1775 2.64076 4.59687 2.64076H4.59625Z"
+                  fill="#657786" />
+              </svg>
+            </a>
+            <small class="text-muted">{{this.likeCount}}</small>
+            {{/if}}
           </div>
         </div>
-        <div class="col-12">回覆{{this.replyTo}}</div>
-        <div class="col-12">{{this.comment}}</div>
-        <!-- 第二層按讚與回應 -->
+        <!--  第二層回覆  -->
+        {{#each this.secondReplies}}
+        <div class="col-1 ml-2">
+          <a href="/users/{{this.User.id}}">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+          </a>
+        </div>
+
+        <div class="col-10 ml-3">
+          <span style="font-size: 15px;">{{this.User.name}}
+            <span class="ml-1 text-muted">{{this.User.account}}．{{moment this.createdAt}}</span> <br>
+            <span class="text-muted">回覆 {{this.replyTo}}
+            </span> <br>
+            {{this.comment}}<br>
+          </span>
+          <!-- 第二層按讚與回應 -->
+          <span>
+            <svg width="15" style="cursor: pointer; margin-right:68px" height="15" viewBox="0 0 15 15" fill="none"
+              xmlns="http://www.w3.org/2000/svg" data-toggle="modal" data-target="#secondReply{{this.id}}">
+              <path
+                d="M8.77875 1.40127L6.18625 1.39502H6.185C3.45125 1.39502 1.31 3.53689 1.31 6.27127C1.31 8.83252 3.30125 10.775 5.97562 10.8775V13.27C5.97562 13.3375 6.00312 13.4488 6.05062 13.5219C6.13937 13.6625 6.29062 13.7388 6.44562 13.7388C6.53187 13.7388 6.61875 13.715 6.69687 13.665C6.86187 13.56 10.7425 11.0775 11.7519 10.2238C12.9406 9.21752 13.6519 7.74252 13.6537 6.27877V6.26814C13.65 3.53877 11.51 1.40127 8.77875 1.40064V1.40127ZM11.1456 9.50877C10.4369 10.1088 8.10687 11.6369 6.91312 12.4106V10.4188C6.91312 10.16 6.70375 9.95002 6.44437 9.95002H6.19687C3.90937 9.95002 2.24812 8.40252 2.24812 6.27127C2.24812 4.06252 3.97812 2.33252 6.18562 2.33252L8.7775 2.33877H8.77875C10.9862 2.33877 12.7162 4.06752 12.7175 6.27377C12.7156 7.46752 12.1287 8.67627 11.1462 9.50877H11.1456Z"
+                fill="#657786" />
+            </svg>
+            {{#if this.secondReplyIsLiked}}
+            <a href="/unlike/0/0/{{this.id}}" style="text-decoration: none;">
+              <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M11 19.6381H10.986C8.403 19.5901 0.949997 12.8561 0.949997 6.47812C0.949997 3.41412 3.475 0.724121 6.353 0.724121C8.643 0.724121 10.183 2.30412 10.999 3.45412C11.813 2.30612 13.353 0.724121 15.644 0.724121C18.524 0.724121 21.048 3.41412 21.048 6.47912C21.048 12.8551 13.594 19.5891 11.011 19.6361H11V19.6381Z"
+                  fill="#E0245E" />
+              </svg>
+            </a>
+            <small>{{this.likeCount}}</small>
+            {{else}}
+            <a href="/like/0/0/{{this.id}}" style="text-decoration: none;">
+              <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M7.5 13.5239H7.49125C5.87687 13.4939 1.21875 9.28514 1.21875 5.29889C1.21875 3.38389 2.79687 1.70264 4.59562 1.70264C6.02687 1.70264 6.98937 2.69014 7.49937 3.40889C8.00812 2.69139 8.97062 1.70264 10.4025 1.70264C12.2025 1.70264 13.78 3.38389 13.78 5.29951C13.78 9.28451 9.12125 13.4933 7.50687 13.5226H7.5V13.5239ZM4.59625 2.64076C3.29625 2.64076 2.15687 3.88326 2.15687 5.30014C2.15687 8.88764 6.55312 12.5476 7.50062 12.5864C8.44937 12.5476 12.8444 8.88826 12.8444 5.30014C12.8444 3.88326 11.705 2.64076 10.405 2.64076C8.825 2.64076 7.9425 4.47576 7.935 4.49389C7.79125 4.84514 7.2125 4.84514 7.06812 4.49389C7.05937 4.47514 6.1775 2.64076 4.59687 2.64076H4.59625Z"
+                  fill="#657786" />
+              </svg>
+            </a>
+            <small class="text-muted">{{this.likeCount}}</small>
+            {{/if}}
+          </span>
+        </div>
+        {{/each}}
         <div class="col-12">
-          <i class="far fa-comment mr-5" data-toggle="modal" data-target="#secondReply{{this.id}}"></i>
-          {{#if this.secondReplyIsLiked}}
-          <a href="/unlike/0/0/{{this.id}}"><i class="fas fa-heart" style="color: salmon;"></i></a>
-          <small>{{this.likeCount}}</small>
-          {{else}}
-          <a href="/like/0/0/{{this.id}}"><i class="far fa-heart" style="color: salmon;"></i></a>
-          <small>{{this.likeCount}}</small>
-          {{/if}}
+          <hr>
         </div>
       </div>
-      {{/each}}
-      {{/each}}
     </div>
+    {{/each}}
   </div>
   {{>rightColumn}}
 </div>
 
 
 <!-- replyTweet Modal -->
-<div class="modal fade" id="replyTweet" tabindex="-1" role="dialog" aria-labelledby="replyTweet" aria-hidden="true">
+<div class="modal fade" id="replyTweet" tabindex="-1" role="dialog" aria-labelledby="replyTweet">
   <form action="/tweets/{{tweet.id}}/reply" method="post">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="replyTweetLabel">回覆</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <div class="row justify-content-center" id="tweet-detail">
-            <div class="col-auto" id="person-img">
-              <img style="width: 50px;height:50px" src="{{tweet.User.avatar}}" alt="pic">
-            </div>
-            <div class="col" id="person-indo">
-              <div class="row">
-                <div class="col-12">{{tweet.User.name}}</div>
-                <div class="col-12">{{tweet.User.account}}</div>
+          <div class="card" style="border-color:transparent;">
+            <div class="row no-gutters">
+              <div class="col-1 d-flex flex-column align-items-center">
+                <img src="{{tweet.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+                <div class="vertical-line" style="width: 2px; height:100% ; background-color:#CCD6DD;"></div>
+              </div>
+              <div class="col-10 ml-3 mb-1">
+                <span style="font-size: 15px;">
+                  <span style="font-weight: bold;">{{tweet.User.name}}</span>
+                  <span class="ml-1 text-muted">{{tweet.User.account}}．{{moment tweet.createdAt}}</span> <br>
+                  <span>{{tweet.description}}</span> <br>
+                </span>
+                <span class="text-muted" style="font-size: 13px;">
+                  回覆給
+                  <span style="color: #FF6600;">{{tweet.User.account}}</span>
+                </span>
+              </div>
+              <hr>
+              <div class="col-1 mt-3">
+                <img src="{{user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
+              </div>
+              <div class="col ml-3 mt-3">
+                <textarea class="w-100" name="reply" cols="25" rows="10" placeholder="推你的回覆"
+                  style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent"></textarea>
+                <div class="card-text text-right">
+                  <button type="submit" class="btn rounded-pill"
+                    style="background-color: #FF6600; color:white">回覆</button>
+                </div>
               </div>
             </div>
-            <p>
-              {{tweet.description}}
-            </p>
-            <small class="mr-auto">
-              回覆給 {{tweet.User.account}}
-            </small>
           </div>
-          <hr>
-          <div class="row w-100">
-            <textarea name="reply" id="" cols="30" rows="10">回覆的內容</textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">回覆</button>
         </div>
       </div>
     </div>
@@ -141,43 +228,48 @@
 </div>
 <!-- Replyreply Modal (幫第一層回覆做 Modal) -->
 {{#each replies}}
-<div class="modal fade" id="replyReply{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="replyReply"
-  aria-hidden="true">
+<div class="modal fade" id="replyReply{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="replyReply{{this.id}}">
   <!-- 透過 routes 傳送 /tweets/:tweetId/:replyId/:replyTo  -->
   <form action="/tweets/{{this.TweetId}}/{{this.id}}/{{this.User.account}}" method="post">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="replyReplyLabel">回覆</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <div class="row justify-content-center" id="reply-detail">
-            <div class="col-auto" id="person-img">
-              <img style="width: 50px;height:50px" src="{{this.User.avatar}}" alt="pic">
-            </div>
-            <div class="col" id="person-indo">
-              <div class="row">
-                <div class="col-12">{{this.User.name}}</div>
-                <div class="col-12">{{this.User.account}}</div>
+          <div class="card" style="border-color:transparent;">
+            <div class="row no-gutters">
+              <div class="col-1 d-flex flex-column align-items-center">
+                <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+                <div class="vertical-line" style="width: 2px; height:100% ; background-color:#CCD6DD;"></div>
+              </div>
+              <div class="col-10 ml-3 mb-1">
+                <span style="font-size: 15px;">
+                  <span style="font-weight: bold;">{{this.User.name}}</span>
+                  <span class="ml-1 text-muted">{{this.User.account}}．{{moment this.createdAt}}</span> <br>
+                  <span>{{this.comment}}</span> <br>
+                </span>
+                <span class="text-muted" style="font-size: 13px;">
+                  回覆給
+                  <span style="color: #FF6600;">{{this.User.account}}</span>
+                </span>
+              </div>
+              <hr>
+              <div class="col-1 mt-3">
+                <img src="{{../user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
+              </div>
+              <div class="col ml-3 mt-3">
+                <textarea class="w-100" name="reply" cols="25" rows="10" placeholder="推你的回覆"
+                  style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent"></textarea>
+                <div class="card-text text-right">
+                  <button type="submit" class="btn rounded-pill"
+                    style="background-color: #FF6600; color:white">回覆</button>
+                </div>
               </div>
             </div>
-            <p>
-              {{this.comment}}
-            </p>
-            <small class="mr-auto">
-              回覆給 {{this.User.account}}
-            </small>
           </div>
-          <hr>
-          <div class="row w-100">
-            <textarea name="reply" id="" cols="30" rows="10">回覆的內容</textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">回覆</button>
         </div>
       </div>
     </div>
@@ -187,42 +279,49 @@
 
 <!-- SecondReply Modal （幫第二層回覆做 Modal） -->
 {{#each secondReplies}}
-<div class="modal fade" id="secondReply{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="secondReply"
-  aria-hidden="true">
+<div class="modal fade" id="secondReply{{this.id}}" tabindex="-1" role="dialog"
+  aria-labelledby="secondReply{{this.id}}">
+  <!-- 透過 routes 傳送 /tweets/:tweetId/:replyId/:replyTo  -->
   <form action="/tweets/{{../tweet.id}}/{{this.ReplyId}}/{{this.User.account}}" method="post">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="secondReplyLabel">回覆</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <div class="row justify-content-center" id="reply-detail">
-            <div class="col-auto" id="person-img">
-              <img style="width: 50px;height:50px" src="{{this.User.avatar}}" alt="pic">
-            </div>
-            <div class="col" id="person-indo">
-              <div class="row">
-                <div class="col-12">{{this.User.name}}</div>
-                <div class="col-12">{{this.User.account}}</div>
+          <div class="card" style="border-color:transparent;">
+            <div class="row no-gutters">
+              <div class="col-1 d-flex flex-column align-items-center">
+                <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+                <div class="vertical-line" style="width: 2px; height:100% ; background-color:#CCD6DD;"></div>
+              </div>
+              <div class="col-10 ml-3 mb-1">
+                <span style="font-size: 15px;">
+                  <span style="font-weight: bold;">{{this.User.name}}</span>
+                  <span class="ml-1 text-muted">{{this.User.account}}．{{moment this.createdAt}}</span> <br>
+                  <span>{{this.comment}}</span> <br>
+                </span>
+                <span class="text-muted" style="font-size: 13px;">
+                  回覆給
+                  <span style="color: #FF6600;">{{this.User.account}}</span>
+                </span>
+              </div>
+              <hr>
+              <div class="col-1 mt-3">
+                <img src="{{../user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
+              </div>
+              <div class="col ml-3 mt-3">
+                <textarea class="w-100" name="reply" cols="25" rows="10" placeholder="推你的回覆"
+                  style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent"></textarea>
+                <div class="card-text text-right">
+                  <button type="submit" class="btn rounded-pill"
+                    style="background-color: #FF6600; color:white">回覆</button>
+                </div>
               </div>
             </div>
-            <p>
-              {{this.comment}}
-            </p>
-            <small class="mr-auto">
-              回覆給 {{this.User.account}}
-            </small>
           </div>
-          <hr>
-          <div class="row w-100">
-            <textarea name="reply" id="" cols="30" rows="10">回覆的內容</textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">回覆</button>
         </div>
       </div>
     </div>
