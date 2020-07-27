@@ -9,3 +9,9 @@ textarea {
   resize: none;
   border: none!important; 
 }
+
+* p {
+  overflow-wrap: break-word;
+  word-break: break-all;
+  word-wrap: break-word;
+}

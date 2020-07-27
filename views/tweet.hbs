@@ -28,9 +28,15 @@
 
         </div>
       </div>
+        <p class="h3 mt-3">{{tweet.description}}</p>
 
-      <p class="h3 mt-3">{{tweet.description}}</p>
       <div class="time">
+
+
+
+時間還沒做
+
+
 
       </div>
     </li>
@@ -91,7 +97,7 @@
     </li>
 
     {{#each replies}}
-    <li class="list-group-item list-group-item-action">
+    <li class="list-group-item list-group-item-action d-flex">
 
       <div class="user-wrap d-flex">
         <a href="/users/{{this.User.id}}" >
@@ -116,7 +122,11 @@
               </div>
             </div>
           </div>
-          <p class="mt-2 ">{{this.comment}}</p>
+          <p class="mt-2">
+            {{this.comment}}
+            </p>
+
+          
 
           <div class="d-flex justify-content-start">
             <a href="/tweet/{{this.id}}/reply" class=" mr-5 text-dark">
