@@ -137,6 +137,7 @@ a p:hover {
   height: 40px;
 }
 .user-page-imformation {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -206,8 +207,6 @@ a p:hover {
   margin-top: 30px;
   border-bottom: 1px solid #E6ECF0;
 }
-.follow-list {
-}
 .follow-item {
   display: flex;
   border-bottom: 1px solid #E6ECF0;
@@ -231,7 +230,6 @@ a p:hover {
 .folloe-item-introduction {
   padding-right: 30px;
 }
-
 
 /* 使用者頁面列表 */
 .user-page-tweets-list,
