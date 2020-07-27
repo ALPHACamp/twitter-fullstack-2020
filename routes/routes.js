@@ -33,12 +33,8 @@ const authenticatedAdmin = (req, res, next) => {
 };
 router.get('/', (req, res) => res.redirect('/tweets'));
 
-router.get('/ii', (req, res) => {
-  res.render('postTweet')
-})
 router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets);
 router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
-router.post('/tweets/:id/comments', authenticated, tweetController.postComment)
 router.get('/tweets/:id', 
 authenticated,
 userController.topUserForLayout,
@@ -98,6 +94,10 @@ router.put('/users/:id/profile', authenticated,
 
 router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply)
 router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
+router.get('/tweets/:id/reply', authenticated,userController.topUserForLayout, (req, res, next) => {
+  res.locals.getComment = true
+  return next()
+}, tweetController.getTweet)
 router.post('/tweets/:id/comments', authenticated, userController.topUserForLayout, tweetController.postComment)
 router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike)
 router.get('/users/:id/edit', authenticated, userController.editUser);

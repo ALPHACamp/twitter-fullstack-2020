@@ -154,6 +154,7 @@ let userController = {
       ]
     });
     user = user.toJSON();
+    console.log(user)
     const followShip = {
       isReply: true,
       tweetsCount: user.Tweets.length,
@@ -163,7 +164,7 @@ let userController = {
     };
 
     let repliesTweet = user.Replies;
-
+    console.log(repliesTweet[1])
     repliesTweet = repliesTweet.map((r) => ({
       ...r,
       tweetId: r.Tweet.id,
@@ -235,7 +236,6 @@ let userController = {
     }))
 
     likes = likes.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
-    console.log(likes)
     res.render('userPage', {
       user,
       followShip,

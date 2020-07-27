@@ -30,14 +30,8 @@
       </div>
         <p class="h3 mt-3">{{tweet.description}}</p>
 
-      <div class="time">
-
-
-
-時間還沒做
-
-
-
+      <div class="text-secondary mt-3 ml-2">
+        {{getTime tweet.createdAt}}
       </div>
     </li>
     <li class="list-group-item d-flex">
@@ -78,14 +72,14 @@
         </form>
       {{/if}}    
     </li>
-    <li class="list-group-item collapse" id="comments">
+    <li class="list-group-item collapse {{#if getComment}} show {{/if}}" id="comments">
       <div class="d-flex">
 
       <img src="{{myUser.avatar}}" alt="" width="75px" height="75px" class="rounded-circle mr-2">
       
       <form action="/tweets/{{tweet.id}}/comments" method="POST" class="flex-grow-1 d-flex flex-column">
         <div class="form-group">
-          <textarea class="form-control tweet" id="newTweet" name="newComment" rows="5" placeholder="推你的回覆"></textarea>
+          <textarea class="form-control tweet" id="newTweet" name="newComment" rows="5" placeholder="在這邊留個言吧！"></textarea>
         </div>
         <div class="align-self-end">
           <button type="submit" class="btn btn-danger rounded-pill">推文</button>
