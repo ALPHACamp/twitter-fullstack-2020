@@ -84,7 +84,7 @@ const userController = {
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
-      order: [['createdAt', 'DESC']]
+      order: [['Tweets', 'createdAt', 'DESC']]
     })
       .then(user => {
         user.dataValues.Tweets.forEach(t => {
@@ -100,7 +100,7 @@ const userController = {
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
-      order: [['createdAt', 'DESC']],
+      order: [['LikedTweets', 'createdAt', 'DESC']],
     })
       .then(user => {
         user.dataValues.LikedTweets.forEach(t => {
