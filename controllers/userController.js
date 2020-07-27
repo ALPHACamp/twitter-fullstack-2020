@@ -173,7 +173,6 @@ let userController = {
       replayCount: r.Tweet.Replies.length,
       isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }))
-
     res.render('userPage', {
       user,
       followShip,
@@ -213,7 +212,6 @@ let userController = {
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
     let likes = user.userLike;
-    console.log(likes)
     likes = likes.map((r) => ({
       ...r,
       tweetId: r.id,
@@ -322,6 +320,7 @@ let userController = {
       ...i,
       isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
     }));
+    followings = followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       user: user.toJSON(),
       followShip: followings,
@@ -347,6 +346,7 @@ let userController = {
       ...i,
       isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
     }));
+    followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       user: user.toJSON(),
       followShip: followers,

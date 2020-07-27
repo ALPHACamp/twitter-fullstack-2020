@@ -48,7 +48,7 @@ const tweetController = {
       RepliesLikeCount: reply.ReplyWhoLike.length,
       isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(req.user.id)
     }))
-    console.log(replies)
+    replies.sort((a, b) => b.createdAt - a.createdAt)
     const totalCount = {
       replyCount: tweet.Replies.length,
       likeCount: tweet.TweetWhoLike.length,
@@ -85,6 +85,12 @@ const tweetController = {
       req.flash('error_messages', "請輸入推文內容!!!")
       return res.redirect('back')
     }
+
+    if (Array.from(req.body.newComment).length > 140) {
+      req.flash('error_messages', '回覆內容需小於140個字!!!');
+      return res.redirect('back');
+    }
+
     return Reply.create({
       comment: req.body.newComment,
       TweetId: whichTweet,
@@ -92,7 +98,7 @@ const tweetController = {
     })
       .then((tweet) => {
         req.flash('success_messages', '回覆成功!!!')
-        res.redirect('/tweets')
+        res.redirect('back')
       })
   },
 };

@@ -40,8 +40,9 @@
       </div>
       <div class="text-secondary h5"> {{ totalCount.likeCount }} 喜歡次數</div>
     </li>
+
     <li class="list-group-item d-flex justify-content-around">
-      <a href="/tweets/{{tweet.id}}/comments" class="mt-1">
+      <a href="#comments" data-toggle="collapse" class="mt-1" aria-controls="comments">
         <svg width="1.6em" height="1.6em" viewBox="0 0 16 16" class="bi bi-chat text-dark" fill="currentColor"
           xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd"
@@ -69,16 +70,33 @@
             </svg>
           </button>
         </form>
-      {{/if}}
+      {{/if}}    
+    </li>
+    <li class="list-group-item collapse" id="comments">
+      <div class="d-flex">
+
+      <img src="{{myUser.avatar}}" alt="" width="75px" height="75px" class="rounded-circle mr-2">
       
+      <form action="/tweets/{{tweet.id}}/comments" method="POST" class="flex-grow-1 d-flex flex-column">
+        <div class="form-group">
+          <textarea class="form-control tweet" id="newTweet" name="newComment" rows="5" placeholder="推你的回覆"></textarea>
+        </div>
+        <div class="align-self-end">
+          <button type="submit" class="btn btn-danger rounded-pill">推文</button>
+      
+        </div>
+      </form>
+      </div>
+
     </li>
 
     {{#each replies}}
     <li class="list-group-item list-group-item-action">
 
       <div class="user-wrap d-flex">
-
-        <img src="{{this.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+        <a href="/users/{{this.User.id}}" >
+          <img src="{{this.User.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+        </a>
 
         <div class="d-flex flex-column">
           <div class="d-flex flex-column">
@@ -99,6 +117,7 @@
             </div>
           </div>
           <p class="mt-2 ">{{this.comment}}</p>
+
           <div class="d-flex justify-content-start">
             <a href="/tweet/{{this.id}}/reply" class=" mr-5 text-dark">
               <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-chat" fill="currentColor"
