@@ -206,8 +206,7 @@ a p:hover {
   margin-top: 30px;
   border-bottom: 1px solid #E6ECF0;
 }
-.follow-list {
-}
+
 .follow-item {
   display: flex;
   border-bottom: 1px solid #E6ECF0;
@@ -540,6 +539,7 @@ width: 600px;
   position: relative;
   top: -10px;
   left: 58px;
+  width: 140px;
 }
 .tweet-item-footer .reply-link,
 .tweet-item-footer .like-link {
