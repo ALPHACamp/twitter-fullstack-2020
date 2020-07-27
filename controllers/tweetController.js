@@ -27,7 +27,6 @@ const tweetController = {
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
-
   getTweet: async (req, res) => {
     const id = req.params.id;
     let tweet = await Tweet.findOne({

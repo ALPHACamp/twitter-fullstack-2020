@@ -48,7 +48,6 @@ let adminController = {
       });
     });
   },
-
   getUsers: async (req, res) => {
     let users = await User.findAll({
       include: [
@@ -73,7 +72,6 @@ let adminController = {
       isAdminUser: true
     });
   },
-
   deleteTweet: (req, res) => {
     Tweet.findByPk(req.params.id).then((Tweet) => {
       Tweet.destroy().then((Tweet) => {
