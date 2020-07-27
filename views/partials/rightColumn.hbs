@@ -1,31 +1,38 @@
 <!-- 若要使用此導覽列，請載入userControlller.getRecommendedUsers  --->
-<div class="col-4">
-  {{#each recommendFollowings}}
-  <div class="card " style="width:350px">
-    <div class="row no-gutters">
-      <div class="col-md-1">
-        <img src="{{this.avatar}}" class="card-img" alt="img">
-      </div>
-      <div class="col-md-6">
-        <div class="card-body">
-          <h5 class="card-title">{{this.name}}</h5>
-          <small>{{this.account}}</small>
+<div class="col-4 mt-3">
+  <div class="row justify-content-center mt-3 ml-3 p-0 m-0" style="width:350px">
+    <div class="col align-self-center m-0 p-0" style="background-color: #F5F8FA;border-radius:10px">
+      <div class="h6 m-3 " style="font-weight: bold;">跟隨誰</div>
+      <hr class="m-0 p-0">
+      {{#each recommendFollowings}}
+      <div class="card m-0 p-0  " style="border-color:transparent; border-radius:0 ;background-color:#F5F8FA;">
+        <div class="row no-gutters">
+          <div class="m-2">
+            <img src="{{this.avatar}}" class="card-img" alt="img" style="border-radius: 50%; width:50px">
+          </div>
+          <div class="col d-flex flex-column justify-content-center">
+            <span style="font-weight: bold;">{{this.name}}</span>
+            <span class="text-muted" style="font-weight: bold;">{{this.account}}</span>
+          </div>
+          {{#if this.isFollowed}}
+          <form action="/following/{{this.id}}?_method=DELETE" method="post" class="row align-items-center mr-3">
+            <div class="col ml-auto ">
+              <button type="submit" class="btn rounded-pill"
+                style="background-color: #FF6600; color:white">取消跟隨</button>
+            </div>
+          </form>
+          {{else}}
+          <form action="/following/{{this.id}}" method="post" class="row align-items-center mr-3">
+            <div class="col ml-auto">
+              <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600">跟隨</button>
+            </div>
+          </form>
+          {{/if}}
         </div>
       </div>
-      {{#if this.isFollowed}}
-      <form action="/following/{{this.id}}?_method=DELETE" method="post">
-        <div class="col ml-auto align-self-center">
-          <button type="submit" class="btn btn-primary" style="color: white">取消跟隨</button>
-        </div>
-      </form>
-      {{else}}
-      <form action="/following/{{this.id}}" method="post">
-        <div class="col ml-auto align-self-center">
-          <button class="btn btn-outline-primary" style="color: blue">跟隨</button>
-        </div>
-      </form>
-      {{/if}}
+      <hr class="m-0 p-0">
+      {{/each}}
+      <div class="h6 m-3"><a href="" style="color:#FF6600;">顯示更多</a></div>
     </div>
   </div>
-  {{/each}}
 </div>
