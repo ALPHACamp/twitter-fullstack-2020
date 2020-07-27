@@ -5,7 +5,6 @@ const Reply = db.Reply
 const Like = db.Like
 const Secondreply = db.Secondreply
 const userController = require('./userController')
-const e = require('express')
 
 const tweetController = {
   getHomePage: (req, res) => {
@@ -23,6 +22,7 @@ const tweetController = {
         })
           .then((tweets) => {
             res.render('home', {
+              user: req.user,
               tweets: tweets,
               recommendFollowings: users,
               currentUserId: req.user.id
@@ -90,6 +90,9 @@ const tweetController = {
                       if (index.LikedUsers.Like.UserId === req.user.id) { index.secondReplyIsLiked = true } else {
                         index.secondReplyIsLiked = false
                       }
+                      delete index.LikedUsers
+                    })
+                    replies.forEach(index => {
                       delete index.LikedUsers
                     })
                     // 過濾掉重複資訊

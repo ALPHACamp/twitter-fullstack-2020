@@ -53,6 +53,7 @@ const userController = {
           console.log(results)
           return res.render('userPage', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
         })
+        .catch((err) => res.send(err))
     })
   },
   getUserLikeContent: (req, res) => {
