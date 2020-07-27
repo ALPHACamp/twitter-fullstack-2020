@@ -6,7 +6,6 @@
         {{#each tweets}}
         <li class="list-group-item list-group-item-action">
             <div class="d-flex justify-content-between">
-
                 <div class="user-wrap d-flex">
                     <img src="{{this.userAvatar}}" alt="" class="rounded-circle mr-4"
                         style="width: 60px; height: 60px;">
@@ -22,13 +21,10 @@
                                 {{!-- 要改 --}}
                                 <span>・{{moment this.createdAt}}</span>
                             </div>
-
                         </div>
                         <p class="mt-2 ">{{this.description}}</p>
                     </div>
                 </div>
-
-
                 <button type="button" class="btn btn-link text-dark" onclick="deleteTweet({{this.id}})"
                     data-toggle="modal" data-target="#exampleModal">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor"
@@ -39,9 +35,6 @@
                             d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z" />
                     </svg>
                 </button>
-
-
-
             </div>
         </li>
         {{/each}}

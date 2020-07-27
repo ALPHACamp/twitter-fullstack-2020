@@ -2,7 +2,6 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
-const Like = db.Like;
 
 const tweetController = {
   getTweets: async (req, res) => {
@@ -12,7 +11,6 @@ const tweetController = {
         User,
         Reply,
         { model: User, as: 'TweetWhoLike' },
-
       ]
     })
     data = tweets.map((r) => ({
@@ -29,6 +27,7 @@ const tweetController = {
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
+
   getTweet: async (req, res) => {
     const id = req.params.id;
     let tweet = await Tweet.findOne({
@@ -67,12 +66,10 @@ const tweetController = {
       req.flash('error_messages', '請輸入推文內容!!!');
       return res.redirect('back');
     }
-
     if (Array.from(req.body.newTweet).length > 140) {
       req.flash('error_messages', '推文內容需小於140個字!!!');
       return res.redirect('back');
     }
-
     return Tweet.create({
       UserId: req.user.id,
       description: req.body.newTweet
@@ -88,6 +85,12 @@ const tweetController = {
       req.flash('error_messages', "請輸入推文內容!!!")
       return res.redirect('back')
     }
+
+    if (Array.from(req.body.newComment).length > 140) {
+      req.flash('error_messages', '回覆內容需小於140個字!!!');
+      return res.redirect('back');
+    }
+
     return Reply.create({
       comment: req.body.newComment,
       TweetId: whichTweet,
