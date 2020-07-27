@@ -87,7 +87,7 @@
             </div>
           </div>
 
-          <a href="#" onclick="getTweetPage()" class="btn btn-danger rounded-pill w-100 mt-3">推文</a>
+          <a href="#" onclick="getTweetPage()" class="btn btn-danger rounded-pill w-100 m-3">推文</a>
           <script>
             function getTweetPage() {
               $('#getTweetPage').modal('show');
@@ -149,8 +149,11 @@
         <li class="list-group-item font-weight-bold h5 bg-light">跟隨誰</li>
         {{#each topUsers}}
         <li class="list-group-item d-flex flex-column flex-lg-row justify-content-lg-between bg-light">
+
           <div class="user-wrap d-flex mb-2">
-            <img src="{{this.avatar}}" alt="" class="rounded-circle mr-2" style="width: 50px; height: 50px;">
+            <a href="/users/{{this.id}}">
+              <img src="{{this.avatar}}" alt="" class="rounded-circle mr-2" style="width: 50px; height: 50px;">
+            </a>
             <div class="user d-flex flex-column justify-content-center">
               <div class="user-name font-weight-bold">
                 {{this.name}}
