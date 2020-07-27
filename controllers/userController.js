@@ -94,7 +94,6 @@ let userController = {
             User,
             Reply,
             { model: User, as: 'TweetWhoLike' },
-
           ]
         },
         { model: User, as: 'Followers' },
