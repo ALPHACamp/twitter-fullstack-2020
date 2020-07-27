@@ -32,21 +32,21 @@ const adminAuthenticated = (req, res, next) => {
 // 首頁
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, tweetController.getHomePage)
-router.get('/tweets/:tweetId', tweetController.getReplyPage)
+router.get('/tweets/:tweetId', authenticated, tweetController.getReplyPage)
 // 發推
-router.post('/tweet', tweetController.postTweet)
-router.delete('/tweets/:tweetId', tweetController.deleteTweet)
+router.post('/tweet', authenticated, tweetController.postTweet)
+router.delete('/tweets/:tweetId', authenticated, tweetController.deleteTweet)
 // 回應推文
-router.post('/tweets/:tweetId/reply', tweetController.postReply)
-router.delete('/tweets/:tweetId/:replyId', tweetController.deleteReply)
+router.post('/tweets/:tweetId/reply', authenticated, tweetController.postReply)
+router.delete('/tweets/:tweetId/:replyId', authenticated, tweetController.deleteReply)
 // 回應留言
-router.post('/tweets/:tweetId/:replyId/:replyTo', tweetController.postSecondReply)
+router.post('/tweets/:tweetId/:replyId/:replyTo', authenticated, tweetController.postSecondReply)
 // 追隨
-router.post('/following/:userId', userController.addFollowing)
-router.delete('/following/:userId', userController.removeFollowing)
+router.post('/following/:userId', authenticated, userController.addFollowing)
+router.delete('/following/:userId', authenticated, userController.removeFollowing)
 // LIKE
-router.get('/like/:tweetId/:replyId/:secondReplyId', tweetController.addLike)
-router.get('/unlike/:tweetId/:replyId/:secondReplyId', tweetController.removeLike)
+router.get('/like/:tweetId/:replyId/:secondReplyId', authenticated, tweetController.addLike)
+router.get('/unlike/:tweetId/:replyId/:secondReplyId', authenticated, tweetController.removeLike)
 // 取得登入頁面
 router.get('/signin', userController.userSigninPage)
 // 取得註冊頁面
@@ -72,23 +72,22 @@ router.get('/admin/tweets', adminAuthenticated, adminController.adminTweetsPage)
 // 取得管理使用者頁面
 router.get('/admin/users', adminAuthenticated, adminController.adminUsersPage)
 // 回傳管理者登入資訊
-router.post('/admin/signin', adminController.adminCheckRequired, passport.authenticate('local', { failureRedirect: '/admin/signin' }),
-  adminAuthenticated, adminController.adminSigninSuccess)
+router.post('/admin/signin', adminController.adminCheckRequired, passport.authenticate('local', { failureRedirect: '/admin/signin' }), adminController.adminSigninSuccess)
 // 管理者刪除推文
 router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.adminDeleteTweets)
 
 // USER
 // 取得個人頁面
-router.get('/users/:id', userController.getUser)
+router.get('/users/:id', authenticated, userController.getUser)
 // 取得個人like內容頁面
-router.get('/users/:id/like', userController.getUserLikeContent)
+router.get('/users/:id/like', authenticated, userController.getUserLikeContent)
 // 編輯個人資料業面
-router.get('/users/:id/edit', userController.editUser)
+router.get('/users/:id/edit', authenticated, userController.editUser)
 // 編輯個人資料
-router.put('/users/:id/edit', userController.putUser)
+router.put('/users/:id/edit', authenticated, userController.putUser)
 // 查看跟隨者名單
-router.get('/users/:id/followers', userController.getUserFollowerList)
+router.get('/users/:id/followers', authenticated, userController.getUserFollowerList)
 // 查看追隨者名單
-router.get('/users/:id/followings', userController.getUserFollowingList)
+router.get('/users/:id/followings', authenticated, userController.getUserFollowingList)
 
 module.exports = router
