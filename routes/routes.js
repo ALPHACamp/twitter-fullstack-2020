@@ -6,11 +6,14 @@ const helper = require('../_helpers')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
-const tweet = require('../models/tweet')
 
 // 判斷是否已登入
 const authenticated = (req, res, next) => {
-  if (helper.ensureAuthenticated(req)) return next()
+  if (helper.ensureAuthenticated(req)) {
+    if (helper.getUser(req).role === 'user') return next()
+    req.flash('error_messages', '管理者無法使用前台服務，只能登入後台！')
+    return res.redirect('/admin/tweets')
+  }
   req.flash('error_messages', '請先進行登入！')
   return res.redirect('/signin')
 }
@@ -18,11 +21,11 @@ const authenticated = (req, res, next) => {
 const adminAuthenticated = (req, res, next) => {
   if (helper.ensureAuthenticated(req)) {
     if (helper.getUser(req).role === 'admin') return next()
-    req.flash('error_messages', '禁止訪問！請向管理者申請管理者權限！')
-    return res.redirect('/admin/signin')
+    req.flash('error_messages', '禁止訪問！請向管理員申請管理者權限！')
+    return res.redirect('/signin')
   }
   req.flash('error_messages', '請先進行登入！')
-  return res.redirect('/signin')
+  return res.redirect('/admin/signin')
 }
 
 // Root path
@@ -30,14 +33,20 @@ const adminAuthenticated = (req, res, next) => {
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, tweetController.getHomePage)
 router.get('/tweets/:tweetId', tweetController.getReplyPage)
+// 發推
 router.post('/tweet', tweetController.postTweet)
+router.delete('/tweets/:tweetId', tweetController.deleteTweet)
+// 回應推文
 router.post('/tweets/:tweetId/reply', tweetController.postReply)
 router.delete('/tweets/:tweetId/:replyId', tweetController.deleteReply)
-router.delete('/tweets/:tweetId', tweetController.deleteTweet)
+// 回應留言
+router.post('/tweets/:tweetId/:replyId/:replyTo', tweetController.postSecondReply)
+// 追隨
 router.post('/following/:userId', userController.addFollowing)
 router.delete('/following/:userId', userController.removeFollowing)
-router.get('/like/:tweetId', tweetController.likeTweet)
-router.get('/unlike/:tweetId', tweetController.removeLike)
+// LIKE
+router.get('/like/:tweetId/:replyId/:secondReplyId', tweetController.addLike)
+router.get('/unlike/:tweetId/:replyId/:secondReplyId', tweetController.removeLike)
 // 取得登入頁面
 router.get('/signin', userController.userSigninPage)
 // 取得註冊頁面
