@@ -9,26 +9,49 @@ const Reply = db.Reply
 const Followship = db.Followship
 
 const userController = {
-  getUser: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        {
-          model: Tweet,
-          include: { model: User, as: 'LikedUsers' }
-        },
-        { model: Tweet }
-      ]
-    })
-      .then((user) => {
-        const results = user.toJSON()
-        results.tweetCount = results.Tweets.length
-        for (let i = 0; i < results.Tweets.length; i++) {
-          results.Tweets[i].repliesCount = results.Tweets[i].replyCount
-          results.Tweets[i].likeCount = results.Tweets[i].LikedUsers.length
-        }
-        console.log(results)
-        return res.render('userPage', { results })
+  getRecommendedUsers: (req, res) => {
+    return new Promise((resolve, reject) => {
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
       })
+        .then((users) => {
+          users = users.map((user) => ({
+            ...user.dataValues,
+            followerCount: user.Followers.length,
+            isFollowed: user.Followers.map((er) => er.id).includes(req.user.id)
+          }))
+          // 去除掉自己和root，依照追蹤人數多排到少，再取前10名顯示
+          users = users.filter((user) => (user.name !== req.user.name && user.name !== 'root'))
+          users = users
+            .sort((a, b) => b.followerCount - a.followerCount)
+            .slice(0, 10)
+          resolve(users)
+        })
+        .catch(err => { reject(err) })
+    })
+  },
+  getUser: (req, res) => {
+    userController.getRecommendedUsers(req, res).then((users) => {
+      return User.findByPk(req.params.id, {
+        include: [
+          {
+            model: Tweet,
+            include: { model: User, as: 'LikedUsers' }
+          },
+          { model: Tweet }
+        ]
+      })
+        .then((user) => {
+          const results = user.toJSON()
+          results.tweetCount = results.Tweets.length
+          for (let i = 0; i < results.Tweets.length; i++) {
+            results.Tweets[i].repliesCount = results.Tweets[i].replyCount
+            results.Tweets[i].likeCount = results.Tweets[i].LikedUsers.length
+          }
+          console.log(results)
+          return res.render('userPage', { results: results, recommendFollowings: users })
+        })
+    })
       .catch((err) => res.send(err))
   },
   getUserLikeContent: (req, res) => {
@@ -134,27 +157,7 @@ const userController = {
       })
       .catch((err) => res.send(err))
   },
-  getRecommendedUsers: (req, res) => {
-    return new Promise((resolve, reject) => {
-      User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-        .then((users) => {
-          users = users.map((user) => ({
-            ...user.dataValues,
-            followerCount: user.Followers.length,
-            isFollowed: user.Followers.map((er) => er.id).includes(req.user.id)
-          }))
-          // 去除掉自己和root，依照追蹤人數多排到少，再取前10名顯示
-          users = users.filter((user) => (user.name !== req.user.name && user.name !== 'root'))
-          users = users
-            .sort((a, b) => b.followerCount - a.followerCount)
-            .slice(0, 10)
-          resolve(users)
-        })
-        .catch(err => { reject(err) })
-    })
-  },
+
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-3"></div>
+  {{>leftColumnUser}}
   <div class="col-5">
     <div class="card" style="background: #FFFFFF; border: 1px solid #E6ECF0; box-sizing: border-box;">
       <div class="row">
@@ -16,22 +16,71 @@
           <h4>{{results.name}}</h4>
           <p>{{results.tweetCount}} 推文</p>
         </div>
-        <img src="{{results.cover}}" alt="background" style="width: 598px;height: 200px;">
-        <img src="{{results.avatar}}" alt="avatar">
+        <div style="max-height: 200px;max-width: 598px; overflow:hidden;">
+          <img src="{{results.cover}}" class="card-img-top" alt="background">
+        </div>
+        <img src="{{results.avatar}}" class="rounded-circle clearfix" alt="avatar" width="140" height="140"
+          style="position:absolute; border: 4px solid #FFFFFF; left: 5px; top: 178px">
         <div class="card-body">
           <h5 class="card-title">{{results.name}}</h5>
           <p>{{results.account}}</p>
           <p>{{results.introduction}}</p>
           <div class="row">
             <div class="col-6">
-              <p>{{results.followingCount}} 個追隨中</p>
+              <p>{{results.followingCount}} 個
+                <span class="text-secondary">追隨中</span>
+              </p>
             </div>
             <div class="col-6">
-              <p>{{results.followerCount}} 位追隨者</p>
+              <p>{{results.followerCount}} 位
+                <span class="text-secondary">追隨者</span>
+              </p>
             </div>
+          </div>
+          <div class="row">
+            <ul class="nav nav-pills">
+              <li class="nav-item px-4 mx-3 border-bottom active border-warning ">
+                <a class="nav-link font-weight-bold" style="color: #FF6600" href="#">推文</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-2 font-weight-bold text-secondary" href="?#">推文與回覆</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-2 font-weight-bold text-secondary" href="#">喜歡的內容</a>
+              </li>
+            </ul>
+          </div>
+          <div class="row">
+            {{#each results.Tweets}}
+            <div class="card" style="color:black">
+              <div class="row no-gutters">
+                <div class="col-md-1 mt-3">
+                  <a href="/users/{{this.UserId}}">
+                    <img src="{{../results.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
+                  </a>
+                </div>
+                <div class="col-md-11">
+                  <a href="/tweets/{{this.id}}" style="text-decoration: none; color:black">
+                    <div class="card-body">
+                      <div class="row ml-1 align-items-center">
+                        <span>{{../results.name}}</span>
+                        <small class="text-muted mr-auto">．{{moment this.createdAt}}</small>
+                      </div>
+                      <p class="card-text">{{this.description}}</p>
+                    </div>
+                    <div class="col-12">
+                      <i class="far fa-comment mr-1"> {{this.replyCount}}</i>
+                      <i class="far fa-heart"> {{this.likeCount}}</i>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            {{/each}}
           </div>
         </div>
       </div>
     </div>
-    <div class="col-4"></div>
   </div>
+  {{>rightColumn}}
+</div>
