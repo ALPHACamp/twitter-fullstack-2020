@@ -23,7 +23,7 @@ const tweetController = {
       return res.redirect('back')
     } else {
       return Tweet.create({
-        // userId: req.user.id,
+        UserId: req.user.id,
         description: req.body.description
       })
         .then(tweet => {
@@ -57,7 +57,7 @@ const tweetController = {
       return Reply.create({
         comment: req.body.comment,
         TweetId: req.body.TweetId,
-        // UserId: req.user.id
+        UserId: req.user.id
       })
         .then(reply => {
           return res.redirect('back')
