@@ -31,71 +31,37 @@ const authenticatedAdmin = (req, res, next) => {
   }
   res.redirect('/login');
 };
-router.get('/', (req, res) => res.redirect('/tweets'));
 
-router.get('/ii', (req, res) => {
-  res.render('postTweet')
-})
+router.get('/', (req, res) => res.redirect('/tweets'));
 router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets);
 router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
-router.post('/tweets/:id/comments', authenticated, tweetController.postComment)
-router.get('/tweets/:id', 
-authenticated,
-userController.topUserForLayout,
-  tweetController.getTweet);
+router.get('/tweets/:id', authenticated, userController.topUserForLayout, tweetController.getTweet);
 
-/* router.get('/users/:id/personal',authenticated, userController.getFollowShip); */
+
 router.get('/logout', userController.logout)
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signup);
 router.get('/login', userController.loginPage);
-router.post(
-  '/login',
-  passport.authenticate('local', {
-    failureRedirect: '/login',
-    failureFlash: true
-  }),
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   userController.login
 );
 
 router.get('/admin/login', adminController.adminLoginPage);
-router.post(
-  '/admin/login',
-  passport.authenticate('local', {
-    failureRedirect: '/admin/login',
-    failureFlash: true
-  }),
-  adminController.login
-);
+router.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.login);
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
-router.delete(
-  '/admin/tweets/:id',
-  authenticatedAdmin,
-  adminController.deleteTweet
-);
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
 router.post('/replies/likes/:ReplyId', authenticated, userController.addReplyLike)
 router.delete('/replies/likes/:ReplyId', authenticated, userController.removeReplyLike)
-
 router.post('/followings/:userId', authenticated, userController.addFollowing);
-router.delete(
-  '/followings/:userId',
-  authenticated,
-  userController.removeFollowing
-  );
-router.get('/users/:id/profile', authenticated, userController.editProfile);
-router.put('/users/:id/profile', authenticated,
-  upload.fields([
-    { name: 'backgroundImg', maxCount: 1 },
-    { name: 'avatar', maxCount: 1 }
-  ]),
-  userController.putEditProfile
-);
+router.delete('/followings/:userId', authenticated, userController.removeFollowing);
 
+router.get('/users/:id/profile', authenticated, userController.editProfile);
+router.put('/users/:id/profile', authenticated, upload.fields([{ name: 'backgroundImg', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putEditProfile);
 router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply)
 router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
 router.post('/tweets/:id/comments', authenticated, userController.topUserForLayout, tweetController.postComment)
