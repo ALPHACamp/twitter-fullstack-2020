@@ -234,7 +234,8 @@ let userController = {
 
     }))
 
-    likes = likes.sort((a, b) => b.createdAt - a.createdAt)
+    likes = likes.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
+    console.log(likes)
     res.render('userPage', {
       user,
       followShip,
@@ -333,6 +334,7 @@ let userController = {
       ...i,
       isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
     }));
+    followings = followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       user: user.toJSON(),
       followShip: followings,
@@ -358,6 +360,7 @@ let userController = {
       ...i,
       isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
     }));
+    followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       user: user.toJSON(),
       followShip: followers,
