@@ -7,7 +7,6 @@ const Secondreply = db.Secondreply
 const userController = require('./userController')
 const e = require('express')
 
-
 const tweetController = {
   getHomePage: (req, res) => {
     userController.getRecommendedUsers(req, res)
@@ -59,17 +58,17 @@ const tweetController = {
             User,
             { model: Reply, include: [User, { model: User, as: 'LikedUsers' }] },
             { model: User, as: 'LikedUsers' }
-          ],
+          ]
         })
           .then((tweets) => {
             // 剔除重複query的 replies 和 likedUsers
             const tweet = {
               ...tweets[0],
               replies: [...new Set(tweets.map(item => { return JSON.stringify(item.Replies) }))].map(item => JSON.parse(item)),
-              likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))],
+              likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))]
             }
             const tweetIsLiked = tweet.likedUsers.includes(req.user.id)
-            let secondReplies = []  // 用於製作modal，與tweet.secondReplies 用途不同
+            const secondReplies = [] // 用於製作modal，與tweet.secondReplies 用途不同
 
             return Promise.all(Array.from(
               { length: tweet.replies.length },
@@ -88,9 +87,7 @@ const tweetController = {
                   .then((replies) => {
                     // replies 是某一個第一層回覆底下的所有回覆 root-1-many
                     replies.forEach(index => {
-                      if (index.LikedUsers.Like.UserId === req.user.id)
-                        index.secondReplyIsLiked = true
-                      else {
+                      if (index.LikedUsers.Like.UserId === req.user.id) { index.secondReplyIsLiked = true } else {
                         index.secondReplyIsLiked = false
                       }
                       delete index.LikedUsers
@@ -98,7 +95,7 @@ const tweetController = {
                     // 過濾掉重複資訊
                     replies = [...new Set(replies.map(item => { return JSON.stringify(item) }))].map(item => JSON.parse(item))
                     tweet.replies[i].secondReplies = replies
-                    secondReplies.push(replies)  // 用於製作 Modal
+                    secondReplies.push(replies) // 用於製作 Modal
                   })
                   .then(() => {
                     // 把每個replies的id拿去Like查詢，看看user有沒有Like過，將結果紀錄在tweet.replies.replyIsLike中
@@ -115,12 +112,12 @@ const tweetController = {
             ))
               .then(() => {
                 res.render('reply', {
-                  tweet, //內含 tweet 基本資料
-                  replies: tweet.replies[0].id === null ? null : tweet.replies,  // 第一層回覆 ＋ 第二層回覆
+                  tweet, // 內含 tweet 基本資料
+                  replies: tweet.replies[0].id === null ? null : tweet.replies, // 第一層回覆 ＋ 第二層回覆
                   currentUserId: req.user.id,
-                  tweetIsLiked,  //是否喜歡過該 tweet
-                  recommendFollowings: users,  // 右欄
-                  secondReplies: secondReplies.flat()  // 第二層回覆
+                  tweetIsLiked, // 是否喜歡過該 tweet
+                  recommendFollowings: users, // 右欄
+                  secondReplies: secondReplies.flat() // 第二層回覆
                 })
               })
               .catch(err => console.log(err))
@@ -176,7 +173,7 @@ const tweetController = {
           })
           .catch((err) => res.send(err))
       })
-      .catch(err => res.send(err))
+      .catch((err) => res.send(err))
   },
   addLike: (req, res) => {
     const UserId = req.user.id
@@ -192,19 +189,16 @@ const tweetController = {
         if (SecondreplyId) {
           return Secondreply.findByPk(SecondreplyId)
             .then(reply => reply.increment('likeCount'))
-        }
-        else if (ReplyId) {
+        } else if (ReplyId) {
           return Reply.findByPk(ReplyId)
             .then(reply => reply.increment('likeCount'))
-        }
-        else {
+        } else {
           return Tweet.findByPk(TweetId)
             .then(tweet => tweet.increment('likeCount'))
         }
       })
       .then(() => res.redirect('back'))
       .catch(err => res.send(err))
-
   },
   removeLike: (req, res) => {
     const UserId = req.user.id
@@ -224,21 +218,17 @@ const tweetController = {
         if (SecondreplyId) {
           return Secondreply.findByPk(SecondreplyId)
             .then(reply => reply.decrement('likeCount'))
-        }
-        else if (ReplyId) {
+        } else if (ReplyId) {
           return Reply.findByPk(ReplyId)
             .then(reply => reply.decrement('likeCount'))
-        }
-        else {
+        } else {
           return Tweet.findByPk(TweetId)
             .then(tweet => tweet.decrement('likeCount'))
         }
       })
       .then(() => res.redirect('back'))
       .catch((err) => res.send(err))
-  },
+  }
 }
-
-
 
 module.exports = tweetController
