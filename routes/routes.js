@@ -11,6 +11,7 @@ const upload = multer({ dest: 'temp/' });
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (req.user.role === 'user') {
+      res.locals.myUser = req.user
       return next();
     }
     req.flash('error_messages', 'You are not an user, please login here');
@@ -22,6 +23,7 @@ const authenticated = (req, res, next) => {
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (req.user.role === 'Admin') {
+      res.locals.myUser = req.user
       return next();
     }
     req.flash('error_messages', 'You are not an admin, please login here');
@@ -34,9 +36,13 @@ router.get('/', (req, res) => res.redirect('/tweets'));
 
 router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets);
 router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
-router.get('/tweets/:id', userController.topUserForLayout, authenticated, tweetController.getTweet);
+router.get('/tweets/:id', 
+authenticated,
+userController.topUserForLayout,
+  tweetController.getTweet);
 
 /* router.get('/users/:id/personal',authenticated, userController.getFollowShip); */
+router.get('/logout', userController.logout)
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signup);
 router.get('/login', userController.loginPage);
@@ -60,7 +66,7 @@ router.post(
 );
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
-router.get('/admin/tweetsUser', authenticatedAdmin, adminController.getUsers);
+router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
 router.delete(
   '/admin/tweets/:id',
   authenticatedAdmin,
@@ -69,6 +75,8 @@ router.delete(
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
+router.post('/replies/likes/:ReplyId', authenticated, userController.addReplyLike)
+router.delete('/replies/likes/:ReplyId', authenticated, userController.removeReplyLike)
 
 router.post('/followings/:userId', authenticated, userController.addFollowing);
 router.delete(
@@ -78,20 +86,21 @@ router.delete(
   );
 router.get('/users/:id/profile', authenticated, userController.editProfile);
 router.put('/users/:id/profile', authenticated,
-  //upload.single('image'),
-  upload.array('image', 2),
-  // upload.fields([
-  //   { name: 'backgroundImg', maxCount: 1 },
-  //   { name: 'avatar', maxCount: 1 }
-  // ]),
+  upload.fields([
+    { name: 'backgroundImg', maxCount: 1 },
+    { name: 'avatar', maxCount: 1 }
+  ]),
   userController.putEditProfile
 );
-router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
+
 router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply)
+router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage)
+router.post('/tweets/:id/comments', authenticated, userController.topUserForLayout, tweetController.postComment)
 router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike)
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
-router.get('/users/:id/:followship', authenticated, userController.topUserForLayout, userController.getFollowShip)
+router.get('/users/:id/followings', authenticated, userController.topUserForLayout, userController.getFollowings)
+router.get('/users/:id/followers', authenticated, userController.topUserForLayout, userController.getFollowers)
 router.get('/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage)
 
 

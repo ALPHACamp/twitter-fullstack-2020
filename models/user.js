@@ -12,22 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     backgroundImg: DataTypes.STRING
   }, {});
   User.associate = function (models) {
-    User.hasMany(models.Tweet)    
-    User.hasMany(models.Like)
+    User.hasMany(models.Tweet)  
+    User.hasMany(models.Reply)
+
     
     User.belongsToMany(models.Tweet, {
       through: models.Like,
       foreignKey: 'UserId',
       as: 'userLike'
-    })
-
-    User.belongsToMany(models.Tweet, {
-      through: models.Reply,
-      foreignKey: 'UserId',
-      as: 'UserReply'
-    })
-
-
+    }) 
+    
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followingId',
@@ -40,6 +34,12 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Followings'
 
     });
+
+    User.belongsToMany(models.Reply, {
+      through: models.RepliesLikes,
+      foreignKey: 'UserId',
+      as: 'UserReliesLikes'
+    })
   };
   return User;
 };
