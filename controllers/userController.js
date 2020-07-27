@@ -161,7 +161,7 @@ let userController = {
     };
 
     let repliesTweet = user.Replies;
-    console.log(repliesTweet[1])
+    // console.log(repliesTweet[2])
     repliesTweet = repliesTweet.map((r) => ({
       ...r,
       tweetId: r.Tweet.id,
