@@ -33,9 +33,12 @@ const authenticatedAdmin = (req, res, next) => {
 };
 router.get('/', (req, res) => res.redirect('/tweets'));
 
-
+router.get('/ii', (req, res) => {
+  res.render('postTweet')
+})
 router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets);
 router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
+router.post('/tweets/:id/comments', authenticated, tweetController.postComment)
 router.get('/tweets/:id', 
 authenticated,
 userController.topUserForLayout,
