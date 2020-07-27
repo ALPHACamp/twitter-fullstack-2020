@@ -5,7 +5,6 @@ const Reply = db.Reply
 const Like = db.Like
 const Secondreply = db.Secondreply
 const userController = require('./userController')
-const e = require('express')
 
 
 const tweetController = {
@@ -24,6 +23,7 @@ const tweetController = {
         })
           .then((tweets) => {
             res.render('home', {
+              user: req.user,
               tweets: tweets,
               recommendFollowings: users,
               currentUserId: req.user.id
@@ -93,6 +93,9 @@ const tweetController = {
                       else {
                         index.secondReplyIsLiked = false
                       }
+                    })
+                    replies.forEach(index => {
+                      delete index.LikedUsers
                     })
                     // 過濾掉重複資訊
                     replies = [...new Set(replies.map(item => { return JSON.stringify(item) }))].map(item => JSON.parse(item))
