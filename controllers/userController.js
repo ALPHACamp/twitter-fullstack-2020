@@ -87,6 +87,12 @@ const userController = {
       order: [['createdAt', 'DESC']]
     })
       .then(user => {
+        user.dataValues.Tweets.forEach(t => {
+          t.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.id)
+        })
+        return user
+      })
+      .then(user => {
         res.render('user-tweets', { pageUser: user.toJSON() })
       })
   },
