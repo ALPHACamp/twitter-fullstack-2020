@@ -107,8 +107,6 @@ const userController = {
   },
   getReplies: (req, res) => {
     Reply.findAll({
-      raw: true,
-      nest: true,
       where: { UserId: req.params.id },
       order: [['createdAt', 'DESC']],
     }).then(replies => {
