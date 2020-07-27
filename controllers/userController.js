@@ -3,6 +3,7 @@ const db = require('../models')
 const User = db.User
 const Followship = db.Followship
 const imgur = require('imgur-node-api')
+const user = require('../models/user')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
@@ -87,6 +88,8 @@ const userController = {
   },
 
   editUser: (req, res) => {
+    //only login user can enter edit profile page
+    if (req.user.id !== Number(req.params.id)) { return res.redirect(`/api/users/${req.params.id}`) }
     return User.findByPk(req.params.id)
       .then(user => {
         return res.render('profileEdit', { user: user.toJSON() })
@@ -182,6 +185,8 @@ const userController = {
   },
 
   addFollowing: (req, res) => {
+    //can not follow/unfollow self
+    if (req.user.id === Number(req.params.userId)) { return res.redirect('back') }
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId
@@ -192,6 +197,8 @@ const userController = {
   },
 
   removeFollowing: (req, res) => {
+    //can not follow/unfollow self
+    if (req.user.id === Number(req.params.userId)) { return res.redirect('back') }
     return Followship.findOne({
       where: {
         followerId: req.user.id,
@@ -202,6 +209,85 @@ const userController = {
         followship.destroy()
           .then((followship) => {
             return res.redirect('back')
+          })
+      })
+  },
+
+  getFollowers: (req, res) => {
+    //loginUserId for 判斷編輯資訊頁/跟隨 button鈕是否出現
+    let loginUserId = req.user.id
+    return User.findByPk(req.params.id)
+      .then((user) => {
+        return Followship.findAll({
+          raw: true,
+          nest: true,
+          order: [['createdAt', 'DESC']],
+          where: { followingId: req.params.id }
+        })
+          .then((users) => {
+            let followerByOrderCreated = users.map(user => user.followerId)
+            return User.findAll({
+              raw: true,
+              nest: true,
+              include: [
+                { model: User, as: 'Followings' },
+                { model: User, as: 'Followers' }
+              ],
+              where: { id: followerByOrderCreated }
+            }).then((users) => {
+              // 整理 users 資料
+              users = users.map(user => ({
+                ...user,
+                //計算追蹤者人數
+                FollowerCount: user.Followers.length,
+                // // 判斷目前登入使用者是否已追蹤該 User 物件, passport.js加入 followship以取得req.user.Followings
+                isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+              }))
+              followerByOrderCreated = followerByOrderCreated.map(order => {
+                return users.find(user => { return user.id === order })
+              })
+              return res.render('followers', { user: user, users: followerByOrderCreated, loginUserId })
+            })
+          })
+      })
+    //return res.render('followers')
+  },
+
+  getFollowings: (req, res) => {
+    //loginUserId for 判斷編輯資訊頁/跟隨 button鈕是否出現
+    let loginUserId = req.user.id
+    return User.findByPk(req.params.id)
+      .then((user) => {
+        return Followship.findAll({
+          raw: true,
+          nest: true,
+          order: [['createdAt', 'DESC']],
+          where: { followerId: req.params.id }
+        })
+          .then((users) => {
+            let followingByOrderCreated = users.map(user => user.followingId)
+            return User.findAll({
+              raw: true,
+              nest: true,
+              include: [
+                { model: User, as: 'Followings' },
+                { model: User, as: 'Followers' }
+              ],
+              where: { id: followingByOrderCreated }
+            }).then((users) => {
+              // 整理 users 資料
+              users = users.map(user => ({
+                ...user,
+                //計算追蹤者人數
+                FollowerCount: user.Followers.length,
+                // // 判斷目前登入使用者是否已追蹤該 User 物件, passport.js加入 followship以取得req.user.Followings
+                isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+              }))
+              followingByOrderCreated = followingByOrderCreated.map(order => {
+                return users.find(user => { return user.id === order })
+              })
+              return res.render('followings', { user: user, users: followingByOrderCreated, loginUserId })
+            })
           })
       })
   },
