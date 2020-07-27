@@ -1,9 +1,8 @@
 <div class="container-fluid">
   {{> left-content}}
   <div class="setting-main-content">
-
     <div class="setting-main-title">
-      帳戶設定{{> message}}
+      帳戶設定 {{> message}}
     </div>
     <form method="POST" class="setting-form sign-form" action="/api/users/:id?_method=PUT">
       <label for="account">帳號</label>

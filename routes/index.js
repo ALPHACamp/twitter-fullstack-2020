@@ -1,7 +1,6 @@
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
-const { authenticate } = require('passport')
 
 const authenticated = (req, res, next) => {
   if (req.isAuthenticated() && req.user.role === 'user') { return next() }
@@ -22,6 +21,8 @@ const adminAuthenticated = (req, res, next) => {
 }
 
 module.exports = (app, passport) => {
+  const userSignIn = passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true })
+  const adminSignIn = passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true })
   const multer = require('multer')
   const upload = multer({ dest: 'temp/' })
   const profileUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }])
@@ -30,19 +31,14 @@ module.exports = (app, passport) => {
   app.post('/signup', userController.signUp)
 
   app.get('/signin', userController.signInPage)
-  app.post('/signin',
-    passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }),
-    userController.signIn)
+  app.post('/signin', userSignIn, userController.signIn)
 
   app.get('/admin/signin', adminController.signInPage)
-  app.post('/admin/signin',
-    passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }),
-    adminController.signIn)
+  app.post('/admin/signin', adminSignIn, adminController.signIn)
   app.get('/admin/tweets', adminAuthenticated, adminController.getTweets)
   app.get('/admin/users', adminAuthenticated, adminController.getUsers)
 
   app.get('/logout', userController.logout)
-
   app.get('/', userController.getIndexPage)
 
   app.get('/tweets', authenticated, tweetController.getTweets)
@@ -54,19 +50,15 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 
   app.get('/api/users/:id', authenticated, userController.editUser)
-  app.post('/api/users/:id', authenticated, profileUpload, userController.putUser)
-  app.put('/api/users/:id', authenticated, userController.putUserProfile)
+  app.post('/api/users/:id', authenticated, profileUpload, userController.putUserProfile)
+  app.put('/api/users/:id', authenticated, userController.putUser)
 
   app.get('/users/:id/tweets', authenticated, userController.getTweets)
   app.get('/users/:id/likes', authenticated, userController.getLikes)
   app.get('/users/:id/replies', authenticated, userController.getReplies)
-
-
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
 
-
-  app.post('/followships/:id', authenticated, userController.follow)
-  app.delete('/followships/:id', authenticated, userController.unfollow)
-
+  app.post('/followships/:id', authenticated, userController.addFollow)
+  app.delete('/followships/:id', authenticated, userController.removeFollow)
 }

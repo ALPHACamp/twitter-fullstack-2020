@@ -34,11 +34,7 @@ const adminController = {
       })
   },
   getTweets: (req, res) => {
-    return Tweet.findAll({
-      include: [
-        User
-      ]
-    })
+    return Tweet.findAll({ include: [User] })
       .then(tweets => {
         tweets = tweets.map(item => ({
           ...item.dataValues,

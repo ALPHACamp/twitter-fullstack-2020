@@ -10,7 +10,7 @@ const tweetController = {
       include: [
         User,
         Reply,
-        { model: User, as: 'likedUsers' }
+        { model: User, as: 'LikedUsers' }
       ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
@@ -39,13 +39,13 @@ const tweetController = {
     Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: User, as: 'likedUsers' },
+        { model: User, as: 'LikedUsers' },
         { model: Reply, include: [User] }
       ]
     }).then(tweet => {
       res.render('tweet', {
         tweet: tweet.toJSON(),
-        isLiked: tweet.likedUsers.map(d => d.id).includes(req.user.id)
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id)
       })
     })
   },

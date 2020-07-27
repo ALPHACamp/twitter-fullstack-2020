@@ -36,8 +36,6 @@ const userController = {
       })
   },
   signInPage: (req, res) => {
-    //if (req.isAuthenticated() && req.user.role === 'user') { return res.redirect('/tweets') }
-    //if (req.isAuthenticated() && req.user.role === 'admin') { return res.redirect('/admin/tweets') }
     res.render('signin')
   },
   signIn: (req, res) => {
@@ -54,8 +52,8 @@ const userController = {
     if (req.isAuthenticated() && req.user.role === 'admin') { return res.redirect('/admin/tweets') }
     res.redirect('/signin')
   },
-
-  putUserProfile: (req, res) => {
+  editUser: (req, res) => res.render('setting'),
+  putUser: (req, res) => {
     const { account, name, email, password, passwordCheck } = req.body
     const error = []
     User.findOne({ where: { id: req.user.id } })
@@ -78,12 +76,11 @@ const userController = {
         })
       })
   },
-
   getTweets: (req, res) => {
     const id = req.params.id
     return User.findByPk(id, {
       include: [
-        { model: Tweet, include: [Reply, { model: User, as: 'likedUsers' },] },
+        { model: Tweet, include: [Reply, { model: User, as: 'LikedUsers' },] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
@@ -93,13 +90,12 @@ const userController = {
         res.render('user-tweets', { pageUser: user.toJSON() })
       })
   },
-
   getLikes: (req, res) => {
     User.findByPk(req.params.id, {
       include: [
         Reply,
         Tweet,
-        { model: Tweet, as: 'LikedTweets', include: [User, Reply, { model: User, as: 'likedUsers' }] },
+        { model: Tweet, as: 'LikedTweets', include: [User, Reply, { model: User, as: 'LikedUsers' }] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
@@ -109,7 +105,6 @@ const userController = {
         res.render('user-likes', { pageUser: user })
       })
   },
-
   getReplies: (req, res) => {
     Reply.findAll({
       raw: true,
@@ -126,8 +121,7 @@ const userController = {
         })
     })
   },
-  editUser: (req, res) => res.render('setting'),
-  putUser: (req, res) => {
+  putUserProfile: (req, res) => {
     const id = Number(req.params.id)
     const { name, introduction } = req.body
     const { avatar, cover } = req.files
@@ -163,9 +157,6 @@ const userController = {
         res.redirect('/tweets')
       })
   },
-
-
-
   getFollowings: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [{ model: User, as: 'Followings' }, { model: Tweet }]
@@ -183,7 +174,6 @@ const userController = {
       res.render('user-followings', { results })
     })
   },
-
   getFollowers: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [{ model: User, as: 'Followers' }, { model: Tweet }]
@@ -200,13 +190,13 @@ const userController = {
       res.render('user-followers', { results })
     })
   },
-  follow: (req, res) => {
+  addFollow: (req, res) => {
     const followingId = Number(req.params.id)
     const followerId = req.user.id
     return Followship.create({ followingId, followerId })
       .then(() => res.redirect('back'))
   },
-  unfollow: (req, res) => {
+  removeFollow: (req, res) => {
     const followingId = Number(req.params.id)
     const followerId = req.user.id
     return Followship.findOne({ where: { followingId, followerId } })
