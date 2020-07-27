@@ -113,7 +113,8 @@ const userController = {
     })
       .then(replies => {
         User.findOne({
-          where: { id: req.params.id }
+          where: { id: req.params.id },
+          include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
         })
           .then(pageUser => {
             res.render('user-replies', { replies, pageUser })
