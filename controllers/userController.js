@@ -38,7 +38,8 @@ const userController = {
             model: Tweet,
             include: { model: User, as: 'LikedUsers' }
           },
-          { model: Tweet }
+          { model: Tweet },
+          { model: User, as: 'Followers' }
         ]
       })
         .then((user) => {
@@ -48,11 +49,11 @@ const userController = {
             results.Tweets[i].repliesCount = results.Tweets[i].replyCount
             results.Tweets[i].likeCount = results.Tweets[i].LikedUsers.length
           }
+          results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
           console.log(results)
-          return res.render('userPage', { results: results, recommendFollowings: users })
+          return res.render('userPage', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
         })
     })
-      .catch((err) => res.send(err))
   },
   getUserLikeContent: (req, res) => {
     return User.findByPk(req.params.id, {
