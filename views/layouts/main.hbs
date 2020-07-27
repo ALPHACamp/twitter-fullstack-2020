@@ -74,12 +74,15 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" id='closeThis' class="btn btn-danger" data-dismiss="modal"
+                    onclick="CloseModal()">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
                 </div>
                 <div class="modal-body">
                   <form action="/tweets/newTweets" method="POST">
                     <div class="form-group">
-                      <textarea class="form-control" id="newTweet" name="newTweet" rows="3"
+                      <textarea class="form-control" id="newTweet" name="newTweet" rows="3" 
                         placeholder="有什麼新鮮事?"></textarea>
                     </div>
                     <div class="modal-footer">
@@ -92,6 +95,15 @@
           </div>
           <button type="button" class="btn btn-danger rounded-pill w-100 mt-3" data-toggle="modal"
             data-target="#exampleModal"> 推文 </button>
+
+          <script>
+            function CloseModal() {
+              $('#closeThis').click(function () {
+                $('#newTweet').val('');
+              })
+
+            }
+          </script>
 
           {{else}}
           <li class="nav-item d-flex mt-4 {{#if isAdminTweet}} text-danger {{else}} text-dark {{/if}}">
