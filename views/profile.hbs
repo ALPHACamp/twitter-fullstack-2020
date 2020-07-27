@@ -1,5 +1,7 @@
+<h5 class="ml-2">{{user.name}}</h5>
+<small class="ml-2">{{tweets.length}} 推文</small>
+<br />
 <div class="row">
-
   <div class="col-md-8">
     <div class="" style="">
       <img class="rounded-top" src="{{user.cover}}" style="width:100%; height: 200px;">
@@ -27,7 +29,7 @@
         {{/ifNotCond}}
       </div>
     </div>
-    <h6>{{user.name}}</h6>
+    <h5>{{user.name}}</h5>
     <small>{{user.email}}</small>
     <p>{{user.introduction}}</p>
     <p>{{followingNum}}個跟隨中 {{followerNum}}位跟隨者</p>

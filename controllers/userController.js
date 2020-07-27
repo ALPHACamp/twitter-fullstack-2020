@@ -90,6 +90,7 @@ const userController = {
             include: [User, Reply]
           }).then((tweets) => {
             tweets = tweets.map(user => ({ ...user.dataValues, }))
+            //console.log('tweets===>', tweets)
             //取得user following/follower人數
             let followingNum = user.toJSON().Followings.length
             let followerNum = user.toJSON().Followers.length
