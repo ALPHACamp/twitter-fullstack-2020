@@ -50,41 +50,50 @@ const userController = {
             results.Tweets[i].likeCount = results.Tweets[i].LikedUsers.length
           }
           results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
-          console.log(results)
           return res.render('userPage', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
         })
         .catch((err) => res.send(err))
     })
   },
   getUserLikeContent: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        {
-          model: Tweet,
-          as: 'LikedTweets',
-          include: { model: User, as: 'LikedUsers' }
-        },
-        {
-          model: Tweet,
-          as: 'LikedTweets',
-          include: Reply
-        },
-        {
-          model: Tweet,
-          as: 'LikedTweets',
-          include: User
-        }
-      ]
-    })
-      .then((user) => {
-        user = user.toJSON()
-        for (let i = 0; i < user.LikedTweets.length; i++) {
-          user.LikedTweets[i].repliesCount = user.LikedTweets[i].replyCount
-          user.LikedTweets[i].likeCount = user.LikedTweets[i].Replies.length
-        }
-        res.json(user)
+    userController.getRecommendedUsers(req, res).then((users) => {
+      return User.findByPk(req.params.id, {
+        include: [
+          {
+            model: Tweet,
+            as: 'LikedTweets',
+            include: { model: User, as: 'LikedUsers' }
+          },
+          {
+            model: Tweet,
+            as: 'LikedTweets',
+            include: Reply
+          },
+          {
+            model: Tweet,
+            as: 'LikedTweets',
+            include: User
+          },
+          { model: User, as: 'Followers' }
+        ]
       })
-      .catch((err) => res.send(err))
+        .then((user) => {
+          user = user.toJSON()
+          for (let i = 0; i < user.LikedTweets.length; i++) {
+            user.LikedTweets[i].repliesCount = user.LikedTweets[i].replyCount
+            user.LikedTweets[i].likeCount = user.LikedTweets[i].Replies.length
+          }
+          user.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
+
+          console.log(user)
+          res.render('userLikeContent', {
+            user: user,
+            recommendFollowings: users,
+            currentId: req._passport.session.user
+          })
+        })
+        .catch((err) => res.send(err))
+    })
   },
   editUser: (req, res) => {
     if (Number(req.params.id) === Number(req._passport.session.user)) {

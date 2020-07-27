@@ -16,19 +16,19 @@
             </svg>
           </a>
           <div class="header ml-4">
-            <h3 class="m-0 p-0">{{results.name}}</h3>
-            <span class="h6 text-muted">{{results.tweetCount}} 推文</span>
+            <h3 class="m-0 p-0">{{user.name}}</h3>
+            <span class="h6 text-muted">{{user.tweetCount}} 推文</span>
           </div>
         </div>
         {{!-- cover&avatar --}}
         <div class="img-wrapper d-flex flex-column flex-nowrap" style="position:relative;">
-          <img src="{{results.cover}}" class="card-img-top" alt="background" width="100%" height="200px"
+          <img src="{{user.cover}}" class="card-img-top" alt="background" width="100%" height="200px"
             style="object-fit: cover;">
-          <img src="{{results.avatar}}" class="rounded-circle" alt="avatar" width="140" height="140"
+          <img src="{{user.avatar}}" class="rounded-circle" alt="avatar" width="140" height="140"
             style="border: 4px solid #FFFFFF; position:absolute; top:60%; left:14px;">
         </div>
         <div class="justify-content-end align-items-end d-flex flex-nowrap">
-          {{#ifEqual results.id currentId}}
+          {{#ifEqual user.id currentId}}
           <div class="d-flex flex-column flex-nowrap border-bottom" style="width: 100%;">
             <div class="p-2 text-right">
               <div class="btn rounded-pill" style="color:#FF6600; border: 1px solid #FF6600">編輯個人資料</div>
@@ -52,15 +52,15 @@
                 </svg>
               </a>
             </div>
-            {{#if results.isFollowed}}
+            {{#if user.isFollowed}}
             <div class="p-2 text-right">
-              <form action="/following/{{results.id}}?_method=DELETE" method="post">
+              <form action="/following/{{user.id}}?_method=DELETE" method="post">
                 <div type="submit" class="btn rounded-pill"
                   style="color:white ;background-color:#FF6600; border: 1px solid #FF6600">正在跟隨</div>
               </form>
             </div>
             {{else}}
-            <form action="/following/{{results.id}}" method="post">
+            <form action="/following/{{user.id}}" method="post">
               <button type="submit" class="float-right px-4 py-2 float-right btn rounded-pill"
                 style="color:#FF6600; border: 1px solid #FF6600">跟隨</button>
             </form>
@@ -70,47 +70,48 @@
 
           {{/ifEqual}}
           <div class="user-info container mt-3">
-            <h3 class="m-0 p-0">{{results.name}}</h3>
-            <span class="text-muted m-0 p-0">{{results.account}}</span>
-            <p class="my-2">{{results.introduction}}</p>
+            <h3 class="m-0 p-0">{{user.name}}</h3>
+            <span class="text-muted m-0 p-0">{{user.account}}</span>
+            <p class="my-2">{{user.introduction}}</p>
             <div class="user-relation d-flex flex-nowrap">
-              <div class="mr-3">{{results.followingCount}} 個<span class="text-muted">追隨中</span></div>
-              <div>{{results.followerCount}} 位<span class="text-muted">追隨者</span></div>
+              <div class="mr-3">{{user.followingCount}} 個<span class="text-muted">追隨中</span></div>
+              <div>{{user.followerCount}} 位<span class="text-muted">追隨者</span></div>
             </div>
           </div>
           <div class="d-flex flex-nowrap justify-content-start mt-4">
             <div class="text-center py-3" style="width: 130px;">
-              <a class="font-weight-bold text-decoration-none" style="color:#FF6600" href="/users/{{results.id}}">推文</a>
+              <a class="font-weight-bold text-decoration-none" href="/users/{{user.id}}">推文</a>
             </div>
             <div class="text-center py-3" style="width: 130px;">
               <a class="font-weight-bold text-decoration-none" href="#">推文與回覆</a>
             </div>
             <div class="text-center py-3" style="width: 130px;">
-              <a class="font-weight-bold text-decoration-none" href="/users/{{results.id}}/like">喜歡的內容</a>
+              <a class="font-weight-bold text-decoration-none" style="color:#FF6600"
+                href="/users/{{user.id}}/like">喜歡的內容</a>
             </div>
           </div>
 
           {{!-- card --}}
-          {{#each results.Tweets}}
+          {{#each user.LikedTweets}}
           <div class="row border-bottom py-3" style="width: 100%;">
             {{!-- avatar --}}
             <div class="col-2 text-center">
               <a href="/users/{{this.UserId}}">
-                <img class="rounded-circle mt-2" src="{{../results.avatar}}" alt="img" width="50px" height="50px">
+                <img class="rounded-circle mt-2" src="{{this.User.avatar}}" alt="img" width="50px" height="50px">
               </a>
             </div>
             {{!-- content --}}
             <div class="col-10 d-flex flex-column flex-nowrap">
               <div class="user">
-                <span class="h5">{{../results.name}}</span><span
-                  class="text-muted ml-2">{{../results.account}}．{{moment this.createdAt}}</span>
+                <span class="h5">{{this.User.name}}</span><span
+                  class="text-muted ml-2">{{this.User.account}}．{{moment this.createdAt}}</span>
               </div>
               <p class="content">{{this.description}}</p>
               <div class="d-flex flex-nowrap align-items-center">
                 <a class="text-decoration-none m-0 p-0" href="/tweets/{{this.id}}" style="color:black">
                   <i class="far fa-comment mr-3"><span class="mx-2">{{this.replyCount}}</span></i>
                 </a>
-                <i class="far fa-heart"><span class="mx-2">{{this.likeCount}}</span></i>
+                <i class="fa fa-heart" style="color: rgb(240, 80, 80)"><span class="mx-2">{{this.likeCount}}</span></i>
               </div>
             </div>
           </div>
