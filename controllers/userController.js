@@ -6,7 +6,7 @@ const Reply = db.Reply;
 const Followship = db.Followship;
 const RepliesLike = db.RepliesLikes
 const bcrypt = require('bcryptjs');
-//const imgur = require('imgur-node-api');
+const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 let userController = {
@@ -26,7 +26,6 @@ let userController = {
     return res.render('signup');
   },
   signup: (req, res) => {
-    //password and confirmPassword must be the same
     if (req.body.password !== req.body.confirmPassword) {
       return res.render('signup', {
         error_messages: 'Please check your confirm password',
@@ -37,9 +36,7 @@ let userController = {
         confirmPassword: req.body.confirmPassword
       });
     }
-    //check if account name has been used
     User.findOne({ where: { account: req.body.account } }).then((user) => {
-      // if the account name has been used
       if (user) {
         return res.render('signup', {
           error_messages: 'This account name is not available',
@@ -50,7 +47,6 @@ let userController = {
           confirmPassword: req.body.confirmPassword
         });
       } else {
-        // the account name is available, check if email has been used
         User.findOne({ where: { email: req.body.email } }).then((user) => {
           if (user) {
             return res.render('signup', {
@@ -100,7 +96,7 @@ let userController = {
         { model: User, as: 'Followings' }
       ]
     });
-    user = user.toJSON();  
+    user = user.toJSON();
     const followShip = {
       isTweet: true,
       tweetsCount: user.Tweets.length,
@@ -119,12 +115,8 @@ let userController = {
       likeCount: tweet.TweetWhoLike.length,
       replayCount: tweet.Replies.length,
       description: tweet.description,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
-    // all user's tweets
-    // all user's likes
-    // all user's replies
     res.render('userPage', {
       user,
       followShip,
@@ -132,6 +124,7 @@ let userController = {
       content: tweets
     });
   },
+
   getUserReply: async (req, res) => {
     const id = req.params.id;
     let user = await User.findOne({
@@ -139,7 +132,7 @@ let userController = {
       include: [
         {
           model: Reply, include: [
-            { model: Tweet, include: [Reply,User,{ model: User, as: 'TweetWhoLike' },] },
+            { model: Tweet, include: [Reply, User, { model: User, as: 'TweetWhoLike' },] },
             User
           ]
         },
@@ -178,11 +171,9 @@ let userController = {
       description: r.Tweet.description,
       likeCount: r.Tweet.TweetWhoLike.length,
       replayCount: r.Tweet.Replies.length,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
-
     }))
-  
+
     res.render('userPage', {
       user,
       followShip,
@@ -205,9 +196,8 @@ let userController = {
           order: ['createdAt', 'DESC'],
           include: [
             User,
-            Reply,            
+            Reply,
             { model: User, as: 'TweetWhoLike' },
-           
           ]
         },
         { model: User, as: 'Followers' },
@@ -223,7 +213,7 @@ let userController = {
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
     let likes = user.userLike;
-console.log(likes)
+    console.log(likes)
     likes = likes.map((r) => ({
       ...r,
       tweetId: r.id,
@@ -234,12 +224,8 @@ console.log(likes)
       description: r.description,
       likeCount: r.TweetWhoLike.length,
       replayCount: r.Replies.length,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: r.TweetWhoLike.map((d) => d.id).includes(req.user.id)
-
     }))
-
-    
     res.render('userPage', {
       user,
       followShip,
@@ -275,7 +261,6 @@ console.log(likes)
   },
   editUser: async (req, res) => {
     try {
-      //check if it's the current user who intends to edit. If not, back to last page
       if (req.user.id !== Number(req.params.id)) {
         return res.redirect('back');
       }
@@ -291,7 +276,6 @@ console.log(likes)
   },
   addFollowing: async (req, res) => {
     try {
-      //check if the user if trying to follow himself
       if (req.user.id == Number(req.params.userId)) {
         req.flash('error_messages', 'you cannot follow yourself');
         return res.redirect('back');
@@ -389,7 +373,6 @@ console.log(likes)
   },
   editProfile: async (req, res) => {
     try {
-      //check if it's the current user who intends to edit. If not, back to last page
       if (req.user.id !== Number(req.params.id)) {
         return res.redirect('back');
       }
@@ -404,52 +387,43 @@ console.log(likes)
     const id = req.params.id;
     const { introduction } = req.body;
     const { files } = req;
-    //console.log('req.files', req.files);
     imgur.setClientID(IMGUR_CLIENT_ID);
 
     const user = await User.findByPk(id);
     if (files.backgroundImg) {
-      imgur.upload(files.backgroundImg[0].path, async (err, img) => {
-        user
-          .update({
-            backgroundImg: img.data.link,
-            introduction
-          })
+      imgur.upload(files.backgroundImg[0].path, (err, img) => {
+        user.update({
+          backgroundImg: img.data.link,
+          introduction
+        })
           .then((user) => {
             if (files.avatar) {
               imgur.upload(files.avatar[0].path, (err, img) => {
-                user
-                  .update({
-                    avatar: img.data.link,
-                    introduction
-                  })
+                user.update({
+                  avatar: img.data.link,
+                  introduction
+                })
                   .then((user) => {
                     return res.redirect(`/users/${req.params.id}`);
                   });
               });
             } else {
-              user
-                .update({
-                  introduction
-                })
-                .then(() => res.redirect(`/users/${req.params.id}`));
+              return res.redirect(`/users/${req.params.id}`);
             }
           });
       });
     } else if (files.avatar) {
       imgur.upload(files.avatar[0].path, (err, img) => {
-        user
-          .update({
-            avatar: img.data.link,
-            introduction
-          })
+        user.update({
+          avatar: img.data.link,
+          introduction
+        })
           .then(() => res.redirect(`/users/${req.params.id}`));
       });
     } else {
-      user
-        .update({
-          introduction
-        })
+      user.update({
+        introduction
+      })
         .then(() => res.redirect(`/users/${req.params.id}`));
     }
   },
@@ -471,7 +445,7 @@ console.log(likes)
     return next();
   },
   addReplyLike: async (req, res) => {
-    try{
+    try {
       await RepliesLike.create({
         UserId: req.user.id,
         ReplyId: req.params.ReplyId
