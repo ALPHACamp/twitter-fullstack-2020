@@ -86,8 +86,7 @@ let userController = {
         {
           model: Tweet,
           order: ['createdAt', 'DESC'],
-          include: [
-            User,
+          include: [            
             Reply,
             { model: User, as: 'TweetWhoLike' },
           ]
@@ -108,10 +107,10 @@ let userController = {
     tweets = tweets.map((tweet) => ({
       ...tweet,
       tweetId: tweet.id,
-      userId: tweet.User.id,
-      userName: tweet.User.name,
-      userAvatar: tweet.User.avatar,
-      userAccount: tweet.User.account,
+      userId: user.id,
+      userName: user.name,
+      userAvatar: user.avatar,
+      userAccount: user.account,
       likeCount: tweet.TweetWhoLike.length,
       replayCount: tweet.Replies.length,
       description: tweet.description,
@@ -130,22 +129,13 @@ let userController = {
     let user = await User.findOne({
       where: { id },
       include: [
+        Tweet,
         {
           model: Reply, include: [
             { model: Tweet, include: [Reply, User, { model: User, as: 'TweetWhoLike' },] },
             User
           ]
-        },
-        { model: Tweet, as: 'userLike' },
-        {
-          model: Tweet,
-          order: ['createdAt', 'DESC'],
-          include: [
-            User,
-            { model: User, as: 'TweetWhoLike' },
-
-          ]
-        },
+        },      
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -173,6 +163,7 @@ let userController = {
       replayCount: r.Tweet.Replies.length,
       isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }))
+    console.log(repliesTweet)
     res.render('userPage', {
       user,
       followShip,
@@ -190,13 +181,9 @@ let userController = {
       include: [
         Tweet,
         {
-          model: Tweet,
-          as: 'userLike',
-          order: ['createdAt', 'DESC'],
+          model: Tweet, as: 'userLike', order: ['createdAt', 'DESC'],
           include: [
-            User,
-            Reply,
-            { model: User, as: 'TweetWhoLike' },
+            User, Reply, { model: User, as: 'TweetWhoLike' },
           ]
         },
         { model: User, as: 'Followers' },
