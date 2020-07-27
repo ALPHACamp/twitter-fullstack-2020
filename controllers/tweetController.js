@@ -12,7 +12,7 @@ const tweetController = {
         User,
         Reply,
         { model: User, as: 'TweetWhoLike' },
-        
+
       ]
     })
     data = tweets.map((r) => ({
@@ -26,19 +26,21 @@ const tweetController = {
       likeCount: r.TweetWhoLike.length,
       replayCount: r.Replies.length,
       isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
-    }));    
+    }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
   getTweet: async (req, res) => {
     const id = req.params.id;
     let tweet = await Tweet.findOne({
       where: { id },
-      include: [User,         
-        { model: User, as: 'TweetWhoLike'},
-        { model: Reply, order: ["createdAt", 'DESC'], include: [
-          User,
-          { model: User, as: 'ReplyWhoLike' }
-        ]},
+      include: [User,
+        { model: User, as: 'TweetWhoLike' },
+        {
+          model: Reply, order: ["createdAt", 'DESC'], include: [
+            User,
+            { model: User, as: 'ReplyWhoLike' }
+          ]
+        },
       ]
     });
     tweet = tweet.toJSON()
@@ -52,18 +54,25 @@ const tweetController = {
       replyCount: tweet.Replies.length,
       likeCount: tweet.TweetWhoLike.length,
       isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
-    }  
-    res.render('tweet', { 
+    }
+    res.render('tweet', {
       isHomePage: true,
       replies,
-      tweet, 
-      totalCount });
+      tweet,
+      totalCount
+    });
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {
       req.flash('error_messages', '請輸入推文內容!!!');
       return res.redirect('back');
     }
+
+    if (Array.from(req.body.newTweet).length > 140) {
+      req.flash('error_messages', '推文內容需小於140個字!!!');
+      return res.redirect('back');
+    }
+
     return Tweet.create({
       UserId: req.user.id,
       description: req.body.newTweet

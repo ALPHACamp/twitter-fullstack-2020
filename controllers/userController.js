@@ -100,8 +100,8 @@ let userController = {
         { model: User, as: 'Followings' }
       ]
     });
-    
-    user = user.toJSON();
+    user = user.toJSON();  
+
     const followShip = {
       isTweet: true,
       tweetsCount: user.Tweets.length,
