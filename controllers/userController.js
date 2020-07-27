@@ -90,16 +90,12 @@ const userController = {
         user.dataValues.Tweets.forEach(t => {
           t.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.id)
         })
-        return user
-      })
-      .then(user => {
         res.render('user-tweets', { pageUser: user.toJSON() })
       })
   },
   getLikes: (req, res) => {
     User.findByPk(req.params.id, {
       include: [
-        Tweet,
         { model: Tweet, as: 'LikedTweets', include: [User, Reply, { model: User, as: 'LikedUsers' }] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
@@ -107,7 +103,10 @@ const userController = {
       order: [['createdAt', 'DESC']],
     })
       .then(user => {
-        res.render('user-likes', { pageUser: user })
+        user.dataValues.LikedTweets.forEach(t => {
+          t.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.id)
+        })
+        res.render('user-likes', { pageUser: user.toJSON() })
       })
   },
   getReplies: (req, res) => {
