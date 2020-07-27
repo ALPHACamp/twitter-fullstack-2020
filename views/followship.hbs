@@ -23,8 +23,8 @@
 
         <nav class="mt-5">
           <div class="nav">
-            <a href="/users/{{user.id}}/followers" class="nav-link {{#if followDetail.followers}}navBar{{else}}text-secondary {{/if}}">追隨者</a>
-            <a href="/users/{{user.id}}/followings" class="nav-link {{#if followDetail.followings}}navBar{{else}}text-secondary {{/if}}">正在追隨</a>
+            <a href="/users/{{user.id}}/followers" class="nav-link {{#if followDetail.followers}}navBar text-danger{{else}}text-secondary {{/if}}">追隨者</a>
+            <a href="/users/{{user.id}}/followings" class="nav-link {{#if followDetail.followings}}navBar text-danger{{else}}text-secondary {{/if}}">正在追隨</a>
           </div>
         </nav>
       </div>

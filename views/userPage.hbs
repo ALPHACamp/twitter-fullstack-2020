@@ -174,13 +174,13 @@
       <nav>
         <div class="nav mt-3">
           <a href="/users/{{user.id}}/tweets"
-            class="user-nav nav-link text-center {{#if followShip.isTweet}} navBar {{else}} text-secondary {{/if}} "
+            class="user-nav nav-link text-center {{#if followShip.isTweet}} navBar text-danger {{else}} text-secondary {{/if}} "
             style="width: 130px;">推文</a>
           <a href="/users/{{user.id}}/comments"
-            class="user-nav nav-link text-center {{#if followShip.isReply}} navBar {{else}} text-secondary {{/if}} "
+            class="user-nav nav-link text-center {{#if followShip.isReply}} navBar text-danger {{else}} text-secondary {{/if}} "
             style="width: 130px;">推文與回覆</a>
           <a href="/users/{{user.id}}/likes"
-            class="user-nav nav-link text-center {{#if followShip.isLike}} navBar {{else}} text-secondary {{/if}} "
+            class="user-nav nav-link text-center {{#if followShip.isLike}} navBar text-danger {{else}} text-secondary {{/if}} "
             style="width: 130px;">喜歡的內容</a>
         </div>
 
@@ -190,27 +190,27 @@
             <li class="list-group-item list-group-item-action">
 
               <div class="user-wrap d-flex">
-                <a href="/users/{{userId}}">
-                  <img src="{{userAvatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">               
+                <a href="/users/{{this.userId}}">
+                  <img src="{{this.userAvatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">               
                 </a>
 
                 <div class="d-flex flex-column">
                   <div class="d-flex flex-column">
                     <div class="user d-flex justify-content-start">
                       <div class="user-name font-weight-bold mr-2">
-                        {{userName}}
+                        {{this.userName}}
                       </div>
-                      <a href="/users/{{userId}}" class="user-account text-secondary">
-                        @{{userAccount}}
+                      <a href="/users/{{this.userId}}" class="user-account text-secondary">
+                        @{{this.userAccount}}
                       </a>
-                      <span>・{{moment createAt}}</span>
+                      <span>・{{moment this.createdAt}}</span>
                     </div>
                   </div>
-                  <a href="/tweets/{{tweetId}}" class="mt-2 text-dark" style="text-decoration: none;"> {{description}} </a>
+                  <a href="/tweets/{{this.tweetId}}" class="mt-2 text-dark" style="text-decoration: none;"> {{this.description}} </a>
                   <div class="d-flex justify-content-start">
-                    <a href="/tweets/{{tweetId}}/comments" class=" mr-5 text-dark">
+                    <a href="/tweets/{{this.tweetId}}/comments" class=" mr-5 text-dark">
                       <span>
-                        {{replayCount}}
+                        {{this.replayCount}}
                       </span>
                       <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-chat ml-1" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
@@ -220,9 +220,9 @@
                     </a>
 
                     {{#if this.isLiked}}
-                    <form action="/likes/{{tweetId}}?_method=DELETE" method="post">
+                    <form action="/likes/{{this.tweetId}}?_method=DELETE" method="post">
                       <span>
-                        {{likeCount}}
+                        {{this.likeCount}}
                       </span>
                       <button type="submit" class="btn btn-link text-danger p-0 ml-1">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="currentColor"
@@ -234,9 +234,9 @@
                     </form>
 
                     {{else}}
-                    <form action="/likes/{{tweetId}}" method="post">
+                    <form action="/likes/{{this.tweetId}}" method="post">
                       <span>
-                        {{likeCount}}
+                        {{this.likeCount}}
                       </span>
                       <button type="submit" class="btn btn-link text-dark p-0 ">
                         <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-heart " fill="currentColor"

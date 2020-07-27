@@ -1,7 +1,7 @@
 .navBar {
-  border-bottom: 2px solid orange;
-  color: orange;
+  border-bottom: 2px solid rgb(255, 81, 0);
 }
+
 textarea:focus {
   outline: none!important;
 }

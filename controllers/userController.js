@@ -6,7 +6,7 @@ const Reply = db.Reply;
 const Followship = db.Followship;
 const RepliesLike = db.RepliesLikes
 const bcrypt = require('bcryptjs');
-//const imgur = require('imgur-node-api');
+const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 let userController = {
@@ -101,6 +101,7 @@ let userController = {
       ]
     });
     user = user.toJSON();  
+
     const followShip = {
       isTweet: true,
       tweetsCount: user.Tweets.length,
@@ -122,6 +123,8 @@ let userController = {
       // 用自己tweet 的UserId 判斷有沒有按讚過
       isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
     }));
+    
+    tweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
     // all user's tweets
     // all user's likes
     // all user's replies
@@ -137,20 +140,13 @@ let userController = {
     let user = await User.findOne({
       where: { id },
       include: [
-        {
-          model: Reply, include: [
-            { model: Tweet, include: [Reply,User,{ model: User, as: 'TweetWhoLike' },] },
-            User
-          ]
-        },
-        { model: Tweet, as: 'userLike' },
-        {
-          model: Tweet,
-          order: ['createdAt', 'DESC'],
-          include: [
-            User,
-            { model: User, as: 'TweetWhoLike' },
-
+        Tweet,
+        { model: Reply, include: [
+          { model: Tweet, include: [
+              Reply,
+              User,
+              { model: User, as: 'TweetWhoLike' }] 
+            },
           ]
         },
         { model: User, as: 'Followers' },
@@ -182,7 +178,7 @@ let userController = {
       isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
 
     }))
-  
+    repliesTweet = repliesTweet.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
       user,
       followShip,
@@ -223,7 +219,6 @@ let userController = {
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
     let likes = user.userLike;
-console.log(likes)
     likes = likes.map((r) => ({
       ...r,
       tweetId: r.id,
@@ -239,7 +234,8 @@ console.log(likes)
 
     }))
 
-    
+    likes = likes.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
+    console.log(likes)
     res.render('userPage', {
       user,
       followShip,
@@ -338,6 +334,7 @@ console.log(likes)
       ...i,
       isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
     }));
+    followings = followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       user: user.toJSON(),
       followShip: followings,
@@ -363,6 +360,7 @@ console.log(likes)
       ...i,
       isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
     }));
+    followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       user: user.toJSON(),
       followShip: followers,
@@ -404,7 +402,6 @@ console.log(likes)
     const id = req.params.id;
     const { introduction } = req.body;
     const { files } = req;
-    //console.log('req.files', req.files);
     imgur.setClientID(IMGUR_CLIENT_ID);
 
     const user = await User.findByPk(id);
