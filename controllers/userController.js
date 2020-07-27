@@ -101,7 +101,6 @@ let userController = {
       ]
     });
     user = user.toJSON();
-    console.log(user)
     const followShip = {
       isTweet: true,
       tweetsCount: user.Tweets.length,
@@ -138,20 +137,13 @@ let userController = {
     let user = await User.findOne({
       where: { id },
       include: [
-        {
-          model: Reply, include: [
-            { model: Tweet, include: [Reply,User,{ model: User, as: 'TweetWhoLike' },] },
-            User
-          ]
-        },
-        { model: Tweet, as: 'userLike' },
-        {
-          model: Tweet,
-          order: ['createdAt', 'DESC'],
-          include: [
-            User,
-            { model: User, as: 'TweetWhoLike' },
-
+        Tweet,
+        { model: Reply, include: [
+          { model: Tweet, include: [
+              Reply,
+              User,
+              { model: User, as: 'TweetWhoLike' }] 
+            },
           ]
         },
         { model: User, as: 'Followers' },
@@ -224,7 +216,6 @@ let userController = {
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
     let likes = user.userLike;
-console.log(likes)
     likes = likes.map((r) => ({
       ...r,
       tweetId: r.id,
