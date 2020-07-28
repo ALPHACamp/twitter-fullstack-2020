@@ -12,12 +12,12 @@
     </div>
 
     <div class="user-page-cover"
-      style="background: url({{pageUser.cover}}); background-position:center;background-size:cover;">
+      style="background: url({{pageUser.cover}}),#C4C4C4; background-position:center;background-size:cover;">
     </div>
 
     <div class="user-page-top">
       <div class="avatar"
-        style="background: url({{pageUser.avatar}}); background-position:center;background-size:cover;"></div>
+        style="background: url({{pageUser.avatar}}),#C4C4C4; background-position:center;background-size:cover;"></div>
       <div class="feature-link">
         {{#ifEqual user.id pageUser.id}}
         <button type="button" class="button profile-button" data-toggle="modal"
@@ -32,12 +32,12 @@
         {{!-- <div class="icon-circle-fill">
           <i class="fac fa-cus-bells-check"></i>
         </div> --}}
-        {{#if isFollowed}}
-        <form action="/followships/?_method=DELETE" method="POST">
+        {{#if pageUser.isFollowed}}
+        <form action="/followships/{{pageUser.id}}?_method=DELETE" method="POST">
           <button class="ml-1 mr-2 unfollow-button">正在跟隨</button>
         </form>
         {{else}}
-        <form action="/followships/" method="POST">
+        <form action="/followships/{{pageUser.id}}" method="POST">
           <button class="ml-4 mr-2 follow-button">跟隨</button>
         </form>
         {{/if}}
@@ -57,7 +57,7 @@
       </div>
       <div class="user-follow-link">
         <div>
-          <a href="/users/{{pageUser.id}}/followers">{{pageUser.Followers.length}}個<span>跟隨中</span></a>
+          <a href="/users/{{pageUser.id}}/followers">{{pageUser.Followers.length}}個<span>跟隨者</span></a>
         </div>
         <div>
           <a href="/users/{{pageUser.id}}/followings"> {{pageUser.Followings.length}}位<span>跟隨中</span></a>
@@ -93,7 +93,6 @@
               <span class="user-account">
                 {{../pageUser.account}}．{{moment this.createdAt}}
               </span>
-
             </div>
             <div class="tweet-item-text">
               <p>{{this.description}}</p>

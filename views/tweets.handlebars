@@ -7,7 +7,8 @@
       首頁
     </div>
     <div class="main-text">
-      <img src="{{user.avatar}}" alt="" class="avtar">
+      <div class="avatar ml-3 mt-3"
+        style="background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;"></div>
       <form method="POST" action="/tweets">
         <textarea name="description" id="description" class="tweetTextarea" cols="30" rows="10" placeholder="有什麼新鮮事？"
           maxlength="140"></textarea>

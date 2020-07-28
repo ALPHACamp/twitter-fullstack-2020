@@ -87,26 +87,26 @@ const userController = {
       order: [['Tweets', 'createdAt', 'DESC']]
     })
       .then(user => {
-        user.dataValues.Tweets.forEach(t => {
-          t.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.id)
-        })
-        res.render('user-tweets', { pageUser: user.toJSON() })
+        const pageUser = user.toJSON()
+        pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(user.id)
+        pageUser.isLiked = req.user.LikedTweets.map(item => item.id).includes(user.id)
+        res.render('user-tweets', { pageUser })
       })
   },
   getLikes: (req, res) => {
     User.findByPk(req.params.id, {
       include: [
+        Tweet,
         { model: Tweet, as: 'LikedTweets', include: [User, Reply, { model: User, as: 'LikedUsers' }] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
       order: [['LikedTweets', 'createdAt', 'DESC']],
     })
-      .then(user => {
-        user.dataValues.LikedTweets.forEach(t => {
-          t.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.id)
-        })
-        res.render('user-likes', { pageUser: user.toJSON() })
+      .then(pageUser => {
+        pageUser.isLiked = req.user.LikedTweets.map(item => item.id).includes(pageUser.id)
+        pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
+        res.render('user-likes', { pageUser })
       })
   },
   getReplies: (req, res) => {
@@ -121,6 +121,7 @@ const userController = {
           include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
         })
           .then(pageUser => {
+            pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
             res.render('user-replies', { replies, pageUser })
           })
       })

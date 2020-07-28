@@ -137,6 +137,7 @@ a p:hover {
   height: 40px;
 }
 .user-page-imformation {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -223,14 +224,17 @@ a p:hover {
   justify-content: space-between;
   margin-bottom: 5px;
 }
-.follow-item .top .column {
+.follow-item .top .user-name-account {
   display: flex;
   flex-direction: column;
 }
-.folloe-item-introduction {
+.follow-item .top .user-account {
+  margin-left: -2px;
+}
+.follow-item-introduction {
+  width: 500px;
   padding-right: 30px;
 }
-
 
 /* 使用者頁面列表 */
 .user-page-tweets-list,
@@ -935,7 +939,17 @@ width: 600px;
   width: 100%;
   text-align: center;
 }
-.reply-data span {
+.tweet-data {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tweet-data .fa-cus-reply,
+.tweet-data .fa-cus-like { 
+  color: #657786;
+  font-size: 18px;
+}
+.tweet-data span {
   font-weight: 500;
   font-size: 15px;
   color: #1C1C1C;
