@@ -26,7 +26,7 @@ module.exports = {
       avatar: faker.image.people(),
       role: 'user',
       cover: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      account: 'user1',
       createdAt: new Date(),
       updatedAt: new Date()
     }, 
@@ -39,7 +39,7 @@ module.exports = {
       avatar: faker.image.people(),
       role: 'user',
       cover: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      account: 'user2',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -52,7 +52,7 @@ module.exports = {
       avatar: faker.image.people(),
       role: 'user',
       cover: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      account: 'user3',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -65,7 +65,7 @@ module.exports = {
       avatar: faker.image.people(),
       role: 'user',
       cover: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      account: 'user4',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -78,7 +78,7 @@ module.exports = {
       avatar: faker.image.people(),
       role: 'user',
       cover: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      account: 'user5',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {})

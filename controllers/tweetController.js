@@ -2,6 +2,7 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
+const helpers = require('../_helpers');
 const Like = db.Like;
 
 const tweetController = {
@@ -14,6 +15,7 @@ const tweetController = {
         Like,
       ]
     })
+    
     data = tweets.map((r) => ({
       ...r.dataValues,
       userId: r.User.id,
@@ -24,7 +26,7 @@ const tweetController = {
       createdA: r.createdAt,
       likeCount: r.Likes.length,
       replayCount: r.Replies.length,
-      isLiked: r.Likes.map(d => d.UserId).includes(req.user.id)
+      isLiked: r.Likes.map(d => d.id).includes(req.user.id)
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
@@ -49,8 +51,8 @@ const tweetController = {
     replies.sort((a, b) => b.createdAt - a.createdAt)
     const totalCount = {
       replyCount: tweet.Replies.length,
-      likeCount: tweet.Likes.length,
-      isLiked: tweet.Likes.map(d => d.UserId).includes(req.user.id)
+      likeCount: tweet.TweetWhoLike.length,
+      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
     }
     res.render('tweet', {
       isHomePage: true,

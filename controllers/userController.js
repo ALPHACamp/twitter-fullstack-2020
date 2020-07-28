@@ -8,6 +8,7 @@ const RepliesLike = db.RepliesLikes
 const bcrypt = require('bcryptjs');
 const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
+const helper = require('../_helpers')
 
 let userController = {
   loginPage: (req, res) => {

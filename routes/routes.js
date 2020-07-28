@@ -10,20 +10,24 @@ const upload = multer({ dest: 'temp/' });
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (req.user.role === 'user') {
-      res.locals.myUser = req.user
+    if (helpers.getUser(req).role === 'user') {
+    // if (req.user.role === 'user') {
+      // res.locals.myUser = req.user
+      res.locals.myUser = helpers.getUser(req)
       return next();
     }
     req.flash('error_messages', 'You are not an user, please login here');
-    return res.redirect('/admin/login');
+    return res.redirect('/admin/signin');
   }
   req.flash('error_messages', 'Please login first');
   res.redirect('/login');
 };
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (req.user.role === 'Admin') {
-      res.locals.myUser = req.user
+    if (helpers.getUser(req).role === 'user') {
+    // if (req.user.role === 'Admin') {
+      // res.locals.myUser = req.user
+      res.locals.myUser = helpers.getUser(req)
       return next();
     }
     req.flash('error_messages', 'You are not an admin, please login here');
@@ -31,6 +35,14 @@ const authenticatedAdmin = (req, res, next) => {
   }
   res.redirect('/login');
 };
+router.get('/admin/signin', adminController.adminLoginPage);
+router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.login);
+router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
+router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
+router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
+
+
 
 router.get('/', (req, res) => res.redirect('/tweets'));
 router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets);
@@ -51,12 +63,6 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
   userController.login
 );
 
-router.get('/admin/login', adminController.adminLoginPage);
-router.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.login);
-router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
-router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
-router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
-router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
 
 router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
