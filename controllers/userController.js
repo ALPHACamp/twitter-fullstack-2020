@@ -181,19 +181,18 @@ let userController = {
   },
   getUserLike: async (req, res) => {
     const id = req.params.id;
-    const tweetsCount = await Tweet.count({
-      where: { UserId: id }
-    });
+    // const tweetsCount = await Tweet.count({
+    //   where: { UserId: id }
+    // });
     let user = await User.findOne({
       where: { id },
       include: [
         Tweet,
-        Reply,
         {
           model: Like, order: ['createdAt', 'DESC'],
           include: [
             User,
-            { model: Tweet, include: [Like,Reply] }
+            { model: Tweet, include: [Like, Reply] }
           ]
         },
         { model: User, as: 'Followers' },
@@ -201,16 +200,15 @@ let userController = {
       ]
     });
     user = user.toJSON();
+    console.log(user)
     const followShip = {
       isLike: true,
-      tweetsCount,
+      tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
-
     let likes = user.Likes;
-
     likes = likes.map((r) => ({
       ...r,
       tweetId: r.Tweet.id,
@@ -220,11 +218,9 @@ let userController = {
       userAccount: r.User.account,
       description: r.User.introduction,
       likeCount: r.Tweet.Likes.length,
-      replayCount:  r.Tweet.Replies.length,
-      isLiked:  r.Tweet.Likes.map((d) => d.UserId).includes(req.user.id)
+      replayCount: r.Tweet.Replies.length,
+      isLiked: r.Tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }))
-    console.log(likes)
-
     likes = likes.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
       user,
