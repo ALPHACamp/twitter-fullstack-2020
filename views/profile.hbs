@@ -1,5 +1,7 @@
+<h5 class="ml-2">{{user.name}}</h5>
+<small class="ml-2">{{tweets.length}} 推文</small>
+<br />
 <div class="row">
-
   <div class="col-md-8">
     <div class="" style="">
       <img class="rounded-top" src="{{user.cover}}" style="width:100%; height: 200px;">
@@ -27,7 +29,7 @@
         {{/ifNotCond}}
       </div>
     </div>
-    <h6>{{user.name}}</h6>
+    <h5>{{user.name}}</h5>
     <small>{{user.email}}</small>
     <p>{{user.introduction}}</p>
     <p>{{followingNum}}個跟隨中 {{followerNum}}位跟隨者</p>
@@ -46,9 +48,42 @@
     <br />
     <br />
     <div class="row">
-      {{!-- {{#each tweets}}
-
-      {{/each}} --}}
+      <ul class="list-group">
+        {{#each tweets}}
+        <li class="list-group-item">
+          <div class="border-top">
+            <h6 class="card-title">
+              <a href="/users/{{this.UserId}}">
+                <img class="mt-2"
+                  style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;"
+                  src="{{this.User.avatar}}" />
+                {{this.User.name}}
+              </a>
+              <small class="text-muted">{{this.User.email}}。{{moment this.createdAt}}</small>
+            </h6>
+          </div>
+          <div class="text-break" style="display: inline;">
+            <a href="/tweets/{{this.id}}">
+              <p class="card-text">{{this.description}}</p>
+            </a>
+            <p class="card-text">
+            <div class="row justify-content-around">
+              <div class="col">
+                <small class="text-muted">
+                  <i class="far fa-comment"> {{this.Replies.length}}</i>
+                </small>
+              </div>
+              <div class="col">
+                <small class="text-muted">
+                  <i class="far fa-heart"> {{this.likedUsers.length}}</i>
+                </small>
+              </div>
+            </div>
+            </p>
+          </div>
+        </li>
+        {{/each}}
+      </ul>
     </div>
   </div>
 
