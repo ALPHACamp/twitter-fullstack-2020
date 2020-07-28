@@ -1,6 +1,7 @@
 const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
+const Like = db.Like;
 const pageLimit = 7
 
 let adminController = {
@@ -27,8 +28,7 @@ let adminController = {
       let pages = Math.ceil(tweets.count / pageLimit)
       let totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
       let prev = page - 1 < 1 ? 1 : page - 1
-      let next = page + 1 > pages ? pages : page + 1
-      console.log(tweets)
+      let next = page + 1 > pages ? pages : page + 1    
       const data = tweets.rows.map((r) => ({
         ...r,
         account: r.User.account,
@@ -52,7 +52,7 @@ let adminController = {
     let users = await User.findAll({
       include: [
         Tweet,
-        { model: Tweet, as: 'userLike' },
+        Like,
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -60,11 +60,11 @@ let adminController = {
 
     data = users.map((r) => ({
       ...r.dataValues,
-      LikeCount: r.userLike.length,
+      LikeCount: r.Likes.length,
       FollowerCount: r.Followers.length,
       FollowingCount: r.Followings.length,
       TweetCount: r.Tweets.length
-    }));
+    }));  
     data = data.sort((a, b) => b.TweetCount - a.TweetCount);
     data = data.filter((user) => user.role === 'user');
     res.render('admin/tweetsUser', {

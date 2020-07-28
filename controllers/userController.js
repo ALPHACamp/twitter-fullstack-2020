@@ -88,7 +88,7 @@ let userController = {
           include: [
             User,
             Reply,
-            { model: User, as: 'TweetWhoLike' },
+            Like,
           ]
         },
         { model: User, as: 'Followers' },
@@ -107,14 +107,14 @@ let userController = {
     tweets = tweets.map((tweet) => ({
       ...tweet,
       tweetId: tweet.id,
-      userId: tweet.User.id,
-      userName: tweet.User.name,
-      userAvatar: tweet.User.avatar,
-      userAccount: tweet.User.account,
-      likeCount: tweet.TweetWhoLike.length,
+      userId: user.id,
+      userName: user.name,
+      userAvatar: user.avatar,
+      userAccount: user.account,
+      likeCount: tweet.Likes.length,
       replayCount: tweet.Replies.length,
       description: tweet.description,
-      isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      isLiked: tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }));
     tweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
@@ -136,7 +136,7 @@ let userController = {
               model: Tweet, include: [
                 Reply,
                 User,
-                { model: User, as: 'TweetWhoLike' }]
+                Like,]
             },
             User
           ]
@@ -153,10 +153,7 @@ let userController = {
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
-    // console.log(user)
     let repliesTweet = user.Replies;
-    console.log(repliesTweet[0])
-    // console.log(repliesTweet[0])
 
 
     repliesTweet = repliesTweet.map(r => ({
@@ -167,9 +164,9 @@ let userController = {
       userAvatar: r.Tweet.User.avatar,
       userAccount: r.Tweet.User.account,
       description: r.Tweet.description,
-      likeCount: r.Tweet.TweetWhoLike.length,
+      likeCount: r.Tweet.Likes.length,
       replayCount: r.Tweet.Replies.length,
-      isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      isLiked: r.Tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }))
 
     repliesTweet = repliesTweet.sort((a, b) => b.createdAt - a.createdAt)
@@ -190,14 +187,12 @@ let userController = {
       where: { id },
       include: [
         Tweet,
+        Reply,
         {
-          model: Tweet,
-          as: 'userLike',
-          order: ['createdAt', 'DESC'],
+          model: Like, order: ['createdAt', 'DESC'],
           include: [
             User,
-            Reply,
-            { model: User, as: 'TweetWhoLike' },
+            { model: Tweet, include: [Like,Reply] }
           ]
         },
         { model: User, as: 'Followers' },
@@ -212,21 +207,24 @@ let userController = {
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
-    let likes = user.userLike;
+
+    let likes = user.Likes;
+
     likes = likes.map((r) => ({
       ...r,
-      tweetId: r.id,
+      tweetId: r.Tweet.id,
       userId: r.User.id,
       userName: r.User.name,
       userAvatar: r.User.avatar,
       userAccount: r.User.account,
-      description: r.description,
-      likeCount: r.TweetWhoLike.length,
-      replayCount: r.Replies.length,
-      isLiked: r.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      description: r.User.introduction,
+      likeCount: r.Tweet.Likes.length,
+      replayCount:  r.Tweet.Replies.length,
+      isLiked:  r.Tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }))
+    console.log(likes)
 
-    likes = likes.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
+    likes = likes.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
       user,
       followShip,

@@ -74,12 +74,15 @@
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
+
                   <button type="button" class="btn btn-secondary" data-dismiss="modal"
                     onclick="cleanTextarea()">Close</button>
+
                 </div>
                 <div class="modal-body">
                   <form action="/tweets/newTweets" method="POST">
                     <div class="form-group">
+
                       <textarea class="form-control" id="newTweetModalTextarea" name="newTweet" rows="3"
                         placeholder="有什麼新鮮事?" oninput="showWordCountModal()" maxlength="140"></textarea>
                       <p><span id="wordCountModal">0</span>/140</p>
@@ -94,6 +97,15 @@
           </div>
           <button type="button" class="btn btn-danger rounded-pill w-100 mt-3" data-toggle="modal"
             data-target="#exampleModal"> 推文 </button>
+
+          <script>
+            function CloseModal() {
+              $('#closeThis').click(function () {
+                $('#newTweet').val('');
+              })
+
+            }
+          </script>
 
           {{else}}
           <li class="nav-item d-flex mt-4 {{#if isAdminTweet}} text-danger {{else}} text-dark {{/if}}">
