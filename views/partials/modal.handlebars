@@ -17,7 +17,7 @@
           </div>
           <form method="POST" action="/tweets">
             <textarea class="modal-textarea modal-post-tweet" name="description" id="description" cols="30" rows="10"
-              placeholder="有什麼新鮮事？" maxlength="140"></textarea>
+              placeholder="有什麼新鮮事？"></textarea>
             <div class="buttons d-flex justify-content-end">
               <button class="tweet-post-button-modal" type="submit" style="display: none;">推文</button>
               <button type="button" class="tweet-post-error-modal" data-toggle="modal" data-target="#postError">
@@ -127,7 +127,7 @@
 <div class="modal fade" id="postError" tabindex="-1" role="dialog" aria-labelledby="postError" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
-      <p class="text-center m-0">要輸入內容才可以送出唷！
+      <p class="text-center m-0 post-error-text">要輸入內容才可以送出唷！
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" style="font-size: 30px; color:#fff;">&times;</span>
         </button>

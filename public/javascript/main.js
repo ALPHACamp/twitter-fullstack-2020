@@ -1,4 +1,5 @@
 const body = document.querySelector('.container-fluid')
+const postErrorText = document.querySelector('.post-error-text')
 const re = new RegExp("^[ ]+$")
 
 body.addEventListener('input', (e) => {
@@ -8,12 +9,18 @@ body.addEventListener('input', (e) => {
   if (isSpace) {
     tweetError.style.display = 'inline'
     tweetButton.style.display = 'none'
+    postErrorText.innerText = "要輸入內容才可以送出唷！"
+  } else if (e.target.value.length > 140) {
+    tweetError.style.display = 'inline'
+    tweetButton.style.display = 'none'
+    postErrorText.innerText = "內容不可以大於 140 字喔！"
   } else if (e.target.value) {
     tweetError.style.display = 'none'
     tweetButton.style.display = 'inline'
   } else {
     tweetError.style.display = 'inline'
     tweetButton.style.display = 'none'
+    postErrorText.innerText = "要輸入內容才可以送出唷！"
   }
 })
 
