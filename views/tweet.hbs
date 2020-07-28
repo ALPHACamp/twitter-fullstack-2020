@@ -1,12 +1,41 @@
 <div class="container">
   <div class="row">
-    <div class="col-3 mt-2 border-right">
-      <div class="col mt-4">
-        <a class="nav-link" href="#">
-          <button style="border-radius: 100px;" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">推文</button>
-        </a>
-      </div>
-    </div>
+    {{!-- <div class="col-3 mt-2 border-right ">
+      <img style="width: 50px;height: 50PX;left: 103px;top: 4px;" src="https://i.imgur.com/5wAep0e.png" alt="">
+        <nav class="nav flex-column">
+          <div class="row row-cols-1">
+            <div class="col mt-4">
+              <i class="fas fa-home fa-2x"></i>
+              <a class="nav-link active" style="display: inline;" href="/tweets">
+                <h4 style="display: inline;">首頁</h4>
+              </a>
+            </div>
+            <div class="col mt-4">
+              <i class="fas fa-user fa-2x"></i>
+              <a class="nav-link" style="display: inline;" href="/users/{{user.id}}">
+                <h4 style="display: inline;">個人資料</h4>
+              </a>
+            </div>
+            <div class="col mt-4">
+              <i class="fas fa-cog fa-2x"></i>
+              <a class="nav-link" style="display: inline;" href="#">
+                <h4 style="display: inline;">設定</h4>
+              </a>
+            </div>
+            <div class="col mt-4">
+              <a class="nav-link" href="#">
+                <button style="border-radius: 100px;" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">推文</button>
+              </a>
+            </div>
+            <div class="col mt-4">
+              <i class="fas fa-sign-out-alt fa-2x"></i>
+              <a class="nav-link" style="display: inline;" href="#">
+                <h4 style="display: inline;">登出</h4>
+              </a>
+            </div>
+          </div>
+        </nav>
+    </div> --}}
     <div class="col-6 mt-2 border-right">
       <div class="row row-cols-1">
         <div class="col">
@@ -28,25 +57,29 @@
             <span >{{tweet.Replies.length}} 回覆</span>
           </div>
           <div class="col">
-            <span>{{tweet.likedUsers.length}} 喜歡次數</span>
+            <span>{{tweet.LikedUsers.length}} 喜歡次數</span>
           </div>
         </div>
         <div class="mt-3 border-top row justify-content-around">
           <div class="col">
             <button style="border-radius: 100px" type="submit" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
-              <i class="far fa-comment"></i>
+              <i class="far fa-comment fa-2x"></i>
             </button>
           </div>
           <div class="col">
-            {{!-- {{#if }} --}}
-              <form action="/followships" method="POST">
+            {{#if isLiked}}
+              <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
                 <button style="border-radius: 100px" type="submit" class="btn btn-light" >
-                  <i class="far fa-heart"></i>
+                  <i class="fas fa-heart fa-2x" style="color: red;"></i> 
                 </button>
               </form>
-            {{!-- {{else}}
-
-            {{/if}} --}}
+            {{else}}
+              <form action="/tweets/{{tweet.id}}/like" method="POST">
+                <button style="border-radius: 100px" type="submit" class="btn btn-light" >
+                  <i class="far fa-heart fa-2x"></i>
+                </button>
+              </form>
+            {{/if}}
           </div>
         </div>
         <!-- Modal -->
@@ -96,7 +129,7 @@
                 </div>
                 <div class="col">
                   <small class="text-muted">
-                    <i class="far fa-heart"> {{this.likedUsers.length}}</i>
+                    <i class="far fa-heart"> {{this.LikedUsers.length}}</i>
                   </small>
                 </div>
               </div>
