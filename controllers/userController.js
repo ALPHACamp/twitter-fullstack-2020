@@ -74,20 +74,22 @@ const userController = {
             as: 'LikedTweets',
             include: User
           },
+          { model: Tweet },
           { model: User, as: 'Followers' }
         ]
       })
         .then((user) => {
-          user = user.toJSON()
-          for (let i = 0; i < user.LikedTweets.length; i++) {
-            user.LikedTweets[i].repliesCount = user.LikedTweets[i].replyCount
-            user.LikedTweets[i].likeCount = user.LikedTweets[i].Replies.length
+          const results = user.toJSON()
+          for (let i = 0; i < results.LikedTweets.length; i++) {
+            results.LikedTweets[i].repliesCount = results.LikedTweets[i].replyCount
+            results.LikedTweets[i].likeCount = results.LikedTweets[i].Replies.length
           }
-          user.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
+          results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+          results.tweetCount = results.Tweets.length
 
-          console.log(user)
+          console.log(results)
           res.render('userLikeContent', {
-            user: user,
+            results: results,
             recommendFollowings: users,
             currentId: req._passport.session.user
           })
