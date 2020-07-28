@@ -2,6 +2,7 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Follow = db.Follow
 
 const adminController = {
   getTweets: (req, res) => {
@@ -10,23 +11,8 @@ const adminController = {
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
       console.log(tweets)
-      return res.render('./admin/tweets', { tweets: tweets })
+      return res.render('./admin/tweets', { layout: 'admin', tweets: tweets })
     })
-  },
-
-  postTweet: (req, res) => {
-    if (!req.body.description) {
-      req.flash('error_messages', '請勿空白')
-      return res.redirect('back')
-    } else {
-      return Tweet.create({
-        // userId: req.user.id,
-        description: req.body.description
-      })
-        .then(tweet => {
-          res.redirect('/admin/tweets')
-        })
-    }
   },
 
   deleteTweet: (req, res) => {
@@ -35,6 +21,15 @@ const adminController = {
         req.flash('success_messages', 'Tweet has been deleted.')
         return res.redirect('back')
       })
+    })
+  },
+
+  getUsers: (req, res) => {
+    return User.findAll({
+      // include: [Reply, Follow],
+      order: [['id', 'ASC']]
+    }).then(users => {
+      return res.render('./admin/users', { layout: 'admin', users: users })
     })
   }
 }

@@ -28,6 +28,7 @@ module.exports = (app, passport) => {
   // admin backstage
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   app.delete('/admin/tweet/:id', authenticatedAdmin, adminController.deleteTweet)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
   // sign in / sign out / sign up
   app.get('/signup', userController.signUpPage)
