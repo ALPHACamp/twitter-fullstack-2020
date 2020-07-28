@@ -51,8 +51,7 @@ let adminController = {
   getUsers: async (req, res) => {
     let users = await User.findAll({
       include: [
-        Tweet,
-        Like,
+        { model: Tweet, include: [Like]},
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -60,7 +59,7 @@ let adminController = {
 
     data = users.map((r) => ({
       ...r.dataValues,
-      LikeCount: r.Likes.length,
+      LikeCount: r.Tweets.map(i => i.Likes.length).reduce((a,b) => a + b, 0),  
       FollowerCount: r.Followers.length,
       FollowingCount: r.Followings.length,
       TweetCount: r.Tweets.length
