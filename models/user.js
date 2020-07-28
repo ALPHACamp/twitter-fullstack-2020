@@ -1,35 +1,6 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      User.belongsToMany(User, {
-        through: models.Followship,
-        foreignKey: 'followingId',
-        as: 'Followers'
-      })
-      User.belongsToMany(User, {
-        through: models.Followship,
-        foreignKey: 'followerId',
-        as: 'Followings'
-      })
-      User.belongsToMany(models.Tweet, {
-        through: models.Like,
-        foreignKey: 'UserId',
-        as: 'LikedTweets'
-      })
-      User.hasMany(models.Reply)
-      User.hasMany(models.Tweet)
-    }
-  };
-  User.init({
+  const User = sequelize.define('User', {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
@@ -38,9 +9,26 @@ module.exports = (sequelize, DataTypes) => {
     introduction: DataTypes.TEXT,
     cover: DataTypes.STRING,
     account: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+  }, {});
+  User.associate = function (models) {
+    User.hasMany(models.Reply)
+    User.hasMany(models.Tweet)
+    //User.hasMany(models.Like) To Sam check test spec.
+    User.belongsToMany(models.Tweet, {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikedTweets'
+    })
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followingId',
+      as: 'Followers'
+    })
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'Followings'
+    })
+  };
   return User;
 };
