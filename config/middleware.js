@@ -11,9 +11,10 @@ module.exports = {
         .then(users => {
           users = users.map(item => ({
             ...item.dataValues,
-            followerCont: item.Followers.length,
+            followerCount: item.Followers.length,
             isFollowed: req.user.Followings.map(item => item.id).includes(item.id)
-          }))
+          })).filter(item => item.name !== req.user.name)
+
           req.user.TopUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
           return req.user
         })
