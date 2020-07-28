@@ -19,7 +19,6 @@ describe('../../models/followship', () => {
   after(() => {
     Followship.init.resetHistory()
   })
-
   it('called Followship.init with the correct parameters', () => {
     expect(Followship.init).to.have.been.calledWith(
       {
