@@ -8,6 +8,8 @@ const passport = require('passport');
 const multer = require('multer');
 const upload = multer({ dest: 'temp/' });
 
+
+
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role === 'user') {
@@ -15,6 +17,8 @@ const authenticated = (req, res, next) => {
       // res.locals.myUser = req.user
       res.locals.myUser = helpers.getUser(req)
       return next();
+    } else {
+      res.redirect('/admin/tweets')
     }
     req.flash('error_messages', 'You are not an user, please login here');
     return res.redirect('/admin/signin');
