@@ -112,7 +112,7 @@
             <p class="tweet-createdAt">{{moment this.createdAt}} </p>
             <p class="tweet-user-avatar">{{this.User.avatar}}</p>
           </div>
-          {{#if isLiked}}
+          {{#if this.dataValues.isLiked}}
           <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
             <button type="submit" class="like-link button">
               <i class="fac fa-cus-solid-like"></i>
@@ -126,50 +126,6 @@
               </form>
         </div>
       </div>
-      {{!-- <div class="user-page-list-item">
-        <div class="left">
-          <div class="avatar"
-            style="background: url({{this.User.avatar}}); background-position:center;background-size:cover;">
-          </div>
-        </div>
-        <div class="right">
-          <div class="user-name-account">
-            <span class="user-name">{{this.User.name}}</span><span
-              class="user-account">{{this.User.account}}．{{moment this.createdAt}}</span>
-          </div>
-          <div class="tweet-item-text">
-            {{this.description}}
-          </div>
-
-
-          <div class="tweet-item-footer">
-            <button type="button" class="button reply-link pt-1  reply-modal-open">
-              <i class="fac fa-cus-reply"></i> {{this.Replies.length}}
-            </button>
-            <div class="hidden-info" style="display:none;">
-              <p class="tweet-user-name">{{this.User.name}}</p>
-              <p class="tweet-user-account">{{this.User.account}}</p>
-              <p class="tweet-description">{{this.description}}</p>
-              <p class="tweet-id">{{this.id}}</p>
-              <p class="tweet-createdAt">{{moment this.createdAt}} </p>
-              <p class="tweet-user-avatar">{{this.User.avatar}}</p>
-            </div>
-            {{#if isLiked}}
-            <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
-              <button type="submit" class="like-link button">
-                <i class="fac fa-cus-solid-like"></i>
-                {{else}}
-                <form action="/tweets/{{this.id}}/like" method="POST">
-                  <button type="submit" class="like-link button">
-                    <i class="fac fa-cus-like"></i>
-                    {{/if}}
-                    {{this.LikedUsers.length}}
-                  </button>
-                </form>
-          </div>
-
-        </div>
-      </div> --}}
       {{/each}}
     </div>
 

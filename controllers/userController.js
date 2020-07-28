@@ -106,7 +106,9 @@ const userController = {
       order: [['LikedTweets', 'createdAt', 'DESC']],
     })
       .then(pageUser => {
-        pageUser.isLiked = req.user.LikedTweets.map(item => item.id).includes(pageUser.id)
+        pageUser.dataValues.LikedTweets.forEach(t => {
+          t.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.dataValues.id)
+        })
         pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
         res.render('user-likes', { pageUser })
       })
