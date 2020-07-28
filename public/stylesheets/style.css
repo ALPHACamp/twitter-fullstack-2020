@@ -271,7 +271,7 @@ a p:hover {
   min-height: 50px;
 }
 .reply-tweet-text {
-  margin-bottom: 15px;
+  margin-bottom: 50px;
 }
 .reply-tweet-text,
 .reply-comment-text {
@@ -279,6 +279,9 @@ a p:hover {
 }
 .reply-comment-text {
   margin-bottom: 15px;
+}
+.reply-tweet {
+  margin-top: 10px;
 }
 .reply-tweet .left{
   display: flex;
@@ -289,6 +292,9 @@ a p:hover {
 .reply-tweet .right{
   min-height: 70px;
   width: auto;
+}
+.reply-tweet-item-footer {
+  position: absolute;
 }
 
 /* 登入註冊頁面 */
@@ -546,7 +552,7 @@ width: 600px;
   width: 140px;
 }
 .tweet-item-footer .reply-link,
-.tweet-item-footer .like-link {
+.tweet-item-footer .like-link,.tweet-item-footer-reply .reply-link,.tweet-item-footer-reply .like-link {
   width: 70px;
   font-weight: 500;
   font-size: 13px;
@@ -564,6 +570,19 @@ width: 600px;
 }
 .fa-cus-solid-like{
   color: red;
+}
+
+.tweet-item-footer-reply {
+  position: relative;
+  left: 20px;
+  bottom: 30px;
+}
+.reply-comment.row {
+    position: relative;
+    top: -20px;
+}
+.reply-comment.row .reply-comment-text {
+  margin-bottom: 0;
 }
 
 /* 右側推薦清單 */

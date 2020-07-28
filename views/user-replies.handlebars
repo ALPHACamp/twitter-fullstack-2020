@@ -77,10 +77,10 @@
 
     <div class="user-page-replies-list w-100">
       {{#each replies}}
-      <div class="tweet-box" onclick="location.href='/tweets/{{this.Tweet.id}}'">
+      <div class="tweet-box">
         <div class="reply-item">
           <!--推文-->
-          <div class="reply-tweet row">
+          <div class="reply-tweet row" onclick="location.href='/tweets/{{this.Tweet.id}}'">
             <div class="left">
               <div class="avatar"
                 style="background: url({{this.Tweet.User.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
@@ -97,8 +97,33 @@
               </div>
             </div>
           </div>
+          <div class="tweet-item-footer-reply d-flex justify-content-start align-items-center">
+            <button type="button" class="button reply-link pt-1  reply-modal-open">
+              <i class="fac fa-cus-reply"></i> {{this.Tweet.Replies.length}}
+            </button>
+            <div class="hidden-info" style="display:none;">
+              <p class="tweet-user-name">{{this.Tweet.User.name}}</p>
+              <p class="tweet-user-account">{{this.Tweet.User.account}}</p>
+              <p class="tweet-description">{{this.Tweet.description}}</p>
+              <p class="tweet-id">{{this.Tweet.id}}</p>
+              <p class="tweet-createdAt">{{moment this.Tweet.createdAt}} </p>
+              <p class="tweet-user-avatar">{{this.Tweet.User.avatar}}</p>
+            </div>
+            {{#if isLiked}}
+            <form action="/tweets/{{this.Tweet.id}}/like?_method=DELETE" method="POST">
+              <button type="submit" class="like-link button">
+                <i class="fac fa-cus-solid-like"></i>
+                {{else}}
+                <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
+                  <button type="submit" class="like-link button">
+                    <i class="fac fa-cus-like"></i>
+                    {{/if}}
+                    {{this.Tweet.LikedUsers.length}}
+                  </button>
+                </form>
+          </div>
           <!--回覆-->
-          <div class="reply-comment row">
+          <div class="reply-comment row" onclick="location.href='/tweets/{{this.Tweet.id}}'">
             <div class="left">
               <div class="avatar"
                 style="background: url({{../pageUser.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
@@ -116,6 +141,7 @@
           </div>
         </div>
       </div>
+
       {{/each}}
     </div>
   </div>
