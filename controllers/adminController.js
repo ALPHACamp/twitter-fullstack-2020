@@ -32,14 +32,16 @@ const adminController = {
       })
   },
   getTweets: (req, res) => {
-    return Tweet.findAll({ include: [User] })
-      .then(tweets => {
-        tweets = tweets.map(item => ({
-          ...item.dataValues,
-          description: item.description.substring(0, 50)
-        }))
-        res.render('admin/tweets', { tweets })
-      })
+    return Tweet.findAll({
+      include: [User],
+      order: [['createdAt', 'DESC']]
+    }).then(tweets => {
+      tweets = tweets.map(item => ({
+        ...item.dataValues,
+        description: item.description.substring(0, 50)
+      }))
+      res.render('admin/tweets', { tweets })
+    })
   },
   deleteTweet: (req, res) => {
     const id = req.params.id
