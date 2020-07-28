@@ -5,29 +5,6 @@ const Reply = db.Reply;
 const Like = db.Like;
 
 const tweetController = {
-  getTweets: async (req, res) => {
-    let tweets = await Tweet.findAll({
-      order: [['createdAt', 'DESC']],
-      include: [
-        User,
-        Reply,
-        Like,
-      ]
-    })
-    data = tweets.map((r) => ({
-      ...r.dataValues,
-      userId: r.User.id,
-      userName: r.User.name,
-      userAvatar: r.User.avatar,
-      userAccount: r.User.account,
-      description: r.description,
-      createdA: r.createdAt,
-      likeCount: r.Likes.length,
-      replayCount: r.Replies.length,
-      isLiked: r.Likes.map(d => d.UserId).includes(req.user.id)
-    }));
-    return res.render('tweetsHome', { tweets: data, isHomePage: true });
-  },
   getTweet: async (req, res) => {
     const id = req.params.id;
     let tweet = await Tweet.findOne({
@@ -58,6 +35,29 @@ const tweetController = {
       tweet,
       totalCount,
     });
+  },
+  getTweets: async (req, res) => {
+    let tweets = await Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [
+        User,
+        Reply,
+        Like,
+      ]
+    })
+    data = tweets.map((r) => ({
+      ...r.dataValues,
+      userId: r.User.id,
+      userName: r.User.name,
+      userAvatar: r.User.avatar,
+      userAccount: r.User.account,
+      description: r.description,
+      createdA: r.createdAt,
+      likeCount: r.Likes.length,
+      replayCount: r.Replies.length,
+      isLiked: r.Likes.map(d => d.UserId).includes(req.user.id)
+    }));
+    return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {
