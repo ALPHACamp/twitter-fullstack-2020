@@ -117,7 +117,7 @@ router.put(
   '/users/:id/profile',
   authenticated,
   upload.fields([
-    { name: 'backgroundImg', maxCount: 1 },
+    { name: 'cover', maxCount: 1 },
     { name: 'avatar', maxCount: 1 }
   ]),
   userController.putEditProfile
