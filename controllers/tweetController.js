@@ -3,6 +3,7 @@ const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
 const helpers = require('../_helpers');
+const Like = db.Like;
 
 const tweetController = {
   getTweets: async (req, res) => {
@@ -11,7 +12,7 @@ const tweetController = {
       include: [
         User,
         Reply,
-        { model: User, as: 'TweetWhoLike' },
+        Like,
       ]
     })
     data = tweets.map((r) => ({
@@ -22,7 +23,7 @@ const tweetController = {
       userAccount: r.User.account,
       description: r.description,
       createdA: r.createdAt,
-      likeCount: r.TweetWhoLike.length,
+      likeCount: r.Likes.length,
       replayCount: r.Replies.length,
       isLiked: r.TweetWhoLike.map(d => d.id).includes(helpers.getUser(req).id)
     }));
@@ -32,11 +33,9 @@ const tweetController = {
     const id = req.params.id;
     let tweet = await Tweet.findOne({
       where: { id },
-      include: [User,
-        { model: User, as: 'TweetWhoLike' },
+      include: [User, Like,
         {
-          model: Reply, order: ["createdAt", 'DESC'], include: [
-            User,
+          model: Reply, order: ["createdAt", 'DESC'], include: [User,
             { model: User, as: 'ReplyWhoLike' }
           ]
         },

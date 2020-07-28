@@ -8,6 +8,7 @@ const RepliesLike = db.RepliesLikes
 const bcrypt = require('bcryptjs');
 const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
+const helper = require('../_helpers')
 
 let userController = {
   loginPage: (req, res) => {
@@ -88,7 +89,7 @@ let userController = {
           include: [
             User,
             Reply,
-            { model: User, as: 'TweetWhoLike' },
+            Like,
           ]
         },
         { model: User, as: 'Followers' },
@@ -101,20 +102,20 @@ let userController = {
       tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req))
     };
     let tweets = user.Tweets;
     tweets = tweets.map((tweet) => ({
       ...tweet,
       tweetId: tweet.id,
-      userId: tweet.User.id,
-      userName: tweet.User.name,
-      userAvatar: tweet.User.avatar,
-      userAccount: tweet.User.account,
-      likeCount: tweet.TweetWhoLike.length,
+      userId: user.id,
+      userName: user.name,
+      userAvatar: user.avatar,
+      userAccount: user.account,
+      likeCount: tweet.Likes.length,
       replayCount: tweet.Replies.length,
       description: tweet.description,
-      isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      isLiked: tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req))
     }));
     tweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
@@ -136,7 +137,7 @@ let userController = {
               model: Tweet, include: [
                 Reply,
                 User,
-                { model: User, as: 'TweetWhoLike' }]
+                Like,]
             },
             User
           ]
@@ -151,12 +152,9 @@ let userController = {
       tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req))
     };
-    // console.log(user)
     let repliesTweet = user.Replies;
-    console.log(repliesTweet[0])
-    // console.log(repliesTweet[0])
 
 
     repliesTweet = repliesTweet.map(r => ({
@@ -167,9 +165,9 @@ let userController = {
       userAvatar: r.Tweet.User.avatar,
       userAccount: r.Tweet.User.account,
       description: r.Tweet.description,
-      likeCount: r.Tweet.TweetWhoLike.length,
+      likeCount: r.Tweet.Likes.length,
       replayCount: r.Tweet.Replies.length,
-      isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      isLiked: r.Tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req))
     }))
 
     repliesTweet = repliesTweet.sort((a, b) => b.createdAt - a.createdAt)
@@ -190,14 +188,12 @@ let userController = {
       where: { id },
       include: [
         Tweet,
+        Reply,
         {
-          model: Tweet,
-          as: 'userLike',
-          order: ['createdAt', 'DESC'],
+          model: Like, order: ['createdAt', 'DESC'],
           include: [
             User,
-            Reply,
-            { model: User, as: 'TweetWhoLike' },
+            { model: Tweet, include: [Like,Reply] }
           ]
         },
         { model: User, as: 'Followers' },
@@ -210,23 +206,26 @@ let userController = {
       tweetsCount,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req))
     };
-    let likes = user.userLike;
+
+    let likes = user.Likes;
+
     likes = likes.map((r) => ({
       ...r,
-      tweetId: r.id,
+      tweetId: r.Tweet.id,
       userId: r.User.id,
       userName: r.User.name,
       userAvatar: r.User.avatar,
       userAccount: r.User.account,
-      description: r.description,
-      likeCount: r.TweetWhoLike.length,
-      replayCount: r.Replies.length,
-      isLiked: r.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      description: r.User.introduction,
+      likeCount: r.Tweet.Likes.length,
+      replayCount:  r.Tweet.Replies.length,
+      isLiked:  r.Tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req))
     }))
+    console.log(likes)
 
-    likes = likes.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
+    likes = likes.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
       user,
       followShip,
@@ -237,7 +236,7 @@ let userController = {
   addLike: async (req, res) => {
     try {
       const newLike = await Like.create({
-        UserId: req.user.id,
+        UserId: helper.getUser(req),
         TweetId: req.params.tweetId
       });
       res.redirect('back');
@@ -250,7 +249,7 @@ let userController = {
     try {
       const toRemove = await Like.findOne({
         where: {
-          UserId: req.user.id,
+          UserId: helper.getUser(req),
           TweetId: req.params.tweetId
         }
       });
@@ -262,7 +261,7 @@ let userController = {
   },
   editUser: async (req, res) => {
     try {
-      if (req.user.id !== Number(req.params.id)) {
+      if (helper.getUser(req) !== Number(req.params.id)) {
         return res.redirect('back');
       }
       const toEdit = await User.findByPk(req.params.id);
@@ -277,12 +276,12 @@ let userController = {
   },
   addFollowing: async (req, res) => {
     try {
-      if (req.user.id == Number(req.params.userId)) {
+      if (helper.getUser(req) == Number(req.params.userId)) {
         req.flash('error_messages', 'you cannot follow yourself');
         return res.redirect('back');
       }
       const newFollowship = await Followship.create({
-        followerId: req.user.id,
+        followerId: helper.getUser(req),
         followingId: req.params.userId
       });
       res.redirect('back');
@@ -294,7 +293,7 @@ let userController = {
     try {
       const toRemove = await Followship.findOne({
         where: {
-          followerId: req.user.id,
+          followerId: helper.getUser(req),
           followingId: req.params.userId
         }
       });
@@ -376,7 +375,7 @@ let userController = {
   },
   editProfile: async (req, res) => {
     try {
-      if (req.user.id !== Number(req.params.id)) {
+      if (helper.getUser(req) !== Number(req.params.id)) {
         return res.redirect('back');
       }
       const toEdit = await User.findByPk(req.params.id);
@@ -450,7 +449,7 @@ let userController = {
   addReplyLike: async (req, res) => {
     try {
       await RepliesLike.create({
-        UserId: req.user.id,
+        UserId: helper.getUser(req),
         ReplyId: req.params.ReplyId
       });
       res.redirect('back');
@@ -463,7 +462,7 @@ let userController = {
     try {
       const toRemove = await RepliesLike.findOne({
         where: {
-          UserId: req.user.id,
+          UserId: helper.getUser(req),
           ReplyId: req.params.ReplyId
         }
       });
