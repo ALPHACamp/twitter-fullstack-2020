@@ -6,9 +6,10 @@ const Reply = db.Reply
 const adminController = {
   getTweets: (req, res) => {
     return Tweet.findAll({
-      include: [Reply],
+      include: [Reply, User],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
+      console.log(tweets)
       return res.render('./admin/tweets', { tweets: tweets })
     })
   },
@@ -26,6 +27,15 @@ const adminController = {
           res.redirect('/admin/tweets')
         })
     }
+  },
+
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id).then(tweet => {
+      return tweet.destroy().then(tweet => {
+        req.flash('success_messages', 'Tweet has been deleted.')
+        return res.redirect('back')
+      })
+    })
   }
 }
 
