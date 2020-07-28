@@ -7,12 +7,12 @@ const User = db.User;
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'email',
+      usernameField: 'account',
       passwordField: 'password',
       passReqToCallback: true
     },
-    (req, email, password, cb) => {
-      User.findOne({ where: { email: email } }).then((user) => {
+    (req, account, password, cb) => {
+      User.findOne({ where: { account: account } }).then((user) => {
         if (!user)
           return cb(
             null,

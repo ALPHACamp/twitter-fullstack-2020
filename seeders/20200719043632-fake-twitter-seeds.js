@@ -12,8 +12,8 @@ module.exports = {
       introduction:faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role:'Admin',
-      backgroundImg: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      cover: faker.image.nightlife(),
+      account: 'root@example.com',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -25,7 +25,7 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
+      cover: faker.image.nightlife(),
       account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -38,7 +38,7 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
+      cover: faker.image.nightlife(),
       account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -51,7 +51,7 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
+      cover: faker.image.nightlife(),
       account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -64,7 +64,7 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
+      cover: faker.image.nightlife(),
       account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -77,7 +77,7 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
+      cover: faker.image.nightlife(),
       account: faker.name.firstName(),
       createdAt: new Date(),
       updatedAt: new Date()

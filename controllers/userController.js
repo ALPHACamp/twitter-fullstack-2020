@@ -391,10 +391,10 @@ let userController = {
     imgur.setClientID(IMGUR_CLIENT_ID);
 
     const user = await User.findByPk(id);
-    if (files.backgroundImg) {
-      imgur.upload(files.backgroundImg[0].path, (err, img) => {
+    if (files.cover) {
+      imgur.upload(files.cover[0].path, (err, img) => {
         user.update({
-          backgroundImg: img.data.link,
+          cover: img.data.link,
           introduction
         })
           .then((user) => {
