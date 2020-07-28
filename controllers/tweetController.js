@@ -15,7 +15,7 @@ const tweetController = {
         Like,
       ]
     })
-    
+    console.log(tweets)
     data = tweets.map((r) => ({
       ...r.dataValues,
       userId: r.User.id,
