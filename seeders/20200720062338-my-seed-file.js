@@ -20,7 +20,7 @@ module.exports = {
         account: '@user1',
         email: 'user1@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-        name: 'user1',
+        name: faker.name.firstName(),
         avatar: `https://loremflickr.com/320/240/paris,girl/all`,
         introduction: faker.lorem.sentences(),
         role: 'user',
@@ -32,7 +32,7 @@ module.exports = {
         account: '@user2',
         email: 'user2@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-        name: 'user2',
+        name: faker.name.firstName(),
         avatar: `https://loremflickr.com/320/240/paris,girl/all`,
         introduction: faker.lorem.sentences(),
         role: 'user',
@@ -44,7 +44,7 @@ module.exports = {
         account: '@user3',
         email: 'user3@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-        name: 'user3',
+        name: faker.name.firstName(),
         avatar: `https://loremflickr.com/320/240/paris,girl/all`,
         introduction: faker.lorem.sentences(),
         role: 'user',
@@ -56,7 +56,7 @@ module.exports = {
         account: '@user4',
         email: 'user4@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-        name: 'user4',
+        name: faker.name.firstName(),
         avatar: `https://loremflickr.com/320/240/paris,girl/all`,
         introduction: faker.lorem.sentences(),
         role: 'user',
@@ -68,7 +68,7 @@ module.exports = {
         account: '@user5',
         email: 'user5@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-        name: 'user5',
+        name: faker.name.firstName(),
         avatar: `https://loremflickr.com/320/240/paris,girl/all`,
         introduction: faker.lorem.sentences(),
         role: 'user',
@@ -80,7 +80,7 @@ module.exports = {
     queryInterface.bulkInsert('Tweets',
       Array.from({ length: 60 }).map((item, index) => ({
         UserId: (index % 6) + 1,//1~6
-        description: faker.lorem.text(),
+        description: faker.lorem.sentences().substring(0, 140),
         createdAt: new Date(),
         updatedAt: new Date()
       }))
