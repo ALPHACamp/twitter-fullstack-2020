@@ -2,8 +2,10 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const Followship = db.Followship
+const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
 const imgur = require('imgur-node-api')
-const user = require('../models/user')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
@@ -75,21 +77,36 @@ const userController = {
           }))
           // 依追蹤者人數排序清單
           users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-          //取得following/follower人數
-          let followingNum = user.toJSON().Followings.length
-          let followerNum = user.toJSON().Followers.length
-          //確認get user page是否為跟隨中使用者
-          function findIsFollowed(findUser) { return findUser.id === Number(req.params.id) }
-          let loginUserisFollowed = users.find(findIsFollowed).isFollowed
+          //將user, users加入陣列回傳
+          let results = [user, users]
+          return results
+        }).then((results) => {
+          //取得回傳陣列值
+          let user = results[0]
+          let users = results[1]
+          return Tweet.findAll({
+            order: [['createdAt', 'DESC']],
+            where: { UserId: user.toJSON().id },
+            include: [User, Reply]
+          }).then((tweets) => {
+            tweets = tweets.map(user => ({ ...user.dataValues, }))
+            //console.log('tweets===>', tweets)
+            //取得user following/follower人數
+            let followingNum = user.toJSON().Followings.length
+            let followerNum = user.toJSON().Followers.length
+            //確認get user page是否為跟隨中使用者
+            function findIsFollowed(findUser) { return findUser.id === Number(req.params.id) }
+            let loginUserisFollowed = users.find(findIsFollowed).isFollowed
 
-          return res.render('profile', { user: user.toJSON(), users: users, followingNum, followerNum, loginUserId, loginUserisFollowed })
+            return res.render('profile', { user: user.toJSON(), users: users, followingNum, followerNum, loginUserId, loginUserisFollowed, tweets: tweets })
+          })
         })
       })
   },
 
   editUser: (req, res) => {
     //only login user can enter edit profile page
-    if (req.user.id !== Number(req.params.id)) { return res.redirect(`/api/users/${req.params.id}`) }
+    if (req.user.id !== Number(req.params.id)) { return res.redirect(`/users/${req.params.id}/tweets`) }
     return User.findByPk(req.params.id)
       .then(user => {
         return res.render('profileEdit', { user: user.toJSON() })
@@ -114,7 +131,7 @@ const userController = {
               avatar: files ? img.data.link : user.avatar,
             }).then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
           })
       })
@@ -131,7 +148,7 @@ const userController = {
               cover: files ? img.data.link : user.cover,
             }).then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
           })
       })
@@ -158,7 +175,7 @@ const userController = {
                         cover: files ? img.data.link : user.cover,
                       }).then((user) => {
                         req.flash('success_messages', 'profile was successfully to update')
-                        res.redirect(`/api/users/${user.id}`)
+                        res.redirect(`/users/${user.id}/tweets`)
                       })
                     })
                 })
@@ -178,7 +195,7 @@ const userController = {
           })
             .then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
         })
     }
