@@ -5,7 +5,6 @@
     <div class="col-5 p-0">
       <div class="d-flex flex-column align-items-center"
         style="background: #FFFFFF; border: 1px solid #E6ECF0; box-sizing: border-box;">
-
         {{!-- 上方返回區塊 --}}
         <div class="d-flex flex-nowrap" style="width: 100%;">
           <a href="/" class="m-3">
@@ -70,8 +69,6 @@
             {{/if}}
             {{/ifEqual}}
           </div>
-
-
           <div class="results-info container mt-3">
             <h3 class="m-0 p-0">{{results.name}}</h3>
             <span class="text-muted m-0 p-0">{{results.account}}</span>
@@ -94,7 +91,7 @@
             </div>
           </div>
         </div>
-        {{!-- card --}}
+        {{!-- card --}}        
         {{#each results.LikedTweets}}
         <div class="row border-bottom py-3" style="width: 100%;">
           {{!-- avatar --}}
