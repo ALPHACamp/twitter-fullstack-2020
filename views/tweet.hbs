@@ -28,10 +28,10 @@
 
         </div>
       </div>
+        <p class="h3 mt-3">{{tweet.description}}</p>
 
-      <p class="h3 mt-3">{{tweet.description}}</p>
-      <div class="time">
-
+      <div class="text-secondary mt-3 ml-2">
+        {{getTime tweet.createdAt}}
       </div>
     </li>
     <li class="list-group-item d-flex">
@@ -72,14 +72,14 @@
         </form>
       {{/if}}    
     </li>
-    <li class="list-group-item collapse" id="comments">
+    <li class="list-group-item collapse {{#if getComment}} show {{/if}}" id="comments">
       <div class="d-flex">
 
       <img src="{{myUser.avatar}}" alt="" width="75px" height="75px" class="rounded-circle mr-2">
       
       <form action="/tweets/{{tweet.id}}/comments" method="POST" class="flex-grow-1 d-flex flex-column">
         <div class="form-group">
-          <textarea class="form-control tweet" id="newTweet" name="newComment" rows="5" placeholder="推你的回覆"></textarea>
+          <textarea class="form-control tweet" id="newTweet" name="newComment" rows="5" placeholder="在這邊留個言吧！"></textarea>
         </div>
         <div class="align-self-end">
           <button type="submit" class="btn btn-danger rounded-pill">推文</button>
@@ -91,7 +91,7 @@
     </li>
 
     {{#each replies}}
-    <li class="list-group-item list-group-item-action">
+    <li class="list-group-item list-group-item-action d-flex">
 
       <div class="user-wrap d-flex">
         <a href="/users/{{this.User.id}}" >
@@ -116,7 +116,11 @@
               </div>
             </div>
           </div>
-          <p class="mt-2 ">{{this.comment}}</p>
+          <p class="mt-2">
+            {{this.comment}}
+            </p>
+
+          
 
           <div class="d-flex justify-content-start">
             <a href="/tweet/{{this.id}}/reply" class=" mr-5 text-dark">
