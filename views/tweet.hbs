@@ -47,7 +47,7 @@
               <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{tweet.User.avatar}}" />
               {{tweet.User.name}}
             </a>
-            <small class="text-muted">@帳號。</small>
+            <small class="text-muted">{{tweet.User.account}}</small>
           </h6>
           <P>{{tweet.description}}</P>
           {{moment tweet.createdAt}}
@@ -114,10 +114,10 @@
                   <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{this.User.avatar}}" />
                   {{this.User.name}}
                 </a>
-                <small class="text-muted">@帳號。{{moment this.createdAt}}</small>
+                <small class="text-muted">{{this.User.account}} ◆ {{moment this.createdAt}}</small>
               </h6>
                 
-              <small class="text-muted">回覆 @推文帳號</small>
+              <small class="text-muted">回覆 {{../tweet.User.account}}</small>
                  
               <p class="card-text">{{this.comment}}</p>
               <p class="card-text">
