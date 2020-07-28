@@ -52,7 +52,6 @@ app.use((req, res, next) => {
   // res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = helpers.getUser(req)
   res.locals.isAuthenticated = helpers.ensureAuthenticated(req)
-  console.log(helpers.getUser(req), helpers.ensureAuthenticated(req))
   next();
 });
 require('./routes')(app);

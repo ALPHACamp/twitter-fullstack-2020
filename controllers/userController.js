@@ -272,11 +272,11 @@ let userController = {
   },
   addFollowing: async (req, res) => {
     try {
-      if (req.user.id == Number(req.params.userId)) {
+      if (req.user.id === Number(req.params.userId)) {
         req.flash('error_messages', 'you cannot follow yourself');
         return res.redirect('back');
       }
-      const newFollowship = await Followship.create({
+      await Followship.create({
         followerId: req.user.id,
         followingId: req.params.userId
       });
