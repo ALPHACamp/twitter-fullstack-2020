@@ -1,0 +1,71 @@
+<div class="container-fluid m-0">
+  <div class="row">
+    {{>leftColumnUser}}
+    {{!-- 中間 --}}
+    <div class="col-5 p-0">
+      <div class="d-flex flex-column align-items-center"
+        style="background: #FFFFFF; border: 1px solid #E6ECF0; box-sizing: border-box;">
+        {{!-- 上方返回區塊 --}}
+        <div class="d-flex flex-nowrap" style="width: 100%;">
+          <a href="/users/{{results.id}}" class="m-3">
+            <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16 5.99988H3.41399L7.70699 1.70687C8.09699 1.31687 8.09699 0.683875 7.70699 0.292875C7.31699 -0.0981249 6.68399 -0.0971249 6.29299 0.292875L0.292988 6.29288C-0.0970117 6.68288 -0.0970117 7.31588 0.292988 7.70687L6.29299 13.7069C6.48799 13.9019 6.74299 13.9999 6.99999 13.9999C7.25699 13.9999 7.51199 13.9019 7.70699 13.7069C8.09699 13.3169 8.09699 12.6839 7.70699 12.2929L3.41399 7.99988H16C16.553 7.99988 17 7.55288 17 6.99988C17 6.44688 16.553 5.99988 16 5.99988Z"
+                fill="black" />
+            </svg>
+          </a>
+          <div class="header ml-4">
+            <h3 class="m-0 p-0">{{results.name}}</h3>
+            <span class="h6 text-muted">{{results.tweetCount}} 推文</span>
+          </div>
+        </div>
+        {{!-- following & follower 標籤  --}}
+        <div class="d-flex flex-nowrap border-bottom flex-row justify-content-start mt-4" style="width: 100%;">
+          <div class="text-center py-3" style="width: 130px;">
+            <a class="font-weight-bold text-decoration-none" style="color:#FF6600"
+              href="/users/{{results.id}}/followers">跟隨者</a>
+          </div>
+          <div class="text-center py-3" style="width: 130px;">
+            <a class="font-weight-bold text-decoration-none" href="/users/{{results.id}}/followings">正在跟隨</a>
+          </div>
+        </div>
+
+        {{!-- card --}}
+        {{#each results.Followers}}
+        <div class="row border-bottom py-3" style="width: 100%;">
+          {{!-- avatar --}}
+          <div class="col-2 text-center">
+            <a href="/users/{{this.id}}">
+              <img class="rounded-circle mt-2" src="{{this.avatar}}" alt="img" width="50px" height="50px">
+            </a>
+          </div>
+          {{!-- content --}}
+          <div class="col-7 d-flex flex-column flex-nowrap">
+            <div class="user">
+              <span class="h5">{{this.name}}</span><span class="text-muted ml-2">{{this.account}}</span>
+            </div>
+            <p class="content">{{this.introduction}}</p>
+          </div>
+          {{!-- 追蹤 --}}
+          {{#if this.isFollowed}}
+          <div class="col-3 p-2 text-right">
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn rounded-pill"
+                style="color:white ;background-color:#FF6600; border: 1px solid #FF6600">正在跟隨</button>
+            </form>
+          </div>
+          {{else}}
+          <div class="col-3 p-2 text-right">
+            <form action="/following/{{this.id}}" method="POST">
+              <button type="submit" class="float-right px-4 py-2 float-right btn rounded-pill"
+                style="color:#FF6600; border: 1px solid #FF6600">跟隨</button>
+            </form>
+          </div>
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+    {{>rightColumn}}
+  </div>
+</div>

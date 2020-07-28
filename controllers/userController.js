@@ -129,48 +129,46 @@ const userController = {
     })
   },
   getUserFollowerList: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
-    }).then((user) => {
-      const Followers = user.Followers.map((follower) => ({
-        ...follower.dataValues,
-        isFollowed: req.user.Followings.map((er) => er.id).includes(
-          follower.id
-        )
-      }))
-      const results = {
-        user: user,
-        tweetCount: user.Tweets.length,
-        Followers: Followers
-      }
-      res.json(results)
+    userController.getRecommendedUsers(req, res).then((users) => {
+      return User.findByPk(req.params.id, {
+        include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+      }).then((user) => {
+        user.update({ followerCount: user.Followers.length })
+        const results = user.toJSON()
+        results.Followers = user.Followers.map((follower) => ({
+          ...follower.dataValues,
+          isFollowed: req.user.Followings.map((er) => er.id).includes(
+            follower.id
+          )
+        }))
+        results.tweetCount = user.Tweets.length
+        res.render('userFollowPage', { results: results, recommendFollowings: users })
+      })
+        .catch((err) => res.send(err))
     })
   },
   getUserFollowingList: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+    userController.getRecommendedUsers(req, res).then((users) => {
+      return User.findByPk(req.params.id, {
+        include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+      })
+        .then((user) => {
+          user.update({ followingCount: user.Followings.length })
+          const results = user.toJSON()
+          results.Followings = user.Followings.map((following) => ({
+            ...following.dataValues,
+            isFollowed: req.user.Followings.map((er) => er.id).includes(
+              following.id
+            )
+          }))
+          results.tweetCount = user.Tweets.length
+
+          console.log(results)
+          res.render('userFollowingPage', { results: results, recommendFollowings: users })
+        })
+        .catch((err) => res.send(err))
     })
-      .then((user) => {
-        const results = {
-          user: user,
-          tweetCount: user.Tweets.length
-        }
-        res.json(results)
-      })
-      .then((user) => {
-        const results = user.toJSON()
-        results.followingCount = results.Followings.length
-        results.followerCount = results.Followers.length
-
-        for (let i = 0; i < results.Tweets.length; i++) {
-          results.Tweets[i].repliesCount = results.Tweets[i].Replies.length
-          results.Tweets[i].likeCount = results.Tweets[i].Likes.length
-        }
-        return res.json(results)
-      })
-      .catch((err) => res.send(err))
   },
-
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({
