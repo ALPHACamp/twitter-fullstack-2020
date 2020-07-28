@@ -88,8 +88,10 @@ const userController = {
     })
       .then(user => {
         const pageUser = user.toJSON()
+        pageUser.Tweets.forEach(t => {
+          t.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.id)
+        })
         pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(user.id)
-        pageUser.isLiked = req.user.LikedTweets.map(item => item.id).includes(user.id)
         res.render('user-tweets', { pageUser })
       })
   },
