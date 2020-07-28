@@ -21,7 +21,7 @@ let userController = {
   logout: (req, res) => {
     req.flash('success_messages', '已經成功登出');
     req.logout();
-    res.redirect('/login');
+    res.redirect('/signin');
   },
   signUpPage: (req, res) => {
     return res.render('signup');
@@ -72,7 +72,7 @@ let userController = {
           })
             .then((user) => {
               req.flash('success_messages', 'Signup successfully');
-              return res.redirect('/login');
+              return res.redirect('/signin');
             })
             .catch((err) => console.log(err));
         });

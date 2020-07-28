@@ -20,7 +20,7 @@ const authenticated = (req, res, next) => {
     return res.redirect('/admin/signin');
   }
   req.flash('error_messages', 'Please login first');
-  res.redirect('/login');
+  res.redirect('/signin');
 };
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -31,9 +31,9 @@ const authenticatedAdmin = (req, res, next) => {
       return next();
     }
     req.flash('error_messages', 'You are not an admin, please login here');
-    return res.redirect('/login');
+    return res.redirect('/signin');
   }
-  res.redirect('/login');
+  res.redirect('/signin');
 };
 router.get('/admin/signin', adminController.adminLoginPage);
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.login);
@@ -58,8 +58,8 @@ router.get('/tweets/:id', authenticated, userController.topUserForLayout, tweetC
 router.get('/logout', userController.logout)
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signup);
-router.get('/login', userController.loginPage);
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
+router.get('/signin', userController.loginPage);
+router.post('/sign', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }),
   userController.login
 );
 
@@ -68,8 +68,8 @@ router.post('/likes/:tweetId', authenticated, userController.addLike);
 router.delete('/likes/:tweetId', authenticated, userController.removeLike);
 router.post('/replies/likes/:ReplyId', authenticated, userController.addReplyLike)
 router.delete('/replies/likes/:ReplyId', authenticated, userController.removeReplyLike)
-router.post('/followings/:userId', authenticated, userController.addFollowing);
-router.delete('/followings/:userId', authenticated, userController.removeFollowing);
+router.post('/followships/:userId', authenticated, userController.addFollowing);
+router.delete('/followships/:userId', authenticated, userController.removeFollowing);
 
 router.get('/users/:id/profile', authenticated, userController.editProfile);
 router.put('/users/:id/profile', authenticated, upload.fields([{ name: 'backgroundImg', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putEditProfile);

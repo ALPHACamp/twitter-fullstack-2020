@@ -185,12 +185,12 @@
           {{#ifCond this.id ../myUser.id}}
           {{else}}
           {{#if this.isFollowed}}
-          <form action="/followings/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4"
+          <form action="/followships/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4"
             style="min-width: 100px;">
             <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
           </form>
           {{else}}
-          <form action="/followings/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
+          <form action="/followships/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
           </form>
           {{/if}}

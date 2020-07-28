@@ -133,12 +133,12 @@
             </svg>
           </a>
           {{#if followShip.isFollowed}}
-          <form action="/followings/{{user.id}}?_method=DELETE" method="post">
+          <form action="/followships/{{user.id}}?_method=DELETE" method="post">
             <button type="submit" class="btn btn-danger rounded-pill"> 正在追蹤
             </button>
           </form>
           {{else}}
-          <form action="/followings/{{user.id}}" method="post">
+          <form action="/followships/{{user.id}}" method="post">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 追蹤
             </button>
           </form>
