@@ -35,8 +35,15 @@ const userController = {
   },
 
   signIn: (req, res) => {
-    req.flash('success_messages', 'Signed in.')
-    res.redirect('/')
+    User.findByPk(req.user.id).then(user => {
+      if (user.role === '1') {
+        req.flash('error_messages', 'Admin please signs in with admin sign in page.')
+        return res.redirect('back')
+      } else {
+        req.flash('success_messages', 'Signed in.')
+        res.redirect('/')
+      }
+    })
   },
 
   signOut: (req, res) => {

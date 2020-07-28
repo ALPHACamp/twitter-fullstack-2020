@@ -40,8 +40,7 @@ module.exports = (app, passport) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) { return next(err) }
       if (user.role !== '1') {
-        console.log(user)
-        req.flash('error_messages', 'The account is not an admin. Please sign in with users sign in page.')
+        req.flash('error_messages', 'User please signs in with user sign in page.')
         return res.redirect('/admin/signin')
       }
       req.logIn(user, (err) => {
