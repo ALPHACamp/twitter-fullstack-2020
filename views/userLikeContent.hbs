@@ -74,6 +74,7 @@
             <span class="text-muted m-0 p-0">{{results.account}}</span>
             <p class="my-2">{{results.introduction}}</p>
             <div class="results-relation d-flex flex-nowrap">
+<<<<<<< HEAD
               <a class="text-decoration-none" href="/users/{{results.id}}/followings">
                 <div class="mr-3 font-weight-bold" style="color: black;">{{results.followingCount}} 個<span
                     class="text-muted">追隨中</span>
@@ -84,6 +85,10 @@
                     class="text-muted">追隨者</span>
                 </div>
               </a>
+=======
+              <div class="mr-3">{{results.followingCount}} 個<span class="text-muted">追隨中</span></div>
+              <div>{{results.followerCount}} 位<span class="text-muted">追隨者</span></div>
+>>>>>>> 79e5d1b2eaeb66f7d05b1be4c6ba3e72ccf198f6
             </div>
           </div>
           <div class="d-flex flex-nowrap justify-content-start mt-4">
@@ -99,7 +104,11 @@
             </div>
           </div>
         </div>
+<<<<<<< HEAD
         {{!-- card --}}
+=======
+        {{!-- card --}}        
+>>>>>>> 79e5d1b2eaeb66f7d05b1be4c6ba3e72ccf198f6
         {{#each results.LikedTweets}}
         <div class="row border-bottom py-3" style="width: 100%;">
           {{!-- avatar --}}
