@@ -2,6 +2,7 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
+const helpers = require('../_helpers');
 const Like = db.Like;
 
 const tweetController = {
@@ -71,17 +72,16 @@ const tweetController = {
     return Tweet.create({
       UserId: req.user.id,
       description: req.body.newTweet
-    })
-      .then((tweet) => {
-        req.flash('success_messages', '推文成功!!!')
-        res.redirect('/tweets')
-      })
+    }).then((tweet) => {
+      req.flash('success_messages', '推文成功!!!');
+      res.redirect('/tweets');
+    });
   },
   postComment: (req, res) => {
-    let whichTweet = req.params.id
+    let whichTweet = req.params.id;
     if (!req.body.newComment) {
-      req.flash('error_messages', "請輸入推文內容!!!")
-      return res.redirect('back')
+      req.flash('error_messages', '請輸入推文內容!!!');
+      return res.redirect('back');
     }
 
     if (Array.from(req.body.newComment).length > 140) {
@@ -93,11 +93,10 @@ const tweetController = {
       comment: req.body.newComment,
       TweetId: whichTweet,
       UserId: req.user.id
-    })
-      .then((tweet) => {
-        req.flash('success_messages', '回覆成功!!!')
-        res.redirect('back')
-      })
+    }).then((tweet) => {
+      req.flash('success_messages', '回覆成功!!!');
+      res.redirect('back');
+    });
   }
 };
 module.exports = tweetController;

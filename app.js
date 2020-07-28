@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('./config/passport');
+const helpers = require('./_helpers')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
@@ -39,16 +40,19 @@ app.use(
     saveUninitialized: false
   })
 );
-//passport
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.static('public'));
 //flash
 app.use(flash());
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');
-  res.locals.isAuthenticated = req.isAuthenticated()
+  // res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = helpers.getUser(req)
+  res.locals.isAuthenticated = helpers.ensureAuthenticated(req)
+  console.log(helpers.getUser(req), helpers.ensureAuthenticated(req))
   next();
 });
 require('./routes')(app);

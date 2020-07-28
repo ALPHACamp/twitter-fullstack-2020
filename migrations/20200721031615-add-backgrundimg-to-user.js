@@ -6,6 +6,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn( 'users', 'cover' );
+    return queryInterface.removeColumn( 'Users', 'cover' );
   }
 };    

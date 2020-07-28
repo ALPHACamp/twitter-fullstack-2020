@@ -28,7 +28,7 @@ let adminController = {
       let pages = Math.ceil(tweets.count / pageLimit)
       let totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
       let prev = page - 1 < 1 ? 1 : page - 1
-      let next = page + 1 > pages ? pages : page + 1    
+      let next = page + 1 > pages ? pages : page + 1
       const data = tweets.rows.map((r) => ({
         ...r,
         account: r.User.account,
