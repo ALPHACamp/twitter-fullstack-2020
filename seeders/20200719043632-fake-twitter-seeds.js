@@ -12,8 +12,8 @@ module.exports = {
       introduction:faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role:'Admin',
-      backgroundImg: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      cover: faker.image.nightlife(),
+      account: 'root@example.com',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -25,8 +25,8 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      cover: faker.image.nightlife(),
+      account: 'user1',
       createdAt: new Date(),
       updatedAt: new Date()
     }, 
@@ -38,8 +38,8 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      cover: faker.image.nightlife(),
+      account: 'user2',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -51,8 +51,8 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      cover: faker.image.nightlife(),
+      account: 'user3',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -64,8 +64,8 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      cover: faker.image.nightlife(),
+      account: 'user4',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -77,8 +77,8 @@ module.exports = {
       introduction: faker.lorem.sentences(5),
       avatar: faker.image.people(),
       role: 'user',
-      backgroundImg: faker.image.nightlife(),
-      account: faker.name.firstName(),
+      cover: faker.image.nightlife(),
+      account: 'user5',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {})
