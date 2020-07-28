@@ -6,6 +6,37 @@ const helpers = require('../_helpers');
 const Like = db.Like;
 
 const tweetController = {
+  getTweet: async (req, res) => {
+    const id = req.params.id;
+    let tweet = await Tweet.findOne({
+      where: { id },
+      include: [User, Like,
+        {
+          model: Reply, order: ["createdAt", 'DESC'], include: [User,
+            { model: User, as: 'ReplyWhoLike' }
+          ]
+        },
+      ]
+    });
+    tweet = tweet.toJSON()
+    let replies = tweet.Replies.map(reply => ({
+      ...reply,
+      RepliesLikeCount: reply.ReplyWhoLike.length,
+      isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(req.user.id)
+    }))
+    replies.sort((a, b) => b.createdAt - a.createdAt)
+    const totalCount = {
+      replyCount: tweet.Replies.length,
+      likeCount: tweet.Likes.length,
+      isLiked: tweet.Likes.map(d => d.UserId).includes(req.user.id)
+    }
+    res.render('tweet', {
+      isHomePage: true,
+      replies,
+      tweet,
+      totalCount,
+    });
+  },
   getTweets: async (req, res) => {
     let tweets = await Tweet.findAll({
       order: [['createdAt', 'DESC']],
@@ -15,7 +46,6 @@ const tweetController = {
         Like,
       ]
     })
-    console.log(tweets)
     data = tweets.map((r) => ({
       ...r.dataValues,
       userId: r.User.id,
@@ -26,42 +56,9 @@ const tweetController = {
       createdA: r.createdAt,
       likeCount: r.Likes.length,
       replayCount: r.Replies.length,
-      isLiked: r.Likes.map((d) => d.dataValues.UserId).includes(req.user.id)
+      isLiked: r.Likes.map(d => d.UserId).includes(req.user.id)
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
-  },
-  getTweet: async (req, res) => {
-    const id = req.params.id;
-    let tweet = await Tweet.findOne({
-      where: { id },
-      include: [
-        User,
-        Like,
-        {
-          model: Reply,
-          order: ['createdAt', 'DESC'],
-          include: [User, { model: User, as: 'ReplyWhoLike' }]
-        }
-      ]
-    });
-    tweet = tweet.toJSON();
-    let replies = tweet.Replies.map((reply) => ({
-      ...reply,
-      RepliesLikeCount: reply.ReplyWhoLike.length,
-      isReplyLiked: reply.ReplyWhoLike.map((d) => d.id).includes(req.user.id)
-    }));
-    replies.sort((a, b) => b.createdAt - a.createdAt);
-    const totalCount = {
-      replyCount: tweet.Replies.length,
-      likeCount: tweet.TweetWhoLike.length,
-      isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
-    };
-    res.render('tweet', {
-      isHomePage: true,
-      replies,
-      tweet,
-      totalCount
-    });
   },
   postTweet: (req, res) => {
     if (!req.body.newTweet) {
