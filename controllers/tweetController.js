@@ -21,6 +21,7 @@ const tweetController = {
       return res.render('tweets', { tweets: data, user: req.user })
     })
   },
+
   postTweet: (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '請勿空白')
