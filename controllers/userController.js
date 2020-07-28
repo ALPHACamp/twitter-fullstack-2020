@@ -133,17 +133,16 @@ const userController = {
       return User.findByPk(req.params.id, {
         include: [{ model: User, as: 'Followers' }, { model: Tweet }]
       }).then((user) => {
-        const Followers = user.Followers.map((follower) => ({
+        const results = user.toJSON()
+        results.Followers = user.Followers.map((follower) => ({
           ...follower.dataValues,
           isFollowed: req.user.Followings.map((er) => er.id).includes(
             follower.id
           )
         }))
-        const results = {
-          user: user,
-          tweetCount: user.Tweets.length,
-          Followers: Followers
-        }
+        results.tweetCount = user.Tweets.length
+
+        console.log(results)
         res.render('userFollowPage', { results: results, recommendFollowings: users })
       })
         .catch((err) => res.send(err))
@@ -170,7 +169,7 @@ const userController = {
             results.Tweets[i].repliesCount = results.Tweets[i].Replies.length
             results.Tweets[i].likeCount = results.Tweets[i].Likes.length
           }
-          return res.render('userFollowPage', { results: results, recommendFollowings: users })
+          return res.render('userFollowPage', { results: results.toJSON(), recommendFollowings: users })
         })
         .catch((err) => res.send(err))
     })
