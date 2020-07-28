@@ -85,10 +85,10 @@ let userController = {
       include: [
         {
           model: Tweet,
-          order: ['createdAt', 'DESC'],
-          include: [            
+          include: [
+            User,
             Reply,
-            { model: User, as: 'TweetWhoLike' },
+            Like,
           ]
         },
         { model: User, as: 'Followers' },
@@ -111,11 +111,12 @@ let userController = {
       userName: user.name,
       userAvatar: user.avatar,
       userAccount: user.account,
-      likeCount: tweet.TweetWhoLike.length,
+      likeCount: tweet.Likes.length,
       replayCount: tweet.Replies.length,
       description: tweet.description,
-      isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      isLiked: tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }));
+    tweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
       user,
       followShip,
@@ -123,7 +124,6 @@ let userController = {
       content: tweets
     });
   },
-
   getUserReply: async (req, res) => {
     const id = req.params.id;
     let user = await User.findOne({
@@ -132,10 +132,15 @@ let userController = {
         Tweet,
         {
           model: Reply, include: [
-            { model: Tweet, include: [Reply, User, { model: User, as: 'TweetWhoLike' },] },
+            {
+              model: Tweet, include: [
+                Reply,
+                User,
+                Like,]
+            },
             User
           ]
-        },      
+        },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -148,10 +153,10 @@ let userController = {
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
-
     let repliesTweet = user.Replies;
 
-    repliesTweet = repliesTweet.map((r) => ({
+
+    repliesTweet = repliesTweet.map(r => ({
       ...r,
       tweetId: r.Tweet.id,
       userId: r.Tweet.User.id,
@@ -159,11 +164,13 @@ let userController = {
       userAvatar: r.Tweet.User.avatar,
       userAccount: r.Tweet.User.account,
       description: r.Tweet.description,
-      likeCount: r.Tweet.TweetWhoLike.length,
+      likeCount: r.Tweet.Likes.length,
       replayCount: r.Tweet.Replies.length,
-      isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      isLiked: r.Tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }))
-    console.log(repliesTweet)
+
+    repliesTweet = repliesTweet.sort((a, b) => b.createdAt - a.createdAt)
+
     res.render('userPage', {
       user,
       followShip,
@@ -180,10 +187,12 @@ let userController = {
       where: { id },
       include: [
         Tweet,
+        Reply,
         {
-          model: Tweet, as: 'userLike', order: ['createdAt', 'DESC'],
+          model: Like, order: ['createdAt', 'DESC'],
           include: [
-            User, Reply, { model: User, as: 'TweetWhoLike' },
+            User,
+            { model: Tweet, include: [Like,Reply] }
           ]
         },
         { model: User, as: 'Followers' },
@@ -198,19 +207,24 @@ let userController = {
       followersCount: user.Followers.length,
       isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
-    let likes = user.userLike;
+
+    let likes = user.Likes;
+
     likes = likes.map((r) => ({
       ...r,
-      tweetId: r.id,
+      tweetId: r.Tweet.id,
       userId: r.User.id,
       userName: r.User.name,
       userAvatar: r.User.avatar,
       userAccount: r.User.account,
-      description: r.description,
-      likeCount: r.TweetWhoLike.length,
-      replayCount: r.Replies.length,
-      isLiked: r.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      description: r.User.introduction,
+      likeCount: r.Tweet.Likes.length,
+      replayCount:  r.Tweet.Replies.length,
+      isLiked:  r.Tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }))
+    console.log(likes)
+
+    likes = likes.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
       user,
       followShip,

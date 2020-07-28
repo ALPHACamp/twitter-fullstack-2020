@@ -2,6 +2,7 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
+const Like = db.Like;
 
 const tweetController = {
   getTweets: async (req, res) => {
@@ -10,7 +11,7 @@ const tweetController = {
       include: [
         User,
         Reply,
-        { model: User, as: 'TweetWhoLike' },
+        Like,
       ]
     })
     data = tweets.map((r) => ({
@@ -21,22 +22,19 @@ const tweetController = {
       userAccount: r.User.account,
       description: r.description,
       createdA: r.createdAt,
-      likeCount: r.TweetWhoLike.length,
+      likeCount: r.Likes.length,
       replayCount: r.Replies.length,
-      isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
+      isLiked: r.Likes.map(d => d.UserId).includes(req.user.id)
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
-
   getTweet: async (req, res) => {
     const id = req.params.id;
     let tweet = await Tweet.findOne({
       where: { id },
-      include: [User,
-        { model: User, as: 'TweetWhoLike' },
+      include: [User, Like,
         {
-          model: Reply, order: ["createdAt", 'DESC'], include: [
-            User,
+          model: Reply, order: ["createdAt", 'DESC'], include: [User,
             { model: User, as: 'ReplyWhoLike' }
           ]
         },
@@ -51,8 +49,8 @@ const tweetController = {
     replies.sort((a, b) => b.createdAt - a.createdAt)
     const totalCount = {
       replyCount: tweet.Replies.length,
-      likeCount: tweet.TweetWhoLike.length,
-      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
+      likeCount: tweet.Likes.length,
+      isLiked: tweet.Likes.map(d => d.UserId).includes(req.user.id)
     }
     res.render('tweet', {
       isHomePage: true,
@@ -100,6 +98,6 @@ const tweetController = {
         req.flash('success_messages', '回覆成功!!!')
         res.redirect('back')
       })
-  },
+  }
 };
 module.exports = tweetController;
