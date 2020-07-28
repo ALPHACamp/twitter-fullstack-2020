@@ -76,7 +76,7 @@
     </nav>
 
     <div class="user-page-replies-list w-100">
-      {{#each replies}}
+      {{#each pageUser.Replies}}
       <div class="tweet-box">
         <div class="reply-item">
           <!--推文-->
@@ -109,7 +109,7 @@
               <p class="tweet-createdAt">{{moment this.Tweet.createdAt}} </p>
               <p class="tweet-user-avatar">{{this.Tweet.User.avatar}}</p>
             </div>
-            {{#if isLiked}}
+            {{#if this.Tweet.dataValues.isLiked}}
             <form action="/tweets/{{this.Tweet.id}}/like?_method=DELETE" method="POST">
               <button type="submit" class="like-link button">
                 <i class="fac fa-cus-solid-like"></i>

@@ -110,21 +110,32 @@ const userController = {
       })
   },
   getReplies: (req, res) => {
-    Reply.findAll({
-      where: { UserId: req.params.id },
-      include: [{ model: Tweet, include: [User] }],
-      order: [['createdAt', 'DESC']]
+    User.findOne({
+      where: { id: req.params.id },
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        {
+          model: Reply, include: [
+            {
+              model: Tweet, include: [
+                User,
+                { model: User, as: 'LikedUsers' }]
+            }
+          ],
+        }
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
     })
-      .then(replies => {
-        User.findOne({
-          where: { id: req.params.id },
-          include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
+      .then(pageUser => {
+        pageUser.dataValues.Replies.forEach(r => {
+          r.dataValues.Tweet.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(r.dataValues.Tweet.dataValues.id)
         })
-          .then(pageUser => {
-            pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
-            res.render('user-replies', { replies, pageUser })
-          })
+        pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
+        res.render('user-replies', { pageUser })
       })
+
   },
   putUserProfile: (req, res) => {
     const id = Number(req.params.id)
