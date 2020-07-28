@@ -11,7 +11,7 @@ module.exports = {
       name: 'Admin',
       introduction:faker.lorem.sentences(5),
       avatar: faker.image.people(),
-      role:'Admin',
+      role:'admin',
       cover: faker.image.nightlife(),
       account: 'root@example.com',
       createdAt: new Date(),

@@ -24,7 +24,7 @@ const authenticated = (req, res, next) => {
 };
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'Admin') {
+    if (helpers.getUser(req).role === 'admin') {
     // if (req.user.role === 'Admin') {
       // res.locals.myUser = req.user
       res.locals.myUser = helpers.getUser(req)
