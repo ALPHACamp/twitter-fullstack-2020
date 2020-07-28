@@ -2,17 +2,25 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
     return Tweet.findAll({
-      include: [Reply],
+      include: [
+        User,
+        Reply,
+        { model: User, as: 'LikedUsers' }
+      ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
-      return res.render('tweets', { tweets: tweets })
+      const data = tweets.map(t => ({
+        ...t.dataValues,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(t.id)
+      }))
+      return res.render('tweets', { tweets: data, user: req.user })
     })
   },
-
   postTweet: (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '請勿空白')
@@ -35,14 +43,16 @@ const tweetController = {
     return Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: Reply, include: [User] }
+        { model: Reply, include: [User] },
+        { model: User, as: 'LikedUsers' }
       ],
       order: [
         [Reply, 'createdAt', 'DESC']
       ]
     })
       .then(tweet => {
-        return res.render('tweet', { tweet: tweet })
+        const isLiked = tweet.LikedUsers.map(t => t.id).includes(req.user.id)
+        return res.render('tweet', { tweet: tweet, isLiked: isLiked })
       })
   },
   postReply: (req, res) => {
@@ -63,6 +73,27 @@ const tweetController = {
           return res.redirect('back')
         })
     }
+  },
+  addLike: (req, res) => {
+    Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.id
+    }).then((tweet) => {
+      return res.redirect('back')
+    })
+  },
+  removeLike: (req, res) => {
+    Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.id
+      }
+    }).then(like => {
+      like.destroy()
+        .then(tweet => {
+          return res.redirect('back')
+        })
+    })
   }
 }
 
