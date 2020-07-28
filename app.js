@@ -31,3 +31,5 @@ app.use(middleware.setLocals)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes/index')(app, passport)
+
+module.exports = app
