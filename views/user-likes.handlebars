@@ -33,11 +33,11 @@
               <i class="fac fa-cus-bells-check"></i>
             </div> --}}
         {{#if isFollowed}}
-        <form action="/followships/?_method=DELETE" method="POST">
+        <form action="/followships/{{pageUser.id}}?_method=DELETE" method="POST">
           <button class="ml-1 mr-2 unfollow-button">正在跟隨</button>
         </form>
         {{else}}
-        <form action="/followships/" method="POST">
+        <form action="/followships/{{pageUser.id}}" method="POST">
           <button class="ml-4 mr-2 follow-button">跟隨</button>
         </form>
         {{/if}}
@@ -57,7 +57,7 @@
       </div>
       <div class="user-follow-link">
         <div>
-          <a href="/users/{{pageUser.id}}/followers">{{pageUser.Followers.length}}個<span>跟隨中</span></a>
+          <a href="/users/{{pageUser.id}}/followers">{{pageUser.Followers.length}}個<span>跟隨者</span></a>
         </div>
         <div>
           <a href="/users/{{pageUser.id}}/followings"> {{pageUser.Followings.length}}位<span>跟隨中</span></a>

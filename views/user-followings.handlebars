@@ -25,14 +25,16 @@
       <div class="follow-item">
         <div class="left">
           <div class="avatar"
-            style="background: url({{this.avatar}}); background-position:center;background-size:cover;">
+            style="background: url({{this.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
           </div>
         </div>
         <div class="right">
           <div class="top">
-            <div class="column">
+            <div class="user-name-account">
               <span class="user-name">{{this.name}}</span><span class="user-account">{{this.account}}</span>
             </div>
+            {{#ifEqual ../user.id this.id}}
+            {{else}}
             {{#if this.isFollowed}}
             <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="unfollow-button">正在跟隨</button>
@@ -42,8 +44,9 @@
               <button type="submit" class="follow-button">跟隨</button>
             </form>
             {{/if}}
+            {{/ifEqual}}
           </div>
-          <div class="folloe-item-introduction">
+          <div class="follow-item-introduction">
             {{this.introduction}}
           </div>
         </div>
