@@ -32,7 +32,7 @@
         {{!-- <div class="icon-circle-fill">
           <i class="fac fa-cus-bells-check"></i>
         </div> --}}
-        {{#if isFollowed}}
+        {{#if pageUser.isFollowed}}
         <form action="/followships/{{pageUser.id}}?_method=DELETE" method="POST">
           <button class="ml-1 mr-2 unfollow-button">正在跟隨</button>
         </form>

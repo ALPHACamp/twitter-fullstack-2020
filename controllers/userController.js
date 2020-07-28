@@ -87,7 +87,9 @@ const userController = {
       order: [['createdAt', 'DESC']]
     })
       .then(user => {
-        res.render('user-tweets', { pageUser: user.toJSON() })
+        const pageUser = user.toJSON()
+        pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(user.id)
+        res.render('user-tweets', { pageUser })
       })
   },
   getLikes: (req, res) => {
@@ -100,8 +102,9 @@ const userController = {
       ],
       order: [['createdAt', 'DESC']],
     })
-      .then(user => {
-        res.render('user-likes', { pageUser: user })
+      .then(pageUser => {
+        pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
+        res.render('user-likes', { pageUser })
       })
   },
   getReplies: (req, res) => {
@@ -116,6 +119,7 @@ const userController = {
           include: [Tweet, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
         })
           .then(pageUser => {
+            pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
             res.render('user-replies', { replies, pageUser })
           })
       })
