@@ -4,7 +4,10 @@ const User = db.User
 module.exports = {
   topUsers: (req, res, next) => {
     if (req.user) {
-      User.findAll({ include: [{ model: User, as: 'Followers' }] })
+      User.findAll({
+        where: { role: 'user' },
+        include: [{ model: User, as: 'Followers' }]
+      })
         .then(users => {
           users = users.map(item => ({
             ...item.dataValues,
