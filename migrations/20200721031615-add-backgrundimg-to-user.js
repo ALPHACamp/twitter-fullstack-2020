@@ -1,11 +1,11 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.addColumn( 'Users', 'backgroundImg', {
+    return queryInterface.addColumn( 'Users', 'cover', {
       type: Sequelize.STRING
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn( 'users', 'backgroundImg' );
+    return queryInterface.removeColumn( 'users', 'cover' );
   }
 };    

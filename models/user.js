@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     introduction: DataTypes.STRING,
     role: DataTypes.STRING,
     account: DataTypes.STRING,
-    backgroundImg: DataTypes.STRING
+    cover: DataTypes.STRING
   }, {});
   User.associate = function (models) {
     User.hasMany(models.Tweet)  
