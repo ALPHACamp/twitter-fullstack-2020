@@ -2,6 +2,7 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
+const helpers = require('../_helpers');
 
 const tweetController = {
   getTweets: async (req, res) => {
@@ -23,7 +24,7 @@ const tweetController = {
       createdA: r.createdAt,
       likeCount: r.TweetWhoLike.length,
       replayCount: r.Replies.length,
-      isLiked: r.TweetWhoLike.map(d => d.id).includes(req.user.id)
+      isLiked: r.TweetWhoLike.map(d => d.id).includes(helpers.getUser(req).id)
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
@@ -45,13 +46,13 @@ const tweetController = {
     let replies = tweet.Replies.map(reply => ({
       ...reply,
       RepliesLikeCount: reply.ReplyWhoLike.length,
-      isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(req.user.id)
+      isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(helpers.getUser(req).id)
     }))
     replies.sort((a, b) => b.createdAt - a.createdAt)
     const totalCount = {
       replyCount: tweet.Replies.length,
       likeCount: tweet.TweetWhoLike.length,
-      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
+      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(helpers.getUser(req).id)
     }
     res.render('tweet', {
       isHomePage: true,
@@ -70,7 +71,7 @@ const tweetController = {
       return res.redirect('back');
     }
     return Tweet.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       description: req.body.newTweet
     })
       .then((tweet) => {
@@ -93,7 +94,7 @@ const tweetController = {
     return Reply.create({
       comment: req.body.newComment,
       TweetId: whichTweet,
-      UserId: req.user.id
+      UserId: helpers.getUser(req).id
     })
       .then((tweet) => {
         req.flash('success_messages', '回覆成功!!!')
