@@ -102,7 +102,7 @@ let userController = {
       tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req))
+      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
     let tweets = user.Tweets;
     tweets = tweets.map((tweet) => ({
@@ -115,7 +115,7 @@ let userController = {
       likeCount: tweet.Likes.length,
       replayCount: tweet.Replies.length,
       description: tweet.description,
-      isLiked: tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req))
+      isLiked: tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }));
     tweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
@@ -152,7 +152,7 @@ let userController = {
       tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req))
+      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
     let repliesTweet = user.Replies;
 
@@ -167,7 +167,7 @@ let userController = {
       description: r.Tweet.description,
       likeCount: r.Tweet.Likes.length,
       replayCount: r.Tweet.Replies.length,
-      isLiked: r.Tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req))
+      isLiked: r.Tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }))
 
     repliesTweet = repliesTweet.sort((a, b) => b.createdAt - a.createdAt)
@@ -206,7 +206,7 @@ let userController = {
       tweetsCount,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req))
+      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
     };
 
     let likes = user.Likes;
@@ -221,7 +221,7 @@ let userController = {
       description: r.User.introduction,
       likeCount: r.Tweet.Likes.length,
       replayCount:  r.Tweet.Replies.length,
-      isLiked:  r.Tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req))
+      isLiked:  r.Tweet.Likes.map((d) => d.UserId).includes(req.user.id)
     }))
     console.log(likes)
 
@@ -236,7 +236,7 @@ let userController = {
   addLike: async (req, res) => {
     try {
       const newLike = await Like.create({
-        UserId: helper.getUser(req),
+        UserId: req.user.id,
         TweetId: req.params.tweetId
       });
       res.redirect('back');
@@ -249,7 +249,7 @@ let userController = {
     try {
       const toRemove = await Like.findOne({
         where: {
-          UserId: helper.getUser(req),
+          UserId: req.user.id,
           TweetId: req.params.tweetId
         }
       });
@@ -261,7 +261,7 @@ let userController = {
   },
   editUser: async (req, res) => {
     try {
-      if (helper.getUser(req) !== Number(req.params.id)) {
+      if (req.user.id !== Number(req.params.id)) {
         return res.redirect('back');
       }
       const toEdit = await User.findByPk(req.params.id);
@@ -276,12 +276,12 @@ let userController = {
   },
   addFollowing: async (req, res) => {
     try {
-      if (helper.getUser(req) == Number(req.params.userId)) {
+      if (req.user.id == Number(req.params.userId)) {
         req.flash('error_messages', 'you cannot follow yourself');
         return res.redirect('back');
       }
       const newFollowship = await Followship.create({
-        followerId: helper.getUser(req),
+        followerId: req.user.id,
         followingId: req.params.userId
       });
       res.redirect('back');
@@ -293,7 +293,7 @@ let userController = {
     try {
       const toRemove = await Followship.findOne({
         where: {
-          followerId: helper.getUser(req),
+          followerId: req.user.id,
           followingId: req.params.userId
         }
       });
@@ -375,7 +375,7 @@ let userController = {
   },
   editProfile: async (req, res) => {
     try {
-      if (helper.getUser(req) !== Number(req.params.id)) {
+      if (req.user.id !== Number(req.params.id)) {
         return res.redirect('back');
       }
       const toEdit = await User.findByPk(req.params.id);
@@ -449,7 +449,7 @@ let userController = {
   addReplyLike: async (req, res) => {
     try {
       await RepliesLike.create({
-        UserId: helper.getUser(req),
+        UserId: req.user.id,
         ReplyId: req.params.ReplyId
       });
       res.redirect('back');
@@ -462,7 +462,7 @@ let userController = {
     try {
       const toRemove = await RepliesLike.findOne({
         where: {
-          UserId: helper.getUser(req),
+          UserId: req.user.id,
           ReplyId: req.params.ReplyId
         }
       });

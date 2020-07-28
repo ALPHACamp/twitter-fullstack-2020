@@ -15,6 +15,7 @@ const tweetController = {
         Like,
       ]
     })
+    
     data = tweets.map((r) => ({
       ...r.dataValues,
       userId: r.User.id,
@@ -25,7 +26,7 @@ const tweetController = {
       createdA: r.createdAt,
       likeCount: r.Likes.length,
       replayCount: r.Replies.length,
-      isLiked: r.TweetWhoLike.map(d => d.id).includes(helpers.getUser(req).id)
+      isLiked: r.Likes.map(d => d.id).includes(req.user.id)
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
@@ -45,13 +46,13 @@ const tweetController = {
     let replies = tweet.Replies.map(reply => ({
       ...reply,
       RepliesLikeCount: reply.ReplyWhoLike.length,
-      isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(helpers.getUser(req).id)
+      isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(req.user.id)
     }))
     replies.sort((a, b) => b.createdAt - a.createdAt)
     const totalCount = {
       replyCount: tweet.Replies.length,
       likeCount: tweet.TweetWhoLike.length,
-      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(helpers.getUser(req).id)
+      isLiked: tweet.TweetWhoLike.map(d => d.id).includes(req.user.id)
     }
     res.render('tweet', {
       isHomePage: true,
@@ -70,7 +71,7 @@ const tweetController = {
       return res.redirect('back');
     }
     return Tweet.create({
-      UserId: helpers.getUser(req).id,
+      UserId: req.user.id,
       description: req.body.newTweet
     })
       .then((tweet) => {
@@ -93,7 +94,7 @@ const tweetController = {
     return Reply.create({
       comment: req.body.newComment,
       TweetId: whichTweet,
-      UserId: helpers.getUser(req).id
+      UserId: req.user.id
     })
       .then((tweet) => {
         req.flash('success_messages', '回覆成功!!!')
