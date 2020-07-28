@@ -6,7 +6,7 @@ const pageLimit = 7
 
 let adminController = {
   adminLoginPage: (req, res) => {
-    return res.render('admin/signin');
+    return res.render('admin/login');
   },
   login: (req, res) => {
     req.flash('success_messages', 'Login successfully');
