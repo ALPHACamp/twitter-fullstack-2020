@@ -3,13 +3,13 @@ const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
 
-const tweetController = {
+const adminController = {
   getTweets: (req, res) => {
     return Tweet.findAll({
       include: [Reply],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
-      return res.render('tweets', { tweets: tweets })
+      return res.render('./admin/tweets', { tweets: tweets })
     })
   },
 
@@ -23,10 +23,10 @@ const tweetController = {
         description: req.body.description
       })
         .then(tweet => {
-          res.redirect('/tweets')
+          res.redirect('/admin/tweets')
         })
     }
   }
 }
 
-module.exports = tweetController
+module.exports = adminController

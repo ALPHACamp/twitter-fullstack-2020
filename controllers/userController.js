@@ -4,7 +4,7 @@ const User = db.User
 
 const userController = {
   signUpPage: (req, res) => {
-    return res.render('signup')
+    return res.render('signup', { layout: 'blank' })
   },
 
   signUp: (req, res) => {
@@ -17,7 +17,6 @@ const userController = {
           req.flash('error_messages', 'Email has been used already.')
           return res.redirect('/signUp')
         } else {
-          console.log(req.body)
           User.create({
             name: req.body.name,
             email: req.body.email,
@@ -32,7 +31,7 @@ const userController = {
   },
 
   signInPage: (req, res) => {
-    return res.render('signIn')
+    return res.render('signIn', { layout: 'blank' })
   },
 
   signIn: (req, res) => {
@@ -43,7 +42,56 @@ const userController = {
   signOut: (req, res) => {
     req.flash('success_messages', 'Signed out.')
     req.logout()
-    res.redirect('/signIn')
+    res.redirect('/signin')
+  },
+
+  settingPage: (req, res) => {
+    User.findByPk(req.user.id).then(user => {
+      return res.render('setting', {
+        name: user.name,
+        email: user.email
+      })
+    })
+  },
+
+  setting: (req, res) => {
+
+    if (req.body.passwordCheck !== req.body.password) {
+      req.flash('error_messages', "Confirm password doesn't match.")
+      return res.redirect('back')
+
+    } else {
+      User.findByPk(req.user.id).then(user => {
+        let originalName = user.name
+        let originalEmail = user.email
+
+        User.findOne({ where: { email: req.body.email } }).then(user => {
+          if (user && user.email !== originalEmail) {
+            req.flash('error_messages', 'Email has been used already.')
+            return res.redirect('back')
+          }
+        })
+        User.findOne({ where: { name: req.body.name } }).then(user => {
+          if (user && user.name !== originalName) {
+            req.flash('error_messages', 'Name has been used already.')
+            return res.redirect('back')
+          }
+        })
+      })
+    }
+
+    return User.findByPk(req.user.id)
+      .then(user => {
+        user.update({
+          email: req.body.email,
+          name: req.body.name,
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+        })
+          .then((user) => {
+            req.flash('success_messages', 'User was successfully updated')
+            res.redirect(`/tweets`)
+          })
+      })
   }
 }
 

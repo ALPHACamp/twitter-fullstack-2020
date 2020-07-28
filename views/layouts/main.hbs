@@ -19,7 +19,7 @@
           <div class="vertical-nav bg-white" id="sidebar">
             <div class="py-4 px-3 mb-2 bg-light">
               <div class="media d-flex align-items-center">
-                <img src="https://bc3-production-blobs-us-east-2.s3.us-east-2.amazonaws.com/22413b7c-cb64-11ea-b15b-ecf4bbd6f9a0?response-content-disposition=inline%3B%20filename%3D%2294ffe51c-87fc-45b3-b8a5-ddfc6c1de850_200x200.png%22%3B%20filename%2A%3DUTF-8%27%2794ffe51c-87fc-45b3-b8a5-ddfc6c1de850_200x200.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS5PME4CT5QW2PJJU%2F20200723%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20200723T060507Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=7b0698a44a6a78f79764e66e0429fb7e7cfae8c7ce60575fbffd7cbbc10cc752" style="width:100px; height:100px">
+                <img src="https://i.imgur.com/5wAep0e.png" style="width:100px; height:100px">
                 <div class="media-body">
                   <h4 class="m-0">Simple-Twitter</h4>
                   <p class="font-weight-light text-muted mb-0">ALPHA Camp project</p>
@@ -32,40 +32,34 @@
             <ul class="nav flex-column bg-white ml-5 mb-0">
               <li class="nav-item">
                 <a href="/" class="nav-link text-dark font-italic bg-light">
-                  <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                  <i class="fas fa-home mr-3 text-primary fa-fw"></i>
                   Home
                 </a>
 
-              {{#if user.isAdmin}}
+              {{#ifCond user.role 1}}
                 <li class="nav-item">
-                  <a href="/admin" class="nav-link text-dark font-italic">
-                    <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                  <a href="/admin" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-cog mr-3 text-primary fa-fw"></i>
                     Admin 後台
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="/users/{{user.id}}" class="nav-link text-dark font-italic">
-                    <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
-                    Profile
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="/signOut" class="nav-link text-dark font-italic">
-                    <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
-                    Sign Out
-                  </a>
-                </li>
-              {{/if}}
+              {{/ifCond}}
               {{#if user}}                
                 <li class="nav-item">
-                  <a href="/users/{{user.id}}" class="nav-link text-dark font-italic">
-                    <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                  <a href="/users/{{user.id}}" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-user mr-3 text-primary fa-fw"></i>
                     Profile
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="/signOut" class="nav-link text-dark font-italic">
-                    <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+                  <a href="/setting/{{user.id}}" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-cog mr-3 text-primary fa-fw"></i>
+                    Setting
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/signout" class="nav-link text-dark font-italic bg-light">
+                    <i class="fas fa-sign-out-alt mr-3 text-primary fa-fw"></i>
                     Sign Out
                   </a>
                 </li>

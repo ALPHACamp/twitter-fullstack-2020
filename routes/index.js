@@ -1,6 +1,8 @@
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const passport = require('passport')
+const adminController = require('../controllers/adminController')
+const { authenticate } = require('passport')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -11,7 +13,7 @@ module.exports = (app, passport) => {
   }
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
-      if (req.user.isAdmin) { return next() }
+      if (req.user.role) { return next() }
       return res.redirect('/')
     }
     res.redirect('/signin')
@@ -23,26 +25,34 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweet)
 
-  // sign in / sign out / sign up
-  app.get('/signUp', userController.signUpPage)
-  app.post('/signUp', userController.signUp)
-  app.get('/signIn', userController.signInPage)
-  app.post('/signIn', passport.authenticate('local', { failureRedirect: '/signIn', failureFlash: true }), userController.signIn)
-  app.get('/signOut', authenticated, userController.signOut)
+  // admin backstage
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 
-  app.get('/admin/signIn', (req, res) => res.render('./admin/signIn'))
-  app.post('/admin/signIn', (req, res, next) => {
+  // sign in / sign out / sign up
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signIn', failureFlash: true }), userController.signIn)
+  app.get('/signout', authenticated, userController.signOut)
+
+  app.get('/admin/signin', (req, res) => res.render('./admin/signin', {layout: 'blank'}))
+  app.post('/admin/signin', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) { return next(err) }
       if (user.role !== '1') {
         console.log(user)
-        req.flash('error_messages', 'The account is not admin. Please sign in with users sign in page.')
-        return res.redirect('/admin/signIn')
+        req.flash('error_messages', 'The account is not an admin. Please sign in with users sign in page.')
+        return res.redirect('/admin/signin')
       }
       req.logIn(user, (err) => {
         if (err) { return next(err); }
-        return res.redirect('/admin/twitters/')
+        req.flash('success_messages', 'Signed in.')
+        return res.redirect('/admin/tweets')
       })
     })(req, res, next)
   })
+
+  // setting
+  app.get('/setting/:id', authenticated, userController.settingPage)
+  app.post('/setting/:id', authenticated, userController.setting)
 }
