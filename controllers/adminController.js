@@ -14,10 +14,9 @@ const adminController = {
     return User.findAll({
       include: [
         Tweet,
+        { model: Tweet, as: 'LikedTweets' },
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
-        { model: Reply, include: Tweet },
-        { model: Like, include: Tweet }
       ]
     })
       .then(result => {
@@ -25,11 +24,10 @@ const adminController = {
           ...item.dataValues,
           followingsCount: item.Followings.length,
           followersCount: item.Followers.length,
-          likesCount: item.Likes.length,
-          repliesCount: item.Replies.length
+          likesCount: item.LikedTweets.length,
+          tweetsCount: item.Tweets.length
         }))
-        const users = data.sort((a, b) => b.Tweets.length - a.Tweets.length)
-
+        const users = data.sort((a, b) => b.tweetsCount - a.tweetsCount)
         res.render('admin/users', { users })
       })
   },
