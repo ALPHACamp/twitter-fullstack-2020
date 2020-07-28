@@ -56,7 +56,7 @@ const tweetController = {
       isHomePage: true,
       replies,
       tweet,
-      totalCount
+      totalCount,
     });
   },
   postTweet: (req, res) => {
