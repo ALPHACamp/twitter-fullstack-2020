@@ -20,27 +20,25 @@ module.exports = (app, passport) => {
   }
 
   // Index page
-  //app.get('/newsFeed', authenticated, (req, res) => res.render('newsFeed'))
+  // app.get('/newsFeed', authenticated, (req, res) => res.render('newsFeed'))
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweet)
-
-  app.get('/tweets/:id', tweetController.getTweet)
-  app.post('/tweets/:id/replies', tweetController.postReply)
+  // reply
+  app.get('/tweets/:id', authenticated, tweetController.getTweet)
+  app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
+  // like
+  app.post('/tweets/:id/like', authenticated, tweetController.addLike)
+  app.delete('/tweets/:id/like', authenticated, tweetController.removeLike)
 
   //user profile route controller
   app.get('/users/:id/tweets', authenticated, userController.getUser)
   app.get('/api/users/:id', authenticated, userController.editUser)
   app.post('/api/users/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
   //user followship
-  // app.get('/api/users/:id', authenticated, userController.getUser)
-  // app.get('/api/users/:id/edit', authenticated, userController.editUser)
-  // app.post('/api/users/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
-  // //user followship
-
   app.post('/followships/:userId', authenticated, userController.addFollowing)
   app.delete('/followships/:userId', authenticated, userController.removeFollowing)
-  //followship page
+  // followship page
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
 
