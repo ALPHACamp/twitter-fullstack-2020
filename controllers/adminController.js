@@ -65,7 +65,7 @@ let adminController = {
       TweetCount: r.Tweets.length
     }));  
     data = data.sort((a, b) => b.TweetCount - a.TweetCount);
-    data = data.filter((user) => user.role === 'user');
+    data = data.filter((user) => user.role !== 'admin');
     res.render('admin/tweetsUser', {
       users: data,
       isAdminUser: true
