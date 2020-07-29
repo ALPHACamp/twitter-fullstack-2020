@@ -83,10 +83,12 @@
               <img src="{{user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
             </div>
             <div class="col ml-3">
-              <textarea class="w-100" name="description" cols="25" rows="10" placeholder="有什麼新鮮事..."
-                style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent"></textarea>
+              <textarea class="w-100" name="description" id="userInput_btn" cols="25" rows="10" placeholder="有什麼新鮮事..."
+                style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent;height:80px"
+                onkeyup="wordsTotal_btn()"></textarea>
               <div class="card-text text-right">
-                <button type="submit" class="btn rounded-pill"
+                <small id="display_btn" class="text-right"></small> <br>
+                <button type="submit" class="btn rounded-pill mt-2"
                   style="background-color: #FF6600; color:white">推文</button>
               </div>
             </div>

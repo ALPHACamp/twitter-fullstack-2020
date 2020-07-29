@@ -32,6 +32,22 @@
   window.setTimeout(function () {
     $(".alert").alert('close')
   }, 8000);
+  function wordsTotal() {
+    let total = document.getElementById('userInput').value.length;
+    if (total > 140)
+      document.getElementById('display').innerHTML = `<span style="color:red;">${total}/140</span>`;
+    else {
+      document.getElementById('display').innerHTML = `<span>${total}/140</span>`;
+    }
+  }
+  function wordsTotal_btn() {
+    let total = document.getElementById('userInput_btn').value.length;
+    if (total > 140)
+      document.getElementById('display_btn').innerHTML = `<span style="color:red;">${total}/140</span>`;
+    else {
+      document.getElementById('display_btn').innerHTML = `<span>${total}/140</span>`;
+    }
+  }
 </script>
 
 </html>
