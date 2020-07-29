@@ -49,10 +49,7 @@ router.post(
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
-router.delete(
-  '/admin/tweets/:id',
-  authenticatedAdmin,
-  adminController.deleteTweet
+router.delete('/admin/tweets/:id',authenticatedAdmin, adminController.deleteTweet
 );
 
 router.get('/', (req, res) => res.redirect('/tweets'));
@@ -72,7 +69,7 @@ router.get(
   },
   tweetController.getTweet
 );
-router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
+router.post('/tweets', authenticated, tweetController.postTweet);
 router.get(
   '/tweets/:id',
   authenticated,
