@@ -220,6 +220,7 @@ const tweetController = {
       }
     })
       .then((like) => {
+        console.log(like)
         return like.destroy()
       })
       .then(() => {

@@ -19,17 +19,19 @@ describe('../../models/followship', () => {
   after(() => {
     Followship.init.resetHistory()
   })
-  it('called Followship.init with the correct parameters', () => {
-    expect(Followship.init).to.have.been.calledWith(
-      {
-        FollowerId: DataTypes.INTEGER,
-        FollowingId: DataTypes.INTEGER
-      },
-      {
-        sequelize,
-        modelName: 'Followship'
-      }
-    )
+  context('properties', () => {
+    it('called Followship.init with the correct parameters', () => {
+      expect(Followship.init).to.have.been.calledWith(
+        {
+          FollowerId: DataTypes.INTEGER,
+          FollowingId: DataTypes.INTEGER
+        },
+        {
+          sequelize,
+          modelName: 'Followship'
+        }
+      )
+    })
   })
 })
 
