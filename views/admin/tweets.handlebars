@@ -41,7 +41,8 @@
               <a class="user-name">{{this.User.name}}</a>
               <span class="user-account">@{{this.User.account}}．{{changeTime this.createdAt}}</span>
             </div>
-            <form action="/tweets/{{this.id}}?_method=DELETE" method="POST" onsubmit="return confirm('確定要刪除推文嗎？')">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST"
+              onsubmit="return confirm('確定要刪除推文嗎？')">
               <button type="submit" class="button delete-tweet-item">✕</button>
             </form>
           </div>

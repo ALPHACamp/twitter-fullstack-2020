@@ -20,6 +20,7 @@ module.exports = (app, passport) => {
   app.post('/admin/signin', adminSignIn, adminController.signIn)
   app.get('/admin/tweets', adminAuthenticated, adminController.getTweets)
   app.get('/admin/users', adminAuthenticated, adminController.getUsers)
+  app.delete('/admin/tweets/:id', adminAuthenticated, adminController.deleteTweet)
 
   app.get('/logout', userController.logout)
   app.get('/', authenticatedStatus, userController.getIndexPage)
@@ -29,7 +30,6 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', userAuthenticated, tweetController.addLike)
   app.delete('/tweets/:id/like', userAuthenticated, tweetController.removeLike)
   app.get('/tweets/:id', userAuthenticated, tweetController.getTweet)
-  app.delete('/tweets/:id', adminAuthenticated, adminController.deleteTweet)
   app.post('/tweets/:id/replies', userAuthenticated, tweetController.postReply)
 
   app.get('/api/users/:id', userAuthenticated, userController.editUser)
