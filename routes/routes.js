@@ -7,6 +7,9 @@ const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+
 // 判斷是否已登入
 const authenticated = (req, res, next) => {
   if (helper.ensureAuthenticated(req)) {
@@ -84,7 +87,11 @@ router.get('/users/:id/like', authenticated, userController.getUserLikeContent)
 // 編輯個人資料業面
 router.get('/users/:id/edit', authenticated, userController.editUser)
 // 編輯個人資料
-router.put('/users/:id/edit', authenticated, userController.putUser)
+router.put('/users/:id/edit', authenticated, upload.fields([
+  { name: 'cover', maxCount: 1 },
+  { name: 'avatar', maxCount: 1 }
+]),
+userController.putUser)
 // 查看跟隨者名單
 router.get('/users/:id/followers', authenticated, userController.getUserFollowerList)
 // 查看追隨者名單

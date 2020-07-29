@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Sequelize } = require('../models')
 const { or, not } = Sequelize.Op
+const fs = require('fs')
 const db = require('../models')
 const helpers = require('../_helpers')
 const User = db.User
@@ -116,17 +117,96 @@ const userController = {
       req.flash('error_message', "name didn't exist")
       return res.redirect('back')
     }
-    return User.findByPk(req.params.id).then((user) => {
-      user
-        .update({
-          name: req.body.name,
-          introduction: req.body.introduction
+    const readFile = (filePath) => {
+      return new Promise((resolve, reject) => {
+        fs.readFile(filePath, (err, data) => {
+          if (err) return reject(err)
+          return resolve(data)
         })
-        .then((user) => {
-          req.flash('success_message', 'user was successfully to update')
-          res.json(user)
+      })
+    }
+
+    const writeFile = (targetFilePath, data) => {
+      return new Promise((resolve, reject) => {
+        fs.writeFile(targetFilePath, data, (err) => {
+          if (err) return reject(err)
+          return resolve()
         })
-    })
+      })
+    }
+    const { files } = req
+    console.log(Object.keys(files).length)
+    if ((Object.keys(files).length === 0)) {
+      console.log(req.body)
+      return User.findByPk(req.params.id).then((user) => {
+        user
+          .update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            cover: user.cover,
+            avatar: user.avatar
+          })
+          .then((user) => {
+            req.flash('success_message', 'user was successfully to update')
+            res.redirect(`/users/${req.params.id}`)
+          })
+      })
+    }
+    if (Object.keys(files).length === 2) {
+      readFile(files.cover[0].path).then((cover) => {
+        return writeFile(`upload/${files.cover[0].originalname}`, cover)
+      })
+        .then((cover) => {
+          readFile(files.avatar[0].path).then((avatar) => {
+            return writeFile(`upload/${files.avatar[0].originalname}`, avatar)
+          })
+            .then((avatar) => {
+              return User.findByPk(req.params.id).then((user) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  cover: `/upload/${files.cover[0].originalname}`,
+                  avatar: `/upload/${files.avatar[0].originalname}`
+                })
+              })
+            }).then((user) => {
+              req.flash('success_message', 'user was successfully to update')
+              res.redirect(`/users/${req.params.id}`)
+            })
+        })
+    } else if (files.cover) {
+      readFile(files.cover[0].path).then((cover) => {
+        return writeFile(`upload/${files.cover[0].originalname}`, cover)
+      }).then((cover) => {
+        return User.findByPk(req.params.id).then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            cover: `/upload/${files.cover[0].originalname}`,
+            avatar: user.avatar
+          })
+        })
+      }).then((user) => {
+        req.flash('success_message', 'user was successfully to update')
+        res.redirect(`/users/${req.params.id}`)
+      })
+    } else if (files.avatar) {
+      readFile(files.avatar[0].path).then((avatar) => {
+        return writeFile(`upload/${files.avatar[0].originalname}`, avatar)
+      }).then((avatar) => {
+        return User.findByPk(req.params.id).then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            cover: user.cover,
+            avatar: `/upload/${files.avatar[0].originalname}`
+          })
+        })
+      }).then((user) => {
+        req.flash('success_message', 'user was successfully to update')
+        res.redirect(`/users/${req.params.id}`)
+      })
+    }
   },
   getUserFollowerList: (req, res) => {
     userController.getRecommendedUsers(req, res).then((users) => {
