@@ -6,6 +6,7 @@ const Like = db.Like
 const Secondreply = db.Secondreply
 const userController = require('./userController')
 const { getUser } = require('../_helpers')
+const e = require('express')
 
 const tweetController = {
   getHomePage: (req, res) => {
@@ -37,12 +38,21 @@ const tweetController = {
       .catch(err => res.send(err))
   },
   postTweet: (req, res) => {
-    return Tweet.create({
-      UserId: getUser(req).id,
-      description: req.body.tweet
-    })
-      .then(() => res.redirect('/tweets'))
-      .catch((err) => res.send(err))
+    const tweet = req.body.tweet
+    if (!tweet.length) {
+      req.flash('error_messages', '請新增內容後再發推文。')
+      res.redirect('/tweets')
+    } else if (tweet.length > 140) {
+      req.flash('error_messages', '推文過長，請輸入140字內的推文。')
+      res.redirect('/tweets')
+    } else {
+      return Tweet.create({
+        UserId: getUser(req).id,
+        description: req.body.tweet
+      })
+        .then(() => res.redirect('/tweets'))
+        .catch((err) => res.send(err))
+    }
   },
   deleteTweet: (req, res) => {
     return Tweet.findByPk(req.params.tweetId)
@@ -137,36 +147,48 @@ const tweetController = {
   },
   postReply: (req, res) => {
     const tweetId = Number(req.params.tweetId)
-    return Reply.create({
-      UserId: getUser(req).id,
-      TweetId: tweetId,
-      comment: req.body.reply,
-      replyTo: req.params.replyTo
-    })
-      .then(() => {
-        return Tweet.findByPk(tweetId)
-          .then((tweet) => {
-            tweet.increment('replyCount')
-          })
-          .then(() => res.redirect('back'))
+    const reply = req.body.reply
+    if (!reply.length) {
+      req.flash('error_messages', '請新增內容後再推你的回覆。')
+      res.redirect('back')
+    } else {
+      return Reply.create({
+        UserId: getUser(req).id,
+        TweetId: tweetId,
+        comment: reply,
+        replyTo: req.params.replyTo
       })
-      .catch((err) => res.send(err))
+        .then(() => {
+          return Tweet.findByPk(tweetId)
+            .then((tweet) => {
+              tweet.increment('replyCount')
+            })
+            .then(() => res.redirect('back'))
+        })
+        .catch((err) => res.send(err))
+    }
   },
   postSecondReply: (req, res) => {
-    return Secondreply.create({
-      UserId: getUser(req).id,
-      ReplyId: Number(req.params.replyId),
-      comment: req.body.reply,
-      replyTo: req.params.replyTo
-    })
-      .then(() => {
-        return Tweet.findByPk(Number(req.params.tweetId))
-          .then((tweet) => {
-            tweet.increment('replyCount')
-          })
-          .then(() => res.redirect('back'))
+    const reply = req.body.reply
+    if (!reply.length) {
+      req.flash('error_messages', '請新增內容後再推你的回覆。')
+      res.redirect('back')
+    } else {
+      return Secondreply.create({
+        UserId: getUser(req).id,
+        ReplyId: Number(req.params.replyId),
+        comment: req.body.reply,
+        replyTo: req.params.replyTo
       })
-      .catch((err) => res.send(err))
+        .then(() => {
+          return Tweet.findByPk(Number(req.params.tweetId))
+            .then((tweet) => {
+              tweet.increment('replyCount')
+            })
+            .then(() => res.redirect('back'))
+        })
+        .catch((err) => res.send(err))
+    }
   },
   deleteReply: (req, res) => {
     return Reply.findByPk(req.params.replyId)
