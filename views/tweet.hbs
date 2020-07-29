@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
-    <div class="col-3 mt-2 border-right">
-      <img style="width: 50px;height: 50PX;left: 103px;top: 4px;" src="https://bc3-production-blobs-us-east-2.s3.us-east-2.amazonaws.com/22413b7c-cb64-11ea-b15b-ecf4bbd6f9a0?response-content-disposition=inline%3B%20filename%3D%2294ffe51c-87fc-45b3-b8a5-ddfc6c1de850_200x200.png%22%3B%20filename%2A%3DUTF-8%27%2794ffe51c-87fc-45b3-b8a5-ddfc6c1de850_200x200.png&response-content-type=image%2Fpng&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAS5PME4CT5QW2PJJU%2F20200722%2Fus-east-2%2Fs3%2Faws4_request&X-Amz-Date=20200722T091315Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=2f62bfd5f415e8fcbd7508e3e548530f0540459bf1755097bd5b2d1b0df03e43" alt="">
+    {{!-- <div class="col-3 mt-2 border-right ">
+      <img style="width: 50px;height: 50PX;left: 103px;top: 4px;" src="https://i.imgur.com/5wAep0e.png" alt="">
         <nav class="nav flex-column">
           <div class="row row-cols-1">
             <div class="col mt-4">
@@ -35,7 +35,7 @@
             </div>
           </div>
         </nav>
-    </div>
+    </div> --}}
     <div class="col-6 mt-2 border-right">
       <div class="row row-cols-1">
         <div class="col">
@@ -43,11 +43,11 @@
         </div>
         <div class="col mt-3 border-top text-break">
           <h6 class="card-title">
-            <a href="/users/{{user.id}}">
-              <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="https://loremflickr.com/320/240?random=1" />
-              this.name
+            <a href="/api/users/{{user.id}}">
+              <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{tweet.User.avatar}}" />
+              {{tweet.User.name}}
             </a>
-            <small class="text-muted">@帳號。</small>
+            <small class="text-muted">{{tweet.User.account}}</small>
           </h6>
           <P>{{tweet.description}}</P>
           {{moment tweet.createdAt}}
@@ -57,25 +57,29 @@
             <span >{{tweet.Replies.length}} 回覆</span>
           </div>
           <div class="col">
-            <span>{{tweet.likedUsers.length}} 喜歡次數</span>
+            <span>{{tweet.LikedUsers.length}} 喜歡次數</span>
           </div>
         </div>
         <div class="mt-3 border-top row justify-content-around">
           <div class="col">
             <button style="border-radius: 100px" type="submit" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
-              <i class="far fa-comment"></i>
+              <i class="far fa-comment fa-2x"></i>
             </button>
           </div>
           <div class="col">
-            {{!-- {{#if }} --}}
-              <form action="/followships" method="POST">
+            {{#if isLiked}}
+              <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
                 <button style="border-radius: 100px" type="submit" class="btn btn-light" >
-                  <i class="far fa-heart"></i>
+                  <i class="fas fa-heart fa-2x" style="color: red;"></i> 
                 </button>
               </form>
-            {{!-- {{else}}
-
-            {{/if}} --}}
+            {{else}}
+              <form action="/tweets/{{tweet.id}}/like" method="POST">
+                <button style="border-radius: 100px" type="submit" class="btn btn-light" >
+                  <i class="far fa-heart fa-2x"></i>
+                </button>
+              </form>
+            {{/if}}
           </div>
         </div>
         <!-- Modal -->
@@ -91,7 +95,7 @@
                 </div>
                 <div class="modal-body">
                   <input type="hidden" name="TweetId" value="{{tweet.id}}" />
-                  <img style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="https://loremflickr.com/320/240?random=1" />
+                  <img style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{user.avatar}}" />
                   <input class="form-control border-0" type="text" name="comment" id="comment" placeholder="回覆" style="width: 400px;display: inline;border-radius: 100px;"></input>
                 </div>
                 <div class="modal-footer">
@@ -106,15 +110,15 @@
           {{#each tweet.Replies}}
             <div class="col border-top">
               <h6>
-                <a href="/users/{{user.id}}">
-                  <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="https://loremflickr.com/320/240?random=1" />
-                  this.name
-                  <small class="text-muted">@帳號。{{moment this.createdAt}}</small>
+                <a href="/api/users/{{this.UserId}}">
+                  <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{this.User.avatar}}" />
+                  {{this.User.name}}
                 </a>
+                <small class="text-muted">{{this.User.account}} ◆ {{moment this.createdAt}}</small>
               </h6>
-                
-              <small class="text-muted">回覆 @推文帳號</small>
-                 
+              <span class="badge badge-primary" style="border-radius: 100px">
+                <small>回覆 {{../tweet.User.account}}</small>
+              </span>
               <p class="card-text">{{this.comment}}</p>
               <p class="card-text">
               <div class="row justify-content-around">
@@ -125,7 +129,7 @@
                 </div>
                 <div class="col">
                   <small class="text-muted">
-                    <i class="far fa-heart"> {{this.likedUsers.length}}</i>
+                    <i class="far fa-heart"> {{this.LikedUsers.length}}</i>
                   </small>
                 </div>
               </div>
