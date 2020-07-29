@@ -13,39 +13,37 @@
 <body>
   <main role="main">
 
-    <div class=" bg-light ">
-      <div class="row">
+    <div class="bg-light">
+      <div class="row mx-auto" style="width: 95vw;">
 
-        <div class="col-3 border-right">
+        <div class="col-3 border-right" style="height: 100%;">
           <div class="vertical-nav bg-white" id="sidebar">
-            <div class="py-4 px-3 mb-2 bg-light">
+            <div class="py-4 px-3 mb-2 ml-0 bg-light">
               <div class="media d-flex align-items-center">
-                <img src="https://i.imgur.com/5wAep0e.png" style="width:100px; height:100px">
+                <img src="https://i.imgur.com/5wAep0e.png" style="width:50px; height:50px; margin-right:10px;">
                 <div class="media-body">
-                  <h4 class="m-0">Simple-Twitter</h4>
-                  <p class="font-weight-light text-muted mb-0">ALPHA Camp project</p>
+                  <h5 class="m-0">Simple-Twitter</h5>
+                  <p class="font-weight-light text-muted mb-0">ALPHA Camp</p>
                 </div>
               </div>
             </div>
 
-            <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 ml-5 mb-0">Navigation</p>
-
-            <ul class="nav flex-column bg-white ml-5 mb-0">
+            <ul class="nav flex-column bg-white mb-0">
               <li class="nav-item">
-                <a href="/tweets" class="nav-link text-dark font-italic bg-light">
+                <a href="/tweets" class="nav-link text-dark bg-light">
                   <i class="fas fa-home mr-3 text-primary fa-fw"></i>
-                  Home
+                  <b>首頁</b>
                 </a>
               <li class="nav-item">
-                <a href="/users/{{user.id}}/tweets" class="nav-link text-dark font-italic bg-light">
+                <a href="/users/{{user.id}}/tweets" class="nav-link text-dark bg-light">
                   <i class="fas fa-user mr-3 text-primary fa-fw"></i>
-                  Profile
+                  <b>個人資料</b>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/setting/{{user.id}}" class="nav-link text-dark font-italic bg-light">
+                <a href="/setting/{{user.id}}" class="nav-link text-dark bg-light">
                   <i class="fas fa-cog mr-3 text-primary fa-fw"></i>
-                  Setting
+                  <b>設定</b>
                 </a>
               </li>
               <li class="nav-item">
@@ -54,9 +52,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/signout" class="nav-link text-dark font-italic bg-light">
+                <a href="/signout" class="nav-link text-dark bg-light">
                   <i class="fas fa-sign-out-alt mr-3 text-primary fa-fw"></i>
-                  Sign Out
+                  <b>登出</b>
                 </a>
               </li>
             </ul>
