@@ -9,45 +9,45 @@ const { getUser } = require('../_helpers')
 
 const tweetController = {
   getHomePage: (req, res) => {
-    userController.getRecommendedUsers(req, res)
-      .then((users) => {
-        // 顯示所有tweets在首頁
-        Tweet.findAll({
-          raw: true,
-          nest: true,
-          include: [
-            User
-          ],
-          order: [['createdAt', 'DESC']]
-        })
-          .then((tweets) => {
-            Like.findAll({ where: { UserId: getUser(req).id }, raw: true, nest: true })
-              .then((likes) => {
-                likes = likes.map(like => like.TweetId)
-                tweets.forEach(tweet => {
-                  tweet.tweetIsLiked = likes.includes(tweet.id)
-                })
+    Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: [
+        User
+      ],
+      order: [['createdAt', 'DESC']]
+    })
+      .then((tweets) => {
+        Like.findAll({ where: { UserId: getUser(req).id }, raw: true, nest: true })
+          .then((likes) => {
+            likes = likes.map(like => like.TweetId)
+            tweets.forEach(tweet => {
+              tweet.tweetIsLiked = likes.includes(tweet.id)
+            })
+            userController.getRecommendedUsers(req, res)
+              .then((users) => {
                 res.render('home', {
                   tweets: tweets,
                   recommendFollowings: users
                 })
               })
+              .catch(err => res.send(err))
           })
       })
       .catch(err => res.send(err))
   },
   postTweet: (req, res) => {
-    const tweet = req.body.tweet
-    if (!tweet.length) {
+    const description = req.body.tweet
+    if (!description.length) {
       req.flash('error_messages', '請新增內容後再發推文。')
       res.redirect('/tweets')
-    } else if (tweet.length > 140) {
+    } else if (description.length > 140) {
       req.flash('error_messages', '推文過長，請輸入140字內的推文。')
       res.redirect('/tweets')
     } else {
       return Tweet.create({
         UserId: getUser(req).id,
-        description: req.body.tweet
+        description: description
       })
         .then(() => res.redirect('/tweets'))
         .catch((err) => res.send(err))
@@ -146,16 +146,15 @@ const tweetController = {
   },
   postReply: (req, res) => {
     const tweetId = Number(req.params.tweetId)
-    const reply = req.body.reply
-    if (!reply.length) {
+    const comment = req.body.comment
+    if (!comment.length) {
       req.flash('error_messages', '請新增內容後再推你的回覆。')
       res.redirect('back')
     } else {
       return Reply.create({
         UserId: getUser(req).id,
         TweetId: tweetId,
-        comment: reply,
-        replyTo: req.params.replyTo
+        comment: comment
       })
         .then(() => {
           return Tweet.findByPk(tweetId)

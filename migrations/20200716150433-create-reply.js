@@ -1,4 +1,5 @@
 'use strict'
+const { getUser } = require('../_helpers')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Replies', {

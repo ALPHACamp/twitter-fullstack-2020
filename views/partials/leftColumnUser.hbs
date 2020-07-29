@@ -69,7 +69,7 @@
 <!-- createTweet Modal -->
 <div class="modal fade" id="createTweet" tabindex="-1" role="dialog" aria-labelledby="createTweet" aria-hidden="true"
   data-backdrop="true">
-  <form action="/tweet" method="post">
+  <form action="/tweets" method="post">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header m-2 p-2">
@@ -83,7 +83,7 @@
               <img src="{{user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
             </div>
             <div class="col ml-3">
-              <textarea class="w-100" name="tweet" cols="25" rows="10" placeholder="有什麼新鮮事..."
+              <textarea class="w-100" name="description" cols="25" rows="10" placeholder="有什麼新鮮事..."
                 style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent"></textarea>
               <div class="card-text text-right">
                 <button type="submit" class="btn rounded-pill"

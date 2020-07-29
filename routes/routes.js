@@ -32,12 +32,12 @@ const adminAuthenticated = (req, res, next) => {
 // 首頁
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, tweetController.getHomePage)
-router.get('/tweets/:tweetId', authenticated, tweetController.getReplyPage)
+router.get('/tweets/:tweetId/replies', authenticated, tweetController.getReplyPage)
 // 發推
-router.post('/tweet', authenticated, tweetController.postTweet)
+router.post('/tweets', authenticated, tweetController.postTweet)
 router.delete('/tweets/:tweetId', authenticated, tweetController.deleteTweet)
 // 回應推文
-router.post('/tweets/:tweetId/reply', authenticated, tweetController.postReply)
+router.post('/tweets/:tweetId/replies', authenticated, tweetController.postReply)
 router.delete('/tweets/:tweetId/:replyId', authenticated, tweetController.deleteReply)
 // 回應留言
 router.post('/tweets/:tweetId/:replyId/:replyTo', authenticated, tweetController.postSecondReply)
