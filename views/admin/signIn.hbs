@@ -1,19 +1,27 @@
 <form class="form-signin mx-auto" action="/admin/signin" method="POST" style="width: 100%;">
+
   <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+    <img class="mb-2" src="https://i.imgur.com/5wAep0e.png" style="width:50px; height:50px">
+    <h1 class="h3 mb-3 font-weight-normal"><strong>後台登入</strong></h1>
   </div>
-  <div class="form-label-group mb-2">
-    <label for="inputAccount">Account</label>
-    <input type="text" name="account" class="form-control" placeholder="Account" required autofocus>
+
+  <div class="form-label-group mb-2 md-form">
+    <input type="text" id="inputAccount" name="account" class="form-control" required autofocus>
+    <label for="inputAccount">帳號</label>
   </div>
-  <div class="form-label-group mb-2">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
+  
+  <div class="form-label-group mb-2 md-form">
+    <input type="password" id="inputPassword" name="password" class="form-control" required>
+    <label for="inputPassword">密碼</label>
   </div>
+
   <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-  <div class="text-center mb-4">
-    <p>Admin only. Users please click below link to go back.</p>
-    <p><a href="/signin">User Sign In</a></p>
+
+  <button class="btn btn-md btn-primary btn-block mb-3" type="submit"
+    style="font-size:medium; border-radius:20px;">登入</button>
+  
+  <div class="text-center mb-4 d-flex justify-content-end">
+    <p><a href="/signin">前台登入</a></p>
   </div>
+
 </form>
