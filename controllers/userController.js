@@ -267,15 +267,16 @@ let userController = {
   },
   addFollowing: async (req, res) => {
     try {
-      if (helper.getUser(req).id === Number(req.params.id)) {
+
+      if (helper.getUser(req).id === Number(req.body.id)) {
         req.flash('error_messages', 'you cannot follow yourself');
         return res.redirect('back');
       } 
-      await Followship.create({
-        followerId: helper.getUser(req).id,
-        followingId: req.params.id
-      });
-      res.redirect('back');
+        await Followship.create({
+          followerId: helper.getUser(req).id,
+          followingId: req.body.id
+        });
+        return res.redirect('back');
     } catch (err) {
       res.send('something is wrong');
     }
@@ -315,6 +316,7 @@ let userController = {
     }));
     followings = followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
+      isUserPage: true,
       user: user.toJSON(),
       followShip: followings,
       followDetail
@@ -341,6 +343,7 @@ let userController = {
     }));
     followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
+      isUserPage: true,
       user: user.toJSON(),
       followShip: followers,
       followDetail
@@ -380,6 +383,11 @@ let userController = {
     const id = req.params.id;
     const { introduction } = req.body;
     const { files } = req;
+
+    if (introduction.length > 140) {
+      req.flash('error_messages', '自我介紹不能超過140個字')
+      return res.redirect('back')
+    }
     imgur.setClientID(IMGUR_CLIENT_ID);
 
     const user = await User.findByPk(id);
