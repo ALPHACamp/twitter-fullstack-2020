@@ -8,6 +8,7 @@ const RepliesLike = db.RepliesLikes
 const bcrypt = require('bcryptjs');
 const imgur = require('imgur-node-api');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
+const helper = require('../_helpers')
 
 let userController = {
   loginPage: (req, res) => {
@@ -20,26 +21,23 @@ let userController = {
   logout: (req, res) => {
     req.flash('success_messages', '已經成功登出');
     req.logout();
-    res.redirect('/login');
+    res.redirect('/signin');
   },
   signUpPage: (req, res) => {
     return res.render('signup');
   },
   signup: (req, res) => {
-    //password and confirmPassword must be the same
-    if (req.body.password !== req.body.confirmPassword) {
+    if (req.body.password !== req.body.checkPassword) {
       return res.render('signup', {
         error_messages: 'Please check your confirm password',
         name: req.body.name,
         account: req.body.account,
         email: req.body.email,
         password: req.body.password,
-        confirmPassword: req.body.confirmPassword
+        checkPassword: req.body.checkPassword
       });
     }
-    //check if account name has been used
     User.findOne({ where: { account: req.body.account } }).then((user) => {
-      // if the account name has been used
       if (user) {
         return res.render('signup', {
           error_messages: 'This account name is not available',
@@ -47,10 +45,9 @@ let userController = {
           account: req.body.account,
           email: req.body.email,
           password: req.body.password,
-          confirmPassword: req.body.confirmPassword
+          checkPassword: req.body.checkPassword
         });
       } else {
-        // the account name is available, check if email has been used
         User.findOne({ where: { email: req.body.email } }).then((user) => {
           if (user) {
             return res.render('signup', {
@@ -59,7 +56,7 @@ let userController = {
               account: req.body.account,
               email: req.body.email,
               password: req.body.password,
-              confirmPassword: req.body.confirmPassword
+              checkPassword: req.body.checkPassword
             });
           }
           User.create({
@@ -75,7 +72,7 @@ let userController = {
           })
             .then((user) => {
               req.flash('success_messages', 'Signup successfully');
-              return res.redirect('/login');
+              return res.redirect('/signin');
             })
             .catch((err) => console.log(err));
         });
@@ -89,45 +86,38 @@ let userController = {
       include: [
         {
           model: Tweet,
-          order: ['createdAt', 'DESC'],
           include: [
             User,
             Reply,
-            { model: User, as: 'TweetWhoLike' },
+            Like,
           ]
         },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
     });
-    user = user.toJSON();  
-
+    user = user.toJSON();
     const followShip = {
       isTweet: true,
       tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req).id)
     };
     let tweets = user.Tweets;
     tweets = tweets.map((tweet) => ({
       ...tweet,
       tweetId: tweet.id,
-      userId: tweet.User.id,
-      userName: tweet.User.name,
-      userAvatar: tweet.User.avatar,
-      userAccount: tweet.User.account,
-      likeCount: tweet.TweetWhoLike.length,
+      userId: user.id,
+      userName: user.name,
+      userAvatar: user.avatar,
+      userAccount: user.account,
+      likeCount: tweet.Likes.length,
       replayCount: tweet.Replies.length,
       description: tweet.description,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
+      isLiked: tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req).id)
     }));
-    
     tweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
-    // all user's tweets
-    // all user's likes
-    // all user's replies
     res.render('userPage', {
       user,
       followShip,
@@ -141,12 +131,15 @@ let userController = {
       where: { id },
       include: [
         Tweet,
-        { model: Reply, include: [
-          { model: Tweet, include: [
-              Reply,
-              User,
-              { model: User, as: 'TweetWhoLike' }] 
+        {
+          model: Reply, include: [
+            {
+              model: Tweet, include: [
+                Reply,
+                User,
+                Like,]
             },
+            User
           ]
         },
         { model: User, as: 'Followers' },
@@ -159,12 +152,12 @@ let userController = {
       tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req).id)
     };
-
     let repliesTweet = user.Replies;
 
-    repliesTweet = repliesTweet.map((r) => ({
+
+    repliesTweet = repliesTweet.map(r => ({
       ...r,
       tweetId: r.Tweet.id,
       userId: r.Tweet.User.id,
@@ -172,13 +165,13 @@ let userController = {
       userAvatar: r.Tweet.User.avatar,
       userAccount: r.Tweet.User.account,
       description: r.Tweet.description,
-      likeCount: r.Tweet.TweetWhoLike.length,
+      likeCount: r.Tweet.Likes.length,
       replayCount: r.Tweet.Replies.length,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: r.Tweet.TweetWhoLike.map((d) => d.id).includes(req.user.id)
-
+      isLiked: r.Tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req).id)
     }))
+
     repliesTweet = repliesTweet.sort((a, b) => b.createdAt - a.createdAt)
+
     res.render('userPage', {
       user,
       followShip,
@@ -188,22 +181,14 @@ let userController = {
   },
   getUserLike: async (req, res) => {
     const id = req.params.id;
-    const tweetsCount = await Tweet.count({
-      where: { UserId: id }
-    });
     let user = await User.findOne({
       where: { id },
       include: [
         Tweet,
         {
-          model: Tweet,
-          as: 'userLike',
-          order: ['createdAt', 'DESC'],
+          model: Like, order: ['createdAt', 'DESC'],
           include: [
-            User,
-            Reply,            
-            { model: User, as: 'TweetWhoLike' },
-           
+            { model: Tweet, include: [User,Like, Reply] }
           ]
         },
         { model: User, as: 'Followers' },
@@ -213,29 +198,25 @@ let userController = {
     user = user.toJSON();
     const followShip = {
       isLike: true,
-      tweetsCount,
+      tweetsCount: user.Tweets.length,
       followingsCount: user.Followings.length,
       followersCount: user.Followers.length,
-      isFollowed: user.Followers.map((d) => d.id).includes(req.user.id)
+      isFollowed: user.Followers.map((d) => d.id).includes(helper.getUser(req).id)
     };
-    let likes = user.userLike;
+    let likes = user.Likes;
     likes = likes.map((r) => ({
       ...r,
-      tweetId: r.id,
-      userId: r.User.id,
-      userName: r.User.name,
-      userAvatar: r.User.avatar,
-      userAccount: r.User.account,
-      description: r.description,
-      likeCount: r.TweetWhoLike.length,
-      replayCount: r.Replies.length,
-      // 用自己tweet 的UserId 判斷有沒有按讚過
-      isLiked: r.TweetWhoLike.map((d) => d.id).includes(req.user.id)
-
+      tweetId: r.Tweet.id,
+      userId: r.Tweet.User.id,
+      userName: r.Tweet.User.name,
+      userAvatar: r.Tweet.User.avatar,
+      userAccount: r.Tweet.User.account,
+      description: r.Tweet.description,
+      likeCount: r.Tweet.Likes.length,
+      replayCount: r.Tweet.Replies.length,
+      isLiked: r.Tweet.Likes.map((d) => d.UserId).includes(helper.getUser(req).id)
     }))
-
-    likes = likes.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
-    console.log(likes)
+    likes = likes.sort((a, b) => b.createdAt - a.createdAt)
     res.render('userPage', {
       user,
       followShip,
@@ -246,7 +227,7 @@ let userController = {
   addLike: async (req, res) => {
     try {
       const newLike = await Like.create({
-        UserId: req.user.id,
+        UserId: helper.getUser(req).id,
         TweetId: req.params.tweetId
       });
       res.redirect('back');
@@ -259,7 +240,7 @@ let userController = {
     try {
       const toRemove = await Like.findOne({
         where: {
-          UserId: req.user.id,
+          UserId: helper.getUser(req).id,
           TweetId: req.params.tweetId
         }
       });
@@ -271,8 +252,7 @@ let userController = {
   },
   editUser: async (req, res) => {
     try {
-      //check if it's the current user who intends to edit. If not, back to last page
-      if (req.user.id !== Number(req.params.id)) {
+      if (helper.getUser(req).id !== Number(req.params.id)) {
         return res.redirect('back');
       }
       const toEdit = await User.findByPk(req.params.id);
@@ -287,14 +267,13 @@ let userController = {
   },
   addFollowing: async (req, res) => {
     try {
-      //check if the user if trying to follow himself
-      if (req.user.id == Number(req.params.userId)) {
+      if (helper.getUser(req).id === Number(req.params.id)) {
         req.flash('error_messages', 'you cannot follow yourself');
         return res.redirect('back');
-      }
-      const newFollowship = await Followship.create({
-        followerId: req.user.id,
-        followingId: req.params.userId
+      } 
+      await Followship.create({
+        followerId: helper.getUser(req).id,
+        followingId: req.params.id
       });
       res.redirect('back');
     } catch (err) {
@@ -305,8 +284,8 @@ let userController = {
     try {
       const toRemove = await Followship.findOne({
         where: {
-          followerId: req.user.id,
-          followingId: req.params.userId
+          followerId: helper.getUser(req).id,
+          followingId: req.params.id
         }
       });
       toRemove.destroy();
@@ -332,7 +311,7 @@ let userController = {
     let followings = user.toJSON().Followings;
     followings = followings.map((i) => ({
       ...i,
-      isFollowed: req.user.Followings.map((d) => d.id).includes(i.id)
+      isFollowed: helper.getUser(req).Followings.map((d) => d.id).includes(i.id)
     }));
     followings = followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
@@ -358,7 +337,7 @@ let userController = {
     let followers = user.toJSON().Followers;
     followers = followers.map((i) => ({
       ...i,
-      isFollowed: req.user.Followers.map((d) => d.id).includes(i.id)
+      isFollowed: helper.getUser(req).Followers.map((d) => d.id).includes(i.id)
     }));
     followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
@@ -387,8 +366,7 @@ let userController = {
   },
   editProfile: async (req, res) => {
     try {
-      //check if it's the current user who intends to edit. If not, back to last page
-      if (req.user.id !== Number(req.params.id)) {
+      if (helper.getUser(req).id !== Number(req.params.id)) {
         return res.redirect('back');
       }
       const toEdit = await User.findByPk(req.params.id);
@@ -405,48 +383,40 @@ let userController = {
     imgur.setClientID(IMGUR_CLIENT_ID);
 
     const user = await User.findByPk(id);
-    if (files.backgroundImg) {
-      imgur.upload(files.backgroundImg[0].path, async (err, img) => {
-        user
-          .update({
-            backgroundImg: img.data.link,
-            introduction
-          })
+    if (files.cover) {
+      imgur.upload(files.cover[0].path, (err, img) => {
+        user.update({
+          cover: img.data.link,
+          introduction
+        })
           .then((user) => {
             if (files.avatar) {
               imgur.upload(files.avatar[0].path, (err, img) => {
-                user
-                  .update({
-                    avatar: img.data.link,
-                    introduction
-                  })
+                user.update({
+                  avatar: img.data.link,
+                  introduction
+                })
                   .then((user) => {
                     return res.redirect(`/users/${req.params.id}`);
                   });
               });
             } else {
-              user
-                .update({
-                  introduction
-                })
-                .then(() => res.redirect(`/users/${req.params.id}`));
+              return res.redirect(`/users/${req.params.id}`);
             }
           });
       });
     } else if (files.avatar) {
       imgur.upload(files.avatar[0].path, (err, img) => {
-        user
-          .update({
-            avatar: img.data.link,
-            introduction
-          })
+        user.update({
+          avatar: img.data.link,
+          introduction
+        })
           .then(() => res.redirect(`/users/${req.params.id}`));
       });
     } else {
-      user
-        .update({
-          introduction
-        })
+      user.update({
+        introduction
+      })
         .then(() => res.redirect(`/users/${req.params.id}`));
     }
   },
@@ -458,7 +428,7 @@ let userController = {
     topUsers = topUsers.map((user) => ({
       ...user.dataValues,
       FollowerCount: user.Followers.length,
-      isFollowed: req.user.Followings.map((d) => d.id).includes(user.id)
+      isFollowed: helper.getUser(req).Followings.map((d) => d.id).includes(user.id)
     }));
 
     topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount);
@@ -468,9 +438,9 @@ let userController = {
     return next();
   },
   addReplyLike: async (req, res) => {
-    try{
+    try {
       await RepliesLike.create({
-        UserId: req.user.id,
+        UserId: helper.getUser(req).id,
         ReplyId: req.params.ReplyId
       });
       res.redirect('back');
@@ -483,7 +453,7 @@ let userController = {
     try {
       const toRemove = await RepliesLike.findOne({
         where: {
-          UserId: req.user.id,
+          UserId: helper.getUser(req).id,
           ReplyId: req.params.ReplyId
         }
       });

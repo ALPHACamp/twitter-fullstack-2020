@@ -3,6 +3,7 @@ var request = require('supertest')
 var sinon = require('sinon')
 var should = chai.should();
 var expect = chai.expect;
+const passport = require('passport')
 
 var app = require('../../../app')
 var helpers = require('../../../_helpers');
