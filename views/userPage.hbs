@@ -53,10 +53,13 @@
 
                 <form action="/users/{{user.id}}/profile?_method=PUT" method="POST" enctype="multipart/form-data">
                   <div class="form-group mx-1">
+
+
+
                     <label for="cover" class="position-relative">
-                      <img src="{{user.cover}}" alt="" class="col p-0" height="300px" style="opacity: 0.9;">
+                      <img src="{{user.cover}}" alt="" class="col p-0" height="200px" style="opacity: 0.9;">
                       <span class="text-white position-absolute font-weight-bold"
-                        style="left:230px; bottom: 120px; cursor: pointer;">
+                        style="left:230px; bottom: 100px; cursor: pointer;">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-camera " fill="currentColor"
                           xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd"
@@ -68,8 +71,9 @@
                       </span>
                       <input type="file" class="form-control-file position-absolute" id="cover" name="cover"
                         style="width: 0px; height: 0px; z-index: -1;">
-
                     </label>
+
+                    
                   </div>
                   <div class="form-group">
                     <label for="avatar" class="position-relative">

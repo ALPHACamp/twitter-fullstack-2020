@@ -10,7 +10,7 @@ const upload = multer({ dest: 'temp/' });
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'user') {
+    if (helpers.getUser(req).role !== 'admin') {
       // if (req.user.role === 'user') {
       // res.locals.myUser = req.user
       res.locals.myUser = helpers.getUser(req);
@@ -26,7 +26,7 @@ const authenticated = (req, res, next) => {
 };
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') {
+    if (helpers.getUser(req).role !== 'user') {
       // if (req.user.role === 'Admin') {
       // res.locals.myUser = req.user
       res.locals.myUser = helpers.getUser(req);

@@ -67,6 +67,7 @@ let userController = {
               req.body.password,
               bcrypt.genSaltSync(10, null)
             ),
+            cover:'https://i.imgur.com/elgEQND.jpeg',
             avatar: 'https://i.imgur.com/73A1th4.png',
             role: 'user'
           })
@@ -342,6 +343,8 @@ let userController = {
       ...i,
       isFollowed: helper.getUser(req).Followers.map((d) => d.id).includes(i.id)
     }));
+    console.log(followers)
+    console.log(helper.getUser(req).Followers)
     followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       isUserPage: true,
