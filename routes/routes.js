@@ -105,7 +105,7 @@ router.delete(
   authenticated,
   userController.removeReplyLike
 );
-router.post('/followships/:id', authenticated, userController.addFollowing);
+router.post('/followships', authenticated, userController.addFollowing);
 router.delete(
   '/followships/:id',
   authenticated,

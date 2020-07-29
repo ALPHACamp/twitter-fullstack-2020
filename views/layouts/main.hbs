@@ -212,7 +212,8 @@
             <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
+          <form action="/followships" method="post" class="d-flex align-items-center ml-4">
+          <input type="hidden" name="id" value="{{this.id}}">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
           </form>
           {{/if}}

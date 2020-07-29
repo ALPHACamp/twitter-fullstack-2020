@@ -160,7 +160,8 @@
             </button>
           </form>
           {{else}}
-          <form action="/followships/{{user.id}}" method="post">
+          <form action="/followships" method="post">
+          <input type="hidden" name="id" value="{{user.id}}">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 追蹤
             </button>
           </form>
