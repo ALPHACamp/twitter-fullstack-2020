@@ -238,6 +238,7 @@ let userController = {
   },
   removeLike: async (req, res) => {
     try {
+      console.log(req.params.tweetId)
       const toRemove = await Like.findOne({
         where: {
           UserId: helper.getUser(req).id,

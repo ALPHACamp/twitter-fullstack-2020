@@ -90,8 +90,8 @@ router.post(
   userController.login
 );
 
-router.post('/likes/:tweetId', authenticated, userController.addLike);
-router.delete('/likes/:tweetId', authenticated, userController.removeLike);
+router.post('/tweets/:tweetId/like', authenticated, userController.addLike);
+router.delete('/tweets/:tweetId/unlike', authenticated, userController.removeLike);
 router.post(
   '/replies/likes/:ReplyId',
   authenticated,

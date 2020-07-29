@@ -62,7 +62,7 @@
 
 
             {{#if this.isLiked}}
-            <form action="/likes/{{this.id}}?_method=DELETE" method="post">
+            <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="post">
               <button type="submit" class="btn btn-link  p-0 ml-1">
                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill text-danger"
                   fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -76,7 +76,7 @@
             </form>
 
             {{else}}
-            <form action="/likes/{{this.id}}" method="post">
+            <form action="/tweets/{{this.id}}/like" method="post">
               <button type="submit" class="btn btn-link text-dark p-0 "
                 onmouseover="hoverHeartAnimation('heart{{this.id}}')"
                 onmouseleave="mouseleaveHeartAnimation('heart{{this.id}}')">
