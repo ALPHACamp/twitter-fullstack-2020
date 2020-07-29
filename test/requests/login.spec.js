@@ -10,7 +10,6 @@ var helpers = require('../../_helpers')
 const db = require('../../models')
 
 describe('# login request', () => {
-
   context('go to login page', () => {
     describe('if user want to signin', () => {
       before(async () => {
@@ -65,7 +64,6 @@ describe('# login request', () => {
   })
 
   context('go to signup page', () => {
-
     describe('if user want to signup', () => {
       before(async () => {
       })

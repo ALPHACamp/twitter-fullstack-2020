@@ -265,22 +265,27 @@ const userController = {
   },
   addFollowing: (req, res) => {
     const userId = req.params.userId
-    return Followship.create({
-      FollowerId: req.user.id,
-      FollowingId: userId
-    })
-      .then(() => {
-        User.findByPk(req.user.id).then((user) => {
-          user.increment('followingCount')
-        })
+    if (Number(userId) === req.user.id) {
+      req.flash('error_messages', '無法追蹤自己')
+      res.redirect('back')
+    } else {
+      return Followship.create({
+        FollowerId: req.user.id,
+        FollowingId: userId
       })
-      .then(() => {
-        User.findByPk(userId).then((user) => {
-          user.increment('followerCount')
+        .then(() => {
+          User.findByPk(req.user.id).then((user) => {
+            user.increment('followingCount')
+          })
         })
-      })
-      .then(() => res.redirect('back'))
-      .catch((err) => res.send(err))
+        .then(() => {
+          User.findByPk(userId).then((user) => {
+            user.increment('followerCount')
+          })
+        })
+        .then(() => res.redirect('back'))
+        .catch((err) => res.send(err))
+    }
   },
   removeFollowing: (req, res) => {
     return Followship.findOne({

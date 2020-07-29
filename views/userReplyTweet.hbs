@@ -109,11 +109,22 @@
             </a>
           </div>
           {{!-- content --}}
-          <div class="col-10 d-flex flex-column flex-nowrap">
-            <div class="user">
-              <span class="h5">{{this.Tweet.User.name}}</span><span
-                class="text-muted ml-2">{{this.Tweet.User.account}}．{{moment this.Tweet.createdAt}}</span>
+          <a href="/tweets/{{this.Tweet.id}}/replies" style="color:black;text-decoration:none">
+            <div class="col-10 d-flex flex-column flex-nowrap">
+              <div class="user">
+                <span class="h5">{{this.Tweet.User.name}}</span><span
+                  class="text-muted ml-2">{{this.Tweet.User.account}}．{{moment this.Tweet.createdAt}}</span>
+              </div>
+              <p class="content">{{this.Tweet.description}}</p>
+              <div class="d-flex flex-nowrap align-items-center">
+                <a class="text-decoration-none m-0 p-0" href="/tweets/{{this.Tweet.id}}" style="color:black">
+                  <i class="far fa-comment mr-3"><span class="mx-2">{{this.Tweet.replyCount}}</span></i>
+                </a>
+                <i class="fa fa-heart" style="color: rgb(240, 80, 80)"><span
+                    class="mx-2">{{this.Tweet.likeCount}}</span></i>
+              </div>
             </div>
+<<<<<<< HEAD
             <p class="content text-break">{{this.Tweet.description}}</p>
             <div class="d-flex flex-nowrap align-items-center">
               <a class="text-decoration-none m-0 p-0" href="/tweets/{{this.Tweet.id}}" style="color:black">
@@ -123,6 +134,9 @@
                   class="mx-2">{{this.Tweet.likeCount}}</span></i>
             </div>
           </div>
+=======
+          </a>
+>>>>>>> a55eda017d7f872cc0b5e1da463f272371a49ff9
         </div>
         {{/each}}
       </div>
