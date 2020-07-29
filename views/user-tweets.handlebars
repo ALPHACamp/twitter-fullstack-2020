@@ -50,7 +50,7 @@
         {{pageUser.name}}
       </div>
       <div class="user-account">
-        {{pageUser.account}}
+        @{{pageUser.account}}
       </div>
       <div class="user-introduction">
         <p>{{pageUser.introduction}}</p>
@@ -91,7 +91,7 @@
             <div class="tweet-item-title">
               <span class="mt-1 user-name"><a href="/users/{{../pageUser.id}}/tweets">{{../pageUser.name}}</a></span>
               <span class="user-account">
-                {{../pageUser.account}}．{{moment this.createdAt}}
+                @{{../pageUser.account}}．{{moment this.createdAt}}
               </span>
             </div>
             <div class="tweet-item-text">

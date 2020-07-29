@@ -35,12 +35,12 @@
             <div class="tweet-item-title">
               <span class="mt-1 user-name"><a href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a></span>
               <span class="user-account">
-                {{this.User.account}}．{{moment this.createdAt}}
+                @{{this.User.account}}．{{moment this.createdAt}}
               </span>
 
             </div>
             <div class="tweet-item-text">
-              <p>{{this.description}}</p>
+              {{this.description}}
             </div>
           </div>
         </div>

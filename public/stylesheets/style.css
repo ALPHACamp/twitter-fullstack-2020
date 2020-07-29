@@ -1,4 +1,4 @@
-::-webkit-scrollbar {  display: none;  }
+::-webkit-scrollbar { display: none;  }
 * {
   font-family: Noto Sans TC;
 }
@@ -25,10 +25,10 @@ a p:hover {
   font-size: 15px;
   color: #657786;
 }
-.user-account-color-span {
+/* .user-account-color-span {
   color: #FF6600;
   font-size: 13px;
-}
+} */
 .button {
   border: none;
   background-color: transparent;
@@ -72,6 +72,9 @@ a p:hover {
   width: 50px;
   height: 50px;
   border-radius: 100%;
+}
+.fa-cus-solid-like{
+  color: #E0245E;
 }
 
 /* 使用者頁面 */
@@ -274,22 +277,20 @@ a p:hover {
   margin-bottom: 50px;
 }
 .reply-tweet-text,
-.reply-comment-text {
+.user-page-reply-comment-text {
+  word-wrap: break-word;
   width: 500px;
 }
-.reply-comment-text {
+.user-page-reply-comment-text {
   margin-bottom: 15px;
 }
-.reply-tweet {
-  margin-top: 10px;
-}
-.reply-tweet .left{
+.user-page-reply-tweet .left{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.reply-tweet .right{
+.user-page-reply-tweet .right{
   min-height: 70px;
   width: auto;
 }
@@ -542,6 +543,7 @@ width: 600px;
   padding: 6px 15px 0px 0px;
   font-size: 15px;
   line-height: 18px;
+  word-wrap: break-word;
 }
 .tweet-box .tweet-item-footer {
   display: flex;
@@ -566,9 +568,6 @@ width: 600px;
 .like-link:hover {
   text-decoration: none;
   position: relative;
-  color: red;
-}
-.fa-cus-solid-like{
   color: red;
 }
 
@@ -1020,20 +1019,24 @@ width: 600px;
 .tweet-content-top .user-account {
  margin: 0;
 }
+.tweet-content-main {
+  word-wrap: break-word;
+}
 .tweet-content-footer .tweet-time{
   margin-bottom: 10px;
   color: #657786;
   font-size: 15px;
 }
 .tweet-content-footer .tweet-data{
+  justify-content: start;
   color: #657786;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   padding: 20px 3px;
   border-top: 1px solid #E6ECF0;
   border-bottom: 1px solid #E6ECF0;
 }
-.tweet-content-footer .tweet-data .number{
+.tweet-content-footer .tweet-data span{
   color: black;
 }
 .tweet-like-reply-link {
@@ -1054,7 +1057,6 @@ width: 600px;
   color: red;  
 }
 .tweet-like-reply-link .fa-cus-solid-like{
-  color: red; 
   font-size: 23px;
 }
 .reply-author-command , 
@@ -1070,13 +1072,15 @@ width: 600px;
   margin-right: 10px;
 }
 .reply-item {
+  /* display: flex; */
   border-bottom: 1px solid #E6ECF0;
 }
 .reply-item .left {
   margin-right: 10px;
 }
 .reply-comment{
-  margin-bottom: 0;
+  width: 500px;
+  word-wrap: break-word;
   margin-top: 5px;
 }
 

@@ -15,10 +15,10 @@
           </div>
         </a>
         <div class="user-list-item-name">
-          <a href="" class="user-name">
+          <a href="/users/{{this.id}}/tweets" class="user-name">
             {{this.name}}
           </a>
-          <div class="user-account">{{this.account}}</div>
+          <div class="user-account">@{{this.account}}</div>
         </div>
         {{#ifEqual this.id ../user.id}}
         {{else}}

@@ -8,7 +8,9 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
+  getIndexPage: (req, res) => res.redirect('/signin'),
   signUpPage: (req, res) => res.render('signup'),
+  signInPage: (req, res) => res.render('signin'),
   signUp: (req, res) => {
     const { account, name, email, password, passwordCheck } = req.body
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
@@ -35,9 +37,6 @@ const userController = {
         }
       })
   },
-  signInPage: (req, res) => {
-    res.render('signin')
-  },
   signIn: (req, res) => {
     req.flash('successMessages', '登入成功')
     res.redirect('/tweets')
@@ -45,11 +44,6 @@ const userController = {
   logout: (req, res) => {
     req.flash('successMessage', '登出成功！')
     req.logout()
-    res.redirect('/signin')
-  },
-  getIndexPage: (req, res) => {
-    if (req.isAuthenticated() && req.user.role === 'user') { return res.redirect('/tweets') }
-    if (req.isAuthenticated() && req.user.role === 'admin') { return res.redirect('/admin/tweets') }
     res.redirect('/signin')
   },
   editUser: (req, res) => res.render('setting'),
