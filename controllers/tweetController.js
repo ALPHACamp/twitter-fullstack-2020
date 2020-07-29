@@ -31,7 +31,6 @@ const tweetController = {
     if (req.body.description.length > 140) {
       return res.redirect('/')
     }
-    console.log(req.body.description.length)
     return Tweet.create({
       UserId: req.user.id,
       description: req.body.description,
@@ -45,7 +44,8 @@ const tweetController = {
         User,
         { model: User, as: 'LikedUsers' },
         { model: Reply, include: [User] }
-      ]
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
       res.render('tweet', {
         tweet: tweet.toJSON(),
