@@ -28,6 +28,10 @@ const tweetController = {
     if (!req.body.description) {
       return res.redirect('/')
     }
+    if (req.body.description.length > 140) {
+      return res.redirect('/')
+    }
+    console.log(req.body.description.length)
     return Tweet.create({
       UserId: req.user.id,
       description: req.body.description,
@@ -50,6 +54,9 @@ const tweetController = {
     })
   },
   postReply: (req, res) => {
+    if (req.body.comment.length > 140) {
+      return res.redirect('back')
+    }
     Reply.create({
       UserId: req.user.id,
       TweetId: req.params.id,
