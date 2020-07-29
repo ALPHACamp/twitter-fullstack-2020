@@ -91,6 +91,7 @@ module.exports = {
   },
   //  truncate: true -> id 從 1 開始
   down: (queryInterface, Sequelize) => {
+
     queryInterface.bulkDelete('Users', null, { truncate: true })
     queryInterface.bulkDelete('Tweets', null, { truncate: true })
     return queryInterface.bulkDelete('Replies', null, { truncate: true })

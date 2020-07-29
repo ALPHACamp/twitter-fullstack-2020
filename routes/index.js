@@ -3,6 +3,8 @@ const tweetController = require('../controllers/tweetController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 const passport = require('passport')
+const adminController = require('../controllers/adminController')
+const { authenticate } = require('passport')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -13,7 +15,7 @@ module.exports = (app, passport) => {
   }
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
-      if (req.user.isAdmin) { return next() }
+      if (req.user.role) { return next() }
       return res.redirect('/')
     }
     res.redirect('/signin')
@@ -31,37 +33,46 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', authenticated, tweetController.addLike)
   app.delete('/tweets/:id/like', authenticated, tweetController.removeLike)
 
-  // user profile route controller
-  app.get('/api/users/:id', authenticated, userController.getUser)
-  app.get('/api/users/:id/edit', authenticated, userController.editUser)
+  //user profile route controller
+  app.get('/users/:id/tweets', authenticated, userController.getUser)
+  app.get('/api/users/:id', authenticated, userController.editUser)
   app.post('/api/users/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postUser) //must to add middleware of upload.single('') because of enctype="multipart/form-data"
-  // user followship
+  //user followship
   app.post('/followships/:userId', authenticated, userController.addFollowing)
   app.delete('/followships/:userId', authenticated, userController.removeFollowing)
   // followship page
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
 
-  // sign in / sign out / sign up
-  app.get('/signUp', userController.signUpPage)
-  app.post('/signUp', userController.signUp)
-  app.get('/signIn', userController.signInPage)
-  app.post('/signIn', passport.authenticate('local', { failureRedirect: '/signIn', failureFlash: true }), userController.signIn)
-  app.get('/signOut', authenticated, userController.signOut)
+  // admin backstage
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.delete('/admin/tweet/:id', authenticatedAdmin, adminController.deleteTweet)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
-  app.get('/admin/signIn', (req, res) => res.render('./admin/signIn'))
-  app.post('/admin/signIn', (req, res, next) => {
+  // sign in / sign out / sign up
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signIn', failureFlash: true }), userController.signIn)
+  app.get('/signout', authenticated, userController.signOut)
+
+  app.get('/admin/signin', (req, res) => res.render('./admin/signin', {layout: 'blank'}))
+  app.post('/admin/signin', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) { return next(err) }
       if (user.role !== '1') {
-        console.log(user)
-        req.flash('error_messages', 'The account is not admin. Please sign in with users sign in page.')
-        return res.redirect('/admin/signIn')
+        req.flash('error_messages', 'User please signs in with user sign in page.')
+        return res.redirect('/admin/signin')
       }
       req.logIn(user, (err) => {
         if (err) { return next(err); }
-        return res.redirect('/admin/twitters/')
+        req.flash('success_messages', 'Signed in.')
+        return res.redirect('/admin/tweets')
       })
     })(req, res, next)
   })
+
+  // setting
+  app.get('/setting/:id', authenticated, userController.settingPage)
+  app.post('/setting/:id', authenticated, userController.setting)
 }

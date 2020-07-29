@@ -2,13 +2,15 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const Followship = db.Followship
+const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
 const imgur = require('imgur-node-api')
-const user = require('../models/user')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
   signUpPage: (req, res) => {
-    return res.render('signup')
+    return res.render('signup', { layout: 'blank' })
   },
 
   signUp: (req, res) => {
@@ -21,7 +23,6 @@ const userController = {
           req.flash('error_messages', 'Email has been used already.')
           return res.redirect('/signUp')
         } else {
-          console.log(req.body)
           User.create({
             name: req.body.name,
             email: req.body.email,
@@ -36,18 +37,74 @@ const userController = {
   },
 
   signInPage: (req, res) => {
-    return res.render('signIn')
+    return res.render('signIn', { layout: 'blank' })
   },
 
   signIn: (req, res) => {
-    req.flash('success_messages', 'Signed in.')
-    res.redirect('/')
+    User.findByPk(req.user.id).then(user => {
+      if (user.role === '1') {
+        req.flash('error_messages', 'Admin please signs in with admin sign in page.')
+        return res.redirect('back')
+      } else {
+        req.flash('success_messages', 'Signed in.')
+        res.redirect('/')
+      }
+    })
   },
 
   signOut: (req, res) => {
     req.flash('success_messages', 'Signed out.')
     req.logout()
-    res.redirect('/signIn')
+    res.redirect('/signin')
+  },
+
+  settingPage: (req, res) => {
+    User.findByPk(req.user.id).then(user => {
+      return res.render('setting', {
+        name: user.name,
+        email: user.email
+      })
+    })
+  },
+
+  setting: (req, res) => {
+
+    if (req.body.passwordCheck !== req.body.password) {
+      req.flash('error_messages', "Confirm password doesn't match.")
+      return res.redirect('back')
+
+    } else {
+      User.findByPk(req.user.id).then(user => {
+        let originalName = user.name
+        let originalEmail = user.email
+
+        User.findOne({ where: { email: req.body.email } }).then(user => {
+          if (user && user.email !== originalEmail) {
+            req.flash('error_messages', 'Email has been used already.')
+            return res.redirect('back')
+          }
+        })
+        User.findOne({ where: { name: req.body.name } }).then(user => {
+          if (user && user.name !== originalName) {
+            req.flash('error_messages', 'Name has been used already.')
+            return res.redirect('back')
+          }
+        })
+      })
+    }
+
+    return User.findByPk(req.user.id)
+      .then(user => {
+        user.update({
+          email: req.body.email,
+          name: req.body.name,
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+        })
+          .then((user) => {
+            req.flash('success_messages', 'User was successfully updated')
+            res.redirect(`/tweets`)
+          })
+      })
   },
 
   getUser: (req, res) => {
@@ -75,21 +132,36 @@ const userController = {
           }))
           // 依追蹤者人數排序清單
           users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-          //取得following/follower人數
-          let followingNum = user.toJSON().Followings.length
-          let followerNum = user.toJSON().Followers.length
-          //確認get user page是否為跟隨中使用者
-          function findIsFollowed(findUser) { return findUser.id === Number(req.params.id) }
-          let loginUserisFollowed = users.find(findIsFollowed).isFollowed
+          //將user, users加入陣列回傳
+          let results = [user, users]
+          return results
+        }).then((results) => {
+          //取得回傳陣列值
+          let user = results[0]
+          let users = results[1]
+          return Tweet.findAll({
+            order: [['createdAt', 'DESC']],
+            where: { UserId: user.toJSON().id },
+            include: [User, Reply]
+          }).then((tweets) => {
+            tweets = tweets.map(user => ({ ...user.dataValues, }))
+            //console.log('tweets===>', tweets)
+            //取得user following/follower人數
+            let followingNum = user.toJSON().Followings.length
+            let followerNum = user.toJSON().Followers.length
+            //確認get user page是否為跟隨中使用者
+            function findIsFollowed(findUser) { return findUser.id === Number(req.params.id) }
+            let loginUserisFollowed = users.find(findIsFollowed).isFollowed
 
-          return res.render('profile', { user: user.toJSON(), users: users, followingNum, followerNum, loginUserId, loginUserisFollowed })
+            return res.render('profile', { user: user.toJSON(), users: users, followingNum, followerNum, loginUserId, loginUserisFollowed, tweets: tweets })
+          })
         })
       })
   },
 
   editUser: (req, res) => {
     //only login user can enter edit profile page
-    if (req.user.id !== Number(req.params.id)) { return res.redirect(`/api/users/${req.params.id}`) }
+    if (req.user.id !== Number(req.params.id)) { return res.redirect(`/users/${req.params.id}/tweets`) }
     return User.findByPk(req.params.id)
       .then(user => {
         return res.render('profileEdit', { user: user.toJSON() })
@@ -114,7 +186,7 @@ const userController = {
               avatar: files ? img.data.link : user.avatar,
             }).then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
           })
       })
@@ -131,7 +203,7 @@ const userController = {
               cover: files ? img.data.link : user.cover,
             }).then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
           })
       })
@@ -158,7 +230,7 @@ const userController = {
                         cover: files ? img.data.link : user.cover,
                       }).then((user) => {
                         req.flash('success_messages', 'profile was successfully to update')
-                        res.redirect(`/api/users/${user.id}`)
+                        res.redirect(`/users/${user.id}/tweets`)
                       })
                     })
                 })
@@ -178,7 +250,7 @@ const userController = {
           })
             .then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/api/users/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
         })
     }
@@ -291,7 +363,6 @@ const userController = {
           })
       })
   },
-
 }
 
 module.exports = userController
