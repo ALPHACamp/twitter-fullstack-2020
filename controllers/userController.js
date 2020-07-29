@@ -41,7 +41,8 @@ const userController = {
           },
           { model: Tweet },
           { model: User, as: 'Followers' }
-        ]
+        ],
+        order: [[Tweet, 'createdAt', 'DESC']]
       })
         .then((user) => {
           const results = user.toJSON()
@@ -63,16 +64,6 @@ const userController = {
           {
             model: Tweet,
             as: 'LikedTweets',
-            include: { model: User, as: 'LikedUsers' }
-          },
-          {
-            model: Tweet,
-            as: 'LikedTweets',
-            include: Reply
-          },
-          {
-            model: Tweet,
-            as: 'LikedTweets',
             include: User
           },
           { model: Tweet },
@@ -81,12 +72,10 @@ const userController = {
       })
         .then((user) => {
           const results = user.toJSON()
-          for (let i = 0; i < results.LikedTweets.length; i++) {
-            results.LikedTweets[i].repliesCount = results.LikedTweets[i].replyCount
-            results.LikedTweets[i].likeCount = results.LikedTweets[i].Replies.length
-          }
           results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
           results.tweetCount = results.Tweets.length
+
+          results.LikedTweets.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
 
           console.log(results)
           res.render('userLikeContent', {
