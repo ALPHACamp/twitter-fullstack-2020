@@ -7,7 +7,8 @@ module.exports = {
     }
     if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'admin') {
       req.flash('errorMessage', '管理員請從後台登入')
-      return res.redirect('/signin')
+      //return res.redirect('/signin')
+      return res.redirect('/admin/tweets')
     }
     res.redirect('/signin')
   },

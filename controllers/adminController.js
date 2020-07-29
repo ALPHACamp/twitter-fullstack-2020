@@ -47,8 +47,11 @@ const adminController = {
     const id = req.params.id
     return Tweet.findById(id, { include: [Reply] })
       .then(tweet => {
-        if (tweet.Replies.length !== 0) { tweet.Replies.destroy() }
-        tweet.destroy()
+        if (tweet.Replies.length !== 0) {
+          tweet.Replies[0].destroy()
+          tweet.destroy()
+        }
+        return tweet.destroy()
       })
       .then(() => res.redirect('/admin/tweets'))
   }
