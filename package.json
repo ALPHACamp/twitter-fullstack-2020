@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development node app.js",
+    "start": "node app.js",
     "dev": "NODE_ENV=development nodemon app.js",
     "seeder": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate && npx sequelize db:seed:all",
     "test": "mocha test --exit --recursive --timeout 5000"
