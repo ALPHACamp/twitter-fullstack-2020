@@ -181,7 +181,7 @@
 
 <!-- replyTweet Modal -->
 <div class="modal fade" id="replyTweet" tabindex="-1" role="dialog" aria-labelledby="replyTweet">
-  <form action="/tweets/{{tweet.id}}/reply" method="post">
+  <form action="/tweets/{{tweet.id}}/replies" method="post">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -212,7 +212,7 @@
                 <img src="{{user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
               </div>
               <div class="col ml-3 mt-3">
-                <textarea class="w-100" name="reply" cols="25" rows="10" placeholder="推你的回覆"
+                <textarea class="w-100" name="comment" cols="25" rows="10" placeholder="推你的回覆"
                   style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent"></textarea>
                 <div class="card-text text-right">
                   <button type="submit" class="btn rounded-pill"
@@ -261,7 +261,7 @@
                 <img src="{{../user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
               </div>
               <div class="col ml-3 mt-3">
-                <textarea class="w-100" name="reply" cols="25" rows="10" placeholder="推你的回覆"
+                <textarea class="w-100" name="comment" cols="25" rows="10" placeholder="推你的回覆"
                   style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent"></textarea>
                 <div class="card-text text-right">
                   <button type="submit" class="btn rounded-pill"
@@ -313,7 +313,7 @@
                 <img src="{{../user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
               </div>
               <div class="col ml-3 mt-3">
-                <textarea class="w-100" name="reply" cols="25" rows="10" placeholder="推你的回覆"
+                <textarea class="w-100" name="comment" cols="25" rows="10" placeholder="推你的回覆"
                   style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent"></textarea>
                 <div class="card-text text-right">
                   <button type="submit" class="btn rounded-pill"

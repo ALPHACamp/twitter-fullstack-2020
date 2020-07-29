@@ -167,15 +167,15 @@ const tweetController = {
     }
   },
   postSecondReply: (req, res) => {
-    const reply = req.body.reply
-    if (!reply.length) {
+    const comment = req.body.comment
+    if (!comment.length) {
       req.flash('error_messages', '請新增內容後再推你的回覆。')
       res.redirect('back')
     } else {
       return Secondreply.create({
         UserId: getUser(req).id,
         ReplyId: Number(req.params.replyId),
-        comment: req.body.reply,
+        comment: comment,
         replyTo: req.params.replyTo
       })
         .then(() => {
