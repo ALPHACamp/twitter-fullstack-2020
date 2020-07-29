@@ -14,8 +14,7 @@ const tweetController = {
       nest: true,
       include: [
         User
-      ],
-      order: [['createdAt', 'DESC']]
+      ]
     })
       .then((tweets) => {
         Like.findAll({ where: { UserId: getUser(req).id }, raw: true, nest: true })
@@ -24,6 +23,7 @@ const tweetController = {
             tweets.forEach(tweet => {
               tweet.tweetIsLiked = likes.includes(tweet.id)
             })
+            tweets = tweets.sort((a, b) => (b.createdAt - a.createdAt))
             userController.getRecommendedUsers(req, res)
               .then((users) => {
                 res.render('home', {
