@@ -1,30 +1,41 @@
-<form class="form-signin mx-auto" action="/setting/:id" method="POST" style="width: 100%;">
-  <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Setting</h1>
+<form class="form-signin mx-auto mt-3" action="/setting/:id" method="POST" style="width: 90%;">
+  <div class="text-left mb-5">
+    <h5 class="mb-3 font-weight-bold">帳戶設定</h5>
+    
   </div>
-  <div class="form-label-group mb-2">
-    <label for="inputAccount">Account</label>
-    <input type="text" name="account" class="form-control" placeholder="Account" value="{{user.account}}" required autofocus>
+
+  <div class="form-label-group mb-2 md-form">
+    <label for="inputAccount">帳號</label>
+    <input type="text" id="inputAccount" name="account" class="form-control" required autofocus>
   </div>
-  <div class="form-label-group mb-2">
+  
+  <div class="form-label-group mb-2 md-form">
+    <label for="inputName">名稱</label>
+    <input type="text" id="inputName" name="name" class="form-control" required>
+  </div>
+  
+  <div class="form-label-group mb-2 md-form">
     <label for="inputEmail">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="Email" value="{{user.email}}" required autofocus>
+    <input type="text" id="inputEmail" name="email" class="form-control" required>
   </div>
-  <div class="form-label-group mb-2">
-    <label for="inputName">Name</label>
-    <input type="text" name="name" class="form-control" placeholder="Name" value="{{user.name}}" required autofocus>
+  
+  <div class="form-label-group mb-2 md-form">
+    <label for="inputPassword">密碼</label>
+    <input type="text" id="inputPassword" name="password" class="form-control" required>
   </div>
-  <div class="form-label-group mb-2">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
+  
+  <div class="form-label-group mb-2 md-form">
+    <label for="inputPasswordCheck">確認密碼</label>
+    <input type="text" id="inputPasswordCheck" name="passwordCheck" class="form-control" required>
   </div>
-  <div class="form-label-group mb-2">
-    <label for="inputPasswordCheck">Confirm Password</label>
-    <input type="password" name="passwordCheck" class="form-control" placeholder="Confirm Password" required>
-  </div>
+
   <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+
+  <button class="btn btn-md btn-primary btn-block mb-3" type="submit"
+    style="font-size:medium; border-radius:20px;">確認</button>
+  
   <div class="text-center mb-4">
-    <p><a href="/signin">Have an account? Sign In</a></p>
+    <p><a href="/tweets">回首頁</a></p>
   </div>
+
 </form>
