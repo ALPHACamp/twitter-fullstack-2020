@@ -1,6 +1,6 @@
 <div class="row">
   {{>leftColumnUser}}
-  <div class="col-5 m-0 p-0" style="border:1px #E6ECF0 solid;">
+  <div class="col-5 m-0 p-0 h-100" style="border:1px #E6ECF0 solid;">
     <nav class="navbar navbar-light" style="border:1px #E6ECF0 solid;">
       <svg class="mr-3" style="cursor: pointer;" onclick="history.back()" width="17" height="14" viewBox="0 0 17 14"
         fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,17 +30,17 @@
           {{moment_format tweet.createdAt}}
         </small>
       </div>
-      <div class="col-12">
-        <hr>
+      <div class="col-12 mt-2">
+        <hr class="m-0 p-0">
       </div>
-      <div class="col-12 ml-3">
+      <div class="col-12 ml-3 my-2">
         <span class="mr-2" style="font-weight: bold;">{{tweet.replyCount}}</span> <span class="text-muted">回覆</span>
         <span class="ml-2 mr-2" style="font-weight: bold;">{{tweet.likeCount}}</span><span
           class="text-muted">喜歡次數</span>
 
       </div>
       <div class="col-12">
-        <hr>
+        <hr class="m-0 p-0">
       </div>
       <!-- 按讚與回應 -->
       <div class="col-12 my-1">
@@ -69,12 +69,12 @@
         {{/if}}
       </div>
       <div class="col-12">
-        <hr class="mt-2 p-0">
+        <hr class="m-0 p-0">
       </div>
     </div>
     <!--  第一層回覆  -->
     {{#each replies}}
-    <div class="card" style="color:black;border-radius:0;border-color:transparent">
+    <div class="card mt-1" style="color:black;border-radius:0;border-color:transparent">
       <div class="row no-gutters">
         <div class="col-1 ml-2 d-flex flex-column align-items-center">
           <a href="/users/{{this.User.id}}">
@@ -169,7 +169,7 @@
         </div>
         {{/each}}
         <div class="col-12">
-          <hr>
+          <hr class="m-0 p-0">
         </div>
       </div>
     </div>
@@ -207,7 +207,7 @@
                   <span style="color: #FF6600;">{{tweet.User.account}}</span>
                 </span>
               </div>
-              <hr>
+              <hr class="m-0 p-0">
               <div class="col-1 mt-3">
                 <img src="{{user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
               </div>
