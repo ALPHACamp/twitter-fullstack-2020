@@ -3,23 +3,27 @@ const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
 const Like = db.Like
+const helpers = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res) => {
-    return Tweet.findAll({
-      include: [
-        User,
-        Reply,
-        { model: User, as: 'LikedUsers' }
-      ],
-      order: [['createdAt', 'DESC']]
-    }).then(tweets => {
-      const data = tweets.map(t => ({
-        ...t.dataValues,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(t.id)
-      }))
-      return res.render('tweets', { tweets: data, user: req.user })
-    })
+    if (!helpers.getUser(req).role) {
+      return Tweet.findAll({
+        include: [
+          User,
+          Reply,
+          { model: User, as: 'LikedUsers' }
+        ],
+        order: [['createdAt', 'DESC']]
+      }).then(tweets => {
+        const data = tweets.map(t => ({
+          ...t.dataValues,
+          isLiked: req.user.LikedTweets.map(d => d.id).includes(t.id)
+        }))
+        return res.render('tweets', { tweets: data, user: req.user })
+      })
+    }
+    return res.render('admin/tweets', { layout: 'blank', tweets: data, user: req.user })
   },
 
   postTweet: (req, res) => {

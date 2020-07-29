@@ -40,3 +40,4 @@ app.listen(port, () => console.log(`App listening on port ${port}!`))
 
 require('./routes')(app, passport)
 
+module.exports = app

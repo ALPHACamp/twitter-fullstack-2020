@@ -7,14 +7,14 @@ const Tweet = db.Tweet
 
 passport.use(new LocalStrategy(
   {
-    usernameField: 'email',
+    usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true
   },
   (req, username, password, cb) => {
-    User.findOne({ where: { email: username } }).then(user => {
-      if (!user) return cb(null, false, req.flash('error_messages', 'Username or password is incorrect.'))
-      if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', 'Username or password is incorrect.'))
+    User.findOne({ where: { account: username } }).then(user => {
+      if (!user) return cb(null, false, req.flash('error_messages', 'Account or password is incorrect.'))
+      if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', 'Account or password is incorrect.'))
       return cb(null, user)
     })
   }
