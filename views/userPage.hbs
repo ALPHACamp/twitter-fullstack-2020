@@ -103,19 +103,21 @@
             </a>
           </div>
           {{!-- content --}}
-          <div class="col-10 d-flex flex-column flex-nowrap">
-            <div class="user">
-              <span class="h5">{{../results.name}}</span><span
-                class="text-muted ml-2">{{../results.account}}．{{moment this.createdAt}}</span>
+          <a href="/tweets/{{this.id}}/replies" style="color:black;text-decoration:none">
+            <div class="col-10 d-flex flex-column flex-nowrap">
+              <div class="user">
+                <span class="h5">{{../results.name}}</span><span
+                  class="text-muted ml-2">{{../results.account}}．{{moment this.createdAt}}</span>
+              </div>
+              <p class="content">{{this.description}}</p>
+              <div class="d-flex flex-nowrap align-items-center">
+                <a class="text-decoration-none m-0 p-0" href="/tweets/{{this.id}}" style="color:black">
+                  <i class="far fa-comment mr-3"><span class="mx-2">{{this.replyCount}}</span></i>
+                </a>
+                <i class="far fa-heart"><span class="mx-2">{{this.likeCount}}</span></i>
+              </div>
             </div>
-            <p class="content">{{this.description}}</p>
-            <div class="d-flex flex-nowrap align-items-center">
-              <a class="text-decoration-none m-0 p-0" href="/tweets/{{this.id}}" style="color:black">
-                <i class="far fa-comment mr-3"><span class="mx-2">{{this.replyCount}}</span></i>
-              </a>
-              <i class="far fa-heart"><span class="mx-2">{{this.likeCount}}</span></i>
-            </div>
-          </div>
+          </a>
         </div>
         {{/each}}
       </div>
