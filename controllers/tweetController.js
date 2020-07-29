@@ -6,7 +6,6 @@ const Like = db.Like
 const Secondreply = db.Secondreply
 const userController = require('./userController')
 const { getUser } = require('../_helpers')
-const e = require('express')
 
 const tweetController = {
   getHomePage: (req, res) => {

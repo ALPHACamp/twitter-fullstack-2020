@@ -9,13 +9,16 @@
         <div class="col-1 mt-2 ml-2">
           <img src="{{user.avatar}}" class="card-img" alt="img" style="border-radius: 50%;">
         </div>
-        <div class="col" data-toggle="modal" data-target="#createTweet">
+        <div class="col">
           <div class="card-body">
-            <p class="card-text" style="color: gray;">有什麼新鮮事？
-            </p>
-            <div class="card-text text-right">
-              <button class="btn rounded-pill" style="background-color: #FF6600; color:white">推文</button>
-            </div>
+            <form action="/tweet" method="post">
+              <textarea class="w-100" name="tweet" cols="25" rows="10" placeholder="有什麼新鮮事..."
+                style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent;height:80px"></textarea>
+              <div class="card-text text-right">
+                <button class="btn rounded-pill" type="submit"
+                  style="background-color: #FF6600; color:white">推文</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
