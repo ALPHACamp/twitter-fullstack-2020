@@ -234,6 +234,8 @@ const userController = {
           )
         }))
         results.tweetCount = user.Tweets.length
+        results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        console.log(results)
         res.render('userFollowPage', { results: results, recommendFollowings: users })
       })
         .catch((err) => res.send(err))
@@ -254,7 +256,7 @@ const userController = {
             )
           }))
           results.tweetCount = user.Tweets.length
-
+          results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
           console.log(results)
           res.render('userFollowingPage', { results: results, recommendFollowings: users })
         })
