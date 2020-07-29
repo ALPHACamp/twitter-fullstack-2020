@@ -6,6 +6,7 @@ const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
+    if (req.user.role === 'admin') { return res.redirect('back') }
     Tweet.findAll({
       include: [
         User,

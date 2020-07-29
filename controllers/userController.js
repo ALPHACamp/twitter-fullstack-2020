@@ -12,11 +12,11 @@ const userController = {
   signUpPage: (req, res) => res.render('signup'),
   signInPage: (req, res) => res.render('signin'),
   signUp: (req, res) => {
-    const { account, name, email, password, passwordCheck } = req.body
+    const { account, name, email, password, checkPassword } = req.body
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     const error = []
 
-    if (password !== passwordCheck) {
+    if (password !== checkPassword) {
       error.push({ message: '密碼與確認密碼必須相同' })
       return res.render('signup', { account, name, email, errorMessage })
     }
@@ -32,7 +32,7 @@ const userController = {
           return User.create({ account, name, email, password: hashPassword })
             .then(() => {
               req.flash('successMessage')
-              res.redirect('signin')
+              res.redirect('/signin')
             })
         }
       })
