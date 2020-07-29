@@ -129,48 +129,46 @@ const userController = {
     })
   },
   getUserFollowerList: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
-    }).then((user) => {
-      const Followers = user.Followers.map((follower) => ({
-        ...follower.dataValues,
-        isFollowed: req.user.Followings.map((er) => er.id).includes(
-          follower.id
-        )
-      }))
-      const results = {
-        user: user,
-        tweetCount: user.Tweets.length,
-        Followers: Followers
-      }
-      res.json(results)
+    userController.getRecommendedUsers(req, res).then((users) => {
+      return User.findByPk(req.params.id, {
+        include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+      }).then((user) => {
+        user.update({ followerCount: user.Followers.length })
+        const results = user.toJSON()
+        results.Followers = user.Followers.map((follower) => ({
+          ...follower.dataValues,
+          isFollowed: req.user.Followings.map((er) => er.id).includes(
+            follower.id
+          )
+        }))
+        results.tweetCount = user.Tweets.length
+        res.render('userFollowPage', { results: results, recommendFollowings: users })
+      })
+        .catch((err) => res.send(err))
     })
   },
   getUserFollowingList: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+    userController.getRecommendedUsers(req, res).then((users) => {
+      return User.findByPk(req.params.id, {
+        include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+      })
+        .then((user) => {
+          user.update({ followingCount: user.Followings.length })
+          const results = user.toJSON()
+          results.Followings = user.Followings.map((following) => ({
+            ...following.dataValues,
+            isFollowed: req.user.Followings.map((er) => er.id).includes(
+              following.id
+            )
+          }))
+          results.tweetCount = user.Tweets.length
+
+          console.log(results)
+          res.render('userFollowingPage', { results: results, recommendFollowings: users })
+        })
+        .catch((err) => res.send(err))
     })
-      .then((user) => {
-        const results = {
-          user: user,
-          tweetCount: user.Tweets.length
-        }
-        res.json(results)
-      })
-      .then((user) => {
-        const results = user.toJSON()
-        results.followingCount = results.Followings.length
-        results.followerCount = results.Followers.length
-
-        for (let i = 0; i < results.Tweets.length; i++) {
-          results.Tweets[i].repliesCount = results.Tweets[i].Replies.length
-          results.Tweets[i].likeCount = results.Tweets[i].Likes.length
-        }
-        return res.json(results)
-      })
-      .catch((err) => res.send(err))
   },
-
   addFollowing: (req, res) => {
     const userId = req.params.userId
     return Followship.create({
@@ -260,7 +258,7 @@ const userController = {
             email,
             password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
             avatar: 'https://image.flaticon.com/icons/svg/2948/2948062.svg',
-            cover: 'https://unsplash.com/photos/mWRR1xj95hg',
+            cover: 'https://images.unsplash.com/photo-1570654230464-9cf6d6f0660f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
             introduction: `Hi Guys,I'm ${name},nice to meet you!`,
             role: 'user'
           })
