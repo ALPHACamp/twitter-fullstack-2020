@@ -31,6 +31,8 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
   next()
 })
+// 顯示上傳的圖片
+app.use('/upload', express.static(__dirname + '/upload'))
 
 app.listen(PORT, () => console.log(`The server is running on http://localhost:${PORT}`))
 
