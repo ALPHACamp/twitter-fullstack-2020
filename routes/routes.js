@@ -63,7 +63,7 @@ router.get(
   tweetController.getTweets
 );
 router.get(
-  '/tweets/:id/reply',
+  '/tweets/:id/replies',
   authenticated,
   userController.topUserForLayout,
   (req, res, next) => {
