@@ -7,15 +7,16 @@
   <form action="/signup" method="POST">
     <div class="sign-form">
       <label for="account">帳號 <span class="at-span">@</span></label>
-      <input type="text" id="account" name="account" value="{{account}}" style="padding-left: 35px;">
+      <input type="text" id="account" name="account" value="{{account}}" style="padding-left: 35px;"
+        required="required">
       <label for="name">名稱</label>
-      <input type="text" id="name" name="name" value="{{name}}">
+      <input type="text" id="name" name="name" value="{{name}}" required="required">
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" value="{{email}}">
+      <input type="email" id="email" name="email" value="{{email}}" required="required">
       <label for="password">密碼</label>
-      <input type="password" id="password" name="password" placeholder="請輸入 8-12 位數英數字">
+      <input type="password" id="password" name="password" placeholder="請輸入 8-12 位數英數字" required="required">
       <label for="checkPassword">再次確認密碼</label>
-      <input type="password" id="checkPassword" name="checkPassword">
+      <input type="password" id="checkPassword" name="checkPassword" required="required">
       <button class="sign-button" type="submit">註冊</button>
     </div>
   </form>
