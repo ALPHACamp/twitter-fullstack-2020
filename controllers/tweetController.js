@@ -65,7 +65,7 @@ const tweetController = {
       req.flash('error_messages', '請輸入推文內容!!!');
       return res.redirect('back');
     }
-    if (Array.from(req.body.newTweet).length > 140) {
+    if (req.body.newTweet.length > 140) {
       req.flash('error_messages', '推文內容需小於140個字!!!');
       return res.redirect('back');
     }
@@ -84,7 +84,7 @@ const tweetController = {
       return res.redirect('back');
     }
 
-    if (Array.from(req.body.newComment).length > 140) {
+    if (req.body.newComment.length > 140) {
       req.flash('error_messages', '回覆內容需小於140個字!!!');
       return res.redirect('back');
     }
