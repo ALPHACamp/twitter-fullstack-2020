@@ -23,8 +23,10 @@
 
         <nav class="mt-5">
           <div class="nav">
-            <a href="/users/{{user.id}}/followers" class="nav-link {{#if followDetail.followers}}navBar text-danger{{else}}text-secondary {{/if}}">追隨者</a>
-            <a href="/users/{{user.id}}/followings" class="nav-link {{#if followDetail.followings}}navBar text-danger{{else}}text-secondary {{/if}}">正在追隨</a>
+            <a href="/users/{{user.id}}/followers"
+              class="nav-link {{#if followDetail.followers}}navBar text-danger{{else}}text-secondary {{/if}}">追隨者</a>
+            <a href="/users/{{user.id}}/followings"
+              class="nav-link {{#if followDetail.followings}}navBar text-danger{{else}}text-secondary {{/if}}">正在追隨</a>
           </div>
         </nav>
       </div>
@@ -37,7 +39,7 @@
         <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
 
       </a>
-    
+
       <div class="d-flex flex-column col">
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-column">
@@ -49,20 +51,20 @@
               @ {{this.account}}
             </a>
           </div>
-    
-    
+
+
           {{#if this.isFollowed}}
-          <form action="/followings/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
+          <form action="/followships/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
             <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
           </form>
           {{else}}
-          <form action="/followings/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
+          <form action="/followships/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
           </form>
           {{/if}}
-    
-    
-    
+
+
+
         </div>
         <p class="mt-2">
           {{this.introduction}}
@@ -75,40 +77,40 @@
 
     {{#if followers}}
     {{#each followers}}
-      <li class="list-group-item d-flex bg-light">
-        <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+    <li class="list-group-item d-flex bg-light">
+      <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
 
-        <div class="d-flex flex-column col">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex flex-column">
-              <div class="user-name font-weight-bold">
-                {{this.name}}
-              </div>
-              {{!-- 連結到user 頁面 --}}
-              <a href="/users/{{this.id}}" class="user-account text-secondary">
-                @ {{this.account}}
-              </a>
-              </div>
-
-
-              {{#if this.isFollowed}}
-              <form action="/followings/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
-                <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
-              </form>
-              {{else}}
-              <form action="/followings/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
-                <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
-              </form>
-              {{/if}}
-
-
-
+      <div class="d-flex flex-column col">
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-column">
+            <div class="user-name font-weight-bold">
+              {{this.name}}
             </div>
-          <p class="mt-2">
-            {{this.introduction}}
-          </p>
+            {{!-- 連結到user 頁面 --}}
+            <a href="/users/{{this.id}}" class="user-account text-secondary">
+              @ {{this.account}}
+            </a>
+          </div>
+
+
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
+            <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
+          </form>
+          {{else}}
+          <form action="/followships/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
+            <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
+          </form>
+          {{/if}}
+
+
+
         </div>
-      </li>
+        <p class="mt-2">
+          {{this.introduction}}
+        </p>
+      </div>
+    </li>
     {{/each}}
     {{/if}}
 
@@ -116,7 +118,7 @@
     {{#each followings}}
     <li class="list-group-item d-flex bg-light">
       <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
-    
+
       <div class="d-flex flex-column col">
         <div class="d-flex justify-content-between">
           <div class="d-flex flex-column">
@@ -132,11 +134,11 @@
 
 
           {{#if this.isFollowed}}
-          <form action="/followings/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
+          <form action="/followships/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
             <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
           </form>
           {{else}}
-          <form action="/followings/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
+          <form action="/followships/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
           </form>
           {{/if}}
