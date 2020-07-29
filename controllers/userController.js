@@ -483,6 +483,9 @@ const userController = {
     req.logout()
     req.flash('success_messages', '已成功登出！')
     res.redirect('/signin')
+  },
+  chatroomPage: (req, res) => {
+    res.render('chatroomPage')
   }
 }
 

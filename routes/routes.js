@@ -58,6 +58,8 @@ router.get('/signup', userController.userSignupPage)
 router.get('/signout', userController.signout)
 // 取得帳號設定頁面
 router.get('/setting', authenticated, userController.accountSettingPage)
+// 公開聊天室
+router.get('/chatroom', authenticated, userController.chatroomPage)
 // 回傳登入資訊
 router.post('/signin', userController.userCheckRequired, passport.authenticate('local', { failureRedirect: '/signin' }), userController.userSigninSuccess)
 // 回傳註冊資訊
