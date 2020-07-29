@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple-Twitter</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/9a9a9cf9c6.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <main role="main">
+
+    <div class="py-5 bg-light">
+      <div class="row">
+
+        <div class="col-3">
+          <div class="vertical-nav bg-white" id="sidebar">
+            <div class="py-4 px-3 mb-2 bg-light">
+              <div class="media d-flex align-items-center">
+                <img src="https://i.imgur.com/5wAep0e.png" style="width:100px; height:100px">
+                <div class="media-body">
+                  <h4 class="m-0">Simple-Twitter</h4>
+                  <p class="font-weight-light text-muted mb-0">ALPHA Camp project</p>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 ml-5 mb-0">Navigation</p>
+
+            <ul class="nav flex-column bg-white ml-5 mb-0">
+              <li class="nav-item">
+                <a href="/" class="nav-link text-dark font-italic bg-light">
+                  <i class="fas fa-home mr-3 text-primary fa-fw"></i>
+                  Home
+                </a>
+
+              <li class="nav-item">
+                <a href="/admin/tweets" class="nav-link text-dark font-italic bg-light">
+                  <i class="fas fa-cog mr-3 text-primary fa-fw"></i>
+                  Tweets 清單
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/admin/users" class="nav-link text-dark font-italic bg-light">
+                  <i class="fas fa-cog mr-3 text-primary fa-fw"></i>
+                  使用者清單
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/setting/{{user.id}}" class="nav-link text-dark font-italic bg-light">
+                  <i class="fas fa-cog mr-3 text-primary fa-fw"></i>
+                  Setting
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="/signout" class="nav-link text-dark font-italic bg-light">
+                  <i class="fas fa-sign-out-alt mr-3 text-primary fa-fw"></i>
+                  Sign Out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-9">
+          {{#if success_messages}}
+          <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin: 30px 0 ;">
+            {{success_messages}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {{/if}}
+          {{#if error_messages}}
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin: 30px 0 ;">
+            {{error_messages}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {{/if}}
+
+          {{{body}}}
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</html>
