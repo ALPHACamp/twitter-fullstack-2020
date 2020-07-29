@@ -5,6 +5,7 @@ const Reply = db.Reply
 const Like = db.Like
 const Secondreply = db.Secondreply
 const userController = require('./userController')
+const { getUser } = require('../_helpers')
 
 const tweetController = {
   getHomePage: (req, res) => {
@@ -20,17 +21,15 @@ const tweetController = {
           order: [['createdAt', 'DESC']]
         })
           .then((tweets) => {
-            Like.findAll({ where: { UserId: req.user.id }, raw: true, nest: true })
+            Like.findAll({ where: { UserId: getUser(req).id }, raw: true, nest: true })
               .then((likes) => {
                 likes = likes.map(like => like.TweetId)
                 tweets.forEach(tweet => {
                   tweet.tweetIsLiked = likes.includes(tweet.id)
                 })
                 res.render('home', {
-                  user: req.user,
                   tweets: tweets,
-                  recommendFollowings: users,
-                  currentUserId: req.user.id
+                  recommendFollowings: users
                 })
               })
           })
@@ -38,12 +37,21 @@ const tweetController = {
       .catch(err => res.send(err))
   },
   postTweet: (req, res) => {
-    return Tweet.create({
-      UserId: req.user.id,
-      description: req.body.tweet
-    })
-      .then(() => res.redirect('/tweets'))
-      .catch((err) => res.send(err))
+    const tweet = req.body.tweet
+    if (!tweet.length) {
+      req.flash('error_messages', '請新增內容後再發推文。')
+      res.redirect('/tweets')
+    } else if (tweet.length > 140) {
+      req.flash('error_messages', '推文過長，請輸入140字內的推文。')
+      res.redirect('/tweets')
+    } else {
+      return Tweet.create({
+        UserId: getUser(req).id,
+        description: req.body.tweet
+      })
+        .then(() => res.redirect('/tweets'))
+        .catch((err) => res.send(err))
+    }
   },
   deleteTweet: (req, res) => {
     return Tweet.findByPk(req.params.tweetId)
@@ -73,7 +81,7 @@ const tweetController = {
               replies: [...new Set(tweets.map(item => { return JSON.stringify(item.Replies) }))].map(item => JSON.parse(item)),
               likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))]
             }
-            const tweetIsLiked = tweet.likedUsers.includes(req.user.id)
+            const tweetIsLiked = tweet.likedUsers.includes(getUser(req).id)
             const secondReplies = [] // 用於製作modal，與tweet.secondReplies 用途不同
 
             return Promise.all(Array.from(
@@ -93,7 +101,7 @@ const tweetController = {
                   .then((replies) => {
                     // replies 是某一個第一層回覆底下的所有回覆 root-1-many
                     replies.forEach(index => {
-                      if (index.LikedUsers.Like.UserId === req.user.id) { index.secondReplyIsLiked = true } else {
+                      if (index.LikedUsers.Like.UserId === getUser(req).id) { index.secondReplyIsLiked = true } else {
                         index.secondReplyIsLiked = false
                       }
                       delete index.LikedUsers
@@ -113,7 +121,7 @@ const tweetController = {
                     })
                       .then((likes) => {
                         likes = likes.map(like => like.UserId)
-                        const replyIsLiked = likes.includes(req.user.id)
+                        const replyIsLiked = likes.includes(getUser(req).id)
                         tweet.replies[i].replyIsLiked = replyIsLiked
                       })
                   })
@@ -124,7 +132,7 @@ const tweetController = {
                 res.render('reply', {
                   tweet, // 內含 tweet 基本資料
                   replies: tweet.replies[0].id === null ? null : tweet.replies, // 第一層回覆 ＋ 第二層回覆
-                  currentUserId: req.user.id,
+                  currentUserId: getUser(req).id,
                   tweetIsLiked, // 是否喜歡過該 tweet
                   recommendFollowings: users, // 右欄
                   secondReplies: secondReplies.flat() // 第二層回覆
@@ -138,36 +146,48 @@ const tweetController = {
   },
   postReply: (req, res) => {
     const tweetId = Number(req.params.tweetId)
-    return Reply.create({
-      UserId: req.user.id,
-      TweetId: tweetId,
-      comment: req.body.reply,
-      replyTo: req.params.replyTo
-    })
-      .then(() => {
-        return Tweet.findByPk(tweetId)
-          .then((tweet) => {
-            tweet.increment('replyCount')
-          })
-          .then(() => res.redirect('back'))
+    const reply = req.body.reply
+    if (!reply.length) {
+      req.flash('error_messages', '請新增內容後再推你的回覆。')
+      res.redirect('back')
+    } else {
+      return Reply.create({
+        UserId: getUser(req).id,
+        TweetId: tweetId,
+        comment: reply,
+        replyTo: req.params.replyTo
       })
-      .catch((err) => res.send(err))
+        .then(() => {
+          return Tweet.findByPk(tweetId)
+            .then((tweet) => {
+              tweet.increment('replyCount')
+            })
+            .then(() => res.redirect('back'))
+        })
+        .catch((err) => res.send(err))
+    }
   },
   postSecondReply: (req, res) => {
-    return Secondreply.create({
-      UserId: req.user.id,
-      ReplyId: Number(req.params.replyId),
-      comment: req.body.reply,
-      replyTo: req.params.replyTo
-    })
-      .then(() => {
-        return Tweet.findByPk(Number(req.params.tweetId))
-          .then((tweet) => {
-            tweet.increment('replyCount')
-          })
-          .then(() => res.redirect('back'))
+    const reply = req.body.reply
+    if (!reply.length) {
+      req.flash('error_messages', '請新增內容後再推你的回覆。')
+      res.redirect('back')
+    } else {
+      return Secondreply.create({
+        UserId: getUser(req).id,
+        ReplyId: Number(req.params.replyId),
+        comment: req.body.reply,
+        replyTo: req.params.replyTo
       })
-      .catch((err) => res.send(err))
+        .then(() => {
+          return Tweet.findByPk(Number(req.params.tweetId))
+            .then((tweet) => {
+              tweet.increment('replyCount')
+            })
+            .then(() => res.redirect('back'))
+        })
+        .catch((err) => res.send(err))
+    }
   },
   deleteReply: (req, res) => {
     return Reply.findByPk(req.params.replyId)
@@ -186,7 +206,7 @@ const tweetController = {
       .catch((err) => res.send(err))
   },
   addLike: (req, res) => {
-    const UserId = req.user.id
+    const UserId = getUser(req).id
     const TweetId = Number(req.params.tweetId)
     const ReplyId = Number(req.params.replyId)
     const SecondreplyId = Number(req.params.secondReplyId)
@@ -211,7 +231,7 @@ const tweetController = {
       .catch(err => res.send(err))
   },
   removeLike: (req, res) => {
-    const UserId = req.user.id
+    const UserId = getUser(req).id
     const TweetId = Number(req.params.tweetId)
     const ReplyId = Number(req.params.replyId)
     const SecondreplyId = Number(req.params.secondReplyId)
@@ -221,6 +241,7 @@ const tweetController = {
       }
     })
       .then((like) => {
+        console.log(like)
         return like.destroy()
       })
       .then(() => {

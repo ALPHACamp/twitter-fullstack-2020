@@ -338,7 +338,7 @@ const userController = {
             email,
             password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
             avatar: 'https://image.flaticon.com/icons/svg/2948/2948062.svg',
-            cover: 'https://unsplash.com/photos/mWRR1xj95hg',
+            cover: 'https://images.unsplash.com/photo-1570654230464-9cf6d6f0660f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80',
             introduction: `Hi Guys,I'm ${name},nice to meet you!`,
             role: 'user'
           })

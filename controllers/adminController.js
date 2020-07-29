@@ -51,7 +51,7 @@ const adminController = {
         users = users.map((user) => ({
           ...user.dataValues,
           tweetsCount: user.Tweets.length,
-          repliesCount: (user.Replies.length) / 1000,
+          tweetsCountByThousand: user.Tweets.length / 1000,
           likesCount: (user.LikedTweets.length) / 1000
         })).sort((a, b) => b.tweetsCount - a.tweetsCount)
         res.render('admin/adminUsersPage', { users })
