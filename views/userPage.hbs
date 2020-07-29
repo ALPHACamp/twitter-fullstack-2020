@@ -44,38 +44,60 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">編輯個人資料</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body p-0">
 
                 <form action="/users/{{user.id}}/profile?_method=PUT" method="POST" enctype="multipart/form-data">
+                  <div class="form-group mx-1">
+                    <label for="cover" class="position-relative">
+                      <img src="{{user.cover}}" alt="" class="col p-0" height="300px" style="opacity: 0.9;">
+                      <span class="text-white position-absolute font-weight-bold" style="left:230px; bottom: 120px; cursor: pointer;">
+                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-camera " fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd"
+                            d="M15 12V6a1 1 0 0 0-1-1h-1.172a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 9.173 3H6.828a1 1 0 0 0-.707.293l-.828.828A3 3 0 0 1 3.172 5H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
+                          <path fill-rule="evenodd" d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                          <path d="M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                        </svg>
+                      </span>
+                      <input type="file" class="form-control-file position-absolute" id="cover" name="cover"
+                        style="width: 0px; height: 0px; z-index: -1;">
 
-                  <br>
-                  <br>
-                  <div class="form-group">
-                    <label for="cover">Cover</label>
-                    <input type="file" class="form-control-file" id="cover" name="cover">
+                    </label>
                   </div>
                   <div class="form-group">
-                    <label for="avatar">Avatar</label>
-                    <input type="file" class="form-control-file" id="avatar" name="avatar">
+                    <label for="avatar" class="position-relative">
+                      <img src="{{user.avatar}}" alt="" width="140px" height="140px"
+                        class="rounded-circle position-absolute"
+                        style="border: 5px solid white; left: 30px; top: -100px;">
+                        <span class="text-white position-absolute font-weight-bold" style="left:85px; bottom: 10px; cursor: pointer;">
+                          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-camera " fill="currentColor"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                              d="M15 12V6a1 1 0 0 0-1-1h-1.172a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 9.173 3H6.828a1 1 0 0 0-.707.293l-.828.828A3 3 0 0 1 3.172 5H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
+                            <path fill-rule="evenodd" d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            <path d="M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                          </svg>
+                        </span>
+                      <input type="file" class="form-control-file postition-absolute" id="avatar" name="avatar"
+                        style="width: 0px; height: 0px; z-index: -1;">
+
+                    </label>
                   </div>
-                  <div class="form-group">
-                    <label for="introduction">Introduction</label>
-                    <textarea class="form-control" id="introduction" name="introduction"
-                      rows="3">{{user.introduction}}</textarea>
+                  <div class="form-group mt-4 mx-3 position-relative bg-light ">
+                    <label for="introduction" class="h5 font-weight-bold" style="left: 10px; ">自我介紹
+                    </label>
+                    <textarea class="form-control border-bottom border-secondary" id="introduction" name="introduction"
+                      rows="7">{{user.introduction}}</textarea>
                   </div>
 
 
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-danger rounded-pill m-3">儲存</button>
                 </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                {{!-- <button type="button" class="btn btn-primary">Save changes</button> --}}
               </div>
             </div>
           </div>
@@ -207,10 +229,10 @@
                     </div>
                   </div>
                   <a href="/tweets/{{this.tweetId}}" class="mt-2 text-dark" style="text-decoration: none;">
-                  <p>
-                    {{this.description}} 
-                  </p>
-                    </a>
+                    <p>
+                      {{this.description}}
+                    </p>
+                  </a>
                   <div class="d-flex justify-content-start">
                     <a href="/tweets/{{this.tweetId}}/replies" class=" mr-5 text-dark"
                       onmouseover="hoverReply('reply{{this.id}}')" onmouseleave="mouseleaveReply('reply{{this.id}}')">

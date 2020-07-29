@@ -380,6 +380,11 @@ let userController = {
     const id = req.params.id;
     const { introduction } = req.body;
     const { files } = req;
+
+    if (introduction.length > 140) {
+      req.flash('error_messages', '自我介紹不能超過140個字')
+      return res.redirect('back')
+    }
     imgur.setClientID(IMGUR_CLIENT_ID);
 
     const user = await User.findByPk(id);
