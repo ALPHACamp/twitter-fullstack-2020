@@ -87,7 +87,7 @@ describe('# tweet request', () => {
           });
       })
       it('will create current users tweet', (done) => {
-        db.Tweet.findOne({where: {userId: 1}}).then(tweet => {
+        db.Tweet.findOne({where: {UserId: 1}}).then(tweet => {
           expect(tweet).to.not.be.null
           done()
         })
