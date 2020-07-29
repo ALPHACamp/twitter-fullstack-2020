@@ -17,18 +17,17 @@
         </a>
         <div class="column ml-1">
           <span class="mt-1 mb-1 user-name"><a href="/users/{{tweet.User.id}}/tweets">{{tweet.User.name}}</a></span>
-          <span href="/users/{{tweet.User.id}}" class="user-account">{{tweet.User.account}}</span>
+          <span href="/users/{{tweet.User.id}}" class="user-account">@{{tweet.User.account}}</span>
         </div>
       </div>
-      <div class="tweet-content-main">
-        <p>{{tweet.description}}</p>
+      <div class="tweet-content-main mb-3">
+        {{tweet.description}}
       </div>
       <div class="tweet-content-footer">
         <div class="tweet-time">{{changeTime tweet.createdAt}}
         </div>
         <div class="tweet-data">
-          <span class="number">{{tweet.Replies.length}}</span> 回覆 <span
-            class="number ml-2">{{tweet.likedUsers.length}}</span>
+          <span>{{tweet.Replies.length}}</span> 回覆 <span class="ml-4">{{tweet.LikedUsers.length}}</span>
           喜歡次數
         </div>
         <div class="tweet-like-reply-link d-flex justify-content-start align-items-center">
@@ -63,7 +62,7 @@
       {{#each tweet.Replies}}
       <div class="reply-item d-flex">
         <div class="left">
-          <a href="/users/{{this.User.id}}">
+          <a href="/users/{{this.User.id}}/tweets">
             <div class="avatar"
               style="background: url({{this.User.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
             </div>
@@ -71,17 +70,19 @@
         </div>
         <div class="right">
           <div>
-            <a href="/users/{{this.User.id}}" class="user-name mt-1">
+            <a href="/users/{{this.User.id}}/tweets" class="user-name mt-1">
               {{this.User.name}}
             </a>
-            <sapn class="user-account">{{this.User.account}}．{{moment this.createdAt}}</sapn>
+            <sapn class="user-account">@{{this.User.account}}．{{moment this.createdAt}}</sapn>
           </div>
           <div>
             <span class="replyto-span-m">回覆</span> <span class="user-account-color-span"><a
-                href="/users/{{../tweet.User.id}}" style="color: #ff6600;">{{../tweet.User.account}}</a></span>
+                href="/users/{{../tweet.User.id}}/tweets" style="color: #ff6600;">@{{../tweet.User.account}}</a></span>
           </div>
-          <p class="reply-comment">{{this.comment}}
-          </p>
+          <div class="reply-comment">
+            {{this.comment}}
+          </div>
+
           <!-- 先註解掉，因為reply目前沒有like和回覆 -->
           <!--<div class="reply-like-post d-flex justify-content-start align-items-center">
             <a href="/reply"
@@ -96,10 +97,10 @@
               </button>
             </form>
           </div> -->
+
         </div>
       </div>
       {{/each}}
-      <!-- 迴圈結束 -->
 
       <!-- 推文作者回覆 先註解掉，如果要做回覆再用 -->
       <!--<div class="reply-item">

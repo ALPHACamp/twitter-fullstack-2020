@@ -50,7 +50,7 @@
         {{pageUser.name}}
       </div>
       <div class="user-account">
-        {{pageUser.account}}
+        @{{pageUser.account}}
       </div>
       <div class="user-introduction">
         <p>{{pageUser.introduction}}</p>
@@ -80,7 +80,7 @@
       <div class="tweet-box" onclick="location.href='/tweets/{{this.Tweet.id}}'">
         <div class="reply-item">
           <!--推文-->
-          <div class="reply-tweet row">
+          <div class="user-page-reply-tweet row">
             <div class="left">
               <div class="avatar"
                 style="background: url({{this.Tweet.User.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
@@ -90,7 +90,7 @@
             <div class="right">
               <div class="user-name-account">
                 <span class="user-name">{{this.Tweet.User.name}}</span><span
-                  class="user-account">{{this.Tweet.User.account}}．{{moment this.Tweet.createdAt}}</span>
+                  class="user-account">@{{this.Tweet.User.account}}．{{moment this.Tweet.createdAt}}</span>
               </div>
               <div class="reply-tweet-text">
                 {{this.Tweet.description}}
@@ -98,7 +98,7 @@
             </div>
           </div>
           <!--回覆-->
-          <div class="reply-comment row">
+          <div class="user-page-reply-comment row">
             <div class="left">
               <div class="avatar"
                 style="background: url({{../pageUser.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
@@ -107,9 +107,9 @@
             <div class="right">
               <div class="user-name-account">
                 <span class="user-name">{{../pageUser.name}}</span><span
-                  class="user-account">{{../pageUser.account}}．{{moment this.createdAt}}</span>
+                  class="user-account">@{{../pageUser.account}}．{{moment this.createdAt}}</span>
               </div>
-              <div class="reply-comment-text">
+              <div class="user-page-reply-comment-text">
                 {{this.comment}}
               </div>
             </div>
