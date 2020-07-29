@@ -98,6 +98,29 @@ const userController = {
         .catch((err) => res.send(err))
     })
   },
+  getUserRepliesTweets: (req, res) => {
+    userController.getRecommendedUsers(req, res).then((users) => {
+      return User.findByPk(req.params.id, {
+        include: [
+          {
+            model: Reply,
+            include: { model: Tweet, include: User }
+          },
+          { model: Tweet },
+          { model: User, as: 'Followers' }
+        ],
+        order: [[Reply, 'createdAt', 'DESC']]
+      })
+        .then((user) => {
+          const results = user
+          results.tweetCount = results.Tweets.length
+          results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
+          console.log(results.toJSON())
+          return res.render('userReplyTweet', { results: results.toJSON(), recommendFollowings: users, currentId: req._passport.session.user })
+        })
+        .catch((err) => res.send(err))
+    })
+  },
   editUser: (req, res) => {
     if (Number(req.params.id) === Number(req._passport.session.user)) {
       return User.findByPk(req.params.id).then((user) => {

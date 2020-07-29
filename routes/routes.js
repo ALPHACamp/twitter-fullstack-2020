@@ -84,7 +84,9 @@ router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.admi
 router.get('/users/:id', authenticated, userController.getUser)
 // 取得個人like內容頁面
 router.get('/users/:id/like', authenticated, userController.getUserLikeContent)
-// 編輯個人資料業面
+// 取得個人回覆過的推文頁面
+router.get('/users/:id/repliesTweet', authenticated, userController.getUserRepliesTweets)
+// 編輯個人資料頁面
 router.get('/users/:id/edit', authenticated, userController.editUser)
 // 編輯個人資料
 router.put('/users/:id/edit', authenticated, upload.fields([
