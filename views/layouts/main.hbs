@@ -7,7 +7,25 @@
   <title>Simple Twitter</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
   <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+  <script>
+    function hoverBig(id) {
+      const targetElement = document.getElementById(id)
+      targetElement.style.transition = 'transform';
+      targetElement.style.transform = 'scale(1.3)';
+      targetElement.style.transitionDuration = "0.7s";
+
+    }
+    function hoverSmall(id) {
+      const targetElement = document.getElementById(id)
+      targetElement.style.transition = 'transform';
+      targetElement.style.transform = 'scale(1)';
+      targetElement.style.transitionDuration = "0.7s";
+    }
+  </script>
+
 </head>
 
 <body>
@@ -27,7 +45,7 @@
     style="min-width: 760px; height: 900px;">
 
     {{#if myUser}}
-    <div
+    <div id="leftBar"
       class="left-sec col-lg-3 border-right border-black-50 d-flex flex-row flex-lg-column justify-content-lg-between align-items-lg-center">
       <div class="d-flex flex-row flex-lg-column">
         <div class="logo mt-3 d-flex flex-column flex-lg-row justify-content-center justify-content-lg-start 
@@ -38,9 +56,10 @@
         </div>
         <ul class="nav flex-row flex-lg-column justify-content-around align-items-lg-start">
           {{#whoAreYou myUser.role}}
-          <li class="nav-item d-flex mt-4 {{#if isHomePage}} text-danger {{else}} text-dark {{/if}}">
-            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house-fill mt-2" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
+          <li class="nav-item d-flex mt-4 {{#if isHomePage}} text-danger {{else}} text-dark {{/if}}"
+            onmouseover="hoverBig('homeSvg')" onmouseout="hoverSmall('homeSvg')">
+            <svg id="homeSvg" width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house-fill mt-2"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M8 3.293l6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
               <path fill-rule="evenodd"
@@ -48,18 +67,20 @@
             </svg>
             <a href="/tweets" class="nav-link h4 {{#if isHomePage}} text-danger {{else}} text-dark {{/if}}">首頁</a>
           </li>
-          <li class="nav-item d-flex mt-4 {{#if isUserPage}} text-danger {{else}} text-dark {{/if}}">
-            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-fill mt-2" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
+          <li class="nav-item d-flex mt-4 {{#if isUserPage}} text-danger {{else}} text-dark {{/if}}"
+            onmouseover="hoverBig('personSvg')" onmouseout="hoverSmall('personSvg')">
+            <svg id="personSvg" width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-person-fill mt-2"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
             </svg>
             <a href="/users/{{myUser.id}}"
               class="nav-link h4 {{#if isUserPage}} text-danger {{else}} text-dark {{/if}}">個人資料</a>
           </li>
-          <li class="nav-item d-flex mt-4 {{#if isEditPage}} text-danger{{else}} text-dark {{/if}}">
-            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-gear mt-2" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
+          <li class="nav-item d-flex mt-4 {{#if isEditPage}} text-danger{{else}} text-dark {{/if}}"
+            onmouseover="hoverBig('settingSvg')" onmouseout="hoverSmall('settingSvg')">
+            <svg id="settingSvg" width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-gear mt-2"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M8.837 1.626c-.246-.835-1.428-.835-1.674 0l-.094.319A1.873 1.873 0 0 1 4.377 3.06l-.292-.16c-.764-.415-1.6.42-1.184 1.185l.159.292a1.873 1.873 0 0 1-1.115 2.692l-.319.094c-.835.246-.835 1.428 0 1.674l.319.094a1.873 1.873 0 0 1 1.115 2.693l-.16.291c-.415.764.42 1.6 1.185 1.184l.292-.159a1.873 1.873 0 0 1 2.692 1.116l.094.318c.246.835 1.428.835 1.674 0l.094-.319a1.873 1.873 0 0 1 2.693-1.115l.291.16c.764.415 1.6-.42 1.184-1.185l-.159-.291a1.873 1.873 0 0 1 1.116-2.693l.318-.094c.835-.246.835-1.428 0-1.674l-.319-.094a1.873 1.873 0 0 1-1.115-2.692l.16-.292c.415-.764-.42-1.6-1.185-1.184l-.291.159A1.873 1.873 0 0 1 8.93 1.945l-.094-.319zm-2.633-.283c.527-1.79 3.065-1.79 3.592 0l.094.319a.873.873 0 0 0 1.255.52l.292-.16c1.64-.892 3.434.901 2.54 2.541l-.159.292a.873.873 0 0 0 .52 1.255l.319.094c1.79.527 1.79 3.065 0 3.592l-.319.094a.873.873 0 0 0-.52 1.255l.16.292c.893 1.64-.902 3.434-2.541 2.54l-.292-.159a.873.873 0 0 0-1.255.52l-.094.319c-.527 1.79-3.065 1.79-3.592 0l-.094-.319a.873.873 0 0 0-1.255-.52l-.292.16c-1.64.893-3.433-.902-2.54-2.541l.159-.292a.873.873 0 0 0-.52-1.255l-.319-.094c-1.79-.527-1.79-3.065 0-3.592l.319-.094a.873.873 0 0 0 .52-1.255l-.16-.292c-.892-1.64.902-3.433 2.541-2.54l.292.159a.873.873 0 0 0 1.255-.52l.094-.319z" />
               <path fill-rule="evenodd"
@@ -133,10 +154,10 @@
         </ul>
       </div>
 
-      <a href="/logout" class="mt-2 mb-lg-4 text-dark h5" style="min-width: 80px;">
+      <a id="logoutElement" href="/logout" class="mt-2 mb-lg-4 text-dark h5" style="min-width: 80px;">
         <span>
-          <svg width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-left" fill="currentColor"
-            xmlns="http://www.w3.org/2000/svg">
+          <svg id="logoutSvg" width="1.1em" height="1.1em" viewBox="0 0 16 16" class="bi bi-box-arrow-in-left"
+            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd"
               d="M7.854 11.354a.5.5 0 0 0 0-.708L5.207 8l2.647-2.646a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708 0z" />
             <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0 0 1h9A.5.5 0 0 0 15 8z" />
@@ -151,12 +172,12 @@
 
     {{/if}}
 
-    <div class="main-sec col overflow-auto p-0" style="min-width: 470px;">
+    <div id="middleCol" class="main-sec col overflow-auto p-0" style="min-width: 470px;">
       {{{body}}}
     </div>
 
     {{#if topUsers}}
-    <div class="right-sec mt-4 col-lg-3 mb-md-3 border-left border-black-50" style="min-width: 350px;">
+    <div id="topUsersDiv" class="right-sec mt-4 col-lg-3 mb-md-3 border-left border-black-50" style="min-width: 350px;">
       <ul
         class="list-group list-group-flush bg-light rounded-lg shadow d-inline-flex flex-row  flex-lg-column overflow-auto"
         style="max-width: 800px;">
@@ -230,6 +251,44 @@
     function showWordCountModal() {
       wordCountModalElement.innerHTML = newTweetTextareaModalElement.value.length
     }
+
+
+
+    function hoverHeartAnimation(id) {
+      const heartElement = document.getElementById(id)
+      heartElement.classList.add("animate__heartBeat", "animate__infinite")
+      heartElement.style.animationIterationCount = "infinite";
+
+    }
+    function mouseleaveHeartAnimation(id) {
+      const heartElement = document.getElementById(id)
+      heartElement.classList.remove("animate__heartBeat", "animate__infinite")
+
+    }
+
+    function hoverReply(id) {
+      const replyElement = document.getElementById(id)
+      replyElement.classList.add("animate__animated", "animate__pulse")
+    }
+    function mouseleaveReply(id) {
+      const replyElement = document.getElementById(id)
+      replyElement.classList.remove("animate__animated", "animate__pulse")
+    }
+
+
+    const logoutElement = document.getElementById('logoutElement')
+    logoutElement.addEventListener('mouseover', () => {
+      document.getElementById('logoutSvg').classList.add("animate__animated", "animate__lightSpeedOutLeft")
+    })
+    logoutElement.addEventListener('mouseleave', () => {
+      document.getElementById('logoutSvg').classList.remove("animate__animated", "animate__lightSpeedOutLeft")
+    })
+
+    document.getElementById('leftBar').classList.add("animate__animated", "animate__fadeIn")
+    document.getElementById('middleCol').classList.add("animate__animated", "animate__fadeIn")
+    document.getElementById('topUsersDiv').classList.add("animate__animated", "animate__fadeInRight")
+
+
   </script>
 
 </body>
