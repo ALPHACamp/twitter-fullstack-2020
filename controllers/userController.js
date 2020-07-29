@@ -15,10 +15,13 @@ const userController = {
     const { account, name, email, password, checkPassword } = req.body
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     const error = []
-
+    if (!account || !name || !email || !password || !checkPassword) {
+      error.push({ message: '所有欄位都是必填' })
+      return res.render('signup', { account, name, email, error })
+    }
     if (password !== checkPassword) {
       error.push({ message: '密碼與確認密碼必須相同' })
-      return res.render('signup', { account, name, email, errorMessage })
+      return res.render('signup', { account, name, email, error })
     }
 
     User.findOne({ where: { $or: [{ email }, { account }] }, raw: true })
