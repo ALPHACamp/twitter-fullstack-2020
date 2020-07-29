@@ -7,7 +7,7 @@ module.exports = {
     queryInterface.bulkInsert('Users', [{
       email: 'root@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      role: true,
+      role: 'admin',
       account: '@root',
       name: 'root',
       avatar: faker.image.avatar(),
@@ -18,7 +18,6 @@ module.exports = {
     }, {
       email: 'user1@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      role: false,
       account: '@user1',
       name: 'user1',
       avatar: faker.image.avatar(),
@@ -29,7 +28,6 @@ module.exports = {
     }, {
       email: 'user2@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      role: false,
       account: '@user2',
       name: 'user2',
       avatar: faker.image.avatar(),
@@ -40,7 +38,6 @@ module.exports = {
     }, {
       email: 'user3@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      role: false,
       account: '@user3',
       name: 'user3',
       avatar: faker.image.avatar(),
@@ -51,7 +48,6 @@ module.exports = {
     }, {
       email: 'user4@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      role: false,
       account: '@user4',
       name: 'user4',
       avatar: faker.image.avatar(),
@@ -62,7 +58,6 @@ module.exports = {
     }, {
       email: 'user5@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      role: false,
       account: '@user5',
       name: 'user5',
       avatar: faker.image.avatar(),

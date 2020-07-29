@@ -2,9 +2,21 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
-const Follow = db.Follow
+const Followship = db.Followship
+const Like = db.Like
 
 const adminController = {
+  adminSettingPage: (req, res) => {
+    User.findByPk(req.user.id).then(user => {
+      return res.render('setting', {
+        layout: 'admin',
+        account: user.account,
+        name: user.name,
+        email: user.email
+      })
+    })
+  },
+
   getTweets: (req, res) => {
     return Tweet.findAll({
       include: [Reply, User],
@@ -29,9 +41,15 @@ const adminController = {
 
   getUsers: (req, res) => {
     return User.findAll({
-      // include: [Reply, Follow],
-      order: [['id', 'ASC']]
+      include: [
+        Reply, 
+        Tweet,
+        Like,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
     }).then(users => {
+      users = users.sort((a, b) => b.Tweets.length - a.Tweets.length)
       return res.render('./admin/users', { layout: 'admin', users: users })
     })
   }

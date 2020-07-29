@@ -16,20 +16,21 @@ const userController = {
   signUp: (req, res) => {
     if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', "Confirm password doesn't match.")
-      return res.redirect('/signUp')
+      return res.redirect('back')
     } else {
-      User.findOne({ where: { email: req.body.email } }).then(user => {
+      User.findOne({ where: { account: req.body.account } }).then(user => {
         if (user) {
-          req.flash('error_messages', 'Email has been used already.')
-          return res.redirect('/signUp')
+          req.flash('error_messages', 'Account has been used already.')
+          return res.redirect('back')
         } else {
           User.create({
+            account: req.body.account,
             name: req.body.name,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
           }).then(user => {
             req.flash('success_messages', 'Congrat! You have signed up. Please sign in here.')
-            return res.redirect('/signIn')
+            return res.redirect('/signin')
           })
         }
       })
@@ -37,17 +38,17 @@ const userController = {
   },
 
   signInPage: (req, res) => {
-    return res.render('signIn', { layout: 'blank' })
+    return res.render('signin', { layout: 'blank' })
   },
 
   signIn: (req, res) => {
     User.findByPk(req.user.id).then(user => {
-      if (user.role === '1') {
+      if (user.role === 'admin') {
         req.flash('error_messages', 'Admin please signs in with admin sign in page.')
         return res.redirect('back')
       } else {
         req.flash('success_messages', 'Signed in.')
-        res.redirect('/')
+        res.redirect('/tweets')
       }
     })
   },
@@ -61,6 +62,7 @@ const userController = {
   settingPage: (req, res) => {
     User.findByPk(req.user.id).then(user => {
       return res.render('setting', {
+        account: user.account,
         name: user.name,
         email: user.email
       })
