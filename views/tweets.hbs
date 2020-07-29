@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col mt-2 border-right">
+<div class="row border-right">
+  <div class="col mt-2">
     <div class="row row-cols-1">
       <div class="col">
         <a href="/tweets">首頁</a>
@@ -7,7 +7,7 @@
       <form action="/tweets" method="POST">
         <div class="col mt-2 border-top">
           <div class="input-group mb-3">
-            <a href="/api/users/{{user.id}}">
+            <a href="/users/{{user.id}}/tweets">
               <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{user.avatar}}" />
             </a>
             <input style="display: inline;border-radius: 100px;" type="text" class="form-control mt-3 border-0" placeholder="有甚麼新鮮事" name="description" id="description" value="{{tweets.description}}">
@@ -24,7 +24,7 @@
         {{#each tweets}}
           <div class="border-top">
             <h6 class="card-title">
-              <a href="/api/users/{{this.UserId}}">
+              <a href="/users/{{this.UserId}}/tweets">
                 <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{this.User.avatar}}" />
                 {{this.User.name}}
               </a> 

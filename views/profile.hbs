@@ -1,89 +1,100 @@
-<h5 class="ml-2">{{user.name}}</h5>
-<small class="ml-2">{{tweets.length}} 推文</small>
-<br />
-<div class="row">
-  <div class="col-md-8">
-    <div class="" style="">
-      <img class="rounded-top" src="{{user.cover}}" style="width:100%; height: 200px;">
-    </div>
-    <div class="row">
-      <div class="col-md-8 mb-4 ">
-        <img class="rounded-circle" src="{{user.avatar}}" style="width:50%; margin-top:-60px;">
-      </div>
-      <div class="col-md-4 d-flex align-items-center">
-        {{#ifCond user.id loginUserId}}
-        <a class="btn btn-primary" href="/api/users/{{user.id}}">
-          編輯個人資料
+<div class="row border-right">
+  <div class="col mt-2">
+    <div class="row row-cols-1">
+      <div class="col">
+        <a href="">
+          <h5 class="ml-2"><i class="fas fa-long-arrow-alt-left"></i>
         </a>
-        {{/ifCond}}
-        {{!-- followship button --}}
-        {{#ifNotCond loginUserId user.id}}
-        {{#if loginUserisFollowed }}
-        <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-            type="submit" class="btn btn-primary" style="font-size:1px; margin:0px; padding:1px;">正在跟隨</button>
-        </form>
-        {{else}}
-        <form action="/followships/{{user.id}}" method="POST" style="display: contents;"><button type="submit"
-            class="btn btn-outline-primary" style="font-size:1px; margin:0px; padding:1px;">跟隨</button></form>
-        {{/if}}
-        {{/ifNotCond}}
+        &nbsp;{{user.name}}</h5>
+        <small class="ml-2">&emsp;&emsp;{{tweets.length}} 推文</small>
       </div>
-    </div>
-    <h5>{{user.name}}</h5>
-    <small>{{user.email}}</small>
-    <p>{{user.introduction}}</p>
-    <p>{{followingNum}}個跟隨中 {{followerNum}}位跟隨者</p>
-
-    <ul class="nav nav-tabs bt-4">
-      <li class="nav-item">
-        <a class="nav-link active" href="/">推文</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">推文與回覆</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/">喜歡的內容</a>
-      </li>
-    </ul>
-    <br />
-    <br />
-    <div class="row">
-      <ul class="list-group">
-        {{#each tweets}}
-        <li class="list-group-item">
-          <div class="border-top">
-            <h6 class="card-title">
-              <a href="/users/{{this.UserId}}">
-                <img class="mt-2"
-                  style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;"
-                  src="{{this.User.avatar}}" />
-                {{this.User.name}}
-              </a>
-              <small class="text-muted">{{this.User.email}}。{{moment this.createdAt}}</small>
-            </h6>
+  
+      <br />
+      <div class="" style="">
+        <img class="rounded-top" src="{{user.cover}}" style="width:100%; height: 200px;">
+      </div>
+      <div class="col">
+        <div class="row">
+          <div class="col ">
+            <img class="rounded-circle" src="{{user.avatar}}" style="width:50%; margin-top:-60px;">
           </div>
-          <div class="text-break" style="display: inline;">
-            <a href="/tweets/{{this.id}}">
-              <p class="card-text">{{this.description}}</p>
+          <div class="col d-flex align-items-center">
+            {{#ifCond user.id loginUserId}}
+            <a class="btn btn-primary" href="/api/users/{{user.id}}">
+              編輯個人資料
             </a>
-            <p class="card-text">
-            <div class="row justify-content-around">
-              <div class="col">
-                <small class="text-muted">
-                  <i class="far fa-comment"> {{this.Replies.length}}</i>
-                </small>
-              </div>
-              <div class="col">
-                <small class="text-muted">
-                  <i class="far fa-heart"> {{this.likedUsers.length}}</i>
-                </small>
-              </div>
-            </div>
-            </p>
+            {{/ifCond}}
+            {{!-- followship button --}}
+            {{#ifNotCond loginUserId user.id}}
+            {{#if loginUserisFollowed }}
+            <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+                type="submit" class="btn btn-primary" style="font-size:1px; margin:0px; padding:1px;">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships/{{user.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn btn-outline-primary" style="font-size:1px; margin:0px; padding:1px;">跟隨</button></form>
+            {{/if}}
+            {{/ifNotCond}}
           </div>
-        </li>
-        {{/each}}
-      </ul>
+        </div>
+        <h5>{{user.name}}</h5>
+        <small>{{user.email}}</small>
+        <p>{{user.introduction}}</p>
+        <p>{{followingNum}}個跟隨中 {{followerNum}}位跟隨者</p>
+      </div>
+      <div class="col">  
+        <ul class="nav nav-tabs bt-4">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">推文</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">推文與回覆</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/">喜歡的內容</a>
+          </li>
+        </ul>
+        <br />
+        <br />
+        <div class="row">
+          <ul class="list-group">
+            {{#each tweets}}
+            <li class="list-group-item">
+              <div class="border-top">
+                <h6 class="card-title">
+                  <a href="/users/{{this.UserId}}/tweets">
+                    <img class="mt-2"
+                      style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;"
+                      src="{{this.User.avatar}}" />
+                    {{this.User.name}}
+                  </a>
+                  <small class="text-muted">{{this.User.email}}。{{moment this.createdAt}}</small>
+                </h6>
+              </div>
+              <div class="text-break" style="display: inline;">
+                <a href="/tweets/{{this.id}}">
+                  <p class="card-text">{{this.description}}</p>
+                </a>
+                <p class="card-text">
+                <div class="row justify-content-around">
+                  <div class="col">
+                    <small class="text-muted">
+                      <i class="far fa-comment"> {{this.Replies.length}}</i>
+                    </small>
+                  </div>
+                  <div class="col">
+                    <small class="text-muted">
+                      <i class="far fa-heart"> {{this.likedUsers.length}}</i>
+                    </small>
+                  </div>
+                </div>
+                </p>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

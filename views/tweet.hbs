@@ -6,7 +6,7 @@
       </div>
       <div class="col mt-3 border-top text-break">
         <h6 class="card-title">
-          <a href="/api/users/{{user.id}}">
+          <a href="/users/{{user.id}}/tweets">
             <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{tweet.User.avatar}}" />
             {{tweet.User.name}}
           </a>
@@ -76,7 +76,7 @@
         {{#each tweet.Replies}}
           <div class="col border-top">
             <h6>
-              <a href="/api/users/{{this.UserId}}">
+              <a href="/users/{{this.UserId}}/tweets">
                 <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{this.User.avatar}}" />
                 {{this.User.name}}
               </a>
