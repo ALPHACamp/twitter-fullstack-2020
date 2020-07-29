@@ -1,147 +1,108 @@
-<div class="container">
-  <div class="row">
-    {{!-- <div class="col-3 mt-2 border-right ">
-      <img style="width: 50px;height: 50PX;left: 103px;top: 4px;" src="https://i.imgur.com/5wAep0e.png" alt="">
-        <nav class="nav flex-column">
-          <div class="row row-cols-1">
-            <div class="col mt-4">
-              <i class="fas fa-home fa-2x"></i>
-              <a class="nav-link active" style="display: inline;" href="/tweets">
-                <h4 style="display: inline;">首頁</h4>
-              </a>
-            </div>
-            <div class="col mt-4">
-              <i class="fas fa-user fa-2x"></i>
-              <a class="nav-link" style="display: inline;" href="/users/{{user.id}}">
-                <h4 style="display: inline;">個人資料</h4>
-              </a>
-            </div>
-            <div class="col mt-4">
-              <i class="fas fa-cog fa-2x"></i>
-              <a class="nav-link" style="display: inline;" href="#">
-                <h4 style="display: inline;">設定</h4>
-              </a>
-            </div>
-            <div class="col mt-4">
-              <a class="nav-link" href="#">
-                <button style="border-radius: 100px;" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">推文</button>
-              </a>
-            </div>
-            <div class="col mt-4">
-              <i class="fas fa-sign-out-alt fa-2x"></i>
-              <a class="nav-link" style="display: inline;" href="#">
-                <h4 style="display: inline;">登出</h4>
-              </a>
-            </div>
-          </div>
-        </nav>
-    </div> --}}
-    <div class="col-6 mt-2 border-right">
-      <div class="row row-cols-1">
-        <div class="col">
-          <a href="/tweets"><i class="fas fa-long-arrow-alt-left"></i>&nbsp;&nbsp;推文</a>
-        </div>
-        <div class="col mt-3 border-top text-break">
-          <h6 class="card-title">
-            <a href="/api/users/{{user.id}}">
-              <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{tweet.User.avatar}}" />
-              {{tweet.User.name}}
-            </a>
-            <small class="text-muted">{{tweet.User.account}}</small>
-          </h6>
-          <P>{{tweet.description}}</P>
-          {{moment tweet.createdAt}}
-        </div>
-        <div class="mt-3 border-top row justify-content-around">
-          <div class="col">
-            <span >{{tweet.Replies.length}} 回覆</span>
-          </div>
-          <div class="col">
-            <span>{{tweet.LikedUsers.length}} 喜歡次數</span>
-          </div>
-        </div>
-        <div class="mt-3 border-top row justify-content-around">
-          <div class="col">
-            <button style="border-radius: 100px" type="submit" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
-              <i class="far fa-comment fa-2x"></i>
-            </button>
-          </div>
-          <div class="col">
-            {{#if isLiked}}
-              <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
-                <button style="border-radius: 100px" type="submit" class="btn btn-light" >
-                  <i class="fas fa-heart fa-2x" style="color: red;"></i> 
-                </button>
-              </form>
-            {{else}}
-              <form action="/tweets/{{tweet.id}}/like" method="POST">
-                <button style="border-radius: 100px" type="submit" class="btn btn-light" >
-                  <i class="far fa-heart fa-2x"></i>
-                </button>
-              </form>
-            {{/if}}
-          </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <form action="/tweets/{{tweet.id}}/replies" method="POST">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">回覆</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <input type="hidden" name="TweetId" value="{{tweet.id}}" />
-                  <img style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{user.avatar}}" />
-                  <input class="form-control border-0" type="text" name="comment" id="comment" placeholder="回覆" style="width: 400px;display: inline;border-radius: 100px;"></input>
-                </div>
-                <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary" style="border-radius: 100px">回覆</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
+<div class="row">
+  <div class="col border-right">
+    <div class="row row-cols-1">
+      <div class="col-6">
+        <a href="/tweets"><i class="fas fa-long-arrow-alt-left"></i>&nbsp;&nbsp;推文</a>
+      </div>
+      <div class="col mt-3 border-top text-break">
+        <h6 class="card-title">
+          <a href="/users/{{user.id}}/tweets">
+            <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{tweet.User.avatar}}" />
+            {{tweet.User.name}}
+          </a>
+          <small class="text-muted">{{tweet.User.account}}</small>
+        </h6>
+        <P>{{tweet.description}}</P>
+        {{moment tweet.createdAt}}
+      </div>
 
-        <div class="mt-3 border-top">
-          {{#each tweet.Replies}}
-            <div class="col border-top">
-              <h6>
-                <a href="/api/users/{{this.UserId}}">
-                  <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{this.User.avatar}}" />
-                  {{this.User.name}}
-                </a>
-                <small class="text-muted">{{this.User.account}} ◆ {{moment this.createdAt}}</small>
-              </h6>
-              <span class="badge badge-primary" style="border-radius: 100px">
-                <small>回覆 {{../tweet.User.account}}</small>
-              </span>
-              <p class="card-text">{{this.comment}}</p>
-              <p class="card-text">
-              <div class="row justify-content-around">
-                <div class="col">
-                  <small class="text-muted">
-                    <i class="far fa-comment"> {{this.Replies.length}}</i>
-                  </small>
-                </div>
-                <div class="col">
-                  <small class="text-muted">
-                    <i class="far fa-heart"> {{this.LikedUsers.length}}</i>
-                  </small>
-                </div>
-              </div>
-              </p>
-            </div>
-          {{/each}}
+      <div class="mx-1 mt-3 border-top row justify-content-around">
+        <div class="col">
+          <span >{{tweet.Replies.length}} 回覆</span>
+        </div>
+        <div class="col">
+          <span>{{tweet.LikedUsers.length}} 喜歡次數</span>
         </div>
       </div>
-    </div>
+      <div class="mx-1 mt-3 border-top row justify-content-around">
+        <div class="col">
+          <button style="border-radius: 100px" type="submit" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
+            <i class="far fa-comment fa-2x"></i>
+          </button>
+        </div>
+        
+        <div class="col">
+          {{#if isLiked}}
+            <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
+              <button style="border-radius: 100px" type="submit" class="btn btn-light" >
+                <i class="fas fa-heart fa-2x" style="color: red;"></i> 
+              </button>
+            </form>
+          {{else}}
+            <form action="/tweets/{{tweet.id}}/like" method="POST">
+              <button style="border-radius: 100px" type="submit" class="btn btn-light" >
+                <i class="far fa-heart fa-2x"></i>
+              </button>
+            </form>
+          {{/if}}
+        </div>
+      </div>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">回覆</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <input type="hidden" name="TweetId" value="{{tweet.id}}" />
+                <img style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{user.avatar}}" />
+                <input class="form-control border-0" type="text" name="comment" id="comment" placeholder="回覆" style="width: 400px;display: inline;border-radius: 100px;"></input>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" style="border-radius: 100px">回覆</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
 
-    <div class="col-3">
-      跟隨誰
+      <div class="mt-3 border-top">
+        {{#each tweet.Replies}}
+          <div class="col border-top">
+            <h6>
+              <a href="/users/{{this.UserId}}/tweets">
+                <img class="mt-2" style="width: 50px;height: 50px;left: 393px;top: 63px;border-radius: 50%;margin-right: 8px;" src="{{this.User.avatar}}" />
+                {{this.User.name}}
+              </a>
+              <small class="text-muted">{{this.User.account}} ◆ {{moment this.createdAt}}</small>
+            </h6>
+            <span class="badge badge-primary" style="border-radius: 100px">
+              <small>回覆 {{../tweet.User.account}}</small>
+            </span>
+            <p class="card-text">{{this.comment}}</p>
+            <p class="card-text">
+            <div class="row justify-content-around">
+              <div class="col">
+                <small class="text-muted">
+                  <i class="far fa-comment"> {{this.Replies.length}}</i>
+                </small>
+              </div>
+              <div class="col">
+                <small class="text-muted">
+                  <i class="far fa-heart"> {{this.LikedUsers.length}}</i>
+                </small>
+              </div>
+            </div>
+            </p>
+          </div>
+        {{/each}}
+      </div>
     </div>
   </div>
 </div>
