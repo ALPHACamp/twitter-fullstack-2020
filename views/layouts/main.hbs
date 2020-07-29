@@ -107,7 +107,41 @@
           {{{body}}}
         </div>
 
-        <div class="col-3"></div>
+        {{!-- Top 10 user list --}}
+        <div class="col-3 md-4">
+          <ul class="list-group">
+            <li class="list-group-item">跟隨誰</li>
+            {{#each users}}
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-3">
+                  <a href="/api/users/{{this.id}}">
+                    <img class="rounded-circle w-100" src="{{this.avatar}}" />
+                  </a>
+                </div>
+                <div class="col-4">
+                  <p>{{this.name}}</p>
+                </div>
+                <div class="col-4">
+                  {{#ifNotCond ../loginUserId this.id}}
+                  {{#if this.isFollowed }}
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+                      type="submit" class="btn btn-primary" style="font-size:1px; margin:0px; padding:1px;">正在跟隨</button>
+                  </form>
+                  {{else}}
+                  <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                      class="btn btn-outline-primary" style="font-size:1px; margin:0px; padding:1px;">跟隨</button></form>
+                  {{/if}}
+                  {{/ifNotCond}}
+                </div>
+              </div>
+            </li>
+            {{/each}}
+            <li class="list-group-item">
+              <a class="link" href="/users/{{user.id}}/followers">顯示更多</a>
+            </li>
+          </ul>
+        </div>
 
       </div>
     </div>
