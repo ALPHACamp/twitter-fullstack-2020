@@ -22,13 +22,13 @@ const tweetController = {
     let replies = tweet.Replies.map(reply => ({
       ...reply,
       RepliesLikeCount: reply.ReplyWhoLike.length,
-      isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(req.user.id)
+      isReplyLiked: reply.ReplyWhoLike.map(d => d.id).includes(helpers.getUser(req).id)
     }))
     replies.sort((a, b) => b.createdAt - a.createdAt)
     const totalCount = {
       replyCount: tweet.Replies.length,
       likeCount: tweet.Likes.length,
-      isLiked: tweet.Likes.map(d => d.UserId).includes(req.user.id)
+      isLiked: tweet.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
     }
     res.render('tweet', {
       isHomePage: true,
@@ -56,22 +56,23 @@ const tweetController = {
       createdA: r.createdAt,
       likeCount: r.Likes.length,
       replayCount: r.Replies.length,
-      isLiked: r.Likes.map(d => d.UserId).includes(req.user.id)
+      isLiked: r.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
     }));
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
   postTweet: (req, res) => {
-    if (!req.body.newTweet) {
+    console.log(req.body.description)
+    if (!req.body.description) {
       req.flash('error_messages', '請輸入推文內容!!!');
       return res.redirect('back');
     }
-    if (req.body.newTweet.length > 140) {
+    if (req.body.description.length > 140) {
       req.flash('error_messages', '推文內容需小於140個字!!!');
       return res.redirect('back');
     }
     return Tweet.create({
-      UserId: req.user.id,
-      description: req.body.newTweet
+      UserId: helpers.getUser(req).id,
+      description: req.body.description
     }).then((tweet) => {
       req.flash('success_messages', '推文成功!!!');
       res.redirect('/tweets');
@@ -92,7 +93,7 @@ const tweetController = {
     return Reply.create({
       comment: req.body.newComment,
       TweetId: whichTweet,
-      UserId: req.user.id
+      UserId: helpers.getUser(req).id
     }).then((tweet) => {
       req.flash('success_messages', '回覆成功!!!');
       res.redirect('back');

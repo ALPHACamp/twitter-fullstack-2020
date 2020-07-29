@@ -10,7 +10,7 @@ const upload = multer({ dest: 'temp/' });
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'user') {
+    if (helpers.getUser(req).role !== 'admin') {
       // if (req.user.role === 'user') {
       // res.locals.myUser = req.user
       res.locals.myUser = helpers.getUser(req);
@@ -26,7 +26,7 @@ const authenticated = (req, res, next) => {
 };
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') {
+    if (helpers.getUser(req).role !== 'user') {
       // if (req.user.role === 'Admin') {
       // res.locals.myUser = req.user
       res.locals.myUser = helpers.getUser(req);
@@ -49,10 +49,7 @@ router.post(
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
-router.delete(
-  '/admin/tweets/:id',
-  authenticatedAdmin,
-  adminController.deleteTweet
+router.delete('/admin/tweets/:id',authenticatedAdmin, adminController.deleteTweet
 );
 
 router.get('/', (req, res) => res.redirect('/tweets'));
@@ -72,7 +69,7 @@ router.get(
   },
   tweetController.getTweet
 );
-router.post('/tweets/newTweets', authenticated, tweetController.postTweet);
+router.post('/tweets', authenticated, tweetController.postTweet);
 router.get(
   '/tweets/:id',
   authenticated,
@@ -93,8 +90,8 @@ router.post(
   userController.login
 );
 
-router.post('/likes/:tweetId', authenticated, userController.addLike);
-router.delete('/likes/:tweetId', authenticated, userController.removeLike);
+router.post('/tweets/:tweetId/like', authenticated, userController.addLike);
+router.delete('/tweets/:tweetId/unlike', authenticated, userController.removeLike);
 router.post(
   '/replies/likes/:ReplyId',
   authenticated,

@@ -53,36 +53,44 @@
 
                 <form action="/users/{{user.id}}/profile?_method=PUT" method="POST" enctype="multipart/form-data">
                   <div class="form-group mx-1">
+
+
+
                     <label for="cover" class="position-relative">
-                      <img src="{{user.cover}}" alt="" class="col p-0" height="300px" style="opacity: 0.9;">
-                      <span class="text-white position-absolute font-weight-bold" style="left:230px; bottom: 120px; cursor: pointer;">
+                      <img src="{{user.cover}}" alt="" class="col p-0" height="200px" style="opacity: 0.9;">
+                      <span class="text-white position-absolute font-weight-bold"
+                        style="left:230px; bottom: 100px; cursor: pointer;">
                         <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-camera " fill="currentColor"
                           xmlns="http://www.w3.org/2000/svg">
                           <path fill-rule="evenodd"
                             d="M15 12V6a1 1 0 0 0-1-1h-1.172a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 9.173 3H6.828a1 1 0 0 0-.707.293l-.828.828A3 3 0 0 1 3.172 5H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
-                          <path fill-rule="evenodd" d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                          <path fill-rule="evenodd"
+                            d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
                           <path d="M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
                         </svg>
                       </span>
                       <input type="file" class="form-control-file position-absolute" id="cover" name="cover"
                         style="width: 0px; height: 0px; z-index: -1;">
-
                     </label>
+
+                    
                   </div>
                   <div class="form-group">
                     <label for="avatar" class="position-relative">
                       <img src="{{user.avatar}}" alt="" width="140px" height="140px"
                         class="rounded-circle position-absolute"
                         style="border: 5px solid white; left: 30px; top: -100px;">
-                        <span class="text-white position-absolute font-weight-bold" style="left:85px; bottom: 10px; cursor: pointer;">
-                          <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-camera " fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                              d="M15 12V6a1 1 0 0 0-1-1h-1.172a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 9.173 3H6.828a1 1 0 0 0-.707.293l-.828.828A3 3 0 0 1 3.172 5H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
-                            <path fill-rule="evenodd" d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                            <path d="M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
-                          </svg>
-                        </span>
+                      <span class="text-white position-absolute font-weight-bold"
+                        style="left:85px; bottom: 10px; cursor: pointer;">
+                        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-camera " fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd"
+                            d="M15 12V6a1 1 0 0 0-1-1h-1.172a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 9.173 3H6.828a1 1 0 0 0-.707.293l-.828.828A3 3 0 0 1 3.172 5H2a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM2 4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-1.172a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 9.172 2H6.828a2 2 0 0 0-1.414.586l-.828.828A2 2 0 0 1 3.172 4H2z" />
+                          <path fill-rule="evenodd"
+                            d="M8 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm0 1a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                          <path d="M3 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0z" />
+                        </svg>
+                      </span>
                       <input type="file" class="form-control-file postition-absolute" id="avatar" name="avatar"
                         style="width: 0px; height: 0px; z-index: -1;">
 
@@ -161,7 +169,7 @@
           </form>
           {{else}}
           <form action="/followships" method="post">
-          <input type="hidden" name="id" value="{{user.id}}">
+            <input type="hidden" name="id" value="{{user.id}}">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 追蹤
             </button>
           </form>
@@ -248,7 +256,7 @@
                     </a>
 
                     {{#if this.isLiked}}
-                    <form action="/likes/{{this.tweetId}}?_method=DELETE" method="post">
+                    <form action="/tweets/{{this.tweetId}}/unlike?_method=DELETE" method="post">
                       <span>
                         {{this.likeCount}}
                       </span>
@@ -262,7 +270,7 @@
                     </form>
 
                     {{else}}
-                    <form action="/likes/{{this.tweetId}}" method="post">
+                    <form action="/tweets/{{this.tweetId}}/like" method="post">
                       <span>
                         {{this.likeCount}}
                       </span>

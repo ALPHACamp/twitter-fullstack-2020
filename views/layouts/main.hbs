@@ -51,8 +51,8 @@
       <div class="d-flex flex-row flex-lg-column">
         <div class="logo mt-3 d-flex flex-column flex-lg-row justify-content-center justify-content-lg-start 
       align-items-center" style="min-width: 260px;">
-          <img src="https://i.imgur.com/73A1th4.png" alt="" class="rounded-circle m-2"
-            style="width: 60px; height: 60px;">
+          <img src="https://i.imgur.com/gey9fzI.jpeg" alt="" class="rounded-circle m-2"
+            style="width: 80px; height: 80px;">
           <div class="font-weight-bold h3">Twitter 衝一波</div>
         </div>
         <ul class="nav flex-row flex-lg-column justify-content-around align-items-lg-start">
@@ -98,14 +98,14 @@
                 <div class="modal-header">
 
                   <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    onclick="cleanTextarea()">x</button>
+                    >x</button>
 
                 </div>
                 <div class="modal-body">
-                  <form action="/tweets/newTweets" method="POST">
+                  <form action="/tweets" method="POST">
                     <div class="form-group">
 
-                      <textarea class="form-control" id="newTweetModalTextarea" name="newTweet" rows="3"
+                      <textarea class="form-control" id="newTweetModalTextarea" name="description" rows="3"
                         placeholder="有什麼新鮮事?" oninput="showWordCountModal()" maxlength="140"></textarea>
                       <p><span id="wordCountModal">0</span>/140</p>
                     </div>
@@ -118,16 +118,8 @@
             </div>
           </div>
           <button type="button" class="btn btn-danger rounded-pill w-100 mt-3" data-toggle="modal"
-            data-target="#exampleModal"> 推文 </button>
+            data-target="#exampleModal" onclick="cleanTextarea()"> 推文 </button>
 
-          <script>
-            function CloseModal() {
-              $('#closeThis').click(function () {
-                $('#newTweet').val('');
-              })
-
-            }
-          </script>
 
           {{else}}
           <li class="nav-item d-flex mt-4 {{#if isAdminTweet}} text-danger {{else}} text-dark {{/if}}">
@@ -178,10 +170,10 @@
     </div>
 
     {{#if topUsers}}
-    <div id="topUsersDiv" class="right-sec mt-4 col-lg-3 mb-md-3 border-left border-black-50" style="min-width: 350px;">
+    <div id="topUsersDiv" class="right-sec mt-4 col-lg-3 mb-md-3 border-left border-black-50" >
       <ul
         class="list-group list-group-flush bg-light rounded-lg shadow d-inline-flex flex-row  flex-lg-column overflow-auto"
-        style="max-width: 800px;">
+        style="max-width: 800px; min-width: 350px;">
 
         {{!-- 使用hbs each 產生使用者 --}}
         <li class="list-group-item font-weight-bold h5 bg-light">跟隨誰</li>
@@ -286,8 +278,6 @@
       document.getElementById('logoutSvg').classList.remove("animate__animated", "animate__lightSpeedOutLeft")
     })
 
-
-    document.getElementById('topUsersDiv').classList.add("animate__animated", "animate__fadeInRight")
 
 
   </script>
