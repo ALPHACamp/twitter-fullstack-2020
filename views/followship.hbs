@@ -1,0 +1,113 @@
+<div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item d-flex align-items-center">
+      <div>
+        <div class="d-flex align-items-center">
+          <a href="javascript:history.back()" class="back">
+            <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-arrow-left-short font-weight-bold text-dark"
+              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M7.854 4.646a.5.5 0 0 1 0 .708L5.207 8l2.647 2.646a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 0 1 .708 0z" />
+              <path fill-rule="evenodd" d="M4.5 8a.5.5 0 0 1 .5-.5h6.5a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5z" />
+            </svg>
+          </a>
+          <div class="ml-5 mt-2">
+            <div class="font-weight-bold">
+              {{user.name}}
+            </div>
+            <span class="text-secondary">
+              {{count.tweetsCount}} 推文
+            </span>
+          </div>
+        </div>
+
+        <nav class="mt-5">
+          <div class="nav">
+            <a href="/users/{{user.id}}/followers" class="nav-link {{#if followers}}navBar{{else}}text-secondary {{/if}}">追隨者</a>
+            <a href="/users/{{user.id}}/followings" class="nav-link {{#if followings}}navBar{{else}}text-secondary {{/if}}">正在追隨</a>
+          </div>
+        </nav>
+      </div>
+    </li>
+
+    {{#if followers}}
+    {{#each followers}}
+      <li class="list-group-item d-flex bg-light">
+        <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+
+        <div class="d-flex flex-column col">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex flex-column">
+              <div class="user-name font-weight-bold">
+                {{this.name}}
+              </div>
+              {{!-- 連結到user 頁面 --}}
+              <a href="/users/{{this.id}}" class="user-account text-secondary">
+                @ {{this.account}}
+              </a>
+              </div>
+
+
+              {{#if this.isFollowed}}
+              <form action="/followings/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
+                <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
+              </form>
+              {{else}}
+              <form action="/followings/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
+                <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
+              </form>
+              {{/if}}
+
+
+
+            </div>
+          <p class="mt-2">
+            {{this.introduction}}
+          </p>
+        </div>
+      </li>
+    {{/each}}
+    {{/if}}
+
+    {{#if followings}}
+    {{#each followings}}
+    <li class="list-group-item d-flex bg-light">
+      <img src="{{this.avatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
+    
+      <div class="d-flex flex-column col">
+        <div class="d-flex justify-content-between">
+          <div class="d-flex flex-column">
+            <div class="user-name font-weight-bold">
+              {{this.name}}
+            </div>
+            {{!-- 連結到user 頁面 --}}
+            <a href="/users/{{this.id}}" class="user-account text-secondary">
+              @ {{this.account}}
+            </a>
+          </div>
+
+
+
+          {{#if this.isFollowed}}
+          <form action="/followings/{{this.id}}?_method=DELETE" method="post" class="d-flex align-items-center ml-4">
+            <button type="submit" class="btn btn-danger rounded-pill"> 正在跟隨 </button>
+          </form>
+          {{else}}
+          <form action="/followings/{{this.id}}" method="post" class="d-flex align-items-center ml-4">
+            <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
+          </form>
+          {{/if}}
+
+
+
+        </div>
+        <p class="mt-2">
+          {{this.introduction}}
+        </p>
+      </div>
+    </li>
+    {{/each}}
+    {{/if}}
+
+  </ul>
+</div>

@@ -1,0 +1,24 @@
+<div class="font-weight-bold h4">使用者清單</div>
+<br />
+<br />
+
+<div class="row">
+    {{#each users}}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img class="card-img-top" src="{{this.backgroundImg}}" width="286px" height="180px">
+            <img class="img-responsive center-block" src="{{this.avatar}}" style="width: 50px;margin-bottom: 25px;">
+            <div class="card-body">
+                <p class="card-text"> {{this.name}} </p>
+                <p class="card-text"> {{this.account}} </p>
+                <a> 文字方塊{{this.TweetCount}} </a>
+                <a> 愛心{{this.LikeCount}} </a>
+                <div>
+                    <a> {{this.FollowerCount}} 位追隨者</a>
+                    <a> {{this.FollowingCount}} 位跟隨者</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
