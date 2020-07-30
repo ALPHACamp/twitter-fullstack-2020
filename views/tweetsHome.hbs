@@ -103,35 +103,6 @@
 </div>
 
 
-<script>
-  function postCommentPage(id) {
-    $('#postCommentPage').modal('show');
-    $('#modalForm').attr('action', `/tweets/${id}/comments`);
-
-  }
-</script>
-
-<div class="modal" tabindex="-1" role="dialog" id='postCommentPage'>
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-      <div class="modal-body">
-        <form id="modalForm" action="/comments" method="POST">
-          <div class="form-group">
-            <textarea class="form-control tweet" id="newComment" form="modalForm" name="newComment" rows="3"
-              placeholder="寫點回覆吧!!!"></textarea>
-          </div>
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">回覆</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 
 

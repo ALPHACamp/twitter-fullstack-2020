@@ -269,16 +269,17 @@ let userController = {
   },
   addFollowing: async (req, res) => {
     try {
-
       if (helper.getUser(req).id === Number(req.body.id)) {
         req.flash('error_messages', 'you cannot follow yourself');
         return res.redirect('back');
-      } 
+      }
         await Followship.create({
           followerId: helper.getUser(req).id,
           followingId: req.body.id
         });
         return res.redirect('back');
+      
+
     } catch (err) {
       res.send('something is wrong');
     }

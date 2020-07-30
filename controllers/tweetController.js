@@ -80,18 +80,18 @@ const tweetController = {
   },
   postComment: (req, res) => {
     let whichTweet = req.params.id;
-    if (!req.body.newComment) {
+    if (!req.body.comment) {
       req.flash('error_messages', '請輸入推文內容!!!');
       return res.redirect('back');
     }
 
-    if (req.body.newComment.length > 140) {
+    if (req.body.comment.length > 140) {
       req.flash('error_messages', '回覆內容需小於140個字!!!');
       return res.redirect('back');
     }
-
+console.log(req.body.comment)
     return Reply.create({
-      comment: req.body.newComment,
+      comment: req.body.comment,
       TweetId: whichTweet,
       UserId: helpers.getUser(req).id
     }).then((tweet) => {
