@@ -44,15 +44,17 @@ const adminController = {
     })
   },
   deleteTweet: (req, res) => {
-    const id = req.params.id
+    const id = Number(req.params.id)
     if (helpers.getUser(req).role !== 'admin') { return res.redirect('/signin') }
-    return Tweet.findByPk(id, { include: [Reply] })
+    return Tweet.findAll({ where: { id }, include: [User, Reply] })
       .then(tweet => {
-        if (tweet.Replies.length !== 0) {
-          tweet.Replies[0].destroy()
-          tweet.destroy()
+        if (tweet[0].User.dataValues.id !== helpers.getUser(req).id) {
+          if (tweet[0].Replies.length) {
+            tweet[0].Replies[0].destroy()
+            return tweet[0].destroy()
+          }
+          return tweet[0].destroy()
         }
-        tweet.destroy()
       })
       .then(() => res.redirect('/admin/tweets'))
   }
