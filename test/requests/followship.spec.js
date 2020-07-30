@@ -29,7 +29,7 @@ describe('# followship request', () => {
           .post('/followships')
           .send('id=1')
           .set('Accept', 'application/json')
-          .expect(200)
+          .expect(302)
           .end(function(err, res) {
             if (err) return done(err);
             db.User.findByPk(1,{include: [

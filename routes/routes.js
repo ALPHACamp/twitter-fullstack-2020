@@ -8,11 +8,11 @@ const passport = require('passport');
 const multer = require('multer');
 const upload = multer({ dest: 'temp/' });
 
+
+
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role !== 'admin') {
-      // if (req.user.role === 'user') {
-      // res.locals.myUser = req.user
+    if (helpers.getUser(req).role === 'user') {
       res.locals.myUser = helpers.getUser(req);
       return next();
     } else {
@@ -26,9 +26,7 @@ const authenticated = (req, res, next) => {
 };
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role !== 'user') {
-      // if (req.user.role === 'Admin') {
-      // res.locals.myUser = req.user
+    if (helpers.getUser(req).role === 'admin') {
       res.locals.myUser = helpers.getUser(req);
       return next();
     }
@@ -53,12 +51,7 @@ router.delete('/admin/tweets/:id',authenticatedAdmin, adminController.deleteTwee
 );
 
 router.get('/', (req, res) => res.redirect('/tweets'));
-router.get(
-  '/tweets',
-  authenticated,
-  userController.topUserForLayout,
-  tweetController.getTweets
-);
+router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets );
 router.get(
   '/tweets/:id/replies',
   authenticated,
@@ -132,7 +125,7 @@ router.get(
   userController.getUserPage
 );
 router.post(
-  '/tweets/:id/comments',
+  '/tweets/:id/replies',
   authenticated,
   userController.topUserForLayout,
   tweetController.postComment
