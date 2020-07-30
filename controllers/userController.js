@@ -103,9 +103,9 @@ const userController = {
       .then(user => {
         const pageUser = user.toJSON()
         pageUser.Tweets.forEach(t => {
-          t.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.id)
+          t.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
         })
-        pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(user.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
         res.render('user-tweets', { pageUser })
       })
   },
@@ -121,9 +121,9 @@ const userController = {
     })
       .then(pageUser => {
         pageUser.dataValues.LikedTweets.forEach(t => {
-          t.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(t.dataValues.id)
+          t.dataValues.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.dataValues.id)
         })
-        pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render('user-likes', { pageUser })
       })
   },
@@ -148,9 +148,9 @@ const userController = {
     })
       .then(pageUser => {
         pageUser.dataValues.Replies.forEach(r => {
-          r.dataValues.Tweet.dataValues.isLiked = req.user.LikedTweets.map(d => d.id).includes(r.dataValues.Tweet.dataValues.id)
+          r.dataValues.Tweet.dataValues.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.dataValues.Tweet.dataValues.id)
         })
-        pageUser.isFollowed = req.user.Followings.map(item => item.id).includes(pageUser.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render('user-replies', { pageUser })
       })
 
@@ -161,7 +161,7 @@ const userController = {
     const { avatar, cover } = req.files
     const { files } = req
 
-    if (req.user.id !== id) {
+    if (helpers.getUser(req).id !== id) {
       req.flash('errorMessage', 'error')
       res.redirect('/tweets')
     }
@@ -213,7 +213,7 @@ const userController = {
     }).then(user => {
       const Followers = user.Followers.map(follower => ({
         ...follower.dataValues,
-        isFollowed: req.user.Followings.map((i) => i.id).includes(follower.id)
+        isFollowed: helpers.getUser(req).Followings.map((i) => i.id).includes(follower.id)
       }))
       const results = {
         user,
@@ -225,13 +225,13 @@ const userController = {
   },
   addFollow: (req, res) => {
     const followingId = Number(req.params.id)
-    const followerId = req.user.id
+    const followerId = helpers.getUser(req).id
     return Followship.create({ followingId, followerId })
       .then(() => res.redirect('back'))
   },
   removeFollow: (req, res) => {
     const followingId = Number(req.params.id)
-    const followerId = req.user.id
+    const followerId = helpers.getUser(req).id
     return Followship.findOne({ where: { followingId, followerId } })
       .then(followship => followship.destroy())
       .then(() => res.redirect('back'))

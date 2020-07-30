@@ -1,3 +1,4 @@
+const helpers = require('../_helpers')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
@@ -6,7 +7,7 @@ const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
-    if (req.user.role === 'admin') { return res.redirect('back') }
+    if (helpers.getUser(req).role === 'admin') { return res.redirect('back') }
     Tweet.findAll({
       include: [
         User,
@@ -17,10 +18,10 @@ const tweetController = {
     }).then(tweets => {
       const data = tweets.map(t => ({
         ...t.dataValues,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(t.id)
+        isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
       }))
       res.render('tweets', {
-        user: req.user,
+        user: helpers.getUser(req),
         tweets: data
       })
     })
@@ -33,7 +34,7 @@ const tweetController = {
       return res.redirect('/')
     }
     return Tweet.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       description: req.body.description,
     }).then(tweet => {
       return res.redirect('/')
@@ -50,7 +51,7 @@ const tweetController = {
     }).then(tweet => {
       res.render('tweet', {
         tweet: tweet.toJSON(),
-        isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id)
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
       })
     })
   },
@@ -59,7 +60,7 @@ const tweetController = {
       return res.redirect('back')
     }
     Reply.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.id,
       comment: req.body.comment
     }).then((reply => {
@@ -68,7 +69,7 @@ const tweetController = {
   },
   addLike: (req, res) => {
     Like.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.id
     }).then((tweet) => {
       return res.redirect('back')
@@ -77,7 +78,7 @@ const tweetController = {
   removeLike: (req, res) => {
     Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.id
       }
     }).then(like => {
