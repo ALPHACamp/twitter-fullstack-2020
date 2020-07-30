@@ -12,10 +12,12 @@
         <div class="col">
           <div class="card-body">
             <form action="/tweets" method="post">
-              <textarea class="w-100" name="tweet" cols="25" rows="10" placeholder="有什麼新鮮事..."
-                style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent;height:80px"></textarea>
+              <textarea class="w-100" name="description" id="userInput" cols="25" rows="10" placeholder="有什麼新鮮事..."
+                style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent;height:80px"
+                onkeyup="wordsTotal()"></textarea>
               <div class="card-text text-right">
-                <button class="btn rounded-pill" type="submit"
+                <small id="display" class="text-right"></small> <br>
+                <button class="btn rounded-pill mt-2" type="submit"
                   style="background-color: #FF6600; color:white">推文</button>
               </div>
             </form>
