@@ -7,6 +7,7 @@ const helpers = require('../_helpers')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const Like = db.Like
 const Followship = db.Followship
 
 const userController = {
@@ -41,7 +42,8 @@ const userController = {
           },
           { model: Tweet },
           { model: User, as: 'Followers' }
-        ]
+        ],
+        order: [[Tweet, 'createdAt', 'DESC']]
       })
         .then((user) => {
           const results = user.toJSON()
@@ -51,7 +53,16 @@ const userController = {
             results.Tweets[i].likeCount = results.Tweets[i].LikedUsers.length
           }
           results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
-          return res.render('userPage', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+
+          Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
+            .then((likes) => {
+              likes = likes.map(like => like.TweetId)
+              results.Tweets.forEach(tweet => {
+                tweet.tweetIsLiked = likes.includes(tweet.id)
+              })
+              console.log(results)
+              return res.render('userPage', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+            })
         })
         .catch((err) => res.send(err))
     })
@@ -63,16 +74,6 @@ const userController = {
           {
             model: Tweet,
             as: 'LikedTweets',
-            include: { model: User, as: 'LikedUsers' }
-          },
-          {
-            model: Tweet,
-            as: 'LikedTweets',
-            include: Reply
-          },
-          {
-            model: Tweet,
-            as: 'LikedTweets',
             include: User
           },
           { model: Tweet },
@@ -81,12 +82,10 @@ const userController = {
       })
         .then((user) => {
           const results = user.toJSON()
-          for (let i = 0; i < results.LikedTweets.length; i++) {
-            results.LikedTweets[i].repliesCount = results.LikedTweets[i].replyCount
-            results.LikedTweets[i].likeCount = results.LikedTweets[i].Replies.length
-          }
           results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
           results.tweetCount = results.Tweets.length
+
+          results.LikedTweets.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
 
           console.log(results)
           res.render('userLikeContent', {
@@ -112,11 +111,11 @@ const userController = {
         order: [[Reply, 'createdAt', 'DESC']]
       })
         .then((user) => {
-          const results = user
+          const results = user.toJSON()
           results.tweetCount = results.Tweets.length
-          results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
-          console.log(results.toJSON())
-          return res.render('userReplyTweet', { results: results.toJSON(), recommendFollowings: users, currentId: req._passport.session.user })
+          results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+          console.log(results)
+          return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
         })
         .catch((err) => res.send(err))
     })
@@ -245,6 +244,8 @@ const userController = {
           )
         }))
         results.tweetCount = user.Tweets.length
+        results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        console.log(results)
         res.render('userFollowPage', { results: results, recommendFollowings: users })
       })
         .catch((err) => res.send(err))
@@ -265,7 +266,7 @@ const userController = {
             )
           }))
           results.tweetCount = user.Tweets.length
-
+          results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
           console.log(results)
           res.render('userFollowingPage', { results: results, recommendFollowings: users })
         })
