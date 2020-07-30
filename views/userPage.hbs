@@ -52,12 +52,13 @@
             </a>
             {{!-- 追蹤 --}}
             {{#if results.isFollowed}}
-            <form action="/following/{{results.id}}?_method=DELETE" method="POST">
+            <form action="/followships/{{results.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn rounded-pill"
                 style="color:white ;background-color:#FF6600; border: 1px solid #FF6600;width:92px;">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/following/{{results.id}}" method="POST">
+            <form action="/followships" method="POST">
+              <input type="hidden" name="id" value="{{results.id}}">
               <button type="submit" class="btn rounded-pill"
                 style="color:#FF6600; border: 1px solid #FF6600;width:92px;">跟隨</button>
             </form>
