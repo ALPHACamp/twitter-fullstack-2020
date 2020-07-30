@@ -112,7 +112,7 @@
             <p class="tweet-user-avatar">{{../pageUser.avatar}}</p>
           </div>
           {{#if isLiked}}
-          <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+          <form action="/tweets/{{this.id}}/unlike" method="POST">
             <button type="submit" class="like-link button">
               <i class="fac fa-cus-solid-like"></i>
               {{else}}

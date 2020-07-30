@@ -28,7 +28,7 @@ module.exports = (app, passport) => {
   app.get('/tweets', userAuthenticated, tweetController.getTweets)
   app.post('/tweets', userAuthenticated, tweetController.postTweet)
   app.post('/tweets/:id/like', userAuthenticated, tweetController.addLike)
-  app.delete('/tweets/:id/like', userAuthenticated, tweetController.removeLike)
+  app.post('/tweets/:id/unlike', userAuthenticated, tweetController.removeLike)
   app.get('/tweets/:id', userAuthenticated, tweetController.getTweet)
   app.post('/tweets/:id/replies', userAuthenticated, tweetController.postReply)
 
