@@ -49,14 +49,15 @@
           {{!-- 追蹤 --}}
           {{#if this.isFollowed}}
           <div class="col-3 p-2 text-right">
-            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn rounded-pill"
                 style="color:white ;background-color:#FF6600; border: 1px solid #FF6600">正在跟隨</button>
             </form>
           </div>
           {{else}}
           <div class="col-3 p-2 text-right">
-            <form action="/following/{{this.id}}" method="POST">
+            <form action="/followships" method="POST">
+              <input type="hidden" name="id" value="{{this.id}}">
               <button type="submit" class="float-right px-4 py-2 float-right btn rounded-pill"
                 style="color:#FF6600; border: 1px solid #FF6600">跟隨</button>
             </form>

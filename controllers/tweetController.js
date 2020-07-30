@@ -71,12 +71,11 @@ const tweetController = {
           include: [
             User,
             Like,
-            { model: Reply, include: [User, Like] }
-
+            { model: Reply, include: [User] }
           ]
         })
           .then((tweets) => {
-            // 剔除重複query的 replies 和 likedUsers
+            // 剔除重複query的 replies 和 likes
             const tweet = {
               ...tweets[0],
               replies: [...new Set(tweets.map(item => { return JSON.stringify(item.Replies) }))].map(item => JSON.parse(item)),
@@ -84,7 +83,6 @@ const tweetController = {
             }
             const tweetIsLiked = tweet.Likes.includes(getUser(req).id)
             const secondReplies = [] // 用於製作modal，與tweet.secondReplies 用途不同
-
             return Promise.all(Array.from(
               { length: tweet.replies.length },
               (_, i) =>
@@ -101,7 +99,6 @@ const tweetController = {
                 })
                   .then((replies) => {
                     // replies 是某一個第一層回覆底下的所有回覆 root-1-many
-                    console.log('replies:', replies)
                     replies.forEach(index => {
                       if (index.Likes.UserId === getUser(req).id) {
                         index.secondReplyIsLiked = true
@@ -129,7 +126,6 @@ const tweetController = {
                   .catch(err => console.log(err))
             ))
               .then(() => {
-                console.log(secondReplies.flat())
                 res.render('reply', {
                   tweet, // 內含 tweet 基本資料
                   replies: tweet.replies[0].id === null ? null : tweet.replies, // 第一層回覆 ＋ 第二層回覆
@@ -207,10 +203,9 @@ const tweetController = {
   },
   addLike: (req, res) => {
     const UserId = getUser(req).id
-    const TweetId = Number(req.params.tweetId)
-    const ReplyId = Number(req.params.replyId)
-    const SecondreplyId = Number(req.params.secondReplyId)
-
+    const TweetId = Number(req.params.tweetId) || 0
+    const ReplyId = Number(req.params.replyId) || 0
+    const SecondreplyId = Number(req.params.secondReplyId) || 0
     return Like.create({
       UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId
     })
@@ -231,16 +226,15 @@ const tweetController = {
   },
   removeLike: (req, res) => {
     const UserId = getUser(req).id
-    const TweetId = Number(req.params.tweetId)
-    const ReplyId = Number(req.params.replyId)
-    const SecondreplyId = Number(req.params.secondReplyId)
+    const TweetId = Number(req.params.tweetId) || 0
+    const ReplyId = Number(req.params.replyId) || 0
+    const SecondreplyId = Number(req.params.secondReplyId) || 0
     return Like.findOne({
       where: {
         UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId
       }
     })
       .then((like) => {
-        console.log(like)
         return like.destroy()
       })
       .then(() => {
