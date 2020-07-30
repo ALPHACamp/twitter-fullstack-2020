@@ -23,7 +23,7 @@ describe('# followship request', () => {
         await db.User.create({})
         await db.User.create({})
       })
-
+      
       it('can not follow self', (done) => {
         request(app)
           .post('/followships')

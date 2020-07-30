@@ -138,8 +138,7 @@ let userController = {
                 Reply,
                 User,
                 Like,]
-            },
-            User
+            },           
           ]
         },
         { model: User, as: 'Followers' },
@@ -267,8 +266,7 @@ let userController = {
   },
   addFollowing: async (req, res) => {
     try {
-
-      if (helper.getUser(req).id === Number(req.body.id)) {
+      if (helper.getUser(req).id === Number(req.body.id)) {       
         req.flash('error_messages', 'you cannot follow yourself');
         return res.redirect('back');
       } 
@@ -279,7 +277,7 @@ let userController = {
         return res.redirect('back');
     } catch (err) {
       res.send('something is wrong');
-    }
+    }  
   },
   removeFollowing: async (req, res) => {
     try {
