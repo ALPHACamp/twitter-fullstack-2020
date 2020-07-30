@@ -54,33 +54,17 @@ const userController = {
     if (!helpers.getUser(req)) { return res.redirect('back') }
     else { res.render('setting') }
   },
-  // putUser: (req, res) => {
-  //   const id = req.params.id
-  //   const userId = helpers.getUser(req)
-  //   const name = 'abc'
-  //   if (id === userId) {
-  //     return User.findByPk(id).then(user => {
-  //       console.log(user.name)
-  //       user.update({ name })
-  //     })
-  //   }
-  // },
   putUser: async (req, res) => {
     const id = req.params.id
     const { email: originalEmail, account: originalAccount } = helpers.getUser(req)
     const { account, name, email, password, passwordCheck } = req.body
-    // const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     const error = []
     let newEmail = ''
     let newAccount = ''
 
-    console.log('dddddddddffffff')
-
     if (originalEmail === email) { newEmail = originalEmail }
     if (originalAccount === account) { newAccount = originalAccount }
-    if (!account || !name || !email || !password || !passwordCheck) { error.push({ message: '所有欄位皆為必填' }) }
     if (password !== passwordCheck) { error.push({ message: '密碼與確認密碼必須相同!' }) }
-
     if (originalEmail !== email) {
       await User.findOne({ where: { email } })
         .then(user => {
@@ -88,7 +72,6 @@ const userController = {
           else { newEmail = email }
         })
     }
-
     if (originalAccount !== account) {
       await User.findOne({ where: { account } })
         .then(user => {
@@ -96,20 +79,19 @@ const userController = {
           else { newAccount = account }
         })
     }
-    console.log('ffffffffffffuck')
-
     if (error.length !== 0) { return res.render('setting', { error }) }
-    else {
-      await User.findByPk(id)
-        .then(user => {
-          // console.log(user.name)
-          return user.update({ name, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), email: newEmail, account: newAccount })
-        })
-        .then(() => {
-          req.flash('successMessage', '更新成功！')
-        })
-        .then(() => res.redirect('back'))
+
+    if (!password) {
+      return User.findByPk(id)
+        .then(user => user.update({ name, email: newEmail, account: newAccount }))
+        .then(() => res.render('setting'))
     }
+    return User.findByPk(id)
+      .then(user => user.update({ name, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), email: newEmail, account: newAccount }))
+      .then(() => {
+        req.flash('successMessage', '更新成功！')
+        res.redirect('/tweets')
+      })
   },
   getTweets: (req, res) => {
     const id = req.params.id
