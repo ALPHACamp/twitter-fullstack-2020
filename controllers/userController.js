@@ -80,6 +80,9 @@ const userController = {
       })
         .then((user) => {
           const results = user.toJSON()
+          // 有可能會抓到喜歡的reply 或 secondReply ，所以要過濾。
+          results.Likes = results.Likes.filter(like => like.TweetId !== 0)
+          console.log(results)
           results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
           results.tweetCount = results.Tweets.length
 
@@ -110,8 +113,16 @@ const userController = {
           const results = user.toJSON()
           results.tweetCount = results.Tweets.length
           results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
-          console.log(results)
-          return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+
+          Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
+            .then((likes) => {
+              likes = likes.map(like => like.TweetId)
+              results.Replies.forEach(reply => {
+                reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
+              })
+              console.log(results.Replies[0].Tweet)
+              return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+            })
         })
         .catch((err) => res.send(err))
     })
