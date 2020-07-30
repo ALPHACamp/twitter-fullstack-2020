@@ -1,21 +1,24 @@
 const express = require('express')
+const app = express()
+const server = require('http').createServer(app)
 const hbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
+const io = require('socket.io')(server)
 
 const helpers = require('./_helpers')
 const passport = require('./config/passport')
 const useHbsHelper = require('./config/hbs-helpers')
 const useRoutes = require('./routes')
 
-const app = express()
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const { PORT } = process.env
 
+io.on('connection', socket => console.log('======================\nAn user was connected!\n======================'))
 app.engine('hbs', hbs({ defaultLayout: 'main', extname: 'hbs', helpers: useHbsHelper }))
 app.set('view engine', 'hbs')
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
@@ -34,7 +37,7 @@ app.use((req, res, next) => {
 // 顯示上傳的圖片
 app.use('/upload', express.static(__dirname + '/upload'))
 
-app.listen(PORT, () => console.log(`The server is running on http://localhost:${PORT}`))
+server.listen(PORT, () => console.log(`The server is running on http://localhost:${PORT}`))
 
 useRoutes(app)
 
