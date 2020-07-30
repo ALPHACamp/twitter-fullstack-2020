@@ -6,6 +6,7 @@ const Followship = db.Followship
 const bcrypt = require('bcryptjs')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const helpers = require('../_helpers')
 
 const userController = {
   getIndexPage: (req, res) => res.redirect('/signin'),
@@ -50,28 +51,44 @@ const userController = {
     res.redirect('/signin')
   },
   editUser: (req, res) => res.render('setting'),
-  putUser: (req, res) => {
+  putUser: async (req, res) => {
+    const { id, email: originalEmail, account: originalAccount } = helpers.getUser(req)
     const { account, name, email, password, passwordCheck } = req.body
+    const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     const error = []
-    User.findOne({ where: { id: req.user.id } })
-      .then(user => {
-        if (!account || !name || !email || !password || !passwordCheck) {
-          error.push({ message: '所有欄位皆為必填!' })
-          return res.render('setting', { error })
-        }
-        if (password !== passwordCheck) {
-          error.push({ message: '密碼與確認密碼必須相同' })
-          return res.render('setting', { error })
-        }
-        return user.update({
-          account,
-          name,
-          email,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
-        }).then(() => {
+    let newEmail = ''
+    let newAccount = ''
+
+    if (originalEmail === email) { newEmail = originalEmail }
+    if (originalAccount === account) { newAccount = originalAccount }
+    if (!account || !name || !email || !password || !passwordCheck) { error.push({ message: '所有欄位皆為必填!' }) }
+    if (password !== passwordCheck) { error.push({ message: '密碼與確認密碼必須相同!' }) }
+
+    if (originalEmail !== email) {
+      await User.findOne({ where: { email } })
+        .then(user => {
+          if (user) { error.push({ message: '信箱已經被註冊' }) }
+          else { newEmail = email }
+        })
+    }
+
+    if (originalAccount !== account) {
+      await User.findOne({ where: { account } })
+        .then(user => {
+          if (user) { error.push({ message: '帳號已存在' }) }
+          else { newAccount = account }
+        })
+    }
+
+    if (error.length !== 0) { return res.render('setting', { error }) }
+    else {
+      await User.findByPk(id)
+        .then(user => user.update({ name, password: hashPassword, email: newEmail, account: newAccount }))
+        .then(() => {
+          req.flash('successMessage', '更新成功~🥰')
           res.redirect('/tweets')
         })
-      })
+    }
   },
   getTweets: (req, res) => {
     const id = req.params.id
