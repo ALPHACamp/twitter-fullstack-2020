@@ -34,11 +34,11 @@ module.exports = (app, passport) => {
   app.get('/tweets/:id/replies', userAuthenticated, tweetController.getReply) //測試用
 
   // app.get('/api/users/:id', userAuthenticated, userController.editUser)
-  // app.post('/api/users/:id', userAuthenticated, profileUpload, userController.putUserProfile)
+  //app.post('/api/users/:id', userAuthenticated, profileUpload, userController.putUserProfile)
   // app.put('/api/users/:id', userAuthenticated, userController.putUser)
   app.get('/users/:id/edit', userAuthenticated, userController.editUser)
   app.post('/users/:id/edit', userAuthenticated, profileUpload, userController.putUserProfile)
-  app.put('/users/:id/edit', userAuthenticated, userController.putUser)
+  app.post('/api/users/:id', userAuthenticated, userController.putUser)
 
   app.get('/users/:id/tweets', userAuthenticated, userController.getTweets)
   app.get('/users/:id/likes', userAuthenticated, userController.getLikes)
