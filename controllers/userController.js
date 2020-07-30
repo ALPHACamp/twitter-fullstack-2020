@@ -96,13 +96,6 @@ const userController = {
               console.log(results)
               return res.render('userLikeContent', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
             })
-
-          // console.log(results)
-          // res.render('userLikeContent', {
-          //   results: results,
-          //   recommendFollowings: users,
-          //   currentId: req._passport.session.user
-          // })
         })
         .catch((err) => res.send(err))
     })
@@ -124,8 +117,19 @@ const userController = {
           const results = user.toJSON()
           results.tweetCount = results.Tweets.length
           results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
-          console.log(results)
-          return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+
+          Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
+            .then((likes) => {
+              likes = likes.map(like => like.TweetId)
+              results.Replies.forEach(reply => {
+                reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
+              })
+              console.log(results.Replies[0].Tweet)
+              return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+            })
+
+          // console.log(results)
+          // return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
         })
         .catch((err) => res.send(err))
     })
