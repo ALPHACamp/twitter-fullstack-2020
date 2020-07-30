@@ -37,7 +37,7 @@ const tweetController = {
       .catch(err => res.send(err))
   },
   postTweet: (req, res) => {
-    const description = req.body.tweet
+    const description = req.body.description
     if (!description.length) {
       req.flash('error_messages', '請新增內容後再發推文。')
       res.redirect('/tweets')
