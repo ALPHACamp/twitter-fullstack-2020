@@ -67,6 +67,15 @@ const tweetController = {
       res.redirect('back')
     }))
   },
+  getReply: (req, res) => {
+    const id = req.params.id
+    return Tweet.findByPk(id, { include: [Reply] })
+      .then(tweet => {
+        const replies = tweet.Replies
+        return res.send(replies)
+      })
+      .then(() => res.redirect('/tweets'))
+  },
   addLike: (req, res) => {
     Like.create({
       UserId: helpers.getUser(req).id,
