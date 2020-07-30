@@ -55,7 +55,8 @@ const userController = {
     else { res.render('setting') }
   },
   putUser: async (req, res) => {
-    const { id, email: originalEmail, account: originalAccount } = helpers.getUser(req)
+    const id = req.params.id
+    const { email: originalEmail, account: originalAccount } = helpers.getUser(req)
     const { account, name, email, password, passwordCheck } = req.body
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     const error = []
@@ -109,9 +110,8 @@ const userController = {
           t.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
         })
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
-        return pageUser
+        res.render('user-tweets', { pageUser })
       })
-      .then(pageUser => res.render('user-likes', { pageUser }))
   },
   getLikes: (req, res) => {
     return User.findByPk(req.params.id, {
@@ -125,7 +125,8 @@ const userController = {
     })
       .then(pageUser => {
         pageUser.dataValues.LikedTweets.forEach(t => {
-          t.dataValues.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.dataValues.id)
+          // t.dataValues.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.dataValues.id)
+          t.dataValues.isLiked = true
         })
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         return pageUser
