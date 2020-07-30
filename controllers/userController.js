@@ -239,7 +239,6 @@ let userController = {
   },
   removeLike: async (req, res) => {
     try {
-      console.log(req.params.tweetId)
       const toRemove = await Like.findOne({
         where: {
           UserId: helper.getUser(req).id,
@@ -257,11 +256,11 @@ let userController = {
       if (helper.getUser(req).id !== Number(req.params.id)) {
         return res.redirect('back');
       }
-      const toEdit = await User.findByPk(req.params.id);
-      res.render('user_edit', {
-        user: toEdit.toJSON(),
-        isEditPage: true
-      });
+        const toEdit = await User.findByPk(req.params.id);
+        return res.render('user_edit', {
+          user: toEdit.toJSON(),
+          isEditPage: true
+        });
     } catch (err) {
       console.log(err);
       res.send(err);
@@ -344,8 +343,6 @@ let userController = {
       ...i,
       isFollowed: helper.getUser(req).Followers.map((d) => d.id).includes(i.id)
     }));
-    console.log(followers)
-    console.log(helper.getUser(req).Followers)
     followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       isUserPage: true,
@@ -354,23 +351,28 @@ let userController = {
       followDetail
     });
   },
-  putEditUser: (req, res) => {
-    User.findByPk(req.params.id).then((user) => {
-      user
-        .update({
-          name: req.body.name,
-          account: req.body.account,
-          email: req.body.email,
-          password: bcrypt.hashSync(
-            req.body.password,
-            bcrypt.genSaltSync(10, null)
-          )
-        })
-        .then((user) => {
-          req.flash('success_messages', '修改成功!!!');
-          res.redirect(`/users/${user.id}/edit`);
-        });
-    });
+  putEditUser: async (req, res) => {
+    const id = req.params.id
+    const { name, account, email, password } = req.body
+    const user = await User.findByPk(id)
+    if (!password) {
+      user.update({
+        name: name,
+        account: account,
+        email: email,
+      })
+      req.flash('success_messages', '修改成功！！')
+      return res.redirect(`/users/${user.id}/edit`);
+    } else {
+      user.update({
+        name: name,
+        account: account,
+        email: email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10, null))
+      })
+      req.flash('success_messages', '修改成功!!!');
+      res.redirect(`/users/${user.id}/edit`);
+    }
   },
   editProfile: async (req, res) => {
     try {

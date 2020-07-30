@@ -73,7 +73,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
           helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] });
+      ).returns({ id: 1, Followings: [], role: 'user' });
       await db.User.create({name: 'User1'})
       await db.User.create({name: 'User2'})
     })
@@ -106,6 +106,7 @@ describe('# user request', () => {
         request(app)
           .get('/api/users/2')
           .set('Accept', 'application/json')
+          //redirect 應該為302????????????????
           .expect(200)
           .end(function(err, res) {
             if (err) return done(err);
@@ -168,7 +169,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({ id: 1, Followings: [], role: 'user'});
+      ).returns({ id: 1, Followings: [], Followers: [], role: 'user'});
       await db.User.create({name: 'User1'})
       await db.User.create({name: 'User2'})
       await db.User.create({name: 'User3'})

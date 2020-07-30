@@ -222,7 +222,7 @@ describe('# tweet request', () => {
 
       it('will redirect index', (done) => {
         request(app)
-          .post('/tweets/1/unlike')
+          .delete('/tweets/1/unlike')
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
