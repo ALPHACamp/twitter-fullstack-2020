@@ -87,12 +87,22 @@ const userController = {
 
           results.LikedTweets.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
 
-          console.log(results)
-          res.render('userLikeContent', {
-            results: results,
-            recommendFollowings: users,
-            currentId: req._passport.session.user
-          })
+          Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
+            .then((likes) => {
+              likes = likes.map(like => like.TweetId)
+              results.LikedTweets.forEach(tweet => {
+                tweet.tweetIsLiked = likes.includes(tweet.id)
+              })
+              console.log(results)
+              return res.render('userLikeContent', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+            })
+
+          // console.log(results)
+          // res.render('userLikeContent', {
+          //   results: results,
+          //   recommendFollowings: users,
+          //   currentId: req._passport.session.user
+          // })
         })
         .catch((err) => res.send(err))
     })
