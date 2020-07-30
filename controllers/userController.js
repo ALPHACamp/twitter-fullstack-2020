@@ -50,20 +50,21 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  editUser: (req, res) => res.render('setting'),
+  editUser: (req, res) => {
+    if (!helpers.getUser(req)) { return res.redirect('back') }
+    else { res.render('setting') }
+  },
   putUser: async (req, res) => {
-    const { id, email: originalEmail, account: originalAccount } = helpers.getUser(req)
+    const id = req.params.id
+    const { email: originalEmail, account: originalAccount } = helpers.getUser(req)
     const { account, name, email, password, passwordCheck } = req.body
-    const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     const error = []
     let newEmail = ''
     let newAccount = ''
 
     if (originalEmail === email) { newEmail = originalEmail }
     if (originalAccount === account) { newAccount = originalAccount }
-    if (!account || !name || !email || !password || !passwordCheck) { error.push({ message: '所有欄位皆為必填' }) }
     if (password !== passwordCheck) { error.push({ message: '密碼與確認密碼必須相同!' }) }
-
     if (originalEmail !== email) {
       await User.findOne({ where: { email } })
         .then(user => {
@@ -71,7 +72,6 @@ const userController = {
           else { newEmail = email }
         })
     }
-
     if (originalAccount !== account) {
       await User.findOne({ where: { account } })
         .then(user => {
@@ -79,16 +79,19 @@ const userController = {
           else { newAccount = account }
         })
     }
-
     if (error.length !== 0) { return res.render('setting', { error }) }
-    else {
-      await User.findByPk(id)
-        .then(user => user.update({ name, password: hashPassword, email: newEmail, account: newAccount }))
-        .then(() => {
-          req.flash('successMessage', '更新成功！')
-          res.redirect('/tweets')
-        })
+
+    if (!password) {
+      return User.findByPk(id)
+        .then(user => user.update({ name, email: newEmail, account: newAccount }))
+        .then(() => res.render('setting'))
     }
+    return User.findByPk(id)
+      .then(user => user.update({ name, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), email: newEmail, account: newAccount }))
+      .then(() => {
+        req.flash('successMessage', '更新成功！')
+        res.redirect('/tweets')
+      })
   },
   getTweets: (req, res) => {
     const id = req.params.id
@@ -103,14 +106,15 @@ const userController = {
       .then(user => {
         const pageUser = user.toJSON()
         pageUser.Tweets.forEach(t => {
-          t.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
+          // t.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
+          t.isLiked = t.LikedUsers.map(d => d.id).includes(helpers.getUser(req))
         })
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
         res.render('user-tweets', { pageUser })
       })
   },
   getLikes: (req, res) => {
-    User.findByPk(req.params.id, {
+    return User.findByPk(req.params.id, {
       include: [
         Tweet,
         { model: Tweet, as: 'LikedTweets', include: [User, Reply, { model: User, as: 'LikedUsers' }] },
@@ -121,11 +125,13 @@ const userController = {
     })
       .then(pageUser => {
         pageUser.dataValues.LikedTweets.forEach(t => {
-          t.dataValues.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.dataValues.id)
+          // t.dataValues.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.dataValues.id)
+          t.dataValues.isLiked = true
         })
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
-        res.render('user-likes', { pageUser })
+        return pageUser
       })
+      .then(pageUser => res.render('user-likes', { pageUser }))
   },
   getReplies: (req, res) => {
     User.findOne({
@@ -223,18 +229,24 @@ const userController = {
       res.render('user-followers', { results })
     })
   },
-  addFollow: (req, res) => {
-    const followingId = Number(req.params.id)
+  addFollow: async (req, res) => {
+    const followingId = Number(req.body.id)
     const followerId = helpers.getUser(req).id
-    return Followship.create({ followingId, followerId })
-      .then(() => res.redirect('back'))
+
+    if (followerId === followingId) { return res.render('error') }
+
+    await Followship.create({ followingId, followerId })
+    return res.redirect('back')
   },
-  removeFollow: (req, res) => {
+  removeFollow: async (req, res) => {
     const followingId = Number(req.params.id)
     const followerId = helpers.getUser(req).id
-    return Followship.findOne({ where: { followingId, followerId } })
+
+    if (followerId === followingId) { return res.redirect('back') }
+
+    await Followship.findOne({ where: { followingId, followerId } })
       .then(followship => followship.destroy())
-      .then(() => res.redirect('back'))
+    return res.redirect('back')
   }
 }
 

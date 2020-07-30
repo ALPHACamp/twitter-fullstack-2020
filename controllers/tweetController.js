@@ -18,12 +18,10 @@ const tweetController = {
     }).then(tweets => {
       const data = tweets.map(t => ({
         ...t.dataValues,
-        isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
+        // isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
+        isLiked: t.LikedUsers.map(i => i.id).includes(helpers.getUser(req).id)
       }))
-      res.render('tweets', {
-        user: helpers.getUser(req),
-        tweets: data
-      })
+      res.render('tweets', { tweets: data })
     })
   },
   postTweet: (req, res) => {
@@ -66,6 +64,15 @@ const tweetController = {
     }).then((reply => {
       res.redirect('back')
     }))
+  },
+  getReply: (req, res) => {
+    const id = req.params.id
+    return Tweet.findByPk(id, { include: [Reply] })
+      .then(tweet => {
+        const replies = tweet.Replies
+        return res.send(replies)
+      })
+      .then(() => res.redirect('/tweets'))
   },
   addLike: (req, res) => {
     Like.create({

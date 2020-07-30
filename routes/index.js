@@ -31,10 +31,14 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/unlike', userAuthenticated, tweetController.removeLike)
   app.get('/tweets/:id', userAuthenticated, tweetController.getTweet)
   app.post('/tweets/:id/replies', userAuthenticated, tweetController.postReply)
+  app.get('/tweets/:id/replies', userAuthenticated, tweetController.getReply) //測試用
 
-  app.get('/api/users/:id', userAuthenticated, userController.editUser)
-  app.post('/api/users/:id', userAuthenticated, profileUpload, userController.putUserProfile)
-  app.put('/api/users/:id', userAuthenticated, userController.putUser)
+  // app.get('/api/users/:id', userAuthenticated, userController.editUser)
+  //app.post('/api/users/:id', userAuthenticated, profileUpload, userController.putUserProfile)
+  // app.put('/api/users/:id', userAuthenticated, userController.putUser)
+  app.get('/users/:id/edit', userAuthenticated, userController.editUser)
+  app.post('/users/:id/edit', userAuthenticated, profileUpload, userController.putUserProfile)
+  app.post('/api/users/:id', userAuthenticated, userController.putUser)
 
   app.get('/users/:id/tweets', userAuthenticated, userController.getTweets)
   app.get('/users/:id/likes', userAuthenticated, userController.getLikes)
@@ -42,6 +46,8 @@ module.exports = (app, passport) => {
   app.get('/users/:id/followings', userAuthenticated, userController.getFollowings)
   app.get('/users/:id/followers', userAuthenticated, userController.getFollowers)
 
-  app.post('/followships/:id', userAuthenticated, userController.addFollow)
+  // app.post('/followships/:id', userAuthenticated, userController.addFollow)
+  // app.delete('/followships/:id', userAuthenticated, userController.removeFollow)
+  app.post('/followships', userAuthenticated, userController.addFollow)
   app.delete('/followships/:id', userAuthenticated, userController.removeFollow)
 }

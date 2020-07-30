@@ -2,7 +2,7 @@ const db = require('../models')
 const User = db.User
 const Reply = db.Reply
 const Tweet = db.Tweet
-const Like = db.Like
+const helpers = require('../_helpers')
 
 const adminController = {
   signInPage: (req, res) => res.render('admin/signin'),
@@ -44,14 +44,17 @@ const adminController = {
     })
   },
   deleteTweet: (req, res) => {
-    const id = req.params.id
-    return Tweet.findById(id, { include: [Reply] })
+    const id = Number(req.params.id)
+    if (helpers.getUser(req).role !== 'admin') { return res.redirect('/signin') }
+    return Tweet.findAll({ where: { id }, include: [User, Reply] })
       .then(tweet => {
-        if (tweet.Replies.length !== 0) {
-          tweet.Replies[0].destroy()
-          tweet.destroy()
+        if (tweet[0].User.dataValues.id !== helpers.getUser(req).id) {
+          if (tweet[0].Replies.length) {
+            tweet[0].Replies[0].destroy()
+            return tweet[0].destroy()
+          }
+          return tweet[0].destroy()
         }
-        return tweet.destroy()
       })
       .then(() => res.redirect('/admin/tweets'))
   }

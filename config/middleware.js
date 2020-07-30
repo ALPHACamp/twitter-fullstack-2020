@@ -3,9 +3,9 @@ const db = require('../models')
 const User = db.User
 
 module.exports = {
-  topUsers: (req, res, next) => {
+  topUsers: async (req, res, next) => {
     if (helpers.getUser(req)) {
-      User.findAll({
+      await User.findAll({
         where: { role: 'user' },
         include: [{ model: User, as: 'Followers' }]
       })
