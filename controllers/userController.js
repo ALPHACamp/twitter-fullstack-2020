@@ -33,48 +33,46 @@ const userController = {
     })
   },
   getUser: (req, res) => {
-    userController.getRecommendedUsers(req, res).then((users) => {
-      return User.findByPk(req.params.id, {
-        include: [
-          {
-            model: Tweet,
-            include: { model: User, as: 'LikedUsers' }
-          },
-          { model: Tweet },
-          { model: User, as: 'Followers' }
-        ],
-        order: [[Tweet, 'createdAt', 'DESC']]
-      })
-        .then((user) => {
-          const results = user.toJSON()
-          results.tweetCount = results.Tweets.length
-          for (let i = 0; i < results.Tweets.length; i++) {
-            results.Tweets[i].repliesCount = results.Tweets[i].replyCount
-            results.Tweets[i].likeCount = results.Tweets[i].LikedUsers.length
-          }
-          results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
-
-          Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
-            .then((likes) => {
-              likes = likes.map(like => like.TweetId)
-              results.Tweets.forEach(tweet => {
-                tweet.tweetIsLiked = likes.includes(tweet.id)
-              })
-              console.log(results)
-              return res.render('userPage', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
-            })
+    userController.getRecommendedUsers(req, res)
+      .then((users) => {
+        return User.findByPk(req.params.id, {
+          include: [
+            {
+              model: Tweet,
+              include: [Like]
+            },
+            { model: User, as: 'Followers' }
+          ],
+          order: [[Tweet, 'createdAt', 'DESC']]
         })
-        .catch((err) => res.send(err))
-    })
+          .then((user) => {
+            return Like.findAll({ where: { UserId: req.user.id }, raw: true, nest: true })
+              .then((likes) => {
+                const results = user.toJSON()
+                likes = likes.map(like => like.TweetId)
+                results.Tweets.forEach(tweet => {
+                  tweet.tweetIsLiked = likes.includes(tweet.id)
+                })
+                results.tweetCount = results.Tweets.length
+                results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
+                return res.render('userPage', {
+                  results: results,
+                  recommendFollowings: users,
+                  currentId: req._passport.session.user
+                })
+              })
+          })
+          .catch((err) => res.send(err))
+      })
+      .catch((err) => res.send(err))
   },
   getUserLikeContent: (req, res) => {
     userController.getRecommendedUsers(req, res).then((users) => {
       return User.findByPk(req.params.id, {
         include: [
           {
-            model: Tweet,
-            as: 'LikedTweets',
-            include: User
+            model: Like,
+            include: [{ model: Tweet, include: User }]
           },
           { model: Tweet },
           { model: User, as: 'Followers' }
@@ -85,9 +83,7 @@ const userController = {
           results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
           results.tweetCount = results.Tweets.length
 
-          results.LikedTweets.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
-
-          console.log(results)
+          results.Likes.sort((a, b) => b.createdAt - a.createdAt)
           res.render('userLikeContent', {
             results: results,
             recommendFollowings: users,

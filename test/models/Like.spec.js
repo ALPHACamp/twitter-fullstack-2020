@@ -28,23 +28,23 @@ describe('# Like Model', () => {
     ].forEach(checkPropertyExists(like))
   })
 
-  // context('associations', () => {
-  //   const User = 'User'
-  //   const Tweet = 'Tweet'
-  //   before(() => {
-  //     Like.associate({ User })
-  //     Like.associate({ Tweet })
-  //   })
+  context('associations', () => {
+    const User = 'User'
+    const Tweet = 'Tweet'
+    before(() => {
+      Like.associate({ User })
+      Like.associate({ Tweet })
+    })
 
-  //   it('should belong to user', (done) => {
-  //     expect(Like.belongsTo).to.have.been.calledWith(User)
-  //     done()
-  //   })
-  //   it('should belong to tweet', (done) => {
-  //     expect(Like.belongsTo).to.have.been.calledWith(Tweet)
-  //     done()
-  //   })
-  // })
+    it('should belong to user', (done) => {
+      expect(Like.belongsTo).to.have.been.calledWith(User)
+      done()
+    })
+    it('should belong to tweet', (done) => {
+      expect(Like.belongsTo).to.have.been.calledWith(Tweet)
+      done()
+    })
+  })
 
   context('action', () => {
     let data = null
