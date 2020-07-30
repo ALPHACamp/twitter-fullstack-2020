@@ -101,7 +101,6 @@ const tweetController = {
                 })
                   .then((replies) => {
                     // replies 是某一個第一層回覆底下的所有回覆 root-1-many
-                    console.log('replies:', replies)
                     replies.forEach(index => {
                       if (index.Likes.UserId === getUser(req).id) {
                         index.secondReplyIsLiked = true
@@ -129,7 +128,6 @@ const tweetController = {
                   .catch(err => console.log(err))
             ))
               .then(() => {
-                console.log(secondReplies.flat())
                 res.render('reply', {
                   tweet, // 內含 tweet 基本資料
                   replies: tweet.replies[0].id === null ? null : tweet.replies, // 第一層回覆 ＋ 第二層回覆
@@ -207,10 +205,9 @@ const tweetController = {
   },
   addLike: (req, res) => {
     const UserId = getUser(req).id
-    const TweetId = Number(req.params.tweetId)
-    const ReplyId = Number(req.params.replyId)
-    const SecondreplyId = Number(req.params.secondReplyId)
-
+    const TweetId = Number(req.params.tweetId) || 0
+    const ReplyId = Number(req.params.replyId) || 0
+    const SecondreplyId = Number(req.params.secondReplyId) || 0
     return Like.create({
       UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId
     })
@@ -231,9 +228,9 @@ const tweetController = {
   },
   removeLike: (req, res) => {
     const UserId = getUser(req).id
-    const TweetId = Number(req.params.tweetId)
-    const ReplyId = Number(req.params.replyId)
-    const SecondreplyId = Number(req.params.secondReplyId)
+    const TweetId = Number(req.params.tweetId) || 0
+    const ReplyId = Number(req.params.replyId) || 0
+    const SecondreplyId = Number(req.params.secondReplyId) || 0
     return Like.findOne({
       where: {
         UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId
