@@ -17,7 +17,7 @@ const userController = {
     const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     const error = []
     if (!account || !name || !email || !password || !checkPassword) {
-      error.push({ message: '所有欄位都是必填' })
+      error.push({ message: '所有欄位皆為必填' })
       return res.render('signup', { account, name, email, error })
     }
     if (password !== checkPassword) {
@@ -42,7 +42,7 @@ const userController = {
       })
   },
   signIn: (req, res) => {
-    req.flash('successMessages', '登入成功')
+    req.flash('successMessages', '登入成功！')
     res.redirect('/tweets')
   },
   logout: (req, res) => {
@@ -61,7 +61,7 @@ const userController = {
 
     if (originalEmail === email) { newEmail = originalEmail }
     if (originalAccount === account) { newAccount = originalAccount }
-    if (!account || !name || !email || !password || !passwordCheck) { error.push({ message: '所有欄位皆為必填!' }) }
+    if (!account || !name || !email || !password || !passwordCheck) { error.push({ message: '所有欄位皆為必填' }) }
     if (password !== passwordCheck) { error.push({ message: '密碼與確認密碼必須相同!' }) }
 
     if (originalEmail !== email) {
@@ -85,7 +85,7 @@ const userController = {
       await User.findByPk(id)
         .then(user => user.update({ name, password: hashPassword, email: newEmail, account: newAccount }))
         .then(() => {
-          req.flash('successMessage', '更新成功~🥰')
+          req.flash('successMessage', '更新成功！')
           res.redirect('/tweets')
         })
     }
