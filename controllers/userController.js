@@ -223,16 +223,22 @@ const userController = {
       res.render('user-followers', { results })
     })
   },
-  addFollow: (req, res) => {
-    const followingId = Number(req.params.id)
-    const followerId = helpers.getUser(req).id
-    return Followship.create({ followingId, followerId })
+  addFollow: async (req, res) => {
+    const followingId = Number(req.body.id)
+    const followerId = Number(helpers.getUser(req).id)
+
+    if (followerId === followingId) { return res.redirect('back') }
+
+    await Followship.create({ followingId, followerId })
       .then(() => res.redirect('back'))
   },
-  removeFollow: (req, res) => {
-    const followingId = Number(req.params.id)
-    const followerId = helpers.getUser(req).id
-    return Followship.findOne({ where: { followingId, followerId } })
+  removeFollow: async (req, res) => {
+    const followingId = Number(req.body.id)
+    const followerId = Number(helpers.getUser(req).id)
+
+    if (followerId === followingId) { return res.redirect('back') }
+
+    await Followship.findOne({ where: { followingId, followerId } })
       .then(followship => followship.destroy())
       .then(() => res.redirect('back'))
   }

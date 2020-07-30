@@ -45,7 +45,7 @@ const adminController = {
   },
   deleteTweet: (req, res) => {
     const id = req.params.id
-    return Tweet.findById(id, { include: [Reply] })
+    return Tweet.findByPk(id, { include: [Reply] })
       .then(tweet => {
         if (tweet.Replies.length !== 0) {
           tweet.Replies[0].destroy()

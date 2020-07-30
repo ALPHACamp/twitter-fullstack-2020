@@ -2,7 +2,7 @@ const helpers = require('../_helpers')
 
 module.exports = {
   userAuthenticated: (req, res, next) => {
-    if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'user') {
+    if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role !== 'admin') {
       return next()
     }
     if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'admin') {
@@ -16,14 +16,14 @@ module.exports = {
     if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'admin') {
       return next()
     }
-    if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'user') {
+    if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role !== 'admin') {
       req.flash('errorMessage', '非管理員無法進入後台')
       return res.redirect('/admin/signin')
     }
     res.redirect('/signin')
   },
   authenticatedStatus: (req, res, next) => {
-    if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'user') { return res.redirect('/tweets') }
+    if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role !== 'admin') { return res.redirect('/tweets') }
     if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'admin') { return res.redirect('/admin/tweets') }
     next()
   }
