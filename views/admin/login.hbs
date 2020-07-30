@@ -1,23 +1,24 @@
-<div class="d-flex flex-column align-items-center">
-<form class="form-signin mt-4 col-5" action="/admin/login" method="POST">
-  <br>
-  <br>
-  <div class="text-center">
-    <h1 class="h3 mb-3 font-weight-bold">後台登入</h1>
-  </div>
-  <br>
-  <div class="form-label-group">
-    <input type="text" name="email" class="form-control my-4" placeholder="Email" required autofocus>
-  </div>
-  <div class="form-label-group">
-    <input type="password" name="password" class="form-control mb-4" placeholder="Password" required>
-  </div>
-  <br />
-
-  <button class="btn btn-lg btn-danger btn-block rounded-pill" type="submit">登入</button>
-  
-  <div class="d-flex justify-content-end mt-2">
-    <a class="mt-2 h5" href="/login">使用者登入</a>
-  </div>
-</form>
+<div id="loginForm" class="d-flex flex-column align-items-center">
+  <form class="form-signin mt-4 col-5" action="/admin/signin" method="POST">
+    <br>
+    <br>
+    <div class="text-center">
+      <h1 class="h3 mb-3 font-weight-bold">後台登入</h1>
+    </div>
+    <br>
+    <div class="form-label-group">
+      <input type="text" name="account" class="form-control my-4" placeholder="Account" required autofocus>
+    </div>
+    <div class="form-label-group">
+      <input type="password" name="password" class="form-control mb-4" placeholder="Password" required>
+    </div>
+    <br />
+    <button class="btn btn-lg btn-danger btn-block rounded-pill" type="submit">登入</button>
+    <div class="d-flex justify-content-end mt-2">
+      <a class="mt-2 h5" href="/signin">使用者登入</a>
+    </div>
+  </form>
 </div>
+<script>
+  document.getElementById('loginForm').classList.add("animate__animated", "animate__fadeIn")
+</script>

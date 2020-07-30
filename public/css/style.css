@@ -1,11 +1,17 @@
 .navBar {
-  border-bottom: 2px solid orange;
-  color: orange;
+  border-bottom: 2px solid rgb(255, 81, 0);
 }
+
 textarea:focus {
   outline: none!important;
 }
 textarea {
   resize: none;
   border: none!important; 
+}
+
+* p {
+  overflow-wrap: break-word;
+  word-break: break-all;
+  word-wrap: break-word;
 }

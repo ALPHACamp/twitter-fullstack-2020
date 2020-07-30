@@ -3,6 +3,7 @@ var request = require('supertest')
 var sinon = require('sinon')
 var should = chai.should();
 var expect = chai.expect;
+const passport = require('passport')
 
 var app = require('../../../app')
 var helpers = require('../../../_helpers');
@@ -19,7 +20,7 @@ describe('# Admin::Tweet request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
         await db.User.create({})
       })
 

@@ -6,40 +6,92 @@
         {{#each tweets}}
         <li class="list-group-item list-group-item-action">
             <div class="d-flex justify-content-between">
-
-            <div class="user-wrap d-flex">
-                <img src="{{this.userAvatar}}" alt="" class="rounded-circle mr-4" style="width: 60px; height: 60px;">
-                <div class="d-flex flex-column">
+                <div class="user-wrap d-flex">
+                    <img src="{{this.userAvatar}}" alt="" class="rounded-circle mr-4"
+                        style="width: 60px; height: 60px;">
                     <div class="d-flex flex-column">
-                        <div class="user d-flex justify-content-start">
-                            <div class="user-name font-weight-bold mr-2">
-                                {{this.userName}}
+                        <div class="d-flex flex-column">
+                            <div class="user d-flex justify-content-start">
+                                <div class="user-name font-weight-bold mr-2">
+                                    {{this.userName}}
+                                </div>
+                                <a href="/users/{{this.id}}" class="user-account text-secondary">
+                                    @{{this.account}}
+                                </a>
+                                {{!-- 要改 --}}
+                                <span>・{{moment this.createdAt}}</span>
                             </div>
-                            <a href="/users/{{this.id}}" class="user-account text-secondary">
-                                @{{this.account}}
-                            </a>
-                            {{!-- 要改 --}}
-                            <span>・{{moment this.createdAt}}</span>
                         </div>
-                        
+                        <p class="mt-2 ">{{this.description}}</p>
                     </div>
-                    <p class="mt-2 ">{{this.description}}</p>                   
                 </div>
-            </div>
-            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-                <button type="submit" class="btn btn-link text-dark">
+                <button type="button" class="btn btn-link text-dark" onclick="deleteTweet({{this.id}})"
+                    data-toggle="modal" data-target="#exampleModal">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-x" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z" />
-                        <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z" />
+                        <path fill-rule="evenodd"
+                            d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z" />
+                        <path fill-rule="evenodd"
+                            d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z" />
                     </svg>
                 </button>
-            </form>
-
             </div>
         </li>
         {{/each}}
-
+        <nav aria-label="Page navigation example">
+            <ul class="pagination ">
+                <li class="page-item">
+                    <a class="page-link btn-lg" href="/admin/tweets?page={{prev}}&pageId={{pageId}}"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {{#each totalPage}}
+                {{#ifCond this ../page}}
+                <li class="page-item active"><a class="page-link btn-lg" href="#">{{this}}</a></li>
+                {{else}}
+                <li class="page-item"><a class="page-link btn-lg"
+                        href="/admin/tweets?page={{this}}&pageId={{../pageId}}">{{this}}</a></li>
+                {{/ifCond}}
+                {{/each}}
+                <a class="page-link btn-lg" href="/admin/tweets?page={{next}}&pageId={{pageId}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                </li>
+            </ul>
+        </nav>
     </ul>
 </div>
 
+<script>
+    function deleteTweet(id) {
+        $('#exampleModal').modal('show');
+        $('#modalForm').attr('action', `/admin/tweets/${id}?_method=DELETE`);
+
+    }
+</script>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">確定要刪除嗎?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                刪除後將無法復原該推文，您確定要刪除嗎?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">否</button>
+                <form id="modalForm" action="" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger">
+                        是
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

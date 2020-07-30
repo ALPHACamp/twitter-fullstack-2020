@@ -4,18 +4,15 @@ const bcrypt = require('bcryptjs');
 const db = require('../models');
 const User = db.User;
 
-// setup passport strategy
 passport.use(
   new LocalStrategy(
-    // customize user field
     {
-      usernameField: 'email',
+      usernameField: 'account',
       passwordField: 'password',
       passReqToCallback: true
     },
-    // authenticate user
-    (req, email, password, cb) => {
-      User.findOne({ where: { email: email } }).then((user) => {
+    (req, account, password, cb) => {
+      User.findOne({ where: { account: account } }).then((user) => {
         if (!user)
           return cb(
             null,
@@ -34,7 +31,6 @@ passport.use(
   )
 );
 
-// serialize and deserialize user
 passport.serializeUser((user, cb) => {
   cb(null, user.id);
 });
@@ -46,7 +42,6 @@ passport.deserializeUser((id, cb) => {
     ]
   }).then((user) => {
     user = user.toJSON();
-    //console.log(user);
     return cb(null, user);
   });
 });
