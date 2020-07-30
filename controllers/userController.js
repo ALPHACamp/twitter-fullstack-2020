@@ -7,6 +7,7 @@ const helpers = require('../_helpers')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const Like = db.Like
 const Followship = db.Followship
 
 const userController = {
@@ -52,7 +53,16 @@ const userController = {
             results.Tweets[i].likeCount = results.Tweets[i].LikedUsers.length
           }
           results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
-          return res.render('userPage', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+
+          Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
+            .then((likes) => {
+              likes = likes.map(like => like.TweetId)
+              results.Tweets.forEach(tweet => {
+                tweet.tweetIsLiked = likes.includes(tweet.id)
+              })
+              console.log(results)
+              return res.render('userPage', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
+            })
         })
         .catch((err) => res.send(err))
     })
@@ -101,11 +111,11 @@ const userController = {
         order: [[Reply, 'createdAt', 'DESC']]
       })
         .then((user) => {
-          const results = user
+          const results = user.toJSON()
           results.tweetCount = results.Tweets.length
-          results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
-          console.log(results.toJSON())
-          return res.render('userReplyTweet', { results: results.toJSON(), recommendFollowings: users, currentId: req._passport.session.user })
+          results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+          console.log(results)
+          return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
         })
         .catch((err) => res.send(err))
     })
