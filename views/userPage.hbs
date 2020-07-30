@@ -191,8 +191,6 @@
               <img src="{{results.avatar}}" class="rounded-circle mb-5" alt="avatar" width="140" height="140"
                 style="border: 4px solid #FFFFFF; position:absolute; top:60%; left:14px;">
             </label>
-
-
           </div>
           <div class="d-flex flex-column mt-5">
             <div class="p-2 mt-3">
@@ -207,7 +205,6 @@
                 style="resize:none;outline:none;wrap:off;overflow:auto;border-color:transparent">{{results.introduction}}</textarea>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -229,18 +226,18 @@
           <div class="card" style="border-color:transparent;">
             <div class="row no-gutters">
               <div class="col-1 d-flex flex-column align-items-center">
-                <img src="{{this.User.avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
+                <img src="{{../results/avatar}}" alt="" style="width: 50px;height:50px; border-radius: 50%">
                 <div class="vertical-line" style="width: 2px; height:100% ; background-color:#CCD6DD;"></div>
               </div>
               <div class="col-10 ml-3 mb-1">
                 <span style="font-size: 15px;">
-                  <span style="font-weight: bold;">{{this.User.name}}</span>
-                  <span class="ml-1 text-muted">{{this.User.account}}．{{moment this.createdAt}}</span> <br>
+                  <span style="font-weight: bold;">{{../results/name}}</span>
+                  <span class="ml-1 text-muted">{{../results/account}}．{{moment this.createdAt}}</span> <br>
                   <span>{{this.description}}</span> <br>
                 </span>
                 <span class="text-muted" style="font-size: 13px;">
                   回覆給
-                  <span style="color: #FF6600;">{{this.User.account}}</span>
+                  <span style="color: #FF6600;">{{../results/account}}</span>
                 </span>
               </div>
               <hr>
