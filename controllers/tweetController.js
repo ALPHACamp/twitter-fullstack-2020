@@ -70,8 +70,9 @@ const tweetController = {
           nest: true,
           include: [
             User,
-            { model: Reply, include: [User, { model: User, as: 'LikedUsers' }] },
-            { model: User, as: 'LikedUsers' }
+            Like,
+            { model: Reply, include: [User, Like] }
+
           ]
         })
           .then((tweets) => {
@@ -79,9 +80,9 @@ const tweetController = {
             const tweet = {
               ...tweets[0],
               replies: [...new Set(tweets.map(item => { return JSON.stringify(item.Replies) }))].map(item => JSON.parse(item)),
-              likedUsers: [...new Set(tweets.map(t => t.LikedUsers.Like.UserId))]
+              Likes: [...new Set(tweets.map(t => t.Likes.UserId))]
             }
-            const tweetIsLiked = tweet.likedUsers.includes(getUser(req).id)
+            const tweetIsLiked = tweet.Likes.includes(getUser(req).id)
             const secondReplies = [] // 用於製作modal，與tweet.secondReplies 用途不同
 
             return Promise.all(Array.from(
@@ -94,20 +95,20 @@ const tweetController = {
                   nest: true,
                   include: [
                     User,
-                    { model: Reply, include: [User] },
-                    { model: User, as: 'LikedUsers' }
+                    Like,
+                    { model: Reply, include: [User] }
                   ]
                 })
                   .then((replies) => {
                     // replies 是某一個第一層回覆底下的所有回覆 root-1-many
+                    console.log('replies:', replies)
                     replies.forEach(index => {
-                      if (index.LikedUsers.Like.UserId === getUser(req).id) { index.secondReplyIsLiked = true } else {
+                      if (index.Likes.UserId === getUser(req).id) {
+                        index.secondReplyIsLiked = true
+                      } else {
                         index.secondReplyIsLiked = false
                       }
-                      delete index.LikedUsers
-                    })
-                    replies.forEach(index => {
-                      delete index.LikedUsers
+                      delete index.Likes
                     })
                     // 過濾掉重複資訊
                     replies = [...new Set(replies.map(item => { return JSON.stringify(item) }))].map(item => JSON.parse(item))
@@ -209,7 +210,6 @@ const tweetController = {
     const TweetId = Number(req.params.tweetId)
     const ReplyId = Number(req.params.replyId)
     const SecondreplyId = Number(req.params.secondReplyId)
-    console.log(TweetId, ReplyId, SecondreplyId)
 
     return Like.create({
       UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId

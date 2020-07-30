@@ -12,11 +12,12 @@ const model = (sequelize, DataTypes) => {
   Tweet.associate = (models) => {
     Tweet.belongsTo(models.User)
     Tweet.hasMany(models.Reply)
-    Tweet.belongsToMany(models.User, {
-      through: models.Like,
-      foreignKey: 'TweetId',
-      as: 'LikedUsers'
-    })
+    Tweet.hasMany(models.Like)
+    // Tweet.belongsToMany(models.User, {
+    //   through: models.Like,
+    //   foreignKey: 'TweetId',
+    //   as: 'LikedUsers'
+    // })
   }
 
   return Tweet
