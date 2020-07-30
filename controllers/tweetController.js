@@ -71,12 +71,11 @@ const tweetController = {
           include: [
             User,
             Like,
-            { model: Reply, include: [User, Like] }
-
+            { model: Reply, include: [User] }
           ]
         })
           .then((tweets) => {
-            // 剔除重複query的 replies 和 likedUsers
+            // 剔除重複query的 replies 和 likes
             const tweet = {
               ...tweets[0],
               replies: [...new Set(tweets.map(item => { return JSON.stringify(item.Replies) }))].map(item => JSON.parse(item)),
@@ -84,7 +83,6 @@ const tweetController = {
             }
             const tweetIsLiked = tweet.Likes.includes(getUser(req).id)
             const secondReplies = [] // 用於製作modal，與tweet.secondReplies 用途不同
-
             return Promise.all(Array.from(
               { length: tweet.replies.length },
               (_, i) =>
@@ -237,7 +235,6 @@ const tweetController = {
       }
     })
       .then((like) => {
-        console.log(like)
         return like.destroy()
       })
       .then(() => {

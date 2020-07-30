@@ -15,14 +15,15 @@
             <span class="text-muted" style="font-weight: bold;">{{this.account}}</span>
           </div>
           {{#if this.isFollowed}}
-          <form action="/following/{{this.id}}?_method=DELETE" method="post" class="row align-items-center mr-3">
+          <form action="/followships/{{this.id}}?_method=DELETE" method="post" class="row align-items-center mr-3">
             <div class="col ml-auto ">
               <button type="submit" class="btn rounded-pill"
                 style="background-color: #FF6600; color:white">取消跟隨</button>
             </div>
           </form>
           {{else}}
-          <form action="/following/{{this.id}}" method="post" class="row align-items-center mr-3">
+          <form action="/followships" method="post" class="row align-items-center mr-3">
+            <input type="hidden" name="id" value="{{this.id}}">
             <div class="col ml-auto">
               <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600">跟隨</button>
             </div>

@@ -56,6 +56,7 @@
               <small class="text-muted ml-1 mr-5">{{this.replyCount}}</small>
               {{#if this.tweetIsLiked}}
               <form action="/tweets/{{this.id}}/unlike" method="post" style="display: inline-block;">
+                <input type="hidden" name="tweetId" value="{{this.id}}">
                 <button type="submit" style="background: none;border: none;">
                   <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path

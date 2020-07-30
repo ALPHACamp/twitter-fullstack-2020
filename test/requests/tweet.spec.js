@@ -2,13 +2,12 @@ var chai = require('chai')
 var request = require('supertest')
 var sinon = require('sinon')
 var app = require('../../app')
-var helpers = require('../../_helpers');
-var should = chai.should();
-var expect = chai.expect;
+var helpers = require('../../_helpers')
+var should = chai.should()
+var expect = chai.expect
 const db = require('../../models')
 
 describe('# tweet request', () => {
-
   context('# index', () => {
     describe('user not login', () => {
       before((done) => {
@@ -21,20 +20,19 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
-            return done();
-          });
+            if (err) return done(err)
+            return done()
+          })
       })
     })
     describe('user log in', () => {
       before(async () => {
-
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
-        ).returns(true);
+        ).returns(true)
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [] });
+        ).returns({ id: 1, Followings: [] })
         await db.User.create({})
         await db.Tweet.create({ UserId: 1, description: 'User1 的 Tweet1' })
         await db.Tweet.create({ UserId: 1, description: 'User1 的 Tweet2' })
@@ -46,17 +44,16 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(200)
           .end(function (err, res) {
-            if (err) return done(err);
+            if (err) return done(err)
             res.text.should.include('User1 的 Tweet1')
             res.text.should.include('User1 的 Tweet2')
-            return done();
-          });
+            return done()
+          })
       })
 
       after(async () => {
-
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
         await db.User.destroy({ where: {}, truncate: true })
         await db.Tweet.destroy({ where: {}, truncate: true })
       })
@@ -66,13 +63,12 @@ describe('# tweet request', () => {
   context('# post', () => {
     describe('when successfully save', () => {
       before(async () => {
-
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
-        ).returns(true);
+        ).returns(true)
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [] });
+        ).returns({ id: 1, Followings: [] })
         await db.User.create({})
       })
       it('will redirect to index', (done) => {
@@ -82,9 +78,9 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
-            done();
-          });
+            if (err) return done(err)
+            done()
+          })
       })
       it('will create current users tweet', (done) => {
         db.Tweet.findOne({ where: { userId: 1 } }).then(tweet => {
@@ -94,9 +90,8 @@ describe('# tweet request', () => {
       })
 
       after(async () => {
-
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
         await db.User.destroy({ where: {}, truncate: true })
         await db.Tweet.destroy({ where: {}, truncate: true })
       })
@@ -114,9 +109,9 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
-            done();
-          });
+            if (err) return done(err)
+            done()
+          })
       })
 
       after(async () => {
@@ -126,13 +121,12 @@ describe('# tweet request', () => {
 
     describe('when failed without validation', () => {
       before(async () => {
-
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
-        ).returns(true);
+        ).returns(true)
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [] });
+        ).returns({ id: 1, Followings: [] })
         await db.User.create({})
       })
       it('will redirect to index', (done) => {
@@ -142,21 +136,20 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
-            done();
-          });
+            if (err) return done(err)
+            done()
+          })
       })
       it('cant create current users tweet', (done) => {
         db.Tweet.findAll({ where: { userId: 1 } }).then(tweets => {
-          expect(tweets).to.be.an('array').that.is.empty;
+          expect(tweets).to.be.an('array').that.is.empty
           done()
         })
       })
 
       after(async () => {
-
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
         await db.User.destroy({ where: {}, truncate: true })
         await db.Tweet.destroy({ where: {}, truncate: true })
       })
@@ -166,13 +159,12 @@ describe('# tweet request', () => {
   context('# like', () => {
     describe('like first tweet', () => {
       before(async () => {
-
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
-        ).returns(true);
+        ).returns(true)
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [] });
+        ).returns({ id: 1, Followings: [] })
         await db.User.create({})
         await db.Tweet.create({ UserId: 1 })
       })
@@ -183,21 +175,21 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
-            done();
-          });
+            if (err) return done(err)
+            done()
+          })
       })
       it('will save like', (done) => {
         db.Like.findOne({ where: { userId: 1 } }).then(like => {
           expect(like).to.not.be.null
           done()
         })
+          .catch(err => console.log(err))
       })
 
       after(async () => {
-
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
         await db.User.destroy({ where: {}, truncate: true })
         await db.Tweet.destroy({ where: {}, truncate: true })
         await db.Like.destroy({ where: {}, truncate: true })
@@ -208,13 +200,12 @@ describe('# tweet request', () => {
   context('# unlike', () => {
     describe('like first tweet', () => {
       before(async () => {
-
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
-        ).returns(true);
+        ).returns(true)
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [] });
+        ).returns({ id: 1, Followings: [] })
         await db.User.create({})
         await db.Tweet.create({ UserId: 1, description: 'test' })
         await db.Like.create({ UserId: 1, TweetId: 1 })
@@ -226,9 +217,9 @@ describe('# tweet request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
-            done();
-          });
+            if (err) return done(err)
+            done()
+          })
       })
       it('will delete like', (done) => {
         db.Like.findOne({ where: { userId: 1 } }).then(like => {
@@ -237,16 +228,13 @@ describe('# tweet request', () => {
         })
       })
 
-
       after(async () => {
-
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
         await db.User.destroy({ where: {}, truncate: true })
         await db.Tweet.destroy({ where: {}, truncate: true })
         await db.Like.destroy({ where: {}, truncate: true })
       })
     })
   })
-
-});
+})
