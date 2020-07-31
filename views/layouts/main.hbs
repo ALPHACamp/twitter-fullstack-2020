@@ -55,7 +55,7 @@
             style="width: 80px; height: 80px;">
           <div class="font-weight-bold h3">Twitter 衝一波</div>
         </div>
-        <ul class="nav flex-row flex-lg-column justify-content-around align-items-lg-start" >
+        <ul class="nav flex-row flex-lg-column justify-content-around align-items-lg-start">
           {{#whoAreYou myUser.role}}
           <li class="nav-item d-flex mt-4 {{#if isHomePage}} text-danger {{else}} text-dark {{/if}}"
             onmouseover="hoverBig('homeSvg')" onmouseout="hoverSmall('homeSvg')">
@@ -97,8 +97,7 @@
               <div class="modal-content">
                 <div class="modal-header">
 
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                    >x</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">x</button>
 
                 </div>
                 <div class="modal-body">
@@ -170,7 +169,7 @@
     </div>
 
     {{#if topUsers}}
-    <div id="topUsersDiv" class="right-sec mt-4 col-lg-3 mb-md-3 border-left border-black-50" >
+    <div id="topUsersDiv" class="right-sec mt-4 col-lg-3 mb-md-3 border-left border-black-50">
       <ul
         class="list-group list-group-flush bg-light rounded-lg shadow d-inline-flex flex-row  flex-lg-column overflow-auto"
         style="max-width: 800px; min-width: 350px;">
@@ -205,7 +204,7 @@
           </form>
           {{else}}
           <form action="/followships" method="post" class="d-flex align-items-center ml-4">
-          <input type="hidden" name="id" value="{{this.id}}">
+            <input type="hidden" name="id" value="{{this.id}}">
             <button type="submit" class="btn btn-outline-danger rounded-pill"> 跟隨 </button>
           </form>
           {{/if}}
@@ -231,7 +230,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
-    
+
 
   <script>
     const newTweetModalTextareaElement = document.getElementById('newTweetModalTextarea')

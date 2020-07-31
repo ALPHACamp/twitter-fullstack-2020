@@ -35,126 +35,55 @@ const authenticatedAdmin = (req, res, next) => {
   }
   res.redirect('/signin');
 };
+
 router.get('/admin/signin', adminController.adminLoginPage);
-router.post(
-  '/admin/signin',
-  passport.authenticate('local', {
+router.post('/admin/signin', passport.authenticate('local', {
     failureRedirect: '/admin/signin',
     failureFlash: true
-  }),
-  adminController.login
-);
+  }), adminController.login );
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
-router.delete('/admin/tweets/:id',authenticatedAdmin, adminController.deleteTweet
-);
+router.delete('/admin/tweets/:id',authenticatedAdmin, adminController.deleteTweet );
 
 router.get('/', (req, res) => res.redirect('/tweets'));
 router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets );
-router.get(
-  '/tweets/:id/replies',
-  authenticated,
-  userController.topUserForLayout,
-  (req, res, next) => {
+router.get('/tweets/:id/replies', authenticated, userController.topUserForLayout, (req, res, next) => {
     res.locals.getComment = true;
     return next();
-  },
-  tweetController.getTweet
-);
+  }, tweetController.getTweet );
 router.post('/tweets', authenticated, tweetController.postTweet);
-router.get(
-  '/tweets/:id',
-  authenticated,
-  userController.topUserForLayout,
-  tweetController.getTweet
-);
+router.get('/tweets/:id', authenticated, userController.topUserForLayout, tweetController.getTweet );
 
 router.get('/logout', userController.logout);
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signup);
 router.get('/signin', userController.loginPage);
-router.post(
-  '/signin',
-  passport.authenticate('local', {
+router.post('/signin', passport.authenticate('local', {
     failureRedirect: '/signin',
     failureFlash: true
-  }),
-  userController.login
-);
+  }), userController.login );
 
 router.post('/tweets/:tweetId/like', authenticated, userController.addLike);
 router.delete('/tweets/:tweetId/unlike', authenticated, userController.removeLike);
-router.post(
-  '/replies/likes/:ReplyId',
-  authenticated,
-  userController.addReplyLike
-);
-router.delete(
-  '/replies/likes/:ReplyId',
-  authenticated,
-  userController.removeReplyLike
-);
+router.post('/replies/likes/:ReplyId', authenticated, userController.addReplyLike );
+router.delete('/replies/likes/:ReplyId', authenticated, userController.removeReplyLike );
 router.post('/followships', authenticated, userController.addFollowing);
-router.delete(
-  '/followships/:id',
-  authenticated,
-  userController.removeFollowing
-);
+router.delete('/followships/:id', authenticated, userController.removeFollowing );
 
 router.get('/users/:id/profile', authenticated, userController.editProfile);
-router.put(
-  '/users/:id/profile',
-  authenticated,
-  upload.fields([
+router.put('/users/:id/profile', authenticated, upload.fields([
     { name: 'cover', maxCount: 1 },
     { name: 'avatar', maxCount: 1 }
-  ]),
-  userController.putEditProfile
-);
-router.get(
-  '/users/:id/comments',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getUserReply
-);
-router.get(
-  '/users/:id/tweets',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getUserPage
-);
-router.post(
-  '/tweets/:id/replies',
-  authenticated,
-  userController.topUserForLayout,
-  tweetController.postComment
-);
-router.get(
-  '/users/:id/likes',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getUserLike
-);
+  ]), userController.putEditProfile );
+router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply );
+router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage );
+router.post('/tweets/:id/replies', authenticated, userController.topUserForLayout, tweetController.postComment );
+router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike );
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
-router.get(
-  '/users/:id/followings',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getFollowings
-);
-router.get(
-  '/users/:id/followers',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getFollowers
-);
-router.get(
-  '/users/:id',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getUserPage
-);
+router.get('/users/:id/followings', authenticated, userController.topUserForLayout, userController.getFollowings );
+router.get('/users/:id/followers', authenticated, userController.topUserForLayout, userController.getFollowers );
+router.get('/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage );
 
 module.exports = router;
