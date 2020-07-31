@@ -19,9 +19,9 @@ This is a simple :v: twitter :v: clone fullstack project made with Express.js, N
 - Admin can view all the users
 - Admin can view and delete all the tweets
 - Users can post tweets
-- Users can like tweets :heart:
+- Users can like/unlike tweets :heart:
 - Users can reply to tweets :speech_balloon:
-- Users can follow users
+- Users can follow/unfollow users
 - Users can edit account info
 - Users can edit profile
 - Users can view all the tweets
