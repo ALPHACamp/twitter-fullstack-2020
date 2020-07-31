@@ -28,7 +28,7 @@ app.use(flash())
 app.use(middleware.topUsers)
 app.use(middleware.setLocals)
 
-app.listen(port, () => console.log(`Alphitter is listening on port ${PORT}!`))
+app.listen(PORT, () => console.log(`Alphitter is listening on port ${PORT}!`))
 
 require('./routes/index')(app, passport)
 
