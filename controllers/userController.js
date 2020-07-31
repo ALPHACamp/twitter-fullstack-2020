@@ -477,6 +477,10 @@ let userController = {
       res.send('something is wrong');
     }
   },
+
+  postChatroomPage: async (req, res) =>{
+    
+  }
 };
 
 module.exports = userController;
