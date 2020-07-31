@@ -34,8 +34,8 @@ const adminAuthenticated = (req, res, next) => {
 // Root path
 // 首頁
 router.get('/', (req, res) => res.redirect('/tweets'))
-router.get('/tweets', authenticated, tweetController.getHomePage)
-router.get('/tweets/:tweetId/replies', authenticated, tweetController.getReplyPage)
+router.get('/tweets', authenticated, userController.getRecommendedUsers, tweetController.getHomePage)
+router.get('/tweets/:tweetId/replies', authenticated, userController.getRecommendedUsers, tweetController.getReplyPage)
 // 發推
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.delete('/tweets/:tweetId', authenticated, tweetController.deleteTweet)
@@ -87,11 +87,11 @@ router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.admi
 
 // USER
 // 取得個人頁面
-router.get('/users/:id', authenticated, userController.getUser)
+router.get('/users/:id', authenticated, userController.getRecommendedUsers, userController.getUser)
 // 取得個人like內容頁面
-router.get('/users/:id/like', authenticated, userController.getUserLikeContent)
+router.get('/users/:id/like', authenticated, userController.getRecommendedUsers, userController.getUserLikeContent)
 // 取得個人回覆過的推文頁面
-router.get('/users/:id/repliesTweet', authenticated, userController.getUserRepliesTweets)
+router.get('/users/:id/repliesTweet', authenticated, userController.getRecommendedUsers, userController.getUserRepliesTweets)
 // 編輯個人資料頁面
 router.get('/users/:id/edit', authenticated, userController.editUser)
 // 編輯個人資料
@@ -99,10 +99,10 @@ router.put('/users/:id/edit', authenticated, upload.fields([
   { name: 'cover', maxCount: 1 },
   { name: 'avatar', maxCount: 1 }
 ]),
-userController.putUser)
+  userController.putUser)
 // 查看跟隨者名單
-router.get('/users/:id/followers', authenticated, userController.getUserFollowerList)
+router.get('/users/:id/followers', authenticated, userController.getRecommendedUsers, userController.getUserFollowerList)
 // 查看追隨者名單
-router.get('/users/:id/followings', authenticated, userController.getUserFollowingList)
+router.get('/users/:id/followings', authenticated, userController.getRecommendedUsers, userController.getUserFollowingList)
 
 module.exports = router
