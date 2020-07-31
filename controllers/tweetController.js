@@ -70,9 +70,9 @@ const tweetController = {
     return Tweet.findByPk(id, { include: [Reply] })
       .then(tweet => {
         const replies = tweet.Replies
-        return res.send(replies)
+        return res.json({ replies })
       })
-      .then(() => res.redirect('/tweets'))
+      .catch(err => console.log(err))
   },
   addLike: (req, res) => {
     Like.create({
