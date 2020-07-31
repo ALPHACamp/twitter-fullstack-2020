@@ -6,9 +6,9 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
-const io = require('socket.io')(server)
 
 const helpers = require('./_helpers')
+const useSocketIO = require('./config/socketIO')
 const passport = require('./config/passport')
 const useHbsHelper = require('./config/hbs-helpers')
 const useRoutes = require('./routes')
@@ -18,7 +18,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const { PORT } = process.env
 
-io.on('connection', socket => console.log('======================\nAn user was connected!\n======================'))
 app.engine('hbs', hbs({ defaultLayout: 'main', extname: 'hbs', helpers: useHbsHelper }))
 app.set('view engine', 'hbs')
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
@@ -27,6 +26,7 @@ app.use(methodOverride('_method'))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
+useSocketIO(server)
 app.use((req, res, next) => {
   res.locals.isAuth = helpers.ensureAuthenticated(req)
   res.locals.user = helpers.getUser(req)
