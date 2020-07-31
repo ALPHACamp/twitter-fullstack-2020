@@ -32,11 +32,11 @@ const tweetController = {
   postTweet: (req, res) => {
     if (!req.body.description.length) {
       req.flash('error_messages', '請新增內容後再發推文。')
-      res.redirect('back')
+      return res.redirect('back')
     }
     if (req.body.description.length > 140) {
       req.flash('error_messages', '推文過長，請輸入140字內的推文。')
-      res.redirect('back')
+      return res.redirect('back')
     }
     return Tweet.create({
       UserId: helpers.getUser(req).id,

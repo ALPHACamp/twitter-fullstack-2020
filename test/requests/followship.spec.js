@@ -17,7 +17,7 @@ describe('# followship request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [], role: 'user' })
+        ).returns({ id: 1, Followings: [] })
         await db.User.destroy({ where: {}, truncate: true })
         await db.Followship.destroy({ where: {}, truncate: true })
         await db.User.create({})
@@ -83,7 +83,7 @@ describe('# followship request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [], role: 'user' })
+        ).returns({ id: 1, Followings: [] })
         await db.User.destroy({ where: {}, truncate: true })
         await db.Followship.destroy({ where: {}, truncate: true })
         await db.User.create({})
