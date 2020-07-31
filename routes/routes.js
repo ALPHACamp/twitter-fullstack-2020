@@ -87,6 +87,6 @@ router.get('/users/:id/followings', authenticated, userController.topUserForLayo
 router.get('/users/:id/followers', authenticated, userController.topUserForLayout, userController.getFollowers );
 router.get('/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage );
 
-router.get('/chatroom', chatController.getChatPage)
+router.get('/chatroom', authenticated, chatController.getChatPage)
 
 module.exports = router;
