@@ -11,6 +11,10 @@ a p:hover {
 }
 
 /* 共用元素 */
+.sign-icon {
+  color: #FF6600;
+  font-size: 40px;
+}
 .user-name {
   font-weight: bold;
   font-size: 15px;
