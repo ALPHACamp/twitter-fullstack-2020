@@ -1,5 +1,3 @@
-process.env.NODE_ENV = 'test'
-
 var chai = require('chai')
 var request = require('supertest')
 var sinon = require('sinon')
@@ -7,6 +5,7 @@ var app = require('../../app')
 var helpers = require('../../_helpers')
 var should = chai.should()
 const db = require('../../models')
+const { expect } = require('chai')
 
 describe('# user request', () => {
   context('# tweets', () => {
@@ -82,9 +81,9 @@ describe('# user request', () => {
           .set('Accept', 'application/json')
           .expect(200)
           .end(function (err, res) {
-            if (err) return done(err)
-            return done()
-          })
+            if (err) return done(err);
+            return done();
+          });
       })
 
       // it('will render edit page', (done) => {
@@ -98,6 +97,7 @@ describe('# user request', () => {
       //       return done()
       //     })
       // })
+<<<<<<< HEAD
       // it('will redirect if not this user', (done) => {
       //   request(app)
       //     .get('/users/2/edit')
@@ -109,6 +109,18 @@ describe('# user request', () => {
       //       return done()
       //     })
       // })
+=======
+      it('will redirect if not this user', (done) => {
+        request(app)
+          .get('/users/2/edit')
+          .set('Accept', 'application/json')
+          .expect(302)
+          .end(function (err, res) {
+            if (err) return done(err)
+            return done()
+          })
+      })
+>>>>>>> c7ce85fcad4376b995ce8c2211f93098bc768b61
     })
 
     after(async () => {
@@ -132,6 +144,7 @@ describe('# user request', () => {
     // describe('successfully update', () => {
     //   it('will change users intro', (done) => {
     //     request(app)
+<<<<<<< HEAD
     //       .put('/users/1/edit')
     //       .send('name=abc')
     //       .set('Accept', 'application/json')
@@ -143,6 +156,19 @@ describe('# user request', () => {
     //           return done()
     //         })
     //       })
+=======
+    //       .post('/api/users/1')
+    //       .send('name=abc')
+    //       .set('Accept', 'application/json')
+    //       .expect(200)
+    //       .end(function (err, res) {
+    //         if (err) return done(err);
+    //         db.User.findByPk(1).then(user => {
+    //           user.name.should.equal('abc');
+    //           return done();
+    //         })
+    //       });
+>>>>>>> c7ce85fcad4376b995ce8c2211f93098bc768b61
     //   })
     // })
 

@@ -16,12 +16,14 @@ const tweetController = {
       ]
     })
       .then((tweets) => {
-        Like.findAll({ where: { UserId: helpers.getUser(req).id } })
+        Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
           .then((likes) => {
+            likes = likes.map(like => like.TweetId)
             tweets = tweets.map(t => ({
               ...t,
               tweetIsLiked: likes.includes(t.id)
             }))
+            tweets = tweets.sort((a, b) => b.createdAt - a.createdAt)
             res.render('home', {
               tweets: tweets
             })
@@ -218,7 +220,7 @@ const tweetController = {
     const SecondreplyId = Number(req.params.secondReplyId) || 0
     return Like.findOne({
       where: {
-        UserId: UserId, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId
+        UserId: helpers.getUser(req).id, TweetId: TweetId, ReplyId: ReplyId, SecondreplyId: SecondreplyId
       }
     })
       .then((like) => {
@@ -236,7 +238,7 @@ const tweetController = {
             .then(tweet => tweet.decrement('likeCount'))
         }
       })
-      .then(() => res.redirect('back'))
+      .then(() => { return res.redirect('back') })
       .catch((err) => res.send(err))
   }
 }

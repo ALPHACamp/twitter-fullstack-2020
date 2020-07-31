@@ -78,11 +78,11 @@ const userController = {
         const results = user.toJSON()
         // 有可能會抓到喜歡的reply 或 secondReply ，所以要過濾。
         results.Likes = results.Likes.filter(like => like.TweetId !== 0)
-        results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+        results.isFollowed = results.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
         results.tweetCount = results.Tweets.length
 
         results.Likes.sort((a, b) => b.createdAt - a.createdAt)
-        res.render('userLikeContent', {
+        return res.render('userLikeContent', {
           results: results,
           currentId: helpers.getUser(req).id
         })
@@ -103,7 +103,7 @@ const userController = {
       .then((user) => {
         const results = user.toJSON()
         results.tweetCount = results.Tweets.length
-        results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+        results.isFollowed = results.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
 
         Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
           .then((likes) => {
@@ -116,18 +116,17 @@ const userController = {
       })
   },
   editUser: (req, res) => {
-    if (Number(req.params.id) === Number(helpers.getUser(req).id)) {
-      return User.findByPk(req.params.id).then((user) => {
-        user = user.toJSON()
-        return res.render('userPage', user)
-      })
-    } else {
+    if (Number(req.params.id) !== helpers.getUser(req).id) {
       req.flash(
-        'error_message',
-        "You don't have the authority to do this action"
+        'error_messages',
+        'error'
       )
-      return res.redirect('/tweets')
+      return res.redirect('back')
     }
+    return User.findByPk(req.params.id).then((user) => {
+      user = user.toJSON()
+      return res.render('userPage', user)
+    })
   },
   putUser: (req, res) => {
     if (!req.body.name) {
@@ -222,7 +221,7 @@ const userController = {
       const results = user.toJSON()
       results.Followers = user.Followers.map((follower) => ({
         ...follower.dataValues,
-        isFollowed: req.user.Followings.map((er) => er.id).includes(
+        isFollowed: helpers.getUser(req).Followings.map((er) => er.id).includes(
           follower.id
         )
       }))
@@ -241,7 +240,7 @@ const userController = {
         const results = user.toJSON()
         results.Followings = user.Followings.map((following) => ({
           ...following.dataValues,
-          isFollowed: req.user.Followings.map((er) => er.id).includes(
+          isFollowed: helpers.getUser(req).Followings.map((er) => er.id).includes(
             following.id
           )
         }))
@@ -434,7 +433,7 @@ const userController = {
     }
     findExistUser(updateAccountAndPassword)
 
-    function findExistUser (updateMethod) {
+    function findExistUser(updateMethod) {
       User.findOne({
         // 除了當前使用者的資料以外，有沒有重複的
         where: {
