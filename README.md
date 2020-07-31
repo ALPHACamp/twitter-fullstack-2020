@@ -54,16 +54,10 @@ create database ac_twitter_workspace;
 use ac_twitter_workspace;
 ```
 
-#### 建立 Table & Schema (請在 VSCode 裡操作 Sequelize 指令)
+#### 建立 Table & Schema & 種子資料 (請在 VSCode terminal執行npm script指令)
 
 ```
-npx sequelize db:migrate
-```
-
-#### 建立種子資料 (請在 VSCode 裡操作 Sequelize 指令)
-
-```
-npx sequelize db:seed:all
+npm run seeder
 ```
 
 #### 修改環境變數 (請將 .env.example 檔案改為 .env)
