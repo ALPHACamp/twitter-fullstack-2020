@@ -2,6 +2,7 @@ const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
 
 const adminController = {
   adminSigninPage: (req, res) => {
@@ -46,14 +47,15 @@ const adminController = {
       .catch(err => res.send(err))
   },
   adminUsersPage: (req, res) => {
-    User.findAll({ include: [Tweet, Reply, { model: Tweet, as: 'LikedTweets' }] })
+    User.findAll({ include: [Tweet, Reply, Like] })
       .then(users => {
-        users = users.map((user) => ({
-          ...user.dataValues,
-          tweetsCount: user.Tweets.length,
-          tweetsCountByThousand: user.Tweets.length / 1000,
-          likesCount: (user.LikedTweets.length) / 1000
-        })).sort((a, b) => b.tweetsCount - a.tweetsCount)
+        users = users
+          .map((user) => ({
+            ...user.dataValues,
+            tweetsCount: user.Tweets.length > 1000 ? `${user.Tweets.length / 1000}K` : user.Tweets.length,
+            likesCount: user.Likes.length > 1000 ? `${user.Likes.length / 1000}K` : user.Likes.length
+          }))
+          .sort((a, b) => b.tweetsCount - a.tweetsCount)
         res.render('admin/adminUsersPage', { users })
       }).catch(err => console.log(err))
   }
