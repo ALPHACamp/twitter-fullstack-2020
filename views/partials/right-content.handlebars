@@ -27,8 +27,8 @@
           <button class="unfollow-button">正在跟隨</button>
         </form>
         {{else}}
-        <form action="/followships/{{this.id}}" method="POST">
-          <button class="follow-button">跟隨</button>
+        <form action="/followships" method="POST">
+          <button class="follow-button" name="id" value="{{this.id}}">跟隨</button>
         </form>
         {{/if}}
         {{/ifEqual}}
@@ -36,7 +36,7 @@
       {{/each}}
       <!-- 迴圈結束 -->
     </div>
-    <button class=" button more-users">
+    <button class="button more-users">
       顯示更多
     </button>
 

@@ -40,8 +40,8 @@
               <button type="submit" class="unfollow-button">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/{{this.id}}" method="POST">
-              <button type="submit" class="follow-button">跟隨</button>
+            <form action="/followships" method="POST">
+              <button class="follow-button" name="id" value="{{this.id}}">跟隨</button>
             </form>
             {{/if}}
             {{/ifEqual}}
