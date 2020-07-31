@@ -25,7 +25,7 @@ describe('# Followship Model', () => {
 
   context('properties', () => {
     ;[
-      'FollowerId', 'FollowingId'
+      'followerId', 'followingId'
     ].forEach(checkPropertyExists(followship))
   })
 })
