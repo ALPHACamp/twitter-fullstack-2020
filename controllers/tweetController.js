@@ -23,6 +23,7 @@ const tweetController = {
       }))
       res.render('tweets', { tweets: data })
     })
+      .catch(error => console.log('Index error'))
   },
   postTweet: (req, res) => {
     if (!req.body.description) {
