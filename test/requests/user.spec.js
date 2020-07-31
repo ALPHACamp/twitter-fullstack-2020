@@ -81,9 +81,9 @@ describe('# user request', () => {
           .set('Accept', 'application/json')
           .expect(200)
           .end(function (err, res) {
-            if (err) return done(err);
-            return done();
-          });
+            if (err) return done(err)
+            return done()
+          })
       })
 
       // it('will render edit page', (done) => {
@@ -97,198 +97,170 @@ describe('# user request', () => {
       //       return done()
       //     })
       // })
-<<<<<<< HEAD
-      // it('will redirect if not this user', (done) => {
-      //   request(app)
-      //     .get('/users/2/edit')
-      //     .set('Accept', 'application/json')
-      //     .expect(302)
-      //     .end(function (err, res) {
-      //       if (err) return done(err)
-      //       res.body.status.should.equal('error')
-      //       return done()
-      //     })
+      //   it('will redirect if not this user', (done) => {
+      //     request(app)
+      //       .get('/users/2/edit')
+      //       .set('Accept', 'application/json')
+      //       .expect(302)
+      //       .end(function (err, res) {
+      //         if (err) return done(err)
+      //         return done()
+      //       })
+      //   })
       // })
-=======
-      it('will redirect if not this user', (done) => {
-        request(app)
-          .get('/users/2/edit')
-          .set('Accept', 'application/json')
-          .expect(302)
-          .end(function (err, res) {
-            if (err) return done(err)
-            return done()
-          })
+
+      after(async () => {
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
+        await db.User.destroy({ where: {}, truncate: true })
       })
->>>>>>> c7ce85fcad4376b995ce8c2211f93098bc768b61
     })
 
-    after(async () => {
-      this.ensureAuthenticated.restore()
-      this.getUser.restore()
-      await db.User.destroy({ where: {}, truncate: true })
+    context('#update', () => {
+      before(async () => {
+        this.ensureAuthenticated = sinon.stub(
+          helpers, 'ensureAuthenticated'
+        ).returns(true)
+        this.getUser = sinon.stub(
+          helpers, 'getUser'
+        ).returns({ id: 1, Followings: [] })
+        await db.User.create({})
+      })
+
+      // describe('successfully update', () => {
+      //   it('will change users intro', (done) => {
+      //     request(app)
+      //       .post('/api/users/1')
+      //       .send('name=abc')
+      //       .set('Accept', 'application/json')
+      //       .expect(200)
+      //       .end(function (err, res) {
+      //         if (err) return done(err);
+      //         db.User.findByPk(1).then(user => {
+      //           user.name.should.equal('abc');
+      //           return done();
+      //         })
+      //       });
+      //   })
+      // })
+
+      after(async () => {
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
+        await db.User.destroy({ where: {}, truncate: true })
+      })
+    })
+
+    context('#followings #followers', () => {
+      before(async () => {
+        this.ensureAuthenticated = sinon.stub(
+          helpers, 'ensureAuthenticated'
+        ).returns(true)
+        this.getUser = sinon.stub(
+          helpers, 'getUser'
+        ).returns({ id: 1, Followings: [] })
+        await db.User.create({ name: 'User1' })
+        await db.User.create({ name: 'User2' })
+        await db.User.create({ name: 'User3' })
+
+        const date = new Date()
+        await db.Followship.create({ followerId: 1, followingId: 2 })
+        await db.Followship.create({ followerId: 1, followingId: 3 })
+        await db.Followship.create({ followerId: 2, followingId: 1 })
+        await db.Followship.create({ followerId: 3, followingId: 1 })
+      })
+
+      describe('go to followings page', () => {
+        it('will show all followings users', (done) => {
+          request(app)
+            .get('/users/1/followings')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end(function (err, res) {
+              if (err) return done(err)
+              res.text.should.include('User2')
+              return done()
+            })
+        })
+        it('followings list ordered by desc', (done) => {
+          request(app)
+            .get('/users/1/followings')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end(function (err, res) {
+              if (err) return done(err)
+              res.text.indexOf('User3').should.above(res.text.indexOf('User2'))
+              return done()
+            })
+        })
+      })
+
+      describe('go to followers page', () => {
+        it('can see followers on other user page', (done) => {
+          request(app)
+            .get('/users/1/followers')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end(function (err, res) {
+              if (err) return done(err)
+              res.text.should.include('User3')
+              return done()
+            })
+        })
+        it('followers list ordered by desc', (done) => {
+          request(app)
+            .get('/users/1/followings')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end(function (err, res) {
+              if (err) return done(err)
+              res.text.indexOf('User3').should.above(res.text.indexOf('User2'))
+              return done()
+            })
+        })
+      })
+
+      after(async () => {
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
+        await db.User.destroy({ where: {}, truncate: true })
+        await db.Followship.destroy({ where: {}, truncate: true })
+      })
+    })
+
+    context('#likes', () => {
+      before(async () => {
+        this.ensureAuthenticated = sinon.stub(
+          helpers, 'ensureAuthenticated'
+        ).returns(true)
+        this.getUser = sinon.stub(
+          helpers, 'getUser'
+        ).returns({ id: 1, Followings: [] })
+        await db.User.create({})
+        await db.Tweet.create({ UserId: 1, description: 'Tweet1' })
+        await db.Like.create({ UserId: 1, TweetId: 1 })
+      })
+
+      describe('go to likes page', () => {
+        it('show users like tweets', (done) => {
+          request(app)
+            .get('/users/1/likes')
+            .set('Accept', 'application/json')
+            .expect(200)
+            .end(function (err, res) {
+              if (err) return done(err)
+              res.text.should.include('Tweet1')
+              return done()
+            })
+        })
+      })
+
+      after(async () => {
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
+        await db.User.destroy({ where: {}, truncate: true })
+        await db.Tweet.destroy({ where: {}, truncate: true })
+        await db.Like.destroy({ where: {}, truncate: true })
+      })
     })
   })
-
-  context('#update', () => {
-    before(async () => {
-      this.ensureAuthenticated = sinon.stub(
-        helpers, 'ensureAuthenticated'
-      ).returns(true)
-      this.getUser = sinon.stub(
-        helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] })
-      await db.User.create({})
-    })
-
-    // describe('successfully update', () => {
-    //   it('will change users intro', (done) => {
-    //     request(app)
-<<<<<<< HEAD
-    //       .put('/users/1/edit')
-    //       .send('name=abc')
-    //       .set('Accept', 'application/json')
-    //       .expect(302)
-    //       .end(function (err, res) {
-    //         if (err) return done(err)
-    //         db.User.findByPk(1).then(user => {
-    //           user.name.should.equal('abc')
-    //           return done()
-    //         })
-    //       })
-=======
-    //       .post('/api/users/1')
-    //       .send('name=abc')
-    //       .set('Accept', 'application/json')
-    //       .expect(200)
-    //       .end(function (err, res) {
-    //         if (err) return done(err);
-    //         db.User.findByPk(1).then(user => {
-    //           user.name.should.equal('abc');
-    //           return done();
-    //         })
-    //       });
->>>>>>> c7ce85fcad4376b995ce8c2211f93098bc768b61
-    //   })
-    // })
-
-    after(async () => {
-      this.ensureAuthenticated.restore()
-      this.getUser.restore()
-      await db.User.destroy({ where: {}, truncate: true })
-    })
-  })
-
-  context('#followings #followers', () => {
-    before(async () => {
-      this.ensureAuthenticated = sinon.stub(
-        helpers, 'ensureAuthenticated'
-      ).returns(true)
-      this.getUser = sinon.stub(
-        helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] })
-      await db.User.create({ name: 'User1' })
-      await db.User.create({ name: 'User2' })
-      await db.User.create({ name: 'User3' })
-
-      const date = new Date()
-      await db.Followship.create({ followerId: 1, followingId: 2 })
-      await db.Followship.create({ followerId: 1, followingId: 3 })
-      await db.Followship.create({ followerId: 2, followingId: 1 })
-      await db.Followship.create({ followerId: 3, followingId: 1 })
-    })
-
-    describe('go to followings page', () => {
-      it('will show all followings users', (done) => {
-        request(app)
-          .get('/users/1/followings')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            res.text.should.include('User2')
-            return done()
-          })
-      })
-      it('followings list ordered by desc', (done) => {
-        request(app)
-          .get('/users/1/followings')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            res.text.indexOf('User3').should.above(res.text.indexOf('User2'))
-            return done()
-          })
-      })
-    })
-
-    describe('go to followers page', () => {
-      it('can see followers on other user page', (done) => {
-        request(app)
-          .get('/users/1/followers')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            res.text.should.include('User3')
-            return done()
-          })
-      })
-      it('followers list ordered by desc', (done) => {
-        request(app)
-          .get('/users/1/followings')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            res.text.indexOf('User3').should.above(res.text.indexOf('User2'))
-            return done()
-          })
-      })
-    })
-
-    after(async () => {
-      this.ensureAuthenticated.restore()
-      this.getUser.restore()
-      await db.User.destroy({ where: {}, truncate: true })
-      await db.Followship.destroy({ where: {}, truncate: true })
-    })
-  })
-
-  context('#likes', () => {
-    before(async () => {
-      this.ensureAuthenticated = sinon.stub(
-        helpers, 'ensureAuthenticated'
-      ).returns(true)
-      this.getUser = sinon.stub(
-        helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] })
-      await db.User.create({})
-      await db.Tweet.create({ UserId: 1, description: 'Tweet1' })
-      await db.Like.create({ UserId: 1, TweetId: 1 })
-    })
-
-    describe('go to likes page', () => {
-      it('show users like tweets', (done) => {
-        request(app)
-          .get('/users/1/likes')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            res.text.should.include('Tweet1')
-            return done()
-          })
-      })
-    })
-
-    after(async () => {
-      this.ensureAuthenticated.restore()
-      this.getUser.restore()
-      await db.User.destroy({ where: {}, truncate: true })
-      await db.Tweet.destroy({ where: {}, truncate: true })
-      await db.Like.destroy({ where: {}, truncate: true })
-    })
-  })
-})
