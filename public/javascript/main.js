@@ -24,7 +24,7 @@ body.addEventListener('input', (e) => {
   }
 })
 
-//將放在前端藏起來的資訊，放到partial的回覆modal
+// reply modal data
 const replyModal = document.querySelector('.reply-modal-tweet')
 const replyForm = document.querySelector('.reply-modal-form')
 
@@ -44,10 +44,10 @@ body.addEventListener('click', (e) => {
          </div>
       <div class="extention-line"></div>
       </div>
-      <div class="reply-modal-tweet-right column">
-        <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} · ${tweetCreatedAt}</span>
-        <div>
-           <p class="pt-1">${tweetDescription}</p>
+      <div class="reply-modal-tweet-right column mb-2">
+        <a href="" class="user-name">${tweetUserName}</a><span class="user-account">@${tweetUserAccount} · ${tweetCreatedAt}</span>
+        <div class="reply-modal-tweet-text">
+          ${tweetDescription}
         </div>
          <span class="replyto-span">回覆給</span> 
         <span class="user-account-color-span">${tweetUserAccount}</span>
@@ -74,10 +74,10 @@ body.addEventListener('click', (e) => {
          </div>
       <div class="extention-line"></div>
       </div>
-      <div class="reply-modal-tweet-right column">
-        <a href="" class="user-name">${tweetUserName}</a><span class="user-account">${tweetUserAccount} · ${tweetCreatedAt}</span>
-        <div>
-           <p class="pt-1">${tweetDescription}</p>
+      <div class="reply-modal-tweet-right column mb-2">
+        <a href="" class="user-name">${tweetUserName}</a><span class="user-account">@${tweetUserAccount} · ${tweetCreatedAt}</span>
+        <div class="reply-modal-tweet-text">
+           ${tweetDescription}
         </div>
          <span class="replyto-span">回覆給</span> 
         <span class="user-account-color-span">${tweetUserAccount}</span>
@@ -115,12 +115,12 @@ removeCoverButton.addEventListener('click', () => {
 })
 
 // preview upload file
-function previewFile(input) {
+function previewFile (input) {
   const coverPreview = document.querySelector('#editModalCover')
   const avatarPreview = document.querySelector('#editModalAvatar')
   const reader = new FileReader()
   reader.onload = (event) => {
-    if (input.id === 'cover') {
+    if (input.id === 'cover-upload') {
       coverPreview.style = `background:url("${event.target.result}"); background-position: center; background-size: cover;`
     }
     if (input.id === 'avatar') {

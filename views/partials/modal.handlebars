@@ -47,7 +47,7 @@
             <!-- 這裡的內容會從js傳資料過來 -->
           </div>
 
-          <div class="reply-modal-textarea mt-3">
+          <div class="reply-modal-textarea mt-1">
             <div>
               <div class="avatar"
                 style="background: url({{user.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
@@ -84,12 +84,12 @@
         </div>
 
         <div class="edit-modal-body">
-          <form action="/api/users/{{user.id}}" enctype="multipart/form-data" method="POST">
+          <form action="/users/{{user.id}}/edit" enctype="multipart/form-data" method="POST">
 
             <div class="edit-modal-cover" id="editModalCover"
               style="background: url({{user.cover}}); background-position:center;background-size:cover;">
-              <label for="cover"><i class="fac fa-cus-upload-image cover-upload"></i></label>
-              <input type="file" name="cover" id="cover" onchange="previewFile(this)">
+              <label for="cover-upload"><i class="fac fa-cus-upload-image cover-upload"></i></label>
+              <input type="file" name="cover" id="cover-upload" onchange="previewFile(this)">
               <button type="button" class="button cover-remove"><i class="fac fa-cus-close remove-icon"></i></button>
             </div>
 
@@ -123,7 +123,7 @@
   </div>
 </div>
 
-<!-- 推文或回覆錯誤Modal-->
+<!-- 錯誤提示Modal-->
 <div class="modal fade" id="postError" tabindex="-1" role="dialog" aria-labelledby="postError" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">

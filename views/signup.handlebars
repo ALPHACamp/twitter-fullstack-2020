@@ -10,13 +10,15 @@
       <input type="text" id="account" name="account" value="{{account}}" style="padding-left: 35px;"
         required="required">
       <label for="name">名稱</label>
-      <input type="text" id="name" name="name" value="{{name}}" required="required">
+      <input type="text" id="name" name="name" value="{{name}}" required>
       <label for="email">Email</label>
-      <input type="email" id="email" name="email" value="{{email}}" required="required">
+      <input type="email" id="email" name="email" value="{{email}}" required>
       <label for="password">密碼</label>
-      <input type="password" id="password" name="password" placeholder="請輸入 8-12 位數英數字" required="required">
-      <label for="checkPassword">再次確認密碼</label>
-      <input type="password" id="checkPassword" name="checkPassword" required="required">
+      <input type="password" id="password" name="password" placeholder="請輸入 6-12 位數英數字" minlength="6" maxlength="12"
+        required>
+      <label for="checkPassword">確認密碼</label>
+      <input type="password" id="checkPassword" name="checkPassword" minlength="6" maxlength="12"
+        placeholder="請再輸入一次相同密碼" required>
       <button class="sign-button" type="submit">註冊</button>
     </div>
   </form>

@@ -46,8 +46,6 @@ module.exports = (app, passport) => {
   app.get('/users/:id/followings', userAuthenticated, userController.getFollowings)
   app.get('/users/:id/followers', userAuthenticated, userController.getFollowers)
 
-  // app.post('/followships/:id', userAuthenticated, userController.addFollow)
-  // app.delete('/followships/:id', userAuthenticated, userController.removeFollow)
   app.post('/followships', userAuthenticated, userController.addFollow)
   app.delete('/followships/:id', userAuthenticated, userController.removeFollow)
 }

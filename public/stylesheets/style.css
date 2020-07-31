@@ -25,10 +25,10 @@ a p:hover {
   font-size: 15px;
   color: #657786;
 }
-/* .user-account-color-span {
+.user-account-color-span {
   color: #FF6600;
   font-size: 13px;
-} */
+}
 .button {
   border: none;
   background-color: transparent;
@@ -743,6 +743,14 @@ width: 600px;
 .reply-modal-tweet-left .avatar{
   min-height: 50px;
 }
+.reply-modal-tweet-right {
+  width: 85%;
+}
+.reply-modal-tweet-text {
+  padding: 15px 0px;
+  word-wrap: break-word;
+}
+
 
 .edit-modal {
   border-radius: 14px;

@@ -25,7 +25,8 @@ const adminController = {
           followingsCount: item.Followings.length,
           followersCount: item.Followers.length,
           likesCount: item.LikedTweets.length,
-          tweetsCount: item.Tweets.length
+          tweetsCount: item.Tweets.length,
+          isAdmin: item.dataValues.role.includes('admin')
         }))
         const users = data.sort((a, b) => b.tweetsCount - a.tweetsCount)
         res.render('admin/users', { users })
