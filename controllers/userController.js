@@ -46,7 +46,7 @@ const userController = {
       order: [[Tweet, 'createdAt', 'DESC']]
     })
       .then((user) => {
-        return Like.findAll({ where: { UserId: req.user.id }, raw: true, nest: true })
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
           .then((likes) => {
             const results = user.toJSON()
             likes = likes.map(like => like.TweetId)
@@ -54,10 +54,10 @@ const userController = {
               tweet.tweetIsLiked = likes.includes(tweet.id)
             })
             results.tweetCount = results.Tweets.length
-            results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
+            results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
             return res.render('userPage', {
               results: results,
-              currentId: req._passport.session.user
+              currentId: helpers.getUser(req).id
             })
           })
       })
@@ -84,7 +84,7 @@ const userController = {
         results.Likes.sort((a, b) => b.createdAt - a.createdAt)
         res.render('userLikeContent', {
           results: results,
-          currentId: req._passport.session.user
+          currentId: helpers.getUser(req).id
         })
       })
   },
@@ -105,28 +105,28 @@ const userController = {
         results.tweetCount = results.Tweets.length
         results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
 
-        Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
+        Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
           .then((likes) => {
             likes = likes.map(like => like.TweetId)
             results.Replies.forEach(reply => {
               reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
             })
-            return res.render('userReplyTweet', { results: results, currentId: req._passport.session.user })
+            return res.render('userReplyTweet', { results: results, currentId: helpers.getUser(req).id })
           })
       })
   },
   editUser: (req, res) => {
-    if (Number(req.params.id) === Number(req._passport.session.user)) {
+    if (Number(req.params.id) === Number(helpers.getUser(req).id)) {
       return User.findByPk(req.params.id).then((user) => {
         user = user.toJSON()
-        return res.json(user)
+        return res.render('userPage', user)
       })
     } else {
       req.flash(
         'error_message',
         "You don't have the authority to do this action"
       )
-      return res.redirect('back')
+      return res.redirect('/tweets')
     }
   },
   putUser: (req, res) => {
@@ -143,7 +143,7 @@ const userController = {
             resolve(img)
           })
         } else {
-          reject('file doesn\'t exist.')
+          reject(Error, 'file doesn\'t exist.')
         }
       })
     }
@@ -160,7 +160,7 @@ const userController = {
           })
           .then((user) => {
             req.flash('success_message', 'user was successfully to update')
-            res.redirect(`/users/${req.params.id}`)
+            res.redirect(`/users/${req.params.id}/tweets`)
           })
       })
     } else if ((Object.keys(files).length === 2)) {
@@ -178,7 +178,7 @@ const userController = {
       })
         .then(() => {
           req.flash('success_message', 'user was successfully to update')
-          res.redirect(`/users/${req.params.id}`)
+          res.redirect(`/users/${req.params.id}/tweets`)
         })
     } else {
       if (files.cover) {
@@ -194,7 +194,7 @@ const userController = {
         })
           .then(() => {
             req.flash('success_message', 'user was successfully to update')
-            res.redirect(`/users/${req.params.id}`)
+            res.redirect(`/users/${req.params.id}/tweets`)
           })
       }
       if (files.avatar) {
@@ -210,7 +210,7 @@ const userController = {
         })
           .then(() => {
             req.flash('success_message', 'user was successfully to update')
-            res.redirect(`/users/${req.params.id}`)
+            res.redirect(`/users/${req.params.id}/tweets`)
           })
       }
     }
@@ -435,7 +435,7 @@ const userController = {
     }
     findExistUser(updateAccountAndPassword)
 
-    function findExistUser(updateMethod) {
+    function findExistUser (updateMethod) {
       User.findOne({
         // 除了當前使用者的資料以外，有沒有重複的
         where: {
