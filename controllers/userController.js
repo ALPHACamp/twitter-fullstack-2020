@@ -46,7 +46,7 @@ const userController = {
       order: [[Tweet, 'createdAt', 'DESC']]
     })
       .then((user) => {
-        return Like.findAll({ where: { UserId: req.user.id }, raw: true, nest: true })
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
           .then((likes) => {
             const results = user.toJSON()
             likes = likes.map(like => like.TweetId)
@@ -54,10 +54,10 @@ const userController = {
               tweet.tweetIsLiked = likes.includes(tweet.id)
             })
             results.tweetCount = results.Tweets.length
-            results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
+            results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
             return res.render('userPage', {
               results: results,
-              currentId: req._passport.session.user
+              currentId: helpers.getUser(req).id
             })
           })
       })
@@ -78,13 +78,13 @@ const userController = {
         const results = user.toJSON()
         // 有可能會抓到喜歡的reply 或 secondReply ，所以要過濾。
         results.Likes = results.Likes.filter(like => like.TweetId !== 0)
-        results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+        results.isFollowed = results.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
         results.tweetCount = results.Tweets.length
 
         results.Likes.sort((a, b) => b.createdAt - a.createdAt)
-        res.render('userLikeContent', {
+        return res.render('userLikeContent', {
           results: results,
-          currentId: req._passport.session.user
+          currentId: helpers.getUser(req).id
         })
       })
   },
@@ -103,20 +103,20 @@ const userController = {
       .then((user) => {
         const results = user.toJSON()
         results.tweetCount = results.Tweets.length
-        results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+        results.isFollowed = results.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
 
-        Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
+        Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
           .then((likes) => {
             likes = likes.map(like => like.TweetId)
             results.Replies.forEach(reply => {
               reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
             })
-            return res.render('userReplyTweet', { results: results, currentId: req._passport.session.user })
+            return res.render('userReplyTweet', { results: results, currentId: helpers.getUser(req).id })
           })
       })
   },
   editUser: (req, res) => {
-    if (Number(req.params.id) === Number(req._passport.session.user)) {
+    if (Number(req.params.id) === Number(helpers.getUser(req).id)) {
       return User.findByPk(req.params.id).then((user) => {
         user = user.toJSON()
         return res.json(user)
@@ -223,7 +223,7 @@ const userController = {
       const results = user.toJSON()
       results.Followers = user.Followers.map((follower) => ({
         ...follower.dataValues,
-        isFollowed: req.user.Followings.map((er) => er.id).includes(
+        isFollowed: helpers.getUser(req).Followings.map((er) => er.id).includes(
           follower.id
         )
       }))
@@ -242,7 +242,7 @@ const userController = {
         const results = user.toJSON()
         results.Followings = user.Followings.map((following) => ({
           ...following.dataValues,
-          isFollowed: req.user.Followings.map((er) => er.id).includes(
+          isFollowed: helpers.getUser(req).Followings.map((er) => er.id).includes(
             following.id
           )
         }))

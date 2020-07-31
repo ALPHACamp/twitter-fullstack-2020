@@ -74,16 +74,16 @@ describe('# user request', () => {
     })
 
     describe('go to edit page', () => {
-      // it('will render edit page', (done) => {
-      //   request(app)
-      //     .get('/users/1/edit')
-      //     .set('Accept', 'application/json')
-      //     .expect(200)
-      //     .end(function(err, res) {
-      //       if (err) return done(err);
-      //       return done();
-      //     });
-      // })
+      it('will render edit page', (done) => {
+        request(app)
+          .get('/users/1/edit')
+          .set('Accept', 'application/json')
+          .expect(200)
+          .end(function (err, res) {
+            if (err) return done(err);
+            return done();
+          });
+      })
 
       it('will render edit page', (done) => {
         request(app)

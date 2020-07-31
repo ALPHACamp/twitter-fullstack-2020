@@ -90,7 +90,7 @@ router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.admi
 // 取得個人頁面
 router.get('/users/:id', authenticated, userController.getRecommendedUsers, userController.getUser)
 // 取得個人like內容頁面
-router.get('/users/:id/like', authenticated, userController.getRecommendedUsers, userController.getUserLikeContent)
+router.get('/users/:id/likes', authenticated, userController.getRecommendedUsers, userController.getUserLikeContent)
 // 取得個人回覆過的推文頁面
 router.get('/users/:id/repliesTweet', authenticated, userController.getRecommendedUsers, userController.getUserRepliesTweets)
 // 編輯個人資料頁面
