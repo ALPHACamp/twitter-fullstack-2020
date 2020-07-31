@@ -111,7 +111,6 @@ const userController = {
             results.Replies.forEach(reply => {
               reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
             })
-            console.log(results.Replies[0].Tweet)
             return res.render('userReplyTweet', { results: results, currentId: helpers.getUser(req).id })
           })
       })

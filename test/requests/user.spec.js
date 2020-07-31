@@ -237,7 +237,7 @@ describe('# user request', () => {
       ).returns(true)
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({ id: 1, Followings: [], role: 'user' })
+      ).returns({ id: 1, Followings: [] })
       await db.User.create({})
       await db.Tweet.create({ UserId: 1, description: 'Tweet1' })
       await db.Like.create({ UserId: 1, TweetId: 1 })
