@@ -80,7 +80,7 @@
       <div class="tweet-box">
         <div class="reply-item">
           <!--推文-->
-          <div class="user-page-reply-tweet row">
+          <div class="user-page-reply-tweet row" onclick="location.href='/tweets/{{this.Tweet.id}}'">
             <div class="left">
               <div class="avatar"
                 style="background: url({{this.Tweet.User.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
@@ -123,7 +123,7 @@
                 </form>
           </div>
           <!--回覆-->
-          <div class="user-page-reply-comment row">
+          <div class="user-page-reply-comment row" onclick="location.href='/tweets/{{this.Tweet.id}}'">
             <div class="left">
               <div class="avatar"
                 style="background: url({{../pageUser.avatar}}),#C4C4C4; background-position:center;background-size:cover;">

@@ -107,13 +107,13 @@ const userController = {
         const pageUser = user.toJSON()
         pageUser.Tweets.forEach(t => {
           // t.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
-          t.isLiked = t.LikedUsers.map(d => d.id).includes(helpers.getUser(req))
+          t.isLiked = t.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
         })
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
         res.render('user-tweets', { pageUser })
       })
   },
-  getLikes: (req, res) => {
+  getLikes: async (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
         Tweet,
@@ -154,14 +154,15 @@ const userController = {
     })
       .then(pageUser => {
         pageUser.dataValues.Replies.forEach(r => {
-          r.dataValues.Tweet.dataValues.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.dataValues.Tweet.dataValues.id)
+          r.dataValues.Tweet.dataValues.isLiked =
+            r.dataValues.Tweet.dataValues.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
         })
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render('user-replies', { pageUser })
       })
 
   },
-  putUserProfile: (req, res) => {
+  putUserProfile: async (req, res) => {
     const id = Number(req.params.id)
     const { name, introduction } = req.body
     const { avatar, cover } = req.files
@@ -176,26 +177,24 @@ const userController = {
       imgur.setClientID(IMGUR_CLIENT_ID)
       if (avatar) {
         avatarPath = avatar[0].path
-        imgur.upload(avatarPath, (err, img) => {
+        await imgur.upload(avatarPath, (err, img) => {
           User.findByPk(id)
             .then(user => user.update({ avatar: img.data.link }))
         })
       }
       if (cover) {
         coverPath = cover[0].path
-        imgur.upload(coverPath, (err, img) => {
+        await imgur.upload(coverPath, (err, img) => {
           User.findByPk(id)
             .then(user => user.update({ cover: img.data.link }))
         })
       }
     }
-    return User.findByPk(id)
-      .then(user => {
-        user.update({ name, introduction })
-      })
-      .then(() => {
-        res.redirect('/tweets')
-      })
+    const user = await User.findByPk(id)
+    await user.update({ name, introduction })
+    req.flash('successMessage', '更新成功！')
+    res.redirect(`/users/${id}/tweets`)
+
   },
   getFollowings: (req, res) => {
     return User.findByPk(req.params.id, {
