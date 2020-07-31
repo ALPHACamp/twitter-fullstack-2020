@@ -107,7 +107,7 @@ const userController = {
         const pageUser = user.toJSON()
         pageUser.Tweets.forEach(t => {
           // t.isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(t.id)
-          t.isLiked = t.LikedUsers.map(d => d.id).includes(helpers.getUser(req))
+          t.isLiked = t.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
         })
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
         res.render('user-tweets', { pageUser })
