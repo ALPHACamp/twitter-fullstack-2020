@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development node app.js",
+    "start": "NODE_ENV=production node app.js",
     "dev": "NODE_ENV=development nodemon app.js",
     "test": "NODE_ENV=test mocha test --exit --recursive --timeout 5000"
   },
@@ -29,6 +29,7 @@
     "mysql2": "^1.6.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "pg": "^8.3.0",
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.5.0",
     "sinon": "^7.2.3",
