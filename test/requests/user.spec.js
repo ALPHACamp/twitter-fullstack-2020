@@ -70,42 +70,42 @@ describe('# user request', () => {
       ).returns(true)
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] })
+      ).returns({ id: 1, Followings: [], role: 'user' })
       await db.User.create({ name: 'User1' })
       await db.User.create({ name: 'User2' })
     })
 
     describe('go to edit page', () => {
-      // it('will render edit page', (done) => {
-      //   request(app)
-      //     .get('/users/1/edit')
-      //     .set('Accept', 'application/json')
-      //     .expect(200)
-      //     .end(function(err, res) {
-      //       if (err) return done(err);
-      //       return done();
-      //     });
-      // })
-
       it('will render edit page', (done) => {
         request(app)
-          .get('/api/users/1')
+          .get('/users/1/edit')
           .set('Accept', 'application/json')
           .expect(200)
           .end(function (err, res) {
             if (err) return done(err)
-            res.body.name.should.equal('User1')
             return done()
           })
       })
+
+      // it('will render edit page', (done) => {
+      //   request(app)
+      //     .get('/api/users/1')
+      //     .set('Accept', 'application/json')
+      //     .expect(200)
+      //     .end(function (err, res) {
+      //       if (err) return done(err)
+      //       res.body.name.should.equal('User1')
+      //       return done()
+      //     })
+      // })
       it('will redirect if not this user', (done) => {
         request(app)
-          .get('/api/users/2')
+          .get('/users/2/edit')
           .set('Accept', 'application/json')
           .expect(200)
           .end(function (err, res) {
             if (err) return done(err)
-            res.body.status.should.equal('error')
+            res.text.status.should.equal('error')
             return done()
           })
       })
@@ -125,14 +125,14 @@ describe('# user request', () => {
       ).returns(true)
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] })
+      ).returns({ id: 1, Followings: [], role: 'user' })
       await db.User.create({})
     })
 
     describe('successfully update', () => {
       it('will change users intro', (done) => {
         request(app)
-          .post('/api/users/1')
+          .post('/users/1/edit')
           .send('name=abc')
           .set('Accept', 'application/json')
           .expect(200)
@@ -160,7 +160,7 @@ describe('# user request', () => {
       ).returns(true)
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] })
+      ).returns({ id: 1, Followings: [], role: 'user' })
       await db.User.create({ name: 'User1' })
       await db.User.create({ name: 'User2' })
       await db.User.create({ name: 'User3' })
@@ -237,7 +237,7 @@ describe('# user request', () => {
       ).returns(true)
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] })
+      ).returns({ id: 1, Followings: [], role: 'user' })
       await db.User.create({})
       await db.Tweet.create({ UserId: 1, description: 'Tweet1' })
       await db.Like.create({ UserId: 1, TweetId: 1 })
