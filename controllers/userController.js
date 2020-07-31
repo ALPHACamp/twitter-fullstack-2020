@@ -9,124 +9,113 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 const imgur = require('imgur-node-api')
-const { error } = require('console')
 
 const userController = {
-  getRecommendedUsers: (req, res) => {
-    return new Promise((resolve, reject) => {
-      User.findAll({
-        include: [{ model: User, as: 'Followers' }]
-      })
-        .then((users) => {
-          users = users.map((user) => ({
-            ...user.dataValues,
-            followerCount: user.Followers.length,
-            isFollowed: user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-          }))
-          // 去除掉自己和root，依照追蹤人數多排到少，再取前10名顯示
-          users = users.filter((user) => (user.name !== req.user.name && user.name !== 'root'))
-          users = users
-            .sort((a, b) => b.followerCount - a.followerCount)
-            .slice(0, 10)
-          resolve(users)
-        })
-        .catch(err => { reject(err) })
+  getRecommendedUsers: (req, res, next) => {
+    User.findAll({
+      include: [{ model: User, as: 'Followers' }]
     })
+      .then((users) => {
+        users = users.map((user) => ({
+          ...user.dataValues,
+          followerCount: user.Followers.length,
+          isFollowed: user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+        }))
+        // 去除掉自己和root，依照追蹤人數多排到少，再取前10名顯示
+        users = users.filter((user) => (user.name !== helpers.getUser(req).name && user.role === 'user'))
+        users = users
+          .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, 10)
+        res.locals.recommendedUsers = users
+        return next()
+      })
+      .catch(() => {
+        res.locals.recommendedUsers = null
+        return next()
+      })
   },
   getUser: (req, res) => {
-    userController.getRecommendedUsers(req, res)
-      .then((users) => {
-        return User.findByPk(req.params.id, {
-          include: [
-            {
-              model: Tweet,
-              include: [Like]
-            },
-            { model: User, as: 'Followers' }
-          ],
-          order: [[Tweet, 'createdAt', 'DESC']]
-        })
-          .then((user) => {
-            return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
-              .then((likes) => {
-                const results = user.toJSON()
-                likes = likes.map(like => like.TweetId)
-                results.Tweets.forEach(tweet => {
-                  tweet.tweetIsLiked = likes.includes(tweet.id)
-                })
-                results.tweetCount = results.Tweets.length
-                results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-                console.log(res.text)
-                return res.render('userPage', {
-                  results: results,
-                  recommendFollowings: users,
-                  currentId: helpers.getUser(req).id
-                })
-              })
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Tweet,
+          include: [Like]
+        },
+        { model: User, as: 'Followers' }
+      ],
+      order: [[Tweet, 'createdAt', 'DESC']]
+    })
+      .then((user) => {
+        return Like.findAll({ where: { UserId: req.user.id }, raw: true, nest: true })
+          .then((likes) => {
+            const results = user.toJSON()
+            likes = likes.map(like => like.TweetId)
+            results.Tweets.forEach(tweet => {
+              tweet.tweetIsLiked = likes.includes(tweet.id)
+            })
+            results.tweetCount = results.Tweets.length
+            results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
+            return res.render('userPage', {
+              results: results,
+              currentId: req._passport.session.user
+            })
           })
-          .catch((err) => res.send(err))
       })
       .catch((err) => res.send(err))
   },
   getUserLikeContent: (req, res) => {
-    userController.getRecommendedUsers(req, res).then((users) => {
-      return User.findByPk(req.params.id, {
-        include: [
-          {
-            model: Like,
-            include: [{ model: Tweet, include: User }]
-          },
-          { model: Tweet },
-          { model: User, as: 'Followers' }
-        ]
-      })
-        .then((user) => {
-          const results = user.toJSON()
-          // 有可能會抓到喜歡的reply 或 secondReply ，所以要過濾。
-          results.Likes = results.Likes.filter(like => like.TweetId !== 0)
-          console.log(results)
-          results.isFollowed = results.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-          results.tweetCount = results.Tweets.length
-
-          results.Likes.sort((a, b) => b.createdAt - a.createdAt)
-          res.render('userLikeContent', {
-            results: results,
-            recommendFollowings: users,
-            currentId: helpers.getUser(req).id
-          })
-        })
-        .catch((err) => res.send(err))
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Like,
+          include: [{ model: Tweet, include: User }]
+        },
+        { model: Tweet },
+        { model: User, as: 'Followers' }
+      ]
     })
+      .then((user) => {
+        const results = user.toJSON()
+        // 有可能會抓到喜歡的reply 或 secondReply ，所以要過濾。
+        results.Likes = results.Likes.filter(like => like.TweetId !== 0)
+        console.log(results)
+        results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+        results.tweetCount = results.Tweets.length
+
+        results.Likes.sort((a, b) => b.createdAt - a.createdAt)
+        res.render('userLikeContent', {
+          results: results,
+          currentId: req._passport.session.user
+        })
+      })
   },
   getUserRepliesTweets: (req, res) => {
-    userController.getRecommendedUsers(req, res).then((users) => {
-      return User.findByPk(req.params.id, {
-        include: [
-          {
-            model: Reply,
-            include: { model: Tweet, include: User }
-          },
-          { model: Tweet },
-          { model: User, as: 'Followers' }
-        ],
-        order: [[Reply, 'createdAt', 'DESC']]
-      })
-        .then((user) => {
-          const results = user.toJSON()
-          results.tweetCount = results.Tweets.length
-          results.isFollowed = results.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-
-          Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
-            .then((likes) => {
-              likes = likes.map(like => like.TweetId)
-              results.Replies.forEach(reply => {
-                reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
-              })
-              return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: helpers.getUser(req).id })
-            })
-        })
-        .catch((err) => res.send(err))
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Reply,
+          include: { model: Tweet, include: User }
+        },
+        { model: Tweet },
+        { model: User, as: 'Followers' }
+      ],
+      order: [[Reply, 'createdAt', 'DESC']]
     })
+      .then((user) => {
+        const results = user.toJSON()
+        results.tweetCount = results.Tweets.length
+        results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+
+        Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
+          .then((likes) => {
+            likes = likes.map(like => like.TweetId)
+            results.Replies.forEach(reply => {
+              reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
+            })
+            console.log(results.Replies[0].Tweet)
+            return res.render('userReplyTweet', { results: results, currentId: req._passport.session.user })
+          })
+      })
   },
   editUser: (req, res) => {
     if (Number(req.params.id) === Number(req._passport.session.user)) {
@@ -156,7 +145,7 @@ const userController = {
             resolve(img)
           })
         } else {
-          reject(error, 'file doesn\'t exist.')
+          reject(Error, 'file doesn\'t exist.')
         }
       })
     }
@@ -229,47 +218,43 @@ const userController = {
     }
   },
   getUserFollowerList: (req, res) => {
-    userController.getRecommendedUsers(req, res).then((users) => {
-      return User.findByPk(req.params.id, {
-        include: [{ model: User, as: 'Followers' }, { model: Tweet }]
-      }).then((user) => {
-        user.update({ followerCount: user.Followers.length })
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+    }).then((user) => {
+      user.update({ followerCount: user.Followers.length })
+      const results = user.toJSON()
+      results.Followers = user.Followers.map((follower) => ({
+        ...follower.dataValues,
+        isFollowed: req.user.Followings.map((er) => er.id).includes(
+          follower.id
+        )
+      }))
+      results.tweetCount = user.Tweets.length
+      results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      console.log(results)
+      res.render('userFollowPage', { results: results })
+    })
+      .catch((err) => res.send(err))
+  },
+  getUserFollowingList: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+    })
+      .then((user) => {
+        user.update({ followingCount: user.Followings.length })
         const results = user.toJSON()
-        results.Followers = user.Followers.map((follower) => ({
-          ...follower.dataValues,
+        results.Followings = user.Followings.map((following) => ({
+          ...following.dataValues,
           isFollowed: req.user.Followings.map((er) => er.id).includes(
-            follower.id
+            following.id
           )
         }))
         results.tweetCount = user.Tweets.length
-        results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         console.log(results)
-        res.render('userFollowPage', { results: results, recommendFollowings: users })
+        res.render('userFollowingPage', { results: results })
       })
-        .catch((err) => res.send(err))
-    })
-  },
-  getUserFollowingList: (req, res) => {
-    userController.getRecommendedUsers(req, res).then((users) => {
-      return User.findByPk(req.params.id, {
-        include: [{ model: User, as: 'Followings' }, { model: Tweet }]
-      })
-        .then((user) => {
-          user.update({ followingCount: user.Followings.length })
-          const results = user.toJSON()
-          results.Followings = user.Followings.map((following) => ({
-            ...following.dataValues,
-            isFollowed: req.user.Followings.map((er) => er.id).includes(
-              following.id
-            )
-          }))
-          results.tweetCount = user.Tweets.length
-          results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-          console.log(results)
-          res.render('userFollowingPage', { results: results, recommendFollowings: users })
-        })
-        .catch((err) => res.send(err))
-    })
+      .catch((err) => res.send(err))
   },
   addFollowing: (req, res) => {
     const userId = req.body.id

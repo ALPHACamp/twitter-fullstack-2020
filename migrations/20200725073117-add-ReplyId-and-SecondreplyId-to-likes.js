@@ -1,12 +1,14 @@
-'use strict';
+// 'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     queryInterface.addColumn('Likes', 'ReplyId', {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      defaultValue: 0
     })
     return queryInterface.addColumn('Likes', 'SecondreplyId', {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      defaultValue: 0
     })
   },
 
