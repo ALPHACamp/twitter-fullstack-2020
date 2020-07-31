@@ -13,6 +13,7 @@ const upload = multer({ dest: 'temp/' })
 // 判斷是否已登入
 const authenticated = (req, res, next) => {
   if (helper.ensureAuthenticated(req)) {
+    if (!helper.getUser(req).role) helper.getUser(req).role = 'user'
     if (helper.getUser(req).role === 'user') return next()
     req.flash('error_messages', '管理者無法使用前台服務，只能登入後台！')
     return res.redirect('/admin/tweets')
