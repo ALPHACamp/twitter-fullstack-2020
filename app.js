@@ -20,6 +20,7 @@ const { PORT } = process.env
 
 app.engine('hbs', hbs({ defaultLayout: 'main', extname: 'hbs', helpers: useHbsHelper }))
 app.set('view engine', 'hbs')
+app.use(express.static('public'))
 app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
