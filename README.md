@@ -2,22 +2,40 @@
 
 > 這是由Yen,政昕,Tony共同打造的AC畢業專案
 
-**Heroku 專案連結:** []()
+**Heroku 專案連結:** [https://warm-reaches-64839.herokuapp.com/](https://warm-reaches-64839.herokuapp.com/)
 
 ## 專案畫面
 
 **前台登入畫面/LoginPage**
-![專案畫面](/public/images/screenshot_1.png)
+![前台登入畫面](https://imgur.com/pPfWEP0.png)
 
 **註冊畫面/RegisterPage**
-![專案畫面](/public/images/screenshot_2.png)
+![註冊畫面](https://imgur.com/1HQHWX7.png)
+
+**首頁畫面/HomePage**
+![首頁畫面](https://imgur.com/9aEwUnB.png)
+
+**推文畫面/TweetPage**
+![推文畫面](https://imgur.com/JfrloEu.png)
+
+**個人資料畫面/personalPage**
+![個人資料畫面](https://imgur.com/r7ZGNAR.png)
+
+**追蹤畫面/Followship Page**
+![追蹤畫面](https://imgur.com/q7HKK1e.png)
+
+**帳號設定畫面/Account Setting Page**
+![帳號設定畫面](https://imgur.com/LGGMtLX.png)
+
+**後臺管理畫面/Management Page**
+![後臺管理畫面](https://imgur.com/qWifsKN.png)
 
 ## 安裝&使用
 
 #### 下載專案
 
 ```
-git clone https://github.com/waiting33118/restaurant-forum.git
+git clone https://github.com/YenLai/twitter-fullstack-2020.git
 ```
 
 #### 安裝 Package
@@ -36,16 +54,10 @@ create database ac_twitter_workspace;
 use ac_twitter_workspace;
 ```
 
-#### 建立 Table & Schema (請在 VSCode 裡操作 Sequelize 指令)
+#### 建立 Table & Schema & 種子資料 (請在 VSCode terminal執行npm script指令)
 
 ```
-npx sequelize db:migrate
-```
-
-#### 建立種子資料 (請在 VSCode 裡操作 Sequelize 指令)
-
-```
-npx sequelize db:seed:all
+npm run seeder
 ```
 
 #### 修改環境變數 (請將 .env.example 檔案改為 .env)
@@ -54,7 +66,7 @@ npx sequelize db:seed:all
 IMGUR_CLIENT_ID = 填入您的imgur client ID
 ```
 
-#### 使用 nodemon 啟動伺服器
+#### 使用 nodemon 啟動伺服器(You need to install nodemon before you use)
 
 ```
 npm run dev
@@ -96,25 +108,29 @@ password:  12345678
 ## 環境建置
 
 ```
+"bcrypt-nodejs": "0.0.3",
 "bcryptjs": "^2.4.3",
-"body-parser": "^1.18.3",
+"body-parser": "^1.19.0",
 "chai": "^4.2.0",
 "connect-flash": "^0.1.1",
 "dotenv": "^8.2.0",
-"express": "^4.16.4",
-"express-handlebars": "^3.0.0",
-"express-session": "^1.15.6",
+"express": "^4.17.1",
+"express-handlebars": "^3.1.0",
+"express-session": "^1.17.1",
 "faker": "^4.1.0",
+"imgur-node-api": "^0.1.0",
 "method-override": "^3.0.0",
 "mocha": "^6.0.2",
 "moment": "^2.27.0",
+"multer": "^1.4.2",
 "mysql2": "^2.1.0",
-"passport": "^0.4.0",
+"passport": "^0.4.1",
 "passport-local": "^1.0.0",
+"proxyquire": "^2.1.3",
 "sequelize": "^6.3.3",
 "sequelize-cli": "^6.2.0",
-"sinon": "^7.2.3",
-"sinon-chai": "^3.3.0"
+"sinon": "^7.5.0",
+"sinon-chai": "^3.5.0"
 ```
 
 ## 產品功能(User Story)
