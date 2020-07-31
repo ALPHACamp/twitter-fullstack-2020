@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Sequelize } = require('../models')
 const { or, not } = Sequelize.Op
-const fs = require('fs')
 const db = require('../models')
 const helpers = require('../_helpers')
 const User = db.User
@@ -9,6 +8,8 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
+const imgur = require('imgur-node-api')
+const { error } = require('console')
 
 const userController = {
   getRecommendedUsers: (req, res) => {
@@ -146,27 +147,22 @@ const userController = {
       req.flash('error_message', "name didn't exist")
       return res.redirect('back')
     }
-    const readFile = (filePath) => {
+    const uploadImg = (filePath) => {
       return new Promise((resolve, reject) => {
-        fs.readFile(filePath, (err, data) => {
-          if (err) return reject(err)
-          return resolve(data)
-        })
+        imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+        if (filePath) {
+          imgur.upload(filePath, (err, img) => {
+            if (err) reject(err)
+            resolve(img)
+          })
+        } else {
+          reject(error, 'file doesn\'t exist.')
+        }
       })
     }
 
-    const writeFile = (targetFilePath, data) => {
-      return new Promise((resolve, reject) => {
-        fs.writeFile(targetFilePath, data, (err) => {
-          if (err) return reject(err)
-          return resolve()
-        })
-      })
-    }
     const { files } = req
-    console.log(Object.keys(files).length)
     if ((Object.keys(files).length === 0)) {
-      console.log(req.body)
       return User.findByPk(req.params.id).then((user) => {
         user
           .update({
@@ -180,61 +176,56 @@ const userController = {
             res.redirect(`/users/${req.params.id}`)
           })
       })
-    }
-    if (Object.keys(files).length === 2) {
-      readFile(files.cover[0].path).then((cover) => {
-        return writeFile(`upload/${files.cover[0].originalname}`, cover)
-      })
-        .then((cover) => {
-          readFile(files.avatar[0].path).then((avatar) => {
-            return writeFile(`upload/${files.avatar[0].originalname}`, avatar)
-          })
-            .then((avatar) => {
-              return User.findByPk(req.params.id).then((user) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  cover: `/upload/${files.cover[0].originalname}`,
-                  avatar: `/upload/${files.avatar[0].originalname}`
-                })
-              })
-            }).then((user) => {
-              req.flash('success_message', 'user was successfully to update')
-              res.redirect(`/users/${req.params.id}`)
+    } else if ((Object.keys(files).length === 2)) {
+      uploadImg(files.cover[0].path).then((cover) => {
+        uploadImg(files.avatar[0].path).then((avatar) => {
+          return User.findByPk(req.params.id).then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              cover: cover.data.link,
+              avatar: avatar.data.link
             })
-        })
-    } else if (files.cover) {
-      readFile(files.cover[0].path).then((cover) => {
-        return writeFile(`upload/${files.cover[0].originalname}`, cover)
-      }).then((cover) => {
-        return User.findByPk(req.params.id).then((user) => {
-          user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            cover: `/upload/${files.cover[0].originalname}`,
-            avatar: user.avatar
           })
         })
-      }).then((user) => {
-        req.flash('success_message', 'user was successfully to update')
-        res.redirect(`/users/${req.params.id}`)
       })
-    } else if (files.avatar) {
-      readFile(files.avatar[0].path).then((avatar) => {
-        return writeFile(`upload/${files.avatar[0].originalname}`, avatar)
-      }).then((avatar) => {
-        return User.findByPk(req.params.id).then((user) => {
-          user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            cover: user.cover,
-            avatar: `/upload/${files.avatar[0].originalname}`
+        .then(() => {
+          req.flash('success_message', 'user was successfully to update')
+          res.redirect(`/users/${req.params.id}`)
+        })
+    } else {
+      if (files.cover) {
+        uploadImg(files.cover[0].path).then((cover) => {
+          return User.findByPk(req.params.id).then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              cover: cover.data.link,
+              avatar: user.avatar
+            })
           })
         })
-      }).then((user) => {
-        req.flash('success_message', 'user was successfully to update')
-        res.redirect(`/users/${req.params.id}`)
-      })
+          .then(() => {
+            req.flash('success_message', 'user was successfully to update')
+            res.redirect(`/users/${req.params.id}`)
+          })
+      }
+      if (files.avatar) {
+        uploadImg(files.avatar[0].path).then((avatar) => {
+          return User.findByPk(req.params.id).then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              cover: user.cover,
+              avatar: avatar.data.link
+            })
+          })
+        })
+          .then(() => {
+            req.flash('success_message', 'user was successfully to update')
+            res.redirect(`/users/${req.params.id}`)
+          })
+      }
     }
   },
   getUserFollowerList: (req, res) => {
@@ -281,7 +272,7 @@ const userController = {
     })
   },
   addFollowing: (req, res) => {
-    const userId = req.params.userId
+    const userId = req.body.id
     if (Number(userId) === req.user.id) {
       req.flash('error_messages', '無法追蹤自己')
       res.redirect('back')

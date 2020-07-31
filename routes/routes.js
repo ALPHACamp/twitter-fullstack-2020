@@ -44,12 +44,16 @@ router.post('/tweets/:tweetId/replies', authenticated, tweetController.postReply
 router.delete('/tweets/:tweetId/:replyId', authenticated, tweetController.deleteReply)
 // 回應留言
 router.post('/tweets/:tweetId/:replyId/:replyTo', authenticated, tweetController.postSecondReply)
-// 追隨
-router.post('/following/:userId', authenticated, userController.addFollowing)
-router.delete('/following/:userId', authenticated, userController.removeFollowing)
-// LIKE
-router.get('/like/:tweetId/:replyId/:secondReplyId', authenticated, tweetController.addLike)
-router.get('/unlike/:tweetId/:replyId/:secondReplyId', authenticated, tweetController.removeLike)
+// Followship
+router.post('/followships', authenticated, userController.addFollowing)
+router.delete('/followships/:userId', authenticated, userController.removeFollowing)
+// Like
+router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
+router.post('/replies/:replyId/like', authenticated, tweetController.addLike)
+router.post('/replies/:replyId/unlike', authenticated, tweetController.removeLike)
+router.post('/secondreplies/:secondReplyId/like', authenticated, tweetController.addLike)
+router.post('/secondreplies/:secondReplyId/unlike', authenticated, tweetController.removeLike)
 // 取得登入頁面
 router.get('/signin', userController.userSigninPage)
 // 取得註冊頁面

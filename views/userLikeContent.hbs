@@ -55,13 +55,14 @@
             {{!-- 追蹤 --}}
             {{#if results.isFollowed}}
             <div class="p-2 text-right">
-              <form action="/following/{{results.id}}?_method=DELETE" method="post">
+              <form action="/followships/{{results.id}}?_method=DELETE" method="post">
                 <button type="submit" class="btn rounded-pill"
                   style="color:white ;background-color:#FF6600; border: 1px solid #FF6600">正在跟隨</button>
               </form>
             </div>
             {{else}}
-            <form action="/following/{{results.id}}" method="post">
+            <form action="/followships" method="post">
+              <input type="hidden" name="id" value="{{results.id}}">
               <button type="submit" class="float-right px-4 py-2 float-right btn rounded-pill"
                 style="color:#FF6600; border: 1px solid #FF6600">跟隨</button>
             </form>
@@ -100,7 +101,7 @@
         </div>
         {{!-- card --}}
         {{#each results.Likes}}
-        <div class="row border-bottom py-3" style="width: 100%;">
+        <div class="row border-bottom py-3 text-break" style="width: 100%;">
           {{!-- avatar --}}
           <div class="col-2 text-center">
             <a href="/users/{{this.Tweet.UserId}}">
@@ -127,13 +128,15 @@
                   fill="#657786" />
               </svg>
               <small class="text-muted mr-5">{{this.Tweet.replyCount}}</small>
-              <a href="/unlike/{{this.Tweet.id}}/0/0" style="text-decoration: none;">
-                <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M11 19.6381H10.986C8.403 19.5901 0.949997 12.8561 0.949997 6.47812C0.949997 3.41412 3.475 0.724121 6.353 0.724121C8.643 0.724121 10.183 2.30412 10.999 3.45412C11.813 2.30612 13.353 0.724121 15.644 0.724121C18.524 0.724121 21.048 3.41412 21.048 6.47912C21.048 12.8551 13.594 19.5891 11.011 19.6361H11V19.6381Z"
-                    fill="#E0245E" />
-                </svg>
-              </a>
+              <form action="/tweets/{{this.Tweet.id}}/unlike" method="post" style="display: inline-block;">
+                <button type="submit" style="background: none;border: none;">
+                  <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M11 19.6381H10.986C8.403 19.5901 0.949997 12.8561 0.949997 6.47812C0.949997 3.41412 3.475 0.724121 6.353 0.724121C8.643 0.724121 10.183 2.30412 10.999 3.45412C11.813 2.30612 13.353 0.724121 15.644 0.724121C18.524 0.724121 21.048 3.41412 21.048 6.47912C21.048 12.8551 13.594 19.5891 11.011 19.6361H11V19.6381Z"
+                      fill="#E0245E" />
+                  </svg>
+                </button>
+              </form>
               <small class="text-muted">{{this.Tweet.likeCount}}</small>
             </div>
           </div>
