@@ -55,7 +55,7 @@
             style="width: 80px; height: 80px;">
           <div class="font-weight-bold h3">Twitter 衝一波</div>
         </div>
-        <ul class="nav flex-row flex-lg-column justify-content-around align-items-lg-start">
+        <ul class="nav flex-row flex-lg-column justify-content-around align-items-lg-start" >
           {{#whoAreYou myUser.role}}
           <li class="nav-item d-flex mt-4 {{#if isHomePage}} text-danger {{else}} text-dark {{/if}}"
             onmouseover="hoverBig('homeSvg')" onmouseout="hoverSmall('homeSvg')">
@@ -231,6 +231,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
     integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
     crossorigin="anonymous"></script>
+    
 
   <script>
     const newTweetModalTextareaElement = document.getElementById('newTweetModalTextarea')

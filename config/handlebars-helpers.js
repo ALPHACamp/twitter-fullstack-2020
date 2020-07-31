@@ -1,8 +1,9 @@
 const moment = require('moment')
-moment.locale('zh-tw', {
+
+moment.locale('zh-TW', {
   longDateFormat: {
     L: 'M月D日',
-    LL: 'A h點mm分・YYYY年M月D日'
+    LL: 'A H點mm分・YYYY年M月D日'
   },
   meridiem: function (hour, minute) {
     const hm = hour * 100 + minute;
@@ -23,8 +24,8 @@ moment.locale('zh-tw', {
 })
 
 module.exports = {
-  getTime: function(a) {
-    return moment(a).format('LL')
+  getTime: function(a) {    
+    return moment(a).tz("Asia/Taipei").format('LL')
   },
   //...
   moment: function (a) {
