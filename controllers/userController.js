@@ -10,6 +10,7 @@ const Like = db.Like
 const Followship = db.Followship
 const imgur = require('imgur-node-api')
 const { error } = require('console')
+const { getUser } = require('../_helpers')
 
 const userController = {
   getRecommendedUsers: (req, res) => {
@@ -21,7 +22,7 @@ const userController = {
           users = users.map((user) => ({
             ...user.dataValues,
             followerCount: user.Followers.length,
-            isFollowed: user.Followers.map((er) => er.id).includes(req.user.id)
+            isFollowed: user.Followers.map((er) => er.id).includes(getUser(req).id)
           }))
           // 去除掉自己和root，依照追蹤人數多排到少，再取前10名顯示
           users = users.filter((user) => (user.name !== req.user.name && user.name !== 'root'))
@@ -47,7 +48,7 @@ const userController = {
           order: [[Tweet, 'createdAt', 'DESC']]
         })
           .then((user) => {
-            return Like.findAll({ where: { UserId: req.user.id }, raw: true, nest: true })
+            return Like.findAll({ where: { UserId: getUser(req).id }, raw: true, nest: true })
               .then((likes) => {
                 const results = user.toJSON()
                 likes = likes.map(like => like.TweetId)
@@ -55,11 +56,11 @@ const userController = {
                   tweet.tweetIsLiked = likes.includes(tweet.id)
                 })
                 results.tweetCount = results.Tweets.length
-                results.isFollowed = user.Followers.map((er) => er.id).includes(req.user.id)
+                results.isFollowed = user.Followers.map((er) => er.id).includes(getUser(req).id)
                 return res.render('userPage', {
                   results: results,
                   recommendFollowings: users,
-                  currentId: req._passport.session.user
+                  currentId: getUser(req).id
                 })
               })
           })
@@ -84,14 +85,14 @@ const userController = {
           // 有可能會抓到喜歡的reply 或 secondReply ，所以要過濾。
           results.Likes = results.Likes.filter(like => like.TweetId !== 0)
           console.log(results)
-          results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+          results.isFollowed = results.Followers.map((er) => er.id).includes(getUser(req).id)
           results.tweetCount = results.Tweets.length
 
           results.Likes.sort((a, b) => b.createdAt - a.createdAt)
           res.render('userLikeContent', {
             results: results,
             recommendFollowings: users,
-            currentId: req._passport.session.user
+            currentId: getUser(req).id
           })
         })
         .catch((err) => res.send(err))
@@ -113,7 +114,7 @@ const userController = {
         .then((user) => {
           const results = user.toJSON()
           results.tweetCount = results.Tweets.length
-          results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
+          results.isFollowed = results.Followers.map((er) => er.id).includes(getUser(req).id)
 
           Like.findAll({ where: { UserId: req._passport.session.user }, raw: true, nest: true })
             .then((likes) => {
@@ -121,7 +122,6 @@ const userController = {
               results.Replies.forEach(reply => {
                 reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
               })
-              console.log(results.Replies[0].Tweet)
               return res.render('userReplyTweet', { results: results, recommendFollowings: users, currentId: req._passport.session.user })
             })
         })

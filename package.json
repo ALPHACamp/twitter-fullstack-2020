@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "NODE_ENV=development nodemon app.js",
     "seeder": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate && npx sequelize db:seed:all",
-    "test": "mocha test --exit --recursive --timeout 5000"
+    "test": "set \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000"
   },
   "author": "",
   "license": "ISC",

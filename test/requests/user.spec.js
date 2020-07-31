@@ -1,3 +1,5 @@
+process.env.NODE_ENV = 'test'
+
 var chai = require('chai')
 var request = require('supertest')
 var sinon = require('sinon')
