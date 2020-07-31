@@ -16,7 +16,7 @@ describe('# user request', () => {
       ).returns(true)
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({ id: 1, Followings: [] })
+      ).returns({ id: 1, Followings: [], role: 'user' })
 
       await db.User.destroy({ where: {}, truncate: true })
       await db.Tweet.destroy({ where: {}, truncate: true })
