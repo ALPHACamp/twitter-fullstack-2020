@@ -116,18 +116,17 @@ const userController = {
       })
   },
   editUser: (req, res) => {
-    if (Number(req.params.id) === Number(helpers.getUser(req).id)) {
-      return User.findByPk(req.params.id).then((user) => {
-        user = user.toJSON()
-        return res.json(user)
-      })
-    } else {
+    if (Number(req.params.id) !== helpers.getUser(req).id) {
       req.flash(
-        'error_message',
-        "You don't have the authority to do this action"
+        'error_messages',
+        'error'
       )
       return res.redirect('back')
     }
+    return User.findByPk(req.params.id).then((user) => {
+      user = user.toJSON()
+      return res.render('userPage', user)
+    })
   },
   putUser: (req, res) => {
     if (!req.body.name) {
@@ -143,7 +142,7 @@ const userController = {
             resolve(img)
           })
         } else {
-          reject('file doesn\'t exist.')
+          reject(Error, 'file doesn\'t exist.')
         }
       })
     }
@@ -160,7 +159,7 @@ const userController = {
           })
           .then((user) => {
             req.flash('success_message', 'user was successfully to update')
-            res.redirect(`/users/${req.params.id}`)
+            res.redirect(`/users/${req.params.id}/tweets`)
           })
       })
     } else if ((Object.keys(files).length === 2)) {
@@ -178,7 +177,7 @@ const userController = {
       })
         .then(() => {
           req.flash('success_message', 'user was successfully to update')
-          res.redirect(`/users/${req.params.id}`)
+          res.redirect(`/users/${req.params.id}/tweets`)
         })
     } else {
       if (files.cover) {
@@ -194,7 +193,7 @@ const userController = {
         })
           .then(() => {
             req.flash('success_message', 'user was successfully to update')
-            res.redirect(`/users/${req.params.id}`)
+            res.redirect(`/users/${req.params.id}/tweets`)
           })
       }
       if (files.avatar) {
@@ -210,7 +209,7 @@ const userController = {
         })
           .then(() => {
             req.flash('success_message', 'user was successfully to update')
-            res.redirect(`/users/${req.params.id}`)
+            res.redirect(`/users/${req.params.id}/tweets`)
           })
       }
     }

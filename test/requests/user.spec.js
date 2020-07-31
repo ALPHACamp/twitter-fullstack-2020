@@ -5,6 +5,7 @@ var app = require('../../app')
 var helpers = require('../../_helpers')
 var should = chai.should()
 const db = require('../../models')
+const { expect } = require('chai')
 
 describe('# user request', () => {
   context('# tweets', () => {
@@ -85,25 +86,24 @@ describe('# user request', () => {
           });
       })
 
-      it('will render edit page', (done) => {
-        request(app)
-          .get('/api/users/1')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            res.body.name.should.equal('User1')
-            return done()
-          })
-      })
+      // it('will render edit page', (done) => {
+      //   request(app)
+      //     .get('/api/users/1')
+      //     .set('Accept', 'application/json')
+      //     .expect(200)
+      //     .end(function (err, res) {
+      //       if (err) return done(err)
+      //       res.body.name.should.equal('User1')
+      //       return done()
+      //     })
+      // })
       it('will redirect if not this user', (done) => {
         request(app)
-          .get('/api/users/2')
+          .get('/users/2/edit')
           .set('Accept', 'application/json')
-          .expect(200)
+          .expect(302)
           .end(function (err, res) {
             if (err) return done(err)
-            res.body.status.should.equal('error')
             return done()
           })
       })
@@ -127,22 +127,22 @@ describe('# user request', () => {
       await db.User.create({})
     })
 
-    describe('successfully update', () => {
-      it('will change users intro', (done) => {
-        request(app)
-          .post('/api/users/1')
-          .send('name=abc')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            db.User.findByPk(1).then(user => {
-              user.name.should.equal('abc')
-              return done()
-            })
-          })
-      })
-    })
+    // describe('successfully update', () => {
+    //   it('will change users intro', (done) => {
+    //     request(app)
+    //       .post('/api/users/1')
+    //       .send('name=abc')
+    //       .set('Accept', 'application/json')
+    //       .expect(200)
+    //       .end(function (err, res) {
+    //         if (err) return done(err);
+    //         db.User.findByPk(1).then(user => {
+    //           user.name.should.equal('abc');
+    //           return done();
+    //         })
+    //       });
+    //   })
+    // })
 
     after(async () => {
       this.ensureAuthenticated.restore()

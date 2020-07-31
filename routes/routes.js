@@ -87,8 +87,8 @@ router.post('/admin/signin', adminController.adminCheckRequired, passport.authen
 router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.adminDeleteTweets)
 
 // USER
-// 取得個人頁面
-router.get('/users/:id', authenticated, userController.getRecommendedUsers, userController.getUser)
+// 取得個人推文頁面
+router.get('/users/:id/tweets', authenticated, userController.getRecommendedUsers, userController.getUser)
 // 取得個人like內容頁面
 router.get('/users/:id/likes', authenticated, userController.getRecommendedUsers, userController.getUserLikeContent)
 // 取得個人回覆過的推文頁面
