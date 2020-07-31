@@ -15,7 +15,25 @@
     <div class="col-6 m-0 p-0 d-flex flex-column flex-nowrap">
       <div class="title py-2 px-3 border-bottom font-weight-bold" style="width: 100%;">公開聊天室</div>
       {{!-- 聊天區塊 --}}
-      <div class="chat"></div>
+      <div class="chat border">
+        <ul class="message"></ul>
+        <form action="" class="p-1">
+          <div class="row m-0">
+            <div class="col-10 p-0 mr-1">
+              <input type="text" id="m" autocomplete="off" class="form-control rounded-pill" placeholder="輸入訊息..."
+                aria-label="message" style="background-color:#c5c0c0; width:100%">
+            </div>
+            <div class="col-auto p-0">
+              <button type="submit" class="btn btn-warning rounded-pill mx-auto">傳送</button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+</script>
