@@ -24,6 +24,7 @@ moment.locale('zh-tw', {
 
 module.exports = {
   getTime: function(a) {
+    a = moment(a).local()
     return moment(a).format('LL')
   },
   //...
