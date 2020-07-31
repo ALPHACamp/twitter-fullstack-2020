@@ -3,6 +3,7 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const tweetController = require('../controllers/tweetController');
 const adminController = require('../controllers/adminController.js');
+const chatController = require('../controllers/chatController')
 const helpers = require('../_helpers');
 const passport = require('passport');
 const multer = require('multer');
@@ -85,5 +86,7 @@ router.put('/users/:id/edit', authenticated, userController.putEditUser);
 router.get('/users/:id/followings', authenticated, userController.topUserForLayout, userController.getFollowings );
 router.get('/users/:id/followers', authenticated, userController.topUserForLayout, userController.getFollowers );
 router.get('/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage );
+
+router.get('/chatroom', chatController.getChatPage)
 
 module.exports = router;
