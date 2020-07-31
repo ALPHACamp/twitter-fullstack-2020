@@ -1,7 +1,7 @@
-'use strict';
+'use strict'
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Tweets', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Likes', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,8 +11,9 @@ module.exports = {
       UserId: {
         type: Sequelize.INTEGER
       },
-      description: {
-        type: Sequelize.TEXT
+      TweetId: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
@@ -22,9 +23,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Tweets');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('Likes')
   }
-};
+}
