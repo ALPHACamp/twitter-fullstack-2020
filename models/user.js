@@ -22,12 +22,12 @@ const model = (sequelize, DataTypes) => {
     User.hasMany(models.Like)
     User.belongsToMany(models.User, {
       through: models.Followship,
-      foreignKey: 'FollowingId',
+      foreignKey: 'followingId',
       as: 'Followers'
     })
     User.belongsToMany(models.User, {
       through: models.Followship,
-      foreignKey: 'FollowerId',
+      foreignKey: 'followerId',
       as: 'Followings'
     })
   }

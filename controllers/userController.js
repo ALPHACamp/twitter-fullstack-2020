@@ -78,7 +78,6 @@ const userController = {
         const results = user.toJSON()
         // 有可能會抓到喜歡的reply 或 secondReply ，所以要過濾。
         results.Likes = results.Likes.filter(like => like.TweetId !== 0)
-        console.log(results)
         results.isFollowed = results.Followers.map((er) => er.id).includes(req.user.id)
         results.tweetCount = results.Tweets.length
 
@@ -112,7 +111,6 @@ const userController = {
             results.Replies.forEach(reply => {
               reply.Tweet.tweetIsLiked = likes.includes(reply.Tweet.id)
             })
-            console.log(results.Replies[0].Tweet)
             return res.render('userReplyTweet', { results: results, currentId: req._passport.session.user })
           })
       })
@@ -231,7 +229,6 @@ const userController = {
       }))
       results.tweetCount = user.Tweets.length
       results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-      console.log(results)
       res.render('userFollowPage', { results: results })
     })
       .catch((err) => res.send(err))
@@ -251,44 +248,41 @@ const userController = {
         }))
         results.tweetCount = user.Tweets.length
         results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        console.log(results)
         res.render('userFollowingPage', { results: results })
       })
       .catch((err) => res.send(err))
   },
   addFollowing: (req, res) => {
-    const userId = req.body.id
-    if (Number(userId) === req.user.id) {
+    if (helpers.getUser(req).id === Number(req.body.id)) {
       req.flash('error_messages', '無法追蹤自己')
-      res.redirect('back')
-    } else {
-      return Followship.create({
-        FollowerId: req.user.id,
-        FollowingId: userId
-      })
-        .then(() => {
-          User.findByPk(req.user.id).then((user) => {
-            user.increment('followingCount')
-          })
-        })
-        .then(() => {
-          User.findByPk(userId).then((user) => {
-            user.increment('followerCount')
-          })
-        })
-        .then(() => res.redirect('back'))
-        .catch((err) => res.send(err))
+      return res.redirect('back')
     }
+    return Followship.create({
+      followerId: helpers.getUser(req).id,
+      followingId: req.body.id
+    })
+      .then(() => {
+        User.findByPk(helpers.getUser(req).id).then((user) => {
+          user.increment('followingCount')
+        })
+      })
+      .then(() => {
+        User.findByPk(Number(req.body.id)).then((user) => {
+          user.increment('followerCount')
+        })
+      })
+      .then(() => res.redirect('back'))
+      .catch((err) => res.send(err))
   },
   removeFollowing: (req, res) => {
     return Followship.findOne({
-      where: { FollowerId: req.user.id, FollowingId: req.params.userId }
+      where: { followerId: helpers.getUser(req).id, followingId: Number(req.params.userId) }
     })
       .then((followship) => {
         followship.destroy()
       })
       .then(() => {
-        User.findByPk(req.user.id).then((user) => {
+        User.findByPk(helpers.getUser(req).id).then((user) => {
           user.decrement('followingCount')
         })
       })
