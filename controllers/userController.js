@@ -147,7 +147,6 @@ const userController = {
         }
       })
     }
-
     const { files } = req
     if ((Object.keys(files).length === 0)) {
       return User.findByPk(req.params.id).then((user) => {

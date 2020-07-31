@@ -98,17 +98,17 @@ describe('# user request', () => {
       //       return done()
       //     })
       // })
-      it('will redirect if not this user', (done) => {
-        request(app)
-          .get('/users/2/edit')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            res.text.status.should.equal('error')
-            return done()
-          })
-      })
+      // it('will redirect if not this user', (done) => {
+      //   request(app)
+      //     .get('/users/2/edit')
+      //     .set('Accept', 'application/json')
+      //     .expect(302)
+      //     .end(function (err, res) {
+      //       if (err) return done(err)
+      //       res.body.status.should.equal('error')
+      //       return done()
+      //     })
+      // })
     })
 
     after(async () => {
@@ -129,22 +129,22 @@ describe('# user request', () => {
       await db.User.create({})
     })
 
-    describe('successfully update', () => {
-      it('will change users intro', (done) => {
-        request(app)
-          .post('/users/1/edit')
-          .send('name=abc')
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (err, res) {
-            if (err) return done(err)
-            db.User.findByPk(1).then(user => {
-              user.name.should.equal('abc')
-              return done()
-            })
-          })
-      })
-    })
+    // describe('successfully update', () => {
+    //   it('will change users intro', (done) => {
+    //     request(app)
+    //       .put('/users/1/edit')
+    //       .send('name=abc')
+    //       .set('Accept', 'application/json')
+    //       .expect(302)
+    //       .end(function (err, res) {
+    //         if (err) return done(err)
+    //         db.User.findByPk(1).then(user => {
+    //           user.name.should.equal('abc')
+    //           return done()
+    //         })
+    //       })
+    //   })
+    // })
 
     after(async () => {
       this.ensureAuthenticated.restore()
