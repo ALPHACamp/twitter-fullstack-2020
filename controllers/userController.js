@@ -145,6 +145,7 @@ const userController = {
             {
               model: Tweet, include: [
                 User,
+                Reply,
                 { model: User, as: 'LikedUsers' }]
             }
           ],
