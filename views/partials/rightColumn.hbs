@@ -4,11 +4,13 @@
     <div class="col align-self-center m-0 p-0" style="background-color: #F5F8FA;border-radius:10px">
       <div class="h6 m-3 " style="font-weight: bold;">跟隨誰</div>
       <hr class="m-0 p-0">
-      {{#each recommendFollowings}}
+      {{#each recommendedUsers}}
       <div class="card m-0 p-0  " style="border-color:transparent; border-radius:0 ;background-color:#F5F8FA;">
         <div class="row no-gutters">
           <div class="m-2">
-            <img src="{{this.avatar}}" class="card-img" alt="img" style="border-radius: 50%; width:50px">
+            <a href="/users/{{this.id}}/tweets">
+              <img src="{{this.avatar}}" class="card-img" alt="img" style="border-radius: 50%; width:50px">
+            </a>
           </div>
           <div class="col d-flex flex-column justify-content-center">
             <span style="font-weight: bold;">{{this.name}}</span>

@@ -2,22 +2,20 @@ var chai = require('chai')
 var request = require('supertest')
 var sinon = require('sinon')
 var app = require('../../app')
-var helpers = require('../../_helpers');
+var helpers = require('../../_helpers')
 var should = chai.should()
 const db = require('../../models')
 
 describe('# followship request', () => {
-
   context('#create', () => {
     describe('when user1 wants to follow user2', () => {
       before(async () => {
-
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
-        ).returns(true);
+        ).returns(true)
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [] });
+        ).returns({ id: 1, Followings: [] })
         await db.User.destroy({ where: {}, truncate: true })
         await db.Followship.destroy({ where: {}, truncate: true })
         await db.User.create({})
@@ -29,9 +27,9 @@ describe('# followship request', () => {
           .post('/followships')
           .send('id=1')
           .set('Accept', 'application/json')
-          .expect(200)
+          .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
+            if (err) return done(err)
             db.User.findByPk(1, {
               include: [
                 { model: db.User, as: 'Followers' },
@@ -39,9 +37,9 @@ describe('# followship request', () => {
               ]
             }).then(user => {
               user.Followings.length.should.equal(0)
-              return done();
+              return done()
             })
-          });
+          })
       })
 
       it('will show followings', (done) => {
@@ -51,7 +49,7 @@ describe('# followship request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
+            if (err) return done(err)
             db.User.findByPk(1, {
               include: [
                 { model: db.User, as: 'Followers' },
@@ -59,15 +57,14 @@ describe('# followship request', () => {
               ]
             }).then(user => {
               user.Followings.length.should.equal(1)
-              return done();
+              return done()
             })
-          });
+          })
       })
 
       after(async () => {
-
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
         await db.User.destroy({ where: {}, truncate: true })
         await db.Followship.destroy({ where: {}, truncate: true })
       })
@@ -77,13 +74,12 @@ describe('# followship request', () => {
   context('#destroy', () => {
     describe('when user1 wants to unfollow user2', () => {
       before(async () => {
-
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
-        ).returns(true);
+        ).returns(true)
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({ id: 1, Followings: [] });
+        ).returns({ id: 1, Followings: [] })
         await db.User.destroy({ where: {}, truncate: true })
         await db.Followship.destroy({ where: {}, truncate: true })
         await db.User.create({})
@@ -97,7 +93,7 @@ describe('# followship request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
-            if (err) return done(err);
+            if (err) return done(err)
             db.User.findByPk(1, {
               include: [
                 { model: db.User, as: 'Followers' },
@@ -105,19 +101,17 @@ describe('# followship request', () => {
               ]
             }).then(user => {
               user.Followings.length.should.equal(0)
-              return done();
+              return done()
             })
-          });
+          })
       })
 
       after(async () => {
-
-        this.ensureAuthenticated.restore();
-        this.getUser.restore();
+        this.ensureAuthenticated.restore()
+        this.getUser.restore()
         await db.User.destroy({ where: {}, truncate: true })
         await db.Followship.destroy({ where: {}, truncate: true })
       })
     })
   })
-
-});
+})
