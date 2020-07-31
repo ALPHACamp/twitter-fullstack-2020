@@ -11,7 +11,7 @@ const passport = require('./config/passport')
 const middleware = require('./config/middleware')
 
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -28,7 +28,7 @@ app.use(flash())
 app.use(middleware.topUsers)
 app.use(middleware.setLocals)
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Alphitter is listening on port ${PORT}!`))
 
 require('./routes/index')(app, passport)
 
