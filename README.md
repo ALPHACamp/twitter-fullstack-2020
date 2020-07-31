@@ -1,16 +1,27 @@
-# Simple Twitter
+# :v: Simple Twitter :v:
 
-This is a simple twitter clone fullstack project made with Express.js, Node.js, express-handlebars and MySQL.
+This is a simple :v: twitter :v: clone fullstack project made with Express.js, Node.js, express-handlebars and MySQL. :v:
 
 ## Snapshots
+### User
+![image alt](./images/hometweets.png)
+![image alt](./images/userpage.png)
+![image alt](./images/editprofile.png)
+![image alt](./images/repliedtweets.png)
+![image alt](./images/likedtweets.png)
+### Admin
+![image alt](./images/adminusers.png)
+![image alt](./images/admintweets.png)
+
+
+
 
 ## User Stories & Product Features
-
 - Admin can view all the users
 - Admin can view and delete all the tweets
 - Users can post tweets
-- Users can like tweets
-- Users can reply to tweets
+- Users can like tweets :heart:
+- Users can reply to tweets :speech_balloon:
 - Users can follow users
 - Users can edit account info
 - Users can edit profile
@@ -93,6 +104,18 @@ user: [http://localhost:3000/signin](http://localhost:3000/signin)
 ```
 account: user1
 password: 12345678
+account: user2
+password: 12345678
+account: user3
+password: 12345678
+account: user4
+password: 12345678
+account: user5
+password: 12345678
 ```
 
-##
+## Contributor
+
+- [Billy-Chung](https://github.com/Billy-Chung) - Front-End Specialist :trollface:
+- [marcho001](https://github.com/marcho001) - Database Killer :fire::fire::fire:
+- [leey611](https://github.com/leey611) - Debuger :exclamation::exclamation::v:
