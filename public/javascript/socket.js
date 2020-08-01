@@ -7,6 +7,7 @@ $(function () {
 
   chatForm.addEventListener('submit', event => {
     event.preventDefault()
+    if (input.value.length === 0) { return false }
     // socket.emit('chat', { message: input.value })
     socket.emit('chat', input.value)
     socket.emit('typing', { isExist: false })
@@ -24,17 +25,17 @@ $(function () {
 
   // message from user
   socket.on('chat', data => {
-    output.innerHTML += ` <div class="chat-message">
-          <div class="chat-avatar"
-            style="background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;"></div>
-          <span class="name">${data.name}</span>
+    output.innerHTML += `
+    <div class="chat-message">
+          <span>${data.name}</span>
+          <div class="chat-avatar" style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
+          </div>
           <div class="column">
             <div class="chat-text">${data.message}</div>
             <div class="chat-time">下午10:20</div>
           </div>
         </div>`
 
-    // output.innerHTML += '<div>' + data.name + ' : ' + data.message + '</div>'
     chatContent.scrollTop = chatContent.scrollHeight
   })
 

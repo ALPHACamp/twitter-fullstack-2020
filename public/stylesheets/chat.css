@@ -15,25 +15,13 @@
   overflow: scroll;
 }
 
+/* output */
 #output {
   display: flex;
   flex-direction: column;
+  overflow: scroll;
 }
-.chat-message {
-  display: flex;
-  align-items: center;
-}
-.chat-avatar {
-  height: 35px;
-  width: 35px;
-  border-radius: 100%;
-}
-.chat-time {
-  color: rgb(148, 150, 151);
-  font-size: 14px;
-  position: relative;
-  top: -5px;
-}
+
 .broadcast div {
   margin: 8px;
   text-align: center;
@@ -45,20 +33,50 @@
   padding: 3px 15px;
   color: rgb(100, 100, 100);
 }
-#output {
-  overflow: scroll;
-}
-#output div { 
+
+.chat-message {
+  display: flex;
+  align-items: center;
   margin: 10px 10px;
 }
-.chat-message .name{
-  font-size: 18px;
+.chat-avatar {
+  height: 35px;
+  width: 35px;
+  border-radius: 100%;
+  margin: 0px 10px;
+}
+.chat-message span{
+  background-color: white;
+  border-radius: 5px;
+  font-size: 16px;
+  color: rgb(78, 78, 78);
 }
 .chat-text {
-  padding: 10px 15px;
+  max-width: 350px;
+  padding: 20px;
   background-color: rgb(240, 240, 240);
-  border-radius: 50px 50px 50px 0%;
+  border-radius: 40px 40px 40px 0px;
 }
+.chat-time {
+  color: rgb(148, 150, 151);
+  font-size: 10px;
+}
+
+.self-message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 5px 10px;
+}
+.self-text {
+  padding: 8px 15px;
+  background-color: #FF6600;
+  border-radius: 50px 50px 0px 50px;
+  color: white;
+}
+
+
+/* input */
 .chat-footer {
   position: fixed;
   top: 690px;
