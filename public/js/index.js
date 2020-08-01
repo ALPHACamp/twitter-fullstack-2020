@@ -7,7 +7,7 @@ const chatLink = document.querySelector('#chatLink')
 
 let usersInChatroom = []
 let chatroomMsg = []
-let self
+// let self
 
 //when users online 重新將user arr 插入ul
 //1 從哪邊監聽進入聊天室的事件？
@@ -29,9 +29,9 @@ let msg = {
   time: new Date(),
   message: message.value
 }
-const text = selfMsg(msg)
-chatroomMsg.appendChild(text)
-socket.broadcast.emit('chat_msg', msg)
+// const text = selfMsgs(msg)
+// chatroomMsg.appendChild(text)
+socket.emit('chat_msg', msg)
 message.value = ''
 })
 
@@ -44,9 +44,8 @@ socket.on('chat_msg', (msg) => {
 
 socket.on('user-online', (newUser) => {
   const online = userOnline(usersInChatroom, newUser)
-  if(online !== '') {
-    chattingMsg.appendChild(userOnline(usersInChatroom, newUser))
-  }
+  if(online === '') return
+  chattingMsg.appendChild(userOnline(usersInChatroom, newUser))
 })
 
 function userOnline(arr, user) {
@@ -92,7 +91,7 @@ function userOffline() {
 
 }
 
-function selfMsg (msg) {
+function selfMsgs (msg) {
   const li = document.createElement('li')
   const p = document.createElement('p')
   const span = document.createElement('span')
