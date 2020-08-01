@@ -106,4 +106,20 @@ function selfMsg (msg) {
   return li
 }
 
+function renderUser (arr) {
+  const li = document.createElement('li')
+  const avatar = document.createElement('img')
+  const div = document.createElement('div')
+  const h5 = document.createElement('h5')
+  const span = document.createElement('span')
 
+  li.classList.add('list-group-item', 'm-1')
+  avatar.classList.add('rounded-circle', 'm-2')
+  div.classList.add('d-flex', 'flex-column', 'align-items-center', 'flex-lg-row', 'align-items-lg-center')
+  h5.classList.add('otherMsg', 'm-0')
+  span.classList.add()
+
+  avatar.src = `${msg.avatar}`
+  avatar.width = '60'
+  avatar.height = '60'
+}
