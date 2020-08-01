@@ -3,7 +3,9 @@ const moment = require('moment')
 moment.locale('zh-TW', {
   longDateFormat: {
     L: 'M月D日',
-    LL: 'A H點mm分・YYYY年M月D日'
+    LL: 'A H點mm分・YYYY年M月D日',
+    LLL: 'A H點mm分',
+    LLLL: 'A H:mm'
   },
   meridiem: function (hour, minute) {
     const hm = hour * 100 + minute;
