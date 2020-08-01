@@ -4,6 +4,7 @@ $(function () {
   const input = document.querySelector('#input')
   const chatContent = document.querySelector('.chat-main')
   const typing = document.querySelector('.typing')
+  const onlineUser = []
 
   chatForm.addEventListener('submit', event => {
     event.preventDefault()
@@ -16,25 +17,25 @@ $(function () {
   })
 
   // message from server
-  socket.on('message', message => {
-    output.innerHTML += `<div class="broadcast">
-    <div><span>${message}</span></div>
-    </div>
-    `
+  socket.on('message', data => {
+    output.innerHTML += `<div class="broadcast"> <div><span>${data.message}</span></div></div>`
+
+    onlineUser.push(data)
+    console.log(onlineUser)
   })
 
   // message from user
   socket.on('chat', data => {
     output.innerHTML += `
-    <div class="chat-message">
-          <span>${data.name}</span>
-          <div class="chat-avatar" style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
+      <div class="chat-message">
+        <div class="chat-avatar" style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
           </div>
-          <div class="column">
-            <div class="chat-text">${data.message}</div>
-            <div class="chat-time">${data.time}</div>
-          </div>
-        </div>`
+        <div class="column">
+          <div class="chat-text"><span>${data.name} :</span>${data.message}</div>
+          <div class="chat-time">${data.time}</div>
+        </div>
+      </div>
+    `
 
     chatContent.scrollTop = chatContent.scrollHeight
   })
@@ -49,10 +50,12 @@ $(function () {
   })
   socket.on('typing', data => {
     if (data.isExist) {
-      typing.innerHTML = `${data.name}正在輸入`
+      typing.innerHTML = `${data.name} is typing...`
     } else {
       typing.innerHTML = ''
     }
   })
+
+
 
 })
