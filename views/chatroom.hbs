@@ -7,15 +7,14 @@
     </ul>
   </div>
   <div class="chat col-8 p-0 border-left border-black-50 d-flex flex-column justify-content-between" style="height: 100%;">
-    {{!-- <div class="d-flex flex-column justify-content-between"> --}}
-      <div class="my-4 border-bottom border-black-50 d-flex">
+      <div class="py-4 border-bottom border-black-50 d-flex">
         <h5 class="ml-3">公開聊天室</h5>
       </div>
 
       <div id="chatting" class="flex-grow-1">
         <ul id="chattingMsg" class="p-0 mr-4">
 
-        {{#each otherUser}}
+        {{#each msg}}
           <li class="d-flex">
             <img src="{{this.avatar}}" alt="" class="rounded-circle border border-dark m-2" width="50px" height="50px">
             <div class="d-flex flex-column">
@@ -56,7 +55,6 @@
         </form>
       
       
-    {{!-- </div> --}}
     
     
   
