@@ -1,0 +1,22 @@
+.chatroom-content {
+  grid-column: 2 / 4;
+  background-color: rgb(212, 209, 209);
+}
+
+.chat-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background-color: darkolivegreen;
+}
+
+#output {
+  background-color: rgb(206, 108, 108);
+  padding: 10px 0px;
+  margin: 5px 0px;
+}
+
+.chat-window {
+  background-color: darkseagreen;
+}

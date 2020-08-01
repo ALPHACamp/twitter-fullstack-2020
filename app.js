@@ -31,11 +31,17 @@ app.use(middleware.setLocals)
 const server = app.listen(PORT, () => console.log(`Alphitter is listening on port ${PORT}!`))
 
 const io = socket(server)
-io.on('connection', (socket) => {
+io.on('connection', socket => {
   console.log('a user join chatroom')
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg)
-    io.emit('chat message', msg)
+
+  socket.on('chat', data => {
+    console.log('message: ' + data)
+    socket.emit('chat', data)
+  })
+
+  socket.on('typing', data => {
+    console.log('brocast:' + data)
+    socket.broadcast.emit('typing', data)
   })
 })
 

@@ -1,18 +1,24 @@
 <div class="container-fluid">
   {{> left-content}}
+  <div class="chatroom-content">
 
-  <div class="main-content">
-
-    <div class="message">
-      <ul id="messages"></ul>
+    <!--output-->
+    <div class="chat-window">
+      <ul id="output"></ul>
+      <div id="feedback">
+        (typing feedback)
+      </div>
     </div>
 
-    <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
-    </form>
+    <!--input-->
+    <div class="chat-footer">
+      <form id="chat-form" action="">
+        <input id="input" autocomplete="off" autofocus />
+        <button>Send</button>
+      </form>
+    </div>
 
   </div>
-
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
