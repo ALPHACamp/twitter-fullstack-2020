@@ -20,6 +20,8 @@
   {{/if}}
 
   {{{body}}}
+
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -28,26 +30,14 @@
   integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
   integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="index.js"></script>
 <script>
   window.setTimeout(function () {
     $(".alert").alert('close')
-  }, 8000);
-  function wordsTotal() {
-    let total = document.getElementById('userInput').value.length;
-    if (total > 140)
-      document.getElementById('display').innerHTML = `<span style="color:red;">${total}/140</span>`;
-    else {
-      document.getElementById('display').innerHTML = `<span>${total}/140</span>`;
-    }
-  }
-  function wordsTotal_btn() {
-    let total = document.getElementById('userInput_btn').value.length;
-    if (total > 140)
-      document.getElementById('display_btn').innerHTML = `<span style="color:red;">${total}/140</span>`;
-    else {
-      document.getElementById('display_btn').innerHTML = `<span>${total}/140</span>`;
-    }
-  }
+  }, 8000)
 </script>
+
+
 
 </html>
