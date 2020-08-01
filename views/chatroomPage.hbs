@@ -16,15 +16,17 @@
       <div class="title py-2 px-3 border-bottom font-weight-bold" style="width: 100%;">公開聊天室</div>
       {{!-- 聊天區塊 --}}
       <div class="chat border">
-        <ul class="message"></ul>
+        <ul class="message-list" id="message-list">
+
+        </ul>
         <form action="" class="p-1">
           <div class="row m-0">
             <div class="col-10 p-0 mr-1">
-              <input type="text" id="m" autocomplete="off" class="form-control rounded-pill" placeholder="輸入訊息..."
-                aria-label="message" style="background-color:#c5c0c0; width:100%">
+              <input type="text" id="message" name="message" autocomplete="off" class="form-control rounded-pill"
+                placeholder="輸入訊息..." aria-label="message" style="background-color:#c5c0c0; width:100%">
             </div>
             <div class="col-auto p-0">
-              <button type="submit" class="btn btn-warning rounded-pill mx-auto">傳送</button>
+              <button id="send-message" type="submit" class="btn btn-warning rounded-pill mx-auto">傳送</button>
             </div>
           </div>
         </form>
@@ -32,8 +34,3 @@
     </div>
   </div>
 </div>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-  const socket = io();
-</script>
