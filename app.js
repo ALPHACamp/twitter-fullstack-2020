@@ -18,9 +18,7 @@ const io = require('socket.io')(http)
 const moment = require('moment')
 
 
-//iew engine
-// app.use(express.static(__dirname + 'css'));
-// app.use(express.static(__dirname + 'js'))
+
 app.engine(
   'hbs',
   exphbs({
@@ -59,26 +57,28 @@ app.use((req, res, next) => {
   next();
 });
 
+
+const users = []
+const chatMessage = []
+let usersCount = 0
+
 io.on('connection', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
-  // console.log(app)
-  socket.on('user-online', () => {
-    user = app.locals.user
-    const newUser = {
-      name: user.name,
-      account: user.account,
-      avatar: user.avatar
+  socket.on('user-online', (user) => {
+    user.socketId = socket.id
+    if (!users.map(i => i.UserId).includes(user.UserId)){
+      users.push(user)
     }
-    console.log(newUser)
-    io.emit('user-online', newUser)
+    usersCount = users.length
+    io.emit('user-online', user)
+    io.emit('renderUser', users)
+    io.emit('userCount', usersCount)
   })
   socket.on('chat_msg', (msg) => {
-    user = app.locals.user
-    msg.avatar = user.avatar
-    msg.UserId = user.id
-    msg.time = moment(msg.time).format('LLL')
-    io.emit('chat_msg', msg)
+    msg.time = moment(msg.time).tz("Asia/Taipei").format('LLLL')
+    chatMessage.push(msg)
+    io.emit('renderMsg', msg)
   })
 })
 require('./routes')(app);
