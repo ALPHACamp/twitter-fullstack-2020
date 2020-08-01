@@ -11,6 +11,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('./config/passport')
 const middleware = require('./config/middleware')
+const helpers = require('./_helpers')
 const socket = require('socket.io')
 
 const app = express()
@@ -29,20 +30,43 @@ app.use(middleware.topUsers)
 app.use(middleware.setLocals)
 
 const server = app.listen(PORT, () => console.log(`Alphitter is listening on port ${PORT}!`))
-
 const io = socket(server)
+
+let username = ''
+app.use((req, res, next) => {
+  if (helpers.getUser(req)) {
+    username = helpers.getUser(req).name
+  }
+  next()
+})
+
 io.on('connection', socket => {
-  console.log('a user join chatroom')
+  const members = {}
+  const socketId = socket.id
 
-  socket.on('chat', data => {
-    console.log('message: ' + data)
-    io.emit('chat', data)
+  // server message
+  socket.emit('message', `${username}Welcome to AlphaChatRoom`)
+  socket.broadcast.emit('message', `${username} join chatroom`)
+
+  // user message
+  socket.on('chat', message => {
+    io.emit('chat', { username, message })
   })
 
-  socket.on('typing', data => {
-    console.log('brocast:' + data)
-    socket.broadcast.emit('typing', data)
+  // socket.on('typing', data => {
+  //   socket.broadcast.emit('typing', data)
+  // })
+
+  // onlineuser
+  socket.on('onlineUser', () => {
+    io.emit('onlineUser', members)
   })
+
+  // user leave room
+  socket.on('disconnect', () => {
+    io.emit('message', `${username} left chatroom`)
+  })
+
 })
 
 require('./routes/index')(app, passport)
