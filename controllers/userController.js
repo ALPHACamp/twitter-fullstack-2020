@@ -7,6 +7,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Message = db.Message
 const Followship = db.Followship
 const imgur = require('imgur-node-api')
 
@@ -433,7 +434,7 @@ const userController = {
     }
     findExistUser(updateAccountAndPassword)
 
-    function findExistUser(updateMethod) {
+    function findExistUser (updateMethod) {
       User.findOne({
         // 除了當前使用者的資料以外，有沒有重複的
         where: {
@@ -461,7 +462,14 @@ const userController = {
     res.redirect('/signin')
   },
   chatroomPage: (req, res) => {
-    res.render('chatroomPage')
+    return Message.findAll({
+      raw: true,
+      nest: true,
+      include: [{ model: User }]
+    }).then((msg) => {
+      console.log(msg)
+      return res.render('chatroomPage', { msg: msg })
+    })
   }
 }
 

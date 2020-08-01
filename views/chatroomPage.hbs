@@ -27,12 +27,19 @@
               style="width: 50px; border-radius:50%">
             <span class="ml-3 bg-light" style="max-width:50%">hihi</span>
           </div> --}}
+          {{#each msg}}
+          <div class="mb-3">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px; border-radius:50%">
+            <span class="ml-3 bg-light" style="max-width:50%">{{this.content}}</span>
+          </div>
+          {{/each}}
         </div>
       </div>
       <footer class="navbar-fixed-bottom">
         <form action="" id="send-form" class="p-1">
           <div class="row m-0">
             <div class="col-10 p-0 mr-1">
+              <input type="hidden" id="userId" value="{{user.id}}">
               <input type="hidden" id="name" value="{{user.name}}">
               <input type="hidden" id="account" value="{{user.account}}">
               <input type="hidden" class="form-control" id="avatar" name="avatar" value="{{user.avatar}}">
