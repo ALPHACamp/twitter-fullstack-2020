@@ -51,18 +51,25 @@ io.on('connection', socket => {
 
   // user message
   socket.on('chat', data => {
+    let now = new Date()
+    let time = now.toLocaleString('zh-TW', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    })
+
+
     io.emit('chat', {
       message: data,
-      name: username
+      name: username,
+      time: time
     })
   })
 
   // listen typing
   socket.on('typing', data => {
-    socket.broadcast.emit('typing', {
-      message: data,
-      name: username
-    })
+    data.name = username
+    socket.broadcast.emit('typing', data)
   })
 
   // onlineuser
