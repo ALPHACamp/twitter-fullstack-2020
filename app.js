@@ -34,26 +34,32 @@ const io = socket(server)
 
 let username = ''
 let useraccount = ''
+let userid = ''
+let useravatar = ''
 app.use((req, res, next) => {
   if (helpers.getUser(req)) {
     username = helpers.getUser(req).name
-    useraccount = helpers.getUser(req).useraccount
+    useraccount = helpers.getUser(req).account
+    userid = helpers.getUser(req).id
+    useravatar = helpers.getUser(req).avatar
   }
   next()
 })
 
+let onlineUser = []
 io.on('connection', socket => {
-  // const members = {}
-  // const socketId = socket.id
-  // const userChatName = username
+  // 在線的使用者，一連線就加進onlineUser陣列裡
+  onlineUser.push({
+    username: username,
+    useraccount: useraccount,
+    userid: userid,
+    useravatar: useravatar,
+  })
+  io.emit('onlineUser', onlineUser)
 
   // server message
-  // socket.emit('message', `Hello, ${username}`)
-  socket.emit('message', {
-    message: `Hello, ${username}`,
-    username: username,
-    useraccount: useraccount
-  })
+  socket.emit('message', `Hello, ${username}`)
+
   socket.broadcast.emit('message', `${username} join chatroom`)
 
   // user message
@@ -78,13 +84,13 @@ io.on('connection', socket => {
     socket.broadcast.emit('typing', data)
   })
 
-  // onlineuser
-  socket.on('onlineUser', () => {
-    io.emit('onlineUser', members)
-  })
-
   // user leave room
   socket.on('disconnect', () => {
+    //過濾掉離線使用者，並傳值給前端
+    onlineUser = onlineUser.filter(function (user, index, array) {
+      return user.userid !== userid
+    })
+    io.emit('onlineUser', onlineUser)
     socket.broadcast.emit('typing', { isExist: false })
     socket.broadcast.emit('message', `${username} left chatroom`)
   })
