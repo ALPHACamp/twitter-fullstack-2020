@@ -61,7 +61,6 @@ const tweetController = {
     return res.render('tweetsHome', { tweets: data, isHomePage: true });
   },
   postTweet: (req, res) => {
-    console.log(req.body.description)
     if (!req.body.description) {
       req.flash('error_messages', '請輸入推文內容!!!');
       return res.redirect('back');
@@ -89,7 +88,6 @@ const tweetController = {
       req.flash('error_messages', '回覆內容需小於140個字!!!');
       return res.redirect('back');
     }
-console.log(req.body.comment)
     return Reply.create({
       comment: req.body.comment,
       TweetId: whichTweet,
