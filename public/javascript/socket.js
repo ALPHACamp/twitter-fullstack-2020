@@ -2,12 +2,13 @@ $(function () {
   const socket = io()
   const chatForm = document.querySelector('#chat-form')
   const input = document.querySelector('#input')
-  const broadcast = document.querySelector('.broadcast')
   const chatContent = document.querySelector('.chat-main')
+  const typing = document.querySelector('.typing')
 
   chatForm.addEventListener('submit', event => {
     event.preventDefault()
-    socket.emit('chat', { message: input.value })
+    // socket.emit('chat', { message: input.value })
+    socket.emit('chat', input.value)
     socket.emit('typing', { isExist: false })
     input.value = ''
     return false
@@ -23,10 +24,18 @@ $(function () {
 
   // message from user
   socket.on('chat', data => {
-    output.innerHTML += '<div>' + data.username + ' : ' + data.message + '</div>'
+    output.innerHTML += ` <div class="chat-message">
+          <div class="chat-avatar"
+            style="background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;"></div>
+          <span class="name">${data.name}</span>
+          <div class="column">
+            <div class="chat-text">${data.message}</div>
+            <div class="chat-time">下午10:20</div>
+          </div>
+        </div>`
 
+    // output.innerHTML += '<div>' + data.name + ' : ' + data.message + '</div>'
     chatContent.scrollTop = chatContent.scrollHeight
-    output.innerHTML += '<div>' + data.userChatName + ' : ' + data.message + '</div>'
   })
 
   //監聽使用者輸入動態
@@ -40,9 +49,9 @@ $(function () {
   })
   socket.on('typing', data => {
     if (data.isExist) {
-      broadcast.innerHTML = `${data.userChatName}正在輸入中`
+      typing.innerHTML = `${data.name}正在輸入`
     } else {
-      broadcast.innerHTML = ``
+      typing.innerHTML = ''
     }
   })
 

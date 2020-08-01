@@ -64,8 +64,13 @@
   top: 690px;
   width: 600px;
   display: flex;
-  justify-content: center;
-
+  flex-direction: column;
+  padding-left: 20px;
+}
+.typing {
+  font-size: 10px;
+  color: rgb(100, 100, 100);
+  margin: 10px 0px -5px 10px;
 }
 #chat-form input {
   height: 35px;
