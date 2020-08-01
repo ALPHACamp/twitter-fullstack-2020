@@ -43,19 +43,23 @@ app.use((req, res, next) => {
 io.on('connection', socket => {
   const members = {}
   const socketId = socket.id
+  const userChatName = username
 
   // server message
   socket.emit('message', `${username}Welcome to AlphaChatRoom`)
   socket.broadcast.emit('message', `${username} join chatroom`)
 
   // user message
-  socket.on('chat', message => {
-    io.emit('chat', { username, message })
+  socket.on('chat', data => {
+    //傳入data物件裡  userChatName: xxx
+    data.userChatName = userChatName
+    io.emit('chat', data)
   })
 
-  // socket.on('typing', data => {
-  //   socket.broadcast.emit('typing', data)
-  // })
+  socket.on('typing', data => {
+    data.userChatName = userChatName
+    socket.broadcast.emit('typing', data)
+  })
 
   // onlineuser
   socket.on('onlineUser', () => {
@@ -64,7 +68,9 @@ io.on('connection', socket => {
 
   // user leave room
   socket.on('disconnect', () => {
-    io.emit('message', `${username} left chatroom`)
+    socket.broadcast.emit('typing', { isExist: false })
+
+    socket.broadcast.emit('message', `${username} left chatroom`)
   })
 
 })
