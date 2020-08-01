@@ -7,8 +7,8 @@ $(function () {
 
   chatForm.addEventListener('submit', event => {
     event.preventDefault()
-    socket.emit('chat', input.value)
-    socket.emit('typing')
+    socket.emit('chat', { message: input.value })
+    socket.emit('typing', { isExist: false })
     input.value = ''
     return false
   })
@@ -26,23 +26,24 @@ $(function () {
     output.innerHTML += '<div>' + data.username + ' : ' + data.message + '</div>'
 
     chatContent.scrollTop = chatContent.scrollHeight
+    output.innerHTML += '<div>' + data.userChatName + ' : ' + data.message + '</div>'
   })
 
-  // //監聽使用者輸入動態
-  // input.addEventListener('input', (e) => {
-  //   //若有值就傳名字，
-  //   if (e.target.value) {
-  //     socket.emit('typing', chatName)
-  //   } else {
-  //     socket.emit('typing')
-  //   }
-  // })
-  // socket.on('typing', data => {
-  //   if (data) {
-  //     broadcast.innerHTML = `${data}正在輸入中`
-  //   } else {
-  //     broadcast.innerHTML = ``
-  //   }
-  // })
+  //監聽使用者輸入動態
+  input.addEventListener('input', (e) => {
+    //若有值就傳名字，
+    if (e.target.value) {
+      socket.emit('typing', { isExist: true })
+    } else {
+      socket.emit('typing', { isExist: false })
+    }
+  })
+  socket.on('typing', data => {
+    if (data.isExist) {
+      broadcast.innerHTML = `${data.userChatName}正在輸入中`
+    } else {
+      broadcast.innerHTML = ``
+    }
+  })
 
 })
