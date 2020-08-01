@@ -5,7 +5,12 @@ module.exports = (server) => {
   io.on('connection', socket => {
     connections.push(socket)
     console.log(`${socket.id} 已連線！,在線人數:${connections.length}`)
-    // console.log('socket', socket)
+    io.emit('showOnlineNumber', connections.length)
+
+    socket.on('join', (user) => {
+      io.emit('showOnlineUser', user)
+    })
+
     socket.on('send', (msg) => {
       io.emit('showMsg', msg)
     })
