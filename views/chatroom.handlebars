@@ -1,0 +1,19 @@
+<div class="container-fluid">
+  {{> left-content}}
+
+  <div class="main-content">
+
+    <div class="message">
+      <ul id="messages"></ul>
+    </div>
+
+    <form action="">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="../public/javascripts/socket.js"></script>

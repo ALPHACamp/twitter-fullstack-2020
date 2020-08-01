@@ -1,7 +1,9 @@
+// use helpers.getUser(req) to replace req.user
+// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
 if (process.env.NODE_ENV !== 'production') { require('dotenv').config() }
 
 const express = require('express')
-const helpers = require('./_helpers')
 const exhbs = require('express-handlebars')
 const bodyPaser = require('body-parser')
 const methodOverride = require('method-override')
@@ -9,12 +11,10 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('./config/passport')
 const middleware = require('./config/middleware')
+const socket = require('socket.io')
 
 const app = express()
 const PORT = process.env.PORT || 3000
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.engine('handlebars', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
@@ -28,7 +28,16 @@ app.use(flash())
 app.use(middleware.topUsers)
 app.use(middleware.setLocals)
 
-app.listen(PORT, () => console.log(`Alphitter is listening on port ${PORT}!`))
+const server = app.listen(PORT, () => console.log(`Alphitter is listening on port ${PORT}!`))
+
+const io = socket(server)
+io.on('connection', (socket) => {
+  console.log('a user join chatroom')
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg)
+    io.emit('chat message', msg)
+  })
+})
 
 require('./routes/index')(app, passport)
 

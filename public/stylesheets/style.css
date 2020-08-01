@@ -11,9 +11,12 @@ a p:hover {
 }
 
 /* 共用元素 */
-.sign-icon {
+.sign-icon, .logo {
   color: #FF6600;
   font-size: 40px;
+}
+.logo {
+  margin-top: 30px;
 }
 .user-name {
   font-weight: bold;
@@ -395,11 +398,6 @@ a p:hover {
   display:flex;
   flex-direction: column;
 }
-.logo {
-  margin-top: 14px;
-  width: 40px;
-  height: 40px;
-}
 .left-column {
   margin-left: 103px;
 }
@@ -434,10 +432,9 @@ a p:hover {
   background: rgba(255,102,0,.8);
 }
 .logout {
-  margin: 370px 0px 0px 104px;
-  
+  margin: 170px 0px 0px 104px;
 }
-.logout a{
+.logout a {
   display: flex;
   align-items: center;
   font-weight: bold;
@@ -453,6 +450,9 @@ a p:hover {
   filter: drop-shadow(#FF6600 330px 0);
   transform: translateX(-330px);
   text-decoration: none;
+}
+.icon-div {
+  width: 40px;
 }
 
 /* 首頁推文 */

@@ -1,24 +1,53 @@
 {{#if user}}
-<!-- 左邊導覽選單區塊 -->
 <div class="left-content">
   <div class="left-column">
-    {{!-- <img class="logo" src="/images/icon.svg" alt=""> --}}
-    <i class="sign-icon fac fa-cus-ac-logo"></i>
+    <i class="logo fac fa-cus-ac-logo"></i>
     <div class="nav">
       <div class="nav-item">
         <a href="/tweets">
-          <img class="home-icon" src="/images/icon-home.svg" alt="">首頁
+          <div class="icon-div">
+            <i class="fac fa-cus-home"></i>
+          </div>
+          首頁
+        </a>
+      </div>
+      <div class="nav-item">
+        <a>
+          <div class="icon-div">
+            <i class="far fa-bell"></i>
+          </div>
+          通知
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="/chat">
+          <div class="icon-div">
+            <i class="far fa-comments"></i>
+          </div>
+          公開聊天室
+        </a>
+      </div>
+      <div class="nav-item">
+        <a>
+          <div class="icon-div">
+            <i class="far fa-paper-plane"></i>
+          </div>
+          私人訊息
         </a>
       </div>
       <div class="nav-item">
         <a href="/users/{{user.id}}/tweets">
-          <img class="pr-1" src="/images/icon-user.svg" alt="">
+          <div class="icon-div">
+            <i class="fac fa-cus-user"></i>
+          </div>
           個人資料
         </a>
       </div>
       <div class="nav-item">
         <a href="/users/{{user.id}}/edit">
-          <img src="/images/icon-setting.svg" alt="">
+          <div class="icon-div">
+            <i class="fac fa-cus-setting mr-3"></i>
+          </div>
           設定
         </a>
       </div>
@@ -29,7 +58,10 @@
   </div>
   <div class="logout">
     <a href="/logout">
-      <img class="logout-icon" src="/images/icon-logout.svg" alt="">登出
+      <div class="icon-div">
+        <i class="logout-icon fac fa-cus-logout"></i>
+      </div>
+      登出
     </a>
   </div>
 </div>
