@@ -4,7 +4,7 @@
     {{>leftColumnUser}}
     <div class="col-3 border m-0 p-0 d-flex flex-column flex-nowrap">
       {{!-- title --}}
-      <div class="title py-2 px-3 border-bottom font-weight-bold" id="online-number" style="width: 100%;">上線使用者()</div>
+      <div class="title py-2 px-3 border-bottom font-weight-bold" id="online-number" style="width: 100%;"></div>
       {{!-- 使用者清單 --}}
       <div class="d-flex flex-nowrap flex-column align-items-center w-100 m-0 p-0" id="online-user">
         {{!-- <div class="d-flex align-items-center w-100 border-bottom p-2">
@@ -22,32 +22,53 @@
       {{!-- 聊天區塊 --}}
       <div class="chat h-100 m-3">
         <div class="message-list h-100 d-flex flex-column justify-content-end" id="message-list">
-          {{!-- <div>
+          {{!-- 別人的發言 --}}
+          {{!-- <div class="w-100 d-flex align-items-center">
             <img src="https://s3.amazonaws.com/uifaces/faces/twitter/Shriiiiimp/128.jpg" alt=""
               style="width: 50px; border-radius:50%">
-            <span class="ml-3 bg-light" style="max-width:50%">hihi</span>
+            <p class="m-3 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">
+            </p>
+          </div> --}}
+          {{!-- 自己的發言 --}}
+          {{!-- <div class="w-100 d-flex justify-content-end">
+            <p class="m-3 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">hihi
+            </p>
+          </div> --}}
+          {{!-- 上線離線訊息 --}}
+          {{!-- <div class="w-100 d-flex justify-content-center">
+            <p class="p-2 bg-light rounded-pill text-secondary" style="max-width: 50%;">user 已連線</p>
           </div> --}}
           {{#each msg}}
-          <div class="mb-3">
-            <img src="{{this.User.avatar}}" alt="" style="width: 50px; border-radius:50%">
-            <span class="ml-3 bg-light" style="max-width:50%">{{this.content}}</span>
+          {{#ifEqual this.UserId ../user.id}}
+          <div class="w-100 d-flex justify-content-end">
+            <p class="m-2 p-2 rounded-lg text-white"
+              style="background-color: #FF6600;max-width:50%; word-break: break-all;">hihi
+            </p>
           </div>
+          {{else}}
+          <div class="w-100 d-flex align-items-center">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px; border-radius:50%">
+            <p class="m-2 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">
+              {{this.content}}
+            </p>
+          </div>
+          {{/ifEqual}}
           {{/each}}
         </div>
       </div>
-      <footer class="navbar-fixed-bottom">
+      <footer class=" navbar-fixed-bottom">
         <form action="" id="send-form" class="p-1">
           <div class="row m-0">
             <div class="col-10 p-0 mr-1">
               <input type="hidden" id="userId" value="{{user.id}}">
-              <input type="hidden" id="name" value="{{user.name}}">
-              <input type="hidden" id="account" value="{{user.account}}">
-              <input type="hidden" class="form-control" id="avatar" name="avatar" value="{{user.avatar}}">
+              <input type="hidden" id="user-name" value="{{user.name}}">
+              <input type="hidden" id="user-account" value="{{user.account}}">
+              <input type="hidden" class="form-control" id="user-avatar" name="avatar" value="{{user.avatar}}">
               <input type="text" id="message" name="message" autocomplete="off" class="form-control rounded-pill border"
                 placeholder="輸入訊息..." aria-label="message" style="background-color:#c5c0c0; width:100%">
             </div>
             <div class="col-auto p-0">
-              <button id="send-message" type="submit" class="btn btn-warning rounded-pill mx-auto">傳送</button>
+              <button id="sendBtn" type="submit" class="btn btn-warning rounded-pill mx-auto">傳送</button>
             </div>
           </div>
         </form>
