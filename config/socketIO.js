@@ -1,17 +1,14 @@
 module.exports = (server) => {
   const io = require('socket.io')(server)
   const connections = []
-  const userList = []
+  let userList = []
 
   io.on('connection', socket => {
-    connections.push(socket)
-    console.log(`${socket.id} 已連線！,在線人數:${connections.length}`)
-
-    socket.on('join', (user) => {
+    socket.on('login', (user) => {
+      user.socketId = socket.id
       userList.push(user)
-      io.emit('showOnlineUser', userList);
-      io.emit('showOnlineNumber', userList.length)
-      io.emit('joinMsg', `${user.name} 已連線`)
+      io.emit('OnlineInfo', userList)
+      io.emit('joinMsg', `${user.name}`)
     })
 
     socket.on('send', (msg) => {
@@ -19,8 +16,11 @@ module.exports = (server) => {
     })
 
     socket.on('disconnect', () => {
-      connections.splice(0, 1)
-      console.log(`使用者已離開！,在線人數:${connections.length}`)
+      userList = userList.filter(user => user.socketId !== socket.id)
+      socket.broadcast.emit('OnlineInfo', userList)
+      // const leaveUser = userList.map(user => { if (user.socketId === socket.id) return user.name })
+      // socket.broadcast.emit('leaveMsg', leaveUser)
     })
   })
 }
+

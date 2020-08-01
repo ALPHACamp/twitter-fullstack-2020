@@ -1,9 +1,9 @@
 (function () {
   const socket = io().connect('http://localhost');
   const onlineUser = document.getElementById('online-user')
-  const avatar = document.getElementById('avatar')
-  const name = document.getElementById('name')
-  const account = document.getElementById('account')
+  const avatar = document.getElementById('user-avatar')
+  const name = document.getElementById('user-name')
+  const account = document.getElementById('user-account')
   const sendBtn = document.getElementById('send-message')
   const messageList = document.getElementById('message-list')
   const message = document.getElementById('message')
@@ -13,17 +13,11 @@
     name: name.value,
     account: account.value
   }
-  socket.emit('join', currnetUser)
-  socket.on('showOnlineNumber', (number) => {
-    onlineNumber.innerHTML = `上線使用者 ${number}`
-  })
-  socket.on('joinMsg', (msg) => {
-    messageList.innerHTML +=
-      `<div class="mb-1 text-center" style="width:30%;">
-        <p class="ml-3 bg-light">${msg}</p>
-      </div>`
-  })
-  socket.on('showOnlineUser', (userList) => {
+
+  // when login 
+  socket.on('OnlineInfo', (userList) => {
+    onlineNumber.innerHTML = `上線使用者 ${userList.length}`
+    onlineUser.innerHTML = ``
     userList.forEach(user => {
       onlineUser.innerHTML += `
     <div class="d-flex align-items-center w-100 border-bottom p-2">
@@ -35,23 +29,22 @@
     </div >
     `
     })
-
+  })
+  socket.emit('login', currnetUser)
+  socket.on('joinMsg', (msg) => {
+    if (msg) {
+      messageList.innerHTML +=
+        `<div class="mb-1 text-center" style="width:30%;">
+        <p class="ml-3 bg-light">${msg} 已連線</p>
+      </div>`
+    }
   })
 
-  socket.on('showMsg', (msg) => {
-    messageList.innerHTML += `
-    <div class="mb-3">
-      <img src="${msg.currnetUser.avatar}" alt=""
-        style="width: 50px; border-radius:50%">
-      <span class="ml-3 bg-light" style="max-width:50%">${msg.message}</span>
-    </div>
-    `
-  })
-  // 按下按鈕呼叫 Server side emit send 
+  // send Message
   sendBtn.addEventListener('click', (e) => {
     e.preventDefault()
     const msg = {
-      currnetUser,
+      user: currnetUser,
       message: message.value
     }
     if (message.value === "") {
@@ -63,7 +56,33 @@
     }
     message.value = ""
   })
+  socket.on('showMsg', (msg) => {
+    if (msg.user.name === currnetUser.name) {
+      messageList.innerHTML += `
+      <div class="w-100 d-flex justify-content-end">
+        <p class="m-3 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">${msg.message}</p>
+      </div>`
+    }
+    else {
+      messageList.innerHTML += `
+      <div class="w-100 d-flex align-items-center">
+        <img src="${msg.user.avatar}" alt="" style="width: 50px; border-radius:50%">
+        <p class="m-3 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">${msg.message}</p>
+      </div>
+      `
+    }
+  })
 
+
+
+  // socket.on('leaveMsg', (msg) => {
+  //   if (msg) {
+  //     messageList.innerHTML +=
+  //       `<div class="mb-1 text-center" style="width:30%;">
+  //       <p class="ml-3 bg-light">${msg} 離線</p>
+  //     </div>`
+  //   }
+  // })
 })()
 
 function wordsTotal() {

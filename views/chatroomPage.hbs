@@ -22,20 +22,27 @@
       {{!-- 聊天區塊 --}}
       <div class="chat h-100 m-3">
         <div class="message-list h-100 d-flex flex-column justify-content-end" id="message-list">
-          {{!-- <div>
+          {{!-- 別人的發言 --}}
+          {{!-- <div class="w-100 d-flex align-items-center">
             <img src="https://s3.amazonaws.com/uifaces/faces/twitter/Shriiiiimp/128.jpg" alt=""
               style="width: 50px; border-radius:50%">
-            <span class="ml-3 bg-light" style="max-width:50%">hihi</span>
+            <p class="m-3 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">
+            </p>
+          </div> --}}
+          {{!-- 自己的發言 --}}
+          {{!-- <div class="w-100 d-flex justify-content-end">
+            <p class="m-3 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">hihi
+            </p>
           </div> --}}
         </div>
       </div>
-      <footer class="navbar-fixed-bottom">
+      <footer class=" navbar-fixed-bottom">
         <form action="" id="send-form" class="p-1">
           <div class="row m-0">
             <div class="col-10 p-0 mr-1">
-              <input type="hidden" id="name" value="{{user.name}}">
-              <input type="hidden" id="account" value="{{user.account}}">
-              <input type="hidden" class="form-control" id="avatar" name="avatar" value="{{user.avatar}}">
+              <input type="hidden" id="user-name" value="{{user.name}}">
+              <input type="hidden" id="user-account" value="{{user.account}}">
+              <input type="hidden" class="form-control" id="user-avatar" name="avatar" value="{{user.avatar}}">
               <input type="text" id="message" name="message" autocomplete="off" class="form-control rounded-pill border"
                 placeholder="輸入訊息..." aria-label="message" style="background-color:#c5c0c0; width:100%">
             </div>
