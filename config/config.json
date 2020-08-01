@@ -19,7 +19,6 @@
     "dialect": "postgres",
     "protocol": "postgres",
     "dialectOptions": {
-      "ssl": true
     }
   },
   "travis": {
