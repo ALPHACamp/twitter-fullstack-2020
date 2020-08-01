@@ -16,6 +16,8 @@ const helpers = require('./_helpers')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const moment = require('moment')
+const db = require('./models')
+const ChatMessage = db.ChatMessage
 
 
 
@@ -76,6 +78,10 @@ io.on('connection', (socket) => {
     io.emit('userCount', usersCount)
   })
   socket.on('chat_msg', (msg) => {
+    const { UserId, time, message } = msg
+    ChatMessage.create({
+      UserId, time, message
+    })
     msg.time = moment(msg.time).tz("Asia/Taipei").format('LLLL')
     chatMessage.push(msg)
     io.emit('renderMsg', msg)
