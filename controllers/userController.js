@@ -85,9 +85,7 @@ let userController = {
     let user = await User.findOne({
       where: { id },
       include: [
-        {
-          model: Tweet,
-          include: [
+        { model: Tweet, include: [
             User,
             Reply,
             Like,

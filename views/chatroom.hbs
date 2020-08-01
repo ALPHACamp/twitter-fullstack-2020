@@ -1,20 +1,9 @@
 <div class="row d-flex flex-column flex-lg-row" style="height: 100%;">
-  <div class="users col-4 p-0">
-    <ul class="list-group list-group-flush">
+  <div class="users col-3 p-0">
+    <ul id="allUser" class="list-group list-group-flush">
       <li class="list-group-item pb-1">
-        <h5 class="m-2">上線使用者({{ usersCount }})</h5>
+        <h5 id="count" class="m-2">上線使用者({{ usersCount }})</h5>
       </li>
-      {{!-- {{#each users}} --}}
-
-      <li class="list-group-item m-1">
-        <div class="d-flex flex-column align-items-center flex-lg-row align-items-lg-center">
-          <img src="{{myUser.avatar}}" alt="" width="60px" height="60px" class="rounded-circle m-0 mr-lg-3">
-          <h5 class="m-0 mr-lg-2">{{myUser.name}}</h5>
-          <span class="text-secondary m-0 ">@{{myUser.account}}</span>
-        </div>
-      </li>
-      
-      {{!-- {{/each}} --}}
     </ul>
   </div>
   <div class="chat col-8 p-0 border-left border-black-50 d-flex flex-column justify-content-between" style="height: 100%;">
@@ -22,11 +11,41 @@
       <div class="my-4 border-bottom border-black-50 d-flex">
         <h5 class="ml-3">公開聊天室</h5>
       </div>
-      <div class="flex-grow-1">
+
+      <div id="chatting" class="flex-grow-1">
+        <ul id="chattingMsg" class="p-0 mr-4">
+
+        {{#each otherUser}}
+          <li class="d-flex">
+            <img src="{{this.avatar}}" alt="" class="rounded-circle border border-dark m-2" width="50px" height="50px">
+            <div class="d-flex flex-column">
+            <p class="otherMsg  m-0">
+              {{this.message}}
+            </p>
+            <span>{{this.time}}</span>
+
+            </div>
+          </li> 
+        {{/each}}
+
+          <li class="d-flex flex-column align-items-end">
+            <p class="selfMsg m-0">
+              peace out!
+            </p>
+            <span class="">time</span>
+            </li>
+
+        </ul>
 
       </div>
-        <form action="#" method="POST" class="d-flex align-items-center border-top border-black-50 px-3" style="height: 70px;">
+
+
+        <form action="#" id="chatForm" method="POST" class="d-flex align-items-center border-top border-black-50 px-3" style="height: 70px;">
           <textarea name="message" id="message" row="1" class="bg-light rounded-pill pl-3 w-100" placeholder="輸入訊息..." style="height: 30px;"></textarea>
+          <input type="hidden" id="name" value="{{myUser.name}}">
+          <input type="hidden" id="avatar" value="{{myUser.avatar}}">
+          <input type="hidden" id="account" value="{{myUser.account}}">
+          <input type="hidden" id="id" value="{{myUser.id}}">
           <button type="submit" class="border-0 bg-white">
             <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cursor" fill="currentColor"
               xmlns="http://www.w3.org/2000/svg">
@@ -43,3 +62,5 @@
   
   </div>
 </div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script>

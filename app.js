@@ -13,11 +13,12 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('./config/passport');
 const helpers = require('./_helpers')
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+const http = require('http').createServer(app)
+const io = require('socket.io')(http)
+const moment = require('moment')
 
-//iew engine
-app.use(express.static(__dirname + 'css'));
+
+
 app.engine(
   'hbs',
   exphbs({
@@ -52,10 +53,36 @@ app.use((req, res, next) => {
   // res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = helpers.getUser(req)
   res.locals.isAuthenticated = helpers.ensureAuthenticated(req)
+  app.locals.user = helpers.getUser(req)
   next();
 });
+
+
+const users = []
+const chatMessage = []
+let usersCount = 0
+
+io.on('connection', (socket) => {
+  //socket.on 使用者進入聊天室
+  //socket.on 收到訊息
+  socket.on('user-online', (user) => {
+    user.socketId = socket.id
+    if (!users.map(i => i.UserId).includes(user.UserId)){
+      users.push(user)
+    }
+    usersCount = users.length
+    io.emit('user-online', user)
+    io.emit('renderUser', users)
+    io.emit('userCount', usersCount)
+  })
+  socket.on('chat_msg', (msg) => {
+    msg.time = moment(msg.time).tz("Asia/Taipei").format('LLLL')
+    chatMessage.push(msg)
+    io.emit('renderMsg', msg)
+  })
+})
 require('./routes')(app);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+http.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 module.exports = app;

@@ -87,6 +87,19 @@ router.get('/users/:id/followings', authenticated, userController.topUserForLayo
 router.get('/users/:id/followers', authenticated, userController.topUserForLayout, userController.getFollowers );
 router.get('/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage );
 
-router.get('/chatroom', authenticated, chatController.getChatPage)
+router.get('/chatroom', authenticated,
+ (req, res, next) => {
+   const user = {
+     name: req.user.name,
+     account: req.user.account,
+     avatar: req.user.avatar
+   }
+   req.session.user = JSON.stringify(user)
+   next()
+  },
+    chatController.getChatPage)
 
 module.exports = router;
+
+
+
