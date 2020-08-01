@@ -33,9 +33,11 @@ const server = app.listen(PORT, () => console.log(`Alphitter is listening on por
 const io = socket(server)
 
 let username = ''
+let useraccount = ''
 app.use((req, res, next) => {
   if (helpers.getUser(req)) {
     username = helpers.getUser(req).name
+    useraccount = helpers.getUser(req).useraccount
   }
   next()
 })
@@ -46,7 +48,12 @@ io.on('connection', socket => {
   // const userChatName = username
 
   // server message
-  socket.emit('message', `Hello, ${username}`)
+  // socket.emit('message', `Hello, ${username}`)
+  socket.emit('message', {
+    message: `Hello, ${username}`,
+    username: username,
+    useraccount: useraccount
+  })
   socket.broadcast.emit('message', `${username} join chatroom`)
 
   // user message
@@ -57,7 +64,6 @@ io.on('connection', socket => {
       minute: '2-digit',
       hour12: true
     })
-
 
     io.emit('chat', {
       message: data,

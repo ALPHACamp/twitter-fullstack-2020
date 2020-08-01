@@ -11,23 +11,29 @@
       <div id="output">
 
         <div class="chat-message">
+
           <div class="chat-avatar" style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
           </div>
-          <span class="name">拉拉</span>
           <div class="column">
-            <div class="chat-text">hellohellohellohello</div>
+            <div class="chat-text">
+              <span>carey : </span>
+              Nobis repellat non dolorem est rerum repellendus cum officiis. Accusaorem est rerum
+              repellendus cum officiis. Accusantium aut
+              aspernatur vel est praesentium aut omnis
+              laborum et. Non elintium aut
+              aspernatur vel est praesentium aut omnis
+              laborum et. Non elig</div>
             <div class="chat-time">下午10:20</div>
           </div>
         </div>
 
-        <div class="chat-message">
-          <div class="chat-avatar"
-            style="background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;"></div>
-          <span class="name">carey</span>
-          <div class="column">
-            <div class="chat-text">sllo</div>
-            <div class="chat-time">下午10:20</div>
-          </div>
+        <div class="self-message">
+          <div class="self-text">sllo</div>
+          <div class="chat-time">下午10:20</div>
+        </div>
+
+        <div class="broadcast">
+          <div><span>carey join room</span></div>
         </div>
 
       </div>
@@ -35,6 +41,7 @@
       <!--input-->
       <div class="chat-footer">
         <div class="typing"></div>
+
         <form id="chat-form" action="">
           <input id="input" autocomplete="off" placeholder="輸入訊息..." autofocus />
           <button class="button"><i class="far fa-paper-plane"></i></button>
@@ -42,12 +49,27 @@
       </div>
 
     </div>
-
-    <div class="online-user-content">
-    </div>
-
   </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="/javascript/socket.js"></script>
+  <div class="online-user-content">
+    <div class="title">
+      上線使用者
+    </div>
+
+    <div class="online-user-column">
+
+      <div class="online-user-item ">
+        <div class="online-user-avatar"
+          style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
+        </div>
+        <div class="online-user-name">carey <span>@fwdsf</span></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/javascript/socket.js"></script>
