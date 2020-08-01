@@ -1,39 +1,43 @@
 $(function () {
   const socket = io()
   const chatForm = document.querySelector('#chat-form')
-  const feedback = document.querySelector('#feedback')
+  const broadcast = document.querySelector('#broadcast')
   const input = document.querySelector('#input')
-  const output = document.querySelector('#output')
-  const chatName = document.querySelector('.chat-name').textContent
-  const chatAvatar = document.querySelector('.chat-avatar')
+  const welcome = document.querySelector('.welcome')
 
   chatForm.addEventListener('submit', event => {
     event.preventDefault()
     socket.emit('chat', input.value)
+    socket.emit('typing')
     input.value = ''
     return false
   })
 
-  input.addEventListener('input', (e) => {
-    //若有值就傳名字，
-    if (e.target.value) {
-      socket.emit('typing', chatName)
-    } else {
-      socket.emit('typing')
-    }
+  // message from server
+  socket.on('message', message => {
+    welcome.innerHTML += '<div>' + message + '</div>'
   })
 
-  // 監聽內容傳進 html 
+  // message from user
   socket.on('chat', data => {
-    output.innerHTML += '<div>' + data + '</div>'
+    output.innerHTML += '<div>' + data.username + ' : ' + data.message + '</div>'
   })
-  socket.on('typing', data => {
-    if (data) {
-      feedback.innerHTML = `${data}正在輸入中`
-    } else {
-      feedback.innerHTML = ``
-    }
-  })
+
+  // //監聽使用者輸入動態
+  // input.addEventListener('input', (e) => {
+  //   //若有值就傳名字，
+  //   if (e.target.value) {
+  //     socket.emit('typing', chatName)
+  //   } else {
+  //     socket.emit('typing')
+  //   }
+  // })
+  // socket.on('typing', data => {
+  //   if (data) {
+  //     broadcast.innerHTML = `${data}正在輸入中`
+  //   } else {
+  //     broadcast.innerHTML = ``
+  //   }
+  // })
+
 })
-
-

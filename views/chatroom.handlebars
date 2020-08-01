@@ -1,11 +1,13 @@
 <div class="container-fluid">
   {{> left-content}}
+
   <div class="chatroom-content">
+    <div class="welcome mt-2 mb-1"></div>
 
     <!--output-->
-    <div class="chat-window">
-      <ul id="output"></ul>
-      <div id="feedback"></div>
+    <div class="chat-main">
+      <div id="broadcast"></div>
+      <div id="output"></div>
     </div>
 
     <!--input-->
@@ -15,13 +17,14 @@
         <button>Send</button>
       </form>
     </div>
-    <!--user info-->
-    <div class="chat-user-info" style="display: none;">
-      <p class="chat-name">{{user.name}}</p>
-      <p class="chat-avatar">{{user.avatar}}</p>
-    </div>
+
   </div>
+
+  <div class="online-user-content">
+  </div>
+
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script src="../public/javascripts/socket.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/javascript/socket.js"></script>
