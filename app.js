@@ -13,11 +13,14 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('./config/passport');
 const helpers = require('./_helpers')
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+const http = require('http').createServer(app)
+const io = require('socket.io')(http)
+const moment = require('moment')
+
 
 //iew engine
-app.use(express.static(__dirname + 'css'));
+// app.use(express.static(__dirname + 'css'));
+// app.use(express.static(__dirname + 'js'))
 app.engine(
   'hbs',
   exphbs({
@@ -52,10 +55,34 @@ app.use((req, res, next) => {
   // res.locals.isAuthenticated = req.isAuthenticated()
   res.locals.user = helpers.getUser(req)
   res.locals.isAuthenticated = helpers.ensureAuthenticated(req)
+  app.locals.user = helpers.getUser(req)
   next();
 });
+
+io.on('connection', (socket) => {
+  //socket.on 使用者進入聊天室
+  //socket.on 收到訊息
+  // console.log(app)
+  socket.on('user-online', () => {
+    user = app.locals.user
+    const newUser = {
+      name: user.name,
+      account: user.account,
+      avatar: user.avatar
+    }
+    console.log(newUser)
+    io.emit('user-online', newUser)
+  })
+  socket.on('chat_msg', (msg) => {
+    user = app.locals.user
+    msg.avatar = user.avatar
+    msg.UserId = user.id
+    msg.time = moment(msg.time).format('LLL')
+    io.emit('chat_msg', msg)
+  })
+})
 require('./routes')(app);
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+http.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 module.exports = app;
