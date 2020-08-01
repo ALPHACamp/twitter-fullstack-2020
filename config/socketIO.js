@@ -1,4 +1,6 @@
 module.exports = (server) => {
+  const db = require('../models')
+  const Message = db.Message
   const io = require('socket.io')(server)
   const connections = []
   let userList = []
@@ -12,7 +14,12 @@ module.exports = (server) => {
     })
 
     socket.on('send', (msg) => {
-      io.emit('showMsg', msg)
+      Message.create({
+        UserId: msg.user.id,
+        content: msg.message
+      }).then(() => {
+        io.emit('showMsg', msg)
+      })
     })
 
     socket.on('disconnect', () => {

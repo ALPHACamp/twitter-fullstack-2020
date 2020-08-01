@@ -38,12 +38,29 @@
           {{!-- <div class="w-100 d-flex justify-content-center">
             <p class="p-2 bg-light rounded-pill text-secondary" style="max-width: 50%;">user 已連線</p>
           </div> --}}
+          {{#each msg}}
+          {{#ifEqual this.UserId ../user.id}}
+          <div class="w-100 d-flex justify-content-end">
+            <p class="m-2 p-2 rounded-lg text-white"
+              style="background-color: #FF6600;max-width:50%; word-break: break-all;">hihi
+            </p>
+          </div>
+          {{else}}
+          <div class="w-100 d-flex align-items-center">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px; border-radius:50%">
+            <p class="m-2 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">
+              {{this.content}}
+            </p>
+          </div>
+          {{/ifEqual}}
+          {{/each}}
         </div>
       </div>
       <footer class=" navbar-fixed-bottom">
         <form action="" id="send-form" class="p-1">
           <div class="row m-0">
             <div class="col-10 p-0 mr-1">
+              <input type="hidden" id="userId" value="{{user.id}}">
               <input type="hidden" id="user-name" value="{{user.name}}">
               <input type="hidden" id="user-account" value="{{user.account}}">
               <input type="hidden" class="form-control" id="user-avatar" name="avatar" value="{{user.avatar}}">

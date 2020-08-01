@@ -1,6 +1,7 @@
 (function () {
   const socket = io().connect('http://localhost')
   const onlineUser = document.getElementById('online-user')
+  const userId = document.getElementById('userId')
   const avatar = document.getElementById('user-avatar')
   const name = document.getElementById('user-name')
   const account = document.getElementById('user-account')
@@ -8,7 +9,8 @@
   const messageList = document.getElementById('message-list')
   const message = document.getElementById('message')
   const onlineNumber = document.getElementById('online-number')
-  let currentUser = {
+  const currentUser = {
+    id: userId.value,
     avatar: avatar.value,
     name: name.value,
     account: account.value
@@ -58,14 +60,14 @@
     if (msg.user.name === currentUser.name) {
       messageList.innerHTML += `
       <div class="w-100 d-flex justify-content-end">
-        <p class="m-3 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">${msg.message}</p>
+        <p class="m-2 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">${msg.message}</p>
       </div>`
     }
     else {
       messageList.innerHTML += `
       <div class="w-100 d-flex align-items-center">
         <img src="${msg.user.avatar}" alt="" style="width: 50px; border-radius:50%">
-        <p class="m-3 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">${msg.message}</p>
+        <p class="m-2 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">${msg.message}</p>
       </div>
       `
     }
