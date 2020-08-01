@@ -5,9 +5,7 @@
     <!--output-->
     <div class="chat-window">
       <ul id="output"></ul>
-      <div id="feedback">
-        (typing feedback)
-      </div>
+      <div id="feedback"></div>
     </div>
 
     <!--input-->
@@ -17,7 +15,11 @@
         <button>Send</button>
       </form>
     </div>
-
+    <!--user info-->
+    <div class="chat-user-info" style="display: none;">
+      <p class="chat-name">{{user.name}}</p>
+      <p class="chat-avatar">{{user.avatar}}</p>
+    </div>
   </div>
 </div>
 

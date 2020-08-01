@@ -36,7 +36,7 @@ io.on('connection', socket => {
 
   socket.on('chat', data => {
     console.log('message: ' + data)
-    socket.emit('chat', data)
+    io.emit('chat', data)
   })
 
   socket.on('typing', data => {
