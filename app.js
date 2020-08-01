@@ -59,6 +59,10 @@ app.use((req, res, next) => {
   next();
 });
 
+const users = []
+const chatMessage = []
+const userCount = 0
+
 io.on('connection', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
