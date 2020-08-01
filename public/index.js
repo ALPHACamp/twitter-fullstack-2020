@@ -17,7 +17,36 @@
   socket.on('showOnlineNumber', (number) => {
     onlineNumber.innerHTML = `上線使用者 ${number}`
   })
+  socket.on('joinMsg', (msg) => {
+    messageList.innerHTML +=
+      `<div class="mb-1 text-center" style="width:30%;">
+        <p class="ml-3 bg-light">${msg}</p>
+      </div>`
+  })
+  socket.on('showOnlineUser', (userList) => {
+    userList.forEach(user => {
+      onlineUser.innerHTML += `
+    <div class="d-flex align-items-center w-100 border-bottom p-2">
+      <img class="rounded-circle" style = "object-fit: cover;" src = "${user.avatar}" width = "50px;" >
+      <div class="ml-3">
+        <span class="font-weight-bold">${user.name}</span>
+        <small class="text-muted ml-1">${user.account}</small>
+      </div>
+    </div >
+    `
+    })
 
+  })
+
+  socket.on('showMsg', (msg) => {
+    messageList.innerHTML += `
+    <div class="mb-3">
+      <img src="${msg.currnetUser.avatar}" alt=""
+        style="width: 50px; border-radius:50%">
+      <span class="ml-3 bg-light" style="max-width:50%">${msg.message}</span>
+    </div>
+    `
+  })
   // 按下按鈕呼叫 Server side emit send 
   sendBtn.addEventListener('click', (e) => {
     e.preventDefault()
@@ -33,28 +62,6 @@
       message.classList.remove('border-danger')
     }
     message.value = ""
-  })
-
-  // Server side 呼叫 Client side 的 showMsg 
-  socket.on('showMsg', (msg) => {
-    messageList.innerHTML += `
-    <div class="mb-3">
-      <img src="${msg.currnetUser.avatar}" alt=""
-        style="width: 50px; border-radius:50%">
-      <span class="ml-3 bg-light" style="max-width:50%">${msg.message}</span>
-    </div>
-    `
-  })
-  socket.on('showOnlineUser', (user) => {
-    onlineUser.innerHTML += `
-    <div class="d-flex align-items-center w-100 border-bottom p-2">
-      <img class="rounded-circle" style = "object-fit: cover;" src = "${user.avatar}" width = "50px;" >
-      <div class="ml-3">
-        <span class="font-weight-bold">${user.name}</span>
-        <small class="text-muted ml-1">${user.account}</small>
-      </div>
-    </div >
-    `
   })
 
 })()
