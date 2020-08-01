@@ -4,25 +4,39 @@
     {{>leftColumnUser}}
     <div class="col-3 border m-0 p-0 d-flex flex-column flex-nowrap">
       {{!-- title --}}
-      <div class="title py-2 px-3 border-bottom font-weight-bold" style="width: 100%;">上線使用者()</div>
+      <div class="title py-2 px-3 border-bottom font-weight-bold" id="online-number" style="width: 100%;">上線使用者()</div>
       {{!-- 使用者清單 --}}
-      <div class="user border-bottom d-flex flex-nowrap align-items-center p-2" style="width: 100%;">
-        <img class="rounded-circle" style="object-fit: cover;"
-          src="https://s3.amazonaws.com/uifaces/faces/twitter/Shriiiiimp/128.jpg" alt="avatar" width="60px;">
-        <div class="ml-2"><span class="font-weight-bold">Apple</span><span class="text-muted ml-1">@apple</span></div>
+      <div class="d-flex flex-nowrap flex-column align-items-center w-100 m-0 p-0" id="online-user">
+        {{!-- <div class="d-flex align-items-center w-100 border-bottom p-2">
+          <img class="rounded-circle" style="object-fit: cover;"
+            src="https://s3.amazonaws.com/uifaces/faces/twitter/Shriiiiimp/128.jpg" alt="avatar" width="50px;">
+          <div class="ml-3">
+            <span class="font-weight-bold">Apple</span>
+            <small class="text-muted ml-1">@apple</small>
+          </div>
+        </div> --}}
       </div>
     </div>
     <div class="col-6 m-0 p-0 d-flex flex-column flex-nowrap">
       <div class="title py-2 px-3 border-bottom font-weight-bold" style="width: 100%;">公開聊天室</div>
       {{!-- 聊天區塊 --}}
-      <div class="chat border">
-        <ul class="message-list" id="message-list">
-
-        </ul>
-        <form action="" class="p-1">
+      <div class="chat h-100 m-3">
+        <div class="message-list h-100 d-flex flex-column justify-content-end" id="message-list">
+          {{!-- <div>
+            <img src="https://s3.amazonaws.com/uifaces/faces/twitter/Shriiiiimp/128.jpg" alt=""
+              style="width: 50px; border-radius:50%">
+            <span class="ml-3 bg-light" style="max-width:50%">hihi</span>
+          </div> --}}
+        </div>
+      </div>
+      <footer class="navbar-fixed-bottom">
+        <form action="" id="send-form" class="p-1">
           <div class="row m-0">
             <div class="col-10 p-0 mr-1">
-              <input type="text" id="message" name="message" autocomplete="off" class="form-control rounded-pill"
+              <input type="hidden" id="name" value="{{user.name}}">
+              <input type="hidden" id="account" value="{{user.account}}">
+              <input type="hidden" class="form-control" id="avatar" name="avatar" value="{{user.avatar}}">
+              <input type="text" id="message" name="message" autocomplete="off" class="form-control rounded-pill border"
                 placeholder="輸入訊息..." aria-label="message" style="background-color:#c5c0c0; width:100%">
             </div>
             <div class="col-auto p-0">
@@ -30,7 +44,7 @@
             </div>
           </div>
         </form>
-      </div>
+      </footer>
     </div>
   </div>
 </div>

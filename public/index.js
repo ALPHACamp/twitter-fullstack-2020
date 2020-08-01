@@ -1,8 +1,22 @@
 (function () {
-  const socket = io().connect('http://localhost')
+  const socket = io().connect('http://localhost');
+  const onlineUser = document.getElementById('online-user')
+  const avatar = document.getElementById('avatar')
+  const name = document.getElementById('name')
+  const account = document.getElementById('account')
   const sendBtn = document.getElementById('send-message')
   const messageList = document.getElementById('message-list')
   const message = document.getElementById('message')
+  const onlineNumber = document.getElementById('online-number')
+  const currnetUser = {
+    avatar: avatar.value,
+    name: name.value,
+    account: account.value
+  }
+  socket.emit('join', currnetUser)
+  socket.on('showOnlineNumber', (number) => {
+    onlineNumber.innerHTML = `上線使用者 ${number}`
+  })
 
   // 廣播加入的使用者及在線人數
   socket.on('attend', (attend) => {
@@ -10,15 +24,47 @@
   })
 
   // 按下按鈕呼叫 Server side 的 emit send 動作
+  // 按下按鈕呼叫 Server side emit send 
   sendBtn.addEventListener('click', (e) => {
     e.preventDefault()
-    socket.emit('send', message.value)
-    message.value = null
+    const msg = {
+      currnetUser,
+      message: message.value
+    }
+    if (message.value === "") {
+      message.classList.add('border-danger')
+    }
+    else {
+      socket.emit('send', msg)
+      message.classList.remove('border-danger')
+    }
+    message.value = ""
   })
 
+<<<<<<< HEAD
   // Server side 的 emit send 呼叫 Client side 的 showMsg
+=======
+  // Server side 呼叫 Client side 的 showMsg
+>>>>>>> 3311477713a3358bbc4247f6c0618b1dae95bb7b
   socket.on('showMsg', (msg) => {
-    messageList.innerHTML += `<li>${msg}</li>`
+    messageList.innerHTML += `
+    <div class="mb-3">
+      <img src="${msg.currnetUser.avatar}" alt=""
+        style="width: 50px; border-radius:50%">
+      <span class="ml-3 bg-light" style="max-width:50%">${msg.message}</span>
+    </div>
+    `
+  })
+  socket.on('showOnlineUser', (user) => {
+    onlineUser.innerHTML += `
+    <div class="d-flex align-items-center w-100 border-bottom p-2">
+      <img class="rounded-circle" style = "object-fit: cover;" src = "${user.avatar}" width = "50px;" >
+      <div class="ml-3">
+        <span class="font-weight-bold">${user.name}</span>
+        <small class="text-muted ml-1">${user.account}</small>
+      </div>
+    </div >
+    `
   })
 })()
 

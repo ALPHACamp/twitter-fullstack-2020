@@ -6,6 +6,12 @@ module.exports = (server) => {
     connections.push(socket)
     console.log(`${socket.id} 已連線！,在線人數:${connections.length}`)
     socket.broadcast.emit('attend', { socketId: socket.id, connectionsLength: connections.length })
+    io.emit('showOnlineNumber', connections.length)
+
+    socket.on('join', (user) => {
+      io.emit('showOnlineUser', user)
+    })
+
     socket.on('send', (msg) => {
       io.emit('showMsg', msg)
     })
