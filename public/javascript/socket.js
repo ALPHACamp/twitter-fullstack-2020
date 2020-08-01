@@ -30,7 +30,7 @@ $(function () {
           <span class="name">${data.name}</span>
           <div class="column">
             <div class="chat-text">${data.message}</div>
-            <div class="chat-time">下午10:20</div>
+            <div class="chat-time">${data.time}</div>
           </div>
         </div>`
 
@@ -40,7 +40,6 @@ $(function () {
 
   //監聽使用者輸入動態
   input.addEventListener('input', (e) => {
-    //若有值就傳名字，
     if (e.target.value) {
       socket.emit('typing', { isExist: true })
     } else {
