@@ -8,8 +8,7 @@ const helpers = require('../_helpers');
 const passport = require('passport');
 const multer = require('multer');
 const upload = multer({ dest: 'temp/' });
-const http = require('http').Sever(app);
-const io = require('socket.io')(http);
+
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -90,39 +89,7 @@ router.get('/users/:id', authenticated, userController.topUserForLayout, userCon
 router.get('/chatroom', authenticated, chatController.getChatPage)
 
 
-/* router.get(
- '/users/:id/chatroom',
- authenticated,
- userController.topUserForLayout,
- userController.getChatroomPage
-); */
 
-// 加入線上人數計數
-/* let onlineCount = 0;
-
-io.on('connection', (socket) => {
-  // 有連線發生時增加人數
-  onlineCount++;
-  // 發送人數給網頁
-  io.emit("online", onlineCount);
-
-  socket.on("greet", () => {
-    socket.emit("greet", onlineCount);
-  });
-
-  socket.on('disconnect', () => {
-    // 有人離線了，扣人
-    onlineCount = (onlineCount < 0) ? 0 : onlineCount -= 1;
-    io.emit("online", onlineCount);
-
-    socket.on("send", (msg) => {
-      if (Object.keys(msg).length < 2) return;
-      // 廣播訊息到聊天室
-      io.emit("msg", msg);
-    });
-  });
-
-}); */
 
 
 module.exports = router;
