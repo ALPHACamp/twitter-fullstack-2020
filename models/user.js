@@ -20,6 +20,7 @@ const model = (sequelize, DataTypes) => {
     User.hasMany(models.Reply)
     User.hasMany(models.Secondreply)
     User.hasMany(models.Like)
+    User.hasMany(models.Message)
     User.belongsToMany(models.User, {
       through: models.Followship,
       foreignKey: 'followingId',

@@ -1,6 +1,7 @@
 (function () {
   const socket = io().connect('http://localhost')
   const onlineUser = document.getElementById('online-user')
+  const userId = document.getElementById('userId')
   const avatar = document.getElementById('avatar')
   const name = document.getElementById('name')
   const account = document.getElementById('account')
@@ -9,6 +10,7 @@
   const message = document.getElementById('message')
   const onlineNumber = document.getElementById('online-number')
   const currentUser = {
+    id: userId.value,
     avatar: avatar.value,
     name: name.value,
     account: account.value
