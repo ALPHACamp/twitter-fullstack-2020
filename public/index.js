@@ -17,7 +17,7 @@
   }
   socket.emit('login', currentUser)
   // when login 
-  socket.on('onlineInfo', (userList) => {
+  socket.on('onlineInfo', (userList, number) => {
     onlineNumber.innerHTML = `上線使用者 ${userList.length}`
     onlineUser.innerHTML = ``
     userList.forEach(user => {
@@ -75,14 +75,15 @@
 
 
 
-  // socket.on('leaveMsg', (msg) => {
-  //   if (msg) {
-  //     messageList.innerHTML +=
-  //       `<div class="mb-1 text-center" style="width:30%;">
-  //       <p class="ml-3 bg-light">${msg} 離線</p>
-  //     </div>`
-  //   }
-  // })
+  socket.on('leaveMsg', (user) => {
+    if (user) {
+      messageList.innerHTML += `
+      <div class="w-100 d-flex justify-content-center">
+        <p class="p-2 bg-light rounded-pill text-secondary" style="max-width: 50%;">${user.name} 離線</p>
+      </div>
+        `
+    }
+  })
 
 })()
 
