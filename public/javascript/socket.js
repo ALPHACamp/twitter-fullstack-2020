@@ -1,9 +1,9 @@
 $(function () {
   const socket = io()
   const chatForm = document.querySelector('#chat-form')
-  const broadcast = document.querySelector('#broadcast')
   const input = document.querySelector('#input')
-  const welcome = document.querySelector('.welcome')
+  const broadcast = document.querySelector('.broadcast')
+  const chatContent = document.querySelector('.chat-main')
 
   chatForm.addEventListener('submit', event => {
     event.preventDefault()
@@ -15,12 +15,17 @@ $(function () {
 
   // message from server
   socket.on('message', message => {
-    welcome.innerHTML += '<div>' + message + '</div>'
+    output.innerHTML += `<div class="broadcast">
+    <div><span>${message}</span></div>
+    </div>
+    `
   })
 
   // message from user
   socket.on('chat', data => {
     output.innerHTML += '<div>' + data.username + ' : ' + data.message + '</div>'
+
+    chatContent.scrollTop = chatContent.scrollHeight
   })
 
   // //監聽使用者輸入動態

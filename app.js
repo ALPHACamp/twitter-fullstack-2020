@@ -45,7 +45,7 @@ io.on('connection', socket => {
   const socketId = socket.id
 
   // server message
-  socket.emit('message', `${username}Welcome to AlphaChatRoom`)
+  socket.emit('message', `Hello, ${username}`)
   socket.broadcast.emit('message', `${username} join chatroom`)
 
   // user message

@@ -2,29 +2,54 @@
   {{> left-content}}
 
   <div class="chatroom-content">
-    <div class="welcome mt-2 mb-1"></div>
+    <div class="main-title">
+      公開聊天室
+    </div>
 
     <!--output-->
     <div class="chat-main">
-      <div id="broadcast"></div>
-      <div id="output"></div>
+      <div id="output">
+
+        <div class="chat-message">
+          <div class="chat-avatar" style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
+          </div>
+          <span class="name">拉拉</span>
+          <div class="column">
+            <div class="chat-text">hellohellohellohello</div>
+            <div class="chat-time">下午10:20</div>
+          </div>
+        </div>
+
+        <div class="chat-message">
+          <div class="chat-avatar"
+            style="background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;"></div>
+          <span class="name">carey</span>
+          <div class="column">
+            <div class="chat-text">sllo</div>
+            <div class="chat-time">下午10:20</div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+      <!--input-->
+      <div class="chat-footer">
+        <form id="chat-form" action="">
+          <input id="input" autocomplete="off" placeholder="輸入訊息..." autofocus />
+          <button class="button"><i class="far fa-paper-plane"></i></button>
+        </form>
+      </div>
+
     </div>
 
-    <!--input-->
-    <div class="chat-footer">
-      <form id="chat-form" action="">
-        <input id="input" autocomplete="off" autofocus />
-        <button>Send</button>
-      </form>
+    <div class="online-user-content">
     </div>
 
   </div>
 
-  <div class="online-user-content">
-  </div>
-
-</div>
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="/javascript/socket.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="/javascript/socket.js"></script>
