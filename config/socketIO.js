@@ -5,6 +5,12 @@ module.exports = (server) => {
   io.on('connection', socket => {
     connections.push(socket)
     console.log(`${socket.id} 已連線！,在線人數:${connections.length}`)
+
+    // 廣播加入的使用者及在線人數
+    socket.on('attend', (attend) => { // 接收前端傳來的currentUserName
+      socket.broadcast.emit('broadcast', { onlineConst: connections.length, currentUserName: attend.currentUserName })
+    })
+
     io.emit('showOnlineNumber', connections.length)
 
     socket.on('join', (user) => {
