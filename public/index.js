@@ -1,21 +1,21 @@
 (function () {
-  const socket = io().connect('http://localhost');
+  const socket = io().connect('http://localhost')
   const onlineUser = document.getElementById('online-user')
   const avatar = document.getElementById('user-avatar')
   const name = document.getElementById('user-name')
   const account = document.getElementById('user-account')
-  const sendBtn = document.getElementById('send-message')
+  const sendBtn = document.getElementById('sendBtn')
   const messageList = document.getElementById('message-list')
   const message = document.getElementById('message')
   const onlineNumber = document.getElementById('online-number')
-  const currnetUser = {
+  let currentUser = {
     avatar: avatar.value,
     name: name.value,
     account: account.value
   }
-
+  socket.emit('login', currentUser)
   // when login 
-  socket.on('OnlineInfo', (userList) => {
+  socket.on('onlineInfo', (userList) => {
     onlineNumber.innerHTML = `上線使用者 ${userList.length}`
     onlineUser.innerHTML = ``
     userList.forEach(user => {
@@ -30,12 +30,11 @@
     `
     })
   })
-  socket.emit('login', currnetUser)
-  socket.on('joinMsg', (msg) => {
-    if (msg) {
-      messageList.innerHTML +=
-        `<div class="mb-1 text-center" style="width:30%;">
-        <p class="ml-3 bg-light">${msg} 已連線</p>
+  socket.on('joinMsg', (user) => {
+    if (user) {
+      messageList.innerHTML += `
+      <div class="w-100 d-flex justify-content-center">
+        <p class="p-2 bg-light rounded-pill text-secondary" style="max-width: 50%;">${user} 已連線</p>
       </div>`
     }
   })
@@ -44,20 +43,19 @@
   sendBtn.addEventListener('click', (e) => {
     e.preventDefault()
     const msg = {
-      user: currnetUser,
+      user: currentUser,
       message: message.value
     }
-    if (message.value === "") {
+    if (message.value === '') {
       message.classList.add('border-danger')
-    }
-    else {
+    } else {
       socket.emit('send', msg)
       message.classList.remove('border-danger')
     }
-    message.value = ""
+    message.value = ''
   })
   socket.on('showMsg', (msg) => {
-    if (msg.user.name === currnetUser.name) {
+    if (msg.user.name === currentUser.name) {
       messageList.innerHTML += `
       <div class="w-100 d-flex justify-content-end">
         <p class="m-3 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">${msg.message}</p>
@@ -83,21 +81,18 @@
   //     </div>`
   //   }
   // })
+
 })()
 
 function wordsTotal() {
-  let total = document.getElementById('userInput').value.length;
-  if (total > 140)
-    document.getElementById('display').innerHTML = `<span style="color:red;">${total}/140</span>`;
-  else {
-    document.getElementById('display').innerHTML = `<span>${total}/140</span>`;
+  const total = document.getElementById('userInput').value.length
+  if (total > 140) { document.getElementById('display').innerHTML = `<span style="color:red;">${total}/140</span>` } else {
+    document.getElementById('display').innerHTML = `<span>${total}/140</span>`
   }
 }
 function wordsTotal_btn() {
-  let total = document.getElementById('userInput_btn').value.length;
-  if (total > 140)
-    document.getElementById('display_btn').innerHTML = `<span style="color:red;">${total}/140</span>`;
-  else {
-    document.getElementById('display_btn').innerHTML = `<span>${total}/140</span>`;
+  const total = document.getElementById('userInput_btn').value.length
+  if (total > 140) { document.getElementById('display_btn').innerHTML = `<span style="color:red;">${total}/140</span>` } else {
+    document.getElementById('display_btn').innerHTML = `<span>${total}/140</span>`
   }
 }

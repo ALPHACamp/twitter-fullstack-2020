@@ -4,7 +4,7 @@
     {{>leftColumnUser}}
     <div class="col-3 border m-0 p-0 d-flex flex-column flex-nowrap">
       {{!-- title --}}
-      <div class="title py-2 px-3 border-bottom font-weight-bold" id="online-number" style="width: 100%;">上線使用者()</div>
+      <div class="title py-2 px-3 border-bottom font-weight-bold" id="online-number" style="width: 100%;"></div>
       {{!-- 使用者清單 --}}
       <div class="d-flex flex-nowrap flex-column align-items-center w-100 m-0 p-0" id="online-user">
         {{!-- <div class="d-flex align-items-center w-100 border-bottom p-2">
@@ -34,6 +34,10 @@
             <p class="m-3 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">hihi
             </p>
           </div> --}}
+          {{!-- 上線離線訊息 --}}
+          {{!-- <div class="w-100 d-flex justify-content-center">
+            <p class="p-2 bg-light rounded-pill text-secondary" style="max-width: 50%;">user 已連線</p>
+          </div> --}}
         </div>
       </div>
       <footer class=" navbar-fixed-bottom">
@@ -47,7 +51,7 @@
                 placeholder="輸入訊息..." aria-label="message" style="background-color:#c5c0c0; width:100%">
             </div>
             <div class="col-auto p-0">
-              <button id="send-message" type="submit" class="btn btn-warning rounded-pill mx-auto">傳送</button>
+              <button id="sendBtn" type="submit" class="btn btn-warning rounded-pill mx-auto">傳送</button>
             </div>
           </div>
         </form>

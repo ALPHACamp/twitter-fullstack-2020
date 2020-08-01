@@ -99,8 +99,7 @@ router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id/edit', authenticated, upload.fields([
   { name: 'cover', maxCount: 1 },
   { name: 'avatar', maxCount: 1 }
-]),
-  userController.putUser)
+]), userController.putUser)
 // 查看跟隨者名單
 router.get('/users/:id/followers', authenticated, userController.getRecommendedUsers, userController.getUserFollowerList)
 // 查看追隨者名單

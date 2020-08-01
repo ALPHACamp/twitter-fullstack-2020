@@ -7,7 +7,7 @@ module.exports = (server) => {
     socket.on('login', (user) => {
       user.socketId = socket.id
       userList.push(user)
-      io.emit('OnlineInfo', userList)
+      io.emit('onlineInfo', userList)
       io.emit('joinMsg', `${user.name}`)
     })
 
@@ -18,8 +18,6 @@ module.exports = (server) => {
     socket.on('disconnect', () => {
       userList = userList.filter(user => user.socketId !== socket.id)
       socket.broadcast.emit('OnlineInfo', userList)
-      // const leaveUser = userList.map(user => { if (user.socketId === socket.id) return user.name })
-      // socket.broadcast.emit('leaveMsg', leaveUser)
     })
   })
 }
