@@ -1,10 +1,12 @@
 const moment = require('moment')
 
 module.exports = {
-  formatMessage (name, data) {
+  formatMessage (name, data, avatar, currentUser) {
     return {
       message: data,
-      name: socket.id,
+      name,
+      avatar,
+      currentUser,
       time: moment().format('LT')
     }
   }

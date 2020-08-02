@@ -26,16 +26,27 @@ $(function () {
 
   // message from user
   socket.on('chat', data => {
-    output.innerHTML += `
-      <div class="chat-message">
-        <div class="chat-avatar" style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
-          </div>
-        <div class="column">
-          <div class="chat-text"><span>${data.name} :</span>${data.message}</div>
+    console.log(data)
+    if (data.currentUser === true) {
+      output.innerHTML += `
+      <div class="self-message">
+          <div class="self-text">${data.message}</div>
           <div class="chat-time">${data.time}</div>
         </div>
-      </div>
-    `
+      `
+    }
+    else {
+      output.innerHTML += `
+        <div class="chat-message">
+          <div class="chat-avatar" style="background: url(${data.avatar}),#C4C4C4; background-position:center;background-size:cover;">
+            </div>
+          <div class="column">
+            <div class="chat-text"><span>${data.name} :</span>${data.message}</div>
+            <div class="chat-time">${data.time}</div>
+          </div>
+        </div>
+      `
+    }
 
     chatContent.scrollTop = chatContent.scrollHeight
   })

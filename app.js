@@ -71,35 +71,39 @@ const server = app.listen(PORT, () => console.log(`Alphitter is listening on por
 const io = socket(server)
 
 io.on('connection', socket => {
-  // 在線的使用者，一連線就加進onlineUsers陣列裡
+  // enter chat room push user data to onlineUsers and filter repeat
   onlineUsers.push({ id, name, account, avatar })
   let set = new Set()
   onlineUsers = onlineUsers.filter(item => !set.has(item.id) ? set.add(item.id) : false)
 
+  // get current user
+  const user = onlineUsers.find(user => user.id === id)
+  user.currentUser = true
+
   // server message
-  socket.emit('message', `Hello, ${name}`)
-  socket.broadcast.emit('message', `${name} join chatroom`)
+  socket.emit('message', `Hello, ${user.name}`)
+  socket.broadcast.emit('message', `${user.name} join chatroom`)
+
+  // update online users
   io.emit('onlineUsers', onlineUsers)
 
-  // user message
+  // user emit message to all user 
   socket.on('chat', data => {
-    io.emit('chat', formatMessage(name, data))
+    io.emit('chat', formatMessage(user.name, data, user.avatar, user.currentUser))
   })
 
   // listen typing
   socket.on('typing', data => {
-    data.name = name
+    data.name = user.name
     socket.broadcast.emit('typing', data)
   })
 
-  // user leave room
+  // user leave room, reset onlineUsers
   socket.on('disconnect', () => {
-
-    //過濾掉離線使用者，並傳值給前端
     onlineUsers = onlineUsers.filter(user => user.id !== id)
     io.emit('onlineUsers', onlineUsers)
     socket.broadcast.emit('typing', { isExist: false })
-    socket.broadcast.emit('message', `${name} left chatroom`)
+    socket.broadcast.emit('message', `${user.name} left chatroom`)
   })
 
 })
