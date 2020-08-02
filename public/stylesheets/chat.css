@@ -139,3 +139,10 @@
   width: 50px;
   margin-right: 10px;
 }
+.online-user-name {
+  font-weight: 600;
+}
+.online-user-name span {
+  font-weight: 500;
+  color: rgb(105, 120, 129);
+}
