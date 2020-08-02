@@ -5,8 +5,16 @@ module.exports = (sequelize, DataTypes) => {
     receiverId: DataTypes.INTEGER,
     message: DataTypes.STRING
   }, {});
-  PrivateMessage.associate = function(models) {
-    // associations can be defined here
+  PrivateMessage.associate = function (models) {
+    PrivateMessage.belongsTo(models.User, {
+      foreignKey: 'SenderId',
+      as: 'Sender'
+    })
+    PrivateMessage.belongsTo(models.User, {
+      foreignKey: 'ReceiverId',
+      as: 'Receiver'
+    })
+
   };
   return PrivateMessage;
 };
