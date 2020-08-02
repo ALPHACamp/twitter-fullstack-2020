@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  {{> left-content}}
+
+  <div class="mailbox-content">
+    <div class="main-title">
+      Apple <code>@apple</code>
+    </div>
+
+    <div class="mail-main">
+      <!--output-->
+      <div id="output-mail">
+
+        <div class="chat-message">
+          <div class="chat-avatar" style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
+          </div>
+          <div class="column">
+            <div class="chat-text">
+              <span>carey : </span>
+              Nobis repellat non dolorem est rerum repellendus cum officiis. Accusaorem est rerum
+              repellendus cum officiis. Accusantium g</div>
+            <div class="chat-time">下午10:20</div>
+          </div>
+        </div>
+
+        <div class="self-message">
+          <div class="self-text">sllo</div>
+          <div class="chat-time">下午10:20</div>
+        </div>
+
+        <div class="broadcast-mail">
+          {{!-- <div><span>carey 上線了</span></div> --}}
+        </div>
+
+      </div>
+
+      <!--input-->
+      <div class="chat-footer">
+        <form id="mail-form" action="">
+          <input id="input" autocomplete="off" placeholder="輸入訊息..." autofocus />
+          <button class="button"><i class="far fa-paper-plane"></i></button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="mailbox-user-content">
+    <div class="title">
+      訊息
+    </div>
+
+    <div class="mailbox-user-column">
+      <!-- 有郵件訊息的使用者 -->
+      <div class="mailbox-user-item">
+        <div class="mailbox-user-avatar"
+          style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
+        </div>
+        <div>
+          <div class="time">2小時</div>
+          <div class="mailbox-user-name">章魚哥 <span>@carey</span>
+          </div>
+          <div class="mail-preview">
+            身份特別出演了幾集。但海綿寶寶的劇情內容基本上與海洋知識無關，甚至誇大到完全不合乎科學與常識，例如海底生火、海底洗澡、海底有湖（酷樂湖）、魚在湖（酷樂湖）裡溺水、海底建築物起火燃燒等。劇情內容不時嘲笑精緻藝術和章魚哥的勞工權益想法。
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/javascript/private-message.js"></script>
