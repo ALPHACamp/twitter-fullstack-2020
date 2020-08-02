@@ -4,6 +4,7 @@ $(function () {
   const input = document.querySelector('#input')
   const chatContent = document.querySelector('.chat-main')
   const typing = document.querySelector('.typing')
+  const onlineUserColumn = document.querySelector('.online-user-column')
   const onlineUser = []
 
   chatForm.addEventListener('submit', event => {
@@ -21,8 +22,9 @@ $(function () {
     output.innerHTML += `<div class="broadcast"> <div><span>${data.message}</span></div></div>`
 
     onlineUser.push(data)
-    console.log(onlineUser)
   })
+
+  console.log(onlineUser)
 
   // message from user
   socket.on('chat', data => {

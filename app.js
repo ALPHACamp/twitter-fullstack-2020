@@ -37,22 +37,30 @@ let useraccount = ''
 app.use((req, res, next) => {
   if (helpers.getUser(req)) {
     username = helpers.getUser(req).name
-    useraccount = helpers.getUser(req).useraccount
+    useraccount = helpers.getUser(req).account
   }
   next()
 })
 
+const users = [
+  {
+    userId: '1',
+    name: 'carey',
+    account: 'xxx'
+  },
+  {
+    userId: '2',
+    name: 'lala',
+    account: '123'
+  }
+]
 io.on('connection', socket => {
-  // const members = {}
   // const socketId = socket.id
-  // const userChatName = username
 
   // server message
-  // socket.emit('message', `Hello, ${username}`)
   socket.emit('message', {
     message: `Hello, ${username}`,
-    username: username,
-    useraccount: useraccount
+    users
   })
   socket.broadcast.emit('message', `${username} join chatroom`)
 
