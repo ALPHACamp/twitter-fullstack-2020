@@ -17,6 +17,34 @@ $(function () {
     return false
   })
 
+  // got history message 
+  socket.on('history', data => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].currentUser === true) {
+        output.innerHTML += `
+        <div class="self-message">
+            <div class="self-text">${data[i].message}</div>
+            <div class="chat-time">${data[i].time}</div>
+          </div>
+        `
+      }
+      else {
+        output.innerHTML += `
+          <div class="chat-message">
+            <div class="chat-avatar" style="background: url(${data[i].avatar}),#C4C4C4; background-position:center;background-size:cover;">
+              </div>
+            <div class="column">
+              <div class="chat-text"><span>${data[i].name} :</span>${data[i].message}</div>
+              <div class="chat-time">${data[i].time}</div>
+            </div>
+          </div>
+        `
+      }
+    }
+
+    chatContent.scrollTop = chatContent.scrollHeight
+  })
+
   // message from server
   socket.on('message', data => {
     output.innerHTML += `<div class="broadcast"> <div><span>${data}</span></div></div>`
@@ -26,7 +54,6 @@ $(function () {
 
   // message from user
   socket.on('chat', data => {
-    console.log(data)
     if (data.currentUser === true) {
       output.innerHTML += `
       <div class="self-message">

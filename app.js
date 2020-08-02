@@ -13,7 +13,11 @@ const passport = require('./config/passport')
 const middleware = require('./config/middleware')
 const helpers = require('./_helpers')
 const socket = require('socket.io')
-const { formatMessage } = require('./chat')
+const db = require('./models')
+const Message = db.Message
+const User = db.User
+const moment = require('moment')
+const { formatMessage, getHistoryMessage } = require('./chat')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -39,38 +43,13 @@ app.use((req, res, next) => {
   next()
 })
 
-// fake test
-let onlineUsers = [
-  {
-    id: 5,
-    name: 'chen',
-    account: 'chenacccount',
-    avatar: ''
-  },
-  {
-    id: 8,
-    name: 'carey',
-    account: 'schiaaaa',
-    avatar: ''
-  },
-  {
-    id: 20,
-    name: 'lala',
-    account: 'lalawang',
-    avatar: ''
-  },
-  {
-    id: 8,  //測試重複
-    name: 'bot',
-    account: 'chatbot',
-    avatar: ''
-  }
-]
+let onlineUsers = []
 
 const server = app.listen(PORT, () => console.log(`Alphitter is listening on port ${PORT}!`))
 const io = socket(server)
 
-io.on('connection', socket => {
+io.on('connection', async socket => {
+
   // enter chat room push user data to onlineUsers and filter repeat
   onlineUsers.push({ id, name, account, avatar })
   let set = new Set()
@@ -79,6 +58,22 @@ io.on('connection', socket => {
   // get current user
   const user = onlineUsers.find(user => user.id === id)
   user.currentUser = true
+
+  // get chat history
+  let historyMessages
+  await Message.findAll({ include: [User], order: [['createdAt', 'DESC']] })
+    .then(data => {
+      historyMessages = data.map(item => ({
+        message: item.dataValues.message,
+        name: item.dataValues.User.name,
+        avatar: item.dataValues.User.avatar,
+        currentUser: user.id === item.dataValues.User.id ? true : false,
+        time: moment(item.dataValues.createdAt).format('LT')
+      }))
+    })
+
+  // emit history message to user 
+  socket.emit('history', historyMessages)
 
   // server message
   socket.emit('message', `Hello, ${user.name}`)
@@ -89,6 +84,7 @@ io.on('connection', socket => {
 
   // user emit message to all user 
   socket.on('chat', data => {
+    Message.create({ message: data, UserId: user.id })
     io.emit('chat', formatMessage(user.name, data, user.avatar, user.currentUser))
   })
 
