@@ -2,7 +2,7 @@ const express = require('express');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
-} 
+}
 
 const app = express();
 const port = process.env.PORT || 3000
@@ -61,9 +61,21 @@ app.use((req, res, next) => {
 
 const users = []
 const chatMessage = []
-const userCount = 0
 
-io.on('connect', (socket) => {
+let usersCount = 0
+const nmsl = io.of('/myNassage');
+nmsl.on('connection', socket => {
+  socket.join('room1',(sender) =>{
+    io.emit('who', sender);
+    console.log('someone connected');
+  })
+  
+ 
+  nmsl.emit('hi','所有人！')
+})
+
+io.on('connection', (socket) => {
+ 
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
   console.log('hi socket', socket.id)
@@ -79,6 +91,7 @@ io.on('connect', (socket) => {
       io.emit('user-online', user)
       io.emit('renderUser', users)
       io.emit('userCount', usersCount)
+
     }
   })
   socket.on('chat_msg', (msg) => {

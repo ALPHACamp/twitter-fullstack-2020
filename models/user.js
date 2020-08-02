@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Reply)
     User.hasMany(models.Like)   
     User.hasMany(models.ChatMessage) 
+    User.hasMany(models.privatemassage) 
     
     User.belongsToMany(User, {
       through: models.Followship,
@@ -33,6 +34,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'UserLikesReply'
     })
+
+  
   };
   return User;
 };
