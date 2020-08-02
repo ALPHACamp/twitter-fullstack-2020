@@ -67,13 +67,14 @@ let onlineUsers = [
   }
 ]
 
-
 const server = app.listen(PORT, () => console.log(`Alphitter is listening on port ${PORT}!`))
 const io = socket(server)
 
 io.on('connection', socket => {
   // 在線的使用者，一連線就加進onlineUsers陣列裡
   onlineUsers.push({ id, name, account, avatar })
+  let set = new Set()
+  onlineUsers = onlineUsers.filter(item => !set.has(item.id) ? set.add(item.id) : false)
 
   // server message
   socket.emit('message', `Hello, ${name}`)
@@ -95,9 +96,7 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
 
     //過濾掉離線使用者，並傳值給前端
-    onlineUsers = onlineUsers.filter((user, index, array) => {
-      return user.id !== id
-    })
+    onlineUsers = onlineUsers.filter(user => user.id !== id)
     io.emit('onlineUsers', onlineUsers)
     socket.broadcast.emit('typing', { isExist: false })
     socket.broadcast.emit('message', `${name} left chatroom`)
