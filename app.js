@@ -15,12 +15,10 @@ const passport = require('./config/passport');
 const helpers = require('./_helpers')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
-io.path('/chatroom')
 // const io2 = require('socket.io')(http)
 const moment = require('moment')
 const db = require('./models')
 const ChatMessage = db.ChatMessage
-
 
 
 app.engine(
@@ -66,6 +64,8 @@ const users = []
 const chatMessage = []
 let usersCount = 0
 
+// const chatroom = io.of('chatroom')
+
 io.on('connection', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
     chatMessage.push(msg)
     io.emit('renderMsg', msg)
   })
-  socket.on('disconnecting', () => {
+  socket.on('disconnect', () => {
     const userOffline = users.filter(i => { i.socketId === socket.id})
     const index = users.indexOf(userOffline)
     users.splice(index, 1)
