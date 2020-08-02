@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('PrivateMessages', {
@@ -9,14 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      message: {
-        type: Sequelize.TEXT
-      },
       senderId: {
         type: Sequelize.INTEGER
       },
       receiverId: {
         type: Sequelize.INTEGER
+      },
+      message: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -28,7 +27,6 @@ module.exports = {
       }
     });
   },
-
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('PrivateMessages');
   }

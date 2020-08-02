@@ -4,7 +4,7 @@ const Message = db.Message
 const User = db.User
 
 module.exports = {
-  formatMessage (name, data, avatar, currentUser) {
+  formatMessage(name, data, avatar, currentUser) {
     return {
       message: data,
       name,
@@ -13,7 +13,7 @@ module.exports = {
       time: moment().format('LT')
     }
   },
-  getHistoryMessage (user) {
+  getHistoryMessage(user) {
     let historyMessages = []
     return Message.findAll({ include: [User], order: [['createdAt', 'DESC']] })
       .then(data => {
