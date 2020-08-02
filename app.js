@@ -15,7 +15,6 @@ const passport = require('./config/passport');
 const helpers = require('./_helpers')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
-const io2 = require('socket.io')(http)
 const moment = require('moment')
 const db = require('./models')
 const ChatMessage = db.ChatMessage
@@ -66,6 +65,10 @@ const chatMessage = []
 let usersCount = 0
 
 io.on('connection', (socket) => {
+
+  socket.on('say-to-someone', (UserId, msg) => {
+    socket.to(id).emit('my message', msg);
+  });
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
   socket.on('user-online', (user) => {

@@ -16,16 +16,24 @@
                                     <div class="user-name font-weight-bold mr-2">
                                         {{senderUserName}}
                                     </div>
-                                    <a href="/users/{{this.id}}" class="user-account text-secondary">
+                                    <a class="user-account text-secondary">
                                         @{{senderUserAccount}}
                                     </a>
                                     {{!-- 要改 --}}
                                     <span>・{{moment sendTime}}</span>
                                 </div>
                             </div>
-                            <p class="mt-2 ">{{sendMassage}}</p>
+                            <p class="mt-2 mb-2 text-dark" style="text-decoration: none;">{{sendMassage}}</p>
+                            <form action="#" id="myMassage" method="POST"
+                                class="d-flex align-items-center border-top border-black-50 px-3">
+                                <input type="hidden" id="name" value="{{myUser.name}}">
+                                <input type="hidden" id="avatar" value="{{user.avatar}}">
+                                <input type="hidden" id="account" value="{{user.account}}">
+                                <input type="hidden" id="id" value="{{user.id}}">
+                                <butten type="submit" class="border-0 bg-white">123</butten>
+                            </form>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
             </li>
             {{/each}}

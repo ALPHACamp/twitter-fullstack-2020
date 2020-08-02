@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      privatemassage.belongsTo(models.User)
     }
   };
   privatemassage.init({

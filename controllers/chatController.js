@@ -12,22 +12,23 @@ const chatController = {
     let myMassage = await User.findOne({
       where: { id },
       include: [
-        { model: User, as: 'RecipientId' },
-        { model: User, as: 'SenderId', },
+        privatemassage,
       ],
     })
-    let massages = myMassage.toJSON().SenderId
+    let massages = myMassage.toJSON().privatemassage
     massages = massages.map((m) => ({
       ...m,
+      sendUserId:m.id,
       senderUserName: m.name,
       senderUserAccount: m.account,
       senderUserAvatar: m.avatar,
       sendTime: m.privatemassage.time,
       sendMassage: m.privatemassage.massage.substring(0, 20),
     }))
-    if (massages.length > 1) {
-      massages = massages.sort((a, b) => b.sendTime - a.sendTime)[0];
-    }
+    // if (massages.length > 1) {
+    //   massages = massages.sort((a, b) => b.sendTime - a.sendTime)[0];
+    // }
+    console.log(massages)
     res.render('oneChatroom', { historyMassages: massages })
   },
 }
