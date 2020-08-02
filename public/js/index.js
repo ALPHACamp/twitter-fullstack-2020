@@ -1,14 +1,17 @@
-const socket = io();
-const chattingMsg = document.querySelector('#chattingMsg');
-const chatting = document.querySelector('#chatting');
-const chatForm = document.querySelector('#chatForm');
-const message = document.querySelector('#message');
-const chatLink = document.querySelector('#chatLink');
-const id = document.querySelector('#id');
-const name = document.querySelector('#name');
-const account = document.querySelector('#account');
-const avatar = document.querySelector('#avatar');
-let userArea = document.querySelector('#allUser');
+const socket = io()
+const chattingMsg = document.querySelector('#chattingMsg')
+const chatting = document.querySelector('#chatting')
+const chatForm = document.querySelector('#chatForm')
+const message = document.querySelector('#message')
+const chatLink = document.querySelector('#chatLink')
+const id = document.querySelector('#id')
+const name = document.querySelector('#name')
+const account = document.querySelector('#account')
+const avatar = document.querySelector('#avatar')
+let userArea = document.querySelector('#allUser')
+let onlineUser = document.querySelector('#onlineUser')
+
+
 
 //when users online 重新將user arr 插入ul
 //1 從哪邊監聽進入聊天室的事件？
@@ -28,19 +31,21 @@ socket.emit('user-online', {
 });
 
 chatForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  let msg = {
-    UserId: id.value,
-    name: name.value,
-    avatar: avatar.value,
-    account: account.value,
-    time: new Date(),
-    message: message.value
-  };
+e.preventDefault()
+let msg = {
+  UserId: id.value,
+  name: name.value,
+  avatar: avatar.value,
+  account: account.value,
+  time: new Date(),
+  message: message.value
+}
 
-  socket.emit('chat_msg', msg);
-  message.value = '';
-});
+socket.emit('chat_msg', msg)
+message.value = ''
+message.focus()
+})
+
 
 socket.on('renderMsg', (msg) => {
   console.log('renderMsg', msg);
@@ -54,8 +59,9 @@ socket.on('user-online', (user) => {
   chattingMsg.appendChild(userOnline(user));
 });
 socket.on('renderUser', (users) => {
-  users.forEach((e) => {
-    userArea.appendChild(renderUser(e));
+  onlineUser.innerHTML = ''
+  users.forEach(e => {
+    onlineUser.appendChild(renderUser(e))
   });
 });
 socket.on('userCount', (count) => {

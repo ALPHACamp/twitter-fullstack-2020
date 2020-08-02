@@ -169,17 +169,6 @@ router.get(
   userController.getUserPage
 );
 
-// router.get('/chatroom', authenticated,
-//  (req, res, next) => {
-//    const user = {
-//      name: req.user.name,
-//      account: req.user.account,
-//      avatar: req.user.avatar
-//    }
-//    req.session.user = JSON.stringify(user)
-//    next()
-//   },
-//     chatController.getChatPage)
 router.get('/chatroom', authenticated, chatController.getChatRoomChats);
 
 module.exports = router;

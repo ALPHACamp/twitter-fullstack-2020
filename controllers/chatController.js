@@ -3,9 +3,6 @@ const User = db.User;
 const ChatMessage = db.ChatMessage;
 
 const chatController = {
-  getChatPage: (req, res) => {
-    res.render('chatroom');
-  },
   getChatRoomChats: async (req, res) => {
     const today = new Date().getTime();
 
