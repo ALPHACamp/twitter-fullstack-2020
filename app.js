@@ -71,6 +71,7 @@ io.on('connect', (socket) => {
   console.log('hi socket', socket.id)
   socket.on('user-online', (user) => {
     if (user){
+      console.log('hello',typeof user)
       user.socketId = socket.id
       if (!users.map(i => i.UserId).includes(user.UserId)){
         users.push(user)
@@ -95,8 +96,10 @@ io.on('connect', (socket) => {
     
     const userOffline = users.filter(i => { 
       return i.socketId === socket.id})
+      console.log('byebye')
+      console.log(userOffline)
     if (userOffline.length > 0) {
-      io.emit('user-offline', userOffline)
+      io.emit('user-offline', ...userOffline)
       const index = users.indexOf(userOffline)
       users.splice(index, 1)
       usersCount = users.length
