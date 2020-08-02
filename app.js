@@ -95,12 +95,14 @@ io.on('connect', (socket) => {
     
     const userOffline = users.filter(i => { 
       return i.socketId === socket.id})
-    io.emit('user-offline', userOffline)
-    const index = users.indexOf(userOffline)
-    users.splice(index, 1)
-    usersCount = users.length
-    io.emit('renderUser', users)
-    io.emit('userCount', usersCount)
+    if (userOffline) {
+      io.emit('user-offline', userOffline)
+      const index = users.indexOf(userOffline)
+      users.splice(index, 1)
+      usersCount = users.length
+      io.emit('renderUser', users)
+      io.emit('userCount', usersCount)
+    }
   })
 })
 
