@@ -5,13 +5,11 @@ $(function () {
   const chatContent = document.querySelector('.chat-main')
   const typing = document.querySelector('.typing')
   const onlineUserColumn = document.querySelector('.online-user-column')
-  const onlineUser = []
 
-
+  // emit input message to socket
   chatForm.addEventListener('submit', event => {
     event.preventDefault()
     if (input.value.length === 0) { return false }
-    // socket.emit('chat', { message: input.value })
     socket.emit('chat', input.value)
     socket.emit('typing', { isExist: false })
     input.value = ''
@@ -20,29 +18,8 @@ $(function () {
 
   // message from server
   socket.on('message', data => {
-    output.innerHTML += `<div class="broadcast"> <div><span>${data.message}</span></div></div>`
+    output.innerHTML += `<div class="broadcast"> <div><span>${data}</span></div></div>`
   })
-
-  //在線使用者
-  socket.on('onlineUser', data => {
-    let allItem = ``
-    for (let i = 0; i < data.length; i++) {
-
-      onlineUser.push(data)
-      allItem +=
-        `
-      <div class="online-user-item ">
-          <div class="online-user-avatar"
-            style="background: url(${data[i].useravatar}),#C4C4C4; background-position:center;background-size:cover;">
-          </div>
-          <div class="online-user-name">${data[i].username} <span>@${data[i].useraccount}</span></div>
-        </div>
-      `
-    }
-    onlineUserColumn.innerHTML = allItem
-  })
-
-  console.log(onlineUser)
 
   // message from user
   socket.on('chat', data => {
@@ -60,7 +37,26 @@ $(function () {
     chatContent.scrollTop = chatContent.scrollHeight
   })
 
-  //監聽使用者輸入動態
+  // get online users
+  socket.on('onlineUsers', data => {
+    console.log(data)
+    let allItem = ``
+    for (let i = 0; i < data.length; i++) {
+      allItem +=
+        `
+      <div class="online-user-item ">
+          <div class="online-user-avatar"
+            style="background: url(${data[i].avatar}),#C4C4C4; background-position:center;background-size:cover;">
+          </div>
+          <div class="online-user-name">${data[i].name} <span>@${data[i].account}</span></div>
+        </div>
+      `
+    }
+
+    onlineUserColumn.innerHTML = allItem
+  })
+
+  // listening other users typing
   input.addEventListener('input', (e) => {
     if (e.target.value) {
       socket.emit('typing', { isExist: true })
@@ -75,7 +71,5 @@ $(function () {
       typing.innerHTML = ''
     }
   })
-
-
 
 })
