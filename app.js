@@ -34,10 +34,14 @@ const io = socket(server)
 
 let username = ''
 let useraccount = ''
+let userid = ''
+let useravatar = ''
 app.use((req, res, next) => {
   if (helpers.getUser(req)) {
     username = helpers.getUser(req).name
     useraccount = helpers.getUser(req).account
+    userid = helpers.getUser(req).id
+    useravatar = helpers.getUser(req).avatar
   }
   next()
 })
@@ -61,44 +65,57 @@ io.on('connection', socket => {
   socket.emit('message', {
     message: `Hello, ${username}`,
     users
-  })
-  socket.broadcast.emit('message', `${username} join chatroom`)
+let onlineUser =[]
+io.on('connection', socket => {
+      // 在線的使用者，一連線就加進onlineUser陣列裡
+      onlineUser.push({
+        username: username,
+        useraccount: useraccount,
+        userid: userid,
+        useravatar: useravatar,
+      })
+      io.emit('onlineUser', onlineUser)
 
-  // user message
-  socket.on('chat', data => {
-    let now = new Date()
-    let time = now.toLocaleString('zh-TW', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
+      // server message
+      socket.emit('message', `Hello, ${username}`)
+
+      socket.broadcast.emit('message', `${username} join chatroom`)
+
+      // user message
+      socket.on('chat', data => {
+        let now = new Date()
+        let time = now.toLocaleString('zh-TW', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        })
+
+        io.emit('chat', {
+          message: data,
+          name: username,
+          time: time
+        })
+      })
+
+      // listen typing
+      socket.on('typing', data => {
+        data.name = username
+        socket.broadcast.emit('typing', data)
+      })
+
+      // user leave room
+      socket.on('disconnect', () => {
+        //過濾掉離線使用者，並傳值給前端
+        onlineUser = onlineUser.filter(function (user, index, array) {
+          return user.userid !== userid
+        })
+        io.emit('onlineUser', onlineUser)
+        socket.broadcast.emit('typing', { isExist: false })
+        socket.broadcast.emit('message', `${username} left chatroom`)
+      })
+
     })
 
-    io.emit('chat', {
-      message: data,
-      name: username,
-      time: time
-    })
-  })
-
-  // listen typing
-  socket.on('typing', data => {
-    data.name = username
-    socket.broadcast.emit('typing', data)
-  })
-
-  // onlineuser
-  socket.on('onlineUser', () => {
-    io.emit('onlineUser', members)
-  })
-
-  // user leave room
-  socket.on('disconnect', () => {
-    socket.broadcast.emit('typing', { isExist: false })
-    socket.broadcast.emit('message', `${username} left chatroom`)
-  })
-
-})
-
-require('./routes/index')(app, passport)
+require ('./routes/index')(app, passport)
 
 module.exports = app
