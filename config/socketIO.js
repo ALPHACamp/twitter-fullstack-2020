@@ -1,4 +1,5 @@
 module.exports = (server) => {
+  const { moment_message } = require('./hbs-helpers')
   const db = require('../models')
   const Message = db.Message
   const io = require('socket.io')(server)
@@ -22,7 +23,10 @@ module.exports = (server) => {
       Message.create({
         UserId: msg.user.id,
         content: msg.message
-      }).then(() => {
+      }).then((message) => {
+        message = message.toJSON()
+        msg.createdAt = moment_message(message.createdAt)
+        console.log(message)
         io.emit('showMsg', msg)
       })
     })

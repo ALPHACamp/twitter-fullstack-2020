@@ -41,17 +41,21 @@
           {{#each msg}}
           {{#ifEqual this.UserId ../user.id}}
           <div class="w-100 d-flex justify-content-end">
-            <p class="m-2 p-2 rounded-lg text-white"
-              style="background-color: #FF6600;max-width:50%; word-break: break-all;">hihi
-            </p>
-          </div>
-          {{else}}
-          <div class="w-100 d-flex align-items-center">
-            <img src="{{this.User.avatar}}" alt="" style="width: 50px; border-radius:50%">
-            <p class="m-2 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">
+            <p class="my-0 p-2 rounded-lg text-white"
+              style="background-color: #FF6600;max-width:50%; word-break: break-all;">
               {{this.content}}
             </p>
           </div>
+          <small class="text-muted d-flex justify-content-end">{{moment_message this.createdAt}}</small>
+          {{else}}
+          <div class="w-100 d-flex align-items-center">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px; border-radius:50%">
+            <p class="ml-2 mb-0 p-2 rounded-lg"
+              style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">
+              {{this.content}}
+            </p>
+          </div>
+          <small class="text-muted d-flex " style="margin-left: 60px;">{{moment_message this.createdAt}}</small>
           {{/ifEqual}}
           {{/each}}
         </div>

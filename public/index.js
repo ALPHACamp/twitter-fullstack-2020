@@ -60,15 +60,18 @@
     if (msg.user.name === currentUser.name) {
       messageList.innerHTML += `
       <div class="w-100 d-flex justify-content-end">
-        <p class="m-2 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">${msg.message}</p>
-      </div>`
+        <p class="my-0 p-2 rounded-lg text-white" style="background-color: #FF6600;max-width:50%; word-break: break-all;">${msg.message}</p>
+      </div>
+      <small class="text-muted d-flex justify-content-end ">${msg.createdAt}</small>
+      `
     }
     else {
       messageList.innerHTML += `
       <div class="w-100 d-flex align-items-center">
         <img src="${msg.user.avatar}" alt="" style="width: 50px; border-radius:50%">
-        <p class="m-2 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">${msg.message}</p>
+         <p class="ml-2 mb-0 p-2 rounded-lg" style="background-color: #E6ECF1; max-width:50%; word-break: break-all;">${msg.message}</p>
       </div>
+      <small class="text-muted d-flex " style="margin-left: 60px;">${msg.createdAt}</small>
       `
     }
   })
