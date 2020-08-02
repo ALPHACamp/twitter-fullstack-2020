@@ -25,6 +25,7 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
   app.get('/', authenticatedStatus, userController.getIndexPage)
   app.get('/chat', userAuthenticated, (req, res) => res.render('chatroom'))
+  app.get('/mailbox', userAuthenticated, userController.getMailIndex)
   app.get('/mailbox/:id', userAuthenticated, userController.getMailPage)
 
   app.get('/tweets', userAuthenticated, tweetController.getTweets)

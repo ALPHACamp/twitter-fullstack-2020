@@ -26,9 +26,11 @@
         <button type="button" class="button profile-button" data-toggle="modal"
           data-target="#editProfileModal">編輯個人資訊</button>
         {{else}}
-        <div class="icon-circle">
-          <i class="fac fa-cus-email"></i>
-        </div>
+        <a href="/mailbox/{{pageUser.id}}">
+          <div class="icon-circle">
+            <i class="fac fa-cus-email"></i>
+          </div>
+        </a>
         <div class="icon-circle">
           <i class="fac fa-cus-bells"></i>
         </div>

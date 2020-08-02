@@ -3,14 +3,17 @@
 
   <div class="mailbox-content">
     <div class="main-title">
-      Apple <code>@apple</code>
+      傳送私人訊息給
+      {{#if pageUser}}
+      {{pageUser.name}} <code>@{{pageUser.account}}</code>
+      {{/if}}
     </div>
 
     <div class="mail-main">
       <!--output-->
       <div id="output-mail">
 
-        <div class="chat-message">
+        {{!-- <div class="chat-message">
           <div class="chat-avatar" style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
           </div>
           <div class="column">
@@ -25,28 +28,27 @@
         <div class="self-message">
           <div class="self-text">sllo</div>
           <div class="chat-time">下午10:20</div>
-        </div>
+        </div> --}}
 
         <div class="broadcast-mail">
           {{!-- <div><span>carey 上線了</span></div> --}}
         </div>
 
       </div>
-
-      <!--input-->
-      <div class="chat-footer">
-        <form id="mail-form" action="">
-          <input id="input" autocomplete="off" placeholder="輸入訊息..." autofocus />
-          <button class="button"><i class="far fa-paper-plane"></i></button>
-        </form>
-      </div>
-
+    </div>
+    <!--input-->
+    <div class="chat-footer">
+      <div class="typing"></div>
+      <form id="mail-form" action="">
+        <input id="input" autocomplete="off" placeholder="輸入訊息..." autofocus />
+        <button class="button"><i class="far fa-paper-plane"></i></button>
+      </form>
     </div>
   </div>
 
   <div class="mailbox-user-content">
     <div class="title">
-      訊息
+      私人訊息
     </div>
 
     <div class="mailbox-user-column">

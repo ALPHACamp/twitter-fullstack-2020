@@ -111,8 +111,8 @@
   color: rgb(100, 100, 100);
 }
 #chat-form button,
-.mail-form button {
-  color: #FF6600;
+#mail-form button {
+  color: #FF6600 !important;
   font-size: 18px;
 }
 

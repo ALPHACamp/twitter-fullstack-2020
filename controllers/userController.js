@@ -248,10 +248,11 @@ const userController = {
       .then(followship => followship.destroy())
     return res.redirect('back')
   },
+  getMailIndex: (req, res) => res.render('mailbox'),
   getMailPage: (req, res) => {
     const id = Number(req.params.id)
-    if (helpers.getUser(req).id === id) { return res.render('mailbox') }
-    else { return res.redirect('/') }
+    return User.findByPk(id)
+      .then(pageUser => res.render('mailbox', { pageUser }))
   }
 }
 
