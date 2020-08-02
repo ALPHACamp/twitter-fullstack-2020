@@ -15,7 +15,6 @@ const passport = require('./config/passport');
 const helpers = require('./_helpers')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
-io.path('/chatroom')
 // const io2 = require('socket.io')(http)
 const moment = require('moment')
 const db = require('./models')
