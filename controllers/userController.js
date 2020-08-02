@@ -247,6 +247,12 @@ const userController = {
     await Followship.findOne({ where: { followingId, followerId } })
       .then(followship => followship.destroy())
     return res.redirect('back')
+  },
+  getMailIndex: (req, res) => res.render('mailbox'),
+  getMailPage: (req, res) => {
+    const id = Number(req.params.id)
+    return User.findByPk(id)
+      .then(pageUser => res.render('mailbox', { pageUser }))
   }
 }
 
