@@ -33,6 +33,18 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'UserLikesReply'
     })
+
+    User.belongsToMany(User, {
+      through: models.privatemassage,
+      foreignKey: 'SenderId',
+      as: 'RecipientId'
+    })
+
+    User.belongsToMany(User, {
+      through: models.privatemassage,
+      foreignKey: 'RecipientId',
+      as: 'SenderId'
+    })
   };
   return User;
 };

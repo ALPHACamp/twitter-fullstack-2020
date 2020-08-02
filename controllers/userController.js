@@ -331,6 +331,7 @@ let userController = {
         { model: User, as: 'Followers' }
       ]
     });
+    
     const followDetail = {
       tweetsCount: user.toJSON().Tweets.length,
       followers: true
@@ -339,7 +340,7 @@ let userController = {
     followers = followers.map((i) => ({
       ...i,
       isFollowed: helper.getUser(req).Followers.map((d) => d.id).includes(i.id)
-    }));
+    }));  
     followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       isUserPage: true,

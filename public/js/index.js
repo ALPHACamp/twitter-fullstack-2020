@@ -8,7 +8,7 @@ const id = document.querySelector('#id')
 const name = document.querySelector('#name')
 const account = document.querySelector('#account')
 const avatar = document.querySelector('#avatar')
-let userArea = document.querySelector('#allUser')
+
 
 
 //when users online 重新將user arr 插入ul
