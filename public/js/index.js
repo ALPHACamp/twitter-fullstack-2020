@@ -26,6 +26,8 @@ let chatroomMsg = []
 //msg emit {userId, name, avatar, msg, time}
 
 //連線後將使用者資料傳到app.js
+
+
 socket.emit('user-online', {
   UserId: id.value,
   name: name.value,
