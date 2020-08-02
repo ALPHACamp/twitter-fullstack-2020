@@ -18,7 +18,7 @@ const chatController = {
       const timeDiff = today - m.time.getTime();
       const timeDiffDays = timeDiff / (1000 * 3600 * 24);
       console.log(timeDiffDays);
-      if (timeDiffDays > 0) {
+      if (timeDiffDays > 3) {
         m.destroy();
       }
       return {

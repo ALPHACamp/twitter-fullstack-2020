@@ -12,6 +12,9 @@ let userArea = document.querySelector('#allUser')
 let onlineUser = document.querySelector('#onlineUser')
 
 
+let usersInChatroom = []
+let chatroomMsg = []
+// let self
 
 //when users online 重新將user arr 插入ul
 //1 從哪邊監聽進入聊天室的事件？
@@ -23,6 +26,8 @@ let onlineUser = document.querySelector('#onlineUser')
 //msg emit {userId, name, avatar, msg, time}
 
 //連線後將使用者資料傳到app.js
+
+
 socket.emit('user-online', {
   UserId: id.value,
   name: name.value,
@@ -40,15 +45,17 @@ let msg = {
   time: new Date(),
   message: message.value
 }
-
 socket.emit('chat_msg', msg)
 message.value = ''
 message.focus()
 })
 
+socket.on('disconnect', (users) => {
+
+})
 
 socket.on('renderMsg', (msg) => {
-  console.log('renderMsg', msg);
+  
   if (msg.UserId === id.value) {
     chattingMsg.appendChild(selfMsg(msg));
   } else {
@@ -56,7 +63,10 @@ socket.on('renderMsg', (msg) => {
   }
 });
 socket.on('user-online', (user) => {
-  chattingMsg.appendChild(userOnline(user));
+  chattingMsg.appendChild(userOnline(user, 'online'));
+});
+socket.on('user-offline', (user) => {
+  chattingMsg.appendChild(userOnline(user, 'offline'));
 });
 socket.on('renderUser', (users) => {
   onlineUser.innerHTML = ''
@@ -69,12 +79,17 @@ socket.on('userCount', (count) => {
     上線使用者 (${count})`;
 });
 
-function userOnline(user) {
+
+function userOnline(user, connectStatus) {
   const li = document.createElement('li');
   const span = document.createElement('span');
   li.classList.add('d-flex', 'justify-content-center', 'm-2');
   span.classList.add('online');
-  span.innerText = `${user.name} 上線了`;
+  if (connectStatus === 'online') {
+    span.innerText = `${user.name} 上線了`;
+  } else if (connectStatus === 'offline'){
+    span.innerText = `${user.name} 離開了`;
+  }
   li.appendChild(span);
   return li;
 }

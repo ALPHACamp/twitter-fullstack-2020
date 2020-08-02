@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -19,7 +19,6 @@ const io = require('socket.io')(http)
 const moment = require('moment')
 const db = require('./models')
 const ChatMessage = db.ChatMessage
-
 
 
 app.engine(
@@ -60,9 +59,9 @@ app.use((req, res, next) => {
   next();
 });
 
-
 const users = []
 const chatMessage = []
+
 let usersCount = 0
 const nmsl = io.of('/myNassage');
 nmsl.on('connection', socket => {
@@ -79,16 +78,21 @@ io.on('connection', (socket) => {
  
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
-  console.log('hi')
+  console.log('hi socket', socket.id)
   socket.on('user-online', (user) => {
-    user.socketId = socket.id
-    if (!users.map(i => i.UserId).includes(user.UserId)) {
-      users.push(user)
+    if (user){
+      console.log('hello',typeof user)
+      user.socketId = socket.id
+      if (!users.map(i => i.UserId).includes(user.UserId)){
+        users.push(user)
+      }
+      usersCount = users.length
+      console.log(users)
+      io.emit('user-online', user)
+      io.emit('renderUser', users)
+      io.emit('userCount', usersCount)
+
     }
-    usersCount = users.length
-    io.emit('user-online', user)
-    io.emit('renderUser', users)
-    io.emit('userCount', usersCount)
   })
   socket.on('chat_msg', (msg) => {
     const { UserId, time, message } = msg
@@ -99,11 +103,23 @@ io.on('connection', (socket) => {
     chatMessage.push(msg)
     io.emit('renderMsg', msg)
   })
+  socket.on('disconnect', () => {
+    
+    const userOffline = users.filter(i => { 
+      return i.socketId === socket.id})
+      console.log('byebye')
+      console.log(userOffline)
+    if (userOffline.length > 0) {
+      io.emit('user-offline', ...userOffline)
+      const index = users.indexOf(userOffline)
+      users.splice(index, 1)
+      usersCount = users.length
+      io.emit('renderUser', users)
+      io.emit('userCount', usersCount)
+    }
+  })
 })
 
-io.on('disconnect', () => {
-
-})
 require('./routes')(app);
 
 http.listen(port, () => console.log(`Example app listening on port ${port}!`));
