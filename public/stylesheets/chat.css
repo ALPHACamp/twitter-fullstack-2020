@@ -2,6 +2,7 @@
   grid-column: 2 / 3;
   border: 1px solid #E6ECF0;
   border-bottom: none;
+  height: auto;
 }
 
 .online-user-content {
@@ -80,8 +81,6 @@
 
 /* input */
 .chat-footer {
-  position: fixed;
-  top: 660px;
   width: 600px;
   display: flex;
   flex-direction: column;
