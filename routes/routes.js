@@ -3,12 +3,11 @@ const router = express.Router();
 const userController = require('../controllers/userController');
 const tweetController = require('../controllers/tweetController');
 const adminController = require('../controllers/adminController.js');
-const chatController = require('../controllers/chatController')
+const chatController = require('../controllers/chatController');
 const helpers = require('../_helpers');
 const passport = require('passport');
 const multer = require('multer');
 const upload = multer({ dest: 'temp/' });
-
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -37,74 +36,140 @@ const authenticatedAdmin = (req, res, next) => {
 };
 
 router.get('/admin/signin', adminController.adminLoginPage);
-router.post('/admin/signin', passport.authenticate('local', {
-  failureRedirect: '/admin/signin',
-  failureFlash: true
-}), adminController.login);
+router.post(
+  '/admin/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+  }),
+  adminController.login
+);
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
-router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
+router.delete(
+  '/admin/tweets/:id',
+  authenticatedAdmin,
+  adminController.deleteTweet
+);
 
 router.get('/', (req, res) => res.redirect('/tweets'));
-router.get('/tweets', authenticated, userController.topUserForLayout, tweetController.getTweets);
-router.get('/tweets/:id/replies', authenticated, userController.topUserForLayout, (req, res, next) => {
-  res.locals.getComment = true;
-  return next();
-}, tweetController.getTweet);
+router.get(
+  '/tweets',
+  authenticated,
+  userController.topUserForLayout,
+  tweetController.getTweets
+);
+router.get(
+  '/tweets/:id/replies',
+  authenticated,
+  userController.topUserForLayout,
+  (req, res, next) => {
+    res.locals.getComment = true;
+    return next();
+  },
+  tweetController.getTweet
+);
 router.post('/tweets', authenticated, tweetController.postTweet);
-router.get('/tweets/:id', authenticated, userController.topUserForLayout, tweetController.getTweet);
+router.get(
+  '/tweets/:id',
+  authenticated,
+  userController.topUserForLayout,
+  tweetController.getTweet
+);
 
 router.get('/logout', userController.logout);
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signup);
 router.get('/signin', userController.loginPage);
-router.post('/signin', passport.authenticate('local', {
-  failureRedirect: '/signin',
-  failureFlash: true
-}), userController.login);
+router.post(
+  '/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: true
+  }),
+  userController.login
+);
 
 router.post('/tweets/:tweetId/like', authenticated, userController.addLike);
-router.delete('/tweets/:tweetId/unlike', authenticated, userController.removeLike);
-router.post('/replies/likes/:ReplyId', authenticated, userController.addReplyLike);
-router.delete('/replies/likes/:ReplyId', authenticated, userController.removeReplyLike);
+router.delete(
+  '/tweets/:tweetId/unlike',
+  authenticated,
+  userController.removeLike
+);
+router.post(
+  '/replies/likes/:ReplyId',
+  authenticated,
+  userController.addReplyLike
+);
+router.delete(
+  '/replies/likes/:ReplyId',
+  authenticated,
+  userController.removeReplyLike
+);
 router.post('/followships', authenticated, userController.addFollowing);
-router.delete('/followships/:id', authenticated, userController.removeFollowing);
+router.delete(
+  '/followships/:id',
+  authenticated,
+  userController.removeFollowing
+);
 
 router.get('/users/:id/profile', authenticated, userController.editProfile);
-router.put('/users/:id/profile', authenticated, upload.fields([
-  { name: 'cover', maxCount: 1 },
-  { name: 'avatar', maxCount: 1 }
-]), userController.putEditProfile);
-router.get('/users/:id/comments', authenticated, userController.topUserForLayout, userController.getUserReply);
-router.get('/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage);
-router.post('/tweets/:id/replies', authenticated, userController.topUserForLayout, tweetController.postComment);
-router.get('/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike);
+router.put(
+  '/users/:id/profile',
+  authenticated,
+  upload.fields([
+    { name: 'cover', maxCount: 1 },
+    { name: 'avatar', maxCount: 1 }
+  ]),
+  userController.putEditProfile
+);
+router.get(
+  '/users/:id/comments',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getUserReply
+);
+router.get(
+  '/users/:id/tweets',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getUserPage
+);
+router.post(
+  '/tweets/:id/replies',
+  authenticated,
+  userController.topUserForLayout,
+  tweetController.postComment
+);
+router.get(
+  '/users/:id/likes',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getUserLike
+);
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
-router.get('/users/:id/followings', authenticated, userController.topUserForLayout, userController.getFollowings);
-router.get('/users/:id/followers', authenticated, userController.topUserForLayout, userController.getFollowers);
-router.get('/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage);
+router.get(
+  '/users/:id/followings',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getFollowings
+);
+router.get(
+  '/users/:id/followers',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getFollowers
+);
+router.get(
+  '/users/:id',
+  authenticated,
+  userController.topUserForLayout,
+  userController.getUserPage
+);
 
-router.get('/chatroom', authenticated,
-  (req, res, next) => {
-    const user = {
-      name: req.user.name,
-      account: req.user.account,
-      avatar: req.user.avatar
-    }
-    req.session.user = JSON.stringify(user)
-    next()
-  },
-  chatController.getChatPage)
-
-router.get('/oneChatroom', authenticated, chatController.getOneChatPage)
-
-
-
-
+router.get('/chatroom', authenticated, chatController.getChatRoomChats);
+router.get('/oneChatroom', authenticated, chatController.getOneChatPage);
 
 module.exports = router;
-
-
-

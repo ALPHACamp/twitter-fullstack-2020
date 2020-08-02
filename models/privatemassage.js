@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   privatemassage.init({
-    SenderId: DataTypes.INTEGER,
+    UserId: DataTypes.INTEGER,
     RecipientId: DataTypes.INTEGER,
     massage: DataTypes.STRING,
     time: DataTypes.DATE

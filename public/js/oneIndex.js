@@ -1,4 +1,4 @@
-const socket = io('http://localhost:3000/oneChatroom')
+const socket = io('/myNassage')
 const id = document.querySelector('#id')
 const myMassage = document.querySelector('#myMassage')
 

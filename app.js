@@ -2,7 +2,7 @@ const express = require('express');
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
-} 
+}
 
 const app = express();
 const port = 3000;
@@ -15,6 +15,7 @@ const passport = require('./config/passport');
 const helpers = require('./_helpers')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+// const io2 = require('socket.io')(http)
 const moment = require('moment')
 const db = require('./models')
 const ChatMessage = db.ChatMessage
@@ -63,17 +64,25 @@ app.use((req, res, next) => {
 const users = []
 const chatMessage = []
 let usersCount = 0
+const nmsl = io.of('/myNassage');
+nmsl.on('connection', socket => {
+  socket.join('room1',(sender) =>{
+    io.emit('who', sender);
+    console.log('someone connected');
+  })
+  
+ 
+  nmsl.emit('hi','所有人！')
+})
 
 io.on('connection', (socket) => {
-
-  socket.on('say-to-someone', (UserId, msg) => {
-    socket.to(id).emit('my message', msg);
-  });
+ 
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
+  console.log('hi')
   socket.on('user-online', (user) => {
     user.socketId = socket.id
-    if (!users.map(i => i.UserId).includes(user.UserId)){
+    if (!users.map(i => i.UserId).includes(user.UserId)) {
       users.push(user)
     }
     usersCount = users.length
@@ -90,6 +99,10 @@ io.on('connection', (socket) => {
     chatMessage.push(msg)
     io.emit('renderMsg', msg)
   })
+})
+
+io.on('disconnect', () => {
+
 })
 require('./routes')(app);
 
