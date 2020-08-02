@@ -146,5 +146,6 @@ router.get( '/users/:id', authenticated, userController.topUserForLayout, userCo
 );
 
 router.get('/chatroom', authenticated, chatController.getChatRoomChats);
+router.get('/oneChatroom', authenticated, chatController.getOneChatPage);
 
 module.exports = router;
