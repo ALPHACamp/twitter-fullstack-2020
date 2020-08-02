@@ -65,20 +65,22 @@ const users = []
 const chatMessage = []
 const userCount = 0
 
-io.on('connection', (socket) => {
+io.on('connect', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
   console.log('hi socket', socket.id)
   socket.on('user-online', (user) => {
-    console.log('this room', socket.room)
-    user.socketId = socket.id
-    if (!users.map(i => i.UserId).includes(user.UserId)){
-      users.push(user)
+    if (user){
+      user.socketId = socket.id
+      if (!users.map(i => i.UserId).includes(user.UserId)){
+        users.push(user)
+      }
+      usersCount = users.length
+      console.log(users)
+      io.emit('user-online', user)
+      io.emit('renderUser', users)
+      io.emit('userCount', usersCount)
     }
-    usersCount = users.length
-    io.emit('user-online', user)
-    io.emit('renderUser', users)
-    io.emit('userCount', usersCount)
   })
   socket.on('chat_msg', (msg) => {
     const { UserId, time, message } = msg
@@ -90,8 +92,9 @@ io.on('connection', (socket) => {
     io.emit('renderMsg', msg)
   })
   socket.on('disconnect', () => {
-    console.log('bye' , socket.id)
-    const userOffline = users.filter(i => { i.socketId === socket.id})
+    
+    const userOffline = users.filter(i => { 
+      return i.socketId === socket.id})
     io.emit('user-offline', userOffline)
     const index = users.indexOf(userOffline)
     users.splice(index, 1)
