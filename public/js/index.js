@@ -1,4 +1,6 @@
-const socket = io()
+const socket = io({
+  path:'/chatroom'
+})
 const chattingMsg = document.querySelector('#chattingMsg')
 const chatting = document.querySelector('#chatting')
 const chatForm = document.querySelector('#chatForm')
@@ -49,7 +51,7 @@ message.focus()
 })
 
 socket.on('disconnect', (users) => {
-  
+
 })
 
 socket.on('renderMsg', (msg) => {
