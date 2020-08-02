@@ -58,14 +58,20 @@ let onlineUsers = [
     name: 'lala',
     account: 'lalawang',
     avatar: ''
+  },
+  {
+    id: 8,  //測試重複
+    name: 'bot',
+    account: 'chatbot',
+    avatar: ''
   }
 ]
+
 
 const server = app.listen(PORT, () => console.log(`Alphitter is listening on port ${PORT}!`))
 const io = socket(server)
 
 io.on('connection', socket => {
-
   // 在線的使用者，一連線就加進onlineUsers陣列裡
   onlineUsers.push({ id, name, account, avatar })
 
@@ -87,6 +93,7 @@ io.on('connection', socket => {
 
   // user leave room
   socket.on('disconnect', () => {
+
     //過濾掉離線使用者，並傳值給前端
     onlineUsers = onlineUsers.filter((user, index, array) => {
       return user.id !== id

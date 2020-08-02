@@ -5,6 +5,7 @@ $(function () {
   const chatContent = document.querySelector('.chat-main')
   const typing = document.querySelector('.typing')
   const onlineUserColumn = document.querySelector('.online-user-column')
+  let onlineUsers = []
 
   // emit input message to socket
   chatForm.addEventListener('submit', event => {
@@ -19,6 +20,8 @@ $(function () {
   // message from server
   socket.on('message', data => {
     output.innerHTML += `<div class="broadcast"> <div><span>${data}</span></div></div>`
+
+    chatContent.scrollTop = chatContent.scrollHeight
   })
 
   // message from user
@@ -39,12 +42,11 @@ $(function () {
 
   // get online users
   socket.on('onlineUsers', data => {
-    console.log(data)
+    onlineUsers.push(data)
     let allItem = ``
     for (let i = 0; i < data.length; i++) {
-      allItem +=
-        `
-      <div class="online-user-item ">
+      allItem += `
+        <div class="online-user-item ">
           <div class="online-user-avatar"
             style="background: url(${data[i].avatar}),#C4C4C4; background-position:center;background-size:cover;">
           </div>

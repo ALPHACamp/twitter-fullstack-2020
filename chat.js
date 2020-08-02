@@ -4,7 +4,7 @@ module.exports = {
   formatMessage (name, data) {
     return {
       message: data,
-      name: name,
+      name: socket.id,
       time: moment().format('LT')
     }
   }
