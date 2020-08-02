@@ -95,7 +95,7 @@ io.on('connect', (socket) => {
     
     const userOffline = users.filter(i => { 
       return i.socketId === socket.id})
-    if (userOffline) {
+    if (userOffline.length > 0) {
       io.emit('user-offline', userOffline)
       const index = users.indexOf(userOffline)
       users.splice(index, 1)
