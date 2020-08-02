@@ -88,15 +88,15 @@ io.on('connection', (socket) => {
     chatMessage.push(msg)
     io.emit('renderMsg', msg)
   })
-  socket.on('disconnecting', () => {
-    const userOffline = users.filter(i => { i.socketId === socket.id})
-    const index = users.indexOf(userOffline)
-    users.splice(index, 1)
-    usersCount = users.length
-    io.emit('renderUser', users)
-    io.emit('user-offline', userOffline)
-    io.emit('userCount', usersCount)
-  })
+  // socket.on('disconnecting', () => {
+  //   const userOffline = users.filter(i => { i.socketId === socket.id})
+  //   const index = users.indexOf(userOffline)
+  //   users.splice(index, 1)
+  //   usersCount = users.length
+  //   io.emit('renderUser', users)
+  //   io.emit('user-offline', userOffline)
+  //   io.emit('userCount', usersCount)
+  // })
 })
 
 require('./routes')(app);

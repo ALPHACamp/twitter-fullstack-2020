@@ -48,6 +48,9 @@ message.value = ''
 message.focus()
 })
 
+socket.on('disconnect', (users) => {
+  
+})
 
 socket.on('renderMsg', (msg) => {
   
