@@ -1,4 +1,4 @@
-const socket = io()
+const socket = io('/',{path: '/chatroom'})
 const chattingMsg = document.querySelector('#chattingMsg')
 const chatting = document.querySelector('#chatting')
 const chatForm = document.querySelector('#chatForm')
