@@ -16,7 +16,8 @@ const socket = require('socket.io')
 const db = require('./models')
 const Message = db.Message
 const User = db.User
-const { formatMessage } = require('./chat')
+const moment = require('moment')
+const { formatMessage, getHistoryMessage } = require('./chat')
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -67,7 +68,7 @@ io.on('connection', async socket => {
         name: item.dataValues.User.name,
         avatar: item.dataValues.User.avatar,
         currentUser: user.id === item.dataValues.User.id ? true : false,
-        time: item.dataValues.createdAt
+        time: moment(item.dataValues.createdAt).format('LT')
       }))
     })
 
