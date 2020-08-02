@@ -61,7 +61,7 @@ io.on('connection', async socket => {
 
   // get chat history
   let historyMessages
-  await Message.findAll({ include: [User], order: [['createdAt', 'DESC']] })
+  await Message.findAll({ include: [User], order: [['createdAt', 'ASC']] })
     .then(data => {
       historyMessages = data.map(item => ({
         message: item.dataValues.message,
