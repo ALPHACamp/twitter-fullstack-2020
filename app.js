@@ -15,12 +15,14 @@ const passport = require('./config/passport');
 const helpers = require('./_helpers')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+io.path('/chatroom')
+// const io2 = require('socket.io')(http)
 const moment = require('moment')
+const db = require('./models')
+const ChatMessage = db.ChatMessage
 
 
-//iew engine
-// app.use(express.static(__dirname + 'css'));
-// app.use(express.static(__dirname + 'js'))
+
 app.engine(
   'hbs',
   exphbs({
@@ -66,25 +68,38 @@ const userCount = 0
 io.on('connection', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
-  // console.log(app)
-  socket.on('user-online', () => {
-    user = app.locals.user
-    const newUser = {
-      name: user.name,
-      account: user.account,
-      avatar: user.avatar
+  console.log('hi socket', socket.id)
+  socket.on('user-online', (user) => {
+    console.log('this room', socket.room)
+    user.socketId = socket.id
+    if (!users.map(i => i.UserId).includes(user.UserId)){
+      users.push(user)
     }
-    console.log(newUser)
-    io.emit('user-online', newUser)
+    usersCount = users.length
+    io.emit('user-online', user)
+    io.emit('renderUser', users)
+    io.emit('userCount', usersCount)
   })
   socket.on('chat_msg', (msg) => {
-    user = app.locals.user
-    msg.avatar = user.avatar
-    msg.UserId = user.id
-    msg.time = moment(msg.time).format('LLL')
-    io.emit('chat_msg', msg)
+    const { UserId, time, message } = msg
+    ChatMessage.create({
+      UserId, time, message
+    })
+    msg.time = moment(msg.time).tz("Asia/Taipei").format('LLLL')
+    chatMessage.push(msg)
+    io.emit('renderMsg', msg)
+  })
+  socket.on('disconnecting', () => {
+    const userOffline = users.filter(i => { i.socketId === socket.id})
+    const index = users.indexOf(userOffline)
+    users.splice(index, 1)
+    usersCount = users.length
+    io.emit('renderUser', users)
+    io.emit('user-offline', userOffline)
+    io.emit('userCount', usersCount)
   })
 })
+
 require('./routes')(app);
 
 http.listen(port, () => console.log(`Example app listening on port ${port}!`));

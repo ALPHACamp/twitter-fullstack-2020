@@ -1,76 +1,81 @@
 <div class="row d-flex flex-column flex-lg-row" style="height: 100%;">
   <div class="users col-3 p-0">
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item pb-1">
-        <h5 class="m-2">上線使用者({{ usersCount }})</h5>
-      </li>
-      {{!-- {{#each users}} --}}
 
-      <li class="list-group-item m-1">
-        <div class="d-flex flex-column align-items-center flex-lg-row align-items-lg-center">
-          <img src="{{myUser.avatar}}" alt="" width="60px" height="60px" class="rounded-circle m-0 mr-lg-3">
-          <h5 class="m-0 mr-lg-2">{{myUser.name}}</h5>
-          <span class="text-secondary m-0 ">@{{myUser.account}}</span>
-        </div>
-        
+    <ul id="allUser" class="list-group list-group-flush border-bottom border-black-50">
+      <li class="list-group-item pb-1 ">
+        <h5 id="count" class="m-2" style="text-align: center;">上線使用者({{ usersCount }})</h5>
       </li>
-      
-      {{!-- {{/each}} --}}
+    </ul>
+
+    <ul id="onlineUser" class="list-group list-group-flush">
+
     </ul>
   </div>
-  <div class="chat col-8 p-0 border-left border-black-50 d-flex flex-column justify-content-between" style="height: 100%;">
-    {{!-- <div class="d-flex flex-column justify-content-between"> --}}
-      <div class="my-4 border-bottom border-black-50 d-flex">
-        <h5 class="ml-3">公開聊天室</h5>
-      </div>
+  <div class="chat col-8 p-0 border-left border-black-50 d-flex flex-column justify-content-center"
+    style="height: 100%;">
+    <div class="pt-4 mt-4 border-bottom border-black-50 d-flex">
+      <h4 class="ml-3 mb-1 ">公開聊天室</h4>
+    </div>
 
-      <div id="chatting" class="flex-grow-1">
-        <ul id="chattingMsg" class="p-0 mr-4">
+    <div id="chatting" class="flex-grow-1 overflow-auto">
+      <ul id="chattingMsg" class="p-0 mr-4">
 
-          {{!-- <li class="d-flex justify-content-center m-2">
-            <span class="online">{{user.name}} 上線了</span>
-          </li> --}}
-
-        {{#each otherUser}}
-          <li class="d-flex">
-            <img src="{{this.avatar}}" alt="" class="rounded-circle border border-dark m-2" width="50px" height="50px">
-            <div class="d-flex flex-column">
+        {{#each msg}}
+        {{#ifCond ../myUser.id this.UserId}}
+        <li class="d-flex flex-column align-items-end">
+          <p class="selfMsg m-0">
+            {{this.message}}
+          </p>
+          <span class="">{{formatTime this.time}}</span>
+        </li>
+        {{else}}
+        <li class="d-flex">
+          <img src="{{this.avatar}}" alt="" class="rounded-circle border border-dark m-2" width="50px" height="50px">
+          <div class="d-flex flex-column">
             <p class="otherMsg  m-0">
               {{this.message}}
             </p>
-            <span>{{this.time}}</span>
+            <span>{{formatTime this.time}}</span>
 
-            </div>
-          </li> 
+          </div>
+        </li>
+        {{/ifCond}}
         {{/each}}
 
-          <li class="d-flex flex-column align-items-end">
-            <p class="selfMsg m-0">
-              peace out!
-            </p>
-            <span class="">time</span>
-            </li>
+        {{!-- <li class="d-flex flex-column align-items-end">
+          <p class="selfMsg m-0">
+            peace out!
+          </p>
+          <span class="">time</span>
+        </li> --}}
 
-        </ul>
+      </ul>
 
-      </div>
+    </div>
 
 
-        <form action="#" id="chatForm" method="POST" class="d-flex align-items-center border-top border-black-50 px-3" style="height: 70px;">
-          <textarea name="message" id="message" row="1" class="bg-light rounded-pill pl-3 w-100" placeholder="輸入訊息..." style="height: 30px;"></textarea>
-          <button type="submit" class="border-0 bg-white">
-            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cursor" fill="currentColor"
-              xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd"
-                d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z" />
-            </svg>
-          </button>
-        </form>
-      
-      
-    {{!-- </div> --}}
-    
-    
-  
+    <form action="#" id="chatForm" method="POST" class="d-flex align-items-center border-top border-black-50 px-3"
+      style="height: 70px;">
+      <textarea name="message" id="message" row="1" class="bg-light rounded-pill pl-3 w-100" placeholder="輸入訊息..."
+        style="height: 30px;"></textarea>
+      <input type="hidden" id="name" value="{{myUser.name}}">
+      <input type="hidden" id="avatar" value="{{myUser.avatar}}">
+      <input type="hidden" id="account" value="{{myUser.account}}">
+      <input type="hidden" id="id" value="{{myUser.id}}">
+      <button type="submit" class="border-0 bg-white">
+        <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-cursor" fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+            d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103zM2.25 8.184l3.897 1.67a.5.5 0 0 1 .262.263l1.67 3.897L12.743 3.52 2.25 8.184z" />
+        </svg>
+      </button>
+    </form>
+
+
+
+
+
   </div>
 </div>
+{{!-- <script src="/socket.io/socket.io.js"></script>
+<script src="/js/index.js"></script> --}}
