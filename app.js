@@ -68,8 +68,9 @@ let usersCount = 0
 io.on('connection', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
-  console.log('hi')
+  console.log('hi socket', socket.id)
   socket.on('user-online', (user) => {
+    console.log('this room', socket.room)
     user.socketId = socket.id
     if (!users.map(i => i.UserId).includes(user.UserId)){
       users.push(user)
@@ -88,11 +89,17 @@ io.on('connection', (socket) => {
     chatMessage.push(msg)
     io.emit('renderMsg', msg)
   })
+  socket.on('disconnecting', () => {
+    const userOffline = users.filter(i => { i.socketId === socket.id})
+    const index = users.indexOf(userOffline)
+    users.splice(index, 1)
+    usersCount = users.length
+    io.emit('renderUser', users)
+    io.emit('user-offline', userOffline)
+    io.emit('userCount', usersCount)
+  })
 })
 
-io.on('disconnect', () => {
-
-})
 require('./routes')(app);
 
 http.listen(port, () => console.log(`Example app listening on port ${port}!`));

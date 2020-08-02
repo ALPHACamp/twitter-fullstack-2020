@@ -48,7 +48,7 @@ message.focus()
 
 
 socket.on('renderMsg', (msg) => {
-  console.log('renderMsg', msg);
+  
   if (msg.UserId === id.value) {
     chattingMsg.appendChild(selfMsg(msg));
   } else {
@@ -56,7 +56,10 @@ socket.on('renderMsg', (msg) => {
   }
 });
 socket.on('user-online', (user) => {
-  chattingMsg.appendChild(userOnline(user));
+  chattingMsg.appendChild(userOnline(user, 'online'));
+});
+socket.on('user-offline', (user) => {
+  chattingMsg.appendChild(userOnline(user, 'offline'));
 });
 socket.on('renderUser', (users) => {
   onlineUser.innerHTML = ''
@@ -69,12 +72,17 @@ socket.on('userCount', (count) => {
     上線使用者 (${count})`;
 });
 
-function userOnline(user) {
+
+function userOnline(user, connectStatus) {
   const li = document.createElement('li');
   const span = document.createElement('span');
   li.classList.add('d-flex', 'justify-content-center', 'm-2');
   span.classList.add('online');
-  span.innerText = `${user.name} 上線了`;
+  if (connectStatus === 'online') {
+    span.innerText = `${user.name} 上線了`;
+  } else if (connectStatus === 'offline'){
+    span.innerText = `${user.name} 離開了`;
+  }
   li.appendChild(span);
   return li;
 }
