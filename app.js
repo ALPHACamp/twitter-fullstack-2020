@@ -15,6 +15,7 @@ const passport = require('./config/passport');
 const helpers = require('./_helpers')
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
+// const io2 = require('socket.io')(http)
 const moment = require('moment')
 const db = require('./models')
 const ChatMessage = db.ChatMessage
@@ -67,6 +68,7 @@ let usersCount = 0
 io.on('connection', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
+  console.log('hi')
   socket.on('user-online', (user) => {
     user.socketId = socket.id
     if (!users.map(i => i.UserId).includes(user.UserId)){
@@ -86,6 +88,10 @@ io.on('connection', (socket) => {
     chatMessage.push(msg)
     io.emit('renderMsg', msg)
   })
+})
+
+io.on('disconnect', () => {
+
 })
 require('./routes')(app);
 

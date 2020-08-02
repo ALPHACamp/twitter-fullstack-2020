@@ -9,6 +9,8 @@ const name = document.querySelector('#name')
 const account = document.querySelector('#account')
 const avatar = document.querySelector('#avatar')
 let userArea = document.querySelector('#allUser')
+let onlineUser = document.querySelector('#onlineUser')
+
 
 
 //when users online 重新將user arr 插入ul
@@ -41,6 +43,7 @@ let msg = {
 
 socket.emit('chat_msg', msg)
 message.value = ''
+message.focus()
 })
 
 
@@ -56,8 +59,9 @@ socket.on('user-online', (user) => {
   chattingMsg.appendChild(userOnline(user))
 })
 socket.on('renderUser', (users) => {
+  onlineUser.innerHTML = ''
   users.forEach(e => {
-    userArea.appendChild(renderUser(e))
+    onlineUser.appendChild(renderUser(e))
   });
 })
 socket.on('userCount', (count) => {
