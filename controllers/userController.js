@@ -137,8 +137,7 @@ let userController = {
                 Reply,
                 User,
                 Like,]
-            },
-            User
+            },           
           ]
         },
         { model: User, as: 'Followers' },
@@ -279,7 +278,7 @@ let userController = {
 
     } catch (err) {
       res.send('something is wrong');
-    }
+    }  
   },
   removeFollowing: async (req, res) => {
     try {
@@ -332,6 +331,7 @@ let userController = {
         { model: User, as: 'Followers' }
       ]
     });
+    
     const followDetail = {
       tweetsCount: user.toJSON().Tweets.length,
       followers: true
@@ -340,7 +340,7 @@ let userController = {
     followers = followers.map((i) => ({
       ...i,
       isFollowed: helper.getUser(req).Followers.map((d) => d.id).includes(i.id)
-    }));
+    }));  
     followers = followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
     res.render('followship', {
       isUserPage: true,
@@ -476,6 +476,10 @@ let userController = {
       res.send('something is wrong');
     }
   },
+
+  postChatroomPage: async (req, res) =>{
+    
+  }
 };
 
 module.exports = userController;

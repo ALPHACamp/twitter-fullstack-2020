@@ -1,6 +1,7 @@
 const db = require('../models');
 const User = db.User;
 const ChatMessage = db.ChatMessage;
+const privatemassage = db.privatemassage
 
 const chatController = {
   getChatRoomChats: async (req, res) => {
@@ -29,7 +30,33 @@ const chatController = {
     });
 
     res.render('chatroom', { msg: await msg });
-  }
+  },
+
+  getOneChatPage: async (req, res) => {
+    const id = req.user.id;
+    let myMassage = await privatemassage.findAll({
+      raw: true,nest: true,
+      where: { RecipientId:id },
+      order: [['time', 'DESC']],
+      include: [        
+        User,
+      ],
+    })
+   
+  let massages = myMassage
+    massages = massages.map((m) => ({
+      ...m,
+      senderUserAvatar:m.User.avatar,
+      senderUserName:m.User.name,
+      senderUserAccount:m.User.account,
+      sendTime:m.time,
+      sendMassage:m.massage,
+   }))
+    
+    console.log(massages)
+    res.render('oneChatroom',{historyMassages:massages})
+  },
 };
+
 
 module.exports = chatController;

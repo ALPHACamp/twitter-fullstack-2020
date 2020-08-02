@@ -170,5 +170,6 @@ router.get(
 );
 
 router.get('/chatroom', authenticated, chatController.getChatRoomChats);
+router.get('/oneChatroom', authenticated, chatController.getOneChatPage);
 
 module.exports = router;
