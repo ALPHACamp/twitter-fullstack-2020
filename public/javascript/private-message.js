@@ -1,0 +1,5 @@
+$(function () {
+  const socket = io()
+
+
+})
