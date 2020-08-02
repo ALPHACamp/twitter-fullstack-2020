@@ -107,8 +107,6 @@ io.on('connection', (socket) => {
     
     const userOffline = users.filter(i => { 
       return i.socketId === socket.id})
-      console.log('byebye')
-      console.log(userOffline)
     if (userOffline.length > 0) {
       io.emit('user-offline', ...userOffline)
       const index = users.indexOf(userOffline)
