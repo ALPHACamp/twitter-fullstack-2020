@@ -28,7 +28,7 @@ socket.emit('user-online', {
   name: name.value,
   avatar: avatar.value,
   account: account.value
-})
+});
 
 chatForm.addEventListener('submit', (e) => {
 e.preventDefault()
@@ -48,103 +48,107 @@ message.focus()
 
 
 socket.on('renderMsg', (msg) => {
-  console.log('renderMsg', msg)
+  console.log('renderMsg', msg);
   if (msg.UserId === id.value) {
-    chattingMsg.appendChild(selfMsg(msg))
+    chattingMsg.appendChild(selfMsg(msg));
   } else {
-    chattingMsg.appendChild(getMsg(msg))
+    chattingMsg.appendChild(getMsg(msg));
   }
-})
+});
 socket.on('user-online', (user) => {
-  chattingMsg.appendChild(userOnline(user))
-})
+  chattingMsg.appendChild(userOnline(user));
+});
 socket.on('renderUser', (users) => {
   onlineUser.innerHTML = ''
   users.forEach(e => {
     onlineUser.appendChild(renderUser(e))
   });
-})
+});
 socket.on('userCount', (count) => {
   document.querySelector('#count').innerText = `
-    上線使用者 (${count})`
-})
+    上線使用者 (${count})`;
+});
 
 function userOnline(user) {
-  const li = document.createElement('li')
-  const span = document.createElement('span')
-  li.classList.add('d-flex', 'justify-content-center', 'm-2')
-  span.classList.add('online')
-  span.innerText = `${user.name} 上線了`
-  li.appendChild(span)
-  return li
+  const li = document.createElement('li');
+  const span = document.createElement('span');
+  li.classList.add('d-flex', 'justify-content-center', 'm-2');
+  span.classList.add('online');
+  span.innerText = `${user.name} 上線了`;
+  li.appendChild(span);
+  return li;
 }
 
 //msg emit {userId, name, avatar, msg, time}
 function getMsg(msg) {
-  const li = document.createElement('li')
-  const avatar = document.createElement('img')
-  const div = document.createElement('div')
-  const p = document.createElement('p')
-  const span = document.createElement('span')
+  const li = document.createElement('li');
+  const avatar = document.createElement('img');
+  const div = document.createElement('div');
+  const p = document.createElement('p');
+  const span = document.createElement('span');
 
-  li.classList.add('d-flex')
-  avatar.classList.add('rounded-circle', 'm-2')
-  div.classList.add('d-flex', 'flex-column')
-  p.classList.add('otherMsg', 'm-0')
+  li.classList.add('d-flex');
+  avatar.classList.add('rounded-circle', 'm-2');
+  div.classList.add('d-flex', 'flex-column');
+  p.classList.add('otherMsg', 'm-0');
 
-  span.innerText = msg.time
-  p.innerText = msg.message
-  div.appendChild(p)
-  div.appendChild(span)
-  avatar.src = `${msg.avatar}`
-  avatar.width = '60'
-  avatar.height = '60'
-  li.appendChild(avatar)
-  li.appendChild(div)
+  span.innerText = msg.time;
+  p.innerText = msg.message;
+  div.appendChild(p);
+  div.appendChild(span);
+  avatar.src = `${msg.avatar}`;
+  avatar.width = '60';
+  avatar.height = '60';
+  li.appendChild(avatar);
+  li.appendChild(div);
 
-  return li
+  return li;
 }
 
-function userOffline() {
+function userOffline() {}
 
+function selfMsg(msg) {
+  const li = document.createElement('li');
+  const p = document.createElement('p');
+  const span = document.createElement('span');
+
+  li.classList.add('d-flex', 'flex-column', 'align-items-end');
+  p.classList.add('selfMsg', 'm-0');
+  p.innerText = msg.message;
+  span.innerText = msg.time;
+  li.appendChild(p);
+  li.appendChild(span);
+  return li;
 }
 
-function selfMsg (msg) {
-  const li = document.createElement('li')
-  const p = document.createElement('p')
-  const span = document.createElement('span')
+function renderUser(user) {
+  const li = document.createElement('li');
+  const avatar = document.createElement('img');
+  const div = document.createElement('div');
+  const h5 = document.createElement('h5');
+  const span = document.createElement('span');
 
-  li.classList.add('d-flex', 'flex-column', 'align-items-end')
-  p.classList.add('selfMsg', 'm-0')
-  p.innerText = msg.message
-  span.innerText = msg.time
-  li.appendChild(p)
-  li.appendChild(span)
-  return li
-}
+  li.classList.add('list-group-item', 'm-1');
+  avatar.classList.add('rounded-circle', 'm-2');
+  div.classList.add(
+    'd-flex',
+    'flex-column',
+    'align-items-center',
+    'flex-lg-row',
+    'align-items-lg-center'
+  );
+  h5.classList.add('mr-lg-2', 'm-0');
+  span.classList.add('text-secondary', 'm-0');
 
-function renderUser (user) {
-  const li = document.createElement('li')
-  const avatar = document.createElement('img')
-  const div = document.createElement('div')
-  const h5 = document.createElement('h5')
-  const span = document.createElement('span')
+  avatar.src = `${user.avatar}`;
+  avatar.width = '60';
+  avatar.height = '60';
+  h5.innerText = user.name;
+  span.innerText = `@${user.account}`;
 
-  li.classList.add('list-group-item', 'm-1')
-  avatar.classList.add('rounded-circle', 'm-2')
-  div.classList.add('d-flex', 'flex-column', 'align-items-center', 'flex-lg-row', 'align-items-lg-center')
-  h5.classList.add('mr-lg-2', 'm-0')
-  span.classList.add('text-secondary','m-0')
-
-  avatar.src = `${user.avatar}`
-  avatar.width = '60'
-  avatar.height = '60'
-  h5.innerText = user.name
-  span.innerText = `@${user.account}`
-
-  div.appendChild(avatar)
-  div.appendChild(h5)
-  div.appendChild(span)
-  li.appendChild(div)
-  return li
+  div.appendChild(avatar);
+  div.appendChild(h5);
+  div.appendChild(span);
+  li.appendChild(div);
+  return li;
 }
