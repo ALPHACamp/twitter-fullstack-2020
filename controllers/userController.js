@@ -7,6 +7,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Message = db.Message
 const Followship = db.Followship
 const imgur = require('imgur-node-api')
 
@@ -146,7 +147,6 @@ const userController = {
         }
       })
     }
-
     const { files } = req
     if ((Object.keys(files).length === 0)) {
       return User.findByPk(req.params.id).then((user) => {
@@ -462,7 +462,14 @@ const userController = {
     res.redirect('/signin')
   },
   chatroomPage: (req, res) => {
-    res.render('chatroomPage')
+    return Message.findAll({
+      raw: true,
+      nest: true,
+      include: [{ model: User }]
+    }).then((msg) => {
+      // console.log(msg) 
+      return res.render('chatroomPage', { msg: msg })
+    })
   }
 }
 

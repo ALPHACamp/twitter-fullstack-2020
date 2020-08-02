@@ -15,5 +15,8 @@ module.exports = {
   },
   moment_format: function (a) {
     return moment(a).format('a h:mm．YYYY年MMMDo')
-  }
+  },
+  moment_message: function (a) {
+    return moment(a).format('a h.mm')
+  },
 }
