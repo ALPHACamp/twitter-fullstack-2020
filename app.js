@@ -65,7 +65,7 @@ const users = []
 const chatMessage = []
 const userCount = 0
 
-io.of('/chatroom').on('connection', (socket) => {
+io.on('connection', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
   console.log('hi socket', socket.id)
