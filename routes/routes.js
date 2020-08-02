@@ -130,43 +130,19 @@ router.get(
   userController.topUserForLayout,
   userController.getUserReply
 );
-router.get(
-  '/users/:id/tweets',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getUserPage
+router.get( '/users/:id/tweets', authenticated, userController.topUserForLayout, userController.getUserPage
 );
-router.post(
-  '/tweets/:id/replies',
-  authenticated,
-  userController.topUserForLayout,
-  tweetController.postComment
+router.post( '/tweets/:id/replies', authenticated, userController.topUserForLayout, tweetController.postComment
 );
-router.get(
-  '/users/:id/likes',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getUserLike
+router.get( '/users/:id/likes', authenticated, userController.topUserForLayout, userController.getUserLike
 );
 router.get('/users/:id/edit', authenticated, userController.editUser);
 router.put('/users/:id/edit', authenticated, userController.putEditUser);
-router.get(
-  '/users/:id/followings',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getFollowings
+router.get( '/users/:id/followings', authenticated, userController.topUserForLayout, userController.getFollowings
 );
-router.get(
-  '/users/:id/followers',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getFollowers
+router.get( '/users/:id/followers', authenticated, userController.topUserForLayout, userController.getFollowers
 );
-router.get(
-  '/users/:id',
-  authenticated,
-  userController.topUserForLayout,
-  userController.getUserPage
+router.get( '/users/:id', authenticated, userController.topUserForLayout, userController.getUserPage
 );
 
 router.get('/chatroom', authenticated, chatController.getChatRoomChats);
