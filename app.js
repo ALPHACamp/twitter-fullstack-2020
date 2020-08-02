@@ -102,6 +102,15 @@ io.on('connection', async socket => {
     socket.broadcast.emit('message', `${user.name} left chatroom`)
   })
 
+
+  /** private messge */
+  socket.on('sendPrvate', data => {
+    data.senderId = user.id
+
+    console.log(data)
+  })
+
+
 })
 
 require('./routes/index')(app, passport)
