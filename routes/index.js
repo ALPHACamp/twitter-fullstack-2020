@@ -23,9 +23,10 @@ module.exports = (app, passport) => {
   app.delete('/admin/tweets/:id', adminAuthenticated, adminController.deleteTweet)
 
   app.get('/logout', userController.logout)
-  // app.get('/', authenticatedStatus, userController.getIndexPage)
-  app.get('/', authenticatedStatus, (req, res) => res.redirect('/chat'))
+  app.get('/', authenticatedStatus, userController.getIndexPage)
   app.get('/chat', userAuthenticated, (req, res) => res.render('chatroom'))
+  app.get('/mailbox', userAuthenticated, userController.getMailIndex)
+  app.get('/mailbox/:id', userAuthenticated, userController.getMailPage)
 
   app.get('/tweets', userAuthenticated, tweetController.getTweets)
   app.post('/tweets', userAuthenticated, tweetController.postTweet)

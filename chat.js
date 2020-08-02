@@ -14,10 +14,10 @@ module.exports = {
     }
   },
   getHistoryMessage (user) {
-    let historyMessages
-    Message.findAll({ include: [User], order: [['createdAt', 'DESC']] })
+    let historyMessages = []
+    return Message.findAll({ include: [User], order: [['createdAt', 'DESC']] })
       .then(data => {
-        historyMessages = data.map(item => ({
+        return historyMessages = data.map(item => ({
           message: item.dataValues.message,
           name: item.dataValues.User.name,
           avatar: item.dataValues.User.avatar,
@@ -25,6 +25,5 @@ module.exports = {
           time: moment(item.dataValues.createdAt).format('LT')
         }))
       })
-    return historyMessages
   }
 }
