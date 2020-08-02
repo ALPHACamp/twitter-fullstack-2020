@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 } 
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
@@ -59,27 +59,27 @@ app.use((req, res, next) => {
   next();
 });
 
-
 const users = []
 const chatMessage = []
-let usersCount = 0
+const userCount = 0
 
-// const chatroom = io.of('chatroom')
-
-io.on('connection', (socket) => {
+io.on('connect', (socket) => {
   //socket.on 使用者進入聊天室
   //socket.on 收到訊息
   console.log('hi socket', socket.id)
   socket.on('user-online', (user) => {
-    console.log('this room', socket.room)
-    user.socketId = socket.id
-    if (!users.map(i => i.UserId).includes(user.UserId)){
-      users.push(user)
+    if (user){
+      console.log('hello',typeof user)
+      user.socketId = socket.id
+      if (!users.map(i => i.UserId).includes(user.UserId)){
+        users.push(user)
+      }
+      usersCount = users.length
+      console.log(users)
+      io.emit('user-online', user)
+      io.emit('renderUser', users)
+      io.emit('userCount', usersCount)
     }
-    usersCount = users.length
-    io.emit('user-online', user)
-    io.emit('renderUser', users)
-    io.emit('userCount', usersCount)
   })
   socket.on('chat_msg', (msg) => {
     const { UserId, time, message } = msg
@@ -91,13 +91,19 @@ io.on('connection', (socket) => {
     io.emit('renderMsg', msg)
   })
   socket.on('disconnect', () => {
-    const userOffline = users.filter(i => { i.socketId === socket.id})
-    const index = users.indexOf(userOffline)
-    users.splice(index, 1)
-    usersCount = users.length
-    io.emit('renderUser', users)
-    io.emit('user-offline', userOffline)
-    io.emit('userCount', usersCount)
+    
+    const userOffline = users.filter(i => { 
+      return i.socketId === socket.id})
+      console.log('byebye')
+      console.log(userOffline)
+    if (userOffline.length > 0) {
+      io.emit('user-offline', ...userOffline)
+      const index = users.indexOf(userOffline)
+      users.splice(index, 1)
+      usersCount = users.length
+      io.emit('renderUser', users)
+      io.emit('userCount', usersCount)
+    }
   })
 })
 

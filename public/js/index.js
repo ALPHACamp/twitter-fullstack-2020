@@ -12,6 +12,9 @@ let userArea = document.querySelector('#allUser')
 let onlineUser = document.querySelector('#onlineUser')
 
 
+let usersInChatroom = []
+let chatroomMsg = []
+// let self
 
 //when users online 重新將user arr 插入ul
 //1 從哪邊監聽進入聊天室的事件？
@@ -23,6 +26,8 @@ let onlineUser = document.querySelector('#onlineUser')
 //msg emit {userId, name, avatar, msg, time}
 
 //連線後將使用者資料傳到app.js
+
+
 socket.emit('user-online', {
   UserId: id.value,
   name: name.value,
@@ -40,12 +45,14 @@ let msg = {
   time: new Date(),
   message: message.value
 }
-
 socket.emit('chat_msg', msg)
 message.value = ''
 message.focus()
 })
 
+socket.on('disconnect', (users) => {
+
+})
 
 socket.on('renderMsg', (msg) => {
   
