@@ -434,7 +434,7 @@ const userController = {
     }
     findExistUser(updateAccountAndPassword)
 
-    function findExistUser (updateMethod) {
+    function findExistUser(updateMethod) {
       User.findOne({
         // 除了當前使用者的資料以外，有沒有重複的
         where: {
@@ -467,7 +467,7 @@ const userController = {
       nest: true,
       include: [{ model: User }]
     }).then((msg) => {
-      console.log(msg)
+      // console.log(msg) 
       return res.render('chatroomPage', { msg: msg })
     })
   }

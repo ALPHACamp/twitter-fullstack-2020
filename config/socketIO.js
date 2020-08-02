@@ -4,13 +4,18 @@ module.exports = (server) => {
   const io = require('socket.io')(server)
   const connections = []
   let userList = []
-
   io.on('connection', socket => {
+    let addedUser = false
+
     socket.on('login', (user) => {
-      user.socketId = socket.id
+      if (addedUser) return
+
+      // store the username in the socket session for this client
+      socket.user = user
       userList.push(user)
+      addedUser = true
       io.emit('onlineInfo', userList)
-      io.emit('joinMsg', `${user.name}`)
+      socket.broadcast.emit('joinMsg', `${user.name}`)
     })
 
     socket.on('send', (msg) => {
@@ -23,8 +28,11 @@ module.exports = (server) => {
     })
 
     socket.on('disconnect', () => {
-      userList = userList.filter(user => user.socketId !== socket.id)
-      socket.broadcast.emit('OnlineInfo', userList)
+      if (addedUser) {
+        userList = userList.filter(user => user !== socket.user)
+        socket.broadcast.emit('onlineInfo', userList)
+        socket.broadcast.emit('leaveMsg', socket.user)
+      }
     })
   })
 }
