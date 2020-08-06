@@ -154,10 +154,10 @@ const userController = {
       order: [['Replies', 'createdAt', 'DESC']]
     })
       .then(pageUser => {
-        // pageUser.dataValues.Replies.forEach(r => {
-        //   r.dataValues.Tweet.dataValues.isLiked =
-        //     r.dataValues.Tweet.dataValues.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-        // })
+        pageUser.dataValues.Replies.forEach(r => {
+          r.dataValues.Tweet.dataValues.isLiked =
+            r.dataValues.Tweet.dataValues.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+        })
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render('user-replies', { pageUser })
       })
