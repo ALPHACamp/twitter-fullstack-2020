@@ -111,7 +111,7 @@
               <p class="tweet-createdAt">{{moment this.Tweet.createdAt}} </p>
               <p class="tweet-user-avatar">{{this.Tweet.User.avatar}}</p>
             </div>
-            {{#if this.Tweet.dataValues.isLiked}}
+            {{!-- {{#if this.Tweet.dataValues.isLiked}}
             <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
               <button type="submit" class="like-link button">
                 <i class="fac fa-cus-solid-like"></i>
@@ -119,10 +119,10 @@
                 <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
                   <button type="submit" class="like-link button">
                     <i class="fac fa-cus-like"></i>
-                    {{/if}}
-                    {{this.Tweet.LikedUsers.length}}
-                  </button>
-                </form>
+                    {{/if}} --}}
+            {{this.Tweet.LikedUsers.length}}
+            </button>
+            </form>
           </div>
           <!--回覆-->
           <div class="user-page-reply-comment row" onclick="location.href='/tweets/{{this.Tweet.id}}'">
