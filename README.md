@@ -48,6 +48,14 @@ Migrate
 $ npx sequelize db:migrate
 ```
 
+Get imgur client id
+[imgur API](https://api.imgur.com/oauth2/addclient)
+```
+1. add .env              <add file name .env>
+2. IMGUR_CLIENT_ID=XXX   <your imgur client id>
+3. SECRET=XXX            <set your secret string>
+```
+
 Execute
 ```
 $ node app.js
