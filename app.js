@@ -15,9 +15,11 @@ const helpers = require('./_helpers')
 const socket = require('socket.io')
 const db = require('./models')
 const Message = db.Message
+const PrivateMessage = db.PrivateMessage
 const User = db.User
 const moment = require('moment')
-const { formatMessage, getHistoryMessage } = require('./chat')
+const { formatMessage, getRoom } = require('./chat')
+const { Op } = require("sequelize")
 
 const app = express()
 const PORT = process.env.PORT || 3000
@@ -101,6 +103,44 @@ io.on('connection', async socket => {
     socket.broadcast.emit('typing', { isExist: false })
     socket.broadcast.emit('message', `${user.name} left chatroom`)
   })
+
+  /** private messge */
+  socket.on('privateMessage', async data => {
+    const senderId = Number(user.id)
+    const receiverId = data.receiverId
+    let historyMessages
+    const room = getRoom(senderId, receiverId)
+
+    socket.join(room)
+
+    // find history messages
+    await PrivateMessage.findAll({
+      where: { [Op.and]: [{ senderId }, { receiverId }] },
+      include: [{ model: User, as: 'Sender' }, { model: User, as: 'Receiver' }]
+    }).then(data => {
+      return historyMessages = data.map(item => ({
+        message: item.dataValues.message,
+        name: item.dataValues.User.name,
+        avatar: item.dataValues.User.avatar,
+        currentUser: user.id === item.dataValues.User.id ? true : false,
+        time: moment(item.dataValues.createdAt).format('LT')
+      }))
+    })
+
+    io.to(room).emit('privateHistory', historyMessages)
+
+    // find history messages
+    socket.on('sendPrvate', async data => {
+      await PrivateMessage.create({
+        message: data.message,
+        receiverId: data.receiverId,
+        senderId
+      })
+      io.to(room).emit('sendPrivate', formatMessage(user.name, data.message, user.avatar, user.currentUser))
+    })
+
+  })
+
 
 })
 
