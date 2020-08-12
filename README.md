@@ -4,7 +4,7 @@
 
 這是一個透過 Node.js＋express 打造的社群軟體，提供使用者發推、回應、追蹤、按讚和聊天等功能。
 
-**Heroku 專案連結:** [https://warm-reaches-64839.herokuapp.com/](https://warm-reaches-64839.herokuapp.com/)
+**Heroku 專案連結:** [https://warm-headland-59422.herokuapp.com/](https://warm-headland-59422.herokuapp.com/)
 
 ## 專案畫面
 
