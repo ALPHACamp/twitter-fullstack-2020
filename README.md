@@ -1,6 +1,7 @@
-# AC畢業專案-Twitter論壇
+# AC畢業專案-Alphitter
 
 > 這是由Yen,政昕,Tony共同打造的AC畢業專案
+這是一個透過 Node.js＋express 打造的社群軟體，提供使用者發推、回應、追蹤、按讚和聊天等功能。
 
 **Heroku 專案連結:** [https://warm-reaches-64839.herokuapp.com/](https://warm-reaches-64839.herokuapp.com/)
 
