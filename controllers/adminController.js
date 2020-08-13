@@ -51,7 +51,7 @@ const adminController = {
       .then(tweet => {
         if (tweet[0].User.dataValues.id !== helpers.getUser(req).id) {
           if (tweet[0].Replies.length) {
-            tweet[0].Replies[0].destroy()
+            tweet[0].Replies.destroy()
             return tweet[0].destroy()
           }
           return tweet[0].destroy()
