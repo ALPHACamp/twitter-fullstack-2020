@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  {{> left-content}}
+  {{> modal}}
+
+  <div class="main-content">
+    <div class="main-title follow-title row">
+      <a href="/users/{{results.user.id}}/tweets"><img src="/images/icon-back.png" alt=""></a>
+      <div class="column">
+        <div>{{results.user.name}}</div>
+        <span>{{results.tweetCounts}} 推文</span>
+      </div>
+    </div>
+
+    <nav class="follow-page-nav navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav user-navbar">
+          <a class="nav-link" href="/users/{{results.user.id}}/followers">跟隨者</a>
+          <a class="nav-link active" href="#">正在跟隨</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="follow-list">
+      {{#each results.Followings}}
+      <div class="follow-item">
+        <div class="left">
+          <a href="/users/{{this.id}}/tweets">
+            <div class="avatar"
+              style="background: url({{this.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
+            </div>
+          </a>
+        </div>
+        <div class="right">
+          <div class="top">
+            <div class="user-name-account">
+              <span class="user-name"><a href="/users/{{this.id}}/tweets"
+                  style="text-decoration: none; color:black;">{{this.name}}</a></span><span
+                class="user-account">@{{this.account}}</span>
+            </div>
+            {{#ifEqual ../user.id this.id}}
+            {{else}}
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="unfollow-button">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST">
+              <button class="follow-button" name="id" value="{{this.id}}">跟隨</button>
+            </form>
+            {{/if}}
+            {{/ifEqual}}
+          </div>
+          <div class="follow-item-introduction">
+            {{this.introduction}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{> right-content}}
+</div>

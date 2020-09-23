@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  {{> left-content}}
+
+  <div class="mailbox-content">
+    <div class="main-title">
+      傳送私人訊息給
+      {{#if pageUser}}
+      {{pageUser.name}} <code>@{{pageUser.account}}</code>
+      {{/if}}
+    </div>
+
+    <div class="mail-main">
+      <!--output-->
+      <div id="output-mail">
+
+        <div class="broadcast-mail">
+          {{!-- <div><span>carey 上線了</span></div> --}}
+        </div>
+
+      </div>
+    </div>
+    <!--input-->
+    <div class="chat-footer">
+      <div class="typing"></div>
+      <form id="mail-form" action="">
+        <input id="input" autocomplete="off" placeholder="輸入訊息..." autofocus />
+        <button class="button"><i class="far fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+
+  <div class="mailbox-user-content">
+    <div class="title">
+      私人訊息
+    </div>
+
+    <div class="mailbox-user-column">
+      <!-- 有郵件訊息的使用者 -->
+      <div class="mailbox-user-item">
+        <div class="mailbox-user-avatar"
+          style="background: url(),#C4C4C4; background-position:center;background-size:cover;">
+        </div>
+        <div>
+          <div class="time">2小時</div>
+
+          <div class="mailbox-user-name">Apple <span>@pie</span>
+          </div>
+          <div class="mail-preview">
+            aque repellat ipsam velit maxime est distinctio fuga. Itaque voluptas et suscipit quisquam. Voluptatem omnis
+            ut commodi
+            amet. Quam maxime n
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/javascript/private-message.js"></script>
