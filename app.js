@@ -10,7 +10,7 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
 app.use('/', (req, res) => {
-  res.render('signin')
+  res.render('admin/tweets')
 })
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
