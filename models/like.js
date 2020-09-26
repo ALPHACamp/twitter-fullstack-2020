@@ -1,8 +1,31 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Like = sequelize.define('Like', {
-  }, {});
-  Like.associate = function(models) {
+  const Like = sequelize.define(
+    'Like',
+    {
+      UserId: DataTypes.INTEGER,
+      Position: DataTypes.STRING,
+      PositionId: DataTypes.INTEGER,
+      isLike: DataTypes.BOOLEAN,
+    },
+    {},
+  );
+  Like.associate = function (models) {
+    Like.belongsTo(models.User);
+    Like.belongsTo(models.Tweet, {
+      foreignKey: 'PositionId',
+      constraints: false,
+      scope: {
+        Position: 'tweet',
+      },
+    });
+    Like.belongsTo(models.Reply, {
+      foreignKey: 'PositionId',
+      constraints: false,
+      scope: {
+        Position: 'reply',
+      },
+    });
   };
   return Like;
 };
