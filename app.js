@@ -5,11 +5,12 @@ const exphbs = require('express-handlebars')
 const app = express()
 const port = 3000
 
-app.engine('handlebars', exphbs({
+app.engine('hbs', exphbs({
   defaultLayout: 'main',
+  extname: '.hbs',
   helpers: require('./config/handlebars-helpers')
 }))
-app.set('view engine', 'handlebars')
+app.set('view engine', 'hbs')
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
