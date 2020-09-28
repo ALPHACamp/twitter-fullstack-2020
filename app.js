@@ -10,8 +10,12 @@ const flash = require('connect-flash')
 const session = require('express-session')
 
 app.use(bodyParser.urlencoded({ extended: true }))
-app.engine('handlebars', handlebars())
+app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+
+// setup session and flash
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+app.use(flash())
 
 // 把 req.locals
 app.use((req, res, next) => {

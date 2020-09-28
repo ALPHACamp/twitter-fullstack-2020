@@ -8,13 +8,16 @@ const userController = {
   },
 
   signUp: (req, res) => {
+    console.log(req.body)
 
-    if (!req.body.password === req.body.passwordCheck) {
+    if (req.body.password !== req.body.passwordCheck) {
+      console.log("進入兩次密碼")
       req.flash('error_messages', '兩次密碼輸入不同')
       return res.redirect('/signup')
     } else {
       User.findOne({ where: { email: req.body.email } }).then(user => {
-        if (user) {
+        console.log("user是誰", user)
+        if (!user) {
           return User.create({
             name: req.body.name,
             email: req.body.email,
