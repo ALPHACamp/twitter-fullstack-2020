@@ -8,6 +8,8 @@ const port = 3000
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+app.use(express.static('public'))
+
 app.use('/upload', express.static(__dirname + '/upload'))
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
