@@ -4,14 +4,9 @@ const db = require('./models')
 const session = require('express-session')
 const flash = require('connect-flash')
 const app = express()
-const port = process.env.PORT || 3000
+const port = 3000
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
-
-// if (process.env.NODE_ENV !== 'production') {
-//   require('dotenv').config()
-// }
-// const passport = require('./config/passport')
 
 app.use('/upload', express.static(__dirname + '/upload'))
 
@@ -38,10 +33,9 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/', (req, res) => {
-  res.send('hello world')
-})
 
 app.listen(port, () => {
   console.log(`Express is listening on http://localhost:${port}`)
 })
+
+require('./routes')(app)
