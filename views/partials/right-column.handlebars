@@ -1,0 +1,25 @@
+<div class="right-column">
+  <div class="right-column-title font-weight-bold">
+    跟隨誰
+  </div>
+  <div class="top-followings-list">
+    <div class="top-user-item d-flex align-items-center">
+      <a href="/users/1/tweets">
+        <div class=" avatar" style="background: url() #C4C4C4; background-size:cover;"></div>
+      </a>
+      <div class="top-user-name d-flex flex-column justify-content-center">
+        <a href="/users/1/tweets" class="user-name font-weight-bold">XXX</a>
+        <div class="user-account">@YYY</div>
+      </div>
+      {{!-- <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+        <button class="unfollow-button">正在跟隨</button>
+      </form> --}}
+      <form action="/followships" method="POST">
+        <button class="follow-button" name="id" value="{{this.id}}">跟隨</button>
+      </form>
+    </div>
+  </div>
+  <button class="button more-users">
+    顯示更多
+  </button>
+</div>
