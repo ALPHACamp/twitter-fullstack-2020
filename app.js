@@ -1,7 +1,6 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const helpers = require('./_helpers');
-const exphbs = require('express-handlebars')
 
 const app = express()
 const port = 3000
@@ -11,7 +10,7 @@ app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
 app.use('/', (req, res) => {
-  res.render('test')
+  res.render('admin/users')
 })
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
