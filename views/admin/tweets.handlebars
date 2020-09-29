@@ -1,0 +1,40 @@
+<div id="left">
+	<div class="row" style="text-align: center;">
+		<ul>
+      <h1>
+				<li>
+					<a class="nav-link" href="/">推文清單</a>
+				</li>
+				<li>
+					<a class="nav-link" href="/">使用者列表</a>
+				</li>
+      </h1>
+		</ul> 
+	</div>
+</div>
+<div id="main">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">推文清單</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each tweets}}
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.UserId}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.createAt}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+<style>
+  body{ margin:0; height:100%}
+  html{ height:100%} 
+  #left{ position:absolute; top:0; left:0; width:200px; height:100%; background-color:#fdfdfd}
+  #main{ margin-left:100px; height:100%; background-color:#f4f6f8}
+  #right{ position:absolute; top:0; right:0; width:300px; height:100%; background-color:#fdfdfd}
+</style> 
