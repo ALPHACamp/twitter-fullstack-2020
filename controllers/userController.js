@@ -9,14 +9,34 @@ const userController = {
   },
 
   register: (req, res) => {
-    User.create({
-      email: req.body.email,
-      name: req.body.name,
-      account: req.body.account,
-      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-    }).then(() => {
-      return res.redirect('/login')
-    })
+    if (req.body.passwordCheck !== req.body.password) {
+      req.flash('error_messages', '兩次密碼輸入不同，請重新填寫')
+      return res.redirect('/register')
+    } else {
+      User.findOne({ where: { email: req.body.email } }).then(user => {
+        if (user) {
+          req.flash('error_messages', 'email重複!')
+          return res.redirect('/register')
+        } else {
+          User.findOne({ where: { account: req.body.account } }).then(user => {
+            if (user) {
+              req.flash('error_messages', '帳號重複!')
+              return res.redirect('/register')
+            } else {
+              User.create({
+                email: req.body.email,
+                name: req.body.name,
+                account: req.body.account,
+                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+              }).then(() => {
+                return res.redirect('/login')
+              })
+
+            }
+          })
+        }
+      })
+    }
   },
 
   loginPage: (req, res) => {
