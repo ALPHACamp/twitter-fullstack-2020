@@ -1,0 +1,50 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link " href="/main">首頁</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/profile">個人資料</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/setting">設定</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/reply_list">貼文</a>
+  </li>
+</ul>
+<br />
+
+
+
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mt-3">帳號設定</h1>
+      <form action="/regist" method="POST">
+        <div class="form-group">
+          <label for="account">Account</label>
+          <input type="text" id="account" name="account" class="form-control" placeholder="Enter Account">
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+            placeholder="Confirm Password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">submit</button>
+      </form>
+      <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
+    </div>
+  </div>
+</div>
