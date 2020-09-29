@@ -11,9 +11,16 @@
 </head>
 
 <body>
+
   <main role="main">
     <div class="album py-5 bg-light">
       <div class="container">
+
+        {{#if user}}
+
+        <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
+
+        {{/if}}
 
         {{#if success_messages}}
         <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
