@@ -25,8 +25,8 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
 
 // setup passport
-app.use(passport.initialize())
-app.use(passport.session())
+
+
 
 // 把 req.flash 放到 res.locals 裡面
 app.use((req, res, next) => {
