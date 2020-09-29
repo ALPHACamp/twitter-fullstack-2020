@@ -14,9 +14,9 @@ const port = 3000
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 // 設定 view engine 使用 handlebars
-app.engine('handlebars', handlebars({ 
-    defaultLayout: 'main',
-  })) 
+app.engine('handlebars', handlebars({
+  defaultLayout: 'main',
+}))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -25,15 +25,15 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
 
 // setup passport
-
-
+app.use(passport.initialize())
+app.use(passport.session())
 
 // 把 req.flash 放到 res.locals 裡面
 app.use((req, res, next) => {
-    res.locals.success_messages = req.flash('success_messages')
-    res.locals.error_messages = req.flash('error_messages')
-    res.locals.user = helpers.getUser(req)
-    next()
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = helpers.getUser(req)
+  next()
 })
 
 //method
