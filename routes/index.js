@@ -13,7 +13,7 @@ module.exports = app => {
 
   // 註冊頁
   app.get('/register', userController.registerPage)
-
+  app.post('/register', userController.register)
   // 前台登入頁
   app.get('/login', userController.loginPage)
   // 後台登入頁
