@@ -1,6 +1,13 @@
 'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 41c4e2da5f64bf7fd8ee1c34469a1bfbfd8d110f
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     name: DataTypes.STRING,
@@ -31,9 +38,25 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Followings'
     })
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 41c4e2da5f64bf7fd8ee1c34469a1bfbfd8d110f
   };
+  User.init({
+    account: DataTypes.STRING,
+    name: DataTypes.STRING,
+    email: DataTypes.STRING,
+    password: DataTypes.STRING,
+    avatar: DataTypes.STRING,
+    cover: DataTypes.STRING,
+    introduction: DataTypes.TEXT,
+    role: DataTypes.BOOLEAN,
+  }, {
+    sequelize,
+    modelName: 'User',
+  });
   return User;
 };

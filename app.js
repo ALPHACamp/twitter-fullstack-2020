@@ -2,10 +2,14 @@ const express = require('express')
 const helpers = require('./_helpers');
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-const db = require('./models')
+
 const app = express()
+<<<<<<< HEAD
 const port = 3000
 const passport = require('./config/passport')
+=======
+const port = process.env.PORT || 3000
+>>>>>>> 41c4e2da5f64bf7fd8ee1c34469a1bfbfd8d110f
 
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -36,12 +40,21 @@ app.use((req, res, next) => {
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+app.engine('handlebars', handlebars({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
+app.set('view engine', 'handlebars')
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+
 
 
 
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+<<<<<<< HEAD
 require('./routes')(app, passport) // passport 傳入 routes
+=======
 
-module.exports = app
+require('./routes')(app)
+>>>>>>> 41c4e2da5f64bf7fd8ee1c34469a1bfbfd8d110f
+
