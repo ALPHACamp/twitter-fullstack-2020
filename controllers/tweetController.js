@@ -15,7 +15,7 @@ const tweetController = {
         const data = tweets.map(t => ({
           ...t.dataValues, 
           description: t.dataValues.description, 
-          isLiked: req.user.LikedUsers.map(d => d.id).includes(t.id)
+          isLiked: helpers.getUser(req).LikedUsers.map(d => d.id).includes(t.id)
         }))
         return res.render('tweets', {tweets: data})
       })
@@ -27,13 +27,32 @@ const tweetController = {
       include:[
         {model: Reply, include:[User]}, 
         {model: User, as: 'LikedUsers'}
-      ]
+      ],
+      order: [['createdAt', 'DESC']]
     }).then(tweet => {
-      const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
-      return res.render('tweet', 
-      tweet: tweet.toJSON(), 
-      isLiked:isLiked )
+      const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+      return res.render('tweet', {
+        tweet: tweet.toJSON(), 
+        isLiked:isLiked 
+      })
     })
+  },
+
+  postTweet: (req,res) => {
+    if (!req.body.description){
+      // req.flash('error_message', '留言不得為空')
+      return res.redirect('back')
+    }
+    if (req.body.description.length > 140) {
+      return res.redirect('/')
+    }
+    return Tweet.create({
+      UserId: helpers.getUser(req).id,
+      description: req.body.description
+    }).then(tweet => {
+      return res.redirect('/')
+    })
+
   }
 
   
