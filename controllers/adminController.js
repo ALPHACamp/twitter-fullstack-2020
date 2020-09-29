@@ -4,7 +4,14 @@ const User = db.User
 
 const adminController = {
   getTweets: (req, res) => {
-    return res.render('admin/tweets')
+    return Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: User
+    })
+      .then(tweets => {
+        return res.render('admin/tweets', { tweets })
+      })
   }
 }
 
