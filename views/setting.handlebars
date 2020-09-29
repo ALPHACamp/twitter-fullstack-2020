@@ -3,7 +3,7 @@
     <a class="nav-link " href="/main">首頁</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="/profile">個人資料</a>
+    <a class="nav-link" href="/user/self">個人資料</a>
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="/setting">設定</a>
@@ -20,27 +20,30 @@
   <div class="col-md-6 m-auto">
     <div class="card card-body">
       <h1 class="text-center mt-3">帳號設定</h1>
-      <form action="/regist" method="POST">
+      <form action="/setting?_method=PUT" method="POST">
         <div class="form-group">
           <label for="account">Account</label>
-          <input type="text" id="account" name="account" class="form-control" placeholder="Enter Account">
+          <input type="text" id="account" name="account" class="form-control" placeholder="Enter Account"
+            value="{{user.account}}">
         </div>
         <div class="form-group">
           <label for="name">Name</label>
-          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name">
+          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" value="{{user.name}}">
         </div>
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email">
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+            value="{{user.email}}">
         </div>
         <div class="form-group">
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
+            value="{{user.password}}">
         </div>
         <div class="form-group">
-          <label for="confirmPassword">Confirm Password</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
-            placeholder="Confirm Password">
+          <label for="passwordCheck">passwordCheck</label>
+          <input type="password" id="passwordCheck" name="passwordCheck" class="form-control"
+            placeholder="Password Check">
         </div>
         <button type="submit" class="btn btn-primary btn-block">submit</button>
       </form>

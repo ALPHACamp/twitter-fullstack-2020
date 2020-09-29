@@ -1,13 +1,13 @@
 <div class="row">
-  <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+  <form action="/user/self?_method=PUT" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="name">Name</label>
       <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
     </div>
 
     <div class="form-group">
-      <label for="image">封面圖片</label>
-      <input type="file" class="form-control-file" id="image" name="image">
+      <label for="background">封面圖片</label>
+      <input type="file" class="form-control-file" id="background" name="background">
     </div>
     <div class="form-group">
       <label for="image">大頭貼</label>
@@ -15,8 +15,9 @@
     </div>
 
     <div class="mb-3">
-      <label for="validationTextarea">profile</label>
-      <textarea class="form-control is-invalid" id="validationTextarea" placeholder="Enter profile" required></textarea>
+      <label for="profile">profile</label>
+      <textarea class="form-control is-invalid" id="profile" name="profile" placeholder="Enter profile"
+        value="{{user.profile}}" required></textarea>
       <div class="invalid-feedback">
         Please enter a message
       </div>
