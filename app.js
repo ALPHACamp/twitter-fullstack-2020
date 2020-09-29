@@ -7,6 +7,7 @@ const app = express()
 const port = 3000
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const passport = require('./config/passport')
 
 app.use(express.static('public'))
 
@@ -23,7 +24,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
-
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
 
@@ -40,4 +42,4 @@ app.listen(port, () => {
   console.log(`Express is listening on http://localhost:${port}`)
 })
 
-require('./routes')(app)
+require('./routes')(app, passport)
