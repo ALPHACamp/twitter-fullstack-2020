@@ -1,19 +1,21 @@
-<form class="form-signin" action="/signin" method="POST" style="width: 100%;">
-  <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mt-3">Login</h1>
+      <form action="/signin" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      <p class="lead mt-4">
+        No Account? <a href="/signup">Register</a>
+      </p>
+    </div>
   </div>
-  <div class="form-label-group">
-    <label for="inputAccount">Account</label>
-    <input type="text" name="account" class="form-control" placeholder="account" required autofocus>
-  </div>
-  <div class="form-label-group">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
-  </div>
-  <br/>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-  <div class="text-center mb-4">
-    <p><a href="/signup">Sign Up</a></p>
-  </div>
-  <p class="mt-5 mb-3 text-muted text-center">© 2019</p>
-</form>
+<h2>hhhwww</h2>
