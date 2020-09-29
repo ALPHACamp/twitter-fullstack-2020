@@ -12,6 +12,6 @@ app.get('/tweets', tweetsController.getTweets)
 // 連到 /admin 頁面就轉到 /admin/restaurants
 app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
 // 在 /admin/restaurants 底下則交給 adminController.getRestaurants 處理
-app.get('/admin/tweets', adminController.gettweets)
+app.get('/admin/tweets', adminController.getTweets)
 
 }
