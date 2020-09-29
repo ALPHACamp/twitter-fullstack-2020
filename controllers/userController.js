@@ -20,6 +20,7 @@ const userController = {
         if (!user) {
           return User.create({
             name: req.body.name,
+            account: req.body.account,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))  //salt = bcrypt.genSaltSync(10)
           }).then(user => {
