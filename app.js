@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const db = require('./models')
 const app = express()
 const port = 3000
+const passport = require('./config/passport')
 
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -16,6 +17,10 @@ app.set('view engine', 'handlebars')
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
+
+//pssport初始化與啟動session
+app.use(passport.initialize())
+app.use(passport.session())
 
 // 把 req.locals
 app.use((req, res, next) => {
@@ -32,6 +37,6 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes')(app)
+require('./routes')(app, passport) // passport 傳入 routes
 
 module.exports = app
