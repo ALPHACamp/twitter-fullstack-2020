@@ -1,7 +1,7 @@
-const db = require('../models') 
+const db = require('../models')
 const Tweet = db.Tweet
 
-let tweetController = {
+const tweetController = {
     //main
     getTweets: (req, res) => {
         return res.render('tweets')
