@@ -30,7 +30,7 @@ module.exports = {
       name: 'user2',
       account: '@user2',
       avatar: 'https://pickaface.net/gallery/avatar/20160625_050020_889_FAKE.png',
-      cover: 'https://latavolalinen.com/wp-content/uploads/2015/08/mountains-rocks-colorado-british-columbia-alps-high-definition-wallpaper.jpg',
+      cover: 'https://mcdn.wallpapersafari.com/medium/7/92/bmNBFo.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
