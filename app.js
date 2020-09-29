@@ -22,6 +22,10 @@ app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 
+//使用public 資料夾
+app.use(express.static('public'))
+
+
 // 把 req.locals
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')

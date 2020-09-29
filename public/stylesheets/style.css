@@ -1,0 +1,25 @@
+.sign-button {
+
+background: #FF6600;
+/* border-radius: 50px; */
+}
+
+.text {
+  /* 註冊 */
+position: absolute;
+width: 36px;
+height: 26px;
+left: 702px;
+top: 565px;
+
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 26px;
+/* identical to box height */
+
+text-align: center;
+
+color: #FFFFFF;
+}
