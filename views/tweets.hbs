@@ -1,3 +1,372 @@
 <div class="container-fluid">
+  <div class="left-content">
+    <div class="navbar-content">
+      <div class="nav-top">
+        <div class="icons">
+          <i class="icon icon-ac-mark"></i>
+        </div>
+      </div>
+      <div class="nav-item">
+        <div class="icons">
+          <i class="icon-home"></i>
+        </div>
+        <a href="#">
+          首頁
+        </a>
+      </div>
+      <div class="nav-item">
+        <div class="icons">
+          <i class="icon-people"></i>
+        </div>
+        <a href="#">
+          個人資料
+        </a>
+      </div>
+      <div class="nav-item">
+        <div class="icons">
+          <i class="icon-gear"></i>
+        </div>
+        <a href="#">
+          設定
+        </a>
+      </div>
 
-</div>
+      <button type="button" class="btn-tweet" data-toggle="modal" data-target="#tweetModal">
+        推文
+      </button>
+    </div>
+
+    <div class="navbar-footer">
+      <a href="#">
+        <svg width="18" height="18" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M9 13L5 9M5 9L9 5M5 9H19M14 13V14C14 14.7956 13.6839 15.5587 13.1213 16.1213C12.5587 16.6839 11.7956 17 11 17H4C3.20435 17 2.44129 16.6839 1.87868 16.1213C1.31607 15.5587 1 14.7956 1 14V4C1 3.20435 1.31607 2.44129 1.87868 1.87868C2.44129 1.31607 3.20435 1 4 1H11C11.7956 1 12.5587 1.31607 13.1213 1.87868C13.6839 2.44129 14 3.20435 14 4V5"
+            stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        登出
+      </a>
+    </div>
+  </div>
+  <div class="tweets-center">
+    <div class="tweets-title">
+      首頁
+    </div>
+    <div class="tweets-input">
+      <div class="main-left">
+        <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+      </div>
+      <div class="main-right">
+        <form action="">
+          <textarea class="form-control tweetText" id="message-text" placeholder="有什麼新鮮事？"></textarea>
+          <button type="submit" class="btn btn-tweet-2">推文</button>
+        </form>
+      </div>
+    </div>
+    <div class="tweets-list">
+      <div class="tweets-content">
+        <div class="left-item">
+          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+        </div>
+        <div class="right-item">
+          <div class="title">
+            <span class="name">
+              <a href="">
+                nono
+              </a>
+            </span>
+            <span class="time">
+              @nonolin·3小時前
+            </span>
+          </div>
+          <div class="body">
+            Needless to say, I keep her in check
+            She was a bad bad, nevertheless (yeah)
+            Callin' it quits now, baby, I'm a wreck (ayy)
+            Crash at my place, baby, you're a wreck (ayy)
+          </div>
+          <div class="footer">
+            <div class="reply-item">
+              <button type="button" class="btn">
+                <i class="icon-reply"></i> 13
+              </button>
+            </div>
+            <div class="like-item">
+              <button type="button" class="btn">
+                <i class="icon-like"></i> 79
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!-- ---------------------------------------------------- --}}
+      <div class="tweets-content">
+        <div class="left-item">
+          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+        </div>
+        <div class="right-item">
+          <div class="title">
+            <span class="name">
+              <a href="">
+                nono
+              </a>
+            </span>
+            <span class="time">
+              @nonolin·3小時前
+            </span>
+          </div>
+          <div class="body">
+            Needless to say, I keep her in check
+            She was a bad bad, nevertheless (yeah)
+            Callin' it quits now, baby, I'm a wreck (ayy)
+            Crash at my place, baby, you're a wreck (ayy)
+          </div>
+          <div class="footer">
+            <div class="reply-item">
+              <button type="button" class="btn">
+                <i class="icon-reply"></i> 13
+              </button>
+            </div>
+            <div class="like-item">
+              <button type="button" class="btn">
+                <i class="icon-like"></i> 79
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tweets-content">
+        <div class="left-item">
+          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+        </div>
+        <div class="right-item">
+          <div class="title">
+            <span class="name">
+              <a href="">
+                nono
+              </a>
+            </span>
+            <span class="time">
+              @nonolin·3小時前
+            </span>
+          </div>
+          <div class="body">
+            Needless to say, I keep her in check
+            She was a bad bad, nevertheless (yeah)
+            Callin' it quits now, baby, I'm a wreck (ayy)
+            Crash at my place, baby, you're a wreck (ayy)
+          </div>
+          <div class="footer">
+            <div class="reply-item">
+              <button type="button" class="btn">
+                <i class="icon-reply"></i> 13
+              </button>
+            </div>
+            <div class="like-item">
+              <button type="button" class="btn">
+                <i class="icon-like"></i> 79
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{!-- -------------------------------------------------------- --}}
+    </div>
+  </div>
+  <div class="right-content">
+    <div class="card follow-content">
+      <div class="card-header follow-title">
+        跟隨誰
+      </div>
+      <div class="top-follow-list">
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              nono
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-follow">正在追蹤</button>
+          </form>
+        </div>
+
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              nono
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+
+        {{!-- ----------------------------------------- --}}
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              nono
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              nono
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              efghntyhjk,
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              sdfghjkl;
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              dfghjklfgh
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              ndsfghjgfdsfdffgh
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              sdfghjhhdfdgffgghj
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+        <div class="list-item follow-body">
+          <a href="#" class="follow-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+          <div class="list-item-name">
+            <a href="">
+              nsdfghjkkhfdfghjkjhg
+            </a>
+            <div class="list-item-account">
+              @nonolin
+            </div>
+          </div>
+          <form action="">
+            <button class="btn-unfollow">追蹤</button>
+          </form>
+        </div>
+
+        {{!-- ----------------------------------------- --}}
+
+
+      </div>
+      <div class="card-footer text-muted follow-footer">
+        顯示更多
+      </div>
+    </div>
+    <div class="modal fade" id="tweetModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Understood</button>
+          </div>
+        </div>
+      </div>
+    </div>
