@@ -12,7 +12,6 @@ app.use(express.static('public'));
 app.use('/', (req, res) => {
   res.render('admin/users')
 })
-
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
