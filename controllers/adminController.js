@@ -12,7 +12,19 @@ const adminController = {
       .then(tweets => {
         return res.render('admin/tweets', { tweets })
       })
-  }
+  },
+
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id)
+      .then(tweet => {
+        tweet.destroy()
+          .then(tweet => {
+            return res.redirect('back')
+          })
+      })
+  },
+
+
 }
 
 module.exports = adminController
