@@ -24,7 +24,6 @@ module.exports = (app, passport) => {
   //user login
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
-<<<<<<< HEAD
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', {
     failureRedirect: '/signin',
@@ -33,8 +32,4 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
   app.get('/main', (req, res) => res.render('mainpage'))
 
-=======
-  app.get('/signin', userController.signIn)
-  
->>>>>>> 41c4e2da5f64bf7fd8ee1c34469a1bfbfd8d110f
 }
