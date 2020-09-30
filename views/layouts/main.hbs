@@ -31,29 +31,29 @@
           </div>
         </div>
         <div class="row">
-          {{!-- {{#if user.isAdmin}} --}}
+          {{#if user.isAdmin}}
           <div class="col">
-            <a href="#" class="btn" style="color: black;">
-              <h6><i class="fa fa-home fa-lg m-3"></i>首頁</h6>
-            </a><br>
-            <a href="#" class="btn" style="color: black;">
-              <h6><i class="fa fa-user fa-lg m-3"></i>個人資料</h6>
-            </a><br>
-            <a href="#" class="btn" style="color: black;">
-              <h6><i class="fa fa-cog fa-lg m-3"></i>設定</h6>
-            </a><br>
-            <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: 180px" >推文</a>
-          </div>
-          {{!-- {{else}}
-          <div class="col">
-            <a href="#" class="btn" style="color: black;">
+            <a href="/admin/users" class="btn" style="color: black;">
               <h6><i class="fa fa-home fa-lg m-3"></i>推文清單</h6>
             </a><br>
-            <a href="#" class="btn" style="color: black;">
+            <a href="/admin/tweets" class="btn" style="color: black;">
               <h6><i class="fa fa-user fa-lg m-3"></i>使用者列表</h6>
             </a><br>
           </div>
-          {{/if}} --}}
+          {{else}}
+          <div class="col">
+            <a href="/" class="btn" style="color: black;">
+              <h6><i class="fa fa-home fa-lg m-3"></i>首頁</h6>
+            </a><br>
+            <a href="/users/{{user.id}}" class="btn" style="color: black;">
+              <h6><i class="fa fa-user fa-lg m-3"></i>個人資料</h6>
+            </a><br>
+            <a href="/users/settings" class="btn" style="color: black;">
+              <h6><i class="fa fa-cog fa-lg m-3"></i>設定</h6>
+            </a><br>
+            <a href="#" class="btn rounded-pill" style="background:rgb(255, 102, 0); color:white; width: 180px">推文</a>
+          </div>
+          {{/if}}
         </div>
       </div>
       {{!-- Center/Right side --}}
@@ -65,7 +65,7 @@
   <div class="container fixed-bottom">
     <div class="row">
       <div class="col">
-        <a href="#" class="btn" style="color: black;">
+        <a href="/users/logout" class="btn" style="color: black;">
           <h6><i class="fas fa-sign-out-alt fa-lg m-3"></i>登出</h6>
         </a>
       </div>
