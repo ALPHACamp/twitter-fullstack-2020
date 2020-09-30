@@ -4,7 +4,7 @@ const User = db.User
 
 const userController = {
   registerPage: (req, res) => {
-    return res.render('register')
+    return res.render('register', { layout: 'mainLogin' })
   },
   register: (req, res) => {
     if (req.body.confirmPassword !== req.body.password) {
@@ -39,7 +39,7 @@ const userController = {
     }
   },
   loginPage: (req, res) => {
-    return res.render('login')
+    return res.render('login', { layout: 'mainLogin' })
   },
   login: (req, res) => {
     req.flash('success_messages', '成功登入！')
