@@ -2,8 +2,24 @@ const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 
 module.exports = (app, passport) => {
- app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
- app.get('/admin/tweets', adminController.getTweets)
+
+    const authenticated = (req, res, next) => {
+        if (req.isAuthenticated()) {  
+          return next()
+        }
+        res.redirect('/signin')
+      }
+    
+      const authenticatedAdmin = (req, res, next) => {
+        if (req.isAuthenticated()) {
+          if (req.user.isAmin) { return next() }  
+          return res.redirect('/') 
+        }
+        res.redirect('/signin')
+      }
+
+ app.get('/admin', (req, res) => res.redirect('/admin/main'))
+ app.get('/admin/main', adminController.getTweets)
 
  app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

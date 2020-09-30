@@ -3,7 +3,7 @@ const helpers = require('./_helpers');
 const handlebars = require('express-handlebars')
 const db = require('./models')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 const passport = require('./config/passport')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
@@ -16,6 +16,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(methodOverride('_method'))
+app.use(bodyParser.json())
 
 
 app.use((req, res, next) => {
@@ -26,7 +27,7 @@ app.use((req, res, next) => {
   })
 
 
-app.engine('handlebars', handlebars({defaultLayout: 'main'})) 
+app.engine('handlebars', handlebars({defaultLayout: 'main', helpers: require('./config/handlebars-helpers')})) 
 app.set('view engine', 'handlebars') 
 
 // use helpers.getUser(req) to replace req.user
