@@ -11,7 +11,7 @@ module.exports = app => {
   app.get('/', (req, res) => res.redirect('/tweets'))
   app.get('/tweets', tweetController.getTweets)
   app.get('/tweets/:id', tweetController.getTweet)
-
-
+  app.post('/like/:tweetId', tweetController.addLike)
+  app.delete('/like/:tweetId', tweetController.removeLike)
 
 }

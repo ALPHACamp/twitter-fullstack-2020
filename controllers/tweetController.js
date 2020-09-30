@@ -36,6 +36,7 @@ const tweetController = {
         isLiked:isLiked 
       })
     })
+    .catch(error => console.log(error))
   },
 
   postTweet: (req,res) => {
@@ -44,6 +45,7 @@ const tweetController = {
       return res.redirect('back')
     }
     if (req.body.description.length > 140) {
+      // req.flash('error_message', '貼文不得超過140個字')
       return res.redirect('/')
     }
     return Tweet.create({
@@ -52,8 +54,20 @@ const tweetController = {
     }).then(tweet => {
       return res.redirect('/')
     })
+    .catch(error => console.log(error))
+  },
 
-  }
+  addLike: (req, res) => {
+    return Like.create({
+      UserId:helpers.getUser(req).id, 
+      TweetId: req.params.tweetId
+    }).then((tweet) => {
+      return res.redirect('back') 
+    })
+  },
+  
+
+
 
   
 
