@@ -20,31 +20,26 @@
 	<div class="col-md-7 column">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">
-					    <div class="col-md-8">
-      						<div class="card-body">
-        						<h5 class="card-title">{{user.name}}</h5>
-        						<p class="card-text">
-          						{{user.account}}
-        						</p>
-      						</div>
-    					</div>
-				</h3>
+				<div class="panel-title">
+					<h3 class="card-title"><strong>{{user.name}}</strong></h3>
+					<h5 class="card-title">@{{user.account}}</h5>
+				</div>
 			</div>
 			<div class="panel-body">
-				{{#each Tweets}}
-				<div class="col-md-8">
-      				<div class="card-body">
-        				<h5 class="card-title">{{this.User.name}}</h5>
-						<h5>{{date this.createdAt}}</h5>
-        				<p class="card-text">
-          				{{this.desciption}}
-        				</p>
-      				</div>
-    			</div>
-				{{/each}}
+				<p>{{user.introduction}}</p>
 			</div>
 		</div>
+		{{#each tweets}}
+			<div class="col-md-8">
+      			<div class="card-body">
+        			<h4 class="card-title">{{this.User.name}}</h4>
+					<h5>{{this.createdAt}}</h5>
+        			<p class="card-text">
+          			{{this.description}}
+        			</p>
+      			</div>
+    		</div>
+		{{/each}}
 	</div>
 </div>
 <div id="right">

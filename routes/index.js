@@ -26,5 +26,5 @@ module.exports = app => {
   app.get('/logout', userController.logout)
 
   //=====================user====================================
-  app.get('/users/:id/tweets', userController.getUserTweets)
+  app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 }
