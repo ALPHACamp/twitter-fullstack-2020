@@ -13,6 +13,9 @@ const adminControllers = {
     req.flash('success_messages', '成功登出！')
     req.logout()
     return res.redirect('/admin/login')
+  },
+  adminTweets: (req, res) => {
+    return res.render('admin/tweets')
   }
 }
 
