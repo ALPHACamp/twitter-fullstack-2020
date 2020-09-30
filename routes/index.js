@@ -1,6 +1,6 @@
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
-const twitController = require('../controllers/twitController.js')
+
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
@@ -17,7 +17,7 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
-
+  app.get('/main', (req, res) => res.render('mainpage'))
   app.get('/admin', (req, res) => res.redirect('/admin/main'))
   app.get('/admin/main', adminController.getTweets)
 
@@ -30,9 +30,7 @@ module.exports = (app, passport) => {
   }), userController.signIn)
   app.get('/logout', userController.logout)
 
-  // 首頁
 
-  app.get('/main', twitController.getmainPage)
 
 
   // setting使用者能編輯自己的 account、name、email 和 password
