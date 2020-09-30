@@ -41,7 +41,7 @@ module.exports = (app, passport) => {
 
   app.get('/admin/signin', adminController.signinPage)
   app.post('/admin/signin', passport.authenticate('local', {
-    failureRedirect: '/signin',
+    failureRedirect: '/admin/signin',
     failureFlash: true
   }), adminController.signIn)
 }
