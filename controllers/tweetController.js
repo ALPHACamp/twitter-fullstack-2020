@@ -7,14 +7,14 @@ const tweetController = {
     //main
     getTweets: async (req, res) => {
         Tweet.findAll({
-            order: [['createdAt', 'DESC']], 
-            include: [User] 
+            order: [['createdAt', 'DESC']],
+            include: [User]
 
         }).then(tweets => {
             const data = tweets.map(t => ({
-              ...t.dataValues,
-              description: t.dataValues.description.substring(0, 100),
-              userName: t.User.name
+                ...t.dataValues,
+                description: t.dataValues.description.substring(0, 100),
+                userName: t.User.name
             }))
             return res.render('tweets', {
                 tweets: data
@@ -27,25 +27,25 @@ const tweetController = {
         if (tweetsDesc == " ") {
             req.flash('error_messages', '不可空白')
             return res.redirect("/tweets")
-        }else{
-            if (tweetsDesc.length > 140){
+        } else {
+            if (tweetsDesc.length > 140) {
                 req.flash('error_messages', '不可超過140字')
                 return res.redirect("/tweets")
-            }else{
+            } else {
                 return Tweet.create({
                     description: tweetsDesc,
                     UserId: helpers.getUser(req).id
                 }).then((tweet) => {
                     req.flash('success_messages', '新增一則tweet')
-                    return  res.redirect("/tweets")
+                    return res.redirect("/tweets")
                 })
             }
         }
     },
     //查看單一推文reply
-    getReplylist:(req, res) => {
+    getReplylist: (req, res) => {
         return Tweet.findByPk(req.params.id, {
-            include:  User
+            include: User
         }).then(tweet => {
             return res.render('replylist', {
                 tweet: tweet.toJSON()

@@ -1,0 +1,52 @@
+<div class="d-flex flex-column align-items-center" style="background-color: white;">
+  <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" alt=""
+    class="rounded-circle" style="width: 60px;">
+  <h1 class="mt-5">建立你的帳號</h1>
+  <form class="form-signin mt-4" action="/register" method="POST" style="width: 30%;">
+
+
+    <div class="form-group"
+      style="background:#f6f8fa; color:#647787;border-color:#647787;border-style:none none solid none;border-width:2px">
+      <label for="account" class="pl-2" style="border-style: none;padding-bottom:0px;margin-bottom:0px">帳號</label>
+      <input type="text" id="account" name="account" class="pl-2" value="{{ account }}"
+        style="border-style:none;width:100%;background:#f6f8fa;outline:none;border-bottom:2px;font-size:15px; color:black">
+    </div>
+
+    <div class="form-group"
+      style="background:#f6f8fa; color:#647787;border-color:#647787;border-style:none none solid none;border-width:2px">
+      <label for="name" class="pl-2" style="border-style: none;padding-bottom:0px;margin-bottom:0px">名稱</label>
+      <input type="text" id="name" name="name" class="pl-2" value="{{ name }}"
+        style="border-style:none;width:100%;background:#f6f8fa;outline:none;border-bottom:2px;font-size:15px; color:black">
+    </div>
+
+    <div class="form-group"
+      style="background:#f6f8fa; color:#647787;border-color:#647787;border-style:none none solid none;border-width:2px">
+      <label for="email" class="pl-2" style="border-style: none;padding-bottom:0px;margin-bottom:0px">Email</label>
+      <input type="text" id="email" name="email" class="pl-2" value="{{ email }}"
+        style="border-style:none;width:100%;background:#f6f8fa;outline:none;border-bottom:2px;font-size:15px; color:black">
+    </div>
+
+    <div class="form-group"
+      style="background:#f6f8fa; color:#647787;border-color:#647787;border-style:none none solid none;border-width:2px">
+      <label for="password" class="pl-2" style="border-style: none;padding-bottom:0px;margin-bottom:0px">密碼</label>
+      <input type="password" id="password" name="password" class="pl-2" value="{{ password }}"
+        style="border-style:none;width:100%;background:#f6f8fa;outline:none;border-bottom:2px;font-size:15px; color:black">
+    </div>
+
+    <div class="form-group"
+      style="background:#f6f8fa; color:#647787;border-color:#647787;border-style:none none solid none;border-width:2px">
+      <label for="passwordCheck" class="pl-2"
+        style="border-style: none;padding-bottom:0px;margin-bottom:0px">密碼確認</label>
+      <input type="password" id="passwordCheck" name="passwordCheck" class="pl-2" value="{{ passwordCheck }}"
+        style="border-style:none;width:100%;background:#f6f8fa;outline:none;border-bottom:2px;font-size:15px; color:black">
+    </div>
+
+    <br />
+    <button class="btn btn-lg btn-block" style="border-radius: 23px;background:#ff6601; color:white"
+      type="submit">註冊</button>
+    <div class="text-center mb-4">
+      <p class="mt-5" style="text-align: center;"><a href="/signin" style="font-size: 12px;font-weight:bold">取消</a>
+      </p>
+    </div>
+  </form>
+</div>
