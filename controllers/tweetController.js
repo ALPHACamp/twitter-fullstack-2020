@@ -64,8 +64,23 @@ const tweetController = {
     }).then((tweet) => {
       return res.redirect('back') 
     })
+    .catch(error => console.log(error))
   },
-  
+
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id, 
+        TweetId: req.params.tweetId
+      }
+    }).then((like) => {
+      like.destroy().then((tweet) => {
+        return res.redirect('back')
+      })
+    })
+    .catch(error => console.log(error))
+  }
+
 
 
 
