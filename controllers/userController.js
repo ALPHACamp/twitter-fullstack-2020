@@ -38,20 +38,20 @@ const userController = {
         { model: User, as: "Followings" }
       ]
     })
-    .then((User) => {
+    .then((user) => {
       user = {
-        ...User.dataValues,
-        LikeCount: User.Likes.length,
-        TweetCount: User.Tweets.length,
-        FollowerCount: User.Followers.length,
-        FollowingCount: User.Followings.length,
-        isFollowing: helpers.getUser(req).Followings.map(d => d.id).includes(User.id)
+        ...user.dataValues,
+        LikeCount: user.Likes.length,
+        TweetCount: user.Tweets.length,
+        FollowerCount: user.Followers.length,
+        FollowingCount: user.Followings.length,
+        isFollowing: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }
-      const tweets = User.Tweets.map((Tweet) => ({
-        ...Tweet.dataValues,
-        LikeCount: Tweet.dataValues.Likes.length,
-        ReplyCount: Tweet.dataValues.Replies.length,
-        isLiked: Tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
+      const tweets = user.Tweets.map((tweet) => ({
+        ...tweet.dataValues,
+        LikeCount: tweet.dataValues.Likes.length,
+        ReplyCount: tweet.dataValues.Replies.length,
+        isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
       }))
       res.render("userTweets", { user, tweets })
     })
