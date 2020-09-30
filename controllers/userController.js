@@ -32,7 +32,6 @@ const userController = {
     }
   },
 
-
   signInPage: (req, res) => {
     return res.render('signin')
   },
@@ -47,6 +46,25 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
+  getUser: (req, res) => {
+    User.findByPk(req.params.user, {
+      include: [
+        {model: User, as: 'Followings'},
+        {model: User, as: 'Followers'},
+        { model: Tweet, include: [Reply, { model: User, as: 'LikedUsers' },] },
+      ],
+      order:[['Tweet', 'createdAt', 'DESC']]
+    }).then(user => {
+      const userSelf = helper.getUser(req).id
+      const isFollowed = helper.getUser(req).Followings.map(d => d.id).includes(user.id)
+      return res.render('users',{
+        user: user.toJSON(),
+        isFollowed: isFollowed, 
+        userSelf: userSelf
+      })
+    })
+  }
 
 
 }

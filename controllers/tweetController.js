@@ -15,7 +15,7 @@ const tweetController = {
         const data = tweets.map(t => ({
           ...t.dataValues, 
           description: t.dataValues.description, 
-          isLiked: helpers.getUser(req).LikedUsers.map(d => d.id).includes(t.id)
+          isLiked: t.LikedUsers.map(d => d.id).includes(t.id)
         }))
         return res.render('tweets', {tweets: data})
       })
@@ -41,14 +41,12 @@ const tweetController = {
 
   postTweet: (req,res) => {
     if (!req.body.description){
-      // req.flash('error_message', '留言不得為空')
       return res.redirect('back')
     }
     if (req.body.description.length > 140) {
-      // req.flash('error_message', '貼文不得超過140個字')
       return res.redirect('/')
     }
-    return Tweet.create({
+    Tweet.create({
       UserId: helpers.getUser(req).id,
       description: req.body.description
     }).then(tweet => {
@@ -82,8 +80,7 @@ const tweetController = {
   },
 
   getReply: (req, res) => {
-    const id = req.params.id
-    return Tweet.findByPk(id, { include: [Reply] })
+    return Tweet.findByPk(req.params.id, { include: [Reply] })
       .then(tweet => {
         const replies = tweet.replies
         return res.render({ replies: replies})
