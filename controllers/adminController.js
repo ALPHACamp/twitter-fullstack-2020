@@ -1,6 +1,9 @@
+const helpers = require('../_helpers.js')
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Like = db.Like
+const Followship = db.Followship
 
 const adminController = {
   getTweets: (req, res) => {
@@ -24,7 +27,18 @@ const adminController = {
       })
   },
 
-
+  getUsers: (req, res) => {
+    return User.findAll({
+      include: [Tweet,
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, as: 'LikedTweets' },
+      ]
+    })
+      .then(user => {
+        return res.render('admin/users', { user })
+      })
+  }
 }
 
 module.exports = adminController

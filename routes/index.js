@@ -37,4 +37,6 @@ module.exports = (app, passport) => {
   app.get('/admin', (req, res) => { res.redirect('/admin/tweets') })
   app.get('/admin/tweets', adminController.getTweets)
   app.post('/admin/tweets/:id', adminController.deleteTweet)
+
+  app.get('/admin/users', adminController.getUsers)
 }
