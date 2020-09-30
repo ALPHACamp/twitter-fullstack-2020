@@ -45,8 +45,8 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res) => {
-    // const realUserId = req.user.id
-    User.findByPk(req.params.id)
+    const realUserId = req.user.id
+    User.findByPk(req.user.id)
       .then(user => {
         return res.render('user/self')
       })
@@ -59,10 +59,11 @@ const userController = {
       })
   },
   putUser: (req, res) => {
-    if (!req.body.name) {
-      req.flash('error_messages', "name didn't exist")
-      return res.redirect('back')
-    }
+    // if (!req.body.name) {
+    //   console.log(req.body.name)
+    //   req.flash('error_messages', "name didn't exist")
+    //   return res.redirect('back')
+    // }
     const { file } = req
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID)
@@ -76,7 +77,7 @@ const userController = {
               profile: req.body.profile
             }).then(user => {
               req.flash('success_messages', 'user was successfully update')
-              res.redirect('user/self')
+              res.redirect(`/user/self`)
             })
           })
       })
@@ -90,7 +91,7 @@ const userController = {
             profile: req.body.profile
           }).then(user => {
             req.flash('success_messages', 'user was successfully update')
-            res.redirect('user/self')
+            res.redirect(`/user/self`)
           })
         })
     }

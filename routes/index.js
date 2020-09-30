@@ -39,7 +39,7 @@ module.exports = (app, passport) => {
 
 
   // 使用者能編輯自己的自我介紹、個人頭像與封面
-  app.get('/user/self', userController.getUser)
+  app.get('/user/:id', userController.getUser)
   app.get('/user/self/edit', userController.editUser)
   app.put('/users/:id', userController.putUser)
 
