@@ -14,9 +14,10 @@ const port = 3000
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 // 設定 view engine 使用 handlebars
-app.engine('handlebars', handlebars({
-  defaultLayout: 'main',
-}))
+app.engine('handlebars', handlebars({ 
+    defaultLayout: 'main',
+    helpers: require('./config/handlebars-helpers')
+  })) 
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -41,6 +42,8 @@ app.use(methodOverride('_method'))
 
 //image
 app.use('/upload', express.static(__dirname + '/upload'))
+//CSS
+app.use(express.static('public'))
 
 // 跟資料庫同步
 //app.get('/', (req, res) => res.send('Hello World!'))
