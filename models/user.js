@@ -4,16 +4,14 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     name: DataTypes.STRING,
     avatar: DataTypes.STRING,
     introduction: DataTypes.TEXT,
-    role: DataTypes.STRING,
+    role: DataTypes.BOOLEAN,
     account: DataTypes.STRING,
-    cover: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN  //isAdmin 欄位
+    cover: DataTypes.STRING
   }, {});
   User.associate = function (models) {
     User.hasMany(models.Reply)
@@ -34,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followerId',
       as: 'Followings'
     })
-
   };
   User.init({
     account: DataTypes.STRING,

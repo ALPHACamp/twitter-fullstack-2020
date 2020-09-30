@@ -1,21 +1,29 @@
-
 <form class="form-signin" action="/signin" method="POST" style="width: 100%;">
   <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+    <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png" alt=""
+      style="width:100px; height:100px">
   </div>
-  <div class="form-label-group">
-    <label for="inputEmail">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
-  </div>
-  <div class="form-label-group">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
-  </div>
-  <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-  <div class="text-center mb-4">
-    <p><a href="/signup">Sign Up</a></p>
-  </div>
-  <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
-</form>
 
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">登入 Alphitter</h1>
+  </div>
+
+  <div class="mx-auto col-md-5">
+    <div class="form-label-group">
+      <label for="inputEmail">帳號</label>
+      <input type="text" name="account" class="form-control" placeholder="帳號" required autofocus>
+    </div>
+    <div class="form-label-group">
+      <label for="inputPassword">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" required>
+    </div>
+    <br />
+    <button class="btn btn-lg btn-block sign-button text-light" type="submit">登入</button>
+    </br>
+    <div class="text-center mb-4">
+      <p><a href="/signup">註冊Alphaitter</a> | <a href="/admin/signin">後台登入</a> </p>
+    </div>
+    <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
+
+  </div>
+</form>
