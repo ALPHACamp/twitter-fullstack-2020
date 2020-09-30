@@ -18,9 +18,11 @@ module.exports = app => {
   app.get('/admin/tweets', adminController.getTweets)
 
   app.get('/admin/signin', adminController.signInPage)
-  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedAdmin, adminController.signIn)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), authenticatedAdmin, adminController.signIn)
   app.get('/admin/logout', adminController.logout)
 
+  app.get('/register', userController.registerPage)
+  app.post('/register', userController.register)
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticated, userController.signIn)
   app.get('/logout', userController.logout)
