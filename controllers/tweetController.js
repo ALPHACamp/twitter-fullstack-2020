@@ -1,11 +1,12 @@
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Reply = db.Reply
 const helpers = require("../_helpers")
 
 const tweetController = {
     //main
-    getTweets: async (req, res) => {
+    getTweets:(req, res) => {
         Tweet.findAll({
             order: [['createdAt', 'DESC']],
             include: [User]
@@ -41,16 +42,6 @@ const tweetController = {
                 })
             }
         }
-    },
-    //查看單一推文reply
-    getReplylist: (req, res) => {
-        return Tweet.findByPk(req.params.id, {
-            include: User
-        }).then(tweet => {
-            return res.render('replylist', {
-                tweet: tweet.toJSON()
-            })
-        })
     }
 }
 

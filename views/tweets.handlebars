@@ -6,7 +6,7 @@
 					<a class="nav-link active" href="/tweets">首頁</a>
 				</li>
 				<li>
-					<a class="nav-link" href="/">個人資料</a>
+					<a class="nav-link" href="/users/{{user.id}}/tweets">個人資料</a>
 				</li>
 				<li>
 					<a class="nav-link" href="/">設定</a>
@@ -22,20 +22,20 @@
 <div id="main">
 	<form action="/tweets" method="POST">
 		<div class="form-group">
-			<img src="" class="card-img" alt="有什麼新鮮事?">
+			<img src="{{ tweets.User.avatar }}" class="img-circle" alt="有什麼新鮮事?" width="100" height="100">
 			<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"> </textarea>
 		</div>
 		<input type="hidden" name="restaurantId" value="{{tweet.description}}" />
 		<button type="submit" class="btn btn-warning btn-lg">推文</button>
 	</form>
-
+	{{tweets.User.avatar}}
 	<br>
 	<br>
   {{#each tweets}}
     <div class="card mb-3" style="max-width: 900px;">
       <div class="row no-gutters">
         <div class="col-md-4">
-          <img src="" class="card-img" alt="user avatar">
+          <img src="{{ this.User.avatar }}" class="img-circle" alt="user avatar" width="100" height="100">
         </div>
         <div class="col-md-8">
           <div class="card-body">

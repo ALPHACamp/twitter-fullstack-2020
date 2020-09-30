@@ -1,3 +1,21 @@
+<div id="left">
+	<div class="row" style="text-align: center;">
+		<ul>
+     		 <h1>
+				<li>
+					<a class="nav-link active" href="/tweets">首頁</a>
+				</li>
+				<li>
+					<a class="nav-link" href="/users/{{user.id}}/tweets">個人資料</a>
+				</li>
+				<li>
+					<a class="nav-link" href="/">設定</a>
+				</li>
+      		</h1>
+		</ul> 
+	</div>
+  <button type="submit" class="btn btn-warning btn-lg btn-block">推文</button>
+</div>
 <h1>推文</h1>
 <hr />
 <div class="main">
@@ -9,5 +27,39 @@
     </div>
   </div>
 </div>
+<hr>
+<br/>
+<br/>
+<h3>所有評論</h3>
+{{#each tweet.Replies}}
+  <blockquote class="blockquote mb-0">
+    <h4><a href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a></h4>
+    <p>{{this.comment}}</p>
+    <footer class="blockquote-footer">{{moment this.createdAt}}</footer>
+  </blockquote>
+  <hr />
+{{/each}}
+<form action="/replies" method="POST">
+  <div class="form-group">
+    <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+  </div>
+  <input type="hidden" name="tweetId" value="{{tweet.id}}" />
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
 <a href="javascript:history.back()">回上一頁</a>
+{{!-- 右邊 --}}
+<div id="right">
+	<div class="col-md-7 column">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					Panel title
+				</h3>
+			</div>
+			<div class="panel-body">
+				Panel content
+			</div>
+		</div>
+	</div>
+</div>
 
