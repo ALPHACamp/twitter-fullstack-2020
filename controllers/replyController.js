@@ -14,17 +14,5 @@ let replyController = {
         res.redirect(`/replylist/${req.body.tweetId}`)
       })
   },
-  getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [
-        Category,
-        { model: Comment, include: [User] }
-      ]
-    }).then(restaurant => {
-      return res.render('restaurant', {
-        restaurant: restaurant.toJSON(),
-      })
-    })
-  },
 }
 module.exports = replyController
