@@ -4,9 +4,9 @@ const db = require('../models')
 const User = db.User
 const passport = require('../config/passport')
 const helpers = require('../_helpers');
-const adminController = require('../contollers/adminController')
-const userController = require('../contollers/userController')
-const tweetController = require('../contollers/tweetController')
+const adminController = require('../controllers/adminController')
+const userController = require('../controllers/userController')
+const tweetController = require('../controllers/tweetController')
 
 const adminAuthenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req) && helpers.getUser(req).isAdmin)

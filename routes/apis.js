@@ -2,9 +2,9 @@ const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
 
-const adminController = require('../contollers/apis/adminController')
-const tweetController = require('../contollers/apis/tweetController')
-const userController = require('../contollers/apis/userController')
+const adminController = require('../controllers/apis/adminController')
+const tweetController = require('../controllers/apis/tweetController')
+const userController = require('../controllers/apis/userController')
 
 
 const authenticated = passport.authenticate('jwt', { session: false })
