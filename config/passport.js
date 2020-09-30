@@ -32,3 +32,5 @@ passport.deserializeUser((id, cb) => {
     return cb(null, user)
   })
 })
+
+module.exports = passport
