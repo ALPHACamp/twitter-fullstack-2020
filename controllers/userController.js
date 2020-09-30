@@ -32,20 +32,23 @@ const userController = {
       })
     }
   },
-  logInPage: (req, res) => {
-    return res.render('login')
-  },
 
-  logIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/main')
-  },
 
-  logout: (req, res) => {
-    req.flash('success_messages', '登出成功！')
-    req.logout()
-    res.redirect('/logIn')
-  },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   getUser: (req, res) => {
     // const realUserId = req.user.id
     User.findByPk(req.params.id)
