@@ -69,7 +69,7 @@ module.exports = {
     ], {});
 
     queryInterface.bulkInsert('Tweets',
-      Array.from({ length: 50 }).map((item, index) => ({
+      Array.from({ length: 10 }).map((item, index) => ({
         id: index + 1,
         UserId: Math.floor(Math.random() * 5) + 1,
         description: faker.lorem.text(),
@@ -77,10 +77,10 @@ module.exports = {
         updatedAt: new Date()
       })), {});
     return queryInterface.bulkInsert('Replies',
-      Array.from({ length: 50 }).map((item, index) => ({
+      Array.from({ length: 20 }).map((item, index) => ({
         id: index + 1,
         UserId: Math.floor(Math.random() * 5) + 1,
-        TweetId: Math.floor(Math.random() * 50) + 1,
+        TweetId: Math.floor(Math.random() * 10) + 1,
         comment: faker.lorem.text(),
         createdAt: new Date(),
         updatedAt: new Date()
