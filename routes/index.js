@@ -1,5 +1,6 @@
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
+const tweetController = require('../controllers/tweetController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -21,8 +22,8 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => { return res.render('index') })
   //admin pages
   app.get('/admin/tweets', authenticatedAdmin, adminController.adminTweets)
-
   //user login 
+  app.get('/', (req, res) => { return res.redirect('/tweets') })
   app.get('/users/login', userController.loginPage)
   app.post('/users/login', passport.authenticate('local', { failureRedirect: '/users/login', failureFlash: true }), userController.login)
   app.get('/users/register', userController.registerPage)
@@ -33,4 +34,6 @@ module.exports = (app, passport) => {
   app.get('/admin/login', adminController.adminLoginPage)
   app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.adminLogin)
   app.get('/admin/logout', adminController.adminLogout)
+
+  app.get('/tweets', tweetController.getTweets)
 }

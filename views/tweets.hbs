@@ -1,6 +1,22 @@
 {{!-- Center --}}
 <div class="col border-left border-right">
-  <h1>Hello Handlebars</h1>
+  <h4>首頁</h4>
+  <form>
+    <div>
+      <img src="" alt="">
+      <textarea class="form-control" id="tweet" name="tweet" rows="3">
+        有什麼新鮮事?
+      </textarea>
+      <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: 60px" >推文</a>
+    </div>
+  </form>
+  <div class="card">
+    {{#each tweets}}
+    <div class="card-body"> 
+      {{this.description}}
+    </div>
+    {{/each}}
+  </div>
 </div>
 {{!-- Right side --}}
 <div class="col-4">
