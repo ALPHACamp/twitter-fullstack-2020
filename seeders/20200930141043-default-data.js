@@ -10,6 +10,7 @@ module.exports = {
       account: 'user1',
       cover: faker.image.image,
       avatar: faker.image.avatar,
+      role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -18,25 +19,26 @@ module.exports = {
       email: 'user2@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       account: 'user2',
-      cover: faker.image.image,
+      introduction: faker.lorem.paragraph,
       avatar: faker.image.avatar,
+      role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
 
     queryInterface.bulkInsert('Tweets', [{
-      content: faker.lorem.paragraph,
+      description: faker.lorem.paragraph,
       UserId: '1'
     },{
-      content: faker.lorem.paragraph,
+      description: faker.lorem.paragraph,
       UserId: '2'
     }], {});
 
     queryInterface.bulkInsert('Replys', [{
-      content: faker.lorem.paragraph,
+      comment: faker.lorem.paragraph,
       UserId: '1'
     },{
-      content: faker.lorem.paragraph,
+      comment: faker.lorem.paragraph,
       UserId: '2'
     }], {});
 
