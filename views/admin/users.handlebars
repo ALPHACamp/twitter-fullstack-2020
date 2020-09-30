@@ -10,20 +10,19 @@
       {{#each user}}
       <div class="col col-lg-3 col-md-4 col-sm-6 mt-2">
         <div class="card" style="border-radius: 15px">
-          <img src="{{this.dataValues.avatar}}" alt="image" class="rounded-circle"
+          <img src="{{this.avatar}}" alt="image" class="rounded-circle"
             style="position: absolute; width: 50%; top:25%; left:25%;border: 5px solid white;">
-          <img class="card-img-top" src="{{this.dataValues.cover}}" alt="Card image cap"
-            style="border-radius: 15px 15px 0 0">
+          <img class="card-img-top" src="{{this.cover}}" alt="Card image cap" style="border-radius: 15px 15px 0 0">
           <div class="card-body" style="border-radius: 0 0 15px 15px; background-color: #F5F5F5;">
             <h5 class="card-title text-center mt-3 mb-0">{{this.name}}</h5>
-            <p class="card-text text-center ">{{this.dataValues.account}}</p>
+            <p class="card-text text-center ">{{this.account}}</p>
             <div class="row justify-content-center">
-              <i class="far fa-comment mr-2">&ensp;{{this.dataValues.Tweets.length}}</i>
-              <i class="far fa-heart ml-2">&ensp;{{this.dataValues.LikedTweets.length}}</i>
+              <i class="far fa-comment mr-2">&ensp;{{this.Tweets.length}}</i>
+              <i class="far fa-heart ml-2">&ensp;{{this.LikedTweets.length}}</i>
             </div>
             <div class="row justify-content-center mt-2">
-              <p class="mr-2">{{this.dataValues.Followings.length}}個跟隨中</p>
-              <p class="ml-2">{{this.dataValues.Followers.length}}位跟隨者</p>
+              <p class="mr-2">{{this.Followings.length}}個跟隨中</p>
+              <p class="ml-2">{{this.Followers.length}}位跟隨者</p>
             </div>
           </div>
         </div>
