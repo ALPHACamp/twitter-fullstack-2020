@@ -1,5 +1,5 @@
-
-const userController = require('../controllers/userController')
+const userController = require("../controllers/userController");
+const tweetController = require("../controllers/tweetController");
 const adminController = require('../controllers/adminController')
 
 module.exports = (app, passport) => {
@@ -11,6 +11,8 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
+
+  // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -33,15 +35,17 @@ module.exports = (app, passport) => {
 
 
   // adminController
+
+  app.get('/admin/signin', adminController.signinPage)
+  app.post('/admin/signin', passport.authenticate('local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+  }), adminController.signIn)
+
   app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/tweets') })
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   app.post('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
-  app.get('/admin/signin', adminController.signinPage)
-  app.post('/admin/signin', passport.authenticate('local', {
-    failureRedirect: '/signin',
-    failureFlash: true
-  }), adminController.signIn)
 }
