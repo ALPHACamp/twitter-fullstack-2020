@@ -1,7 +1,10 @@
 <div class="row mt-5">
   <div class="col-md-6 m-auto">
     <div class="card card-body">
-      <h1 class="text-center mt-3">Login</h1>
+      <div class="col mb-5 text-center">
+        <img style="width: 50px; height: 50px" src="https://i.imgur.com/yqet9K2.png" alt="AlphaCamp">
+        <h1 class="text-center mt-3">登入Alphitter</h1>
+      </div>
       <form action="/users/login" method="POST">
         <div class="form-group">
           <label for="email">Email</label>
@@ -11,11 +14,13 @@
           <label for="password">Password</label>
           <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-        <a href="/auth/facebook" class="btn btn-info btn-block">Facebook</a>
+        <button type="submit" class="btn btn-block"
+          style="border-radius: 18px; background: coral; color:white">登入</button>
+        {{!-- <a href="/auth/facebook" class="btn btn-info btn-block">Facebook</a> --}}
       </form>
-      <p class="lead mt-4">
-        No Account? <a href="/users/register">Register</a>
+      <p class="lead mt-4 text-right">
+        <a href="/users/register" style="font-size: 14px; font-weight: bold; "> <u>註冊Alphitter</u></a>
+        <a href="/admin/login" style="font-size: 14px; font-weight: bold"><u>後台登入</u></a>
       </p>
     </div>
   </div>
