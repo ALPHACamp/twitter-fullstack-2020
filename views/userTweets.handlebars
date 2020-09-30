@@ -16,31 +16,44 @@
 	</div>
   <button type="submit" class="btn btn-warning btn-lg btn-block">推文</button>
 </div>
+{{!-- 中間區域 --}}
 <div id="main">
-	<div class="col-md-7 column">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="panel-title">
-					<h3 class="card-title"><strong>{{user.name}}</strong></h3>
-					<h5 class="card-title">@{{user.account}}</h5>
+					<h3 class="card-title"><strong>{{profile.name}}</strong></h3>
+					<h5 class="card-title">@{{profile.account}}</h5>
+					<p>
+					{{#ifCond profile.id user.id }}
+            			<a href="/users/{{profile.id}}/edit"><button type="submit" class="btn btn-primary">edit</button></a>
+        			{{/ifCond}}
+					</p>
 				</div>
 			</div>
 			<div class="panel-body">
-				<p>{{user.introduction}}</p>
+				<p>{{profile.introduction}}</p>
 			</div>
 		</div>
 		{{#each tweets}}
-			<div class="col-md-8">
-      			<div class="card-body">
-        			<h4 class="card-title">{{this.User.name}}</h4>
-					<h5>{{this.createdAt}}</h5>
-        			<p class="card-text">
-          			{{this.description}}
-        			</p>
-      			</div>
-    		</div>
+		 <div class="card mb-3" style="max-width: 900px;">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+				  <img src="{{this.User.avatar}}" class="card-img" alt="user avatar">
+				</div>
+				<div class="col-md-8">
+      				<div class="card-body">
+        				<h5 class="card-title">
+						  <a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+						  <small class="text-muted">{{moment this.createdAt }}</small>
+						</h5>
+        				<p class="card-text">
+          				{{this.description}}
+        				</p>
+      				</div>
+    			</div>
+			</div>
+		</div>
 		{{/each}}
-	</div>
 </div>
 <div id="right">
 	<div class="col-md-7 column">

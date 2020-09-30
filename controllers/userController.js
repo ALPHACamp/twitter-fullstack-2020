@@ -53,9 +53,22 @@ const userController = {
         ReplyCount: tweet.dataValues.Replies.length,
         isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
       }))
-      res.render("userTweets", { user, tweets })
+      res.render("userTweets", { profile: user, tweets })
     })
   },
+  editUser: (req, res) => {
+    if(helpers.getUser(req).id == req.params.id) {
+      return User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('profileEdit', { user: user.toJSON()} )
+      })
+    } else {
+      return User.findByPk(req.params.id)
+      .then(user => {
+        return res.redirect(`/users/${user.id}/tweets`)
+      })
+    }
+  }
 }
 
 module.exports = userController
