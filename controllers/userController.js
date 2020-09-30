@@ -20,6 +20,7 @@ const userController = {
         if (!user) {
           return User.create({
             name: req.body.name,
+            account: req.body.account,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))  //salt = bcrypt.genSaltSync(10)
           }).then(user => {
@@ -31,9 +32,21 @@ const userController = {
     }
   },
 
-  signIn: (req, res) => {
+
+  signInPage: (req, res) => {
     return res.render('signin')
-  }
+  },
+
+  signIn: (req, res) => {
+    req.flash('success_messages', "成功登入！")
+    res.redirect('/main')
+  },
+
+  logout: (req, res) => {
+    req.flash('success_messages', '成功登出!')
+    req.logout()
+    res.redirect('/signin')
+  },
 
 
 }
