@@ -13,22 +13,13 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
-<<<<<<< HEAD
     "body-parser": "^1.19.0",
-=======
-    "body-parser": "^1.18.3",
->>>>>>> 89f2bd0fabf292d92b16fbf450fb4b9b937a3c13
     "chai": "^4.2.0",
     "connect-flash": "^0.1.1",
     "dotenv": "^8.2.0",
     "express": "^4.16.4",
-<<<<<<< HEAD
     "express-handlebars": "^5.1.0",
     "express-session": "^1.15.6",
-=======
-    "express-handlebars": "^3.0.0",
-    "express-session": "^1.17.1",
->>>>>>> 89f2bd0fabf292d92b16fbf450fb4b9b937a3c13
     "faker": "^4.1.0",
     "method-override": "^3.0.0",
     "mocha": "^6.0.2",
