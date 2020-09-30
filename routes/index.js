@@ -24,4 +24,7 @@ module.exports = app => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticated, userController.signIn)
   app.get('/logout', userController.logout)
+
+  //=====================user====================================
+  app.get('/users/:id/tweets', userController.getUserTweets)
 }
