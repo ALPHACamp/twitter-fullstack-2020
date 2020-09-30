@@ -6,7 +6,7 @@ module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
     if (req.isAuthenticated()) {  // isAuthenticated 為passport內建之方法,回傳true or false
-      if (req.user.role === "1") { return next() }
+      if (req.user.role === "1") { return next() }   //1 true 代表一般, 0代表admin
       return res.redirect('/')
     }
     res.redirect('/signin')
@@ -44,7 +44,7 @@ module.exports = (app, passport) => {
 
   app.get('/admin/signin', adminController.signinPage)
   app.post('/admin/signin', passport.authenticate('local', {
-    failureRedirect: '/signin',
+    failureRedirect: '/admin/signin',
     failureFlash: true
   }), adminController.signIn)
 }
