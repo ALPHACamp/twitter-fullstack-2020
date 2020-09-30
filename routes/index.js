@@ -19,7 +19,7 @@ module.exports = (app, passport) => {
     res.redirect('/users/login')
   }
 
-  app.get('/', authenticated, (req, res) => { return res.render('index') })
+  app.get('/tweets', authenticated, (req, res) => { return res.render('tweets') })
   //admin pages
   app.get('/admin/tweets', authenticatedAdmin, adminController.adminTweets)
   //user login 

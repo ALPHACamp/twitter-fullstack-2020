@@ -44,7 +44,7 @@ const userController = {
   },
   login: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    return res.redirect('/')
+    return res.redirect('/tweets')
   },
   logout: (req, res) => {
     req.flash('success_messages', '成功登出！')
