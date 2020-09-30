@@ -1,6 +1,6 @@
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
-const restController = require('../controllers/restController.js')
+const twitController = require('../controllers/twitController.js')
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
@@ -33,11 +33,11 @@ module.exports = (app, passport) => {
 
   // 首頁
 
-  app.get('/main', restController.getmainPage)
+  app.get('/main', twitController.getmainPage)
 
   // setting使用者能編輯自己的 account、name、email 和 password
-  app.get('/setting', restController.getSetting)
-  app.put('/setting', restController.putSetting)
+  app.get('/setting', twitController.getSetting)
+  app.put('/setting', twitController.putSetting)
 
 
   // 使用者能編輯自己的自我介紹、個人頭像與封面

@@ -26,7 +26,7 @@ const userController = {
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
           }).then(user => {
             req.flash('success_messages', 'registered successfully')
-            return res.redirect('/login')
+            return res.redirect('/signin')
           })
         }
       })

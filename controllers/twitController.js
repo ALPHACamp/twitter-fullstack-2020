@@ -1,4 +1,4 @@
-const restController = {
+const twitController = {
   getSetting: (req, res) => {
     return res.render('setting')
   },
@@ -10,4 +10,4 @@ const restController = {
     return res.render('mainpage')
   }
 }
-module.exports = restController
+module.exports = twitController
