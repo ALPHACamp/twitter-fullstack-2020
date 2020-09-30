@@ -2,14 +2,10 @@ const express = require('express')
 const helpers = require('./_helpers');
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-const db = require('./models')
-const app = express()
-<<<<<<< HEAD
 const port = process.env.PORT || 3000
+const app = express()
+const db = require('./models')
 
-=======
-const port = 3000
->>>>>>> f95187df21ce490d539cfd78b8e4bb910f39365b
 const passport = require('./config/passport')
 
 const flash = require('connect-flash')
@@ -39,9 +35,6 @@ app.use((req, res, next) => {
   next()
 })
 
-const flash = require('connect-flash')
-const session = require('express-session')
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -70,12 +63,5 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-<<<<<<< HEAD
 require('./routes')(app, passport) // passport 傳入 routes
-=======
-
-require('./routes')(app, passport) // passport 傳入 routes
-
-module.exports = app
->>>>>>> f95187df21ce490d539cfd78b8e4bb910f39365b
 
