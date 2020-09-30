@@ -6,11 +6,10 @@ module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
     if (req.isAuthenticated()) {  // isAuthenticated 為passport內建之方法,回傳true or false
-      if (req.user.role === "1") { return next() }   //1 true 代表一般, 0代表admin
+      if (req.user.role === "1") { return next() }
       return res.redirect('/')
     }
     res.redirect('/signin')
-
   }
 
   // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -36,15 +35,17 @@ module.exports = (app, passport) => {
 
 
   // adminController
-  app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/tweets') })
-  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-  app.post('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-
-  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
   app.get('/admin/signin', adminController.signinPage)
   app.post('/admin/signin', passport.authenticate('local', {
     failureRedirect: '/admin/signin',
     failureFlash: true
   }), adminController.signIn)
+
+  app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/tweets') })
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.post('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+
 }
