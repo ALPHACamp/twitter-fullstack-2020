@@ -9,7 +9,10 @@ module.exports = (app, passport) => {
       return next()
     }
     res.redirect('/signin')
+
   }
+
+  // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
