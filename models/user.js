@@ -4,7 +4,10 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+<<<<<<< HEAD
 
+=======
+>>>>>>> feature/E
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     name: DataTypes.STRING,
@@ -34,7 +37,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followerId',
       as: 'Followings'
     })
-
   };
   User.init({
     account: DataTypes.STRING,
