@@ -1,15 +1,21 @@
+const helpers = require('../_helpers.js')
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Like = db.Like
+const Followship = db.Followship
 
 const adminController = {
   getTweets: (req, res) => {
     return Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: User
+      include: User,
+      order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
+        tweets = tweets.map(tweet => ({
+          ...tweet.dataValues,
+          description: tweet.dataValues.description.split(" ", 50).join(" ")
+        }))
         return res.render('admin/tweets', { tweets })
       })
   },
@@ -22,6 +28,33 @@ const adminController = {
             return res.redirect('back')
           })
       })
+  },
+
+  getUsers: (req, res) => {
+    return User.findAll({
+      include: [Tweet,
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, as: 'LikedTweets' },
+      ]
+    })
+      .then(user => {
+        user = user.map(user => ({
+          ...user.dataValues,
+          TweetsCount: user.Tweets.length
+        }))
+        user = user.sort((a, b) => b.TweetsCount - a.TweetsCount)
+        return res.render('admin/users', { user })
+      })
+  },
+
+  signinPage: (req, res) => {
+    return res.render('admin/signin')
+  },
+
+  signIn: (req, res) => {
+    req.flash('success_messages', "成功登入！")
+    res.redirect('/admin/tweets')
   },
 
 

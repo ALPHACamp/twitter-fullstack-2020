@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {{!-- <div class="row mt-3"> --}}
 
 
@@ -73,6 +74,33 @@
 
           <div class="name" name="name">
             <a><strong>{{this.User.name}}&ensp;</strong></a>
+=======
+<div class="row mt-3">
+  <div class="col-3 border-right">main.hbs
+    <a href="/admin/users">users page</a>
+  </div>
+
+  <div class="col-md-9 pl-0">
+    <h3 class="ml-2">推文清單</h3>
+    <hr>
+    {{#each tweets}}
+    <div class="row justify-content-between">
+      <div class="row col-11">
+        <div class="avatar mt-2 ml-4">
+          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle" style="width: 90px">
+        </div>
+        <div class="information d-flex flex-column mt-2 col">
+          <div class="d-flex">
+            <div class="name" name="name">
+              <a><strong>{{this.User.dataValues.name}}&ensp;</strong></a>
+            </div>
+            <div class="account" name="account">
+              <a>{{this.User.dataValues.account}} </a>
+            </div>
+            <div class="createdAt" name="createdAt">
+              &ensp;·&ensp;{{moment this.createdAt}}
+            </div>
+>>>>>>> da892b201996387ce1d8dd604fa39e2baed9193f
           </div>
 
           <div class="account" name="account">
@@ -89,11 +117,16 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="col-1 mr-2">
       <button type="submit" class="close" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </form>
+=======
+    <hr>
+    {{/each}}
+>>>>>>> da892b201996387ce1d8dd604fa39e2baed9193f
   </div>
   {{!-- </div> --}}
   <hr>
