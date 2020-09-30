@@ -20,6 +20,17 @@
 <h1>首頁</h1>
 <hr />
 <div id="main">
+	<form action="/tweets" method="POST">
+		<div class="form-group">
+			<img src="" class="card-img" alt="有什麼新鮮事?">
+			<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"> </textarea>
+		</div>
+		<input type="hidden" name="restaurantId" value="{{tweet.description}}" />
+		<button type="submit" class="btn btn-warning btn-lg">推文</button>
+	</form>
+
+	<br>
+	<br>
   {{#each tweets}}
     <div class="card mb-3" style="max-width: 900px;">
       <div class="row no-gutters">
@@ -32,8 +43,10 @@
               <a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
 			  ● <small class="text-muted">{{moment this.createdAt }}</small>
             </h5>
-            <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap">
-              {{{ this.description }}}</p>
+			<a href="/replylist/{{ this.id }}">
+				<p class="card-text" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap">
+				{{{ this.description }}}</p>
+			</a>
           </div>
         </div>
       </div>
@@ -53,4 +66,8 @@
 				Panel content
 			</div>
 		</div>
+	</div>
 </div>
+
+
+

@@ -26,15 +26,15 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
 
 // setup passport
-
-
+app.use(passport.initialize())
+app.use(passport.session())
 
 // 把 req.flash 放到 res.locals 裡面
 app.use((req, res, next) => {
-    res.locals.success_messages = req.flash('success_messages')
-    res.locals.error_messages = req.flash('error_messages')
-    res.locals.user = helpers.getUser(req)
-    next()
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = helpers.getUser(req)
+  next()
 })
 
 //method
@@ -42,6 +42,8 @@ app.use(methodOverride('_method'))
 
 //image
 app.use('/upload', express.static(__dirname + '/upload'))
+//CSS
+app.use(express.static('public'))
 
 // 跟資料庫同步
 //app.get('/', (req, res) => res.send('Hello World!'))

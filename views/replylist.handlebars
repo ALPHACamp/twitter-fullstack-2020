@@ -1,0 +1,22 @@
+<h1>推文</h1>
+<hr />
+<div class="main">
+  <div class="col-md-4">
+    <img class="img-responsive center-block" src="/">
+    <p>{{tweet.User.name}}</p>
+    <div class="well">
+      <p>{{tweet.description}}</p>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<form action="/replies" method="POST">
+  <div class="form-group">
+    <textarea class="form-control" id="text" name="text" rows="3"></textarea>
+  </div>
+  <input type="hidden" name="tweetId" value="{{tweet.id}}" />
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<a href="javascript:history.back()">回上一頁</a>
+

@@ -1,0 +1,22 @@
+<div class="d-flex flex-column align-items-center" style="background-color: white;">
+  <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" alt=""
+    class="rounded-circle" style="width: 60px;">
+  <h1 class="mt-5">登入 Alphitter</h1>
+  <form class="form-signin mt-4" action="/signin" method="POST" style="width: 30%;">
+    <input type="text" id="email" name="email" class="form-control pb-4 pt-2" placeholder="帳號"
+      style="border-top: 0px;border-left: 0px;border-right:0px;border-bottom:2px gray solid;line-height:px; background:#f4f5f7"
+      required autofocus>
+    <input type="password" name="password" class="form-control mt-3 pb-4 pt-2" placeholder="密碼"
+      style="border-top: 0px;border-left: 0px;border-right:0px;border-bottom:2px gray solid;line-height:px;background:#f4f5f7"
+      required>
+    <br />
+    <button class="btn btn-lg btn-block" style="border-radius: 23px;background:#ff6601; color:white"
+      type="submit">登入</button>
+    <div class="text-center mb-4">
+      <p class="mt-5" style="text-align: right;"><a href="/signup" style="font-size: 12px;font-weight:bold">註冊
+          Alphitter</a>|
+        <a href="/admin/signin" style="font-size: 12px;font-weight:bold">後台登入</a>
+      </p>
+    </div>
+  </form>
+</div>
