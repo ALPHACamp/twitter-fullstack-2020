@@ -54,4 +54,8 @@ module.exports = (app, passport) => {
 
   app.post("/like/:tweetId", tweetController.addLike);
   app.delete("/like/:tweetId", tweetController.removeLike);
+
+  app.post('/replies', tweetController.postRely)
+  app.get('/replies/:id', tweetController.getRely)
+
 };

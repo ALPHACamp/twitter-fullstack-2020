@@ -79,14 +79,33 @@ const tweetController = {
       })
     })
     .catch(error => console.log(error))
+  },
+
+  getReply: (req, res) => {
+    const id = req.params.id
+    return Tweet.findByPk(id, { include: [Reply] })
+      .then(tweet => {
+        const replies = tweet.replies
+        return res.render({ replies: replies})
+      })
+    .catch(error => console.log(error))
+  },
+
+  postReply: (req, res) => {
+    if (req.body.comment.length > 140) {
+      return res.redirect('back')
+    }
+    return Reply.create({
+      comment: req.body.comment, 
+      TweetId: req.params.tweetId,
+      UserId: helper.getUser(req).id
+    })
+    .then((reply) => {
+      res.redirect('back')
+    })
+    .catch(error => console.log(error))
   }
-
-
-
-
   
-
-
 }
 
 module.exports = tweetController
