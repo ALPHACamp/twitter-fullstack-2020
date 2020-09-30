@@ -37,4 +37,7 @@ module.exports = (app, passport) => {
   app.post('/admin/tweets/:id', adminController.deleteTweet)
 
   app.get('/admin/users', adminController.getUsers)
+
+  app.get('/admin/signin', adminController.signinPage)
+  app.post('/admin/signin', adminController.signIn)
 }
