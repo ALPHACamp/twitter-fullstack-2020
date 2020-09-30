@@ -7,7 +7,7 @@ const restController = {
   },
 
   getmainPage: (req, res) => {
-    return res.render('main')
+    return res.render('mainpage')
   }
 }
 module.exports = restController

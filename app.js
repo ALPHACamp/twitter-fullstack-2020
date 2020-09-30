@@ -33,7 +33,7 @@ app.set('view engine', 'handlebars')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-// app.get('/', (req, res) => res.render('signin'))
+app.get('/', (req, res) => res.render('signin'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
