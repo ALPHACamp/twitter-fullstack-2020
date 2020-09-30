@@ -17,7 +17,7 @@ passport.use(new LocalStrategy(
           return done(null, false, req.flash('error_messages', '帳號尚未註冊!'))
         }
         if (!bcyrpt.compareSync(password, user.password)) {
-          return done(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤'))
+          return done(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤!'))
         }
         return done(null, user)
       })
