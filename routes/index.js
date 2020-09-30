@@ -1,10 +1,8 @@
+
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 
-
-
 module.exports = (app, passport) => {
-
 
   const authenticated = (req, res, next) => {
     if (req.isAuthenticated()) {  // isAuthenticated 為passport內建之方法,回傳true or false

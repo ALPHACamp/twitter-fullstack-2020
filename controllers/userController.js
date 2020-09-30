@@ -32,6 +32,7 @@ const userController = {
     }
   },
 
+
   signInPage: (req, res) => {
     return res.render('signin')
   },
@@ -46,10 +47,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-
-
-
-
 
 
 }
