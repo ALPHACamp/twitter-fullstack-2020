@@ -1,0 +1,47 @@
+{{!-- Center --}}
+<div class="col border-left border-right">
+  <h4>首頁</h4>
+  <form>
+    <div>
+      <img src="" alt="">
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: 60px" >推文</a>
+    </div>
+  </form>
+</div>
+{{!-- Right side --}}
+<div class="col-4">
+  <ul class="list-group mt-3 ml-3" >
+    <li class="list-group-item" style="background-color:lightgray;">
+      <strong>跟隨誰</strong>
+    </li>
+    <li class="list-group-item" style="background-color: lightgray;">
+      <div class="d-flex">
+        {{!-- <div class="p-3">Avatar</div> --}}
+        <img class="mr-3" src="#" alt="Avatar">
+        <div>
+          <strong>Name</strong><br> 
+          <span class="text-muted">@UserName</span>
+        </div>
+        <div class="align-self-center ml-auto">
+          <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: auto">正在跟隨</a>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" style="background-color: lightgray;">
+      <div class="d-flex">
+        <img class="mr-3" src="#" alt="Avatar">
+        <div>
+          <strong>Name</strong><br>
+          <span class="text-muted">@UserName</span> 
+        </div>
+        <div class="align-self-center ml-auto">
+          <a href="#" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</a>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" style="background-color: lightgray;">
+      <a href="#" style="color: coral;">顯示更多</a>
+    </li>
+  </ul>
+</div>
