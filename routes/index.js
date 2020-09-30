@@ -30,14 +30,14 @@ module.exports = (app, passport) => {
   }), userController.signIn)
   app.get('/logout', userController.logout)
 
-
   // 首頁
 
   app.get('/main', twitController.getmainPage)
 
+
   // setting使用者能編輯自己的 account、name、email 和 password
-  app.get('/setting', twitController.getSetting)
-  app.put('/setting', twitController.putSetting)
+  app.get('/setting', userController.getSetting)
+  app.put('/setting', userController.putSetting)
 
 
   // 使用者能編輯自己的自我介紹、個人頭像與封面
