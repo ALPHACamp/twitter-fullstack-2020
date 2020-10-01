@@ -14,7 +14,7 @@ const adminController = {
       .then(tweets => {
         tweets = tweets.map(tweet => ({
           ...tweet.dataValues,
-          description: tweet.dataValues.description.split(" ", 50).join(" ")
+          description: tweet.dataValues.description.substring(0, 50)
         }))
         return res.render('admin/tweets', { tweets })
       })
@@ -38,13 +38,13 @@ const adminController = {
         { model: Tweet, as: 'LikedTweets' },
       ]
     })
-      .then(user => {
-        user = user.map(user => ({
+      .then(users => {
+        users = users.map(user => ({
           ...user.dataValues,
           TweetsCount: user.Tweets.length
         }))
-        user = user.sort((a, b) => b.TweetsCount - a.TweetsCount)
-        return res.render('admin/users', { user })
+        users = users.sort((a, b) => b.TweetsCount - a.TweetsCount)
+        return res.render('admin/users', { users })
       })
   },
 
