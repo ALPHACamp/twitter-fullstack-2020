@@ -17,36 +17,40 @@
   <button type="submit" class="btn btn-warning btn-lg btn-block">推文</button>
 </div>
 <h1>推文</h1>
+<a href="javascript:history.back()">回上一頁</a>
 <hr />
+<br/>
+<br/>
 <div class="main">
-  <div class="col-md-4">
-    <img class="img-responsive center-block" src="/">
-    <p>{{tweet.User.name}}</p>
-    <div class="well">
-      <p>{{tweet.description}}</p>
-    </div>
+  <div class="col-md-11">
+    <a href="/users/{{reply.User.id}}/tweets">
+    <img class="img-circle" src="{{ reply.User.avatar }}" width="50" height="50">
+    </a>
+    <span>{{reply.User.name}}</span>
+    <h3>
+    <p>{{reply.description}}</p>
+    </h3>
+    {{moment reply.createdAt}}
+    <hr>
   </div>
 </div>
+<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#replyModal">
+	回覆
+</button>
 <hr>
 <br/>
 <br/>
-<h3>所有評論</h3>
-{{#each tweet.Replies}}
-  <blockquote class="blockquote mb-0">
-    <h4><a href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a></h4>
-    <p>{{this.comment}}</p>
-    <footer class="blockquote-footer">{{moment this.createdAt}}</footer>
-  </blockquote>
-  <hr />
-{{/each}}
-<form action="/replies" method="POST">
-  <div class="form-group">
-    <textarea class="form-control" id="text" name="text" rows="3"></textarea>
-  </div>
-  <input type="hidden" name="tweetId" value="{{tweet.id}}" />
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-<a href="javascript:history.back()">回上一頁</a>
+<h3>所有回覆</h3>
+<div class="col-md-11">
+	{{#each reply.Replies}}
+	<blockquote class="blockquote mb-0">
+		<h4><a href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a></h4>
+		<p>{{this.comment}}</p>
+		<footer class="blockquote-footer">{{moment this.createdAt}}</footer>
+	</blockquote>
+	<hr />
+	{{/each}}
+</div>
 {{!-- 右邊 --}}
 <div id="right">
 	<div class="col-md-7 column">
@@ -62,4 +66,39 @@
 		</div>
 	</div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+		<div class="col-md-8">
+			<a href="/users/{{reply.User.id}}/tweets">
+				<img class="img-circle" src="{{ reply.User.avatar }}" width="50" height="50">
+			</a>
+			<span>{{reply.User.name}}/{{moment reply.createdAt}}</span>
+			<p>{{reply.description}}</p>
+			回覆給
+			<a href="/users/{{reply.User.id}}/tweets">
+				@{{reply.User.account}}
+			</a>
+			<hr>
+  		</div>
+		<form action="/replylist/{{ reply.id }}" method="POST">
+		<div class="form-group">
+			<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;"></textarea>
+		</div>
+		<input type="hidden" name="tweetId" value="{{reply.id}}" />
+		<button type="submit" class="btn btn-info">回覆</button>
+		</form>
+      </div>
+    </div>
+  </div>
+</div>
+
 

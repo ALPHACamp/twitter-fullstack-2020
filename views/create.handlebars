@@ -1,0 +1,10 @@
+<div class="raw">
+    <form action="/createview" method="POST">
+		<div class="form-group">
+			<img src="{{ user.avatar }}" class="img-circle" alt="有什麼新鮮事?" width="100" height="100">
+			<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"> </textarea>
+		</div>
+		<input type="hidden" name="restaurantId" value="{{tweet.description}}" />
+		<button type="submit" class="btn btn-warning btn-lg">推文</button>
+	</form>
+</div>
