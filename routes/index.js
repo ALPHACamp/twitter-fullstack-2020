@@ -65,4 +65,8 @@ module.exports = (app, passport) => {
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 
   app.get('/admin/logout', adminController.logout)
+
+
+  // user 相關路由
+  app.get('/users/:id', userController.getUser)
 }
