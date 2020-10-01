@@ -19,11 +19,10 @@ a, a:hover {
 }
 
 .container-fluid {
-  /* border: 1px solid gray; */
   display: grid;
   /* grid-template-columns: 27% 43.5% 29%; */
   grid-template-columns: 350px 600px 400px;
-  height: 100%;
+  height: 900px;
 }
 
 /* 左邊列表 */
@@ -600,4 +599,135 @@ a, a:hover {
 
 .reply-modal-textarea:focus, .reply-modal-textarea:active {
   outline:0px !important;
+}
+
+/* 管理者首頁 */
+.admin-tweets-list {
+  grid-column-start: 2;
+  grid-column-end: 4;
+}
+
+.admin-tweets-title {
+  height: 50px;
+  border: 1px solid #E6ECF0;
+  line-height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 13px;
+  align-self: center;
+}
+
+.admin-list-item {
+  display: flex;
+  padding: 15px;
+  border: 1px solid #E6ECF0;
+  justify-content: space-between;
+}
+
+.admin-list-left {
+  display: flex;
+}
+
+.list-name {
+  display: flex;
+  font-size: 15px;
+}
+
+.list-name a{
+  font-weight: bold;
+  color: #1C1C1C;
+}
+
+.list-name span{
+  font-weight: 500;
+  color: #657786;
+  margin-left: 5px;
+}
+
+.right-list-item  {
+  margin-left: 15px;
+}
+
+.admin-list-right .delete-btn {
+  background: none;
+  border: none;
+  color: #657786;
+  font-size: 20px;
+}
+
+/* 管理者使用者列表 */
+.admin-right-list {
+  grid-column-start: 2;
+  grid-column-end: 4;
+  border: 1px solid #E6ECF0;;
+}
+
+.admin-users-title {
+  height: 50px;
+  border-bottom: 1px solid #E6ECF0;
+  line-height: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 13px;
+  align-self: center;
+}
+
+
+.admin-users-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  height: 900px;
+  /* overflow: scroll; */
+}
+
+.user-list-item {
+  width: 225px;
+  height: 300px;
+  background: #F6F7F8;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
+  position: relative;
+}
+
+
+.user-list-item-cover{
+  height: 140px;
+  border-radius: 10px 10px 0px 0px;
+}
+
+.user-list-item-avatar img {
+  position: absolute;
+  left: 66.5px;
+  top: 65px;
+  border: 5px solid #FFFFFF;
+}
+
+.user-list-item-info {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-list-item-follow, .user-list-item-icons {
+  display: flex;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-list-item-icons .reply-data,
+ .user-list-item-icons .like-data{
+  display: flex;
+  align-items: center;
+}
+
+.user-list-item-info a{
+  font-weight: 900;
+  font-size: 20px;
+  color: #1C1C1C;
+}
+
+.user-list-item-follow span{
+  color: #657786;
 }
