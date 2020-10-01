@@ -20,24 +20,21 @@
   
     {{#each tweetFollowings}}
     <li class="list-group-item">
-      <div class="row"> 
-        <div class="col-2">
+      <div class="flex-container"> 
+        <div class="mr-2">
           <a href="">
             <img src="{{this.user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%">
           </a>
         </div>
-        <div class="col-10">
+        <div>
           <strong style="display: inline;">{{this.user.name}}</strong> <font color="grey">@{{this.user.account}} {{moment this.createdAt}}</font> 
           <p>{{this.description}}</p>
-          <div class="row">
-            <div class="col-2">
-              <a href="/tweets/{{this.id}}" style="color:black;"><i class="far fa-comment-alt"></i>  {{this.repliesCount}}</a>
-            </div>
-            <div class="col-2">
-              <form action="">
-                <i class="far fa-heart"></i>  {{this.likesCount}}
-              </form>
-            </div>
+          <div class="display: inline-block;">
+            <a href="/tweets/{{this.id}}" style="color:black;" class="mr-4"><i class="far fa-comment-alt"></i>  {{this.repliesCount}}</a>
+            <form action="/like/{{this.id}}" method="POST" style="display: inline-block;">
+              <button type="submit" style="color:black; border:none; background-color:white;"><i class="far fa-heart"></i></button>
+              <div style="float: right;">{{this.likesCount}}</div>   
+            </form>
           </div>
         </div>
       </div>

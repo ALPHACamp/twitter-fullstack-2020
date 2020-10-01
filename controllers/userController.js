@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
+const Like = db.Like
 
 const userController = {
   registerPage: (req, res) => {
@@ -50,6 +51,33 @@ const userController = {
     req.flash('success_messages', '成功登出！')
     req.logout()
     return res.redirect('/users/login')
+  },
+
+  Like: (req, res) => {
+    Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      }
+    })
+    .then(like => {
+      //if user has already like this tweet
+      if (like) {
+        like.destroy()
+          .then(like => {
+            return res.redirect('back')
+          })
+      }
+      else {
+        Like.create({
+          UserId: req.user.id,
+          TweetId: req.params.tweetId
+        })
+        .then(like => {
+          return res.redirect('back')
+        })
+      }
+    })
   }
 }
 

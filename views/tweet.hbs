@@ -23,7 +23,7 @@
       <strong>{{tweet.Likes.length}}</strong> 喜歡次數
     </li>
     <li class="list-group-item">
-      <a href="" style="color:black;" class="mr-5"><i class="far fa-comment-alt fa-lg"></i></a>
+      <button data-toggle="modal" data-target="#s{{tweet.id}}" style="color:black; border:none; background-color:white;" class="mr-5"><i class="far fa-comment-alt fa-lg"></i></button>
       <form action="" style="display: inline-block;">
         <i class="far fa-heart fa-lg"></i>
       </form>
@@ -42,7 +42,7 @@
             <a href="" style="color: coral;" style="font-size: 2px;">@{{../tweet.User.name}}</a>
             <section>{{this.comment}}</section>
             
-            <a href="" style="color:black; font-size:10px;" class="mr-5"><i class="far fa-comment-alt"></i> {{this.ReplyComments.length}}</a>
+            <button data-toggle="modal" data-target="" style="color:black; font-size:10px; border:none; background-color:white;" class="mr-5"><i class="far fa-comment-alt"></i> {{this.ReplyComments.length}}</button>
             <form action="" style="display: inline-block;">
               <i class="far fa-heart" style="font-size:10px;"> {{this.Likes.length}}</i>
             </form>
@@ -87,4 +87,42 @@
       <a href="#" style="color: coral;">顯示更多</a>
     </li>
   </ul>
+</div>
+
+<div class="modal fade" id="s{{tweet.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: coral;">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <div class="flex-container mb-2">
+          <div>
+            <img class="mr-3" src="{{tweet.User.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          </div>
+          <div>
+            <strong>{{tweet.User.name}}</strong>
+            <font color="grey">@{{tweet.User.account}} • {{moment tweet.updatedAt}}</font>
+            <p>
+              {{tweet.description}}
+            </p>
+            <font color="grey" size="2px">回覆給</font><font color="coral" size="2px">@{{tweet.User.name}}</font> 
+          </div>
+        </div>
+        <div class="flex-container">
+          <div>
+            <img src="{{user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          </div>
+          <div style="width: 600px;">
+            <form action="/tweets/{{tweet.id}}/replies" method="POST">
+              <textarea placeholder="推你的回覆" class="form-control" id="comment" name="comment" rows="3"  style="border: none;"></textarea>
+              <button class="btn" type="submit" style="border-radius: 18px; background:coral; color:white; width: 60px; float: right;">留言</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

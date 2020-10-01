@@ -34,8 +34,13 @@ module.exports = (app, passport) => {
   app.get('/admin/login', adminController.adminLoginPage)
   app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.adminLogin)
   app.get('/admin/logout', adminController.adminLogout)
-
+  
+  //tweet page
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweets)
   app.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
+  app.post('/tweets/:tweetId/replies', authenticated, tweetController.postReply)
+
+  //Like
+  app.post('/like/:tweetId', authenticated, userController.Like)
 }

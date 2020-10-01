@@ -72,8 +72,27 @@ const tweetController = {
       tweet.Replies.sort((a, b) => {
         return b.updatedAt - a.updatedAt
       })
-      return res.render('tweet', { tweet })
+      user = req.user
+      return res.render('tweet', { tweet, user })
     })
+  },
+
+  postReply: (req, res) => {
+    const { comment } = req.body
+    if (!comment) {
+      req.flash('error_messages', '留言不得為空白')
+      return res.redirect(`/tweets/${req.params.tweetId}`)
+    }
+    else {
+      Reply.create({
+        UserId: req.user.id,
+        TweetId: req.params.tweetId,
+        comment
+      })
+      .then(reply => {
+        return res.redirect(`/tweets/${reply.TweetId}`)
+      })
+    }
   }
 }
 
