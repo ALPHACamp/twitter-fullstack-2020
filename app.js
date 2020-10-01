@@ -20,25 +20,16 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
-// const db = require('./models')
-// const User = db.User
-// const bcrypt = require('bcryptjs')
-// User.create({
-//   account: 'good2@example.com',
-//   password: bcrypt.hashSync("good2", bcrypt.genSaltSync(10)),
-//   isAdmin: false
-// })
-// .then(() => {
-//   console.log('success to create account')
-// })
 app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req);
   res.locals.isAuthenticated = helpers.ensureAuthenticated(req);
   next();
 });
+// app.use('/', (req, res) => {
+//   res.render('admin/users');
+// });
+// use helpers.getUser(req) to replace req.user
+// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 require('./routes/index')(app);
 
