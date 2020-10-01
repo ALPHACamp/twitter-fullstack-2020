@@ -64,7 +64,7 @@ const userController = {
     req.logout()
     return res.redirect('/admin/login')
   },
-  getUser: (req, res) => {
+  getUserSettings: (req, res) => {
     const reqUser = helpers.getUser(req)
     return User.findByPk(reqUser.id).then(user => {
       return res.render('settings', {
@@ -72,7 +72,7 @@ const userController = {
       })
     })
   },
-  putUser: (req, res) => {
+  putUserSettings: (req, res) => {
     const { account, name, email, password, confirmPassword } = req.body
     const id = req.params.id
     let passwordCheck = true
