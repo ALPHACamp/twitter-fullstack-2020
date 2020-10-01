@@ -1,22 +1,50 @@
 {{!-- Center --}}
 <div class="col border-left border-right">
-  <h4>首頁</h4>
-  <form>
-    <div>
-      <img src="" alt="">
-      <textarea class="form-control" id="tweet" name="tweet" rows="3">
-        有什麼新鮮事?
-      </textarea>
-      <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: 60px" >推文</a>
-    </div>
-  </form>
-  <div class="card">
+  <ul class="list-group" >
+    <li class="list-group-item">
+      <strong>首頁</strong>
+    </li>
+    <li class="list-group-item">
+    <form>
+      <div class="row">
+        <div class="col-2">
+          <img src="" alt="user avatar" style="width: 50px; border-radius: 50%;">
+        </div>
+        <div class="col-10">  
+          <textarea placeholder="有什麼新鮮事?" class="form-control" id="tweet" name="tweet" rows="3"  style="border: none;"></textarea>
+        </div>
+      </div>
+      <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: 60px; float: right;" >推文</a>
+    </form>
+    </li>
+  
     {{#each tweets}}
-    <div class="card-body"> 
-      {{this.description}}
-    </div>
-    {{/each}}
-  </div>
+    <li class="list-group-item">
+      <div class="row"> 
+        <div class="col-2">
+          <a href="">
+            <img src="{{this.user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%">
+          </a>
+        </div>
+        <div class="col-10">
+          <strong style="display: inline;">{{this.user.name}}</strong> <font color="grey">@{{this.user.account}} {{moment this.createdAt}}</font> 
+          <p>{{this.description}}</p>
+          <div class="row">
+            <div class="col-2">
+              <a href="" style="color:black;"><i class="far fa-comment-alt"></i>  {{this.repliesCount}}</a>
+            </div>
+            <div class="col-2">
+              <form action="">
+                <i class="far fa-heart"></i>  {{this.likesCount}}
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+  
+  {{/each}}
 </div>
 {{!-- Right side --}}
 <div class="col-4">
