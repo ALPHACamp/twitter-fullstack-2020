@@ -30,12 +30,25 @@ const adminController = {
       const data = results.map(item => ({
         ...item.dataValues,
         LikesCount: item.dataValues.LikedTweets.length,
+        TweetsCount: item.dataValues.Tweets.length,
         followersCount: item.dataValues.Followers.length,
         followingsCount: item.dataValues.Followings.length
       }))
       const users = data.sort((a, b) => b.tweetsCount - a.tweetsCount)
-      res.json({ users })
+      res.render('admin/users', { users })
+      // res.json({ users })
     })
+  },
+  deleteTweet: (req, res) => {
+    const id = Number(req.params.id)
+
+    return Tweet.findByPk(id).then(tweet => {
+      if (tweet === null) {
+        res.redirect('/admin/tweets')
+      } else {
+        tweet.destroy()
+      }
+    }).then(() => res.redirect('/admin/tweets'))
   },
   login: (req, res) => {
     req.flash('success_messages', '成功登入！')
