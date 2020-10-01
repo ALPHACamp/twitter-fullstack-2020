@@ -79,6 +79,16 @@ const userController = {
   },
 
   likeReply: (req, res) => {
+    Like.create({
+          UserId: req.user.id,
+          ReplyId: req.params.replyId
+    })
+    .then(like => {
+      return res.redirect('back')
+    })
+  },
+
+  dislikeReply: (req, res) => {
     Like.findOne({
       where: {
         UserId: req.user.id,
@@ -86,20 +96,10 @@ const userController = {
       }
     })
     .then(like => {
-      if (like) {
-        like.destroy()
-          .then(like => {
-            return res.redirect('back')
-          })
-      } else {
-        Like.create({
-          UserId: req.user.id,
-          ReplyId: req.params.replyId
-        })
+      like.destroy()
         .then(like => {
           return res.redirect('back')
-        })
-      }
+        })   
     })
   }
 }

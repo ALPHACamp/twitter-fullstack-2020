@@ -82,10 +82,25 @@ const tweetController = {
     )
     .then(tweet => {
       tweet = tweet.toJSON()
+
+      //like and dislike
+      tweet.Replies.forEach(reply => {
+        reply.Likes.forEach(like => {
+          if (like.UserId === req.user.id) {
+            reply['likesReply'] = true
+          }
+          else {
+            reply['likesReply'] = false
+          }
+        })
+      })
+
       tweet.Replies.sort((a, b) => {
         return b.updatedAt - a.updatedAt
       })
+
       user = req.user
+      
       return res.render('tweet', { tweet, user })
     })
   },

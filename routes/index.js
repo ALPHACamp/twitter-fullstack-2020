@@ -45,5 +45,5 @@ module.exports = (app, passport) => {
   app.post('/like/:tweetId', authenticated, userController.likeTweet)
   app.delete('/like/:tweetId', authenticated, userController.dislikeTweet)
   app.post('/like/:replyId/replies', authenticated,userController.likeReply)
-  
+  app.delete('/like/:replyId/replies', authenticated, userController.dislikeReply)
 }
