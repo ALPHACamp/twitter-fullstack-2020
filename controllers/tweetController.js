@@ -7,15 +7,19 @@ const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
-    Tweet.findAll({include: [User, Reply, 
+
+    return Tweet.findAll({
+      include: [User, Reply, 
+
       {model: User, as: 'LikedUsers'}],
       order: [['createdAt', 'DESC']]
       })
       .then(tweets => {
         const data = tweets.map(t => ({
           ...t.dataValues, 
-          description: t.dataValues.description, 
-          isLiked: helpers.getUser(req).LikedUsers.map(d => d.id).includes(t.id)
+          description: t.dataValues.description.substring(0,50), 
+          isLiked: t.LikedUsers.map(d => d.id).includes(t.id)
+
         }))
         return res.render('tweets', {tweets: data})
       })
@@ -41,6 +45,7 @@ const tweetController = {
 
   postTweet: (req,res) => {
     if (!req.body.description){
+
       // req.flash('error_message', '留言不得為空')
       return res.redirect('back')
     }
@@ -49,6 +54,7 @@ const tweetController = {
       return res.redirect('/')
     }
     return Tweet.create({
+
       UserId: helpers.getUser(req).id,
       description: req.body.description
     }).then(tweet => {
@@ -79,14 +85,53 @@ const tweetController = {
       })
     })
     .catch(error => console.log(error))
-  }
+  },
+
+  getReply: (req, res) => {
+    return Tweet.findByPk(req.params.id, { include: [Reply] })
+      .then(tweet => {
+        const replies = tweet.replies
+        return res.render({ replies: replies})
+      })
+    .catch(error => console.log(error))
+  },
+
+  postReply: (req, res) => {
+    if (req.body.comment.length > 140) {
+      return res.redirect('back')
+    }
+    Reply.create({
+      comment: req.body.comment, 
+      TweetId: req.params.tweetId,
+      UserId: helper.getUser(req).id
+    })
+    .then((reply) => {
+      res.redirect('back')
+    })
+    .catch(error => console.log(error))
+  },
+
+  getUser: (req, res) => {   
+    User.findByPk(req.params.id, {
+      include: [
+        Tweet, 
+        {model: Reply, include:[Tweet]},
+        {model: Tweet, as: 'LikedUsers'}, 
+        {model: User, as: 'Followers'},
+        {model: User, as: 'Followings'}
+      ]
+      })
+      .then(user => {
+        const isFollowed = helper.getUser(req).Followings.map(d => d.id).includes(user.id)
+        res.render('tweets', {user:user.toJSON(), 
+        isFollowed: isFollowed })
+      })
+  },
 
 
 
 
   
-
-
 }
 
 module.exports = tweetController
