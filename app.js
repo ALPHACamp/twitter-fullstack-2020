@@ -23,6 +23,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
+
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
