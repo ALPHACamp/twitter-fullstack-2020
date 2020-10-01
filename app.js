@@ -21,6 +21,10 @@ app.engine('handlebars', handlebars({
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 
+//setup body parser
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())

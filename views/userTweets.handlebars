@@ -16,32 +16,93 @@
 	</div>
   <button type="submit" class="btn btn-warning btn-lg btn-block">推文</button>
 </div>
+{{!-- 中間區域 --}}
+<h5>{{profile.name}}</h5>
+<hr />
 <div id="main">
-	<div class="col-md-7 column">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="panel-title">
-					<h3 class="card-title"><strong>{{user.name}}</strong></h3>
-					<h5 class="card-title">@{{user.account}}</h5>
+					<h3 class="card-title"><strong>{{profile.name}}</strong></h3>
+					<h5 class="card-title">@{{profile.account}}</h5>
+					{{#ifCond profile.id user.id }}
+            			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+						  Edit Profile
+						</button>
+        			{{/ifCond}}
 				</div>
 			</div>
 			<div class="panel-body">
-				<p>{{user.introduction}}</p>
+				<p>{{profile.introduction}}</p>
 			</div>
 		</div>
 		{{#each tweets}}
-			<div class="col-md-8">
-      			<div class="card-body">
-        			<h4 class="card-title">{{this.User.name}}</h4>
-					<h5>{{this.createdAt}}</h5>
-        			<p class="card-text">
-          			{{this.description}}
-        			</p>
-      			</div>
-    		</div>
+		 <div class="card mb-3" style="max-width: 900px;">
+			<div class="row no-gutters">
+				<div class="col-md-4">
+				  <img src="{{this.User.avatar}}" class="card-img" alt="user avatar">
+				</div>
+				<div class="col-md-8">
+      				<div class="card-body">
+        				<h5 class="card-title">
+						  <a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+						  <small class="text-muted">{{moment this.createdAt }}</small>
+						</h5>
+        				<p class="card-text">
+          				{{this.description}}
+        				</p>
+      				</div>
+    			</div>
+			</div>
+		</div>
 		{{/each}}
-	</div>
 </div>
+{{!-- modal --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form
+  		action="/users/{{user.id}}/edit"
+  		method='POST'
+	  >
+	  <div class='col-md-8'>
+      <div class='form-group'>
+        <input
+          type='text'
+          class='form-control form-control-lg'
+          name='name'
+          id='name'
+          placeholder='Name'
+          value="{{user.name}}"
+          required
+        />
+      </div>
+      <div class='form-group'>
+        <textarea
+          class='form-control'
+          name='introduction'
+          id='introduction'
+          rows='8'
+          placeholder='Type anything about you here...'
+        >{{user.introduction}}</textarea>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+{{!-- 右邊區域 --}}
 <div id="right">
 	<div class="col-md-7 column">
 		<div class="panel panel-default">
