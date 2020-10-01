@@ -104,21 +104,7 @@ const userController = {
       res.render('userTweets', { profile: user, tweets })
     })
   },
-  editUser: (req, res) => {
-    if(helpers.getUser(req).id == req.params.id) {
-      return User.findByPk(req.params.id)
-      .then(user => {
-        return res.render('profileEdit', { user: user.toJSON()} )
-      })
-    } else {
-      return User.findByPk(req.params.id)
-      .then(user => {
-        return res.redirect(`/users/${user.id}/tweets`)
-      })
-    }
-  },
   putUser: (req, res) => {
-     console.log(req.body)
     return User.findByPk(req.params.id).then(user => {
       user
       .update({
@@ -126,7 +112,6 @@ const userController = {
         introduction: req.body.introduction
       })
       .then(user => {
-        req.flash('success_msg', 'user was successfully to update')
         res.redirect(`/users/${req.params.id}/tweets`)
       })
     })
