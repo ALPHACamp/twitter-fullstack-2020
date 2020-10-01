@@ -83,7 +83,17 @@ const tweetController = {
     .then(tweet => {
       tweet = tweet.toJSON()
 
-      //like and dislike
+      //like and dislike tweet
+      tweet.Likes.forEach(like => {
+        if (like.UserId === req.user.id) {
+          tweet['likesTweet'] = true
+        }
+        else {
+          tweet['likesTweet'] = false
+        }
+      })
+
+      //like and dislike reply
       tweet.Replies.forEach(reply => {
         reply.Likes.forEach(like => {
           if (like.UserId === req.user.id) {

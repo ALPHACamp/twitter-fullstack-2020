@@ -24,10 +24,15 @@
     </li>
     <li class="list-group-item">
       <button data-toggle="modal" data-target="#s{{tweet.id}}" style="color:black; border:none; background-color:white;" class="mr-5"><i class="far fa-comment-alt fa-lg"></i></button>
+      {{#if tweet.likesTweet}}
+      <form action="/like/{{tweet.id}}?_method=DELETE" method="POST" style="display: inline-block;">
+        <button type="submit" style="color:black; border:none; background-color:white;"><i class="fas fa-heart fa-lg"></i></button>
+      </form>
+      {{else}}
       <form action="/like/{{tweet.id}}" method="POST" style="display: inline-block;">
         <button type="submit" style="color:black; border:none; background-color:white;"><i class="far fa-heart fa-lg"></i></button>
-        <div style="float: right;">{{this.likesCount}}</div>   
       </form>
+      {{/if}}
     </li>
     {{#each tweet.Replies}}
     <li class="list-group-item">

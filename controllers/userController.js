@@ -75,7 +75,7 @@ const userController = {
         .then(like => {
           return res.redirect('back')
         })
-      })  
+    })  
   },
 
   likeReply: (req, res) => {
