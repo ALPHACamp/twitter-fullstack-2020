@@ -4,7 +4,7 @@
   <h5>推文清單</h5>
   <hr>
   {{#each tweets}}
-    {{this.User.account}} @{{this.User.name}}
+    {{this.User.account}} @{{this.User.name}}・{{moment this.createdAt}}
     <br />
     <br />
     {{this.description}}
