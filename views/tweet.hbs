@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  {{!-- left-column --}}
+  {{> left-column}}
+
+  <div class="tweets-center">
+    <div class="tweets-title">
+      <a href="/tweets">
+        <i class="icon-arrow"></i>推文
+      </a>
+    </div>
+    <div class="card tweet-content">
+      <div class="tweet-content-top">
+        <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+        <div class="tweet-content-name">
+          <span class="user-name"><a href="">nono</a></span>
+          <span class="user-account">@nono</span>
+        </div>
+      </div>
+
+      <div class="card-body tweet-content-main">
+        <p>
+          Needless to say, I keep her in checkShe was a bad bad, nevertheless (yeah)Callin' it quits now,
+          baby,I'mawrec(ayy)Crash at my place, baby, you're a wreck (ayy)Needless to say, I keep her
+        </p>
+        <span class="tweet-time">上午10:05·2020年9月29日</span>
+      </div>
+
+      <div class="tweet-content-footer">
+        <div class="tweet-info">
+          <span>23 </span>回覆
+          <span>134 </span>喜歡
+        </div>
+        <div class="tweet-reply-like">
+          <button type="button" class="btn btn-reply" data-toggle="modal" data-target="#replyModal">
+            <i class="icon-reply" style="font-size: 24px"></i>
+          </button>
+          <button type="button" class="btn btn-like">
+            <i class="icon-like" style="font-size: 24px"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="tweets-list">
+      <div class="tweets-content">
+        <div class="left-item">
+          <a href="">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </a>
+        </div>
+        <div class="right-item">
+          <div class="title">
+            <span class="name">
+              <a href="">
+                nono
+              </a>
+            </span>
+            <span class="time">
+              @nonolin·3小時前
+            </span>
+          </div>
+          <div class="body-reply">
+            <span class="reply-mark">回覆</span>
+            <a class="reply-user" href="">@</a>
+          </div>
+          <div class="reply-text">
+            goood!
+          </div>
+          <div class="footer">
+            <div class="reply-item">
+              <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
+                <i class="icon-reply"></i> 13
+              </button>
+            </div>
+            <div class="like-item">
+              <button type="button" class="btn">
+                <i class="icon-like"></i> 79
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{!-- right-column --}}
+  {{> right-column}}
+  {{> modal}}
+</div>
