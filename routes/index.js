@@ -63,6 +63,8 @@ module.exports = (app, passport) => {
   })
   // 後台推文清單
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-
+  // 後台使用者清單
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  // 後台登出
   app.get('/admin/logout', adminController.logout)
 }
