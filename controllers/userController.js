@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
 
 const userController = {
   signUpPage: (req, res) => {
@@ -47,24 +48,7 @@ const userController = {
     res.redirect('/signin')
   },
 
-  getUser: (req, res) => {
-    User.findByPk(req.params.user, {
-      include: [
-        {model: User, as: 'Followings'},
-        {model: User, as: 'Followers'},
-        { model: Tweet, include: [Reply, { model: User, as: 'LikedUsers' },] },
-      ],
-      order:[['Tweet', 'createdAt', 'DESC']]
-    }).then(user => {
-      const userSelf = helper.getUser(req).id
-      const isFollowed = helper.getUser(req).Followings.map(d => d.id).includes(user.id)
-      return res.render('users',{
-        user: user.toJSON(),
-        isFollowed: isFollowed, 
-        userSelf: userSelf
-      })
-    })
-  }
+  
 
 
 }

@@ -1,3 +1,72 @@
-<div class="container-fluid">
+<div class="container-fluid m-0">
+  <div class="main">
+    <div class="header"
+      style="position: absolute;width: 600px;height: 55px;left: 378px;top: -1px;background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;">
+      首頁</div>
+    <div class="body">
+      <div class="row-4">
+        <a href="/tweets/{{user.id}}">
+          <img src="{{User.avatar}}"
+            style="position: absolute;width: 50px;height: 50px;left: 393px;top: 63px;background: #C4C4C4;"></a>
+        <form method="POST" action="/tweets">
+          <textarea name="description" cols="30" rows="5"
+            style="position: absolute;width: 600px;height: 120px;left: 378px;top: 53px;background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+            placeholder="有什麼新鮮事"></textarea>
+          <button type="submit"
+            style="position: absolute;width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;"><span
+              style="color: #FFFFFF;">推文</span></button>
+        </form>
+      </div>
+      <div class="divider"
+        style="position: absolute;width: 600px;height: 10px;left: 378px;top: 173px;background: #E6ECF0;"></div>
 
+    </div>
+    <div class="col">
+      <div class="tweet-list" style="position: static;width: 600px;height: 136px;left: 0px;top: 0px;">
+        {{#each tweets}}
+        <div class="tweet">
+          <div class="tweet-item">
+            <div class="tweet-left">
+              <a href="#" style="background: #C4C4C4;">
+                <img src="{{this.User.avatar}}"
+                  style="background: url(),#C4C4C4;background-position:center;background-size:cover;">
+
+              </a>
+            </div>
+            <div class="tweet-item-right">
+              <div class="tweet-item-title">
+                <span class="mt-1"><a href="#">{{this.User.name}}</a></span>
+                <span class="user-account">
+                  @{{this.User.account}}．{{moment this.createdAt}}
+                </span>
+
+              </div>
+              <div class="tweet-text">
+                {{this.description}}
+              </div>
+            </div>
+          </div>
+          <div class="tweet-footer">
+
+
+            <button type="button" class="button reply-link pt-1">
+              <i class="far fa-comment"></i> {{this.Replies.length}}
+            </button>
+
+            {{#if isLiked}}
+            <button type="button" class="button reply-link pt-1">
+              <i class="fas fa-heart"></i> {{this.LikedUsers.length}}
+            </button>
+            {{else}}
+            <button type="button" class="button reply-link pt-1">
+              <i class="far fa-heart"></i> {{this.LikedUsers.length}}
+            </button>
+            {{/if}}
+
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 </div>

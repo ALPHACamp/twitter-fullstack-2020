@@ -7,14 +7,15 @@ const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
-    Tweet.findAll({include: [User, Reply, 
+    return Tweet.findAll({
+      include: [User, Reply, 
       {model: User, as: 'LikedUsers'}],
       order: [['createdAt', 'DESC']]
       })
       .then(tweets => {
         const data = tweets.map(t => ({
           ...t.dataValues, 
-          description: t.dataValues.description, 
+          description: t.dataValues.description.substring(0,50), 
           isLiked: t.LikedUsers.map(d => d.id).includes(t.id)
         }))
         return res.render('tweets', {tweets: data})
@@ -101,7 +102,29 @@ const tweetController = {
       res.redirect('back')
     })
     .catch(error => console.log(error))
-  }
+  },
+
+  getUser: (req, res) => {   
+    User.findByPk(req.params.id, {
+      include: [
+        Tweet, 
+        {model: Reply, include:[Tweet]},
+        {model: Tweet, as: 'LikedUsers'}, 
+        {model: User, as: 'Followers'},
+        {model: User, as: 'Followings'}
+      ]
+      })
+      .then(user => {
+        const isFollowed = helper.getUser(req).Followings.map(d => d.id).includes(user.id)
+        res.render('tweets', {user:user.toJSON(), 
+        isFollowed: isFollowed })
+      })
+  },
+
+
+
+
+  
   
 }
 

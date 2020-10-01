@@ -31,7 +31,6 @@ app.use((req, res, next) => {
 })
 
 
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
@@ -54,9 +53,9 @@ app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-// app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+app.get('/', (req, res) => res.send('Hello World!'))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes')(app, passport) // passport 傳入 routes
 
