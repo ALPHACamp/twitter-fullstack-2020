@@ -23,11 +23,11 @@ const tweetController = {
         FollowerId: tweet.dataValues.User.dataValues.Followers.map(Followers => Followers.dataValues.id)
       }))
 
-      //filter the tweets to those that user followings
+      //filter the tweets to those that user followings & user himself
       tweetFollowings = []
       tweets.forEach(tweets => {
         tweets.FollowerId.forEach(FollowerId => {
-          if (FollowerId === req.user.id) {
+          if (FollowerId === req.user.id || tweets.UserId === req.user.id) {
             tweetFollowings.push(tweets)
           }
         })
@@ -38,14 +38,23 @@ const tweetController = {
 
   postTweets: (req, res) => {
     const { description } = req.body
-    console.log(req.user)
-    Tweet.create({
-      description,
-      UserId: req.user.id
-    })
-    .then(tweet => {
-      
-    })
+    if (!description) {
+      req.flash('error_messages', '貼文不得為空白')
+      return res.redirect('/tweets')
+    }
+    if (description.length > 140) {
+      req.flash('error_messages', '貼文字數不得超過140字')
+      return res.redirect('/tweets')
+    }
+    else {
+      Tweet.create({
+        description,
+        UserId: req.user.id
+      })
+      .then(tweet => {
+        return res.redirect('/tweets')
+      })
+    }
   }
 }
 
