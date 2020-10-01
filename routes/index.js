@@ -2,6 +2,8 @@ const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 
+const helpers = require('../_helpers')
+
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
@@ -17,16 +19,15 @@ module.exports = (app, passport) => {
   }
 
   const authenticatedAdmin = (req, res, next) => {
-    console.log('SDFSDF')
-    if (req.isAuthenticated()) {
-      if (req.user.role === 'admin') {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).role === 'admin') {
         return next()
       } else {
         req.flash('error_messages', '請登入正確帳號!')
-        return res.redirect('/admin/login')
+        return res.redirect('/admin/signin')
       }
     }
-    res.redirect('/admin/login')
+    res.redirect('/admin/signin')
   }
 
   app.get('/', authenticated, (req, res) => {
@@ -51,12 +52,12 @@ module.exports = (app, passport) => {
 
 
   // 後台登入頁
-  app.get('/admin/login', adminController.loginPage)
+  app.get('/admin/signin', adminController.signInPage)
   // 後台登入 
-  app.post('/admin/login', passport.authenticate('local', {
-    failureRedirect: '/admin/login',
+  app.post('/admin/signin', passport.authenticate('local', {
+    failureRedirect: '/admin/signin',
     failureFlash: true
-  }), adminController.login)
+  }), adminController.signIn)
 
   app.get('/admin', authenticatedAdmin, (req, res) => {
     res.redirect('/admin/tweets')
@@ -68,5 +69,5 @@ module.exports = (app, passport) => {
   // 後台使用者清單
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
   // 後台登出
-  app.get('/admin/logout', adminController.logout)
+  app.get('/admin/signout', adminController.signOut)
 }

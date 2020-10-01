@@ -38,8 +38,6 @@ app.use((req, res, next) => {
 })
 
 
-app.listen(port, () => {
-  console.log(`Express is listening on http://localhost:${port}`)
-})
+module.exports = app.listen(port, () => console.log(`Express is listening on http://localhost:${port}`))
 
 require('./routes')(app, passport)

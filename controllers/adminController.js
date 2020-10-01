@@ -4,8 +4,8 @@ const Tweet = db.Tweet
 const User = db.User
 
 const adminController = {
-  loginPage: (req, res) => {
-    return res.render('admin/login')
+  signInPage: (req, res) => {
+    return res.render('admin/signin')
   },
   getTweets: (req, res) => {
     return Tweet.findAll({
@@ -50,14 +50,14 @@ const adminController = {
       }
     }).then(() => res.redirect('/admin/tweets'))
   },
-  login: (req, res) => {
+  signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.redirect('/admin/tweets')
   },
-  logout: (req, res) => {
+  signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
     req.logout()
-    res.redirect('/admin/login')
+    res.redirect('/admin/signin')
   }
 }
 
