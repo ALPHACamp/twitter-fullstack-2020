@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
+const helpers = require('../_helpers');
 
 const userController = {
   registerPage: (req, res) => {
@@ -50,6 +51,14 @@ const userController = {
     req.flash('success_messages', '成功登出！')
     req.logout()
     return res.redirect('/users/login')
+  },
+  settingsPage: (req, res) => {
+    const reqUser = helpers.getUser(req)
+    return User.findByPk(reqUser.id).then(user => {
+      return res.render('settings', {
+        user: user.toJSON()
+      })
+    })
   }
 }
 

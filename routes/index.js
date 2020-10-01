@@ -1,6 +1,14 @@
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
+const helpers = require('../_helpers');
+
+// const authenticated = (req, res, next) => {
+//   if (helpers.ensureAuthenticated(req)) {
+//     return next()
+//   }
+//   res.redirect('/users/login')
+// }
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -36,4 +44,6 @@ module.exports = (app, passport) => {
   app.get('/admin/logout', adminController.adminLogout)
 
   app.get('/tweets', tweetController.getTweets)
+  app.get('/users/settings', authenticated, userController.settingsPage)
+  app.get('/users/logout', userController.logout)
 }
