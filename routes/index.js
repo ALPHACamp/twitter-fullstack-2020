@@ -7,15 +7,15 @@ const helpers = require('../_helpers')
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      if (req.user.role === 'user') {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).role !== 'admin') {
         return next()
       } else {
         req.flash('error_messages', '請登入正確帳號!')
-        return res.redirect('/login')
+        return res.redirect('/signin')
       }
     }
-    res.redirect('/login')
+    res.redirect('/signin')
   }
 
   const authenticatedAdmin = (req, res, next) => {
@@ -38,17 +38,17 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   // 註冊頁
-  app.get('/register', userController.registerPage)
-  app.post('/register', userController.register)
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
   // 前台登入頁
-  app.get('/login', userController.loginPage)
+  app.get('/signin', userController.signInPage)
   // 前台登入
-  app.post('/login', passport.authenticate('local', {
-    failureRedirect: '/login',
+  app.post('/signin', passport.authenticate('local', {
+    failureRedirect: '/signin',
     failureFlash: true
-  }), userController.login)
+  }), userController.signIn)
 
-  app.get('/logout', userController.logout)
+  app.get('/signout', userController.signOut)
 
 
   // 後台登入頁
