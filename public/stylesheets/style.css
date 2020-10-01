@@ -1,0 +1,9 @@
+.flex-container{
+  display: flex;
+}
+
+.item {
+  flex-basis: 20px;
+  display: inline-block;
+
+}

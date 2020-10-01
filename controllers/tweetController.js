@@ -1,15 +1,13 @@
 const db = require('../models')
-const tweet = require('../models/tweet')
 const Tweet = db.Tweet
 const Like = db.Like
 const User = db.User
 const Reply = db.Reply
-const Followship = db.Followship
+const ReplyComment = db.ReplyComment
 
 const tweetController = {
   getTweets: (req, res) => {
     Tweet.findAll({
-      //where: {UserId: '$User.dataValues.Followings.id$'},
        include: [
         Like,
         Reply,
@@ -33,7 +31,10 @@ const tweetController = {
           }
         })
       })
-      return res.render('tweets', { tweetFollowings })
+
+      user = req.user
+      
+      return res.render('tweets', { tweetFollowings, user })
     })  
   },
 
@@ -56,6 +57,21 @@ const tweetController = {
         return res.redirect('/tweets')
       })
     }
+  },
+
+  getTweet: (req, res) => {
+    Tweet.findByPk(req.params.tweetId,
+      { include: [
+        Like, 
+        User,
+        { model: Reply, include: [ User, Like, ReplyComment ] }
+      ] }
+    )
+    .then(tweet => {
+
+      console.log(tweet.toJSON())
+      return res.render('tweet', { tweet: tweet.toJSON() })
+    })
   }
 }
 

@@ -9,6 +9,8 @@ const passport = require('./config/passport')
 const app = express()
 const port = 3000
 
+app.use(express.static('public'))
+
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs',

@@ -1,0 +1,90 @@
+{{!-- Center --}}
+<div class="col">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <a href="/tweets" style="color:black;"><i class="fas fa-arrow-left mr-4"></i></a>
+      <strong>推文</strong>
+    </li>
+    <li class="list-group-item">
+      <div class="flex-container">
+          <img class="mr-2" src="{{tweet.User.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          <div> 
+            <strong>{{tweet.User.name}}</strong><br> 
+            <font color="grey">@{{tweet.User.account}}</font>
+          </div>
+      </div>
+      <div class="mt-2">
+        <p>{{tweet.description}}</p>
+        <font color="grey" size="2px">{{date tweet.updatedAt}}</font>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <strong>{{tweet.Replies.length}}</strong> 回覆 &nbsp
+      <strong>{{tweet.Likes.length}}</strong> 喜歡次數
+    </li>
+    <li class="list-group-item">
+      <a href="" style="color:black;" class="mr-5"><i class="far fa-comment-alt fa-lg"></i></a>
+      <form action="" style="display: inline-block;">
+        <i class="far fa-heart fa-lg"></i>
+      </form>
+    </li>
+    {{#each tweet.Replies}}
+    <li class="list-group-item">
+      <div class="flex-container">
+          <div class="item img">
+            <img class="mr-2" src="{{this.User.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          </div>
+          <div> 
+            <strong>{{this.User.name}}</strong>
+            <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
+            <br>
+            <font color="grey" size="2px">回覆</font>
+            <a href="" style="color: coral;" style="font-size: 2px;">@{{../tweet.User.name}}</a>
+            <section>{{this.comment}}</section>
+            
+            <a href="" style="color:black; font-size:10px;" class="mr-5"><i class="far fa-comment-alt"></i> {{this.ReplyComments.length}}</a>
+            <form action="" style="display: inline-block;">
+              <i class="far fa-heart" style="font-size:10px;"> {{this.Likes.length}}</i>
+            </form>
+          </div>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{!-- Right side --}}
+<div class="col-4">
+  <ul class="list-group mt-3 ml-3" >
+    <li class="list-group-item" style="background-color:lightgray;">
+      <strong>跟隨誰</strong>
+    </li>
+    <li class="list-group-item" style="background-color: lightgray;">
+      <div class="d-flex">
+        {{!-- <div class="p-3">Avatar</div> --}}
+        <img class="mr-3" src="#" alt="Avatar">
+        <div>
+          <strong>Name</strong><br> 
+          <span class="text-muted">@UserName</span>
+        </div>
+        <div class="align-self-center ml-auto">
+          <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: auto">正在跟隨</a>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" style="background-color: lightgray;">
+      <div class="d-flex">
+        <img class="mr-3" src="#" alt="Avatar">
+        <div>
+          <strong>Name</strong><br>
+          <span class="text-muted">@UserName</span> 
+        </div>
+        <div class="align-self-center ml-auto">
+          <a href="#" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</a>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" style="background-color: lightgray;">
+      <a href="#" style="color: coral;">顯示更多</a>
+    </li>
+  </ul>
+</div>

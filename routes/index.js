@@ -37,4 +37,5 @@ module.exports = (app, passport) => {
 
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweets)
+  app.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
 }

@@ -1,5 +1,5 @@
 {{!-- Center --}}
-<div class="col border-left border-right">
+<div class="col">
   <ul class="list-group" >
     <li class="list-group-item">
       <strong>首頁</strong>
@@ -8,7 +8,7 @@
     <form action="/tweets" method="POST">
       <div class="row">
         <div class="col-2">
-          <img src="" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          <img src="{{user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
         </div>
         <div class="col-10">  
           <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;"></textarea>
@@ -31,7 +31,7 @@
           <p>{{this.description}}</p>
           <div class="row">
             <div class="col-2">
-              <a href="" style="color:black;"><i class="far fa-comment-alt"></i>  {{this.repliesCount}}</a>
+              <a href="/tweets/{{this.id}}" style="color:black;"><i class="far fa-comment-alt"></i>  {{this.repliesCount}}</a>
             </div>
             <div class="col-2">
               <form action="">
