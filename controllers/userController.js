@@ -52,6 +52,18 @@ const userController = {
     req.logout()
     return res.redirect('/users/login')
   },
+  adminLoginPage: (req, res) => {
+    return res.render('admin/login', { layout: 'mainLogin' })
+  },
+  adminLogin: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    return res.redirect('/admin/tweets')
+  },
+  adminLogout: (req, res) => {
+    req.flash('success_messages', '成功登出！')
+    req.logout()
+    return res.redirect('/admin/login')
+  },
   getUser: (req, res) => {
     const reqUser = helpers.getUser(req)
     return User.findByPk(reqUser.id).then(user => {
@@ -64,7 +76,6 @@ const userController = {
     const { account, name, email, password, confirmPassword } = req.body
     const id = req.params.id
     let passwordCheck = true
-    
     // check user auth
     if (helpers.getUser(req).id !== Number(id)) {
       req.flash('error_messages', 'You can only edit your account')
