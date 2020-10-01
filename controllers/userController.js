@@ -52,6 +52,18 @@ const userController = {
     req.logout()
     return res.redirect('/users/login')
   },
+  adminLoginPage: (req, res) => {
+    return res.render('admin/login', { layout: 'mainLogin' })
+  },
+  adminLogin: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    return res.redirect('/admin/tweets')
+  },
+  adminLogout: (req, res) => {
+    req.flash('success_messages', '成功登出！')
+    req.logout()
+    return res.redirect('/admin/login')
+  },
   settingsPage: (req, res) => {
     const reqUser = helpers.getUser(req)
     return User.findByPk(reqUser.id).then(user => {
