@@ -68,9 +68,11 @@ const tweetController = {
       ] }
     )
     .then(tweet => {
-
-      console.log(tweet.toJSON())
-      return res.render('tweet', { tweet: tweet.toJSON() })
+      tweet = tweet.toJSON()
+      tweet.Replies.sort((a, b) => {
+        return b.updatedAt - a.updatedAt
+      })
+      return res.render('tweet', { tweet })
     })
   }
 }
