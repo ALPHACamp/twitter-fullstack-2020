@@ -36,7 +36,16 @@ const adminController = {
     }).then(user => {
         return res.render('admin/users', { user })
       })
-  }
+  },
+  signinPage: (req, res) => {
+    return res.render('admin/signin')
+  },
+
+  signIn: (req, res) => {
+    req.flash('success_messages', "成功登入！")
+    res.redirect('/admin/tweets')
+  },
+
 
 }
 
