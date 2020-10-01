@@ -104,6 +104,82 @@ const userController = {
         res.render("userTweets", { user, tweets })
       })
   },
+  getSetting: async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    if (user.id === helpers.getUser(req).id) {
+      return res.render('userSetting', {
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        email: user.toJSON().email,
+        css: 'settingPage'
+      })
+    } else {
+      req.flash('error_messages', '不能修改別人的資料')
+      return res.redirect('/tweets')
+    }
+  },
+  putSetting: async (req, res) => {
+    const { account, name, email, password, passwordCheck } = req.body
+
+    const errors = []
+
+    if (!account || !name || !email || !password || !passwordCheck) {
+      errors.push({ message: '所有欄位都是必填。' })
+    }
+    if (password !== passwordCheck) {
+      errors.push({ message: '密碼與確認密碼不相符！' })
+    }
+    if (errors.length) {
+      return res.render('userSetting', {
+        errors,
+        account,
+        name,
+        email,
+        password,
+        passwordCheck,
+        css: 'settingPage'
+      })
+    }
+    const user = await User.findByPk(req.params.id)
+    if (user.id === helpers.getUser(req).id) {
+      const duplicatedUser = await User.findOne({
+        where: {
+          [Op.or]: [
+            { email },
+            { account }
+          ],
+          id: {
+            [Op.ne]: user.id
+          }
+        }
+      })
+      if (duplicatedUser) {
+        errors.push({ message: '重複的帳號或email' })
+        return res.render('userSetting', {
+          account,
+          name,
+          email,
+          password,
+          passwordCheck,
+          errors,
+          css: 'settingPage'
+        })
+      }
+
+      await user.update({
+        account,
+        name,
+        email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+        passwordCheck
+      })
+      req.flash('success_messages', 'setting was successfully to update')
+      return res.redirect(`/setting/${user.id}`)
+    } else {
+      req.flash('error_messages', '不能修改別人的資料')
+      return res.redirect('/tweets')
+    }
+  }
 }
 
 module.exports = userController

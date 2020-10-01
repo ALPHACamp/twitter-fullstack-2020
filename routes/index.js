@@ -33,5 +33,6 @@ module.exports = app => {
 
   // =====================user====================================
   app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
-
+  app.get('/setting/:id', authenticated, userController.getSetting)
+  app.put('/setting/:id', authenticated, userController.putSetting)
 }
