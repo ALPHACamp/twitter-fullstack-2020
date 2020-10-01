@@ -20,7 +20,7 @@ module.exports = (app, passport) => {
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      console.log(req.user)
+      // console.log(req.user)
       if (req.user.role === 'admin') { return next() }
       return res.redirect('/users/login')
     }
