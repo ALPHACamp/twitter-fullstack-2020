@@ -29,7 +29,8 @@ const userController = {
               name: req.body.name,
               email: req.body.email,
               account: req.body.account,
-              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+              role: 'user'
             }).then(user => {
               req.flash('success_messages', '成功註冊帳號！')
               return res.redirect('/users/login')
@@ -43,12 +44,12 @@ const userController = {
   },
   login: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    return res.redirect('/')
+    return res.redirect('/tweets')
   },
   logout: (req, res) => {
-    req.flash('success_messages', '成功登出')
-    res.logout()
-    return redirect('/users/login')
+    req.flash('success_messages', '成功登出！')
+    req.logout()
+    return res.redirect('/users/login')
   }
 }
 
