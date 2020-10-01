@@ -14,16 +14,15 @@ const port = 3000
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 // 設定 view engine 使用 handlebars
-app.engine('handlebars', handlebars({ 
-    defaultLayout: 'main',
-    helpers: require('./config/handlebars-helpers')
-  })) 
+app.engine('handlebars', handlebars({
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
+}))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //setup body parser
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
