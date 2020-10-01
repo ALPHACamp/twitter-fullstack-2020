@@ -19,13 +19,13 @@ const userController = {
   },
 
   signup: (req, res) => {
-    const { account, name, email, password, passwordCheck } = req.body
+    const { account, name, email, password, checkPassword } = req.body
     req.flash('userInput', req.body)
-    if (!account || !name || !email || !password || !passwordCheck) {
+    if (!account || !name || !email || !password || !checkPassword) {
       req.flash('errorMessage', '請確認是否有欄位未填寫')
       return res.redirect('/signup')
     }
-    if (!(password === passwordCheck)) {
+    if (!(password === checkPassword)) {
       req.flash('errorMessage', '兩次密碼並不相同，請重新輸入')
       return res.redirect('/signup')
     }
