@@ -35,41 +35,20 @@ module.exports = (app, passport) => {
     userController.signIn
   );
   app.get("/logout", userController.logout);
-  app.get("/main", (req, res) => res.render("mainpage"));
 
 
   // adminController
-  app.get("/admin", (req, res) => {
-    res.redirect("/admin/tweets");
-  });
-  app.get("/admin/tweets", adminController.getTweets);
-  app.post("/admin/tweets/:id", adminController.deleteTweet);
-
-
-  app.get("/signup", userController.signUpPage);
-  app.post("/signup", userController.signUp);
-  app.get("/signin", userController.signIn);
-  
-  //tweetController
-  app.get("/", (req, res) => res.redirect("/tweets"));
-  app.get("/tweets", tweetController.getTweets);
-  app.get("/tweets/:id", tweetController.getTweet);
-  app.post('/tweets', tweetController.postTweet)
-  app.get('/tweets/user',tweetController.getUser)
-
-  app.post("/tweets/:id/like", tweetController.addLike);
-  app.delete("/tweets/:id/unlike", tweetController.removeLike);
-
-  app.post('/tweets/:id/replies', tweetController.postReply)
-  app.get('/tweets/:id/replies', tweetController.getReply)
-
-
   app.get('/admin/signin', adminController.signinPage)
   app.post('/admin/signin', passport.authenticate('local', {
     failureRedirect: '/admin/signin',
     failureFlash: true
   }), adminController.signIn)
 
+  app.get("/admin", (req, res) => {
+    res.redirect("/admin/tweets");
+  });
+  app.get("/admin/tweets", authenticatedAdmin, adminController.getTweets);
+  app.post("/admin/tweets/:id", authenticatedAdmin, adminController.deleteTweet);
 
   app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/tweets') })
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
@@ -77,5 +56,21 @@ module.exports = (app, passport) => {
 
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
+  //tweetController
+  app.get("/", authenticated, (req, res) => res.redirect("/tweets"));
+  app.get("/tweets", authenticated, tweetController.getTweets);
+  app.get("/tweets/:id", authenticated, tweetController.getTweet);
+  app.post('/tweets', authenticated, tweetController.postTweet)
+  app.get('/tweets/user', authenticated, tweetController.getUser)
 
- 
+  app.post("/tweets/:id/like", authenticated, tweetController.addLike);
+  app.delete("/tweets/:id/unlike", authenticated, tweetController.removeLike);
+
+  app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
+  app.get('/tweets/:id/replies', authenticated, tweetController.getReply)
+
+
+  // userController
+  app.get('/user/:id/follower', authenticated, userController.getFollowers)
+
+}

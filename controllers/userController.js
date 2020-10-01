@@ -47,7 +47,7 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', "成功登入！")
-    res.redirect('/main')
+    res.redirect('/tweets')
   },
 
   logout: (req, res) => {
@@ -56,7 +56,9 @@ const userController = {
     res.redirect('/signin')
   },
 
-  
+  getFollowers: (req, res) => {
+    res.render('followers')
+  }
 
 
 }
