@@ -16,6 +16,7 @@ const tweetController = {
                 ...t.dataValues,
                 description: t.dataValues.description.substring(0, 100),
             }))
+            console.log(tweets.dataValues)
             return res.render('tweets', {
                 tweets: data
             })
@@ -41,38 +42,6 @@ const tweetController = {
                 })
             }
         }
-    },
-    //單一推文
-    getTweetCreate: (req, res) => {
-        return Tweet.findByPk(req.params.id, {
-          include: [
-            User,
-            { model: Reply, include: [User] },
-          ]
-        }).then(tweet => {
-            return res.render('create', {
-                tweet: tweet.toJSON()
-            })
-        })
-    },
-    postCreateview:(req, res) => {
-        const tweetDesc = req.body.text
-        return Tweet.create({
-            description: tweetDesc,
-            UserId: helpers.getUser(req).id
-        }).then(tweet => {
-            Tweet.findByPk(req.params.id, {
-                include: [
-                    User,
-                    { model: Reply, include: [User] },
-                ]
-            }).then(reply => {
-                console.log(reply)
-                return res.render('createview', {
-                    tweet: tweet.toJSON()
-                })
-            })
-        })
     },
 }
 

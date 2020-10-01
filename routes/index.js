@@ -11,9 +11,6 @@ module.exports = app => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetsController.getTweets)
   app.post('/tweets', authenticated, tweetsController.postTweets)
-  app.get('/tweets/create/:id', authenticated, tweetsController.getTweetCreate)
-  app.post('/createview', authenticated, tweetsController.postCreateview)
-  
 
   app.get('/replylist/:id', authenticated, replyController.getReplylist)
   app.post('/replylist/:id', authenticated, replyController.postReply)
