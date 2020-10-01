@@ -53,7 +53,7 @@ const userController = {
         ReplyCount: tweet.dataValues.Replies.length,
         isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
       }))
-      res.render("userTweets", { profile: user, tweets })
+      res.render('userTweets', { profile: user, tweets })
     })
   },
   editUser: (req, res) => {
@@ -68,6 +68,20 @@ const userController = {
         return res.redirect(`/users/${user.id}/tweets`)
       })
     }
+  },
+  putUser: (req, res) => {
+     console.log(req.body)
+    return User.findByPk(req.params.id).then(user => {
+      user
+      .update({
+        name: req.body.name,
+        introduction: req.body.introduction
+      })
+      .then(user => {
+        req.flash('success_msg', 'user was successfully to update')
+        res.redirect(`/users/${req.params.id}/tweets`)
+      })
+    })
   }
 }
 

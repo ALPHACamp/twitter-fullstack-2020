@@ -17,17 +17,19 @@
   <button type="submit" class="btn btn-warning btn-lg btn-block">推文</button>
 </div>
 {{!-- 中間區域 --}}
+<h5>{{profile.name}}</h5>
+<hr />
 <div id="main">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<div class="panel-title">
 					<h3 class="card-title"><strong>{{profile.name}}</strong></h3>
 					<h5 class="card-title">@{{profile.account}}</h5>
-					<p>
 					{{#ifCond profile.id user.id }}
-            			<a href="/users/{{profile.id}}/edit"><button type="submit" class="btn btn-primary">edit</button></a>
+            			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+						  Edit Profile
+						</button>
         			{{/ifCond}}
-					</p>
 				</div>
 			</div>
 			<div class="panel-body">
@@ -55,6 +57,52 @@
 		</div>
 		{{/each}}
 </div>
+{{!-- modal --}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <form
+  		action="/users/{{user.id}}/edit"
+  		method='POST'
+	  >
+	  <div class='col-md-8'>
+      <div class='form-group'>
+        <input
+          type='text'
+          class='form-control form-control-lg'
+          name='name'
+          id='name'
+          placeholder='Name'
+          value="{{user.name}}"
+          required
+        />
+      </div>
+      <div class='form-group'>
+        <textarea
+          class='form-control'
+          name='introduction'
+          id='introduction'
+          rows='8'
+          placeholder='Type anything about you here...'
+        >{{user.introduction}}</textarea>
+      </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+	  </form>
+    </div>
+  </div>
+</div>
+{{!-- 右邊區域 --}}
 <div id="right">
 	<div class="col-md-7 column">
 		<div class="panel panel-default">
