@@ -53,7 +53,7 @@ const userController = {
     return res.redirect('/users/login')
   },
 
-  Like: (req, res) => {
+  likeTweet: (req, res) => {
     Like.findOne({
       where: {
         UserId: req.user.id,
@@ -72,6 +72,31 @@ const userController = {
         Like.create({
           UserId: req.user.id,
           TweetId: req.params.tweetId
+        })
+        .then(like => {
+          return res.redirect('back')
+        })
+      }
+    })
+  },
+
+  likeReply: (req, res) => {
+    Like.findOne({
+      where: {
+        UserId: req.user.id,
+        ReplyId: req.params.replyId
+      }
+    })
+    .then(like => {
+      if (like) {
+        like.destroy()
+          .then(like => {
+            return res.redirect('back')
+          })
+      } else {
+        Like.create({
+          UserId: req.user.id,
+          ReplyId: req.params.replyId
         })
         .then(like => {
           return res.redirect('back')
