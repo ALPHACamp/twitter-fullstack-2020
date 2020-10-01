@@ -1,1 +1,9 @@
-<h1>Tweets page</h1>
+{{!-- Center --}}
+<div class="col border-left border-right">
+  推文清單
+  <hr>
+  {{#each tweets}}
+    {{this.description}}
+    <hr>
+  {{/each}}
+</div>
