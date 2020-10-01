@@ -6,7 +6,7 @@ module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
     if (req.isAuthenticated()) {  // isAuthenticated 為passport內建之方法,回傳true or false
-      if (req.user.role === "1") { return next() }
+      if (!req.user.role) { return next() }
       return res.redirect('/')
     }
     res.redirect('/signin')
@@ -16,10 +16,10 @@ module.exports = (app, passport) => {
 
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
-      if (req.user.role === "0") { return next() }  //如果是管理員的話
+      if (req.user.role) { return next() }  //如果是管理員的話
       return res.redirect('/') //如果不是就導回首頁
     }
-    res.redirect('/signin')
+    res.redirect('/admin/signin')
   }
 
   //user login

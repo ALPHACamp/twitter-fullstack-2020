@@ -42,8 +42,25 @@
             <div class="d-flex flex-column mt-2 col ">
               </br>
 
+              {{#if user.role}}
+              <div class="d-flex">
+                <div class="tweets" name="tweets">
+
+                  <a class=" nav-link" href="/admin/tweets"><strong><i class="fas fa-home"></i>推文清單</strong></a>
+
+                </div>
+
+              </div>
+              </br>
               <div class="d-flex">
 
+                <div class="users" name="users">
+                  <a class=" nav-link" href="/admin/users"><strong><i class="far fa-user"></i> 使用者列表</strong></a>
+                </div>
+
+              </div>
+              {{else}}
+              <div class="d-flex">
                 <div class="main " name="main">
 
                   <a class=" nav-link" href="/main"><strong><i class="fas fa-home"></i>首頁</strong></a>
@@ -54,7 +71,7 @@
               </br>
               <div class="d-flex">
 
-                <div class="setting" name="user">
+                <div class="user" name="user">
                   <a class=" nav-link" href="/main"><strong><i class="far fa-user"></i> 個人資料</strong></a>
                 </div>
 
@@ -75,6 +92,7 @@
                 </div>
 
               </div>
+              {{/if}}
               </br>
               </br>
               </br>
