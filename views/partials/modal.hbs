@@ -1,0 +1,73 @@
+{{!-- 回覆modal --}}
+<div class="modal" id="replyModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content reply-modal-content">
+      <div class="reply-modal-header">
+        <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">
+          &times;
+        </button>
+      </div>
+      <div class="reply-modal-body">
+        <div class="reply-modal-tweet">
+          <div class="reply-modal-userPic">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </div>
+          <div class="reply-modal-info">
+            <div class="reply-modal-name">
+              <a href="">
+                nono
+              </a>
+              <span class="reply-time">@nonolin · 3小時前</span>
+            </div>
+            <p>Needless to say, I keep her in checkShe was a bad bad, nevertheless (yeah)Callin' it quits now,
+              baby,I'mawrec(ayy)Crash at my place, baby, you're a wreck (ayy)Needless to say, I keep her
+            </p>
+            <div class="reply-target">
+              <span class="reply-mark">回覆給</span>
+              <a class="reply-user" href="">@</a>
+            </div>
+          </div>
+        </div>
+        <div class="reply-modal-post">
+          <div class="reply-modal-userPic">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </div>
+          <div class="reply-modal-text">
+            <form action="">
+              <textarea class="reply-modal-textarea" placeholder="推你的回覆"></textarea>
+              <div class="tweet-post-btn">
+                <button type="submit" class="btn btn-post-modal">回覆</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- 推文modal --}}
+<div class="modal" id="tweetModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content tweet-modal-content">
+      <div class="tweet-modal">
+        <div class="tweet-modal-header">
+          <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">&times;
+          </button>
+        </div>
+        <div class="tweet-modal-body">
+          <div class="tweet-modal-avatar">
+            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          </div>
+          <form action="">
+            <textarea class="tweet-modal-text" placeholder="有什麼新鮮事？"></textarea>
+            <div class="tweet-post-btn">
+              <button type="submit" class="btn btn-post-modal">推文</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

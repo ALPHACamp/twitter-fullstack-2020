@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash');
 
 
+
 const app = express();
 const port = 3000;
 
@@ -20,6 +21,7 @@ app.use(session({ secret: 'test', resave: false, saveUninitialized: true }))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
+
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
