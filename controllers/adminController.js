@@ -7,11 +7,13 @@ const User = db.User
 const adminController = {
   getTweets: (req, res) => {
     return Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: User
-    })
-      .then(tweets => {
+      include: User,
+      order: [['createdAt', 'DESC']]
+    }).then(tweets => {
+        tweets = tweets.map(tweet => ({
+          ...tweet.dataValues,
+          description: tweet.dataValues.description.split(" ", 50).join(" ")
+        }))
         return res.render('admin/tweets', { tweets })
       })
   },
@@ -34,6 +36,11 @@ const adminController = {
         { model: Tweet, as: 'LikeTweets' },
       ]
     }).then(user => {
+        user = user.map(user => ({
+          ...user.dataValues,
+          TweetsCount: user.Tweets.length
+        }))
+        user = user.sort((a, b) => b.TweetsCount - a.TweetsCount)
         return res.render('admin/users', { user })
       })
   },
