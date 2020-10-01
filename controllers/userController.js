@@ -2,7 +2,10 @@ const bcrypt = require('bcryptjs')
 const { Sequelize } = require('../models')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
+
 const Op = Sequelize.Op
+
 
 const userController = {
   signUpPage: (req, res) => {
@@ -38,7 +41,6 @@ const userController = {
     }
   },
 
-
   signInPage: (req, res) => {
     return res.render('signin')
   },
@@ -53,6 +55,8 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
+  
 
 
 }
