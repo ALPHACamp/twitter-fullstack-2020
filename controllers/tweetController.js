@@ -17,17 +17,30 @@ const tweetController = {
       tweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         likesCount: tweet.dataValues.Likes.length,
+        likeUserId: tweet.dataValues.Likes.map(like => like.dataValues.UserId),
         repliesCount: tweet.dataValues.Replies.length,
         user: tweet.dataValues.User.dataValues,
-        FollowerId: tweet.dataValues.User.dataValues.Followers.map(Followers => Followers.dataValues.id)
+        FollowerId: tweet.dataValues.User.dataValues.Followers.map(followers => followers.dataValues.id)       
       }))
 
+      //like and dislike
+      tweets.forEach(tweet => {
+        tweet.likeUserId.forEach(userId => {
+          if (userId === req.user.id) {
+            tweet['likesTweet'] = true
+          }
+          else {
+            tweet['likesTweet'] = false
+          }
+        })
+      })
+      
       //filter the tweets to those that user followings & user himself
       tweetFollowings = []
-      tweets.forEach(tweets => {
-        tweets.FollowerId.forEach(FollowerId => {
-          if (FollowerId === req.user.id || tweets.UserId === req.user.id) {
-            tweetFollowings.push(tweets)
+      tweets.forEach(tweet => {
+        tweet.FollowerId.forEach(FollowerId => {
+          if (FollowerId === req.user.id || tweet.UserId === req.user.id) {
+            tweetFollowings.push(tweet)
           }
         })
       })

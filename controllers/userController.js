@@ -54,6 +54,16 @@ const userController = {
   },
 
   likeTweet: (req, res) => {
+    Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.tweetId
+    })
+    .then(like => {
+      return res.redirect('back')
+    })
+  },
+
+  dislikeTweet: (req, res) => {
     Like.findOne({
       where: {
         UserId: req.user.id,
@@ -61,23 +71,11 @@ const userController = {
       }
     })
     .then(like => {
-      //if user has already like this tweet
-      if (like) {
-        like.destroy()
-          .then(like => {
-            return res.redirect('back')
-          })
-      }
-      else {
-        Like.create({
-          UserId: req.user.id,
-          TweetId: req.params.tweetId
-        })
+      like.destroy()
         .then(like => {
           return res.redirect('back')
         })
-      }
-    })
+      })  
   },
 
   likeReply: (req, res) => {
