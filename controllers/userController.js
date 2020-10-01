@@ -86,24 +86,51 @@ const userController = {
         { model: User, as: "Followings" }
       ]
     })
-      .then((user) => {
-        user = {
-          ...user.dataValues,
-          LikeCount: user.Likes.length,
-          TweetCount: user.Tweets.length,
-          FollowerCount: user.Followers.length,
-          FollowingCount: user.Followings.length,
-          isFollowing: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
-        }
-        const tweets = user.Tweets.map((tweet) => ({
-          ...tweet.dataValues,
-          LikeCount: tweet.dataValues.Likes.length,
-          ReplyCount: tweet.dataValues.Replies.length,
-          isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
-        }))
-        res.render("userTweets", { user, tweets })
-      })
+    .then((user) => {
+      user = {
+        ...user.dataValues,
+        LikeCount: user.Likes.length,
+        TweetCount: user.Tweets.length,
+        FollowerCount: user.Followers.length,
+        FollowingCount: user.Followings.length,
+        isFollowing: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      }
+      const tweets = user.Tweets.map((tweet) => ({
+        ...tweet.dataValues,
+        LikeCount: tweet.dataValues.Likes.length,
+        ReplyCount: tweet.dataValues.Replies.length,
+        isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
+      }))
+      res.render('userTweets', { profile: user, tweets })
+    })
   },
+  editUser: (req, res) => {
+    if(helpers.getUser(req).id == req.params.id) {
+      return User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('profileEdit', { user: user.toJSON()} )
+      })
+    } else {
+      return User.findByPk(req.params.id)
+      .then(user => {
+        return res.redirect(`/users/${user.id}/tweets`)
+      })
+    }
+  },
+  putUser: (req, res) => {
+     console.log(req.body)
+    return User.findByPk(req.params.id).then(user => {
+      user
+      .update({
+        name: req.body.name,
+        introduction: req.body.introduction
+      })
+      .then(user => {
+        req.flash('success_msg', 'user was successfully to update')
+        res.redirect(`/users/${req.params.id}/tweets`)
+      })
+    })
+  }
 }
 
 module.exports = userController
