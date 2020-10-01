@@ -101,9 +101,10 @@ const userController = {
           ReplyCount: tweet.dataValues.Replies.length,
           isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
         }))
-        res.render("userTweets", { user, tweets })
+        res.render('userTweets', { profile: user, tweets })
       })
   },
+
   getSetting: async (req, res) => {
     const user = await User.findByPk(req.params.id)
     if (user.id === helpers.getUser(req).id) {
@@ -179,6 +180,19 @@ const userController = {
       req.flash('error_messages', '不能修改別人的資料')
       return res.redirect('/tweets')
     }
+  },
+  putUser: (req, res) => {
+    return User.findByPk(req.params.id).then(user => {
+      user
+        .update({
+          name: req.body.name,
+          introduction: req.body.introduction
+        })
+        .then(user => {
+          res.redirect(`/users/${req.params.id}/tweets`)
+        })
+    })
+
   }
 }
 
