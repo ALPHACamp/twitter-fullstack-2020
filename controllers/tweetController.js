@@ -13,7 +13,8 @@ const tweetController = {
        include: [
         Like,
         Reply,
-        { model: User, include: [{ model: User, as: 'Followers'}]}]
+        { model: User, include: [{ model: User, as: 'Followers'}]}],
+        order: [['updatedAt', 'DESC']]
     }).then(tweets => {
       tweets = tweets.map(tweet => ({
         ...tweet.dataValues,
