@@ -5,9 +5,10 @@
       <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">登入 AlphaTwitter</h1>
       </div>
+      {{> message}}
       <div class="form-label-group">
         <input type="text" name="account" class="form-control mt-4" placeholder="帳號"
-          style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black;"
+          style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black;" value="{{userInput.account}}"
           required autofocus>
       </div>
       <div class="form-label-group">
