@@ -6,7 +6,6 @@ const Reply = db.Reply
 
 const tweetController = {
   getTweets: (req, res) => {
-
     Tweet.findAll({
       include: [Like, User, Reply]
       //where: { UserId: req.user.id },      
@@ -20,6 +19,17 @@ const tweetController = {
       //console.log(tweets)
       return res.render('tweets', { tweets })
     })  
+  },
+
+  postTweets: (req, res) => {
+    const { description } = req.body
+    Tweet.create({
+      description,
+      UserId: req.user.id
+    })
+    .then(tweet => {
+      
+    })
   }
 }
 

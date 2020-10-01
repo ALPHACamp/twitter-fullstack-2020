@@ -5,16 +5,16 @@
       <strong>首頁</strong>
     </li>
     <li class="list-group-item">
-    <form>
+    <form action="/tweets" method="POST">
       <div class="row">
         <div class="col-2">
           <img src="" alt="user avatar" style="width: 50px; border-radius: 50%;">
         </div>
         <div class="col-10">  
-          <textarea placeholder="有什麼新鮮事?" class="form-control" id="tweet" name="tweet" rows="3"  style="border: none;"></textarea>
+          <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;"></textarea>
         </div>
       </div>
-      <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: 60px; float: right;" >推文</a>
+      <button class="btn" type="submit" style="border-radius: 18px; background:coral; color:white; width: 60px; float: right;">推文</button>
     </form>
     </li>
   

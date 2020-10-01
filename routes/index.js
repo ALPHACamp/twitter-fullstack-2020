@@ -9,4 +9,5 @@ module.exports = (app, passport) => {
   app.post('/users/register', userController.register)
 
   app.get('/tweets', tweetController.getTweets)
+  app.post('/tweets', tweetController.postTweets)
 }
