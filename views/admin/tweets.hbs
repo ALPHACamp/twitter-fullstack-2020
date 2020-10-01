@@ -4,10 +4,17 @@
   <h5>推文清單</h5>
   <hr>
   {{#each tweets}}
-    {{this.User.account}} @{{this.User.name}}・{{moment this.createdAt}}
-    <br />
-    <br />
-    {{this.description}}
+    <div class="row">
+      <div class="col-1">
+        <img style="width: 70px; border-radius: 50%" src="{{this.User.avatar}}" alt="">
+      </div>
+      <div class="col-11">
+        <span class="bold"><b>{{this.User.account}}</b></span>
+        <span style="color: grey">@{{this.User.name}}・{{moment this.createdAt}}</span>
+        <br />
+        {{this.description}}
+      </div>
+    </div>
     <hr>
   {{/each}}
 </div>
