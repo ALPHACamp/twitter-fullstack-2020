@@ -2,31 +2,32 @@ const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 
+const helpers = require('../_helpers')
+
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      if (req.user.role === 'user') {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).role !== 'admin') {
         return next()
       } else {
         req.flash('error_messages', '請登入正確帳號!')
-        return res.redirect('/login')
+        return res.redirect('/signin')
       }
     }
-    res.redirect('/login')
+    res.redirect('/signin')
   }
 
   const authenticatedAdmin = (req, res, next) => {
-    console.log('SDFSDF')
-    if (req.isAuthenticated()) {
-      if (req.user.role === 'admin') {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).role === 'admin') {
         return next()
       } else {
         req.flash('error_messages', '請登入正確帳號!')
-        return res.redirect('/admin/login')
+        return res.redirect('/admin/signin')
       }
     }
-    res.redirect('/admin/login')
+    res.redirect('/admin/signin')
   }
 
   app.get('/', authenticated, (req, res) => {
@@ -37,36 +38,39 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   // 註冊頁
-  app.get('/register', userController.registerPage)
-  app.post('/register', userController.register)
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
   // 前台登入頁
-  app.get('/login', userController.loginPage)
+  app.get('/signin', userController.signInPage)
   // 前台登入
-  app.post('/login', passport.authenticate('local', {
-    failureRedirect: '/login',
+  app.post('/signin', passport.authenticate('local', {
+    failureRedirect: '/signin',
     failureFlash: true
-  }), userController.login)
+  }), userController.signIn)
 
-  app.get('/logout', userController.logout)
+  app.get('/signout', userController.signOut)
 
 
   // 後台登入頁
-  app.get('/admin/login', adminController.loginPage)
+  app.get('/admin/signin', adminController.signInPage)
   // 後台登入 
-  app.post('/admin/login', passport.authenticate('local', {
-    failureRedirect: '/admin/login',
+  app.post('/admin/signin', passport.authenticate('local', {
+    failureRedirect: '/admin/signin',
     failureFlash: true
-  }), adminController.login)
+  }), adminController.signIn)
 
   app.get('/admin', authenticatedAdmin, (req, res) => {
     res.redirect('/admin/tweets')
   })
   // 後台推文清單
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+
+  // user 相關路由
+  app.get('/users/:id', userController.getUser)
   // 刪除後台推文
   app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   // 後台使用者清單
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
   // 後台登出
-  app.get('/admin/logout', adminController.logout)
+  app.get('/admin/signout', adminController.signOut)
 }

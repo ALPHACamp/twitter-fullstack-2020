@@ -285,3 +285,84 @@ label {
   position: fixed;
 }
 
+/* userPage */
+.user-header {
+  display: flex;
+  justify-content:flex-start;
+}
+
+.user-header a{
+  margin:20px 0px 21px 19px;
+  color:#000000;
+}
+
+.user-title {
+  margin-left: 43px;
+}
+
+.user-content span {
+  font:13px;
+  color: #657786;
+}
+
+.user-cover {
+  width:598px;
+  height: 200px;
+}
+
+.user-info-top {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-info-top img {
+  width:140px;
+  height: 140px;
+  border: 5px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 50%;
+  position: relative;
+  left: 14px;
+}
+
+.user-info-top button {
+  width:122px;
+  height: 40px;
+  font-size: 15px;
+  font-weight:bold;
+  border: 1px solid #FF6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+  color: #FF6600;
+  background-color: transparent;
+  position: relative;
+  top: 6rem;
+  left: 9rem;
+}
+
+.user-info-bottom {
+  margin: 15px; 
+}
+
+.user-followships a {
+  color:#000000;
+  text-decoration:none;
+}
+
+.user-selection-bar li {
+  height: 40px;
+}
+
+.user-selection-bar a {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 21px;
+  color: #657786;
+}
+
+.user-selection-bar a:hover {
+  color: #FF6600;
+  text-decoration: none;
+}
