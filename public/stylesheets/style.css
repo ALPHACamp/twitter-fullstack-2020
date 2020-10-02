@@ -2,7 +2,7 @@
   height: 200px; 
   width: 100%;
 }
-.user_photo {
+.user_avatar {
   position: relative;
   background: #fff;
   width: 150px;
@@ -10,8 +10,17 @@
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0);
   transform: translateY(-50%);
-  left: 10px;
   /* left: 50%; */
   /* cursor: pointer;  */
 }
-
+.user_avatar_s {
+  background: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0);
+}
+.selected_nav {
+  color: rgb(255, 102, 0); 
+  border-bottom: rgb(255, 102, 0) solid;
+}
