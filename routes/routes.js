@@ -30,12 +30,12 @@ router.get('/tweets', userAuthenticated, tweetController.getTweets)
 router.get('/signup', userController.getSignupPage)
 router.post('/signup', userController.signup)
 router.get('/signin', userController.getSigninPage)
-router.post('/signin',
-  passport.authenticate('local', { failureRedirect: '/signin' }), userController.signin)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin' }), userController.signin)
 
 router.get('/admin/tweets', adminAuthenticated, adminController.getTweets)
 router.get('/admin/signin', adminController.getSigninPage)
-router.post('/admin/signin',
-  passport.authenticate('local', { failureRedirect: '/admin/signin' }), adminController.signin)
+router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin' }), adminController.signin)
+
+
 
 module.exports = router

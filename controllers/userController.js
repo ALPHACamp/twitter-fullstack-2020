@@ -18,6 +18,7 @@ const userController = {
     return res.redirect('/tweets')
   },
 
+
   signup: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
     req.flash('userInput', req.body)
@@ -29,16 +30,17 @@ const userController = {
       req.flash('errorMessage', '兩次密碼並不相同，請重新輸入')
       return res.redirect('/signup')
     }
-    User.findOne({ where: { [Op.or]: [{account}, {email}] } })
+    User.findOne({ where: { [Op.or]: [{ account }, { email }] } })
       .then((user) => {
         if (user) {
           req.flash('errorMessage', '帳號/信箱已使用，請重新輸入')
           return res.redirect('/signup')
         }
         User.create({ account, name, email, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)) })
-          .then(() => { 
+          .then(() => {
             req.flash('successMessage', '成功註冊!! 請登入')
-            return res.redirect('/signin') })
+            return res.redirect('/signin')
+          })
           .catch(() => {
             req.flash('errorMessage', '系統異常，請重新操作 #U101')
             return res.redirect('/signup')
