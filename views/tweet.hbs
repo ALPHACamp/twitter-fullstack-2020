@@ -163,6 +163,21 @@
             <font color="grey" size="2px">回覆給</font><font color="coral" size="2px">@{{this.User.name}}</font> 
           </div>
         </div>
+        {{#each this.ReplyComments}}
+        <div class="flex-container mb-2">
+          <div>
+            <img class="mr-3" src="{{this.User.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          </div>
+          <div>
+            <strong>{{this.User.name}}</strong>
+            <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
+            <p>
+              {{this.comment}}
+            </p>
+            <font color="grey" size="2px">回覆給</font><font color="coral" size="2px">@{{this.User.name}}</font> 
+          </div>
+        </div>
+        {{/each}}
         <div class="flex-container">
           <div>
             <img src="{{../user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">

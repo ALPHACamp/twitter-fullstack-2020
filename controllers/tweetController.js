@@ -68,13 +68,17 @@ const tweetController = {
       { include: [
         Like, 
         User,
-        { model: Reply, include: [ User, Like, ReplyComment ] }
+        { model: Reply, include: [ 
+          User, 
+          Like, 
+          { model: ReplyComment, include: [ User ]} 
+        ] }
       ] }
     )
     .then(tweet => {
       tweet = tweet.toJSON()
       const user = req.user
-      console.log(tweet.Replies[0])
+      
       //like and dislike tweet
       const isLikedTweet = req.user.Likes.map(likes => likes.TweetId).includes(tweet.id)
 
