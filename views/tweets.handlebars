@@ -1,7 +1,7 @@
 <div id="left">
 	<div class="row" style="text-align: center;">
 		<ul>
-     		 <h1>
+			<h1>
 				<li>
 					<a class="nav-link active" href="/tweets">首頁</a>
 				</li>
@@ -9,12 +9,12 @@
 					<a class="nav-link" href="/">個人資料</a>
 				</li>
 				<li>
-					<a class="nav-link" href="/">設定</a>
+					<a class="nav-link" href="/setting/{{user.id}}">設定</a>
 				</li>
-      		</h1>
-		</ul> 
+			</h1>
+		</ul>
 	</div>
-  <button type="submit" class="btn btn-warning btn-lg btn-block">推文</button>
+	<button type="submit" class="btn btn-warning btn-lg btn-block">推文</button>
 </div>
 {{!-- 中間區域 --}}
 <h1>首頁</h1>
@@ -23,7 +23,8 @@
 	<form action="/tweets" method="POST">
 		<div class="form-group">
 			<img src="" class="card-img" alt="有什麼新鮮事?">
-			<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"> </textarea>
+			<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;"
+				placeholder="what's on your mind?"> </textarea>
 		</div>
 		<input type="hidden" name="restaurantId" value="{{tweet.description}}" />
 		<button type="submit" class="btn btn-warning btn-lg">推文</button>
@@ -31,27 +32,27 @@
 
 	<br>
 	<br>
-  {{#each tweets}}
-    <div class="card mb-3" style="max-width: 900px;">
-      <div class="row no-gutters">
-        <div class="col-md-4">
-          <img src="" class="card-img" alt="user avatar">
-        </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">
-              <a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-			  ● <small class="text-muted">{{moment this.createdAt }}</small>
-            </h5>
-			<a href="/replylist/{{ this.id }}">
-				<p class="card-text" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap">
-				{{{ this.description }}}</p>
-			</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{/each}}
+	{{#each tweets}}
+	<div class="card mb-3" style="max-width: 900px;">
+		<div class="row no-gutters">
+			<div class="col-md-4">
+				<img src="" class="card-img" alt="user avatar">
+			</div>
+			<div class="col-md-8">
+				<div class="card-body">
+					<h5 class="card-title">
+						<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+						● <small class="text-muted">{{moment this.createdAt }}</small>
+					</h5>
+					<a href="/replylist/{{ this.id }}">
+						<p class="card-text" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap">
+							{{{ this.description }}}</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{{/each}}
 </div>
 {{!-- 右邊 --}}
 <div id="right">
@@ -68,6 +69,3 @@
 		</div>
 	</div>
 </div>
-
-
-
