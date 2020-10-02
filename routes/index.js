@@ -6,12 +6,9 @@ const helpers = require('../_helpers.js')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
-    if (helpers.ensureAuthenticated(req)) {  // isAuthenticated 為passport內建之方法,回傳true or false
-      if (!req.user.role) {
-        return next()
-      }
-      req.flash('error_messages', '請從後臺登入!')
-      return res.redirect('/admin/signin')
+    if (helpers.ensureAuthenticated(req)) {
+      return next()
+
     }
     res.redirect("/signin");
   };
@@ -21,7 +18,6 @@ module.exports = (app, passport) => {
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (req.user.role) { return next() }  //如果是管理員的話
-
       req.flash('error_messages', '您非管理員，請從前台登入')
       return res.redirect('/admin/signin') //如果不是就導回首頁
     }
@@ -42,7 +38,6 @@ module.exports = (app, passport) => {
     userController.signIn
   );
   app.get("/logout", userController.logout);
-  app.get("/main", (req, res) => res.render("mainpage"));
 
 
   // adminController
@@ -58,19 +53,19 @@ module.exports = (app, passport) => {
   app.get("/signin", userController.signIn);
 
   //tweetController
-  app.get("/", (req, res) => res.redirect("/tweets"));
-  app.get("/tweets", tweetController.getTweets);
-  app.get("/tweets/:id", tweetController.getTweet);
-  app.post('/tweets', tweetController.postTweet)
-  app.get('/tweets/user', tweetController.getUser)
+  app.get("/", authenticated, (req, res) => res.redirect("/tweets"));
+  app.get("/tweets", authenticated, tweetController.getTweets);
+  app.get("/tweets/:id", authenticated, tweetController.getTweet);
+  app.post('/tweets', authenticated, tweetController.postTweet)
+  app.get('/tweets/user', authenticated, tweetController.getUser)
 
-  app.post("/tweets/:id/like", tweetController.addLike);
-  app.delete("/tweets/:id/unlike", tweetController.removeLike);
+  app.post("/tweets/:id/like", authenticated, tweetController.addLike);
+  app.delete("/tweets/:id/unlike", authenticated, tweetController.removeLike);
 
-  app.post('/tweets/:id/replies', tweetController.postReply)
-  app.get('/tweets/:id/replies', tweetController.getReply)
+  app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
+  app.get('/tweets/:id/replies', authenticated, tweetController.getReply)
 
-
+  //adminController 
   app.get('/admin/signin', adminController.signinPage)
   app.post('/admin/signin', passport.authenticate('local', {
     failureRedirect: '/admin/signin',

@@ -2,10 +2,7 @@ const bcrypt = require('bcryptjs')
 const { Sequelize } = require('../models')
 const db = require('../models')
 const User = db.User
-const Tweet = db.Tweet
-
 const Op = Sequelize.Op
-
 
 const userController = {
   signUpPage: (req, res) => {
@@ -47,7 +44,7 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', "成功登入！")
-    res.redirect('/main')
+    res.redirect('/tweets')
   },
 
   logout: (req, res) => {
@@ -55,8 +52,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-
-  
 
 
 }
