@@ -1,0 +1,96 @@
+{{!-- Center --}}
+<div class="col border-left border-right">
+  <div class="row mt-3 pl-3 border-bottom align-items-center">
+    <i class="fas fa-arrow-left fa-lg"></i>
+    <div class="ml-5">
+      <h5>{{ name }}</h5>
+      <span class="text-muted">{{tweetsCount}} 推文</span>
+    </div>
+  </div>
+  <div class="row">
+    <img src="{{ cover }}" class="img-fluid user_cover" alt="Responsive image">
+    <div class="col" style="height: 75px;">
+      <img src="{{ avatar }}" class="user_avatar">
+    </div>
+    <div class="col mt-3">
+      <a href="#" class="btn rounded-pill float-right" style="width: auto; border-color: rgb(255, 102, 0); color: rgb(255, 102, 0)">編輯個人資料</a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span class="bold"><b>{{account}}</b></span><br>
+      <span style="color: grey">@{{name}}</span><br>
+      <span >{{introduction}}</span><br>
+      {{followingsCount}}個<span style="color: grey">跟隨中</span>  
+      {{followersCount}}位<span style="color: grey">跟隨者</span>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link selected_nav" href="#">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">喜歡的內容</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {{#each tweets}}
+  <div class="row border-bottom"> 
+    <div class="d-flex p-2">
+      <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
+      <div class="col">
+        <span class="bold">{{this.account}}</span>
+        <span style="color: grey">@{{this.name}}・{{moment this.updatedAt}}</span><br>
+        <span><small>
+          {{this.description}}<br>
+          <i class="far fa-comment mr-3" style="color: grey;"> {{this.replyCount}}</i>
+          <i class="far fa-heart" style="color: grey;"> {{this.likeCount}}</i>
+        </small></span>
+      </div>
+    </div>
+    
+  </div>
+  {{/each}}
+</div>
+{{!-- Right side --}}
+<div class="col-4">
+  <ul class="list-group mt-3 ml-3">
+    <li class="list-group-item" style="background-color:rgb(245, 248, 250);">
+      <strong>跟隨誰</strong>
+    </li>
+    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
+      <div class="d-flex">
+        {{!-- <div class="p-3">Avatar</div> --}}
+        <img class="mr-3" src="#" alt="Avatar">
+        <div>
+          <strong>Name</strong><br>
+          <span class="text-muted">@UserName</span>
+        </div>
+        <div class="align-self-center ml-auto">
+          <a href="#" class="btn rounded-pill" style="background:rgb(255, 102, 0); color:white; width: auto">正在跟隨</a>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
+      <div class="d-flex">
+        <img class="mr-3" src="#" alt="Avatar">
+        <div>
+          <strong>Name</strong><br>
+          <span class="text-muted">@UserName</span>
+        </div>
+        <div class="align-self-center ml-auto">
+          <a href="#" class="btn rounded-pill" style="width: auto; border-color: rgb(255, 102, 0); color: rgb(255, 102, 0)">跟隨</a>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
+      <a href="#" style="color: rgb(255, 102, 0);">顯示更多</a>
+    </li>
+  </ul>
+</div>

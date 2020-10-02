@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
-const User = db.User
+const { User, Tweet, Reply, Like, Followship } = db
 const helpers = require('../_helpers');
 
 const userController = {
@@ -64,7 +64,7 @@ const userController = {
     req.logout()
     return res.redirect('/admin/login')
   },
-  getUser: (req, res) => {
+  getUserSettings: (req, res) => {
     const reqUser = helpers.getUser(req)
     return User.findByPk(reqUser.id).then(user => {
       return res.render('settings', {
@@ -72,7 +72,7 @@ const userController = {
       })
     })
   },
-  putUser: (req, res) => {
+  putUserSettings: (req, res) => {
     const { account, name, email, password, confirmPassword } = req.body
     const id = req.params.id
     let passwordCheck = true
@@ -131,6 +131,38 @@ const userController = {
         return res.redirect('back')
       }).catch(err => console.log(err))
     }
+  },
+  getUserTweets: (req, res) => {
+    const reqUserId = req.params.userId
+    return User.findByPk(reqUserId, {
+      order: [[{ model: Tweet }, 'createdAt', 'DESC']],
+      include: [
+        { model: Tweet, include:[Like, Reply] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ]
+    }).then(user => {
+      const tweets = user.toJSON().Tweets.map(tweet => ({
+        avatar: user.toJSON().avatar,
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        description: tweet.description.substring(0, 50),
+        updatedAt: tweet.updatedAt,
+        replyCount: tweet.Replies.length,
+        likeCount: tweet.Likes.length
+      }))
+      return res.render('userTweets', {
+        tweets,
+        cover: user.toJSON().cover,
+        avatar: user.toJSON().avatar,
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        introduction: user.toJSON().introduction,
+        followingsCount: user.toJSON().Followings.length,
+        followersCount: user.toJSON().Followers.length,
+        tweetsCount: tweets.length
+      })
+    })
   }
 }
 
