@@ -8,14 +8,21 @@ const port = 3000
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
+const path = require('path')
+const Handlebars = require('handlebars')
 
 app.use(express.static('public'))
 
 app.use('/upload', express.static(__dirname + '/upload'))
 
+
 app.engine('hbs', exphbs({
-  defaultLayout: 'main', extname: '.hbs', helpers: require('./config/handlebars-helpers')
+  defaultLayout: 'main',
+  extname: '.hbs',
+  partialsDir: path.join(__dirname, 'views/partials'),
+  helpers: require('./config/handlebars-helpers')  // add partial
 }))
+
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))

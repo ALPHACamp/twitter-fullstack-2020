@@ -2,6 +2,7 @@
   <div class="left-column">
     <i class="logo fas fa-cus-logo"></i>
     {{!-- user --}}
+    {{#ifCond 'user' user.role}}
     <div class="nav d-flex flex-column">
       <div class="nav-item">
         <a href="/tweets">
@@ -31,8 +32,10 @@
     <button type="button" class="tweet-button">
       推文
     </button>
+    {{/ifCond}}
     {{!-- admin --}}
-    {{!-- <div class="nav d-flex flex-column">
+    {{#ifCond 'admin' user.role}}
+    <div class="nav d-flex flex-column">
       <div class="nav-item">
         <a href="/tweets">
           <div class="icon-div">
@@ -49,7 +52,8 @@
           使用者列表
         </a>
       </div>
-    </div> --}}
+    </div>
+    {{/ifCond}}
   </div>
   <div class="logout">
     <div class="nav-item">
