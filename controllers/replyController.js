@@ -19,16 +19,15 @@ let replyController = {
     if (replyDesc.length === 0) {
        req.flash('error_messages', '不可空白')
       return res.redirect(`/replylist/${req.body.tweetId}`)
-    } else {
-      return Reply.create({
-        comment: replyDesc,
-        TweetId: req.body.tweetId,
-        UserId: helpers.getUser(req).id
-      })
-      .then((reply) => {
-        res.redirect(`/replylist/${req.body.tweetId}`)
-      })
     }
+    return Reply.create({
+      comment: replyDesc,
+      TweetId: req.body.tweetId,
+      UserId: helpers.getUser(req).id
+    })
+    .then((reply) => {
+      res.redirect(`/replylist/${req.body.tweetId}`)
+    })
   },
 }
 module.exports = replyController
