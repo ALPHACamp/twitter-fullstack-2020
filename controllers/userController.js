@@ -1,3 +1,10 @@
+const bcrypt = require('bcryptjs');
+const db = require('../models');
+const User = db.User;
+const Like = db.Like;
+const Tweet = db.Tweet;
+const Reply = db.Reply;
+
 const userController = {
   getSigninPage: (req, res) => {
     return res.render('signin');
@@ -6,10 +13,22 @@ const userController = {
   signin: (req, res) => {
     return res.redirect('/tweets');
   },
+  getSelf: (req, res) => {
+    let selfId = req.user.id;
+    return res.redirect(`/users/${selfId}`);
+  },
   getUser: (req, res) => {
-    let user = req.user;
-    console.log(user);
-    return res.render('user', user);
+    let userId = req.params.id;
+    return User.findByPk(userId, {
+      include: [
+        Like,
+        { model: Tweet, include: Reply },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+    }).then((user) => {
+      return res.render('user', { user, self: req.user });
+    });
   },
 };
 

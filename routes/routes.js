@@ -26,7 +26,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/tweets', userAuthenticated, tweetController.getTweets);
-router.get('/users', userAuthenticated, userController.getUser);
+
+router.get('/users/self', userAuthenticated, userController.getSelf);
+router.get('/users/:id', userAuthenticated, userController.getUser);
 
 router.get('/signin', userController.getSigninPage);
 router.post(
