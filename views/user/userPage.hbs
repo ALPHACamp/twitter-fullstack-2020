@@ -13,26 +13,25 @@
             <i class="fas fa-arrow-left"></i>
           </a>
           <div class="user-title">
-            <h5>{{user.name}}使用者姓名</h5>
+            <h5>{{user.name}}</h5>
             <span>{{user.Tweets.length}} 推文</span>
           </div>
         </div>
 
         <div class="user-cover">
-          <img src="https://mcdn.wallpapersafari.com/medium/7/92/bmNBFo.jpg{{user.cover}}" alt="{{user.cover}}">
+          <img src="{{user.cover}}" alt="{{user.cover}}">
         </div>
 
 
         {{!-- 需再細修 --}}
         <div class="user-info">
           <div class="user-info-top">
-            <img src="https://pickaface.net/gallery/avatar/unr_fake_190524_1549_9fgji7.png{{user.avatar}}"
-              alt="{{user.avatar}}">
-            {{#ifCond user.id currentUserId}}
+            <img src="{{user.avatar}}" alt="{{user.avatar}}">
+            {{!-- {{#ifCond user.id currentUserId}} --}}
             <button type="button" data-toggle="modal" data-target="#exampleModal">
               編輯個人資料
             </button>
-            {{else}}
+            {{!-- {{else}}
             <a href="{{user.email}}"><i class="far fa-envelope"></i></a>
             <i class="far fa-bell"></i>
             {{#if user.isFollowed}}
@@ -44,14 +43,14 @@
               <button type="submit" class="btn btn-primary">跟隨</button>
             </form>
             {{/if}}
-            {{/ifCond}}
+            {{/ifCond}} --}}
           </div>
 
 
           <div class="user-info-bottom">
-            <h5>{{user.name}}使用者姓名</h5>
-            <span>{{user.account}}＠user_test</span>
-            <p>{{user.introduction}}asd qwe dgtyh asdqwe </p>
+            <h5>{{user.name}}</h5>
+            <span>{{user.account}}</span>
+            <p>{{user.introduction}}</p>
             <div class="user-followships">
               <a href="/users/{{user.id}}/followings">{{user.FollowingCount}}30個</a>
               <span>跟隨中&nbsp;&nbsp;</span>

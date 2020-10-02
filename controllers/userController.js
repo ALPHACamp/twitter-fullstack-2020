@@ -1,7 +1,9 @@
-const user = require("../models/user")
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
+const Reply = db.Reply
+const Followship = db.Followship
 
 const userController = {
   signUpPage: (req, res) => {
@@ -53,8 +55,20 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
   getUser: (req, res) => {
-    return res.render('user/userPage')
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
+      return res.render('user/userPage', { user: user.toJSON() })
+    })
+
+
+
   }
 }
 
