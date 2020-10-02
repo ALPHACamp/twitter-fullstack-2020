@@ -50,4 +50,7 @@ module.exports = (app, passport) => {
 
   //Reply
   app.post('/replies/:replyId', authenticated, replyController.postReply)
+
+  //follow
+  app.post('following/:userId', authenticated, userController.postFollowing)
 }

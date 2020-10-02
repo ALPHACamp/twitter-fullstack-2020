@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
 const Like = db.Like
+const FollowShip = db.FollowShip
 
 const userController = {
   registerPage: (req, res) => {
@@ -100,6 +101,31 @@ const userController = {
         .then(like => {
           return res.redirect('back')
         })   
+    })
+  },
+
+  postFollowing: (req, res) => {
+    FollowShip.create({
+      followerId: req.user.id,
+      followingId: req.params.id
+    })
+    .then(followShip => {
+      return res.redirect('/tweets')
+    })
+  },
+
+  deleteFollowing: (req, res) => {
+    FollowShip.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.id
+      }
+    })
+    .then(followShip => {
+      followShip.destroy()
+        .then(followShip => {
+          return res.redirect('/tweets')
+        })
     })
   }
 }
