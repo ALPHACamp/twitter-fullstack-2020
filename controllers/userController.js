@@ -1,4 +1,4 @@
-const { User, Reply, Tweet, Like } = require('../models')
+const { User, Reply, Tweet, Like, Followship } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { Op } = require('sequelize')
 const helpers = require('../_helpers')
@@ -192,7 +192,81 @@ const userController = {
           res.redirect(`/users/${req.params.id}/tweets`)
         })
     })
-
+  },
+  addFollowing: (req, res) => {
+    if (helpers.getUser(req).id === Number(req.body.id)) {
+      return res.send('can not follow self')
+    }
+    return Followship.create({
+      followerId: helpers.getUser(req).id,
+      followingId: Number(req.body.id)
+    }).then(followship => {
+      res.redirect('back')
+    })
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.followingId
+      }
+    }).then(followship => {
+      followship.destroy().then(followship => {
+        return res.redirect('back')
+      })
+    })
+  },
+  getFollower: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [User] },
+        {
+          model: User,
+          as: 'Followers',
+          include: [{ model: User, as: 'Followers' }]
+        },
+        { model: User, as: 'Followings' },
+        { model: Tweet, as: 'LikedTweets' }
+      ]
+    }).then(user => {
+      const isFollowed = helpers
+        .getUser(req)
+        .Followings.map(d => d.id)
+        .includes(user.id)
+      const followerList = user.Followers.map(r => ({
+        ...r.dataValues,
+        introduction: r.dataValues.introduction,
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map(d => d.id)
+          .includes(r.id)
+      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      return res.render('followers',{ profile: user, isFollowed, followerList })
+    })
+  },
+  getFollowing: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [User] },
+        { model: User, as: 'Followers' },
+        {
+          model: User,
+          as: 'Followings',
+          include: [{ model: User, as: 'Followers' }]
+        },
+        { model: Tweet, as: 'LikedTweets' }
+      ]
+    }).then(user => {
+      const isFollowed = helpers
+        .getUser(req)
+        .Followings.map(d => d.id)
+        .includes(user.id)
+      const followingList = user.Followings.map(r => ({
+        ...r.dataValues,
+        introduction: r.dataValues.introduction
+      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      return res.render('followings',{ profile: user, isFollowed, followingList })
+    })
   }
 }
 

@@ -30,5 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       as: 'LikedTweets'
     })
   };
+    
   return User;
 };

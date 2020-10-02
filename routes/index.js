@@ -38,4 +38,8 @@ module.exports = app => {
   app.get('/setting/:id', authenticated, userController.getSetting)
   app.put('/setting/:id', authenticated, userController.putSetting)
   app.post('/users/:id/edit', authenticated, userController.putUser)
+  app.get('/users/:id/followers', authenticated, userController.getFollower)
+  app.get('/users/:id/followings', authenticated, userController.getFollowing)
+  app.post('/followships', authenticated, userController.addFollowing)
+  app.delete('/followships/:followingId', authenticated, userController.removeFollowing)
 }
