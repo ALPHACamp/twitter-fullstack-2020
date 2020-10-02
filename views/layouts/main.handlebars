@@ -5,11 +5,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Simple Twitter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simple Twitter</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 </head>
 
@@ -18,13 +18,6 @@
   <main role="main">
     <div class="album py-5 bg-light">
       <div class="container">
-
-
-        {{#if user}}
-
-        <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
-
-        {{/if}}
 
         {{#if success_messages}}
         <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
@@ -38,7 +31,86 @@
         </div>
         {{/if}}
 
-        {{{body}}}
+
+
+        <div class="row mt-3 container-fluid">
+          {{#if user}}
+          <div class="col-3 ">
+            <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+              style="width:75px; height:75px">
+
+            <div class="d-flex flex-column mt-2 col ">
+              </br>
+
+              {{#if user.role}}
+              <div class="d-flex">
+                <div class="tweets" name="tweets">
+
+                  <a class=" nav-link" href="/admin/tweets"><strong><i class="fas fa-home"></i>推文清單</strong></a>
+
+                </div>
+
+              </div>
+              </br>
+              <div class="d-flex">
+
+                <div class="users" name="users">
+                  <a class=" nav-link" href="/admin/users"><strong><i class="far fa-user"></i> 使用者列表</strong></a>
+                </div>
+
+              </div>
+              {{else}}
+              <div class="d-flex">
+                <div class="main " name="main">
+
+                  <a class=" nav-link" href="/main"><strong><i class="fas fa-home"></i>首頁</strong></a>
+
+                </div>
+
+              </div>
+              </br>
+              <div class="d-flex">
+
+                <div class="user" name="user">
+                  <a class=" nav-link" href="/main"><strong><i class="far fa-user"></i> 個人資料</strong></a>
+                </div>
+
+              </div>
+              </br>
+              <div class="d-flex">
+
+                <div class="setting" name="setting">
+                  <a class=" nav-link" href="/main"><strong> <i class="fas fa-cog"></i> 設定</strong></a>
+                </div>
+
+              </div>
+              </br>
+              <div class="d-flex">
+
+                <div class="name" name="name">
+                  <a class=" nav-link btn btn-lg btn-block sign-button text-light" href="/"> 推文</a>
+                </div>
+
+              </div>
+              {{/if}}
+              </br>
+              </br>
+              </br>
+              </br>
+              </br>
+
+              <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
+
+            </div>
+
+
+          </div>
+          {{/if}}
+
+          {{{body}}}
+        </div>
+
+
       </div>
     </div>
   </main>

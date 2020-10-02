@@ -7,9 +7,12 @@ const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
+
     return Tweet.findAll({
+
       include: [User, Reply,
         { model: User, as: 'LikedUsers' }],
+
       order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
@@ -18,6 +21,7 @@ const tweetController = {
           ...t.dataValues,
           description: t.dataValues.description,
           isLiked: t.LikedUsers.map(d => d.id).includes(t.id)
+
         }))
         return User.findOne({ where: { id: UserId } })
           .then(user => {
@@ -53,14 +57,17 @@ const tweetController = {
 
   postTweet: (req,res) => {
     if (!req.body.description){
+
       req.flash('error_messages','貼文不可空白')
       return res.redirect('back')
     }
     if (req.body.description.length > 140) {
       req.flash('error_messages','貼文不得超過140個字')
       return res.redirect('back')
+
     }
-    Tweet.create({
+    return Tweet.create({
+
       UserId: helpers.getUser(req).id,
       description: req.body.description
     }).then(tweet => {
@@ -123,7 +130,6 @@ const tweetController = {
     .catch(error => console.log(error))
   },
 
-  
   
   
 }
