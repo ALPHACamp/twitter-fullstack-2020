@@ -13,12 +13,16 @@
       <div class="card-body">
         <div class="user-profile">
           <a class="user-name">{{this.name}}</a><br>
-          <span class="user-account">@{{this.account}}</span>
+          <span class="tweet-user-account">@{{this.account}}</span>
+        </div>
+        <div class="tweet-user-info">
+          <i class="fas fa-cus-reply" aria-hidden="true"></i>{{TweetsCount}}
+          <i class="fas fa-cus-like" aria-hidden="true"></i>{{LikesCount}}
         </div>
         <div class="admin-user-followships">
-          <a href="/users/{{user.id}}/followings">{{user.FollowingCount}}30個</a>
+          <a href="/users/{{user.id}}/followings">{{followingsCount}}個</a>
           <span>跟隨中&nbsp;&nbsp;</span>
-          <a href="/users/{{user.id}}/followers">{{user.FollowerCount}}20位</a>
+          <a href="/users/{{user.id}}/followers">{{followersCount}}位</a>
           <span>跟隨者</span>
         </div>
       </div>
