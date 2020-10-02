@@ -1,23 +1,27 @@
 <div id="left">
-	<div class="row" style="text-align: center;">
-		<ul>
-			<h1>
-				<li>
-					{{User.id}}
-					<a class="nav-link active" href="/tweets">首頁</a>
-				</li>
-				<li>
-					<a class="nav-link" href="/users/{{user.id}}/tweets">個人資料</a>
-				</li>
-				<li>
-					<a class="nav-link" href="/setting/{{user.id}}">設定</a>
-				</li>
-			</h1>
-		</ul>
-	</div>
-	<button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#tweetModal">
-		推文
-	</button>
+	<ul class="nav flex-column justify-content-between" style="height: 100vh;">
+		<div class="flex-colum ">
+			<a class="navbar-brand ml-3 mb-3" href="/">
+			<img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
+			height="30" alt="">
+			</a>
+			<li class="nav-item">
+				<a class="nav-link" href="/tweets" style="color: black;"><i class="fas fa-home mr-2"></i>首頁</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/users/{{user.id}}/tweets" style="color: black;"><i class="fas fa-user mr-2"></i>個人資料</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/setting/{{user.id}}" style="color: black;"><i class="fas fa-cog mr-2"></i>設定</a>
+			</li>
+			<button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#tweetModal">
+				推文
+			</button>
+		</div>
+		<li class="nav-item">
+		<a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
+		</li>
+	</ul>
 </div>
 {{!-- 中間區域 --}}
 <h1>首頁</h1>
@@ -53,7 +57,7 @@
 						{{ this.description }}
 					</p>
 			</div>
-			<div class="card-footer">
+			<div class="card-footer" style="background-color:#ffffff">
 				<form action="/replylist/{{ this.id }}" method="POST" style="display: inline;">
 					<!-- a modal -->
 					<a data-toggle="modal" href="#exampleModalCenter{{ this.id }}">回覆</a>
