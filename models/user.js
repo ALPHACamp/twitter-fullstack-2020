@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     isAdmin: DataTypes.BOOLEAN
   }, {});
   User.associate = function(models) {
+    User.hasMany(models.Reply)
     User.hasMany(models.Tweet);
     User.belongsToMany(models.Tweet, {
       through: models.Like,

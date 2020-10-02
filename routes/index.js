@@ -1,6 +1,6 @@
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
-
+const tweetController = require('../controllers/tweetController')
 
 module.exports = (app, passport) => {
 
@@ -38,7 +38,14 @@ module.exports = (app, passport) => {
   app.get('/admin/users', adminController.getUsers)
   app.get('/admin/signin', adminController.signinPage)
   app.post('/admin/signin', adminController.signIn)
+
+
+  // tweetController
+app.get("/", (req, res) => res.redirect("/tweets"));
+app.get("/tweets", tweetController.getTweets);
 }
+
+
 
 // const userController = require('../controllers/userController')
 // const adminController = require('../controllers/adminController')
