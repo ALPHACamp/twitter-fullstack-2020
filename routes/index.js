@@ -8,12 +8,9 @@ module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       return next()
-
     }
     res.redirect("/signin");
   };
-
-  // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -39,6 +36,9 @@ module.exports = (app, passport) => {
   );
   app.get("/logout", userController.logout);
 
+  app.get("/setting", userController.getSetting);
+  app.put("/setting", userController.putSetting)
+
 
   // adminController
   app.get("/admin", (req, res) => {
@@ -51,6 +51,7 @@ module.exports = (app, passport) => {
   app.get("/signup", userController.signUpPage);
   app.post("/signup", userController.signUp);
   app.get("/signin", userController.signIn);
+
 
   //tweetController
   app.get("/", authenticated, (req, res) => res.redirect("/tweets"));
