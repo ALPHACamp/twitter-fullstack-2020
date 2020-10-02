@@ -1,0 +1,35 @@
+<div class="wrapper d-flex align-items-stretch ">
+  <nav id="sidebar">
+    <div>
+      {{> left-column}}
+    </div>
+  </nav>
+
+  <div class="row" id="tweet-user">
+    {{#each users}}
+    <div class="card-user">
+      <img class="card-img-top cover" src="{{this.cover}}" alt="Card image cap">
+      <img class="card-img-top avatar" src="{{this.avatar}}" alt="Card image cap">
+      <div class="card-body">
+        <div class="user-profile">
+          <a class="user-name">{{this.name}}</a><br>
+          <span class="tweet-user-account">@{{this.account}}</span>
+        </div>
+        <div class="tweet-user-info">
+          <i class="fas fa-cus-reply" aria-hidden="true"></i>{{TweetsCount}}
+          <i class="fas fa-cus-like" aria-hidden="true"></i>{{LikesCount}}
+        </div>
+        <div class="admin-user-followships">
+          <a href="/users/{{user.id}}/followings">{{followingsCount}}個</a>
+          <span>跟隨中&nbsp;&nbsp;</span>
+          <a href="/users/{{user.id}}/followers">{{followersCount}}位</a>
+          <span>跟隨者</span>
+        </div>
+      </div>
+
+    </div>
+    {{/each}}
+  </div>
+
+
+</div>

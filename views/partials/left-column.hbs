@@ -37,7 +37,7 @@
     {{#ifCond 'admin' user.role}}
     <div class="nav d-flex flex-column">
       <div class="nav-item">
-        <a href="/tweets">
+        <a href="/admin/tweets">
           <div class="icon-div">
             <i class="fas fa-cus-home"></i>
           </div>
@@ -45,7 +45,7 @@
         </a>
       </div>
       <div class="nav-item">
-        <a href="/tweets">
+        <a href="/admin/users">
           <div class="icon-div">
             <i class="fas fa-cus-user"></i>
           </div>
@@ -57,7 +57,11 @@
   </div>
   <div class="logout">
     <div class="nav-item">
-      <a href="/logout">
+      {{#ifCond 'admin' user.role}}
+      <a href="/admin/signout">
+        {{else}}
+        <a href="/signout"></a>
+        {{/ifCond}}
         <div class="icon-div">
           <i class="fas fa-cus-logout"></i>
         </div>
