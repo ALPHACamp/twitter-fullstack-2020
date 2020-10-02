@@ -10,6 +10,10 @@ const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const path = require('path')
 const Handlebars = require('handlebars')
+const helpers = require('./_helpers')
+
+// This package can help you disable prototype checks for your models.
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 
 app.use(express.static('public'))
 
@@ -20,7 +24,8 @@ app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs',
   partialsDir: path.join(__dirname, 'views/partials'),
-  helpers: require('./config/handlebars-helpers')  // add partial
+  helpers: require('./config/handlebars-helpers'),  // add partial
+  handlebars: allowInsecurePrototypeAccess(Handlebars)
 }))
 
 app.set('view engine', 'hbs')
@@ -41,7 +46,7 @@ app.use(methodOverride('_method'))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = req.user
+  res.locals.user = helpers.getUser(req)
   // console.log(req.user)
   next()
 })

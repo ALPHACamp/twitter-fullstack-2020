@@ -10,13 +10,17 @@
     <tbody>
       {{#each tweets}}
       <tr>
-        <th scope="row">{{users.name}}
-          {{moment this.createdAt}}
+        <th scope="row">
+          <div>
+            <a class="user-name">{{this.User.name}}</a>
+            <span class="user-account">@{{this.User.name}}．{{moment this.createdAt}}</span>
+          </div>
         </th>
-        <td>{{users.avatat}}</td>
+        <td>{{this.User.avatar}}</td>
         <td>{{this.description}}</td>
         <td>
-          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;"
+            onsubmit="return confirm('確定要刪除推文？')">
             <button type="submit" class="btn btn-link">Delete</button>
           </form>
         </td>

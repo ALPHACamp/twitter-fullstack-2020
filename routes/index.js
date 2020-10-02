@@ -50,27 +50,21 @@ module.exports = (app, passport) => {
 
   app.get('/signout', userController.signOut)
 
-
-  // 後台登入頁
-  app.get('/admin/signin', adminController.signInPage)
-  // 後台登入 
+  // Admin
+  app.get('/admin/signin', adminController.signInPage) // 後台登入頁
   app.post('/admin/signin', passport.authenticate('local', {
     failureRedirect: '/admin/signin',
     failureFlash: true
-  }), adminController.signIn)
+  }), adminController.signIn) // 後台登入
+  app.get('/admin/signout', adminController.signOut) // 後台登出
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets) // 後台推文清單
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers) // 後台使用者清單
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet) // 刪除後台推文
 
-  app.get('/admin', authenticatedAdmin, (req, res) => {
-    res.redirect('/admin/tweets')
-  })
-  // 後台推文清單
-  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  // app.get('/admin', authenticatedAdmin, (req, res) => {
+  //   res.redirect('/admin/tweets')
+  // })
 
   // user 相關路由
   app.get('/users/:id', userController.getUser)
-  // 刪除後台推文
-  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-  // 後台使用者清單
-  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
-  // 後台登出
-  app.get('/admin/signout', adminController.signOut)
 }
