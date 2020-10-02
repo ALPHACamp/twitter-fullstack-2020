@@ -33,10 +33,6 @@ module.exports = app => {
 
   // =====================user====================================
   app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
-<<<<<<< HEAD
-  // app.get("/users/:id/edit", authenticated, userController.editUser)
-=======
->>>>>>> 9b84f81055c4476c3aebbfc06bd95e3ad3c66398
   app.post('/users/:id/edit', authenticated, userController.putUser)
 
 }
