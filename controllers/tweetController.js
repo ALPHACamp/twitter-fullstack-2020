@@ -1,6 +1,4 @@
 const { User, Tweet } = require('../models')
-const Tweet = db.Tweet
-const User = db.User
 const helpers = require("../_helpers")
 
 const tweetController = {
@@ -15,7 +13,6 @@ const tweetController = {
                 ...t.dataValues,
                 description: t.dataValues.description.substring(0, 100),
             }))
-            console.log(tweets.dataValues)
             return res.render('tweets', {
                 tweets: data
             })
