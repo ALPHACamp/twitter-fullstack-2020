@@ -1,11 +1,11 @@
-<form class="form-signin" action="/login" method="POST" style="width: 100%;">
+<form class="form-signin" action="/signin" method="POST" style="width: 100%;">
   <div class="text-center mb-4">
     <h1 class="h3 mb-3 font-weight-bold">登入 Alphitter</h1>
   </div>
 
   <div class="form-label-group">
-    <label for="email">Email</label>
-    <input type="text" name="email" class="form-control shadow-none border-none" required autofocus>
+    <label for="account">Account</label>
+    <input type="text" name="account" class="form-control shadow-none border-none" required autofocus>
   </div>
   <div class="form-label-group">
     <label for="password">密碼</label>
@@ -15,9 +15,9 @@
   <br />
   <button class="btn btn-lg  btn-block " id="submit" type="submit">登入</button>
   <div class="text-center mb-4">
-    <p id="link"><a href="/register">註冊 Alphitter</a>
+    <p id="link"><a href="/signup">註冊 Alphitter</a>
       <span>·</span>
-      <a href="/admin/login">後台登入</a>
+      <a href="/admin/signin">後台登入</a>
     </p>
 
   </div>

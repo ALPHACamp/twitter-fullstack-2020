@@ -6,12 +6,12 @@ const User = db.User
 
 passport.use(new LocalStrategy(
   {
-    usernameField: 'email',
+    usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true
   },
-  (req, email, password, done) => {
-    User.findOne({ where: { email } })
+  (req, account, password, done) => {
+    User.findOne({ where: { account } })
       .then(user => {
         if (!user) {
           return done(null, false, req.flash('error_messages', '帳號尚未註冊!'))

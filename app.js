@@ -8,12 +8,21 @@ const port = 3000
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
+const path = require('path')
+const Handlebars = require('handlebars')
 
 app.use(express.static('public'))
 
 app.use('/upload', express.static(__dirname + '/upload'))
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+
+app.engine('hbs', exphbs({
+  defaultLayout: 'main',
+  extname: '.hbs',
+  partialsDir: path.join(__dirname, 'views/partials'),
+  helpers: require('./config/handlebars-helpers')  // add partial
+}))
+
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -38,8 +47,6 @@ app.use((req, res, next) => {
 })
 
 
-app.listen(port, () => {
-  console.log(`Express is listening on http://localhost:${port}`)
-})
+module.exports = app.listen(port, () => console.log(`Express is listening on http://localhost:${port}`))
 
 require('./routes')(app, passport)

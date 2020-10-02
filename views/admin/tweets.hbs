@@ -1,3 +1,27 @@
-<div>
-  tweets
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
+    <div>
+      {{> left-column}}
+    </div>
+  </nav>
+
+  <table class="table">
+    <td>推文清單</td>
+    <tbody>
+      {{#each tweets}}
+      <tr>
+        <th scope="row">{{users.name}}
+          {{moment this.createdAt}}
+        </th>
+        <td>{{users.avatat}}</td>
+        <td>{{this.description}}</td>
+        <td>
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
