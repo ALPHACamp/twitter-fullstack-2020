@@ -33,10 +33,10 @@ const userController = {
       ],
     }).then((user) => {
       // const targetUser = user.toJSON();
-      const followings = req.user.Followings.map((u) => u.id);
-      const followers = req.user.Followers.map((u) => u.id);
-      console.log('followers:', followers);
-      console.log('followings', followings);
+      //const followings = req.user.Followings.map((u) => u.id);
+      // const followers = req.user.Followers.map((u) => u.id);
+      // console.log('followers:', followers);
+      // console.log('followings', followings);
       return res.render('user', {
         user: user.toJSON(),
         self: req.user,
