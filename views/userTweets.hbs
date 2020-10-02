@@ -41,10 +41,8 @@
     </div>
   </div>
   {{#each tweets}}
-  <div class="row border-bottom">
-    
+  <div class="row border-bottom"> 
     <div class="d-flex p-2">
-      {{!-- <div class="p-3">Avatar</div> --}}
       <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
       <div class="col">
         <span class="bold">{{this.account}}</span>
@@ -54,8 +52,6 @@
           <i class="far fa-comment mr-3" style="color: grey;"> {{this.replyCount}}</i>
           <i class="far fa-heart" style="color: grey;"> {{this.likeCount}}</i>
         </small></span>
-
-        {{!-- <i class="fas fa-heart"></i> --}}
       </div>
     </div>
     

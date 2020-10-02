@@ -134,7 +134,6 @@ const userController = {
   },
   getUserTweets: (req, res) => {
     const reqUserId = req.params.userId
-    
     return User.findByPk(reqUserId, {
       order: [[{ model: Tweet }, 'createdAt', 'DESC']],
       include: [
@@ -152,7 +151,6 @@ const userController = {
         replyCount: tweet.Replies.length,
         likeCount: tweet.Likes.length
       }))
-
       return res.render('userTweets', {
         tweets,
         cover: user.toJSON().cover,
