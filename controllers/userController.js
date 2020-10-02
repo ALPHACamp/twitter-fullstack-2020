@@ -46,6 +46,7 @@ const userController = {
   },
 
   signIn: (req, res) => {
+    console.log(req.user.role)
     req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
