@@ -1,13 +1,14 @@
-const { User, Tweet } = require('../models')
+const { User, Tweet} = require('../models')
 const helpers = require("../_helpers")
 
+//分頁
+const pageLimit = 10
 
 const adminController = {
   getTweets:(req, res) => {
-    Tweet.findAndCountAll({
+    Tweet.findAll({
         order: [['createdAt', 'DESC']],
         include: [User]
-
     }).then(tweets => {
         const data = tweets.map(t => ({
             ...t.dataValues,
