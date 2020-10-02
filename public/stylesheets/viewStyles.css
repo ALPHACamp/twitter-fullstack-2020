@@ -330,9 +330,10 @@ a:hover {
 .tweets-content .right-item .footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 130px;
   height: 40px;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
 }
 
 .tweets-content .btn:focus,
@@ -341,28 +342,39 @@ a:hover {
   box-shadow: none;
 }
 
-.tweets-content .right-item .footer .reply-item {
+.tweets-content .right-item .footer .footer-item {
   display: flex;
+  align-items: center;
+  justify-content: start;
 }
 
-.tweets-content .right-item .footer .reply-item button {
+.tweets-content .right-item .footer .footer-item .btn {
   color: #657786;
-  font-size: 14px;
-  font-weight: 500;
+  /* font-size: 14px;
+  font-weight: 500; */
   text-align: center;
+  padding: 0.2rem 0.5rem 0 0;
+
+  /* padding-top: 0.5rem; */
 }
 
-.tweets-content .right-item .footer .reply-item i {
+.tweets-content .right-item .footer .footer-item i {
   width: 14px;
   height: 14px;
   font-weight: 500;
   color: #657786;
 }
 
-.tweets-content .right-item .footer .like-item {
-  display: flex;
-}
+.tweets-content .right-item .footer .footer-item .item-count {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
 
+  color: #657786;
+}
+/* 
 .tweets-content .right-item .footer .like-item button {
   color: #657786;
   font-size: 14px;
@@ -375,7 +387,7 @@ a:hover {
   height: 14px;
   color: #657786;
   font-weight: 500;
-}
+} */
 
 /* 單一畫面 */
 .tweet-content {

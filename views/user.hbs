@@ -77,22 +77,24 @@
               </a>
             </span>
             <span class="time">
-              @{{../user.account}}·{{moment this.createdAt}}
+              @{{../user.account}}・{{moment this.createdAt}}
             </span>
           </div>
           <div class="body">
             {{subText this.description 100}}
           </div>
           <div class="footer">
-            <div class="reply-item">
+            <div class="footer-item reply-item">
               <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                <i class="icon-reply"></i> 13
+                <i class="icon-reply"></i>
               </button>
+              <div class="item-count reply-count">13</div>
             </div>
-            <div class="like-item">
+            <div class="footer-item like-item">
               <button type="button" class="btn">
-                <i class="icon-like"></i> 79
+                <i class="icon-like"></i>
               </button>
+              <div class="item-count like-count">79</div>
             </div>
           </div>
         </div>
