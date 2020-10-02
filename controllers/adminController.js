@@ -1,9 +1,10 @@
-const { User, Reply, Tweet, Like } = require('../models')
+const { User, Tweet } = require('../models')
 const helpers = require("../_helpers")
+
 
 const adminController = {
   getTweets:(req, res) => {
-    Tweet.findAll({
+    Tweet.findAndCountAll({
         order: [['createdAt', 'DESC']],
         include: [User]
 
