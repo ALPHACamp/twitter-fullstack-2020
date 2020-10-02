@@ -116,6 +116,29 @@ const userController = {
       })
     })
   },
+  addFollowing: (req, res) => {
+    if (helpers.getUser(req).id === Number(req.body.id)) {
+      return res.send('can not follow self')
+    }
+    return Followship.create({
+      followerId: helpers.getUser(req).id,
+      followingId: Number(req.body.id)
+    }).then(followship => {
+      res.redirect('back')
+    })
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.followingId
+      }
+    }).then(followship => {
+      followship.destroy().then(followship => {
+        return res.redirect('back')
+      })
+    })
+  },
   getFollower: (req, res) => {
     User.findByPk(req.params.id, {
       include: [
