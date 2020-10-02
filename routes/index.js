@@ -23,6 +23,7 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, (req, res) => { return res.render('tweets') })
   //admin pages
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   //user login 
   app.get('/', (req, res) => { return res.redirect('/tweets') })
   app.get('/users/login', userController.loginPage)

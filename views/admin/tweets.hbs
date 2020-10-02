@@ -11,6 +11,12 @@
       <div class="col-11">
         <span class="bold"><b>{{this.User.account}}</b></span>
         <span style="color: grey">@{{this.User.name}}・{{moment this.createdAt}}</span>
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST"
+          onsubmit="return confirm('Press ok to confirm DELETE')">
+          <button type="submit" class="close" aria-label="Close">
+            <span aria-hidden=" true">&times;</span>
+          </button>
+        </form>
         <br />
         {{this.description}}
       </div>
