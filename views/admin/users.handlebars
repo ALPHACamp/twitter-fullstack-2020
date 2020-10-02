@@ -1,0 +1,37 @@
+<div id="left">
+	<div class="row" style="text-align: center;">
+		<ul>
+      <h1>
+				<li>
+					<a class="nav-link" href="/admin/tweets">推文清單</a>
+				</li>
+				<li>
+					<a class="nav-link" href="/admin/users">使用者列表</a>
+				</li>
+      </h1>
+		</ul> 
+	</div>
+</div>
+<div class="row">
+  {{#each users}}
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <img class="card-img-top" src="{{this.cover}}" alt="Card image cap" width="286px" height="180px">
+        <div class="card-body">
+          <p class="card-text">
+            {{this.name}}
+          </p>
+          <span>
+              {{this.account}}
+          </span>
+          <span>{{this.LikeCount}}</span>
+          TweetCount:<span>{{this.TweetCount}}</span>
+          <span>{{this.FollowerCount}}</span>
+          <span>{{this.FollowingCount}}</span>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+</div>
+<br />
+<br />

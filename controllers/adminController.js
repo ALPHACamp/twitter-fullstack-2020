@@ -1,10 +1,46 @@
-const db = require('../models')
-const Tweet = db.Tweet
+const { User, Reply, Tweet, Like } = require('../models')
+const helpers = require("../_helpers")
 
 const adminController = {
-  getTweets: (req, res) => {
-    return Tweet.findAll({ raw: true }).then(tweets => {
-      return res.render('admin/tweets', { tweets: tweets })
+  getTweets:(req, res) => {
+    Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        include: [User]
+
+    }).then(tweets => {
+        const data = tweets.map(t => ({
+            ...t.dataValues,
+            description: t.dataValues.description.substring(0, 50),
+        }))
+        return res.render('admin/tweets', {
+            tweets: data
+        })
+    })
+  },
+  getUsers:(req,res) => {
+    User.findAll({ 
+      include: [
+        { model: Like, include: [Tweet] },
+        {
+          model: Tweet,
+          include: [User]
+        },
+        { model: User, as: "Followers" },
+        { model: User, as: "Followings" }
+      ] 
+    }).then(users => {
+      const data = users.map(u => ({
+        ...u.dataValues,
+        //TweetCount: users.Tweets.length
+/*         LikeCount: users.Like.length,
+        TweetCount: users.Tweet.length,
+        FollowerCount: users.Followers.length,
+        FollowingCount: users.Followings.length, */
+      }))
+      console.log(data.TweetCount)
+      return res.render('admin/users', {
+        users: data
+      })
     })
   },
   signInPage: (req, res) => {

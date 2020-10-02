@@ -3,38 +3,43 @@
 		<ul>
       <h1>
 				<li>
-					<a class="nav-link" href="/">推文清單</a>
+					<a class="nav-link" href="/admin/tweets">推文清單</a>
 				</li>
 				<li>
-					<a class="nav-link" href="/">使用者列表</a>
+					<a class="nav-link" href="/admin/users">使用者列表</a>
 				</li>
       </h1>
 		</ul> 
 	</div>
 </div>
+{{!-- 中間區域 --}}
+<h1>推文清單</h1>
+<hr />
 <div id="main">
   <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">推文清單</th>
-      </tr>
-    </thead>
     <tbody>
-      {{#each tweets}}
-      <tr>
-        <th scope="row">{{this.id}}</th>
-        <td>{{this.UserId}}</td>
-        <td>{{this.description}}</td>
-        <td>{{this.createAt}}</td>
-      </tr>
-      {{/each}}
+    {{#each tweets}}
+      <div class="card mb-3" style="max-width: 900px;">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <a href="/users/{{this.User.id}}/tweets">
+              <img src="{{ this.User.avatar }}" class="rounded-circle" alt="no avatar" width="100" height="100">
+            </a>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body" onclick="location.href='/replylist/{{ this.User.id }}';">
+                <h5 class="card-title">
+                <a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+                ● <small class="text-muted">{{moment this.createdAt }}</small>
+                </h5>
+                <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap">
+                  {{ this.description }}
+                </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {{/each}}
     </tbody>
   </table>
 </div>
-<style>
-  body{ margin:0; height:100%}
-  html{ height:100%} 
-  #left{ position:absolute; top:0; left:0; width:200px; height:100%; background-color:#fdfdfd}
-  #main{ margin-left:100px; height:100%; background-color:#f4f6f8}
-  #right{ position:absolute; top:0; right:0; width:300px; height:100%; background-color:#fdfdfd}
-</style> 
