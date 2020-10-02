@@ -1,4 +1,5 @@
 const db = require('../models')
+const user = require('../models/user')
 const Tweet = db.Tweet
 const Like = db.Like
 const User = db.User
@@ -14,7 +15,7 @@ const tweetController = {
         { model: User, include: [{ model: User, as: 'Followers'}]}],
         order: [['updatedAt', 'DESC']]
     }).then(tweets => {
-      const user = req.user
+      const LoginUser = req.user
 
       tweets = tweets.map(tweet => ({
         ...tweet.dataValues,
@@ -28,18 +29,36 @@ const tweetController = {
       //filter the tweets to those that user followings & user himself
       tweetFollowings = []
       tweets.forEach(tweet => {
-        if (tweet.UserId === user.id) {
+        if (tweet.UserId === LoginUser.id) {
           tweetFollowings.push(tweet)
         }
         tweet.followerId.forEach(followerId => {
-          if (followerId === user.id) {
+          if (followerId === LoginUser.id) {
             tweetFollowings.push(tweet)
           }
         })
       })
 
-      return res.render('tweets', { tweetFollowings, user })
-    })  
+      //Top 10 followers
+      User.findAndCountAll({
+        include: [{ model: User, as: 'Followers' }],
+        limit: 10
+      })
+      .then(users => {
+        users = users.rows.map(user => ({
+          ...user.dataValues,
+          isFollowing: user.Followers.map(follower => follower.id).includes(req.user.id)
+        }))
+
+        //sort by the amount of the followers
+        users.sort((a, b) => {
+          return b.Followers.length - a.Followers.length
+        })
+        
+        return res.render('tweets', { tweetFollowings, LoginUser, users })
+      })
+    })
+    
   },
 
   postTweets: (req, res) => {

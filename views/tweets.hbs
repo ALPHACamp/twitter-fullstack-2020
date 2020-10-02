@@ -5,12 +5,12 @@
       <strong>首頁</strong>
     </li>
     <li class="list-group-item">
-    <form action="/tweets" method="POST">
-      <div class="row">
-        <div class="col-2">
-          <img src="{{user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+    <form action="/tweets" method="POST">  
+      <div class="flex-container">
+        <div>
+          <img src="{{LoginUser.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
         </div>
-        <div class="col-10">  
+        <div style="width: 600px;">  
           <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;"></textarea>
         </div>
       </div>
@@ -56,31 +56,32 @@
     <li class="list-group-item" style="background-color:lightgray;">
       <strong>跟隨誰</strong>
     </li>
+    {{#each users}}
     <li class="list-group-item" style="background-color: lightgray;">
-      <div class="d-flex">
+      <div class="flex-container">
         {{!-- <div class="p-3">Avatar</div> --}}
-        <img class="mr-3" src="#" alt="Avatar">
+        <div class="mr-2">
+        <img src="{{this.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%">
+        </div>
         <div>
-          <strong>Name</strong><br> 
-          <span class="text-muted">@UserName</span>
+          <strong>{{this.name}}</strong><br> 
+          <span class="text-muted">@{{this.account}}</span>
         </div>
         <div class="align-self-center ml-auto">
-          <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: auto">正在跟隨</a>
+          {{#if this.isFollowing}}
+          <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn" style="border-radius: 18px; background:coral; color:white; width: auto">正在跟隨</button>
+          </form>
+          
+          {{else}}
+          <form action="/following/{{this.id}}" method="POST">
+            <button type="submit" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</button>
+          </form>
+          {{/if}}
         </div>
       </div>
     </li>
-    <li class="list-group-item" style="background-color: lightgray;">
-      <div class="d-flex">
-        <img class="mr-3" src="#" alt="Avatar">
-        <div>
-          <strong>Name</strong><br>
-          <span class="text-muted">@UserName</span> 
-        </div>
-        <div class="align-self-center ml-auto">
-          <a href="#" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</a>
-        </div>
-      </div>
-    </li>
+    {{/each}}
     <li class="list-group-item" style="background-color: lightgray;">
       <a href="#" style="color: coral;">顯示更多</a>
     </li>

@@ -52,5 +52,6 @@ module.exports = (app, passport) => {
   app.post('/replies/:replyId', authenticated, replyController.postReply)
 
   //follow
-  app.post('following/:userId', authenticated, userController.postFollowing)
+  app.post('/following/:userId', authenticated, userController.postFollowing)
+  app.delete('/following/:userId', authenticated, userController.deleteFollowing)
 }
