@@ -515,6 +515,7 @@ a, a:hover {
 .tweet-post-btn {
   display: flex;
   justify-content: flex-end;
+  margin-top: 15px;
 }
 
 .tweet-post-btn .btn-post-modal {
@@ -523,12 +524,10 @@ a, a:hover {
   height: 40px;
   background: #FF6600;
   border-radius: 100px;
-  border:1px solid rgb(228, 217, 217);
 }
 
 
 /* reply-modal */
-
 .reply-modal-content {
   background: #FFFFFF;
   border-radius: 14px !important;
@@ -585,7 +584,7 @@ a, a:hover {
 
 .reply-modal-post {
   display: flex;
-  padding: 15px;
+  padding-top: 15px;
 }
 
 .reply-modal-textarea {
@@ -730,4 +729,143 @@ a, a:hover {
 
 .user-list-item-follow span{
   color: #657786;
+}
+
+/* edit-modal */
+.edit-modal-content {
+  background: #FFFFFF;
+  border-radius: 14px !important;
+  width: 600px;
+  height: 650px;
+  border: none !important;
+}
+
+.edit-modal-header {
+  border-bottom: 1px solid#E6ECF0;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 15px;
+}
+
+.edit-left-top span {
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.edit-right-top .btn-post-modal {
+  color: #ffff;
+  width: 64px;
+  height: 35px;
+  background: #FF6600;
+  border-radius: 100px;
+}
+
+.edit-item-cover {
+  height: 200px;
+  width: 600px;
+  border: 1px solid #E6ECF0;
+  background-color: #F5F8FA !important;
+}
+
+.edit-item-cover:hover {
+  opacity: 0.8;
+}
+
+.edit-item-cover label {
+  position: relative;
+  left: 270px;
+  top: 95px;
+}
+
+.edit-item-cover .remove {
+  position: relative;
+  left: 300px;
+  top: 95px;
+  border: none !important;
+  background-color: none !important;
+}
+
+.edit-item-cover label:hover,
+.edit-item-avatar label:hover {
+  cursor: pointer;
+}
+
+.edit-item-cover i,
+.edit-item-avatar i{
+  color: #FFFFFF;
+  font-size: 20px;
+}
+
+.edit-item-avatar {
+  position: relative;
+  top: -65px;
+  left: 25px;
+  border: 5px solid #ffff;
+  border-radius: 100px;
+  width: 120px;
+  height: 120px;
+}
+
+.edit-item-avatar label {
+  position: relative;
+  left: 45px;
+  top: 45px;
+}
+
+.edit-item-name {
+  margin-top: -60px;
+  padding: 0 15px 0 15px;
+}
+
+.edit-item-name input{
+  width: 570px;
+  height: 60px;
+  background-color: #F5F8FA;
+  border-radius: 4px;
+  border: none;
+  border-bottom: 3px solid #657786;
+  resize: none !important; 
+  font-weight: 600;
+  font-size: 19px;
+}
+
+.edit-item-name input:active,
+.edit-item-name input:focus,
+.item-text-center:active,
+.item-text-center:focus{
+  border: none;
+  resize: none !important; 
+  outline: 0px !important;
+  border-bottom: 3px solid #657786;
+}
+
+.item-name-top-mark,
+.item-text-top-mark{
+  position: relative;
+  top: 20px;
+  font-size: 15px;
+}
+
+.item-name-bottom,
+.item-text-bottom {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.edit-item-text {
+  padding: 0 15px 0 15px;
+}
+
+.edit-item-text .item-text-center {
+  width: 570px;
+  height: 150px;
+  border: none;
+  border-bottom: 3px solid #657786;
+  resize: none !important; 
+  font-weight: 600;
+  border-radius: 4px;
+  font-size: 19px;
+  background-color: #F5F8FA;
 }
