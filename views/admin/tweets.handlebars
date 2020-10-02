@@ -27,7 +27,7 @@
             </a>
           </div>
           <div class="col-md-8">
-            <div class="card-body" onclick="location.href='/replylist/{{ this.User.id }}';">
+            <div class="card-body">
                 <h5 class="card-title">
                 <a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
                 ● <small class="text-muted">{{moment this.createdAt }}</small>
@@ -35,6 +35,9 @@
                 <p class="card-text" style="overflow: hidden; text-overflow: ellipsis; white-space:nowrap">
                   {{ this.description }}
                 </p>
+                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                  <button type="submit" class="btn btn-link">Delete</button>
+                </form>
             </div>
           </div>
         </div>

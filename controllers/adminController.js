@@ -17,29 +17,31 @@ const adminController = {
         })
     })
   },
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id)
+    .then(tweet => {
+      tweet.destroy()
+      .then((tweet) => {
+        res.redirect('/admin')
+      })
+    })
+  },
   getUsers:(req,res) => {
-    User.findAll({ 
+    return User.findAll({ 
       include: [
-        { model: Like, include: [Tweet] },
-        {
-          model: Tweet,
-          include: [User]
-        },
+        Tweet,
         { model: User, as: "Followers" },
-        { model: User, as: "Followings" }
+        { model: User, as: "Followings" },
+        { model: Tweet, as: 'LikedTweets' }
       ] 
     }).then(users => {
-      const data = users.map(u => ({
+      users = users.map(u => ({
         ...u.dataValues,
-        //TweetCount: users.Tweets.length
-/*         LikeCount: users.Like.length,
-        TweetCount: users.Tweet.length,
-        FollowerCount: users.Followers.length,
-        FollowingCount: users.Followings.length, */
       }))
-      console.log(data.TweetCount)
+      users = users.sort((a, b) => b.Tweets.length - a.Tweets.length)
+      console.log(users)
       return res.render('admin/users', {
-        users: data
+        users: users
       })
     })
   },

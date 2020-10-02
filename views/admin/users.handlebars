@@ -16,18 +16,15 @@
   {{#each users}}
     <div class="col-md-4">
       <div class="card mb-4 shadow-sm">
-        <img class="card-img-top" src="{{this.cover}}" alt="Card image cap" width="286px" height="180px">
+        <img class="card-img-top" src="{{this.cover}}" alt="/" width="286px" height="180px">
+        <img src="{{ this.avatar }}" class="rounded-circle" alt="no avatar" width="50" height="50">
         <div class="card-body">
-          <p class="card-text">
-            {{this.name}}
-          </p>
-          <span>
-              {{this.account}}
-          </span>
-          <span>{{this.LikeCount}}</span>
-          TweetCount:<span>{{this.TweetCount}}</span>
-          <span>{{this.FollowerCount}}</span>
-          <span>{{this.FollowingCount}}</span>
+          <h5>{{ this.name }}</h5>
+          <h7>@{{this.account}}</h7>
+          <p>Tweets:{{this.Tweets.length}}則</p>
+          <p>LikedTweets:{{this.LikedTweets.length}}</p>
+          <p>{{this.Followings.length}}個跟隨中</p>
+          <span>{{this.Followers.length}}位跟隨者</span>
         </div>
       </div>
     </div>
