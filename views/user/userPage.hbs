@@ -3,20 +3,20 @@
     <div>
       {{> left-column}}
     </div>
-  </nav>
+    <div class="center-content">
+      <div class="user-content">
 
-  <div class="center-content">
-    <div class="user-content">
-
-      <div class="user-header">
-        <a href="javascript:history.back()">
-          <i class="fas fa-arrow-left"></i>
-        </a>
-        <div class="user-title">
-          <h5>{{user.name}}使用者姓名</h5>
-          <span>{{user.Tweets.length}} 推文</span>
+        <div class="user-header">
+          <a href="javascript:history.back()">
+            <i class="fas fa-arrow-left"></i>
+          </a>
+          <div class="user-title">
+            <h5>{{user.name}}</h5>
+            <span>{{user.Tweets.length}} 推文</span>
+          </div>
         </div>
       </div>
+
 
       <div class="user-cover">
         <img src="https://mcdn.wallpapersafari.com/medium/7/92/bmNBFo.jpg{{user.cover}}" alt="{{user.cover}}">
@@ -57,6 +57,7 @@
             <span>跟隨中&nbsp;&nbsp;</span>
             <a href="/users/{{user.id}}/followers">{{user.FollowerCount}}20位</a>
             <span>跟隨者</span>
+            >>>>>>> d264a17da8ba6919dc63b8b5154b8ce8eb9f778a
           </div>
         </div>
       </div>
@@ -80,11 +81,11 @@
 
 
     </div>
-  </div>
+</div>
 
-  <div class="right-content">
-    {{>right-column}}
-  </div>
+<div class="right-content">
+  {{>right-column}}
+</div>
 
 
 </div>

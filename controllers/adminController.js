@@ -51,20 +51,21 @@ const adminController = {
       }))
       const users = data.sort((a, b) => b.tweetsCount - a.tweetsCount)
       res.render('admin/users', { users })
-      // res.json({ users })
     })
   },
   deleteTweet: (req, res) => {
-    const id = Number(req.params.id)
+    if (helpers.getUser(req).role === 'admin') {
+      const id = Number(req.params.id)
 
-    return Tweet.findByPk(id).then(tweet => {
-      if (tweet === null) {
-        res.redirect('/admin/tweets')
-      } else {
-        tweet.destroy()
-          .then(() => res.redirect('/admin/tweets'))
-      }
-    }).catch(err => console.log(err))
+      return Tweet.findByPk(id).then(tweet => {
+        if (tweet === null) {
+          res.redirect('/admin/tweets')
+        } else {
+          tweet.destroy()
+            .then(() => res.redirect('/admin/tweets'))
+        }
+      }).catch(err => console.log(err))
+    }
   }
 }
 

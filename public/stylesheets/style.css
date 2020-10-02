@@ -423,7 +423,7 @@ border-radius: 10px;
   color: #657786;
 }
 
-.user-cover {
+.user-cover img{
   width:598px;
   height: 200px;
 }
@@ -431,6 +431,8 @@ border-radius: 10px;
 .user-info-top {
   display: flex;
   justify-content: space-between;
+  position: relative;
+  bottom: 4rem;
 }
 
 .user-info-top img {
@@ -454,12 +456,18 @@ border-radius: 10px;
   color: #FF6600;
   background-color: transparent;
   position: relative;
-  top: 6rem;
-  left: 9rem;
+  top: 5rem;
 }
 
 .user-info-bottom {
   margin: 15px; 
+  position: relative;
+  bottom: 5rem;
+}
+
+.user-selection-bar {
+  position: relative;
+  bottom: 5rem;
 }
 
 .user-followships  a {
