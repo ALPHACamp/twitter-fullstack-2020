@@ -1,5 +1,4 @@
 const db = require('../models')
-const user = require('../models/user')
 const Tweet = db.Tweet
 const Like = db.Like
 const User = db.User
@@ -131,6 +130,16 @@ const tweetController = {
         return res.redirect(`/tweets/${reply.TweetId}`)
       })
     }
+  },
+
+  deleteTweet: (req, res) => {
+    Tweet.findByPk(req.params.tweetId)
+      .then(tweet => {
+        tweet.destroy()
+          .then(tweet => {
+            return res.redirect('/tweets')
+          })  
+      })
   }
 }
 

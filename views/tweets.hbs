@@ -27,7 +27,22 @@
           </a>
         </div>
         <div>
-          <strong style="display: inline;">{{this.user.name}}</strong> <font color="grey">@{{this.user.account}} {{moment this.createdAt}}</font> 
+          {{#ifCond ../loginUser.id this.user.id}}
+          <div class="dropdown show" style="position:absolute; right:10px;">
+            <a style="color:black; text-decoration:none;" role="button" id="more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              •••
+            </a>
+            <div class="dropdown-menu" aria-labelledby="more">
+              <form action="">
+                <button class="dropdown-item" type="submit">修改此貼文</button>
+              </form>
+              <button data-toggle="modal" data-target="#t{{this.id}}"  class="dropdown-item">刪除此貼文</button>
+            </div>
+          </div>
+         
+          {{/ifCond}}
+          <strong>{{this.user.name}}</strong> <font color="grey">@{{this.user.account}} {{moment this.createdAt}}</font> 
+          
           <p>{{this.description}}</p>
           <div class="display: inline-block;">
             <a href="/tweets/{{this.id}}" style="color:black;" class="mr-4"><i class="far fa-comment-alt"></i>  {{this.repliesCount}}</a>
@@ -47,7 +62,25 @@
       </div>
     </li>
   </ul>
-  
+  <!-- pop up delete tweet message -->
+  <div class="modal fade" id="t{{this.id}}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>刪除貼文?</h4>
+        </div>
+        <div class="modal-body">
+          確定要刪除這則貼文?
+        </div>
+        <div class="modal-footer">
+          <form action="/tweets/{{this.id}}?_method=DELETE" method="POST">
+             <button type="submit" class="btn btn-primary">刪除</button>
+          </form>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+      </div>
+    </div>
+  </div>
   {{/each}}
 </div>
 {{!-- Right side --}}
@@ -89,3 +122,4 @@
     </li>
   </ul>
 </div>
+
