@@ -27,9 +27,15 @@
         <div class="action-item user-icon">
           <i class="icon icon-noti"></i>
         </div>
+        {{#if ../isFollowing}}
         <form action="/followships" method="POST">
-          <button class="action-item btn-user-follow" name="id" value="{{user.id}}">追蹤 + </button>
+          <button class="action-item btn-user-unfollow" name="id" value="{{user.id}}">正在追蹤</button>
         </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button class="action-item btn-user-follow" name="id" value="{{user.id}}">追蹤 +</button>
+        </form>
+        {{/if}}
         {{/Equal}}
       </div>
       <div class="user-data">
