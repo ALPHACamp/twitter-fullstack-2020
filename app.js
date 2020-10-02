@@ -24,6 +24,7 @@ app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
 app.use(session({ secret: 'test', resave: false, saveUninitialized: true }));
 app.use(flash());
 app.use(passport.initialize());
@@ -33,14 +34,13 @@ app.use(passport.session());
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.use((req, res, next) => {
-  res.locals.user = helpers.getUser(req)
-  res.locals.isAuthenticated = helpers.ensureAuthenticated(req)
-  res.locals.successMessage = req.flash('successMessage')
-  res.locals.errorMessage = req.flash('errorMessage')
-  res.locals.userInput = req.flash('userInput')[0]
-  next()
-})
-
+  res.locals.user = helpers.getUser(req);
+  res.locals.isAuthenticated = helpers.ensureAuthenticated(req);
+  res.locals.successMessage = req.flash('successMessage');
+  res.locals.errorMessage = req.flash('errorMessage');
+  res.locals.userInput = req.flash('userInput')[0];
+  next();
+});
 
 require('./routes/index')(app);
 
