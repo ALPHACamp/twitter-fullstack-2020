@@ -2,7 +2,12 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
+const { Sequelize } = require('../models')
+const user = require('../models/user')
 const User = db.User
+
+
+
 
 // setup passport strategy
 passport.use(new LocalStrategy(

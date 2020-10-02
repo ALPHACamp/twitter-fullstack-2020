@@ -1,13 +1,17 @@
 const userController = require("../controllers/userController");
 const tweetController = require("../controllers/tweetController");
 const adminController = require('../controllers/adminController')
+const helpers = require('../_helpers.js')
 
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {  // isAuthenticated 為passport內建之方法,回傳true or false
-      if (!req.user.role) { return next() }
-      return res.redirect('/')
+    if (helpers.ensureAuthenticated(req)) {  // isAuthenticated 為passport內建之方法,回傳true or false
+      if (!req.user.role) {
+        return next()
+      }
+      req.flash('error_messages', '請從後臺登入!')
+      return res.redirect('/admin/signin')
     }
     res.redirect('/signin')
   }
@@ -15,9 +19,11 @@ module.exports = (app, passport) => {
   // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
   const authenticatedAdmin = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (helpers.ensureAuthenticated(req)) {
       if (req.user.role) { return next() }  //如果是管理員的話
-      return res.redirect('/') //如果不是就導回首頁
+
+      req.flash('error_messages', '您非管理員，請從前台登入')
+      return res.redirect('/admin/signin') //如果不是就導回首頁
     }
     res.redirect('/admin/signin')
   }
