@@ -858,7 +858,7 @@ a, a:hover {
   padding: 0 15px 0 15px;
 }
 
-.item-text-center {
+.edit-item-text .item-text-center {
   width: 570px;
   height: 150px;
   border: none;
