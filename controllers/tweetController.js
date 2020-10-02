@@ -13,7 +13,6 @@ const tweetController = {
                 ...t.dataValues,
                 description: t.dataValues.description.substring(0, 100),
             }))
-            console.log(tweets.dataValues)
             return res.render('tweets', {
                 tweets: data
             })
