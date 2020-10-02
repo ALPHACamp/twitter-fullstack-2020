@@ -27,7 +27,9 @@ const userController = {
         { model: User, as: 'Followings' },
       ],
     }).then((user) => {
-      return res.render('user', { user, self: req.user });
+      console.log('self@@@@', req.user);
+      console.log('user@@@@', user.toJSON());
+      return res.render('user', { user: user.toJSON(), self: req.user });
     });
   },
 };
