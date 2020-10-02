@@ -110,7 +110,7 @@ const tweetController = {
       })
 
       user = req.user
-      
+      console.log(tweet)
       return res.render('tweet', { tweet, user })
     })
   },

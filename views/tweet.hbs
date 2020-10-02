@@ -47,7 +47,7 @@
             <font color="grey" size="2px">回覆</font>
             <a href="" style="color: coral;" style="font-size: 2px;">@{{../tweet.User.name}}</a>
             <section>{{this.comment}}</section>
-            <button data-toggle="modal" data-target="" style="color:black; font-size:10px; border:none; background-color:white;" class="mr-5"><i class="far fa-comment-alt"></i> {{this.ReplyComments.length}}</button>
+            <button data-toggle="modal" data-target="#r{{this.id}}" style="color:black; font-size:10px; border:none; background-color:white;" class="mr-5"><i class="far fa-comment-alt"></i> {{this.ReplyComments.length}}</button>
             {{#if this.likesReply}}
             <form action="/like/{{this.id}}/replies?_method=DELETE" method="POST" style="display: inline-block;">
               <button type="submit" style="color:black; border:none; background-color:white; font-size: 2px;"><i class="fas fa-heart"></i></button>
@@ -139,3 +139,43 @@
     </div>
   </div>
 </div>
+
+{{#each tweet.Replies}}
+<div class="modal fade" id="r{{this.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: coral;">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      </div>
+      <div class="modal-body">
+        <div class="flex-container mb-2">
+          <div>
+            <img class="mr-3" src="{{this.User.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          </div>
+          <div>
+            <strong>{{this.User.name}}</strong>
+            <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
+            <p>
+              {{this.comment}}
+            </p>
+            <font color="grey" size="2px">回覆給</font><font color="coral" size="2px">@{{this.User.name}}</font> 
+          </div>
+        </div>
+        <div class="flex-container">
+          <div>
+            <img src="{{../user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          </div>
+          <div style="width: 600px;">
+            <form action="/replies/{{this.id}}" method="POST">
+              <textarea placeholder="推你的回覆" class="form-control" id="comment" name="comment" rows="3"  style="border: none;"></textarea>
+              <button class="btn" type="submit" style="border-radius: 18px; background:coral; color:white; width: 60px; float: right;">留言</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/each}}

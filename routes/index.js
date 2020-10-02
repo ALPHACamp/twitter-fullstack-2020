@@ -1,6 +1,7 @@
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
+const replyController = require('../controllers/replyController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -46,4 +47,7 @@ module.exports = (app, passport) => {
   app.delete('/like/:tweetId', authenticated, userController.dislikeTweet)
   app.post('/like/:replyId/replies', authenticated,userController.likeReply)
   app.delete('/like/:replyId/replies', authenticated, userController.dislikeReply)
+
+  //Reply
+  app.post('/replies/:replyId', authenticated, replyController.postReply)
 }
