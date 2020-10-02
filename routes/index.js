@@ -36,8 +36,10 @@ module.exports = (app, passport) => {
     userController.signIn
   );
   app.get("/logout", userController.logout);
-  app.get("/main", (req, res) => res.render("mainpage"));
+  // app.get("/main", (req, res) => res.render("mainpage"));
 
+  //userController
+  app.get('/users/:id', authenticated, userController.getUser)  
 
   // adminController
   app.get("/admin", (req, res) => {
@@ -52,17 +54,15 @@ module.exports = (app, passport) => {
   app.get("/signin", userController.signIn);
   
   //tweetController
-  app.get("/", (req, res) => res.redirect("/tweets"));
-  app.get("/tweets", tweetController.getTweets);
-  app.get("/tweets/:id", tweetController.getTweet);
-  app.post('/tweets', tweetController.postTweet)
-  app.get('/tweets/user',tweetController.getUser)
+  app.get("/main", (req, res) => res.redirect("/tweets"));
+  app.get("/tweets",authenticated, tweetController.getTweets);
+  app.get("/tweets/:id",authenticated, tweetController.getTweet);
+  app.post('/tweets/:id',authenticated, tweetController.postTweet)
+  app.post("/tweets/:id/like",authenticated, tweetController.addLike);
+  app.delete("/tweets/:id/unlike",authenticated, tweetController.removeLike);
 
-  app.post("/tweets/:id/like", tweetController.addLike);
-  app.delete("/tweets/:id/unlike", tweetController.removeLike);
-
-  app.post('/tweets/:id/replies', tweetController.postReply)
-  app.get('/tweets/:id/replies', tweetController.getReply)
+  app.post('/tweets/:id/replies',authenticated, tweetController.postReply)
+  app.get('/tweets/:id/replies',authenticated, tweetController.getReply)
 
 
   app.get('/admin/signin', adminController.signinPage)

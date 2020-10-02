@@ -1,1 +1,20 @@
-<h1>tweet</h1>
+<div class="col-md-9 pl-0 border-left">
+  {{#each tweet}}
+  <div class="header">
+    <div class="tweet-item-right">
+      <div class="tweet-item-title">
+
+        <span class="mt-1"><a href="/users/{{user.id}}">{{user.dataValues.name}}</a></span>
+        <span class="user-account">
+          {{User.dataValues.account}}．{{moment User.dataValues.createdAt}}
+        </span>
+
+      </div>
+      <div class="tweet-text">
+        {{tweet.description}}
+      </div>
+    </div>
+  </div>
+
+  {{/each}}
+</div>
