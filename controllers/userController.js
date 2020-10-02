@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
-const User = db.User
+const { User, Tweet, Reply, Like, Followship } = db
 const helpers = require('../_helpers');
 
 const userController = {
@@ -132,12 +132,37 @@ const userController = {
       }).catch(err => console.log(err))
     }
   },
-  getUser: (req, res) => {
+  getUserTweets: (req, res) => {
     const reqUserId = req.params.userId
-    console.log('reqUser', reqUserId)
-    return User.findByPk(reqUserId).then(user => {
+    
+    return User.findByPk(reqUserId, {
+      order: [[{ model: Tweet }, 'createdAt', 'DESC']],
+      include: [
+        { model: Tweet, include:[Like, Reply] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ]
+    }).then(user => {
+      const tweets = user.toJSON().Tweets.map(tweet => ({
+        avatar: user.toJSON().avatar,
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        description: tweet.description.substring(0, 50),
+        updatedAt: tweet.updatedAt,
+        replyCount: tweet.Replies.length,
+        likeCount: tweet.Likes.length
+      }))
+
       return res.render('userTweets', {
-        user: user.toJSON()
+        tweets,
+        cover: user.toJSON().cover,
+        avatar: user.toJSON().avatar,
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        introduction: user.toJSON().introduction,
+        followingsCount: user.toJSON().Followings.length,
+        followersCount: user.toJSON().Followers.length,
+        tweetsCount: tweets.length
       })
     })
   }
