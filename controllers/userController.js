@@ -1,4 +1,4 @@
-const { User, Reply, Tweet, Like } = require('../models')
+const { User, Reply, Tweet, Like, Followship } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { Op } = require('sequelize')
 const helpers = require('../_helpers')
