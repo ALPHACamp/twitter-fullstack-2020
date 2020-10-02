@@ -1,0 +1,9 @@
+.alertMessage {
+  animation-name: alertMessage;
+  animation-duration: 3s;
+}
+@keyframes alertMessage {
+  to {
+    opacity: 0;
+  }
+}
