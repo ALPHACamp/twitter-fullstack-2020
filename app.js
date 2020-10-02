@@ -42,10 +42,14 @@ app.use(passport.session());
 //   console.log('success to create account')
 // })
 app.use((req, res, next) => {
-  res.locals.user = helpers.getUser(req);
-  res.locals.isAuthenticated = helpers.ensureAuthenticated(req);
-  next();
-});
+  res.locals.user = helpers.getUser(req)
+  res.locals.isAuthenticated = helpers.ensureAuthenticated(req)
+  res.locals.successMessage = req.flash('successMessage')
+  res.locals.errorMessage = req.flash('errorMessage')
+  res.locals.userInput = req.flash('userInput')[0]
+  next()
+})
+
 
 require('./routes/index')(app);
 
