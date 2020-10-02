@@ -89,7 +89,28 @@ const userController = {
             return res.render('following', { user, tweets })
           })
       })
+  },
+
+  getUser: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        { model: Reply, include: [Tweet] },
+        { model: Tweet, as: 'LikedUsers' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
+      const userSelf = helpers.getUser(req).id
+      const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
+      res.render({
+        user: user,
+        isLiked: isLiked,
+        userSelf: userSelf
+      })
+    })
   }
+
+
 
 
 }

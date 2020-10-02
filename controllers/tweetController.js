@@ -8,19 +8,21 @@ const Like = db.Like
 const tweetController = {
   getTweets: (req, res) => {
     return Tweet.findAll({
+
       include: [User, Reply,
         { model: User, as: 'LikedUsers' }],
+
       order: [['createdAt', 'DESC']]
     })
       .then(tweets => {
+        const UserId = helpers.getUser(req).id
         const data = tweets.map(t => ({
           ...t.dataValues,
-          description: t.dataValues.description.substring(0, 50),
+          description: t.dataValues.description,
           isLiked: t.LikedUsers.map(d => d.id).includes(t.id)
         }))
-        return User.findOne({ where: { account: req.user.account } })
+        return User.findOne({ where: { id: UserId } })
           .then(user => {
-            console.log(user.dataValues.avatar)
             return res.render('tweets', { tweets: data, user })
           })
       })
@@ -28,18 +30,26 @@ const tweetController = {
   },
 
   getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
+    Tweet.findByPk(req.params.id, {
       include: [
+        User,
         { model: Reply, include: [User] },
         { model: User, as: 'LikedUsers' }
       ],
-      order: [['createdAt', 'DESC']]
+      order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
+      const UserId = helpers.getUser(req).id
       const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-      return res.render('tweet', {
-        tweet: tweet.toJSON(),
-        isLiked: isLiked
-      })
+
+      return User.findOne({ where: { id: UserId } })
+        .then(user => {
+          console.log(user)
+          return res.render('tweet', {
+            tweet: tweet,
+            isLiked: isLiked
+          })
+        })
+
     })
       .catch(error => console.log(error))
   },
@@ -47,19 +57,20 @@ const tweetController = {
   postTweet: (req, res) => {
     if (!req.body.description) {
 
-      // req.flash('error_message', '留言不得為空')
+      req.flash('error_messages', '貼文不可空白')
       return res.redirect('back')
     }
     if (req.body.description.length > 140) {
-      // req.flash('error_message', '貼文不得超過140個字')
-      return res.redirect('/')
+      req.flash('error_messages', '貼文不得超過140個字')
+      return res.redirect('back')
+
     }
     return Tweet.create({
 
       UserId: helpers.getUser(req).id,
       description: req.body.description
     }).then(tweet => {
-      return res.redirect('/')
+      return res.redirect('/tweets')
     })
       .catch(error => console.log(error))
   },
@@ -67,32 +78,39 @@ const tweetController = {
   addLike: (req, res) => {
     return Like.create({
       UserId: helpers.getUser(req).id,
-      TweetId: req.params.tweetId
-    }).then((tweet) => {
+      TweetId: req.params.id
+    }).then((like) => {
       return res.redirect('back')
     })
       .catch(error => console.log(error))
   },
 
   removeLike: (req, res) => {
-    return Like.findOne({
+    Like.findOne({
       where: {
         UserId: helpers.getUser(req).id,
-        TweetId: req.params.tweetId
+        TweetId: req.params.id
       }
     }).then((like) => {
-      like.destroy().then((tweet) => {
-        return res.redirect('back')
-      })
+      like.destroy()
+        .then(tweet => {
+          return res.redirect('back')
+        })
     })
       .catch(error => console.log(error))
   },
 
   getReply: (req, res) => {
-    return Tweet.findByPk(req.params.id, { include: [Reply] })
-      .then(tweet => {
-        const replies = tweet.replies
-        return res.render({ replies: replies })
+    return Tweet.findByPk(req.params.id,
+      {
+        include: [{ model: Reply, include: [User] }]
+      }).then(tweet => {
+        const data = tweet.Replies.map(t => ({
+          ...t.dataValues,
+          comment: t.comment
+        }))
+
+        return res.render('tweet', { tweet: data })
       })
       .catch(error => console.log(error))
   },
@@ -102,36 +120,15 @@ const tweetController = {
       return res.redirect('back')
     }
     Reply.create({
+      TweetId: req.params.id,
       comment: req.body.comment,
-      TweetId: req.params.tweetId,
-      UserId: helper.getUser(req).id
+      UserId: helpers.getUser(req).id
     })
       .then((reply) => {
         res.redirect('back')
       })
       .catch(error => console.log(error))
   },
-
-  getUser: (req, res) => {
-    User.findByPk(req.params.id, {
-      include: [
-        Tweet,
-        { model: Reply, include: [Tweet] },
-        { model: Tweet, as: 'LikedUsers' },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    })
-      .then(user => {
-        const isFollowed = helper.getUser(req).Followings.map(d => d.id).includes(user.id)
-        res.render('tweets', {
-          user: user.toJSON(),
-          isFollowed: isFollowed
-        })
-      })
-  },
-
-
 
 
 
