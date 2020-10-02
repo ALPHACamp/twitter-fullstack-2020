@@ -101,16 +101,33 @@ const tweetController = {
       const isLikedTweet = req.user.Likes.map(likes => likes.TweetId).includes(tweet.id)
 
       //like and dislike reply
-      const LikeReplies = tweet.Replies.map(reply => reply.Likes)
-      let data = []
-      LikeReplies.forEach(r => { r.forEach(l =>　data.push(l)) })
-      const isLikedReply = data.map(reply => reply.UserId).includes(req.user.id)
- 
+      tweetReplies = tweet.Replies.map(reply => ({
+        ...reply,
+        isLikedReply: reply.Likes.map(like => like.UserId).includes(req.user.id)
+      }))
+
       tweet.Replies.sort((a, b) => {
         return b.updatedAt - a.updatedAt
       })
 
-      return res.render('tweet', { tweet, loginUser, isLikedTweet, isLikedReply })
+       //Top 10 followers
+      User.findAndCountAll({
+        include: [{ model: User, as: 'Followers' }],
+        limit: 10
+      })
+      .then(users => {
+        users = users.rows.map(user => ({
+          ...user.dataValues,
+          isFollowing: user.Followers.map(follower => follower.id).includes(req.user.id)
+        }))
+        
+        //sort by the amount of the followers
+        users.sort((a, b) => {
+          return b.Followers.length - a.Followers.length
+        })
+        
+        return res.render('tweet', { tweet, loginUser, isLikedTweet, tweetReplies, users })
+      })
     })
   },
 
