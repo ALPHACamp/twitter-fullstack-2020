@@ -1,24 +1,41 @@
-const db = require('../models')
-const User = db.User
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcryptjs');
+const db = require('../models');
+const User = db.User;
+const Like = db.Like;
+const Tweet = db.Tweet;
+const Reply = db.Reply;
 const { Op } = require("sequelize");
 
-const userController = {
 
+const userController = {
   getSigninPage: (req, res) => {
     return res.render('signin')
   },
 
   getSignupPage: (req, res) => {
     return res.render('signup')
-
   },
 
   signin: (req, res) => {
-    return res.redirect('/tweets')
+    return res.redirect('/tweets');
   },
-
-
+  getSelf: (req, res) => {
+    let selfId = req.user.id;
+    return res.redirect(`/users/${selfId}`);
+  },
+  getUser: (req, res) => {
+    let userId = req.params.id;
+    return User.findByPk(userId, {
+      include: [
+        Like,
+        { model: Tweet, include: Reply },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+    }).then((user) => {
+      return res.render('user', { user: user.toJSON(), self: req.user });
+    });
+  },
   signup: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
     req.flash('userInput', req.body)

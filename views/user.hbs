@@ -1,0 +1,111 @@
+<div class="container-fluid">
+  {{> left-column}}
+  <div class="user-main">
+    <div class="user-header">
+      <a href="/tweets" style="text-align: center;"><i class="user-arrow icon icon-arrow"></i></a>
+      <div class="user-header-info">
+        <div class="user-header-name">{{user.name}}</div>
+        <div class="user-header-tweet-count">{{user.Tweets.length}} 推文</div>
+      </div>
+    </div>
+
+    <div class="user-cover"
+      style="height: 200px;background: url({{user.cover}}),#C4C4C4;background-position: center;background-size: cover;">
+    </div>
+
+    <div class="user-info">
+      <div class="user-avatar"
+        style="height:140px;width:140px;background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
+      </div>
+      <div class="user-action">
+        {{#Equal self.id user.id}}
+        <button type="button" class="button btn-edit-profile" data-toggle="modal" data-target="">編輯個人資訊</button>
+        {{else}}
+        <div class="action-item user-icon">
+          <i class="icon icon-messege"></i>
+        </div>
+        <div class="action-item user-icon">
+          <i class="icon icon-noti"></i>
+        </div>
+        <form action="/followships" method="POST">
+          <button class="action-item btn-user-follow" name="id" value="{{user.id}}">追蹤 + </button>
+        </form>
+        {{/Equal}}
+      </div>
+      <div class="user-data">
+        <div class="user-name">{{user.name}}</div>
+        <div class="user-account">@{{user.account}}</div>
+        <div class="user-intro">{{user.introduction}}</div>
+        <div class="user-follow">
+          <div class="user-following">
+            <span>{{user.Followings.length}} 個</span>跟隨中
+          </div>
+          <div class="user-follower">
+            <span>{{user.Followers.length}} 位</span>追隨者
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <nav class="user-page-nav navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav user-navbar">
+          <a class="nav-link active" href="#">推文</a>
+          <a class="nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
+          <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+        </div>
+      </div>
+    </nav>
+
+    {{!-- tweets list --}}
+    <div class="user-tweets-list">
+      {{#each user.Tweets}}
+      <div class="tweets-content">
+        <div class="left-item">
+          <a href="/users/{{../user.id}}">
+            <img src="{{../user.avatar}}" class="rounded-circle"
+              style="width: 50px;height:50px;background-color:#C4C4C4;">
+          </a>
+        </div>
+        <div class="right-item">
+          <div class="title">
+            <span class="name">
+              <a href="">
+                {{../user.name}}
+              </a>
+            </span>
+            <span class="time">
+              @{{../user.account}}・{{moment this.createdAt}}
+            </span>
+          </div>
+          <div class="body">
+            {{subText this.description 100}}
+          </div>
+          <div class="footer">
+            <div class="footer-item reply-item">
+              <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
+                <i class="icon-reply"></i>
+              </button>
+              <div class="item-count reply-count">13</div>
+            </div>
+            <div class="footer-item like-item">
+              <button type="button" class="btn">
+                <i class="icon-like"></i>
+              </button>
+              <div class="item-count like-count">79</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {{/each}}
+    </div>
+
+
+
+  </div>
+  {{> right-column}}
+
+</div>

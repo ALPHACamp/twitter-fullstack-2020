@@ -3,32 +3,36 @@
   font-style: normal;
 }
 
-button:focus, button:active {
-   outline: 0px !important;
-   box-shadow: none;
+button:focus,
+button:active {
+  outline: 0px !important;
+  box-shadow: none;
 }
 
-a, a:hover {
+a,
+a:hover {
   text-decoration: none;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
-.btn:focus, .btn:active {
-   outline: 0px !important;
-   box-shadow: none;
+.btn:focus,
+.btn:active {
+  outline: 0px !important;
+  box-shadow: none;
 }
 
 .container-fluid {
   display: grid;
   /* grid-template-columns: 27% 43.5% 29%; */
-  grid-template-columns: 350px 600px 400px;
-  height: 900px;
+  grid-template-columns: 1fr 350px 600px 400px 1fr;
+  height: 100%;
+  width: 100%;
 }
 
 /* 左邊列表 */
 .left-content {
-  grid-column-start: 1;
-  grid-column-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -45,8 +49,8 @@ a, a:hover {
   margin: 4px 0px 20px 0px;
 }
 
-.icons i{
-  color: #FF6600;
+.icons i {
+  color: #ff6600;
 }
 
 .nav-item {
@@ -56,8 +60,8 @@ a, a:hover {
 }
 
 .nav-item a {
-  text-decoration:none;
-  color: #1C1C1C;
+  text-decoration: none;
+  color: #1c1c1c;
 }
 
 .nav-item .icons {
@@ -72,14 +76,14 @@ a, a:hover {
 }
 
 .navbar-footer a {
-  text-decoration:none;
-  color: #1C1C1C;
+  text-decoration: none;
+  color: #1c1c1c;
 }
 
 .btn-tweet {
   width: 210px;
   height: 45px;
-  background: #FF6600;
+  background: #ff6600;
   border-radius: 100px;
   border: none;
   color: #ffff;
@@ -90,12 +94,12 @@ a, a:hover {
 /* 右邊列表 */
 
 .right-content {
-  grid-column-start: 3;
-  grid-column-end: 4;
+  grid-column-start: 4;
+  grid-column-end: 5;
 }
 
 .follow-content {
-  background: #F5F8FA;
+  background: #f5f8fa;
   border-radius: 14px;
   width: 350px;
   height: 500px;
@@ -107,22 +111,22 @@ a, a:hover {
 }
 
 .follow-title {
-  background: #F5F8FA !important;
+  background: #f5f8fa !important;
   border-top-left-radius: 14px !important;
   border-top-right-radius: 14px !important;
   height: 45px;
   font-size: 18px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .top-follow-list {
   height: 700px;
   width: 350px;
-  background: #F5F8FA !important;
+  background: #f5f8fa !important;
 }
 
 .follow-body {
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   height: 70px;
   width: 350px;
   display: flex;
@@ -134,7 +138,6 @@ a, a:hover {
   margin: 10px 0px 0px 15px;
 }
 
-
 .list-item-name {
   align-self: center;
   margin-left: 10px;
@@ -142,11 +145,11 @@ a, a:hover {
   flex-direction: column;
 }
 
-.list-item-name a{
-  text-decoration:none;
+.list-item-name a {
+  text-decoration: none;
   font-weight: bold;
   font-size: 15px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .list-item-account {
@@ -158,56 +161,61 @@ a, a:hover {
 }
 
 .follow-footer {
-  background: #F5F8FA !important;
-  border-top: 1px solid #E6ECF0;
+  background: #f5f8fa !important;
+  border-top: 1px solid #e6ecf0;
   border-bottom-left-radius: 14px !important;
   border-bottom-right-radius: 14px !important;
-  height: 45px; 
+  height: 45px;
   font-size: 15px;
-  color: #FF6600 !important;
+  color: #ff6600 !important;
 }
 
 .btn-follow {
   width: 92px;
   height: 30px;
-  background: #FF6600;
-  border: 1px solid #FF6600;
+  background: #ff6600;
+  border: 1px solid #ff6600;
   box-sizing: border-box;
   border-radius: 100px;
   font-weight: bold;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 15px;
-  float:right;
+  float: right;
   align-self: right;
-  position: absolute;right: 20px;top: 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
 
 .btn-unfollow {
   width: 62px;
   height: 30px;
-  color: #FF6600;
-  background: #F5F8FA;
-  border: 1.5px solid #FF6600;
+  color: #ff6600;
+  background: #f5f8fa;
+  border: 1.5px solid #ff6600;
   box-sizing: border-box;
   border-radius: 100px;
   font-weight: bold;
   font-size: 15px;
-  float:right;
+  float: right;
   align-self: right;
-  position: absolute;right: 20px;top: 20px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
-
 
 /* 中間 tweets */
 .tweets-center {
-  grid-column-start: 2;
-  grid-column-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  border: 1px solid #e6ecf0;
 }
 
 .tweets-title {
-  width: 600px;
+  width: 100%;
   height: 50px;
-  border: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
+
   line-height: 50px;
   font-size: 18px;
   font-weight: bold;
@@ -222,9 +230,9 @@ a, a:hover {
 
 .tweets-input {
   height: 110px;
-  border: 1px solid #E6ECF0;
+  /* border: 1px solid #e6ecf0; */
   display: flex;
-  border-bottom:10px solid #E6ECF0 ;
+  border-bottom: 10px solid #e6ecf0;
 }
 
 .tweets-input .main-left {
@@ -240,10 +248,9 @@ a, a:hover {
 
 .tweets-input .main-right .tweetText {
   border: none;
-  resize: none; 
+  resize: none;
   height: 40px;
   margin-bottom: 5px;
-
 }
 
 .tweets-input .main-right .tweetText:focus {
@@ -251,8 +258,8 @@ a, a:hover {
   box-shadow: none !important;
 }
 
-.tweets-input .main-right .tweetText::placeholder {      
-  color: #9197A3;
+.tweets-input .main-right .tweetText::placeholder {
+  color: #9197a3;
 }
 
 .tweets-input .main-right .btn-tweet-2 {
@@ -260,20 +267,20 @@ a, a:hover {
   width: 60px;
   height: 30px;
   line-height: 18px;
-  background: #FF6600;
-  color:#ffff;
+  background: #ff6600;
+  color: #ffff;
   border-radius: 100px;
 }
 
-
-.btn-tweet-2:focus, .btn-tweet-2:active {
-   outline: 0px !important;
-   box-shadow: none;
+.btn-tweet-2:focus,
+.btn-tweet-2:active {
+  outline: 0px !important;
+  box-shadow: none;
 }
 
 .tweets-content {
   display: flex;
-  border: 1px solid #E6ECF0;
+  border-bottom: 0.5px solid #e6ecf0;
   width: 600px;
   height: 145px;
 }
@@ -293,22 +300,22 @@ a, a:hover {
   display: flex;
 }
 
-.tweets-content .right-item .title .name{
+.tweets-content .right-item .title .name {
   margin-right: 5px;
   align-self: center;
 }
 
-.tweets-content .right-item .title .name a{
-  text-decoration:none;
+.tweets-content .right-item .title .name a {
+  text-decoration: none;
   font-weight: bold;
   font-size: 15px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
-.tweets-content .right-item .title .time{
- color: #657786;
- align-self: center;
- font-size: 15px;
+.tweets-content .right-item .title .time {
+  color: #657786;
+  align-self: center;
+  font-size: 15px;
 }
 
 .tweets-content .right-item .body {
@@ -322,40 +329,52 @@ a, a:hover {
 .tweets-content .right-item .footer {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 130px;
   height: 40px;
-  border: 1px solid gray;
+  /* border: 1px solid gray; */
 }
 
-
-.tweets-content .btn:focus, .btn:active {
-   outline: 0px !important;
-   box-shadow: none;
+.tweets-content .btn:focus,
+.btn:active {
+  outline: 0px !important;
+  box-shadow: none;
 }
 
-.tweets-content .right-item .footer .reply-item {
+.tweets-content .right-item .footer .footer-item {
   display: flex;
+  align-items: center;
+  justify-content: start;
 }
 
-.tweets-content .right-item .footer .reply-item button{
+.tweets-content .right-item .footer .footer-item .btn {
   color: #657786;
-  font-size: 14px;
-  font-weight: 500;
+  /* font-size: 14px;
+  font-weight: 500; */
   text-align: center;
+  padding: 0.2rem 0.5rem 0 0;
+
+  /* padding-top: 0.5rem; */
 }
 
-.tweets-content .right-item .footer .reply-item i {
-   width: 14px;
-   height: 14px;
-   font-weight: 500;
-   color: #657786;
+.tweets-content .right-item .footer .footer-item i {
+  width: 14px;
+  height: 14px;
+  font-weight: 500;
+  color: #657786;
 }
 
-.tweets-content .right-item .footer .like-item {
-  display: flex;
-}
+.tweets-content .right-item .footer .footer-item .item-count {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
 
-.tweets-content .right-item .footer .like-item button{
+  color: #657786;
+}
+/* 
+.tweets-content .right-item .footer .like-item button {
   color: #657786;
   font-size: 14px;
   font-weight: 500;
@@ -363,15 +382,15 @@ a, a:hover {
 }
 
 .tweets-content .right-item .footer .like-item i {
-   width: 14px;
-   height: 14px;
-   color: #657786;
-   font-weight: 500;
-}
+  width: 14px;
+  height: 14px;
+  color: #657786;
+  font-weight: 500;
+} */
 
 /* 單一畫面 */
 .tweet-content {
-  border:1px solid #E6ECF0 ;
+  border: 1px solid #e6ecf0;
   /* border:1px solid gray; */
   width: 600px;
 }
@@ -404,9 +423,9 @@ a, a:hover {
 }
 
 .tweet-content-main {
-  border-bottom:1px solid #E6ECF0 ;
+  border-bottom: 1px solid #e6ecf0;
   font-size: 23px;
-  word-wrap:break-word;
+  word-wrap: break-word;
   margin: 0px 0px 0px 15px;
 }
 
@@ -416,7 +435,7 @@ a, a:hover {
   margin-bottom: -1px;
 }
 
-.tweet-content-main span{
+.tweet-content-main span {
   font-size: 15px;
   margin-left: -15px;
   margin-bottom: -5px;
@@ -432,25 +451,26 @@ a, a:hover {
   color: #657786;
   font-size: 20px;
   padding: 15px 3px;
-  border-bottom:1px solid #E6ECF0 ;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .tweet-content-footer .tweet-info span {
-  color:#000000;
+  color: #000000;
   margin-left: 20px;
 }
 
-.tweet-reply-like .icon-reply{
+.tweet-reply-like .icon-reply {
   margin-left: 17px;
   color: #657786;
 }
 
-.tweet-reply-like .btn:focus, .btn:active {
-   outline: 0px !important;
-   box-shadow: none;
+.tweet-reply-like .btn:focus,
+.btn:active {
+  outline: 0px !important;
+  box-shadow: none;
 }
 
-.tweet-reply-like .icon-like{
+.tweet-reply-like .icon-like {
   margin-left: 100px;
   color: #657786;
 }
@@ -462,7 +482,7 @@ a, a:hover {
 }
 
 .tweets-content .body-reply .reply-user {
-  color: #FF6600;
+  color: #ff6600;
   font-weight: bold;
 }
 
@@ -472,7 +492,7 @@ a, a:hover {
 
 /* tweet-modal */
 .tweet-modal-content {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 14px !important;
   width: 600px;
   height: 300px;
@@ -483,7 +503,6 @@ a, a:hover {
   border-bottom: 1px solid#E6ECF0;
   height: 54px;
   display: flex;
-
 }
 
 .close-button {
@@ -491,7 +510,7 @@ a, a:hover {
   background-color: transparent;
   border: none;
   font-size: 30px;
-  color: #FF6600;
+  color: #ff6600;
 }
 
 .tweet-modal-avatar {
@@ -508,8 +527,8 @@ a, a:hover {
   width: 500px;
   height: 150px;
   border: none;
-  resize: none !important; 
-  outline:0px !important;
+  resize: none !important;
+  outline: 0px !important;
 }
 
 .tweet-post-btn {
@@ -522,18 +541,17 @@ a, a:hover {
   color: #ffff;
   width: 64px;
   height: 40px;
-  background: #FF6600;
+  background: #ff6600;
   border-radius: 100px;
 }
 
-
 /* reply-modal */
 .reply-modal-content {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 14px !important;
   width: 600px;
   border: none !important;
-} 
+}
 
 .reply-modal-header {
   border-bottom: 1px solid#E6ECF0;
@@ -557,7 +575,7 @@ a, a:hover {
 .reply-modal-name a {
   font-weight: bold;
   font-size: 15px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .reply-modal-name span {
@@ -579,7 +597,7 @@ a, a:hover {
 .reply-target a {
   font-weight: 500;
   font-size: 14px;
-  color:  #FF6600;
+  color: #ff6600;
 }
 
 .reply-modal-post {
@@ -592,12 +610,222 @@ a, a:hover {
   width: 500px;
   height: 170px;
   border: none;
-  resize: none !important; 
+  resize: none !important;
   text-shadow: none !important;
+}
+
+.reply-modal-textarea:focus,
+.reply-modal-textarea:active {
+  outline: 0px !important;
 }
 
 .reply-modal-textarea:focus, .reply-modal-textarea:active {
   outline:0px !important;
+}
+
+/* user profile */
+.user-main {
+  border: 1px solid #e6ecf0;
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+.user-header {
+  display: flex;
+  align-items: center;
+  height: 55px;
+  border-bottom: 1px solid #e6ecf0;
+  /* flex-direction: row; */
+}
+.user-arrow {
+  margin: 20px;
+}
+.user-header-info {
+  margin-left: 1rem;
+}
+
+.user-header-name,
+.user-name {
+  font-family: Noto Sans TC;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 28px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+.user-header-tweet-count {
+  margin-top: -3px;
+  font-family: Noto Sans TC;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #657786;
+}
+.user-cover {
+  background-position: center;
+  background-size: cover;
+}
+.user-info {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+.user-avatar {
+  position: absolute;
+  left: 14px;
+  top: -70px;
+  border: 4px solid #ffffff;
+  border-radius: 70px;
+}
+.user-action {
+  display: flex;
+  justify-content: flex-end;
+  width: auto;
+  height: 70px;
+
+  /* margin-top: 10px; */
+  padding-right: 15px;
+
+  align-items: center;
+}
+.user-action .action-item {
+  margin: 5px;
+}
+.user-action .btn-edit-profile {
+  width: 122px;
+  height: 40px;
+  border: 1px solid #ff6600;
+  border-radius: 100px;
+  background-color: #ffffff;
+
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+
+  color: #ff6600;
+}
+.user-action .btn-edit-profile:hover {
+  background-color: #ffffffe5;
+  color: #ff6600e3;
+  cursor: pointer;
+}
+
+.user-action .user-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid #ff6600;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+}
+
+.user-action .user-icon .icon {
+  font-size: 30px;
+  color: #ff6600;
+
+  position: absolute;
+  top: 1px;
+  left: 5px;
+}
+
+.user-action .btn-user-follow {
+  width: 92px;
+  height: 40px;
+
+  color: #ff6600;
+  border: 1px solid #ff6600;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-radius: 100px;
+}
+
+.user-info .user-data {
+  width: 600px;
+  margin-top: 5px;
+  padding: 0 15px;
+}
+
+.user-account {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  /* identical to box height */
+
+  color: #657786;
+}
+
+.user-info .user-data .user-account {
+  margin-top: -3px;
+}
+
+.user-info .user-data .user-intro {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 10px 0;
+}
+
+.user-info .user-data .user-follow {
+  display: flex;
+  flex-direction: row;
+
+  font-family: Noto Sans TC;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #657786;
+}
+
+.user-info .user-data .user-follow span {
+  font-weight: 500;
+  color: #000000;
+}
+.user-following {
+  margin-right: 10px;
+}
+
+.user-follower {
+  margin-left: 10px;
+}
+
+/* 列表頁籤 */
+
+.user-page-nav {
+  width: 100%;
+  height: 45px;
+  border-bottom: 1px solid #e6ecf0;
+  margin-top: 10px;
+}
+
+.user-page-nav .user-navbar .nav-link {
+  width: 130px;
+  text-align: center;
+  padding-bottom: 12px;
+
+  font-size: 15px;
+  color: #657786;
+}
+
+.user-page-nav .user-navbar .active {
+  color: #ff6600 !important;
+  font-weight: bold !important;
+  border-bottom: 3px solid #ff6600;
 }
 
 /* 管理者首頁 */
@@ -869,3 +1097,4 @@ a, a:hover {
   font-size: 19px;
   background-color: #F5F8FA;
 }
+
