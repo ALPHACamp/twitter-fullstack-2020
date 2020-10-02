@@ -1,4 +1,4 @@
-<form class="form-signin" action="/register" method="POST" style="width: 100%;">
+<form class="form-signin" action="/signup" method="POST" style="width: 100%;">
   <div class="text-center mb-4">
     <h1 class="h3 mb-3 font-weight-bold">建立你的帳號</h1>
   </div>
@@ -20,13 +20,13 @@
     <input type="password" name="password" class="form-control" required>
   </div>
   <div class="form-label-group">
-    <label for="passwordCheck">密碼確認</label>
-    <input type="password" name="passwordCheck" class="form-control" required>
+    <label for="checkPassword">密碼確認</label>
+    <input type="password" name="checkPassword" class="form-control" required>
   </div>
 
   <br />
   <button class="btn btn-lg  btn-block " id="submit" type="submit">註冊</button>
   <div class="text-center mb-4">
-    <p id="cancel"><a href="/login">取消</a></p>
+    <p id="cancel"><a href="/signin">取消</a></p>
   </div>
 </form>
