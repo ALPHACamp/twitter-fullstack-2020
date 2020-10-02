@@ -10,7 +10,7 @@ module.exports = {
       account: 'root',
       cover: faker.image.imageUrl(),
       introduction: faker.lorem.text(),
-      avatar: faker.image.imageUrl(),
+      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}`,
       role: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -22,23 +22,21 @@ module.exports = {
       account: 'user1',
       cover: faker.image.imageUrl(),
       introduction: faker.lorem.text(),
-      avatar: faker.image.imageUrl(),
+      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}`,
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
     }], {});
 
-    queryInterface.bulkInsert('Tweets', [{
-      description: faker.lorem.text(),
-      UserId: '1',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      description: faker.lorem.text(),
-      UserId: '2',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], {});
+    queryInterface.bulkInsert('Tweets',
+      Array.from({ length: 50 }).map(b =>
+        ({
+          description: faker.lorem.text(),
+          UserId: Math.floor(Math.random() * 2) + 1,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        })
+      ), {})
 
     queryInterface.bulkInsert('Replies', [{
       comment: faker.lorem.text(),

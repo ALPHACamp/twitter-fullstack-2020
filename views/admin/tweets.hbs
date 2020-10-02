@@ -6,11 +6,17 @@
   {{#each tweets}}
     <div class="row">
       <div class="col-1">
-        <img style="width: 70px; border-radius: 50%" src="{{this.User.avatar}}" alt="">
+        <img style="width: 60px; height:60px; border-radius: 50%" src="{{this.User.avatar}}" alt="">
       </div>
       <div class="col-11">
         <span class="bold"><b>{{this.User.account}}</b></span>
         <span style="color: grey">@{{this.User.name}}・{{moment this.createdAt}}</span>
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST"
+          onsubmit="return confirm('Press ok to confirm DELETE')">
+          <button type="submit" class="close" aria-label="Close">
+            <span aria-hidden=" true">&times;</span>
+          </button>
+        </form>
         <br />
         {{this.description}}
       </div>

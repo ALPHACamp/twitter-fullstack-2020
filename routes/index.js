@@ -24,6 +24,7 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, (req, res) => { return res.render('tweets') })
   //admin pages
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   //user login 
   app.get('/', (req, res) => { return res.redirect('/tweets') })
   app.get('/users/login', userController.loginPage)
@@ -41,5 +42,5 @@ module.exports = (app, passport) => {
   app.get('/users/settings', authenticated, userController.getUserSettings)
   app.put('/users/settings/:id', authenticated, userController.putUserSettings)
   app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
-  app.get('/users/logout', userController.logout)
+
 }

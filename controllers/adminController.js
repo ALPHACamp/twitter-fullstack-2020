@@ -21,6 +21,15 @@ const adminControllers = {
         console.log(tweets)
         return res.render('admin/tweets', { tweets })
       })
+  },
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id)
+      .then(tweet => {
+        tweet.destroy()
+          .then(comment => {
+            res.redirect('/admin/tweets')
+          })
+      })
   }
 }
 
