@@ -154,7 +154,17 @@ const tweetController = {
       .then(tweet => {
         tweet.destroy()
           .then(tweet => {
-            return res.redirect('/tweets')
+            return res.redirect('back')
+          })  
+      })
+  },
+
+  deleteReply: (req, res) => {
+    ReplyComment.findByPk(req.params.replyId)
+      .then(replyComment => {
+        replyComment.destroy()
+          .then(replyComment => {
+            return res.redirect('back')
           })  
       })
   }

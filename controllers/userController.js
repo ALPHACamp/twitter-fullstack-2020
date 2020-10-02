@@ -110,7 +110,7 @@ const userController = {
       followingId: req.params.userId
     })
     .then(followship => {
-      return res.redirect('/tweets')
+      return res.redirect('back')
     })
   },
 
@@ -124,7 +124,7 @@ const userController = {
     .then(followship => {
       followship.destroy()
         .then(followship => {
-          return res.redirect('/tweets')
+          return res.redirect('back')
         })
     })
   }
