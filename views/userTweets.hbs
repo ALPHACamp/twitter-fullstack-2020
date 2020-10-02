@@ -10,10 +10,10 @@
   <div class="row">
     <img src="{{ cover }}" class="img-fluid user_cover" alt="Responsive image">
     <div class="col" style="height: 75px;">
-      <img src="{{ avatar }}" class="user_avatar">
+      <img src="{{ avatar }}" class="user_avatar" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">
     </div>
     <div class="col mt-3">
-      <a href="#" class="btn rounded-pill float-right" style="width: auto; border-color: rgb(255, 102, 0); color: rgb(255, 102, 0)">編輯個人資料</a>
+      <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button>
     </div>
   </div>
   <div class="row">
@@ -73,7 +73,7 @@
           <span class="text-muted">@UserName</span>
         </div>
         <div class="align-self-center ml-auto">
-          <a href="#" class="btn rounded-pill" style="background:rgb(255, 102, 0); color:white; width: auto">正在跟隨</a>
+          <a href="#" class="btn btn-outline-twitter-active rounded-pill" >正在跟隨</a>
         </div>
       </div>
     </li>
@@ -85,7 +85,7 @@
           <span class="text-muted">@UserName</span>
         </div>
         <div class="align-self-center ml-auto">
-          <a href="#" class="btn rounded-pill" style="width: auto; border-color: rgb(255, 102, 0); color: rgb(255, 102, 0)">跟隨</a>
+          <a href="#" class="btn btn-outline-twitter rounded-pill" >跟隨</a>
         </div>
       </div>
     </li>
@@ -94,3 +94,37 @@
     </li>
   </ul>
 </div>
+  <!-- Modal -->
+  <div class="modal fade" id="show-detail-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog " role="document">
+      <div class="modal-content">
+        <!-- Modal header -->
+        <div class="modal-header">
+          <button type="button" class="border-0" style="background-color: rgba(0, 0, 0, 0);color: rgb(255, 102, 0);" data-dismiss="modal" aria-label="Close">
+            <h5>X</h5>
+          </button>
+          <h5 class="modal-title ml-3 align-self-left">編輯個人資料</h5>
+          <button type="button" class="btn btn-twitter rounded-pill">儲存</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body no-gutters p-0">
+          <div class="row p-0 m-0" style="height:275px">
+            <img src="{{ cover }}" class="img-fluid user_cover" alt="Responsive image">
+            <img src="{{ avatar }}" class="user_avatar ml-3">
+          </div>
+          <form class="mx-3">
+            <div class="form-group">
+              <label for="name" class="col-form-label">名稱</label>
+              <input type="text" class="form-control" id="name" maxlength="50" value="{{name}}">
+            </div>
+            <div class="form-group">
+              <label for="introduction" class="col-form-label">自我介紹</label>
+              <textarea class="form-control" id="introduction" maxlength="160">{{introduction}}</textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>

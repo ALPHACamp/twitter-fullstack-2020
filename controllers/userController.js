@@ -142,6 +142,7 @@ const userController = {
         { model: User, as: 'Followers' }
       ]
     }).then(user => {
+      console.log('user:', user.toJSON())
       const tweets = user.toJSON().Tweets.map(tweet => ({
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
@@ -153,6 +154,7 @@ const userController = {
       }))
       return res.render('userTweets', {
         tweets,
+        userId: user.toJSON().id,
         cover: user.toJSON().cover,
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
