@@ -3,10 +3,10 @@
 		<ul>
       <h1>
 				<li>
-					<a class="nav-link" href="/">首頁</a>
+					<a class="nav-link active" href="/tweets">首頁</a>
 				</li>
 				<li>
-					<a class="nav-link" href="/">個人資料</a>
+					<a class="nav-link" href="/users/{{user.id}}/tweets">個人資料</a>
 				</li>
 				<li>
 					<a class="nav-link active" href="/">設定</a>
@@ -14,10 +14,13 @@
       </h1>
 		</ul> 
 	</div>
-  <button type="submit" class="btn btn-warning btn-lg btn-block">推文</button>
+    <button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#tweetModal">
+		推文
+	</button>
 </div>
 {{!-- 中間區域 --}}
 <h5>{{profile.name}}</h5>
+<a href="javascript:history.back()">回上一頁</a>
 <hr />
 <div id="main">
     {{#if profile.avatar}}
@@ -86,46 +89,70 @@
 </div>
 {{!-- modal --}}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			<form
+				action="/users/{{user.id}}/edit"
+				method='POST'
+			>
+			<div class='col-md-8'>
+			<div class='form-group'>
+				<input
+				type='text'
+				class='form-control form-control-lg'
+				name='name'
+				id='name'
+				placeholder='Name'
+				value="{{user.name}}"
+				required
+				/>
+			</div>
+			<div class='form-group'>
+				<textarea
+				class='form-control'
+				name='introduction'
+				id='introduction'
+				rows='8'
+				placeholder='Type anything about you here...'
+				>{{user.introduction}}</textarea>
+			</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Save changes</button>
+			</div>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- tweetModal -->
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-      <form
-  		action="/users/{{user.id}}/edit"
-  		method='POST'
-	  >
-	  <div class='col-md-8'>
-      <div class='form-group'>
-        <input
-          type='text'
-          class='form-control form-control-lg'
-          name='name'
-          id='name'
-          placeholder='Name'
-          value="{{user.name}}"
-          required
-        />
+		<form action="/tweets" method="POST">
+			<div class="form-group">
+				<img src="{{user.avatar}}" class="rounded-circle" width="100" height="100">
+				<span>有什麼新鮮事?</span>
+				<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"> </textarea>
+			</div>
+			<input type="hidden" name="tweetId" value="{{user.description}}" />
+			<button type="submit" class="btn btn-warning btn-lg">推文</button>
+		</form>
       </div>
-      <div class='form-group'>
-        <textarea
-          class='form-control'
-          name='introduction'
-          id='introduction'
-          rows='8'
-          placeholder='Type anything about you here...'
-        >{{user.introduction}}</textarea>
-      </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Save changes</button>
-      </div>
-	  </form>
     </div>
   </div>
   </div>
