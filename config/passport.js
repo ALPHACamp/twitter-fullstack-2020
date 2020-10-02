@@ -12,20 +12,19 @@ passport.use(
     { usernameField: 'account', passReqToCallback: true },
     (req, account, password, cb) => {
       User.findOne({ where: { account } }).then((user) => {
+        req.flash('userInput', req.body);
         if (!user) {
-          console.log('no this user');
           return cb(
             null,
             false,
-            req.flash('error_messages', '帳號或密碼輸入錯誤'),
+            req.flash('errorMessage', '帳號/密碼輸入錯誤！'),
           );
         }
         if (!bcrypt.compareSync(password, user.password)) {
-          console.log('error password');
           return cb(
             null,
             false,
-            req.flash('error_messages', '帳號或密碼輸入錯誤！'),
+            req.flash('errorMessage', '帳號/密碼輸入錯誤！'),
           );
         }
         return cb(null, user);
@@ -64,7 +63,6 @@ passport.deserializeUser((id, cb) => {
       { model: User, as: 'Followings' },
     ],
   }).then((user) => {
-    //console.log('user @@@', user.toJSON());
     return cb(null, user.toJSON());
   });
 });

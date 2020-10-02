@@ -9,7 +9,14 @@ const flash = require('connect-flash');
 const app = express();
 const port = 3000;
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: 'hbs' }));
+app.engine(
+  'hbs',
+  exphbs({
+    defaultLayout: 'main',
+    extname: 'hbs',
+    helpers: require('./config/handlebars-helper'),
+  }),
+);
 app.set('view engine', 'hbs');
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -27,13 +34,11 @@ app.use(passport.session());
 app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req);
   res.locals.isAuthenticated = helpers.ensureAuthenticated(req);
+  res.locals.successMessage = req.flash('successMessage');
+  res.locals.errorMessage = req.flash('errorMessage');
+  res.locals.userInput = req.flash('userInput')[0];
   next();
 });
-// app.use('/', (req, res) => {
-//   res.render('admin/users');
-// });
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 require('./routes/index')(app);
 
