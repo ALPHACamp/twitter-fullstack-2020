@@ -57,7 +57,11 @@
   </div>
   <div class="logout">
     <div class="nav-item">
-      <a href="/logout">
+      {{#ifCond 'admin' user.role}}
+      <a href="/admin/signout">
+        {{else}}
+        <a href="/signout"></a>
+        {{/ifCond}}
         <div class="icon-div">
           <i class="fas fa-cus-logout"></i>
         </div>

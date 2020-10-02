@@ -6,26 +6,38 @@
   </nav>
 
   <table class="table">
-    <td>推文清單</td>
+    <thead>
+      <tr>
+        <th colspan="3">推文清單</th>
+      </tr>
+    </thead>
     <tbody>
       {{#each tweets}}
       <tr>
-        <th scope="row">
+        <td style="width: 80px">
+          <img {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+            style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+        </td>
+        <td>
           <div>
             <a class="user-name">{{this.User.name}}</a>
             <span class="user-account">@{{this.User.name}}．{{moment this.createdAt}}</span>
           </div>
-        </th>
-        <td>{{this.User.avatar}}</td>
-        <td>{{this.description}}</td>
+          <div>{{this.description}}</div>
+        </td>
         <td>
           <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;"
             onsubmit="return confirm('確定要刪除推文？')">
-            <button type="submit" class="btn btn-link">Delete</button>
+            <button type="submit" class="btn btn-link">
+              <div class="icon-div">
+                <i class="fas fa-cus-close"></i>
+              </div>
+            </button>
           </form>
         </td>
       </tr>
       {{/each}}
     </tbody>
   </table>
+
 </div>
