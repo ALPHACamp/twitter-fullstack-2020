@@ -8,13 +8,18 @@
   <div class="row" id="tweet-user">
     {{#each users}}
     <div class="card-user">
-      <img class="card-img-top cover" src="{{this.cover}}" alt="Card image cap">
-      <img class="card-img-top avatar" src="{{this.avatar}}" alt="Card image cap">
+      <img class="card-img-top cover" {{#if this.cover}}src="{{this.cover}}" {{/if}}>
+      <img class="card-img-top avatar" {{#if this.avatar}}src="{{this.avatar}}" {{/if}}>
       <div class="card-body">
         <div class="user-profile">
           <a class="user-name">{{this.name}}</a><br>
           <span class="tweet-user-account">@{{this.account}}</span>
         </div>
+        {{#ifCond 'admin' this.role}}
+        <div class="tweet-user-info" style="color: red;">
+          管理員
+        </div>
+        {{else}}
         <div class="tweet-user-info">
           <i class="fas fa-cus-reply" aria-hidden="true"></i>{{TweetsCount}}
           <i class="fas fa-cus-like" aria-hidden="true"></i>{{LikesCount}}
@@ -25,6 +30,7 @@
           <a href="/users/{{user.id}}/followers">{{followersCount}}位</a>
           <span>跟隨者</span>
         </div>
+        {{/ifCond}}
       </div>
 
     </div>
