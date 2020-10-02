@@ -71,6 +71,7 @@ module.exports = (app, passport) => {
 
 
   // userController
-  app.get('/user/:id/follower', authenticated, userController.getFollowers)
+  app.get('/user/:id/follower', authenticated, userController.getFollower)
+  app.get('/user/:id/following', authenticated, userController.getFollowing)
 
 }

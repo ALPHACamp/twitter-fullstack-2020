@@ -10,3 +10,28 @@ border-radius: 100px;
 
 color: #FFFFFF;
 }
+
+.followship-following-btn{
+width: 90px;
+height: 30px;
+background: #FF6600;
+border-radius: 50px;
+border: 1px solid #FF6600;
+color: #FFFFFF;
+font-weight:bold;
+}
+
+.followship-follower-btn {
+  width: 60px;
+  height: 30px;
+  border: 1px solid#FF6600;
+  border-radius: 50px;
+  background: #FFFFFF;
+  color: #FF6600;
+  font-weight:bold;
+}
+
+.following-follower, .follower-following, .followship-tweetsCount {
+  color: 	#7B7B7B;
+  font-weight:bold;
+}

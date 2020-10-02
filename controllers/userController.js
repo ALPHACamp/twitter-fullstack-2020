@@ -56,8 +56,39 @@ const userController = {
     res.redirect('/signin')
   },
 
-  getFollowers: (req, res) => {
-    res.render('followers')
+  getFollower: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then(user => {
+        // console.log(user)
+        return res.render('follower', { user })
+      })
+  },
+
+  getFollowing: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }]
+    })
+      .then(user => {
+        return Tweet.findAll({
+          include: User,
+          where: { UserId: req.params.id },
+          order: [['createdAt', 'DESC']]
+        })
+          .then(tweets => {
+            console.log(user)
+            console.log("****----------------******* -------------********------------------*******")
+            console.log(tweets)
+            return res.render('following', { user, tweets })
+          })
+      })
   }
 
 
