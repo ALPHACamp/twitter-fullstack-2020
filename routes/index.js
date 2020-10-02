@@ -56,13 +56,13 @@ module.exports = (app, passport) => {
   app.get("/signup", userController.signUpPage);
   app.post("/signup", userController.signUp);
   app.get("/signin", userController.signIn);
-  
+
   //tweetController
   app.get("/", (req, res) => res.redirect("/tweets"));
   app.get("/tweets", tweetController.getTweets);
   app.get("/tweets/:id", tweetController.getTweet);
   app.post('/tweets', tweetController.postTweet)
-  app.get('/tweets/user',tweetController.getUser)
+  app.get('/tweets/user', tweetController.getUser)
 
   app.post("/tweets/:id/like", tweetController.addLike);
   app.delete("/tweets/:id/unlike", tweetController.removeLike);
@@ -85,4 +85,4 @@ module.exports = (app, passport) => {
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 
- 
+}
