@@ -25,15 +25,15 @@ a:hover {
   /* border: 1px solid gray; */
   display: grid;
   /* grid-template-columns: 27% 43.5% 29%; */
-  grid-template-columns: 350px 600px 400px;
+  grid-template-columns: 1fr 350px 600px 400px 1fr;
   height: 100%;
   width: 100%;
 }
 
 /* 左邊列表 */
 .left-content {
-  grid-column-start: 1;
-  grid-column-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
@@ -95,8 +95,8 @@ a:hover {
 /* 右邊列表 */
 
 .right-content {
-  grid-column-start: 3;
-  grid-column-end: 4;
+  grid-column-start: 4;
+  grid-column-end: 5;
 }
 
 .follow-content {
@@ -207,8 +207,8 @@ a:hover {
 
 /* 中間 tweets */
 .tweets-center {
-  grid-column-start: 2;
-  grid-column-end: 3;
+  grid-column-start: 3;
+  grid-column-end: 4;
   border: 1px solid #e6ecf0;
 }
 
@@ -624,10 +624,10 @@ a:hover {
 /* user profile */
 .user-main {
   border: 1px solid #e6ecf0;
+  grid-column-start: 3;
+  grid-column-end: 4;
 }
 .user-header {
-  grid-column-start: 2;
-  grid-column-end: 3;
   display: flex;
   align-items: center;
   height: 55px;
