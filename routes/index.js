@@ -36,4 +36,6 @@ module.exports = app => {
   app.post('/users/:id/edit', authenticated, userController.putUser)
   app.get('/users/:id/followers', authenticated, userController.getFollower)
   app.get('/users/:id/followings', authenticated, userController.getFollowing)
+  app.post('/followships', authenticated, userController.addFollowing)
+  app.delete('/followships/:followingId', authenticated, userController.removeFollowing)
 }
