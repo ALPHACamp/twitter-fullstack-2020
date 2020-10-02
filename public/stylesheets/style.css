@@ -1,0 +1,17 @@
+.user_cover {
+  height: 200px; 
+  width: 100%;
+}
+.user_photo {
+  position: relative;
+  background: #fff;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0);
+  transform: translateY(-50%);
+  left: 10px;
+  /* left: 50%; */
+  /* cursor: pointer;  */
+}
+

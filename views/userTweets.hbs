@@ -1,0 +1,53 @@
+{{!-- Center --}}
+<div class="col border-left border-right">
+  <div class="row mt-3 pl-3 border-bottom">
+    <i class="fas fa-arrow-left"></i>
+    <div class="ml-5">
+      <h5>{{ user.name }}</h5>
+      <span class="text-muted">推文</span>
+    </div>
+  </div>
+  <div class="row">
+    <img src="{{ user.cover }}" class="img-fluid user_cover" alt="Responsive image">
+    <img src="{{ user.cover }}" class="user_photo" >
+    <div class="col mt-3">
+      <a href="#" class="btn rounded-pill float-right" style="width: auto; border-color: rgb(255, 102, 0); color: rgb(255, 102, 0)">編輯個人資料</a>
+    </div>
+  </div>
+</div>
+{{!-- Right side --}}
+<div class="col-4">
+  <ul class="list-group mt-3 ml-3">
+    <li class="list-group-item" style="background-color:rgb(245, 248, 250);">
+      <strong>跟隨誰</strong>
+    </li>
+    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
+      <div class="d-flex">
+        {{!-- <div class="p-3">Avatar</div> --}}
+        <img class="mr-3" src="#" alt="Avatar">
+        <div>
+          <strong>Name</strong><br>
+          <span class="text-muted">@UserName</span>
+        </div>
+        <div class="align-self-center ml-auto">
+          <a href="#" class="btn rounded-pill" style="background:rgb(255, 102, 0); color:white; width: auto">正在跟隨</a>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
+      <div class="d-flex">
+        <img class="mr-3" src="#" alt="Avatar">
+        <div>
+          <strong>Name</strong><br>
+          <span class="text-muted">@UserName</span>
+        </div>
+        <div class="align-self-center ml-auto">
+          <a href="#" class="btn rounded-pill" style="width: auto; border-color: rgb(255, 102, 0); color: rgb(255, 102, 0)">跟隨</a>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
+      <a href="#" style="color: rgb(255, 102, 0);">顯示更多</a>
+    </li>
+  </ul>
+</div>

@@ -131,6 +131,15 @@ const userController = {
         return res.redirect('back')
       }).catch(err => console.log(err))
     }
+  },
+  getUser: (req, res) => {
+    const reqUserId = req.params.userId
+    console.log('reqUser', reqUserId)
+    return User.findByPk(reqUserId).then(user => {
+      return res.render('userTweets', {
+        user: user.toJSON()
+      })
+    })
   }
 }
 

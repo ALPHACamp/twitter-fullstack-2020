@@ -40,5 +40,6 @@ module.exports = (app, passport) => {
   app.get('/tweets', tweetController.getTweets)
   app.get('/users/settings', authenticated, userController.getUserSettings)
   app.put('/users/settings/:id', authenticated, userController.putUserSettings)
+  app.get('/users/:userId/tweets', authenticated, userController.getUser)
   app.get('/users/logout', userController.logout)
 }
