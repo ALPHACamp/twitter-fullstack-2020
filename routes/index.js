@@ -36,9 +36,4 @@ module.exports = app => {
   app.get('/setting/:id', authenticated, userController.getSetting)
   app.put('/setting/:id', authenticated, userController.putSetting)
   app.post('/users/:id/edit', authenticated, userController.putUser)
-<<<<<<< HEAD
-  app.get('/users/:id/followers', authenticated, userController.getFollower)
-  app.get('/users/:id/followings', authenticated, userController.getFollowing)
-=======
->>>>>>> 327ae41a5309934415bef008ddfba3d0070dd581
 }
