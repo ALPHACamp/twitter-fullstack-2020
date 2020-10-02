@@ -7,15 +7,26 @@ const adminController = {
   signInPage: (req, res) => {
     return res.render('admin/signin')
   },
+  signIn: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/admin/tweets')
+  },
+  signOut: (req, res) => {
+    req.flash('success_messages', '成功登出！')
+    req.logout()
+    res.redirect('/admin/signin')
+  },
   getTweets: (req, res) => {
     return Tweet.findAll({
-      include: [User]
-    }).then(tweets => {
-      tweets = tweets.map(item => ({
+      include: [User],
+      order: [['createdAt', 'DESC']]
+    }).then(data => {
+      const tweets = data.map(item => ({
         ...item.dataValues,
         description: item.dataValues.description.substring(0, 50)
       }))
-      res.render('admin/tweets', { tweets })
+      // res.json({ tweets })
+      res.render('admin/tweets', { tweets: tweets })
     })
   },
   getUsers: (req, res) => {
@@ -47,17 +58,9 @@ const adminController = {
         res.redirect('/admin/tweets')
       } else {
         tweet.destroy()
+          .then(() => res.redirect('/admin/tweets'))
       }
-    }).then(() => res.redirect('/admin/tweets'))
-  },
-  signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/admin/tweets')
-  },
-  signOut: (req, res) => {
-    req.flash('success_messages', '成功登出！')
-    req.logout()
-    res.redirect('/admin/signin')
+    }).catch(err => console.log(err))
   }
 }
 
