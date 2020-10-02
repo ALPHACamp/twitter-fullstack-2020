@@ -19,8 +19,13 @@ const userController = {
     return res.render('userSetting')
   },
   putUserSetting: (req, res) => {
+    Object.keys(req.body).forEach(d => req.body[d] = req.body[d].trim())
     const { account, name, email, password, checkPassword } = req.body
     if (req.user.id !== Number(req.params.id)) return res.redirect('back')
+    if (!account || !name || !email || !password || !checkPassword) {
+      req.flash('errorMessage', '欄位不能為空~');
+      return res.redirect(`/users/${req.user.id}/setting`)
+    }
     if (password !== checkPassword) {
       req.flash('errorMessage', '密碼並不相符~')
       return res.redirect(`/users/${req.user.id}/setting`)
