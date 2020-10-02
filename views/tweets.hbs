@@ -31,7 +31,7 @@
           <p>{{this.description}}</p>
           <div class="display: inline-block;">
             <a href="/tweets/{{this.id}}" style="color:black;" class="mr-4"><i class="far fa-comment-alt"></i>  {{this.repliesCount}}</a>
-            {{#if this.likesTweet}}
+            {{#if this.isLiked}}
             <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: inline-block;">
               <button type="submit" style="color:black; border:none; background-color:white;"><i class="fas fa-heart"></i></button>
               <div style="float: right;">{{this.likesCount}}</div>   

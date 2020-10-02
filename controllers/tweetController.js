@@ -14,39 +14,30 @@ const tweetController = {
         { model: User, include: [{ model: User, as: 'Followers'}]}],
         order: [['updatedAt', 'DESC']]
     }).then(tweets => {
+      const user = req.user
+
       tweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         likesCount: tweet.dataValues.Likes.length,
-        likeUserId: tweet.dataValues.Likes.map(like => like.dataValues.UserId),
         repliesCount: tweet.dataValues.Replies.length,
         user: tweet.dataValues.User.dataValues,
-        FollowerId: tweet.dataValues.User.dataValues.Followers.map(followers => followers.dataValues.id)       
+        followerId: tweet.dataValues.User.dataValues.Followers.map(followers => followers.dataValues.id),      
+        isLiked: req.user.Likes.map(like => like.TweetId).includes(tweet.id)
       }))
-
-      //like and dislike
-      tweets.forEach(tweet => {
-        tweet.likeUserId.forEach(userId => {
-          if (userId === req.user.id) {
-            tweet['likesTweet'] = true
-          }
-          else {
-            tweet['likesTweet'] = false
-          }
-        })
-      })
-      
+          
       //filter the tweets to those that user followings & user himself
       tweetFollowings = []
       tweets.forEach(tweet => {
-        tweet.FollowerId.forEach(FollowerId => {
-          if (FollowerId === req.user.id || tweet.UserId === req.user.id) {
+        if (tweet.UserId === user.id) {
+          tweetFollowings.push(tweet)
+        }
+        tweet.followerId.forEach(followerId => {
+          if (followerId === user.id) {
             tweetFollowings.push(tweet)
           }
         })
       })
 
-      user = req.user
-      
       return res.render('tweets', { tweetFollowings, user })
     })  
   },
@@ -82,36 +73,22 @@ const tweetController = {
     )
     .then(tweet => {
       tweet = tweet.toJSON()
-
+      const user = req.user
+      console.log(tweet.Replies[0])
       //like and dislike tweet
-      tweet.Likes.forEach(like => {
-        if (like.UserId === req.user.id) {
-          tweet['likesTweet'] = true
-        }
-        else {
-          tweet['likesTweet'] = false
-        }
-      })
+      const isLikedTweet = req.user.Likes.map(likes => likes.TweetId).includes(tweet.id)
 
       //like and dislike reply
-      tweet.Replies.forEach(reply => {
-        reply.Likes.forEach(like => {
-          if (like.UserId === req.user.id) {
-            reply['likesReply'] = true
-          }
-          else {
-            reply['likesReply'] = false
-          }
-        })
-      })
-
+      const LikeReplies = tweet.Replies.map(reply => reply.Likes)
+      let data = []
+      LikeReplies.forEach(r => { r.forEach(l =>　data.push(l)) })
+      const isLikedReply = data.map(reply => reply.UserId).includes(req.user.id)
+ 
       tweet.Replies.sort((a, b) => {
         return b.updatedAt - a.updatedAt
       })
 
-      user = req.user
-      console.log(tweet)
-      return res.render('tweet', { tweet, user })
+      return res.render('tweet', { tweet, user, isLikedTweet, isLikedReply })
     })
   },
 
