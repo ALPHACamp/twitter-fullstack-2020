@@ -12,6 +12,19 @@
             <strong>{{tweet.User.name}}</strong><br> 
             <font color="grey">@{{tweet.User.account}}</font>
           </div>
+          {{#ifCond loginUser.id tweet.User.id}}
+          <div class="dropdown show" style="position:absolute; right:20px;">
+            <a style="color:black; text-decoration:none;" role="button" id="more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              •••
+            </a>
+            <div class="dropdown-menu" aria-labelledby="more">
+              <form action="">
+                <button class="dropdown-item" type="submit">修改此貼文</button>
+              </form>
+              <button data-toggle="modal" data-target="#t{{tweet.id}}"  class="dropdown-item">刪除此貼文</button>
+            </div>
+          </div>
+          {{/ifCond}}
       </div>
       <div class="mt-2">
         <p>{{tweet.description}}</p>
@@ -101,7 +114,7 @@
     </li>
   </ul>
 </div>
-
+<!-- pop up reply tweet message -->
 <div class="modal fade" id="s{{tweet.id}}" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -124,6 +137,21 @@
             <font color="grey" size="2px">回覆給</font><font color="coral" size="2px">@{{tweet.User.name}}</font> 
           </div>
         </div>
+        {{#each tweet.Replies}}
+        <div class="flex-container mb-2">
+          <div>
+            <img class="mr-3" src="{{this.User.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+          </div>
+          <div>
+            <strong>{{this.User.name}}</strong>
+            <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
+            <p>
+              {{this.comment}}
+            </p>
+            <font color="grey" size="2px">回覆給</font><font color="coral" size="2px">@{{this.User.name}}</font> 
+          </div>
+        </div>
+        {{/each}}
         <div class="flex-container">
           <div>
             <img src="{{user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
@@ -140,6 +168,7 @@
   </div>
 </div>
 
+<!-- pop up reply comment message -->
 {{#each tweet.Replies}}
 <div class="modal fade" id="r{{this.id}}" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -180,7 +209,7 @@
         {{/each}}
         <div class="flex-container">
           <div>
-            <img src="{{../user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+            <img src="{{../loginUser.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
           </div>
           <div style="width: 600px;">
             <form action="/replies/{{this.id}}" method="POST">
@@ -194,3 +223,23 @@
   </div>
 </div>
 {{/each}}
+
+<!-- pop up delete tweet message -->
+  <div class="modal fade" id="t{{tweet.id}}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4>刪除貼文?</h4>
+        </div>
+        <div class="modal-body">
+          確定要刪除這則貼文?
+        </div>
+        <div class="modal-footer">
+          <form action="/tweets/{{tweet.id}}?_method=DELETE" method="POST">
+             <button type="submit" class="btn btn-primary">刪除</button>
+          </form>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+      </div>
+      </div>
+    </div>
+  </div>

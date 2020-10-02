@@ -95,7 +95,7 @@ const tweetController = {
     )
     .then(tweet => {
       tweet = tweet.toJSON()
-      const user = req.user
+      const loginUser = req.user
       
       //like and dislike tweet
       const isLikedTweet = req.user.Likes.map(likes => likes.TweetId).includes(tweet.id)
@@ -110,7 +110,7 @@ const tweetController = {
         return b.updatedAt - a.updatedAt
       })
 
-      return res.render('tweet', { tweet, user, isLikedTweet, isLikedReply })
+      return res.render('tweet', { tweet, loginUser, isLikedTweet, isLikedReply })
     })
   },
 
