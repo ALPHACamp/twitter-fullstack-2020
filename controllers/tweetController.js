@@ -4,7 +4,7 @@ const tweetController = {
 
   getTweets: (req, res) => {
     tweetService.getTweets(req, res, (data) => {
-      return res.render('tweets', data)
+      return res.render('following', data)
     })
   }
 }
