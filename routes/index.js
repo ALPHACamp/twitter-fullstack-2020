@@ -34,5 +34,6 @@ module.exports = app => {
   // =====================user====================================
   app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
   app.post('/users/:id/edit', authenticated, userController.putUser)
-
+  app.get('/users/:id/followers', authenticated, userController.getFollower)
+  app.get('/users/:id/followings', authenticated, userController.getFollowing)
 }

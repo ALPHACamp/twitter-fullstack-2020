@@ -115,6 +115,58 @@ const userController = {
         res.redirect(`/users/${req.params.id}/tweets`)
       })
     })
+  },
+  getFollower: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [User] },
+        {
+          model: User,
+          as: 'Followers',
+          include: [{ model: User, as: 'Followers' }]
+        },
+        { model: User, as: 'Followings' },
+        { model: Tweet, as: 'LikedTweets' }
+      ]
+    }).then(user => {
+      const isFollowed = helpers
+        .getUser(req)
+        .Followings.map(d => d.id)
+        .includes(user.id)
+      const followerList = user.Followers.map(r => ({
+        ...r.dataValues,
+        introduction: r.dataValues.introduction,
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map(d => d.id)
+          .includes(r.id)
+      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      return res.render('followers',{ profile: user, isFollowed, followerList })
+    })
+  },
+  getFollowing: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [User] },
+        { model: User, as: 'Followers' },
+        {
+          model: User,
+          as: 'Followings',
+          include: [{ model: User, as: 'Followers' }]
+        },
+        { model: Tweet, as: 'LikedTweets' }
+      ]
+    }).then(user => {
+      const isFollowed = helpers
+        .getUser(req)
+        .Followings.map(d => d.id)
+        .includes(user.id)
+      const followingList = user.Followings.map(r => ({
+        ...r.dataValues,
+        introduction: r.dataValues.introduction
+      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      return res.render('followings',{ profile: user, isFollowed, followingList })
+    })
   }
 }
 
