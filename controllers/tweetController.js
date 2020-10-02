@@ -15,7 +15,7 @@ const tweetController = {
         { model: User, include: [{ model: User, as: 'Followers'}]}],
         order: [['updatedAt', 'DESC']]
     }).then(tweets => {
-      const LoginUser = req.user
+      const loginUser = req.user
 
       tweets = tweets.map(tweet => ({
         ...tweet.dataValues,
@@ -29,11 +29,11 @@ const tweetController = {
       //filter the tweets to those that user followings & user himself
       tweetFollowings = []
       tweets.forEach(tweet => {
-        if (tweet.UserId === LoginUser.id) {
+        if (tweet.UserId === loginUser.id) {
           tweetFollowings.push(tweet)
         }
         tweet.followerId.forEach(followerId => {
-          if (followerId === LoginUser.id) {
+          if (followerId === loginUser.id) {
             tweetFollowings.push(tweet)
           }
         })
@@ -49,13 +49,13 @@ const tweetController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(req.user.id)
         }))
-
+        
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
         })
         
-        return res.render('tweets', { tweetFollowings, LoginUser, users })
+        return res.render('tweets', { tweetFollowings, loginUser, users })
       })
     })
     
