@@ -105,6 +105,12 @@ const userController = {
       }
     });
   },
+  getFollowersPage: (req, res) => {
+    return res.render('follower');
+  },
+  getFollowingsPage: (req, res) => {
+    return res.render('following');
+  },
   signup: (req, res) => {
     Object.keys(req.body).forEach((d) => (req.body[d] = req.body[d].trim()));
     const { account, name, email, password, checkPassword } = req.body;

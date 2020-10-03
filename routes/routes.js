@@ -38,6 +38,16 @@ router.put(
   userAuthenticated,
   userController.putUserSetting,
 );
+router.get(
+  '/users/:id/followings',
+  userAuthenticated,
+  userController.getFollowingsPage,
+);
+router.get(
+  '/users/:id/followers',
+  userAuthenticated,
+  userController.getFollowersPage,
+);
 router.get('/users/:id', userAuthenticated, userController.getUser);
 
 router.get('/signup', userController.getSignupPage);

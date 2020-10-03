@@ -46,12 +46,12 @@
         <div class="user-account">@{{user.account}}</div>
         <div class="user-intro">{{user.introduction}}</div>
         <div class="user-follow">
-          <div class="user-following">
+          <a href="/users/{{user.id}}/followings" class="user-following">
             <span>{{user.Followings.length}} 個</span>跟隨中
-          </div>
-          <div class="user-follower">
+          </a>
+          <a href="/users/{{user.id}}/followers" class="user-follower">
             <span>{{user.Followers.length}} 位</span>追隨者
-          </div>
+          </a>
         </div>
       </div>
 
