@@ -37,6 +37,8 @@ module.exports = (app, passport) => {
   // User tweet
   app.get('/tweets', authenticated, tweetController.getTweets) // 顯示所有 tweet
   app.post('/tweets', authenticated, tweetController.postTweet) // 新增 tweet
+  app.post('/tweets/:id/like', authenticated, tweetController.addLike)
+  app.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 
   // 註冊頁
   app.get('/signup', userController.signUpPage)
