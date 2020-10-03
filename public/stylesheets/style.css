@@ -616,3 +616,55 @@ box-sizing: border-box;
   margin-left: 30px;
   margin-top: 10px;
 }
+
+/* modal */
+.modal-content {
+  width: 600px;
+  height: 300px;
+  border: none;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.tweet-modal-header {
+  padding: 2px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.tweet-modal-close-button {
+  margin-left: 5px;
+  background-color: transparent;
+  border: none;
+  font-size: 28px;
+  color: #FF6600;
+}
+
+.tweet-modal-body {
+  height: 220px;
+  padding: 15px;
+  display: flex;
+}
+
+.tweet-modal-textarea {
+  width: 480px;
+  height: 180px;
+  background-color: transparent;
+  margin-left: 10px;
+  padding-top: 10px;
+  border: 0px;
+  outline: none;
+  resize: none;
+}
+
+.tweet-modal-button {
+  width: 64px;
+  height: 40px;
+  left: 455px;
+  top: -5px;
+  background: #FF6600;
+  border-radius: 100px;
+  border: 1px solid #FF6600;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
