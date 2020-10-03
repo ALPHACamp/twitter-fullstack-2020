@@ -1,3 +1,28 @@
+.flex-container{
+  display: flex;
+}
+
+.btn-cancel{
+  background-color:lightgray; 
+  color:white;
+}
+
+.btn-edit, .btn-delete, .btn-create {
+  background-color:coral; 
+  color:white;
+}
+
+.user-avatar {
+  width: 50px; 
+  border-radius: 50%;
+}
+
+.btn-push {
+  border: none; 
+  color:black; 
+  background-color:white;
+}
+
 .user_cover {
   height: 200px; 
   width: 100%;

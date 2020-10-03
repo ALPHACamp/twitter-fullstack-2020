@@ -1,56 +1,79 @@
 {{!-- Center --}}
-<div class="col border-left border-right">
-  <h4>首頁</h4>
-  <form>
-    <div>
-      <img src="" alt="">
-      <textarea class="form-control" id="tweet" name="tweet" rows="3">
-        有什麼新鮮事?
-      </textarea>
-      <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: 60px" >推文</a>
-    </div>
-  </form>
-  <div class="card">
-    {{#each tweets}}
-    <div class="card-body"> 
-      {{this.description}}
-    </div>
+<div class="col">
+  <ul class="list-group" >
+    <li class="list-group-item">
+      <strong>首頁</strong>
+    </li>
+
+    <li class="list-group-item" style="border-bottom-width:8px;">
+      <form action="/tweets" method="POST">  
+        <div class="flex-container">
+          <div>
+            <img src="{{loginUser.avatar}}" alt="user avatar" class="user-avatar">
+          </div>
+          <div style="width: 600px;">  
+            <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;"></textarea>
+          </div>
+        </div>
+        <button class="btn btn-create" type="submit" style="border-radius: 18px; width: 60px; float: right;">推文</button>
+      </form>
+    </li>
+  
+    {{#each tweetFollowings}}
+    <li class="list-group-item">
+      <div class="flex-container"> 
+        <div class="mr-2">
+          <a href="/users/{{this.user.id}}">
+            <img src="{{this.user.avatar}}" alt="user avatar" class="user-avatar">
+          </a>
+        </div>
+        <div>
+          {{#ifCond ../loginUser.id this.user.id}}
+          <div class="dropdown show" style="position:absolute; right:20px;">
+            <a style="color:black; text-decoration:none;" role="button" id="more" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              •••
+            </a>
+            <div class="dropdown-menu" aria-labelledby="more">
+              <button data-toggle="modal" data-target="#et{{this.id}}"  class="dropdown-item">修改此貼文</button>
+              <button data-toggle="modal" data-target="#t{{this.id}}"  class="dropdown-item">刪除此貼文</button>
+            </div>
+          </div>
+          {{/ifCond}}
+          <strong>{{this.user.name}}</strong> <font class="text-muted">@{{this.user.account}} {{moment this.createdAt}}</font> 
+          
+          <p>{{this.description}}</p>
+
+          <div>
+            <a href="/tweets/{{this.id}}" style="float:left; color:black; margin-right:4px;"><i class="far fa-comment-alt"></i></a>
+            <div style="float:left; margin-right:25px;">{{this.repliesCount}}</div>
+          </div>
+
+          {{#if this.isLiked}}
+          <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="float:left;">
+            <button type="submit" class="btn-push"><i class="fas fa-heart"></i></button>
+          </form>
+          <div style="float:left;">{{this.likesCount}}</div>   
+          {{else}}
+          <form action="/like/{{this.id}}" method="POST" style="float:left;">
+            <button type="submit" class="btn-push"><i class="far fa-heart"></i></button>
+          </form>
+          <div style="float:left;">{{this.likesCount}}</div>   
+          {{/if}}
+          
+        </div>
+      </div>
+    </li>
+
+    <!-- pop up edit tweet message -->
+    {{> edit}}
+
+    <!-- pop up delete tweet message -->
+    {{> delete}}
+
     {{/each}}
-  </div>
+  </ul>
+
 </div>
 {{!-- Right side --}}
-<div class="col-4">
-  <ul class="list-group mt-3 ml-3" >
-    <li class="list-group-item" style="background-color:lightgray;">
-      <strong>跟隨誰</strong>
-    </li>
-    <li class="list-group-item" style="background-color: lightgray;">
-      <div class="d-flex">
-        {{!-- <div class="p-3">Avatar</div> --}}
-        <img class="mr-3" src="#" alt="Avatar">
-        <div>
-          <strong>Name</strong><br> 
-          <span class="text-muted">@UserName</span>
-        </div>
-        <div class="align-self-center ml-auto">
-          <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: auto">正在跟隨</a>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item" style="background-color: lightgray;">
-      <div class="d-flex">
-        <img class="mr-3" src="#" alt="Avatar">
-        <div>
-          <strong>Name</strong><br>
-          <span class="text-muted">@UserName</span> 
-        </div>
-        <div class="align-self-center ml-auto">
-          <a href="#" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</a>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item" style="background-color: lightgray;">
-      <a href="#" style="color: coral;">顯示更多</a>
-    </li>
-  </ul>
-</div>
+{{> right}}
+
