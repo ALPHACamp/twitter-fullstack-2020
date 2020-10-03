@@ -19,6 +19,8 @@ const userAuthenticated = (req, res, next) => {
     return next();
   return res.redirect('/signin');
 };
+
+
 //////////////////////////////////////////////////////////////////////////////////
 
 router.get('/', (req, res) => {

@@ -74,9 +74,11 @@ const userController = {
         return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
       });
   },
+
   signin: (req, res) => {
     return res.redirect('/tweets');
   },
+
   getSelf: (req, res) => {
     let selfId = helpers.getUser(req).id;
     return res.redirect(`/users/${selfId}`);
