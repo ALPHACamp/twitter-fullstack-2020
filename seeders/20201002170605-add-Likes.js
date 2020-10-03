@@ -7,6 +7,9 @@ module.exports = {
       `SELECT id FROM Tweets`,
     );
     tweetIds = tweetIds[0].map((i) => i.id);
+    let randomindexs = randomNums(20, tweetIds.length);
+    console.log(randomindexs);
+    tweetIds = randomindexs.map((i) => tweetIds[i]);
 
     let userIds = await queryInterface.sequelize.query(
       `SELECT id FROM Users WHERE isAdmin = false;`,
@@ -17,6 +20,10 @@ module.exports = {
       `SELECT id FROM Replies`,
     );
     replyIds = replyIds[0].map((i) => i.id);
+
+    randomindexs = randomNums(10, replyIds.length);
+    console.log(randomindexs);
+    replyIds = randomindexs.map((i) => replyIds[i]);
 
     const likesIntweets = tweetIds.reduce((acc, value, index, array) => {
       const userids = randomNums(3, userIds.length).map(
