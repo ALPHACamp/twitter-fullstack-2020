@@ -18,7 +18,7 @@ const tweetController = {
             const data = tweets.map(t => ({
               ...t.dataValues, 
               description: t.dataValues.description,
-            //   isLiked: req.user.LikeUsers.map(d => d.id).includes(t.id)
+              isLiked: t.LikeUsers.map(d => d.id).includes(t.id)
             }))
             return res.render('tweets', {tweets: data})
           })
