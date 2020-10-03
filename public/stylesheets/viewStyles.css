@@ -21,6 +21,10 @@ a:hover {
   box-shadow: none;
 }
 
+.like {
+  color: #e0245e !important;
+}
+
 .container-fluid {
   display: grid;
   /* grid-template-columns: 27% 43.5% 29%; */
@@ -364,15 +368,19 @@ a:hover {
   color: #657786;
 }
 
-.tweets-content .right-item .footer .footer-item .item-count {
+.tweets-content .right-item .footer .footer-item .item-count,
+.tweets-content .right-item .footer .footer-item .unlike-item-count {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
   line-height: 13px;
-
   color: #657786;
 }
+.tweets-content .right-item .footer .footer-item .like-item-count {
+  color: #e0245e !important;
+}
+
 /* 
 .tweets-content .right-item .footer .like-item button {
   color: #657786;

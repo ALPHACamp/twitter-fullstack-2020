@@ -99,22 +99,34 @@
               </button>
               <div class="item-count reply-count">{{this.Replies.length}}</div>
             </div>
+
             <div class="footer-item like-item">
+              {{#if this.isLikeBySelf}}
+              <button type="button" class="btn">
+                <i class="like icon-like-fill"></i>
+              </button>
+              <div class="like-item-count item-count">{{this.Likes.length}}</div>
+              {{else}}
               <button type="button" class="btn">
                 <i class="icon-like"></i>
               </button>
-              <div class="item-count like-count">{{this.Likes.length}}</div>
+              <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+              {{/if}}
             </div>
+
           </div>
+
+
+
+
         </div>
       </div>
-
       {{/each}}
     </div>
 
-
-
   </div>
+
+
   {{> right-column}}
   {{> modal}}
 

@@ -93,11 +93,20 @@ const userController = {
         // const targetUser = user.toJSON();
         const followings = req.user.Followings.map((u) => u.id);
         const followers = req.user.Followers.map((u) => u.id);
-        //const Tweets = user.toJSON().Tweets;
 
-        //console.log(Tweets[0]);
+        const data = user.toJSON();
+        let Tweets = data.Tweets;
+        Tweets = Tweets.map((t) => {
+          if (t.Likes.length > 0) {
+            let likeIds = t.Likes.map((l) => l.UserId);
+            t.isLikeBySelf = likeIds.includes(req.user.id);
+          } else {
+            t.isLikeBySelf = false;
+          }
+          return t;
+        });
         return res.render('user', {
-          user: user.toJSON(),
+          user: data,
           self: req.user,
           isFollowing: followings.includes(Number(req.params.id)),
         });
