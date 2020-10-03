@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs') 
+const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 
@@ -9,13 +9,13 @@ const userController = {
 
   signUp: (req, res) => {
     // confirm password
-    if(req.body.passwordCheck !== req.body.password){
+    if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', 'differenct passwords！')
       return res.redirect('/signup')
     } else {
       // confirm unique user
-      User.findOne({where: {account: req.body.account}}).then(user => {
-        if(user){
+      User.findOne({ where: { account: req.body.account } }).then(user => {
+        if (user) {
           req.flash('error_messages', 'same account')
           return res.redirect('/signup')
         } else {
@@ -27,9 +27,9 @@ const userController = {
           }).then(user => {
             req.flash('success_messages', 'registered successfully')
             return res.redirect('/signin')
-          })  
+          })
         }
-      })    
+      })
     }
   },
   signInPage: (req, res) => {
@@ -43,7 +43,64 @@ const userController = {
     req.flash('success_messages', '成功登出!')
     req.logout()
     res.redirect('/signin')
-  }
+  },
+  getUser: (req, res) => {
+    // const realUserId = req.user.id
+    User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('user/self')
+      })
+
+  },
+  editUser: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('user/self/edit')
+      })
+  },
+  putUser: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_messages', "name didn't exist")
+      return res.redirect('back')
+    }
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(file.path, (err, img) => {
+        return User.findByPk(req.params.id)
+          .then(user => {
+            user.update({
+              name: req.body.name,
+              image: file ? img.data.link : null,
+              background: file ? img.data.link : null,
+              profile: req.body.profile
+            }).then(user => {
+              req.flash('success_messages', 'user was successfully update')
+              res.redirect('user/self')
+            })
+          })
+      })
+    } else {
+      return User.findByPk(req.params.id)
+        .then(user => {
+          user.update({
+            name: req.body.name,
+            image: user.image,
+            background: user.background,
+            profile: req.body.profile
+          }).then(user => {
+            req.flash('success_messages', 'user was successfully update')
+            res.redirect('user/self')
+          })
+        })
+    }
+  },
+  getSetting: (req, res) => {
+    return res.render('setting')
+  },
+  putSetting: (req, res) => {
+    return res.render('setting')
+  },
 }
 
 module.exports = userController

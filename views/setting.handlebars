@@ -1,0 +1,53 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link " href="/mainpage">首頁</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/user/self">個人資料</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/setting">設定</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/reply_list">貼文</a>
+  </li>
+</ul>
+<br />
+
+
+
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <h1 class="text-center mt-3">帳號設定</h1>
+      <form action="/setting?_method=PUT" method="POST">
+        <div class="form-group">
+          <label for="account">Account</label>
+          <input type="text" id="account" name="account" class="form-control" placeholder="Enter Account"
+            value="{{user.account}}">
+        </div>
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" value="{{user.name}}">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+            value="{{user.email}}">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
+            value="{{user.password}}">
+        </div>
+        <div class="form-group">
+          <label for="passwordCheck">passwordCheck</label>
+          <input type="password" id="passwordCheck" name="passwordCheck" class="form-control"
+            placeholder="Password Check">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">submit</button>
+      </form>
+
+    </div>
+  </div>
+</div>

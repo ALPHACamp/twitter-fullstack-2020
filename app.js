@@ -14,21 +14,21 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(bodyParser.json())
 
 
 app.use((req, res, next) => {
-    res.locals.success_messages = req.flash('success_messages')
-    res.locals.error_messages = req.flash('error_messages')
-    res.locals.user = req.user
-    next()
-  })
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = req.user
+  next()
+})
 
 
-app.engine('handlebars', handlebars({defaultLayout: 'main', helpers: require('./config/handlebars-helpers')})) 
-app.set('view engine', 'handlebars') 
+app.engine('handlebars', handlebars({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
+app.set('view engine', 'handlebars')
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
