@@ -1,21 +1,27 @@
-const helper = require('../_helpers')
+const helpers = require('../_helpers')
 const db = require('../models')
 const User = db.User
 
 module.exports = {
-  TopUsers: (req, res, next) => {
-    if (helper.getUser(req)) {
-      return User.findAll({
-        where: { isAdmin: '0' }
+  topUsers: (req, res, next) => {
+    if (helpers.getUser(req)) {
+      User.findAll({
+        where: { isAdmin: '0' },
+        include: [
+          { model: User, as: 'Followers' }
+        ]
       })
         .then((users) => {
-          let data = users.map((u) => ({
-            ...u.dataValues
-          }))
-          console.log(data)
+          users = users.map((data) => ({
+            ...data.dataValues,
+            FollowerCount: data.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.map((d) => d.id).includes(data.id)
+          })).filter((user) => user.name !== helpers.getUser(req).name)
+          helpers.getUser(req).TopUsers = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+          console.log(helpers.getUser(req))
+          return helpers.getUser(req)
         })
     }
     next()
   }
-
 }

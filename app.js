@@ -30,7 +30,7 @@ app.use(session({ secret: 'test', resave: false, saveUninitialized: true }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(middleware.TopUsers);
+app.use(middleware.topUsers)
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -41,6 +41,7 @@ app.use((req, res, next) => {
   res.locals.successMessage = req.flash('successMessage');
   res.locals.errorMessage = req.flash('errorMessage');
   res.locals.userInput = req.flash('userInput')[0];
+  console.log(res.locals.user)
   next();
 });
 
