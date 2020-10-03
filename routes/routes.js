@@ -23,6 +23,8 @@ const userAuthenticated = (req, res, next) => {
     return res.redirect('/admin/tweets');
   return res.redirect('/signin');
 };
+
+
 //////////////////////////////////////////////////////////////////////////////////
 
 router.get('/', (req, res) => {

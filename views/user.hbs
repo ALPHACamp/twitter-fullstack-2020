@@ -6,21 +6,21 @@
     <div class="user-header">
       <a href="/tweets" style="text-align: center;"><i class="user-arrow icon icon-arrow"></i></a>
       <div class="user-header-info">
-        <div class="user-header-name">{{user.name}}</div>
-        <div class="user-header-tweet-count">{{user.Tweets.length}} 推文</div>
+        <div class="user-header-name">{{visitUser.name}}</div>
+        <div class="user-header-tweet-count">{{visitUser.Tweets.length}} 推文</div>
       </div>
     </div>
 
     <div class="user-cover"
-      style="height: 200px;background: url({{user.cover}}),#C4C4C4;background-position: center;background-size: cover;">
+      style="height: 200px;background: url({{visitUser.cover}}),#C4C4C4;background-position: center;background-size: cover;">
     </div>
 
     <div class="user-info">
       <div class="user-avatar"
-        style="height:140px;width:140px;background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
+        style="height:140px;width:140px;background: url({{visitUser.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
       </div>
       <div class="user-action">
-        {{#Equal self.id user.id}}
+        {{#Equal user.id visitUser.id}}
         <button type="button" class="button btn-edit-profile" data-toggle="modal"
           data-target="#editModal">編輯個人資訊</button>
         {{else}}
@@ -32,25 +32,25 @@
         </div>
         {{#if ../isFollowing}}
         <form action="/followships" method="POST">
-          <button class="action-item btn-user-unfollow" name="id" value="{{user.id}}">正在追蹤</button>
+          <button class="action-item btn-user-unfollow" name="id" value="{{visitUser.id}}">正在追蹤</button>
         </form>
         {{else}}
         <form action="/followships" method="POST">
-          <button class="action-item btn-user-follow" name="id" value="{{user.id}}">追蹤 +</button>
+          <button class="action-item btn-user-follow" name="id" value="{{visitUser.id}}">追蹤 +</button>
         </form>
         {{/if}}
         {{/Equal}}
       </div>
       <div class="user-data">
-        <div class="user-name">{{user.name}}</div>
-        <div class="user-account">@{{user.account}}</div>
-        <div class="user-intro">{{user.introduction}}</div>
+        <div class="user-name">{{visitUser.name}}</div>
+        <div class="user-account">@{{visitUser.account}}</div>
+        <div class="user-intro">{{visitUser.introduction}}</div>
         <div class="user-follow">
-          <a href="/users/{{user.id}}/followings" class="user-following">
-            <span>{{user.Followings.length}} 個</span>跟隨中
+          <a href="/users/{{visitUser.id}}/followings" class="user-following">
+            <span>{{visitUser.Followings.length}} 個</span>跟隨中
           </a>
-          <a href="/users/{{user.id}}/followers" class="user-follower">
-            <span>{{user.Followers.length}} 位</span>追隨者
+          <a href="/users/{{visitUser.id}}/followers" class="user-follower">
+            <span>{{visitUser.Followers.length}} 位</span>追隨者
           </a>
         </div>
       </div>
@@ -62,31 +62,31 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav user-navbar">
           <a class="nav-link active" href="#">推文</a>
-          <a class="nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
-          <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+          <a class="nav-link" href="/users/{{visitUser.id}}/replies">推文與回覆</a>
+          <a class="nav-link" href="/users/{{visitUser.id}}/likes">喜歡的內容</a>
         </div>
       </div>
     </nav>
 
     {{!-- tweets list --}}
     <div class="user-tweets-list">
-      {{#each user.Tweets}}
+      {{#each visitUser.Tweets}}
       <div class="tweets-content">
         <div class="left-item">
-          <a href="/users/{{../user.id}}">
-            <img src="{{../user.avatar}}" class="rounded-circle"
+          <a href="/users/{{../visitUser.id}}">
+            <img src="{{../visitUser.avatar}}" class="rounded-circle"
               style="width: 50px;height:50px;background-color:#C4C4C4;">
           </a>
         </div>
         <div class="right-item">
           <div class="title">
             <span class="name">
-              <a href="/users/{{../user.id}}">
-                {{../user.name}}
+              <a href="/users/{{../visitUser.id}}">
+                {{../visitUser.name}}
               </a>
             </span>
             <span class="time">
-              @{{../user.account}}・{{moment this.createdAt}}
+              @{{../visitUser.account}}・{{moment this.createdAt}}
             </span>
           </div>
           <div class="body">

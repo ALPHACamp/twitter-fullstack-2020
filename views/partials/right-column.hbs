@@ -4,170 +4,30 @@
       跟隨誰
     </div>
     <div class="top-follow-list">
+      {{#each user.TopUsers}}
       <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+        <a href="/users/{{this.id}}" class="follow-avatar">
+          <img src="{{this.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
         </a>
         <div class="list-item-name">
-          <a href="">
-            nono
+          <a href="/users/{{this.id}}">
+            {{this.name}}
           </a>
           <div class="list-item-account">
-            @nonolin
+            @{{this.account}}
           </div>
         </div>
+        {{#if this.isFollowed }}
         <form action="">
           <button class="btn-follow">正在追蹤</button>
         </form>
-      </div>
-
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            nono
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
+        {{else}}
         <form action="">
           <button class="btn-unfollow">追蹤</button>
         </form>
+        {{/if}}
       </div>
-
-      {{!-- ----------------------------------------- --}}
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            nono
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
-        <form action="">
-          <button class="btn-unfollow">追蹤</button>
-        </form>
-      </div>
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            nono
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
-        <form action="">
-          <button class="btn-unfollow">追蹤</button>
-        </form>
-      </div>
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            efghntyhjk,
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
-        <form action="">
-          <button class="btn-unfollow">追蹤</button>
-        </form>
-      </div>
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            sdfghjkl;
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
-        <form action="">
-          <button class="btn-unfollow">追蹤</button>
-        </form>
-      </div>
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            dfghjklfgh
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
-        <form action="">
-          <button class="btn-unfollow">追蹤</button>
-        </form>
-      </div>
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            ndsfghjgfdsfdffgh
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
-        <form action="">
-          <button class="btn-unfollow">追蹤</button>
-        </form>
-      </div>
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            sdfghjhhdfdgffgghj
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
-        <form action="">
-          <button class="btn-unfollow">追蹤</button>
-        </form>
-      </div>
-      <div class="list-item follow-body">
-        <a href="#" class="follow-avatar">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-        </a>
-        <div class="list-item-name">
-          <a href="">
-            nsdfghjkkhfdfghjkjhg
-          </a>
-          <div class="list-item-account">
-            @nonolin
-          </div>
-        </div>
-        <form action="">
-          <button class="btn-unfollow">追蹤</button>
-        </form>
-      </div>
-      {{!-- ----------------------------------------- --}}
+      {{/each}}
     </div>
     <div class="card-footer text-muted follow-footer">
       顯示更多
