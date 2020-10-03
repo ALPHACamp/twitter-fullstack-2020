@@ -6,20 +6,21 @@
   </nav>
 
   <div class="center-content d-flex" id="tweet-content">
-
     <div class="head justify-content-between ">
-      <h5 class="tweet-title">推文</h5>
+      <h5 class="tweet-title">首頁</h5>
       <div class="tweet-content">
         <div class="tweet-avatar">
-          <img {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
-            style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+          <img class="ml-2 mt-2" {{#if user.avatar}}src={{user.avatar}}{{/if}}
+            style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
         </div>
-        <div class="tweet-comment">
-          <textarea rows="10" cols="30" placeholder="有什麼新鮮事？"></textarea>
-        </div>
-        <button type=" button" class="tweet-content-button">
-          推文
-        </button>
+        <form method="POST" action="/tweets">
+          <div class="tweet-comment">
+            <textarea name="description" id="description" rows="10" cols="30" placeholder="有什麼新鮮事？"></textarea>
+          </div>
+          <button type="submit" class="tweet-content-button">
+            推文
+          </button>
+        </form>
       </div>
       <div class="tweet-all">
         {{!-- {{#each tweets}} --}}
