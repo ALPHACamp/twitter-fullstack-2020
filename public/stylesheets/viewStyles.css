@@ -62,7 +62,7 @@ a:hover {
 .nav-item {
   display: flex;
   align-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 25px;
 }
 
 .nav-item a {
@@ -96,6 +96,7 @@ a:hover {
   color: #ffff;
   font-weight: 500;
   line-height: 18px;
+  margin-top: -3px;
 }
 
 /* 右邊列表 */
