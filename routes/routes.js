@@ -9,14 +9,18 @@ const userController = require('../controllers/userController');
 const tweetController = require('../controllers/tweetController');
 
 const adminAuthenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req) && helpers.getUser(req).isAdmin)
+  if (helpers.ensureAuthenticated(req) &&
+    (helpers.getUser(req).isAdmin || helpers.getUser(req).role))
     return next();
   return res.redirect('/admin/signin');
 };
 
 const userAuthenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req) && !helpers.getUser(req).isAdmin)
+  if (helpers.ensureAuthenticated(req) &&
+    (!helpers.getUser(req).isAdmin && !helpers.getUser(req).role))
     return next();
+  if (helpers.getUser(req).role || helpers.getUser(req).isAdmin)
+    return res.redirect('/admin/tweets');
   return res.redirect('/signin');
 };
 //////////////////////////////////////////////////////////////////////////////////
