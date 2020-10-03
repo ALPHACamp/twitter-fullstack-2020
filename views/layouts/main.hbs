@@ -8,21 +8,12 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
     integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
 </head>
 
 <body>
   <div class="container">
-    {{#if success_messages}}
-      <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
-        {{success_messages}}
-      </div>
-    {{/if}}
-    {{#if error_messages}}
-      <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
-        {{error_messages}}
-      </div>
-    {{/if}}
+    {{> alert}}
     <div class="row justify-content-md-center">
       {{!-- Left side --}}
       <div class="col-2 mr-5">
@@ -40,7 +31,6 @@
               <a href="/admin/users" class="btn" style="color: black;">
                 <h6><i class="fa fa-user fa-lg m-3"></i>使用者列表</h6>
               </a><br>
-              <a href="#" class="btn btn-twitter rounded-pill" style="width: 180px">推文</a>
             </div>
             {{else}}
               <div class="col">
@@ -53,6 +43,10 @@
                 <a href="/users/settings" class="btn" style="color: black;">
                   <h6><i class="fa fa-cog fa-lg m-3"></i>設定</h6>
                 </a><br>
+
+              <button data-toggle="modal" data-target="#createTweet" class="btn btn-create" style="border-radius: 18px; width: 180px">推文</button>
+              <!-- pop up create tweet message -->
+              {{> message}}
                 <a href="#" class="btn btn-twitter rounded-pill"
                   style="width: 180px">推文</a>
               </div>

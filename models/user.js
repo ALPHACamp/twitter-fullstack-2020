@@ -1,7 +1,5 @@
 'use strict';
 
-const { Sequelize } = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     name: DataTypes.STRING,
@@ -27,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followerId',
       as: 'Followings'
     })
+    User.hasMany(models.ReplyComment)
   };
   return User;
 };

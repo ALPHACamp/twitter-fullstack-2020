@@ -56,6 +56,82 @@ const userController = {
     req.logout()
     return res.redirect('/users/login')
   },
+
+  likeTweet: (req, res) => {
+    Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.tweetId
+    })
+    .then(like => {
+      return res.redirect('back')
+    })
+  },
+
+  dislikeTweet: (req, res) => {
+    Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      }
+    })
+    .then(like => {
+      like.destroy()
+        .then(like => {
+          return res.redirect('back')
+        })
+    })  
+  },
+
+  likeReply: (req, res) => {
+    Like.create({
+          UserId: req.user.id,
+          ReplyId: req.params.replyId
+    })
+    .then(like => {
+      return res.redirect('back')
+    })
+  },
+
+  dislikeReply: (req, res) => {
+    Like.findOne({
+      where: {
+        UserId: req.user.id,
+        ReplyId: req.params.replyId
+      }
+    })
+    .then(like => {
+      like.destroy()
+        .then(like => {
+          return res.redirect('back')
+        })   
+    })
+  },
+
+  postFollowing: (req, res) => {
+    Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.userId
+    })
+    .then(followship => {
+      return res.redirect('back')
+    })
+  },
+
+  deleteFollowing: (req, res) => {
+    Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+    .then(followship => {
+      followship.destroy()
+        .then(followship => {
+          return res.redirect('back')
+        })
+      })
+  },
+
   adminLoginPage: (req, res) => {
     return res.render('admin/login', { layout: 'mainLogin' })
   },
