@@ -29,6 +29,8 @@ router.get('/tweets', userAuthenticated, tweetController.getTweets);
 
 router.get('/users/self', userAuthenticated, userController.getSelf);
 router.get('/users/:id', userAuthenticated, userController.getUser);
+router.get('/users/:id/setting', userAuthenticated, userController.getUserSettingPage);
+router.put('/users/:id/setting', userAuthenticated, userController.putUserSetting);
 
 router.get('/signup', userController.getSignupPage)
 router.post('/signup', userController.signup)
