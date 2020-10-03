@@ -167,6 +167,30 @@ const tweetController = {
             return res.redirect('back')
           })  
       })
+  },
+
+  editTweet: (req, res) => {
+    Tweet.findByPk(req.params.tweetId)
+      .then(tweet => {
+        const { description } = req.body
+        if (!description) {
+          req.flash('error_messages', '留言不得為空白')
+          return res.redirect('back')
+        }
+        if (description.length > 140) {
+          req.flash('error_messages', '貼文字數不得超過140字')
+          return res.redirect('back')
+        }
+        else {
+          tweet.update({
+            description
+          })
+          .then(tweet => {
+            req.flash('success_messages', '已成功更新貼文')
+            return res.redirect('back')
+          })
+        }
+      })
   }
 }
 
