@@ -23,6 +23,24 @@ const tweetController = {
             return res.render('tweets', {tweets: data})
           })
       },
+      getTweet: (req, res) => {
+        Tweet.findByPk(req.params.id, {
+          include:[
+            User,
+            {model: Reply, include:[User]}, 
+            {model: User, as: 'LikeUsers'}
+          ],
+          order: [['Replies','createdAt', 'DESC']]
+        }).then(tweet => {
+          const isLiked = tweet.LikeUsers.map(d => d.id).includes(tweet.id)
+                return res.render('tweet', {
+                  tweet, 
+                  isLiked })
+          })
+        .catch(error => console.log(error))
+      },
+    
+
 }
 
 module.exports = tweetController

@@ -41,8 +41,9 @@ module.exports = (app, passport) => {
 
 
   // tweetController
-app.get("/", (req, res) => res.redirect("/tweets"));
-app.get("/tweets", tweetController.getTweets);
+app.get("/", (req, res) => res.redirect("/tweets"))
+app.get("/tweets", tweetController.getTweets)
+app.get("/tweets/:id", tweetController.getTweet);
 }
 
 
