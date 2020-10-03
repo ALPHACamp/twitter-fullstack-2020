@@ -113,8 +113,8 @@ const userController = {
           return t;
         });
         return res.render('user', {
-          user: data,
-          self: helpers.getUser(req),
+          user: helpers.getUser(req),
+          visitUser: data,
           isFollowing: followings.includes(Number(req.params.id)),
         });
       } else {
