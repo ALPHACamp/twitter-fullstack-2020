@@ -24,7 +24,9 @@
   color: rgb(255, 102, 0); 
   border-bottom: rgb(255, 102, 0) solid;
 }
-
+.unselected_nav {
+  color: grey;
+}
 .border-avatar {
   border-width: 5px;
   border-style: solid;
@@ -33,7 +35,20 @@
   top: 120px;
   left: 85px
 }
-
 .admin-users-card{
   border-color: white;
+}
+.btn-twitter {
+  background:rgb(255, 102, 0);
+  color:white;
+}
+.btn-outline-twitter {
+  width: auto; 
+  border-color: rgb(255, 102, 0); 
+  color: rgb(255, 102, 0);
+}
+.btn-outline-twitter-active {
+  width: auto; 
+  background:rgb(255, 102, 0);
+  color:white;
 }
