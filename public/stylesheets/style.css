@@ -25,6 +25,9 @@
   border-bottom: rgb(255, 102, 0) solid;
 }
 
+.unselected_nav {
+  color: grey;
+}
 .border-avatar {
   border-width: 5px;
   border-style: solid;
@@ -33,7 +36,6 @@
   top: 80px;
   left: 55px
 }
-
 .admin-users-card{
   border-color: white;
 }
