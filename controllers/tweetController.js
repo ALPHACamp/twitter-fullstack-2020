@@ -40,6 +40,22 @@ const tweetController = {
           })
         .catch(error => console.log(error))
       },
-}
 
+      postTweet: (req,res) => {
+        if (!req.body.description){
+          req.flash('error_message', "it can't be blank.")
+          return res.redirect('back')
+        }
+        if (req.body.description.length > 140) {
+          req.flash('error_message', "it can't be longer than 140 characters.")
+          return res.redirect('back')
+        }
+        return Tweet.create({
+          UserId: req.user.id,
+          description: req.body.description
+        }).then(tweet => {
+          return res.redirect('/tweets')
+        })
+ }
+}
 module.exports = tweetController
