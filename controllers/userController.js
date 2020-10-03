@@ -153,6 +153,7 @@ const userController = {
       }))
       return res.render('userTweets', {
         tweets,
+        userId: user.toJSON().id,
         cover: user.toJSON().cover,
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
@@ -161,6 +162,75 @@ const userController = {
         followingsCount: user.toJSON().Followings.length,
         followersCount: user.toJSON().Followers.length,
         tweetsCount: tweets.length
+      })
+    })
+  },
+  getUserReplies: (req, res) => {
+    const reqUserId = req.params.userId
+    return User.findByPk(reqUserId, {
+      order: [[{ model: Reply }, 'createdAt', 'DESC']],
+      include: [
+        { model: Reply, include: [{ model: Tweet, include: [User, Reply, Like] }] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        Tweet
+      ]
+    }).then(user => {
+      console.log('user.reply:', user.toJSON().Replies)
+      const replies = user.toJSON().Replies.map(reply => ({
+        avatar: user.toJSON().avatar,
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        description: reply.Tweet.description.substring(0, 50),
+        updatedAt: reply.Tweet.updatedAt,
+        replyCount: reply.Tweet.Replies.length,
+        likeCount: reply.Tweet.Likes.length
+      }))
+      return res.render('userReplies', {
+        replies,
+        userId: user.toJSON().id,
+        cover: user.toJSON().cover,
+        avatar: user.toJSON().avatar,
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        introduction: user.toJSON().introduction,
+        followingsCount: user.toJSON().Followings.length,
+        followersCount: user.toJSON().Followers.length,
+        tweetsCount: user.toJSON().Tweets.length
+      })
+    })
+  },
+  getUserLikes: (req, res) => {
+    const reqUserId = req.params.userId
+    return User.findByPk(reqUserId, {
+      order: [[{ model: Like }, 'createdAt', 'DESC']],
+      include: [
+        { model: Like, include: [{ model: Tweet, include: [User, Reply, Like] }] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        Tweet
+      ]
+    }).then(user => {
+      const likes = user.toJSON().Likes.map(like => ({
+        avatar: user.toJSON().avatar,
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        description: like.Tweet.description.substring(0, 50),
+        updatedAt: like.Tweet.updatedAt,
+        replyCount: like.Tweet.Replies.length,
+        likeCount: like.Tweet.Likes.length
+      }))
+      return res.render('userLikes', {
+        likes,
+        userId: user.toJSON().id,
+        cover: user.toJSON().cover,
+        avatar: user.toJSON().avatar,
+        account: user.toJSON().account,
+        name: user.toJSON().name,
+        introduction: user.toJSON().introduction,
+        followingsCount: user.toJSON().Followings.length,
+        followersCount: user.toJSON().Followers.length,
+        tweetsCount: user.toJSON().Tweets.length
       })
     })
   }
