@@ -34,9 +34,11 @@ module.exports = (app, passport) => {
     res.redirect('/tweets')
   })
 
-  // tweet首頁
-  app.get('/tweets', authenticated, tweetController.getTweets)
-  app.get('/tweets/:id', authenticated, tweetController.getTweet)
+  // User tweet
+  app.get('/tweets', authenticated, tweetController.getTweets) // 顯示所有 tweet
+  app.post('/tweets', authenticated, tweetController.postTweet) // 新增 tweet
+  app.get('/tweets/:id', authenticated, tweetController.getTweet) // 顯示單一 tweet
+
   // 註冊頁
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
