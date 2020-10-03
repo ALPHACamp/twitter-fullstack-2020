@@ -13,16 +13,7 @@
 
 <body>
   <div class="container">
-    {{#if success_messages}}
-      <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
-        {{success_messages}}
-      </div>
-    {{/if}}
-    {{#if error_messages}}
-      <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
-        {{error_messages}}
-      </div>
-    {{/if}}
+    {{> alert}}
     <div class="row justify-content-md-center">
       {{!-- Left side --}}
       <div class="col-2 mr-5">
@@ -34,7 +25,7 @@
         <div class="row">
           {{!-- {{#if user.isAdmin}} --}}
           <div class="col">
-            <a href="#" class="btn" style="color: black;">
+            <a href="/" class="btn" style="color: black;">
               <h6><i class="fa fa-home fa-lg m-3"></i>首頁</h6>
             </a><br>
             <a href="#" class="btn" style="color: black;">
@@ -43,7 +34,11 @@
             <a href="#" class="btn" style="color: black;">
               <h6><i class="fa fa-cog fa-lg m-3"></i>設定</h6>
             </a><br>
-            <a href="#" class="btn" style="border-radius: 18px; background:coral; color:white; width: 180px">推文</a>
+            <button data-toggle="modal" data-target="#createTweet" class="btn btn-create" style="border-radius: 18px; width: 180px">推文</button>
+
+            <!-- pop up create tweet message -->
+            {{> message}}
+
           </div>
           {{!-- {{else}}
           <div class="col">

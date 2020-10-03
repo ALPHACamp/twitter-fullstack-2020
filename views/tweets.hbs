@@ -4,26 +4,27 @@
     <li class="list-group-item">
       <strong>首頁</strong>
     </li>
-    <li class="list-group-item">
-    <form action="/tweets" method="POST">  
-      <div class="flex-container">
-        <div>
-          <img src="{{loginUser.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+
+    <li class="list-group-item" style="border-bottom-width:8px;">
+      <form action="/tweets" method="POST">  
+        <div class="flex-container">
+          <div>
+            <img src="{{loginUser.avatar}}" alt="user avatar" class="user-avatar">
+          </div>
+          <div style="width: 600px;">  
+            <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;"></textarea>
+          </div>
         </div>
-        <div style="width: 600px;">  
-          <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;"></textarea>
-        </div>
-      </div>
-      <button class="btn" type="submit" style="border-radius: 18px; background:coral; color:white; width: 60px; float: right;">推文</button>
-    </form>
+        <button class="btn btn-create" type="submit" style="border-radius: 18px; width: 60px; float: right;">推文</button>
+      </form>
     </li>
   
     {{#each tweetFollowings}}
     <li class="list-group-item">
       <div class="flex-container"> 
         <div class="mr-2">
-          <a href="">
-            <img src="{{this.user.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%">
+          <a href="/users/{{this.user.id}}">
+            <img src="{{this.user.avatar}}" alt="user avatar" class="user-avatar">
           </a>
         </div>
         <div>
@@ -38,111 +39,41 @@
             </div>
           </div>
           {{/ifCond}}
-          <strong>{{this.user.name}}</strong> <font color="grey">@{{this.user.account}} {{moment this.createdAt}}</font> 
+          <strong>{{this.user.name}}</strong> <font class="text-muted">@{{this.user.account}} {{moment this.createdAt}}</font> 
           
           <p>{{this.description}}</p>
-          <div class="display: inline-block;">
-            <a href="/tweets/{{this.id}}" style="color:black;" class="mr-4"><i class="far fa-comment-alt"></i>  {{this.repliesCount}}</a>
-            {{#if this.isLiked}}
-            <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: inline-block;">
-              <button type="submit" style="color:black; border:none; background-color:white;"><i class="fas fa-heart"></i></button>
-              <div style="float: right;">{{this.likesCount}}</div>   
-            </form>
-            {{else}}
-            <form action="/like/{{this.id}}" method="POST" style="display: inline-block;">
-              <button type="submit" style="color:black; border:none; background-color:white;"><i class="far fa-heart"></i></button>
-              <div style="float: right;">{{this.likesCount}}</div>   
-            </form>
-            {{/if}}
+
+          <div>
+            <a href="/tweets/{{this.id}}" style="float:left; color:black; margin-right:4px;"><i class="far fa-comment-alt"></i></a>
+            <div style="float:left; margin-right:25px;">{{this.repliesCount}}</div>
           </div>
+
+          {{#if this.isLiked}}
+          <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="float:left;">
+            <button type="submit" class="btn-push"><i class="fas fa-heart"></i></button>
+          </form>
+          <div style="float:left;">{{this.likesCount}}</div>   
+          {{else}}
+          <form action="/like/{{this.id}}" method="POST" style="float:left;">
+            <button type="submit" class="btn-push"><i class="far fa-heart"></i></button>
+          </form>
+          <div style="float:left;">{{this.likesCount}}</div>   
+          {{/if}}
+          
         </div>
       </div>
     </li>
+
+    <!-- pop up edit tweet message -->
+    {{> edit}}
+
+    <!-- pop up delete tweet message -->
+    {{> delete}}
+
+    {{/each}}
   </ul>
 
-  <!-- pop up edit tweet message -->
-  <div class="modal fade" id="et{{this.id}}" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4>編輯貼文</h4>
-        </div>
-        <form action="/tweets/{{this.id}}?_method=PUT" method="POST">
-        <div class="modal-body flex-container">
-          <div>
-            <img src="{{../loginUser.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
-          </div>
-          <div style="width: 600px;">  
-            <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;">{{this.description}}</textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary">儲存</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- pop up delete tweet message -->
-  <div class="modal fade" id="t{{this.id}}" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4>刪除貼文?</h4>
-        </div>
-        <div class="modal-body">
-          確定要刪除這則貼文?
-        </div>
-        <div class="modal-footer">
-          <form action="/tweets/{{this.id}}?_method=DELETE" method="POST">
-             <button type="submit" class="btn btn-primary">刪除</button>
-          </form>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-      </div>
-      </div>
-    </div>
-  </div>
-  {{/each}}
 </div>
 {{!-- Right side --}}
-<div class="col-4">
-  <ul class="list-group mt-3 ml-3" >
-    <li class="list-group-item" style="background-color:lightgray;">
-      <strong>跟隨誰</strong>
-    </li>
-    {{#each users}}
-    <li class="list-group-item" style="background-color: lightgray;">
-      <div class="flex-container">
-        {{!-- <div class="p-3">Avatar</div> --}}
-        <div class="mr-2">
-        <img src="{{this.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%">
-        </div>
-        <div>
-          <strong>{{this.name}}</strong><br> 
-          <span class="text-muted">@{{this.account}}</span>
-        </div>
-        <div class="align-self-center ml-auto">
-          {{#ifCond ../loginUser.id this.id}}
-          {{else}}
-            {{#if this.isFollowing}}
-            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn" style="border-radius: 18px; background:coral; color:white; width: auto">正在跟隨</button>
-            </form>
-            {{else}}
-            <form action="/following/{{this.id}}" method="POST">
-              <button type="submit" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</button>
-            </form>
-            {{/if}}
-          {{/ifCond}}
-        </div>
-      </div>
-    </li>
-    {{/each}}
-    <li class="list-group-item" style="background-color: lightgray;">
-      <a href="#" style="color: coral;">顯示更多</a>
-    </li>
-  </ul>
-</div>
+{{> right}}
 

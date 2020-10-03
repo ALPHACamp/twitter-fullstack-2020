@@ -4,6 +4,7 @@ const Like = db.Like
 const User = db.User
 const Reply = db.Reply
 const ReplyComment = db.ReplyComment
+let more = 10
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -39,12 +40,11 @@ const tweetController = {
       })
 
       //Top 10 followers
-      User.findAndCountAll({
-        include: [{ model: User, as: 'Followers' }],
-        limit: 10
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
       })
       .then(users => {
-        users = users.rows.map(user => ({
+        users = users.map(user => ({
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(req.user.id)
         }))
@@ -53,6 +53,12 @@ const tweetController = {
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
         })
+        
+        //more followers
+        if (req.query.more) {
+          more = more + 10
+        }
+        users = users.slice(0, more)
         
         return res.render('tweets', { tweetFollowings, loginUser, users })
       })
@@ -125,7 +131,13 @@ const tweetController = {
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
         })
-        
+
+        //more followers
+        if (req.query.more) {
+          more = more + 10
+        }
+        users = users.slice(0, more)
+
         return res.render('tweet', { tweet, loginUser, isLikedTweet, tweetReplies, users })
       })
     })
