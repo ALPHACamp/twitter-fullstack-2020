@@ -79,11 +79,7 @@ const userController = {
   getUser: (req, res) => {
     let userId = req.params.id;
     return User.findByPk(userId, {
-      where: {
-        isAdmin: false,
-      },
       include: [
-        // Like,
         {
           model: Tweet,
           include: [Reply, Like],
@@ -93,7 +89,7 @@ const userController = {
         { model: User, as: 'Followings' },
       ],
     }).then((user) => {
-      if (user !== null) {
+      if (user !== null && user.isAdmin === false) {
         // const targetUser = user.toJSON();
         const followings = req.user.Followings.map((u) => u.id);
         const followers = req.user.Followers.map((u) => u.id);
