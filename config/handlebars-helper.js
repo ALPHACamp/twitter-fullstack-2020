@@ -8,7 +8,7 @@ module.exports = {
     return options.inverse(this);
   },
   moment: (a) => {
-    return moment(a).fromNow();
+    return moment(a).fromNow(true);
   },
   subText: (content, num) => {
     let count = Number(num) ? Number(num) : 50;
