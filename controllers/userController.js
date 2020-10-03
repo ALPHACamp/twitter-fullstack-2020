@@ -31,6 +31,7 @@ const userController = {
                 email: req.body.email,
                 name: req.body.name,
                 account: req.body.account,
+                role: 'user',
                 password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
               }).then(() => {
                 return res.redirect('/signin')

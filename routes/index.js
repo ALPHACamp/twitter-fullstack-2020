@@ -11,8 +11,8 @@ module.exports = (app, passport) => {
       if (helpers.getUser(req).role !== 'admin') {
         return next()
       } else {
-        req.flash('error_messages', '請登入正確帳號!')
-        return res.redirect('/signin')
+        req.flash('error_messages', '管理員請使用後台')
+        return res.redirect('/admin/tweets')
       }
     }
     res.redirect('/signin')
