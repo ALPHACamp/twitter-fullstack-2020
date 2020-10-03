@@ -55,6 +55,7 @@ module.exports = (app, passport) => {
   //Reply
   app.post('/replies/:replyId', authenticated, replyController.postReply)
   app.delete('/replies/:replyId', authenticated, replyController.deleteReply)
+  app.put('/replies/:replyId', authenticated, replyController.editReply)
 
   //follow
   app.post('/following/:userId', authenticated, userController.postFollowing)

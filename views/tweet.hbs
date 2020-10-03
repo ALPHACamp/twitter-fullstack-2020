@@ -98,7 +98,7 @@
               <img src="{{../loginUser.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
             </div>
             <div style="width: 600px;">  
-              <textarea placeholder="有什麼新鮮事?" class="form-control" id="comment" name="comment" rows="3"  style="border: none;">{{this.comment}}</textarea>
+              <textarea placeholder="留言..." class="form-control" id="comment" name="comment" rows="3"  style="border: none;">{{this.comment}}</textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -263,9 +263,7 @@
                 •••
               </a>
               <div class="dropdown-menu" aria-labelledby="more">
-                <form action="">
-                  <button class="dropdown-item" type="submit">修改此留言</button>
-                </form>
+                <button data-toggle="modal" data-target="#er{{this.id}}"  class="dropdown-item">修改此留言</button>
                 <button data-toggle="modal" data-target="#cr{{this.id}}"  class="dropdown-item">刪除此留言</button>
               </div>
             </div>
@@ -278,6 +276,7 @@
             <font color="grey" size="2px">回覆給</font><font color="coral" size="2px">@{{this.User.name}}</font> 
           </div>
         </div>
+
         <!-- pop up delete reply comment message -->
         <div class="modal fade" id="cr{{this.id}}" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -297,6 +296,32 @@
             </div>
           </div>
         </div>
+
+        <!-- pop up edit reply comment message -->
+        <div class="modal fade" id="er{{this.id}}" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4>編輯留言</h4>
+              </div>
+              <form action="/replies/{{this.id}}?_method=PUT" method="POST">
+              <div class="modal-body flex-container">
+                <div>
+                  <img src="{{../../loginUser.avatar}}" alt="user avatar" style="width: 50px; border-radius: 50%;">
+                </div>
+                <div style="width: 600px;">  
+                  <textarea placeholder="留言..." class="form-control" id="comment" name="comment" rows="3"  style="border: none;">{{this.comment}}</textarea>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">儲存</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
         {{/each}}
         <div class="flex-container">
           <div>
