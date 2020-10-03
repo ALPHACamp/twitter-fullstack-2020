@@ -41,7 +41,7 @@ const userController = {
       .then(user => {
         if (user) {
           req.flash('error_messages', '信箱或是帳號重複！')
-          return res.redirect('/register')
+          return res.redirect('/signup')
         }
         User.create({
           account,
@@ -49,7 +49,7 @@ const userController = {
           email,
           password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         }).then(user => {
-          return res.redirect('/')
+          return res.redirect('/tweets')
         })
       })
   },
@@ -241,7 +241,7 @@ const userController = {
           .Followings.map(d => d.id)
           .includes(r.id)
       })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-      return res.render('followers',{ profile: user, isFollowed, followerList })
+      return res.render('followers', { profile: user, isFollowed, followerList })
     })
   },
   getFollowing: (req, res) => {
@@ -265,7 +265,7 @@ const userController = {
         ...r.dataValues,
         introduction: r.dataValues.introduction
       })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-      return res.render('followings',{ profile: user, isFollowed, followingList })
+      return res.render('followings', { profile: user, isFollowed, followingList })
     })
   }
 }
