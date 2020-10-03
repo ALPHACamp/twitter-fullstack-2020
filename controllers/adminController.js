@@ -36,8 +36,8 @@ const adminControllers = {
         { model: Like },
         { model: Tweet },
         { model: User, as: 'Followings' },
-        { model: User, as: 'Followers' }
-      ]
+        { model: User, as: 'Followers' },
+      ],
     }).then(users => {
       console.log(users[0])
       res.render('admin/users', { users })
