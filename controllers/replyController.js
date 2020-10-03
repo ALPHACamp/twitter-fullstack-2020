@@ -1,4 +1,4 @@
-const { User, Reply, Tweet } = require('../models')
+const { User, Reply, Tweet, Like } = require('../models')
 const helpers = require("../_helpers")
 
 let replyController = {
@@ -6,11 +6,14 @@ let replyController = {
     return Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: Reply, include: [User] }
+        {model: Reply, include: [User]},
+        { model: User, as: 'LikedUsers' }
       ]
     }).then(reply => {
+      const isLiked = reply.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
         return res.render('replylist', {
-          reply: reply.toJSON()
+          reply: reply.toJSON(),
+          isLiked: isLiked
         })
     })
   },
@@ -29,5 +32,26 @@ let replyController = {
       res.redirect(`/replylist/${req.body.tweetId}`)
     })
   },
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.id
+    })
+     .then(like => {
+       return res.redirect('back')
+     })
+   },
+   removeLike: (req, res) => {
+    return Like.findOne({where: {
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.id
+    }})
+      .then(like => {
+        like.destroy()
+         .then((like) => {
+           return res.redirect('back')
+         })
+      })
+   }
 }
 module.exports = replyController
