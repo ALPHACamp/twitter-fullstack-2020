@@ -45,9 +45,6 @@ module.exports = (app, passport) => {
 app.get("/", (req, res) => res.redirect("/tweets"))
 app.get("/tweets", tweetController.getTweets)
 app.get("/tweets/:id", tweetController.getTweet);
-}
-
-
 
   // setting使用者能編輯自己的 account、name、email 和 password
   app.get('/setting', userController.getSetting)
@@ -58,7 +55,11 @@ app.get("/tweets/:id", tweetController.getTweet);
   app.get('/user/self', userController.getUser)
   app.get('/user/self/edit', userController.editUser)
   app.put('/users/:id', userController.putUser)
-
 }
+
+
+
+
+
 
 
