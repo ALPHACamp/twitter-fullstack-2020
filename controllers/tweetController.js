@@ -41,18 +41,20 @@ const tweetController = {
   postTweet: (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '推文字數不可為 0')
-      return res.redirect('/')
+      res.redirect('/tweets')
     }
-    if (req.body.description.length > 140) {
+    else if (req.body.description.length > 140) {
       req.flash('error_messages', '推文字數不可超過 140 個字')
-      return res.redirect('/')
+      res.redirect('/tweets')
     }
-    return Tweet.create({
-      UserId: helpers.getUser(req).id,
-      description: req.body.description,
-    }).then(() => {
-      return res.redirect('/')
-    }).catch(err => console.log(err))
+    else {
+      return Tweet.create({
+        UserId: helpers.getUser(req).id,
+        description: req.body.description,
+      }).then(() => {
+        return res.redirect('/')
+      }).catch(err => console.log(err))
+    }
   },
   postReply: (req, res) => {
     if (!req.body.comment) {
