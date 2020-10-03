@@ -1,6 +1,12 @@
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+const imagesUpload = upload.fields([
+  { name: 'avatar', maxCount: 1 },
+  { name: 'cover', maxCount: 1 }
+])
 
 const helpers = require('../_helpers');
 
@@ -46,5 +52,5 @@ module.exports = (app, passport) => {
   app.get('/users/:userId/likes', authenticated, userController.getUserLikes)
   app.get('/users/:userId/followers', authenticated, userController.getUserFollowers)
   app.get('/users/:userId/followings', authenticated, userController.getUserFollowings)
-  
+  app.put('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
 }

@@ -1,7 +1,11 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const { User, Tweet, Reply, Like, Followship } = db
-const helpers = require('../_helpers');
+const helpers = require('../_helpers')
+const fs = require('fs')
+const { resolve } = require('path')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
   registerPage: (req, res) => {
@@ -75,7 +79,7 @@ const userController = {
   putUserSettings: (req, res) => {
     const { account, name, email, password, confirmPassword } = req.body
     const id = req.params.id
-    let passwordCheck = true
+    let passwordCheck = false
     // check user auth
     if (helpers.getUser(req).id !== Number(id)) {
       req.flash('error_messages', 'You can only edit your account')
@@ -102,9 +106,10 @@ const userController = {
         req.flash('error_messages', 'Password and confirmed Password are not matched')
         passwordCheck = false
         return res.redirect('back')
+      } else {
+        passwordCheck = true
       }
     }
-    
     if (passwordCheck) {
       // user change password
       return User.findByPk(id).then(user => {
@@ -249,7 +254,7 @@ const userController = {
         avatar: r.avatar,
         account: r.account,
         name: r.name,
-        introduction: r.introduction.substring(0, 160),
+        introduction: r.introduction.substring(0, 140),
         followshipCreatedAt: r.Followship.createdAt,
         // 追蹤者人數
         followerCount: users.Followers.length,
@@ -279,7 +284,7 @@ const userController = {
         avatar: r.avatar,
         account: r.account,
         name: r.name,
-        introduction: r.introduction.substring(0, 160),
+        introduction: r.introduction.substring(0, 140),
         followshipCreatedAt: r.Followship.createdAt,
         // 追蹤者人數
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(r.id)
@@ -292,28 +297,73 @@ const userController = {
         tweetsCount: tweetsCount
       })
     })
+  },
+  putUserInfo: (req, res) => {
+    const { name, introduction } = req.body
+    const id = req.params.userId
+    console.log('req.files:', req.files)
+    // check user auth
+    if (helpers.getUser(req).id !== Number(id)) {
+      req.flash('error_messages', 'You can only edit your account')
+      return res.redirect('back')
+    }
+    if (!req.body.name) {
+      req.flash('error_messages', "name didn't exist")
+      return res.redirect('back')
+    }
+    const { files } = req
+    // upload cover
+    const uploadCover = new Promise((resolve, reject) => {
+      let coverURL = ''
+      if (files.cover) {
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        imgur.upload(files.cover[0].path, (err, img) => {
+          if (err) return reject(err)
+          coverURL = img.data.link
+          resolve(coverURL)
+        })
+      } else {
+        coverURL = null
+        resolve(coverURL)
+      }
+    })
+    // upload avatar
+    const uploadAvatar = new Promise((resolve, reject) => {
+      let avatarURL = ''
+      if (files.avatar) {
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        imgur.upload(files.avatar[0].path, (err, img) => {
+          if (err) return reject(err)
+          avatarURL = img.data.link
+          resolve(avatarURL)
+        })
+      } else {
+        avatarURL = null
+        resolve(avatarURL)
+      }
+    })
+    // update All
+    async function updateUser() {
+      try {
+        const [coverURL, avatarURL] = await Promise.all([uploadCover, uploadAvatar])
+        return User.findByPk(id).then(user => {
+          user.update({
+            name: name,
+            introduction: introduction,
+            cover: coverURL || user.cover,
+            avatar: avatarURL || user.avatar
+          })
+        }).then((user) => {
+          req.flash('success_messages', 'User information updated successfully.')
+          // return res.redirect('/users/' + id + '/tweets')
+          return res.redirect('/')
+        })
+      } catch (err) {
+        console.log('Error:', err)
+      }
+    }
+    updateUser()
   }
-  // addFollowing: (req, res) => {
-  //   return Followship.create({
-  //     followerId: req.user.id,
-  //     followingId: req.params.userId
-  //   })
-  //     .then((followship) => {
-  //       return res.redirect('back')
-  //     })
-  // },
-  // removeFollowing: (req, res) => {
-  //   return Followship.findOne({ where: {
-  //     followerId: req.user.id,
-  //     followingId: req.params.userId
-  //   } })
-  //     .then((followship) => {
-  //       followship.destroy()
-  //         .then((followship) => {
-  //           return res.redirect('back')
-  //         })
-  //     })
-  // }
 }
 
 module.exports = userController

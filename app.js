@@ -6,9 +6,11 @@ const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
-
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
@@ -25,7 +27,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
-// app.use('/upload', express.static(__dirname+'/upload'))
+app.use('/upload', express.static(__dirname+'/upload'))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
