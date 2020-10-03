@@ -11,13 +11,15 @@ module.exports = app => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetsController.getTweets)
   app.post('/tweets', authenticated, tweetsController.postTweets)
-  app.get('/replylist/:id', authenticated, tweetsController.getReplylist)
 
-  app.post('/replies', authenticated, replyController.postReply)
+  app.get('/replylist/:id', authenticated, replyController.getReplylist)
+  app.post('/replylist/:id', authenticated, replyController.postReply)
 
   // =====================admin====================================
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   // ================signup/signin======================================
   app.get('/admin/signin', adminController.signInPage)
@@ -36,4 +38,8 @@ module.exports = app => {
   app.get('/setting/:id', authenticated, userController.getSetting)
   app.put('/setting/:id', authenticated, userController.putSetting)
   app.post('/users/:id/edit', authenticated, userController.putUser)
+  app.get('/users/:id/followers', authenticated, userController.getFollower)
+  app.get('/users/:id/followings', authenticated, userController.getFollowing)
+  app.post('/followships', authenticated, userController.addFollowing)
+  app.delete('/followships/:followingId', authenticated, userController.removeFollowing)
 }
