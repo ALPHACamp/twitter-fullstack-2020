@@ -578,14 +578,31 @@ box-sizing: border-box;
   outline: none;
 }
 
-.tweet-user-info{
+.tweet-content-info {
   width: 100%;
   position: relative;
-  left: 50px;
+  left: 15px;
 }
 
-.tweet-user-info i {
+.tweet-content-info i {
   margin-left: 5px;
+}
+
+.tweet-content-box {
+  display: flex;
+  border-top: 1px solid #E6ECF0;
+}
+
+.tweet-content-username {
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
+.tweet-content-description {
+  display:inline-block;
+  width:95%;
+  word-wrap:break-word;
+  white-space:normal;
 }
 
 .number {
