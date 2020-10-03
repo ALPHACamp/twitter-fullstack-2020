@@ -44,6 +44,7 @@ module.exports = (app, passport) => {
   app.delete('/tweets/:tweetId', authenticated, tweetController.deleteTweet)
   app.delete('/tweets/:replyId/replies', authenticated, tweetController.deleteReply)
   app.put('/tweets/:tweetId', authenticated, tweetController.editTweet)
+  app.put('/tweets/:replyId/replies', authenticated, tweetController.editReply)
 
   //Like
   app.post('/like/:tweetId', authenticated, userController.likeTweet)
@@ -53,7 +54,7 @@ module.exports = (app, passport) => {
 
   //Reply
   app.post('/replies/:replyId', authenticated, replyController.postReply)
-
+  
   //follow
   app.post('/following/:userId', authenticated, userController.postFollowing)
   app.delete('/following/:userId', authenticated, userController.deleteFollowing)

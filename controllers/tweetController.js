@@ -137,6 +137,10 @@ const tweetController = {
       req.flash('error_messages', '留言不得為空白')
       return res.redirect(`/tweets/${req.params.tweetId}`)
     }
+    if (comment.length > 100) {
+      req.flash('error_messages', '留言字數不得超過100字')
+      return res.redirect('back')
+    }
     else {
       Reply.create({
         UserId: req.user.id,
@@ -174,7 +178,7 @@ const tweetController = {
       .then(tweet => {
         const { description } = req.body
         if (!description) {
-          req.flash('error_messages', '留言不得為空白')
+          req.flash('error_messages', '貼文不得為空白')
           return res.redirect('back')
         }
         if (description.length > 140) {
@@ -187,6 +191,30 @@ const tweetController = {
           })
           .then(tweet => {
             req.flash('success_messages', '已成功更新貼文')
+            return res.redirect('back')
+          })
+        }
+      })
+  },
+
+  editReply: (req, res) => {
+    Reply.findByPk(req.params.replyId)
+      .then(reply => {
+        const { comment } = req.body
+        if (!comment) {
+          req.flash('error_messages', '留言不得為空白')
+          return res.redirect('back')
+        }
+        if (comment.length > 100) {
+          req.flash('error_messages', '留言字數不得超過100字')
+          return res.redirect('back')
+        }
+        else {
+          reply.update({
+            comment
+          })
+          .then(reply => {
+            req.flash('success_messages', '已成功更新留言')
             return res.redirect('back')
           })
         }
