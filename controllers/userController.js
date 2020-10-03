@@ -93,7 +93,9 @@ const userController = {
         // const targetUser = user.toJSON();
         const followings = req.user.Followings.map((u) => u.id);
         const followers = req.user.Followers.map((u) => u.id);
-        //console.log(user.toJSON().Tweets[0].Likes);
+        //const Tweets = user.toJSON().Tweets;
+
+        //console.log(Tweets[0]);
         return res.render('user', {
           user: user.toJSON(),
           self: req.user,
