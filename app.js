@@ -5,6 +5,7 @@ const session = require('express-session');
 const passport = require('./config/passport');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
+const methodOverride = require('method-override')
 
 const app = express();
 const port = 3000;
@@ -19,6 +20,7 @@ app.engine(
 );
 app.set('view engine', 'hbs');
 
+app.use(methodOverride('_method'))
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));

@@ -16,6 +16,7 @@ module.exports = {
       `SELECT id FROM Replies`,
     );
     replyIds = replyIds[0].map((i) => i.id);
+
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
