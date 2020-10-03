@@ -30,9 +30,9 @@
       </div>
       <div>
         {{#if this.isFollowed}}
-        <a href="#" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</a>
+        <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</button></form>
         {{else}}
-        <a href="#" class="btn btn-outline-twitter rounded-pill">跟隨</a>
+        <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter rounded-pill">跟隨</button></form>
         {{/if}}
       </div>
     </div>
@@ -47,7 +47,6 @@
     </li>
     <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
       <div class="d-flex">
-        {{!-- <div class="p-3">Avatar</div> --}}
         <img class="mr-3" src="#" alt="Avatar">
         <div>
           <strong>Name</strong><br>
