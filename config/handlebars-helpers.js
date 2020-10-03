@@ -7,7 +7,6 @@ module.exports = {
     }
     return options.inverse(this)
   },
-
   moment: function (a) {
     return moment(a).fromNow()
   },
@@ -26,5 +25,6 @@ module.exports = {
       t = '上午'
     }
     return t + h + ':' + m + ' • ' + Y + '年' + M + '月' + D + '日'
+
   }
 }

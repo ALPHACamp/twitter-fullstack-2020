@@ -5,6 +5,8 @@ const replyController = require('../controllers/replyController')
 
 const helpers = require('../_helpers');
 
+const helpers = require('../_helpers');
+
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
