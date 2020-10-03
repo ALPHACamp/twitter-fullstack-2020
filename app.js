@@ -6,6 +6,7 @@ const passport = require('./config/passport');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const methodOverride = require('method-override')
+const middleware = require('./config/middleware')
 
 const app = express();
 const port = 3000;
@@ -29,6 +30,7 @@ app.use(session({ secret: 'test', resave: false, saveUninitialized: true }));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(middleware.TopUsers);
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
