@@ -50,5 +50,5 @@ app.use(express.static('public'))
 
 // 跟資料庫同步
 //app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+module.exports = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 require('./routes')(app)
