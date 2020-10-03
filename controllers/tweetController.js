@@ -23,6 +23,7 @@ const tweetController = {
             return res.render('tweets', {tweets: data})
           })
       },
+
       getTweet: (req, res) => {
         Tweet.findByPk(req.params.id, {
           include:[
@@ -39,8 +40,6 @@ const tweetController = {
           })
         .catch(error => console.log(error))
       },
-    
-
 }
 
 module.exports = tweetController
