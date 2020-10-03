@@ -3,17 +3,19 @@ const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
 
+const helpers = require('../_helpers');
+
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (helpers.ensureAuthenticated(req)) {
       if (req.user.role === 'user') { return next() }
     }
     req.flash('error_messages', '錯誤賬號類型，請使用後台登錄！')
     return res.redirect('/users/login')
   }
   const authenticatedAdmin = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      console.log(req.user)
+    if (helpers.ensureAuthenticated(req)) {
+      // console.log(req.user)
       if (req.user.role === 'admin') { return next() }
       return res.redirect('/users/login')
     }
@@ -22,7 +24,9 @@ module.exports = (app, passport) => {
 
   app.get('/', authenticated, (req, res) => { return res.redirect('/tweets') })
   //admin pages
-  app.get('/admin/tweets', authenticatedAdmin, adminController.adminTweets)
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
   //user login 
   app.get('/', (req, res) => { return res.redirect('/tweets') })
   app.get('/users/login', userController.loginPage)
@@ -32,9 +36,9 @@ module.exports = (app, passport) => {
   app.get('/users/logout', userController.logout)
 
   //admin login
-  app.get('/admin/login', adminController.adminLoginPage)
-  app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.adminLogin)
-  app.get('/admin/logout', adminController.adminLogout)
+  //app.get('/admin/login', adminController.adminLoginPage)
+  //app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.adminLogin)
+  //app.get('/admin/logout', adminController.adminLogout)
   
   //tweet page
   app.get('/tweets', authenticated, tweetController.getTweets)
@@ -60,4 +64,14 @@ module.exports = (app, passport) => {
   //follow
   app.post('/following/:userId', authenticated, userController.postFollowing)
   app.delete('/following/:userId', authenticated, userController.deleteFollowing)
+  app.get('/admin/login', userController.adminLoginPage)
+  app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), userController.adminLogin)
+  app.get('/admin/logout', userController.adminLogout)
+
+  app.get('/tweets', tweetController.getTweets)
+  app.get('/users/settings', authenticated, userController.getUserSettings)
+  app.put('/users/settings/:id', authenticated, userController.putUserSettings)
+  app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
+  app.get('/users/:userId/replies', authenticated, userController.getUserReplies)
+  app.get('/users/:userId/likes', authenticated, userController.getUserLikes)
 }

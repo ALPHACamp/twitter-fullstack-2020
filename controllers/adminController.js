@@ -1,22 +1,48 @@
 const db = require('../models')
-const User = db.User
+const { User, Tweet, Like, Reply, Followship } = db
+
 
 const adminControllers = {
-  adminLoginPage: (req, res) => {
-    return res.render('admin/login', { layout: 'mainLogin' })
+  getTweets: (req, res) => {
+    return Tweet.findAll({
+      raw: true,
+      nest: true,
+      order: [['createdAt', 'DESC']],
+      include: [{ model: User }]
+    })
+      .then(tweets => {
+        // console.log(tweets)
+        tweets = tweets.map(tweet => ({
+          ...tweet,
+          description: tweet.description.substring(0, 200),
+        }))
+        // console.log(tweets)
+        return res.render('admin/tweets', { tweets })
+      })
   },
-  adminLogin: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    return res.redirect('/admin/tweets')
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id)
+      .then(tweet => {
+        tweet.destroy()
+          .then(comment => {
+            res.redirect('/admin/tweets')
+          })
+      })
   },
-  adminLogout: (req, res) => {
-    req.flash('success_messages', '成功登出！')
-    req.logout()
-    return res.redirect('/admin/login')
+  getUsers: (req, res) => {
+    return User.findAll({
+      nest: true,
+      include: [
+        { model: Like },
+        { model: Tweet },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ]
+    }).then(users => {
+      console.log(users[0])
+      res.render('admin/users', { users })
+    })
   },
-  adminTweets: (req, res) => {
-    return res.render('admin/tweets')
-  }
 }
 
 module.exports = adminControllers

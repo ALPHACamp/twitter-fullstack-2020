@@ -23,33 +23,32 @@
           </div>
         </div>
         <div class="row">
-          {{!-- {{#if user.isAdmin}} --}}
-          <div class="col">
-            <a href="/" class="btn" style="color: black;">
-              <h6><i class="fa fa-home fa-lg m-3"></i>首頁</h6>
-            </a><br>
-            <a href="#" class="btn" style="color: black;">
-              <h6><i class="fa fa-user fa-lg m-3"></i>個人資料</h6>
-            </a><br>
-            <a href="#" class="btn" style="color: black;">
-              <h6><i class="fa fa-cog fa-lg m-3"></i>設定</h6>
-            </a><br>
-            <button data-toggle="modal" data-target="#createTweet" class="btn btn-create" style="border-radius: 18px; width: 180px">推文</button>
+          {{#ifCond user.role 'admin'}}
+            <div class="col">
+              <a href="/admin/tweets" class="btn" style="color: black;">
+                <h6><i class="fa fa-home fa-lg m-3"></i>推文清單</h6>
+              </a><br>
+              <a href="/admin/users" class="btn" style="color: black;">
+                <h6><i class="fa fa-user fa-lg m-3"></i>使用者列表</h6>
+              </a><br>
+            </div>
+            {{else}}
+              <div class="col">
+                <a href="/" class="btn" style="color: black;">
+                  <h6><i class="fa fa-home fa-lg m-3"></i>首頁</h6>
+                </a><br>
+                <a href="/users/{{user.id}}/tweets" class="btn" style="color: black;">
+                  <h6><i class="fa fa-user fa-lg m-3"></i>個人資料</h6>
+                </a><br>
+                <a href="/users/settings" class="btn" style="color: black;">
+                  <h6><i class="fa fa-cog fa-lg m-3"></i>設定</h6>
+                </a><br>
+              <button data-toggle="modal" data-target="#createTweet" class="btn btn-create" style="border-radius: 18px; width: 180px">推文</button>
 
-            <!-- pop up create tweet message -->
-            {{> message}}
-
-          </div>
-          {{!-- {{else}}
-          <div class="col">
-            <a href="#" class="btn" style="color: black;">
-              <h6><i class="fa fa-home fa-lg m-3"></i>推文清單</h6>
-            </a><br>
-            <a href="#" class="btn" style="color: black;">
-              <h6><i class="fa fa-user fa-lg m-3"></i>使用者列表</h6>
-            </a><br>
-          </div>
-          {{/if}} --}}
+              <!-- pop up create tweet message -->
+              {{> message}}
+              </div>
+          {{/ifCond}}
         </div>
       </div>
       {{!-- Center/Right side --}}
