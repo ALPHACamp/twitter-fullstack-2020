@@ -354,7 +354,7 @@ const userController = {
             avatar: avatarURL || user.avatar
           })
         }).then((user) => {
-          req.flash('success_messages', 'User information updated successfully.')
+          req.flash('success_messages', 'User information updated success.')
           // return res.redirect('/users/' + id + '/tweets')
           return res.redirect('/')
         })

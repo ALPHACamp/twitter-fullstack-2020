@@ -20,11 +20,11 @@
   </div>
   <div class="row">
     <div class="col">
-      <span class="bold"><b>{{name}</b></span><br>
+      <span class="bold"><b>{{name}}</b></span><br>
       <span style="color: grey">@{{account}}</span><br>
       <span>{{introduction}}</span><br>
-      {{followingsCount}}個<span style="color: grey">跟隨中</span>
-      {{followersCount}}位<span style="color: grey">跟隨者</span>
+      {{followingsCount}}個 <a href="/users/{{user.id}}/followings"><span style="color: grey">跟隨中</span></a>
+      {{followersCount}}位 <a href="/users/{{user.id}}/followers"><span style="color: grey">跟隨者</span></a>
     </div>
   </div>
   <div class="row border-bottom">
