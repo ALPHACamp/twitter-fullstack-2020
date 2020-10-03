@@ -5,6 +5,7 @@ const Like = db.Like;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
 const { Op } = require('sequelize');
+const helpers = require('../_helpers');
 
 const userController = {
   getSigninPage: (req, res) => {
@@ -15,31 +16,33 @@ const userController = {
     return res.render('signup');
   },
   getUserSettingPage: (req, res) => {
-    if (req.user.id !== Number(req.params.id)) return res.redirect('back');
+    if (helpers.getUser(req).id !== Number(req.params.id))
+      return res.redirect('back');
     return res.render('userSetting');
   },
   putUserSetting: (req, res) => {
     Object.keys(req.body).forEach((d) => (req.body[d] = req.body[d].trim()));
     const { account, name, email, password, checkPassword } = req.body;
-    if (req.user.id !== Number(req.params.id)) return res.redirect('back');
+    if (helpers.getUser(req).id !== Number(req.params.id))
+      return res.redirect('back');
     if (!account || !name || !email || !password || !checkPassword) {
       req.flash('errorMessage', '欄位不能為空~');
-      return res.redirect(`/users/${req.user.id}/setting`);
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
     }
     if (password !== checkPassword) {
       req.flash('errorMessage', '密碼並不相符~');
-      return res.redirect(`/users/${req.user.id}/setting`);
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
     }
     User.findOne({
       where: {
         [Op.or]: [{ account }, { email }],
-        id: { [Op.ne]: req.user.id },
+        id: { [Op.ne]: helpers.getUser(req).id },
       },
     })
       .then((checkUser) => {
         if (checkUser) {
           req.flash('errorMessage', '帳號/信箱已使用~');
-          return res.redirect(`/users/${req.user.id}/setting`);
+          return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
         }
         User.findByPk(req.params.id)
           .then((user) => {
@@ -52,28 +55,30 @@ const userController = {
               })
               .then(() => {
                 req.flash('successMessage', '資料已成功更改~');
-                res.redirect(`/users/${req.user.id}/setting`);
+                res.redirect(`/users/${helpers.getUser(req).id}/setting`);
               })
               .catch(() => {
                 req.flash('errorMessage', '系統異常，請重新操作 #U103~');
-                return res.redirect(`/users/${req.user.id}/setting`);
+                return res.redirect(
+                  `/users/${helpers.getUser(req).id}/setting`,
+                );
               });
           })
           .catch(() => {
             req.flash('errorMessage', '系統異常，請重新操作 #U104~');
-            return res.redirect(`/users/${req.user.id}/setting`);
+            return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
           });
       })
       .catch(() => {
         req.flash('errorMessage', '系統異常，請重新操作 #U105~');
-        return res.redirect(`/users/${req.user.id}/setting`);
+        return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
       });
   },
   signin: (req, res) => {
     return res.redirect('/tweets');
   },
   getSelf: (req, res) => {
-    let selfId = req.user.id;
+    let selfId = helpers.getUser(req).id;
     return res.redirect(`/users/${selfId}`);
   },
   getUser: (req, res) => {
@@ -91,15 +96,15 @@ const userController = {
     }).then((user) => {
       if (user !== null && user.isAdmin === false) {
         // const targetUser = user.toJSON();
-        const followings = req.user.Followings.map((u) => u.id);
-        const followers = req.user.Followers.map((u) => u.id);
+        const followings = helpers.getUser(req).Followings.map((u) => u.id);
+        const followers = helpers.getUser(req).Followers.map((u) => u.id);
 
         const data = user.toJSON();
         let Tweets = data.Tweets;
         Tweets = Tweets.map((t) => {
           if (t.Likes.length > 0) {
             let likeIds = t.Likes.map((l) => l.UserId);
-            t.isLikeBySelf = likeIds.includes(req.user.id);
+            t.isLikeBySelf = likeIds.includes(helpers.getUser(req).id);
           } else {
             t.isLikeBySelf = false;
           }
@@ -107,12 +112,12 @@ const userController = {
         });
         return res.render('user', {
           user: data,
-          self: req.user,
+          self: helpers.getUser(req),
           isFollowing: followings.includes(Number(req.params.id)),
         });
       } else {
         req.flash('errorMessage', '使用者不存在');
-        res.redirect(`/users/${req.user.id}`);
+        res.redirect(`/users/${helpers.getUser(req).id}`);
       }
     });
   },
