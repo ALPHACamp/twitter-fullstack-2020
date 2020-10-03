@@ -1,6 +1,8 @@
 <div class="container-fluid">
+
   {{> left-column}}
   <div class="user-main">
+    {{> message}}
     <div class="user-header">
       <a href="/tweets" style="text-align: center;"><i class="user-arrow icon icon-arrow"></i></a>
       <div class="user-header-info">
@@ -19,7 +21,8 @@
       </div>
       <div class="user-action">
         {{#Equal self.id user.id}}
-        <button type="button" class="button btn-edit-profile" data-toggle="modal" data-target="">編輯個人資訊</button>
+        <button type="button" class="button btn-edit-profile" data-toggle="modal"
+          data-target="#editModal">編輯個人資訊</button>
         {{else}}
         <div class="action-item user-icon">
           <i class="icon icon-messege"></i>
@@ -43,12 +46,12 @@
         <div class="user-account">@{{user.account}}</div>
         <div class="user-intro">{{user.introduction}}</div>
         <div class="user-follow">
-          <div class="user-following">
+          <a href="/users/{{user.id}}/followings" class="user-following">
             <span>{{user.Followings.length}} 個</span>跟隨中
-          </div>
-          <div class="user-follower">
+          </a>
+          <a href="/users/{{user.id}}/followers" class="user-follower">
             <span>{{user.Followers.length}} 位</span>追隨者
-          </div>
+          </a>
         </div>
       </div>
 
@@ -94,24 +97,37 @@
               <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
                 <i class="icon-reply"></i>
               </button>
-              <div class="item-count reply-count">13</div>
+              <div class="item-count reply-count">{{this.Replies.length}}</div>
             </div>
+
             <div class="footer-item like-item">
+              {{#if this.isLikeBySelf}}
+              <button type="button" class="btn">
+                <i class="like icon-like-fill"></i>
+              </button>
+              <div class="like-item-count item-count">{{this.Likes.length}}</div>
+              {{else}}
               <button type="button" class="btn">
                 <i class="icon-like"></i>
               </button>
-              <div class="item-count like-count">79</div>
+              <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+              {{/if}}
             </div>
+
           </div>
+
+
+
+
         </div>
       </div>
-
       {{/each}}
     </div>
 
-
-
   </div>
+
+
   {{> right-column}}
+  {{> modal}}
 
 </div>

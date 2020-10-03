@@ -80,22 +80,47 @@ const userController = {
     let userId = req.params.id;
     return User.findByPk(userId, {
       include: [
-        // Like,
-        { model: Tweet, include: [Reply, Like] },
+        {
+          model: Tweet,
+          include: [Reply, Like],
+          order: [['updatedAt', 'DESC']],
+        },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
     }).then((user) => {
-      // const targetUser = user.toJSON();
-      const followings = req.user.Followings.map((u) => u.id);
-      const followers = req.user.Followers.map((u) => u.id);
-      console.log(user.toJSON().Tweets[0].Likes);
-      return res.render('user', {
-        user: user.toJSON(),
-        self: req.user,
-        isFollowing: followings.includes(Number(req.params.id)),
-      });
+      if (user !== null && user.isAdmin === false) {
+        // const targetUser = user.toJSON();
+        const followings = req.user.Followings.map((u) => u.id);
+        const followers = req.user.Followers.map((u) => u.id);
+
+        const data = user.toJSON();
+        let Tweets = data.Tweets;
+        Tweets = Tweets.map((t) => {
+          if (t.Likes.length > 0) {
+            let likeIds = t.Likes.map((l) => l.UserId);
+            t.isLikeBySelf = likeIds.includes(req.user.id);
+          } else {
+            t.isLikeBySelf = false;
+          }
+          return t;
+        });
+        return res.render('user', {
+          user: data,
+          self: req.user,
+          isFollowing: followings.includes(Number(req.params.id)),
+        });
+      } else {
+        req.flash('errorMessage', '使用者不存在');
+        res.redirect(`/users/${req.user.id}`);
+      }
     });
+  },
+  getFollowersPage: (req, res) => {
+    return res.render('follower');
+  },
+  getFollowingsPage: (req, res) => {
+    return res.render('following');
   },
   signup: (req, res) => {
     Object.keys(req.body).forEach((d) => (req.body[d] = req.body[d].trim()));
