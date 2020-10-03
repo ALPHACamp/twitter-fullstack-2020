@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt-nodejs')
 const { Op } = require('sequelize')
 const helpers = require('../_helpers')
 
+
 const userController = {
   registerPage: (req, res) => {
     return res.render('register')
@@ -267,7 +268,7 @@ const userController = {
       })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
       return res.render('followings',{ profile: user, isFollowed, followingList })
     })
-  }
+  },
 }
 
 module.exports = userController

@@ -88,6 +88,16 @@
 						</div>
 					</div>
               	</form>
+				{{!-- like --}}
+				{{#if isLiked }}
+					<form action="/like/{{this.id}}?_method=DELETE" method="POST">
+						<button type="submit" class="fas fa-heart"></button>
+					</form>
+				{{else}}
+					<form action="/like/{{this.id}}" method="POST">
+						<button type="submit" class="far fa-heart"></button>
+					</form>
+				{{/if}}
 			</div>
         </div>
       </div>

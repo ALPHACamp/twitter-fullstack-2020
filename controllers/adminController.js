@@ -41,7 +41,6 @@ const adminController = {
         ...u.dataValues,
       }))
       users = users.sort((a, b) => b.Tweets.length - a.Tweets.length)
-      console.log(users)
       return res.render('admin/users', {
         users: users
       })
