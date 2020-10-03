@@ -108,6 +108,16 @@ label {
   
 }
 
+.sign-logo {
+  margin-top: 30px;
+  margin-bottom: 15px;
+}
+
+.sign-label-text {
+  top: 3px;
+  left: 3px;
+}
+
 .button {
   border: none;
   background-color: transparent;
