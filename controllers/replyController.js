@@ -18,6 +18,16 @@ const replyController = {
         return res.redirect('back')
       })
     }
+  },
+
+  deleteReply: (req, res) => {
+    ReplyComment.findByPk(req.params.replyId)
+      .then(replyComment => {
+        replyComment.destroy()
+          .then(replyComment => {
+            return res.redirect('back')
+          })  
+      })
   }
 }
 

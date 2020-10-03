@@ -164,10 +164,10 @@ const tweetController = {
   },
 
   deleteReply: (req, res) => {
-    ReplyComment.findByPk(req.params.replyId)
-      .then(replyComment => {
-        replyComment.destroy()
-          .then(replyComment => {
+    Reply.findByPk(req.params.replyId)
+      .then(reply => {
+        reply.destroy()
+          .then(reply => {
             return res.redirect('back')
           })  
       })
