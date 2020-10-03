@@ -28,19 +28,33 @@ router.get('/', (req, res) => {
 router.get('/tweets', userAuthenticated, tweetController.getTweets);
 
 router.get('/users/self', userAuthenticated, userController.getSelf);
+router.get(
+  '/users/:id/setting',
+  userAuthenticated,
+  userController.getUserSettingPage,
+);
+router.put(
+  '/users/:id/setting',
+  userAuthenticated,
+  userController.putUserSetting,
+);
 router.get('/users/:id', userAuthenticated, userController.getUser);
-router.get('/users/:id/setting', userAuthenticated, userController.getUserSettingPage);
-router.put('/users/:id/setting', userAuthenticated, userController.putUserSetting);
 
-router.get('/signup', userController.getSignupPage)
-router.post('/signup', userController.signup)
-router.get('/signin', userController.getSigninPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin' }), userController.signin)
+router.get('/signup', userController.getSignupPage);
+router.post('/signup', userController.signup);
+router.get('/signin', userController.getSigninPage);
+router.post(
+  '/signin',
+  passport.authenticate('local', { failureRedirect: '/signin' }),
+  userController.signin,
+);
 
-router.get('/admin/tweets', adminAuthenticated, adminController.getTweets)
-router.get('/admin/signin', adminController.getSigninPage)
-router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin' }), adminController.signin)
+router.get('/admin/tweets', adminAuthenticated, adminController.getTweets);
+router.get('/admin/signin', adminController.getSigninPage);
+router.post(
+  '/admin/signin',
+  passport.authenticate('local', { failureRedirect: '/admin/signin' }),
+  adminController.signin,
+);
 
-
-
-module.exports = router
+module.exports = router;
