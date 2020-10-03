@@ -1067,6 +1067,7 @@ a:hover {
   resize: none !important;
   font-weight: 600;
   font-size: 19px;
+  padding-top: 15px;
 }
 
 .edit-item-name input:active,
@@ -1106,6 +1107,7 @@ a:hover {
   border-radius: 4px;
   font-size: 19px;
   background-color: #f5f8fa;
+  padding-top: 2rem;
 }
 
 /* follower頁面 */
