@@ -1,3 +1,4 @@
+{{#if user}}
 {{!-- 編輯modal --}}
 <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -16,19 +17,19 @@
         </div>
         <div class="edit-modal-body">
           <div class="edit-item-cover"
-            style="background: url(https://i.imgur.com/mP4m8UI.jpg);background-repeat:no-repeat;background-position: center;background-size: cover;">
+            style="background: url({{user.cover}});background-repeat:no-repeat;background-position: center;background-size: cover;">
             <label for="cover-upload"><i class="icon-photo cover"></i></label>
             <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button>
           </div>
           <div class="edit-item-avatar" class="rounded-circle"
-            style="background: url(https://i.imgur.com/mP4m8UI.jpg);background-position:center;background-size:cover;">
+            style="background: url({{user.avatar}});background-position:center;background-size:cover;">
             <label for="avatar-upload"><i class="icon-photo avatar"></i></label>
           </div>
           <div class="edit-item-name">
             <div class="item-name-top">
               <span class="item-name-top-mark">Name</span>
             </div>
-            <input type="text" value="nono">
+            <input type="text" value="{{user.name}}">
             <div class="item-name-bottom">
               <span>4/50</span>
             </div>
@@ -37,7 +38,7 @@
             <div class="item-text-top">
               <span class="item-text-top-mark">自我介紹</span>
             </div>
-            <textarea name="" id="" class="item-text-center" cols="30" rows="10"></textarea>
+            <textarea name="" id="" class="item-text-center" cols="30" rows="10">{{user.introduction}}</textarea>
             <div class="item-text-bottom">
               <span>1/160</span>
             </div>
@@ -126,3 +127,4 @@
       </div>
     </div>
   </div>
+  {{/if}}
