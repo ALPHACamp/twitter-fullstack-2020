@@ -1,7 +1,5 @@
 const db = require('../models')
-const User = db.User
-const Tweet = db.Tweet
-const pageLimit = 30
+const { User, Tweet, Like, Reply, Followship } = db
 
 
 const adminControllers = {
@@ -13,12 +11,12 @@ const adminControllers = {
       include: [{ model: User }]
     })
       .then(tweets => {
-        console.log(tweets)
+        // console.log(tweets)
         tweets = tweets.map(tweet => ({
           ...tweet,
           description: tweet.description.substring(0, 200),
         }))
-        console.log(tweets)
+        // console.log(tweets)
         return res.render('admin/tweets', { tweets })
       })
   },
@@ -30,7 +28,21 @@ const adminControllers = {
             res.redirect('/admin/tweets')
           })
       })
-  }
+  },
+  getUsers: (req, res) => {
+    return User.findAll({
+      nest: true,
+      include: [
+        { model: Like },
+        { model: Tweet },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ]
+    }).then(users => {
+      console.log(users[0])
+      res.render('admin/users', { users })
+    })
+  },
 }
 
 module.exports = adminControllers
