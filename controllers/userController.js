@@ -233,6 +233,65 @@ const userController = {
         tweetsCount: user.toJSON().Tweets.length
       })
     })
+  },
+  getUserFollowers: (req, res) => {
+    const reqUserId = req.params.userId
+    return User.findByPk(reqUserId, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' }
+      ]
+    }).then(users => {
+      const tweetsCount = users.toJSON().Tweets.length
+      const name = users.toJSON().name
+      users = users.Followers.map(r => ({
+        ...r.dataValues,
+        avatar: r.avatar,
+        account: r.account,
+        name: r.name,
+        introduction: r.introduction.substring(0, 160),
+        followshipCreatedAt: r.Followship.createdAt,
+        // 追蹤者人數
+        followerCount: users.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(r.id)
+      }))
+      // 排序
+      users = users.sort((a, b) => b.followshipCreatedAt - a.followshipCreatedAt)
+      return res.render('userFollowers', {
+        users: users,
+        name: name,
+        tweetsCount: tweetsCount
+      })
+    })
+  },
+  getUserFollowings: (req, res) => {
+    const reqUserId = req.params.userId
+    return User.findByPk(reqUserId, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followings' }
+      ]
+    }).then(users => {
+      const tweetsCount = users.toJSON().Tweets.length
+      const name = users.toJSON().name
+      users = users.Followings.map(r => ({
+        ...r.dataValues,
+        avatar: r.avatar,
+        account: r.account,
+        name: r.name,
+        introduction: r.introduction.substring(0, 160),
+        followshipCreatedAt: r.Followship.createdAt,
+        // 追蹤者人數
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(r.id)
+      }))
+      // 排序
+      users = users.sort((a, b) => b.followshipCreatedAt - a.followshipCreatedAt)
+      return res.render('userFollowings', {
+        users: users,
+        name: name,
+        tweetsCount: tweetsCount
+      })
+    })
   }
 }
 
