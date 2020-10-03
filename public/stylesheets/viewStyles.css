@@ -829,8 +829,8 @@ a:hover {
 
 /* 管理者首頁 */
 .admin-tweets-list {
-  grid-column-start: 2;
-  grid-column-end: 4;
+  grid-column-start: 3;
+  grid-column-end: 5;
 }
 
 .admin-tweets-title {
@@ -883,7 +883,7 @@ a:hover {
 
 /* 管理者使用者列表 */
 .admin-right-list {
-  grid-column-start: 2;
+  grid-column-start: 3;
   grid-column-end: 4;
   border: 1px solid #E6ECF0;;
 }
