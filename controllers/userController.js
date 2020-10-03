@@ -84,7 +84,8 @@ const userController = {
         // 使用者的追蹤者
         { model: User, as: "Followers" },
         // 使用者追蹤的人
-        { model: User, as: "Followings" }
+        { model: User, as: "Followings" },
+        { model: Tweet, as: 'LikedTweets' }
       ]
     })
       .then((user) => {
