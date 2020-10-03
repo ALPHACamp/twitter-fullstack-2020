@@ -619,8 +619,9 @@ a:hover {
   outline: 0px !important;
 }
 
-.reply-modal-textarea:focus, .reply-modal-textarea:active {
-  outline:0px !important;
+.reply-modal-textarea:focus,
+.reply-modal-textarea:active {
+  outline: 0px !important;
 }
 
 /* user profile */
@@ -748,6 +749,17 @@ a:hover {
   border-radius: 100px;
 }
 
+.user-action .btn-user-unfollow {
+  width: 92px;
+  height: 40px;
+
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  background-color: #ff6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+}
+
 .user-info .user-data {
   width: 600px;
   margin-top: 5px;
@@ -835,7 +847,7 @@ a:hover {
 
 .admin-tweets-title {
   height: 50px;
-  border: 1px solid #E6ECF0;
+  border: 1px solid #e6ecf0;
   line-height: 50px;
   font-size: 18px;
   font-weight: bold;
@@ -846,7 +858,7 @@ a:hover {
 .admin-list-item {
   display: flex;
   padding: 15px;
-  border: 1px solid #E6ECF0;
+  border: 1px solid #e6ecf0;
   justify-content: space-between;
 }
 
@@ -859,18 +871,18 @@ a:hover {
   font-size: 15px;
 }
 
-.list-name a{
+.list-name a {
   font-weight: bold;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
-.list-name span{
+.list-name span {
   font-weight: 500;
   color: #657786;
   margin-left: 5px;
 }
 
-.right-list-item  {
+.right-list-item {
   margin-left: 15px;
 }
 
@@ -885,19 +897,18 @@ a:hover {
 .admin-right-list {
   grid-column-start: 2;
   grid-column-end: 4;
-  border: 1px solid #E6ECF0;;
+  border: 1px solid #e6ecf0;
 }
 
 .admin-users-title {
   height: 50px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   line-height: 50px;
   font-size: 18px;
   font-weight: bold;
   padding-left: 13px;
   align-self: center;
 }
-
 
 .admin-users-list {
   display: inline-flex;
@@ -909,15 +920,14 @@ a:hover {
 .user-list-item {
   width: 225px;
   height: 300px;
-  background: #F6F7F8;
+  background: #f6f7f8;
   border-radius: 10px;
   margin-top: 15px;
   margin-left: 15px;
   position: relative;
 }
 
-
-.user-list-item-cover{
+.user-list-item-cover {
   height: 140px;
   border-radius: 10px 10px 0px 0px;
 }
@@ -926,7 +936,7 @@ a:hover {
   position: absolute;
   left: 66.5px;
   top: 65px;
-  border: 5px solid #FFFFFF;
+  border: 5px solid #ffffff;
 }
 
 .user-list-item-info {
@@ -936,31 +946,32 @@ a:hover {
   align-items: center;
 }
 
-.user-list-item-follow, .user-list-item-icons {
+.user-list-item-follow,
+.user-list-item-icons {
   display: flex;
   font-size: 14px;
   font-weight: 500;
 }
 
 .user-list-item-icons .reply-data,
- .user-list-item-icons .like-data{
+.user-list-item-icons .like-data {
   display: flex;
   align-items: center;
 }
 
-.user-list-item-info a{
+.user-list-item-info a {
   font-weight: 900;
   font-size: 20px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
-.user-list-item-follow span{
+.user-list-item-follow span {
   color: #657786;
 }
 
 /* edit-modal */
 .edit-modal-content {
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 14px !important;
   width: 600px;
   height: 650px;
@@ -985,15 +996,15 @@ a:hover {
   color: #ffff;
   width: 64px;
   height: 35px;
-  background: #FF6600;
+  background: #ff6600;
   border-radius: 100px;
 }
 
 .edit-item-cover {
   height: 200px;
   width: 600px;
-  border: 1px solid #E6ECF0;
-  background-color: #F5F8FA !important;
+  border: 1px solid #e6ecf0;
+  background-color: #f5f8fa !important;
 }
 
 .edit-item-cover:hover {
@@ -1020,8 +1031,8 @@ a:hover {
 }
 
 .edit-item-cover i,
-.edit-item-avatar i{
-  color: #FFFFFF;
+.edit-item-avatar i {
+  color: #ffffff;
   font-size: 20px;
 }
 
@@ -1046,14 +1057,14 @@ a:hover {
   padding: 0 15px 0 15px;
 }
 
-.edit-item-name input{
+.edit-item-name input {
   width: 570px;
   height: 60px;
-  background-color: #F5F8FA;
+  background-color: #f5f8fa;
   border-radius: 4px;
   border: none;
   border-bottom: 3px solid #657786;
-  resize: none !important; 
+  resize: none !important;
   font-weight: 600;
   font-size: 19px;
 }
@@ -1061,15 +1072,15 @@ a:hover {
 .edit-item-name input:active,
 .edit-item-name input:focus,
 .item-text-center:active,
-.item-text-center:focus{
+.item-text-center:focus {
   border: none;
-  resize: none !important; 
+  resize: none !important;
   outline: 0px !important;
   border-bottom: 3px solid #657786;
 }
 
 .item-name-top-mark,
-.item-text-top-mark{
+.item-text-top-mark {
   position: relative;
   top: 20px;
   font-size: 15px;
@@ -1090,18 +1101,17 @@ a:hover {
   height: 150px;
   border: none;
   border-bottom: 3px solid #657786;
-  resize: none !important; 
+  resize: none !important;
   font-weight: 600;
   border-radius: 4px;
   font-size: 19px;
-  background-color: #F5F8FA;
+  background-color: #f5f8fa;
 }
-
 
 /* follower頁面 */
 
 .follower-center {
-  border: 1px solid #E6ECF0;
+  border: 1px solid #e6ecf0;
 }
 
 .follower-title {
@@ -1133,10 +1143,10 @@ a:hover {
 .follow-nav {
   margin-top: 15px;
   width: 100%;
-  border-bottom: 2px solid #E5E5E5;
+  border-bottom: 2px solid #e5e5e5;
 }
 
-.follow-nav  a {
+.follow-nav a {
   display: flex;
   justify-content: center;
   font-weight: bold;
@@ -1145,11 +1155,10 @@ a:hover {
 }
 
 .follow-nav > .active {
-  border-bottom: 3px solid #FF6600 !important;
-  color: #FF6600 !important;
-  width: 130px; 
+  border-bottom: 3px solid #ff6600 !important;
+  color: #ff6600 !important;
+  width: 130px;
 }
-
 
 .user-page-nav {
   width: 100%;
@@ -1173,11 +1182,10 @@ a:hover {
 }
 
 .followship-content {
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   height: 110px;
   width: 600px;
   display: flex;
-
 }
 
 .followship-left {

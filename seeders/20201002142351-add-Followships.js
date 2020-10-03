@@ -1,5 +1,4 @@
 'use strict';
-const { randomNums } = require('../components/Util');
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {

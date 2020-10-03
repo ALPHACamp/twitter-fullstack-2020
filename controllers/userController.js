@@ -80,8 +80,8 @@ const userController = {
     let userId = req.params.id;
     return User.findByPk(userId, {
       include: [
-        Like,
-        { model: Tweet, include: Reply },
+        // Like,
+        { model: Tweet, include: [Reply, Like] },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
@@ -89,12 +89,11 @@ const userController = {
       // const targetUser = user.toJSON();
       const followings = req.user.Followings.map((u) => u.id);
       const followers = req.user.Followers.map((u) => u.id);
-      // console.log('followers:', followers);
-      // console.log('followings', followings);
+      console.log(user.toJSON().Tweets[0].Likes);
       return res.render('user', {
         user: user.toJSON(),
         self: req.user,
-        isFollowing: followings.includes(req.params.id),
+        isFollowing: followings.includes(Number(req.params.id)),
       });
     });
   },
