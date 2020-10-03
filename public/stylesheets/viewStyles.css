@@ -43,6 +43,8 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: fixed;
+  height: 100%;
 }
 
 .navbar-content {
@@ -77,6 +79,7 @@ a:hover {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
+  justify-self: end;
 }
 
 .navbar-footer a {
