@@ -15,6 +15,9 @@ module.exports = app => {
   app.get('/replylist/:id', authenticated, replyController.getReplylist)
   app.post('/replylist/:id', authenticated, replyController.postReply)
 
+app.post('/like/:id', authenticated, replyController.addLike)
+app.delete('/like/:id', authenticated, replyController.removeLike)
+
   // =====================admin====================================
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
