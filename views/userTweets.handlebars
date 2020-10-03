@@ -75,48 +75,93 @@
 		</form>
     {{/if}}
 	<ul class="nav nav-tabs">
-		<li class="nav-item">
-			<a class="nav-link active" href="/">推文</a>
+		<li class="active">
+			<a class="nav-link" href="#tweets" data-toggle="tab">推文</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="/">推文與回覆</a>
+			<a class="nav-link" href="#tweetreply" data-toggle="tab">推文與回覆</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+			<a class="nav-link" href="#tweetlike" data-toggle="tab">喜歡的內容</a>
 		</li>
 	</ul>
-	{{#each tweets}}
-		<div class="card mb-3" style="max-width: 900px;">
-			<div class="row no-gutters">
-				<div class="col-md-4">
-				<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
-				</div>
-				<div class="col-md-8">
-					<div class="card-body">
-						<h5 class="card-title">
-							<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-							<small class="text-muted">{{moment this.createdAt }}</small>
-						</h5>
-						<p class="card-text">
-						{{this.description}}
-						</p>
-						{{!-- like --}}
-						{{#if isLiked }}
-							<form action="/like/{{this.id}}?_method=DELETE" method="POST">
-									<button type="submit" class="fas fa-heart"></button>
-									({{this.LikeCount}})
-							</form>
-						{{else}}
-							<form action="/like/{{this.id}}" method="POST">
-									<button type="submit" class="far fa-heart"></button>
-									({{this.LikeCount}})
-							</form>
-						{{/if}}
+	<div class="tab-content"> 
+		{{!-- 推文 --}}
+		<div class="tab-pane active" id="tweets">
+		{{#each tweets}}
+			<div class="card mb-3" style="max-width: 900px;">
+				<div class="row no-gutters">
+					<div class="col-md-4">
+					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">
+								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+								<small class="text-muted">{{moment this.createdAt }}</small>
+							</h5>
+							<p class="card-text">
+							{{this.description}}
+							</p>
+							{{!-- like --}}
+							{{#if isLiked }}
+								<form action="/like/{{this.id}}?_method=DELETE" method="POST">
+										<button type="submit" class="fas fa-heart"></button>
+										({{this.LikeCount}})
+								</form>
+							{{else}}
+								<form action="/like/{{this.id}}" method="POST">
+										<button type="submit" class="far fa-heart"></button>
+										({{this.LikeCount}})
+								</form>
+							{{/if}}
+						</div>
 					</div>
 				</div>
 			</div>
+		{{/each}}
 		</div>
-	{{/each}}
+		{{!-- 推文與回覆 --}}
+		<div class="tab-pane" id="tweetreply">tweetreply</div>
+		{{!-- 喜歡的內容 --}}
+		<div class="tab-pane" id="tweetlike">
+			{{#each profile.LikedTweets}}
+			<div class="card mb-3" style="max-width: 900px;">
+				<div class="row no-gutters">
+					<div class="col-md-4">
+					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">
+								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+								<small class="text-muted">{{moment this.createdAt }}</small>
+							</h5>
+							<p class="card-text">
+							{{this.description}}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/each}}
+		</div>
+	</div>
+</div>
+{{!-- 右邊區域 --}}
+<div id="right">
+	<div class="col-md-7 column">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					推薦
+				</h3>
+			</div>
+			<div class="panel-body">
+				Panel content
+			</div>
+		</div>
+	</div>
 </div>
 {{!-- modal --}}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -188,18 +233,8 @@
   </div>
   </div>
 </div>
-{{!-- 右邊區域 --}}
-<div id="right">
-	<div class="col-md-7 column">
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				<h3 class="panel-title">
-					推薦
-				</h3>
-			</div>
-			<div class="panel-body">
-				Panel content
-			</div>
-		</div>
-	</div>
-</div>
+{{!-- 頁籤script --}}
+<script>
+    $(document).ready(function(){
+    });
+</script>
