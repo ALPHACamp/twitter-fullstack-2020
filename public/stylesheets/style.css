@@ -124,7 +124,7 @@ label {
   text-decoration: none;
 }
 
-.user-account ,.tweet-user-account{
+.user-account {
   font-weight: 700;
   font-size: 15px;
   color: #657786;
@@ -144,8 +144,9 @@ label {
 }
 
 .right-content {
-  right: 0;
   position: fixed;
+  right: 0;
+  top: 0;
 }
 
 .center-content {
@@ -317,28 +318,20 @@ label {
   width: 100px;
 }
 
-
-.tweet-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  }
-
 /* tweet users */
-.card-user{
-  margin-bottom: 5px;
-}
 
  .avatar{
   position: relative;
   width: 35%;
+  left: 10px;
   top: 3px;
   border-radius: 50%;
   border: 1px solid grey;
-  left: 80px;
-  top: 85px;
-  border: 4px solid #FFFFFF;
-  box-sizing: border-box;
+    left: 80px;
+    top: 85px;
+
+border: 4px solid #FFFFFF;
+box-sizing: border-box;
 }
 
 .cover {
@@ -380,9 +373,7 @@ border-radius: 10px;
 }
 
 .admin-user-followships {
-  margin-top: 55px;
-  left: 30px;
-  position: relative;
+  margin-top: 60px;
 }
 .admin-user-followships a {
   color:#000000;
@@ -390,19 +381,6 @@ border-radius: 10px;
   font-weight: bolder;
 
 }
-
-.tweet-user-info {
-  position: relative;
-  top: 50px;
-  left: 70px;
-}
-
-.tweet-user-account {
-  left: -10px;
-  position: relative;
-}
-
-
 /* userPage */
 .user-header {
   display: flex;
@@ -491,4 +469,75 @@ border-radius: 10px;
 .user-selection-bar a:hover {
   color: #FF6600;
   text-decoration: none;
+}
+
+/* tweet-main */
+#tweet-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 200px;
+  position: relative;
+  border: 1px solid #E6ECF0;
+}
+
+.tweet-title {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1C1C1C;
+}
+
+.head {
+  width: 650px;
+}
+
+.tweet-content {
+  height: 120px;
+  border: 1px solid #E6ECF0;
+  }
+
+.tweet-content-button {
+  width: 64px;
+  height: 40px;
+  left: 580px;
+  top: -70px;
+  background: #FF6600;
+  border-radius: 100px;
+  border: 1px solid #FF6600;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.tweet-comment textarea {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  height: 88px;
+  border: 0px;
+  position: relative;
+  left: 80px;
+  top: -40px;
+  width: 550px;
+}
+.tweet-user-info{
+  width: 100%;
+  position: relative;
+  left: 50px;
+}
+.tweet-user-info i {
+  margin-left: 5px;
+}
+
+.number {
+  font-size: 13px;
+  line-height: 13px;
+  color: #657786;
+  position: relative;
+  top: -3px;
+}
+
+.fa-cus-like{
+  margin-left: 30px;
+  margin-top: 10px;
 }
