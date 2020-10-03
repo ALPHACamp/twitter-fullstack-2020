@@ -1,10 +1,11 @@
-const adminController = require('../controllers/adminController.js')
-const userController = require('../controllers/userController.js')
+const userController = require('../controllers/userController')
+const adminController = require('../controllers/adminController')
+const tweetController = require('../controllers/tweetController')
 
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    if (req.isAuthenticated()) {  
       return next()
     }
     res.redirect('/signin')
@@ -12,14 +13,13 @@ module.exports = (app, passport) => {
 
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
-      if (req.user.isAmin) { return next() }
-      return res.redirect('/')
+      if (req.user.isAmin) { return next() }  
+      return res.redirect('/') 
     }
     res.redirect('/signin')
   }
-  app.get('/main', (req, res) => res.render('mainpage'))
-  app.get('/admin', (req, res) => res.redirect('/admin/main'))
-  app.get('/admin/main', adminController.getTweets)
+
+  //user login
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
@@ -30,6 +30,21 @@ module.exports = (app, passport) => {
   }), userController.signIn)
   app.get('/logout', userController.logout)
 
+
+
+  // adminController
+  app.get('/admin', (req, res) => { res.redirect('/admin/tweets') })
+  app.get('/admin/tweets', adminController.getTweets)
+  app.post('/admin/tweets/:id', adminController.deleteTweet)
+  app.get('/admin/users', adminController.getUsers)
+  app.get('/admin/signin', adminController.signinPage)
+  app.post('/admin/signin', adminController.signIn)
+
+
+  // tweetController
+app.get("/", (req, res) => res.redirect("/tweets"));
+app.get("/tweets", tweetController.getTweets);
+}
 
 
 
@@ -44,6 +59,5 @@ module.exports = (app, passport) => {
   app.put('/users/:id', userController.putUser)
 
 }
-
 
 
