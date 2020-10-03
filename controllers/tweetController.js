@@ -117,12 +117,11 @@ const tweetController = {
       })
 
        //Top 10 followers
-      User.findAndCountAll({
-        include: [{ model: User, as: 'Followers' }],
-        limit: 10
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
       })
       .then(users => {
-        users = users.rows.map(user => ({
+        users = users.map(user => ({
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(req.user.id)
         }))
