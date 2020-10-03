@@ -6,38 +6,45 @@
   </nav>
 
   <div class="center-content d-flex" id="tweet-content">
-
     <div class="head justify-content-between ">
-      <h5 class="tweet-title">推文</h5>
+      <h5 class="tweet-title">首頁</h5>
       <div class="tweet-content">
         <div class="tweet-avatar">
-          <img {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
-            style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+          <img class="ml-2 mt-2" {{#if user.avatar}}src={{user.avatar}}{{/if}}
+            style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
         </div>
-        <div class="tweet-comment">
-          <textarea rows="10" cols="30" placeholder="有什麼新鮮事？"></textarea>
-        </div>
-        <button type=" button" class="tweet-content-button">
-          推文
-        </button>
+        <form method="POST" action="/tweets">
+          <div class="tweet-comment">
+            <textarea name="description" id="description" rows="10" cols="30" placeholder="有什麼新鮮事？"></textarea>
+          </div>
+          <button type="submit" class="tweet-content-button">
+            推文
+          </button>
+        </form>
       </div>
       <div class="tweet-all">
-        {{!-- {{#each tweets}} --}}
-        <div>
-          <img {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
-            style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
-          <a class="user-name">APPLE</a>
-          <span class="user-account">@{{this.User.name}}．{{moment this.createdAt}}</span>
+        {{#each tweets}}
+        <div class="tweet-content-box" onclick="location.href='/tweets/{{this.id}}'">
+          <div class="tweet-content-left">
+            <a href="/users/{{this.User.id}}/tweets">
+              <img class="ml-2 mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+                style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+            </a>
+          </div>
+          <div class="tweet-content-right">
+            <div class="tweet-content-username">
+              <a href="/users/{{this.User.id}}/tweets" class="user-name">{{this.User.name}}</a>
+              <span class="user-account">@{{this.User.account}}．{{moment this.createdAt}}</span>
+            </div>
+            <div class="tweet-content-info">
+              <span class="tweet-content-description">{{this.description}}</span><br>
+              <i class="fas fa-cus-reply" aria-hidden="true"></i><span class="number">{{this.Replies.length}}</span>
+              <i class="fas fa-cus-like" aria-hidden="true"></i></i><span
+                class="number">{{this.LikedUsers.length}}</span>
+            </div>
+          </div>
         </div>
-        <div class="tweet-user-info">
-          <span>Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate
-            exercitation incididunt
-            aliquip deserunt reprehenderit elit laborum.{{this.description}}</span><br>
-          <i class="fas fa-cus-reply" aria-hidden="true"></i><span class="number">10K{{TweetsCount}}</span>
-          <i class="fas fa-cus-like" aria-hidden="true"></i></i><span class="number">1.5K{{LikesCount}}</span>
-
-        </div>
-        {{!-- {{/each}} --}}
+        {{/each}}
       </div>
     </div>
     <div class="right-content">
