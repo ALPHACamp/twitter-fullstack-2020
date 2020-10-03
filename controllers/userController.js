@@ -79,6 +79,9 @@ const userController = {
   getUser: (req, res) => {
     let userId = req.params.id;
     return User.findByPk(userId, {
+      where: {
+        isAdmin: false,
+      },
       include: [
         // Like,
         { model: Tweet, include: [Reply, Like] },
@@ -86,15 +89,20 @@ const userController = {
         { model: User, as: 'Followings' },
       ],
     }).then((user) => {
-      // const targetUser = user.toJSON();
-      const followings = req.user.Followings.map((u) => u.id);
-      const followers = req.user.Followers.map((u) => u.id);
-      //console.log(user.toJSON().Tweets[0].Likes);
-      return res.render('user', {
-        user: user.toJSON(),
-        self: req.user,
-        isFollowing: followings.includes(Number(req.params.id)),
-      });
+      if (user !== null) {
+        // const targetUser = user.toJSON();
+        const followings = req.user.Followings.map((u) => u.id);
+        const followers = req.user.Followers.map((u) => u.id);
+        //console.log(user.toJSON().Tweets[0].Likes);
+        return res.render('user', {
+          user: user.toJSON(),
+          self: req.user,
+          isFollowing: followings.includes(Number(req.params.id)),
+        });
+      } else {
+        req.flash('errorMessage', '使用者不存在');
+        res.redirect(`/users/${req.user.id}`);
+      }
     });
   },
   signup: (req, res) => {
