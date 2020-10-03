@@ -36,7 +36,7 @@ module.exports = (app, passport) => {
 
   // tweet首頁
   app.get('/tweets', authenticated, tweetController.getTweets)
-
+  app.get('/tweets/:id', authenticated, tweetController.getTweet)
   // 註冊頁
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

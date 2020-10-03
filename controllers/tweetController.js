@@ -32,10 +32,12 @@ const tweetController = {
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
+      console.log('tweet.Replies:', tweet.Replies.User)
       res.render('tweet', {
         tweet: tweet.toJSON(),
         isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
       })
+      // console.log(tweet)
     }).catch(err => console.log(err))
   },
   postTweet: (req, res) => {
