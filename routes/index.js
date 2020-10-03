@@ -20,6 +20,7 @@ module.exports = (app, passport) => {
   }
 
   //user login
+
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
   app.get('/signin', userController.signInPage)
@@ -28,7 +29,7 @@ module.exports = (app, passport) => {
     failureFlash: true
   }), userController.signIn)
   app.get('/logout', userController.logout)
-  app.get('/main', (req, res) => res.render('mainpage'))
+
 
 
   // adminController
@@ -47,50 +48,16 @@ app.get("/tweets", tweetController.getTweets);
 
 
 
-// const userController = require('../controllers/userController')
-// const adminController = require('../controllers/adminController')
-// module.exports = (app, passport) => {
-
-//   const authenticated = (req, res, next) => {
-//     if (req.isAuthenticated()) {  
-//       if (req.user.role === "1") { return next() }
-//       return res.redirect('/')
-//     }
-//     res.redirect('/signin')
-//   }
-
-//   const authenticatedAdmin = (req, res, next) => {
-//     if (req.isAuthenticated()) {
-//       if (req.user.role === "0") { return next() } 
-//       return res.redirect('/') 
-//     }
-//     res.redirect('/signin')
-//   }
-//   //user login
-//   app.get('/signup', userController.signUpPage)
-//   app.post('/signup', userController.signUp)
-//   app.get('/signin', userController.signInPage)
-//   app.post('/signin', passport.authenticate('local', {
-//     failureRedirect: '/signin',
-//     failureFlash: true
-//   }), userController.signIn)
-//   app.get('/main', (req, res) => res.render('mainpage'))
-//   app.get('/main', authenticated, (req, res) => res.render('mainpage'))
+  // setting使用者能編輯自己的 account、name、email 和 password
+  app.get('/setting', userController.getSetting)
+  app.put('/setting', userController.putSetting)
 
 
-//   // adminController
-  
-//   app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/tweets') })
-//   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-//   app.post('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+  // 使用者能編輯自己的自我介紹、個人頭像與封面
+  app.get('/user/self', userController.getUser)
+  app.get('/user/self/edit', userController.editUser)
+  app.put('/users/:id', userController.putUser)
 
-//   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+}
 
-//   app.get('/admin/signin', adminController.signinPage)
-//   app.post('/admin/signin', passport.authenticate('local', {
-//     failureRedirect: '/signin',
-//     failureFlash: true
-//   }), adminController.signIn)
-//   app.get('/logout', userController.logout)
 
-// } 
