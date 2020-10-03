@@ -5,7 +5,43 @@
     </div>
   </nav>
 
-  <table class="table">
+  <div style="width: 100%">
+    <div class="admin-title">
+      推文清單
+    </div>
+    <div>
+      <table class="table">
+        <tbody>
+          {{#each tweets}}
+          <tr>
+            <td style="width: 80px">
+              <img {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}>
+            </td>
+            <td>
+              <div>
+                <a class="user-name">{{this.User.name}}</a>
+                <span class="user-account">@{{this.User.name}}．{{moment this.createdAt}}</span>
+              </div>
+              <div>{{this.description}}</div>
+            </td>
+            <td>
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;"
+                onsubmit="return confirm('確定要刪除推文？')">
+                <button type="submit" class="btn btn-link">
+                  <div class="icon-div">
+                    <i class="fas fa-cus-close"></i>
+                  </div>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {{!-- <table class="table">
     <thead>
       <tr>
         <th colspan="3">推文清單</th>
@@ -37,6 +73,6 @@
       </tr>
       {{/each}}
     </tbody>
-  </table>
+  </table> --}}
 
 </div>
