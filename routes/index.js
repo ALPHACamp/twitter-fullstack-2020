@@ -35,18 +35,16 @@ module.exports = (app, passport) => {
   // adminController
   app.get('/admin', (req, res) => { res.redirect('/admin/tweets') })
   app.get('/admin/tweets', adminController.getTweets)
-  app.post('/admin/tweets/:id', adminController.deleteTweet)
+  app.delete('/admin/tweets/:id', adminController.deleteTweet)
   app.get('/admin/users', adminController.getUsers)
   app.get('/admin/signin', adminController.signinPage)
   app.post('/admin/signin', adminController.signIn)
 
 
   // tweetController
-app.get("/", (req, res) => res.redirect("/tweets"));
-app.get("/tweets", tweetController.getTweets);
-}
-
-
+app.get("/", (req, res) => res.redirect("/tweets"))
+app.get("/tweets", tweetController.getTweets)
+app.get("/tweets/:id", tweetController.getTweet);
 
   // setting使用者能編輯自己的 account、name、email 和 password
   app.get('/setting', userController.getSetting)
@@ -57,7 +55,11 @@ app.get("/tweets", tweetController.getTweets);
   app.get('/user/self', userController.getUser)
   app.get('/user/self/edit', userController.editUser)
   app.put('/users/:id', userController.putUser)
-
 }
+
+
+
+
+
 
 
