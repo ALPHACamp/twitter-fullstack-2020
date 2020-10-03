@@ -32,6 +32,25 @@ const adminController = {
   signin: (req, res) => {
     return res.redirect('/admin/tweets')
   },
+
+  deleteTweet: (req, res) => {
+    Tweet.findByPk(req.params.tweetId)
+      .then(tweet => {
+        tweet.destroy()
+          .then(() => {
+            req.flash('successMessage', '成功刪除~');
+            return res.redirect('back')
+          })
+          .catch(() => {
+            req.flash('errorMessage', 'ERROR #A101');
+            return res.redirect('back')
+           })
+      })
+      .catch(() => {
+        req.flash('errorMessage', 'ERROR #A102');
+        return res.redirect('back')
+       })
+  },
 }
 
 module.exports = adminController

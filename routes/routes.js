@@ -56,5 +56,6 @@ router.post(
   passport.authenticate('local', { failureRedirect: '/admin/signin' }),
   adminController.signin,
 );
+router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.deleteTweet)
 
 module.exports = router;
