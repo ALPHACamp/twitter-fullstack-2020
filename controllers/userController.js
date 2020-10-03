@@ -84,7 +84,11 @@ const userController = {
       },
       include: [
         // Like,
-        { model: Tweet, include: [Reply, Like] },
+        {
+          model: Tweet,
+          include: [Reply, Like],
+          order: [['updatedAt', 'DESC']],
+        },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
