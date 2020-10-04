@@ -35,11 +35,23 @@ module.exports = (app, passport) => {
     userController.signIn
   );
   app.get("/logout", userController.logout);
+<<<<<<< HEAD
 
   app.get("/setting", userController.getSetting);
   app.put("/setting", userController.putSetting)
 
 
+=======
+  // app.get("/main", (req, res) => res.render("mainpage"));
+
+  //userController
+  app.get('/users/:id', authenticated, userController.getUser)  
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.post("/like/:id",authenticated, userController.addLike);
+  app.delete("/unlike/:id",authenticated, userController.removeLike);
+  
+>>>>>>> 9c068e27e81eb24a89551dc3c93179ea140686d6
   // adminController
   app.get("/admin", (req, res) => {
     res.redirect("/admin/tweets");
@@ -51,6 +63,7 @@ module.exports = (app, passport) => {
   app.get("/signup", userController.signUpPage);
   app.post("/signup", userController.signUp);
   app.get("/signin", userController.signIn);
+<<<<<<< HEAD
 
 
   //tweetController
@@ -62,6 +75,18 @@ module.exports = (app, passport) => {
 
   app.post("/tweets/:id/like", authenticated, tweetController.addLike);
   app.delete("/tweets/:id/unlike", authenticated, tweetController.removeLike);
+=======
+  
+  //tweetController
+  app.get("/main", (req, res) => res.redirect("/tweets"));
+  app.get("/tweets",authenticated, tweetController.getTweets);
+  app.get("/tweets/:id",authenticated, tweetController.getTweet);
+  app.post('/tweets/:id',authenticated, tweetController.postTweet)
+
+
+  app.post('/tweets/:id/replies',authenticated, tweetController.postReply)
+  app.get('/tweets/:id/replies',authenticated, tweetController.getReply)
+>>>>>>> 9c068e27e81eb24a89551dc3c93179ea140686d6
 
   app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
   app.get('/tweets/:id/replies', authenticated, tweetController.getReply)

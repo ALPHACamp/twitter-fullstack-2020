@@ -8,6 +8,7 @@ const db = require('./models')
 const methodOverride = require('method-override')
 
 const passport = require('./config/passport')
+const methodOverride = require("method-override");
 
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -17,7 +18,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 app.engine('handlebars', handlebars({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
-app.use(bodyParser.json())
+
+app.use(methodOverride("_method"));
+
 
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
@@ -35,6 +38,10 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
+
+
+// use helpers.getUser(req) to replace req.user
+// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 //使用public 資料夾
 app.use(express.static('public'))
