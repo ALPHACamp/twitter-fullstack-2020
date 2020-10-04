@@ -1,29 +1,10 @@
-<<<<<<< HEAD
-<div class="col-md-9 pl-0 border-left">
-=======
-
 <div class="col-md-9 pl-0 border-left">
 
->>>>>>> 43fde70f6b49316d0e915b6e4da803a4bb93bdbd
   <div class="main">
     <div class="header"
       style="width: 600px;height: 55px;left: 378px;top: -1px;background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;">
       首頁</div>
     <div class="body">
-<<<<<<< HEAD
-      <div class="row">
-        <a href="/tweets/{{user.dataValues.id}}">
-          <img src="{{user.dataValues.avatar}}" alt="avatar">
-        </a>
-        <form method="POST" action="/tweets">
-          <textarea name="description" cols="30" rows="5"
-            style="position: absolute;width: 600px;height: 120px;left: 378px;top: 53px;background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
-            placeholder="有什麼新鮮事"></textarea>
-          <button type="submit"
-            style="position: absolute;width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;"><span
-              style="color: #FFFFFF;">推文</span></button>
-        </form>
-=======
       <div class="body-avatar d-flex align-items-stretch">
         <div class="right">
           <a href="/tweets/{{user.dataValues.id}}">
@@ -44,40 +25,25 @@
         </div>
       </div>
       <div class="divider" style="width: 600px;height: 10px;left: 378px;top: 173px;background: #E6ECF0;">
->>>>>>> 43fde70f6b49316d0e915b6e4da803a4bb93bdbd
       </div>
 
     </div>
     <div class="col">
       <div class="tweet-list" style="width: 600px;height: 136px;left: 0px;top: 0px;">
         {{#each tweets}}
-<<<<<<< HEAD
-        <div class="tweet border-bottom">
-          <div class="tweet-item">
-            <div class="tweet-left">
-              <a href="#" style="background: #C4C4C4;">
-                <img src="{{this.User.dataValues.avatar}}"
-                  style="background: url(),#C4C4C4;background-position:center;background-size:cover;">
-
-=======
         <div class="tweet">
           <div class="tweet-item-left d-flex align-items-stretch">
             <div class="tweet-left d-flex align-items-stretch">
               <a href="#">
                 <img src="{{this.User.dataValues.avatar}}" class="rounded-circle"
                   style="background-size:cover; width: 50px;height: 50px;">
->>>>>>> 43fde70f6b49316d0e915b6e4da803a4bb93bdbd
               </a>
             </div>
             <div class="tweet-item-right  ml-3">
               <div class="tweet-item-title">
                 <span class="mt-1"><a href="#">{{this.User.dataValues.name}}</a></span>
                 <span class="user-account">
-<<<<<<< HEAD
-                  {{this.User.dataValues.account}}．{{moment this.createdAt}}
-=======
                   {{this.User.dataValues.account}}．{{moment User.dataValues.createdAt}}
->>>>>>> 43fde70f6b49316d0e915b6e4da803a4bb93bdbd
                 </span>
 
               </div>
@@ -86,17 +52,10 @@
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-          <div class="tweet-footer">
-
-
-            <button type="button" class="btn reply-link pt-1">
-=======
           <div class="tweet-footer ml-5">
             <!-- Button trigger modal -->
             <button type="button" class="mt-4 mb-4" data-toggle="modal" data-target="#replyModal"
               style="background: none;border: none;">
->>>>>>> 43fde70f6b49316d0e915b6e4da803a4bb93bdbd
               <i class="far fa-comment"></i> {{this.Replies.length}}
             </button>
             <!-- Modal -->
@@ -138,22 +97,11 @@
 
 
             {{#if isLiked}}
-<<<<<<< HEAD
-            <button type="button" class="btn reply-link pt-1">
-              <i class="fas fa-heart"></i> {{this.LikedUsers.length}}
-            </button>
-            {{else}}
-            <button type="button" class="btn reply-link pt-1">
-              <i class="far fa-heart"></i> {{this.LikedUsers.length}}
-            </button>
-            {{/if}}
-=======
             <form action="/tweets/{{this.User.dataValues.id}}/unlike" method="POST" style="display:inline;">
               <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
                 <i class="far fa-heart"></i>
                 {{else}}
                 <form action="/tweets/{{this.User.dataValues.id}}/like" method="POST" style="display:inline; ">
->>>>>>> 43fde70f6b49316d0e915b6e4da803a4bb93bdbd
 
                   <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
                     <i class="fas fa-heart"></i>

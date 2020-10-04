@@ -3,6 +3,8 @@ const { Sequelize } = require('../models')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const FollowShip = db.FollowShip
+const helpers = require('../_helpers.js')
 
 const Op = Sequelize.Op
 
@@ -56,40 +58,63 @@ const userController = {
     res.redirect('/signin')
   },
 
-  getFollower: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        Tweet,
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
+  addFollowing: (req, res) => {
+    // if (helpers.getUser(req).id === Number(req.params.userId)) {
+    //   res.flash('error_messages', '不能追隨自己')
+    //   return res.redirect('back')
+    // }
+    return FollowShip.create({
+      followerId: helpers.getUser(req).id,
+      followingId: req.params.userId
     })
-      .then(user => {
-        // console.log(user)
-        return res.render('follower', { user })
+      .then(followship => {
+        return res.redirect('back')
       })
   },
+
+  removeFollowing: (req, res) => {
+    return FollowShip.findOne({
+      where: { followerId: helpers.getUser(req).id, followingId: req.params.userId }
+    })
+      .then(followship => {
+        followship.destroy()
+          .then(followship => {
+            return res.redirect('back')
+          })
+      })
+  },
+
+  getFollower: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followers' }]
+    })
+      .then(user => {
+        const followerList = user.Followers.map(user => ({
+          ...user.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+        }))
+        // console.log(followerList)
+        return res.render('follower', { user, followerList })
+      })
+  },
+
 
   getFollowing: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
-        { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }]
     })
       .then(user => {
-        return Tweet.findAll({
-          include: User,
-          where: { UserId: req.params.id },
-          order: [['createdAt', 'DESC']]
-        })
-          .then(tweets => {
-            console.log(user)
-            console.log("****----------------******* -------------********------------------*******")
-            console.log(tweets)
-            return res.render('following', { user, tweets })
-          })
+        const followingList = user.Followings.map(user => ({
+          ...user.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+        }))
+        return res.render('following', { user, followingList })
       })
   },
+
+
 
   getUser: (req, res) => {
     User.findByPk(req.params.id, {

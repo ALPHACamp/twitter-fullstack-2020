@@ -16,38 +16,25 @@
         style="color:#FF6600;border-bottom:2px solid #FF6600;">正在跟隨</h5>
     </a>
   </div>
-  {{#each tweets}}
+  {{#each followingList}}
   <div class="row border-bottom">
     <div class="avatar col-2 mt-3">
-      <img src="{{this.User.dataValues.avatar}}" alt="avatar" class="border rounded-circle" style="max-width: 90%">
+      <img src="{{this.dataValues.avatar}}" alt="avatar" class="border rounded-circle" style="max-width: 90%">
     </div>
     <div class="col mt-3">
       <div class="font-weight-bold"></div>
-      <div style="color:gray">{{this.User.dataValues.account}}</div>
-      <p style="word-break:break-all; word-wrap:break-all;">{{this.dataValues.description}}</p>
+      <div style="color:gray">{{this.dataValues.account}}</div>
+      <p style="word-break:break-all; word-wrap:break-all;">{{this.dataValues.introduction}}</p>
     </div>
-    <form action="" method="POST">
+    {{#if this.isFollowed}}
+    <form action="/followship/{{this.dataValues.id}}?_method=DELETE" method="POST">
       <button type="submit" class="followship-following-btn mt-2 mr-2">正在跟隨</button>
     </form>
-  </div>
-  {{/each}}
-
-  <div class="row border-bottom">
-    <div class="avatar col-2 mt-3">
-      <img src="https://s3.amazonaws.com/uifaces/faces/twitter/cloudstudio/128.jpg" alt="avatar"
-        class="border rounded-circle" style="max-width: 90%">
-    </div>
-    <div class="col mt-3">
-      <div class="font-weight-bold">user2</div>
-      <div style="color:gray">@user2</div>
-      <p style="word-break:break-all; word-wrap:break-all;">
-        waeo;ifrnwea;otfhngweao;ftjaw;oijtf;owajfwesfweou;hrfwaol;efhwiolwo;aifjroigjhew49roi7hgol</p>
-    </div>
-    <form action="" method="POST">
+    {{else}}
+    <form action="/followship/{{this.dataValues.id}}" method="POST">
       <button type="submit" class="followship-follower-btn mt-2 mr-2">跟隨</button>
     </form>
+    {{/if}}
   </div>
-
-
-
+  {{/each}}
 </div>
