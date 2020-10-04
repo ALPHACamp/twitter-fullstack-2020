@@ -41,10 +41,10 @@ const tweetController = {
         .catch(error => console.log(error))
       },
 
-      postTweet: (req,res) => {
+      createTweet: (req,res) => {
         if (!req.body.description){
           req.flash('error_message', "it can't be blank.")
-          return res.redirect('back')
+          return res.redirect('/')
         }
         if (req.body.description.length > 140) {
           req.flash('error_message', "it can't be longer than 140 characters.")
