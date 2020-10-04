@@ -112,7 +112,7 @@ const userController = {
       // ], order: [[LikedTweets, 'createdAt', 'DESC']]
     }).then(user => {
       // console.log(user.dataValues)
-      console.log(user)
+      console.log(user.dataValues)
       const pageUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
       pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)

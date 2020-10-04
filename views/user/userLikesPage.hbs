@@ -77,7 +77,7 @@
         </ul>
       </div>
       <div class="tweet-all">
-        {{#each users}}
+        {{#each users.Likes}}
         <div class="tweet-content-box" onclick="location.href='/tweets/{{../this.id}}'">
           <div class="tweet-content-left">
             <a href="/users/{{../this.id}}/tweets">
@@ -87,11 +87,11 @@
           </div>
           <div class="tweet-content-right">
             <div class="tweet-content-username">
-              <a href="/users/{{../user.id}}/tweets" class="user-name">{{../user.UserId}}</a>
-              <span class="user-account">@{{this.account}}．{{moment ../user.createdAt}}</span>
+              <a href="/users/{{../user.id}}/tweets" class="user-name">fake{{../user.UserId}}</a>
+              <span class="user-account">@fake{{../users.LikedUsers}}．fake{{moment ../user.createdAt}}</span>
             </div>
             <div class="tweet-content-info">
-              <span class="tweet-content-description">{{this.description}}</span><br>
+              <span class="tweet-content-description">fake{{../Tweets.description}}</span><br>
             </div>
             <div class="tweet-content-bottom">
               {{!-- reply icon --}}
