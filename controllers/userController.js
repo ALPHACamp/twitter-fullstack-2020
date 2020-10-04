@@ -10,14 +10,14 @@ const userController = {
   },
 
   register: (req, res) => {
-    const { account, name, email, password, passwordCheck } = req.body
+    const { account, name, email, password, checkPassword } = req.body
 
     const errors = []
 
-    if (!account || !name || !email || !password || !passwordCheck) {
+    if (!account || !name || !email || !password || !checkPassword) {
       errors.push({ message: '所有欄位都是必填。' })
     }
-    if (password !== passwordCheck) {
+    if (password !== checkPassword) {
       errors.push({ message: '密碼與確認密碼不相符！' })
     }
     if (errors.length) {
@@ -27,7 +27,7 @@ const userController = {
         name,
         email,
         password,
-        passwordCheck
+        checkPassword
       })
     }
 
@@ -50,7 +50,7 @@ const userController = {
           email,
           password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         }).then(user => {
-          return res.redirect('/tweets')
+          return res.redirect('/signin')
         })
       })
   },
@@ -85,7 +85,7 @@ const userController = {
         { model: User, as: "Followers" },
         // 使用者追蹤的人
         { model: User, as: "Followings" },
-        { model: Tweet, as: 'LikedTweets',include: [ User]}
+        { model: Tweet, as: 'LikedTweets', include: [User] }
       ]
     })
       .then((user) => {
@@ -103,11 +103,11 @@ const userController = {
           ReplyCount: tweet.dataValues.Replies.length,
           isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
         }))
-/*         console.log(user)
-        console.log("=====================")
-        console.log(user.LikedTweets)
-        console.log("=====================")
-        console.log(user.LikedTweets[0].User) */
+        /*         console.log(user)
+                console.log("=====================")
+                console.log(user.LikedTweets)
+                console.log("=====================")
+                console.log(user.LikedTweets[0].User) */
         res.render('userTweets', { profile: user, tweets })
       })
   },
@@ -127,14 +127,14 @@ const userController = {
     }
   },
   putSetting: async (req, res) => {
-    const { account, name, email, password, passwordCheck } = req.body
+    const { account, name, email, password, checkPassword } = req.body
 
     const errors = []
 
-    if (!account || !name || !email || !password || !passwordCheck) {
+    if (!account || !name || !email || !password || !checkPassword) {
       errors.push({ message: '所有欄位都是必填。' })
     }
-    if (password !== passwordCheck) {
+    if (password !== checkPassword) {
       errors.push({ message: '密碼與確認密碼不相符！' })
     }
     if (errors.length) {
@@ -144,7 +144,7 @@ const userController = {
         name,
         email,
         password,
-        passwordCheck,
+        checkPassword,
         css: 'settingPage'
       })
     }
@@ -168,7 +168,7 @@ const userController = {
           name,
           email,
           password,
-          passwordCheck,
+          checkPassword,
           errors,
           css: 'settingPage'
         })
@@ -179,7 +179,7 @@ const userController = {
         name,
         email,
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
-        passwordCheck
+        checkPassword
       })
       req.flash('success_messages', 'setting was successfully to update')
       return res.redirect(`/setting/${user.id}`)
