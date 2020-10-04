@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'ReplyId',
       useJunctionTable: false,
     });
+    Reply.belongsToMany(models.User, {
+      through: models.Like,
+      foreignKey: 'PositionId',
+      as: 'LikedByUsers',
+    });
   };
   return Reply;
 };

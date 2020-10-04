@@ -86,45 +86,8 @@ const userController = {
   getUser: (req, res) => {
     let userId = req.params.id;
     return res.redirect(`/users/${userId}/tweets`);
-    // return User.findByPk(userId, {
-    //   include: [
-    //     {
-    //       model: Tweet,
-    //       include: [Reply, Like],
-    //       order: [['updatedAt', 'DESC']],
-    //     },
-    //     { model: User, as: 'Followers' },
-    //     { model: User, as: 'Followings' },
-    //   ],
-    // }).then((user) => {
-    //   if (user !== null && user.isAdmin === false) {
-    //     return res.redirect(`/users/${req.params.id}/tweets`);
-    // const targetUser = user.toJSON();
-    // const followings = helpers.getUser(req).Followings.map((u) => u.id);
-    // const followers = helpers.getUser(req).Followers.map((u) => u.id);
-
-    // const data = user.toJSON();
-    // let Tweets = data.Tweets;
-    // Tweets = Tweets.map((t) => {
-    //   if (t.Likes.length > 0) {
-    //     let likeIds = t.Likes.map((l) => l.UserId);
-    //     t.isLikeBySelf = likeIds.includes(helpers.getUser(req).id);
-    //   } else {
-    //     t.isLikeBySelf = false;
-    //   }
-    //   return t;
-    // });
-    // return res.render('user', {
-    //   user: helpers.getUser(req),
-    //   visitUser: data,
-    //   isFollowing: followings.includes(Number(req.params.id)),
-    // });
-    // } else {
-    //   req.flash('errorMessage', '使用者不存在');
-    //   return res.redirect(`/users/${helpers.getUser(req).id}/tweets`);
-    // }
   },
-  getTweets: (req, res) => {
+  getTweetsPage: (req, res) => {
     let userId = req.params.id;
     return User.findByPk(userId, {
       include: [
@@ -140,7 +103,7 @@ const userController = {
       if (user !== null && user.isAdmin === false) {
         // const targetUser = user.toJSON();
         const followings = helpers.getUser(req).Followings.map((u) => u.id);
-        const followers = helpers.getUser(req).Followers.map((u) => u.id);
+        //const followers = helpers.getUser(req).Followers.map((u) => u.id);
 
         const data = user.toJSON();
         let Tweets = data.Tweets;
@@ -163,6 +126,59 @@ const userController = {
         res.redirect(`/users/${helpers.getUser(req).id}`);
       }
     });
+  },
+  getLikesPage: (req, res) => {
+    let UserId = req.params.id;
+    return User.findByPk(UserId, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        {
+          model: Tweet,
+          as: 'LikeTweets',
+          include: [User, Reply, { model: User, as: 'LikedByUsers' }],
+        },
+      ],
+      order: [['LikeTweets', 'updatedAt', 'DESC']],
+    }).then((visitUser) => {
+      const followings = helpers.getUser(req).Followings.map((u) => u.id);
+      const likes = helpers.getUser(req).Likes
+        ? helpers
+            .getUser(req)
+            .Likes.filter((u) => u.Position === 'tweet')
+            .map((t) => t.PositionId)
+        : [];
+
+      //console.log(likes);
+      visitUser.dataValues.LikeTweets.forEach((lt) => {
+        //console.log('before @@@', lt.dataValues.LikedByUsers);
+        lt.dataValues.isLikeBySelf = likes.includes(lt.id);
+        //console.log('before @@@', lt);
+      });
+      let isFollowing = followings.includes(UserId);
+
+      return res.render('user-like', {
+        user: helpers.getUser(req),
+        isFollowing,
+        visitUser,
+      });
+    });
+
+    //Like.findAll({where:{UserId,Position:'tweet'}},attribute:[])
+    // return User.findByPk(userId, {
+    //   include: [
+    //     Tweet,
+    //     {
+    //       model: Tweet,
+    //       as:'LikedTweets',
+    //       include: [User, Reply],
+    //       order: [['updatedAt', 'DESC']],
+    //     },
+    //     { model: User, as: 'Followers' },
+    //     { model: User, as: 'Followings' },
+    //   ],
+    // });
   },
   getFollowersPage: (req, res) => {
     return res.render('follower');
