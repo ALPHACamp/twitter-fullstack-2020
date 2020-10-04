@@ -75,31 +75,6 @@ const tweetController = {
       .catch(error => console.log(error))
   },
 
-  addLike: (req, res) => {
-    return Like.create({
-      UserId: helpers.getUser(req).id,
-      TweetId: req.params.id
-    }).then((like) => {
-      return res.redirect('back')
-    })
-      .catch(error => console.log(error))
-  },
-
-  removeLike: (req, res) => {
-    Like.findOne({
-      where: {
-        UserId: helpers.getUser(req).id,
-        TweetId: req.params.id
-      }
-    }).then((like) => {
-      like.destroy()
-        .then(tweet => {
-          return res.redirect('back')
-        })
-    })
-      .catch(error => console.log(error))
-  },
-
   getReply: (req, res) => {
     return Tweet.findByPk(req.params.id,
       {

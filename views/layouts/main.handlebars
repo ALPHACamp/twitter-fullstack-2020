@@ -74,8 +74,36 @@
               </div>
               </br>
               <div class="d-flex">
-                <div class="name" name="name">
-                  <a class=" nav-link btn btn-lg btn-block sign-button text-light" href="/"> 推文</a>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="mt-4 mb-4 btn" data-toggle="modal" data-target="#tweetModal"
+                  style="background: #FF6600;border-radius: 50px;">
+                  <span style="color: #FFFFFF;">推文</span></button>
+                <!-- Modal -->
+                <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+
+                      </div>
+                      <div class="modal-title">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="left" class="d-flex">
+                          <form method="POST" action="/tweets/{{user.dataValues.id}}">
+                            <textarea name="description" cols="55" rows="5"
+                              style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+                              placeholder="有什麼新鮮事"></textarea>
+                            <button type="submit"
+                              style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+                              <span style="color: #FFFFFF;">推文</span></button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               {{/if}}
