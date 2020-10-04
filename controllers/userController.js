@@ -3,6 +3,10 @@ const { Sequelize } = require('../models')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const Reply = db.Reply
+const Followship = db.Followship
+const Like = db.Like
+const helpers = require('../_helpers')
 
 const Op = Sequelize.Op
 
@@ -71,9 +75,59 @@ const userController = {
         isLiked: isLiked, 
         userSelf:userSelf})
     })
-  }
-  
-  
+  },
+
+  addFollowing: (req, res) => {
+    return Followship.create({
+      followerId: helpers.getUser(req).id, 
+      followingId: req.params.userId
+    })
+    .then((followship)  => {
+      return res.redirect('back')
+    })
+  },
+
+  removeFollowing: (req, res) => {
+    return Followship.findOne({where: {
+      followerId: helpers.getUser(req).id, 
+      followingId: req.params.userId
+    }})
+    .then((followship) => {
+      followship.destroy()
+        .then((followship) => {
+          return res.redirect('back')
+        })
+    })
+  },
+
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id, 
+      TweetId: req.params.id
+    }).then((like) => {
+      return res.redirect('back') 
+    })
+    .catch(error => console.log(error))
+  },
+
+  removeLike: (req, res) => {
+    Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id, 
+        TweetId: req.params.id
+      }
+    }).then(like => {
+      like.destroy()
+        .then(tweet => {
+          return res.redirect('back')
+        })
+    })
+    .catch(error => console.log(error))
+  },
+
+
+
+
 
 
 }
