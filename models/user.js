@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     isAdmin: DataTypes.BOOLEAN
   }, {});
   User.associate = function(models) {
+    User.hasMany(models.Reply)
     User.hasMany(models.Tweet);
     User.hasMany(models.Reply);
     User.belongsToMany(models.Tweet, {
@@ -27,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Followship,
       foreignKey: 'followingId',
       as: 'Followers'
+<<<<<<< HEAD
     });
+=======
+    })
+>>>>>>> origin/master
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followerId',
