@@ -107,9 +107,10 @@
           </div>
           <div class="reply-modal-body">
             <div class="reply-modal-tweet d-flex">
-              <div class="tweet-content-left">
-                <img class="ml-2 mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
-                  style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+              <div class="tweet-content-left d-flex flex-column align-items-center">
+                <img class="mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
+                  style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px; margin-left:15px">
+                <div class="extension-line"></div>
               </div>
               <div class="tweet-content-right">
                 <div class="tweet-content-username">
@@ -119,11 +120,11 @@
                 <div class="tweet-content-info">
                   <span class="tweet-content-description">{{tweet.description}}</span><br>
                   <span class="reply-account">回覆@</span><span
-                    class="reply-tweet-account">{{tweet.User.account}}</span><br>
+                    class="reply-tweet-account">{{tweet.User.account}}</span><br><br>
                 </div>
               </div>
             </div>
-            <div class="reply-modal-reply">
+            <div class="reply-modal-reply" style="padding-top: 3px">
               <img {{#if user.avatar}}src={{user.avatar}}{{/if}}
                 style=" background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
               <form method="POST" action="/tweets/{{tweet.id}}/replies">
