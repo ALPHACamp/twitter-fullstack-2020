@@ -186,6 +186,11 @@ const userController = {
   getFollowingsPage: (req, res) => {
     return res.render('following');
   },
+  signout: (req, res) => {
+    req.flash('successMessage', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
+  },
   signup: (req, res) => {
     Object.keys(req.body).forEach((d) => (req.body[d] = req.body[d].trim()));
     const { account, name, email, password, checkPassword } = req.body;

@@ -5,6 +5,8 @@ const User = db.User;
 const Like = db.Like;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
+const { Op } = require('sequelize');
+const helpers = require('../_helpers');
 
 
 const adminController = {
@@ -29,6 +31,22 @@ const adminController = {
     // })
   },
 
+  getUsers: (req, res) => {
+    User.findAll({
+      include: [
+        Like, Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      // where: { account: { [Op.ne]: helpers.getUser(req).account } }
+    })
+      .then(user => {
+        let userFilter = user.filter(user => user.dataValues.account !== 'root')
+        userFilter = userFilter.sort((a, b) => b.dataValues.Tweets.length - a.dataValues.Tweets.length)
+        res.render('admin/users', { userByFind: userFilter })
+      })
+  },
+
   signin: (req, res) => {
     return res.redirect('/admin/tweets')
   },
@@ -44,12 +62,12 @@ const adminController = {
           .catch(() => {
             req.flash('errorMessage', 'ERROR #A101');
             return res.redirect('back')
-           })
+          })
       })
       .catch(() => {
         req.flash('errorMessage', 'ERROR #A102');
         return res.redirect('back')
-       })
+      })
   },
 }
 
