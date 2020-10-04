@@ -717,26 +717,34 @@ label {
   top: 5px;
   font-weight: 500;
   line-height: 40px;
-  border: 1px solid #E6ECF0;
-  width:100%;
+  border-top: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
+  width: 100%;
+  padding: 8px 3px;
 }
 
 .reply-number, .like-number {
   font-weight: bolder;
-  font-size: 13px;
-  line-height: 13px;
+  font-size: 18px;
+  line-height: 18px;
 }
 
 .feedback-action {
   border-bottom: 1px solid #E6ECF0;
 }
 
-.reply-text, .like-text ,.reply-account,.user-followships  span {
+.reply-text, .like-text{
+  font-size: 16px;
+  line-height: 16px;
+  color: #657786;
+  position: relative;
+}
+ 
+.reply-account, .user-followships  span {
   font-size: 13px;
   line-height: 13px;
   color: #657786;
   position: relative;
-
 }
 
 .reply-tweet-account {
@@ -744,6 +752,10 @@ label {
   font-weight: bolder;
 }
 
+.tweet-content-date {
+  color: #657786;
+  font-size: 13px;
+}
 
 .user-edit {
 display: flex;
