@@ -18,7 +18,7 @@ describe('# reply request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], Likes: []}); //add Likes
 
         await db.User.destroy({where: {},truncate: true})
         await db.Tweet.destroy({where: {},truncate: true})

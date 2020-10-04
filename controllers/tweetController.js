@@ -88,7 +88,7 @@ const tweetController = {
     }
   },
 
-  getTweet: (req, res) => {
+  getReply: (req, res) => {
     Tweet.findByPk(req.params.tweetId,
       {
         include: [
@@ -108,13 +108,15 @@ const tweetController = {
         tweet = tweet.toJSON()
         const loginUser = helpers.getUser(req)
 
+        console.log(loginUser)
+
         //like and dislike tweet
-        const isLikedTweet = helpers.getUser(req).Likes.map(likes => likes.TweetId).includes(tweet.id)
+        const isLikedTweet = loginUser.Likes.map(likes => likes.TweetId).includes(tweet.id)
 
         //like and dislike reply
         tweetReplies = tweet.Replies.map(reply => ({
           ...reply,
-          isLikedReply: reply.Likes.map(like => like.UserId).includes(helpers.getUser(req).id)
+          isLikedReply: reply.Likes.map(like => like.UserId).includes(loginUser.id)
         }))
 
         tweet.Replies.sort((a, b) => {
@@ -128,7 +130,7 @@ const tweetController = {
           .then(users => {
             users = users.map(user => ({
               ...user.dataValues,
-              isFollowing: user.Followers.map(follower => follower.id).includes(helpers.getUser(req).id)
+              isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
             }))
 
             //sort by the amount of the followers
@@ -151,7 +153,7 @@ const tweetController = {
     const { comment } = req.body
     if (!comment) {
       req.flash('error_messages', '留言不得為空白')
-      return res.redirect(`/tweets/${req.params.tweetId}`)
+      return res.redirect(`/tweets/${req.params.tweetId}/replies`)
     }
     if (comment.length > 100) {
       req.flash('error_messages', '留言字數不得超過100字')
@@ -164,7 +166,7 @@ const tweetController = {
         comment
       })
         .then(reply => {
-          return res.redirect(`/tweets/${reply.TweetId}`)
+          return res.redirect(`/tweets/${reply.TweetId}/replies`)
         })
     }
   },
