@@ -1,3 +1,4 @@
+
 const tweetService = require('../services/tweetService')
 const db = require('../models');
 const User = db.User;
@@ -6,13 +7,28 @@ const Tweet = db.Tweet;
 const Reply = db.Reply;
 const helpers = require('../_helpers');
 
-
 const tweetController = {
-
   getTweets: (req, res) => {
-    tweetService.getTweets(req, res, (data) => {
-      return res.render('tweets', data)
+    Tweet.findAll({
+      include: [
+        User,
+        Reply,
+        Like
+      ],
+      order: [['createdAt', 'DESC']]
     })
+      .then((tweets) => {
+        const data = tweets.map((t) => ({
+          ...t.dataValues
+        }))
+        const likes = helpers.getUser(req).Likes
+        const isLiked = likes.map((i) => i.id).includes(data.id)
+        return res.render('tweets', {
+          isLiked: isLiked,
+          tweets: data,
+          userSelf: helpers.getUser(req)
+        })
+      })
   },
 
   postTweets: (req, res) => {    
@@ -31,6 +47,7 @@ const tweetController = {
       return res.redirect('back')
     })
   },
+
 }
 
 module.exports = tweetController

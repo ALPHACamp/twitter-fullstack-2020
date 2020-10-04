@@ -15,9 +15,9 @@ module.exports = {
             FollowerCount: data.Followers.length,
             isFollowed: helpers.getUser(req)
               ? helpers
-                  .getUser(req)
-                  .Followings.map((d) => d.id)
-                  .includes(data.id)
+                .getUser(req)
+                .Followings.map((d) => d.id)
+                .includes(data.id)
               : false,
           }))
           .filter((user) => user.name !== helpers.getUser(req).name);
