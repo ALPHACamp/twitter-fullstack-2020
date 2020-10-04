@@ -140,6 +140,37 @@ const userController = {
       })
     })
   },
+  addFollowing: (req, res) => {
+    const currentUserId = helpers.getUser(req).id
+    const followingUser = Number(req.params.userId)
+
+    if (currentUserId === followingUser) {
+      req.flash('error_messages', '請嘗試追蹤別人吧！')
+      return res.redirect('back')
+    } else {
+      return Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.userId
+      })
+        .then((followship) => {
+          return res.redirect('back')
+        })
+    }
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then((followship) => {
+        followship.destroy()
+          .then((followship) => {
+            return res.redirect('back')
+          })
+      })
+  }
 }
 
 module.exports = userController
