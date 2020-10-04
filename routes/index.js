@@ -82,4 +82,5 @@ module.exports = (app, passport) => {
   app.get('/users/:userId/followers', authenticated, userController.getUserFollowers)
   app.get('/users/:userId/followings', authenticated, userController.getUserFollowings)
   app.put('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
+  app.get('/users/:userId', authenticated, userController.getUserTweets)
 }

@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
-const { User, Tweet, Reply, Like, Followship } = db
+const { User, Tweet, Reply, Like, Followship, ReplyComment } = db
 const helpers = require('../_helpers')
 const fs = require('fs')
 const { resolve } = require('path')
@@ -223,14 +223,18 @@ const userController = {
         { model: User, as: 'Followers' }
       ]
     }).then(user => {
+      console.log('user:', user.toJSON())
+      console.log('user.Tweets:', user.toJSON().Tweets)
       const tweets = user.toJSON().Tweets.map(tweet => ({
+        id: user.toJSON().id,
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
         name: user.toJSON().name,
         description: tweet.description.substring(0, 50),
         updatedAt: tweet.updatedAt,
         replyCount: tweet.Replies.length,
-        likeCount: tweet.Likes.length
+        likeCount: tweet.Likes.length,
+        isLiked: req.user.Likes.map(like => like.TweetId).includes(tweet.id)
       }))
       return res.render('userTweets', {
         tweets,
@@ -251,22 +255,34 @@ const userController = {
     return User.findByPk(reqUserId, {
       order: [[{ model: Reply }, 'createdAt', 'DESC']],
       include: [
-        { model: Reply, include: [{ model: Tweet, include: [User, Reply, Like] }] },
+        {
+          model: Reply,
+          include: [
+            { model: Tweet, include: [User, Reply, Like] },
+            { model: ReplyComment },
+            { model: Like }
+          ]
+        },
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
         Tweet
       ]
     }).then(user => {
-      console.log('user.reply:', user.toJSON().Replies)
+      // console.log('user:', user)
+      // console.log('user.reply:', user.toJSON().Replies)
       const replies = user.toJSON().Replies.map(reply => ({
+        ...reply,
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
         name: user.toJSON().name,
-        description: reply.Tweet.description.substring(0, 50),
-        updatedAt: reply.Tweet.updatedAt,
-        replyCount: reply.Tweet.Replies.length,
-        likeCount: reply.Tweet.Likes.length
+        comment: reply.comment,
+        updatedAt: reply.updatedAt,
+        replyCommentsCount: reply.ReplyComments.length,
+        replyLikeCount: reply.Likes.length,
+        tweetId: reply.TweetId,
+        tweetUserAccount: reply.Tweet.User.account
       }))
+      console.log('replies:', replies)
       return res.render('userReplies', {
         replies,
         userId: user.toJSON().id,

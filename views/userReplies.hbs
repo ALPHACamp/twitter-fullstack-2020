@@ -47,12 +47,13 @@
     <div class="d-flex p-2">
       <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
       <div class="col">
-        <span class="bold">{{this.account}}</span>
-        <span style="color: grey">@{{this.name}}・{{moment this.updatedAt}}</span><br>
+        <span class="bold">{{this.name}}</span>
+        <span style="color: grey">@{{this.account}}・{{moment this.updatedAt}}</span><br>
+        <span style="color: grey">回覆 <a href="/tweets/{{this.tweetId}}">@{{this.tweetUserAccount}}</a></span><br>
         <span><small>
-            {{this.description}}<br>
-            <i class="far fa-comment mr-3" style="color: grey;"> {{this.replyCount}}</i>
-            <i class="far fa-heart" style="color: grey;"> {{this.likeCount}}</i>
+            {{this.comment}}<br>
+            <i class="far fa-comment mr-3" style="color: grey;"> {{this.replyCommentsCount}}</i>
+            <i class="far fa-heart" style="color: grey;"> {{this.replyLikeCount}}</i>
           </small></span>
       </div>
     </div>
@@ -61,41 +62,7 @@
   {{/each}}
 </div>
 {{!-- Right side --}}
-<div class="col-4">
-  <ul class="list-group mt-3 ml-3">
-    <li class="list-group-item" style="background-color:rgb(245, 248, 250);">
-      <strong>跟隨誰</strong>
-    </li>
-    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
-      <div class="d-flex">
-        {{!-- <div class="p-3">Avatar</div> --}}
-        <img class="mr-3" src="#" alt="Avatar">
-        <div>
-          <strong>Name</strong><br>
-          <span class="text-muted">@UserName</span>
-        </div>
-        <div class="align-self-center ml-auto">
-          <a href="#" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</a>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
-      <div class="d-flex">
-        <img class="mr-3" src="#" alt="Avatar">
-        <div>
-          <strong>Name</strong><br>
-          <span class="text-muted">@UserName</span>
-        </div>
-        <div class="align-self-center ml-auto">
-          <a href="#" class="btn btn-outline-twitter rounded-pill">跟隨</a>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
-      <a href="#" style="color: rgb(255, 102, 0);">顯示更多</a>
-    </li>
-  </ul>
-</div>
+{{> right}}
 <!-- Modal -->
 <div class="modal fade" id="show-detail-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
   aria-hidden="true">
