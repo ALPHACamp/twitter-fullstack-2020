@@ -8,14 +8,14 @@ const User = db.User
 passport.use(new LocalStrategy(
   // customize user field
   {
-    usernameField: 'email',
+    usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true //就可以 callback 的第一個參數裡拿到 req
   },
   // authenticate user
   (req, username, password, cb) => {
-    User.findOne({ where: { email: username } }).then(user => {
-      if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤'))
+    User.findOne({ where: { account: username } }).then(user => {
+      if (!user) return cb(null, false, req.flash('error_messages', '此帳號沒有被註冊'))
       if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
       return cb(null, user) //null為passsport 設計
     })
