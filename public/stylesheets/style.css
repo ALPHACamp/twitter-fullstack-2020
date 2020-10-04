@@ -616,3 +616,50 @@ box-sizing: border-box;
   margin-left: 30px;
   margin-top: 10px;
 }
+
+/* tweet-reply-list */
+.tweet-user-account{
+    position: relative;
+    left: 50px;
+    top: -23px;
+}
+
+.tweet-main-reply {
+  border: 1px solid #E6ECF0;
+}
+
+.user-avatar {
+  margin: 5px;
+}
+
+.tweet-user-reaction {
+  position: relative;
+  top: 5px;
+  font-weight: 500;
+  line-height: 40px;
+  border: 1px solid #E6ECF0;
+  width:100%;
+}
+
+.reply-number, .like-number {
+  font-weight: bolder;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.feedback-action {
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.reply-text, .like-text ,.reply-account{
+  font-size: 13px;
+  line-height: 13px;
+  color: #657786;
+  position: relative;
+
+}
+
+.reply-tweet-account {
+  color: #FF6600;
+  font-weight: bolder;
+}
