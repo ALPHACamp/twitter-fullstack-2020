@@ -39,6 +39,7 @@ router.get('/', (req, res) => {
   res.redirect('/tweets');
 });
 
+router.post('/tweets', userAuthenticated, tweetController.postTweets);
 router.get('/tweets', userAuthenticated, tweetController.getTweets);
 
 router.get('/users/self', userAuthenticated, userController.getSelf);
