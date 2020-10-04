@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User
+const User = db.User;
+const Tweet = db.Tweet;
+const Reply = db.Reply;
 
 const userController = {
   signUpPage: (req, res) => {
@@ -101,6 +103,35 @@ const userController = {
   putSetting: (req, res) => {
     return res.render('setting')
   },
+  //austin
+  otherUser: (req, res) =>{
+    return User.findByPk(req.params.id, {
+                include: [
+                    { model: Tweet },
+                    { model: Reply, include: [Tweet]},
+                    { model: User, as: "Followings" },
+                    { model: User, as: "Followers" },
+                    { model: Tweet, as: "LikeTweets"}
+                ]
+            })
+            .then(user=>{
+              //特定使用者 - 推文 排序依日期
+              user.Tweets = user.Tweets.map(tweet=>({...tweet.dataValues}));
+              user.Tweets = user.Tweets.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
+              //特定使用者 - 回文 排序依日期
+              user.Replies = user.Replies.map(reply => ({...reply.dataValues}))
+              user.Replies = user.Replies.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
+              //特定使用者 - 跟隨者 排序依日期
+              user.Followers = user.Followers.map(f=> f.Followship.toJSON());
+              user.Followers = user.Followers.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
+              //特定使用者 - 追蹤者 排序依日期
+              user.Followings = user.Followings.map(f=> f.Followship.toJSON());
+              user.Followings = user.Followings.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
+              //特定使用者 - 喜歡的推文 排序依日期
+              user.LikeTweets = user.LikeTweets.map(l=> l.Like.toJSON());
+              user.LikeTweets = user.LikeTweets.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
+            })
+  }
 }
 
 module.exports = userController
