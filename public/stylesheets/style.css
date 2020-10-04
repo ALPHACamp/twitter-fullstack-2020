@@ -698,6 +698,14 @@ label {
   /* z-index: 2; */
 }
 
+.extension-line {
+  width: 3px;
+  height: 100%;
+  background-color: #CCD6DD;
+  margin-top: 2px;
+  margin-left:15px
+}
+
 /* tweet-reply-list */
 .tweet-user-account{
     position: relative;
