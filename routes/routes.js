@@ -46,6 +46,7 @@ router.get('/', (req, res) => {
   res.redirect('/tweets');
 });
 
+router.post('/tweets', userAuthenticated, tweetController.postTweets);
 router.get('/tweets', userAuthenticated, tweetController.getTweets);
 
 router.get('/users/self', userAuthenticated, userController.getSelf);
@@ -91,6 +92,7 @@ router.delete(
   followshipController.unFollow,
 );
 
+router.get('/signout', userController.signout);
 router.get('/signup', userController.getSignupPage);
 router.post('/signup', userController.signup);
 router.get('/signin', userController.getSigninPage);
@@ -99,7 +101,7 @@ router.post(
   passport.authenticate('local', { failureRedirect: '/signin' }),
   userController.signin,
 );
-
+router.get('/admin/users', adminAuthenticated, adminController.getUsers);
 router.get('/admin/tweets', adminAuthenticated, adminController.getTweets);
 router.get('/admin/signin', adminController.getSigninPage);
 router.post(

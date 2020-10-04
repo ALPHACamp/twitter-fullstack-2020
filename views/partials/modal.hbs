@@ -1,4 +1,3 @@
-{{#if user}}
 {{!-- 編輯modal --}}
 <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -77,10 +76,10 @@
           <div class="tweet-modal-avatar">
             <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
           </div>
-          <form action="">
-            <textarea class="tweet-modal-text" placeholder="有什麼新鮮事？"></textarea>
+          <form action="/tweets" method="POST">
+            <textarea class="tweet-modal-text" id="mainTweetText" name="tweetText" placeholder="有什麼新鮮事？"></textarea>
             <div class="tweet-post-btn">
-              <button type="submit" class="btn btn-post-modal">推文</button>
+              <button type="submit" class="btn btn-post-modal" id="mainTweetTextBtn">推文</button>
             </div>
           </form>
         </div>
@@ -102,27 +101,27 @@
       <div class="reply-modal-body">
         <div class="reply-modal-tweet">
           <div class="reply-modal-userPic">
-            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+            <img src="{{reply.User.dataValues.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
           </div>
           <div class="reply-modal-info">
             <div class="reply-modal-name">
-              <a href="">
-                nono
+              <a href="/users/{{reply.UserId}}">
+                {{reply.User.dataValues.name}}
               </a>
-              <span class="reply-time">@nonolin · 3小時前</span>
+              <span class="reply-time">@{{reply.User.dataValues.account}} · 3小時前</span>
             </div>
-            <p>Needless to say, I keep her in checkShe was a bad bad, nevertheless (yeah)Callin' it quits now,
-              baby,I'mawrec(ayy)Crash at my place, baby, you're a wreck (ayy)Needless to say, I keep her
+            <p>
+              {{reply.description}}
             </p>
             <div class="reply-target">
               <span class="reply-mark">回覆給</span>
-              <a class="reply-user" href="">@</a>
+              <a class="reply-user" href="">@{{reply.User.dataValues.account}}</a>
             </div>
           </div>
         </div>
         <div class="reply-modal-post">
           <div class="reply-modal-userPic">
-            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+            <img src="{{userSelf.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
           </div>
           <div class="reply-modal-text">
             <form action="">
@@ -136,4 +135,3 @@
       </div>
     </div>
   </div>
-  {{/if}}

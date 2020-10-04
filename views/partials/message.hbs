@@ -23,3 +23,16 @@
     </div>
   {{/if}}
 {{/if}}
+
+
+{{#if successFlashMessage}}
+  <div class="alert alert-success text-center adminOpacity" role="alert">
+    {{successFlashMessage}}
+  </div>
+{{/if}}
+
+{{#if errorFlashMessage}}
+  <div class="alert alert-danger text-center adminOpacity" role="alert">
+    {{errorFlashMessage}}
+  </div>
+{{/if}}

@@ -44,7 +44,10 @@ app.use((req, res, next) => {
   res.locals.successMessage = req.flash('successMessage');
   res.locals.errorMessage = req.flash('errorMessage');
   res.locals.userInput = req.flash('userInput')[0];
-  console.log(res.locals.user);
+
+  res.locals.successFlashMessage = req.flash('successFlashMessage');
+  res.locals.errorFlashMessage = req.flash('errorFlashMessage');
+
   next();
 });
 

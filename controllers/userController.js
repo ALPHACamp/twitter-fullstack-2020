@@ -288,17 +288,6 @@ const userController = {
             });
         });
       }
-      // if (cover != null) {
-      //   let coverPath = cover[0].path;
-      //   await imgur.upload(coverPath, (err, img) => {
-      //     let cover = img.data.link;
-      //     User.findByPk(UserId).then((user) => user.update({ cover,name: req.body.name,
-      //     introduction: req.body.introduction }));
-      //   });
-      // }
-
-      //console.log('avatatar', avatar != null);
-      //console.log('cover', cover != null);
     }
     return User.findByPk(UserId).then((user) => {
       user
@@ -311,6 +300,11 @@ const userController = {
           return res.redirect(`/users/${UserId}/tweets`);
         });
     });
+  },
+  signout: (req, res) => {
+    req.flash('successMessage', '登出成功！');
+    req.logout();
+    res.redirect('/signin');
   },
   signup: (req, res) => {
     Object.keys(req.body).forEach((d) => (req.body[d] = req.body[d].trim()));
