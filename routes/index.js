@@ -5,8 +5,6 @@ const replyController = require('../controllers/replyController')
 
 const helpers = require('../_helpers');
 
-const helpers = require('../_helpers');
-
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -41,7 +39,7 @@ module.exports = (app, passport) => {
   //app.get('/admin/login', adminController.adminLoginPage)
   //app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.adminLogin)
   //app.get('/admin/logout', adminController.adminLogout)
-  
+
   //tweet page
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweets)
@@ -55,7 +53,7 @@ module.exports = (app, passport) => {
   //Like
   app.post('/like/:tweetId', authenticated, userController.likeTweet)
   app.delete('/like/:tweetId', authenticated, userController.dislikeTweet)
-  app.post('/like/:replyId/replies', authenticated,userController.likeReply)
+  app.post('/like/:replyId/replies', authenticated, userController.likeReply)
   app.delete('/like/:replyId/replies', authenticated, userController.dislikeReply)
 
   //Reply

@@ -39,7 +39,9 @@ const adminControllers = {
         { model: User, as: 'Followers' },
       ],
     }).then(users => {
-      console.log(users[0])
+      // console.log(users)
+      console.log(users[0].Tweets.length)
+      users = users.sort((a, b) => b.Tweets.length - a.Tweets.length)
       res.render('admin/users', { users })
     })
   },
