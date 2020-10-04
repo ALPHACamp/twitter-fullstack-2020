@@ -123,6 +123,29 @@ const userController = {
     })
   },
 
+  // 取得 追蹤使用者 的清單
+  getUserFollowers: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' }
+      ]
+    }).then(user => {
+      const pageUser = user.toJSON()
+      // console.log('pageUser', pageUser)
+      followerList = user.Followers.map(user => ({
+        ...user.dataValues,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      }))
+      // console.log('followerList', followerList)
+      return res.render('user/followerPage', {
+        user: pageUser,
+        followerList
+      })
+    })
+  },
+
+  // 取得 被使用者追蹤 的清單
   getUserFollowings: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
@@ -131,17 +154,17 @@ const userController = {
       ]
     }).then(user => {
       const pageUser = user.toJSON()
-      const followings = pageUser.Followings.map(user => ({
+      followingList = user.Followings.map(user => ({
         ...user.dataValues,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(follower.id)
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
-      // console.log('followings', followings)
       return res.render('user/followingPage', {
         user: pageUser,
-        followings
+        followingList
       })
     })
   },
+
   addFollowing: (req, res) => {
     const currentUserId = helpers.getUser(req).id
     const followingUser = Number(req.params.userId)
