@@ -116,10 +116,18 @@ const userController = {
             })
             .then(user=>{
               //特定使用者 - 推文 排序依日期
-              user.Tweets = user.Tweets.map(tweet=>({...tweet.dataValues}));
+              user.Tweets = user.Tweets.map(tweet=>({
+                ...tweet.dataValues,
+                userName: user.name,
+                userAvatar: user.avatar,
+                userAccount: user.account
+              }));
               user.Tweets = user.Tweets.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
               //特定使用者 - 回文 排序依日期
-              user.Replies = user.Replies.map(reply => ({...reply.dataValues}))
+              user.Replies = user.Replies.map(reply => ({
+                ...reply.dataValues,
+                tweet: reply.Tweet.toJSON(),
+              }))
               user.Replies = user.Replies.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
               //特定使用者 - 跟隨者 排序依日期
               user.Followers = user.Followers.map(f=> f.Followship.toJSON());
@@ -128,8 +136,18 @@ const userController = {
               user.Followings = user.Followings.map(f=> f.Followship.toJSON());
               user.Followings = user.Followings.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
               //特定使用者 - 喜歡的推文 排序依日期
+              console.log(user.LikeTweets);
               user.LikeTweets = user.LikeTweets.map(l=> l.Like.toJSON());
               user.LikeTweets = user.LikeTweets.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
+              
+              res.render("user/other", {
+                user,
+                tweets: user.Tweets, 
+                replies: user.Replies, 
+                followers: user.Followers,
+                followings: user.Followings,
+                like: user.LikeTweets
+              });
             })
   }
 }

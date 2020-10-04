@@ -28,11 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Followship,
       foreignKey: 'followingId',
       as: 'Followers'
-<<<<<<< HEAD
-    });
-=======
     })
->>>>>>> origin/master
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followerId',
