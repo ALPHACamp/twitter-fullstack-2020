@@ -18,7 +18,6 @@ module.exports = {
             isFollowed: helpers.getUser(req).Followings.map((d) => d.id).includes(data.id)
           })).filter((user) => user.name !== helpers.getUser(req).name)
           helpers.getUser(req).TopUsers = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-          console.log(helpers.getUser(req))
           return helpers.getUser(req)
         })
     }
