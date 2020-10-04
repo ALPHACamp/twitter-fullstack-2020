@@ -44,12 +44,12 @@ const adminController = {
           .catch(() => {
             req.flash('errorMessage', 'ERROR #A101');
             return res.redirect('back')
-           })
+          })
       })
       .catch(() => {
         req.flash('errorMessage', 'ERROR #A102');
         return res.redirect('back')
-       })
+      })
   },
 }
 
