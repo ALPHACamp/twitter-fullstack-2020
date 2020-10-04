@@ -5,6 +5,8 @@ const User = db.User;
 const Like = db.Like;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
+const { Op } = require('sequelize');
+const helpers = require('../_helpers');
 
 
 const adminController = {
@@ -27,6 +29,22 @@ const adminController = {
     // adminService.getTweets(req, res, (data) => {
     //   return res.render('admin/tweets', data)
     // })
+  },
+
+  getUsers: (req, res) => {
+    User.findAll({
+      include: [
+        Like, Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      // where: { account: { [Op.ne]: helpers.getUser(req).account } }
+    })
+      .then(user => {
+        let userFilter = user.filter(user => user.dataValues.account !== 'root')
+        userFilter = userFilter.sort((a, b) => b.dataValues.Tweets.length - a.dataValues.Tweets.length)
+        res.render('admin/users', { userByFind: userFilter })
+      })
   },
 
   signin: (req, res) => {
