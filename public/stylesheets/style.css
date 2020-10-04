@@ -490,10 +490,6 @@ box-sizing: border-box;
   bottom: 5rem;
 }
 
-.user-selection-bar {
-  position: relative;
-  bottom: 5rem;
-}
 
 .user-followships  a {
   color:#000000;
@@ -517,6 +513,16 @@ box-sizing: border-box;
   color: #FF6600;
   text-decoration: none;
 }
+
+.user-followships {
+  position: relative;
+  top: 5px;
+  font-weight: 500;
+  line-height: 40px;
+  width:100%;
+}
+
+
 
 /* tweet-main */
 #tweet-content {
@@ -727,7 +733,7 @@ box-sizing: border-box;
   border-bottom: 1px solid #E6ECF0;
 }
 
-.reply-text, .like-text ,.reply-account{
+.reply-text, .like-text ,.reply-account,.user-followships  span {
   font-size: 13px;
   line-height: 13px;
   color: #657786;
@@ -739,3 +745,4 @@ box-sizing: border-box;
   color: #FF6600;
   font-weight: bolder;
 }
+

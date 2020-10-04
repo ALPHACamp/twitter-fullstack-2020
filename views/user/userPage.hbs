@@ -1,112 +1,104 @@
-<div class="d-flex">
-  <div class="center-left">
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
     <div>
       {{> left-column}}
     </div>
-    <div class="center-content">
-      <div class="user-content">
+  </nav>
 
-        <div class="user-header">
-          <a href="javascript:history.back()">
-            <i class="fas fa-arrow-left"></i>
-          </a>
-          <div class="user-title">
-            <h5>{{user.name}}</h5>
-            <span>{{user.Tweets.length}} 推文</span>
-          </div>
+  <div class="center-content d-flex" id="tweet-content">
+    <div class="head  justify-content-between ">
+      <a href="javascript:history.back()" style="color: black;">
+        <div class="d-flex">
+          <i class="fas fa-arrow-left ml-2 mt-3"></i>
+          <h5 class="tweet-title">{{users.name}}</h5>
         </div>
-      </div>
-
-
+      </a>
       <div class="user-cover">
-        <img src="{{user.cover}}" alt="{{user.cover}}">
+        <img src="{{users.cover}}" alt="{{users.cover}}">
       </div>
-
-
-      {{!-- 需再細修 --}}
-      <div class="user-info">
-        <div class="user-info-top">
-          <img src="{{user.avatar}}" alt="{{user.avatar}}">
-          {{#ifCond user.id currentUserId}}
-          <button type="button" data-toggle="modal" data-target="#exampleModal">
-            編輯個人資料
-          </button>
-          {{else}}
-          <a href="{{user.email}}"><i class="far fa-envelope"></i></a>
-          <i class="far fa-bell"></i>
-          {{#if pageUser.isFollowed}}
-          <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="display: inline-block;">
-            <button type="submit" class="btn btn-primary">正在跟隨</button>
-          </form>
-          {{else}}
-          <form action="/followships/{{user.id}}" method="POST" style="display: inline-block;">
-            <button type="submit" class="btn btn-primary">跟隨</button>
-          </form>
-          {{/if}}
-          {{/ifCond}}
+      <div class="tweet-content-box" onclick="location.href='/tweets/{{users.id}}'">
+        <div class="tweet-content-left">
+          <a href="/users/{{users.id}}/tweets">
+            <img class="ml-2 mt-2" {{#if users.avatar}}src={{users.avatar}}{{/if}}
+              style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+          </a>
         </div>
-
-
-        <div class="user-info-bottom">
-          <h5>{{user.name}}</h5>
-          <span>@{{user.account}}</span>
-          <p>{{user.introduction}}</p>
+        <div class="tweet-content-right">
+          <div class="tweet-content-username">
+            <a href="/users/{{users.id}}/tweets" class="user-name">{{users.name}}</a>
+            <span class="user-account">@{{users.account}}</span>
+          </div>
+          <div class="tweet-content-info">
+            <span class="tweet-content-description">{{users.introduction}}</span><br>
+          </div>
           <div class="user-followships">
-            <a href="/users/{{user.id}}/followings">{{user.Followings.length}}個</a>
+            <a href="/users/{{users.id}}/followings">{{users.Followings.length}}個</a>
             <span>跟隨中&nbsp;&nbsp;</span>
-            <a href="/users/{{user.id}}/followers">{{user.Followers.length}}位</a>
+            <a href="/users/{{users.id}}/followers">{{users.Followers.length}}位</a>
             <span>跟隨者</span>
           </div>
         </div>
       </div>
-
-
       <div class="user-selection-bar">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link" href="/users/{{user.id}}/tweets">推文</a>
+            <a class="nav-link" href="/users/{{users.id}}/tweets">推文</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/{{user.id}}/replies">推文與回應</a>
+            <a class="nav-link" href="/users/{{users.id}}/replies">推文與回應</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+            <a class="nav-link" href="/users/{{users.id}}/likes">喜歡的內容</a>
           </li>
         </ul>
       </div>
-
-      {{!-- tweet-list --}}
-
+      <div class="tweet-all">
+        {{#each users.Tweets}}
+        <div class="tweet-content-box" onclick="location.href='/tweets/{{../users.id}}'">
+          <div class="tweet-content-left">
+            <a href="/users/{{../users.id}}/tweets">
+              <img class="ml-2 mt-2" {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
+                style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+            </a>
+          </div>
+          <div class="tweet-content-right">
+            <div class="tweet-content-username">
+              <a href="/users/{{../users.id}}/tweets" class="user-name">{{../users.name}}</a>
+              <span class="user-account">@{{../users.account}}．{{moment this.createdAt}}</span>
+            </div>
+            <div class="tweet-content-info">
+              <span class="tweet-content-description">{{this.description}}</span><br>
+            </div>
+            <div class="tweet-content-bottom">
+              {{!-- reply icon --}}
+              <button type="button" class="button tweet-reply-link">
+                <i class="fas fa-cus-reply" aria-hidden="true"></i>10{{RepliesCount}}
+              </button>
+              {{!-- like/unlike icon --}}
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-filled-like"></i>
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-like"></i>5{{LikesCount}}
+                </button>
+              </form>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
 
     </div>
+
   </div>
+
 
   <div class="right-content">
     {{>right-column}}
   </div>
-
-
-</div>
-</div>
-
-
-<!-- edit user info modal 範例 -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
