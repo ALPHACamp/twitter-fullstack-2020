@@ -18,13 +18,13 @@ const followshipController = {
         if (followship === null) {
           Followship.create({ followerId, followingId }).then(() => {
             req.flash('successMessage', '追蹤成功！');
-            return res.redirect('back');
-            //return res.redirect(`/users/${followingId}/tweets`);
+            //return res.redirect('back');
+            return res.redirect(`/users/${followingId}/tweets`);
           });
         } else {
           req.flash('errorMessage', '不得重複追蹤同一位使用者！');
-          return res.redirect('back');
-          //return res.redirect(`/users/${followingId}/tweets`);
+          //return res.redirect('back');
+          return res.redirect(`/users/${followingId}/tweets`);
         }
       },
     );
