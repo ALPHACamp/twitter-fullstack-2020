@@ -16,11 +16,10 @@
       <div class="user-cover">
         <img src="{{users.cover}}" alt="{{users.cover}}">
       </div>
-      <div class="tweet-content-box" onclick="location.href='/tweets/{{users.id}}'">
-        <div class="tweet-content-left">
+      <div class="tweet-content-box">
+        <div class=" user-info-top">
           <a href="/users/{{users.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if users.avatar}}src={{users.avatar}}{{/if}}
-              style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+            <img class="ml-2 mt-2" {{#if users.avatar}}src={{users.avatar}}{{/if}}>
           </a>
         </div>
         <div class="tweet-content-right">
@@ -38,6 +37,31 @@
             <span>跟隨者</span>
           </div>
         </div>
+
+        <div class="user-info-top">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            編輯個人資料
+          </button>
+          {{#ifCond users.id currentUserId}}
+          {{else}}
+          {{#if pageUser.isFollowed}}
+          <a href="mailto:{{users.email}}"><i class="far fa-envelope"></i></a>
+          <i class="far fa-bell"></i>
+          <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="display: inline-block;">
+            <button type="submit" class="btn btn-primary">正在跟隨</button>
+          </form>
+          {{else}}
+          {{#ifCond users.id ""}}
+          <form action="/followships/{{users.id}}" method="POST" style="display: inline-block;">
+            <button type="submit" class="btn btn-primary">跟隨</button>
+          </form>
+          {{/ifCond}}
+          {{/if}}
+          {{/ifCond}}
+        </div>
+
+
+
       </div>
       <div class="user-selection-bar">
         <ul class="nav nav-tabs">
@@ -100,5 +124,7 @@
 
 
   <div class="right-content">
-    {{>right-column}}
+    {{!-- {{>right-column}} --}}
   </div>
+
+  {{> userEdit}}
