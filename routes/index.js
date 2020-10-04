@@ -8,14 +8,15 @@ const helpers = require('../_helpers');
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'user') { return next() }
+      //if (helpers.getUser(req).role === 'user') { return next() }
+      return next()
     }
     req.flash('error_messages', '錯誤賬號類型，請使用後台登錄！')
     return res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      // console.log(req.user)
+      console.log(req.user)
       if (req.user.role === 'admin') { return next() }
       return res.redirect('/signin')
     }
@@ -27,6 +28,7 @@ module.exports = (app, passport) => {
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  
   //user login 
   app.get('/', (req, res) => { return res.redirect('/tweets') })
   app.get('/signin', userController.loginPage)
@@ -36,9 +38,9 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
   //admin login
-  //app.get('/admin/login', adminController.adminLoginPage)
-  //app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.adminLogin)
-  //app.get('/admin/logout', adminController.adminLogout)
+  app.get('/admin/signin', userController.adminLoginPage)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.adminLogin)
+  app.get('/admin/logout', userController.adminLogout)
 
   //tweet page
   app.get('/tweets', authenticated, tweetController.getTweets)
@@ -51,8 +53,8 @@ module.exports = (app, passport) => {
   app.put('/tweets/:replyId/replies', authenticated, tweetController.editReply)
 
   //Like
-  app.post('/like/:tweetId', authenticated, userController.likeTweet)
-  app.delete('/like/:tweetId', authenticated, userController.dislikeTweet)
+  app.post('/tweets/:tweetId/like', authenticated, userController.likeTweet)
+  app.post('/tweets/:tweetId/unlike', authenticated, userController.unlikeTweet)
   app.post('/like/:replyId/replies', authenticated, userController.likeReply)
   app.delete('/like/:replyId/replies', authenticated, userController.dislikeReply)
 
@@ -62,13 +64,9 @@ module.exports = (app, passport) => {
   app.put('/replies/:replyId', authenticated, replyController.editReply)
 
   //follow
-  app.post('/following/:userId', authenticated, userController.postFollowing)
-  app.delete('/following/:userId', authenticated, userController.deleteFollowing)
-  app.get('/admin/login', userController.adminLoginPage)
-  app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), userController.adminLogin)
-  app.get('/admin/logout', userController.adminLogout)
+  app.post('/followships', authenticated, userController.postFollowing)
+  app.delete('/followships/:userId', authenticated, userController.deleteFollowing)
 
-  app.get('/tweets', tweetController.getTweets)
   app.get('/users/settings', authenticated, userController.getUserSettings)
   app.put('/users/settings/:id', authenticated, userController.putUserSettings)
   app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)

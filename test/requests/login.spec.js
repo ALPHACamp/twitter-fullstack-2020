@@ -20,8 +20,7 @@ describe('# login request', () => {
           name: 'User1', 
           email: 'User1@example.com', 
           account: 'User1',
-          password: bcrypt.hashSync('User1', bcrypt.genSaltSync(10)),
-          role: 'user'
+          password: bcrypt.hashSync('User1', bcrypt.genSaltSync(10))
         })
       })
 

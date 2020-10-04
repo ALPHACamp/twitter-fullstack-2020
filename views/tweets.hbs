@@ -49,12 +49,12 @@
           </div>
 
           {{#if this.isLiked}}
-          <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="float:left;">
+          <form action="/tweets/{{this.id}}/unlike" method="POST" style="float:left;">
             <button type="submit" class="btn-push"><i class="fas fa-heart"></i></button>
           </form>
           <div style="float:left;">{{this.likesCount}}</div>   
           {{else}}
-          <form action="/like/{{this.id}}" method="POST" style="float:left;">
+          <form action="/tweets/{{this.id}}/like" method="POST" style="float:left;">
             <button type="submit" class="btn-push"><i class="far fa-heart"></i></button>
           </form>
           <div style="float:left;">{{this.likesCount}}</div>   

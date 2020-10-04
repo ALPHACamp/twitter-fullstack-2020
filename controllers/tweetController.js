@@ -24,7 +24,7 @@ const tweetController = {
         repliesCount: tweet.dataValues.Replies.length,
         user: tweet.dataValues.User.dataValues,
         followerId: tweet.dataValues.User.dataValues.Followers.map(followers => followers.dataValues.id),
-        isLiked: helpers.getUser(req).Likes.map(like => like.TweetId).includes(tweet.id)
+        isLiked: loginUser.Likes.map(like => like.TweetId).includes(tweet.id)
       }))
 
       //filter the tweets to those that user followings & user himself
@@ -47,7 +47,7 @@ const tweetController = {
         .then(users => {
           users = users.map(user => ({
             ...user.dataValues,
-            isFollowing: user.Followers.map(follower => follower.id).includes(helpers.getUser(req).id)
+            isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
           }))
 
           //sort by the amount of the followers

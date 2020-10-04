@@ -63,7 +63,7 @@ const userController = {
       })
   },
 
-  dislikeTweet: (req, res) => {
+  unlikeTweet: (req, res) => {
     Like.findOne({
       where: {
         UserId: helpers.getUser(req).id,
@@ -104,13 +104,18 @@ const userController = {
   },
 
   postFollowing: (req, res) => {
-    Followship.create({
-      followerId: helpers.getUser(req).id,
-      followingId: req.params.userId
-    })
-      .then(followship => {
-        return res.redirect('back')
+    if (Number(req.body.id) === Number(helpers.getUser(req).id)) {
+      return res.redirect('/tweets')
+    }
+    else {
+      Followship.create({
+        followerId: helpers.getUser(req).id,
+        followingId: req.body.id
       })
+        .then(followship => {
+          return res.redirect('back')
+        })
+    }
   },
 
   deleteFollowing: (req, res) => {
