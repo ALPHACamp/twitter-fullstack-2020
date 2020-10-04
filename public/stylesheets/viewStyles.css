@@ -916,7 +916,7 @@ a:hover {
 /* 管理者使用者列表 */
 .admin-right-list {
   grid-column-start: 3;
-  grid-column-end: 4;
+  grid-column-end: 5;
   border: 1px solid #e6ecf0;
 }
 
@@ -933,7 +933,7 @@ a:hover {
 .admin-users-list {
   display: inline-flex;
   flex-wrap: wrap;
-  height: 900px;
+  /* height: 900px; */
   /* overflow: scroll; */
 }
 
