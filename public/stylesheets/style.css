@@ -604,6 +604,31 @@ box-sizing: border-box;
   white-space:normal;
 }
 
+.tweet-content-bottom {
+  width: 100%;
+  position: relative;
+  /* left: 15px; */
+  margin-top: 10px;
+  margin-bottom: 3px;
+  display: flex;
+}
+
+.tweet-content-bottom form {
+  margin-top: -4px;
+}
+
+.tweet-reply-link, .tweet-like-link {
+  width: 50px;
+  padding: 0px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #657786;
+}
+
+.fa-cus-filled-like {
+  color: #E0245E;
+}
+
 .number {
   font-size: 13px;
   line-height: 13px;
@@ -613,10 +638,61 @@ box-sizing: border-box;
 }
 
 .fa-cus-like{
-  margin-left: 30px;
-  margin-top: 10px;
+  margin-top: 7px;
 }
 
+/* modal */
+.modal-content {
+  width: 600px;
+  height: 300px;
+  border: none;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.tweet-modal-header {
+  padding: 2px;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.tweet-modal-close-button {
+  margin-left: 5px;
+  background-color: transparent;
+  border: none;
+  font-size: 28px;
+  color: #FF6600;
+}
+
+.tweet-modal-body {
+  height: 220px;
+  padding: 15px;
+  display: flex;
+}
+
+.tweet-modal-textarea {
+  width: 480px;
+  height: 180px;
+  background-color: transparent;
+  margin-left: 10px;
+  padding-top: 10px;
+  border: 0px;
+  outline: none;
+  resize: none;
+}
+
+.tweet-modal-button {
+  width: 64px;
+  height: 40px;
+  left: 455px;
+  top: -5px;
+  background: #FF6600;
+  border-radius: 100px;
+  border: 1px solid #FF6600;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+  
 /* tweet-reply-list */
 .tweet-user-account{
     position: relative;

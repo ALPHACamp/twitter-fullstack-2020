@@ -5,6 +5,8 @@
     </div>
   </nav>
 
+  {{>modal}}
+
   <div class="center-content d-flex" id="tweet-content">
     <div class="head justify-content-between ">
       <h5 class="tweet-title">首頁</h5>
@@ -38,9 +40,26 @@
             </div>
             <div class="tweet-content-info">
               <span class="tweet-content-description">{{this.description}}</span><br>
-              <i class="fas fa-cus-reply" aria-hidden="true"></i><span class="number">{{this.Replies.length}}</span>
-              <i class="fas fa-cus-like" aria-hidden="true"></i></i><span
-                class="number">{{this.LikedUsers.length}}</span>
+            </div>
+            <div class="tweet-content-bottom">
+              {{!-- reply icon --}}
+              <button type="button" class="button tweet-reply-link">
+                <i class="fas fa-cus-reply" aria-hidden="true"></i>{{this.Replies.length}}
+              </button>
+              {{!-- like/unlike icon --}}
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-filled-like"></i>{{this.LikedUsers.length}}
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-like"></i>{{this.LikedUsers.length}}
+                </button>
+              </form>
+              {{/if}}
             </div>
           </div>
         </div>
