@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
   {{!-- left-column --}}
   {{> left-column}}
   <div class="tweets-center">
@@ -43,7 +42,7 @@
             </div>
             <div class="footer">
               <div class="footer-item reply-item">
-                <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
+                <button type="button" class="btn ply-on" data-toggle="modal" data-target="#replyModal">
                   <i class="icon-reply"></i>
                 </button>
                 <div class="item-count reply-count">{{this.Replies.length}}</div>
@@ -59,10 +58,8 @@
         </div>
       </div>
       {{/each}}
-
     </div>
   </div>
-
   {{!-- right-column --}}
   {{> right-column}}
   {{> modal}}
