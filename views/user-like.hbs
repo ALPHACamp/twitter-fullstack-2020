@@ -102,19 +102,19 @@
 
             <div class="footer-item like-item">
               {{#if this.dataValues.isLikeBySelf}}
-              <form action="/tweets/{{this.id}}/unlike" method="post">
+              <form action="/tweets/{{this.id}}/unlike" method="post" class="form-like">
                 <button type="submit" class="btn">
                   <i class="like icon-like-fill"></i>
                 </button>
                 <div class="like-item-count item-count">{{this.LikedByUsers.length}}</div>
                 {{else}}
-                <form action="/tweets/{{this.id}}/like" method="post"></form>
-                <button type="button" class="btn">
-                  <i class="icon-like"></i>
-                </button>
-                <div class="item-count unlike-item-count">{{this.LikedByUsers.length}}</div>
-                {{/if}}
-              </form>
+                <form action="/tweets/{{this.id}}/like" method="post">
+                  <button type="button" class="btn">
+                    <i class="icon-like"></i>
+                  </button>
+                  <div class="item-count unlike-item-count">{{this.LikedByUsers.length}}</div>
+                  {{/if}}
+                </form>
             </div>
 
           </div>

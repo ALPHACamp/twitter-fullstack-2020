@@ -29,7 +29,7 @@ a:hover {
   display: grid;
   /* grid-template-columns: 27% 43.5% 29%; */
   grid-template-columns: 1fr 350px 600px 400px 1fr;
-  height: 100%;
+  height: 100vh;
   width: 100%;
 }
 
@@ -43,8 +43,8 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  position: fixed;
-  height: 100%;
+  /* position: fixed; */
+  height: 100vh;
 }
 
 .navbar-content {
@@ -384,6 +384,10 @@ a:hover {
 }
 .tweets-content .right-item .footer .footer-item .like-item-count {
   color: #e0245e !important;
+}
+.tweets-content .form-like {
+  display: flex !important;
+  align-items: center !important;
 }
 
 /* 

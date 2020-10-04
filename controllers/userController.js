@@ -7,6 +7,9 @@ const Reply = db.Reply;
 const { Op } = require('sequelize');
 const helpers = require('../_helpers');
 
+const imgur = require('imgur-node-api');
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
+
 const userController = {
   getSigninPage: (req, res) => {
     return res.render('signin');
@@ -186,10 +189,122 @@ const userController = {
   getFollowingsPage: (req, res) => {
     return res.render('following');
   },
+  putUserProfile: async (req, res) => {
+    const UserId = Number(req.params.id);
+    //imgur.setClientID(IMGUR_CLIENT_ID);
+    console.log('IMGUR_CLIENT_ID', IMGUR_CLIENT_ID);
+    //console.log('login', helpers.getUser(req).id);
+    //console.log('pa $$$', UserId);
+    if (helpers.getUser(req).id !== UserId) {
+      req.flash('errorMessage', '你沒有足夠的權限');
+      res.redirect('/tweets');
+    }
+
+    if (!req.body.name || req.body.name.length > 50) {
+      req.flash('errorMessage', '名稱長度不符');
+      return res.redirect('back');
+    }
+
+    if (!req.body.introduction || req.body.introduction.length > 160) {
+      req.flash('errorMessage', '自我介紹長度不符');
+      return res.redirect('back');
+    }
+
+    const { files } = req;
+    //console.log('files', files);
+    //console.log('file', req.file);
+    if (files) {
+      const { avatar, cover } = req.files;
+      imgur.setClientID(IMGUR_CLIENT_ID);
+
+      if (avatar != null) {
+        let avatarPath = avatar[0].path;
+        await imgur.upload(avatarPath, async (err, img) => {
+          let avatar = img.data.link;
+          console.log('avatar', avatar);
+          if (cover != null) {
+            let coverPath = cover[0].path;
+            await imgur.upload(coverPath, (err, img) => {
+              let cover = img.data.link;
+
+              return User.findByPk(UserId).then((user) =>
+                user
+                  .update({
+                    cover,
+                    avatar,
+                    name: req.body.name,
+                    introduction: req.body.introduction,
+                  })
+                  .then(() => {
+                    req.flash('successMessage', '更新成功！');
+                    return res.redirect(`/users/${UserId}/tweets`);
+                  }),
+              );
+            });
+          } else {
+            return User.findByPk(UserId).then((user) =>
+              user
+                .update({
+                  avatar,
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                })
+                .then(() => {
+                  req.flash('successMessage', '更新成功！');
+                  return res.redirect(`/users/${UserId}/tweets`);
+                }),
+            );
+          }
+          //await User.findByPk(UserId).then(async (user) => await user.update({ avatar }));
+        });
+      } else if (cover != null) {
+        let coverPath = cover[0].path;
+        await imgur.upload(coverPath, (err, img) => {
+          let cover = img.data.link;
+
+          return User.findByPk(UserId).then((user) =>
+            user
+              .update({
+                cover,
+                name: req.body.name,
+                introduction: req.body.introduction,
+              })
+              .then(() => {
+                req.flash('successMessage', '更新成功！');
+                return res.redirect(`/users/${UserId}/tweets`);
+              }),
+          );
+        });
+      } else {
+        return User.findByPk(UserId).then((user) => {
+          user
+            .update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+            })
+            .then(() => {
+              req.flash('successMessage', '更新成功！');
+              return res.redirect(`/users/${UserId}/tweets`);
+            });
+        });
+      }
+    }
+    return User.findByPk(UserId).then((user) => {
+      user
+        .update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+        })
+        .then(() => {
+          req.flash('successMessage', '更新成功！');
+          return res.redirect(`/users/${UserId}/tweets`);
+        });
+    });
+  },
   signout: (req, res) => {
-    req.flash('successMessage', '登出成功！')
-    req.logout()
-    res.redirect('/signin')
+    req.flash('successMessage', '登出成功！');
+    req.logout();
+    res.redirect('/signin');
   },
   signup: (req, res) => {
     Object.keys(req.body).forEach((d) => (req.body[d] = req.body[d].trim()));
