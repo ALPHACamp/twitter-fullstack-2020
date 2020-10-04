@@ -1,0 +1,84 @@
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
+    <div>
+      {{> left-column}}
+    </div>
+  </nav>
+
+  <div class="center-content d-flex" id="tweet-content">
+    <div class="head  justify-content-between ">
+      <a href="javascript:history.back()" style="color: black;">
+        <div class="d-flex">
+          <i class="fas fa-arrow-left ml-2 mt-3"></i>
+          <h5 class="tweet-title">推文</h5>
+        </div>
+      </a>
+
+      <div class="tweet-content-box" onclick="location.href='/tweets/{{this.id}}'">
+        <div class="tweet-content-left">
+          <a href="/users/{{tweet.User.id}}/tweets">
+            <img class="ml-2 mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
+              style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+          </a>
+        </div>
+        <div class="tweet-content-right">
+          <div class="tweet-content-username">
+            <a href="/users/{{tweet.User.id}}/tweets" class="user-name">{{tweet.User.name}}</a>
+            <span class="user-account">@{{tweet.User.account}}</span>
+          </div>
+          <div class="tweet-content-info">
+            <span class="tweet-content-description">{{tweet.description}}</span><br>
+            <span class="date">{{moment tweet.createdAt}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="tweet-user-reaction">
+        <span class="reply-number ml-3 mt-2">10K{{RepliesCount}}</span>
+        <span class="reply-text">回覆</span>
+        <span class="like-number">5K{{LikesCount}}</span><span class="like-text">喜歡次數</span>
+      </div>
+      <div class="feedback-action d-flex">
+        <a href="/users/{{tweet.id}}/replies"><button class="btn ml-3 mt-2">
+            <i class="fas fa-cus-reply fa-2x" aria-hidden="true"></i>
+          </button></a>
+        <form action="/like/{{tweet.id}}" method="POST"><button class="btn" type="submit"><i
+              class=" fas fa-cus-like fa-2x" aria-hidden="true"></i></button>
+        </form>
+      </div>
+      {{#each tweet.Replies}}
+      <div class="tweet-content-box">
+        <div class="tweet-content-left">
+          <a href="/users/{{this.User.id}}/tweets">
+            <img class="ml-2 mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+              style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+          </a>
+        </div>
+        <div class="tweet-content-right">
+          <div class="tweet-content-username">
+            <a href="/users/{{this.User.id}}/tweets" class="user-name">{{this.User.name}}</a>
+            <span class="user-account">@{{this.account}}．{{moment this.createdAt}}</span><br>
+          </div>
+          <div class="tweet-content-info">
+            <span class="reply-account">回覆@</span><span class="reply-tweet-account">{{../tweet.User.account}}</span><br>
+            <span>{{this.comment}}</span><br>
+            <div class="feedback-action d-flex justify-content-start">
+              <div class="btn fb-reply">
+                <i class="fas fa-cus-reply mt-2" aria-hidden="true"></i>
+                <span class="number">10{{TweetsCount}}</span>
+              </div>
+              <div class="btn fb-like">
+                <i class="fas fa-cus-like" aria-hidden="true"></i><span class="number">5{{LikesCount}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+  </div>
+
+
+  <div class="right-content">
+    {{>right-column}}
+  </div>
