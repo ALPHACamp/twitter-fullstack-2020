@@ -63,8 +63,12 @@ router.get(
   userController.getFollowersPage,
 );
 router.get('/users/:id', userAuthenticated, userController.getUser);
-router.get('/users/:id/tweets', userAuthenticated, userController.getTweets);
-router.get('/users/:id/likes', userAuthenticated, userController.getLikes);
+router.get(
+  '/users/:id/tweets',
+  userAuthenticated,
+  userController.getTweetsPage,
+);
+router.get('/users/:id/likes', userAuthenticated, userController.getLikesPage);
 
 router.post('/followships', userAuthenticated, followshipController.addFollow);
 router.delete(
