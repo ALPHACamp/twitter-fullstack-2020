@@ -18,5 +18,6 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/admin/tweets', authenticated, authenticatedAdmin, adminController.getTweets)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/signin', userController.signin)
+router.get('/admin/tweets/:tweetsCount', tweetController.getTenTweets)
 
 module.exports = router
