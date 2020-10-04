@@ -85,6 +85,47 @@ const userController = {
   },
   getUser: (req, res) => {
     let userId = req.params.id;
+    return res.redirect(`/users/${userId}/tweets`);
+    // return User.findByPk(userId, {
+    //   include: [
+    //     {
+    //       model: Tweet,
+    //       include: [Reply, Like],
+    //       order: [['updatedAt', 'DESC']],
+    //     },
+    //     { model: User, as: 'Followers' },
+    //     { model: User, as: 'Followings' },
+    //   ],
+    // }).then((user) => {
+    //   if (user !== null && user.isAdmin === false) {
+    //     return res.redirect(`/users/${req.params.id}/tweets`);
+    // const targetUser = user.toJSON();
+    // const followings = helpers.getUser(req).Followings.map((u) => u.id);
+    // const followers = helpers.getUser(req).Followers.map((u) => u.id);
+
+    // const data = user.toJSON();
+    // let Tweets = data.Tweets;
+    // Tweets = Tweets.map((t) => {
+    //   if (t.Likes.length > 0) {
+    //     let likeIds = t.Likes.map((l) => l.UserId);
+    //     t.isLikeBySelf = likeIds.includes(helpers.getUser(req).id);
+    //   } else {
+    //     t.isLikeBySelf = false;
+    //   }
+    //   return t;
+    // });
+    // return res.render('user', {
+    //   user: helpers.getUser(req),
+    //   visitUser: data,
+    //   isFollowing: followings.includes(Number(req.params.id)),
+    // });
+    // } else {
+    //   req.flash('errorMessage', '使用者不存在');
+    //   return res.redirect(`/users/${helpers.getUser(req).id}/tweets`);
+    // }
+  },
+  getTweets: (req, res) => {
+    let userId = req.params.id;
     return User.findByPk(userId, {
       include: [
         {

@@ -7,24 +7,31 @@ const helpers = require('../_helpers');
 const adminController = require('../controllers/adminController');
 const userController = require('../controllers/userController');
 const tweetController = require('../controllers/tweetController');
+const followshipController = require('../controllers/followshipController');
 
 const adminAuthenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req) &&
-    (helpers.getUser(req).isAdmin || helpers.getUser(req).role))
+  if (
+    helpers.ensureAuthenticated(req) &&
+    (helpers.getUser(req).isAdmin || helpers.getUser(req).role)
+  )
     return next();
   return res.redirect('/admin/signin');
 };
 
 const userAuthenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req) &&
-    (!helpers.getUser(req).isAdmin && !helpers.getUser(req).role))
+  if (
+    helpers.ensureAuthenticated(req) &&
+    !helpers.getUser(req).isAdmin &&
+    !helpers.getUser(req).role
+  )
     return next();
-  if (helpers.ensureAuthenticated(req) &&
-  (helpers.getUser(req).role || helpers.getUser(req).isAdmin))
+  if (
+    helpers.ensureAuthenticated(req) &&
+    (helpers.getUser(req).role || helpers.getUser(req).isAdmin)
+  )
     return res.redirect('/admin/tweets');
   return res.redirect('/signin');
 };
-
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -56,6 +63,14 @@ router.get(
   userController.getFollowersPage,
 );
 router.get('/users/:id', userAuthenticated, userController.getUser);
+router.get('/users/:id/tweets', userAuthenticated, userController.getTweets);
+
+router.post('/followships', userAuthenticated, followshipController.addFollow);
+router.delete(
+  '/followships/:id',
+  userAuthenticated,
+  followshipController.unFollow,
+);
 
 router.get('/signup', userController.getSignupPage);
 router.post('/signup', userController.signup);
@@ -73,6 +88,10 @@ router.post(
   passport.authenticate('local', { failureRedirect: '/admin/signin' }),
   adminController.signin,
 );
-router.delete('/admin/tweets/:tweetId', adminAuthenticated, adminController.deleteTweet)
+router.delete(
+  '/admin/tweets/:tweetId',
+  adminAuthenticated,
+  adminController.deleteTweet,
+);
 
 module.exports = router;
