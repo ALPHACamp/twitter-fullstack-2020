@@ -108,7 +108,11 @@ const userController = {
     return User.findByPk(req.params.id, {
                 include: [
                     { model: Tweet },
-                    { model: Reply, include: [Tweet]},
+                    { model: Reply, include: [
+                      {
+                        model: Tweet, include: User
+                      }
+                    ]},
                     { model: User, as: "Followings" },
                     { model: User, as: "Followers" },
                     { model: Tweet, as: "LikeTweets"}
@@ -136,7 +140,6 @@ const userController = {
               user.Followings = user.Followings.map(f=> f.Followship.toJSON());
               user.Followings = user.Followings.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
               //特定使用者 - 喜歡的推文 排序依日期
-              console.log(user.LikeTweets);
               user.LikeTweets = user.LikeTweets.map(l=> l.Like.toJSON());
               user.LikeTweets = user.LikeTweets.sort((a, b)=> b.createdAt.getTime() - a.createdAt.getTime());
               
