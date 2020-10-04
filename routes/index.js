@@ -35,7 +35,7 @@ module.exports = (app, passport) => {
   })
 
   // tweet首頁
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/tweets', authenticated, userController.getRecommendedFollowings, tweetController.getTweets)
 
   // 註冊頁
   app.get('/signup', userController.signUpPage)
@@ -66,6 +66,6 @@ module.exports = (app, passport) => {
   // })
 
   // user 相關路由
-  app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
-  app.get('/users/:id/likes', authenticated, userController.getUserLikes)
+  app.get('/users/:id/tweets', authenticated, userController.getRecommendedFollowings, userController.getUserTweets)
+  app.get('/users/:id/likes', authenticated, userController.getRecommendedFollowings, userController.getUserLikes)
 }
