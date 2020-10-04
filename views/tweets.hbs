@@ -11,9 +11,9 @@
         <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
       </div>
       <div class="main-right">
-        <form action="">
-          <textarea class="form-control tweetText" placeholder="有什麼新鮮事？"></textarea>
-          <button type="submit" class="btn btn-tweet-2">推文</button>
+        <form action="/tweets" method="POST">
+          <textarea class="form-control tweetText" id="tweetText" name="tweetText" placeholder="有什麼新鮮事？"></textarea>
+          <button type="submit" class="btn btn-tweet-2" id="tweetTextBtn">推文</button>
         </form>
       </div>
     </div>
