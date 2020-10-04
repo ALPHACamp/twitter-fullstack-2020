@@ -38,11 +38,11 @@
         <span class="like-number">{{tweet.LikedUsers.length}}</span><span class="like-text"> 喜歡次數</span>
       </div>
       <div class="feedback-action d-flex">
-        <a href="/users/{{tweet.id}}/replies">
-          <button class="btn ml-2 mt-3">
-            <i class="fas fa-cus-reply fa-2x" style="font-size: 25px" aria-hidden="true"></i>
-          </button>
-        </a>
+        {{!-- <a href="/users/{{tweet.id}}/replies"> --}}
+        <button class="btn ml-2 mt-3" data-toggle="modal" data-target="#replyModal">
+          <i class="fas fa-cus-reply fa-2x" style="font-size: 25px" aria-hidden="true"></i>
+        </button>
+        {{!-- </a> --}}
 
         {{#if isLiked}}
         <form action="/tweets/{{tweet.id}}/unlike" method="POST">
@@ -73,7 +73,7 @@
           </div>
           <div class="tweet-content-info">
             <span class="reply-account">回覆@</span><span class="reply-tweet-account">{{../tweet.User.account}}</span><br>
-            <span>{{this.comment}}</span><br>
+            <span class="tweet-content-description">{{this.comment}}</span><br>
             {{!-- <div class="feedback-action d-flex justify-content-start">
               <div class="btn fb-reply">
                 <i class="fas fa-cus-reply mt-2" aria-hidden="true"></i>
@@ -88,10 +88,54 @@
       </div>
       {{/each}}
     </div>
-
   </div>
 
 
   <div class="right-content">
     {{>right-column}}
+  </div>
+
+  {{!-- reply modal --}}
+  <div class="modal" tabindex="-1" role="dialog" id="replyModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="reply-modal">
+          <div class="reply-modal-header">
+            <button type="button" data-dismiss="modal" aria-label="Close" class="tweet-modal-close-button">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="reply-modal-body">
+            <div class="reply-modal-tweet d-flex">
+              <div class="tweet-content-left">
+                <img class="ml-2 mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
+                  style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+              </div>
+              <div class="tweet-content-right">
+                <div class="tweet-content-username">
+                  <span class="user-name">{{tweet.User.name}}</span>
+                  <span class="user-account">@{{tweet.User.account}}．{{moment tweet.User.createdAt}}</span><br>
+                </div>
+                <div class="tweet-content-info">
+                  <span class="tweet-content-description">{{tweet.description}}</span><br>
+                  <span class="reply-account">回覆@</span><span
+                    class="reply-tweet-account">{{tweet.User.account}}</span><br>
+                </div>
+              </div>
+            </div>
+            <div class="reply-modal-reply">
+              <img {{#if user.avatar}}src={{user.avatar}}{{/if}}
+                style=" background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+              <form method="POST" action="/tweets/{{tweet.id}}/replies">
+                <textarea class="tweet-modal-textarea" name="comment" id="comment" cols="30" rows="10"
+                  placeholder="推你的回覆"></textarea>
+                <button type="submit" class="tweet-modal-button">
+                  回覆
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>

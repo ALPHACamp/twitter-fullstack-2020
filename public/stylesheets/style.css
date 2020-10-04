@@ -602,10 +602,11 @@ label {
 }
 
 .tweet-content-description {
-  display:inline-block;
-  width:95%;
-  word-wrap:break-word;
-  white-space:normal;
+  display: inline-block;
+  width: 95%;
+  word-break: break-all;
+  /* word-wrap: break-word; */
+  white-space: normal;
 }
 
 .tweet-content-bottom {
@@ -648,13 +649,13 @@ label {
 /* modal */
 .modal-content {
   width: 600px;
-  height: 300px;
+  /* height: 300px; */
   border: none;
   background-color: white;
   border-radius: 10px;
 }
 
-.tweet-modal-header {
+.tweet-modal-header, .reply-modal-header {
   padding: 2px;
   border-bottom: 1px solid #E6ECF0;
 }
@@ -667,8 +668,8 @@ label {
   color: #FF6600;
 }
 
-.tweet-modal-body {
-  height: 220px;
+.tweet-modal-body, .reply-modal-reply {
+  /* height: 220px; */
   padding: 15px;
   display: flex;
 }
@@ -687,16 +688,16 @@ label {
 .tweet-modal-button {
   width: 64px;
   height: 40px;
-  left: 455px;
-  top: -5px;
+  margin-left: 455px;
+  /* top: -5px; */
   background: #FF6600;
   border-radius: 100px;
   border: 1px solid #FF6600;
   color: white;
-  position: relative;
-  z-index: 2;
+  /* position: relative; */
+  /* z-index: 2; */
 }
-  
+
 /* tweet-reply-list */
 .tweet-user-account{
     position: relative;
