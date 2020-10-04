@@ -164,6 +164,59 @@ const userController = {
       }
     });
   },
+  getLikes: (req, res) => {
+    let UserId = req.params.id;
+    return User.findByPk(UserId, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        {
+          model: Tweet,
+          as: 'LikeTweets',
+          include: [User, Reply, { model: User, as: 'LikedByUsers' }],
+        },
+      ],
+      order: [['LikeTweets', 'updatedAt', 'DESC']],
+    }).then((visitUser) => {
+      const followings = helpers.getUser(req).Followings.map((u) => u.id);
+      const likes = helpers.getUser(req).Likes
+        ? helpers
+            .getUser(req)
+            .Likes.filter((u) => u.Position === 'tweet')
+            .map((t) => t.PositionId)
+        : [];
+
+      //console.log(likes);
+      visitUser.dataValues.LikeTweets.forEach((lt) => {
+        //console.log('before @@@', lt.dataValues.LikedByUsers);
+        lt.dataValues.isLikeBySelf = likes.includes(lt.id);
+        //console.log('before @@@', lt);
+      });
+      let isFollowing = followings.includes(UserId);
+
+      return res.render('user-like', {
+        user: helpers.getUser(req),
+        isFollowing,
+        visitUser,
+      });
+    });
+
+    //Like.findAll({where:{UserId,Position:'tweet'}},attribute:[])
+    // return User.findByPk(userId, {
+    //   include: [
+    //     Tweet,
+    //     {
+    //       model: Tweet,
+    //       as:'LikedTweets',
+    //       include: [User, Reply],
+    //       order: [['updatedAt', 'DESC']],
+    //     },
+    //     { model: User, as: 'Followers' },
+    //     { model: User, as: 'Followings' },
+    //   ],
+    // });
+  },
   getFollowersPage: (req, res) => {
     return res.render('follower');
   },

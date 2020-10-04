@@ -64,6 +64,7 @@ router.get(
 );
 router.get('/users/:id', userAuthenticated, userController.getUser);
 router.get('/users/:id/tweets', userAuthenticated, userController.getTweets);
+router.get('/users/:id/likes', userAuthenticated, userController.getLikes);
 
 router.post('/followships', userAuthenticated, followshipController.addFollow);
 router.delete(
