@@ -13,7 +13,7 @@ const imagesUpload = upload.fields([
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (req.user.role === 'user') { return next() }
+      if (helpers.getUser(req).role === 'user') { return next() }
     }
     req.flash('error_messages', '錯誤賬號類型，請使用後台登錄！')
     return res.redirect('/users/login')
@@ -21,7 +21,7 @@ module.exports = (app, passport) => {
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       // console.log(req.user)
-      if (req.user.role === 'admin') { return next() }
+      if (helpers.getUser(req).role === 'admin') { return next() }
       return res.redirect('/users/login')
     }
     res.redirect('/users/login')
@@ -44,7 +44,7 @@ module.exports = (app, passport) => {
   //app.get('/admin/login', adminController.adminLoginPage)
   //app.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.adminLogin)
   //app.get('/admin/logout', adminController.adminLogout)
-  
+
   //tweet page
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.post('/tweets', authenticated, tweetController.postTweets)
@@ -58,7 +58,7 @@ module.exports = (app, passport) => {
   //Like
   app.post('/like/:tweetId', authenticated, userController.likeTweet)
   app.delete('/like/:tweetId', authenticated, userController.dislikeTweet)
-  app.post('/like/:replyId/replies', authenticated,userController.likeReply)
+  app.post('/like/:replyId/replies', authenticated, userController.likeReply)
   app.delete('/like/:replyId/replies', authenticated, userController.dislikeReply)
 
   //Reply
