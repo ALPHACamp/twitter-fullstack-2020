@@ -5,6 +5,7 @@ const User = db.User
 const Reply = db.Reply
 const ReplyComment = db.ReplyComment
 let more = 10
+const helpers = require('../_helpers');
 
 const tweetController = {
   getTweets: (req, res) => {
