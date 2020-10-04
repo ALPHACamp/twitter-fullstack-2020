@@ -1,0 +1,43 @@
+<div class="container">
+
+  <div class="user-title">
+    <h5>{{user.name}}</h5>
+    <span>{{user.Tweets.length}} 推文</span>
+  </div>
+
+  <div class="tweet-all">
+    {{#each followings}}
+    <div class="tweet-content-box" onclick="location.href='/tweets/{{this.id}}'">
+      <div class="tweet-content-left">
+        <a href="/users/{{this.id}}/tweets">
+          <img class="ml-2 mt-2" src={{this.avatar}}
+            style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+        </a>
+      </div>
+      <div class="tweet-content-right">
+        <div class="tweet-content-username">
+          <a href="/users/{{this.id}}/tweets" class="user-name">{{this.name}}</a>
+          <span class="user-account">@{{this.account}}</span>
+        </div>
+        <div class="tweet-content-info">
+          <span class="tweet-content-description">{{this.introduction}}</span><br>
+        </div>
+        <div class="tweet-content-bottom">
+
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button class="unfollow-button">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST">
+            <button class="follow-button" name="id" value="{{this.id}}">跟隨</button>
+          </form>
+          {{/if}}
+
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>
+</div>
