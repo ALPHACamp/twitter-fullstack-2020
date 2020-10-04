@@ -74,7 +74,6 @@ const userController = {
     })
   },
 
-
   getUserTweets: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
@@ -118,8 +117,27 @@ const userController = {
 
       return res.render('user/userLikesPage')
     })
-  }
+  },
 
+  getUserFollowings: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
+      const pageUser = user.toJSON()
+      const followings = pageUser.Followings.map(user => ({
+        ...user.dataValues,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(follower.id)
+      }))
+      // console.log('followings', followings)
+      return res.render('user/followingPage', {
+        user: pageUser,
+        followings
+      })
+    })
+  },
 }
 
 module.exports = userController
