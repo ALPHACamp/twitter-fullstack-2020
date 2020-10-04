@@ -7,14 +7,14 @@
     <div class="body">
       <div class="body-avatar d-flex align-items-stretch">
         <div class="right">
-          <a href="/tweets/{{user.dataValues.id}}">
-            <img src="{{user.dataValues.avatar}}" class="rounded-circle"
+          <a href="/tweets/{{User.dataValues.id}}">
+            <img src="{{User.dataValues.avatar}}" class="rounded-circle"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
 
         <div class="left" class="d-flex">
-          <form method="POST" action="/tweets/{{user.dataValues.id}}">
+          <form method="POST" action="/tweets">
             <textarea name="description" cols="55" rows="5"
               style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
               placeholder="what's up?"></textarea>
@@ -101,7 +101,7 @@
               <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
                 <i class="far fa-heart"></i>
                 {{else}}
-                <form action="/tweets/{{this.User.dataValues.id}}/like" method="POST" style="display:inline; ">
+                <form action="like/{{this.User.dataValues.id}}" method="POST" style="display:inline; ">
 
                   <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
                     <i class="fas fa-heart"></i>

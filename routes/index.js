@@ -43,8 +43,12 @@ module.exports = (app, passport) => {
 
   // tweetController
 app.get("/", (req, res) => res.redirect("/tweets"))
-app.get("/tweets", tweetController.getTweets)
-app.get("/tweets/:id", tweetController.getTweet);
+app.get("/tweets", authenticated, tweetController.getTweets)
+app.get("/tweets/:id", authenticated, tweetController.getTweet)
+app.post('/tweets', authenticated, tweetController.createTweet)
+app.post('/like/:id', tweetController.addLike)
+
+
 
   // setting使用者能編輯自己的 account、name、email 和 password
   app.get('/setting', userController.getSetting)
