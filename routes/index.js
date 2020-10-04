@@ -11,15 +11,15 @@ module.exports = (app, passport) => {
       if (req.user.role === 'user') { return next() }
     }
     req.flash('error_messages', '錯誤賬號類型，請使用後台登錄！')
-    return res.redirect('/users/login')
+    return res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       // console.log(req.user)
       if (req.user.role === 'admin') { return next() }
-      return res.redirect('/users/login')
+      return res.redirect('/signin')
     }
-    res.redirect('/users/login')
+    res.redirect('/signin')
   }
 
   app.get('/', authenticated, (req, res) => { return res.redirect('/tweets') })
@@ -29,11 +29,11 @@ module.exports = (app, passport) => {
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
   //user login 
   app.get('/', (req, res) => { return res.redirect('/tweets') })
-  app.get('/users/login', userController.loginPage)
-  app.post('/users/login', passport.authenticate('local', { failureRedirect: '/users/login', failureFlash: true }), userController.login)
-  app.get('/users/register', userController.registerPage)
-  app.post('/users/register', userController.register)
-  app.get('/users/logout', userController.logout)
+  app.get('/signin', userController.loginPage)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.login)
+  app.get('/signup', userController.registerPage)
+  app.post('/signup', userController.register)
+  app.get('/logout', userController.logout)
 
   //admin login
   //app.get('/admin/login', adminController.adminLoginPage)
