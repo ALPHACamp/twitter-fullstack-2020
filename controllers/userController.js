@@ -240,16 +240,6 @@ const userController = {
       // Right side
       // filter the tweets to those that user followings & user himself
       const tweetFollowings = []
-      // tweets.forEach(tweet => {
-      //   if (tweet.UserId === loginUser.id) {
-      //     tweetFollowings.push(tweet)
-      //   }
-      //   tweet.followerId.forEach(followerId => {
-      //     if (followerId === loginUser.id) {
-      //       tweetFollowings.push(tweet)
-      //     }
-      //   })
-      // })
       // Top 10 followers
       User.findAll({
         include: [{ model: User, as: 'Followers' }]
