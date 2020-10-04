@@ -101,7 +101,7 @@
               <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
                 <i class="far fa-heart"></i>
                 {{else}}
-                <form action="/tweets/{{this.User.dataValues.id}}/like" method="POST" style="display:inline; ">
+                <form action="like/{{this.User.dataValues.id}}" method="POST" style="display:inline; ">
 
                   <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
                     <i class="fas fa-heart"></i>

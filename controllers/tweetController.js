@@ -56,6 +56,14 @@ const tweetController = {
         }).then(tweet => {
           return res.redirect('/tweets')
         })
- }
+      },
+      addLike: (req, res) => {
+        return Like.create({
+          UserId:req.user.id, 
+          TweetId: req.params.id
+        }).then((tweet) => {
+          return res.redirect('back') 
+        })
+      },
 }
 module.exports = tweetController
