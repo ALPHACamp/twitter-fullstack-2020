@@ -1,5 +1,4 @@
 <div class="container-fluid">
-
   {{!-- left-column --}}
   {{> left-column}}
   <div class="tweets-center">
@@ -8,7 +7,7 @@
     </div>
     <div class="tweets-input">
       <div class="main-left">
-        <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+        <img src="{{userSelf.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
       </div>
       <div class="main-right">
         <form action="">
@@ -18,128 +17,49 @@
       </div>
     </div>
     <div class="tweets-list">
-      <div class="tweets-content">
-        <div class="left-item">
-          <a href="/users/{{user.id}}">
-            <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;background-color:#C4C4C4;">
-          </a>
-        </div>
-        <div class="right-item">
-          <div class="title">
-            <span class="name">
-              <a href="">
-                {{user.name}}
-              </a>
-            </span>
-            <span class="time">
-              @{{user.account}}・a day ago
-            </span>
+      {{#each tweets}}
+      <div class="card tweets-content">
+        <div class="card-body tweets-body">
+          <div class="left-item">
+            <a href="/users/{{this.UserId}}">
+              <img src="{{this.User.dataValues.avatar}}" class="rounded-circle"
+                style="width: 50px;height:50px;background-color:#C4C4C4;">
+            </a>
           </div>
-          <div class="body">
-            Needless to say, I keep her in check
-            She was a bad bad, nevertheless (yeah)
-            Callin' it quits now, baby, I'm a wreck (ayy)
-            Crash at my place, baby, you're a wreck (ayy)
-          </div>
-          <div class="footer">
-            <div class="footer-item reply-item">
-              <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                <i class="icon-reply"></i>
-              </button>
-              <div class="item-count reply-count">13</div>
+          <div class="right-item">
+            <div class="title">
+              <span class="name">
+                <a href="/users/{{this.UserId}}">
+                  {{this.User.dataValues.name}}
+                </a>
+              </span>
+              <span class="time">
+                @{{this.User.dataValues.account}}・{{moment this.createdAt}}
+              </span>
             </div>
-            <div class="footer-item like-item">
-              <button type="button" class="btn">
-                <i class="icon-like"></i>
-              </button>
-              <div class="item-count like-count">79</div>
+            <div class="body">
+              {{this.description}}
             </div>
-          </div>
-        </div>
-      </div>
-      {{!-- ---------------------------------------------------- --}}
-      <div class="tweets-content">
-        <div class="left-item">
-          <a href="/users/{{user.id}}">
-            <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;background-color:#C4C4C4;">
-          </a>
-        </div>
-        <div class="right-item">
-          <div class="title">
-            <span class="name">
-              <a href="">
-                {{user.name}}
-              </a>
-            </span>
-            <span class="time">
-              @{{user.account}}・a day ago
-            </span>
-          </div>
-          <div class="body">
-            Needless to say, I keep her in check
-            She was a bad bad, nevertheless (yeah)
-            Callin' it quits now, baby, I'm a wreck (ayy)
-            Crash at my place, baby, you're a wreck (ayy)
-          </div>
-          <div class="footer">
-            <div class="footer-item reply-item">
-              <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                <i class="icon-reply"></i>
-              </button>
-              <div class="item-count reply-count">13</div>
-            </div>
-            <div class="footer-item like-item">
-              <button type="button" class="btn">
-                <i class="icon-like"></i>
-              </button>
-              <div class="item-count like-count">79</div>
+            <div class="footer">
+              <div class="footer-item reply-item">
+                <button type="button" class="btn ply-on" data-toggle="modal" data-target="#replyModal">
+                  <i class="icon-reply"></i>
+                </button>
+                <div class="item-count reply-count">{{this.Replies.length}}</div>
+              </div>
+              <div class="footer-item like-item">
+                <button type="button" class="btn">
+                  <i class="icon-like"></i>
+                </button>
+                <div class="item-count like-count">{{this.Likes.length}}</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="tweets-content">
-        <div class="left-item">
-          <a href="/users/{{user.id}}">
-            <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;background-color:#C4C4C4;">
-          </a>
-        </div>
-        <div class="right-item">
-          <div class="title">
-            <span class="name">
-              <a href="">
-                {{user.name}}
-              </a>
-            </span>
-            <span class="time">
-              @{{user.account}}・a day ago
-            </span>
-          </div>
-          <div class="body">
-            Needless to say, I keep her in check
-            She was a bad bad, nevertheless (yeah)
-            Callin' it quits now, baby, I'm a wreck (ayy)
-            Crash at my place, baby, you're a wreck (ayy)
-          </div>
-          <div class="footer">
-            <div class="footer-item reply-item">
-              <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                <i class="icon-reply"></i>
-              </button>
-              <div class="item-count reply-count">13</div>
-            </div>
-            <div class="footer-item like-item">
-              <button type="button" class="btn">
-                <i class="icon-like"></i>
-              </button>
-              <div class="item-count like-count">79</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {{!-- -------------------------------------------------------- --}}
+      {{/each}}
     </div>
   </div>
-
   {{!-- right-column --}}
   {{> right-column}}
   {{> modal}}
