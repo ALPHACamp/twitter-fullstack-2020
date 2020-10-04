@@ -84,6 +84,7 @@ const userController = {
         { model: User, as: 'Followings' }
       ], order: [[Tweet, 'createdAt', 'DESC']]
     }).then(user => {
+      // console.log(user.Tweets)
       const pageUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
       pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(user.id)
@@ -94,7 +95,7 @@ const userController = {
       // })
 
       return res.render('user/userPage', {
-        user: pageUser,
+        users: pageUser,
         currentUserId
       })
     })
@@ -110,6 +111,7 @@ const userController = {
         { model: User, as: 'Followings' }
       ], order: [[LikedTweets, 'createdAt', 'DESC']]
     }).then(user => {
+      console.log(user)
       const pageUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
       pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
