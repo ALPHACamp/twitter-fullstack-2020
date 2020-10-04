@@ -1,5 +1,7 @@
 <div class="col-md-9 pl-0 border-left">
+  {{> message}}
   <div class="main">
+
     <div class="header"
       style="width: 600px;height: 55px;left: 378px;top: -1px;background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;">
       首頁</div>
@@ -17,8 +19,7 @@
             <textarea name="description" cols="55" rows="5"
               style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
               placeholder="有什麼新鮮事"></textarea>
-            <button type="submit"
-              style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+            <button type="submit" class="btn" style="background: #FF6600;border-radius: 100px;">
               <span style="color: #FFFFFF;">推文</span></button>
           </form>
         </div>
@@ -42,7 +43,7 @@
               <div class="tweet-item-title">
                 <span class="mt-1"><a href="#">{{this.User.dataValues.name}}</a></span>
                 <span class="user-account">
-                  {{this.User.dataValues.account}}．{{moment User.dataValues.createdAt}}
+                  {{this.User.dataValues.account}}．{{moment this.createdAt}}
                 </span>
 
               </div>
@@ -93,21 +94,19 @@
               </div>
             </div>
 
-
-
             {{#if isLiked}}
-            <form action="/tweets/{{this.User.dataValues.id}}/unlike" method="POST" style="display:inline;">
-              <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
+            <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit" class="mt-4 mb-4" style="background: none;border: none;">
                 <i class="far fa-heart"></i>
                 {{else}}
-                <form action="/tweets/{{this.User.dataValues.id}}/like" method="POST" style="display:inline; ">
-
-                  <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
+                <form action="/like/{{this.id}}" method="POST" style="display:inline; ">
+                  <button type="submit" class="mt-4 mb-4" style="background: none;border: none;">
                     <i class="fas fa-heart"></i>
                     {{/if}}
                     {{this.LikedUsers.length}}
                   </button>
                 </form>
+
           </div>
         </div>
         {{/each}}

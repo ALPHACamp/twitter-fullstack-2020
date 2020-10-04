@@ -6,6 +6,7 @@ const db = require('./models')
 const app = express()
 const port = 3000
 const passport = require('./config/passport')
+const methodOverride = require("method-override");
 
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -13,6 +14,7 @@ const session = require('express-session')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(methodOverride("_method"));
 
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
@@ -30,11 +32,12 @@ app.use((req, res, next) => {
   next()
 })
 
-
-app.use(bodyParser.urlencoded({ extended: true }))
-app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
+app.engine('handlebars', handlebars({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
+ 
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
@@ -48,10 +51,6 @@ app.use((req, res, next) => {
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-app.engine('handlebars', handlebars({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
-app.set('view engine', 'handlebars')
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
 
 
 app.get('/', (req, res) => res.send('Hello World!'))
