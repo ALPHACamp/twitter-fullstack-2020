@@ -1,5 +1,5 @@
 const express = require('express')
-const helpers = require('./_helpers');
+const helpers = require('./_helpers')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
