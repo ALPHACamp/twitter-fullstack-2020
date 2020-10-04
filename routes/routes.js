@@ -9,6 +9,13 @@ const userController = require('../controllers/userController');
 const tweetController = require('../controllers/tweetController');
 const followshipController = require('../controllers/followshipController');
 
+const multer = require('multer');
+const upload = multer({ dest: 'temp/' });
+const imgUpload = upload.fields([
+  { name: 'avatar', maxCount: 1 },
+  { name: 'cover', maxCount: 1 },
+]); // 同時傳兩張圖片的設定
+
 const adminAuthenticated = (req, res, next) => {
   if (
     helpers.ensureAuthenticated(req) &&
@@ -69,6 +76,13 @@ router.get(
   userController.getTweetsPage,
 );
 router.get('/users/:id/likes', userAuthenticated, userController.getLikesPage);
+
+router.post(
+  '/users/:id/edit',
+  userAuthenticated,
+  imgUpload,
+  userController.putUserProfile,
+);
 
 router.post('/followships', userAuthenticated, followshipController.addFollow);
 router.delete(

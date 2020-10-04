@@ -3,52 +3,61 @@
 <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="">
+    <form action="/users/{{user.id}}/edit" enctype="multipart/form-data" method="post">
       <div class="modal-content edit-modal-content">
         <div class="edit-modal-header">
+
           <div class="edit-left-top">
             <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">&times;
             </button>
             <span>編輯個人資料</span>
           </div>
+
           <div class="edit-right-top">
-            <button type="sbumit" class="btn btn-post-modal">儲存</button>
+            <button type="submit" class="btn btn-post-modal">儲存</button>
           </div>
+
         </div>
+
         <div class="edit-modal-body">
+
           <div class="edit-item-cover"
             style="background: url({{user.cover}});background-repeat:no-repeat;background-position: center;background-size: cover;">
-            <label for="cover-upload"><i class="icon-photo cover"></i></label>
+            <label for="cover"><i class="icon-photo cover"></i></label>
+            <input type="file" name="cover" class="custom-file-input" id="cover">
             <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button>
           </div>
-          <div class="edit-item-avatar" class="rounded-circle"
-            style="background: url({{user.avatar}});background-position:center;background-size:cover;">
-            <label for="avatar-upload"><i class="icon-photo avatar"></i></label>
+
+          <div class="edit-item-avatar" class="rounded-circle" style="background: url({{user.avatar}}),#C4C4C4;
+            background-position:center;background-size:cover;">
+            <label for="avatar"><i class="icon-photo avatar"></i></label>
+            <input type="file" name="avatar" class="custom-file-input" id="avatar">
           </div>
+
           <div class="edit-item-name">
             <div class="item-name-top">
               <span class="item-name-top-mark">Name</span>
             </div>
-            <input type="text" value="{{user.name}}">
+            <input type="text" id="name" name="name" placeholder="name" maxlength="50" value="{{user.name}}">
             <div class="item-name-bottom">
-              <span>4/50</span>
+              <span>{{user.name.length}}/50</span>
             </div>
           </div>
+
           <div class="edit-item-text">
             <div class="item-text-top">
               <span class="item-text-top-mark">自我介紹</span>
             </div>
-            <textarea name="" id="" class="item-text-center" cols="30" rows="10">{{user.introduction}}</textarea>
+            <textarea name="introduction" id="introduction" placeholder="introduction" maxlength="160"
+              class="item-text-center" cols="30" rows="10">{{user.introduction}}</textarea>
             <div class="item-text-bottom">
-              <span>1/160</span>
+              <span>{{user.introduction.length}}/160</span>
             </div>
           </div>
 
         </div>
       </div>
       <div class="edit-modal-footer">
-        <input type="file" class="custom-file-input" id="cover-upload">
-        <input type="file" class="custom-file-input" id="avatar-upload">
       </div>
     </form>
   </div>

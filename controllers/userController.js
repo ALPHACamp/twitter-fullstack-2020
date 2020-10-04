@@ -7,6 +7,9 @@ const Reply = db.Reply;
 const { Op } = require('sequelize');
 const helpers = require('../_helpers');
 
+const imgur = require('imgur-node-api');
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
+
 const userController = {
   getSigninPage: (req, res) => {
     return res.render('signin');
@@ -185,6 +188,64 @@ const userController = {
   },
   getFollowingsPage: (req, res) => {
     return res.render('following');
+  },
+  putUserProfile: async (req, res) => {
+    const UserId = Number(req.params.id);
+    //console.log('login', helpers.getUser(req).id);
+    //console.log('pa $$$', UserId);
+    if (helpers.getUser(req).id !== UserId) {
+      req.flash('errorMessage', '你沒有足夠的權限');
+      return res.redirect('back');
+    }
+
+    if (!req.body.name || req.body.name.length > 50) {
+      req.flash('errorMessage', '名稱長度不符');
+      return res.redirect('back');
+    }
+
+    if (!req.body.introduction || req.body.introduction.length > 160) {
+      req.flash('errorMessage', '自我介紹長度不符');
+      return res.redirect('back');
+    }
+
+    const { files } = req;
+    //console.log('files', files);
+    //console.log('file', req.file);
+    if (files) {
+      const { avatar, cover } = req.files;
+      imgur.setClientID(IMGUR_CLIENT_ID);
+
+      console.log('avatatar', avatar != null);
+      console.log('cover', cover != null);
+      if (avatar != null) {
+        let avatarPath = avatar[0].path;
+        console.log('avatatar', img.data.link);
+        await imgur.upload(avatarPath, (error, img) => {
+          User.findByPk(UserId).then((user) =>
+            user.update({ avatar: img.data.link }),
+          );
+        });
+      }
+
+      if (cover != null) {
+        let coverPath = cover[0].path;
+        await imgur.upload(coverPath, (error, img) => {
+          console.log('cover', img.data.link);
+          User.findByPk(UserId).then((user) =>
+            user.update({ cover: img.data.link }),
+          );
+        });
+      }
+    }
+
+    return User.findByPk(UserId).then(async (user) => {
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+      });
+      req.flash('successMessage', '更新成功！');
+      return res.redirect(`/users/${UserId}/tweets`);
+    });
   },
   signup: (req, res) => {
     Object.keys(req.body).forEach((d) => (req.body[d] = req.body[d].trim()));
