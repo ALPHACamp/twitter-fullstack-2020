@@ -191,11 +191,13 @@ const userController = {
   },
   putUserProfile: async (req, res) => {
     const UserId = Number(req.params.id);
+    //imgur.setClientID(IMGUR_CLIENT_ID);
+    console.log('IMGUR_CLIENT_ID', IMGUR_CLIENT_ID);
     //console.log('login', helpers.getUser(req).id);
     //console.log('pa $$$', UserId);
     if (helpers.getUser(req).id !== UserId) {
       req.flash('errorMessage', '你沒有足夠的權限');
-      return res.redirect('back');
+      res.redirect('/tweets');
     }
 
     if (!req.body.name || req.body.name.length > 50) {
@@ -215,36 +217,99 @@ const userController = {
       const { avatar, cover } = req.files;
       imgur.setClientID(IMGUR_CLIENT_ID);
 
-      console.log('avatatar', avatar != null);
-      console.log('cover', cover != null);
       if (avatar != null) {
         let avatarPath = avatar[0].path;
-        console.log('avatatar', img.data.link);
-        await imgur.upload(avatarPath, (error, img) => {
-          User.findByPk(UserId).then((user) =>
-            user.update({ avatar: img.data.link }),
-          );
-        });
-      }
+        await imgur.upload(avatarPath, async (err, img) => {
+          let avatar = img.data.link;
+          console.log('avatar', avatar);
+          if (cover != null) {
+            let coverPath = cover[0].path;
+            await imgur.upload(coverPath, (err, img) => {
+              let cover = img.data.link;
 
-      if (cover != null) {
+              return User.findByPk(UserId).then((user) =>
+                user
+                  .update({
+                    cover,
+                    avatar,
+                    name: req.body.name,
+                    introduction: req.body.introduction,
+                  })
+                  .then(() => {
+                    req.flash('successMessage', '更新成功！');
+                    return res.redirect(`/users/${UserId}/tweets`);
+                  }),
+              );
+            });
+          } else {
+            return User.findByPk(UserId).then((user) =>
+              user
+                .update({
+                  avatar,
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                })
+                .then(() => {
+                  req.flash('successMessage', '更新成功！');
+                  return res.redirect(`/users/${UserId}/tweets`);
+                }),
+            );
+          }
+          //await User.findByPk(UserId).then(async (user) => await user.update({ avatar }));
+        });
+      } else if (cover != null) {
         let coverPath = cover[0].path;
-        await imgur.upload(coverPath, (error, img) => {
-          console.log('cover', img.data.link);
-          User.findByPk(UserId).then((user) =>
-            user.update({ cover: img.data.link }),
+        await imgur.upload(coverPath, (err, img) => {
+          let cover = img.data.link;
+
+          return User.findByPk(UserId).then((user) =>
+            user
+              .update({
+                cover,
+                name: req.body.name,
+                introduction: req.body.introduction,
+              })
+              .then(() => {
+                req.flash('successMessage', '更新成功！');
+                return res.redirect(`/users/${UserId}/tweets`);
+              }),
           );
         });
+      } else {
+        return User.findByPk(UserId).then((user) => {
+          user
+            .update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+            })
+            .then(() => {
+              req.flash('successMessage', '更新成功！');
+              return res.redirect(`/users/${UserId}/tweets`);
+            });
+        });
       }
-    }
+      // if (cover != null) {
+      //   let coverPath = cover[0].path;
+      //   await imgur.upload(coverPath, (err, img) => {
+      //     let cover = img.data.link;
+      //     User.findByPk(UserId).then((user) => user.update({ cover,name: req.body.name,
+      //     introduction: req.body.introduction }));
+      //   });
+      // }
 
-    return User.findByPk(UserId).then(async (user) => {
-      await user.update({
-        name: req.body.name,
-        introduction: req.body.introduction,
-      });
-      req.flash('successMessage', '更新成功！');
-      return res.redirect(`/users/${UserId}/tweets`);
+      //console.log('avatatar', avatar != null);
+      //console.log('cover', cover != null);
+    }
+    return User.findByPk(UserId).then((user) => {
+      user
+        .update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+        })
+        .then(() => {
+          req.flash('successMessage', '更新成功！');
+          return res.redirect(`/users/${UserId}/tweets`);
+        });
     });
   },
   signup: (req, res) => {
