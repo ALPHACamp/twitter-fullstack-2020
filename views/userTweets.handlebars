@@ -1,91 +1,167 @@
 <div id="left">
-	<div class="row" style="text-align: center;">
-		<ul>
-      <h1>
-				<li>
-					<a class="nav-link active" href="/tweets">首頁</a>
-				</li>
-				<li>
-					<a class="nav-link" href="/users/{{user.id}}/tweets">個人資料</a>
-				</li>
-				<li>
-					<a class="nav-link active" href="/">設定</a>
-				</li>
-      </h1>
-		</ul> 
-	</div>
-    <button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#tweetModal">
-		推文
-	</button>
+	<ul class="nav flex-column justify-content-between" style="height: 100vh;">
+		<div class="flex-colum ">
+			<a class="navbar-brand ml-3 mb-3" href="/">
+			<img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
+			height="30" alt="">
+			</a>
+			<li class="nav-item">
+				<a class="nav-link" href="/tweets" style="color: black;"><i class="fas fa-home mr-2"></i>首頁</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/users/{{user.id}}/tweets" style="color: black;"><i class="fas fa-user mr-2"></i>個人資料</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/setting/{{user.id}}" style="color: black;"><i class="fas fa-cog mr-2"></i>設定</a>
+			</li>
+			<button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#tweetModal">
+				推文
+			</button>
+		</div>
+		<li class="nav-item">
+		<a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
+		</li>
+	</ul>
 </div>
 {{!-- 中間區域 --}}
 <h5>{{profile.name}}</h5>
 <a href="javascript:history.back()">回上一頁</a>
 <hr />
 <div id="main">
-    {{#if profile.avatar}}
-    <img
-      class="my-5 rounded"
-      src="{{profile.avatar}}"
-      alt="{{profile.name}}"
-      width="200px"
-      height="200px"
-      style="border: solid 7px white"
-      />
-    {{else}}
-    <img
-      class="my-5 rounded"
-      src="https://lighthouse-cdn.alphacamp.co/default/medium_user_photo.jpg"
-      width="200px"
-      height="200px"
-      style="border: solid 7px white"
-      />
-    {{/if}}
+	<img class="ex1" src="{{profile.cover}}" alt="/" width="890px" height="180px">
+	<div style="position:absolute;z-index:2;left:600px;top:200px;">
+		{{#if profile.avatar}}
+			<img
+			class="rounded-circle"
+			src="{{profile.avatar}}"
+			alt="{{profile.name}}"
+			width="150"
+			height="150"
+			style="border: solid 7px white"
+			/>
+		{{else}}
+			<img
+			class="rounded-circle"
+			src="https://lighthouse-cdn.alphacamp.co/default/medium_user_photo.jpg"
+			width="200px"
+			height="200px"
+			style="border: solid 7px white"
+			/>
+		{{/if}}
+	</div>
 	<h3 class="card-title"><strong>{{profile.name}}</strong></h3>
 	<h5 class="card-title">@{{profile.account}}</h5>
 	<p>{{profile.introduction}}</p>	
 	{{#ifCond profile.id user.id }}
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 			Edit Profile
 		</button>
-  {{/ifCond}}
-	  {{#if profile.isFollowing}}
-      <form
-        action="/followships/{{profile.id}}?_method=DELETE"
-        method="POST"
-        style="display: contents;">
-        <button type="submit" class="btn btn-danger">
-          UnFollow
-        </button>
-      </form>
+  	{{/ifCond}}
+	{{#if profile.isFollowing}}
+		<form
+			action="/followships/{{profile.id}}?_method=DELETE"
+			method="POST"
+			style="display: contents;">
+			<button type="submit" class="btn btn-danger">
+			UnFollow
+			</button>
+		</form>
     {{else}}
-      <form action="/followships" method="POST" style="display: contents;">
-        <input type="hidden" name="id" value="{{profile.id}}" />
-        <button type="submit" class="btn btn-primary">
-          follow
-        </button>
-      </form>
+		<form action="/followships" method="POST" style="display: contents;">
+			<input type="hidden" name="id" value="{{profile.id}}" />
+			<button type="submit" class="btn btn-primary">
+			follow
+			</button>
+		</form>
     {{/if}}
-	  {{#each tweets}}
-	  <div class="card mb-3" style="max-width: 900px;">
-		<div class="row no-gutters">
-			<div class="col-md-4">
-			  <img src="{{this.User.avatar}}" class="card-img" alt="user avatar">
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a class="nav-link" href="#tweets" data-toggle="tab">推文</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#tweetreply" data-toggle="tab">推文與回覆</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" href="#tweetlike" data-toggle="tab">喜歡的內容</a>
+		</li>
+	</ul>
+	<div class="tab-content"> 
+		{{!-- 推文 --}}
+		<div class="tab-pane active" id="tweets">
+		{{#each tweets}}
+			<div class="card mb-3" style="max-width: 900px;">
+				<div class="row no-gutters">
+					<div class="col-md-4">
+					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">
+								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+								<small class="text-muted">{{moment this.createdAt }}</small>
+							</h5>
+							<p class="card-text">
+							{{this.description}}
+							</p>
+							{{!-- like --}}
+							{{#if isLiked }}
+								<form action="/like/{{this.id}}?_method=DELETE" method="POST">
+										<button type="submit" class="fas fa-heart"></button>
+										({{this.LikeCount}})
+								</form>
+							{{else}}
+								<form action="/like/{{this.id}}" method="POST">
+										<button type="submit" class="far fa-heart"></button>
+										({{this.LikeCount}})
+								</form>
+							{{/if}}
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-md-8">
-      			<div class="card-body">
-        			<h5 class="card-title">
-						<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-						<small class="text-muted">{{moment this.createdAt }}</small>
-					</h5>
-        			<p class="card-text">
-          			{{this.description}}
-        			</p>
-      			</div>
-    		</div>
+		{{/each}}
+		</div>
+		{{!-- 推文與回覆 --}}
+		<div class="tab-pane" id="tweetreply">tweetreply</div>
+		{{!-- 喜歡的內容 --}}
+		<div class="tab-pane" id="tweetlike">
+			{{#each profile.LikedTweets}}
+			<div class="card mb-3" style="max-width: 900px;">
+				<div class="row no-gutters">
+					<div class="col-md-4">
+					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
+					</div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">
+								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+								<small class="text-muted">{{moment this.createdAt }}</small>
+							</h5>
+							<p class="card-text">
+							{{this.description}}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			{{/each}}
 		</div>
 	</div>
-	{{/each}}
+</div>
+{{!-- 右邊區域 --}}
+<div id="right">
+	<div class="col-md-7 column">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					推薦
+				</h3>
+			</div>
+			<div class="panel-body">
+				Panel content
+			</div>
+		</div>
+	</div>
 </div>
 {{!-- modal --}}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -173,3 +249,8 @@
 	</div>
 </div>
 
+{{!-- 頁籤script --}}
+<script>
+    $(document).ready(function(){
+    });
+</script>
