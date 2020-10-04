@@ -140,7 +140,7 @@ const userController = {
       if (user !== null && user.isAdmin === false) {
         // const targetUser = user.toJSON();
         const followings = helpers.getUser(req).Followings.map((u) => u.id);
-        const followers = helpers.getUser(req).Followers.map((u) => u.id);
+        //const followers = helpers.getUser(req).Followers.map((u) => u.id);
 
         const data = user.toJSON();
         let Tweets = data.Tweets;
