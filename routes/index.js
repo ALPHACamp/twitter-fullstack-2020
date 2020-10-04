@@ -72,4 +72,6 @@ module.exports = (app, passport) => {
   // user 相關路由
   app.get('/users/:id/tweets', authenticated, userController.getRecommendedFollowings, userController.getUserTweets)
   app.get('/users/:id/likes', authenticated, userController.getRecommendedFollowings, userController.getUserLikes)
+
+  app.get('/users/:id/followers', authenticated, userController.getUserFollowings)
 }
