@@ -99,9 +99,24 @@ const userController = {
   getSetting: (req, res) => {
     return res.render('setting')
   },
+
   putSetting: (req, res) => {
-    return res.render('setting')
+
+    return User.findByPk(req.params.id)
+      .then(user => {
+        user.update({
+          account: req.body.account,
+          name: req.body.name,
+          email: req.body.email,
+          password: req.body.password
+        })
+          .then(user => {
+            req.flash('success_messages', 'user was successfully update')
+            res.redirect('setting')
+          })
+      })
   },
+
 }
 
 module.exports = userController

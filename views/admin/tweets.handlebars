@@ -1,38 +1,38 @@
 <div class="col-md-9 pl-0">
-    <h3 class="ml-2">推文清單</h3>
-    <hr>
-    {{#each tweets}}
-    {{!-- <div class="row m-auto"> --}}
-    <div class="row justify-content-between">
-      <div class="row col-11">
-        <div class="avatar mt-2 ml-4">
-          <img src="{{this.User.avatar}}" alt=" image" class="border rounded-circle" style="width: 90px">
-        </div>
-        <div class="information d-flex flex-column mt-2 col">
-          <div class="d-flex">
-               <div class="name" name="name">
-              <a><strong>{{this.User.name}}&ensp;</strong></a>
-            </div>
-            <div class="account" name="account">
-              <a>{{this.User.account}} </a>
-            </div>
-            <div class="createdAt" name="createdAt">
-              &ensp;·&ensp;{{moment this.createdAt}}
-            </div>
+  <h3 class="ml-2">推文清單</h3>
+  <hr>
+  {{#each tweets}}
+  {{!-- <div class="row m-auto"> --}}
+  <div class="row justify-content-between">
+    <div class="row col-11">
+      <div class="avatar mt-2 ml-4">
+        <img src="{{this.User.avatar}}" alt=" image" class="border rounded-circle" style="width: 90px">
+      </div>
+      <div class="information d-flex flex-column mt-2 col">
+        <div class="d-flex">
+          <div class="name" name="name">
+            <a><strong>{{this.User.name}}&ensp;</strong></a>
           </div>
-          <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
-            {{this.description}}
+          <div class="account" name="account">
+            <a>{{this.User.account}} </a>
+          </div>
+          <div class="createdAt" name="createdAt">
+            &ensp;·&ensp;{{moment this.createdAt}}
           </div>
         </div>
+        <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
+          {{this.description}}
         </div>
-      <form action="_method=DELETE" method="POST" class="col-1 mr-2">
-        <button type="submit" class="close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </form>
+      </div>
     </div>
-    {{!-- </div> --}}
-    <hr>
-    {{/each}}
+    <form action="_method=DELETE" method="POST" class="col-1 mr-2">
+      <button type="submit" class="close" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </form>
   </div>
-</div> 
+  {{!-- </div> --}}
+  <hr>
+  {{/each}}
+</div>
+</div>
