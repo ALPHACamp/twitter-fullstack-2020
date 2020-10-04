@@ -1,0 +1,130 @@
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
+    <div>
+      {{> left-column}}
+    </div>
+  </nav>
+
+  <div class="center-content d-flex" id="tweet-content">
+    <div class="head  justify-content-between ">
+      <a href="javascript:history.back()" style="color: black;">
+        <div class="d-flex">
+          <i class="fas fa-arrow-left ml-2 mt-3"></i>
+          <h5 class="tweet-title">{{users.name}}</h5>
+        </div>
+      </a>
+      <div class="user-cover">
+        <img src="{{users.cover}}" alt="{{users.cover}}">
+      </div>
+      <div class="tweet-content-box">
+        <div class=" user-info-top">
+          <a href="/users/{{users.id}}/tweets">
+            <img class="ml-2 mt-2" {{#if users.avatar}}src={{users.avatar}}{{/if}}>
+          </a>
+        </div>
+        <div class="tweet-content-right">
+          <div class="tweet-content-username">
+            <a href="/users/{{users.id}}/tweets" class="user-name">{{users.name}}</a>
+            <span class="user-account">@{{users.account}}</span>
+          </div>
+          <div class="tweet-content-info">
+            <span class="tweet-content-description">{{users.introduction}}</span><br>
+          </div>
+          <div class="user-followships">
+            <a href="/users/{{users.id}}/followings">{{users.Followings.length}}個</a>
+            <span>跟隨中&nbsp;&nbsp;</span>
+            <a href="/users/{{users.id}}/followers">{{users.Followers.length}}位</a>
+            <span>跟隨者</span>
+          </div>
+        </div>
+
+        <div class="user-info-top">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            編輯個人資料
+          </button>
+          {{#ifCond users.id currentUserId}}
+          {{else}}
+          {{#if pageUser.isFollowed}}
+          <a href="mailto:{{users.email}}"><i class="far fa-envelope"></i></a>
+          <i class="far fa-bell"></i>
+          <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="display: inline-block;">
+            <button type="submit" class="btn btn-primary">正在跟隨</button>
+          </form>
+          {{else}}
+          {{#ifCond users.id ""}}
+          <form action="/followships/{{users.id}}" method="POST" style="display: inline-block;">
+            <button type="submit" class="btn btn-primary">跟隨</button>
+          </form>
+          {{/ifCond}}
+          {{/if}}
+          {{/ifCond}}
+        </div>
+
+
+
+      </div>
+      <div class="user-selection-bar">
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="/users/{{users.id}}/tweets">推文</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/{{users.id}}/replies">推文與回應</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/users/{{users.id}}/likes">喜歡的內容</a>
+          </li>
+        </ul>
+      </div>
+      <div class="tweet-all">
+        {{#each users}}
+        <div class="tweet-content-box" onclick="location.href='/tweets/{{../this.id}}'">
+          <div class="tweet-content-left">
+            <a href="/users/{{../this.id}}/tweets">
+              <img class="ml-2 mt-2" {{#if ../this.avatar}}src={{../this.avatar}}{{/if}}
+                style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+            </a>
+          </div>
+          <div class="tweet-content-right">
+            <div class="tweet-content-username">
+              <a href="/users/{{../user.id}}/tweets" class="user-name">{{../user.UserId}}</a>
+              <span class="user-account">@{{this.account}}．{{moment ../user.createdAt}}</span>
+            </div>
+            <div class="tweet-content-info">
+              <span class="tweet-content-description">{{this.description}}</span><br>
+            </div>
+            <div class="tweet-content-bottom">
+              {{!-- reply icon --}}
+              <button type="button" class="button tweet-reply-link">
+                <i class="fas fa-cus-reply" aria-hidden="true"></i>10{{RepliesCount}}
+              </button>
+              {{!-- like/unlike icon --}}
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-filled-like"></i>
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-like"></i>5{{LikesCount}}
+                </button>
+              </form>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="right-content">
+    {{!-- {{>right-column}} --}}
+  </div>
+
+  {{> userEdit}}
