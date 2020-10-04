@@ -5,7 +5,7 @@
         <img style="width: 50px; height: 50px" src="https://i.imgur.com/yqet9K2.png" alt="AlphaCamp">
         <h1 class="text-center mt-3">建立你的賬號</h1>
       </div>
-      <form action="/users/register" method="POST">
+      <form action="/signup" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" value="{{ name }}">
@@ -35,7 +35,7 @@
         {{!-- <a href="/auth/facebook" class="btn btn-info btn-block">Facebook</a> --}}
       </form>
       <p class=" lead mt-4 text-center" style="font-size: 14px; font-weight: bold;">
-        <a href="/users/login"><u>取消</u></a>
+        <a href="/signin"><u>取消</u></a>
       </p>
     </div>
   </div>
