@@ -40,6 +40,7 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', authenticated, tweetController.addLike)
   app.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
   app.get('/tweets/:id', authenticated, userController.getRecommendedFollowings, tweetController.getTweet) // 顯示單一 tweet
+  app.post('/tweets/:id/replies', authenticated, tweetController.postReply) // 新增 reply
 
   // 註冊頁
   app.get('/signup', userController.signUpPage)
