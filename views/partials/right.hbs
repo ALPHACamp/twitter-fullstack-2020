@@ -1,0 +1,44 @@
+<div class="col-4">
+  <ul class="list-group mt-3 ml-3" >
+    <li class="list-group-item" style="background-color:lightgray;">
+      <strong>跟隨誰</strong>
+    </li>
+    {{#each users}}
+    <li class="list-group-item" style="background-color: lightgray;">
+      <div class="flex-container">
+        {{!-- <div class="p-3">Avatar</div> --}}
+        <div class="mr-2">
+          <a href="/users/this.id">
+          <img src="{{this.avatar}}" alt="user avatar" class="user-avatar">
+          </a>
+        </div>
+        <div>
+          <strong>{{this.name}}</strong><br> 
+          <span class="text-muted">@{{this.account}}</span>
+        </div>
+        <div class="align-self-center ml-auto">
+          {{#ifCond ../loginUser.id this.id}}
+          {{else}}
+            {{#if this.isFollowing}}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn" style="border-radius: 18px; background:coral; color:white; width: auto">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/following/{{this.id}}" method="POST">
+              <button type="submit" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</button>
+            </form>
+            {{/if}}
+          {{/ifCond}}
+        </div>
+      </div>
+    </li>
+    {{/each}}
+    <li class="list-group-item" style="background-color: lightgray;">
+      {{#if tweetFollowings}}
+      <a href="/tweets?more=10" style="color: coral;">顯示更多</a>
+      {{else}}
+      <a href="/tweets/{{tweet.id}}?more=10" style="color: coral;">顯示更多</a>
+      {{/if}}
+    </li>
+  </ul>
+</div>

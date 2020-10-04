@@ -10,6 +10,8 @@ const passport = require('./config/passport')
 const app = express()
 const port = 3000
 
+app.use(express.static('public'))
+
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs',
@@ -23,6 +25,7 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(methodOverride('_method'))
 app.use(passport.initialize())
 app.use(passport.session())
+
 app.use(flash())
 app.use(methodOverride('_method'))
 // app.use('/upload', express.static(__dirname+'/upload'))
