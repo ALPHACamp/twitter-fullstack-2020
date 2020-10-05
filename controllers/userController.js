@@ -70,34 +70,76 @@ const userController = {
       }))
       users = users.filter(user => (user.role === "user" && user.name !== helpers.getUser(req).name))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 6)
-      res.locals.users = users
+      res.locals.recommendedList = users
       return next()
     })
+  },
+  getSetting: (req, res) => {
+    // console.log('helpers.getUser(req).id', helpers.getUser(req).id)
+    return res.render('setting')
+  },
+
+  putSetting: (req, res) => {
+    const { account, name, email, password, checkPassword } = req.body
+    const id = req.params.id
+
+    if (password !== checkPassword) {
+      req.flash('error_messages', '請再次確認密碼')
+      return res.redirect('back')
+    }
+    else {
+      User.findOne({ where: { email: email } }).then(user => {
+        if (user) {
+          req.flash('error_messages', '信箱已註冊')
+          return res.redirect('back')
+        } else {
+          User.findOne({ where: { account: account } }).then(user => {
+            if (user) {
+              req.flash('error_messages', '帳號已註冊')
+              return res.redirect('back')
+            } else {
+              return User.findByPk(id)
+                .then((user) => {
+                  user.update({
+                    email: email,
+                    name: name,
+                    account: account,
+                    password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+                  }).then((user) => {
+                    req.flash('success_messages', '成功更新帳號資訊!')
+                    return res.redirect('/tweets')
+                  })
+                })
+            }
+          })
+        }
+      })
+    }
   },
 
   getUserTweets: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        Tweet,
-        { model: Tweet, as: 'LikedTweets' },
+        {
+          model: Tweet,
+          include: [
+            Reply,
+            { model: User, as: 'LikedUsers' }
+          ]
+        },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ], order: [[Tweet, 'createdAt', 'DESC']]
     }).then(user => {
-      // console.log(user.Tweets)
       const pageUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
-      pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(user.id)
 
-      // // 不確定能否撈到 tweet 資料
-      // pageUser.Tweets.forEach(tweet => {
-      //   tweet.isLiked = tweet.Likes.map(item => item.id).includes(currentUserId)
-      // })
-
-      return res.render('user/userPage', {
-        users: pageUser,
-        currentUserId
+      pageUser.Tweets.forEach(tweet => {
+        tweet.isLiked = tweet.LikedUsers.map(d => d.id).includes(currentUserId)
       })
+      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
+
+      return res.render('user/userPage', { users: pageUser })
     })
   },
 
