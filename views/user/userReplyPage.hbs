@@ -51,11 +51,11 @@
             <button type="submit" class="btn btn-primary">正在跟隨</button>
           </form>
           {{else}}
-          {{!-- {{#ifCond users.id ""}} --}}
+          {{#ifCond users.id ""}}
           <form action="/followships/{{users.id}}" method="POST" style="display: inline-block;">
             <button type="submit" class="btn btn-primary">跟隨</button>
           </form>
-          {{!-- {{/ifCond}} --}}
+          {{/ifCond}}
           {{/if}}
           {{/ifCond}}
         </div>
@@ -72,51 +72,31 @@
             <a class="nav-link" href="/users/{{users.id}}/replies">推文與回應</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/users/{{users.id}}/likes">喜歡的內容</a>
+            <a class="nav-link" href="/users/{{users.id}}/likes">喜歡的內容</a>
           </li>
         </ul>
       </div>
-      <div class="tweet-all">
-        {{#each users.Likes}}
-        <div class="tweet-content-box" onclick="location.href='/tweets/{{../this.id}}'">
-          <div class="tweet-content-left">
-            <a href="/users/{{../this.id}}/tweets">
-              <img class="ml-2 mt-2" {{#if ../this.avatar}}src={{../this.avatar}}{{/if}}
-                style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
-            </a>
+      {{#each users.Replies}}
+      <div class="tweet-content-box">
+        <div class="tweet-content-left">
+          <a href="/users/{{this.User.id}}/tweets">
+            <img class="ml-2 mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+              style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+          </a>
+        </div>
+        <div class="tweet-content-right">
+          <div class="tweet-content-username">
+            <a href="/users/{{this.User.id}}/tweets" class="user-name">{{this.User.name}}</a>
+            <span class="user-account">@{{this.User.account}}．{{moment this.createdAt}}</span><br>
           </div>
-          <div class="tweet-content-right">
-            <div class="tweet-content-username">
-              <a href="/users/{{../user.id}}/tweets" class="user-name">fake{{../user.UserId}}</a>
-              <span class="user-account">@fake{{../users.LikedUsers}}．fake{{moment ../user.createdAt}}</span>
-            </div>
-            <div class="tweet-content-info">
-              <span class="tweet-content-description">fake{{this.LikedTweets.description}}</span><br>
-            </div>
-            <div class="tweet-content-bottom">
-              {{!-- reply icon --}}
-              <button type="button" class="button tweet-reply-link">
-                <i class="fas fa-cus-reply" aria-hidden="true"></i>10{{RepliesCount}}
-              </button>
-              {{!-- like/unlike icon --}}
-              {{#if isLiked}}
-              <form action="/tweets/{{this.id}}/unlike" method="POST">
-                <button type="submit" class="button tweet-like-link">
-                  <i class="fas fa-cus-filled-like"></i>
-                </button>
-              </form>
-              {{else}}
-              <form action="/tweets/{{this.id}}/like" method="POST">
-                <button type="submit" class="button tweet-like-link">
-                  <i class="fas fa-cus-like"></i>5{{LikesCount}}
-                </button>
-              </form>
-              {{/if}}
-            </div>
+          <div class="tweet-content-info">
+            <span class="reply-account">回覆@</span><span
+              class="reply-tweet-account">fake{{../Replies.Tweet.User.account}}</span><br>
+            <span class="tweet-content-description">{{this.comment}}</span><br>
           </div>
         </div>
-        {{/each}}
       </div>
+      {{/each}}
 
     </div>
 

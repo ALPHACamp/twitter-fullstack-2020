@@ -112,7 +112,7 @@ const userController = {
       // ], order: [[LikedTweets, 'createdAt', 'DESC']]
     }).then(user => {
       // console.log(user.dataValues)
-      console.log(user.dataValues)
+      // console.log(user.dataValues)
       const pageUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
       pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
@@ -139,7 +139,7 @@ const userController = {
       }))
       // console.log('followerList', followerList)
       return res.render('user/followerPage', {
-        user: pageUser,
+        users: pageUser,
         followerList
       })
     })
@@ -153,13 +153,15 @@ const userController = {
         { model: User, as: 'Followings' }
       ]
     }).then(user => {
+      // console.log(user.dataValues)
       const pageUser = user.toJSON()
       followingList = user.Followings.map(user => ({
         ...user.dataValues,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
+      // console.log('followingList', followingList)
       return res.render('user/followingPage', {
-        user: pageUser,
+        users: pageUser,
         followingList
       })
     })
@@ -195,6 +197,26 @@ const userController = {
             return res.redirect('back')
           })
       })
+  },
+
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: Like, include: [{ model: Tweet, include: User }] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Tweet, as: 'LikedTweets' },
+        { model: Reply, include: [User] }
+      ], order: [['Replies', 'createdAt', 'DESC']]
+    }).then(user => {
+      // console.log(user.dataValues)
+      const pageUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+      pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
+
+      return res.render('user/userReplyPage', { users: user.toJSON() })
+    })
   }
 }
 

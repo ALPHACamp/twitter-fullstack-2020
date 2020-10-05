@@ -781,3 +781,17 @@ display: flex;
     flex-direction: column;
 }
 
+.title-description {
+    margin-left: 35px;
+    font-size: 8px;
+    z-index: 2;
+    margin-bottom: 20px;
+    position: relative;
+    top: -5px;
+    color: #657786;
+}
+.tweet-title-name {
+    position: relative;
+    top: 10px;
+    left: 10px;
+}

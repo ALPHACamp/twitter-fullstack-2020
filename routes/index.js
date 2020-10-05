@@ -73,6 +73,7 @@ module.exports = (app, passport) => {
   // user 相關路由
   app.get('/users/:id/tweets', authenticated, userController.getRecommendedFollowings, userController.getUserTweets)
   app.get('/users/:id/likes', authenticated, userController.getRecommendedFollowings, userController.getUserLikes)
+  app.get('/users/:id/replies', authenticated, userController.getRecommendedFollowings, userController.getUserReplies)
 
   app.get('/users/:id/followers', authenticated, userController.getUserFollowers) // 被追蹤
   app.get('/users/:id/following', authenticated, userController.getUserFollowings) // 追蹤人
