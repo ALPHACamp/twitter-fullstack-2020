@@ -277,6 +277,24 @@ const userController = {
       return res.render('followings', { profile: user, isFollowed, followingList })
     })
   },
+  getTopUsers: (req, res, next) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+      .then((users) => {
+        users = users.map((user) => ({
+          ...user.dataValues,
+          followerCount: user.Followers.length,
+          isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id)
+        }))
+        users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.isAdmin) )
+        users = users
+          .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, 10)
+        res.locals.topUsers = users
+        return next()
+      })
+  }
 }
 
 module.exports = userController
