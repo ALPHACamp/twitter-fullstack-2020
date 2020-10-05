@@ -12,8 +12,25 @@ passport.use(
     { usernameField: 'account', passReqToCallback: true },
     (req, account, password, cb) => {
       User.findOne({ where: { account } }).then((user) => {
+        // console.log('@@@@', user)
         req.flash('userInput', req.body);
         if (!user) {
+          return cb(
+            null,
+            false,
+            req.flash('errorMessage', '帳號/密碼輸入錯誤！'),
+          );
+        }
+        if (req.url === "/admin/signin" && 
+          user.dataValues.isAdmin === false && !user.dataValues.role) {
+          return cb(
+            null,
+            false,
+            req.flash('errorMessage', '帳號/密碼輸入錯誤！'),
+          );
+        }
+        if (req.url === "/signin" && 
+          (user.dataValues.isAdmin === true || user.dataValues.role === 'admin')) {
           return cb(
             null,
             false,
