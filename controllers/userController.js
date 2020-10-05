@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User
+const User = db.User;
+const Tweet = db.Tweet;
+const Reply = db.Reply;
 
 const userController = {
   signUpPage: (req, res) => {
@@ -116,7 +118,58 @@ const userController = {
           })
       })
   },
+  //austin
+  otherUser: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet },
+        {
+          model: Reply, include: [
+            {
+              model: Tweet, include: User
+            }
+          ]
+        },
+        { model: User, as: "Followings" },
+        { model: User, as: "Followers" },
+        { model: Tweet, as: "LikeTweets" }
+      ]
+    })
+      .then(user => {
+        //特定使用者 - 推文 排序依日期
+        user.Tweets = user.Tweets.map(tweet => ({
+          ...tweet.dataValues,
+          userName: user.name,
+          userAvatar: user.avatar,
+          userAccount: user.account
+        }));
+        user.Tweets = user.Tweets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        //特定使用者 - 回文 排序依日期
+        user.Replies = user.Replies.map(reply => ({
+          ...reply.dataValues,
+          tweet: reply.Tweet.toJSON(),
+        }))
+        user.Replies = user.Replies.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        //特定使用者 - 跟隨者 排序依日期
+        user.Followers = user.Followers.map(f => f.Followship.toJSON());
+        user.Followers = user.Followers.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        //特定使用者 - 追蹤者 排序依日期
+        user.Followings = user.Followings.map(f => f.Followship.toJSON());
+        user.Followings = user.Followings.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        //特定使用者 - 喜歡的推文 排序依日期
+        user.LikeTweets = user.LikeTweets.map(l => l.Like.toJSON());
+        user.LikeTweets = user.LikeTweets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
+        res.render("user/other", {
+          user,
+          tweets: user.Tweets,
+          replies: user.Replies,
+          followers: user.Followers,
+          followings: user.Followings,
+          like: user.LikeTweets
+        });
+      })
+  }
 }
 
 module.exports = userController

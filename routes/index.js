@@ -1,11 +1,11 @@
-const userController = require('../controllers/userController')
-const adminController = require('../controllers/adminController')
-const tweetController = require('../controllers/tweetController')
+const adminController = require('../controllers/adminController.js')
+const userController = require('../controllers/userController.js')
+const tweetController = require("../controllers/tweetController");
 
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {  
+    if (req.isAuthenticated()) {
       return next()
     }
     res.redirect('/signin')
@@ -13,13 +13,14 @@ module.exports = (app, passport) => {
 
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
-      if (req.user.isAmin) { return next() }  
-      return res.redirect('/') 
+      if (req.user.isAmin) { return next() }
+      return res.redirect('/')
     }
     res.redirect('/signin')
   }
-
-  //user login
+  app.get('/main', (req, res) => res.render('mainpage'))
+  app.get('/admin', (req, res) => res.redirect('/admin/main'))
+  app.get('/admin/main', adminController.getTweets)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
@@ -31,24 +32,11 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
 
-
-  // adminController
-  app.get('/admin', (req, res) => { res.redirect('/admin/tweets') })
-  app.get('/admin/tweets', adminController.getTweets)
-  app.delete('/admin/tweets/:id', adminController.deleteTweet)
-  app.get('/admin/users', adminController.getUsers)
-  app.get('/admin/signin', adminController.signinPage)
-  app.post('/admin/signin', adminController.signIn)
-
-
-  // tweetController
-app.get("/", (req, res) => res.redirect("/tweets"))
-app.get("/tweets", authenticated, tweetController.getTweets)
-app.get("/tweets/:id", authenticated, tweetController.getTweet)
-app.post('/tweets', authenticated, tweetController.createTweet)
-app.post('/like/:id', tweetController.addLike)
-
-
+  app.get("/", (req, res) => res.redirect("/tweets"))
+  app.get("/tweets", authenticated, tweetController.getTweets)
+  app.get("/tweets/:id", authenticated, tweetController.getTweet)
+  app.post('/tweets', authenticated, tweetController.createTweet)
+  app.post('/like/:id', tweetController.addLike)
 
   // setting使用者能編輯自己的 account、name、email 和 password
   app.get('/setting', userController.getSetting)
@@ -59,11 +47,9 @@ app.post('/like/:id', tweetController.addLike)
   app.get('/user/:id', userController.getUser)
   app.get('/user/self/edit', userController.editUser)
   app.put('/users/:id', userController.putUser)
+
+  app.get("/user/other/:id", userController.otherUser)
 }
-
-
-
-
 
 
 
