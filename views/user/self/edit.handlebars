@@ -14,15 +14,17 @@
       <input type="file" class="form-control-file" id="avatar" name="avatar">
     </div>
 
-    <div class="mb-3">
-      <label for="profile">profile</label>
-      <textarea class="form-control is-invalid" id="profile" name="profile" placeholder="Enter profile"
-        value="{{user.profile}}" required></textarea>
-      <div class="invalid-feedback">
-        Please enter a message
-      </div>
 
 
-      <button type="submit" class="btn btn-primary">Submit</button>
+    <form method="POST" action="/tweets/{{../user.dataValues.id}}/introduction">
+      <textarea name="comment" cols="55" rows="5"
+        style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+        placeholder="">{{ user.introduction }}</textarea>
+      <button type="submit"
+        style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+        <span style="color: #FFFFFF;">Submit</span></button>
+    </form>
+
+
   </form>
 </div>

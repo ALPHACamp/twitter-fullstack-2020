@@ -38,9 +38,7 @@ module.exports = (app, passport) => {
   app.get("/tweets/:id", authenticated, tweetController.getTweet)
   app.post('/tweets', authenticated, tweetController.createTweet)
 
-  // add favorite
-  app.post('/favorite/:tweetId', authenticated, tweetController.addFavorite)
-  app.delete('/favorite/:tweetId', authenticated, tweetController.removeFavorite)
+
 
 
   // add like

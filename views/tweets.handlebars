@@ -105,19 +105,11 @@
                 <i class="far fa-heart"></i>
             </form>
             {{/if}}
-            {{this.LikedUsers.length}}
+            {{this.LikeUsers.length}}
             </button>
             </form>
 
-            {{!-- add favorate button --}}
-            {{#if this.isFavorited }}
-            <form action="/favorite/{{this.id}}?_method=DELETE" method="POST" style="display:inline;"><button
-                type="submit" class="btn btn-danger">移除最愛</button></form>
-            {{else}}
-            <form action="/favorite/{{this.id}}" method="POST" style="display:inline;"><button type="submit"
-                class="btn btn-primary">加到最愛</button>
-            </form>
-            {{/if}}
+
 
           </div>
         </div>
