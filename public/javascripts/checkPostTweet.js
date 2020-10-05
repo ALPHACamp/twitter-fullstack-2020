@@ -16,7 +16,6 @@ function listenText (eText,eBtn) {
   eBtn.setAttribute('disabled', '')
   eText.addEventListener('input', (e) => {
     const textLength = eText.value.trim().length
-    console.log('tweetText.length', tweetText.value.length)
     if (textLength === 0 || textLength > 140) {
       return eBtn.setAttribute('disabled', '')
     }

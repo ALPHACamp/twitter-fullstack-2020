@@ -18,7 +18,7 @@ passport.use(
           return cb(
             null,
             false,
-            req.flash('errorMessage', '帳號/密碼輸入錯誤！'),
+            req.flash('errorScrollingMessage', '帳號/密碼輸入錯誤！'),
           );
         }
         if (req.url === "/admin/signin" && 
@@ -26,7 +26,7 @@ passport.use(
           return cb(
             null,
             false,
-            req.flash('errorMessage', '帳號/密碼輸入錯誤！'),
+            req.flash('errorScrollingMessage', '帳號/密碼輸入錯誤！'),
           );
         }
         if (req.url === "/signin" && 
@@ -34,14 +34,14 @@ passport.use(
           return cb(
             null,
             false,
-            req.flash('errorMessage', '帳號/密碼輸入錯誤！'),
+            req.flash('errorScrollingMessage', '帳號/密碼輸入錯誤！'),
           );
         }
         if (!bcrypt.compareSync(password, user.password)) {
           return cb(
             null,
             false,
-            req.flash('errorMessage', '帳號/密碼輸入錯誤！'),
+            req.flash('errorScrollingMessage', '帳號/密碼輸入錯誤！'),
           );
         }
         return cb(null, user);

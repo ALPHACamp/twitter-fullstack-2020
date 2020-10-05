@@ -29,11 +29,11 @@ const userController = {
     if (helpers.getUser(req).id !== Number(req.params.id))
       return res.redirect('back');
     if (!account || !name || !email || !password || !checkPassword) {
-      req.flash('errorMessage', '欄位不能為空~');
+      req.flash('errorScrollingMessage', '欄位不能為空~');
       return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
     }
     if (password !== checkPassword) {
-      req.flash('errorMessage', '密碼並不相符~');
+      req.flash('errorScrollingMessage', '密碼並不相符~');
       return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
     }
     User.findOne({
@@ -44,7 +44,7 @@ const userController = {
     })
       .then((checkUser) => {
         if (checkUser) {
-          req.flash('errorMessage', '帳號/信箱已使用~');
+          req.flash('errorScrollingMessage', '帳號/信箱已使用~');
           return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
         }
         User.findByPk(req.params.id)
@@ -57,23 +57,23 @@ const userController = {
                 password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
               })
               .then(() => {
-                req.flash('successMessage', '資料已成功更改~');
+                req.flash('successScrollingMessage', '資料已成功更改~');
                 res.redirect(`/users/${helpers.getUser(req).id}/setting`);
               })
               .catch(() => {
-                req.flash('errorMessage', '系統異常，請重新操作 #U103~');
+                req.flash('errorScrollingMessage', '系統異常，請重新操作 #U103~');
                 return res.redirect(
                   `/users/${helpers.getUser(req).id}/setting`,
                 );
               });
           })
           .catch(() => {
-            req.flash('errorMessage', '系統異常，請重新操作 #U104~');
+            req.flash('errorScrollingMessage', '系統異常，請重新操作 #U104~');
             return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
           });
       })
       .catch(() => {
-        req.flash('errorMessage', '系統異常，請重新操作 #U105~');
+        req.flash('errorScrollingMessage', '系統異常，請重新操作 #U105~');
         return res.redirect(`/users/${helpers.getUser(req).id}/setting`);
       });
   },
@@ -302,7 +302,7 @@ const userController = {
     });
   },
   signout: (req, res) => {
-    req.flash('successMessage', '登出成功！');
+    req.flash('successScrollingMessage', '登出成功！');
     req.logout();
     res.redirect('/signin');
   },

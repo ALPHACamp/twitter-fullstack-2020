@@ -40,7 +40,7 @@ const tweetController = {
     })
     .then(() => {
       req.flash('successFlashMessage','成功新增推文!')
-      return res.redirect('back')
+      return res.redirect('/tweets')
     })
     .catch(() => {
       req.flash('errorFlashMessage', '新增推文失敗!')
