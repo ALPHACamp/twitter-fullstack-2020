@@ -94,8 +94,17 @@
           </div>
           <div class="footer">
             <div class="footer-item reply-item">
-              <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                <i class="icon-reply"></i>
+              <button type="button" class="btn" data-toggle="modal">
+                <ul class="reply-text" style="display:none">
+                  <li>{{../visitUser.id}}</li>
+                  <li>{{../visitUser.name}}</li>
+                  <li>{{../visitUser.account}}</li>
+                  <li>{{moment this.createdAt}}</li>
+                  <li>{{this.description}}</li>
+                  <li>{{../visitUser.avatar}}</li>
+                  <li>{{this.id}}</li>
+                </ul>
+                <i class="icon-reply reply-on"></i>
               </button>
               <div class="item-count reply-count">{{this.Replies.length}}</div>
             </div>

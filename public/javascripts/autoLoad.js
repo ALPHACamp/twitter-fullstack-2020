@@ -15,7 +15,7 @@ if (adminTweets) {
         .then(data => {
           tweetTemplate(data.data)
         })
-        .catch(() => {return console.log('Load error')})
+        .catch(() => { return console.log('Load error') })
     }
   })
 }
@@ -45,5 +45,5 @@ function tweetTemplate(data) {
     </div>
     `
   }
-  adminTweets.innerHTML += finalTemplate 
+  adminTweets.innerHTML += finalTemplate
 }
