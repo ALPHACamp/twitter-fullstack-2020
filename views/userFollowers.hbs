@@ -1,0 +1,45 @@
+{{!-- Center --}}
+<div class="col border-left border-right">
+  <div class="row mt-3 pl-3 border-bottom align-items-center">
+    <a href="javascript:history.back()"><i class="fas fa-arrow-left fa-lg"></i></a>
+    <div class="ml-5">
+      <h5>{{ name }}</h5>
+      <span class="text-muted">{{tweetsCount}} 推文</span>
+    </div>
+  </div>
+  <div class="row border-bottom">
+    <div class="col">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link selected_nav" href="/users/{{user.id}}/followers">跟隨者</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link unselected_nav" href="/users/{{user.id}}/followings">正在跟隨</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {{#each users}}
+  <div class="row border-bottom">
+    <div class="d-flex p-2">
+      <a href="/users/{{../user.id}}">
+        <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
+      </a>
+      <div class="col">
+        <span class="bold">{{this.name}}</span><br>
+        <span style="color: grey">@{{this.account}}</span><br>
+        <span><small>{{this.introduction}}<br></small></span>
+      </div>
+      <div>
+        {{#if this.isFollowed}}
+        <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</button></form>
+        {{else}}
+        <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter rounded-pill">跟隨</button></form>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{!-- Right side --}}
+{{> right}}
