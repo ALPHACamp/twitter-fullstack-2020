@@ -455,7 +455,7 @@ border-bottom: 2px solid #ff6600;
 }
 
 .user-cover img{
-  width:598px;
+  width: 100%;
   height: 200px;
 }
 
@@ -467,7 +467,7 @@ border-bottom: 2px solid #ff6600;
 }
 
 .user-info-top img {
-  width:140px;
+  width: 140px;
   height: 140px;
   border: 5px solid #ffffff;
   box-sizing: border-box;
