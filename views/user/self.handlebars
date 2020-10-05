@@ -1,20 +1,50 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="/tweets">首頁</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="/user/self">個人資料</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " href="/setting">設定</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/user/other/">貼文</a>
-  </li>
-</ul>
-<br />
-
 <div class="row">
+
+  <div class="col-md-3 pl-0">
+
+    <div class="left-zone">
+      <div class="AC-icon">
+        <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+          style="width:75px">
+      </div>
+
+      </br>
+      </br>
+
+      <div class="home" name="home">
+        <a class="left-zone-items" href="/tweets" style="text-decoration: none"><i class="fas fa-home"></i>&ensp;首頁</a>
+      </div>
+
+      </br>
+      </br>
+
+      <div class="profile" name="profile">
+        <a class="left-zone-items" href="/user/self" style="text-decoration: none"><i
+            class="far fa-user"></i>&ensp;個人資料</a>
+      </div>
+
+      </br>
+      </br>
+
+      <div class="setting" name="setting">
+        <a class="left-zone-items" href="/setting" style="text-decoration: none"><i class="fas fa-cog"></i>&ensp;設定</a>
+      </div>
+
+      </br>
+      </br>
+
+      <form action="/user/tweets">
+        <button type="submit" class="left-zone-btn">
+          推文</button>
+      </form>
+
+
+      <a href="/logout" class="logout" style="text-decoration: none"><i class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+
+    </div>
+
+  </div>
+
 
 
 
