@@ -167,9 +167,13 @@ const userController = {
   },
 
   addLike: (req, res) => {
-    return Like.create({
-      UserId: helpers.getUser(req).id,
-      TweetId: req.params.id
+
+    return Like.findOrCreate({
+      where: { TweetId: req.params.id, UserId: helpers.getUser(req).id },
+      defaults: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.id
+      }
     }).then((like) => {
       return res.redirect('back')
     })
