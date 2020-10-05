@@ -7,7 +7,6 @@ const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
-
     return Tweet.findAll({
 
       include: [User, Reply,
@@ -21,7 +20,6 @@ const tweetController = {
           ...t.dataValues,
           description: t.dataValues.description,
           isLiked: t.LikedUsers.map(d => d.id).includes(t.id)
-
         }))
         return User.findOne({ where: { id: UserId } })
           .then(user => {
@@ -33,36 +31,37 @@ const tweetController = {
 
   getTweet: (req, res) => {
     Tweet.findByPk(req.params.id, {
-      include:[
+      include: [
         User,
-        {model: Reply, include:[User]}, 
-        {model: User, as: 'LikedUsers'}
+        { model: Reply, include: [User] },
+        { model: User, as: 'LikedUsers' }
       ],
-      order: [['Replies','createdAt', 'DESC']]
+      order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
       const UserId = helpers.getUser(req).id
       const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
 
-        return User.findOne({ where: { id: UserId } })
-          .then(user => { 
-            console.log(user)
-            return res.render('tweet', {
-              tweet: tweet, 
-              isLiked:isLiked })
-      })
-      
+      return User.findOne({ where: { id: UserId } })
+        .then(user => {
+          console.log(user)
+          return res.render('tweet', {
+            tweet: tweet,
+            isLiked: isLiked
+          })
+        })
+
     })
-    .catch(error => console.log(error))
+      .catch(error => console.log(error))
   },
 
-  postTweet: (req,res) => {
-    if (!req.body.description){
+  postTweet: (req, res) => {
+    if (!req.body.description) {
 
-      req.flash('error_messages','貼文不可空白')
+      req.flash('error_messages', '貼文不可空白')
       return res.redirect('back')
     }
     if (req.body.description.length > 140) {
-      req.flash('error_messages','貼文不得超過140個字')
+      req.flash('error_messages', '貼文不得超過140個字')
       return res.redirect('back')
 
     }
@@ -73,21 +72,22 @@ const tweetController = {
     }).then(tweet => {
       return res.redirect('/tweets')
     })
-    .catch(error => console.log(error))
+      .catch(error => console.log(error))
   },
 
   getReply: (req, res) => {
-    return Tweet.findByPk(req.params.id, 
-      { include:[{ model:Reply,  include: [User] }]
-     }).then(tweet => {     
+    return Tweet.findByPk(req.params.id,
+      {
+        include: [{ model: Reply, include: [User] }]
+      }).then(tweet => {
         const data = tweet.Replies.map(t => ({
-          ...t.dataValues, 
+          ...t.dataValues,
           comment: t.comment
         }))
-    
-        return res.render('tweet',{ tweet: data})
+
+        return res.render('tweet', { tweet: data })
       })
-    .catch(error => console.log(error))
+      .catch(error => console.log(error))
   },
 
   postReply: (req, res) => {
@@ -96,17 +96,17 @@ const tweetController = {
     }
     Reply.create({
       TweetId: req.params.id,
-      comment: req.body.comment, 
+      comment: req.body.comment,
       UserId: helpers.getUser(req).id
     })
-    .then((reply) => {
-      res.redirect('back')
-    })
-    .catch(error => console.log(error))
+      .then((reply) => {
+        res.redirect('back')
+      })
+      .catch(error => console.log(error))
   },
 
-  
-  
+
+
 }
 
 module.exports = tweetController

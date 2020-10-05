@@ -60,6 +60,7 @@ const userController = {
     res.redirect('/signin')
   },
 
+
   getSetting: (req, res) => {
     return res.render('setting')
   },
@@ -89,7 +90,36 @@ const userController = {
         req.flash('success_messages', '資料已被更新!')
         res.redirect('/')
       })
+  },
 
+  getFollower: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followers' }]
+    })
+      .then(user => {
+        const followerList = user.Followers.map(user => ({
+          ...user.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+        }))
+        // console.log(followerList)
+        return res.render('follower', { user, followerList })
+      })
+  },
+
+
+  getFollowing: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followings' }]
+    })
+      .then(user => {
+        const followingList = user.Followings.map(user => ({
+          ...user.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+        }))
+        return res.render('following', { user, followingList })
+      })
   },
 
   getUser: (req, res) => {

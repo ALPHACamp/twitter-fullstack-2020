@@ -46,9 +46,12 @@ app.use((req, res, next) => {
 app.use(express.static('public'))
 
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 38ddd32418871550f69ca9dc0074c425b18db539
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes')(app, passport) // passport 傳入 routes
