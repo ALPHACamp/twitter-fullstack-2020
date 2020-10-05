@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Sequelize } = require('../models')
 const db = require('../models')
+const user = require('../models/user')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -9,7 +10,6 @@ const Like = db.Like
 const helpers = require('../_helpers')
 
 const Op = Sequelize.Op
-
 
 const userController = {
   signUpPage: (req, res) => {
@@ -58,6 +58,38 @@ const userController = {
     req.flash('success_messages', '成功登出!')
     req.logout()
     res.redirect('/signin')
+  },
+
+
+  getSetting: (req, res) => {
+    return res.render('setting')
+  },
+
+  putSetting: (req, res) => {
+
+    if (!req.body.name) {
+      req.flash('error_messages', 'name did not exist')
+      return res.redirect('/')
+    }
+
+    if (req.body.password !== req.body.passwordCheck) {
+      req.flash('error_messages', '兩次密碼輸入不同')
+      return res.redirect('back')
+    }
+
+    return User.findByPk(req.user.id)
+      .then((user) => {
+        user.update({
+          name: req.body.name,
+          email: req.body.email,
+          account: req.body.account,
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10))
+        })
+      }).then(user => {
+        console.log("updated!")
+        req.flash('success_messages', '資料已被更新!')
+        res.redirect('/')
+      })
   },
 
   getFollower: (req, res) => {
@@ -135,9 +167,13 @@ const userController = {
   },
 
   addLike: (req, res) => {
-    return Like.create({
-      UserId: helpers.getUser(req).id,
-      TweetId: req.params.id
+
+    return Like.findOrCreate({
+      where: { TweetId: req.params.id, UserId: helpers.getUser(req).id },
+      defaults: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.id
+      }
     }).then((like) => {
       return res.redirect('back')
     })
@@ -145,7 +181,7 @@ const userController = {
   },
 
   removeLike: (req, res) => {
-    Like.findOne({
+    return Like.findOne({
       where: {
         UserId: helpers.getUser(req).id,
         TweetId: req.params.id
@@ -183,7 +219,6 @@ const userController = {
 
   
    
-
 
 
 
