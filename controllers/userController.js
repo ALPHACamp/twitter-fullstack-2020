@@ -15,7 +15,7 @@ const userController = {
   register: (req, res) => {
     if (req.body.confirmPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/users/register')
+      return res.redirect('/signup')
     } else {
       // confirm unique user
       User.findOne({
@@ -29,7 +29,7 @@ const userController = {
         .then(user => {
           if (user) {
             req.flash('error_messages', '信箱或賬號重複！')
-            return res.redirect('/users/register')
+            return res.redirect('/signup')
           } else {
             User.create({
               name: req.body.name,
@@ -39,7 +39,7 @@ const userController = {
               role: 'user'
             }).then(user => {
               req.flash('success_messages', '成功註冊帳號！')
-              return res.redirect('/users/login')
+              return res.redirect('/signin')
             })
           }
         })
@@ -55,7 +55,7 @@ const userController = {
   logout: (req, res) => {
     req.flash('success_messages', '成功登出！')
     req.logout()
-    return res.redirect('/users/login')
+    return res.redirect('/signin')
   },
 
   likeTweet: (req, res) => {
@@ -68,7 +68,7 @@ const userController = {
       })
   },
 
-  dislikeTweet: (req, res) => {
+  unlikeTweet: (req, res) => {
     Like.findOne({
       where: {
         UserId: helpers.getUser(req).id,
@@ -109,13 +109,18 @@ const userController = {
   },
 
   postFollowing: (req, res) => {
-    Followship.create({
-      followerId: helpers.getUser(req).id,
-      followingId: req.params.userId
-    })
-      .then(followship => {
-        return res.redirect('back')
+    if (Number(req.body.id) === Number(helpers.getUser(req).id)) {
+      return res.redirect('/tweets')
+    }
+    else {
+      Followship.create({
+        followerId: helpers.getUser(req).id,
+        followingId: req.body.id
       })
+        .then(followship => {
+          return res.redirect('back')
+        })
+    }
   },
 
   deleteFollowing: (req, res) => {
