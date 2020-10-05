@@ -1,5 +1,6 @@
 const db = require('../models')
 const ReplyComment = db.ReplyComment
+const helpers = require('../_helpers');
 
 const replyController = {
   postReply: (req, res) => {
@@ -10,13 +11,13 @@ const replyController = {
     }
     else {
       ReplyComment.create({
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         ReplyId: req.params.replyId,
         comment
       })
-      .then(replyComment => {
-        return res.redirect('back')
-      })
+        .then(replyComment => {
+          return res.redirect('back')
+        })
     }
   },
 
@@ -26,7 +27,7 @@ const replyController = {
         replyComment.destroy()
           .then(replyComment => {
             return res.redirect('back')
-          })  
+          })
       })
   },
 
@@ -46,10 +47,10 @@ const replyController = {
           replyComment.update({
             comment
           })
-          .then(replyComment => {
-            req.flash('success_messages', '已成功更新留言')
-            return res.redirect('back')
-          })
+            .then(replyComment => {
+              req.flash('success_messages', '已成功更新留言')
+              return res.redirect('back')
+            })
         }
       })
   }

@@ -55,76 +55,76 @@ const userController = {
 
   likeTweet: (req, res) => {
     Like.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
-    .then(like => {
-      return res.redirect('back')
-    })
+      .then(like => {
+        return res.redirect('back')
+      })
   },
 
   dislikeTweet: (req, res) => {
     Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId
       }
     })
-    .then(like => {
-      like.destroy()
-        .then(like => {
-          return res.redirect('back')
-        })
-    })  
+      .then(like => {
+        like.destroy()
+          .then(like => {
+            return res.redirect('back')
+          })
+      })
   },
 
   likeReply: (req, res) => {
     Like.create({
-          UserId: req.user.id,
-          ReplyId: req.params.replyId
+      UserId: helpers.getUser(req).id,
+      ReplyId: req.params.replyId
     })
-    .then(like => {
-      return res.redirect('back')
-    })
+      .then(like => {
+        return res.redirect('back')
+      })
   },
 
   dislikeReply: (req, res) => {
     Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         ReplyId: req.params.replyId
       }
     })
-    .then(like => {
-      like.destroy()
-        .then(like => {
-          return res.redirect('back')
-        })   
-    })
+      .then(like => {
+        like.destroy()
+          .then(like => {
+            return res.redirect('back')
+          })
+      })
   },
 
   postFollowing: (req, res) => {
     Followship.create({
-      followerId: req.user.id,
+      followerId: helpers.getUser(req).id,
       followingId: req.params.userId
     })
-    .then(followship => {
-      return res.redirect('back')
-    })
+      .then(followship => {
+        return res.redirect('back')
+      })
   },
 
   deleteFollowing: (req, res) => {
     Followship.findOne({
       where: {
-        followerId: req.user.id,
+        followerId: helpers.getUser(req).id,
         followingId: req.params.userId
       }
     })
-    .then(followship => {
-      followship.destroy()
-        .then(followship => {
-          return res.redirect('back')
-        })
+      .then(followship => {
+        followship.destroy()
+          .then(followship => {
+            return res.redirect('back')
+          })
       })
   },
 
@@ -180,7 +180,7 @@ const userController = {
         return res.redirect('back')
       }
     }
-    
+
     if (passwordCheck) {
       // user change password
       return User.findByPk(id).then(user => {
@@ -213,7 +213,7 @@ const userController = {
     return User.findByPk(reqUserId, {
       order: [[{ model: Tweet }, 'createdAt', 'DESC']],
       include: [
-        { model: Tweet, include:[Like, Reply] },
+        { model: Tweet, include: [Like, Reply] },
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' }
       ]
