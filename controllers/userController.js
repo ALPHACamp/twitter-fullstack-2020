@@ -70,7 +70,7 @@ const userController = {
       }))
       users = users.filter(user => (user.role === "user" && user.name !== helpers.getUser(req).name))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 6)
-      res.locals.users = users
+      res.locals.recommendedList = users
       return next()
     })
   },
