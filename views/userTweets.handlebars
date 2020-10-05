@@ -52,11 +52,26 @@
 	<h3 class="card-title"><strong>{{profile.name}}</strong></h3>
 	<h5 class="card-title">@{{profile.account}}</h5>
 	<p>{{profile.introduction}}</p>	
+	{{!-- 追隨中與追隨者 --}}
+    <div class="user-relation d-flex flex-nowrap">
+      <a class="text-decoration-none" href="/users/{{profile.id}}/followings">
+           <div class="mr-3 font-weight-bold" style="color: black;">{{profile.FollowingCount}} 個<span
+            class="text-secondary">追隨中</span>
+        </div>
+      </a>
+      <a class="text-decoration-none" href="/users/{{profile.id}}/followers">
+        <div class="mr-3 font-weight-bold" style="color: black;">{{profile.FollowerCount}} 位<span
+            class="text-secondary">追隨者</span>
+        </div>
+      </a>
+    </div>
+	{{!-- 編輯個人資料 --}}
 	{{#ifCond profile.id user.id }}
     	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 			Edit Profile
 		</button>
   	{{/ifCond}}
+	{{!-- 追隨 --}}
 	{{#if profile.isFollowing}}
 		<form
 			action="/followships/{{profile.id}}?_method=DELETE"
