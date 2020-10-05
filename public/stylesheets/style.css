@@ -163,10 +163,6 @@ label {
   max-width: 800px;
 }
 
-.nav {
-  margin-top: 36px;
-}
-
 .nav-item {
   height: 60px;
 }
@@ -207,6 +203,17 @@ label {
 .logout a:hover {
   color: #FF6600;
   text-decoration: none;
+}
+.nav-tabs .nav-link {
+  border: none;
+}
+
+
+.nav-tabs .nav-link:hover {
+border-bottom: 2px solid #ff6600;
+}
+.nav-tabs .nav-link:active {
+border-bottom: 2px solid #ff6600;
 }
 
 .icon-div {
@@ -522,6 +529,7 @@ label {
 
 
 
+
 /* tweet-main */
 #tweet-content {
   display: flex;
@@ -773,20 +781,17 @@ display: flex;
     flex-direction: column;
 }
 
-.form-control {
-  box-sizing: border-box;
-  max-width: 100%;
-  width: 100%;
-  height: 40px;
-  font-weight: 500;
-  padding: 15px 0 2px 3px;
-  display: block;
-  border: 1px solid transparent;
-  border-bottom-color: #94979b;
-  border-bottom: 2px solid #657786;
-  background: 0;
-  font-size: 16px;
-  transition: all .25s ease-out;
-  border-radius: 0;
-  outline: none;
+.title-description {
+    margin-left: 35px;
+    font-size: 8px;
+    z-index: 2;
+    margin-bottom: 20px;
+    position: relative;
+    top: -5px;
+    color: #657786;
+}
+.tweet-title-name {
+    position: relative;
+    top: 10px;
+    left: 10px;
 }

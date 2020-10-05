@@ -14,8 +14,8 @@
         </div>
       </a>
 
-      <div class="tweet-content-box" onclick="location.href='/tweets/{{this.id}}'">
-        <div class="tweet-content-left">
+      <div class="tweet-content-box">
+        <div class=" tweet-content-left">
           <a href="/users/{{tweet.User.id}}/tweets">
             <img class="ml-2 mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
               style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
@@ -90,10 +90,10 @@
     </div>
   </div>
 
-
   <div class="right-content">
     {{>right-column}}
   </div>
+
 
   {{!-- reply modal --}}
   <div class="modal" tabindex="-1" role="dialog" id="replyModal">
@@ -140,3 +140,4 @@
       </div>
     </div>
   </div>
+</div>

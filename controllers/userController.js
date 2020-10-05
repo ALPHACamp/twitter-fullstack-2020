@@ -6,6 +6,7 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Followship = db.Followship
 const helpers = require('../_helpers')
+const Like = db.Like
 
 const userController = {
   signUpPage: (req, res) => {
@@ -104,23 +105,47 @@ const userController = {
     return User.findByPk(req.params.id, {
       include: [
         Tweet,
-        { model: like, include: [{ model: Tweet, include: User }] },
+        { model: Like, include: [{ model: Tweet, include: User }] },
         { model: Tweet, as: 'LikedTweets' },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ], order: [[LikedTweets, 'createdAt', 'DESC']]
+        { model: User, as: 'Followings' }]
+      // ], order: [[LikedTweets, 'createdAt', 'DESC']]
     }).then(user => {
-      console.log(user)
+      // console.log(user.dataValues)
+      // console.log(user.dataValues)
       const pageUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
       pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
 
       // 缺少 like 清單
 
-      return res.render('user/userLikesPage')
+      return res.render('user/userLikesPage', { users: user.toJSON() })
     })
   },
 
+  // 取得 追蹤使用者 的清單
+  getUserFollowers: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' }
+      ]
+    }).then(user => {
+      const pageUser = user.toJSON()
+      // console.log('pageUser', pageUser)
+      followerList = user.Followers.map(user => ({
+        ...user.dataValues,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      }))
+      // console.log('followerList', followerList)
+      return res.render('user/followerPage', {
+        users: pageUser,
+        followerList
+      })
+    })
+  },
+
+  // 取得 被使用者追蹤 的清單
   getUserFollowings: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
@@ -128,18 +153,20 @@ const userController = {
         { model: User, as: 'Followings' }
       ]
     }).then(user => {
+      // console.log(user.dataValues)
       const pageUser = user.toJSON()
-      const followings = pageUser.Followings.map(user => ({
+      followingList = user.Followings.map(user => ({
         ...user.dataValues,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(follower.id)
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
-      // console.log('followings', followings)
+      // console.log('followingList', followingList)
       return res.render('user/followingPage', {
-        user: pageUser,
-        followings
+        users: pageUser,
+        followingList
       })
     })
   },
+
   addFollowing: (req, res) => {
     const currentUserId = helpers.getUser(req).id
     const followingUser = Number(req.params.userId)
@@ -170,6 +197,26 @@ const userController = {
             return res.redirect('back')
           })
       })
+  },
+
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        { model: Like, include: [{ model: Tweet, include: User }] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Tweet, as: 'LikedTweets' },
+        { model: Reply, include: [User] }
+      ], order: [['Replies', 'createdAt', 'DESC']]
+    }).then(user => {
+      // console.log(user.dataValues)
+      const pageUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+      pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
+
+      return res.render('user/userReplyPage', { users: user.toJSON() })
+    })
   }
 }
 

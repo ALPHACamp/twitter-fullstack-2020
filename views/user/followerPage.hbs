@@ -24,7 +24,7 @@
         </ul>
       </div>
 
-      {{#each users.Followings}}
+      {{#each users.Followers}}
       <div class="tweet-content-box">
         <div class=" tweet-content-left">
           <a href="/users/{{this.id}}/tweets">
@@ -61,9 +61,8 @@
 
 
 
-
   <div class="right-content">
-    {{!-- {{>right-column}} --}}
+    {{>right-column}}
   </div>
 
   {{> userEdit}}
