@@ -16,7 +16,7 @@ const adminControllers = {
           ...tweet,
           description: tweet.description.substring(0, 200),
         }))
-        // console.log(tweets)
+        // console.log(tweets[0].User.avatar)
         return res.render('admin/tweets', { tweets })
       })
   },
@@ -40,7 +40,7 @@ const adminControllers = {
       ],
     }).then(users => {
       // console.log(users)
-      console.log(users[0].Tweets.length)
+      // console.log(users[0].Tweets.length)
       users = users.sort((a, b) => b.Tweets.length - a.Tweets.length)
       res.render('admin/users', { users })
     })

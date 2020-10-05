@@ -33,7 +33,7 @@ passport.deserializeUser((id, cb) => {
       Like,
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' },
-      Like
+      // Like
     ]
   }).then(user => {
     user = user.toJSON()

@@ -8,9 +8,9 @@ module.exports = {
       email: 'root@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       account: 'root',
-      cover: faker.image.imageUrl(),
+      cover: 'https://loremflickr.com/320/150',
       introduction: faker.lorem.text(),
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}`,
+      avatar: 'https://loremflickr.com/320/240',
       role: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -20,9 +20,9 @@ module.exports = {
       email: 'user1@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       account: 'user1',
-      cover: faker.image.imageUrl(),
+      cover: 'https://loremflickr.com/320/10',
       introduction: faker.lorem.text(),
-      avatar: `https://loremflickr.com/320/240/restaurant,food/?random=${Math.random() * 100}`,
+      avatar: 'https://loremflickr.com/320/211',
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
