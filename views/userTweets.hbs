@@ -8,12 +8,16 @@
     </div>
   </div>
   <div class="row">
-    <img src="{{ cover }}" class="img-fluid user_cover" alt="Responsive image">
+    <img src="{{ cover }}" class="img-fluid user_cover" alt="Cover">
     <div class="col" style="height: 75px;">
-      <img src="{{ avatar }}" class="user_avatar" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">
+      <a href="/users/{{userId}}/tweets">
+        <img src="{{ avatar }}" class="user_avatar">
+      </a>
     </div>
     <div class="col mt-3">
-      <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button>
+      {{!-- <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button> --}}
+      <a href="/users/{{userId}}"  class="btn rounded-pill float-right btn-outline-twitter">編輯個人資料</a>
+     
     </div>
   </div>
   <div class="row">
@@ -43,7 +47,7 @@
   {{#each tweets}}
   <div class="row border-bottom"> 
     <div class="d-flex p-2">
-      <a href="/users/{{../user.id}}">
+      <a href="/users/{{../user.id}}/tweets">
         <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
       </a>
       <div class="col">
@@ -73,6 +77,8 @@
   </div>
   {{/each}}
 </div>
+{{!-- Message --}}
+{{> message}}
 {{!-- Right side --}}
 {{> right}}
 <!-- Modal -->
@@ -116,3 +122,4 @@
     </div>
   </div>
 </div>
+

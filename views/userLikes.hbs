@@ -45,7 +45,7 @@
   {{#each likes}}
   <div class="row border-bottom">
     <div class="d-flex p-2">
-      <a href="/users/{{../user.id}}">
+      <a href="/users/{{../user.id}}/tweets">
         <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
       </a>
       <div class="col">
@@ -76,6 +76,8 @@
   </div>
   {{/each}}
 </div>
+<!-- pop up reply comment message -->
+{{> message}}
 {{!-- Right side --}}
 {{> right}}
 <!-- Modal -->

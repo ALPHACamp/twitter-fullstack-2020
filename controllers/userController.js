@@ -560,14 +560,28 @@ const userController = {
           })
         }).then((user) => {
           req.flash('success_messages', 'User information updated success.')
-          // return res.redirect('/users/' + id + '/tweets')
-          return res.redirect('/')
+          return res.redirect('/users/' + id + '/tweets')
+          // return res.redirect('/')
         })
       } catch (err) {
         console.log('Error:', err)
       }
     }
     updateUser()
+  },
+  getUserInfo: (req, res) => {
+    const id = req.params.userId
+    const loginId = helpers.getUser(req).id
+    // check user auth
+    if (loginId !== Number(id)) {
+      req.flash('error_messages', 'You can only edit your account')
+      return res.redirect('/users/' + loginId + '/tweets')
+    }
+    return User.findByPk(id).then(user => {
+      return res.render('userInfo', {
+        ...user.toJSON()
+      })
+    })
   }
 }
 

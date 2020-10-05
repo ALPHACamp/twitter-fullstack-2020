@@ -1,0 +1,41 @@
+
+  {{!-- <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data"> --}}
+  <form action="/users/{{user.id}}" method="POST" enctype="multipart/form-data">
+    <!--  header -->
+    <div class="row ">
+      <div class="col d-flex justify-content-around my-2 ">
+        <a href="javascript:history.back()" style="background-color: rgba(0, 0, 0, 0);color: rgb(255, 102, 0);">
+          <h5>X</h5>
+        </a>
+        <h5 class="modal-title ml-3 align-self-left">編輯個人資料</h5>
+        <button type="submit" class="btn btn-twitter rounded-pill">儲存</button>
+      </div>
+    </div>
+    <!--  body -->
+    <div class="row no-gutters p-0 border-right border-bottom border-left">
+      <div class="col">
+        <div class="form-group" style="height:275px">
+          <img src="{{ cover }}" class="img-fluid user_cover" alt="Responsive image">
+          <img src="{{ avatar }}" class="user_avatar ml-3">
+        </div>
+        <div class="form-group mx-3">
+          <label for="name" class="col-form-label">名稱</label>
+          <input type="text" class="form-control" id="name" name="name" maxlength="50" value="{{name}}">
+        </div>
+        <div class="form-group mx-3">
+          <label for="introduction" class="col-form-label">自我介紹</label>
+          <textarea class="form-control" id="introduction" name="introduction" maxlength="160">{{introduction}}</textarea>
+        </div>
+        <div class="form-group mx-3">
+          <label for="cover">Cover</label>
+          <input type="file" class="form-control-file" id="cover" name="cover">
+        </div>
+        <div class="form-group mx-3">
+          <label for="avatar">Avatar</label>
+          <input type="file" class="form-control-file" id="avatar" name="avatar">
+        </div>
+      </div>
+    </div>
+  </form>
+<!-- pop up reply comment message -->
+{{> message}}
