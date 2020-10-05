@@ -110,8 +110,8 @@ const userController = {
 
   postFollowing: (req, res) => {
     if (Number(req.body.id) === Number(helpers.getUser(req).id)) {
-      //return res.render('tweets')
-      return res.redirect('back')
+      return res.render('tweets')
+      //return res.redirect('back')
     }
     else {
       Followship.create({
