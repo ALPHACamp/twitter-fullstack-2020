@@ -65,8 +65,64 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-            <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+            <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">
+                <div class="col">
+                    <div class="tweet-list">
+                        {{#each replies}}
+                        <div class="tweet">
+                            <div class="tweet-item-left d-flex align-items-stretch">
+                                <div class="tweet-left d-flex align-items-stretch">
+                                    <a href="#">
+                                        <img src="{{ this.tweet.User.avatar }}" class="rounded-circle"
+                                            style="background-size:cover; width: 50px;height: 50px;">
+                                    </a>
+                                </div>
+                                <div class="tweet-item-right  ml-3">
+                                    <div class="tweet-item-title">
+                                        <span class="mt-1"><a href="#">{{ this.tweet.User.name }}</a></span>
+                                        <span class="user-account">
+                                            {{ this.tweet.User.account }}．{{moment this.createdAt}}
+                                        </span>
+                                    </div>
+                                    <div class="tweet-text">
+                                        {{ this.tweet.description }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">
+                <div class="col">
+                    <div class="tweet-list">
+                        {{#each likes}}
+                        <div class="tweet">
+                            <div class="tweet-item-left d-flex align-items-stretch">
+                                <div class="tweet-left d-flex align-items-stretch">
+                                    <a href="#">
+                                        <img src="{{ this.user.avatar }}" class="rounded-circle"
+                                            style="background-size:cover; width: 50px;height: 50px;">
+                                    </a>
+                                </div>
+                                <div class="tweet-item-right  ml-3">
+                                    <div class="tweet-item-title">
+                                        <span class="mt-1"><a href="#">{{ this.user.name }}</a></span>
+                                        <span class="user-account">
+                                            {{ this.user.account }}．{{moment this.likeTweet.createdAt}}
+                                        </span>
+                                    </div>
+                                    <div class="tweet-text">
+                                        {{ this.description }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
