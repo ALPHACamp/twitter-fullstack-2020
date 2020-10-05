@@ -93,37 +93,45 @@
               </div>
             </div>
 
-            {{#if this.isFavorited }}
-            <form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-                class="btn btn-danger">移除最愛</button></form>
-            {{else}}
-            <form action="/favorite/{{this.id}}" method="POST"><button type="submit"
-                class="btn btn-primary">加到最愛</button></form>
-            {{/if}}
-
-            {{!-- {{#if isLiked }}
-            <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-                type="submit" class="btn btn-danger">UnLike</button></form>
-            {{else}}
-            <form action="/like/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
-                class="btn btn-primary">Like</button></form>
-            {{/if}} --}}
 
             {{#if isLiked}}
             <form action="/tweets/{{this.User.dataValues.id}}/unlike" method="POST" style="display:inline;">
               <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
                 <i class="far fa-heart"></i>
                 {{else}}
-                <form action="like/{{this.User.dataValues.id}}" method="POST" style="display:inline; ">
+                <form action="/tweets/{{this.User.dataValues.id}}/like" method="POST" style="display:inline; ">
+                  <form action="like/{{this.User.dataValues.id}}" method="POST" style="display:inline; ">
 
-                  <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
-                    <i class="fas fa-heart"></i>
-                    {{/if}}
-                    {{this.LikedUsers.length}}
-                  </button>
-                </form>
+                    <button type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
+                      <i class="fas fa-heart"></i>
+                      {{/if}}
+                      {{this.LikedUsers.length}}
+                    </button>
+                  </form>
           </div>
         </div>
+
+
+        {{!-- add favorate button --}}
+        {{#if this.isFavorited }}
+        <form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+            class="btn btn-danger">移除最愛</button></form>
+        {{else}}
+        <form action="/favorite/{{this.id}}" method="POST"><button type="submit" class="btn btn-primary">加到最愛</button>
+        </form>
+        {{/if}}
+
+        {{!-- add like button --}}
+        {{#if this.isLiked }}
+        <form action="/like/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+            class="btn btn-danger">Unlike</button></form>
+        {{else}}
+        <form action="/like/{{this.id}}" method="POST"><button type="submit" class="btn btn-primary">Like</button>
+        </form>
+        {{/if}}
+
+
+
         {{/each}}
       </div>
     </div>

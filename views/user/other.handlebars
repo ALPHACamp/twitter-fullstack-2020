@@ -17,6 +17,13 @@
             <form action="/favorite/{{user.id}}" method="POST" style="display: contents;"><button type="submit"
                     class="btn btn-primary">加到最愛</button></form>
             {{/if}}
+            {{#if isLiked }}
+            <form action="/like/{{user.id}}?_method=DELETE" method="POST"><button type="submit"
+                    class="btn btn-danger">Unlike</button></form>
+            {{else}}
+            <form action="/like/{{user.id}}" method="POST"><button type="submit" class="btn btn-primary">Like</button>
+            </form>
+            {{/if}}
         </div>
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">

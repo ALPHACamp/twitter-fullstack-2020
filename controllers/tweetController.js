@@ -19,8 +19,8 @@ const tweetController = {
       const data = tweets.map(t => ({
         ...t.dataValues,
         description: t.dataValues.description,
-        isLiked: t.LikeUsers.map(d => d.id).includes(t.id),
-        isFavorited: req.user.FavoritedTweets.map(d => d.id).includes(t.id)
+        isFavorited: req.user.FavoritedTweets.map(d => d.id).includes(t.id),
+        // isLiked: req.user.LikedTweets.map(d => d.id).includes(t.id),
       }))
       return res.render('tweets', { tweets: data })
     })
@@ -37,7 +37,7 @@ const tweetController = {
       order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
       const isFavorited = tweet.FavoritedUsers.map(user => user.id).includes(req.user.id)
-      const isLiked = tweet.LikeUsers.map(d => d.id).includes(tweet.id)
+      const isLiked = tweet.LikedUsers.map(user => user.id).includes(req.user.id)
       return res.render('tweet', {
         tweet,
         isFavorited: isFavorited,
@@ -66,7 +66,7 @@ const tweetController = {
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
-      TweetId: req.params.id
+      TweetId: req.params.tweetId
     }).then((tweet) => {
       return res.redirect('back')
     })
@@ -75,7 +75,7 @@ const tweetController = {
     return Like.findOne({
       where: {
         UserId: req.user.id,
-        TweetId: req.params.id
+        TweetId: req.params.tweetId
       }
     })
       .then((like) => {

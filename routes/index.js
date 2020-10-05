@@ -44,8 +44,8 @@ module.exports = (app, passport) => {
 
 
   // add like
-  app.post('/like/:id', authenticated, tweetController.addLike)
-
+  app.post('/like/:tweetId', authenticated, tweetController.addLike)
+  app.delete('/like/:tweetId', authenticated, tweetController.removeLike)
   // setting使用者能編輯自己的 account、name、email 和 password
   app.get('/setting', authenticated, userController.getSetting)
   app.put('/setting', authenticated, userController.putSetting)
