@@ -93,17 +93,21 @@
               </div>
             </div>
 
-            {{#if isLiked }}
-            <form action="/like/{{tweets.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-                type="submit" class="btn btn-danger">UnLike</button></form>
+            {{#if this.isFavorited }}
+            <form action="/favorite/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+                class="btn btn-danger">移除最愛</button></form>
             {{else}}
-            <form action="/like/{{tweets.id}}" method="POST" style="display: contents;"><button type="submit"
-                class="btn btn-primary">Like</button></form>
+            <form action="/favorite/{{this.id}}" method="POST"><button type="submit"
+                class="btn btn-primary">加到最愛</button></form>
             {{/if}}
 
-
-
-
+            {{!-- {{#if isLiked }}
+            <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+                type="submit" class="btn btn-danger">UnLike</button></form>
+            {{else}}
+            <form action="/like/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn btn-primary">Like</button></form>
+            {{/if}} --}}
 
             {{#if isLiked}}
             <form action="/tweets/{{this.User.dataValues.id}}/unlike" method="POST" style="display:inline;">

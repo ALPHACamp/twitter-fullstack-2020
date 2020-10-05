@@ -4,6 +4,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Favorite = db.Favorite
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -18,7 +19,8 @@ const tweetController = {
       const data = tweets.map(t => ({
         ...t.dataValues,
         description: t.dataValues.description,
-        isLiked: t.LikeUsers.map(d => d.id).includes(t.id)
+        isLiked: t.LikeUsers.map(d => d.id).includes(t.id),
+        isFavorited: req.user.FavoritedTweets.map(d => d.id).includes(t.id)
       }))
       return res.render('tweets', { tweets: data })
     })
@@ -29,14 +31,17 @@ const tweetController = {
       include: [
         User,
         { model: Reply, include: [User] },
+        { model: User, as: 'FavoritedUsers' },
         { model: User, as: 'LikeUsers' }
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
+      const isFavorited = tweet.FavoritedUsers.map(user => user.id).includes(req.user.id)
       const isLiked = tweet.LikeUsers.map(d => d.id).includes(tweet.id)
       return res.render('tweet', {
         tweet,
-        isLiked
+        isFavorited: isFavorited,
+        isLiked: isLiked,
       })
     })
       .catch(error => console.log(error))
@@ -80,5 +85,29 @@ const tweetController = {
           })
       })
   },
+  addFavorite: (req, res) => {
+    return Favorite.create({
+      UserId: req.user.id,
+      TweetId: req.params.tweetId
+    })
+      .then((tweet) => {
+        return res.redirect('back')
+      })
+  },
+
+  removeFavorite: (req, res) => {
+    return Favorite.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      }
+    })
+      .then((favorite) => {
+        favorite.destroy()
+          .then((tweet) => {
+            return res.redirect('back')
+          })
+      })
+  }
 }
 module.exports = tweetController

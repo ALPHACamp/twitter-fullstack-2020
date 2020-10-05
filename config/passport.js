@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
 
 // setup passport strategy
 passport.use(new LocalStrategy(
@@ -26,8 +27,17 @@ passport.use(new LocalStrategy(
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
+
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then(user => {
+  User.findByPk(id, {
+    include: [
+      { model: Tweet, as: 'FavoritedTweets' },
+      { model: Tweet, as: 'LikeTweets' },
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' },
+
+    ]
+  }).then(user => {
     user = user.toJSON() // 此處與影片示範不同
     return cb(null, user)
   })

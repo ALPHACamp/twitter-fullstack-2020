@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     introduction: DataTypes.TEXT,
     isAdmin: DataTypes.BOOLEAN
   }, {});
-  User.associate = function(models) {
+  User.associate = function (models) {
     User.hasMany(models.Reply)
     User.hasMany(models.Tweet);
     User.hasMany(models.Reply);
@@ -33,6 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Followship,
       foreignKey: 'followerId',
       as: 'Followings'
+    })
+    User.belongsToMany(models.Tweet, {
+      through: models.Favorite,
+      foreignKey: 'UserId',
+      as: 'FavoritedTweets'
     })
   };
   return User;

@@ -10,43 +10,53 @@
             <h2>{{ user.name }}</h2>
             <h5>{{ user.account }}</h5>
             <p>{{ user.introduction }}</p>
+            {{#if isFavorited }}
+            <form action="/favorite/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
+                <button type="submit" class="btn btn-danger">移除最愛</button></form>
+            {{else}}
+            <form action="/favorite/{{user.id}}" method="POST" style="display: contents;"><button type="submit"
+                    class="btn btn-primary">加到最愛</button></form>
+            {{/if}}
         </div>
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-tweets" role="tab" aria-controls="nav-home" aria-selected="true">推文</a>
-                <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-replies" role="tab" aria-controls="nav-profile" aria-selected="false">推文與回覆</a>
-                <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-likes" role="tab" aria-controls="nav-contact" aria-selected="false">喜歡</a>
+                <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-tweets" role="tab"
+                    aria-controls="nav-home" aria-selected="true">推文</a>
+                <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-replies" role="tab"
+                    aria-controls="nav-profile" aria-selected="false">推文與回覆</a>
+                <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-likes" role="tab"
+                    aria-controls="nav-contact" aria-selected="false">喜歡</a>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel" aria-labelledby="nav-home-tab">
                 <div class="col">
-                    <div class="tweet-list"> 
+                    <div class="tweet-list">
                         {{#each tweets}}
                         <div class="tweet">
                             <div class="tweet-item-left d-flex align-items-stretch">
                                 <div class="tweet-left d-flex align-items-stretch">
-                                <a href="#">
-                                    <img src="{{ this.userAvatar }}" class="rounded-circle"
-                                    style="background-size:cover; width: 50px;height: 50px;">
-                                </a>
+                                    <a href="#">
+                                        <img src="{{ this.userAvatar }}" class="rounded-circle"
+                                            style="background-size:cover; width: 50px;height: 50px;">
+                                    </a>
                                 </div>
                                 <div class="tweet-item-right  ml-3">
-                                <div class="tweet-item-title">
-                                    <span class="mt-1"><a href="#">{{ this.userName }}</a></span>
-                                    <span class="user-account">
-                                    {{ this.userAccount }}．{{moment this.createdAt}}
-                                    </span>
-                                </div>
-                                <div class="tweet-text">
-                                    {{this.description}}
-                                </div>
+                                    <div class="tweet-item-title">
+                                        <span class="mt-1"><a href="#">{{ this.userName }}</a></span>
+                                        <span class="user-account">
+                                            {{ this.userAccount }}．{{moment this.createdAt}}
+                                        </span>
+                                    </div>
+                                    <div class="tweet-text">
+                                        {{this.description}}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         {{/each}}
                     </div>
-                </div> 
+                </div>
             </div>
             <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
             <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>

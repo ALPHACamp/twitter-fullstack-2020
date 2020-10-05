@@ -1,6 +1,7 @@
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 const tweetController = require("../controllers/tweetController");
+const { addFavorite } = require('../controllers/tweetController');
 
 module.exports = (app, passport) => {
 
@@ -36,6 +37,13 @@ module.exports = (app, passport) => {
   app.get("/tweets", authenticated, tweetController.getTweets)
   app.get("/tweets/:id", authenticated, tweetController.getTweet)
   app.post('/tweets', authenticated, tweetController.createTweet)
+
+  // add favorite
+  app.post('/favorite/:tweetId', authenticated, tweetController.addFavorite)
+  app.delete('/favorite/:tweetId', authenticated, tweetController.removeFavorite)
+
+
+  // add like
   app.post('/like/:id', authenticated, tweetController.addLike)
 
   // setting使用者能編輯自己的 account、name、email 和 password
