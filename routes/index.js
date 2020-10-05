@@ -9,14 +9,14 @@ const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 module.exports = app => {
   // ====================tweets======================================
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetsController.getTweets)
+  app.get('/tweets', authenticated, userController.getTopUsers, tweetsController.getTweets)
   app.post('/tweets', authenticated, tweetsController.postTweets)
 
-  app.get('/replylist/:id', authenticated, replyController.getReplylist)
+  app.get('/replylist/:id', authenticated, userController.getTopUsers, replyController.getReplylist)
   app.post('/replylist/:id', authenticated, replyController.postReply)
 
-app.post('/like/:id', authenticated, replyController.addLike)
-app.delete('/like/:id', authenticated, replyController.removeLike)
+  app.post('/like/:id', authenticated, replyController.addLike)
+  app.delete('/like/:id', authenticated, replyController.removeLike)
 
   // =====================admin====================================
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
@@ -37,7 +37,7 @@ app.delete('/like/:id', authenticated, replyController.removeLike)
   app.post('/signup', userController.register)
 
   // =====================user====================================
-  app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
+  app.get('/users/:id/tweets', authenticated, userController.getTopUsers, userController.getUserTweets)
   app.get('/setting/:id', authenticated, userController.getSetting)
   app.put('/setting/:id', authenticated, userController.putSetting)
   app.post('/users/:id/edit', authenticated, userController.putUser)
