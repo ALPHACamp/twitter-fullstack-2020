@@ -2,8 +2,13 @@ const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
-
 const helpers = require('../_helpers');
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+const imagesUpload = upload.fields([
+  { name: 'avatar', maxCount: 1 },
+  { name: 'cover', maxCount: 1 }
+])
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -74,5 +79,6 @@ module.exports = (app, passport) => {
   app.get('/users/:userId/likes', authenticated, userController.getUserLikes)
   app.get('/users/:userId/followers', authenticated, userController.getUserFollowers)
   app.get('/users/:userId/followings', authenticated, userController.getUserFollowings)
-  
+  app.put('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
+  app.get('/users/:userId', authenticated, userController.getUserTweets)
 }

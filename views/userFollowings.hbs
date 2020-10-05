@@ -1,7 +1,7 @@
 {{!-- Center --}}
 <div class="col border-left border-right">
   <div class="row mt-3 pl-3 border-bottom align-items-center">
-    <i class="fas fa-arrow-left fa-lg"></i>
+    <a href="javascript:history.back()"><i class="fas fa-arrow-left fa-lg"></i></a>
     <div class="ml-5">
       <h5>{{ name }}</h5>
       <span class="text-muted">{{tweetsCount}} 推文</span>
@@ -22,10 +22,12 @@
   {{#each users}}
   <div class="row border-bottom">
     <div class="d-flex p-2">
-      <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
+      <a href="/users/{{../user.id}}">
+        <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
+      </a>
       <div class="col">
-        <span class="bold">{{this.account}}</span><br>
-        <span style="color: grey">@{{this.name}}</span><br>
+        <span class="bold">{{this.name}}</span><br>
+        <span style="color: grey">@{{this.account}}</span><br>
         <span><small>{{this.introduction}}<br></small></span>
       </div>
       <div>
@@ -40,38 +42,4 @@
   {{/each}}
 </div>
 {{!-- Right side --}}
-<div class="col-4">
-  <ul class="list-group mt-3 ml-3">
-    <li class="list-group-item" style="background-color:rgb(245, 248, 250);">
-      <strong>跟隨誰</strong>
-    </li>
-    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
-      <div class="d-flex">
-        {{!-- <div class="p-3">Avatar</div> --}}
-        <img class="mr-3" src="#" alt="Avatar">
-        <div>
-          <strong>Name</strong><br>
-          <span class="text-muted">@UserName</span>
-        </div>
-        <div class="align-self-center ml-auto">
-          <a href="#" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</a>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
-      <div class="d-flex">
-        <img class="mr-3" src="#" alt="Avatar">
-        <div>
-          <strong>Name</strong><br>
-          <span class="text-muted">@UserName</span>
-        </div>
-        <div class="align-self-center ml-auto">
-          <a href="#" class="btn btn-outline-twitter rounded-pill">跟隨</a>
-        </div>
-      </div>
-    </li>
-    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
-      <a href="#" style="color: rgb(255, 102, 0);">顯示更多</a>
-    </li>
-  </ul>
-</div>
+{{> right}}
