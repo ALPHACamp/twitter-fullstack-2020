@@ -11,7 +11,7 @@ main.addEventListener('click', (event) => {
     let replyDes = event.target.previousElementSibling.children[4].textContent
     let replyAvatar = event.target.previousElementSibling.children[5].textContent
     let replyTweet = event.target.previousElementSibling.children[6].textContent
-    replyForm.setAttribute("action", `/tweets/${replyTweet}`)
+    replyForm.setAttribute("action", `/tweets/${replyTweet}/replies`)
 
     let replyTemplate = `
     <div class="reply-modal-userPic">
