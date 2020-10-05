@@ -292,10 +292,6 @@ const userController = {
         res.locals.topUsers = users
         return next()
       })
-      .catch(() => {
-        res.locals.topUsers = null
-        return next()
-      })
   }
 }
 
