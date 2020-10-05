@@ -139,7 +139,7 @@ const userController = {
       }))
       // console.log('followerList', followerList)
       return res.render('user/followerPage', {
-        user: pageUser,
+        users: pageUser,
         followerList
       })
     })
@@ -153,13 +153,15 @@ const userController = {
         { model: User, as: 'Followings' }
       ]
     }).then(user => {
+      // console.log(user.dataValues)
       const pageUser = user.toJSON()
       followingList = user.Followings.map(user => ({
         ...user.dataValues,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
+      // console.log('followingList', followingList)
       return res.render('user/followingPage', {
-        user: pageUser,
+        users: pageUser,
         followingList
       })
     })
