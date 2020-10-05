@@ -63,6 +63,10 @@ const tweetController = {
           req.flash('successFlashMessage', '成功回覆推文!')
           return res.redirect('back')
         })
+        .catch(() => {
+          req.flash('errorFlashMessage', '回覆推文失敗!')
+          return res.redirect('back')
+        })
     }
   }
 
