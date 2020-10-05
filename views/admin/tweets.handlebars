@@ -2,7 +2,7 @@
   <div class="col-3 border-right">main.hbs
     <a href="/admin/users">users page</a>
   </div>
-<div class="col-md-9 pl-0">
+  <div class="col-md-9 pl-0">
     <h3 class="ml-2">推文清單</h3>
     <hr>
     {{#each tweets}}
@@ -14,7 +14,7 @@
         </div>
         <div class="information d-flex flex-column mt-2 col">
           <div class="d-flex">
-               <div class="name" name="name">
+            <div class="name" name="name">
               <a><strong>{{this.User.dataValues.name}}&ensp;</strong></a>
             </div>
             <div class="account" name="account">
@@ -24,12 +24,22 @@
               &ensp;·&ensp;{{moment this.createdAt}}
             </div>
           </div>
-          <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
-            {{this.description}}
+          <div class="createdAt" name="createdAt">
+            &ensp;·&ensp;{{moment this.createdAt}}
           </div>
         </div>
+        <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
+          {{this.description}}
         </div>
-      <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="col-1 mr-2">
+
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="col-1 mr-2">
+          <button type="submit" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </form>
+
+      </div>
+      <form action="_method=DELETE" method="POST" class="col-1 mr-2">
         <button type="submit" class="close" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -39,4 +49,4 @@
     <hr>
     {{/each}}
   </div>
-</div> 
+</div>
