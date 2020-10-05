@@ -48,8 +48,10 @@ router.get('/', (req, res) => {
 
 router.post('/tweets', userAuthenticated, tweetController.postTweets);
 router.get('/tweets', userAuthenticated, tweetController.getTweets);
-router.post('/tweets/:id/like', userAuthenticated, tweetController.postLike);
-router.post('/tweets/:id/unlike', userAuthenticated, tweetController.postUnlike);
+router.post('/tweets/:id/like', userAuthenticated, tweetController.postTweetLike);
+router.post('/tweets/:id/unlike', userAuthenticated, tweetController.postTweetUnlike);
+router.post('/replies/:id/like', userAuthenticated, tweetController.postReplyLike);
+router.post('/replies/:id/unlike', userAuthenticated, tweetController.postReplyUnlike);
 
 router.get('/users/self', userAuthenticated, userController.getSelf);
 router.get(

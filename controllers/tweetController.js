@@ -19,7 +19,8 @@ const tweetController = {
     })
       .then((tweets) => {
         const data = tweets.map((t) => ({
-          ...t.dataValues
+          ...t.dataValues,
+          isLiked: t.toJSON().Likes.map((i) => i.UserId).includes(helpers.getUser(req).id),
         }))
         const likes = helpers.getUser(req).Likes
         const isLiked = likes.map((i) => i.id).includes(data.id)
@@ -48,20 +49,100 @@ const tweetController = {
       })
   },
 
-  postLike: (req, res) => {
-    console.log('req.params', req.params)
-    Like.create({
-      UserId: helpers.getUser(req).id,
-      Position: tweet,
-      PositionId: req.params.id,
-      isLike: true,
-    })
-
-  
+  postTweetLike: async (req, res) => {
+    try {
+      const [like, isCreated] = await Like.findOrCreate(
+        {
+          where: {
+            Position: 'tweet',
+            PositionId: req.params.id,
+            UserId: helpers.getUser(req).id,
+          },
+          defaults: {
+            UserId: helpers.getUser(req).id,
+            Position: 'tweet',
+            PositionId: req.params.id,
+            isLike: true,
+          }
+        })
+      if (isCreated) console.log('postTweetLike success')
+      else console.log('postTweetLike already created')
+      return res.redirect('back')
+    }
+    catch {
+      console.log('postTweetLike error')
+      return res.redirect('back')
+    }
   },
 
-  postUnlike: (req, res) => {
+  postTweetUnlike: (req, res) => {
+    Like.findOne({
+      where: {
+        Position: 'tweet',
+        PositionId: req.params.id,
+        UserId: helpers.getUser(req).id,
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+          .then(() => { return res.redirect('back') })
+          .catch(() => {
+            console.log('deleteTweetLike error')
+            return res.redirect('back')
+          })
+      })
+      .catch(() => {
+        console.log('queryTweetLike error')
+        return res.redirect('back')
+      })
+  },
 
+  postReplyLike: async (req, res) => {
+    try {
+      const [like, isCreated] = await Like.findOrCreate(
+        {
+          where: {
+            Position: 'reply',
+            PositionId: req.params.id,
+            UserId: helpers.getUser(req).id,
+          },
+          defaults: {
+            UserId: helpers.getUser(req).id,
+            Position: 'reply',
+            PositionId: req.params.id,
+            isLike: true,
+          }
+        })
+      if (isCreated) console.log('postReplyLike success')
+      else console.log('postReplyLike already created')
+      return res.redirect('back')
+    }
+    catch {
+      console.log('postReplyLike error')
+      return res.redirect('back')
+    }
+  },
+
+  postReplyUnlike: (req, res) => {
+    Like.findOne({
+      where: {
+        Position: 'reply',
+        PositionId: req.params.id,
+        UserId: helpers.getUser(req).id,
+      }
+    })
+      .then((like) => {
+        return like.destroy()
+          .then(() => { return res.redirect('back') })
+          .catch(() => {
+            console.log('deleteReplyLike error')
+            return res.redirect('back')
+          })
+      })
+      .catch(() => {
+        console.log('queryReplyLike error')
+        return res.redirect('back')
+      })
   },
 
 
