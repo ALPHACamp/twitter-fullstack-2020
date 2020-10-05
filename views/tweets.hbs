@@ -44,17 +44,17 @@
           <p>{{this.description}}</p>
 
           <div>
-            <a href="/tweets/{{this.id}}" style="float:left; color:black; margin-right:4px;"><i class="far fa-comment-alt"></i></a>
+            <a href="/tweets/{{this.id}}/replies" style="float:left; color:black; margin-right:4px;"><i class="far fa-comment-alt"></i></a>
             <div style="float:left; margin-right:25px;">{{this.repliesCount}}</div>
           </div>
 
           {{#if this.isLiked}}
-          <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="float:left;">
+          <form action="/tweets/{{this.id}}/unlike" method="POST" style="float:left;">
             <button type="submit" class="btn-push"><i class="fas fa-heart"></i></button>
           </form>
           <div style="float:left;">{{this.likesCount}}</div>   
           {{else}}
-          <form action="/like/{{this.id}}" method="POST" style="float:left;">
+          <form action="/tweets/{{this.id}}/like" method="POST" style="float:left;">
             <button type="submit" class="btn-push"><i class="far fa-heart"></i></button>
           </form>
           <div style="float:left;">{{this.likesCount}}</div>   

@@ -8,7 +8,7 @@
       <div class="flex-container">
         {{!-- <div class="p-3">Avatar</div> --}}
         <div class="mr-2">
-          <a href="/users/this.id">
+          <a href="/users/{{this.id}}">
           <img src="{{this.avatar}}" alt="user avatar" class="user-avatar">
           </a>
         </div>
@@ -20,12 +20,12 @@
           {{#ifCond ../loginUser.id this.id}}
           {{else}}
             {{#if this.isFollowing}}
-            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn" style="border-radius: 18px; background:coral; color:white; width: auto">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/following/{{this.id}}" method="POST">
-              <button type="submit" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</button>
+            <form action="/followships" method="POST">
+              <button name="id" value="{{this.id}}" type="submit" class="btn" style="border-radius: 18px; width: auto; border-color: coral; color:coral">跟隨</button>
             </form>
             {{/if}}
           {{/ifCond}}
