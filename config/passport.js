@@ -2,7 +2,13 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
+const { Sequelize } = require('../models')
+const user = require('../models/user')
+const tweetController = require('../controllers/tweetController')
 const User = db.User
+const Tweet = db.Tweet
+
+
 
 // setup passport strategy
 passport.use(new LocalStrategy(
@@ -28,7 +34,11 @@ passport.serializeUser((user, cb) => { //user轉 user_id
 })
 
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then(user => {
+  User.findByPk(id, {
+    include: [
+      { model: Tweet, as: 'LikedTweets' }
+    ]
+  }).then(user => {
     user = user.toJSON()
     return cb(null, user)
   })

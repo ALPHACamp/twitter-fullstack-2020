@@ -5,16 +5,16 @@ const bodyParser = require('body-parser')
 const port = process.env.PORT || 3000
 const app = express()
 const db = require('./models')
+const methodOverride = require('method-override')
 
 const passport = require('./config/passport')
-const methodOverride = require("method-override");
 
 const flash = require('connect-flash')
 const session = require('express-session')
 
 app.use(bodyParser.urlencoded({ extended: true }))
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
+
 app.engine('handlebars', handlebars({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
 
@@ -24,6 +24,7 @@ app.use(methodOverride("_method"));
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
+app.use(methodOverride('_method'))
 
 //pssport初始化與啟動session
 app.use(passport.initialize())
@@ -33,7 +34,7 @@ app.use(passport.session())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = req.user
+  res.locals.user = helpers.getUser(req)
   next()
 })
 
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 
 //使用public 資料夾
 app.use(express.static('public'))
+
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
