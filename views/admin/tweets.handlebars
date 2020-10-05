@@ -31,14 +31,13 @@
         <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
           {{this.description}}
         </div>
-        <<<<<<< HEAD </div>
-          =======
-          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="col-1 mr-2">
-            <button type="submit" class="close" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </form>
-          >>>>>>> master
+
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="col-1 mr-2">
+          <button type="submit" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </form>
+
       </div>
       <form action="_method=DELETE" method="POST" class="col-1 mr-2">
         <button type="submit" class="close" aria-label="Close">

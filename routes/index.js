@@ -18,9 +18,9 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
-  app.get('/main', (req, res) => res.render('mainpage'))
-  app.get('/admin', (req, res) => res.redirect('/admin/main'))
-  app.get('/admin/main', adminController.getTweets)
+
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/main'))
+  app.get('/admin/main', authenticatedAdmin, adminController.getTweets)
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
@@ -36,19 +36,19 @@ module.exports = (app, passport) => {
   app.get("/tweets", authenticated, tweetController.getTweets)
   app.get("/tweets/:id", authenticated, tweetController.getTweet)
   app.post('/tweets', authenticated, tweetController.createTweet)
-  app.post('/like/:id', tweetController.addLike)
+  app.post('/like/:id', authenticated, tweetController.addLike)
 
   // setting使用者能編輯自己的 account、name、email 和 password
-  app.get('/setting', userController.getSetting)
-  app.put('/setting', userController.putSetting)
+  app.get('/setting', authenticated, userController.getSetting)
+  app.put('/setting', authenticated, userController.putSetting)
 
 
   // 使用者能編輯自己的自我介紹、個人頭像與封面
-  app.get('/user/:id', userController.getUser)
-  app.get('/user/self/edit', userController.editUser)
-  app.put('/users/:id', userController.putUser)
+  app.get('/user/:id', authenticated, userController.getUser)
+  app.get('/user/self/edit', authenticated, userController.editUser)
+  app.put('/users/:id', authenticated, userController.putUser)
 
-  app.get("/user/other/:id", userController.otherUser)
+  app.get("/user/other/:id", authenticated, userController.otherUser)
 }
 
 
