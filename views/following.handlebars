@@ -8,16 +8,16 @@
     <div class="row ml-3 align-items-center">
       <i class="fas fa-arrow-left fa-lg"></i>
       <div class="ml-5">
-        <h4 class="m-0 font-weight-bold">{{user.dataValues.name}}</h4>
+        <h4 class="m-0 font-weight-bold">{{user.name}}</h4>
         <p class="followship-tweetsCount m-0">{{user.Tweets.length}}推文</p>
       </div>
     </div>
     <br>
     <div class="row border-bottom">
-      <a href="/user/{{user.dataValues.id}}/follower" style="text-decoration: none">
+      <a href="/users/{{user.id}}/follower" style="text-decoration: none">
         <h5 class="following-follower m-0 px-4 py-3 font-weight-bold">跟隨者</h5>
       </a>
-      <a href="/user/{{user.dataValues.id}}/following" style="text-decoration: none">
+      <a href="/users/{{user.id}}/following" style="text-decoration: none">
         <h5 class="following-following m-0 px-4 py-3 font-weight-bold"
           style="color:#FF6600;border-bottom:2px solid #FF6600;">正在跟隨</h5>
       </a>
@@ -44,4 +44,4 @@
     </div>
     {{/each}}
   </div>
-</div>>
+</div>

@@ -28,6 +28,29 @@ font-size: large;
   border-radius: 50px;
 }
 
+.right-zone {
+  color: #000000;
+  font-weight: bold;
+}
+
+.list-group .right-zone-header {
+  background-color: aquamarine;
+  border: none;
+  border-radius: 20px 20px 0 0 !important ;
+}
+
+.list-group .right-zone-body{
+  background-color: gray;
+  border: none;
+}
+
+.list-group .right-zone-footer {
+  background-color: blanchedalmond;
+  border: none;
+    border-radius: 0 0 20px 20px !important;
+
+}
+
 .logout {
   color:#000000;
   font-weight: bold;

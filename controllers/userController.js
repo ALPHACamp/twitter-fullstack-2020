@@ -98,12 +98,14 @@ const userController = {
         { model: User, as: 'Followers' }]
     })
       .then(user => {
-        const followerList = user.Followers.map(user => ({
+        followerList = user.Followers.map(user => ({
           ...user.dataValues,
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        // console.log(followerList)
-        return res.render('follower', { user, followerList })
+        console.log(user.toJSON())
+        console.log('-----*-*-***********************-----------')
+        console.log(followerList)
+        return res.render('follower', { user: user.toJSON(), followerList })
       })
   },
 
@@ -114,26 +116,27 @@ const userController = {
         { model: User, as: 'Followings' }]
     })
       .then(user => {
-        const followingList = user.Followings.map(user => ({
+        followingList = user.Followings.map(user => ({
           ...user.dataValues,
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        return res.render('following', { user, followingList })
+        return res.render('following', { user: user.toJSON(), followingList })
       })
   },
 
   getUser: (req, res) => {
     User.findByPk(req.params.id, {
       include: [
-        { model: Reply, include: [Tweet] },
+        Reply,
         { model: Tweet, as: 'LikedUsers' },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
     }).then(user => {
+      console.log(user)
       const userSelf = helpers.getUser(req).id
       const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
-      res.render({
+      res.render('user', {
         user: user,
         isLiked: isLiked,
         userSelf: userSelf
@@ -195,7 +198,22 @@ const userController = {
       .catch(error => console.log(error))
   },
 
-
+  getTopFollowers: (req, res, next) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+      .then(users => {
+        console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*", users)
+        users = users.map(user => ({
+          ...user.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+          FollowersCount: user.Followers.length
+        }))
+        users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
+        res.locals.users = users
+        return next()
+      })
+  }
 
 
 

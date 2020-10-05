@@ -36,8 +36,8 @@ module.exports = (app, passport) => {
   );
 
   app.get("/logout", userController.logout);
-  app.get("/setting", userController.getSetting);
-  app.put("/setting", userController.putSetting)
+  app.get("/users/:id/setting", userController.getSetting);
+  app.put("/users/:id/setting", userController.putSetting)
 
 
 
@@ -45,8 +45,8 @@ module.exports = (app, passport) => {
 
   //userController
   app.get('/users/:id', authenticated, userController.getUser)
-  app.get('/user/:id/follower', authenticated, userController.getFollower)
-  app.get('/user/:id/following', authenticated, userController.getFollowing)
+  app.get('/users/:id/follower', authenticated, userController.getFollower)
+  app.get('/users/:id/following', authenticated, userController.getFollowing)
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
   app.post("/like/:id", authenticated, userController.addLike);
