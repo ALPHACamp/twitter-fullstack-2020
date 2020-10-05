@@ -1,6 +1,8 @@
 const express = require('express')
-const helpers = require('./_helpers');
+const Handlebars = require('handlebars')
+const helpers = require('./_helpers')
 const exphbs = require('express-handlebars')
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
@@ -17,7 +19,8 @@ app.use(express.static('public'))
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs',
-  helpers: require('./config/handlebars-helpers')
+  helpers: require('./config/handlebars-helpers'),
+  handlebars: allowInsecurePrototypeAccess(Handlebars)
 }))
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
@@ -30,7 +33,7 @@ app.use(passport.session())
 
 app.use(flash())
 app.use(methodOverride('_method'))
-app.use('/upload', express.static(__dirname+'/upload'))
+app.use('/upload', express.static(__dirname + '/upload'))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
