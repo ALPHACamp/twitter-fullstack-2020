@@ -5,6 +5,8 @@
     </div>
   </nav>
 
+  {{> modal}}
+
   <div class="center-content d-flex" id="tweet-content">
     <div class="head  justify-content-between ">
       <a href="javascript:history.back()" style="color: black;">
@@ -14,10 +16,10 @@
         </div>
       </a>
       <div class="user-cover">
-        <img src="{{users.cover}}" alt="{{users.cover}}">
+        <img {{#if users.cover}}src="{{users.cover}}" {{/if}}>
       </div>
       <div class="tweet-content-box">
-        <div class=" user-info-top">
+        <div class="user-info-top">
           <a href="/users/{{users.id}}/tweets">
             <img class="ml-2 mt-2" {{#if users.avatar}}src={{users.avatar}}{{/if}}>
           </a>
@@ -118,9 +120,7 @@
         </div>
         {{/each}}
       </div>
-
     </div>
-
   </div>
 
 
