@@ -147,7 +147,7 @@ const userController = {
   },
 
   removeLike: (req, res) => {
-    Like.findOne({
+    return Like.findOne({
       where: {
         UserId: helpers.getUser(req).id,
         TweetId: req.params.id

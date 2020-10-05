@@ -8,7 +8,6 @@ const db = require('./models')
 const methodOverride = require('method-override')
 
 const passport = require('./config/passport')
-const methodOverride = require("method-override");
 
 const flash = require('connect-flash')
 const session = require('express-session')
