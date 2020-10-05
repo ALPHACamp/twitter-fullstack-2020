@@ -11,16 +11,20 @@ const imagesUpload = upload.fields([
 ])
 
 module.exports = (app, passport) => {
+
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (req.user.role === 'user') { return next() }
+      if (helpers.getUser(req).role === 'user') {
+        return next()
+      }
     }
-    req.flash('error_messages', '錯誤賬號類型，請使用後台登錄！')
-    return res.redirect('/signin')
+    return res.redirect('/admin/tweets')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (req.user.role === 'admin') { return next() }
+      if (helpers.getUser(req).role === 'admin') {
+        return next()
+      }
       return res.redirect('/signin')
     }
     res.redirect('/signin')
