@@ -12,6 +12,7 @@ const userController = {
   registerPage: (req, res) => {
     return res.render('register', { layout: 'mainLogin' })
   },
+
   register: (req, res) => {
     if (req.body.checkPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
@@ -45,13 +46,16 @@ const userController = {
         })
     }
   },
+
   loginPage: (req, res) => {
     return res.render('login', { layout: 'mainLogin' })
   },
+
   login: (req, res) => {
     req.flash('success_messages', '成功登入！')
     return res.redirect('/tweets')
   },
+
   logout: (req, res) => {
     req.flash('success_messages', '成功登出！')
     req.logout()
@@ -142,15 +146,18 @@ const userController = {
   adminLoginPage: (req, res) => {
     return res.render('admin/login', { layout: 'mainLogin' })
   },
+
   adminLogin: (req, res) => {
     req.flash('success_messages', '成功登入！')
     return res.redirect('/admin/tweets')
   },
+
   adminLogout: (req, res) => {
     req.flash('success_messages', '成功登出！')
     req.logout()
     return res.redirect('/admin/login')
   },
+
   getUserSettings: (req, res) => {
     const reqUser = helpers.getUser(req)
     return User.findByPk(reqUser.id).then(user => {
@@ -159,6 +166,7 @@ const userController = {
       })
     })
   },
+
   putUserSettings: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
     const id = req.params.id
@@ -220,6 +228,7 @@ const userController = {
       }).catch(err => console.log(err))
     }
   },
+
   getUserTweets: (req, res) => {
     const reqUserId = req.params.userId
     const loginUser = helpers.getUser(req)
@@ -231,6 +240,7 @@ const userController = {
         { model: User, as: 'Followers' }
       ]
     }).then(user => {
+      console.log(user)
       const tweets = user.toJSON().Tweets.map(tweet => ({
         id: user.toJSON().id,
         avatar: user.toJSON().avatar,
@@ -241,7 +251,7 @@ const userController = {
         replyCount: tweet.Replies.length,
         likeCount: tweet.Likes.length,
         tweetId: tweet.id,
-        isLiked: req.user.Likes.map(like => like.TweetId).includes(tweet.id)
+        isLiked: loginUser.Likes.map(like => like.TweetId).includes(tweet.id)
       }))
       // Right side
       // filter the tweets to those that user followings & user himself
@@ -252,7 +262,7 @@ const userController = {
       }).then(users => {
         users = users.map(user => ({
           ...user.dataValues,
-          isFollowing: user.Followers.map(follower => follower.id).includes(req.user.id)
+          isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
         //sort by the amount of the followers
         users.sort((a, b) => {
@@ -282,6 +292,7 @@ const userController = {
       })
     })
   },
+
   getUserReplies: (req, res) => {
     const reqUserId = req.params.userId
     const loginUser = helpers.getUser(req)
@@ -311,7 +322,7 @@ const userController = {
         updatedAt: reply.updatedAt,
         replyCommentsCount: reply.ReplyComments.length,
         replyLikeCount: reply.Likes.length,
-        isReplyLiked: req.user.Likes.map(like => like.ReplyId).includes(reply.id),
+        isReplyLiked: loginUser.Likes.map(like => like.ReplyId).includes(reply.id),
         // Tweet
         tweetId: reply.TweetId,
         tweetUserAccount: reply.Tweet.User.account,
@@ -319,7 +330,7 @@ const userController = {
         tweetDescription: reply.Tweet.description.substring(0, 160),
         replyCount: reply.Tweet.Replies.length,
         tweetLikeCount: reply.Tweet.Likes.length,
-        isLiked: req.user.Likes.map(like => like.TweetId).includes(reply.TweetId)
+        isLiked: loginUser.Likes.map(like => like.TweetId).includes(reply.TweetId)
       }))
       // Right side
       // filter the tweets to those that user followings & user himself
@@ -330,7 +341,7 @@ const userController = {
       }).then(users => {
         users = users.map(user => ({
           ...user.dataValues,
-          isFollowing: user.Followers.map(follower => follower.id).includes(req.user.id)
+          isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
         //sort by the amount of the followers
         users.sort((a, b) => {
@@ -359,6 +370,7 @@ const userController = {
       })
     })
   },
+
   getUserLikes: (req, res) => {
     const reqUserId = req.params.userId
     const loginUser = helpers.getUser(req)
@@ -381,7 +393,7 @@ const userController = {
         replyCount: like.Tweet.Replies.length,
         likeCount: like.Tweet.Likes.length,
         tweetId: like.TweetId,
-        isLiked: req.user.Likes.map(l => l.TweetId).includes(like.TweetId)
+        isLiked: loginUser.Likes.map(l => l.TweetId).includes(like.TweetId)
       }))
       // Right side
       // filter the tweets to those that user followings & user himself
@@ -392,7 +404,7 @@ const userController = {
       }).then(users => {
         users = users.map(user => ({
           ...user.dataValues,
-          isFollowing: user.Followers.map(follower => follower.id).includes(req.user.id)
+          isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
         //sort by the amount of the followers
         users.sort((a, b) => {
@@ -421,6 +433,7 @@ const userController = {
       })
     })
   },
+
   getUserFollowers: (req, res) => {
     const reqUserId = req.params.userId
     const loginUser = helpers.getUser(req)
@@ -453,6 +466,7 @@ const userController = {
       })
     })
   },
+
   getUserFollowings: (req, res) => {
     const reqUserId = req.params.userId
     const loginUser = helpers.getUser(req)
@@ -462,6 +476,9 @@ const userController = {
         { model: User, as: 'Followings' }
       ]
     }).then(users => {
+
+      console.log(users)
+      
       const tweetsCount = users.toJSON().Tweets.length
       const name = users.toJSON().name
       users = users.Followings.map(r => ({
@@ -474,6 +491,8 @@ const userController = {
         // 追蹤者人數
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(r.id)
       }))
+
+      
       // 排序
       users = users.sort((a, b) => b.followshipCreatedAt - a.followshipCreatedAt)
       return res.render('userFollowings', {
@@ -483,6 +502,7 @@ const userController = {
       })
     })
   },
+  
   putUserInfo: (req, res) => {
     const { name, introduction } = req.body
     const id = req.params.userId
