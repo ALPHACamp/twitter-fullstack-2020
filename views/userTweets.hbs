@@ -53,15 +53,15 @@
           <small>
             {{this.description}}<br>
             <span class="d-flex flex-row ">
-              <a href="/tweets/{{this.tweetId}}">
+              <a href="/tweets/{{this.tweetId}}/replies">
                 <i class="far fa-comment mr-3" style="color: grey;"> {{this.replyCount}}</i>
               </a>
               {{#if this.isLiked}}
-              <form action="/like/{{this.tweetId}}?_method=DELETE" method="POST">
+              <form action="/tweets/{{this.tweetId}}/unlike" method="POST">
                 <button type="submit" class="btn-push"><i class="fas fa-heart" style="color: rgb(224, 36, 94); ;">{{this.likeCount}}</i></button>
               </form>
               {{else}}
-              <form action="/like/{{this.tweetId}}" method="POST">
+              <form action="/tweets/{{this.tweetId}}/like" method="POST">
                 <button type="submit" class="btn-push"><i class="far fa-heart" style="color: grey;">{{this.likeCount}}</i></button>
               </form>
               {{/if}}

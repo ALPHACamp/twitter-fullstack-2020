@@ -20,12 +20,12 @@
           {{#ifCond ../loginUser.id this.id}}
           {{else}}
             {{#if this.isFollowing}}
-            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/following/{{this.id}}" method="POST">
-              <button type="submit" class="btn btn-outline-twitter rounded-pill">跟隨</button>
+            <form action="/followships" method="POST">
+              <button name="id" value="{{this.id}}" type="submit" class="btn btn-outline-twitter rounded-pill">跟隨</button>
             </form>
             {{/if}}
           {{/ifCond}}
