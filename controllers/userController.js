@@ -148,9 +148,9 @@ const userController = {
       const followings = helpers.getUser(req).Followings.map((u) => u.id);
       const likes = helpers.getUser(req).Likes
         ? helpers
-            .getUser(req)
-            .Likes.filter((u) => u.Position === 'tweet')
-            .map((t) => t.PositionId)
+          .getUser(req)
+          .Likes.filter((u) => u.Position === 'tweet')
+          .map((t) => t.PositionId)
         : [];
 
       //console.log(likes);
