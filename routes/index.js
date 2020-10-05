@@ -33,8 +33,8 @@ app.delete('/like/:id', authenticated, replyController.removeLike)
   app.get('/logout', userController.logout)
 
   // ================register====================================
-  app.get('/register', userController.registerPage)
-  app.post('/register', userController.register)
+  app.get('/signup', userController.registerPage)
+  app.post('/signup', userController.register)
 
   // =====================user====================================
   app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
