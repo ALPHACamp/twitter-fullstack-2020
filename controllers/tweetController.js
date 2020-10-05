@@ -19,7 +19,7 @@ const tweetController = {
         const data = tweets.map(t => ({
           ...t.dataValues,
           description: t.dataValues.description,
-          isLiked: t.LikedUsers.map(d => d.id).includes(t.id)
+          isLiked: t.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
         }))
         return User.findOne({ where: { id: UserId } })
           .then(user => {
@@ -43,7 +43,6 @@ const tweetController = {
 
       return User.findOne({ where: { id: UserId } })
         .then(user => {
-          console.log(user)
           return res.render('tweet', {
             tweet: tweet,
             isLiked: isLiked
@@ -80,6 +79,7 @@ const tweetController = {
       {
         include: [{ model: Reply, include: [User] }]
       }).then(tweet => {
+        console.log(tweet)
         const data = tweet.Replies.map(t => ({
           ...t.dataValues,
           comment: t.comment
