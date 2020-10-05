@@ -38,14 +38,14 @@ const tweetController = {
       UserId: helpers.getUser(req).id,
       description: tweetText,
     })
-      .then(() => {
-        req.flash('successFlashMessage', '成功新增推文!')
-        return res.redirect('back')
-      })
-      .catch(() => {
-        req.flash('errorFlashMessage', '新增推文失敗!')
-        return res.redirect('back')
-      })
+    .then(() => {
+      req.flash('successFlashMessage','成功新增推文!')
+      return res.redirect('/tweets')
+    })
+    .catch(() => {
+      req.flash('errorFlashMessage', '新增推文失敗!')
+      return res.redirect('back')
+    })
   },
 
   postReply: (req, res) => {

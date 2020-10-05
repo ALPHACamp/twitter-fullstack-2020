@@ -1,7 +1,11 @@
 <div class="container-fluid">
   {{!-- left-column --}}
   {{> left-column}}
-  <div class="tweets-center">
+  <div class="tweets-center" style="position: relative;">
+    <div style="position: absolute; width: 100%">
+      {{> message}}
+    </div>
+
     <div class="tweets-title">
       首頁
     </div>

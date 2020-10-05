@@ -1,7 +1,8 @@
 const alert = document.querySelector('.alert')
-const adminOpacity = document.querySelector('.adminOpacity')
+const useScrolling = document.querySelector('.useScrolling')
+const useOpacity = document.querySelector('.useOpacity')
 
-if (alert && !adminOpacity) {
+if (alert && useScrolling) {
   let msg = alert.innerText + '　　　　　　　　　　　　　　　　　　'
   const textShift = () => {
     msg = msg.substring(2, msg.length) + msg.substring(0, 2)
@@ -11,16 +12,14 @@ if (alert && !adminOpacity) {
   textShift()
 }
 
-if (alert && adminOpacity) {
+if (alert && useOpacity) {
   setTimeout(() => { 
-    adminOpacity.classList.add('alertMessage')
-    adminOpacity.addEventListener('animationend', event => { 
+    useOpacity.classList.add('alertMessage')
+    useOpacity.addEventListener('animationend', event => { 
       event.target.classList.remove('alertMessage')
-      adminOpacity.remove() 
+      useOpacity.remove() 
     }, { once: true })
   }, 2000)
 }
-
-
 
 
