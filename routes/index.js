@@ -65,7 +65,7 @@ module.exports = (app, passport) => {
   app.get('/user/self/edit', authenticated, userController.editUser)
   app.put('/users/:id', authenticated, userController.putUser)
 
-  app.get("/user/other/:id", userController.otherUser)
+  app.get("/user/other/:id", authenticated, userController.otherUser)
 }
 
 
