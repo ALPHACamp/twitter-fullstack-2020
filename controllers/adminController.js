@@ -4,6 +4,7 @@ const Like = db.Like
 const Followship = db.Followship
 const Tweet = db.Tweet
 const User = db.User
+
 const adminController = {
   getTweets: (req, res) => {
     return Tweet.findAll({
