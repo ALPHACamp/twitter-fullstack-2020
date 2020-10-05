@@ -3,28 +3,34 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
+        <h5 class="modal-title" id="exampleModalLabel" style="margin-left: -350px;">編輯個人資料</h5>
+        <button type="button" class="save-button">儲存</button>
       </div>
       <div class="modal-body">
 
       </div>
       <div class="user-edit">
-        <div class="form-label-group">
-          <label for="name">名稱</label>
-          <input type="text" name="name" class="form-control shadow-none border-none">
+        <div class="modal-cover">
+          <img {{#if users.cover}}src="{{users.cover}}" {{/if}} style="max-width: 600px;max-height:200px">
+          {{!-- <img src="https://fakeimg.pl/600x200/ff0000/000" alt=""> --}}
+          <i class="fas fa-camera"></i>
         </div>
-        <div class="form-label-group">
+        <div class="user-info-top">
+          <img class="ml-2" style="top: -30px;" {{#if users.avatar}}src={{users.avatar}}{{/if}}>
+          <i class="fas fa-camera"></i>
+        </div>
+        <div class="form-label-group-modal">
+          <label for="name">名稱</label>
+          <input type="text" name="name" class="form-control shadow-none border-none" value="{{users.name}}">
+        </div>
+        <div class="form-label-group-modal">
           <label for="introduction">自我介紹</label>
-          <input type="introduction" name="introduction" class="form-control">
+          <textarea name="introduction" rows="10" cols="30" placeholder="{{users.introduction}}"></textarea>
         </div>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
