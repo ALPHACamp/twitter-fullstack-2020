@@ -13,7 +13,7 @@ const userController = {
     return res.render('register', { layout: 'mainLogin' })
   },
   register: (req, res) => {
-    if (req.body.confirmPassword !== req.body.password) {
+    if (req.body.checkPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     } else {
@@ -159,7 +159,7 @@ const userController = {
     })
   },
   putUserSettings: (req, res) => {
-    const { account, name, email, password, confirmPassword } = req.body
+    const { account, name, email, password, checkPassword } = req.body
     const id = req.params.id
     let passwordCheck = false
     // check user auth
@@ -173,18 +173,18 @@ const userController = {
       return res.redirect('back')
     }
     // check password
-    if (password && !confirmPassword) {
+    if (password && !checkPassword) {
       req.flash('error_messages', 'Please confirm password')
       passwordCheck = false
       return res.redirect('back')
     }
-    if (!password && confirmPassword) {
+    if (!password && checkPassword) {
       req.flash('error_messages', 'Password should not be empty')
       passwordCheck = false
       return res.redirect('back')
     }
-    if (password || confirmPassword) {
-      if (password !== confirmPassword) {
+    if (password || checkPassword) {
+      if (password !== checkPassword) {
         req.flash('error_messages', 'Password and confirmed Password are not matched')
         passwordCheck = false
         return res.redirect('back')
