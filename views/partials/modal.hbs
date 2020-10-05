@@ -53,7 +53,6 @@
               <span>{{user.introduction.length}}/160</span>
             </div>
           </div>
-
         </div>
       </div>
       <div class="edit-modal-footer">
@@ -100,38 +99,22 @@
       </div>
       <div class="reply-modal-body">
         <div class="reply-modal-tweet">
-          <div class="reply-modal-userPic">
-            <img src="{{reply.User.dataValues.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
-          </div>
-          <div class="reply-modal-info">
-            <div class="reply-modal-name">
-              <a href="/users/{{reply.UserId}}">
-                {{reply.User.dataValues.name}}
-              </a>
-              <span class="reply-time">@{{reply.User.dataValues.account}} · 3小時前</span>
-            </div>
-            <p>
-              {{reply.description}}
-            </p>
-            <div class="reply-target">
-              <span class="reply-mark">回覆給</span>
-              <a class="reply-user" href="">@{{reply.User.dataValues.account}}</a>
-            </div>
-          </div>
+          {{!-- dom --}}
         </div>
-        <div class="reply-modal-post">
-          <div class="reply-modal-userPic">
-            <img src="{{userSelf.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
-          </div>
-          <div class="reply-modal-text">
-            <form action="">
-              <textarea class="reply-modal-textarea" placeholder="推你的回覆"></textarea>
-              <div class="tweet-post-btn">
-                <button type="submit" class="btn btn-post-modal">回覆</button>
-              </div>
-            </form>
-          </div>
+      </div>
+      <div class="reply-modal-post">
+        <div class="reply-modal-userPic">
+          <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+        </div>
+        <div class="reply-modal-text">
+          <form action="/tweets" method="POST">
+            <textarea class="reply-modal-textarea" placeholder="推你的回覆"></textarea>
+            <div class="tweet-post-btn">
+              <button type="submit" class="btn btn-post-modal">回覆</button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
