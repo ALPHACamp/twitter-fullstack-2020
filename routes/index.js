@@ -81,4 +81,7 @@ module.exports = (app, passport) => {
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
 
+  // setting 相關路由
+  app.get('/setting/:userId/edit', authenticated, userController.getSetting)
+  app.put('/setting/:userId', authenticated, userController.putSetting)
 }
