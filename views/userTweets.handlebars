@@ -123,7 +123,7 @@
 		</div>
 		{{!-- 推文與回覆 --}}
 		<div class="tab-pane" id="tweetreply">
-			{{#each profile.ReplyTweets}}
+			{{#each profile.ReplyTweet}}
 			<div class="card mb-3" style="max-width: 900px;">
 				<div class="row no-gutters">
 					<div class="col-md-4">
@@ -136,7 +136,7 @@
 								<small class="text-muted">{{moment this.createdAt }}</small>
 							</h5>
 							<p class="card-text">
-							{{this.Tweet.description}}
+							{{this.description}}
 							</p>
 							<p class="card-text">
 							{{this.Reply.comment}}
