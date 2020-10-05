@@ -70,9 +70,88 @@ const userController = {
       }))
       users = users.filter(user => (user.role === "user" && user.name !== helpers.getUser(req).name))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 6)
-      res.locals.users = users
+      res.locals.recommendedList = users
       return next()
     })
+  },
+  getSetting: (req, res) => {
+    // console.log('helpers.getUser(req).id', helpers.getUser(req).id)
+    return res.render('setting')
+  },
+
+  putSetting: (req, res) => {
+
+    // helpers.getUser(req).id
+    const { account, name, email, password, checkPassword } = req.body
+
+    User.findOne({ where: { email: email } }).then(user => {
+      if (user) {
+        req.flash('error_messages', '信箱已註冊')
+        return res.redirect('back')
+      }
+    })
+
+    User.findOne({ where: { account: account } }).then(user => {
+      if (user) {
+        req.flash('error_messages', '帳號已註冊')
+        return res.redirect('back')
+      }
+    })
+
+    if (password !== checkPassword) {
+      req.flash('error_messages', '請再次確認密碼')
+      return res.redirect('back')
+    }
+
+    return User.findByPk(req.params.id)
+      .then((user) => {
+        console.log('user', user)
+        user.update({
+          account: account,
+          name: name,
+          email: email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+        }).then((user) => {
+          req.flash('success_messages', '成功更新帳號資訊!')
+          return res.redirect('/tweets')
+        })
+          .catch((err) => console.log(err))
+      })
+
+    // const { account, name, email, password, checkPassword } = req.body
+
+    // if (password !== checkPassword) {
+    //   req.flash('error_messages', '請再次確認密碼')
+    //   return res.redirect('back')
+    // }
+    // else {
+    //   User.findOne({ where: { email: email } }).then(user => {
+    //     if (user) {
+    //       req.flash('error_messages', '信箱已註冊')
+    //       return res.redirect('back')
+    //     } else {
+    //       User.findOne({ where: { account: account } }).then(user => {
+    //         if (user) {
+    //           req.flash('error_messages', '帳號已註冊')
+    //           return res.redirect('back')
+    //         } else {
+    //           return User.findByPk(req.params.id)
+    //             .then((user) => {
+    //               user.update({
+    //                 email: email,
+    //                 name: name,
+    //                 account: account,
+    //                 password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+    //               }).then((user) => {
+    //                 req.flash('success_messages', '成功更新帳號資訊!')
+    //                 return res.redirect('/tweets')
+    //               })
+    //             })
+    //         }
+    //       })
+    //     }
+    //   })
+    // }
   },
 
   getUserTweets: (req, res) => {

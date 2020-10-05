@@ -24,12 +24,11 @@
         </ul>
       </div>
 
-      {{#each users.Followers}}
+      {{#each followerList}}
       <div class="tweet-content-box">
         <div class=" tweet-content-left">
           <a href="/users/{{this.id}}/tweets">
-            <img {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+            <img src={{this.avatar}} style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
           </a>
         </div>
         <div class="top-user-item d-flex align-items-center" style="width: 600px;">
@@ -40,7 +39,7 @@
           <span class="tweet-content-description">{{this.introduction}}</span><br>
           <div class="follow-content-button mr-2">
 
-            {{#if ../users.isFollowed}}
+            {{#if this.isFollowed}}
             <form action="/following/{{this.id}}?_method=DELETE" method="POST">
               <button class="unfollow-button">正在跟隨</button>
             </form>
