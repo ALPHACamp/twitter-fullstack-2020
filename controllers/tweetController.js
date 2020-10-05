@@ -31,22 +31,39 @@ const tweetController = {
       })
   },
 
-  postTweets: (req, res) => {    
+  postTweets: (req, res) => {
     const tweetText = req.body.tweetText.trim()
     if (!tweetText || tweetText.length > 140) return res.redirect('back')
     Tweet.create({
       UserId: helpers.getUser(req).id,
       description: tweetText,
     })
-    .then(() => {
-      req.flash('successFlashMessage','成功新增推文!')
-      return res.redirect('/tweets')
-    })
-    .catch(() => {
-      req.flash('errorFlashMessage', '新增推文失敗!')
-      return res.redirect('back')
-    })
+      .then(() => {
+        req.flash('successFlashMessage', '成功新增推文!')
+        return res.redirect('/tweets')
+      })
+      .catch(() => {
+        req.flash('errorFlashMessage', '新增推文失敗!')
+        return res.redirect('back')
+      })
   },
+
+  postLike: (req, res) => {
+    console.log('req.params', req.params)
+    Like.create({
+      UserId: helpers.getUser(req).id,
+      Position: tweet,
+      PositionId: req.params.id,
+      isLike: true,
+    })
+
+  
+  },
+
+  postUnlike: (req, res) => {
+
+  },
+
 
 }
 
