@@ -66,7 +66,7 @@
       <div class="user-selection-bar">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link" href="/users/{{users.id}}/tweets">推文</a>
+            <a class="nav-link active" href="/users/{{users.id}}/tweets">推文</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/users/{{users.id}}/replies">推文與回應</a>
@@ -76,9 +76,10 @@
           </li>
         </ul>
       </div>
+
       <div class="tweet-all">
         {{#each users.Tweets}}
-        <div class="tweet-content-box" onclick="location.href='/tweets/{{../users.id}}'">
+        <div class="tweet-content-box" onclick="location.href='/tweets/{{this.id}}'">
           <div class="tweet-content-left">
             <a href="/users/{{../users.id}}/tweets">
               <img class="ml-2 mt-2" {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
@@ -96,19 +97,19 @@
             <div class="tweet-content-bottom">
               {{!-- reply icon --}}
               <button type="button" class="button tweet-reply-link">
-                <i class="fas fa-cus-reply" aria-hidden="true"></i>10{{RepliesCount}}
+                <i class="fas fa-cus-reply" aria-hidden="true"></i>{{this.Replies.length}}
               </button>
               {{!-- like/unlike icon --}}
               {{#if isLiked}}
               <form action="/tweets/{{this.id}}/unlike" method="POST">
                 <button type="submit" class="button tweet-like-link">
-                  <i class="fas fa-cus-filled-like"></i>
+                  <i class="fas fa-cus-filled-like"></i>{{this.LikedUsers.length}}
                 </button>
               </form>
               {{else}}
               <form action="/tweets/{{this.id}}/like" method="POST">
                 <button type="submit" class="button tweet-like-link">
-                  <i class="fas fa-cus-like"></i>5{{LikesCount}}
+                  <i class="fas fa-cus-like"></i>{{this.LikedUsers.length}}
                 </button>
               </form>
               {{/if}}

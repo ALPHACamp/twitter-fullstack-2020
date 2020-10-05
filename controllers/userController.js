@@ -78,26 +78,26 @@ const userController = {
   getUserTweets: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        Tweet,
-        { model: Tweet, as: 'LikedTweets' },
+        {
+          model: Tweet,
+          include: [
+            Reply,
+            { model: User, as: 'LikedUsers' }
+          ]
+        },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ], order: [[Tweet, 'createdAt', 'DESC']]
     }).then(user => {
-      // console.log(user.Tweets)
       const pageUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
-      pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(user.id)
 
-      // // 不確定能否撈到 tweet 資料
-      // pageUser.Tweets.forEach(tweet => {
-      //   tweet.isLiked = tweet.Likes.map(item => item.id).includes(currentUserId)
-      // })
-
-      return res.render('user/userPage', {
-        users: pageUser,
-        currentUserId
+      pageUser.Tweets.forEach(tweet => {
+        tweet.isLiked = tweet.LikedUsers.map(d => d.id).includes(currentUserId)
       })
+      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
+
+      return res.render('user/userPage', { users: pageUser })
     })
   },
 
