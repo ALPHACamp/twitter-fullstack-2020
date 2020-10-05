@@ -7,6 +7,54 @@ border-radius: 100px;
 
 .text {
   /* 註冊 */
-
 color: #FFFFFF;
+}
+
+.left-zone-items {
+font-weight: bolder;
+color:#000000;
+font-size: large;
+}
+
+.left-zone-btn {
+  width: 70%;
+  height: 50px;
+  max-width: 200px;
+  background: #FF6600;
+  border: 1px solid #FF6600;
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: large;
+  border-radius: 50px;
+}
+
+.logout {
+  color:#000000;
+  font-weight: bold;
+  font-size: large;
+}
+
+.followship-following-btn{
+width: 90px;
+height: 30px;
+background: #FF6600;
+border-radius: 50px;
+border: 1px solid #FF6600;
+color: #FFFFFF;
+font-weight:bold;
+}
+
+.followship-follower-btn {
+  width: 60px;
+  height: 30px;
+  border: 1px solid#FF6600;
+  border-radius: 50px;
+  background: #FFFFFF;
+  color: #FF6600;
+  font-weight:bold;
+}
+
+.following-follower, .follower-following, .followship-tweetsCount {
+  color: 	#7B7B7B;
+  font-weight:bold;
 }

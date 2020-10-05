@@ -51,7 +51,7 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', "成功登入！")
-    res.redirect('/main')
+    res.redirect('/tweets')
   },
 
   logout: (req, res) => {
@@ -60,60 +60,94 @@ const userController = {
     res.redirect('/signin')
   },
 
+  getFollower: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followers' }]
+    })
+      .then(user => {
+        const followerList = user.Followers.map(user => ({
+          ...user.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+        }))
+        // console.log(followerList)
+        return res.render('follower', { user, followerList })
+      })
+  },
+
+
+  getFollowing: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followings' }]
+    })
+      .then(user => {
+        const followingList = user.Followings.map(user => ({
+          ...user.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+        }))
+        return res.render('following', { user, followingList })
+      })
+  },
+
   getUser: (req, res) => {
     User.findByPk(req.params.id, {
-      include:[
-        {model: Reply, include:[Tweet]},
-        {model: Tweet, as: 'LikedUsers'},
-        {model:User, as:'Followers'},
-        {model:User, as:'Followings'}
+      include: [
+        { model: Reply, include: [Tweet] },
+        { model: Tweet, as: 'LikedUsers' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
       ]
     }).then(user => {
       const userSelf = helpers.getUser(req).id
       const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
-      res.render({user:user, 
-        isLiked: isLiked, 
-        userSelf:userSelf})
+      res.render({
+        user: user,
+        isLiked: isLiked,
+        userSelf: userSelf
+      })
     })
   },
 
   addFollowing: (req, res) => {
     return Followship.create({
-      followerId: helpers.getUser(req).id, 
+      followerId: helpers.getUser(req).id,
       followingId: req.params.userId
     })
-    .then((followship)  => {
-      return res.redirect('back')
-    })
+      .then((followship) => {
+        return res.redirect('back')
+      })
   },
 
   removeFollowing: (req, res) => {
-    return Followship.findOne({where: {
-      followerId: helpers.getUser(req).id, 
-      followingId: req.params.userId
-    }})
-    .then((followship) => {
-      followship.destroy()
-        .then((followship) => {
-          return res.redirect('back')
-        })
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.userId
+      }
     })
+      .then((followship) => {
+        followship.destroy()
+          .then((followship) => {
+            return res.redirect('back')
+          })
+      })
   },
 
   addLike: (req, res) => {
     return Like.create({
-      UserId: helpers.getUser(req).id, 
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.id
     }).then((like) => {
-      return res.redirect('back') 
+      return res.redirect('back')
     })
-    .catch(error => console.log(error))
+      .catch(error => console.log(error))
   },
 
   removeLike: (req, res) => {
     Like.findOne({
       where: {
-        UserId: helpers.getUser(req).id, 
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.id
       }
     }).then(like => {
@@ -122,7 +156,7 @@ const userController = {
           return res.redirect('back')
         })
     })
-    .catch(error => console.log(error))
+      .catch(error => console.log(error))
   },
 
 
