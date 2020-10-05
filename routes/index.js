@@ -11,10 +11,11 @@ const imagesUpload = upload.fields([
 ])
 
 module.exports = (app, passport) => {
+
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      //if (req.user.role === 'user') { return next() }
-      return next()
+      if (req.user.role === 'user') { return next() }
+      //return next()
     }
       req.flash('error_messages', '錯誤賬號類型，請使用後台登錄！')
       return res.redirect('/signin')
