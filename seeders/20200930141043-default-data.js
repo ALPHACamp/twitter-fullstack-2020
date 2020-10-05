@@ -101,6 +101,12 @@ module.exports = {
         ), {})
     }
 
+    return queryInterface.bulkInsert('Followships', [{
+      followerId: '2',
+      followingId: '3',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {});
   },
 
   down: (queryInterface, Sequelize) => {

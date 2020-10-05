@@ -13,12 +13,12 @@ const db = require('../../models')
 describe('# login request', () => {
 
   context('go to login page', () => {
-    
+
     describe('if user want to signin', () => {
-      before(async() => {
+      before(async () => {
         await db.User.create({
-          name: 'User1', 
-          email: 'User1@example.com', 
+          name: 'User1',
+          email: 'User1@example.com',
           account: 'User1',
           password: bcrypt.hashSync('User1', bcrypt.genSaltSync(10))
         })
@@ -28,7 +28,7 @@ describe('# login request', () => {
         request(app)
           .get('/signin')
           .expect(200)
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
             done();
           });
@@ -37,14 +37,14 @@ describe('# login request', () => {
       it('login successfully', (done) => {
         request(app)
           .post('/signin')
-          .send('account=User1@example.com&password=User1')
+          .send('account=User1&password=User1')
           .set('Accept', 'application/json')
           .expect(302)
           .expect('Location', '/tweets')
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
-              return done();
-            })
+            return done();
+          })
       });
 
 
@@ -55,32 +55,32 @@ describe('# login request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .expect('Location', '/signin')
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
-              return done();
-            })
+            return done();
+          })
       });
 
-      
-      // after(async () => {
-      //   await db.User.destroy({where: {},truncate: true})
-      // })
+
+      after(async () => {
+        await db.User.destroy({ where: {}, truncate: true })
+      })
 
     });
-    
+
   });
 
   context('go to signup page', () => {
-    
+
     describe('if user want to signup', () => {
-      before(async() => {
+      before(async () => {
       })
 
       it('can render index', (done) => {
         request(app)
           .get('/signup')
           .expect(200)
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
             done();
           });
@@ -93,18 +93,18 @@ describe('# login request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .expect('Location', '/signin')
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
-              return done();
-            })
+            return done();
+          })
       });
 
-      // after(async () => {
-      //   await db.User.destroy({where: {},truncate: true})
-      // })
+      after(async () => {
+        await db.User.destroy({ where: {}, truncate: true })
+      })
 
     });
-    
+
   });
 
 
