@@ -1,7 +1,4 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     email: DataTypes.STRING,
@@ -33,18 +30,5 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Followings'
     })
   };
-  User.init({
-    account: DataTypes.STRING,
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    avatar: DataTypes.STRING,
-    cover: DataTypes.STRING,
-    introduction: DataTypes.TEXT,
-    role: DataTypes.BOOLEAN,
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
   return User;
 };

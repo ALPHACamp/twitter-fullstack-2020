@@ -1,7 +1,4 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   const Tweet = sequelize.define('Tweet', {
     UserId: DataTypes.INTEGER,
@@ -16,14 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'TweetId',
       as: 'LikedUsers'
     })
-
   };
-  Tweet.init({
-    description: DataTypes.TEXT,
-    UserId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Tweet',
-  });
   return Tweet;
 };
