@@ -1,23 +1,19 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    name: DataTypes.STRING,
-    avatar: DataTypes.STRING,
-    introduction: DataTypes.TEXT,
-    role: DataTypes.STRING,
-    account: DataTypes.STRING,
-    cover: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN  //isAdmin 欄位
-  }, {});
+  const User = sequelize.define('User',
+    {
+      account: DataTypes.STRING,
+      name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
+      role: DataTypes.STRING,
+      avatar: DataTypes.STRING,
+      introduction: DataTypes.TEXT,
+      cover: DataTypes.STRING
+    }, {});
   User.associate = function (models) {
     User.hasMany(models.Reply)
     User.hasMany(models.Tweet)
-    User.hasMany(models.Like)
     User.belongsToMany(models.Tweet, {
       through: models.Like,
       foreignKey: 'UserId',
@@ -33,19 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followerId',
       as: 'Followings'
     })
+    User.hasMany(models.Like)
   };
-  User.init({
-    account: DataTypes.STRING,
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    avatar: DataTypes.STRING,
-    cover: DataTypes.STRING,
-    introduction: DataTypes.TEXT,
-    role: DataTypes.BOOLEAN,
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
   return User;
 };

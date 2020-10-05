@@ -1,20 +1,93 @@
 <div class="col-md-9 pl-0 border-left">
-  {{#each tweet}}
-  <div class="header">
-    <div class="tweet-item-right">
-      <div class="tweet-item-title">
+  <div class="main-content">
+    <div class="main-title">
+      <a href="/" class="ml-1 mr-5"><i class="fac fa-cus-back"></i></a>
+      推文
+    </div>
 
-        <span class="mt-1"><a href="/users/{{user.id}}">{{user.dataValues.name}}</a></span>
-        <span class="user-account">
-          {{User.dataValues.account}}．{{moment User.dataValues.createdAt}}
-        </span>
-
+    <div class="tweet-content w-100">
+      <div class="tweet-content-top d-flex justify-content-start align-items-center">
+        <a href="/tweets/{{tweet.User.dataValues.id}}">
+          <div class="avatar"
+            style="background: url({{tweet.User.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+          </div>
+        </a>
+        <div class="column ml-1">
+          <span class="mt-1 mb-1 user-name"><a
+              href="/tweets/{{tweet.User.dataValues.id}}">{{tweet.User.dataValues.name}}</a></span>
+          <span href="/tweets/{{tweet.User.dataValues.id}}"
+            class="user-account">@{{tweet.User.dataValues.account}}</span>
+        </div>
       </div>
-      <div class="tweet-text">
+
+
+
+      <div class="tweets-main mb-3">
         {{tweet.description}}
       </div>
+      <div class="tweet-content-footer">
+        <div class="tweet-time">{{moment tweet.createdAt}}
+        </div>
+        <div class="tweet-data">
+          <span>{{tweet.Replies.length}}</span> 回覆 <span class="ml-4">{{tweet.LikedUsers.length}}</span>
+          喜歡次數
+        </div>
+        <div class="reply-link d-flex justify-content-start align-items-center">
+          <a href="#" role="button" class="reply-link ml-1 reply-modal-open">
+            <i class="fac fa-cus-reply"></i>
+          </a>
+
+          {{#if isLiked}}
+          <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" class="mt-4 mb-4" style="background: none;border: none;">
+              <i class="far fa-heart"></i>
+              {{else}}
+              <form action="/like/{{this.id}}" method="POST" style="display:inline; ">
+                <button type="submit" class="mt-4 mb-4" style="background: none;border: none;">
+                  <i class="fas fa-heart"></i>
+                  {{/if}}
+                </button>
+              </form>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reply-list w-100">
+      {{#each tweet.Replies}}
+      <div class="reply-item d-flex">
+        <div class="left">
+          <a href="/tweets/{{this.User.id}}">
+            <div class="avatar"
+              style="background: url({{this.User.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+            </div>
+          </a>
+        </div>
+        <div class="right">
+          <div>
+            <a href="/users/{{this.User.id}}/tweets" class="user-name mt-1">
+              {{this.User.name}}
+            </a>
+            <sapn class="user-account">@{{this.User.account}}．{{moment this.createdAt}}</sapn>
+          </div>
+          <div>
+            <span class="reply-m">回覆</span> <span class="user-account-color-span"><a
+                href="/users/{{../tweet.User.id}}/tweets" style="color: #ff6600;">@{{../tweet.User.account}}</a></span>
+          </div>
+          <div class="reply-comment">
+            {{this.comment}}
+          </div>
+
+
+        </div>
+      </div>
+      {{/each}}
+
+
     </div>
   </div>
 
-  {{/each}}
+
+</div>
+
 </div>
