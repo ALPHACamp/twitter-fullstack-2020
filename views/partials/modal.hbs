@@ -102,15 +102,16 @@
           {{!-- dom --}}
         </div>
       </div>
+
       <div class="reply-modal-post">
         <div class="reply-modal-userPic">
           <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
         </div>
         <div class="reply-modal-text">
-          <form action="/tweets" method="POST">
-            <textarea class="reply-modal-textarea" placeholder="推你的回覆"></textarea>
+          <form id="reply-form" method="POST">
+            <textarea class="reply-modal-textarea" id="mainReplyText" name="replyText" placeholder="推你的回覆"></textarea>
             <div class="tweet-post-btn">
-              <button type="submit" class="btn btn-post-modal">回覆</button>
+              <button type="submit" id="mainReplyBtn" class="btn btn-post-modal">回覆</button>
             </div>
           </form>
         </div>

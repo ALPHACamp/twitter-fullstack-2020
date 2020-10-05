@@ -48,6 +48,26 @@ const tweetController = {
       })
   },
 
+  postReply: (req, res) => {
+    let tweetId = req.params.id
+    let replyText = req.body.replyText.trim()
+    if (!replyText.length) {
+      return res.redirect('back')
+    } else {
+      return Reply.create({
+        UserId: helpers.getUser(req).id,
+        TweetId: tweetId,
+        comment: replyText
+      })
+        .then(() => {
+          req.flash('successFlashMessage', '成功回覆推文!')
+          return res.redirect('back')
+        })
+    }
+  }
+
+
+
 }
 
 module.exports = tweetController

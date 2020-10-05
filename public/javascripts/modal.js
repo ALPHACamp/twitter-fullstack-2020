@@ -1,5 +1,6 @@
 const main = document.querySelector('.container-fluid')
 const replyModal = document.querySelector('.reply-modal-tweet')
+const replyForm = document.querySelector('#reply-form')
 
 main.addEventListener('click', (event) => {
   if (event.target.classList.contains('reply-on')) {
@@ -9,6 +10,8 @@ main.addEventListener('click', (event) => {
     let replyTime = event.target.previousElementSibling.children[3].textContent
     let replyDes = event.target.previousElementSibling.children[4].textContent
     let replyAvatar = event.target.previousElementSibling.children[5].textContent
+    let replyTweet = event.target.previousElementSibling.children[6].textContent
+    replyForm.setAttribute("action", `/tweets/${replyTweet}`)
 
     let replyTemplate = `
     <div class="reply-modal-userPic">
@@ -30,6 +33,4 @@ main.addEventListener('click', (event) => {
     $("#replyModal").modal('show')
   }
 })
-
-// console.log(replyOn.previousElementSibling.children)
 
