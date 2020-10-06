@@ -7,7 +7,6 @@ const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
-
     return Tweet.findAll({
       include: [User, Reply,
         { model: User, as: 'LikedUsers' }],
@@ -30,7 +29,7 @@ const tweetController = {
   },
 
   getTweet: (req, res) => {
-    Tweet.findByPk(req.params.id, {
+    return Tweet.findByPk(req.params.id, {
       include: [
         User,
         { model: Reply, include: [User] },
@@ -38,18 +37,10 @@ const tweetController = {
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
-      console.log(tweet)
+      // console.log(tweet)
       const UserId = helpers.getUser(req).id
       const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-
-      return User.findOne({ where: { id: UserId } })
-        .then(user => {
-          return res.render('tweet', {
-            tweet: tweet,
-            isLiked: isLiked
-          })
-        })
-
+      return res.render('tweet', { tweet, isLiked })
     })
       .catch(error => console.log(error))
   },
