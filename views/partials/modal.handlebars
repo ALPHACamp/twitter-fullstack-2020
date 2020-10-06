@@ -36,18 +36,18 @@
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
-                      <img src="{{../user.dataValues.avatar}}" class="rounded-circle"
+                      <img src="{{user.avatar}}" class="rounded-circle"
                         style="background-size:cover; width: 50px;height: 50px;">
-                      <span class="mt-1"><a href="#">{{../user.dataValues.name}}</a></span>
+                      <span class="mt-1"><a href="#">{{user.name}}</a></span>
                       <span class="user-account">
-                        {{../user.dataValues.account}}．{{moment ../user.dataValues.createdAt}}
+                        {{user.account}}．{{moment user.createdAt}}
                       </span>
                     </div>
                     <div class="modal-body" class="d-flex">
                       <div class="tweet-text d-flex align-items-stretch">
-                        {{../user.dataValues.description}}
+                        {{user.description}}
                       </div>
-                      <form method="POST" action="/tweets/{{../user.dataValues.id}}/replies">
+                      <form method="POST" action="/tweets/{{user.id}}/replies">
                         <textarea name="comment" cols="55" rows="5"
                           style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
                           placeholder="....."></textarea>
