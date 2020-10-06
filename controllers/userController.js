@@ -6,6 +6,7 @@ const fs = require('fs')
 const { resolve } = require('path')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 let more = 10
 
 const userController = {
@@ -264,6 +265,13 @@ const userController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
+
+        users.forEach((user, index, arr) => {
+          if(user.role === "admin") {
+              arr.splice(index, 1);
+          }
+        })
+
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -343,6 +351,13 @@ const userController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
+
+        users.forEach((user, index, arr) => {
+          if(user.role === "admin") {
+              arr.splice(index, 1);
+          }
+        })
+
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -406,6 +421,13 @@ const userController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
+
+        users.forEach((user, index, arr) => {
+          if(user.role === "admin") {
+              arr.splice(index, 1);
+          }
+        })
+        
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -569,6 +591,7 @@ const userController = {
     }
     updateUser()
   },
+  
   getUserInfo: (req, res) => {
     const id = req.params.userId
     const loginId = helpers.getUser(req).id

@@ -45,20 +45,19 @@
             <font class="text-muted">@{{this.user.account}} {{moment this.createdAt}}</font>
             <p>{{this.description}}</p>
             <div>
-              <a href="/tweets/{{this.id}}/replies" style="float:left; color:black; margin-right:4px;"><i
-                  class="far fa-comment-alt"></i></a>
-              <div style="float:left; margin-right:25px;">{{this.repliesCount}}</div>
+              <a href="/tweets/{{this.id}}/replies" style="float:left; color:black; margin-right:4px;"><i class="far fa-comment" style="color: grey;"></i></a>
+              <div style="float:left; margin-right:25px;"> {{this.repliesCount}}</div>
             </div>
             {{#if this.isLiked}}
               <form action="/tweets/{{this.id}}/unlike" method="POST" style="float:left;">
-                <button type="submit" class="btn-push"><i class="fas fa-heart"></i></button>
+                <button type="submit" class="btn-push"><i class="fas fa-heart" style="color: rgb(224, 36, 94); ;"></i></button>
               </form>
-              <div style="float:left;">{{this.likesCount}}</div>
+              <div style="float:left;"> {{this.likesCount}}</div>
             {{else}}
               <form action="/tweets/{{this.id}}/like" method="POST" style="float:left;">
                 <button type="submit" class="btn-push"><i class="far fa-heart"></i></button>
               </form>
-              <div style="float:left;">{{this.likesCount}}</div>
+              <div style="float:left;"> {{this.likesCount}}</div>
             {{/if}}
           </div>
         </div>

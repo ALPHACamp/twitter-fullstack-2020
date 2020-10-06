@@ -20,8 +20,6 @@
             <p>
               {{tweet.description}}
             </p>
-            <font color="grey" size="2px">回覆給</font>
-            <font color="coral" size="2px">@{{tweet.User.name}}</font>
           </div>
         </div>
         {{#each tweetReplies}}
@@ -82,8 +80,6 @@
               <p>
                 {{this.comment}}
               </p>
-              <font color="grey" size="2px">回覆給</font>
-              <font color="coral" size="2px">@{{this.User.name}}</font>
             </div>
           </div>
           {{#each this.ReplyComments}}
