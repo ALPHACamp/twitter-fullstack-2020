@@ -1,15 +1,20 @@
 const userController = require("../controllers/userController");
 const tweetController = require("../controllers/tweetController");
+<<<<<<< HEAD
 const adminController = require('../controllers/adminController')
 const helpers = require('../_helpers.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
+=======
+const adminController = require("../controllers/adminController");
+>>>>>>> e8d56928a37586581d8ea4cacb9b0adff9c4f69d
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
-    if (helpers.ensureAuthenticated(req)) {
-      return next()
+    if (req.isAuthenticated()) {
+      // isAuthenticated 為passport內建之方法,回傳true or false
+      return next();
     }
     res.redirect("/signin");
   };
@@ -24,11 +29,14 @@ module.exports = (app, passport) => {
 
   };
 
+<<<<<<< HEAD
 
   app.get('/users/self', (req, res) => res.render('userselfedit'))
   app.put('/users/self/edit', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putSelf)
 
 
+=======
+>>>>>>> e8d56928a37586581d8ea4cacb9b0adff9c4f69d
   //user login
   app.get("/signup", userController.signUpPage);
   app.post("/signup", userController.signUp);
@@ -43,8 +51,8 @@ module.exports = (app, passport) => {
   );
 
   app.get("/logout", userController.logout);
-  app.get("/setting", userController.getSetting);
-  app.put("/setting", userController.putSetting)
+  app.get("/users/:id/setting", userController.getSetting);
+  app.put("/users/:id/setting", userController.putSetting)
 
 
 
@@ -54,13 +62,15 @@ module.exports = (app, passport) => {
   // app.get("/main", (req, res) => res.render("mainpage"));
 
   //userController
-  app.get('/users/:id', authenticated, userController.getUser)
-  app.get('/user/:id/follower', authenticated, userController.getFollower)
-  app.get('/user/:id/following', authenticated, userController.getFollowing)
+
+  app.get('/users/:id/follower', authenticated, userController.getTopFollowers, userController.getUserFollower)
+  app.get('/users/:id/following', authenticated, userController.getTopFollowers, userController.getUserFollowing)
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.get('/users/:id/likes', authenticated, userController.getUserLikes)
   app.post("/like/:id", authenticated, userController.addLike);
   app.delete("/unlike/:id", authenticated, userController.removeLike);
+  app.get('/users/:id', authenticated, userController.getUser)
 
   // adminController
   app.get("/admin", (req, res) => {
@@ -69,33 +79,39 @@ module.exports = (app, passport) => {
   app.get("/admin/tweets", adminController.getTweets);
   app.post("/admin/tweets/:id", adminController.deleteTweet);
 
-
   app.get("/signup", userController.signUpPage);
   app.post("/signup", userController.signUp);
   app.get("/signin", userController.signIn);
 
   //tweetController
   app.get("/", (req, res) => res.redirect("/tweets"));
-  app.get("/tweets", authenticated, tweetController.getTweets);
+  app.get("/tweets", authenticated, userController.getTopFollowers, tweetController.getTweets);
   app.get("/tweets/:id", authenticated, tweetController.getTweet);
-  app.post('/tweets/:id', authenticated, tweetController.postTweet)
+  app.post("/tweets/:id", authenticated, tweetController.postTweet);
 
+  app.post("/tweets/:id/replies", authenticated, tweetController.postReply);
+  app.get("/tweets/:id/replies", authenticated, tweetController.getReply);
 
-  app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
-  app.get('/tweets/:id/replies', authenticated, tweetController.getReply)
+  // adminController
+  app.get("/admin/signin", adminController.signinPage);
+  app.post(
+    "/admin/signin",
+    passport.authenticate("local", {
+      failureRedirect: "/admin/signin",
+      failureFlash: true,
+    }),
+    adminController.signIn
+  );
 
-  //adminController 
-  app.get('/admin/signin', adminController.signinPage)
-  app.post('/admin/signin', passport.authenticate('local', {
-    failureRedirect: '/admin/signin',
-    failureFlash: true
-  }), adminController.signIn)
+  app.get("/admin", authenticatedAdmin, (req, res) => {
+    res.redirect("/admin/tweets");
+  });
+  app.get("/admin/tweets", authenticatedAdmin, adminController.getTweets);
+  app.post(
+    "/admin/tweets/:id",
+    authenticatedAdmin,
+    adminController.deleteTweet
+  );
 
-  app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/tweets') })
-  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-  app.post('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-
-  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
-
-
-}
+  app.get("/admin/users", authenticatedAdmin, adminController.getUsers);
+};
