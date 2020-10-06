@@ -9,8 +9,30 @@ const imagesUpload = upload.fields([
   { name: 'avatar', maxCount: 1 },
   { name: 'cover', maxCount: 1 }
 ])
+const passport = require('../config/passport')
+
+// use helpers.getUser(req) to replace req.user
+// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 module.exports = (app, passport) => {
+  // const apiAuthenticated = passport.authenticate('jwt', { session: false })
+  const apiAuthenticated = (req, res, next) => {
+    if (helpers.ensureAuthenticated(req)) {
+      return next()
+    } else {
+      return res.json({ status: 'error', message: 'permission denied' })
+    }
+  }
+
+  const apiAuthenticatedAdmin = (req, res, next) => {
+    if (helpers.getUser(req)) {
+      if (helpers.getUser(req).role === 'admin') { return next() }
+      return res.json({ status: 'error', message: 'permission denied' })
+    } else {
+      return res.json({ status: 'error', message: 'permission denied' })
+    }
+  }
+
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
@@ -30,7 +52,6 @@ module.exports = (app, passport) => {
     }
     res.redirect('/admin/signin')
   }
-  
 
   app.get('/', authenticated, (req, res) => { return res.redirect('/tweets') })
   //admin pages
@@ -87,4 +108,7 @@ module.exports = (app, passport) => {
   app.put('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
   app.post('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
   app.get('/users/:userId', authenticated, userController.getUserInfo)
+  app.get('/api/users/:userId', apiAuthenticated, userController.apiGetUserInfo)
+  app.post('/api/users/:userId', apiAuthenticated, userController.apiPostUserInfo)
+  app.post('/api/signin', userController.apiSignIn)
 }
