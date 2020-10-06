@@ -13,13 +13,14 @@
           <h5 class="tweet-title">{{users.name}}</h5>
         </div>
       </a>
-      <div class="user-cover">
+      <div class="user-cover" style="top: -30px;background: #C4C4C4;width: 600px;height:200px;">
         <img src="{{users.cover}}" alt="{{users.cover}}">
       </div>
       <div class="tweet-content-box">
         <div class=" user-info-top">
           <a href="/users/{{users.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if users.avatar}}src={{users.avatar}}{{/if}}>
+            <img class="ml-2 mt-2" style="top: -30px;background: #C4C4C4;border-radius: 100%;"
+              {{#if users.avatar}}src={{users.avatar}}{{/if}}>
           </a>
         </div>
         <div class="tweet-content-right">
@@ -77,22 +78,44 @@
         </ul>
       </div>
       {{#each users.Replies}}
-      <div class="tweet-content-box">
-        <div class="tweet-content-left">
-          <a href="/users/{{this.User.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
-              style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
-          </a>
-        </div>
-        <div class="tweet-content-right">
-          <div class="tweet-content-username">
-            <a href="/users/{{this.User.id}}/tweets" class="user-name">{{this.User.name}}</a>
-            <span class="user-account">@{{this.User.account}}．{{moment this.createdAt}}</span><br>
+      {{!-- tweet --}}
+      <div class="tweet-content-box-reply" style="border-top: 1px solid #E6ECF0"
+        onclick="location.href='/tweets/{{this.TweetId}}'">
+        <div class="reply-modal-tweet d-flex">
+          <div class="tweet-content-left d-flex flex-column align-items-center">
+            <a href="/users/{{this.Tweet.UserId}}/tweets">
+              <img class="mt-2" {{#if this.Tweet.User.avatar}}src={{this.Tweet.User.avatar}}{{/if}}
+                style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px; margin-left:15px">
+            </a>
+            <div class="extension-line"></div>
           </div>
-          <div class="tweet-content-info">
-            <span class="reply-account">回覆@</span><span
-              class="reply-tweet-account">fake{{../Replies.Tweet.User.account}}</span><br>
-            <span class="tweet-content-description">{{this.comment}}</span><br>
+          <div class="tweet-content-right">
+            <div class="tweet-content-username">
+              <a href="/users/{{this.Tweet.UserId}}/tweets" class="user-name">{{this.Tweet.User.name}}</a>
+              <span class="user-account">@{{this.Tweet.User.account}}．{{moment this.createdAt}}</span><br>
+            </div>
+            <div class="tweet-content-info">
+              <span class="tweet-content-description">{{this.Tweet.description}}</span><br><br>
+            </div>
+          </div>
+        </div>
+
+        {{!-- reply --}}
+        <div class="reply-modal-tweet d-flex">
+          <div class="tweet-content-left d-flex flex-column align-items-center">
+            <a href="/users/{{this.UserId}}/tweets">
+              <img class="mt-2" {{#if ../user.avatar}}src={{../user.avatar}}{{/if}}
+                style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px; margin-left:15px">
+            </a>
+          </div>
+          <div class="tweet-content-right">
+            <div class="tweet-content-username">
+              <a href="/users/{{this.UserId}}/tweets" class="user-name">{{../user.name}}</a>
+              <span class="user-account">@{{../user.account}}．{{moment this.createdAt}}</span><br>
+            </div>
+            <div class="tweet-content-info">
+              <span class="tweet-content-description">{{this.comment}}</span><br><br>
+            </div>
           </div>
         </div>
       </div>

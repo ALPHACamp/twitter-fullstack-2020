@@ -13,13 +13,13 @@
 
       </div>
       <div class="user-edit">
-        <div class="modal-cover">
-          <img {{#if users.cover}}src="{{users.cover}}" {{/if}} style="max-width: 600px;max-height:200px">
-          {{!-- <img src="https://fakeimg.pl/600x200/ff0000/000" alt=""> --}}
-          <i class="fas fa-camera"></i>
+        <div class="modal-cover" style="top: -30px;background: #C4C4C4;width: 600px;height:200px;">
+          <img {{#if users.cover}}src="{{users.cover}}" {{/if}} style="top: -30px;max-width: 600px;max-height:200px;">
         </div>
+        <i class="fas fa-camera modal-cover-svg"></i>
         <div class="user-info-top">
-          <img class="ml-2" style="top: -30px;" {{#if users.avatar}}src={{users.avatar}}{{/if}}>
+          <img class="ml-2" style="top: -30px;background: #C4C4C4;border-radius: 100%;"
+            {{#if users.avatar}}src={{users.avatar}}{{/if}}>
           <i class="fas fa-camera"></i>
         </div>
         <div class="form-label-group-modal">
