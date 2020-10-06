@@ -7,3 +7,20 @@
     opacity: 0;
   }
 }
+
+.alertBtn {
+  animation-name: alertBtn;
+  animation-duration: 1s;
+  animation-iteration-count: 5;
+}
+@keyframes alertBtn {
+  from {
+    color: white;
+    border: 1px solid red;
+  }
+  to {
+    color: red;
+    border: 1px solid white;
+  }
+}
+
