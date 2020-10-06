@@ -1,5 +1,5 @@
 {{!-- 新增 tweet modal  --}}
- <div class="modal" tabindex="-1" role="dialog" id="tweetModal"> 
+<div class="modal" tabindex="-1" role="dialog" id="tweetModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="tweet-modal-header">
@@ -21,105 +21,107 @@
 
       </div>
     </div>
-  </div> 
- </div> 
+  </div>
+</div>
 
- {{!-- reply Modal --}}
-<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
+{{!-- reply Modal --}}
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
 
-                    </div>
-                    <div class="modal-title">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <img src="{{user.avatar}}" class="rounded-circle"
-                        style="background-size:cover; width: 50px;height: 50px;">
-                      <span class="mt-1"><a href="#">{{user.name}}</a></span>
-                      <span class="user-account">
-                        {{user.account}}．{{moment user.createdAt}}
-                      </span>
-                    </div>
-                    <div class="modal-body" class="d-flex">
-                      <div class="tweet-text d-flex align-items-stretch">
-                        {{user.description}}
-                      </div>
-                      <form method="POST" action="/tweets/{{user.id}}/replies">
-                        <textarea name="comment" cols="55" rows="5"
-                          style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
-                          placeholder="say something"></textarea>
-                        <button type="submit"
-                          style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
-                          <span style="color: #FFFFFF;">回覆</span></button>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div> 
+      </div>
+      <div class="modal-title">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="{{user.avatar}}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
+        <span class="mt-1"><a href="#">{{user.name}}</a></span>
+        <span class="user-account">
+          {{user.account}}．{{moment user.createdAt}}
+        </span>
+      </div>
+      <div class="modal-body" class="d-flex">
+        <div class="tweet-text d-flex align-items-stretch">
+          {{user.description}}
+        </div>
+        <form method="POST" action="/tweets/{{user.id}}/replies">
+          <textarea name="comment" cols="55" rows="5"
+            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+            placeholder="say something"></textarea>
+          <button type="submit"
+            style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+            <span style="color: #FFFFFF;">回覆</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 {{!-- user Edit modal --}}
 <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="row">
-  <div class="modal-dialog">
-    <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
-      <div class="modal-content edit-modal-content">
-        <div class="edit-modal-header">
-         <div class="d-inline-flex justify-content-between">
-          <div class="edit-left-top">
-            <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">&times;
-            </button>
-            <span>編輯個人資料</span>
+  <div class="row ">
+    <div class="modal-dialog ">
+      <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="modal-content edit-modal-content ">
+          <div class="edit-modal-header">
+            <div class="d-inline-flex justify-content-between">
+              <div class="edit-left-top">
+                <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">&times;
+                </button>
+                <a class="font-weight-bold"><span>編輯個人資料</span></a>
+              </div>
+
+
+            </div>
           </div>
 
-          <div class="edit-right-top">
-            <button type="submit" class="btn btn-post-modal">儲存</button>
-          </div>
+
+          <div class="edit-modal-body">
+
+            <div class="edit-item-avatar rounded-circle" style="background: url({{user.avatar}}),#C4C4C4;
+                      position: absolute; max-width: 25%; top:8%; left:35%;border: 5px solid white;">
+
+              <label for="avatar"><i class="icon-photo avatar"></i></label>
+              <input type="file" name="avatar" class="custom-file-input" id="avatar">
             </div>
+
+            <div class="edit-item-cover" style="background: url({{user.background}});border-radius: 15px 15px 0 0">
+              <label for="background"><i class="icon-photo background"></i></label>
+              <input type="file" name="background" class="custom-file-input" id="background">
+              <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button>
+            </div>
+
+
+            <div class="edit-item-name row justify-content-center mt-2">
+              <div class="item-name-top">
+                <span class="item-name-top-mark">Name</span>
+              </div>
+              <input type="text" id="name" name="name" placeholder="name" maxlength="50" value="{{user.name}}">
+              <div class="item-name-bottom">
+                <span>{{user.name.length}}/50</span>
+              </div>
+            </div>
+            <div class="edit-item-text ">
+              <div class="item-text-top row justify-content-center mt-2">
+                <span class="item-text-top-mark ">自我介紹</span>
+              </div>
+              <textarea name="introduction" id="introduction" placeholder="introduction" maxlength="160"
+                class="item-text-center ml-5" cols="30" rows="10">{{user.introduction}}</textarea>
+              <div class="item-text-bottom row justify-content-center">
+                <span>{{user.introduction.length}}/160</span>
+              </div>
+              <div class="edit-right-top">
+                <button type="submit" class="btn btn-post-modal">儲存</button>
+              </div>
+            </div>
+          </div>
         </div>
-        
-
-        <div class="edit-modal-body">
-          <div class="edit-item-cover"
-            style="background: url({{user.cover}});background-repeat:no-repeat;background-position: center;background-size: cover;">
-            <label for="cover"><i class="icon-photo cover"></i></label>
-            <input type="file" name="cover" class="custom-file-input" id="cover">
-            <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button>
-          </div>
-
-          <div class="edit-item-avatar" style="background: url({{user.avatar}}),#C4C4C4;
-            background-position:center;background-size:cover;">
-            <label for="avatar"><i class="icon-photo avatar"></i></label>
-            <input type="file" name="avatar" class="custom-file-input" id="avatar">
-          </div>
-
-          <div class="edit-item-name">
-            <div class="item-name-top">
-              <span class="item-name-top-mark">Name</span>
-            </div>
-            <input type="text" id="name" name="name" placeholder="name" maxlength="50" value="{{user.name}}">
-            <div class="item-name-bottom">
-              <span>{{user.name.length}}/50</span>
-            </div>
-          </div>
-          <div class="edit-item-text">
-            <div class="item-text-top">
-              <span class="item-text-top-mark">自我介紹</span>
-            </div>
-            <textarea name="introduction" id="introduction" placeholder="introduction" maxlength="160"
-              class="item-text-center" cols="30" rows="10">{{user.introduction}}</textarea>
-            <div class="item-text-bottom">
-              <span>{{user.introduction.length}}/160</span>
-            </div>
-          </div>
+        <div class="edit-modal-footer">
         </div>
-      </div>
-      <div class="edit-modal-footer">
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
-  </div>
+
 </div>
