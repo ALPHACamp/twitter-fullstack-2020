@@ -15,7 +15,7 @@ const tweetController = {
     })
       .then(tweets => {
         const UserId = helpers.getUser(req).id
-        console.log("tweets", tweets)
+        // console.log("tweets", tweets)
         const data = tweets.map(t => ({
           ...t.dataValues,
           description: t.dataValues.description,
@@ -43,7 +43,7 @@ const tweetController = {
 
       return User.findOne({ where: { id: UserId } })
         .then(user => {
-          console.log(user)
+          // console.log(user)
           return res.render('tweet', {
             tweet: tweet,
             isLiked: isLiked
