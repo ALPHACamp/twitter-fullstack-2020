@@ -169,6 +169,21 @@ const userController = {
           })
       })
   },
+  getUsersHavingTopFollowers: (req, res, next) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+      .then(users => {
+        users = users.map(user => ({
+          ...user.dataValues,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
+          FollowersCount: user.Followers.length
+        }))
+        users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
+        res.locals.users = users
+        return next()
+      })
+  },
   //austin
   otherUser: (req, res) => {
     return User.findByPk(req.params.id, {
