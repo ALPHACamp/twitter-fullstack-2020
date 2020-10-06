@@ -75,6 +75,10 @@ module.exports = (app, passport) => {
   app.get('/users/:id/likes', authenticated, userController.getRecommendedFollowings, userController.getUserLikes)
   app.get('/users/:id/replies', authenticated, userController.getRecommendedFollowings, userController.getUserReplies)
 
+  // user edit 相關路由
+  // app.get('/users/:id/edit', authenticated, userController.getUserInfo)
+  app.put('/users/:id', authenticated, userController.putUserInfo)
+
   app.get('/users/:id/followers', authenticated, userController.getRecommendedFollowings, userController.getUserFollowers) // 被追蹤
   app.get('/users/:id/following', authenticated, userController.getRecommendedFollowings, userController.getUserFollowings) // 追蹤人
 

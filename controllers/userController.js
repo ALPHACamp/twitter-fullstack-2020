@@ -171,6 +171,23 @@ const userController = {
     })
   },
 
+  // getUserInfo: (req, res) => {
+
+  // },
+
+
+  putUserInfo: (req, res) => {
+
+    if (!req.body.name) {
+      req.flash('error_messages', "name didn't exist")
+      return res.redirect('back')
+    }
+    // const { name, introduction } = req.body
+    // console.log(req.body.name)
+    // console.log('name', name, 'introduction', introduction)
+    // return res.redirect('back')
+  },
+
   // 取得 追蹤使用者 的清單
   getUserFollowers: (req, res) => {
     return User.findByPk(req.params.id, {
