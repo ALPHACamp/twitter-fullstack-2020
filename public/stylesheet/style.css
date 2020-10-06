@@ -1,5 +1,58 @@
-body{ margin:0; height:100%}
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+body{ margin:0; height:100%;}
 html{ height:100%} 
-#left{ position:absolute; top:0; left:0; width:200px; height:100%; background-color:#ffffff}
-#main{ margin-left:60px; height:100%; background-color:#ffffff}
-#right{ position:absolute; top:0; right:0; width:300px; height:100%; background-color:#ffffff}
+#left{ position:fixed; top:0; left:0; width:26.25%; height:100%; background-color:#ffffff}
+#main{ 
+  margin-left:26.25%; 
+  min-height: 100%;
+  width:41.66%; 
+  background-color:#ffffff;
+  border-left: 1px solid #E6EcF0;
+  border-right: 1px solid #E6EcF0;
+  font-family: 'Noto Sans TC';
+}
+#right{ position:fixed; top:0; right:0; width:32.08%; height:100%; background-color:#ffffff}
+
+.error {
+  margin-left: 26.25%;
+  width: 41.66%;
+}
+
+#left-container{
+  width:55.55%;
+  margin-left: 26.45%;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Noto Sans TC';
+}
+
+#left-container i{
+  margin-right: 20px;
+}
+
+.navbar-brand{
+  margin-bottom: 42px;
+  margin-top: 14px;
+}
+
+#left-container .flex-colum .nav-item{
+  margin-bottom: 26px;
+}
+
+.main-top{
+  font-weight: 500;
+  font-size: 18px;
+  padding: 15px;
+  border-bottom: 1px solid #E6EcF0;
+}
+
+#main img{
+  width: 50px;
+  height: 50px;
+  margin-left: 15px;
+}
+
+.post-area{
+  border-bottom: 10px solid #E6EcF0;
+}
