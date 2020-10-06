@@ -5,8 +5,6 @@
     </div>
   </nav>
 
-  {{> modal}}
-
   <div class="center-content d-flex" id="tweet-content">
     <div class="head  justify-content-between ">
       <a href="javascript:history.back()" style="color: black;">
@@ -15,13 +13,14 @@
           <h5 class="tweet-title">{{users.name}}</h5>
         </div>
       </a>
-      <div class="user-cover">
-        <img {{#if users.cover}}src="{{users.cover}}" {{/if}}>
+      <div class="user-cover" style="top: -30px;background: #C4C4C4;width: 600px;height:200px;">
+        <img src="{{users.cover}}" alt="{{users.cover}}">
       </div>
       <div class="tweet-content-box">
-        <div class="user-info-top">
+        <div class=" user-info-top">
           <a href="/users/{{users.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if users.avatar}}src={{users.avatar}}{{/if}}>
+            <img class="ml-2 mt-2" style="top: -30px;background: #C4C4C4;border-radius: 100%;"
+              {{#if users.avatar}}src={{users.avatar}}{{/if}}>
           </a>
         </div>
         <div class="tweet-content-right">
@@ -68,7 +67,7 @@
       <div class="user-selection-bar">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" href="/users/{{users.id}}/tweets">推文</a>
+            <a class="nav-link" href="/users/{{users.id}}/tweets">推文</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/users/{{users.id}}/replies">推文與回應</a>
@@ -78,10 +77,9 @@
           </li>
         </ul>
       </div>
-
       <div class="tweet-all">
         {{#each users.Tweets}}
-        <div class="tweet-content-box" onclick="location.href='/tweets/{{this.id}}'">
+        <div class="tweet-content-box" onclick="location.href='/tweets/{{../users.id}}'">
           <div class="tweet-content-left">
             <a href="/users/{{../users.id}}/tweets">
               <img class="ml-2 mt-2" {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
@@ -99,19 +97,19 @@
             <div class="tweet-content-bottom">
               {{!-- reply icon --}}
               <button type="button" class="button tweet-reply-link">
-                <i class="fas fa-cus-reply" aria-hidden="true"></i>{{this.Replies.length}}
+                <i class="fas fa-cus-reply" aria-hidden="true"></i>10{{RepliesCount}}
               </button>
               {{!-- like/unlike icon --}}
               {{#if isLiked}}
               <form action="/tweets/{{this.id}}/unlike" method="POST">
                 <button type="submit" class="button tweet-like-link">
-                  <i class="fas fa-cus-filled-like"></i>{{this.LikedUsers.length}}
+                  <i class="fas fa-cus-filled-like"></i>
                 </button>
               </form>
               {{else}}
               <form action="/tweets/{{this.id}}/like" method="POST">
                 <button type="submit" class="button tweet-like-link">
-                  <i class="fas fa-cus-like"></i>{{this.LikedUsers.length}}
+                  <i class="fas fa-cus-like"></i>5{{LikesCount}}
                 </button>
               </form>
               {{/if}}
@@ -120,12 +118,14 @@
         </div>
         {{/each}}
       </div>
+
     </div>
+
   </div>
 
-  {{!-- 
+
   <div class="right-content">
     {{>right-column}}
-  </div> --}}
+  </div>
 
   {{> userEdit}}
