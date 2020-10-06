@@ -253,7 +253,8 @@ const userController = {
             })
           })
       }
-    },
+    }
+  },
 
   getUserReplies: (req, res) => {
     return User.findByPk(req.params.id, {
