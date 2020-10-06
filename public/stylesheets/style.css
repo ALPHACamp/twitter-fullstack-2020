@@ -811,14 +811,13 @@ display: flex;
 
 }
 
-.modal-cover svg {
+.modal-cover-svg{
   position: relative;
   z-index: 2;
   left: 300px;
   top: -100px;
   cursor: pointer;
   color: white;
-
 }
 
 .modal-cover img{

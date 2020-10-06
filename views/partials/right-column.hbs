@@ -7,7 +7,8 @@
   <div class="top-followings-list">
     <div class="top-user-item d-flex align-items-center">
       <a href="/users/{{this.id}}/tweets">
-        <img src="{{this.avatar}}" alt="{{this.avatar}}">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
       </a>
       <div class="top-user-name d-flex flex-column justify-content-center">
         <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">{{this.name}}</a>

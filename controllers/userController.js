@@ -172,6 +172,7 @@ const userController = {
     })
   },
 
+
   // getUserInfo: (req, res) => {
 
   // },
@@ -252,7 +253,35 @@ const userController = {
             })
           })
       }
-    }
+    },
+
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Reply,
+          include: [
+            {
+              model: Tweet,
+              include: [Reply, Like, User]
+            }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ], order: [[Reply, 'createdAt', 'DESC']]
+    }).then(user => {
+      const pageUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+
+      pageUser.Replies.forEach(tweet => {
+        tweet.isLiked = tweet.Tweet.Likes.map(d => d.id).includes(currentUserId)
+      })
+      pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
+
+      // res.json({ pageUser })
+      return res.render('user/userReplyPage', { users: pageUser })
+    })
   },
 
   // 取得 追蹤使用者 的清單
@@ -329,26 +358,6 @@ const userController = {
             return res.redirect('back')
           })
       })
-  },
-
-  getUserReplies: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        Tweet,
-        { model: Like, include: [{ model: Tweet, include: User }] },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
-        { model: Tweet, as: 'LikedTweets' },
-        { model: Reply, include: [User] }
-      ], order: [['Replies', 'createdAt', 'DESC']]
-    }).then(user => {
-      // console.log(user.dataValues)
-      const pageUser = user.toJSON()
-      const currentUserId = helpers.getUser(req).id
-      pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
-
-      return res.render('user/userReplyPage', { users: user.toJSON() })
-    })
   }
 }
 
