@@ -10,12 +10,12 @@
       <div class="modal-body">
         <div class="flex-container mb-2">
           <div>
-            <a href="/users/{{tweet.User.id}}">
+            <a href="/users/{{tweet.User.id}}/tweets">
               <img class="mr-3 user-avatar" src="{{tweet.User.avatar}}" alt="user avatar">
             </a>
           </div>
           <div>
-            <a href="/users/{{tweet.User.id}}" style="text-decoration:none; color:black"><strong>{{tweet.User.name}}</strong></a>
+            <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{tweet.User.name}}</strong></a>
             <font color="grey">@{{tweet.User.account}} • {{moment tweet.updatedAt}}</font>
             <p>
               {{tweet.description}}
@@ -25,12 +25,13 @@
         {{#each tweetReplies}}
           <div class="flex-container mb-2">
             <div>
-              <a href="/users/{{this.User.id}}">
+              <a href="/users/{{this.User.id}}/tweets">
                 <img class="mr-3 user-avatar" src="{{this.User.avatar}}" alt="user avatar">
               </a>
             </div>
             <div>
-              <a href="/users/{{this.User.id}}" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
+              <a href="/users/{{this.User.id}}/tweets
+              " style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
               <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
               <p>
                 {{this.comment}}
@@ -70,12 +71,12 @@
         <div class="modal-body">
           <div class="flex-container mb-2">
             <div>
-              <a href="/users/{{this.User.id}}">
+              <a href="/users/{{this.User.id}}/tweets">
                 <img class="mr-3 user-avatar" src="{{this.User.avatar}}" alt="user avatar">
               </a>
             </div>
             <div>
-              <a href="/users/{{this.User.id}}" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
+              <a href="/users/{{this.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
               <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
               <p>
                 {{this.comment}}
@@ -85,7 +86,7 @@
           {{#each this.ReplyComments}}
             <div class="flex-container mb-2">
               <div>
-                <a href="/users/{{this.User.id}}">
+                <a href="/users/{{this.User.id}}/tweets">
                   <img class="mr-3 user-avatar" src="{{this.User.avatar}}" alt="user avatar">
                 </a>
               </div>
@@ -102,7 +103,7 @@
                     </div>
                   </div>
                 {{/ifCond}}
-                <a href="/users/{{this.User.id}}" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
+                <a href="/users/{{this.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
                 <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
                 <p>
                   {{this.comment}}
