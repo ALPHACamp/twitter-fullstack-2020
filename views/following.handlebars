@@ -66,15 +66,14 @@
     <br>
     <div class="row border-bottom">
       <a href="/user/{{user.dataValues.id}}/follower" style="text-decoration: none">
-        <h5 class="follower-follower m-0 px-4 py-3 font-weight-bold"
-          style="color:#FF6600;border-bottom:2px solid #FF6600;">追蹤者</h5>
+        <h5 class="following-follower m-0 px-4 py-3 font-weight-bold">追蹤者</h5>
       </a>
       <a href="/user/{{user.dataValues.id}}/following" style="text-decoration: none">
-        <h5 class="follower-following m-0 px-4 py-3 font-weight-bold">正在追蹤</h5>
+        <h5 class="following-following m-0 px-4 py-3 font-weight-bold"
+          style="color:#FF6600;border-bottom:2px solid #FF6600;">正在追蹤</h5>
       </a>
     </div>
-
-    {{#each followerList}}
+    {{#each followingList}}
     <div class="row border-bottom">
       <div class="avatar col-2 mt-3">
         <img src="{{this.dataValues.avatar}}" alt="avatar" class="border rounded-circle" style="max-width: 90%">
@@ -95,6 +94,5 @@
       {{/if}}
     </div>
     {{/each}}
-
   </div>
-</div>
+</div>>
