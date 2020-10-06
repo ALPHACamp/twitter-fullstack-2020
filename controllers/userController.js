@@ -5,6 +5,7 @@ const db = require('../models')
 const User = db.User;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
+const Like = db.Like;
 
 const userController = {
   signUpPage: (req, res) => {
@@ -173,11 +174,11 @@ const userController = {
   otherUser: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        { model: Tweet },
+        { model: Tweet, include: [Reply, { model: User, as: "LikeUsers" }] },
         {
           model: Reply, include: [
             {
-              model: Tweet, include: User
+              model: Tweet, include: [User, Reply, { model: User, as: "LikeUsers" }]
             }
           ]
         },
@@ -196,13 +197,19 @@ const userController = {
           ...tweet.dataValues,
           userName: user.name,
           userAvatar: user.avatar,
-          userAccount: user.account
+          userAccount: user.account,
+          countReplies: tweet.toJSON().Replies.length,
+          countLikeUser: tweet.toJSON().LikeUsers.length,
         }));
         user.Tweets = user.Tweets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         //特定使用者 - 回文 排序依日期
+        console.log(req.user);
         user.Replies = user.Replies.map(reply => ({
           ...reply.dataValues,
           tweet: reply.Tweet.toJSON(),
+          // isLike: reply.Tweet.LikeUsers.some(user=> user.toJSON().id === req.user.id ), 
+          countReplies: reply.Tweet.toJSON().Replies.length,
+          countLikeUser: reply.Tweet.toJSON().LikeUsers.length
         }))
         user.Replies = user.Replies.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         //特定使用者 - 被追蹤 排序依日期
