@@ -24,24 +24,23 @@ const tweetController = {
     },
     //新增推文
     postTweets: (req, res) => {
-        const tweetsDesc = req.body.text
-        if (tweetsDesc == " ") {
+        const { tweet } = req.body
+        const tweetsDesc = req.body.tweet
+        if (!tweet) {
             req.flash('error_messages', '不可空白')
             return res.redirect("/tweets")
-        } else {
-            if (tweetsDesc.length > 140) {
-                req.flash('error_messages', '不可超過140字')
-                return res.redirect("/tweets")
-            } else {
-                return Tweet.create({
-                    description: tweetsDesc,
-                    UserId: helpers.getUser(req).id
-                }).then((tweet) => {
-                    req.flash('success_messages', '新增一則tweet')
-                    return res.redirect("/tweets")
-                })
-            }
-        }
+        } 
+        if (tweetsDesc.length > 140) {
+            req.flash('error_messages', '不可超過140字')
+            return res.redirect("/tweets")
+        } 
+        return Tweet.create({
+            description: tweetsDesc,
+            UserId: helpers.getUser(req).id
+        }).then((tweet) => {
+            req.flash('success_messages', '新增一則tweet')
+            return res.redirect("/tweets")
+        })
     },
 }
 

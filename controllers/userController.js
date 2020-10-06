@@ -220,56 +220,37 @@ const userController = {
     })
   },
   getFollower: (req, res) => {
-    User.findByPk(req.params.id, {
-      include: [
-        { model: Tweet, include: [User] },
-        {
-          model: User,
-          as: 'Followers',
-          include: [{ model: User, as: 'Followers' }]
-        },
-        { model: User, as: 'Followings' },
-        { model: Tweet, as: 'LikedTweets' }
-      ]
-    }).then(user => {
-      const isFollowed = helpers
-        .getUser(req)
-        .Followings.map(d => d.id)
-        .includes(user.id)
-      const followerList = user.Followers.map(r => ({
-        ...r.dataValues,
-        introduction: r.dataValues.introduction,
-        isFollowed: helpers
-          .getUser(req)
-          .Followings.map(d => d.id)
-          .includes(r.id)
-      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-      return res.render('followers', { profile: user, isFollowed, followerList })
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+    }).then((user) => {
+      const results = user
+      results.Followers = user.Followers.map((follower) => ({
+        ...follower.dataValues,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(
+          follower.id
+        )
+      }))
+      results.tweetCount = user.Tweets.length
+      results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      res.render('followers', { results: results })
     })
+      .catch((err) => res.send(err))
   },
   getFollowing: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: [
-        { model: Tweet, include: [User] },
-        { model: User, as: 'Followers' },
-        {
-          model: User,
-          as: 'Followings',
-          include: [{ model: User, as: 'Followers' }]
-        },
-        { model: Tweet, as: 'LikedTweets' }
-      ]
-    }).then(user => {
-      const isFollowed = helpers
-        .getUser(req)
-        .Followings.map(d => d.id)
-        .includes(user.id)
-      const followingList = user.Followings.map(r => ({
-        ...r.dataValues,
-        introduction: r.dataValues.introduction
-      })).sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-      return res.render('followings', { profile: user, isFollowed, followingList })
+      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
     })
+      .then((user) => {
+        const results = user
+        results.Followings = user.Followings.map((following) => ({
+          ...following.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(
+            following.id
+          )
+        }))
+        results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        res.render('followings', { results: results })
+      })
   },
   getTopUsers: (req, res, next) => {
     return User.findAll({
