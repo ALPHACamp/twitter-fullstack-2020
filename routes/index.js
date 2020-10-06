@@ -11,7 +11,6 @@ const imagesUpload = upload.fields([
 ])
 
 module.exports = (app, passport) => {
-
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
@@ -21,6 +20,7 @@ module.exports = (app, passport) => {
     }
     return res.redirect('/signin')
   }
+  
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
