@@ -7,8 +7,38 @@ const { resolve } = require('path')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 let more = 10
+const jwt = require('jsonwebtoken')
+const passportJWT = require('passport-jwt')
+const ExtractJwt = passportJWT.ExtractJwt
+const JwtStrategy = passportJWT.Strategy
 
 const userController = {
+  apiSignIn: (req, res) => {
+    if (!req.body.account || !req.body.password) {
+      return res.json({ status: 'error', message: "required fields didn't exist" })
+    }
+    // 檢查 user 是否存在與密碼是否正確
+    let useraccount = req.body.account
+    let password = req.body.password
+    User.findOne({ where: { account: useraccount } }).then(user => {
+      if (!user) return res.status(401).json({ status: 'error', message: 'no such user found' })
+      if(!bcrypt.compareSync(password, user.password)) {
+        return res.status(401).json({ status: 'error', message: 'passwords did not match' })
+      }
+      // 簽發 token
+      const payload = { id: user.id }
+      const token = jwt.sign(payload, process.env.JWT_SECRET)
+      return res.json({
+        status: 'success',
+        message: 'ok',
+        token: token,
+        user: {
+          id: user.id, name: user.name, email: user.email, role: user.role
+        }
+      })
+    })
+  },
+
   registerPage: (req, res) => {
     return res.render('register', { layout: 'mainLogin' })
   },
@@ -506,7 +536,6 @@ const userController = {
   putUserInfo: (req, res) => {
     const { name, introduction } = req.body
     const id = req.params.userId
-    console.log('req.files:', req.files)
     // check user auth
     if (helpers.getUser(req).id !== Number(id)) {
       req.flash('error_messages', 'You can only edit your account')
@@ -582,6 +611,36 @@ const userController = {
         ...user.toJSON()
       })
     })
+  },
+  apiGetUserInfo: (req, res) => {
+    const id = req.params.userId
+    const loginId = helpers.getUser(req).id
+    // check user auth
+    if (loginId !== Number(id)) {
+      return res.json({ status: 'error', message: 'permission denied' })
+    }
+    return User.findByPk(id).then(user => {
+      return res.json({
+        ...user.toJSON()
+      })
+    })
+  },
+  apiPostUserInfo: (req, res) => {
+    const id = req.params.userId
+    const loginId = helpers.getUser(req).id
+    const { name, introduction } = req.body
+    // check user auth
+    if (loginId !== Number(id)) {
+      return res.json({ status: 'error', message: 'permission denied' })
+    }
+    return User.findByPk(id).then(user => {
+      user.update({
+        name: name,
+        introduction: introduction
+      })
+    }).then(() => {
+      return res.json({ status: 'success', message: 'Updated successfully' })
+    }).catch(err => console.log(err))
   }
 }
 
