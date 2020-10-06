@@ -13,7 +13,7 @@ module.exports = {
       account: 'root',
       cover: randomCover(),
       avatar: randomAvater(),
-      introduction: faker.lorem.text(),
+      introduction: faker.lorem.text(160),
       isAdmin: true,
       createdAt: new Date(),
       updatedAt: new Date(),
