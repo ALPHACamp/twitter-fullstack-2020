@@ -13,4 +13,11 @@ module.exports = {
   },
 
 
+
+  // use helpers.getUser(req) to replace req.user
+  // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+
+
+
+
 }

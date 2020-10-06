@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link>
 </head>
 
 <body>
@@ -18,8 +19,34 @@
 
     {{{body}}}
 
+    <div class="form-group inputCount">
+      <label for="inputprdDesc">Content</label>
+
+      <div class="introcount">asadad</div>
+
+
+      <textarea name="" id="inputprdDesc" cols="30" rows="5" class="introtext" placeholder="please enter content"
+        maxlength="120"></textarea>
+    </div>
+
+
   </div>
 </body>
+
+<script>
+  const nameText = document.querySelector('.nametext')
+  const nameCount = document.querySelector('.namecount')
+  const introText = document.querySelector('.introtext')
+  const introCount = document.querySelector('.introcount')
+
+  introText.addEventListener('keyup', () => {
+    return introCount.innerHTML = introText.value.length
+  })
+  nameText.addEventListener('keyup', () => {
+    return nameCount.innerHTML = nameText.value.length
+  })
+
+</script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

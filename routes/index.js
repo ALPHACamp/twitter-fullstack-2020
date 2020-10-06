@@ -2,6 +2,8 @@ const userController = require("../controllers/userController");
 const tweetController = require("../controllers/tweetController");
 const adminController = require('../controllers/adminController')
 const helpers = require('../_helpers.js')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 
 module.exports = (app, passport) => {
@@ -19,7 +21,12 @@ module.exports = (app, passport) => {
       return res.redirect('/admin/signin') //如果不是就導回首頁
     }
     res.redirect("/signin");
+
   };
+
+
+  app.get('/users/self', (req, res) => res.render('userselfedit'))
+  app.put('/users/self/edit', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putSelf)
 
 
   //user login
@@ -38,6 +45,9 @@ module.exports = (app, passport) => {
   app.get("/logout", userController.logout);
   app.get("/setting", userController.getSetting);
   app.put("/setting", userController.putSetting)
+
+
+
 
 
 

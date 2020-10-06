@@ -20,6 +20,8 @@ app.set('view engine', 'handlebars')
 
 app.use(methodOverride("_method"));
 
+app.use('/upload', express.static(__dirname + '/upload'))
+
 
 // setup session and flash
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))

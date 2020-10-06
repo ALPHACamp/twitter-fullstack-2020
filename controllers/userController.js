@@ -9,6 +9,10 @@ const Followship = db.Followship
 const Like = db.Like
 const helpers = require('../_helpers')
 
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = '6ff52e969355450'
+const fs = require('fs')
+
 const Op = Sequelize.Op
 
 const userController = {
@@ -91,6 +95,49 @@ const userController = {
         res.redirect('/')
       })
   },
+
+  // putSelf: (req, res) => {
+  //   console.log("req.body是什麼", req.body)
+
+  //   const { file } = req
+  //   console.log("file", file)
+
+  //   if (file) {
+  //     imgur.setClientID(IMGUR_CLIENT_ID);
+  //     imgur.upload(file.path, (err, img) => {
+  //       //error handling
+  //       if (err) {
+  //         next(err)
+  //         return
+  //       }
+
+  //       return User.findByPk(helpers.getUser(req).id)
+  //         .then(user => {
+  //           user.update({
+  //             name: req.body.name,
+  //             description: req.body.description,
+  //             cover: file ? img.data.link : user.cover,
+  //             avatar: file ? img.data.link : user.avatar
+  //           }).then((user) => {
+  //               req.flash('success_messages', 'restaurant was successfully to update')
+  //               res.redirect('/main')
+  //             })
+  //         })
+  //     }
+  //   } else {
+  //     return User.findByPk(helpers.getUser(req).id)
+  //       .then(user => {
+  //         user.update({
+  //           name: req.body.name,
+  //           description: req.body.description,
+  //           cover: user.cover,
+  //           avatar: user.avatar
+  //         }).then((user) => {
+  //         req.flash('success_messages', 'restaurant was successfully to update')
+  //         res.redirect('/users/self')
+  //       })
+  //   }
+  // },
 
   getFollower: (req, res) => {
     return User.findByPk(req.params.id, {
@@ -195,6 +242,36 @@ const userController = {
       .catch(error => console.log(error))
   },
 
+  putSelf: async (req, res) => {
+
+    const { avatar, cover } = req.files
+    const { files } = req
+
+
+
+    if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      if (avatar) {
+        await imgur.upload(avatar[0].path, (err, img) => {
+          User.findByPk(helpers.getUser(req).id)
+            .then(user => user.update({ avatar: img.data.link }))
+        })
+      }
+      if (cover) {
+        await imgur.upload(cover[0].path, (err, img) => {
+          User.findByPk(helpers.getUser(req).id)
+            .then(user => user.update({ cover: img.data.link }))
+        })
+      }
+    }
+    await User.findByPk(helpers.getUser(req).id).then(user => user.update({
+      name: req.body.name,
+      introduction: req.body.introduction
+    }))
+    req.flash('successMessage', '更新成功！')
+    res.redirect(`/users/self`)
+
+  },
 
 
 
