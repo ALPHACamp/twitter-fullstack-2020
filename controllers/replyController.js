@@ -11,7 +11,6 @@ let replyController = {
       ]
     }).then(reply => {
       const isLiked = reply.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-        console.log(reply)
         return res.render('replylist', {
           reply: reply.toJSON(),
           isLiked: isLiked

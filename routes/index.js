@@ -1,4 +1,4 @@
-const tweetsController = require('../controllers/tweetController.js')
+const tweetsController = require('../controllers/tweetsController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController')
 const replyController = require('../controllers/replyController.js')
@@ -16,6 +16,7 @@ module.exports = app => {
   app.post('/tweets/:id/replies', authenticated, replyController.postReply)
 
   app.post('/tweets/:id/like', authenticated, replyController.addLike)
+  app.post('/tweets/:id/unlike', authenticated, replyController.removeLike)
   app.delete('/tweets/:id/unlike', authenticated, replyController.removeLike)
 
   // =====================admin====================================

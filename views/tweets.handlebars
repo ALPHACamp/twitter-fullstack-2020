@@ -31,7 +31,7 @@
 		<div class="form-group">
 			<img src="{{ user.avatar }}" class="rounded-circle" alt="有什麼新鮮事?" width="100" height="100">
 			<span>今天有什麼新鮮事?</span>
-			<textarea class="form-control" id="tweet" name="tweet" rows="3" style="max-width: 900px;" 
+			<textarea class="form-control" id="description" name="description" rows="3" style="max-width: 900px;" 
 				placeholder="what's on your mind?"></textarea>
 		</div>
 		<button type="submit" class="btn btn-warning btn-lg">推文</button>
@@ -57,7 +57,7 @@
 					</p>
 			</div>
 			<div class="card-footer" style="background-color:#ffffff">
-				<form action="/tweets/{{ this.id }}/replies" method="POST" style="display: inline;"></form>
+				<form action="/tweets/{{ this.id }}/replies" method="POST" style="display: inline;">
 					<!-- a modal -->
 					<a data-toggle="modal" href="#exampleModalCenter{{ this.id }}">回覆</a>
 					<!-- Modal -->
@@ -122,7 +122,7 @@
 			<div class="form-group">
 				<img src="{{ user.avatar }}" class="rounded-circle" width="100" height="100">
 				<span>有什麼新鮮事?</span>
-				<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"> </textarea>
+				<textarea class="form-control" id="description" name="description" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"></textarea>
 			</div>
 			<input type="hidden" name="tweetId" value="{{tweet.description}}" />
 			<button type="submit" class="btn btn-warning btn-lg">推文</button>

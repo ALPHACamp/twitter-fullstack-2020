@@ -1,7 +1,7 @@
-const { User, Tweet, Like } = require('../models')
-const helpers = require("../_helpers")
+const { User, Tweet, Like } = require('twitter-fullstack-2020/models')
+const helpers = require("twitter-fullstack-2020/_helpers")
 
-const tweetController = {
+const tweetsController = {
     //main
     getTweets:(req, res) => {
         Tweet.findAll({
@@ -24,9 +24,8 @@ const tweetController = {
     },
     //新增推文
     postTweets: (req, res) => {
-        const { tweet } = req.body
-        const tweetsDesc = req.body.tweet
-        if (!tweet) {
+        const tweetsDesc = req.body.description.trim();
+        if (tweetsDesc === "") {
             req.flash('error_messages', '不可空白')
             return res.redirect("/tweets")
         } 
@@ -34,8 +33,8 @@ const tweetController = {
             req.flash('error_messages', '不可超過140字')
             return res.redirect("/tweets")
         } 
-        return Tweet.create({
-            description: tweetsDesc,
+        Tweet.create({
+            description: req.body.description,
             UserId: helpers.getUser(req).id
         }).then((tweet) => {
             req.flash('success_messages', '新增一則tweet')
@@ -44,4 +43,4 @@ const tweetController = {
     },
 }
 
-module.exports = tweetController
+module.exports = tweetsController
