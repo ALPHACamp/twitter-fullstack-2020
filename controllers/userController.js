@@ -9,6 +9,9 @@ const Followship = db.Followship
 const helpers = require('../_helpers')
 const Like = db.Like
 
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -184,10 +187,11 @@ const userController = {
   // },
 
 
-  putUserInfo: (req, res) => {
+  putUserInfo: async (req, res) => {
     const { files } = req
     const { name, introduction } = req.body
     const { cover, avatar } = req.files
+
 
     if (!name) {
       req.flash('error_messages', "請輸入名稱")
@@ -204,46 +208,43 @@ const userController = {
       return res.redirect('back')
     }
 
+
     // res.json(files)
     // 可傳出 path
     // console.log('avatar[0].path', avatar[0].path)
 
     if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
       if (cover) {
-        fs.readFile(cover[0].path, (err, data) => {
-          if (err) console.log('Error:', err)
-          fs.writeFile(`upload/${files.originalname}`, data, () => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                // res.json(user)
-                user.update({
-                  name: name,
-                  introduction: introduction,
-                  cover: files ? `/upload/${files.originalname}` : user.cover,
-                  // avatar: user.avatar
-                }).then((user) => {
-                  req.flash('success_messages', 'profile was successfully to update')
-                  res.redirect(`/users/${req.params.id}/tweets`)
-                })
+        imgur.upload(cover[0].path, (err, img) => {
+          return User.findByPk(req.params.id)
+            .then((user) => {
+              // res.json(user)
+              user.update({
+                name: name,
+                introduction: introduction,
+                cover: files ? img.data.link : user.cover,
+                avatar: user.avatar,
+              }).then((user) => {
+                req.flash('success_messages', 'profile was successfully to update')
+                res.redirect(`/users/${req.params.id}/tweets`)
               })
-          })
+            })
         })
       } else if (avatar) {
-        fs.readFile(avatar[0].path, (err, data) => {
-          if (err) console.log('Error:', err)
-          fs.writeFile(`upload/${files.originalname}`, data, () => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                user.update({
-                  name: name,
-                  introduction: introduction,
-                  avatar: files ? `/upload/${files.originalname}` : user.avatar,
-                }).then((user) => {
-                  req.flash('success_messages', 'profile was successfully to update')
-                  res.redirect(`/users/${req.params.id}/tweets`)
-                })
+        imgur.upload(avatar[0].path, (err, img) => {
+          return User.findByPk(req.params.id)
+            .then((user) => {
+              user.update({
+                name: name,
+                introduction: introduction,
+                cover: user.cover,
+                avatar: files ? img.data.link : user.avatar,
+              }).then((user) => {
+                req.flash('success_messages', 'profile was successfully to update')
+                res.redirect(`/users/${req.params.id}/tweets`)
               })
-          })
+            })
         })
       } else {
         return User.findByPk(req.params.id)
