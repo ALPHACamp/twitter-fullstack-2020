@@ -40,7 +40,9 @@
               <span>@{{this.account}}</span>
             </div>
             <div class="right-top-button">
-              {{#if this.isFollowed}}
+              {{#Equal this.id ../user.id}}
+              {{else}}
+              {{#if ../this.isFollowed}}
               <form action="">
                 <button class="right-btn-follow">正在追蹤</button>
                 {{else}}
@@ -48,6 +50,7 @@
                   <button class="right-btn-unfollow">追蹤</button>
                   {{/if}}
                 </form>
+                {{/Equal}}
             </div>
           </div>
           <p>

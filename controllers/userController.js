@@ -199,7 +199,8 @@ const userController = {
         }))
         return res.render('follower', {
           users,
-          Follower: follower
+          Follower: follower,
+          user: helpers.getUser(req)
         });
       })
   },
