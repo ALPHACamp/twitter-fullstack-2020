@@ -10,75 +10,137 @@
     </div>
     <div class="card tweet-content">
       <div class="tweet-content-top">
-        <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+        <img src="{{tweet.User.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
         <div class="tweet-content-name">
-          <span class="user-name"><a href="">nono</a></span>
-          <span class="user-account">@nono</span>
+          <span class="user-name"><a href="">{{tweet.User.name}}</a></span>
+          <span class="user-account">@{{tweet.User.account}}</span>
         </div>
       </div>
 
       <div class="card-body tweet-content-main">
-        <p>
-          Needless to say, I keep her in checkShe was a bad bad, nevertheless (yeah)Callin' it quits now,
-          baby,I'mawrec(ayy)Crash at my place, baby, you're a wreck (ayy)Needless to say, I keep her
-        </p>
-        <span class="tweet-time">上午10:05·2020年9月29日</span>
+        <p> {{tweet.description}} </p>
+        <span class="tweet-time">{{LocaleTime}} · {{LocaleDate}}</span>
       </div>
 
       <div class="tweet-content-footer">
         <div class="tweet-info">
-          <span>23 </span>回覆
-          <span>134 </span>喜歡
+          <span>{{tweet.Replies.length}} </span>回覆
+          <span>{{tweet.Likes.length}} </span>喜歡
         </div>
         <div class="tweet-reply-like">
-          <button type="button" class="btn btn-reply" data-toggle="modal" data-target="#replyModal">
-            <i class="icon-reply" style="font-size: 24px"></i>
+          <button type="button" class="btn btn-reply" data-toggle="modal">
+            <ul class="reply-text" style="display:none">
+              <li>{{this.UserId}}</li>
+              <li>{{this.User.dataValues.name}}</li>
+              <li>{{this.User.dataValues.account}}</li>
+              <li>{{moment this.createdAt}}</li>
+              <li>{{this.description}}</li>
+              <li>{{this.User.dataValues.avatar}}</li>
+              <li>{{this.id}}</li>
+            </ul>
+            <i class="icon-reply reply-on" style="font-size: 24px"></i>
           </button>
-          <button type="button" class="btn btn-like">
-            <i class="icon-like" style="font-size: 24px"></i>
-          </button>
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="post" class="form-like" style="display: inline-block;">
+            <button type="submit" class="btn">
+              <i class="like icon-like-fill" style="font-size: 24px; margin-left:100px;"></i>
+            </button>
+            <div class="like-item-count item-count"></div>
+            {{else}}
+            <form action="/tweets/{{tweet.id}}/like" method="post" class="form-like" style="display: inline-block;">
+              <button type="submit" class="btn">
+                <i class="icon-like" style="font-size: 24px;"></i>
+              </button>
+              <div class="item-count unlike-item-count"></div>
+              {{/if}}
+            </form>
         </div>
       </div>
     </div>
     <div class="tweets-list">
+
+      {{#each tweet.Replies}}
       <div class="tweets-content">
-        <div class="left-item">
-          <a href="">
-            <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
-          </a>
-        </div>
-        <div class="right-item">
-          <div class="title">
-            <span class="name">
-              <a href="">
-                nono
-              </a>
-            </span>
-            <span class="time">
-              @nonolin·3小時前
-            </span>
+          <div class="left-item">
+            <a href="/users/{{this.UserId}}">
+              <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+            </a>
           </div>
-          <div class="body-reply">
-            <span class="reply-mark">回覆</span>
-            <a class="reply-user" href="">@</a>
-          </div>
-          <div class="reply-text">
-            goood!
-          </div>
-          <div class="footer">
-            <div class="reply-item">
-              <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                <i class="icon-reply"></i> 13
-              </button>
+          <div class="right-item">
+            <div class="title">
+              <span class="name">
+                <a href="/users/{{this.UserId}}">
+                  {{this.User.name}}
+                </a>
+              </span>
+              <span class="time">
+                @{{this.User.account}}·{{moment this.updatedAt}}
+              </span>
             </div>
-            <div class="like-item">
-              <button type="button" class="btn">
-                <i class="icon-like"></i> 79
-              </button>
+            <div class="body-reply">
+              <span class="reply-mark">回覆</span>
+              <a class="reply-user" href="/users/{{../tweet.User.id}}">@{{../tweet.User.account}}</a>
+            </div>
+            <div class="reply-text">
+              {{subText this.comment 140}}
+            </div>
+            <div class="footer">
+              <div class="reply-item">
+                <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
+                  <i class="icon-reply"></i> {{this.followingByReply.length}}
+                </button>
+              </div>
+              <div class="like-item">
+                <button type="button" class="btn">
+                  <i class="icon-like"></i> {{this.Likes.length}}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
       </div>
+
+          {{#each this.followingByReply}}
+          <div class="tweets-content" style="border:white 0px">
+            <div class="left-item">
+              <a href="/users/{{this.UserId}}">
+                <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+              </a>
+            </div>
+            <div class="right-item">
+              <div class="title">
+                <span class="name">
+                  <a href="/users/{{this.UserId}}">
+                    {{this.User.name}}
+                  </a>
+                </span>
+                <span class="time">
+                  @{{this.User.account}}·{{moment this.updatedAt}}
+                </span>
+              </div>
+              <div class="body-reply">
+                <span class="reply-mark">回覆</span>
+                <a class="reply-user" href="/users/{{../this.User.id}}">@{{../this.User.account}}</a>
+              </div>
+              <div class="reply-text">
+                {{subText this.comment 140}}
+              </div>
+              <div class="footer">
+                <div class="reply-item">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
+                    <i class="icon-reply"></i> {{this.followingByReply.length}}
+                  </button>
+                </div>
+                <div class="like-item">
+                  <button type="button" class="btn">
+                    <i class="icon-like"></i> {{this.Likes.length}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+
+      {{/each}}
     </div>
   </div>
 
