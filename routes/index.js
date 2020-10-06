@@ -14,7 +14,7 @@ module.exports = (app, passport) => {
 
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
-      if (req.user.isAmin) { return next() }
+      if (req.user.isAdmin) { return next() }
       return res.redirect('/')
     }
     res.redirect('/signin')
@@ -27,7 +27,7 @@ module.exports = (app, passport) => {
     failureRedirect: '/admin/signin',
     failureFlash: true
   }), adminController.signIn)
-  app.post('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
   app.get('/signup', userController.signUpPage)
