@@ -38,8 +38,7 @@
         <div class="tweet-list" style="width: 600px;height: 136px;left: 0px;top: 0px;">
           {{#each tweets}}
           <div class="tweet mt-2">
-            <div class="tweet-item-left d-flex align-items-stretch"
-              onclick="location.href='/tweets/{{this.dataValues.id}}'" style="cursor: pointer;">
+            <div class="tweet-item-left d-flex align-items-stretch" style="cursor: pointer;">
               <div class="tweet-left d-flex align-items-stretch">
                 <a href="/tweets/{{this.User.dataValues.id}}">
                   <img src="{{this.User.dataValues.avatar}}" class="rounded-circle"

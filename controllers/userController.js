@@ -195,24 +195,7 @@ const userController = {
       .catch(error => console.log(error))
   },
 
-  getTweet: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        {model: Tweet, include:[Reply, {model: User, as:'LikedUsers'}]}, 
-        {model: User, as: 'Followers'},
-        {model: User, as: 'Followings'}
-      ],
-      order:[['Tweet', 'createdAt','DESC']]
-    }).then(users => {
-      const userSelf = user.toJSON()
-      console.log(users)
-      const data = users.map(t => {
-        isLiked: t.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-        isFollowed: helpers.getUser(req).Followings.map(f => f.id).includes(user.id)
-        res.render('tweet', {tweet: data})
-      })
-    })
-  },
+
 
   
  

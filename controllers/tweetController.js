@@ -38,6 +38,7 @@ const tweetController = {
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
+      console.log(tweet)
       const UserId = helpers.getUser(req).id
       const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
 

@@ -1,6 +1,5 @@
 const userController = require("../controllers/userController");
 const tweetController = require("../controllers/tweetController");
-<<<<<<< HEAD
 const adminController = require("../controllers/adminController");
 
 module.exports = (app, passport) => {
@@ -8,33 +7,15 @@ module.exports = (app, passport) => {
     if (req.isAuthenticated()) {
       // isAuthenticated 為passport內建之方法,回傳true or false
       return next();
-=======
-const adminController = require('../controllers/adminController')
-const helpers = require('../_helpers.js')
-
-
-module.exports = (app, passport) => {
-  const authenticated = (req, res, next) => {
-    if (helpers.ensureAuthenticated(req)) {
-      return next()
->>>>>>> 7437d5f02c561d211557da3318d4250f54bb0fa6
     }
     res.redirect("/signin");
   };
 
   const authenticatedAdmin = (req, res, next) => {
-<<<<<<< HEAD
-    if (req.isAuthenticated()) {
-      if (req.user.role) {
-        return next();
-      } //如果是管理員的話
-      return res.redirect("/"); //如果不是就導回首頁
-=======
     if (helpers.ensureAuthenticated(req)) {
       if (req.user.role) { return next() }  //如果是管理員的話
       req.flash('error_messages', '您非管理員，請從前台登入')
       return res.redirect('/admin/signin') //如果不是就導回首頁
->>>>>>> 7437d5f02c561d211557da3318d4250f54bb0fa6
     }
     res.redirect("/signin");
   };
@@ -70,7 +51,7 @@ module.exports = (app, passport) => {
     authenticated,
     userController.removeFollowing
   );
-  app.get('/users/:id/tweet', authenticated, userController.getTweet)
+  
   app.post("/like/:id", authenticated, userController.addLike);
   app.delete("/unlike/:id", authenticated, userController.removeLike);
   
