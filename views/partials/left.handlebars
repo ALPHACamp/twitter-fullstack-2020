@@ -30,10 +30,54 @@
   </br>
   </br>
 
-  <form action="/user/tweets">
-    <button type="submit" class="left-zone-btn">
-      推文</button>
-  </form>
+
+  <button type="button" class="btn btn-block" data-toggle="modal" data-target="#tweetModal"
+    style="border: none;background: #FF6600;border-radius: 100px;">
+    <span style="color: #FFFFFF;">推文</span>
+  </button>
+  <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="tweet-title btn">推文</div>
+        </div>
+        <div class="modal-title">
+          <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" class="d-flex">
+          <div class="body-avatar d-flex align-items-stretch">
+            <div class="right">
+              <a href="/tweets/{{tweet.User.dataValues.id}}">
+                <img src="{{tweet.User.dataValues.avatar}}" class="rounded-circle"
+                  style="width: 50px;height: 50px;background: #C4C4C4;">
+              </a>
+            </div>
+
+            <div class="left" class="d-flex">
+              <form method="POST" action="/tweets/{{user.dataValues.id}}">
+                <textarea name="description" cols="40" rows="10"
+                  style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
+                  placeholder="有什麼新鮮事"></textarea>
+                <button type="submit" class="btn" style="background: #FF6600;border-radius: 100px;">
+                  <span style="color: #FFFFFF;">推文</span></button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
 
 
   </br>
