@@ -119,7 +119,6 @@ const userController = {
           introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        console.log(followingList)
         followingList = followingList.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         return res.render('following', { users: users.toJSON(), followingList })
       })
@@ -140,7 +139,6 @@ const userController = {
           order: [['createdAt', 'DESC']]
         })
           .then(tweets => {
-            console.log(tweets)
             return res.render('user', { users, tweets })
           })
         // const userSelf = helpers.getUser(req).id
@@ -215,8 +213,17 @@ const userController = {
       ]
     })
       .then(users => {
-        // console.log(users.toJSON())
-        return res.render('likes', { users: users.toJSON() })
+        return Like.findAll({
+          where: { UserId: req.params.id },
+          include: [User, Reply, Tweet],
+          order: [['createdAt', 'DESC']]
+        })
+          .then(likes => {
+            console.log(likes)
+            return res.render('likes', { users, likes })
+          })
+        // const userSelf = helpers.getUser(req).id
+        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
       })
   },
 
