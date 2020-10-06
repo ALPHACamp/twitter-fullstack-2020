@@ -27,7 +27,7 @@ const tweetController = {
         return res.render('tweets', {
           isLiked: isLiked,
           tweets: data,
-          userSelf: helpers.getUser(req)
+          user: helpers.getUser(req)
         })
       })
   },
@@ -144,6 +144,29 @@ const tweetController = {
         return res.redirect('back')
       })
   },
+
+  postReply: (req, res) => {
+    let tweetId = req.params.id
+    let replyText = req.body.replyText.trim()
+    if (!replyText.length) {
+      return res.redirect('back')
+    } else {
+      return Reply.create({
+        UserId: helpers.getUser(req).id,
+        TweetId: tweetId,
+        comment: replyText
+      })
+        .then(() => {
+          req.flash('successFlashMessage', '成功回覆推文!')
+          return res.redirect('back')
+        })
+        .catch(() => {
+          req.flash('errorFlashMessage', '回覆推文失敗!')
+          return res.redirect('back')
+        })
+    }
+  }
+
 
 
 }

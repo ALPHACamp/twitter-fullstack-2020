@@ -362,7 +362,6 @@ a:hover {
   color: #657786;
   text-align: center;
   padding: 0.2rem 0.5rem 0 0;
-
   /* padding-top: 0.5rem; */
 }
 
@@ -619,7 +618,7 @@ a:hover {
 
 .reply-modal-post {
   display: flex;
-  padding-top: 15px;
+  padding: 0px 15px 15px 15px;
 }
 
 .reply-modal-textarea {
@@ -1138,6 +1137,8 @@ a:hover {
 /* follower頁面 */
 
 .follower-center {
+  grid-column-start: 3;
+  grid-column-end: 4;
   border: 1px solid #e6ecf0;
 }
 

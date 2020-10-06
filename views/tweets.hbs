@@ -11,7 +11,7 @@
     </div>
     <div class="tweets-input">
       <div class="main-left">
-        <img src="{{userSelf.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+        <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
       </div>
       <div class="main-right">
         <form action="/tweets" method="POST">
@@ -46,8 +46,17 @@
             </div>
             <div class="footer">
               <div class="footer-item reply-item">
-                <button type="button" class="btn ply-on" data-toggle="modal" data-target="#replyModal">
-                  <i class="icon-reply"></i>
+                <button type="button" class="btn" data-toggle="modal">
+                  <ul class="reply-text" style="display:none">
+                    <li>{{this.UserId}}</li>
+                    <li>{{this.User.dataValues.name}}</li>
+                    <li>{{this.User.dataValues.account}}</li>
+                    <li>{{moment this.createdAt}}</li>
+                    <li>{{this.description}}</li>
+                    <li>{{this.User.dataValues.avatar}}</li>
+                    <li>{{this.id}}</li>
+                  </ul>
+                  <i class="icon-reply reply-on"></i>
                 </button>
                 <div class="item-count reply-count">{{this.Replies.length}}</div>
               </div>
