@@ -140,7 +140,10 @@ const userController = {
       })
       pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
 
-      return res.render('user/userPage', { users: pageUser })
+      return res.render('user/userPage', {
+        users: pageUser,
+        currentUserId: currentUserId
+      })
     })
   },
 
@@ -166,9 +169,12 @@ const userController = {
       pageUser.Likes.forEach(tweet => {
         tweet.isLiked = tweet.Tweet.Likes.map(d => d.UserId).includes(currentUserId)
       })
-      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(currentUserId)
+      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
 
-      return res.render('user/userLikesPage', { users: pageUser })
+      return res.render('user/userLikesPage', {
+        users: pageUser,
+        currentUserId: currentUserId
+      })
     })
   },
 
@@ -253,7 +259,8 @@ const userController = {
             })
           })
       }
-    },
+    }
+  },
 
   getUserReplies: (req, res) => {
     return User.findByPk(req.params.id, {
@@ -277,9 +284,12 @@ const userController = {
       pageUser.Replies.forEach(tweet => {
         tweet.isLiked = tweet.Tweet.Likes.map(d => d.UserId).includes(currentUserId)
       })
-      pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
+      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
 
-      return res.render('user/userReplyPage', { users: pageUser })
+      return res.render('user/userReplyPage', {
+        users: pageUser,
+        currentUserId: currentUserId
+      })
     })
   },
 

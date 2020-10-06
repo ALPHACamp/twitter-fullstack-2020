@@ -32,7 +32,7 @@
             <span class="tweet-content-description">{{users.introduction}}</span><br>
           </div>
           <div class="user-followships">
-            <a href="/users/{{users.id}}/followings">{{users.Followings.length}}個</a>
+            <a href="/users/{{users.id}}/following">{{users.Followings.length}}個</a>
             <span>跟隨中&nbsp;&nbsp;</span>
             <a href="/users/{{users.id}}/followers">{{users.Followers.length}}位</a>
             <span>跟隨者</span>
@@ -40,23 +40,21 @@
         </div>
 
         <div class="user-info-top">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          {{#ifCond users.id currentUserId}}
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#user-info-Modal">
             編輯個人資料
           </button>
-          {{#ifCond users.id currentUserId}}
           {{else}}
-          {{#if pageUser.isFollowed}}
+          {{#if users.isFollowed}}
           <a href="mailto:{{users.email}}"><i class="far fa-envelope"></i></a>
           <i class="far fa-bell"></i>
-          <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="display: inline-block;">
+          <form action="/following/{{users.id}}?_method=DELETE" method="POST" style="display: inline-block;">
             <button type="submit" class="btn btn-primary">正在跟隨</button>
           </form>
           {{else}}
-          {{#ifCond users.id ""}}
-          <form action="/followships/{{users.id}}" method="POST" style="display: inline-block;">
+          <form action="/following/{{users.id}}" method="POST" style="display: inline-block;">
             <button type="submit" class="btn btn-primary">跟隨</button>
           </form>
-          {{/ifCond}}
           {{/if}}
           {{/ifCond}}
         </div>
