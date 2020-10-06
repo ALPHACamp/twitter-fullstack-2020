@@ -54,8 +54,6 @@
           </a>
         </div>
       </div>
-
-
     </div>
 
     <nav class="user-page-nav navbar-expand-lg navbar-light">
@@ -90,13 +88,22 @@
                 @{{this.User.account}}・{{moment this.createdAt}}
               </span>
             </div>
-            <div class="body">
+            <a href="/tweets/{{this.id}}" class="body">
               {{subText this.description 100}}
-            </div>
+            </a>
             <div class="footer">
               <div class="footer-item reply-item">
-                <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                  <i class="icon-reply"></i>
+                <button type="button" class="btn" data-toggle="modal">
+                  <ul class="reply-text" style="display:none">
+                    <li>{{this.User.id}}</li>
+                    <li>{{this.User.name}}</li>
+                    <li>{{this.User.account}}</li>
+                    <li>{{moment this.createdAt}}</li>
+                    <li>{{this.description}}</li>
+                    <li>{{this.User.avatar}}</li>
+                    <li>{{this.id}}</li>
+                  </ul>
+                  <i class="icon-reply reply-on"></i>
                 </button>
                 <div class="item-count reply-count">{{this.Replies.length}}</div>
               </div>
@@ -142,8 +149,17 @@
                 </div>
                 <div class="footer">
                   <div class="footer-item reply-item">
-                    <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                      <i class="icon-reply"></i>
+                    <button type="button" class="btn" data-toggle="modal">
+                      <ul class="reply-text" style="display:none">
+                        <li>{{this.User.id}}</li>
+                        <li>{{this.User.name}}</li>
+                        <li>{{this.User.account}}</li>
+                        <li>{{moment this.createdAt}}</li>
+                        <li>{{this.comment}}</li>
+                        <li>{{this.User.avatar}}</li>
+                        <li>{{this.id}}</li>
+                      </ul>
+                      <i class="icon-reply reply-on"></i>
                     </button>
                     <div class="item-count reply-count">{{this.followingByReply.length}}</div>
                   </div>

@@ -110,7 +110,7 @@ a:hover {
   background: #f5f8fa;
   border-radius: 14px;
   width: 350px;
-  height: 500px;
+  /* height: 500px; */
   font-weight: 700;
   margin-left: 20px;
   margin-right: 80px;
@@ -128,7 +128,7 @@ a:hover {
 }
 
 .top-follow-list {
-  height: 700px;
+  /* height: 700px; */
   width: 350px;
   background: #f5f8fa !important;
 }
@@ -286,7 +286,6 @@ a:hover {
 }
 
 .tweets-content {
-  /* border: 1px solid gray; */
   display: flex;
   border-radius: 0px !important;
   border-bottom: 0.5px solid #e6ecf0;
@@ -420,7 +419,6 @@ a:hover {
 
 .tweet-content-top {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
 }
 
@@ -447,13 +445,13 @@ a:hover {
 
 .tweet-content-main {
   border-bottom: 1px solid #e6ecf0;
-  font-size: 23px;
+  font-size: 20px;
   word-wrap: break-word;
-  margin: 0px 0px 0px 15px;
+  margin: -10px 15px 0px 15px;
 }
 
 .tweet-content-main p {
-  width: 500px;
+  width: 550px;
   margin-left: -15px;
   margin-bottom: -1px;
 }
@@ -472,7 +470,7 @@ a:hover {
 
 .tweet-content-footer .tweet-info {
   color: #657786;
-  font-size: 20px;
+  font-size: 18px;
   padding: 15px 3px;
   border-bottom: 1px solid #e6ecf0;
 }
@@ -507,10 +505,6 @@ a:hover {
 .tweets-content .body-reply .reply-user {
   color: #ff6600;
   font-weight: bold;
-}
-
-.reply-text {
-  height: 45px;
 }
 
 /* tweet-modal */
