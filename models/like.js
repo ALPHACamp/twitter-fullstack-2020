@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       Position: DataTypes.STRING,
       PositionId: DataTypes.INTEGER,
       isLike: DataTypes.BOOLEAN,
+      TweetId: DataTypes.INTEGER,
     },
     {},
   );

@@ -28,7 +28,7 @@ module.exports = {
         account: `user${index + 1}`,
         cover: randomCover(),
         avatar: randomAvater(),
-        introduction: faker.lorem.text(),
+        introduction: faker.lorem.text(160),
         isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date(),

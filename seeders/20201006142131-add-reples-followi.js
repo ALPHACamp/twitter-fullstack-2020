@@ -1,29 +1,37 @@
 'use strict';
 const faker = require('faker');
 const { randomNums } = require('../components/Util');
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    let tweetIds = await queryInterface.sequelize.query(
-      `SELECT id FROM Tweets`,
+    let repliesIds = await queryInterface.sequelize.query(
+      `SELECT id,TweetId FROM Replies`,
     );
-    tweetIds = tweetIds[0].map((i) => i.id);
+    repliesIds = repliesIds[0].map((i) => ({ id: i.id, TweetId: i.TweetId }));
 
+    //console.log(repliesIds);
     let userIds = await queryInterface.sequelize.query(
       `SELECT id FROM Users WHERE isAdmin = false;`,
     );
     userIds = userIds[0].map((i) => i.id);
+    let random = randomNums(
+      Math.floor(repliesIds.length * 0.7),
+      repliesIds.length,
+    );
+    //console.log(Math.floor(Math.random() * repliesIds.length * 0.7));
 
-    const replies = tweetIds.reduce((acc, value, index, array) => {
+    repliesIds = random.map((index) => repliesIds[index]);
+    //console.log(repliesIds);
+    const replies = repliesIds.reduce((acc, value, index, array) => {
       const userids = randomNums(
         Math.floor(Math.random() * userIds.length),
         userIds.length,
       ).map((index) => userIds[index]);
       //console.log(userids);
+
       const reply = userids.map((d) => ({
         UserId: parseInt(d),
-        TweetId: parseInt(value),
-        ReplyId: null,
+        TweetId: value.TweetId,
+        ReplyId: value.id,
         comment: faker.lorem.text(140),
         createdAt: new Date(),
         updatedAt: new Date(),
