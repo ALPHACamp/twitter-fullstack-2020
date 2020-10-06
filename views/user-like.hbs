@@ -108,29 +108,21 @@
                 </button>
                 <div class="like-item-count item-count">{{this.LikedByUsers.length}}</div>
                 {{else}}
-                <form action="/tweets/{{this.id}}/like" method="post" class="form-like">
-                  <button type="button" class="btn">
+                <form action="/tweets/{{this.id}}/like" method="post">
+                  <button type="submit" class="btn">
                     <i class="icon-like"></i>
                   </button>
                   <div class="item-count unlike-item-count">{{this.LikedByUsers.length}}</div>
                   {{/if}}
                 </form>
             </div>
-
           </div>
-
-
-
-
         </div>
       </div>
       {{/each}}
     </div>
-
   </div>
-
 
   {{> right-column}}
   {{> modal}}
-
 </div>
