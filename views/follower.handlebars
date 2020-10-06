@@ -8,25 +8,27 @@
     <div class="row ml-1 align-items-center">
       <i class="fas fa-arrow-left fa-lg"></i>
       <div class="ml-5">
-        <h4 class="m-0 font-weight-bold">{{users.name}}</h4>
-        <p class="followship-tweetsCount m-0">{{users.Tweets.length}}推文</p>
+        <h4 class="m-0 font-weight-bold">{{name}}</h4>
+        <p class="followship-tweetsCount m-0">{{tweetsLength}}推文</p>
       </div>
     </div>
     <br>
     <div class="row border-bottom">
-      <a href="/users/{{users.id}}/follower" style="text-decoration: none">
+      <a href="/users/{{user.id}}/follower" style="text-decoration: none">
         <h5 class="follower-follower m-0 px-4 py-3 font-weight-bold"
           style="color:#FF6600;border-bottom:2px solid #FF6600;">跟隨者</h5>
       </a>
-      <a href="/users/{{users.id}}/following" style="text-decoration: none">
+      <a href="/users/{{user.id}}/following" style="text-decoration: none">
         <h5 class="follower-following m-0 px-4 py-3 font-weight-bold">正在跟隨</h5>
       </a>
     </div>
 
-    {{#each followerList}}
+    {{#each users}}
     <div class="row border-bottom">
       <div class="avatar col-2 mt-3">
-        <img src="{{this.avatar}}" alt="avatar" class="border rounded-circle" style="max-width: 90%">
+        <a href="/users/{{../user.id}}">
+          <img src="{{this.avatar}}" alt="avatar" class="border rounded-circle" style="max-width: 90%">
+        </a>
       </div>
       <div class="col mt-3">
         <div class="font-weight-bold">{{this.name}}</div>

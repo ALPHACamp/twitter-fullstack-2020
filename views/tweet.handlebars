@@ -47,11 +47,11 @@
             {{#if isLiked}}
             <form action="/unlike/{{tweet.dataValues.id}}?_method=DELETE" method="POST" style="display:inline;">
               <button type="submit" class="ml-3" style="background: none;border: none;">
-                <i class="far fa-heart"></i>
+                <i class="fas fa-heart"></i>
                 {{else}}
                 <form action="/like/{{tweet.dataValues.id}}" method="POST" style="display:inline; ">
                   <button type="submit" class="ml-3" style="background: none;border: none;">
-                    <i class="fas fa-heart"></i>
+                    <i class="far fa-heart"></i>
                     {{/if}}
                     {{tweet.LikedUsers.length}}
                   </button>
