@@ -42,9 +42,10 @@ module.exports = {
     }, []);
 
     const likesInreplies = replyIds.reduce((acc, value, index, array) => {
-      const userids = randomNums(4, userIds.length).map(
-        (index) => userIds[index],
-      );
+      const userids = randomNums(
+        Math.floor(Math.random() * userIds.length),
+        userIds.length,
+      ).map((index) => userIds[index]);
       const likesInreply = userids.map((d) => ({
         UserId: parseInt(d),
         Position: 'reply',
