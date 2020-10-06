@@ -88,7 +88,8 @@ const userController = {
         { model: User, as: "Followers" },
         // 使用者追蹤的人
         { model: User, as: "Followings" },
-        { model: Tweet, as: 'LikedTweets', include: [User] }
+        { model: Tweet, as: 'LikedTweets', include: [User] },
+        { model: Tweet, as: 'ReplyTweet', include: [User] }
       ]
     })
       .then((user) => {
@@ -106,11 +107,6 @@ const userController = {
           ReplyCount: tweet.dataValues.Replies.length,
           isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
         }))
-        /*         console.log(user)
-                console.log("=====================")
-                console.log(user.LikedTweets)
-                console.log("=====================")
-                console.log(user.LikedTweets[0].User) */
         res.render('userTweets', { profile: user, tweets })
       })
   },
