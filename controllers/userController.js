@@ -5,7 +5,7 @@ const db = require('../models')
 const User = db.User;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
-const Like = db.Like;
+const Followship = db.Followship
 
 const userController = {
   signUpPage: (req, res) => {
@@ -168,6 +168,21 @@ const userController = {
           .then((followship) => {
             return res.redirect('back')
           })
+      })
+  },
+  getUsersHavingTopFollowers: (req, res, next) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+      .then(users => {
+        users = users.map(user => ({
+          ...user.dataValues,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
+          FollowersCount: user.Followers.length
+        }))
+        users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
+        res.locals.users = users
+        return next()
       })
   },
   //austin

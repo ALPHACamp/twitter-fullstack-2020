@@ -14,7 +14,7 @@ module.exports = (app, passport) => {
 
   const authenticatedAdmin = (req, res, next) => {
     if (req.isAuthenticated()) {
-      if (req.user.isAmin) { return next() }
+      if (req.user.isAdmin) { return next() }
       return res.redirect('/')
     }
     res.redirect('/signin')
@@ -27,7 +27,7 @@ module.exports = (app, passport) => {
     failureRedirect: '/admin/signin',
     failureFlash: true
   }), adminController.signIn)
-  app.post('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
   app.get('/signup', userController.signUpPage)
@@ -41,7 +41,7 @@ module.exports = (app, passport) => {
 
 
   app.get("/", (req, res) => res.redirect("/tweets"))
-  app.get("/tweets", authenticated, tweetController.getTweets)
+  app.get("/tweets", authenticated, userController.getUsersHavingTopFollowers, tweetController.getTweets)
   app.get("/tweets/:id", authenticated, tweetController.getTweet)
   app.post('/tweets', authenticated, tweetController.createTweet)
   app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
@@ -63,8 +63,8 @@ module.exports = (app, passport) => {
   app.get('/user/self/edit', authenticated, userController.editUser)
   app.put('/users/:id', authenticated, userController.putUser)
 
-  app.get('/user/:id/follower', authenticated, userController.getFollower)
-  app.get('/user/:id/following', authenticated, userController.getFollowing)
+  app.get('/user/:id/follower', userController.getUsersHavingTopFollowers, authenticated, userController.getFollower)
+  app.get('/user/:id/following', userController.getUsersHavingTopFollowers, authenticated, userController.getFollowing)
   app.post('/following/:id', authenticated, userController.addFollowing)
   app.delete('/following/:id', authenticated, userController.removeFollowing)
 

@@ -1,0 +1,63 @@
+{{!-- 新增 tweet modal  --}}
+ <div class="modal" tabindex="-1" role="dialog" id="tweetModal"> 
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="tweet-modal-header">
+        <button type="button" data-dismiss="modal" aria-label="Close" class="tweet-modal-close-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="tweet-modal-body">
+        <img {{#if user.avatar}}src={{user.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+
+        <form method="POST" action="/tweets">
+          <textarea class="tweet-modal-textarea" name="description" id="description" cols="30" rows="10"
+            placeholder="有什麼新鮮事？"></textarea>
+          <button type="submit" class="tweet-modal-button">
+            推文
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </div> 
+ </div> 
+
+ {{!-- reply Modal --}}
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+
+                    </div>
+                    <div class="modal-title">
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <img src="{{user.avatar}}" class="rounded-circle"
+                        style="background-size:cover; width: 50px;height: 50px;">
+                      <span class="mt-1"><a href="#">{{user.name}}</a></span>
+                      <span class="user-account">
+                        {{user.account}}．{{moment user.createdAt}}
+                      </span>
+                    </div>
+                    <div class="modal-body" class="d-flex">
+                      <div class="tweet-text d-flex align-items-stretch">
+                        {{user.description}}
+                      </div>
+                      <form method="POST" action="/tweets/{{user.id}}/replies">
+                        <textarea name="comment" cols="55" rows="5"
+                          style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+                          placeholder="....."></textarea>
+                        <button type="submit"
+                          style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+                          <span style="color: #FFFFFF;">回覆</span></button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+
+
