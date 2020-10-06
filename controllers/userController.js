@@ -8,6 +8,7 @@ const { Op } = require('sequelize');
 const helpers = require('../_helpers');
 
 const imgur = require('imgur-node-api');
+const { use } = require('../routes/routes');
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 const userController = {
@@ -205,7 +206,25 @@ const userController = {
       })
   },
   getFollowingsPage: (req, res) => {
-    return res.render('following');
+    let userId = req.params.id
+    User.findByPk(userId, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followings' }
+      ]
+    })
+      .then((user) => {
+        const users = user.toJSON()
+        const following = user.Followings.map((data) => ({
+          ...data.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map((d) => d.id).includes(data.id)
+        }))
+        return res.render('following', {
+          users,
+          Following: following,
+          user: helpers.getUser(req)
+        });
+      })
   },
   putUserProfile: async (req, res) => {
     const UserId = Number(req.params.id);
