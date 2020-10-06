@@ -171,21 +171,6 @@ const userController = {
         visitUser,
       });
     });
-
-    //Like.findAll({where:{UserId,Position:'tweet'}},attribute:[])
-    // return User.findByPk(userId, {
-    //   include: [
-    //     Tweet,
-    //     {
-    //       model: Tweet,
-    //       as:'LikedTweets',
-    //       include: [User, Reply],
-    //       order: [['updatedAt', 'DESC']],
-    //     },
-    //     { model: User, as: 'Followers' },
-    //     { model: User, as: 'Followings' },
-    //   ],
-    // });
   },
   getRepliesPage: (req, res) => {
     let UserId = req.params.id;
@@ -201,19 +186,25 @@ const userController = {
             Like,
             User,
           ],
-          order: [['Tweets', 'updatedAt', 'DESC']],
+          order: [['updatedAt', 'DESC']],
         },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
+      order: [['Replies', 'updatedAt', 'ASC']],
     }).then((user) => {
+      //console.log(user.dataValues);
+      user.Tweets = user.Tweets.length;
       let replies = user.toJSON().Replies;
       let tweets = user.toJSON().Replies.map((r) => r.Tweet);
+      //console.log(tweets);
       tweets = tweets.reduce((arr, value) => {
         if (arr.findIndex((v) => v.id === value.id) === -1) {
           arr.push(value);
         }
-        return arr;
+        return arr.sort((a, b) => {
+          return new Date(b.updatedAt) - new Date(a.updatedAt);
+        });
       }, []);
 
       tweets.forEach((t) => {
@@ -236,51 +227,49 @@ const userController = {
     });
   },
   getFollowersPage: (req, res) => {
-    let userId = req.params.id
+    let userId = req.params.id;
     User.findByPk(userId, {
-      include: [
-        Tweet,
-        { model: User, as: 'Followers' }
-      ]
-    })
-      .then((user) => {
-        const users = user.toJSON()
-        const follower = user.Followers.map((data) => ({
-          ...data.dataValues,
-          isFollowed: helpers.getUser(req).Followings.map((d) => d.id).includes(data.id)
-        }))
-        return res.render('follower', {
-          users,
-          Follower: follower,
-          user: helpers.getUser(req)
-        });
-      })
+      include: [Tweet, { model: User, as: 'Followers' }],
+    }).then((user) => {
+      const users = user.toJSON();
+      const follower = user.Followers.map((data) => ({
+        ...data.dataValues,
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map((d) => d.id)
+          .includes(data.id),
+      }));
+      return res.render('follower', {
+        users,
+        Follower: follower,
+        user: helpers.getUser(req),
+      });
+    });
   },
   getFollowingsPage: (req, res) => {
-    let userId = req.params.id
+    let userId = req.params.id;
     User.findByPk(userId, {
-      include: [
-        Tweet,
-        { model: User, as: 'Followings' }
-      ]
-    })
-      .then((user) => {
-        const users = user.toJSON()
-        const following = user.Followings.map((data) => ({
-          ...data.dataValues,
-          isFollowed: helpers.getUser(req).Followings.map((d) => d.id).includes(data.id)
-        }))
-        return res.render('following', {
-          users,
-          Following: following,
-          user: helpers.getUser(req)
-        });
-      })
+      include: [Tweet, { model: User, as: 'Followings' }],
+    }).then((user) => {
+      const users = user.toJSON();
+      const following = user.Followings.map((data) => ({
+        ...data.dataValues,
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map((d) => d.id)
+          .includes(data.id),
+      }));
+      return res.render('following', {
+        users,
+        Following: following,
+        user: helpers.getUser(req),
+      });
+    });
   },
   putUserProfile: async (req, res) => {
     const UserId = Number(req.params.id);
     //imgur.setClientID(IMGUR_CLIENT_ID);
-    console.log('IMGUR_CLIENT_ID', IMGUR_CLIENT_ID);
+    //console.log('IMGUR_CLIENT_ID', IMGUR_CLIENT_ID);
     //console.log('login', helpers.getUser(req).id);
     //console.log('pa $$$', UserId);
     if (helpers.getUser(req).id !== UserId) {
@@ -309,7 +298,7 @@ const userController = {
         let avatarPath = avatar[0].path;
         await imgur.upload(avatarPath, async (err, img) => {
           let avatar = img.data.link;
-          console.log('avatar', avatar);
+          //console.log('avatar', avatar);
           if (cover != null) {
             let coverPath = cover[0].path;
             await imgur.upload(coverPath, (err, img) => {

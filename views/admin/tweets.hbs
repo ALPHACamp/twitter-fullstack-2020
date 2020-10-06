@@ -57,9 +57,37 @@
         </div>
       </div>
       <div class="admin-list-right">
-        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-          <button type="submit" class="delete-btn">&times;</button>
-        </form>
+        <button type="button" class="delete-btn" data-toggle="modal" data-target="#e{{this.id}}">
+          &times;
+        </button>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="e{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row align-items-center mx-0">
+              <i class="fa fa-exclamation-triangle mr-2" aria-hidden="" style="color:red;"></i>
+              <h5 class="modal-title" id="exampleModalLabel">warning!!!</h5>
+            </div>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            請確認是否刪除這則推文:
+            <div>{{subText this.description}}</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="delete-btn btn btn-danger">Delete</button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
     {{/each}}
