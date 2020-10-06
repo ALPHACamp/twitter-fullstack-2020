@@ -865,10 +865,12 @@ display: flex;
   border: 1px solid #FF6600;
   color: white;
 }
-.cover-upload {
+.cover-img {
   position: relative;
-  top: 60px;
+  top: -100px;
   left: 275px;
+  z-index: 2;
+  cursor: pointer;
 }
 
 .cover-upload> input, .avatar-upload > input

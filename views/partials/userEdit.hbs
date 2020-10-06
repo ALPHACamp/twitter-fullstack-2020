@@ -14,39 +14,39 @@
 
         </div>
         <div class="user-edit">
-          <div class="modal-cover" style="top: -30px;background: #C4C4C4;width: 600px;height:200px;">
-            <img {{#if users.cover}}src="{{users.cover}}" {{/if}} style="top: -30px;max-width: 600px;max-height:200px;">
-            <div class="cover-upload">
-              <label for="cover">
-                <i class="fas fa-camera "></i>
-              </label>
-              <input type="file" class="form-control-file" id="cover" name="cover">
-            </div>
+          {{!-- <div class="modal-cover" style="top: -30px;background: #C4C4C4;width: 600px;height:200px;"> --}}
+          <img {{#if users.cover}}src="{{users.cover}}" {{/if}}
+            style="top: -30px;max-width: 600px;max-height:200px;background: #C4C4C4;width: 600px;height:200px">
+          <div class="cover-upload">
+            <label for="cover" class="cover-img">
+              <i class="fas fa-camera "></i>
+            </label>
+            <input type="file" class="form-control-file" id="cover" name="cover">
           </div>
-          
-          <div class="user-info-top">
-            <img style="top: -30px;background: #C4C4C4;border-radius: 100%;"
-              {{#if users.avatar}}src={{users.avatar}}{{/if}}>
-            <div class="avatar-upload">
-              <label for="avatar">
-                <i class="fas fa-camera "></i>
-              </label>
-
-            <div class="user-info-top">
-              <input type="file" class="form-control-file" id="avatar" name="avatar">
-            </div>
-          </div>
-          <div class="form-label-group-modal">
-            <label for="name">名稱</label>
-            <input type="text" name="name" class="form-control shadow-none border-none" value="{{users.name}}">
-          </div>
-          <div class="form-label-group-modal">
-            <label for="introduction">自我介紹</label>
-            <textarea name="introduction" rows="10" cols="30" placeholder="{{users.introduction}}"></textarea>
-          </div>
-
         </div>
+
+        <div class="user-info-top">
+          <img style="top: -30px;background: #C4C4C4;border-radius: 100%;"
+            {{#if users.avatar}}src={{users.avatar}}{{/if}}>
+          <div class="avatar-upload">
+            <label for="avatar">
+              <i class="fas fa-camera "></i>
+            </label>
+
+            <input type="file" class="form-control-file" id="avatar" name="avatar">
+          </div>
+        </div>
+        <div class="form-label-group-modal">
+          <label for="name">名稱</label>
+          <input type="text" name="name" class="form-control shadow-none border-none" value="{{users.name}}">
+        </div>
+        <div class="form-label-group-modal">
+          <label for="introduction">自我介紹</label>
+          <textarea name="introduction" rows="10" cols="30" placeholder="{{users.introduction}}"></textarea>
+        </div>
+
       </div>
-    </form>
   </div>
+  </form>
+</div>
 </div>
