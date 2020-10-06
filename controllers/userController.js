@@ -190,66 +190,62 @@ const userController = {
     return User.findByPk(req.params.id, {
       include: [
         { model: Tweet, include: [Reply, { model: User, as: "LikeUsers" }] },
-        {
-          model: Reply, include: [
-            {
-              model: Tweet, include: [User, Reply, { model: User, as: "LikeUsers" }]
-            }
+        { model: Reply, include: [
+            {model: Tweet, include: [User, Reply, { model: User, as: "LikeUsers" }]}
+          ]
+        },
+        { model: Tweet, as: "LikeTweets", include: [
+            User, Reply, { model: User, as: "LikeUsers" }
           ]
         },
         { model: User, as: "Followings" },
         { model: User, as: "Followers" },
-        {
-          model: Tweet, as: "LikeTweets", include: [
-            { model: User },
-          ]
-        }
       ]
     })
       .then(user => {
         //特定使用者 - 推文 排序依日期
-        user.Tweets = user.Tweets.map(tweet => ({
-          ...tweet.dataValues,
-          userName: user.name,
-          userAvatar: user.avatar,
-          userAccount: user.account,
-          countReplies: tweet.toJSON().Replies.length,
-          countLikeUser: tweet.toJSON().LikeUsers.length,
-        }));
-        user.Tweets = user.Tweets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        //特定使用者 - 回文 排序依日期
-        console.log(req.user);
-        user.Replies = user.Replies.map(reply => ({
-          ...reply.dataValues,
-          tweet: reply.Tweet.toJSON(),
-          // isLike: reply.Tweet.LikeUsers.some(user=> user.toJSON().id === req.user.id ), 
-          countReplies: reply.Tweet.toJSON().Replies.length,
-          countLikeUser: reply.Tweet.toJSON().LikeUsers.length
-        }))
-        user.Replies = user.Replies.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        //特定使用者 - 被追蹤 排序依日期
-        user.Followers = user.Followers.map(f => f.toJSON());
-        user.Followers = user.Followers.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-
-        //特定使用者 - 跟隨 排序依日期
-        user.Followings = user.Followings.map(f => f.toJSON());
-        user.Followings = user.Followings.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-
-        //特定使用者 - 喜歡的推文 排序依日期
-        user.LikeTweets = user.LikeTweets.map(l => ({
-          likeTweet: l.Like.toJSON(),
-          description: l.dataValues.description,
-          user: l.User.toJSON(),
-        }));
-        user.LikeTweets = user.LikeTweets.sort((a, b) => b.likeTweet.createdAt.getTime() - a.likeTweet.createdAt.getTime());
-        res.render("user/other", {
-          user,
-          tweets: user.Tweets,
-          replies: user.Replies,
-          followers: user.Followers,
-          followings: user.Followings,
-          likes: user.LikeTweets
-        });
+        // user.Tweets = user.Tweets.map(tweet => ({
+        //   ...tweet.dataValues,
+        //   userName: user.name,
+        //   userAvatar: user.avatar,
+        //   userAccount: user.account,
+        //   countReplies: tweet.toJSON().Replies.length,
+        //   countLikeUser: tweet.toJSON().LikeUsers.length,
+        // }));
+        // user.Tweets = user.Tweets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        // //特定使用者 - 回文 排序依日期
+        // user.Replies = user.Replies.map(reply => ({
+        //   ...reply.dataValues,
+        //   tweet: reply.Tweet.toJSON(),
+        //   isLike: reply.Tweet.LikeUsers.some(user=> user.toJSON().id === req.user.id ), 
+        //   countReplies: reply.Tweet.toJSON().Replies.length,
+        //   countLikeUser: reply.Tweet.toJSON().LikeUsers.length
+        // }))
+        // user.Replies = user.Replies.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        // //特定使用者 - 喜歡的推文 排序依日期
+        // user.LikeTweets = user.LikeTweets.map(l => ({
+        //   ...l.dataValues,
+        //   likeTweet: l.Like.toJSON(),
+        //   user: l.User.toJSON(),
+        //   countReplies: l.toJSON().Replies.length,
+        //   countLikeUser: l.toJSON().LikeUsers.length
+        // }));
+        // user.LikeTweets = user.LikeTweets.sort((a, b) => b.likeTweet.createdAt.getTime() - a.likeTweet.createdAt.getTime());
+        // // 特定使用者 - 被追蹤 排序依日期
+        // user.Followers = user.Followers.map(f => f.toJSON());
+        // user.Followers = user.Followers.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        // // 特定使用者 - 跟隨 排序依日期
+        // user.Followings = user.Followings.map(f => f.toJSON());
+        // user.Followings = user.Followings.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        // console.log(user.toJSON());
+        // res.render("user/other", {
+        //   user,
+        //   tweets: user.Tweets,
+        //   replies: user.Replies,
+        //   // followers: user.Followers,
+        //   // followings: user.Followings,
+        //   likes: user.LikeTweets
+        // });
       })
   }
 }
