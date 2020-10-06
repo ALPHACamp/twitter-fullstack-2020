@@ -165,9 +165,34 @@ const tweetController = {
           return res.redirect('back')
         })
     }
-  }
+  },
 
+  getTweet: (req, res) => {
+    console.log('req.params', req.params.id)
+    Tweet.findByPk(req.params.id,
+      {
+        include: [
+          Like, User,
+          {
+            model: Reply, include: [Like, User,
+              { model: Reply, as: 'followingByReply', 
+                include: [User, Like, { model: Reply, as: 'followingByReply'}] }]
+          },
+        ]
+      })
+      .then(tweet => {
+        // console.log('tweet######', tweet.toJSON().Replies) 
+        // console.log('tweet######@@@@@@######', tweet.toJSON().Replies[1].followingByReply[0].Likes)
+        const isLiked = tweet.Likes.map((i) => i.UserId).includes(helpers.getUser(req).id)
+        res.render('tweet', {
+          isLiked,
+          tweet: tweet.toJSON(),
+          LocaleDate: tweet.toJSON().updatedAt.toLocaleDateString(),
+          LocaleTime: tweet.toJSON().updatedAt.toLocaleTimeString(),
+        })
+      })
 
+  },
 
 }
 
