@@ -142,8 +142,8 @@
               {{!-- add like button --}}
               {{#if this.isLiked }}
               <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display:inline;"><button
-                  type="submit" class="button reply-link mt-4 mb-4" style="background: red;border: none;">
-                  <i class="far fa-heart"></i></form>
+                  type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
+                  <i class="fas fa-heart"></i></form>
               {{else}}
               <form action="/like/{{this.id}}" method="POST" style="display:inline;"><button type="submit"
                   class="button reply-link mt-4 mb-4" style="background: none;border: none;">
@@ -164,3 +164,4 @@
       </div>
     </div>
   </div>
+  
