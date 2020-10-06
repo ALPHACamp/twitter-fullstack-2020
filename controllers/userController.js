@@ -23,7 +23,7 @@ const userController = {
     let password = req.body.password
     User.findOne({ where: { account: useraccount } }).then(user => {
       if (!user) return res.status(401).json({ status: 'error', message: 'no such user found' })
-      if(!bcrypt.compareSync(password, user.password)) {
+      if (!bcrypt.compareSync(password, user.password)) {
         return res.status(401).json({ status: 'error', message: 'passwords did not match' })
       }
       // 簽發 token
@@ -271,7 +271,7 @@ const userController = {
         { model: User, as: 'Followers' }
       ]
     }).then(user => {
-      console.log(user)
+      // console.log(user)
       const tweets = user.toJSON().Tweets.map(tweet => ({
         id: user.toJSON().id,
         avatar: user.toJSON().avatar,
@@ -311,7 +311,7 @@ const userController = {
           more = more + 10
         }
         users = users.slice(0, more)
-
+        console.log(tweets)
         return res.render('userTweets', {
           tweets,
           userId: user.toJSON().id,
@@ -530,7 +530,7 @@ const userController = {
     }).then(users => {
 
       console.log(users)
-      
+
       const tweetsCount = users.toJSON().Tweets.length
       const name = users.toJSON().name
       users = users.Followings.map(r => ({
@@ -544,7 +544,7 @@ const userController = {
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(r.id)
       }))
 
-      
+
       // 排序
       users = users.sort((a, b) => b.followshipCreatedAt - a.followshipCreatedAt)
       return res.render('userFollowings', {
@@ -554,7 +554,7 @@ const userController = {
       })
     })
   },
-  
+
   putUserInfo: (req, res) => {
     const { name, introduction } = req.body
     const id = req.params.userId
