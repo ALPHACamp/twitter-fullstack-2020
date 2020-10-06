@@ -60,10 +60,11 @@ module.exports = (app, passport) => {
 
   // 使用者能編輯自己的自我介紹、個人頭像與封面
   app.get('/user/:id', authenticated, userController.getUser)
-  app.get('/user/:id/follower', authenticated, userController.getFollower)
-  app.get('/user/:id/following', authenticated, userController.getFollowing)
   app.get('/user/self/edit', authenticated, userController.editUser)
   app.put('/users/:id', authenticated, userController.putUser)
+
+  app.get('/user/:id/follower', authenticated, userController.getFollower)
+  app.get('/user/:id/following', authenticated, userController.getFollowing)
   app.post('/following/:id', authenticated, userController.addFollowing)
   app.delete('/following/:id', authenticated, userController.removeFollowing)
 
