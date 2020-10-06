@@ -38,12 +38,12 @@ const tweetController = {
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
+      console.log(tweet)
       const UserId = helpers.getUser(req).id
       const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
 
       return User.findOne({ where: { id: UserId } })
         .then(user => {
-          // console.log(user)
           return res.render('tweet', {
             tweet: tweet,
             isLiked: isLiked
@@ -80,6 +80,7 @@ const tweetController = {
       {
         include: [{ model: Reply, include: [User] }]
       }).then(tweet => {
+        console.log(tweet)
         const data = tweet.Replies.map(t => ({
           ...t.dataValues,
           comment: t.comment
