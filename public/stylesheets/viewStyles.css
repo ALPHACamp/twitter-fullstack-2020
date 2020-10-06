@@ -307,6 +307,7 @@ a:hover {
 .tweets-content .right-item {
   width: 530px;
   margin-left: 10px;
+  margin-right: 15px;
 }
 
 .tweets-content .right-item .title {
