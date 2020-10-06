@@ -13,7 +13,7 @@
           {{users.name}}
         </div>
         <div class="follower-title-bottom">
-          {{users.Tweets.length}} 則推文
+          {{users.Tweets.length}} 推文
         </div>
       </div>
     </div>
@@ -43,11 +43,11 @@
               {{#Equal this.id ../user.id}}
               {{else}}
               {{#if ../this.isFollowed}}
-              <form action="">
-                <button class="right-btn-follow">正在追蹤</button>
+              <form action="/followships/{{../this.id}}?_method=DELETE" method="POST">
+                <button class="right-btn-follow" name="id" value="{{../this.id}}">正在追蹤</button>
                 {{else}}
-                <form action="">
-                  <button class="right-btn-unfollow">追蹤</button>
+                <form action="/followships" method="POST">
+                  <button class="right-btn-unfollow" name="id" value="{{../this.id}}">追蹤</button>
                   {{/if}}
                 </form>
                 {{/Equal}}
