@@ -175,8 +175,10 @@ const tweetController = {
           Like, User,
           {
             model: Reply, include: [Like, User,
-              { model: Reply, as: 'followingByReply', 
-                include: [User, Like, { model: Reply, as: 'followingByReply'}] }]
+              {
+                model: Reply, as: 'followingByReply',
+                include: [User, Like, { model: Reply, as: 'followingByReply' }]
+              }]
           },
         ]
       })

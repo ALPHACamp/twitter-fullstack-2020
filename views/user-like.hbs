@@ -89,9 +89,9 @@
               @{{this.User.account}}・{{moment this.createdAt}}
             </span>
           </div>
-          <div class="body">
+          <a href="/tweets/{{this.id}}" class="body">
             {{subText this.description 100}}
-          </div>
+          </a>
           <div class="footer">
             <div class="footer-item reply-item">
               <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
