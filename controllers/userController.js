@@ -1,3 +1,4 @@
+const fs = require('fs')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const tweetController = require('./tweetController')
@@ -163,13 +164,96 @@ const userController = {
       const currentUserId = helpers.getUser(req).id
 
       pageUser.Likes.forEach(tweet => {
-        tweet.isLiked = true
+        tweet.isLiked = tweet.Tweet.Likes.map(d => d.UserId).includes(currentUserId)
       })
       pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(currentUserId)
 
       return res.render('user/userLikesPage', { users: pageUser })
     })
   },
+
+
+  // getUserInfo: (req, res) => {
+
+  // },
+
+
+  putUserInfo: (req, res) => {
+    const { files } = req
+    const { name, introduction } = req.body
+    const { cover, avatar } = req.files
+
+    if (!name) {
+      req.flash('error_messages', "請輸入名稱")
+      return res.redirect('back')
+    }
+
+    if (name.length > 50) {
+      req.flash('error_messages', "名稱不可超過 50 字")
+      return res.redirect('back')
+    }
+
+    if (introduction.length > 160) {
+      req.flash('error_messages', "自我介紹不可超過 160 字")
+      return res.redirect('back')
+    }
+
+    // res.json(files)
+    // 可傳出 path
+    // console.log('avatar[0].path', avatar[0].path)
+
+    if (files) {
+      if (cover) {
+        fs.readFile(cover[0].path, (err, data) => {
+          if (err) console.log('Error:', err)
+          fs.writeFile(`upload/${files.originalname}`, data, () => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                // res.json(user)
+                user.update({
+                  name: name,
+                  introduction: introduction,
+                  cover: files ? `/upload/${files.originalname}` : user.cover,
+                  // avatar: user.avatar
+                }).then((user) => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/${req.params.id}/tweets`)
+                })
+              })
+          })
+        })
+      } else if (avatar) {
+        fs.readFile(avatar[0].path, (err, data) => {
+          if (err) console.log('Error:', err)
+          fs.writeFile(`upload/${files.originalname}`, data, () => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                user.update({
+                  name: name,
+                  introduction: introduction,
+                  avatar: files ? `/upload/${files.originalname}` : user.avatar,
+                }).then((user) => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/${req.params.id}/tweets`)
+                })
+              })
+          })
+        })
+      } else {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            user.update({
+              name: name,
+              introduction: introduction,
+              cover: user.cover,
+              avatar: user.avatar
+            }).then((user) => {
+              req.flash('success_messages', 'profile was successfully to update')
+              res.redirect(`/users/${req.params.id}/tweets`)
+            })
+          })
+      }
+    },
 
   getUserReplies: (req, res) => {
     return User.findByPk(req.params.id, {
@@ -191,11 +275,10 @@ const userController = {
       const currentUserId = helpers.getUser(req).id
 
       pageUser.Replies.forEach(tweet => {
-        tweet.isLiked = tweet.Tweet.Likes.map(d => d.id).includes(currentUserId)
+        tweet.isLiked = tweet.Tweet.Likes.map(d => d.UserId).includes(currentUserId)
       })
       pageUser.isFollowed = helpers.getUser(req).Followers.map(item => item.id).includes(currentUserId)
 
-      // res.json({ pageUser })
       return res.render('user/userReplyPage', { users: pageUser })
     })
   },

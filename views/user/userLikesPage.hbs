@@ -103,13 +103,13 @@
               </button>
               {{!-- like/unlike icon --}}
               {{#if isLiked}}
-              <form action="/tweets/{{this.id}}/unlike" method="POST">
+              <form action="/tweets/{{this.TweetId}}/unlike" method="POST">
                 <button type="submit" class="button tweet-like-link">
                   <i class="fas fa-cus-filled-like"></i>{{this.Tweet.Likes.length}}
                 </button>
               </form>
               {{else}}
-              <form action="/tweets/{{this.id}}/like" method="POST">
+              <form action="/tweets/{{this.TweetId}}/like" method="POST">
                 <button type="submit" class="button tweet-like-link">
                   <i class="fas fa-cus-like"></i>{{this.Tweet.Likes.length}}
                 </button>
