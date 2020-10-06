@@ -15,7 +15,7 @@
             </a>
           </div>
           <div>
-            <strong>{{tweet.User.name}}</strong>
+            <a href="/users/{{tweet.User.id}}"><strong>{{tweet.User.name}}</strong></a>
             <font color="grey">@{{tweet.User.account}} • {{moment tweet.updatedAt}}</font>
             <p>
               {{tweet.description}}
@@ -30,7 +30,7 @@
               </a>
             </div>
             <div>
-              <strong>{{this.User.name}}</strong>
+              <a href="/users/{{this.User.id}}"><strong>{{this.User.name}}</strong></a>
               <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
               <p>
                 {{this.comment}}
@@ -75,7 +75,7 @@
               </a>
             </div>
             <div>
-              <strong>{{this.User.name}}</strong>
+              <a href="/users/{{this.User.id}}"><strong>{{this.User.name}}</strong></a>
               <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
               <p>
                 {{this.comment}}
@@ -102,7 +102,7 @@
                     </div>
                   </div>
                 {{/ifCond}}
-                <strong>{{this.User.name}}</strong>
+                <a href="/users/{{this.User.id}}"><strong>{{this.User.name}}</strong></a>
                 <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
                 <p>
                   {{this.comment}}

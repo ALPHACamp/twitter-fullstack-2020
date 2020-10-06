@@ -114,8 +114,6 @@ const tweetController = {
         tweet = tweet.toJSON()
         const loginUser = helpers.getUser(req)
 
-        console.log(loginUser)
-
         //like and dislike tweet
         const isLikedTweet = loginUser.Likes.map(likes => likes.TweetId).includes(tweet.id)
 

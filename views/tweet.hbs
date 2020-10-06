@@ -12,7 +12,7 @@
             style="border-radius: 50%; height: 50px; width: 50px">
         </a>
         <div>
-          <strong>{{tweet.User.name}}</strong><br>
+          <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{tweet.User.name}}</strong><br></a>
           <font class="text-muted">@{{tweet.User.account}}</font>
         </div>
         {{#ifCond loginUser.id tweet.User.id}}
@@ -71,11 +71,11 @@
                 </div>
               </div>
             {{/ifCond}}
-            <strong>{{this.User.name}}</strong>
+            <a href="/users/{{this.User.id}}" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
             <font class="text-muted">@{{this.User.account}} • {{moment this.updatedAt}}</font>
             <br>
             <font class="text-muted" size="2px">回覆</font>
-            <a href="" style="color: coral;" style="font-size: 2px;">@{{../tweet.User.name}}</a>
+            <a href="/users/{{../tweet.User.id}}" style="color: coral; text-decoration:none;" style="font-size: 2px;">@{{../tweet.User.name}}</a>
             <p>{{this.comment}}</p>
             <div>
               <button data-toggle="modal" data-target="#r{{this.id}}"

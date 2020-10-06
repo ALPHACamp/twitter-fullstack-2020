@@ -41,7 +41,7 @@
                 </div>
               </div>
             {{/ifCond}}
-            <strong>{{this.user.name}}</strong>
+            <a href="/users/{{this.user.id}}/tweets" style="text-decoration:none; color:black"><strong>{{this.user.name}}</strong></a>
             <font class="text-muted">@{{this.user.account}} {{moment this.createdAt}}</font>
             <p>{{this.description}}</p>
             <div>

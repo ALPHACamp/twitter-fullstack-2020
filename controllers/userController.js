@@ -190,10 +190,10 @@ const userController = {
   },
 
   getUserSettings: (req, res) => {
-    const reqUser = helpers.getUser(req)
-    return User.findByPk(reqUser.id).then(user => {
+    const loginUser = helpers.getUser(req)
+    return User.findByPk(loginUser.id).then(user => {
       return res.render('settings', {
-        user: user.toJSON()
+        user: user.toJSON(), loginUser
       })
     })
   },
