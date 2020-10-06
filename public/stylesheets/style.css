@@ -86,3 +86,27 @@ font-weight:bold;
   color: 	#7B7B7B;
   font-weight:bold;
 }
+
+.user-header .user-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.user-header .user-avatar {
+  border-radius: 50%;
+  position: absolute;
+  top: 175px;
+  left: 5%;
+  border: 5px solid #FFFFFF;
+}
+
+.user-edit-btn {
+  border-radius: 50px;
+  width: 120px;
+  height: 45px;
+  background-color: #FFFFFF;
+  color: #FF6600;
+  border: 2px solid#FF6600;
+  font-weight: bold;
+}

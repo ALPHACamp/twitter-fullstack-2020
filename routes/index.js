@@ -44,13 +44,14 @@ module.exports = (app, passport) => {
   // app.get("/main", (req, res) => res.render("mainpage"));
 
   //userController
-  app.get('/users/:id', authenticated, userController.getUser)
-  app.get('/users/:id/follower', authenticated, userController.getTopFollowers, userController.getFollower)
-  app.get('/users/:id/following', authenticated, userController.getTopFollowers, userController.getFollowing)
+  app.get('/users/:id/follower', authenticated, userController.getTopFollowers, userController.getUserFollower)
+  app.get('/users/:id/following', authenticated, userController.getTopFollowers, userController.getUserFollowing)
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.get('/users/:id/likes', authenticated, userController.getUserLikes)
   app.post("/like/:id", authenticated, userController.addLike);
   app.delete("/unlike/:id", authenticated, userController.removeLike);
+  app.get('/users/:id', authenticated, userController.getUser)
 
   // adminController
   app.get("/admin", (req, res) => {

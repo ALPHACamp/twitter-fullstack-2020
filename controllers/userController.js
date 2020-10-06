@@ -92,7 +92,7 @@ const userController = {
       })
   },
 
-  getFollower: (req, res) => {
+  getUserFollower: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followers' }]
@@ -108,7 +108,7 @@ const userController = {
       })
   },
 
-  getFollowing: (req, res) => {
+  getUserFollowing: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followings' }],
@@ -126,23 +126,26 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    User.findByPk(req.params.id, {
-      include: [
-        { model: Reply, include: [Tweet] },
-        { model: Tweet, as: 'LikedUsers' },
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        { model: Tweet, as: 'LikedTweets' }
       ]
-    }).then(user => {
-      console.log(user)
-      const userSelf = helpers.getUser(req).id
-      const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
-      res.render('user', {
-        user: user,
-        isLiked: isLiked,
-        userSelf: userSelf
-      })
     })
+      .then(users => {
+        return Tweet.findAll({
+          where: { UserId: req.params.id },
+          include: [User, Reply, Like],
+          order: [['createdAt', 'DESC']]
+        })
+          .then(tweets => {
+            console.log(tweets)
+            return res.render('user', { users, tweets })
+          })
+        // const userSelf = helpers.getUser(req).id
+        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
+      })
   },
 
   addFollowing: (req, res) => {
@@ -201,6 +204,20 @@ const userController = {
         })
     })
       .catch(error => console.log(error))
+  },
+
+  getUserLikes: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, as: 'LikedTweets' }
+      ]
+    })
+      .then(users => {
+        // console.log(users.toJSON())
+        return res.render('likes', { users: users.toJSON() })
+      })
   },
 
   getTopFollowers: (req, res, next) => {
