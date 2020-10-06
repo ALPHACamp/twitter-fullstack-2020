@@ -1,3 +1,5 @@
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = 'c26a5187596e138'
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User;
@@ -74,9 +76,9 @@ const userController = {
           .then(user => {
             user.update({
               name: req.body.name,
-              image: file ? img.data.link : null,
+              avatar: file ? img.data.link : null,
               background: file ? img.data.link : null,
-              profile: req.body.profile
+              introduction: req.body.introduction
             }).then(user => {
               req.flash('success_messages', 'user was successfully update')
               res.redirect(`/user/self`)
@@ -88,9 +90,9 @@ const userController = {
         .then(user => {
           user.update({
             name: req.body.name,
-            image: user.image,
+            avatar: user.avatar,
             background: user.background,
-            profile: req.body.profile
+            introduction: req.body.introduction
           }).then(user => {
             req.flash('success_messages', 'user was successfully update')
             res.redirect(`/user/self`)
@@ -104,13 +106,13 @@ const userController = {
 
   putSetting: (req, res) => {
 
-    return User.findByPk(req.params.id)
+    return User.findByPk(req.user.id)
       .then(user => {
         user.update({
           account: req.body.account,
           name: req.body.name,
           email: req.body.email,
-          password: req.body.password
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
         })
           .then(user => {
             req.flash('success_messages', 'user was successfully update')
@@ -132,9 +134,11 @@ const userController = {
         },
         { model: User, as: "Followings" },
         { model: User, as: "Followers" },
-        { model: Tweet, as: "LikeTweets", include: [ 
-          { model: User },
-        ]}
+        {
+          model: Tweet, as: "LikeTweets", include: [
+            { model: User },
+          ]
+        }
       ]
     })
       .then(user => {
@@ -159,7 +163,7 @@ const userController = {
         //特定使用者 - 跟隨 排序依日期
         user.Followings = user.Followings.map(f => f.toJSON());
         user.Followings = user.Followings.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        
+
         //特定使用者 - 喜歡的推文 排序依日期
         user.LikeTweets = user.LikeTweets.map(l => ({
           likeTweet: l.Like.toJSON(),
