@@ -57,7 +57,9 @@
                     <h2>{{ user.name }}</h2>
                     <h6>@{{ user.account }}</h6>
                     <p>{{ user.introduction }}</p>
-
+                    <div>
+                        <p>{{user.Followings.length}}個跟隨中 {{user.Followers.length}}位跟隨者</p>
+                    </div>
                 </div>
 
                 <nav>
