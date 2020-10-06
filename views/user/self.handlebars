@@ -2,8 +2,8 @@
 
   <div class="col-md-3 pl-0">
 
-{{>left}}
-
+    {{>left}}
+    {{>modal}}
   </div>
 
   <div class="col-md-9 pl-0 border-left">
@@ -16,23 +16,23 @@
           <img src="{{ user.avatar }}" alt="">
         </div>
         <button type="Edit" class="btn btn-light">
-          <a href="/user/self/edit">
-            編輯個人資料
-          </a>
+          <button type="button" class="button btn-edit-profile" data-toggle="modal"
+            data-target="#editModal">編輯個人資訊</button>
+
 
         </button>
         <h2>{{ user.name }}</h2>
         <h6>@{{ user.account }}</h6>
         <p>{{ user.introduction }}</p>
         <div class="row pl-3">
-            <a class="user-followings font-weight-bold" href="/user/{{user.id}}/following"
-              style="text-decoration: none; color:black">
-              {{users.dataValues.Followings.length}}個</a>
-            <p style="color:#7B7B7B">跟隨中</p>
-            <a class="user-folowers ml-3 font-weight-bold" href="/user/{{user.id}}/follower"
-              style="text-decoration: none; color:black">{{users.dataValues.Followers.length}}位</a>
-            <p style="color:#7B7B7B">跟隨者</p>
-          </div>
+          <a class="user-followings font-weight-bold" href="/user/{{user.id}}/following"
+            style="text-decoration: none; color:black">
+            {{users.dataValues.Followings.length}}個</a>
+          <p style="color:#7B7B7B">跟隨中</p>
+          <a class="user-folowers ml-3 font-weight-bold" href="/user/{{user.id}}/follower"
+            style="text-decoration: none; color:black">{{users.dataValues.Followers.length}}位</a>
+          <p style="color:#7B7B7B">跟隨者</p>
+        </div>
         {{!-- <p>{{ user.Followings.length}} <a href="/user/:id/following"> followings</a>   {{ user.Followers.length}} <a href="/user/:id/follower">followers</a></p> --}}
 
         <nav>
