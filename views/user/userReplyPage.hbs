@@ -94,8 +94,30 @@
               <span class="user-account">@{{this.Tweet.User.account}}．{{moment this.createdAt}}</span><br>
             </div>
             <div class="tweet-content-info">
-              <span class="tweet-content-description">{{this.Tweet.description}}</span><br><br>
+              <span class="tweet-content-description">{{this.Tweet.description}}</span><br>
             </div>
+
+            <div class="tweet-content-bottom" style="margin-top: 5px">
+              {{!-- reply icon --}}
+              <button type="button" class="button tweet-reply-link">
+                <i class="fas fa-cus-reply" aria-hidden="true"></i>{{this.Tweet.Replies.length}}
+              </button>
+              {{!-- like/unlike icon --}}
+              {{#if isLiked}}
+              <form action="/tweets/{{this.TweetId}}/unlike" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-filled-like"></i>{{this.Tweet.Likes.length}}
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.TweetId}}/like" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-like"></i>{{this.Tweet.Likes.length}}
+                </button>
+              </form>
+              {{/if}}
+            </div>
+
           </div>
         </div>
 
@@ -103,14 +125,14 @@
         <div class="reply-modal-tweet d-flex">
           <div class="tweet-content-left d-flex flex-column align-items-center">
             <a href="/users/{{this.UserId}}/tweets">
-              <img class="mt-2" {{#if ../user.avatar}}src={{../user.avatar}}{{/if}}
+              <img class="mt-2" {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
                 style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px; margin-left:15px">
             </a>
           </div>
           <div class="tweet-content-right">
             <div class="tweet-content-username">
-              <a href="/users/{{this.UserId}}/tweets" class="user-name">{{../user.name}}</a>
-              <span class="user-account">@{{../user.account}}．{{moment this.createdAt}}</span><br>
+              <a href="/users/{{this.UserId}}/tweets" class="user-name">{{../users.name}}</a>
+              <span class="user-account">@{{../users.account}}．{{moment this.createdAt}}</span><br>
             </div>
             <div class="tweet-content-info">
               <span class="tweet-content-description">{{this.comment}}</span><br><br>
