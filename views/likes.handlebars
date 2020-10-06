@@ -1,0 +1,34 @@
+<div class="row mt-3">
+
+  <div class="col-md-3 pl-0">
+
+    {{> left}}
+
+  </div>
+
+  <div class="col-md-6 px-3 border-left border-right">
+
+    {{> message}}
+
+    <div class="row ml-1 align-items-center">
+      <i class="fas fa-arrow-left fa-lg"></i>
+      <div class="ml-5">
+        <h4 class="m-0 font-weight-bold">{{users.name}}</h4>
+        <p class="followship-tweetsCount m-0">{{users.Tweets.length}}推文</p>
+      </div>
+    </div>
+
+    <div>
+
+    </div>
+
+
+
+  </div>
+
+  <div class="col-md-3">
+
+    {{> right}}
+
+  </div>
+</div>

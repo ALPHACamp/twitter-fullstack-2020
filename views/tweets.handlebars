@@ -68,11 +68,11 @@
               {{#if isLiked}}
               <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
                 <button type="submit" class="mt-4 mb-4" style="background: none;border: none;">
-                  <i class="far fa-heart"></i>
+                  <i class="fas fa-heart"></i>
                   {{else}}
                   <form action="/like/{{this.id}}" method="POST" style="display:inline; ">
                     <button type="submit" class="mt-4 mb-4" style="background: none;border: none;">
-                      <i class="fas fa-heart"></i>
+                      <i class="far fa-heart"></i>
                       {{/if}}
                       {{this.LikedUsers.length}}
                     </button>
