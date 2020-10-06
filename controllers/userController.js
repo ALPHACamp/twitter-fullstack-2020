@@ -107,7 +107,20 @@ const userController = {
         res.render('userTweets', { profile: user, tweets })
       })
   },
-
+  getUserLikes: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        //使用者Like過的所有推文
+        { model: Tweet, as: 'LikedTweets', include: [User] }
+      ]
+    })
+      .then((user) => {
+        user = {
+          ...user.dataValues,
+        }
+        res.render('likes', { profile: user })
+      })
+  },
   getSetting: async (req, res) => {
     const user = await User.findByPk(req.params.id)
     if (user.id === helpers.getUser(req).id) {

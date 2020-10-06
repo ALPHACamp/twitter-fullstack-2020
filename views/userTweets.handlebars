@@ -100,7 +100,7 @@
 			<a class="nav-link" href="#tweetlike" data-toggle="tab">喜歡的內容</a>
 		</li>
 	</ul>
-	<div class="tab-content"> 
+	<div class="tab-content">
 		{{!-- 推文 --}}
 		<div class="tab-pane active" id="tweets">
 		{{#each tweets}}
@@ -164,26 +164,7 @@
 		</div>
 		{{!-- 喜歡的內容 --}}
 		<div class="tab-pane" id="tweetlike">
-			{{#each profile.LikedTweets}}
-			<div class="card mb-3" style="max-width: 900px;">
-				<div class="row no-gutters">
-					<div class="col-md-4">
-					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
-					</div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h5 class="card-title">
-								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-								<small class="text-muted">{{moment this.createdAt }}</small>
-							</h5>
-							<p class="card-text">
-							{{this.description}}
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			{{/each}}
+			<iframe src="likes" width="900px" height="900px" frameborder="0" id="mainframe" ></iframe>
 		</div>
 	</div>
 </div>
@@ -260,6 +241,15 @@
     </div>
   </div>
   </div>
+</div>
+
+{{!-- test --}}
+<div class="modal fade" id="ajax" role="basic" aria-hidden="true">									
+		<div class="modal-dialog">
+			<div class="modal-content">
+				test
+			</div>
+	</div>
 </div>
 {{!-- 頁籤script --}}
 <script>
