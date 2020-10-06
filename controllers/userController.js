@@ -193,11 +193,13 @@ const userController = {
     })
       .then((user) => {
         const users = user.toJSON()
-        const isFollowed = users.Followers.map((d) => d.id).includes(helpers.getUser(req).id)
-        console.log(users)
+        const follower = user.Followers.map((data) => ({
+          ...data.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map((d) => d.id).includes(data.id)
+        }))
         return res.render('follower', {
           users,
-          isFollowed
+          Follower: follower
         });
       })
   },

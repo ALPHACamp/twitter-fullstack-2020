@@ -1222,6 +1222,7 @@ a:hover {
 
 .followship-right {
   margin-top: 10px;
+  width: 500px;
 }
 
 .followship-right a {
@@ -1245,7 +1246,6 @@ a:hover {
 }
 
 .right-top-name {
-  border: 1px solid gray;
   display: flex;
   flex-direction: column;
 }
