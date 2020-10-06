@@ -5,6 +5,8 @@
     </div>
   </nav>
 
+  {{> modal}}
+
   <div class="center-content d-flex" id="tweet-content">
     <div class="head  justify-content-between ">
       <a href="javascript:history.back()" style="color: black;">
@@ -78,37 +80,37 @@
       </div>
       <div class="tweet-all">
         {{#each users.Likes}}
-        <div class="tweet-content-box" onclick="location.href='/tweets/{{../this.id}}'">
+        <div class="tweet-content-box" onclick="location.href='/tweets/{{this.TweetId}}'">
           <div class="tweet-content-left">
-            <a href="/users/{{../this.id}}/tweets">
-              <img class="ml-2 mt-2" {{#if ../this.avatar}}src={{../this.avatar}}{{/if}}
+            <a href="/users/{{this.Tweet.UserId}}/tweets">
+              <img class="ml-2 mt-2" {{#if this.Tweet.User.avatar}}src={{this.Tweet.User.avatar}}{{/if}}
                 style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
             </a>
           </div>
           <div class="tweet-content-right">
             <div class="tweet-content-username">
-              <a href="/users/{{../user.id}}/tweets" class="user-name">fake{{../user.UserId}}</a>
-              <span class="user-account">@fake{{../users.LikedUsers}}．fake{{moment ../user.createdAt}}</span>
+              <a href="/users/{{this.Tweet.UserId}}/tweets" class="user-name">{{this.Tweet.User.name}}</a>
+              <span class="user-account">@{{this.Tweet.User.account}}．{{moment this.createdAt}}</span>
             </div>
             <div class="tweet-content-info">
-              <span class="tweet-content-description">fake{{this.LikedTweets.description}}</span><br>
+              <span class="tweet-content-description">{{this.Tweet.description}}</span><br>
             </div>
             <div class="tweet-content-bottom">
               {{!-- reply icon --}}
               <button type="button" class="button tweet-reply-link">
-                <i class="fas fa-cus-reply" aria-hidden="true"></i>10{{RepliesCount}}
+                <i class="fas fa-cus-reply" aria-hidden="true"></i>{{this.Tweet.Replies.length}}
               </button>
               {{!-- like/unlike icon --}}
               {{#if isLiked}}
               <form action="/tweets/{{this.id}}/unlike" method="POST">
                 <button type="submit" class="button tweet-like-link">
-                  <i class="fas fa-cus-filled-like"></i>
+                  <i class="fas fa-cus-filled-like"></i>{{this.Tweet.Likes.length}}
                 </button>
               </form>
               {{else}}
               <form action="/tweets/{{this.id}}/like" method="POST">
                 <button type="submit" class="button tweet-like-link">
-                  <i class="fas fa-cus-like"></i>5{{LikesCount}}
+                  <i class="fas fa-cus-like"></i>{{this.Tweet.Likes.length}}
                 </button>
               </form>
               {{/if}}
