@@ -15,13 +15,14 @@
           <h5 class="tweet-title">{{users.name}}</h5>
         </div>
       </a>
-      <div class="user-cover">
+      <div class="user-cover" style="top: -30px;background: #C4C4C4;width: 600px;height:200px;">
         <img src="{{users.cover}}" alt="{{users.cover}}">
       </div>
       <div class="tweet-content-box">
         <div class=" user-info-top">
           <a href="/users/{{users.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if users.avatar}}src={{users.avatar}}{{/if}}>
+            <img class="ml-2 mt-2" style="top: -30px;background: #C4C4C4;border-radius: 100%;"
+              {{#if users.avatar}}src={{users.avatar}}{{/if}}>
           </a>
         </div>
         <div class="tweet-content-right">
