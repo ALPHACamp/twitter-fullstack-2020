@@ -1,19 +1,29 @@
-<div class="row">
+<div class="jumbotron">
+  <h5 class="display-10">編輯個人資料</h5>
   <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
-    </div>
 
+
+
+    <a href="#">
+      <img src="{{user.background }}" style="background-size:cover; width: 250px;height: 150px;">
+    </a>
     <div class="form-group">
       <label for="background">封面圖片</label>
       <input type="file" class="form-control-file" id="background" name="background">
     </div>
+
+    <a href="#">
+      <img src="{{user.avatar }}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
+    </a>
     <div class="form-group">
-      <label for="avatar">大頭貼</label>
+      <label for="avatar"></label>
       <input type="file" class="form-control-file" id="avatar" name="avatar">
     </div>
 
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
+    </div>
 
 
 
@@ -27,4 +37,9 @@
 
 
   </form>
+
+
+
+
+
 </div>
