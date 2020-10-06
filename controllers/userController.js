@@ -132,7 +132,9 @@ const userController = {
         },
         { model: User, as: "Followings" },
         { model: User, as: "Followers" },
-        { model: Tweet, as: "LikeTweets" }
+        { model: Tweet, as: "LikeTweets", include: [ 
+          { model: User },
+        ]}
       ]
     })
       .then(user => {
@@ -150,23 +152,28 @@ const userController = {
           tweet: reply.Tweet.toJSON(),
         }))
         user.Replies = user.Replies.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        //特定使用者 - 跟隨者 排序依日期
-        user.Followers = user.Followers.map(f => f.Followship.toJSON());
+        //特定使用者 - 被追蹤 排序依日期
+        user.Followers = user.Followers.map(f => f.toJSON());
         user.Followers = user.Followers.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        //特定使用者 - 追蹤者 排序依日期
-        user.Followings = user.Followings.map(f => f.Followship.toJSON());
-        user.Followings = user.Followings.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        //特定使用者 - 喜歡的推文 排序依日期
-        user.LikeTweets = user.LikeTweets.map(l => l.Like.toJSON());
-        user.LikeTweets = user.LikeTweets.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
+        //特定使用者 - 跟隨 排序依日期
+        user.Followings = user.Followings.map(f => f.toJSON());
+        user.Followings = user.Followings.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+        
+        //特定使用者 - 喜歡的推文 排序依日期
+        user.LikeTweets = user.LikeTweets.map(l => ({
+          likeTweet: l.Like.toJSON(),
+          description: l.dataValues.description,
+          user: l.User.toJSON(),
+        }));
+        user.LikeTweets = user.LikeTweets.sort((a, b) => b.likeTweet.createdAt.getTime() - a.likeTweet.createdAt.getTime());
         res.render("user/other", {
           user,
           tweets: user.Tweets,
           replies: user.Replies,
           followers: user.Followers,
           followings: user.Followings,
-          like: user.LikeTweets
+          likes: user.LikeTweets
         });
       })
   }
