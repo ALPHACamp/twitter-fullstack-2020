@@ -286,6 +286,7 @@ a:hover {
 }
 
 .tweets-content {
+  /* border: 1px solid gray; */
   display: flex;
   border-radius: 0px !important;
   border-bottom: 0.5px solid #e6ecf0;
@@ -389,25 +390,31 @@ a:hover {
   align-items: center !important;
 }
 
-/* 
-.tweets-content .right-item .footer .like-item button {
-  color: #657786;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: center;
+/* 推文與回覆 */
+.reply-content {
+  display: flex;
+  border-radius: 0px !important;
+  border-left: 0.5px solid #e6ecf0;
+  width: 500px;
 }
 
-.tweets-content .right-item .footer .like-item i {
-  width: 14px;
-  height: 14px;
-  color: #657786;
-  font-weight: 500;
-} */
+.reply-content .left-item {
+  margin-left: 15px;
+  margin-top: 13px;
+} 
+
+.reply-content .right-item {
+  width: 450px;
+  margin-left: 10px;
+}
+
+.reply-content .right-item .body {
+  width: 420px;
+}
 
 /* 單一畫面 */
 .tweet-content {
   border: 1px solid #e6ecf0;
-  /* border:1px solid gray; */
   width: 600px;
 }
 
@@ -1047,6 +1054,11 @@ a:hover {
   top: 95px;
   border: none !important;
   background-color: none !important;
+}
+
+.edit-item-cover input,
+.edit-item-avatar input{
+  display: none;
 }
 
 .edit-item-cover label:hover,

@@ -117,15 +117,9 @@
                     {{/if}}
                   </form>
               </div>
-
-
-
             </div>
             {{#each this.replies}}
-            <div class="reply-content" style="display: flex;
-              border-radius: 0px !important;
-              border-left: 0.5px solid #e6ecf0;
-              width: 600px;">
+            <div class="reply-content">
               <div class="left-item">
                 <a href="/users/{{this.User.id}}">
                   <img src="{{this.User.avatar}}" class="rounded-circle"
@@ -146,54 +140,39 @@
                 <div class="body">
                   {{subText this.comment 100}}
                 </div>
-              </div>
-              <div class="footer">
-                <div class="footer-item reply-item">
-                  <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                    <i class="icon-reply"></i>
-                  </button>
-                  <div class="item-count reply-count">{{this.followingByReply.length}}</div>
-                </div>
-
-                <div class="footer-item like-item">
-                  {{#if this.isLikeBySelf}}
-                  <form action="/tweets/{{this.id}}/unlike" method="post" class="form-like">
-                    <button type="submit" class="btn">
-                      <i class="like icon-like-fill"></i>
+                <div class="footer">
+                  <div class="footer-item reply-item">
+                    <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
+                      <i class="icon-reply"></i>
                     </button>
-                    <div class="like-item-count item-count">{{this.Likes.length}}</div>
-                    {{else}}
-                    <form action="/tweets/{{this.id}}/like" method="post" class="form-like">
-                      <button type="button" class="btn">
-                        <i class="icon-like"></i>
+                    <div class="item-count reply-count">{{this.followingByReply.length}}</div>
+                  </div>
+
+                  <div class="footer-item like-item">
+                    {{#if this.isLikeBySelf}}
+                    <form action="/tweets/{{this.id}}/unlike" method="post" class="form-like">
+                      <button type="submit" class="btn">
+                        <i class="like icon-like-fill"></i>
                       </button>
-                      <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
-                      {{/if}}
-                    </form>
+                      <div class="like-item-count item-count">{{this.Likes.length}}</div>
+                      {{else}}
+                      <form action="/tweets/{{this.id}}/like" method="post" class="form-like">
+                        <button type="button" class="btn">
+                          <i class="icon-like"></i>
+                        </button>
+                        <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+                        {{/if}}
+                      </form>
+                  </div>
                 </div>
               </div>
-
-
-
             </div>
             {{/each}}
-
-
-
-
           </div>
         </div>
       </div>
-
-
-
-
-
       {{/each}}
     </div>
-
-
-
   </div>
 
   {{> right-column}}
