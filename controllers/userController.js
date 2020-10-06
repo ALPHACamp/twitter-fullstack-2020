@@ -62,7 +62,10 @@ const userController = {
                 res.redirect(`/users/${helpers.getUser(req).id}/setting`);
               })
               .catch(() => {
-                req.flash('errorScrollingMessage', '系統異常，請重新操作 #U103~');
+                req.flash(
+                  'errorScrollingMessage',
+                  '系統異常，請重新操作 #U103~',
+                );
                 return res.redirect(
                   `/users/${helpers.getUser(req).id}/setting`,
                 );
@@ -149,9 +152,9 @@ const userController = {
       const followings = helpers.getUser(req).Followings.map((u) => u.id);
       const likes = helpers.getUser(req).Likes
         ? helpers
-          .getUser(req)
-          .Likes.filter((u) => u.Position === 'tweet')
-          .map((t) => t.PositionId)
+            .getUser(req)
+            .Likes.filter((u) => u.Position === 'tweet')
+            .map((t) => t.PositionId)
         : [];
 
       //console.log(likes);
@@ -183,6 +186,54 @@ const userController = {
     //     { model: User, as: 'Followings' },
     //   ],
     // });
+  },
+  getRepliesPage: (req, res) => {
+    let UserId = req.params.id;
+    let selfId = Number(helpers.getUser(req).id);
+    return User.findByPk(UserId, {
+      include: [
+        Tweet,
+        {
+          model: Reply,
+          include: [
+            { model: Tweet, include: [Like, User, Reply] },
+            { model: Reply, as: 'followingByReply' },
+            Like,
+            User,
+          ],
+          order: [['Tweets', 'updatedAt', 'DESC']],
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+    }).then((user) => {
+      let replies = user.toJSON().Replies;
+      let tweets = user.toJSON().Replies.map((r) => r.Tweet);
+      tweets = tweets.reduce((arr, value) => {
+        if (arr.findIndex((v) => v.id === value.id) === -1) {
+          arr.push(value);
+        }
+        return arr;
+      }, []);
+
+      tweets.forEach((t) => {
+        const reply = [];
+        replies.forEach((r) => {
+          r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
+          if (r.Tweet.id === t.id) {
+            reply.push(r);
+          }
+        });
+        t.replies = Array.from(reply);
+        t.isLikeBySelf = t.Likes.map((l) => l.UserId).includes(selfId);
+      });
+
+      return res.render('user-replies', {
+        user: helpers.getUser(req),
+        visitUser: user,
+        tweets,
+      });
+    });
   },
   getFollowersPage: (req, res) => {
     let userId = req.params.id
