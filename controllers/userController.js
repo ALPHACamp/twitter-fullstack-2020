@@ -184,7 +184,22 @@ const userController = {
     // });
   },
   getFollowersPage: (req, res) => {
-    return res.render('follower');
+    let userId = req.params.id
+    User.findByPk(userId, {
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' }
+      ]
+    })
+      .then((user) => {
+        const users = user.toJSON()
+        const isFollowed = users.Followers.map((d) => d.id).includes(helpers.getUser(req).id)
+        console.log(users)
+        return res.render('follower', {
+          users,
+          isFollowed
+        });
+      })
   },
   getFollowingsPage: (req, res) => {
     return res.render('following');

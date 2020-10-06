@@ -4,16 +4,16 @@
   <div class="follower-center">
     <div class="follower-title">
       <div class="follower-title-left">
-        <a href="#">
+        <a href="/users/{{users.id}}/tweets">
           <i class="icon-arrow"></i>
         </a>
       </div>
       <div class="follower-title-right">
         <div class="follower-title-top">
-          nono Lin
+          {{users.name}}
         </div>
         <div class="follower-title-bottom">
-          25 推文
+          {{users.Tweets.length}} 則推文
         </div>
       </div>
     </div>
@@ -21,22 +21,23 @@
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="follow-nav navbar-nav mr-auto">
-          <a class="nav-link active" href="#">追蹤者</a>
-          <a class="nav-link" href="#">正在追蹤</a>
+          <a class="nav-link active" href="/users/{{users.id}}/followers">追蹤者</a>
+          <a class="nav-link" href="/users/{{users.id}}/followings">正在追蹤</a>
       </div>
     </nav>
     <div class="followship-lists">
+      {{#each users.Followers}}
       <div class="followship-content">
         <div class="followship-left">
-          <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
+          <img src="{{this.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
         </div>
         <div class="followship-right">
           <div class="followship-right-top">
             <div class="right-top-name">
-              <a href="">
-                nono
+              <a href="/users/{{this.id}}/tweets">
+                {{this.name}}
               </a>
-              <span>@nonolin</span>
+              <span>@{{this.account}}</span>
             </div>
             <div class="right-top-button">
               <form action="">
@@ -44,13 +45,10 @@
               </form>
             </div>
           </div>
-          <p>
-            Needless to say, I keep her in check
-            She was a bad bad, nevertheless (yeah)
-            Needless to say, I keep her in check</p>
+          <p>{{this.introduction}}</p>
         </div>
       </div>
-      <div class="followship-content">
+      {{!-- <div class="followship-content">
         <div class="followship-left">
           <img src="https://i.imgur.com/mP4m8UI.jpg" class="rounded-circle" style="width: 50px;height:50px;">
         </div>
@@ -73,7 +71,8 @@
             She was a bad bad, nevertheless (yeah)
             Needless to say, I keep her in check</p>
         </div>
-      </div>
+      </div> --}}
+      {{/each}}
     </div>
   </div>
   {{!-- right-column --}}

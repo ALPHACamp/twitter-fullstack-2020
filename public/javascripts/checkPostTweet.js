@@ -7,10 +7,6 @@ const mainTweetTextBtn = document.querySelector('#mainTweetTextBtn')
 const mainReplyBtn = document.querySelector('#mainReplyBtn')
 const mainReplyText = document.querySelector('#mainReplyText')
 
-console.log(tweetText)
-console.log(mainReplyText)
-console.log(mainReplyBtn)
-
 if (tweetText)
   listenText(tweetText, tweetTextBtn)
 
