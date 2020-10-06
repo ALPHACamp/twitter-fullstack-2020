@@ -120,6 +120,19 @@ const userController = {
           })
       })
   },
+  getFollower: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followers' }]
+    })
+      .then(user => {
+        const followerList = user.Followers.map(user => ({
+          ...user.dataValues,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        }))
+        return res.render('follower', { user, followerList })
+      })
+  },
   //austin
   otherUser: (req, res) => {
     return User.findByPk(req.params.id, {
