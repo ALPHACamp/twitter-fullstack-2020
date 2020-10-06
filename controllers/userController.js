@@ -97,37 +97,38 @@ const userController = {
       include: [Tweet,
         { model: User, as: 'Followers' }]
     })
-      .then(user => {
-        followerList = user.Followers.map(user => ({
+      .then(users => {
+        followerList = users.Followers.map(user => ({
           ...user.dataValues,
+          introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        console.log(user.toJSON())
-        console.log('-----*-*-***********************-----------')
-        console.log(followerList)
-        return res.render('follower', { user: user.toJSON(), followerList })
+        followerList = followerList.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        return res.render('follower', { users: users.toJSON(), followerList })
       })
   },
-
 
   getFollowing: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
-        { model: User, as: 'Followings' }]
+        { model: User, as: 'Followings' }],
     })
-      .then(user => {
-        followingList = user.Followings.map(user => ({
+      .then(users => {
+        followingList = users.Followings.map(user => ({
           ...user.dataValues,
+          introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        return res.render('following', { user: user.toJSON(), followingList })
+        console.log(followingList)
+        followingList = followingList.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        return res.render('following', { users: users.toJSON(), followingList })
       })
   },
 
   getUser: (req, res) => {
     User.findByPk(req.params.id, {
       include: [
-        Reply,
+        { model: Reply, include: [Tweet] },
         { model: Tweet, as: 'LikedUsers' },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
@@ -145,6 +146,10 @@ const userController = {
   },
 
   addFollowing: (req, res) => {
+    if (helpers.getUser(req).id === Number(req.params.id)) {
+      res.flash('error_messages', '請勿追蹤自己')
+      return res.redirect('back')
+    }
     return Followship.create({
       followerId: helpers.getUser(req).id,
       followingId: req.params.userId
@@ -203,12 +208,12 @@ const userController = {
       include: [{ model: User, as: 'Followers' }]
     })
       .then(users => {
-        console.log("-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*", users)
         users = users.map(user => ({
           ...user.dataValues,
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
           FollowersCount: user.Followers.length
         }))
+        // users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.role))
         users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
         res.locals.users = users
         return next()

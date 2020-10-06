@@ -34,20 +34,25 @@ font-size: large;
 }
 
 .list-group .right-zone-header {
-  background-color: aquamarine;
-  border: none;
+  background-color:	#F5F5F5 ;
+  border-top: 1px solid #F5F5F5;
+  border-right: 1px solid #F5F5F5;
+  border-left: 1px solid #F5F5F5;
   border-radius: 20px 20px 0 0 !important ;
 }
 
 .list-group .right-zone-body{
-  background-color: gray;
-  border: none;
+  border-right: 1px solid #F5F5F5;
+  border-left: 1px solid #F5F5F5;
+  background-color:	#F5F5F5;
 }
 
 .list-group .right-zone-footer {
-  background-color: blanchedalmond;
-  border: none;
-    border-radius: 0 0 20px 20px !important;
+  background-color:	#F5F5F5;
+  border-bottom: 1px solid #F5F5F5;
+  border-right: 1px solid #F5F5F5;
+  border-left: 1px solid #F5F5F5;
+  border-radius: 0 0 20px 20px !important;
 
 }
 
