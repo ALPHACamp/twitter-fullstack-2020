@@ -17,11 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "TweetId",
       as: "ReplyUsers"
     });
-    Tweet.belongsToMany(models.User, {
-      through: models.Favorite,
-      foreignKey: 'TweetId',
-      as: 'FavoritedUsers'
-    });
+
   };
   return Tweet;
 };

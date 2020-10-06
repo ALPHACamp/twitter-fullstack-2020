@@ -1,53 +1,178 @@
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link" href="/tweets">首頁</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" href="/user/self">個人資料</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link " href="/setting">設定</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="/user/other/{{ this.UserId }}">貼文</a>
-  </li>
-</ul>
-<br />
-
 <div class="row">
 
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
+  <div class="col-md-3 pl-0">
+
+    <div class="left-zone">
+      <div class="AC-icon">
+        <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+          style="width:75px">
+      </div>
+
+      </br>
+      </br>
+
+      <div class="home" name="home">
+        <a class="left-zone-items" href="/tweets" style="text-decoration: none"><i class="fas fa-home"></i>&ensp;首頁</a>
+      </div>
+
+      </br>
+      </br>
+
+      <div class="profile" name="profile">
+        <a class="left-zone-items" href="/user/self" style="text-decoration: none"><i
+            class="far fa-user"></i>&ensp;個人資料</a>
+      </div>
+
+      </br>
+      </br>
+
+      <div class="setting" name="setting">
+        <a class="left-zone-items" href="/setting" style="text-decoration: none"><i class="fas fa-cog"></i>&ensp;設定</a>
+      </div>
+
+      </br>
+      </br>
+
+      <form action="/user/tweets">
+        <button type="submit" class="left-zone-btn">
+          推文</button>
+      </form>
+
+
+      <a href="/logout" class="logout" style="text-decoration: none"><i class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+
+    </div>
+
   </div>
 
 
 
-  <div class="col-md-4">
 
-    <img class="img-responsive center-block" src="{{user.background}}"
-      style="width: 250px;margin-top: 25px;margin-bottom: 25px;">封面圖片
-  </div>
+  <div class="col-md-9 pl-0 border-left">
+    <div class="main">
+      <div class="header">
+        <div class="background">
+          <img src="{{ user.background }}" alt="封面圖片">
+        </div>
+        <div class="avatar">
+          <img src="{{ user.avatar }}" alt="">
+        </div>
+        <button type="Edit" class="btn btn-light">
+          <a href="/user/self/edit">
+            編輯個人資料
+          </a>
+
+        </button>
+        <h2>{{ user.name }}</h2>
+        <h6>@{{ user.account }}</h6>
+        <p>{{ user.introduction }}</p>
+
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-tweets" role="tab"
+              aria-controls="nav-home" aria-selected="true">推文</a>
+            <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-replies" role="tab"
+              aria-controls="nav-profile" aria-selected="false">推文與回覆</a>
+            <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-likes" role="tab"
+              aria-controls="nav-contact" aria-selected="false">喜歡</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="col">
+              <div class="tweet-list">
+                {{#each tweets}}
+                <div class="tweet">
+                  <div class="tweet-item-left d-flex align-items-stretch">
+                    <div class="tweet-left d-flex align-items-stretch">
+                      <a href="#">
+                        <img src="{{ this.userAvatar }}" class="rounded-circle"
+                          style="background-size:cover; width: 50px;height: 50px;">
+                      </a>
+                    </div>
+                    <div class="tweet-item-right  ml-3">
+                      <div class="tweet-item-title">
+                        <span class="mt-1"><a href="#">{{ this.userName }}</a></span>
+                        <span class="user-account">
+                          {{ this.userAccount }}．{{moment this.createdAt}}
+                        </span>
+                      </div>
+                      <div class="tweet-text">
+                        {{this.description}}
+                      </div>
+                      <div class="tweet-footer ml-5">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="mt-4 mb-4" data-toggle="modal" data-target="#replyModal"
+                          style="background: none;border: none;">
+                          <i class="far fa-comment"></i> {{this.Replies.length}}
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                          aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+
+                              </div>
+                              <div class="modal-title">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                                <img src="{{../user.dataValues.avatar}}" class="rounded-circle"
+                                  style="background-size:cover; width: 50px;height: 50px;">
+                                <span class="mt-1"><a href="#">{{../user.dataValues.name}}</a></span>
+                                <span class="user-account">
+                                  {{../user.dataValues.account}}．{{moment ../user.dataValues.createdAt}}
+                                </span>
+                              </div>
+                              <div class="modal-body" class="d-flex">
+                                <div class="tweet-text d-flex align-items-stretch">
+                                  {{../user.dataValues.description}}
+                                </div>
+                                <form method="POST" action="/tweets/{{../user.dataValues.id}}/replies">
+                                  <textarea name="comment" cols="55" rows="5"
+                                    style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+                                    placeholder="....."></textarea>
+                                  <button type="submit"
+                                    style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+                                    <span style="color: #FFFFFF;">回覆</span></button>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 
 
-  <div class="col-md-4">
-
-    <img class="img-responsive center-block" src="{{user.avatar}}"
-      style="width: 250px;margin-top: 25px;margin-bottom: 25px;">大頭貼
-  </div>
-
-  <div class="mb-3">
-    <label for="profile">profile{{user.profile}}</label>
-
-
-
-
-    <button type="Edit" class="btn btn-light">
-      <a href="/user/self/edit">
-        Edit
-      </a>
-
-    </button>
+                        {{!-- add like button --}}
+                        {{#if this.isLiked }}
+                        <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
+                          <button type="submit" class="button reply-link mt-4 mb-4"
+                            style="background: red;border: none;">
+                            <i class="far fa-heart"></i></form>
+                        {{else}}
+                        <form action="/like/{{this.id}}" method="POST" style="display:inline;">
+                          <button type="submit" class="button reply-link mt-4 mb-4"
+                            style="background: none;border: none;">
+                            <i class="far fa-heart"></i>
+                        </form>
+                        {{/if}}
+                        {{this.LikeUsers.length}}
+                        </button>
+                        </form>
 
 
-  </div>
+                      </div>
+                    </div>
+                  </div>
+                  {{/each}}
+
+
+
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+            <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+          </div>
+        </div>
+      </div>

@@ -4,7 +4,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
-const Favorite = db.Favorite
+
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -19,15 +19,14 @@ const tweetController = {
       const data = tweets.map(t => ({
         ...t.dataValues,
         description: t.dataValues.description,
-        isFavorited: req.user.FavoritedTweets.map(d => d.id).includes(t.id),
         isLiked: req.user.LikeTweets.map(d => d.id).includes(t.id),
       }))
       return User.findOne({ where: { id: req.user.id } })
-      .then(user => {
-        return res.render('tweets', { tweets: data, user })
-      })
-  })
-  .catch(error => console.log(error))
+        .then(user => {
+          return res.render('tweets', { tweets: data, user })
+        })
+    })
+      .catch(error => console.log(error))
   },
 
   getTweet: (req, res) => {
@@ -35,22 +34,24 @@ const tweetController = {
       include: [
         User,
         { model: Reply, include: [User] },
-        { model: User, as: 'FavoritedUsers' },
-        { model: User, as: 'LikeUsers' }
+        { model: User, as: 'LikeUsers' },
       ],
       order: [['Replies', 'createdAt', 'DESC']]
     }).then(tweet => {
-      const isFavorited = tweet.FavoritedUsers.map(user => user.id).includes(req.user.id)
       const isLiked = tweet.LikeUsers.map(user => user.id).includes(req.user.id)
+      return res.render('tweet', {
+        tweet,
+        isLiked: isLiked,
+      })
 
-      return User.findOne({ where: { id: req.user.id } })
-        .then(user => {
-          console.log(user)
-          return res.render('tweet', {
-            tweet,
-            isLiked
-          })
-        })
+      // return User.findOne({ where: { id: req.user.id } })
+      // .then(user => {
+      //   console.log(user)
+      //   return res.render('tweet', {
+      //     tweet,
+      //     isLiked
+      //   })
+      // })
     })
       .catch(error => console.log(error))
   },
@@ -132,19 +133,5 @@ const tweetController = {
       })
   },
 
-  removeFavorite: (req, res) => {
-    return Favorite.findOne({
-      where: {
-        UserId: req.user.id,
-        TweetId: req.params.tweetId
-      }
-    })
-      .then((favorite) => {
-        favorite.destroy()
-          .then((tweet) => {
-            return res.redirect('back')
-          })
-      })
-  }
 }
 module.exports = tweetController

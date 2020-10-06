@@ -10,22 +10,9 @@
                         <img src="{{ user.avatar }}" alt="">
                     </div>
                     <h2>{{ user.name }}</h2>
-                    <h5>{{ user.account }}</h5>
+                    <h6>@{{ user.account }}</h6>
                     <p>{{ user.introduction }}</p>
-                    {{#if isFavorited }}
-                    <form action="/favorite/{{user.id}}?_method=DELETE" method="POST" style="display: contents;">
-                        <button type="submit" class="btn btn-danger">移除最愛</button></form>
-                    {{else}}
-                    <form action="/favorite/{{user.id}}" method="POST" style="display: contents;"><button type="submit"
-                            class="btn btn-primary">加到最愛</button></form>
-                    {{/if}}
-                    {{#if isLiked }}
-                    <form action="/like/{{user.id}}?_method=DELETE" method="POST"><button type="submit"
-                            class="btn btn-danger">Unlike</button></form>
-                    {{else}}
-                    <form action="/like/{{user.id}}" method="POST"><button type="submit" class="btn btn-primary">Like</button>
-                    </form>
-                    {{/if}}
+
                 </div>
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -38,7 +25,8 @@
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel"
+                        aria-labelledby="nav-home-tab">
                         <div class="col">
                             <div class="tweet-list">
                                 {{#each tweets}}
@@ -60,129 +48,206 @@
                                             <div class="tweet-text">
                                                 {{this.description}}
                                             </div>
+                                            <div class="tweet-footer ml-5">
+                                                <!-- Button trigger modal -->
+                                                <button type="button" class="mt-4 mb-4" data-toggle="modal"
+                                                    data-target="#replyModal" style="background: none;border: none;">
+                                                    <i class="far fa-comment"></i> {{this.Replies.length}}
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="replyModal" tabindex="-1"
+                                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+
+                                                            </div>
+                                                            <div class="modal-title">
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                <img src="{{../user.dataValues.avatar}}"
+                                                                    class="rounded-circle"
+                                                                    style="background-size:cover; width: 50px;height: 50px;">
+                                                                <span class="mt-1"><a
+                                                                        href="#">{{../user.dataValues.name}}</a></span>
+                                                                <span class="user-account">
+                                                                    {{../user.dataValues.account}}．{{moment ../user.dataValues.createdAt}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="modal-body" class="d-flex">
+                                                                <div class="tweet-text d-flex align-items-stretch">
+                                                                    {{../user.dataValues.description}}
+                                                                </div>
+                                                                <form method="POST"
+                                                                    action="/tweets/{{../user.dataValues.id}}/replies">
+                                                                    <textarea name="comment" cols="55" rows="5"
+                                                                        style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+                                                                        placeholder="....."></textarea>
+                                                                    <button type="submit"
+                                                                        style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+                                                                        <span style="color: #FFFFFF;">回覆</span></button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                {{!-- add like button --}}
+                                                {{#if this.isLiked }}
+                                                <form action="/like/{{this.id}}?_method=DELETE" method="POST"
+                                                    style="display:inline;">
+                                                    <button type="submit" class="button reply-link mt-4 mb-4"
+                                                        style="background: red;border: none;">
+                                                        <i class="far fa-heart"></i></form>
+                                                {{else}}
+                                                <form action="/like/{{this.id}}" method="POST" style="display:inline;">
+                                                    <button type="submit" class="button reply-link mt-4 mb-4"
+                                                        style="background: none;border: none;">
+                                                        <i class="far fa-heart"></i>
+                                                </form>
+                                                {{/if}}
+                                                {{this.LikeUsers.length}}
+                                                </button>
+                                                </form>
+
+                                            </div>
+
                                         </div>
                                     </div>
+                                    {{/each}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">
-                        <div class="col">
-                            <div class="tweet-list">
-                                {{#each replies}}
-                                <div class="tweet">
-                                    <div class="tweet-item-left d-flex align-items-stretch">
-                                        <div class="tweet-left d-flex align-items-stretch">
-                                            <a href="/user/other/{{ this.tweet.User.id }}">
-                                                <img src="{{ this.tweet.User.avatar }}" class="rounded-circle"
-                                                    style="background-size:cover; width: 50px;height: 50px;">
-                                            </a>
-                                        </div>
-                                        <div class="tweet-item-right  ml-3">
-                                            <div class="tweet-item-title">
-                                                <span class="mt-1"><a href="/user/other/{{ this.tweet.User.id }}">{{ this.tweet.User.name }}</a></span>
-                                                <span class="user-account">
-                                                    {{ this.tweet.User.account }}．{{moment this.createdAt}}
-                                                </span>
+                        <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">
+                            <div class="col">
+                                <div class="tweet-list">
+                                    {{#each replies}}
+                                    <div class="tweet">
+                                        <div class="tweet-item-left d-flex align-items-stretch">
+                                            <div class="tweet-left d-flex align-items-stretch">
+                                                <a href="/user/other/{{ this.tweet.User.id }}">
+                                                    <img src="{{ this.tweet.User.avatar }}" class="rounded-circle"
+                                                        style="background-size:cover; width: 50px;height: 50px;">
+                                                </a>
                                             </div>
-                                            <div class="tweet-text">
-                                                {{ this.tweet.description }}
+                                            <div class="tweet-item-right  ml-3">
+                                                <div class="tweet-item-title">
+                                                    <span class="mt-1"><a
+                                                            href="/user/other/{{ this.tweet.User.id }}">{{ this.tweet.User.name }}</a></span>
+                                                    <span class="user-account">
+                                                        {{ this.tweet.User.account }}．{{moment this.createdAt}}
+                                                    </span>
+                                                </div>
+                                                <div class="tweet-text">
+                                                    {{ this.tweet.description }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    {{/each}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        <div class="col">
-                            <div class="tweet-list">
-                                {{#each likes}}
-                                <div class="tweet">
-                                    <div class="tweet-item-left d-flex align-items-stretch">
-                                        <div class="tweet-left d-flex align-items-stretch">
-                                            <a href="/user/other/{{ this.user.id }}">
-                                                <img src="{{ this.user.avatar }}" class="rounded-circle"
-                                                    style="background-size:cover; width: 50px;height: 50px;">
-                                            </a>
-                                        </div>
-                                        <div class="tweet-item-right  ml-3">
-                                            <div class="tweet-item-title">
-                                                <span class="mt-1"><a href="/user/other/{{ this.user.id }}">{{ this.user.name }}</a></span>
-                                                <span class="user-account">
-                                                    {{ this.user.account }}．{{moment this.likeTweet.createdAt}}
-                                                </span>
+                        <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">
+                            <div class="col">
+                                <div class="tweet-list">
+                                    {{#each likes}}
+                                    <div class="tweet">
+                                        <div class="tweet-item-left d-flex align-items-stretch">
+                                            <div class="tweet-left d-flex align-items-stretch">
+                                                <a href="/user/other/{{ this.user.id }}">
+                                                    <img src="{{ this.user.avatar }}" class="rounded-circle"
+                                                        style="background-size:cover; width: 50px;height: 50px;">
+                                                </a>
                                             </div>
-                                            <div class="tweet-text">
-                                                {{ this.description }}
+                                            <div class="tweet-item-right  ml-3">
+                                                <div class="tweet-item-title">
+                                                    <span class="mt-1"><a
+                                                            href="/user/other/{{ this.user.id }}">{{ this.user.name }}</a></span>
+                                                    <span class="user-account">
+                                                        {{ this.user.account }}．{{moment this.likeTweet.createdAt}}
+                                                    </span>
+                                                </div>
+                                                <div class="tweet-text">
+                                                    {{ this.description }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    {{/each}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <h3>誰在追蹤您</h3>
-            <div class="col">
-                <div class="tweet-list">
-                    {{#each followers}}
-                    <div class="tweet">
-                        <div class="tweet-item-left d-flex align-items-stretch">
-                            <div class="tweet-left d-flex align-items-stretch">
-                                <a href="/user/other/{{ this.id }}">
-                                    <img src="{{ this.avatar }}" class="rounded-circle"
-                                        style="background-size:cover; width: 50px;height: 50px;">
-                                </a>
-                            </div>
-                            <div class="tweet-item-right  ml-3">
-                                <div class="tweet-item-title">
-                                    <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
+            <div class="col-md-4">
+                <h3>誰在追蹤您</h3>
+                <div class="col">
+                    <div class="tweet-list">
+                        {{#each followers}}
+                        <div class="tweet">
+                            <div class="tweet-item-left d-flex align-items-stretch">
+                                <div class="tweet-left d-flex align-items-stretch">
+                                    <a href="/user/other/{{ this.id }}">
+                                        <img src="{{ this.avatar }}" class="rounded-circle"
+                                            style="background-size:cover; width: 50px;height: 50px;">
+                                    </a>
                                 </div>
-                                <div class="tweet-text">
-                                    <span class="user-account">
-                                        {{ this.account }}
-                                    </span>                               
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
-            </div>
-            <h3>追蹤誰</h3>
-            <div class="col">
-                <div class="tweet-list">
-                    {{#each followings}}
-                    <div class="tweet">
-                        <div class="tweet-item-left d-flex align-items-stretch">
-                            <div class="tweet-left d-flex align-items-stretch">
-                                <a href="/user/other/{{ this.id }}">
-                                    <img src="{{ this.avatar }}" class="rounded-circle"
-                                        style="background-size:cover; width: 50px;height: 50px;">
-                                </a>
-                            </div>
-                            <div class="tweet-item-right  ml-3">
-                                <div class="tweet-item-title">
-                                    <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
-                                </div>
-                                <div class="tweet-text">
-                                    <span class="user-account">
-                                        {{ this.account }}
-                                    </span>                               
+                                <div class="tweet-item-right  ml-3">
+                                    <div class="tweet-item-title">
+                                        <span class="mt-1"><a
+                                                href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
+                                    </div>
+                                    <div class="tweet-text">
+                                        <span class="user-account">
+                                            {{ this.account }}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        {{/each}}
                     </div>
-                    {{/each}}
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <h3>追蹤誰</h3>
+                <div class="col">
+                    <div class="tweet-list">
+                        {{#each followings}}
+                        <div class="tweet">
+                            <div class="tweet-item-left d-flex align-items-stretch">
+                                <div class="tweet-left d-flex align-items-stretch">
+                                    <a href="/user/other/{{ this.id }}">
+                                        <img src="{{ this.avatar }}" class="rounded-circle"
+                                            style="background-size:cover; width: 50px;height: 50px;">
+                                    </a>
+                                </div>
+                                <div class="tweet-item-right  ml-3">
+                                    <div class="tweet-item-title">
+                                        <span class="mt-1"><a
+                                                href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
+                                    </div>
+                                    <div class="tweet-text">
+                                        <span class="user-account">
+                                            {{ this.account }}
+                                        </span>
+                                    </div>
+                                </div>
+                                {{/each}}
+
+
+
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-replies" role="tabpanel"
+                                aria-labelledby="nav-profile-tab">
+                                ...</div>
+                            <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">
+                                ...
+                            </div>
+                        </div>
+                    </div>
+                </div>
