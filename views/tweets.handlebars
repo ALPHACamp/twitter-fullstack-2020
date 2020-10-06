@@ -16,12 +16,12 @@
       <div class="body">
         <div class="body-avatar d-flex align-items-stretch">
           <div class="right">
-            <img src="{{user.dataValues.avatar}}" class="rounded-circle"
+            <img src="{{users.dataValues.avatar}}" class="rounded-circle"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </div>
 
           <div class="left" class="d-flex">
-            <form method="POST" action="/tweets/{{user.dataValues.id}}">
+            <form method="POST" action="/tweets/{{users.dataValues.id}}">
               <textarea name="description" cols="55" rows="5"
                 style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
                 placeholder="有什麼新鮮事"></textarea>

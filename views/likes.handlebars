@@ -58,30 +58,31 @@
       </a>
     </div>
 
-    {{#each likes}}
+    {{#each like}}
     <div class="row justify-content-between">
       <div class="row col-11">
         <div class="avatar mt-2 ml-4">
-          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle" style="width: 60px">
+          <img src="{{this.Tweet.User.dataValues.avatar}}" alt=" image" class="border rounded-circle"
+            style="width: 60px">
         </div>
         <div class="information d-flex flex-column mt-2 col">
           <div class="d-flex">
             <div class="name" name="name">
-              <a><strong>{{this.User.dataValues.name}}&ensp;</strong></a>
+              <a><strong>{{this.Tweet.User.dataValues.name}}&ensp;</strong></a>
             </div>
             <div class="account" name="account">
-              <a>{{this.User.dataValues.account}} </a>
+              <a>{{this.Tweet.User.dataValues.account}} </a>
             </div>
             <div class="createdAt" name="createdAt">
               &ensp;·&ensp;{{moment this.dataValues.createdAt}}
             </div>
           </div>
           <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
-            {{this.dataValues.description}}
+            {{this.Tweet.dataValues.description}}
           </div>
           <div>
-            <i class="far fa-comment" style="color: #7B7B7B">&ensp;{{this.dataValues.Replies.length}}</i>
-            <i class="far fa-heart ml-5" style="color: #7B7B7B">&ensp;{{this.dataValues.Likes.length}}</i>
+            <i class="far fa-comment" style="color:#7B7B7B;">&ensp;{{this.Tweet.dataValues.Replies.length}}</i>
+            <i class="fas fa-heart ml-5" style="color:#FF0088;">&ensp;{{this.Tweet.dataValues.Likes.length}}</i>
           </div>
         </div>
       </div>

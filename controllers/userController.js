@@ -98,13 +98,16 @@ const userController = {
         { model: User, as: 'Followers' }]
     })
       .then(users => {
-        followerList = users.Followers.map(user => ({
+        const name = users.dataValues.name
+        const tweetsLength = users.dataValues.Tweets.length
+        users = users.Followers.map(user => ({
           ...user.dataValues,
           introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        followerList = followerList.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        return res.render('follower', { users: users.toJSON(), followerList })
+        users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        // console.log(users)
+        return res.render('follower', { users, name, tweetsLength })
       })
   },
 
@@ -114,13 +117,15 @@ const userController = {
         { model: User, as: 'Followings' }],
     })
       .then(users => {
-        followingList = users.Followings.map(user => ({
+        const name = users.dataValues.name
+        const tweetsLength = users.dataValues.Tweets.length
+        users = users.Followings.map(user => ({
           ...user.dataValues,
           introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        followingList = followingList.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        return res.render('following', { users: users.toJSON(), followingList })
+        users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        return res.render('following', { users, name, tweetsLength })
       })
   },
 
@@ -215,12 +220,12 @@ const userController = {
       .then(users => {
         return Like.findAll({
           where: { UserId: req.params.id },
-          include: [User, Reply, Tweet],
+          include: [{ model: Tweet, include: [User, Reply, Like] }],
           order: [['createdAt', 'DESC']]
         })
-          .then(likes => {
-            console.log(likes)
-            return res.render('likes', { users, likes })
+          .then(like => {
+            // console.log(like)
+            return res.render('likes', { users, like })
           })
         // const userSelf = helpers.getUser(req).id
         // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
@@ -244,11 +249,11 @@ const userController = {
       })
   }
 
-  
- 
 
-  
-   
+
+
+
+
 
 
 

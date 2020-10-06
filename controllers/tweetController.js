@@ -21,8 +21,8 @@ const tweetController = {
           isLiked: t.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
         }))
         return User.findOne({ where: { id: UserId } })
-          .then(user => {
-            return res.render('tweets', { tweets: data, user })
+          .then(users => {
+            return res.render('tweets', { tweets: data, users })
           })
       })
       .catch(error => console.log(error))
