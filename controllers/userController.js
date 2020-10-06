@@ -246,7 +246,7 @@ const userController = {
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
         name: user.toJSON().name,
-        description: tweet.description.substring(0, 160),
+        description: tweet.description ? tweet.description.substring(0, 160) : 0,
         updatedAt: tweet.updatedAt,
         replyCount: tweet.Replies.length,
         likeCount: tweet.Likes.length,
@@ -387,7 +387,7 @@ const userController = {
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
         name: user.toJSON().name,
-        description: like.Tweet.description.substring(0, 160),
+        description: like.Tweet.description ? like.Tweet.description.substring(0, 160) : 0,
         // description: like.Tweet.description,
         updatedAt: like.Tweet.updatedAt,
         replyCount: like.Tweet.Replies.length,
@@ -450,7 +450,7 @@ const userController = {
         avatar: r.avatar,
         account: r.account,
         name: r.name,
-        introduction: r.introduction.substring(0, 140),
+        introduction: r.introduction ? r.introduction.substring(0, 140) : 0,
         followshipCreatedAt: r.Followship.createdAt,
         // 追蹤者人數
         followerCount: users.Followers.length,
@@ -486,7 +486,7 @@ const userController = {
         avatar: r.avatar,
         account: r.account,
         name: r.name,
-        introduction: r.introduction.substring(0, 140),
+        introduction: r.introduction ? r.introduction.substring(0, 140) : 0,
         followshipCreatedAt: r.Followship.createdAt,
         // 追蹤者人數
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(r.id)
@@ -560,14 +560,28 @@ const userController = {
           })
         }).then((user) => {
           req.flash('success_messages', 'User information updated success.')
-          // return res.redirect('/users/' + id + '/tweets')
-          return res.redirect('/')
+          return res.redirect('/users/' + id + '/tweets')
+          // return res.redirect('/')
         })
       } catch (err) {
         console.log('Error:', err)
       }
     }
     updateUser()
+  },
+  getUserInfo: (req, res) => {
+    const id = req.params.userId
+    const loginId = helpers.getUser(req).id
+    // check user auth
+    if (loginId !== Number(id)) {
+      req.flash('error_messages', 'You can only edit your account')
+      return res.redirect('/users/' + loginId + '/tweets')
+    }
+    return User.findByPk(id).then(user => {
+      return res.render('userInfo', {
+        ...user.toJSON()
+      })
+    })
   }
 }
 
