@@ -87,4 +87,5 @@ module.exports = (app, passport) => {
   app.put('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
   app.post('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
   app.get('/users/:userId', authenticated, userController.getUserInfo)
+  app.get('/api/users/:userId', authenticated, userController.apiGetUserInfo)
 }

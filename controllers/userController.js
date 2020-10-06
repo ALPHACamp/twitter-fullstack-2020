@@ -582,6 +582,20 @@ const userController = {
         ...user.toJSON()
       })
     })
+  },
+  apiGetUserInfo: (req, res) => {
+    const id = req.params.userId
+    const loginId = helpers.getUser(req).id
+    // check user auth
+    if (loginId !== Number(id)) {
+      req.flash('error_messages', 'You can only edit your account')
+      return res.redirect('/users/' + loginId + '/tweets')
+    }
+    return User.findByPk(id).then(user => {
+      return res.json('userInfo', {
+        ...user.toJSON()
+      })
+    })
   }
 }
 
