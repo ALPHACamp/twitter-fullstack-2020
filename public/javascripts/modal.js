@@ -27,7 +27,7 @@ main.addEventListener('click', (event) => {
       <p>${replyDes}</p>
       <div class="reply-target">
         <span class="reply-mark">回覆給</span>
-        <a class="reply-user" href="">@${replyAccount}</a>
+        <a class="reply-user" href="/users/${replyUser}">@${replyAccount}</a>
      </div>`
     replyModal.innerHTML = replyTemplate
     $("#replyModal").modal('show')
