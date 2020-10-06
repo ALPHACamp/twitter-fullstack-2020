@@ -1,0 +1,100 @@
+<div class="row mt-3">
+  <div class="col-md-3 pl-0">
+
+    <div class="left-zone">
+  <div class="AC-icon">
+    <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+      style="width:75px">
+  </div>
+
+  </br>
+  </br>
+
+  <div class="home" name="home">
+    <a class="left-zone-items" href="/tweets" style="text-decoration: none"><i class="fas fa-home"></i>&ensp;首頁</a>
+  </div>
+
+  </br>
+  </br>
+
+  <div class="profile" name="profile">
+    <a class="left-zone-items" href="/user/:id" style="text-decoration: none"><i class="far fa-user"></i>&ensp;個人資料</a>
+  </div>
+
+  </br>
+  </br>
+
+  <div class="setting" name="setting">
+    <a class="left-zone-items" href="/setting" style="text-decoration: none"><i
+        class="fas fa-cog"></i>&ensp;設定</a>
+  </div>
+
+  </br>
+  </br>
+
+  <form action="/user/tweets">
+    <button type="submit" class="left-zone-btn">
+      推文</button>
+  </form>
+
+
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+
+
+  <a href="/logout" class="logout" style="text-decoration: none"><i class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+
+</div>
+
+  </div>
+  <div class="col-md-6 px-3 border-left border-right">
+    <div class="row ml-3 align-items-center">
+      <i class="fas fa-arrow-left fa-lg"></i>
+      <div class="ml-5">
+        <h4 class="m-0 font-weight-bold">{{user.dataValues.name}}</h4>
+        <p class="followship-tweetsCount m-0">{{user.Tweets.length}}推文</p>
+      </div>
+    </div>
+    <br>
+    <div class="row border-bottom">
+      <a href="/user/{{user.dataValues.id}}/follower" style="text-decoration: none">
+        <h5 class="follower-follower m-0 px-4 py-3 font-weight-bold"
+          style="color:#FF6600;border-bottom:2px solid #FF6600;">追蹤者</h5>
+      </a>
+      <a href="/user/{{user.dataValues.id}}/following" style="text-decoration: none">
+        <h5 class="follower-following m-0 px-4 py-3 font-weight-bold">正在追蹤</h5>
+      </a>
+    </div>
+
+    {{#each followerList}}
+    <div class="row border-bottom">
+      <div class="avatar col-2 mt-3">
+        <img src="{{this.dataValues.avatar}}" alt="avatar" class="border rounded-circle" style="max-width: 90%">
+      </div>
+      <div class="col mt-3">
+        <div class="font-weight-bold"></div>
+        <div style="color:gray">{{this.dataValues.account}}</div>
+        <p style="word-break:break-all; word-wrap:break-all;">{{this.dataValues.introduction}}</p>
+      </div>
+      {{#if this.isFollowed}}
+      <form action="/followship/{{this.dataValues.id}}?_method=DELETE" method="POST">
+        <button type="submit" class="followship-following-btn mt-2 mr-2">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="/followship/{{this.dataValues.id}}" method="POST">
+        <button type="submit" class="followship-follower-btn mt-2 mr-2">跟隨</button>
+      </form>
+      {{/if}}
+    </div>
+    {{/each}}
+
+  </div>
+</div>

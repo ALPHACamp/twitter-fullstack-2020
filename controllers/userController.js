@@ -120,6 +120,55 @@ const userController = {
           })
       })
   },
+  getFollower: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followers' }]
+    })
+      .then(user => {
+        const followerList = user.Followers.map(user => ({
+          ...user.dataValues,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        }))
+        return res.render('follower', { user, followerList })
+      })
+  },
+  getFollowing: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followings' }]
+    })
+      .then(user => {
+        const followingList = user.Followings.map(user => ({
+          ...user.dataValues,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        }))
+        return res.render('following', { user, followingList })
+      })
+  },
+  addFollowing: (req, res) => {
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.userId
+    })
+      .then((followship) => {
+        return res.redirect('back')
+      })
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then((followship) => {
+        followship.destroy()
+          .then((followship) => {
+            return res.redirect('back')
+          })
+      })
+  },
   //austin
   otherUser: (req, res) => {
     return User.findByPk(req.params.id, {
