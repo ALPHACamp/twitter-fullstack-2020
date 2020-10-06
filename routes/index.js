@@ -78,11 +78,13 @@ module.exports = (app, passport) => {
 
   app.get('/users/settings', authenticated, userController.getUserSettings)
   app.put('/users/settings/:id', authenticated, userController.putUserSettings)
+
   app.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
   app.get('/users/:userId/replies', authenticated, userController.getUserReplies)
   app.get('/users/:userId/likes', authenticated, userController.getUserLikes)
   app.get('/users/:userId/followers', authenticated, userController.getUserFollowers)
   app.get('/users/:userId/followings', authenticated, userController.getUserFollowings)
   app.put('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
-  app.get('/users/:userId', authenticated, userController.getUserTweets)
+  app.post('/users/:userId', authenticated, imagesUpload, userController.putUserInfo)
+  app.get('/users/:userId', authenticated, userController.getUserInfo)
 }
