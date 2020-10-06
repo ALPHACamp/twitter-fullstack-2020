@@ -4,6 +4,9 @@ const userController = require('../controllers/userController')
 
 const helpers = require('../_helpers')
 
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
@@ -77,7 +80,8 @@ module.exports = (app, passport) => {
 
   // user edit 相關路由
   // app.get('/users/:id/edit', authenticated, userController.getUserInfo)
-  app.put('/users/:id', authenticated, userController.putUserInfo)
+  app.put('/users/:id', authenticated,
+    upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putUserInfo)
 
   app.get('/users/:id/followers', authenticated, userController.getRecommendedFollowings, userController.getUserFollowers) // 被追蹤
   app.get('/users/:id/following', authenticated, userController.getRecommendedFollowings, userController.getUserFollowings) // 追蹤人

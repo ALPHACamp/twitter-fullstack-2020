@@ -1,3 +1,4 @@
+const fs = require('fs')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const tweetController = require('./tweetController')
@@ -177,15 +178,81 @@ const userController = {
 
 
   putUserInfo: (req, res) => {
+    const { files } = req
+    const { name, introduction } = req.body
+    const { cover, avatar } = req.files
 
-    if (!req.body.name) {
-      req.flash('error_messages', "name didn't exist")
+    if (!name) {
+      req.flash('error_messages', "請輸入名稱")
       return res.redirect('back')
     }
-    // const { name, introduction } = req.body
-    // console.log(req.body.name)
-    // console.log('name', name, 'introduction', introduction)
-    // return res.redirect('back')
+
+    if (name.length > 50) {
+      req.flash('error_messages', "名稱不可超過 50 字")
+      return res.redirect('back')
+    }
+
+    if (introduction.length > 160) {
+      req.flash('error_messages', "自我介紹不可超過 160 字")
+      return res.redirect('back')
+    }
+
+    // res.json(files)
+    // 可傳出 path
+    // console.log('avatar[0].path', avatar[0].path)
+
+    if (files) {
+      if (cover) {
+        fs.readFile(cover[0].path, (err, data) => {
+          if (err) console.log('Error:', err)
+          fs.writeFile(`upload/${files.originalname}`, data, () => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                // res.json(user)
+                user.update({
+                  name: name,
+                  introduction: introduction,
+                  cover: files ? `/upload/${files.originalname}` : user.cover,
+                  // avatar: user.avatar
+                }).then((user) => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/${req.params.id}/tweets`)
+                })
+              })
+          })
+        })
+      } else if (avatar) {
+        fs.readFile(avatar[0].path, (err, data) => {
+          if (err) console.log('Error:', err)
+          fs.writeFile(`upload/${files.originalname}`, data, () => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                user.update({
+                  name: name,
+                  introduction: introduction,
+                  avatar: files ? `/upload/${files.originalname}` : user.avatar,
+                }).then((user) => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/${req.params.id}/tweets`)
+                })
+              })
+          })
+        })
+      } else {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            user.update({
+              name: name,
+              introduction: introduction,
+              cover: user.cover,
+              avatar: user.avatar
+            }).then((user) => {
+              req.flash('success_messages', 'profile was successfully to update')
+              res.redirect(`/users/${req.params.id}/tweets`)
+            })
+          })
+      }
+    }
   },
 
   // 取得 追蹤使用者 的清單
