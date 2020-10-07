@@ -90,7 +90,7 @@ module.exports = (app, passport) => {
 
   // setting 相關路由
   app.get('/users/:id/setting', authenticated, userController.getSetting)
-  app.put('/users/:id/setting', authenticated, userController.putSetting)
+  app.post('/api/users/:id', authenticated, userController.putSetting)
 
   // follow 相關路由
   app.post('/followships', authenticated, userController.addFollowing)

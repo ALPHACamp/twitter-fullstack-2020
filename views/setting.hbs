@@ -1,3 +1,25 @@
+{{#if error}}
+{{#each error}}
+<div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
+  {{this.message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}
+{{/if}}
+
+{{#if success}}
+{{#each success}}
+<div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+  {{this.message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}
+{{/if}}
+
 <div class="wrapper d-flex align-items-stretch">
   <nav id="sidebar">
     <div>
@@ -10,7 +32,7 @@
       帳戶設定
     </div>
     <br><br>
-    <form action="/users/{{user.id}}/setting?_method=PUT" method="POST">
+    <form action="/api/users/{{user.id}}" method="POST">
 
       <div class="form-label-group">
         <label for="account" class="sign-label-text">帳號</label>
