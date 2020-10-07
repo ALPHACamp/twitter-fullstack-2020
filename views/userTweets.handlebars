@@ -103,68 +103,87 @@
 	<div class="tab-content">
 		{{!-- 推文 --}}
 		<div class="tab-pane active" id="tweets">
-		{{#each tweets}}
-			<div class="card mb-3" style="max-width: 900px;">
-				<div class="row no-gutters">
-					<div class="col-md-4">
-					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar width="150" height="150">
-					</div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h5 class="card-title">
-								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-								<small class="text-muted">{{moment this.createdAt }}</small>
-							</h5>
-							<p class="card-text">
-							{{this.description}}
-							</p>
-							{{!-- like --}}
-							{{#if isLiked }}
-								<form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
-										<button type="submit" class="fas fa-heart"></button>
-										({{this.LikeCount}})
-								</form>
-							{{else}}
-								<form action="/tweets/{{this.id}}/like" method="POST">
-										<button type="submit" class="far fa-heart"></button>
-										({{this.LikeCount}})
-								</form>
-							{{/if}}
+			{{#each tweets}}
+				<div class="card mb-3" style="max-width: 900px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+						<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar" width="150" height="150">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">
+									<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+									<small class="text-muted">{{moment this.createdAt }}</small>
+								</h5>
+								<p class="card-text">
+								{{this.description}}
+								</p>
+								{{!-- like --}}
+								{{#if isLiked }}
+									<form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
+											<button type="submit" class="fas fa-heart"></button>
+											({{this.LikeCount}})
+									</form>
+								{{else}}
+									<form action="/tweets/{{this.id}}/like" method="POST">
+											<button type="submit" class="far fa-heart"></button>
+											({{this.LikeCount}})
+									</form>
+								{{/if}}
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		{{/each}}
+			{{/each}}
 		</div>
 		{{!-- 推文與回覆 --}}
 		<div class="tab-pane" id="tweetreply">
 			{{#each profile.ReplyTweet}}
-			<div class="card mb-3" style="max-width: 900px;">
-				<div class="row no-gutters">
-					<div class="col-md-4">
-					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar" width="150" height="150">
-					</div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h5 class="card-title">
-								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-								<small class="text-muted">{{moment this.createdAt }}</small>
-							</h5>
-							<p class="card-text">
-							{{this.description}}
-							</p>
-							<p class="card-text">
-							{{this.Reply.comment}}
-							</p>
+				<div class="card mb-3" style="max-width: 900px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+						<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar" width="150" height="150">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">
+									<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+									<small class="text-muted">{{moment this.createdAt }}</small>
+								</h5>
+								<p class="card-text">
+								{{this.description}}
+								</p>
+								<p class="card-text">
+								{{this.Reply.comment}}
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 			{{/each}}
 		</div>
 		{{!-- 喜歡的內容 --}}
 		<div class="tab-pane" id="tweetlike">
-			<iframe src="likes" width="900px" height="900px" frameborder="0" id="mainframe" ></iframe>
+			{{#each profile.LikedTweets}}
+				<div class="card mb-3" style="max-width: 900px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+							<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">
+									<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+									<small class="text-muted">{{moment this.createdAt }}</small>
+								</h5>
+								<p class="card-text">
+									{{this.description}}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			{{/each}}
 		</div>
 	</div>
 </div>

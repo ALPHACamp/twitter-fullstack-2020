@@ -88,7 +88,11 @@ const userController = {
         { model: User, as: "Followers" },
         // 使用者追蹤的人
         { model: User, as: "Followings" },
-        { model: Tweet, as: 'LikedTweets', include: [User] },
+        { 
+          model: Tweet, as: 'LikedTweets',
+          order: [["createdAt", "DESC"]],
+          include: [User] 
+        },
         { model: Tweet, as: 'ReplyTweet', include: [User] }
       ]
     })
@@ -108,20 +112,6 @@ const userController = {
           isLiked: tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
         }))
         res.render('userTweets', { profile: user, tweets })
-      })
-  },
-  getUserLikes: (req, res) => {
-    User.findByPk(req.params.id, {
-      include: [
-        //使用者Like過的所有推文
-        { model: Tweet, as: 'LikedTweets', include: [User] }
-      ]
-    })
-      .then((user) => {
-        user = {
-          ...user.dataValues,
-        }
-        res.render('likes', { profile: user })
       })
   },
   getSetting: async (req, res) => {
