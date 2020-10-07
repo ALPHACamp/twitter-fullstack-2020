@@ -245,7 +245,7 @@ border-bottom: 2px solid #ff6600;
 }
 
 .top-user-item {
-  height: 65px;
+  /* height: 65px; */
   border-bottom: 1px solid #E6ECF0;
 }
 
@@ -821,16 +821,20 @@ display: flex;
 }
 
 .modal-cover img{
-  width: 100%;
+  width: 100%
 }
 
 .user-info-top svg {
   position: relative;
   z-index: 2;
-  left: -510px;
+  left: -530px;
   cursor: pointer;
   color: white;
   top: 35px;
+}
+
+.cover-upload svg {
+  color: white;
 }
 
 .form-label-group-modal  textarea {
@@ -860,4 +864,23 @@ display: flex;
   border-radius: 100px;
   border: 1px solid #FF6600;
   color: white;
+}
+.cover-img {
+  position: relative;
+  top: -100px;
+  left: 275px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.cover-upload> input, .avatar-upload > input
+{
+    display: none;
+}
+
+.cover-upload i, .avatar-upload  i
+{
+  color: white;
+  width: 80px;
+  cursor: pointer;
 }

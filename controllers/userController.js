@@ -9,6 +9,9 @@ const Followship = db.Followship
 const helpers = require('../_helpers')
 const Like = db.Like
 
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -80,41 +83,56 @@ const userController = {
     return res.render('setting')
   },
 
-  putSetting: (req, res) => {
-    const { account, name, email, password, checkPassword } = req.body
+  putSetting: async (req, res) => {
     const id = req.params.id
+    const { email: currentEmail, account: currentAccount } = helpers.getUser(req)
+    const { account, name, email, password, checkPassword } = req.body
 
+    const error = []
+    let newEmail = ''
+    let newAccount = ''
+
+    if (currentEmail === email) { newEmail = currentEmail }
+    if (currentAccount === account) { newAccount = currentAccount }
     if (password !== checkPassword) {
-      req.flash('error_messages', '請再次確認密碼')
-      return res.redirect('back')
+      error.push({ message: '密碼不相同, 請再次確認密碼' })
     }
-    else {
-      User.findOne({ where: { email: email } }).then(user => {
-        if (user) {
-          req.flash('error_messages', '信箱已註冊')
-          return res.redirect('back')
-        } else {
-          User.findOne({ where: { account: account } }).then(user => {
-            if (user) {
-              req.flash('error_messages', '帳號已註冊')
-              return res.redirect('back')
-            } else {
-              return User.findByPk(id)
-                .then((user) => {
-                  user.update({
-                    email: email,
-                    name: name,
-                    account: account,
-                    password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-                  }).then((user) => {
-                    req.flash('success_messages', '成功更新帳號資訊!')
-                    return res.redirect('/tweets')
-                  })
-                })
-            }
-          })
-        }
-      })
+
+    if (currentEmail !== email) {
+      await User.findOne({ where: { email } })
+        .then(user => {
+          if (user) { error.push({ message: '信箱已經被註冊' }) }
+          else { newEmail = email }
+        })
+    }
+
+    if (currentAccount !== account) {
+      await User.findOne({ where: { account } })
+        .then(user => {
+          if (user) { error.push({ message: '帳號已存在' }) }
+          else { newAccount = account }
+        })
+    }
+
+    if (error.length !== 0) {
+      return res.render('setting', { error })
+    }
+
+    if (!password) {
+      return User.findByPk(id)
+        .then(user => user.update({ name, email: newEmail, account: newAccount }))
+        .then(() => {
+          const success = []
+          success.push({ message: '成功更新帳號資訊!' })
+          return res.render('setting', { success })
+        })
+    } else {
+      return User.findByPk(id)
+        .then(user => user.update({ name, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), email: newEmail, account: newAccount }))
+        .then(() => {
+          req.flash('success_messages', '成功更新帳號資訊!')
+          res.redirect('/tweets')
+        })
     }
   },
 
@@ -178,13 +196,24 @@ const userController = {
     })
   },
 
+  getUserInfo: (req, res) => {
+    if (!helpers.getUser(req)) {
+      req.flash('error_messages', "can't edit other user's profile")
+      return res.redirect('back')
+    }
+    else { res.render('setting') }
+  },
 
-  // getUserInfo: (req, res) => {
+  editUser: (req, res) => {
+    if (!helpers.getUser(req)) {
+      return res.redirect('back')
+    } else {
+      res.render('partials/userEdit')
+    }
+  },
 
-  // },
 
-
-  putUserInfo: (req, res) => {
+  putUserInfo: async (req, res) => {
     const { files } = req
     const { name, introduction } = req.body
     const { cover, avatar } = req.files
@@ -204,55 +233,44 @@ const userController = {
       return res.redirect('back')
     }
 
-    // res.json(files)
-    // 可傳出 path
-    // console.log('avatar[0].path', avatar[0].path)
-
     if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
       if (cover) {
-        fs.readFile(cover[0].path, (err, data) => {
-          if (err) console.log('Error:', err)
-          fs.writeFile(`upload/${files.originalname}`, data, () => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                // res.json(user)
-                user.update({
-                  name: name,
-                  introduction: introduction,
-                  cover: files ? `/upload/${files.originalname}` : user.cover,
-                  // avatar: user.avatar
-                }).then((user) => {
+        await imgur.upload(cover[0].path, (err, img) => {
+          return User.findByPk(req.params.id)
+            .then((user) => {
+              user.update({
+                name: name,
+                introduction: introduction,
+                cover: files ? img.data.link : user.cover,
+              })
+                .then((user) => {
                   req.flash('success_messages', 'profile was successfully to update')
                   res.redirect(`/users/${req.params.id}/tweets`)
                 })
-              })
-          })
+            })
         })
-      } else if (avatar) {
-        fs.readFile(avatar[0].path, (err, data) => {
-          if (err) console.log('Error:', err)
-          fs.writeFile(`upload/${files.originalname}`, data, () => {
-            return User.findByPk(req.params.id)
-              .then((user) => {
-                user.update({
-                  name: name,
-                  introduction: introduction,
-                  avatar: files ? `/upload/${files.originalname}` : user.avatar,
-                }).then((user) => {
+      } if (avatar) {
+        await imgur.upload(avatar[0].path, (err, img) => {
+          return User.findByPk(req.params.id)
+            .then((user) => {
+              user.update({
+                name: name,
+                introduction: introduction,
+                avatar: files ? img.data.link : user.avatar,
+              })
+                .then((user) => {
                   req.flash('success_messages', 'profile was successfully to update')
                   res.redirect(`/users/${req.params.id}/tweets`)
                 })
-              })
-          })
+            })
         })
       } else {
-        return User.findByPk(req.params.id)
+        await User.findByPk(req.params.id)
           .then((user) => {
             user.update({
               name: name,
-              introduction: introduction,
-              cover: user.cover,
-              avatar: user.avatar
+              introduction: introduction
             }).then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
               res.redirect(`/users/${req.params.id}/tweets`)
@@ -339,15 +357,16 @@ const userController = {
 
   addFollowing: (req, res) => {
     const currentUserId = helpers.getUser(req).id
-    const followingUser = Number(req.params.userId)
+    const followingUser = Number(req.body.id)
 
     if (currentUserId === followingUser) {
       req.flash('error_messages', '請嘗試追蹤別人吧！')
-      return res.redirect('back')
+      // return res.redirect('error')
+      return res.render('error')
     } else {
       return Followship.create({
-        followerId: req.user.id,
-        followingId: req.params.userId
+        followerId: currentUserId,
+        followingId: followingUser
       })
         .then((followship) => {
           return res.redirect('back')
@@ -357,7 +376,7 @@ const userController = {
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
-        followerId: req.user.id,
+        followerId: helpers.getUser(req).id,
         followingId: req.params.userId
       }
     })

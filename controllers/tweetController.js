@@ -69,6 +69,21 @@ const tweetController = {
       res.redirect('back')
     }).catch(err => console.log(err))
   },
+  getReply: (req, res) => {
+    Tweet.findByPk(req.params.id, {
+      include: [
+        User,
+        { model: User, as: 'LikedUsers' },
+        { model: Reply, include: [User] }
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
+    }).then(tweet => {
+      res.render('tweet', {
+        tweet: tweet.toJSON(),
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+      })
+    }).catch(err => console.log(err))
+  },
   addLike: (req, res) => {
     Like.create({
       UserId: helpers.getUser(req).id,

@@ -19,7 +19,7 @@
             <a class="nav-link active" href="/users/{{users.id}}/followers">跟隨者</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/{{users.id}}/following">正在跟隨</a>
+            <a class="nav-link" href="/users/{{users.id}}/followings">正在跟隨</a>
           </li>
         </ul>
       </div>
@@ -31,7 +31,7 @@
             <img src={{this.avatar}} style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
           </a>
         </div>
-        <div class="top-user-item d-flex align-items-center" style="width: 600px;">
+        <div class="top-user-item d-flex align-items-center" style="width: 600px; max-height: 500px">
           <div class="top-user-name d-flex flex-column justify-content-center">
             <a href="/users/{{this.id}}/tweets" class="user-name">{{this.name}}</a>
             <span class="user-account">@{{this.account}}</span>
@@ -40,11 +40,11 @@
           <div class="follow-content-button mr-2">
 
             {{#if this.isFollowed}}
-            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
               <button class="unfollow-button">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/following/{{this.id}}" method="POST">
+            <form action="/followships" method="POST">
               <button class="follow-button" name="id" value="{{this.id}}">跟隨</button>
             </form>
             {{/if}}
