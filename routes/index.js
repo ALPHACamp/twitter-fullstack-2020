@@ -80,9 +80,9 @@ module.exports = (app, passport) => {
   app.get('/users/:id/replies', authenticated, userController.getRecommendedFollowings, userController.getUserReplies)
 
   // user edit 相關路由
-  // app.get('/users/:id/edit', authenticated, userController.getUserInfo)
+  app.get('/users/:id/edit', authenticated, userController.getUserInfo)
   app.get('/api/users/:id', authenticated, userController.editUser) //for auto-test
-  app.put('/users/:id', authenticated,
+  app.put('/users/:id/edit', authenticated,
     upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putUserInfo)
 
   app.get('/users/:id/followers', authenticated, userController.getRecommendedFollowings, userController.getUserFollowers) // 被追蹤
