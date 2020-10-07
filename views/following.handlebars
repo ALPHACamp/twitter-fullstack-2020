@@ -1,63 +1,14 @@
 <div class="row mt-3">
   <div class="col-md-3 pl-0">
 
-    <div class="left-zone">
-  <div class="AC-icon">
-    <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
-      style="width:75px">
-  </div>
-
-  </br>
-  </br>
-
-  <div class="home" name="home">
-    <a class="left-zone-items" href="/tweets" style="text-decoration: none"><i class="fas fa-home"></i>&ensp;首頁</a>
-  </div>
-
-  </br>
-  </br>
-
-  <div class="profile" name="profile">
-    <a class="left-zone-items" href="/user/:id" style="text-decoration: none"><i class="far fa-user"></i>&ensp;個人資料</a>
-  </div>
-
-  </br>
-  </br>
-
-  <div class="setting" name="setting">
-    <a class="left-zone-items" href="/setting" style="text-decoration: none"><i
-        class="fas fa-cog"></i>&ensp;設定</a>
-  </div>
-
-  </br>
-  </br>
-
-  <form action="/user/tweets">
-    <button type="submit" class="left-zone-btn">
-      推文</button>
-  </form>
-
-
-  </br>
-  </br>
-  </br>
-  </br>
-  </br>
-  </br>
-  </br>
-  </br>
-  </br>
-  </br>
-
-
-  <a href="/logout" class="logout" style="text-decoration: none"><i class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
-
-</div>
+{{>left}}
 
   </div>
   <div class="col-md-6 px-3 border-left border-right">
     <div class="row ml-3 align-items-center">
+      <a href="/user/self" style="text-decoration: none; color:black">
       <i class="fas fa-arrow-left fa-lg"></i>
+    </a>
       <div class="ml-5">
         <h4 class="m-0 font-weight-bold">{{user.dataValues.name}}</h4>
         <p class="followship-tweetsCount m-0">{{user.Tweets.length}}推文</p>
