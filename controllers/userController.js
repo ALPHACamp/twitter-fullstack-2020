@@ -219,7 +219,7 @@ const userController = {
           r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
         });
 
-        console.log('replies', allReplies);
+        //console.log('replies', allReplies);
         allReplies = allReplies.sort((a, b) => {
           return new Date(b.updatedAt) - new Date(a.updatedAt);
         });
@@ -258,10 +258,14 @@ const userController = {
             }
           });
 
-          console.log('tweets', resultTweets);
+          //console.log('tweets', resultTweets);
           //let allTweets = tweets.dataValues;
 
-          return res.json(resultTweets);
+          return res.render('user-replies', {
+            user: helpers.getUser(req),
+            visitUser: user,
+            tweets: resultTweets,
+          });
         });
       });
 
