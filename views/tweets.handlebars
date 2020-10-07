@@ -60,20 +60,10 @@
 						{{ this.description }}
 					</p>
 				</div>
-				<div class="tweet-reaction" style="background-color:#ffffff">
-					<form action="/replylist/{{ this.id }}" method="POST" style="display: inline;">
+				<div class="tweet-reaction d-flex" style="background-color:#ffffff">
+					<form action="/replylist/{{ this.id }}" method="POST">
 						<!-- a modal -->
 						<a data-toggle="modal" href="#exampleModalCenter{{ this.id }}"><i class="far fa-comment fa-sm"></i></a>
-						{{!-- like --}}
-						{{#if isLiked }}
-						<form action="/like/{{this.id}}?_method=DELETE" method="POST">
-							<button type="submit"><i class="far fa-heart fa-sm"></i></button>
-						</form>
-						{{else}}
-						<form action="/like/{{this.id}}" method="POST">
-							<button type="submit"><i class="far fa-heart fa-sm"></i></button>
-						</form>
-						{{/if}}
 						<!-- Reply Modal -->
 						<div class="modal fade" id="exampleModalCenter{{ this.id }}" tabindex="-1" role="dialog"
 							aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -101,7 +91,17 @@
 							</div>
 						</div>
 					</form>
-
+					{{!-- like --}}
+					{{#if isLiked }}
+					<form action="/like/{{this.id}}?_method=DELETE" method="POST">
+						<button type="submit" style="outline: none;"><i class="fas fa-heart fa-sm"
+								style="color: #e0255e;"></i></button>
+					</form>
+					{{else}}
+					<form action="/like/{{this.id}}" method="POST">
+						<button type="submit" style="outline: none;"><i class="far fa-heart fa-sm"></i></button>
+					</form>
+					{{/if}}
 				</div>
 			</div>
 		</div>

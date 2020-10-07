@@ -94,3 +94,9 @@ html{ height:100%}
 .tweet-reaction {
   margin-bottom: 14px;
 }
+
+.right-container {
+  padding-right:17.74%;
+  padding-left: 6.49%;
+  padding-top: 15px;
+}
