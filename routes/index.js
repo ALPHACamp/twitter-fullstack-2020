@@ -48,13 +48,13 @@ module.exports = (app, passport) => {
   app.put("/users/:id/setting", userController.putSetting)
 
   //userController
-  app.get('/users/:id', authenticated, userController.getUser)
-  app.get('/users/:id/follower', authenticated, userController.getFollower)
-  app.get('/users/:id/following', authenticated, userController.getFollowing)
+  app.get('/users/:id', authenticated, userController.getTopFollowers, userController.getUser)
+  app.get('/users/:id/follower', authenticated, userController.getTopFollowers, userController.getFollower)
+  app.get('/users/:id/following', authenticated, userController.getTopFollowers, userController.getFollowing)
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
-  app.get('/users/:id/likes', authenticated, userController.getUserLikes)
-  app.get('/users/:id/replies', authenticated, userController.getUserReplies)
+  app.get('/users/:id/likes', authenticated, userController.getTopFollowers, userController.getUserLikes)
+  app.get('/users/:id/replies', authenticated, userController.getTopFollowers, userController.getUserReplies)
   app.post("/like/:id", authenticated, userController.addLike);
   app.delete("/unlike/:id", authenticated, userController.removeLike);
 
@@ -65,8 +65,8 @@ module.exports = (app, passport) => {
 
   //tweetController
   app.get("/", (req, res) => res.redirect("/tweets"));
-  app.get("/tweets", authenticated, tweetController.getTweets);
-  app.get("/tweets/:id", authenticated, tweetController.getTweet);
+  app.get("/tweets", authenticated, userController.getTopFollowers, tweetController.getTweets);
+  app.get("/tweets/:id", authenticated, userController.getTopFollowers, tweetController.getTweet);
   app.post('/tweets/:id', authenticated, tweetController.postTweet)
   app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
   app.get('/tweets/:id/replies', authenticated, tweetController.getReply)

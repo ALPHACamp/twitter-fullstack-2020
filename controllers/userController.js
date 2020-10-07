@@ -135,7 +135,7 @@ const userController = {
 
   getUser: (req, res, next) => {
     const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
-
+    console.log(helpers.getUser(req).Followings)
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followings' },
@@ -333,21 +333,21 @@ const userController = {
 
   getTopFollowers: (req, res, next) => {
     return User.findAll({
-      include: [{ model: User, as: 'Followers' }]
-    })
-      .then(users => {
-        users = users.map(user => ({
-          ...user.dataValues,
-          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
-          FollowersCount: user.Followers.length
-        }))
-        users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.role))
-        users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
-        res.locals.users = users
-        return next()
-      })
-  }
+      include: [{ model: User, as: 'Followers' }],
+    }).then(users => {
+      users = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      }))
+      users = users.filter(user => user.name !== helpers.getUser(req).name)
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+      res.locals.getTopFollowers = users
 
+      return next()
+    })
+      .catch(err => next(err))
+  }
 }
 
 module.exports = userController
