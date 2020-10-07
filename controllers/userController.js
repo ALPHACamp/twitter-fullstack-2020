@@ -375,7 +375,7 @@ const userController = {
       console.log(user.toJSON().Replies[0].Tweet.User)
       const replies = user.Replies.map(reply => ({
         // Reply
-        ...reply,
+        ...reply.dataValues,
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
         name: user.toJSON().name,
@@ -386,6 +386,7 @@ const userController = {
         isReplyLiked: loginUser.Likes.map(like => like.ReplyId).includes(reply.id),
         // Tweet
         tweetId: reply.TweetId,
+        tweetUserId: reply.Tweet.User.id,
         tweetUserAccount: reply.Tweet.User.account,
         tweetUserName: reply.Tweet.User.name,
         tweetDescription: reply.Tweet.description.substring(0, 160),
