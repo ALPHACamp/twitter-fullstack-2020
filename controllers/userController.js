@@ -354,7 +354,8 @@ const userController = {
         Tweet
       ]
     }).then(user => {
-      const replies = user.toJSON().Replies.map(reply => ({
+      console.log(user.toJSON().Replies[0].Tweet.User)
+      const replies = user.Replies.map(reply => ({
         // Reply
         ...reply,
         avatar: user.toJSON().avatar,
@@ -432,6 +433,7 @@ const userController = {
         Tweet
       ]
     }).then(user => {
+      console.log(user)
       const likes = user.toJSON().Likes.map(like => ({
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
@@ -444,6 +446,9 @@ const userController = {
         tweetId: like.TweetId,
         isLiked: loginUser.Likes.map(l => l.TweetId).includes(like.TweetId)
       }))
+
+      const isFollowed = user.Followers.map(followers => followers.id).includes(loginUser.id)
+
       // Right side
       // filter the tweets to those that user followings & user himself
       const tweetFollowings = []
@@ -484,7 +489,8 @@ const userController = {
           tweetsCount: user.toJSON().Tweets.length,
           tweetFollowings,
           loginUser,
-          users
+          users,
+          isFollowed
         })
       })
     })
