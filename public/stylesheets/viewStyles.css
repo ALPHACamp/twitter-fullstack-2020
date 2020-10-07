@@ -1286,3 +1286,11 @@ a:hover {
   font-size: 15px;
   margin-right: 15px;
 }
+
+.tweetWordTipError {
+  color: red;
+}
+
+.tweetWordTipNormal {
+  color: green;
+}
