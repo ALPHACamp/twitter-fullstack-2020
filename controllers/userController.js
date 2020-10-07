@@ -127,9 +127,7 @@ const userController = {
   },
   putSetting: async (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
-
     const errors = []
-
     if (!account || !name || !email || !password || !checkPassword) {
       errors.push({ message: '所有欄位都是必填。' })
     }
@@ -334,7 +332,7 @@ const userController = {
           followerCount: user.Followers.length,
           isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id)
         }))
-        users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.isAdmin) )
+        users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.isAdmin))
         users = users
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
