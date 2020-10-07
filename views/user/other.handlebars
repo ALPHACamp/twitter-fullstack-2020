@@ -1,74 +1,43 @@
 <div class="container">
-    <div class="row">
+    <div class="row mt-4">
         <div class="col-md-3 pl-0">
-            <div class="left-zone">
-                <div class="AC-icon">
-                    <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
-                        style="width:75px">
-                </div>
-
-                </br>
-                </br>
-
-                <div class="home" name="home">
-                    <a class="left-zone-items" href="/tweets" style="text-decoration: none"><i
-                            class="fas fa-home"></i>&ensp;首頁</a>
-                </div>
-
-                </br>
-                </br>
-
-                <div class="profile" name="profile">
-                    <a class="left-zone-items" href="/user/self" style="text-decoration: none"><i
-                            class="far fa-user"></i>&ensp;個人資料</a>
-                </div>
-
-                </br>
-                </br>
-
-                <div class="setting" name="setting">
-                    <a class="left-zone-items" href="/setting" style="text-decoration: none"><i
-                            class="fas fa-cog"></i>&ensp;設定</a>
-                </div>
-
-                </br>
-                </br>
-
-                <form action="/user/tweets">
-                    <button type="submit" class="left-zone-btn">
-                        推文</button>
-                </form>
-
-
-                <a href="/logout" class="logout" style="text-decoration: none"><i
-                        class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
-
-            </div>
+     {{>left}}
         </div>
-        <div class="col-md-6 pl-0 border-left">
-            <div class="main">
-                <div class="header">
-                    <div class="background">
-                        <img src="{{ user.background }}" alt="">
-                    </div>
-                    <div class="avatar">
-                        <img src="{{ user.avatar }}" alt="">
-                    </div>
-                    <h2>{{ user.name }}</h2>
-                    <h6>
-                        <p style="color:#7B7B7B">@{{ user.account }}</p>
-                    </h6>
-                    <p>{{ user.introduction }}</p>
-                    <div class="row pl-3">
-                        <a class="user-followings font-weight-bold" href="/user/{{user.id}}/following"
-                            style="text-decoration: none; color:black">
-                            {{user.Followings.length}}個</a>
-                        <p style="color:#7B7B7B">跟隨中</p>
-                        <a class="user-folowers ml-3 font-weight-bold" href="/user/{{user.id}}/follower"
-                            style="text-decoration: none; color:black">{{user.Followers.length}}位</a>
-                        <p style="color:#7B7B7B">跟隨者</p>
-                    </div>
-                </div>
+ <div class="col-md-6 px-3 border-left border-right">
+
+      <div class="row ml-1 align-items-center ">
+     <a href="/tweets" style="text-decoration: none; color:black">
+      <i class="fas fa-arrow-left fa-lg"></i>
+    </a>
+      <div class="ml-5">
+        <h4 class="m-0 font-weight-bold">{{user.name}}</h4>
+        <p class="followship-tweetsCount m-0">{{user.Tweets.length}}推文</p>
+      </div>
+    </div>
+
+      <div class="row">
+        <img src="{{user.background}}" alt="user-cover" class="img-fluid" style="width: 100%;
+  height: 200px; object-fit: cover;">
+        <img src="{{user.avatar}}" alt="user-avatar" class="rounded-circle"
+            style="mborder-radius: 50%; position: absolute; top: 130px; left: 5%; border: 5px solid #FFFFFF;">
+      </div>
+      <div class="row justify-content-end">
+        <button class="m-3" data-toggle="modal" data-target="#editModal" style="border-radius: 50px;
+  width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">正在追蹤</button>
+      </div>
+
+        <h2>{{ user.name }}</h2>
+        <h6>@{{ user.account }}</h6>
+        <p>{{ user.introduction }}</p>
+        <div class="row pl-3">
+          <a class="user-followings font-weight-bold" href="/user/{{user.id}}/following"
+            style="text-decoration: none; color:black">
+            {{users.dataValues.Followings.length}}個</a>
+          <p style="color:#7B7B7B">跟隨中</p>
+          <a class="user-folowers ml-3 font-weight-bold" href="/user/{{user.id}}/follower"
+            style="text-decoration: none; color:black">{{users.dataValues.Followers.length}}位</a>
+          <p style="color:#7B7B7B">跟隨者</p>
+        </div>
 
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
