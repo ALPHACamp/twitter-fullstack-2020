@@ -9,6 +9,10 @@ const Followship = db.Followship
 const Like = db.Like
 const helpers = require('../_helpers')
 
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = '6ff52e969355450'
+const fs = require('fs')
+
 const Op = Sequelize.Op
 
 const userController = {
@@ -60,7 +64,6 @@ const userController = {
     res.redirect('/signin')
   },
 
-
   getSetting: (req, res) => {
     return res.render('setting')
   },
@@ -77,7 +80,7 @@ const userController = {
       return res.redirect('back')
     }
 
-    return User.findByPk(req.user.id)
+    return User.findByPk(helpers.getUser(req).id)
       .then((user) => {
         user.update({
           name: req.body.name,
@@ -87,45 +90,39 @@ const userController = {
         })
       }).then(user => {
         console.log("updated!")
-        req.flash('success_messages', '資料已被更新!')
-        res.redirect('/')
+
+        req.flash('success_messages', "資料被更新！")
+        res.redirect('/tweets')
+
       })
   },
 
-  getUserFollower: (req, res) => {
+  getFollower: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followers' }]
     })
-      .then(users => {
-        const name = users.dataValues.name
-        const tweetsLength = users.dataValues.Tweets.length
-        users = users.Followers.map(user => ({
+      .then(user => {
+        const followerList = user.Followers.map(user => ({
           ...user.dataValues,
-          introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        // console.log(users)
-        return res.render('follower', { users, name, tweetsLength })
+        // console.log(followerList)
+        return res.render('follower', { user, followerList })
       })
   },
 
-  getUserFollowing: (req, res) => {
+  getFollowing: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
-        { model: User, as: 'Followings' }],
+        { model: User, as: 'Followings' }]
     })
-      .then(users => {
-        const name = users.dataValues.name
-        const tweetsLength = users.dataValues.Tweets.length
-        users = users.Followings.map(user => ({
+      .then(user => {
+        const followingList = user.Followings.map(user => ({
           ...user.dataValues,
-          introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-        return res.render('following', { users, name, tweetsLength })
+        return res.render('following', { user, followingList })
       })
   },
 
@@ -136,7 +133,7 @@ const userController = {
       include: [Tweet,
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
-        { model: Tweet, as: 'LikedTweets' }
+        { model: User, as: 'Followings' }
       ]
     })
       .then(users => {
@@ -154,10 +151,6 @@ const userController = {
   },
 
   addFollowing: (req, res) => {
-    if (helpers.getUser(req).id === Number(req.params.id)) {
-      res.flash('error_messages', '請勿追蹤自己')
-      return res.redirect('back')
-    }
     return Followship.create({
       followerId: helpers.getUser(req).id,
       followingId: req.params.userId
@@ -209,6 +202,42 @@ const userController = {
         })
     })
       .catch(error => console.log(error))
+  },
+
+  putSelf: async (req, res) => {
+
+    const { avatar, cover } = req.files
+    const { files } = req
+    console.log(typeof (helpers.getUser(req).id))
+    console.log(typeof (req.params.id))
+
+    if (helpers.getUser(req).id !== Number((req.params.id))) {
+      req.flash('error_messages', 'error')
+      res.redirect('/tweets')
+    }
+
+    if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      if (avatar) {
+        await imgur.upload(avatar[0].path, (err, img) => {
+          User.findByPk(helpers.getUser(req).id)
+            .then(user => user.update({ avatar: img.data.link }))
+        })
+      }
+      if (cover) {
+        await imgur.upload(cover[0].path, (err, img) => {
+          User.findByPk(helpers.getUser(req).id)
+            .then(user => user.update({ cover: img.data.link }))
+        })
+      }
+    }
+    await User.findByPk(helpers.getUser(req).id).then(user =>
+      user.update({
+        name: req.body.name,
+        introduction: req.body.introduction
+      }))
+    req.flash('success_messages', '更新成功！')
+    res.redirect('back')
   },
 
   getUserLikes: (req, res) => {
@@ -281,6 +310,7 @@ const userController = {
         return next()
       })
   }
+
 }
 
 module.exports = userController
