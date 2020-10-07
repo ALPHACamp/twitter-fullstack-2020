@@ -1,6 +1,7 @@
 const adminTweets = document.querySelector('.admin-tweets-list')
 const body = document.querySelector('body')
 const html = document.querySelector('html')
+let limitScroll = 1
 
 if (adminTweets) {
   window.addEventListener('scroll', (e) => {
@@ -8,11 +9,13 @@ if (adminTweets) {
     const clientHeight = adminTweets.clientHeight;
     const scrollTop = html.scrollTop;
     const scrollHeight = html.scrollHeight;
-
-    if (scrollTop + clientHeight === scrollHeight) {
+    
+    if ((scrollTop + clientHeight >= (scrollHeight * 0.9)) && limitScroll === 1) {
+      limitScroll = 0
       axios
         .get(`http://localhost:3000/api/admin/tweets/${adminItem.length}`)
         .then(data => {
+          limitScroll = 1
           tweetTemplate(data.data)
         })
         .catch(() => { return console.log('Load error') })
