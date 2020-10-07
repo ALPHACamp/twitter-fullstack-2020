@@ -210,51 +210,47 @@ const userController = {
     if (files) {
       imgur.setClientID(IMGUR_CLIENT_ID)
       if (cover) {
-        imgur.upload(cover[0].path, (err, img) => {
+        await imgur.upload(cover[0].path, (err, img) => {
           return User.findByPk(req.params.id)
             .then((user) => {
-              // res.json(user)
               user.update({
                 name: name,
                 introduction: introduction,
                 cover: files ? img.data.link : user.cover,
-                avatar: user.avatar,
-              }).then((user) => {
-                req.flash('success_messages', 'profile was successfully to update')
-                res.redirect(`/users/${req.params.id}/tweets`)
               })
+                .then((user) => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/${req.params.id}/tweets`)
+                })
             })
         })
-      } else (avatar)
-      imgur.upload(avatar[0].path, (err, img) => {
-        return User.findByPk(req.params.id)
+      } if (avatar) {
+        await imgur.upload(avatar[0].path, (err, img) => {
+          return User.findByPk(req.params.id)
+            .then((user) => {
+              user.update({
+                name: name,
+                introduction: introduction,
+                avatar: files ? img.data.link : user.avatar,
+              })
+                .then((user) => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/${req.params.id}/tweets`)
+                })
+            })
+        })
+      } else {
+        await User.findByPk(req.params.id)
           .then((user) => {
             user.update({
               name: name,
-              introduction: introduction,
-              cover: user.cover,
-              avatar: files ? img.data.link : user.avatar,
+              introduction: introduction
             }).then((user) => {
               req.flash('success_messages', 'profile was successfully to update')
               res.redirect(`/users/${req.params.id}/tweets`)
             })
           })
-      })
-
-    }
-    else {
-      return User.findByPk(req.params.id)
-        .then((user) => {
-          user.update({
-            name: name,
-            introduction: introduction,
-            cover: user.cover,
-            avatar: user.avatar
-          }).then((user) => {
-            req.flash('success_messages', 'profile was successfully to update')
-            res.redirect(`/users/${req.params.id}/tweets`)
-          })
-        })
+      }
     }
   },
 
