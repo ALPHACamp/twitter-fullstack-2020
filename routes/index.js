@@ -47,13 +47,6 @@ module.exports = (app, passport) => {
   app.get("/users/:id/setting", userController.getSetting);
   app.put("/users/:id/setting", userController.putSetting)
 
-
-
-
-
-
-  // app.get("/main", (req, res) => res.render("mainpage"));
-
   //userController
   app.get('/users/:id', authenticated, userController.getUser)
   app.get('/users/:id/follower', authenticated, userController.getFollower)
@@ -65,13 +58,6 @@ module.exports = (app, passport) => {
   app.post("/like/:id", authenticated, userController.addLike);
   app.delete("/unlike/:id", authenticated, userController.removeLike);
 
-  // adminController
-  app.get("/admin", (req, res) => {
-    res.redirect("/admin/tweets");
-  });
-  app.get("/admin/tweets", adminController.getTweets);
-  app.post("/admin/tweets/:id", adminController.deleteTweet);
-
 
   app.get("/signup", userController.signUpPage);
   app.post("/signup", userController.signUp);
@@ -82,8 +68,6 @@ module.exports = (app, passport) => {
   app.get("/tweets", authenticated, tweetController.getTweets);
   app.get("/tweets/:id", authenticated, tweetController.getTweet);
   app.post('/tweets/:id', authenticated, tweetController.postTweet)
-
-
   app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
   app.get('/tweets/:id/replies', authenticated, tweetController.getReply)
 

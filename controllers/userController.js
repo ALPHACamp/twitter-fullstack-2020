@@ -97,7 +97,7 @@ const userController = {
       })
   },
 
-  getFollower: (req, res) => {
+  getFollower: (req, res, next) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followers' }]
@@ -112,9 +112,10 @@ const userController = {
         users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         return res.render('follower', { users, name, tweetsLength })
       })
+      .catch(err => { next(err) })
   },
 
-  getFollowing: (req, res) => {
+  getFollowing: (req, res, next) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followings' }]
@@ -129,9 +130,10 @@ const userController = {
         users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
         return res.render('following', { users, name, tweetsLength })
       })
+      .catch(err => { next(err) })
   },
 
-  getUser: (req, res) => {
+  getUser: (req, res, next) => {
     const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
 
     return User.findByPk(req.params.id, {
@@ -155,12 +157,14 @@ const userController = {
             }))
             return res.render('user', { users, tweets, checkUser })
           })
+          .catch(err => { next(err) })
         // const userSelf = helpers.getUser(req).id
         // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
       })
+      .catch(err => { next(err) })
   },
 
-  addFollowing: (req, res) => {
+  addFollowing: (req, res, next) => {
     return Followship.create({
       followerId: helpers.getUser(req).id,
       followingId: req.params.userId
@@ -168,9 +172,10 @@ const userController = {
       .then((followship) => {
         return res.redirect('back')
       })
+      .catch(err => { next(err) })
   },
 
-  removeFollowing: (req, res) => {
+  removeFollowing: (req, res, next) => {
     return Followship.findOne({
       where: {
         followerId: helpers.getUser(req).id,
@@ -182,7 +187,9 @@ const userController = {
           .then((followship) => {
             return res.redirect('back')
           })
+          .catch(err => { next(err) })
       })
+      .catch(err => { next(err) })
   },
 
   addLike: (req, res) => {
@@ -250,7 +257,7 @@ const userController = {
     res.redirect('back')
   },
 
-  getUserLikes: (req, res) => {
+  getUserLikes: (req, res, next) => {
     const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
 
     return User.findByPk(req.params.id, {
@@ -270,12 +277,14 @@ const userController = {
           .then(likes => {
             return res.render('likes', { users, likes, checkUser })
           })
+          .catch(err => { next(err) })
         // const userSelf = helpers.getUser(req).id
         // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
       })
+      .catch(err => { next(err) })
   },
 
-  getUserReplies: (req, res) => {
+  getUserReplies: (req, res, next) => {
     const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
 
     return User.findByPk(req.params.id, {
@@ -313,10 +322,13 @@ const userController = {
                 // tweetsAndRepliesList = tweetsAndRepliesList.sort((a, b) => b.Tweet.createdAt - a.Tweet.createdAt)
                 return res.render('replies', { users, tweetsAndRepliesList, checkUser })
               })
+              .catch(err => { next(err) })
           })
+          .catch(err => { next(err) })
         // const userSelf = helpers.getUser(req).id
         // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
       })
+      .catch(err => { next(err) })
   },
 
   getTopFollowers: (req, res, next) => {
