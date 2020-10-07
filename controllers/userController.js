@@ -80,7 +80,7 @@ const userController = {
       return res.redirect('back')
     }
 
-    return User.findByPk(req.user.id)
+    return User.findByPk(helpers.getUser(req).id)
       .then((user) => {
         user.update({
           name: req.body.name,
@@ -207,7 +207,7 @@ const userController = {
     const { avatar, cover } = req.files
     const { files } = req
 
-    if (helpers.getUser(req).id !== id) {
+    if (helpers.getUser(req).id !== req.params.id) {
       req.flash('errorMessage', 'error')
       res.redirect('/tweets')
     }
@@ -227,12 +227,13 @@ const userController = {
         })
       }
     }
-    await User.findByPk(ghelpers.etUser(req).id).then(user => user.update({
-      name: req.body.name,
-      introduction: req.body.introduction
-    }))
+    await User.findByPk(helpers.getUser(req).id).then(user =>
+      user.update({
+        name: req.body.name,
+        introduction: req.body.introduction
+      }))
     req.flash('successMessage', '更新成功！')
-    res.redirect(`/users/self`)
+    res.redirect('back')
   },
 
   getUserLikes: (req, res) => {

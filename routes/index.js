@@ -28,9 +28,10 @@ module.exports = (app, passport) => {
 
   };
 
+  // /users/{ { user.id } } /edit
+
   //user login
-  app.get('/users/self', (req, res) => res.render('userselfedit'))
-  app.put('/users/self/edit', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putSelf)
+  app.put('/users/:id/edit', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putSelf)
   app.get("/signup", userController.signUpPage);
   app.post("/signup", userController.signUp);
   app.get("/signin", userController.signInPage);
