@@ -14,8 +14,20 @@
         data-id="{{userId}}">
     </div>
     <div class="col mt-3">
-      <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal"
-        data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button>
+      {{#ifCond userId loginUser.id}}
+      {{!-- <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button> --}}
+      <a href="/users/{{userId}}" class="btn rounded-pill float-right btn-outline-twitter">編輯個人資料</a>
+      {{else}}
+        {{#if isFollowed}}
+        <form action="/followships/{{userId}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-outline-twitter-active rounded-pill float-right">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button name="id" value="{{userId}}" type="submit" class="btn btn-outline-twitter rounded-pill float-right">跟隨</button>
+        </form>
+        {{/if}}
+      {{/ifCond}}
     </div>
   </div>
   <div class="row">
@@ -31,18 +43,18 @@
     <div class="col">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link unselected_nav" href="/users/{{user.id}}/tweets">推文</a>
+          <a class="nav-link unselected_nav" href="/users/{{userId}}/tweets">推文</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link unselected_nav" href="/users/{{user.id}}/replies">推文與回覆</a>
+          <a class="nav-link unselected_nav" href="/users/{{userId}}/replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link selected_nav" href="/users/{{user.id}}/likes">喜歡的內容</a>
+          <a class="nav-link selected_nav" href="/users/{{userId}}/likes">喜歡的內容</a>
         </li>
       </ul>
     </div>
   </div>
-  {{#each likes}}
+  {{#each data}}
   <div class="row border-bottom">
     <div class="d-flex p-2">
       <a href="/users/{{../user.id}}/tweets">
@@ -50,7 +62,7 @@
       </a>
       <div class="col">
         <span class="bold">{{this.name}}</span>
-        <span style="color: grey">@{{this.account}}・{{moment this.updatedAt}}</span><br>
+        <span style="color: grey">@{{this.account}}・{{moment this.tweetUpdatedAt}}</span><br>
         <span>
           <small>
             {{this.description}}<br>
@@ -59,12 +71,12 @@
                 <i class="far fa-comment mr-3" style="color: grey;"> {{this.replyCount}}</i>
               </a>
               {{#if this.isLiked}}
-              <form action="/tweets/{{this.tweetId}}/unlike" method="POST">
+              <form action="/tweets/{{this.TweetId}}/unlike" method="POST">
                 <button type="submit" class="btn-push"><i class="fas fa-heart"
                     style="color:rgb(224, 36, 94);">{{this.likeCount}}</i></button>
               </form>
               {{else}}
-              <form action="/tweets/{{this.tweetId}}/like" method="POST">
+              <form action="/tweets/{{this.TweetId}}/like" method="POST">
                 <button type="submit" class="btn-push"><i class="far fa-heart" style="color: grey;">{{this.likeCount}}</i></button>
               </form>
               {{/if}}

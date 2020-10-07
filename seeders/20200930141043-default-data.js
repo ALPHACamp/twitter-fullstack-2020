@@ -10,7 +10,7 @@ module.exports = {
       account: 'root',
       cover: 'https://loremflickr.com/320/240/paris/all?random=1',
       introduction: faker.lorem.text(),
-      avatar: 'https://loremflickr.com/320/240/girl/all?random=1',
+      avatar: 'https://loremflickr.com/320/240/people/all?random=1',
       role: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -22,7 +22,7 @@ module.exports = {
       account: 'user1',
       cover: 'https://loremflickr.com/320/240/paris/all?random=2',
       introduction: faker.lorem.text(),
-      avatar: 'https://loremflickr.com/320/240/girl/all?random=2',
+      avatar: 'https://loremflickr.com/320/240/people/all?random=2',
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -34,7 +34,7 @@ module.exports = {
       account: 'user2',
       cover: 'https://loremflickr.com/320/240/paris/all?random=3',
       introduction: faker.lorem.text(),
-      avatar: 'https://loremflickr.com/320/240/girl/all?random=3',
+      avatar: 'https://loremflickr.com/320/240/people/all?random=3',
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -46,7 +46,7 @@ module.exports = {
       account: 'user3',
       cover: 'https://loremflickr.com/320/240/paris/all?random=4',
       introduction: faker.lorem.text(),
-      avatar: 'https://loremflickr.com/320/240/girl/all?random=4',
+      avatar: 'https://loremflickr.com/320/240/people/all?random=4',
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -58,7 +58,7 @@ module.exports = {
       account: 'user4',
       cover: 'https://loremflickr.com/320/240/paris/all?random=5',
       introduction: faker.lorem.text(),
-      avatar: 'https://loremflickr.com/320/240/girl/all?random=5',
+      avatar: 'https://loremflickr.com/320/240/people/all?random=5',
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -70,7 +70,7 @@ module.exports = {
       account: 'user5',
       cover: 'https://loremflickr.com/320/240/paris/all?random=6',
       introduction: faker.lorem.text(),
-      avatar: 'https://loremflickr.com/320/240/girl/all?random=6',
+      avatar: 'https://loremflickr.com/320/240/people/all?random=6',
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
