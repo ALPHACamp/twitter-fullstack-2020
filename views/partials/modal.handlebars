@@ -57,7 +57,10 @@
     </div>
   </div>
 </div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 {{!-- user Edit modal --}}
 <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -123,5 +126,36 @@
       </form>
     </div>
   </div>
-
+</div>
+{{!-- other user --}}
+<div class="modal fade" id="user-tweet-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+      </div>
+      <div class="modal-title">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="{{../pageUser.avatar}}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
+        <span class="mt-1"><a href="#">{{user.name}}</a></span>
+        <span class="user-account">
+          {{user.account}}．{{moment user.createdAt}}
+        </span>
+      </div>
+      <div class="modal-body" class="d-flex">
+        <div class="tweet-text d-flex align-items-stretch">
+          {{ this.description }}
+        </div>
+        <form method="POST" action="/tweets/{{user.id}}/replies">
+          <textarea name="comment" cols="55" rows="5"
+            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+            placeholder="say something"></textarea>
+          <button type="submit"
+            style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+            <span style="color: #FFFFFF;">回覆</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
