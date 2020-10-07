@@ -271,7 +271,7 @@ const userController = {
         { model: User, as: 'Followers' }
       ]
     }).then(user => {
-      // console.log(user)
+      console.log(user)
       const tweets = user.toJSON().Tweets.map(tweet => ({
         id: user.toJSON().id,
         avatar: user.toJSON().avatar,
@@ -284,6 +284,9 @@ const userController = {
         tweetId: tweet.id,
         isLiked: loginUser.Likes.map(like => like.TweetId).includes(tweet.id)
       }))
+
+      const isFollowed = user.Followers.map(followers => followers.id).includes(loginUser.id)
+      
       // Right side
       // filter the tweets to those that user followings & user himself
       const tweetFollowings = []
@@ -325,7 +328,8 @@ const userController = {
           tweetsCount: tweets.length,
           tweetFollowings,
           loginUser,
-          users
+          users,
+          isFollowed
         })
       })
     })
