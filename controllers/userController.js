@@ -101,11 +101,11 @@ const userController = {
         {
           model: Tweet,
           include: [Reply, Like],
-          order: [['updatedAt', 'DESC']],
         },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
+      order: [['Tweets', 'updatedAt', 'DESC']],
     }).then((user) => {
       if (user !== null && user.isAdmin === false) {
         // const targetUser = user.toJSON();

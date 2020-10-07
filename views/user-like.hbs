@@ -74,8 +74,10 @@
       <div class="tweets-content">
         <div class="left-item">
           <a href="/users/{{this.id}}">
-            <img src="{{this.User.avatar}}" class="rounded-circle"
-              style="width: 50px;height:50px;background-color:#C4C4C4;">
+
+            <div class="tweet-user-avatar"
+              style="width: 50px;height:50px;background:url({{this.User.avatar}})#C4C4C4;background-repeat:no-repeat;background-position: center;background-size: cover;">
+            </div>
           </a>
         </div>
         <div class="right-item">
