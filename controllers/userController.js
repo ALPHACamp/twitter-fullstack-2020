@@ -177,53 +177,60 @@ const userController = {
     let selfId = Number(helpers.getUser(req).id);
     return User.findByPk(UserId, {
       include: [
-        Tweet,
-        {
-          model: Reply,
-          include: [
-            { model: Tweet, include: [Like, User, Reply] },
-            { model: Reply, as: 'followingByReply' },
-            Like,
-            User,
-          ],
-          order: [['updatedAt', 'DESC']],
-        },
+        { model: Tweet, attributes: ['id'] },
+        { model: Reply, where: { ReplyId: null }, attributes: ['id'] },
+        // {
+        //   model: Reply,
+        //   include: [
+        //     { model: Tweet, include: [Like, User, Reply] },
+        //     { model: Reply, as: 'followingByReply' },
+        //     Like,
+        //     User,
+        //   ],
+        // },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
-      order: [['Replies', 'updatedAt', 'ASC']],
-    }).then((user) => {
+      order: [['Replies', 'updatedAt', 'DESC']],
+    }).then(async (user) => {
+      let replies = user.toJSON().Replies.map((i) => i.id);
+
       //console.log(user.dataValues);
-      user.Tweets = user.Tweets.length;
-      let replies = user.toJSON().Replies;
-      let tweets = user.toJSON().Replies.map((r) => r.Tweet);
-      //console.log(tweets);
-      tweets = tweets.reduce((arr, value) => {
-        if (arr.findIndex((v) => v.id === value.id) === -1) {
-          arr.push(value);
-        }
-        return arr.sort((a, b) => {
-          return new Date(b.updatedAt) - new Date(a.updatedAt);
-        });
-      }, []);
+      // console.log(user.toJSON());
+      // user.Tweets = user.Tweets.length;
+      // let replies = user.toJSON().Replies;
 
-      tweets.forEach((t) => {
-        const reply = [];
-        replies.forEach((r) => {
-          r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
-          if (r.Tweet.id === t.id) {
-            reply.push(r);
-          }
-        });
-        t.replies = Array.from(reply);
-        t.isLikeBySelf = t.Likes.map((l) => l.UserId).includes(selfId);
-      });
+      // let tweets = user.toJSON().Replies.map((r) => r.Tweet);
+      // //console.log(tweets);
+      // tweets = tweets.reduce((arr, value) => {
+      //   if (arr.findIndex((v) => v.id === value.id) === -1) {
+      //     arr.push(value);
+      //   }
+      //   return arr.sort((a, b) => {
+      //     return new Date(b.updatedAt) - new Date(a.updatedAt);
+      //   });
+      // }, []);
 
-      return res.render('user-replies', {
-        user: helpers.getUser(req),
-        visitUser: user,
-        tweets,
-      });
+      // tweets.forEach((t) => {
+      //   const reply = [];
+      //   replies.forEach((r) => {
+      //     r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
+      //     delete r.Likes;
+      //     if (r.Tweet.id === t.id) {
+      //       reply.push(r);
+      //     }
+      //   });
+      //   t.replies = Array.from(reply);
+      //   t.isLikeBySelf = t.Likes.map((l) => l.UserId).includes(selfId);
+      //   delete t.Likes;
+      //   t.Replies = t.Replies.length;
+      //});
+      return res.json(user.toJSON());
+      // return res.render('user-replies', {
+      //   user: helpers.getUser(req),
+      //   visitUser: user,
+      //   tweets,
+      // });
     });
   },
   getFollowersPage: (req, res) => {

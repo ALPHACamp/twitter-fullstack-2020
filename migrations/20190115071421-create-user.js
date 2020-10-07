@@ -25,6 +25,7 @@ module.exports = {
       },
       avatar: {
         type: Sequelize.STRING,
+        defaultValue: 'https://i.imgur.com/Lq0dUBY.png',
       },
       introduction: {
         type: Sequelize.TEXT,
@@ -35,6 +36,7 @@ module.exports = {
       },
       cover: {
         type: Sequelize.STRING,
+        defaultValue: 'https://imgur.com/pxnjHp2.png',
       },
       createdAt: {
         allowNull: false,

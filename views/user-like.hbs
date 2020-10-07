@@ -108,7 +108,7 @@
                 </button>
                 <div class="like-item-count item-count">{{this.LikedByUsers.length}}</div>
                 {{else}}
-                <form action="/tweets/{{this.id}}/like" method="post">
+                <form action="/tweets/{{this.id}}/like" method="post" class="form-like">
                   <button type="submit" class="btn">
                     <i class="icon-like"></i>
                   </button>
@@ -121,6 +121,7 @@
       </div>
       {{/each}}
     </div>
+
   </div>
 
   {{> right-column}}

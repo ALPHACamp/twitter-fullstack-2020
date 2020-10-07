@@ -14,7 +14,7 @@ module.exports = {
     );
     userIds = userIds[0].map((i) => i.id);
     let random = randomNums(
-      Math.floor(repliesIds.length * 0.7),
+      Math.floor(repliesIds.length * 0.3),
       repliesIds.length,
     );
     //console.log(Math.floor(Math.random() * repliesIds.length * 0.7));
