@@ -47,7 +47,7 @@
 
   </div>
   <div class="col-md-9 pl-0 border-left">
-    <h3 class="ml-2">使用者列表</h3>
+    <h3 class="ml-3 font-weight-bold">使用者列表</h3>
     <hr>
     <div class="row ml-1 mr-1">
       {{#each users}}
@@ -55,17 +55,24 @@
         <div class="card" style="border-radius: 15px">
           <img src="{{this.avatar}}" alt="image" class="rounded-circle"
             style="position: absolute; max-width: 50%; top:25%; left:25%;border: 5px solid white;">
-          <img class="card-img-top" src="{{this.cover}}" alt="Card image cap" style="border-radius: 15px 15px 0 0">
+          <img class="card-img-top" src="{{this.cover}}" alt="Card image cap"
+            style="border-radius: 15px 15px 0 0; height: 130px;">
           <div class="card-body" style="border-radius: 0 0 15px 15px; background-color: #F5F5F5;">
             <h5 class="card-title text-center mt-5 mb-0">{{this.name}}</h5>
-            <p class="card-text text-center ">{{this.account}}</p>
+            <p class="card-text text-center" style="color: #7B7B7B">{{this.account}}</p>
             <div class="row justify-content-center">
-              <i class="far fa-comment mr-2">&ensp;{{this.Tweets.length}}</i>
-              <i class="far fa-heart ml-2">&ensp;{{this.LikedTweets.length}}</i>
+              <div class="mr-2">
+                <i class="far fa-comment" style="color: #7B7B7B"></i>&ensp;{{this.Tweets.length}}
+              </div>
+              <div class="ml-2">
+                <i class="far fa-heart" style="color: #7B7B7B"></i>&ensp;{{this.LikedTweets.length}}
+              </div>
             </div>
             <div class="row justify-content-center mt-2">
-              <p class="mr-1">{{this.Followings.length}}個跟隨中</p>
-              <p class="ml-1">{{this.Followers.length}}位跟隨者</p>
+              <p class="mr-1">{{this.Followings.length}}個</p>
+              <p style="color: #7B7B7B">跟隨中</p>
+              <p class="ml-1">{{this.Followers.length}}位</p>
+              <p style="color: #7B7B7B">跟隨者</p>
             </div>
           </div>
         </div>

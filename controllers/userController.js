@@ -102,13 +102,15 @@ const userController = {
       include: [Tweet,
         { model: User, as: 'Followers' }]
     })
-      .then(user => {
-        const followerList = user.Followers.map(user => ({
+      .then(users => {
+        const name = users.dataValues.name
+        const tweetsLength = users.dataValues.Tweets.length
+        users = users.Followers.map(user => ({
           ...user.dataValues,
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        // console.log(followerList)
-        return res.render('follower', { user, followerList })
+        users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        return res.render('follower', { users, name, tweetsLength })
       })
   },
 
@@ -117,12 +119,15 @@ const userController = {
       include: [Tweet,
         { model: User, as: 'Followings' }]
     })
-      .then(user => {
-        const followingList = user.Followings.map(user => ({
+      .then(users => {
+        const name = users.dataValues.name
+        const tweetsLength = users.dataValues.Tweets.length
+        users = users.Followings.map(user => ({
           ...user.dataValues,
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        return res.render('following', { user, followingList })
+        users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        return res.render('following', { users, name, tweetsLength })
       })
   },
 
@@ -241,6 +246,8 @@ const userController = {
   },
 
   getUserLikes: (req, res) => {
+    const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
+
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followings' },
@@ -256,7 +263,7 @@ const userController = {
         })
           .then(like => {
             // console.log(like)
-            return res.render('likes', { users, like })
+            return res.render('likes', { users, like, checkUser })
           })
         // const userSelf = helpers.getUser(req).id
         // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
@@ -264,6 +271,8 @@ const userController = {
   },
 
   getUserReplies: (req, res) => {
+    const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
+
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: Reply, include: [User, Tweet, Like] },
@@ -286,7 +295,7 @@ const userController = {
             console.log(users)
             console.log('----------------------------------')
             console.log(tweets)
-            return res.render('replies', { users, tweets })
+            return res.render('replies', { users, tweets, checkUser })
 
           })
         // const userSelf = helpers.getUser(req).id
@@ -304,7 +313,7 @@ const userController = {
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
           FollowersCount: user.Followers.length
         }))
-        // users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.role))
+        users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.role))
         users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
         res.locals.users = users
         return next()
