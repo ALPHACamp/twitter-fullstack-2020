@@ -294,19 +294,23 @@ const userController = {
           .then(tweets => {
             return Reply.findAll({
               where: { UserId: req.params.id },
-              include: [{ model: Tweet, include: [Reply, User, Like] }],
+              include: [{ model: Tweet, include: [Reply, User, Like, { model: User, as: 'LikedUsers' }] }],
               order: [[['createdAt', 'DESC']]]
-
             })
               .then(replies => {
                 const repliesList = []
                 replies = replies.map(reply => ({
-                  ...reply.dataValues
+                  ...reply.dataValues,
                 }))
                 replies.forEach(reply => repliesList.push(reply.Tweet))
                 const result = Array.from(new Set(repliesList.concat(tweets)))
                 const set = new Set()
                 const tweetsAndRepliesList = result.filter(tweet => !set.has(tweet.id) ? set.add(tweet.id) : false)
+                // tweetsAndRepliesList = tweetsAndRepliesList.map(list => ({
+                //   ...list.dataValues
+                // }))
+                // console.log(tweetsAndRepliesList)
+                // tweetsAndRepliesList = tweetsAndRepliesList.sort((a, b) => b.Tweet.createdAt - a.Tweet.createdAt)
                 return res.render('replies', { users, tweetsAndRepliesList, checkUser })
               })
           })
