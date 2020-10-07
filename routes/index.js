@@ -4,6 +4,9 @@ const userController = require('../controllers/userController')
 const replyController = require('../controllers/replyController.js')
 const passport = require('../config/passport')
 
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+
 const { authenticated, authenticatedAdmin } = require('../middleware/auth')
 
 module.exports = app => {
@@ -40,7 +43,10 @@ module.exports = app => {
   app.get('/users/:id/tweets', authenticated, userController.getTopUsers, userController.getUserTweets)
   app.get('/setting/:id', authenticated, userController.getSetting)
   app.put('/setting/:id', authenticated, userController.putSetting)
-  app.post('/users/:id/edit', authenticated, userController.putUser)
+  app.put('/users/:id/edit', authenticated, upload.fields([
+    { name: 'cover', maxCount: 1 },
+    { name: 'avatar', maxCount: 1 }
+  ]), userController.putUser)
   app.get('/users/:id/followers', authenticated, userController.getTopUsers, userController.getFollower)
   app.get('/users/:id/followings', authenticated, userController.getTopUsers, userController.getFollowing)
   app.post('/followships', authenticated, userController.addFollowing)
