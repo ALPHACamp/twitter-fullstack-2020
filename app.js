@@ -6,7 +6,6 @@ const port = process.env.PORT || 3000
 const app = express()
 const db = require('./models')
 const methodOverride = require('method-override')
-
 const passport = require('./config/passport')
 
 const flash = require('connect-flash')
@@ -27,6 +26,7 @@ app.use('/upload', express.static(__dirname + '/upload'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
 app.use(methodOverride('_method'))
+
 
 //pssport初始化與啟動session
 app.use(passport.initialize())
