@@ -46,13 +46,13 @@
     </div>
   </div>
   <div class="col-md-9 pl-0 border-left">
-    <h3 class="ml-2">推文清單</h3>
+    <h3 class="ml-3 font-weight-bold">推文清單</h3>
     <hr>
     {{#each tweets}}
     <div class="row justify-content-between">
       <div class="row col-11">
         <div class="avatar mt-2 ml-4">
-          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle" style="width: 90px">
+          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle" style="width: 75px">
         </div>
         <div class="information d-flex flex-column mt-2 col">
           <div class="d-flex">
@@ -60,9 +60,9 @@
               <a><strong>{{this.User.dataValues.name}}&ensp;</strong></a>
             </div>
             <div class="account" name="account">
-              <a>{{this.User.dataValues.account}} </a>
+              <a style="color: #7B7B7B">{{this.User.dataValues.account}} </a>
             </div>
-            <div class="createdAt" name="createdAt">
+            <div class="createdAt" name="createdAt" style="color: #7B7B7B">
               &ensp;·&ensp;{{moment this.createdAt}}
             </div>
           </div>
