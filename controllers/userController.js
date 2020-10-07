@@ -81,7 +81,7 @@ const userController = {
           })
       })
     } else {
-      return user.findByPk(req.user.id)
+      return user.findByPk(req.params.id)
         .then(user => {
           user.update({
             name: req.body.name,
@@ -91,7 +91,7 @@ const userController = {
           })
             .then(user => {
               req.flash('success_messages', 'user was successfully update')
-              res.redirect('/user/self/:id')
+              res.redirect('/user/{{user.id}}/self')
             })
         })
     }
