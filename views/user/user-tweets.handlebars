@@ -29,6 +29,24 @@
                             style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">編輯個人資料</button>
                         </div>
                         {{>modal}}
+                    {{else}}
+                        <div class="row justify-content-end">
+                        {{#if pageUser.isFollowed}}     
+                            <form action="/following/{{pageUser.id}}?_method=DELETE" method="POST">
+                                <button class="m-3" data-toggle="modal" data-target="#editModal"
+                                    style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">
+                                    正在跟隨
+                                </button>
+                            </form>
+                         {{else}}
+                            <form action="/following/{{pageUser.id}}" method="POST">
+                                <button class="m-3" data-toggle="modal" data-target="#editModal"
+                                    style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">
+                                    跟隨
+                                </button>
+                            </form>
+                         {{/if}}
+                         </div>
                     {{/ifCond}}
 
                     <div class=" justify-content ml-2 mt-5">
@@ -39,6 +57,14 @@
                         </h6>
 
                         <p>{{ pageUser.introduction }}</p>
+                    </div>
+                    <div class="d-flex justify-content ml-2 mb-3">
+                        <div class="ml-2">
+                            <strong>{{ pageUser.followingCount }}個</strong> 跟隨中
+                        </div>
+                        <div class="ml-4">
+                            <strong>{{ pageUser.followersCount }}位</strong> 跟隨者
+                        </div>
                     </div>
                 </div>
                 <nav>
