@@ -20,8 +20,12 @@
   </div>
   <div class="row">
     <div class="col">
-      <span class="bold"><b>{{name}}</b></span><br>
-      <span style="color: grey">@{{account}}</span><br>
+      <a href="/users/{{userId}}/tweets">
+        <span class="bold"><b>{{name}}</b></span><br>
+      </a>
+      <a href="/users/{{userId}}/tweets">
+        <span style="color: grey">@{{account}}</span><br>
+      </a>
       <span>{{introduction}}</span><br>
       {{followingsCount}}個 <a href="/users/{{user.id}}/followings"><span style="color: grey">跟隨中</span></a>
       {{followersCount}}位 <a href="/users/{{user.id}}/followers"><span style="color: grey">跟隨者</span></a>
@@ -60,10 +64,14 @@
         <a href="/users/{{this.UserId}}/tweets">
           <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
         </a>
-        
         <div class="col">
-          <span class="bold">{{this.name}}</span>
-          <span style="color: grey">@{{this.account}}・{{moment this.updatedAt}}</span><br>
+          <a href="/users/{{this.UserId}}/tweets">
+            <span class="bold">{{this.name}}</span>
+          </a>
+          <a href="/users/{{this.UserId}}/tweets">
+            <span style="color: grey">@{{this.account}}</span><br>
+          </a>
+          <span style="color: grey">・{{moment this.updatedAt}}</span>
           <span >
             <small>
               {{this.comment}}<br>
