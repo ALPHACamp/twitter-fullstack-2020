@@ -102,13 +102,15 @@ const userController = {
       include: [Tweet,
         { model: User, as: 'Followers' }]
     })
-      .then(user => {
-        const followerList = user.Followers.map(user => ({
+      .then(users => {
+        const name = users.dataValues.name
+        const tweetsLength = users.dataValues.Tweets.length
+        users = users.Followers.map(user => ({
           ...user.dataValues,
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        // console.log(followerList)
-        return res.render('follower', { user, followerList })
+        users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        return res.render('follower', { users, name, tweetsLength })
       })
   },
 
@@ -117,12 +119,15 @@ const userController = {
       include: [Tweet,
         { model: User, as: 'Followings' }]
     })
-      .then(user => {
-        const followingList = user.Followings.map(user => ({
+      .then(users => {
+        const name = users.dataValues.name
+        const tweetsLength = users.dataValues.Tweets.length
+        users = users.Followings.map(user => ({
           ...user.dataValues,
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
-        return res.render('following', { user, followingList })
+        users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+        return res.render('following', { users, name, tweetsLength })
       })
   },
 
@@ -139,10 +144,15 @@ const userController = {
       .then(users => {
         return Tweet.findAll({
           where: { UserId: req.params.id },
-          include: [User, Reply, Like],
+          include: [User, Reply, Like,
+            { model: User, as: 'LikedUsers' }],
           order: [['createdAt', 'DESC']]
         })
           .then(tweets => {
+            tweets = tweets.map(t => ({
+              ...t.dataValues,
+              isLiked: t.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+            }))
             return res.render('user', { users, tweets, checkUser })
           })
         // const userSelf = helpers.getUser(req).id
@@ -241,6 +251,8 @@ const userController = {
   },
 
   getUserLikes: (req, res) => {
+    const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
+
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followings' },
@@ -251,12 +263,12 @@ const userController = {
       .then(users => {
         return Like.findAll({
           where: { UserId: req.params.id },
-          include: [{ model: Tweet, include: [User, Reply, Like] }],
+          include: [{ model: Tweet, include: [User, Reply, Like, { model: User, as: 'LikedUsers' }] }
+          ],
           order: [['createdAt', 'DESC']]
         })
-          .then(like => {
-            // console.log(like)
-            return res.render('likes', { users, like })
+          .then(likes => {
+            return res.render('likes', { users, likes, checkUser })
           })
         // const userSelf = helpers.getUser(req).id
         // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
@@ -264,9 +276,10 @@ const userController = {
   },
 
   getUserReplies: (req, res) => {
+    const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
+
     return User.findByPk(req.params.id, {
-      include: [Tweet,
-        { model: Reply, include: [User, Tweet, Like] },
+      include: [
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
         { model: Tweet, as: 'LikedTweets' }
@@ -279,15 +292,27 @@ const userController = {
           order: [['createdAt', 'DESC']]
         })
           .then(tweets => {
-            const tweetsAndRepliesList = []
-            tweets = tweets.map(tweet => ({
-              ...tweet.dataValues
-            }))
-            console.log(users)
-            console.log('----------------------------------')
-            console.log(tweets)
-            return res.render('replies', { users, tweets })
-
+            return Reply.findAll({
+              where: { UserId: req.params.id },
+              include: [{ model: Tweet, include: [Reply, User, Like, { model: User, as: 'LikedUsers' }] }],
+              order: [[['createdAt', 'DESC']]]
+            })
+              .then(replies => {
+                const repliesList = []
+                replies = replies.map(reply => ({
+                  ...reply.dataValues,
+                }))
+                replies.forEach(reply => repliesList.push(reply.Tweet))
+                const result = Array.from(new Set(repliesList.concat(tweets)))
+                const set = new Set()
+                const tweetsAndRepliesList = result.filter(tweet => !set.has(tweet.id) ? set.add(tweet.id) : false)
+                // tweetsAndRepliesList = tweetsAndRepliesList.map(list => ({
+                //   ...list.dataValues
+                // }))
+                // console.log(tweetsAndRepliesList)
+                // tweetsAndRepliesList = tweetsAndRepliesList.sort((a, b) => b.Tweet.createdAt - a.Tweet.createdAt)
+                return res.render('replies', { users, tweetsAndRepliesList, checkUser })
+              })
           })
         // const userSelf = helpers.getUser(req).id
         // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
@@ -304,7 +329,7 @@ const userController = {
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
           FollowersCount: user.Followers.length
         }))
-        // users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.role))
+        users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.role))
         users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
         res.locals.users = users
         return next()

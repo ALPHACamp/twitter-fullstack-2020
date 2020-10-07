@@ -11,7 +11,9 @@
     {{> message}}
 
     <div class="row ml-1 align-items-center">
-      <i class="fas fa-arrow-left fa-lg"></i>
+      <a href="/tweets" style="text-decoration: none; color:black">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </a>
       <div class="ml-5">
         <h4 class="m-0 font-weight-bold">{{users.dataValues.name}}</h4>
         <p class="followship-tweetsCount m-0">{{users.Tweets.length}}推文</p>
@@ -20,40 +22,22 @@
 
     <div class="user-header mt-1">
       <div class="row">
-        <img src="{{users.dataValues.cover}}" alt="user-cover" class="user-cover img-fluid"
-          style=" width: 598px;height: 200px;">
-        <img src="{{users.dataValues.avatar}}" alt="user-avatar" class="user-avatar"
-          style=" width: 140px;height: 140px;">
+        <img src="{{users.dataValues.cover}}" alt="user-cover" class="user-cover img-fluid">
+        <img src="{{users.dataValues.avatar}}" alt="user-avatar" class="user-avatar">
       </div>
-
-      </br>
-
       <div class="row justify-content-end">
         {{#if checkUser}}
         <!-- Button trigger modal -->
-
-        <button type="button" class="btn"
-          style="border: 1px solid #FF6600; box-sizing: border-box;border-radius: 100px; color: #FF6600 ; background: white "
-          data-toggle="modal" data-target="#exampleModalCenter">
-          編輯個人資料
+        <button type="button" class="user-edit-btn m-3" data-toggle="modal" data-target="#exampleModalCenter"> 編輯個人資料
         </button>
-
-
-
-
-
         {{else}}
         <div style="height:78px;">&emsp;</div>
         {{/if}}
-        {{!-- </a> --}}
       </div>
-
-      </br>
-
 
       <div class="row">
         <div class="col">
-          <h4 class="user-name m-0">{{users.dataValues.name}}</h4>
+          <h4 class="user-name m-0 mt-1">{{users.dataValues.name}}</h4>
           <p class="user-account mb-2" style="color:#7B7B7B">{{users.dataValues.account}}</p>
           <p class="user-introduction">{{users.dataValues.introduction}}</p>
           <div class="row pl-3">
@@ -86,8 +70,7 @@
     <div class="row justify-content-between">
       <div class="row col-11">
         <div class="avatar mt-2 ml-4">
-          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle"
-            style="width: 50px; height: 50px">
+          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle" style="width: 60px">
         </div>
         <div class="information d-flex flex-column mt-2 col">
           <div class="d-flex">
@@ -102,11 +85,21 @@
             </div>
           </div>
           <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
-            {{this.dataValues.description}}
+            {{this.description}}
           </div>
           <div>
-            <i class="far fa-comment" style="color: #7B7B7B">&ensp;{{this.dataValues.Replies.length}}</i>
-            <i class="far fa-heart ml-5" style="color: #7B7B7B">&ensp;{{this.dataValues.Likes.length}}</i>
+            <i class="far fa-comment" style="color: #7B7B7B">&ensp;{{this.Replies.length}}</i>
+            {{#if isLiked}}
+            <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit" class="ml-5" style="color: #7B7B7B;background: none;border: none;">
+                <i class="fas fa-heart">&ensp;{{this.Likes.length}}</i>
+                {{else}}
+                <form action="/like/{{this.id}}" method="POST" style="display:inline; ">
+                  <button type="submit" class="ml-5" style="color: #7B7B7B;background: none;border: none;">
+                    <i class="far fa-heart">&ensp;{{this.Likes.length}}</i>
+                    {{/if}}
+                  </button>
+                </form>
           </div>
         </div>
       </div>
