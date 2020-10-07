@@ -452,24 +452,7 @@ const userController = {
         Tweet
       ]
     }).then(user => {
-<<<<<<< HEAD
       console.log(user)
-      const likes = user.toJSON().Likes.map(like => ({
-        avatar: user.toJSON().avatar,
-        account: user.toJSON().account,
-        name: user.toJSON().name,
-        description: like.Tweet.description ? like.Tweet.description.substring(0, 160) : 0,
-        // description: like.Tweet.description,
-        updatedAt: like.Tweet.updatedAt,
-        replyCount: like.Tweet.Replies.length,
-        likeCount: like.Tweet.Likes.length,
-        tweetId: like.TweetId,
-        isLiked: loginUser.Likes.map(l => l.TweetId).includes(like.TweetId)
-      }))
-
-      const isFollowed = user.Followers.map(followers => followers.id).includes(loginUser.id)
-
-=======
       const data = user.Likes.map(r => ({
         ...r.dataValues,
         avatar: r.dataValues.Tweet.User.avatar,
@@ -483,7 +466,7 @@ const userController = {
         isLiked: loginUser.Likes.map(l => l.TweetId).includes(r.TweetId)
       }))
 
->>>>>>> 39a5ccc52f93c241ca521a7a04dfe428ec396e64
+      const isFollowed = user.Followers.map(followers => followers.id).includes(loginUser.id)
       // Right side
       // filter the tweets to those that user followings & user himself
       const tweetFollowings = []
