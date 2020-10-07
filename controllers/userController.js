@@ -107,6 +107,7 @@ const userController = {
         const tweetsLength = users.dataValues.Tweets.length
         users = users.Followers.map(user => ({
           ...user.dataValues,
+          introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
         users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
@@ -125,6 +126,7 @@ const userController = {
         const tweetsLength = users.dataValues.Tweets.length
         users = users.Followings.map(user => ({
           ...user.dataValues,
+          introduction: user.dataValues.introduction.substring(0, 50),
           isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
         }))
         users = users.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
@@ -135,12 +137,11 @@ const userController = {
 
   getUser: (req, res, next) => {
     const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
-    console.log(helpers.getUser(req).Followings)
+    // console.log(helpers.getUser(req).Followings)
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followings' },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        { model: User, as: 'Followers' }
       ]
     })
       .then(users => {
@@ -158,8 +159,6 @@ const userController = {
             return res.render('user', { users, tweets, checkUser })
           })
           .catch(err => { next(err) })
-        // const userSelf = helpers.getUser(req).id
-        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
       })
       .catch(err => { next(err) })
   },
@@ -278,8 +277,6 @@ const userController = {
             return res.render('likes', { users, likes, checkUser })
           })
           .catch(err => { next(err) })
-        // const userSelf = helpers.getUser(req).id
-        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
       })
       .catch(err => { next(err) })
   },
@@ -314,19 +311,13 @@ const userController = {
                 replies.forEach(reply => repliesList.push(reply.Tweet))
                 const result = Array.from(new Set(repliesList.concat(tweets)))
                 const set = new Set()
-                const tweetsAndRepliesList = result.filter(tweet => !set.has(tweet.id) ? set.add(tweet.id) : false)
-                // tweetsAndRepliesList = tweetsAndRepliesList.map(list => ({
-                //   ...list.dataValues
-                // }))
-                // console.log(tweetsAndRepliesList)
-                // tweetsAndRepliesList = tweetsAndRepliesList.sort((a, b) => b.Tweet.createdAt - a.Tweet.createdAt)
+                let tweetsAndRepliesList = result.filter(tweet => !set.has(tweet.id) ? set.add(tweet.id) : false) // 取出不重複的tweet
+                tweetsAndRepliesList = tweetsAndRepliesList.sort((a, b) => b.createdAt - a.createdAt)
                 return res.render('replies', { users, tweetsAndRepliesList, checkUser })
               })
               .catch(err => { next(err) })
           })
           .catch(err => { next(err) })
-        // const userSelf = helpers.getUser(req).id
-        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
       })
       .catch(err => { next(err) })
   },
