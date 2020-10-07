@@ -3,7 +3,7 @@
     <i class="logo fas fa-cus-logo"></i>
     {{!-- user --}}
     {{#ifCond 'user' user.role}}
-    <div class="nav d-flex flex-column">
+    <div class="nav d-flex flex-column" style="margin-top: 60px">
       <div class="nav-item">
         <a href="/tweets">
           <div class="icon-div">
@@ -35,7 +35,7 @@
     {{/ifCond}}
     {{!-- admin --}}
     {{#ifCond 'admin' user.role}}
-    <div class="nav d-flex flex-column">
+    <div class="nav d-flex flex-column" style="margin-top: 60px">
       <div class="nav-item">
         <a href="/admin/tweets">
           <div class="icon-div">
