@@ -176,7 +176,6 @@ const tweetController = {
     } else {
       return Reply.create({
         UserId: helpers.getUser(req).id,
-        TweetId: tweetId,
         ReplyId: replyId,
         comment: replyText
       })
