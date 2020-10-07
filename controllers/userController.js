@@ -79,8 +79,12 @@ const userController = {
     })
   },
   getSetting: (req, res) => {
-    // console.log('helpers.getUser(req).id', helpers.getUser(req).id)
-    return res.render('setting')
+    if (helpers.getUser(req).id !== Number(req.params.id)) {
+      req.flash('error_messages', '無法修改其他使用者資訊')
+      res.redirect('/tweets')
+    } else {
+      return res.render('setting')
+    }
   },
 
   putSetting: async (req, res) => {
@@ -205,13 +209,14 @@ const userController = {
   },
 
   editUser: (req, res) => {
-    if (!helpers.getUser(req)) {
-      return res.redirect('back')
+    if (helpers.getUser(req).id !== Number(req.params.id)) {
+      return res.json({ status: 'error' })
     } else {
-      res.render('partials/userEdit')
+      User.findByPk(req.params.id).then(user => {
+        return res.json({ name: user.name })
+      })
     }
   },
-
 
   putUserInfo: async (req, res) => {
     const { files } = req
