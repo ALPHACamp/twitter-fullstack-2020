@@ -49,16 +49,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-<<<<<<< HEAD
-
-=======
-  getUser: (req, res) => {
-    User.findByPk(req.params.id)
-      .then(user => {
-        return res.render('user/self', {test:123})
-      })
-  },
->>>>>>> master
   editUser: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
@@ -193,10 +183,12 @@ const userController = {
   getTweets: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        { model: Tweet, include: [ 
-          { model: Reply}, 
-          { model: User, as: 'LikeUsers' }
-      ]},
+        {
+          model: Tweet, include: [
+            { model: Reply },
+            { model: User, as: 'LikeUsers' }
+          ]
+        },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],

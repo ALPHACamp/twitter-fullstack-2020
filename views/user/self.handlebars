@@ -3,120 +3,110 @@
     {{>left}}
     {{>modal}}
   </div>
-  <div class="col-md-7 pl-0 border-left">
+
+  <div class="col-md-6 pl-0 border-left">
     <div class="row ml-1 align-items-center ">
       <a href="/tweets" style="text-decoration: none; color:black">
         <i class="fas fa-arrow-left fa-lg"></i>
       </a>
       <div class="ml-5">
-        <h4 class="m-0 font-weight-bold" style="color:#FF6600">{{user.name}}</h4>
-        <p class="followship-tweetsCount m-0" style="color:#7B7B7B">{{user.Tweets.length}}推文</p>
+        <h4 class="m-0 font-weight-bold" style="color:#FF6600">{{selfUser.name}}</h4>
+        <p class="followship-tweetsCount m-0" style="color:#7B7B7B">{{selfUser.Tweets.length}}推文</p>
       </div>
     </div>
-    <div class="col-md-6 pl-0 border-left">
-      <div class="row ml-1 align-items-center ">
-        <a href="/tweets" style="text-decoration: none; color:black">
-          <i class="fas fa-arrow-left fa-lg"></i>
-        </a>
-        <div class="ml-5">
-          <h4 class="m-0 font-weight-bold" style="color:#FF6600">{{selfUser.name}}</h4>
-          <p class="followship-tweetsCount m-0" style="color:#7B7B7B">{{selfUser.Tweets.length}}推文</p>
+    <div class="main">
+      <div class="header">
+        <div class="background">
+          <img src="{{ user.background }}" alt="user-background" class="img-fluid" style="width: 100%;
+            height: 200px; object-fit: cover;">
+        </div>
+        <div class="avatar">
+          <img src="{{ selfUser.avatar }}" alt="pageUser-avatar" class="rounded-circle"
+            style="mborder-radius: 50%; position: absolute; top: 160px; left: 3%; border: 5px solid #FFFFFF;">
+        </div>
+
+
+
+        <div class="row justify-content-end">
+          <button class="m-3" data-toggle="modal" data-target="#editModal"
+            style="border-radius: 50px;
+                        width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">編輯個人資料</button>
+        </div>
+        <div class=" justify-content ml-2">
+          <h2>{{ selfUser.name }}</h2>
+          <h6>
+            <p style="color:#7B7B7B">@{{ selfUser.account }}</p>
+          </h6>
+          <p>{{ selfUser.introduction }}</p>
         </div>
       </div>
-      <div class="main">
-        <div class="header">
-          <div class="background">
-            <img src="{{ user.background }}" alt="user-background" class="img-fluid" style="width: 100%;
-            height: 200px; object-fit: cover;">
-          </div>
-          <div class="avatar">
-            <img src="{{ selfUser.avatar }}" alt="pageUser-avatar" class="rounded-circle"
-              style="mborder-radius: 50%; position: absolute; top: 160px; left: 3%; border: 5px solid #FFFFFF;">
-          </div>
-
-
-
-          <div class="row justify-content-end">
-            <button class="m-3" data-toggle="modal" data-target="#editModal"
-              style="border-radius: 50px;
-                        width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">編輯個人資料</button>
-          </div>
-          <div class=" justify-content ml-2">
-            <h2>{{ selfUser.name }}</h2>
-            <h6>
-              <p style="color:#7B7B7B">@{{ selfUser.account }}</p>
-            </h6>
-            <p>{{ selfUser.introduction }}</p>
-          </div>
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-link active" href="/user/{{ selfUser.id }}/tweets">推文</a>
+          <a class="nav-link" href="/user/{{ selfUser.id }}/replies">推文與回覆</a>
+          <a class="nav-link" href="/user/{{ selfUser.id }}/likes">喜歡</a>
         </div>
-        <nav>
-          <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-link active" href="/user/{{ selfUser.id }}/tweets">推文</a>
-            <a class="nav-link" href="/user/{{ selfUser.id }}/replies">推文與回覆</a>
-            <a class="nav-link" href="/user/{{ selfUser.id }}/likes">喜歡</a>
-          </div>
-        </nav>
-        <div class="tab-content" id="nav-tabContent">
-          <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div class="col">
-              <div class="tweet-list">
-                {{#each selfUser.Tweets}}
-                <div class="tweet">
-                  <div class="tweet-item-left d-flex align-items-stretch">
-                    <div class="tweet-left d-flex align-items-stretch">
-                      <a href="/user/{{ this.UserId }}/tweets">
-                        <img src="{{ ../selfUser.avatar }}" class="rounded-circle"
-                          style="background-size:cover; width: 50px;height: 50px;">
-                      </a>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel" aria-labelledby="nav-home-tab">
+          <div class="col">
+            <div class="tweet-list">
+              {{#each selfUser.Tweets}}
+              <div class="tweet">
+                <div class="tweet-item-left d-flex align-items-stretch">
+                  <div class="tweet-left d-flex align-items-stretch">
+                    <a href="/user/{{ this.UserId }}/tweets">
+                      <img src="{{ ../selfUser.avatar }}" class="rounded-circle"
+                        style="background-size:cover; width: 50px;height: 50px;">
+                    </a>
+                  </div>
+                  <div class="tweet-item-right ml-3">
+                    <div class="tweet-item-title">
+                      <span class="mt-1"><a href="/user/{{ this.UserId }}/tweets">{{ ../selfUser.name }}</a></span>
+                      <span class="user-account">
+                        {{ ../selfUser.account }}．{{moment this.createdAt}}
+                      </span>
                     </div>
-                    <div class="tweet-item-right ml-3">
-                      <div class="tweet-item-title">
-                        <span class="mt-1"><a href="/user/{{ this.UserId }}/tweets">{{ ../selfUser.name }}</a></span>
-                        <span class="user-account">
-                          {{ ../selfUser.account }}．{{moment this.createdAt}}
-                        </span>
-                      </div>
-                      <div class="tweet-text">
-                        {{this.description}}
-                      </div>
-                      <div class="tweet-footer">
-                        <!-- Button trigger modal -->
-                        <button type="button" data-toggle="modal" data-target="#user-tweet-modal"
-                          style="background: none;border: none;">
-                          <i class="far fa-comment"></i> {{this.Replies.length}}
+                    <div class="tweet-text">
+                      {{this.description}}
+                    </div>
+                    <div class="tweet-footer">
+                      <!-- Button trigger modal -->
+                      <button type="button" data-toggle="modal" data-target="#user-tweet-modal"
+                        style="background: none;border: none;">
+                        <i class="far fa-comment"></i> {{this.Replies.length}}
+                      </button>
+
+                      {{>modal}}
+
+                      {{#if this.isLiked }}
+
+                      <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
+                        <button type="submit" class="button reply-link mt-4 mb-4" style="background: red;border: none;">
+                          <i class="far fa-heart"></i>
                         </button>
-
-                        {{>modal}}
-
-                        {{#if this.isLiked }}
-
-                        <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
-                          <button type="submit" class="button reply-link mt-4 mb-4"
-                            style="background: red;border: none;">
-                            <i class="far fa-heart"></i>
-                          </button>
-                        </form>
-                        {{else}}
-                        <form action="/like/{{this.id}}" method="POST" style="display:inline;">
-                          <button type="submit" class="button reply-link mt-4 mb-4"
-                            style="background: none;border: none;">
-                            <i class="far fa-heart"></i>
-                          </button>
-                        </form>
-                        {{/if}}
-                        {{this.LikeUsers.length}}
-                      </div>
+                      </form>
+                      {{else}}
+                      <form action="/like/{{this.id}}" method="POST" style="display:inline;">
+                        <button type="submit" class="button reply-link mt-4 mb-4"
+                          style="background: none;border: none;">
+                          <i class="far fa-heart"></i>
+                        </button>
+                      </form>
+                      {{/if}}
+                      {{this.LikeUsers.length}}
                     </div>
                   </div>
                 </div>
-                {{/each}}
               </div>
+              {{/each}}
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-md-3 p-0">
-      {{>right}}
-    </div>
   </div>
+  <div class="col-md-3 p-0">
+    {{>right}}
+  </div>
+</div>
