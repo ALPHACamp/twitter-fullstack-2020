@@ -224,28 +224,28 @@ const userController = {
     let passwordCheck = false
     // check user auth
     if (helpers.getUser(req).id !== Number(id)) {
-      req.flash('error_messages', 'You can only edit your account')
+      req.flash('error_messages', '只能編輯自己的賬號')
       return res.redirect('back')
     }
     // check data
     if (!account || !name || !email) {
-      req.flash('error_messages', 'Account/Name/Email should not be empty')
+      req.flash('error_messages', '請填入賬號/名稱/Email')
       return res.redirect('back')
     }
     // check password
     if (password && !checkPassword) {
-      req.flash('error_messages', 'Please confirm password')
+      req.flash('error_messages', '請確認密碼')
       passwordCheck = false
       return res.redirect('back')
     }
     if (!password && checkPassword) {
-      req.flash('error_messages', 'Password should not be empty')
+      req.flash('error_messages', '請填入密碼')
       passwordCheck = false
       return res.redirect('back')
     }
     if (password || checkPassword) {
       if (password !== checkPassword) {
-        req.flash('error_messages', 'Password and confirmed Password are not matched')
+        req.flash('error_messages', '密碼與確認密碼不符')
         passwordCheck = false
         return res.redirect('back')
       } else {
@@ -262,7 +262,7 @@ const userController = {
           password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         })
       }).then(user => {
-        req.flash('success_messages', '輸入成功！')
+        req.flash('success_messages', '賬戶資料更改成功！')
         return res.redirect('back')
       }).catch(err => console.log(err))
     } else {
@@ -274,7 +274,7 @@ const userController = {
           email
         })
       }).then(user => {
-        req.flash('success_messages', '輸入成功！')
+        req.flash('success_messages', '賬戶資料更改成功')
         return res.redirect('back')
       }).catch(err => console.log(err))
     }
@@ -644,11 +644,11 @@ const userController = {
     const id = req.params.userId
     // check user auth
     if (helpers.getUser(req).id !== Number(id)) {
-      req.flash('error_messages', 'You can only edit your account')
+      req.flash('error_messages', '只能編輯自己的賬戶')
       return res.redirect('back')
     }
     if (!req.body.name) {
-      req.flash('error_messages', "name didn't exist")
+      req.flash('error_messages', "請填入名稱")
       return res.redirect('back')
     }
     const { files } = req
@@ -694,7 +694,7 @@ const userController = {
             avatar: avatarURL || user.avatar
           })
         }).then((user) => {
-          req.flash('success_messages', 'User information updated success.')
+          req.flash('success_messages', '用戶資料更新成功')
           return res.redirect('/users/' + id + '/tweets')
           // return res.redirect('/')
         })
@@ -710,7 +710,7 @@ const userController = {
     const loginId = helpers.getUser(req).id
     // check user auth
     if (loginId !== Number(id)) {
-      req.flash('error_messages', 'You can only edit your account')
+      req.flash('error_messages', '只能編輯自己的賬戶')
       return res.redirect('/users/' + loginId + '/tweets')
     }
     return User.findByPk(id).then(user => {
