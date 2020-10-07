@@ -23,12 +23,20 @@
         <img src="{{users.dataValues.cover}}" alt="user-cover" class="user-cover img-fluid">
         <img src="{{users.dataValues.avatar}}" alt="user-avatar" class="user-avatar">
       </div>
+
       <div class="row justify-content-end">
-        <button class="user-edit-btn m-3">編輯個人資料</button>
+        {{#if checkUser}}
+        <!-- Button trigger modal -->
+        <button type="button" class="user-edit-btn m-3" data-toggle="modal" data-target="#exampleModalCenter"> 編輯個人資料
+        </button>
+        {{else}}
+        <div style="height:78px;">&emsp;</div>
+        {{/if}}
       </div>
+
       <div class="row">
         <div class="col">
-          <h4 class="user-name m-0">{{users.dataValues.name}}</h4>
+          <h4 class="user-name m-0 mt-1">{{users.dataValues.name}}</h4>
           <p class="user-account mb-2" style="color:#7B7B7B">{{users.dataValues.account}}</p>
           <p class="user-introduction">{{users.dataValues.introduction}}</p>
           <div class="row pl-3">

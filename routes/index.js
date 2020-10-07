@@ -1,10 +1,5 @@
 const userController = require("../controllers/userController");
 const tweetController = require("../controllers/tweetController");
-<<<<<<< HEAD
-const adminController = require("../controllers/adminController");
-const user = require("../models/user");
-const helpers = require('../_helpers')
-=======
 const adminController = require('../controllers/adminController')
 const helpers = require('../_helpers.js')
 const multer = require('multer')
@@ -13,7 +8,6 @@ const upload = multer({ dest: 'temp/' })
 
 
 // const user = require("../models/user");
->>>>>>> 34f6128188bf56c356d5bccdc257757381e80327
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -62,8 +56,8 @@ module.exports = (app, passport) => {
 
   //userController
   app.get('/users/:id', authenticated, userController.getUser)
-  app.get('/user/:id/follower', authenticated, userController.getFollower)
-  app.get('/user/:id/following', authenticated, userController.getFollowing)
+  app.get('/users/:id/follower', authenticated, userController.getFollower)
+  app.get('/users/:id/following', authenticated, userController.getFollowing)
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
   app.get('/users/:id/likes', authenticated, userController.getUserLikes)
@@ -102,8 +96,7 @@ module.exports = (app, passport) => {
 
   app.get('/admin', authenticatedAdmin, (req, res) => { res.redirect('/admin/tweets') })
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-  app.post('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 
