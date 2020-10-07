@@ -183,6 +183,14 @@ const userController = {
 
   // },
 
+  editUser: (req, res) => {
+    if (!helpers.getUser(req)) {
+      return res.redirect('back')
+    } else {
+      res.render('partials/userEdit')
+    }
+  },
+
 
   putUserInfo: (req, res) => {
     const { files } = req
@@ -339,15 +347,16 @@ const userController = {
 
   addFollowing: (req, res) => {
     const currentUserId = helpers.getUser(req).id
-    const followingUser = Number(req.params.userId)
+    const followingUser = Number(req.body.id)
 
     if (currentUserId === followingUser) {
       req.flash('error_messages', '請嘗試追蹤別人吧！')
-      return res.redirect('back')
+      // return res.redirect('error')
+      return res.render('error')
     } else {
       return Followship.create({
-        followerId: req.user.id,
-        followingId: req.params.userId
+        followerId: currentUserId,
+        followingId: followingUser
       })
         .then((followship) => {
           return res.redirect('back')
@@ -357,7 +366,7 @@ const userController = {
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
-        followerId: req.user.id,
+        followerId: helpers.getUser(req).id,
         followingId: req.params.userId
       }
     })
