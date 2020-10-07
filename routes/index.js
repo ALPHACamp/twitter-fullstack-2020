@@ -1,7 +1,7 @@
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 const tweetController = require("../controllers/tweetController");
-const { addFavorite } = require('../controllers/tweetController');
+
 
 module.exports = (app, passport) => {
 
