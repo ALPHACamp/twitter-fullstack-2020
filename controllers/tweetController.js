@@ -23,7 +23,7 @@ const tweetController = {
       }))
       return User.findOne({ where: { id: req.user.id } })
         .then(user => {
-          return res.render('tweets', { tweets: data, user })
+          return res.render('tweets', { tweets: data, user, users: res.locals.users })
         })
     })
       .catch(error => console.log(error))

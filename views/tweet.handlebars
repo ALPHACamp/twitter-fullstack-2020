@@ -1,11 +1,8 @@
 <div class="row mt-3">
-  <div class="col-md-3 pl-0">
-{{>left}}
-
-</div>
-
-<div class="col-md-6 px-3 border-left border-right">
-
+  <div class="col-md-2 pl-0">
+    {{>left}}
+  </div>
+  <div class="col-md-7 px-3 border-left">
     <div class="main-content">
       <div class="main-title">
         <a href="/tweets" class="ml-1 mr-4">
@@ -17,7 +14,7 @@
       <div class="tweet-content mt-3">
         <div class=" d-flex justify-content-start align-items-center">
 
-          <img src="{{tweet.User.dataValues.avatar}}" class="rounded-circle px-3 mx-3"
+          <img src="{{tweet.User.dataValues.avatar}}" class="rounded-circle"
             style="width: 50px;height: 50px;background: #C4C4C4;">
 
           <div class="col ml-1">
@@ -97,6 +94,9 @@
         <hr class="mt-2 mb-2 ml-2" style="width:100%;" />
       {{/each}}
     </div>
+  </div>
+  <div class="col-md-3 p-0">
+      {{>right}}
   </div>
 </div>
 

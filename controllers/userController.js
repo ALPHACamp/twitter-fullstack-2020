@@ -50,12 +50,10 @@ const userController = {
     res.redirect('/signin')
   },
   getUser: (req, res) => {
-    const realUserId = req.user.id
-    User.findByPk(req.user.id)
+    User.findByPk(req.params.id)
       .then(user => {
-        return res.render('user/self')
+        return res.render('user/self', {test:123})
       })
-
   },
   editUser: (req, res) => {
     return User.findByPk(req.params.id)
@@ -150,7 +148,7 @@ const userController = {
   addFollowing: (req, res) => {
     return Followship.create({
       followerId: req.user.id,
-      followingId: req.params.userId
+      followingId: req.params.id
     })
       .then((followship) => {
         return res.redirect('back')
@@ -160,7 +158,7 @@ const userController = {
     return Followship.findOne({
       where: {
         followerId: req.user.id,
-        followingId: req.params.userId
+        followingId: req.params.id
       }
     })
       .then((followship) => {
@@ -181,7 +179,7 @@ const userController = {
           FollowersCount: user.Followers.length
         }))
         users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
-        res.locals.users = users
+        res.locals.users = users;
         return next()
       })
   },
