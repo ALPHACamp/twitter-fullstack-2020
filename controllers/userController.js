@@ -64,7 +64,6 @@ const userController = {
     res.redirect('/signin')
   },
 
-
   getSetting: (req, res) => {
     return res.render('setting')
   },
@@ -111,7 +110,6 @@ const userController = {
       })
   },
 
-
   getFollowing: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [Tweet,
@@ -127,22 +125,27 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    User.findByPk(req.params.id, {
-      include: [
-        { model: Reply, include: [Tweet] },
-        { model: Tweet, as: 'LikedUsers' },
+    const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
+
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
-    }).then(user => {
-      const userSelf = helpers.getUser(req).id
-      const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
-      res.render({
-        user: user,
-        isLiked: isLiked,
-        userSelf: userSelf
-      })
     })
+      .then(users => {
+        return Tweet.findAll({
+          where: { UserId: req.params.id },
+          include: [User, Reply, Like],
+          order: [['createdAt', 'DESC']]
+        })
+          .then(tweets => {
+            return res.render('user', { users, tweets, checkUser })
+          })
+        // const userSelf = helpers.getUser(req).id
+        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
+      })
   },
 
   addFollowing: (req, res) => {
@@ -230,11 +233,78 @@ const userController = {
     }))
     req.flash('successMessage', '更新成功！')
     res.redirect(`/users/self`)
-
   },
 
+  getUserLikes: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, as: 'LikedTweets' }
+      ]
+    })
+      .then(users => {
+        return Like.findAll({
+          where: { UserId: req.params.id },
+          include: [{ model: Tweet, include: [User, Reply, Like] }],
+          order: [['createdAt', 'DESC']]
+        })
+          .then(like => {
+            // console.log(like)
+            return res.render('likes', { users, like })
+          })
+        // const userSelf = helpers.getUser(req).id
+        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
+      })
+  },
 
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: Reply, include: [User, Tweet, Like] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, as: 'LikedTweets' }
+      ]
+    })
+      .then(users => {
+        return Tweet.findAll({
+          where: { UserId: req.params.id },
+          include: [User, Reply, Like],
+          order: [['createdAt', 'DESC']]
+        })
+          .then(tweets => {
+            const tweetsAndRepliesList = []
+            tweets = tweets.map(tweet => ({
+              ...tweet.dataValues
+            }))
+            console.log(users)
+            console.log('----------------------------------')
+            console.log(tweets)
+            return res.render('replies', { users, tweets })
 
+          })
+        // const userSelf = helpers.getUser(req).id
+        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
+      })
+  },
+
+  getTopFollowers: (req, res, next) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+      .then(users => {
+        users = users.map(user => ({
+          ...user.dataValues,
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+          FollowersCount: user.Followers.length
+        }))
+        // users = users.filter(user => user.name !== helpers.getUser(req).name && (!user.role))
+        users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
+        res.locals.users = users
+        return next()
+      })
+  }
 
 }
 

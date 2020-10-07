@@ -6,6 +6,9 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 
+
+// const user = require("../models/user");
+
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -56,6 +59,8 @@ module.exports = (app, passport) => {
   app.get('/user/:id/following', authenticated, userController.getFollowing)
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.get('/users/:id/likes', authenticated, userController.getUserLikes)
+  app.get('/users/:id/replies', authenticated, userController.getUserReplies)
   app.post("/like/:id", authenticated, userController.addLike);
   app.delete("/unlike/:id", authenticated, userController.removeLike);
 
