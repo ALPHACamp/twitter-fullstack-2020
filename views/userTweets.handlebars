@@ -99,30 +99,62 @@
 		{{!-- 推文 --}}
 		<div class="tab-pane active" id="tweets">
 			{{#each tweets}}
-			<div class="card mb-3" style="max-width: 900px;">
-				<div class="row no-gutters">
-					<div class="col-md-4">
-						<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
+			<div class="tweet" style="max-width: 900px;">
+				<div class="d-flex">
+					<div class="tweet-left">
+						<a href="/users/{{this.User.id}}/tweets">
+							<img src="{{ this.User.avatar }}" class="rounded-circle" alt="no avatar" width="100" height="100">
+						</a>
 					</div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h5 class="card-title">
-								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-								<small class="text-muted">{{moment this.createdAt }}</small>
-							</h5>
-							<p class="card-text">
-								{{this.description}}
+					<div class="tweet-right">
+						<a class="tweet-name" href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+						<small class="text-muted">@{{this.User.account}}•{{moment this.createdAt }}</small>
+						<div onclick="location.href='/replylist/{{ this.id }}';">
+							<p style="overflow: hidden; word-break:break-word">
+								{{ this.description }}
 							</p>
+						</div>
+						<div class="tweet-reaction d-flex" style="background-color:#ffffff">
+							<form action="/replylist/{{ this.id }}" method="POST">
+								<!-- a modal -->
+								<a data-toggle="modal" href="#exampleModalCenter{{ this.id }}"><i class="far fa-comment fa-sm"></i></a>
+								<!-- Reply Modal -->
+								<div class="modal fade" id="exampleModalCenter{{ this.id }}" tabindex="-1" role="dialog"
+									aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+									<div class="modal-dialog modal-dialog-centered" role="document">
+										<div class="modal-content">
+											<div class="col-md-10">
+												<a href="/users/{{this.User.id}}/tweets">
+													<img class="rounded-circle" src="{{ this.User.avatar }}" width="50" height="50">
+												</a>
+												<span>{{this.User.name}}/{{moment this.createdAt}}</span>
+												<p>{{this.description}}</p>
+												回覆給
+												<a href="/users/{{this.User.id}}/tweets">
+													@{{this.User.account}}
+												</a>
+											</div>
+											<div class="form-group">
+												<img src="{{ ../user.avatar }}" class="rounded-circle" width="50" height="50">
+												<span>推你的回覆</span>
+												<textarea class="form-control" id="text" name="text" rows="3"
+													style="max-width: 900px;"></textarea>
+											</div>
+											<input type="hidden" name="tweetId" value="{{this.id}}" />
+											<button type="submit" class="btn btn-info btn-sm">回覆</button>
+										</div>
+									</div>
+								</div>
+							</form>
 							{{!-- like --}}
 							{{#if isLiked }}
 							<form action="/like/{{this.id}}?_method=DELETE" method="POST">
-								<button type="submit" class="fas fa-heart"></button>
-								({{this.LikeCount}})
+								<button type="submit" style="outline: none;"><i class="fas fa-heart fa-sm"
+										style="color: #e0255e;"></i></button>
 							</form>
 							{{else}}
 							<form action="/like/{{this.id}}" method="POST">
-								<button type="submit" class="far fa-heart"></button>
-								({{this.LikeCount}})
+								<button type="submit" style="outline: none;"><i class="far fa-heart fa-sm"></i></button>
 							</form>
 							{{/if}}
 						</div>
@@ -134,23 +166,37 @@
 		{{!-- 推文與回覆 --}}
 		<div class="tab-pane" id="tweetreply">
 			{{#each profile.ReplyTweet}}
-			<div class="card mb-3" style="max-width: 900px;">
-				<div class="row no-gutters">
-					<div class="col-md-4">
-						<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar" width="150" height="150">
+			<div class="tweet" style="max-width: 900px;">
+				<div class="d-flex">
+					<div class="tweet-left">
+						<a href="/users/{{this.User.id}}/tweets">
+							<img src="{{ this.User.avatar }}" class="rounded-circle" alt="no avatar" width="100" height="100">
+						</a>
 					</div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h5 class="card-title">
-								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-								<small class="text-muted">{{moment this.createdAt }}</small>
-							</h5>
-							<p class="card-text">
-								{{this.description}}
+					<div class="tweet-right">
+						<a class="tweet-name" href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+						<small class="text-muted">@{{this.User.account}}•{{moment this.createdAt }}</small>
+						<div onclick="location.href='/replylist/{{ this.id }}';">
+							<p style="overflow: hidden; word-break:break-word">
+								{{ this.description }}
 							</p>
-							<p class="card-text">
-								{{this.Reply.comment}}
-							</p>
+						</div>
+						<div class="tweet-reaction d-flex" style="background-color:#ffffff">
+							<form action="/replylist/{{ this.id }}" method="POST">
+								<!-- a modal -->
+								<a><i class="far fa-comment fa-sm"></i></a>
+							</form>
+							{{!-- like --}}
+							{{#if isLiked }}
+							<form action="/like/{{this.id}}?_method=DELETE" method="POST">
+								<button type="submit" style="outline: none;"><i class="fas fa-heart fa-sm"
+										style="color: #e0255e;"></i></button>
+							</form>
+							{{else}}
+							<form action="/like/{{this.id}}" method="POST">
+								<button type="submit" style="outline: none;"><i class="far fa-heart fa-sm"></i></button>
+							</form>
+							{{/if}}
 						</div>
 					</div>
 				</div>
@@ -160,20 +206,31 @@
 		{{!-- 喜歡的內容 --}}
 		<div class="tab-pane" id="tweetlike">
 			{{#each profile.LikedTweets}}
-			<div class="card mb-3" style="max-width: 900px;">
-				<div class="row no-gutters">
-					<div class="col-md-4">
-						<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar " width="150" height="150">
+			<div class="tweet" style="max-width: 900px;">
+				<div class="d-flex">
+					<div class="tweet-left">
+						<a href="/users/{{this.User.id}}/tweets">
+							<img src="{{ this.User.avatar }}" class="rounded-circle" alt="no avatar" width="100" height="100">
+						</a>
 					</div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h5 class="card-title">
-								<a href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
-								<small class="text-muted">{{moment this.createdAt }}</small>
-							</h5>
-							<p class="card-text">
-								{{this.description}}
+					<div class="tweet-right">
+						<a class="tweet-name" href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
+						<small class="text-muted">@{{this.User.account}}•{{moment this.createdAt }}</small>
+						<div onclick="location.href='/replylist/{{ this.id }}';">
+							<p style="overflow: hidden; word-break:break-word">
+								{{ this.description }}
 							</p>
+						</div>
+						<div class="tweet-reaction d-flex" style="background-color:#ffffff">
+							<form action="/replylist/{{ this.id }}" method="POST">
+								<!-- a modal -->
+								<a><i class="far fa-comment fa-sm"></i></a>
+							</form>
+							{{!-- like --}}
+							<form action="/like/{{this.id}}?_method=DELETE" method="POST">
+								<button type="submit" style="outline: none;"><i class="fas fa-heart fa-sm"
+										style="color: #e0255e;"></i></button>
+							</form>
 						</div>
 					</div>
 				</div>
