@@ -47,6 +47,12 @@ html{ height:100%}
   border-bottom: 1px solid #E6EcF0;
 }
 
+.main-follow-top {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px;
+}
+
 #main img {
   width: 50px;
   height: 50px;
