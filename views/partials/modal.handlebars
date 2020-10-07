@@ -71,12 +71,12 @@
           <div class="edit-modal-header">
             <div class="d-inline-flex justify-content-between">
               <div class="edit-left-top">
-                <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">&times;
+                <button type="button" data-dismiss="modal" aria-label="Close"
+                  class="tweet-modal-close-button btn btn-outline-warning">
+                  <span aria-hidden="true">&times;</span>
                 </button>
                 <a class="font-weight-bold"><span>編輯個人資料</span></a>
               </div>
-
-
             </div>
           </div>
 
@@ -84,20 +84,21 @@
           <div class="edit-modal-body">
 
             <div class="edit-item-avatar rounded-circle" style="background: url({{user.avatar}}),#C4C4C4;
-                      position: absolute; max-width: 25%; top:8%; left:35%;border: 5px solid white;">
+                      position: absolute; max-width: 20%; top:22%; left:8%;border: 5px solid white;">
 
               <label for="avatar"><i class="icon-photo avatar"></i></label>
               <input type="file" name="avatar" class="custom-file-input" id="avatar">
             </div>
 
-            <div class="edit-item-cover" style="background: url({{user.background}});border-radius: 15px 15px 0 0">
+            <div class="edit-item-cover"
+              style="background: url({{user.background}});border-radius: 15px 15px 15px 15px width:100%;height: 150px">
               <label for="background"><i class="icon-photo background"></i></label>
               <input type="file" name="background" class="custom-file-input" id="background">
-              <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button>
+              {{!-- <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button> --}}
             </div>
 
 
-            <div class="edit-item-name row justify-content-center mt-2">
+            <div class="edit-item-name row justify-content-center mt-5">
               <div class="item-name-top">
                 <span class="item-name-top-mark">Name</span>
               </div>
@@ -111,12 +112,17 @@
                 <span class="item-text-top-mark ">自我介紹</span>
               </div>
               <textarea name="introduction" id="introduction" placeholder="introduction" maxlength="160"
-                class="item-text-center ml-5" cols="30" rows="10">{{user.introduction}}</textarea>
+                class="item-text-center ml-2 mr-2" cols="60" rows="10">{{user.introduction}}</textarea>
               <div class="item-text-bottom row justify-content-center">
                 <span>{{user.introduction.length}}/160</span>
               </div>
               <div class="edit-right-top">
-                <button type="submit" class="btn btn-post-modal">儲存</button>
+
+                <div class="row justify-content-end mr-2 mb-2">
+                  <button type="submit"
+                    style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+                    <span style="color: #FFFFFF;">儲存</span></button>
+                </div>
               </div>
             </div>
           </div>
