@@ -36,7 +36,7 @@ module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
-        return res.redirect('/admin/tweets')
+        return res.redirect('/signin')
       }
       return next()
     }
