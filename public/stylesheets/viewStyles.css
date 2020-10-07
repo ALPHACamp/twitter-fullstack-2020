@@ -278,6 +278,11 @@ a:hover {
   color: #ffff;
   border-radius: 100px;
 }
+.tweets-list {
+  overflow-y: scroll;
+  width: 600px;
+  height: 100vh;
+}
 
 .btn-tweet-2:focus,
 .btn-tweet-2:active {
@@ -289,19 +294,20 @@ a:hover {
   display: flex;
   border-radius: 0px !important;
   border-bottom: 0.5px solid #e6ecf0;
-  width: 600px;
+  /* width: 600px; */
 }
 
 .tweets-body {
   display: flex !important;
   padding: 0px !important;
 }
-
-
+.tweets-content .left-item .tweet-user-avatar {
+  border-radius: 25px;
+}
 .tweets-content .left-item {
   margin-left: 15px;
   margin-top: 13px;
-} 
+}
 
 .tweets-content .right-item {
   width: 530px;
@@ -401,7 +407,7 @@ a:hover {
 .reply-content .left-item {
   margin-left: 15px;
   margin-top: 13px;
-} 
+}
 
 .reply-content .right-item {
   width: 450px;
@@ -940,7 +946,7 @@ a:hover {
   display: inline-flex;
   flex-wrap: wrap;
   height: 100vh;
-  overflow-y: scroll;  
+  overflow-y: scroll;
 }
 
 .user-list-item {
@@ -1033,7 +1039,7 @@ a:hover {
   background-color: #f5f8fa !important;
 }
 
-.edit-item-cover img{
+.edit-item-cover img {
   position: absolute;
   height: 200px;
   width: 600px;
@@ -1063,7 +1069,7 @@ a:hover {
 }
 
 .edit-item-cover input,
-.edit-item-avatar input{
+.edit-item-avatar input {
   display: none;
 }
 
@@ -1088,7 +1094,7 @@ a:hover {
   height: 120px;
 }
 
-.edit-item-avatar img{
+.edit-item-avatar img {
   position: absolute;
   top: -5px;
   left: -5px;
@@ -1096,8 +1102,8 @@ a:hover {
   border-radius: 100px;
   width: 120px;
   height: 120px;
-  background-position:center;
-  background-size:cover;
+  background-position: center;
+  background-size: cover;
 }
 
 .edit-item-avatar label {
@@ -1241,7 +1247,7 @@ a:hover {
 }
 
 .followship-lists {
-   margin-top: -10px;
+  margin-top: -10px;
 }
 
 .followship-content {

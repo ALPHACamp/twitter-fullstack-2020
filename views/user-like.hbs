@@ -74,8 +74,10 @@
       <div class="tweets-content">
         <div class="left-item">
           <a href="/users/{{this.id}}">
-            <img src="{{this.User.avatar}}" class="rounded-circle"
-              style="width: 50px;height:50px;background-color:#C4C4C4;">
+
+            <div class="tweet-user-avatar"
+              style="width: 50px;height:50px;background:url({{this.User.avatar}})#C4C4C4;background-repeat:no-repeat;background-position: center;background-size: cover;">
+            </div>
           </a>
         </div>
         <div class="right-item">
@@ -108,7 +110,7 @@
                 </button>
                 <div class="like-item-count item-count">{{this.LikedByUsers.length}}</div>
                 {{else}}
-                <form action="/tweets/{{this.id}}/like" method="post">
+                <form action="/tweets/{{this.id}}/like" method="post" class="form-like">
                   <button type="submit" class="btn">
                     <i class="icon-like"></i>
                   </button>
@@ -121,6 +123,7 @@
       </div>
       {{/each}}
     </div>
+
   </div>
 
   {{> right-column}}
