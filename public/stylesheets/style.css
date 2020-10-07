@@ -154,7 +154,7 @@ label {
 
 .right-content {
   position: fixed;
-  right: 50px;
+  right: 20px;
   top: 0;
 }
 
@@ -392,6 +392,13 @@ color:  #ff6600!important;
 
   background: url(.jpg), #C4C4C4;
   border-radius: 10px 10px 0px 0px;
+}
+
+.tweet-setting {
+  margin-left: 200px;
+  border-left: 1px solid #E6ECF0;
+  width: 50vw;
+  height: 100vh;
 }
 
 #tweet-user {
