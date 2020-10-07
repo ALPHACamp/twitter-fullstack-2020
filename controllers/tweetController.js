@@ -23,7 +23,7 @@ const tweetController = {
       }))
       return User.findOne({ where: { id: req.user.id } })
         .then(user => {
-          return res.render('tweets', { tweets: data, user })
+          return res.render('tweets', { tweets: data, user, users: res.locals.users })
         })
     })
       .catch(error => console.log(error))
@@ -100,7 +100,7 @@ const tweetController = {
     if (req.body.comment.length > 140) {
       return res.redirect('back')
     }
-    Reply.create({
+    return Reply.create({
       TweetId: req.params.id,
       UserId: req.user.id,
       comment: req.body.comment,
