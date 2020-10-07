@@ -86,11 +86,21 @@
             </div>
           </div>
           <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
-            {{this.dataValues.description}}
+            {{this.description}}
           </div>
           <div>
-            <i class="far fa-comment" style="color: #7B7B7B">&ensp;{{this.dataValues.Replies.length}}</i>
-            <i class="far fa-heart ml-5" style="color: #7B7B7B">&ensp;{{this.dataValues.Likes.length}}</i>
+            <i class="far fa-comment" style="color: #7B7B7B">&ensp;{{this.Replies.length}}</i>
+            {{#if isLiked}}
+            <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit" class="ml-5" style="color: #7B7B7B;background: none;border: none;">
+                <i class="fas fa-heart">&ensp;{{this.Likes.length}}</i>
+                {{else}}
+                <form action="/like/{{this.id}}" method="POST" style="display:inline; ">
+                  <button type="submit" class="ml-5" style="color: #7B7B7B;background: none;border: none;">
+                    <i class="far fa-heart">&ensp;{{this.Likes.length}}</i>
+                    {{/if}}
+                  </button>
+                </form>
           </div>
         </div>
       </div>
