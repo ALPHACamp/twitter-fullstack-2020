@@ -49,7 +49,16 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+<<<<<<< HEAD
 
+=======
+  getUser: (req, res) => {
+    User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('user/self', {test:123})
+      })
+  },
+>>>>>>> master
   editUser: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
@@ -145,7 +154,7 @@ const userController = {
   addFollowing: (req, res) => {
     return Followship.create({
       followerId: req.user.id,
-      followingId: req.params.userId
+      followingId: req.params.id
     })
       .then((followship) => {
         return res.redirect('back')
@@ -155,7 +164,7 @@ const userController = {
     return Followship.findOne({
       where: {
         followerId: req.user.id,
-        followingId: req.params.userId
+        followingId: req.params.id
       }
     })
       .then((followship) => {
@@ -176,7 +185,7 @@ const userController = {
           FollowersCount: user.Followers.length
         }))
         users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
-        res.locals.users = users
+        res.locals.users = users;
         return next()
       })
   },
@@ -184,7 +193,10 @@ const userController = {
   getTweets: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        { model: Tweet, include: [Reply, { model: User, as: 'LikeUsers' },] },
+        { model: Tweet, include: [ 
+          { model: Reply}, 
+          { model: User, as: 'LikeUsers' }
+      ]},
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],

@@ -1,0 +1,38 @@
+ <div class="right-zone">
+    <ul class="list-group">
+        <li class="list-group-item d-flex">
+            跟隨誰
+        </li>
+    {{#each users}}
+        <li class="list-group-item d-flex">
+            <div class="tweet-item-left d-flex align-items-stretch">
+              <div class="tweet-left d-flex align-items-stretch">
+                <a href="/user/{{ this.id }}/tweets">
+                  <img src="{{this.avatar}}" class="rounded-circle"
+                    style="background-size:cover; width: 50px;height: 50px;">
+                </a>
+              </div>
+              <div class="tweet-item-right ml-3">
+                <div class="tweet-item-title">
+                    <span class="mt-1"><a href="/user/{{ this.id }}/tweets">{{this.name}}</a></span>
+                </div>
+                <div class="tweet-text">
+                    <span class="mt-1 text-secondary" style="font-size: .5rem;">@{{this.account}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="pt-2" style="width: 100%;text-align: right;">
+                {{#if this.isFollowed}}
+                <form action="/following/{{ this.id }}?_method=DELETE" method="POST">
+                    <button class="btn btn-warning" style="">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/following/{{ this.id }}" method="POST">
+                    <button class="btn btn-outline-warning" style="">跟隨</button>
+                </form>
+                {{/if}}
+            </div>
+        </li>
+    {{/each}}
+    </ul>
+ </div>

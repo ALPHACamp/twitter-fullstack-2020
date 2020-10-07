@@ -1,13 +1,9 @@
 <div class="row mt-3">
-  <div class="col-md-3 pl-0">
-
+  <div class="col-md-2 pl-0">
    {{>left}}
-
    {{>modal}}
- 
-
   </div>
-  <div class="col-md-9 px-0 border-left">
+  <div class="col-md-7 p-1 border-left">
     <div class="main">
       <div class="header"
         style="width: 600px;height: 55px;left: 378px;top: -1px;background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;">
@@ -15,12 +11,11 @@
       <div class="body">
         <div class="body-avatar d-flex align-items-stretch">
           <div class="right">
-            <a href="/tweets/{{User.dataValues.id}}">
-              <img src="{{User.dataValues.avatar}}" class="rounded-circle"
+            <a href="/user/{{user.id}}/tweets">
+              <img src="{{user.avatar}}" class="rounded-circle"
                 style="width: 50px;height: 50px;background: #C4C4C4;">
             </a>
           </div>
-
           <div class="left" class="d-flex">
             <form method="POST" action="/tweets">
               <textarea name="description" cols="55" rows="5"
@@ -51,7 +46,7 @@
                 <div class="tweet-item-title">
                   <span class="mt-1"><a href="/user/{{ this.UserId }}/tweets">{{this.User.dataValues.name}}</a></span>
                   <span class="user-account">
-                    {{this.User.dataValues.account}}．{{moment User.dataValues.createdAt}}
+                    {{this.User.dataValues.account}}．{{moment this.createdAt}}
                   </span>
 
                 </div>
@@ -100,3 +95,7 @@
 
     </div>
   </div>
+  <div class="col-md-3 p-0">
+    {{>right}}
+  </div>
+</div>

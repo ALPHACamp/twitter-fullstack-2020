@@ -1,9 +1,9 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-3 pl-0">
+        <div class="col-md-2 pl-0">
             {{>left}}
         </div>
-        <div class="col-md-6 pl-0 border-left">
+        <div class="col-md-7 pl-0 border-left">
             <div class="row ml-1 align-items-center ">
                 <a href="/tweets" style="text-decoration: none; color:black">
                     <i class="fas fa-arrow-left fa-lg"></i>
@@ -23,6 +23,13 @@
                         <img src="{{ pageUser.avatar }}" alt="pageUser-avatar" class="rounded-circle"
                             style="mborder-radius: 50%; position: absolute; top: 160px; left: 3%; border: 5px solid #FFFFFF;">
                     </div>
+                    {{#ifCond user.id pageUser.id}}
+                        <div class="row justify-content-end">
+                            <button class="m-3" data-toggle="modal" data-target="#editModal"
+                            style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">編輯個人資料</button>
+                        </div>
+                    {{>modal}}
+                    {{/ifCond}}
                     <div class=" justify-content ml-2 mt-5">
                         <h2>{{ pageUser.name }}</h2>
 
@@ -59,7 +66,7 @@
                                                 <span class="mt-1"><a
                                                         href="/user/{{ this.Tweet.User.id }}/tweets">{{ this.Tweet.User.name }}</a></span>
                                                 <span class="user-account">
-                                                    {{ this.Tweet.User.account }}．{{moment this.Tweet.createdAt}}
+                                                    {{ this.Tweet.User.account }}．{{moment this.createdAt}}
                                                 </span>
                                             </div>
                                             <div class="tweet-text">
@@ -100,66 +107,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <h3>誰在追蹤您</h3>
-            <div class="col">
-                <div class="tweet-list">
-                    {{#each followers}}
-                    <div class="tweet">
-                        <div class="tweet-item-left d-flex align-items-stretch">
-                            <div class="tweet-left d-flex align-items-stretch">
-                                <a href="/user/other/{{ this.id }}">
-                                    <img src="{{ this.avatar }}" class="rounded-circle"
-                                        style="background-size:cover; width: 50px;height: 50px;">
-                                </a>
-                            </div>
-                            <div class="tweet-item-right  ml-3">
-                                <div class="tweet-item-title">
-                                    <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
-                                </div>
-                                <div class="tweet-text">
-                                    <span class="user-account">
-                                        {{ this.account }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{/each}}
-                </div>
-            </div>
-            <h3>追蹤誰</h3>
-            <div class="col">
-                <div class="tweet-list">
-                    {{#each followings}}
-                    <div class="tweet">
-                        <div class="tweet-item-left d-flex align-items-stretch">
-                            <div class="tweet-left d-flex align-items-stretch">
-                                <a href="/user/other/{{ this.id }}">
-                                    <img src="{{ this.avatar }}" class="rounded-circle"
-                                        style="background-size:cover; width: 50px;height: 50px;">
-                                </a>
-                            </div>
-                            <div class="tweet-item-right  ml-3">
-                                <div class="tweet-item-title">
-                                    <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
-                                </div>
-                                <div class="tweet-text">
-                                    <span class="user-account">
-                                        {{ this.account }}
-                                    </span>
-                                </div>
-                            </div>
-                            {{/each}}
-                        </div>
-                        <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            ...</div>
-                        <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">
-                            ...
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-md-3 p-0">
+            {{>right}}
         </div>
     </div>
 </div>

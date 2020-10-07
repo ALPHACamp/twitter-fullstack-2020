@@ -42,7 +42,7 @@ module.exports = (app, passport) => {
 
   app.get("/", (req, res) => res.redirect("/tweets"))
   app.get("/tweets", authenticated, userController.getUsersHavingTopFollowers, tweetController.getTweets)
-  app.get("/tweets/:id", authenticated, tweetController.getTweet)
+  app.get("/tweets/:id", authenticated, userController.getUsersHavingTopFollowers, tweetController.getTweet)
   app.post('/tweets', authenticated, tweetController.createTweet)
   app.post('/tweets/:id/replies', authenticated, tweetController.postReply)
   app.get('/tweets/:id/replies', authenticated, tweetController.getReply)
@@ -54,7 +54,7 @@ module.exports = (app, passport) => {
   app.post('/like/:tweetId', authenticated, tweetController.addLike)
   app.delete('/like/:tweetId', authenticated, tweetController.removeLike)
   // setting使用者能編輯自己的 account、name、email 和 password
-  app.get('/setting', authenticated, userController.getSetting)
+  app.get('/setting', authenticated, userController.getUsersHavingTopFollowers, userController.getSetting)
   app.put('/setting', authenticated, userController.putSetting)
 
 
@@ -63,12 +63,13 @@ module.exports = (app, passport) => {
   // app.get('/users/:id', authenticated, userController.editUser)
   app.put('/user/:id', authenticated, userController.putUser)
 
+
   app.get('/user/:id/follower', userController.getUsersHavingTopFollowers, authenticated, userController.getFollower)
   app.get('/user/:id/following', userController.getUsersHavingTopFollowers, authenticated, userController.getFollowing)
+  app.get('/user/:id/tweets', authenticated, userController.getUsersHavingTopFollowers, userController.getTweets)
+  app.get('/user/:id/replies', authenticated, userController.getUsersHavingTopFollowers, userController.getReplies)
+  app.get('/user/:id/likes', authenticated, userController.getUsersHavingTopFollowers, userController.getlikes)
 
-  app.get('/user/:id/tweets', authenticated, userController.getTweets)
-  app.get('/user/:id/replies', authenticated, userController.getReplies)
-  app.get('/user/:id/likes', authenticated, userController.getlikes)
 
   app.post('/following/:id', authenticated, userController.addFollowing)
   app.delete('/following/:id', authenticated, userController.removeFollowing)

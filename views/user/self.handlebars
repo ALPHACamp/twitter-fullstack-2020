@@ -1,8 +1,17 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-3 pl-0">
-      {{>left}}
-      {{>modal}}
+<div class="row">
+  <div class="col-md-2 pl-0">
+    {{>left}}
+    {{>modal}}
+  </div>
+  <div class="col-md-7 pl-0 border-left">
+    <div class="row ml-1 align-items-center ">
+      <a href="/tweets" style="text-decoration: none; color:black">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </a>
+      <div class="ml-5">
+        <h4 class="m-0 font-weight-bold" style="color:#FF6600">{{user.name}}</h4>
+        <p class="followship-tweetsCount m-0" style="color:#7B7B7B">{{user.Tweets.length}}推文</p>
+      </div>
     </div>
     <div class="col-md-6 pl-0 border-left">
       <div class="row ml-1 align-items-center ">
@@ -107,66 +116,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-3">
-      <h3>誰在追蹤您</h3>
-      <div class="col">
-        <div class="tweet-list">
-          {{#each followers}}
-          <div class="tweet">
-            <div class="tweet-item-left d-flex align-items-stretch">
-              <div class="tweet-left d-flex align-items-stretch">
-                <a href="/user/other/{{ this.id }}">
-                  <img src="{{ this.avatar }}" class="rounded-circle"
-                    style="background-size:cover; width: 50px;height: 50px;">
-                </a>
-              </div>
-              <div class="tweet-item-right  ml-3">
-                <div class="tweet-item-title">
-                  <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
-                </div>
-                <div class="tweet-text">
-                  <span class="user-account">
-                    {{ this.account }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          {{/each}}
-        </div>
-      </div>
-      <h3>追蹤誰</h3>
-      <div class="col">
-        <div class="tweet-list">
-          {{#each followings}}
-          <div class="tweet">
-            <div class="tweet-item-left d-flex align-items-stretch">
-              <div class="tweet-left d-flex align-items-stretch">
-                <a href="/user/other/{{ this.id }}">
-                  <img src="{{ this.avatar }}" class="rounded-circle"
-                    style="background-size:cover; width: 50px;height: 50px;">
-                </a>
-              </div>
-              <div class="tweet-item-right  ml-3">
-                <div class="tweet-item-title">
-                  <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
-                </div>
-                <div class="tweet-text">
-                  <span class="user-account">
-                    {{ this.account }}
-                  </span>
-                </div>
-              </div>
-              {{/each}}
-            </div>
-            <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">
-              ...</div>
-            <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">
-              ...
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="col-md-3 p-0">
+      {{>right}}
     </div>
   </div>
-</div>
