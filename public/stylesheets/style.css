@@ -910,3 +910,12 @@ display: flex;
   transition: all 600ms cubic-bezier(0.645, 0.045, 0.355, 1);
   transform: scale(1.1);
 } 
+
+.alert {
+  z-index: 2;
+  margin: 30px;
+  width: 300px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+}
