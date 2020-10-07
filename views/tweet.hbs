@@ -12,7 +12,7 @@
             style="border-radius: 50%; height: 50px; width: 50px">
         </a>
         <div>
-          <strong>{{tweet.User.name}}</strong><br>
+          <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{tweet.User.name}}</strong><br></a>
           <font class="text-muted">@{{tweet.User.account}}</font>
         </div>
         {{#ifCond loginUser.id tweet.User.id}}
@@ -38,11 +38,10 @@
       <strong>{{tweet.Likes.length}}</strong> 喜歡次數
     </li>
     <li class="list-group-item">
-      <button data-toggle="modal" data-target="#s{{tweet.id}}" class="mr-5 btn-push"><i
-          class="far fa-comment-alt fa-lg"></i></button>
+      <button data-toggle="modal" data-target="#s{{tweet.id}}" class="mr-5 btn-push"><i class="far fa-comment mr-3 fa-lg" style="color: grey;"></i></button>
       {{#if isLikedTweet}}
         <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline-block;">
-          <button type="submit" class="btn-push"><i class="fas fa-heart fa-lg"></i></button>
+          <button type="submit" class="btn-push"><i class="fas fa-heart fa-lg" style="color: rgb(224, 36, 94); ;"></i></button>
         </form>
       {{else}}
         <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: inline-block;">
@@ -54,7 +53,7 @@
       <li class="list-group-item">
         <div class="flex-container">
           <div>
-            <a href="/users/{{this.User.id}}">
+            <a href="/users/{{this.User.id}}/tweets">
               <img class="mr-2" src="{{this.User.avatar}}" alt="user avatar"
                 style="width: 50px; height: 50px; border-radius: 50%;">
             </a>
@@ -72,22 +71,22 @@
                 </div>
               </div>
             {{/ifCond}}
-            <strong>{{this.User.name}}</strong>
+            <a href="/users/{{this.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
             <font class="text-muted">@{{this.User.account}} • {{moment this.updatedAt}}</font>
             <br>
             <font class="text-muted" size="2px">回覆</font>
-            <a href="" style="color: coral;" style="font-size: 2px;">@{{../tweet.User.name}}</a>
+            <a href="/users/{{../tweet.User.id}}/tweets" style="color: coral; text-decoration:none;" style="font-size: 2px;">@{{../tweet.User.name}}</a>
             <p>{{this.comment}}</p>
             <div>
               <button data-toggle="modal" data-target="#r{{this.id}}"
                 style="float: left; color:black; font-size:10px; border:none; background-color:white;"><i
-                  class="far fa-comment-alt"></i></button>
+                  class="far fa-comment" style="color: grey;"></i></button>
               <div style="float: left; font-size:10px; margin-right: 25px;">{{this.ReplyComments.length}}</div>
             </div>
             {{#if this.isLikedReply}}
               <form action="/like/{{this.id}}/replies?_method=DELETE" method="POST" style="float: left;">
                 <button type="submit" class="btn-push" style="float: left; font-size: 10px;"><i
-                    class="fas fa-heart"></i></button>
+                    class="fas fa-heart" style="color: rgb(224, 36, 94); ;"></i></button>
               </form>
               <div style="font-size:10px; float: left;">{{this.Likes.length}}</div>
             {{else}}

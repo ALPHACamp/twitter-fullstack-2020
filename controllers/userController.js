@@ -6,6 +6,7 @@ const fs = require('fs')
 const { resolve } = require('path')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 let more = 10
 const jwt = require('jsonwebtoken')
 const passportJWT = require('passport-jwt')
@@ -22,7 +23,7 @@ const userController = {
     let password = req.body.password
     User.findOne({ where: { account: useraccount } }).then(user => {
       if (!user) return res.status(401).json({ status: 'error', message: 'no such user found' })
-      if(!bcrypt.compareSync(password, user.password)) {
+      if (!bcrypt.compareSync(password, user.password)) {
         return res.status(401).json({ status: 'error', message: 'passwords did not match' })
       }
       // 簽發 token
@@ -189,10 +190,10 @@ const userController = {
   },
 
   getUserSettings: (req, res) => {
-    const reqUser = helpers.getUser(req)
-    return User.findByPk(reqUser.id).then(user => {
+    const loginUser = helpers.getUser(req)
+    return User.findByPk(loginUser.id).then(user => {
       return res.render('settings', {
-        user: user.toJSON()
+        user: user.toJSON(), loginUser
       })
     })
   },
@@ -270,7 +271,7 @@ const userController = {
         { model: User, as: 'Followers' }
       ]
     }).then(user => {
-      console.log(user)
+      // console.log(user)
       const tweets = user.toJSON().Tweets.map(tweet => ({
         id: user.toJSON().id,
         avatar: user.toJSON().avatar,
@@ -294,6 +295,13 @@ const userController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
+
+        users.forEach((user, index, arr) => {
+          if(user.role === "admin") {
+              arr.splice(index, 1);
+          }
+        })
+
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -303,7 +311,7 @@ const userController = {
           more = more + 10
         }
         users = users.slice(0, more)
-
+        console.log(tweets)
         return res.render('userTweets', {
           tweets,
           userId: user.toJSON().id,
@@ -373,6 +381,13 @@ const userController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
+
+        users.forEach((user, index, arr) => {
+          if(user.role === "admin") {
+              arr.splice(index, 1);
+          }
+        })
+
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -438,6 +453,13 @@ const userController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
+
+        users.forEach((user, index, arr) => {
+          if(user.role === "admin") {
+              arr.splice(index, 1);
+          }
+        })
+        
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -510,7 +532,7 @@ const userController = {
     }).then(users => {
 
       console.log(users)
-      
+
       const tweetsCount = users.toJSON().Tweets.length
       const name = users.toJSON().name
       users = users.Followings.map(r => ({
@@ -524,7 +546,7 @@ const userController = {
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(r.id)
       }))
 
-      
+
       // 排序
       users = users.sort((a, b) => b.followshipCreatedAt - a.followshipCreatedAt)
       return res.render('userFollowings', {
@@ -534,7 +556,7 @@ const userController = {
       })
     })
   },
-  
+
   putUserInfo: (req, res) => {
     const { name, introduction } = req.body
     const id = req.params.userId
@@ -600,6 +622,7 @@ const userController = {
     }
     updateUser()
   },
+  
   getUserInfo: (req, res) => {
     const id = req.params.userId
     const loginId = helpers.getUser(req).id
