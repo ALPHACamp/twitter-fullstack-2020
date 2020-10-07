@@ -58,7 +58,7 @@
       </div>
     </div>
     <div class="tweets-list">
-      {{#each tweet.Replies}}
+      {{#each reply}}
       <div class="card tweets-content">
         <div class="card-body tweets-body">
           <div class="left-item">
@@ -86,14 +86,37 @@
             </div>
             <div class="footer">
               <div class="footer-item reply-item">
-                <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                  <i class="icon-reply"></i> {{this.followingByReply.length}}
+                <button type="button" class="btn btn-reply" data-toggle="modal">
+                  <ul class="reply-text" style="display:none">
+                    <li>{{this.UserId}}</li>
+                    <li>{{this.User.name}}</li>
+                    <li>{{this.User.account}}</li>
+                    <li>{{moment this.updatedAt}}</li>
+                    <li>{{this.comment}}</li>
+                    <li>{{this.User.avatar}}</li>
+                    <li>{{../tweet.id}}</li>
+                    <li>{{this.id}}</li>
+                  </ul>
+                  <i class="icon-reply replies-on" style="font-size: 22px"></i>
+                  {{this.followingByReply.length}}
                 </button>
               </div>
               <div class="footer-item like-item">
-                <button type="button" class="btn">
-                  <i class="icon-like"></i> {{this.Likes.length}}
-                </button>
+              {{#if this.isLiked}}
+        <form action="/replies/{{this.id}}/unlike" method="post" class="form-like">
+          <button type="submit" class="btn">
+            <i class="like icon-like-fill" style="font-size: 22px;"></i>
+          </button>
+          <div class="like-item-count item-count">{{this.Likes.length}}</div>
+          {{else}}
+          <form action="/replies/{{this.id}}/like" method="post" class="form-like">
+            <button type="submit" class="btn">
+              <i class="icon-like" style="font-size: 22px;"></i>
+            </button>
+            <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+            {{/if}}
+          </form>
+
               </div>
             </div>
             {{#each this.followingByReply}}
@@ -122,15 +145,22 @@
                   {{subText this.comment 140}}
                 </div>
                 <div class="footer">
-                  <div class="reply-item">
-                    <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                      <i class="icon-reply"></i> {{this.followingByReply.length}}
-                    </button>
-                  </div>
-                  <div class="like-item">
-                    <button type="button" class="btn">
-                      <i class="icon-like"></i> {{this.Likes.length}}
-                    </button>
+                  <div class="footer-item like-item">
+
+                  {{#if this.isLiked}}
+                          <form action="/replies/{{this.id}}/unlike" method="post" class="form-like">
+                            <button type="submit" class="btn">
+                              <i class="like icon-like-fill" style="font-size: 22px;"></i>
+                            </button>
+                            <div class="like-item-count item-count">{{this.Likes.length}}</div>
+                            {{else}}
+                            <form action="/replies/{{this.id}}/like" method="post" class="form-like">
+                              <button type="submit" class="btn">
+                                <i class="icon-like" style="font-size: 22px;"></i>
+                              </button>
+                              <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+                              {{/if}}
+                            </form>
                   </div>
                 </div>
               </div>

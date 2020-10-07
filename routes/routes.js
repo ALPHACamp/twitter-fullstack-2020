@@ -58,6 +58,11 @@ router.post(
   userAuthenticated,
   tweetController.postReply,
 );
+router.post(
+  '/tweets/:id/replies/:rid',
+  userAuthenticated,
+  tweetController.postReplies,
+);
 
 
 router.get('/users/self', userAuthenticated, userController.getSelf);
