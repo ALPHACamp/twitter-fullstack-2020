@@ -47,12 +47,11 @@ const tweetController = {
 
   postTweet: (req, res) => {
     if (!req.body.description) {
-
-      req.flash('error_message', '貼文不可空白')
+      req.flash('error_messages', '貼文不可空白')
       return res.redirect('back')
     }
     if (req.body.description.length > 140) {
-      req.flash('error_message', '貼文不得超過140個字')
+      req.flash('error_messages', '貼文不得超過140個字')
       return res.redirect('back')
 
     }
@@ -84,6 +83,11 @@ const tweetController = {
 
   postReply: (req, res) => {
     if (req.body.comment.length > 140) {
+      req.flash('error_messages', '貼文不得超過140個字')
+      return res.redirect('back')
+    }
+    if(!req.body.comment){
+      req.flash('error_messages', '回覆不可空白')
       return res.redirect('back')
     }
     Reply.create({

@@ -112,3 +112,40 @@ font-weight:bold;
   font-weight: bold;
 }
 
+.tweets-index {
+  width: 600px;
+  height: 55px;
+  left: 378px;
+  top: -1px;
+  background: #FFFFFF;
+  box-sizing: border-box; 
+  font-weight:bold;
+  font-size:18px;
+}
+
+.tweets-description {
+  background: #FFFFFF;
+  border: 0px solid #E6ECF0;
+  box-sizing: border-box;
+}
+
+.tweets-user-account {
+  color:#6E7783;
+  font-size:14px;
+}
+.tweets-reply-button {
+  background: none;
+  border: none;
+  color:#6E7783;
+}
+.tweets-like-button {
+  background: none;
+  border: none;
+  color:#D81159;
+}
+
+.tweets-unlike-button {
+  background: none;
+  border: none;
+  color:#6E7783;
+}
