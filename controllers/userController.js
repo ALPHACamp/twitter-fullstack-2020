@@ -304,8 +304,9 @@ const userController = {
                   ...reply.dataValues
                 }))
                 replies.forEach(reply => repliesList.push(reply.Tweet))
-                const tweetsAndRepliesList = Array.from(new Set(repliesList.concat(tweets)))
-                // console.log(tweetsAndRepliesList)
+                const result = Array.from(new Set(repliesList.concat(tweets)))
+                const set = new Set()
+                const tweetsAndRepliesList = result.filter(tweet => !set.has(tweet.id) ? set.add(tweet.id) : false)
                 return res.render('replies', { users, tweetsAndRepliesList, checkUser })
               })
           })
