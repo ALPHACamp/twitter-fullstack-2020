@@ -18,14 +18,39 @@
       </div>
     </div>
 
-    <div class="user-header">
+    <div class="user-header mt-1">
       <div class="row">
-        <img src="{{users.dataValues.cover}}" alt="user-cover" class="user-cover img-fluid">
-        <img src="{{users.dataValues.avatar}}" alt="user-avatar" class="user-avatar">
+        <img src="{{users.dataValues.cover}}" alt="user-cover" class="user-cover img-fluid"
+          style=" width: 598px;height: 200px;">
+        <img src="{{users.dataValues.avatar}}" alt="user-avatar" class="user-avatar"
+          style=" width: 140px;height: 140px;">
       </div>
+
+      </br>
+
       <div class="row justify-content-end">
-        <button class="user-edit-btn m-3">編輯個人資料</button>
+        {{#if checkUser}}
+        <!-- Button trigger modal -->
+
+        <button type="button" class="btn"
+          style="border: 1px solid #FF6600; box-sizing: border-box;border-radius: 100px; color: #FF6600 ; background: white "
+          data-toggle="modal" data-target="#exampleModalCenter">
+          編輯個人資料
+        </button>
+
+
+
+
+
+        {{else}}
+        <div style="height:78px;">&emsp;</div>
+        {{/if}}
+        {{!-- </a> --}}
       </div>
+
+      </br>
+
+
       <div class="row">
         <div class="col">
           <h4 class="user-name m-0">{{users.dataValues.name}}</h4>
@@ -47,14 +72,13 @@
     <div class="row border-bottom">
       <a href="/users/{{users.dataValues.id}}" style="text-decoration: none">
         <h6 class="follower-follower m-0 px-4 py-3 font-weight-bold"
-          style="color:#FF6600;border-bottom:2px solid #FF6600;">
-          &emsp;推文&emsp;</h5>
+          style="color:#FF6600;border-bottom:2px solid #FF6600;"> &emsp;推文&emsp;</h6>
       </a>
       <a href="/users/{{users.dataValues.id}}/replies" style="text-decoration: none">
-        <h6 class="follower-following m-0 px-4 py-3 font-weight-bold">推文與回覆</h5>
+        <h6 class="follower-following m-0 px-4 py-3 font-weight-bold">推文與回覆</h6>
       </a>
       <a href="/users/{{users.dataValues.id}}/likes" style="text-decoration: none">
-        <h6 class="follower-following m-0 px-4 py-3 font-weight-bold">喜歡的內容</h5>
+        <h6 class="follower-following m-0 px-4 py-3 font-weight-bold">喜歡的內容</h6>
       </a>
     </div>
 
@@ -62,7 +86,8 @@
     <div class="row justify-content-between">
       <div class="row col-11">
         <div class="avatar mt-2 ml-4">
-          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle" style="width: 60px">
+          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle"
+            style="width: 50px; height: 50px">
         </div>
         <div class="information d-flex flex-column mt-2 col">
           <div class="d-flex">
@@ -101,4 +126,113 @@
     {{> right}}
 
   </div>
+</div>
+
+
+
+<!-- 編輯個人Modal -->
+
+<div class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true" style="background: #FFFFFF;
+width: 600px;
+height: 700px;
+border-radius: 14px;">
+
+  <div class="modal-dialog modal-dialog-centered justify-content-center
+ ">
+
+    <div class="modal-content " style="width: 600px;">
+      <form class="col-md-9 pl-0 border-left" action="/users/{{users.dataValues.id}}/edit?_method=PUT" method="POST"
+        enctype="multipart/form-data">
+
+
+        <div class="modal-header" style="width: 570px;">
+
+
+
+          <h5 class=" modal-title" id="exampleModalLongTitle">
+
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h6 class="font-weight-bold"> 編輯個人資料 </h6>
+
+          </h5>
+
+
+
+          <button type="submit" class="btn" style="background: #FF6600; width:100% border-radius: 100px;">
+            <span style="color: #FFFFFF;">儲存</span></button>
+
+        </div>
+
+        <div class="modal-body">
+
+
+
+
+          <div class="form-label-group tweet-left d-flex align-items-stretch">
+            <a href="#">
+              <div class="cover" style="background: url({{user.cover}}),#C4C4C4; background-position:center; width: 580px;
+                    height: 200px;">
+
+                <label class="btn" style="background: #FF6600;border-radius: 100px;">
+                  <input id="upload_img" style="display:none;" id="cover" name="cover" type="file">
+                  <i class="fas fa-upload" style="color: #FFFFFF;"></i>
+                </label>
+              </div>
+
+            </a>
+          </div>
+
+          <div class=" form-label-group tweet-left d-flex align-items-stretch">
+
+            <div class="avatar rounded-circle" style="background: url({{user.avatar}}),#C4C4C4; background-position:center; background-size:cover; width: 120px;
+height: 120px;">
+
+              <label class="btn " style="background: #FF6600;border-radius: 100px;">
+                <input id="upload_img" style="display:none;" id="avatar" name="avatar" type="file">
+                <i class="fas fa-upload" style="color: #FFFFFF;"></i>
+              </label>
+
+            </div>
+
+          </div>
+
+          <div class="form-label-group">
+            <label for="name">名稱</label>
+            <input type="text" maxlength="50" id="name" name="name" class="form-control nametext nametext"
+              style="width: 570px; height: 54px; background: #F5F8FA" placeholder="
+                          {{$user.name}}" value="{{user.name}}" required autofocus>
+
+            <div class="text-right" style="width: 570px">
+              <span class="text-right namecount"></span>/50
+            </div>
+          </div>
+
+          <div class="form-label-group inputCount">
+            <label for="inputPassword">自我介紹</label>
+            <textarea class="form-control introtext" style="width: 570px; height: 150px; background: #F5F8FA"
+              id="inputprdDesc" aria-label="With textarea" name="introduction" maxlength="160">{{user.introduction}}    
+            </textarea>
+            <div class="text-right" style="width: 570px">
+              <span class="text-right introcount"></span>/160
+            </div>
+
+          </div>
+
+
+
+
+
+      </form>
+
+
+
+
+
+    </div>
+
+  </div>
+
 </div>
