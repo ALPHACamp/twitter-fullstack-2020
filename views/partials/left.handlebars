@@ -31,8 +31,7 @@
   </br>
 
 
-  <button type="button" class="btn btn-block" data-toggle="modal" data-target="#tweetModal"
-    style="border: none;background: #FF6600;border-radius: 100px;">
+  <button type="button" class="left-zone-btn" data-toggle="modal" data-target="#tweetModal">
     <span style="color: #FFFFFF;">推文</span>
   </button>
   <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -49,14 +48,13 @@
         <div class="modal-body" class="d-flex">
           <div class="body-avatar d-flex align-items-stretch">
             <div class="right">
-              <a href="/tweets/{{tweet.User.dataValues.id}}">
-                <img src="{{tweet.User.dataValues.avatar}}" class="rounded-circle"
-                  style="width: 50px;height: 50px;background: #C4C4C4;">
+              <a href="/tweets/{{user.id}}">
+                <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height: 50px;background: #C4C4C4;">
               </a>
             </div>
 
             <div class="left" class="d-flex">
-              <form method="POST" action="/tweets/{{user.dataValues.id}}">
+              <form method="POST" action="/tweets/{{user.id}}">
                 <textarea name="description" cols="40" rows="10"
                   style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
                   placeholder="有什麼新鮮事"></textarea>
@@ -70,14 +68,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
 
 
   </br>

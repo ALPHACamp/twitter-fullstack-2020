@@ -1,6 +1,7 @@
 const userController = require("../controllers/userController");
 const tweetController = require("../controllers/tweetController");
 const adminController = require("../controllers/adminController");
+const user = require("../models/user");
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -48,6 +49,7 @@ module.exports = (app, passport) => {
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
   app.get('/users/:id/likes', authenticated, userController.getUserLikes)
+  app.get('/users/:id/replies', authenticated, userController.getUserReplies)
   app.post("/like/:id", authenticated, userController.addLike);
   app.delete("/unlike/:id", authenticated, userController.removeLike);
   app.get('/users/:id', authenticated, userController.getUser)

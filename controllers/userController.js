@@ -130,6 +130,8 @@ const userController = {
   },
 
   getUser: (req, res) => {
+    const checkUser = helpers.getUser(req).id === Number(req.params.id) ? true : false
+
     return User.findByPk(req.params.id, {
       include: [Tweet,
         { model: User, as: 'Followings' },
@@ -144,7 +146,7 @@ const userController = {
           order: [['createdAt', 'DESC']]
         })
           .then(tweets => {
-            return res.render('user', { users, tweets })
+            return res.render('user', { users, tweets, checkUser })
           })
         // const userSelf = helpers.getUser(req).id
         // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
@@ -232,6 +234,37 @@ const userController = {
       })
   },
 
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet,
+        { model: Reply, include: [User, Tweet, Like] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, as: 'LikedTweets' }
+      ]
+    })
+      .then(users => {
+        return Tweet.findAll({
+          where: { UserId: req.params.id },
+          include: [User, Reply, Like],
+          order: [['createdAt', 'DESC']]
+        })
+          .then(tweets => {
+            const tweetsAndRepliesList = []
+            tweets = tweets.map(tweet => ({
+              ...tweet.dataValues
+            }))
+            console.log(users)
+            console.log('----------------------------------')
+            console.log(tweets)
+            return res.render('replies', { users, tweets })
+
+          })
+        // const userSelf = helpers.getUser(req).id
+        // const isLiked = helpers.getUser(req).Followings.map(d => d.id).include(user.id)
+      })
+  },
+
   getTopFollowers: (req, res, next) => {
     return User.findAll({
       include: [{ model: User, as: 'Followers' }]
@@ -248,16 +281,6 @@ const userController = {
         return next()
       })
   }
-
-
-
-
-
-
-
-
-
-
 }
 
 module.exports = userController
