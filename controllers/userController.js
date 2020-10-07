@@ -10,6 +10,7 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 let more = 10
 const jwt = require('jsonwebtoken')
 const passportJWT = require('passport-jwt')
+const multer = require('multer')
 const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
 
@@ -719,6 +720,7 @@ const userController = {
       })
     })
   },
+
   apiGetUserInfo: (req, res) => {
     const id = req.params.userId
     const loginId = helpers.getUser(req).id
@@ -732,6 +734,7 @@ const userController = {
       })
     })
   },
+
   apiPostUserInfo: (req, res) => {
     const id = req.params.userId
     const loginId = helpers.getUser(req).id

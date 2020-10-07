@@ -1,0 +1,66 @@
+<!-- edit user info modal -->
+<!-- Modal -->
+<div class="modal fade" id="show-detail-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+  aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+        <!-- Modal header -->
+        <div class="modal-header">
+          <button type="button" class="border-0" style="background-color: rgba(0, 0, 0, 0);color: rgb(255, 102, 0);"
+            data-dismiss="modal" aria-label="Close">
+            <h5>X</h5>
+          </button>
+          <h5 class="modal-title ml-3 align-self-left">編輯個人資料</h5>
+          <button type="submit" class="btn btn-twitter rounded-pill">儲存</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body no-gutters p-0">
+          <div class="form-group" style="height:275px">
+            <img src="{{ cover }}" id="preCover" class="img-fluid user_cover" alt="Responsive image">
+            <img src="{{ avatar }}" id="preAvatar" class="user_avatar ml-3">
+          </div>
+          <div class="form-group mx-3">
+            <label for="name" class="col-form-label">名稱</label>
+            <input type="text" class="form-control" id="name" name="name" maxlength="50" value="{{name}}">
+          </div>
+          <div class="form-group mx-3">
+            <label for="introduction" class="col-form-label">自我介紹</label>
+            <textarea class="form-control" id="introduction" name="introduction"
+              maxlength="160">{{introduction}}</textarea>
+          </div>
+          <div class="form-group mx-3">
+            <label for="cover">Cover</label>
+            <input type="file" class="form-control-file" id="cover" name="cover">
+          </div>
+          <div class="form-group mx-3">
+            <label for="avatar">Avatar</label>
+            <input type="file" class="form-control-file" id="avatar" name="avatar">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script>
+  $('#cover').on('change', function(e){      
+    const file = this.files[0];
+    const fr = new FileReader();
+    fr.onload = function (e) {
+      $('#preCover').attr('src', e.target.result);
+    };
+    fr.readAsDataURL(file);
+  });
+
+  $('#avatar').on('change', function(e){      
+    const file = this.files[0];
+    const fr = new FileReader();
+    fr.onload = function (e) {
+      $('#preAvatar').attr('src', e.target.result);
+    };
+    fr.readAsDataURL(file);
+  });
+</script>

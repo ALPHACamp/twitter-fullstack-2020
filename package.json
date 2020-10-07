@@ -1,12 +1,12 @@
 {
-  "name": "test",
+  "name": "ac_twitter_workspace",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "set \"NODE_ENV=test\" && mocha test/*/*.js --exit --recursive --timeout 5000"
+    "test": "mocha test --exit --recursive --timeout 5000"
   },
   "author": "",
   "license": "ISC",
