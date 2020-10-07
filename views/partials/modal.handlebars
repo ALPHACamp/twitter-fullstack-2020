@@ -3,22 +3,26 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="tweet-modal-header">
-        <button type="button" data-dismiss="modal" aria-label="Close" class="tweet-modal-close-button">
+        <button type="button" data-dismiss="modal" aria-label="Close"
+          class="tweet-modal-close-button btn btn-outline-warning">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="tweet-modal-body">
+
+      <div class="card-body">
         <img {{#if user.avatar}}src={{user.avatar}}{{/if}}
           style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-
         <form method="POST" action="/tweets">
-          <textarea class="tweet-modal-textarea" name="description" id="description" cols="30" rows="10"
+          <textarea class="tweet-modal-textarea" name="description" id="description" cols="60" rows="8"
             placeholder="有什麼新鮮事？"></textarea>
-          <button type="submit" class="tweet-modal-button">
-            推文
-          </button>
-        </form>
 
+          <div class="row justify-content-center">
+            <button type="submit" data-toggle=" modal" data-target="#tweetModal"
+              style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+              <span style="color: #FFFFFF;">推文</span></button>
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -57,10 +61,6 @@
     </div>
   </div>
 </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> master
 {{!-- user Edit modal --}}
 <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -137,7 +137,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <img src="{{../pageUser.avatar}}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
+        <img src="{{../pageUser.avatar}}" class="rounded-circle"
+          style="background-size:cover; width: 50px;height: 50px;">
         <span class="mt-1"><a href="#">{{user.name}}</a></span>
         <span class="user-account">
           {{user.account}}．{{moment user.createdAt}}
