@@ -15,8 +15,8 @@
     </div>
     <div class="col mt-3">
       {{#ifCond userId loginUser.id}}
-      {{!-- <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button> --}}
-      <a href="/users/{{userId}}" class="btn rounded-pill float-right btn-outline-twitter">編輯個人資料</a>
+      <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button>
+      {{!-- <a href="/users/{{userId}}" class="btn rounded-pill float-right btn-outline-twitter">編輯個人資料</a> --}}
       {{else}}
         {{#if isFollowed}}
         <form action="/followships/{{userId}}?_method=DELETE" method="POST">
@@ -32,8 +32,12 @@
   </div>
   <div class="row">
     <div class="col">
-      <span class="bold"><b>{{name}}</b></span><br>
-      <span style="color: grey">@{{account}}</span><br>
+      <a href="/users/{{userId}}/tweets">
+        <span class="bold"><b>{{name}}</b></span><br>
+      </a>
+      <a href="/users/{{userId}}/tweets">
+        <span style="color: grey">@{{account}}</span><br>
+      </a>
       <span>{{introduction}}</span><br>
       {{followingsCount}}個 <a href="/users/{{user.id}}/followings"><span style="color: grey">跟隨中</span></a>
       {{followersCount}}位 <a href="/users/{{user.id}}/followers"><span style="color: grey">跟隨者</span></a>
