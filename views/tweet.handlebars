@@ -4,7 +4,7 @@
     {{> left}}
 
   </div>
-  <div class="col-md-9 px-0 border-left">
+  <div class="col-md-6 px-0 border-left">
 
     <div class="main-content">
       <div class="main-title">
@@ -15,21 +15,21 @@
       </div>
 
       <div class="tweet-content mt-3">
-        <div class=" d-flex justify-content-start align-items-center">
+        <div class="d-flex justify-content-start align-items-center">
 
-          <img src="{{tweet.User.dataValues.avatar}}" class="rounded-circle"
+          <img src="{{tweet.User.dataValues.avatar}}" class="rounded-circle mx-2 mb-3"
             style="width: 50px;height: 50px;background: #C4C4C4;">
 
           <div class="col ml-3">
-            <span class="row ">{{tweet.User.dataValues.name}}</span>
-            <span class="row" style="color:gray;">{{tweet.User.dataValues.account}}</span>
+            <span class="row">{{tweet.User.dataValues.name}}</span>
+            <span class="row tweets-user-account" style="color:gray;">{{tweet.User.dataValues.account}}</span>
           </div>
         </div>
-        <div class="tweet-content-main  ml-2 mb-2 mt-2">
+        <div class="tweet-content-main  m-4">
           {{tweet.dataValues.description}}
         </div>
         <div class="tweet-content-footer">
-          <div class="mt-2 mb-2 ml-2" style="font-size:14px;color:gray;">{{moment tweet.dataValues.createdAt}}
+          <div class="m-3" style="font-size:14px;color:gray;">{{moment tweet.dataValues.createdAt}}
           </div>
           <hr style="width:350px;" />
           <div class="time">
@@ -39,18 +39,18 @@
           <hr style="width:350px;" />
 
           <div class="footer mr-2">
-            <button type="button" class=" mb-2 ml-2" style=" background: none;border: none;">
+            <button type="button" class=" mb-2 ml-2 tweets-reply-button">
               <i class="far fa-comment"></i> {{tweet.Replies.length}}
             </button>
 
 
             {{#if isLiked}}
             <form action="/unlike/{{tweet.dataValues.id}}?_method=DELETE" method="POST" style="display:inline;">
-              <button type="submit" class="ml-3" style="background: none;border: none;">
+              <button type="submit" class="ml-3 tweets-like-button">
                 <i class="fas fa-heart"></i>
                 {{else}}
                 <form action="/like/{{tweet.dataValues.id}}" method="POST" style="display:inline; ">
-                  <button type="submit" class="ml-3" style="background: none;border: none;">
+                  <button type="submit" class="ml-3 tweets-unlike-button">
                     <i class="far fa-heart"></i>
                     {{/if}}
                     {{tweet.LikedUsers.length}}
@@ -77,9 +77,10 @@
             <a href="/tweets/{{this.User.dataValues.id}}" class="user-name mt-1">
               {{this.User.dataValues.name}}
             </a>
-            <span class="account">{{this.User.dataValues.account}}．{{moment this.dataValues.createdAt}}</span>
+            <span
+              class="account tweets-user-account">{{this.User.dataValues.account}}．{{moment this.dataValues.createdAt}}</span>
           </div>
-          <div>
+          <div class="my-3">
             <span class="reply">回覆</span> <span class="user-account-color-span"><a
                 href="/tweets/{{../tweet.User.dataValues.id}}"
                 style="color: #ff6600;">{{../tweet.User.dataValues.account}}</a></span>
@@ -88,10 +89,14 @@
             {{this.dataValues.comment}}
           </div>
 
-
         </div>
       </div>
       {{/each}}
     </div>
+  </div>
+  <div class="col-md-3">
+
+    {{> right}}
+
   </div>
 </div>
