@@ -542,6 +542,8 @@ const userController = {
       }))
       // 排序
       data = data.sort((a, b) => b.followshipCreatedAt - a.followshipCreatedAt)
+      console.log('=================================')
+      console.log('data:', data)
 
       // Right side
       // filter the tweets to those that user followings & user himself
@@ -573,7 +575,8 @@ const userController = {
           users, // for right partials
           data,
           name: name,
-          tweetsCount: tweetsCount
+          tweetsCount: tweetsCount,
+          loginUser
         })
       })
     })
@@ -634,7 +637,8 @@ const userController = {
           users,
           data,
           name: name,
-          tweetsCount: tweetsCount
+          tweetsCount: tweetsCount,
+          loginUser
         })
       })
     })

@@ -32,15 +32,14 @@
         <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
           <span style="color: grey">@{{this.account}}</span><br>
         </a>
-        
         <span><small>{{this.introduction}}<br></small></span>
       </div>
       <div>
         {{#if this.isFollowed}}
         <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</button></form>
         {{else}}
-        <form action="/followships" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter rounded-pill">跟隨</button></form>
-        {{/if}}
+        <form action="/followships" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter rounded-pill" name="id" value="{{this.id}}">跟隨</button></form>
+        {{/if}} 
       </div>
     </div>
   </div>
