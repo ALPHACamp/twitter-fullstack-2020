@@ -21,13 +21,16 @@
     <div class="user-header mt-1">
       <div class="row">
         <img src="{{users.dataValues.cover}}" alt="user-cover" class="user-cover img-fluid">
-        <img src="{{users.dataValues.avatar}}" alt="user-avatar" class="user-avatar">
+        <img src="{{users.dataValues.avatar}}" alt="user-avatar" class="user-avatar" style="width: 140px; height:
+          140px;">
       </div>
       <div class="row justify-content-end">
         {{#if checkUser}}
         <!-- Button trigger modal -->
         <button type="button" class="user-edit-btn m-3" data-toggle="modal" data-target="#exampleModalCenter"> 編輯個人資料
         </button>
+
+
         {{else}}
         <div style="height:78px;">&emsp;</div>
         {{/if}}
@@ -67,7 +70,8 @@
     <div class="row justify-content-between">
       <div class="row col-11">
         <div class="avatar mt-2 ml-4">
-          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle" style="width: 60px">
+          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle"
+            style="width: 60px; height: 60px">
         </div>
         <div class="information d-flex flex-column mt-2 col">
           <div class="d-flex">
@@ -107,3 +111,5 @@
 
   </div>
 </div>
+
+{{> modal}}

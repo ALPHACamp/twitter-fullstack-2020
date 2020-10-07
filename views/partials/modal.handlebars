@@ -1,20 +1,15 @@
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  Launch demo modal
-</button>
-
-
-
-<!-- Modal -->
-
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true" style="background: #FFFFFF;
+width: 650px;
+height: 700px;
+left: 40%;
 border-radius: 14px;">
 
-  <div class="modal-dialog modal-dialog-centered ">
+  <div class="modal-dialog modal-dialog-centered justify-content-center
+ ">
 
     <div class="modal-content " style="width: 600px;">
-      <form class="col-md-9 pl-0 border-left" action="/users/:id/edit?_method=PUT" method="POST" style="width: 100%;"
+      <form class="col-md-9 pl-0 border-left" action="/users/{{users.dataValues.id}}/edit?_method=PUT" method="POST"
         enctype="multipart/form-data">
 
 
@@ -60,7 +55,7 @@ border-radius: 14px;">
           <div class=" form-label-group tweet-left d-flex align-items-stretch">
 
             <div class="avatar rounded-circle" style="background: url({{user.avatar}}),#C4C4C4; background-position:center; background-size:cover; width: 120px;
-height: 120px;">
+height: 120px; top: 70%">
 
               <label class="btn " style="background: #FF6600;border-radius: 100px;">
                 <input id="upload_img" style="display:none;" id="avatar" name="avatar" type="file">
@@ -106,7 +101,5 @@ height: 120px;">
     </div>
 
   </div>
-
-</div>
 
 </div>
