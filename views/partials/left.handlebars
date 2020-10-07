@@ -1,51 +1,55 @@
- <div class="left-zone">
-      <div class="AC-icon">
-        <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
-          style="width:75px">
-      </div>
+<div class="left-zone">
+  <div class="AC-icon">
+    <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+      style="width:75px">
+  </div>
 
-      </br>
-      </br>
+  </br>
+  </br>
 
-      <div class="home" name="home">
-        <a class="left-zone-items" href="/tweets" style="text-decoration: none; color:black"><i class="fas fa-home"></i>&ensp;首頁</a>
-      </div>
+  <div class="home" name="home">
+    <a class="left-zone-items" href="/tweets" style="text-decoration: none; color:black"><i
+        class="fas fa-home"></i>&ensp;首頁</a>
+  </div>
 
-      </br>
-      </br>
+  </br>
+  </br>
 
-      <div class="profile" name="profile">
-        <a class="left-zone-items" href="/user/self" style="text-decoration: none; color:black"><i
-            class="far fa-user"></i>&ensp;個人資料</a>
-      </div>
+  <div class="profile" name="profile">
+    <a class="left-zone-items" href="/user/self/{{ user.id }}" style="text-decoration: none; color:black"><i
+        class="far fa-user"></i>&ensp;個人資料</a>
+  </div>
 
-      </br>
-      </br>
+  </br>
+  </br>
 
-      <div class="setting" name="setting">
-        <a class="left-zone-items" href="/setting" style="text-decoration: none; color:black"><i class="fas fa-cog"></i>&ensp;設定</a>
-      </div>
+  <div class="setting" name="setting">
+    <a class="left-zone-items" href="/setting" style="text-decoration: none; color:black"><i
+        class="fas fa-cog"></i>&ensp;設定</a>
+  </div>
 
-      </br>
-      </br>
+  </br>
+  </br>
 
-      <form action="/user/tweets">
-      <button type="button" data-toggle="modal" data-target="#tweetModal" style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
-                <span style="color: #FFFFFF;">Tweet</span></button>
-          </button>
-      </form>
-      
-   
-      </br>
-      </br>
-      </br>
-      </br>
-      </br>
-      </br>
+  <form action="/user/tweets">
+    <button type="button" data-toggle="modal" data-target="#tweetModal"
+      style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+      <span style="color: #FFFFFF;">Tweet</span></button>
+    </button>
+  </form>
 
 
-      <a href="/logout" class="logout" style="text-decoration: none; color:black"><i class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
 
-      
-      
-    </div>
+
+  <a href="/logout" class="logout" style="text-decoration: none; color:black"><i
+      class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+
+
+
+</div>
