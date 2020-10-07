@@ -26,8 +26,25 @@ let strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
 })
 passport.use(strategy)
 
-// setup passport strategy
-passport.use(new LocalStrategy(
+//setup email passport strategy
+passport.use('email-local', new LocalStrategy(
+  // customize user field
+  {
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+  },
+  // authenticate user
+  (req, username, password, cb) => {
+    User.findOne({ where: { email: username } }).then(user => {
+      if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤'))
+      if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤！'))
+      return cb(null, user)
+    })
+  }
+))
+// setup account passport strategy
+passport.use('account-local', new LocalStrategy(
   // customize user field
   {
     usernameField: 'account',
@@ -43,6 +60,8 @@ passport.use(new LocalStrategy(
     })
   }
 ))
+
+
 
 // serialize and deserialize user
 passport.serializeUser((user, cb) => {

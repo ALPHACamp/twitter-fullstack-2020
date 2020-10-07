@@ -36,7 +36,12 @@ module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
+<<<<<<< HEAD
         return res.redirect('/signin')
+=======
+        req.flash('error_messages', 'Admin account, signed in to Admin page!')
+        return res.redirect('/admin/tweets')
+>>>>>>> 39a5ccc52f93c241ca521a7a04dfe428ec396e64
       }
       return next()
     }
@@ -48,6 +53,7 @@ module.exports = (app, passport) => {
       if (helpers.getUser(req).role === 'admin') {
         return next()
       }
+      req.flash('error_messages', 'Please sign in with Admin account!')
       return res.redirect('/admin/signin')
     }
     res.redirect('/admin/signin')
@@ -62,14 +68,18 @@ module.exports = (app, passport) => {
   //user login 
   app.get('/', (req, res) => { return res.redirect('/tweets') })
   app.get('/signin', userController.loginPage)
-  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.login)
+  app.get('/signin/:type', userController.emailLoginPage)
+  app.post('/signin', passport.authenticate('account-local', { failureRedirect: '/signin', failureFlash: true }), userController.login)
+  app.post('/signin/email', passport.authenticate('email-local', { failureRedirect: '/signin/email', failureFlash: true }), userController.emailLogin)
   app.get('/signup', userController.registerPage)
   app.post('/signup', userController.register)
   app.get('/logout', userController.logout)
 
   //admin login
   app.get('/admin/signin', userController.adminLoginPage)
-  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.adminLogin)
+  app.post('/admin/signin', passport.authenticate('account-local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.adminLogin)
+  app.get('/admin/signin/:type', userController.adminEmailLoginPage)
+  app.post('/admin/signin/email', passport.authenticate('email-local', { failureRedirect: '/admin/signin/email', failureFlash: true }), userController.adminEmailLogin)
   app.get('/admin/logout', userController.adminLogout)
 
   //tweet page
