@@ -53,7 +53,11 @@
                                                     data-target="#user-tweet-modal" style="background: none;border: none;">
                                                     <i class="far fa-comment"></i> {{this.Replies.length}}
                                                 </button>
+
+                                                {{>modal}}
+
                                                 {{#if this.isLiked }}
+
                                                 <form action="/like/{{this.id}}?_method=DELETE" method="POST"
                                                     style="display:inline;">
                                                     <button type="submit" class="button reply-link mt-4 mb-4"
