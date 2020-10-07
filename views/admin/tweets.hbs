@@ -11,32 +11,18 @@
       <div class="col-11">
         <span class="bold"><b>{{this.User.account}}</b></span>
         <span style="color: grey">@{{this.User.name}}・{{moment this.createdAt}}</span>
-        <button data-toggle="modal" data-target="#tweets{{this.id}}" class="close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <!-- Modal -->
-        <div class="modal fade" id="tweets{{this.id}}" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h4>刪除貼文?</h4>
-              </div>
-              <div class="modal-body">
-                確定要刪除這則貼文?
-              </div>
-              <div class="modal-footer">
-                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-                  <button type="submit" class="btn btn-delete">刪除</button>
-                </form>
-                <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
-              </div>
-            </div>
-          </div>
-        </div>
+          <button class="close" data-toggle="modal" data-target="#dt{{this.id}}">
+            <span aria-hidden=" true">&times;</span>
+          </button>
+        </form>
         <br />
         {{this.description}}
       </div>
     </div>
     <hr>
+    <!-- pop up delete tweets in admin tweet page -->
+    {{> delete}}
   {{/each}}
 </div>
+
+

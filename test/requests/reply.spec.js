@@ -61,7 +61,7 @@ describe('# reply request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], Likes: []}); //add Likes
         await db.User.create({})
         await db.Tweet.create({UserId: 1, description: 'test'})
       })
