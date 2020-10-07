@@ -4,19 +4,34 @@
             {{>left}}
         </div>
         <div class="col-md-6 pl-0 border-left">
+            <div class="row ml-1 align-items-center ">
+                <a href="/tweets" style="text-decoration: none; color:black">
+                    <i class="fas fa-arrow-left fa-lg"></i>
+                </a>
+                <div class="ml-5">
+                    <h4 class="m-0 font-weight-bold" style="color:#FF6600">{{pageUser.name}}</h4>
+                    <p class="followship-tweetsCount m-0" style="color:#7B7B7B">{{pageUser.Tweets.length}}推文</p>
+                </div>
+            </div>
             <div class="main">
                 <div class="header">
                     <div class="background">
-                        <img src="{{ pageUser.background }}" alt="">
+                        <img src="{{ pageUser.background }}" alt="pageUser-background" class="img-fluid" style="width: 100%;
+                    height: 200px; object-fit: cover;">
                     </div>
                     <div class="avatar">
-                        <img src="{{ pageUser.avatar }}" alt="">
+                        <img src="{{ pageUser.avatar }}" alt="pageUser-avatar" class="rounded-circle"
+                            style="mborder-radius: 50%; position: absolute; top: 160px; left: 3%; border: 5px solid #FFFFFF;">
                     </div>
-                    <h2>{{ pageUser.name }}</h2>
-                    <h6>
-                        <p style="color:#7B7B7B">@{{ pageUser.account }}</p>
-                    </h6>
-                    <p>{{ pageUser.introduction }}</p>
+                    <div class=" justify-content ml-2 mt-5">
+                        <h2>{{ pageUser.name }}</h2>
+
+                        <h6>
+                            <p style="color:#7B7B7B">@{{ pageUser.account }}</p>
+                        </h6>
+
+                        <p>{{ pageUser.introduction }}</p>
+                    </div>
                 </div>
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -26,7 +41,8 @@
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel"
+                        aria-labelledby="nav-home-tab">
                         <div class="col">
                             <div class="tweet-list">
                                 {{#each pageUser.LikeTweets}}
@@ -34,12 +50,14 @@
                                     <div class="tweet-item-left d-flex align-items-stretch">
                                         <div class="tweet-left d-flex align-items-stretch">
                                             <a href="/user/{{ this.User.id }}/tweets">
-                                                <img src="{{ this.User.avatar }}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
+                                                <img src="{{ this.User.avatar }}" class="rounded-circle"
+                                                    style="background-size:cover; width: 50px;height: 50px;">
                                             </a>
                                         </div>
                                         <div class="tweet-item-right ml-3">
                                             <div class="tweet-item-title">
-                                                <span class="mt-1"><a href="/user/{{ this.User.id }}/tweets">{{ this.User.name }}</a></span>
+                                                <span class="mt-1"><a
+                                                        href="/user/{{ this.User.id }}/tweets">{{ this.User.name }}</a></span>
                                                 <span class="user-account">
                                                     {{ this.User.account }}．{{moment this.createdAt}}
                                                 </span>
@@ -49,13 +67,13 @@
                                             </div>
                                             <div class="tweet-footer">
                                                 <!-- Button trigger modal -->
-                                                <button type="button" data-toggle="modal"
-                                                    data-target="#replyModal" style="background: none;border: none;">
+                                                <button type="button" data-toggle="modal" data-target="#replyModal"
+                                                    style="background: none;border: none;">
                                                     <i class="far fa-comment"></i> {{this.Replies.length}}
                                                 </button>
                                                 <button type="submit" class="button reply-link mt-4 mb-4"
-                                                    style="background: red;border: none;">
-                                                    <i class="far fa-heart"></i>
+                                                    style="background: none;border: none;">
+                                                    <i class="fas fa-heart"></i>
                                                 </button>
                                                 {{this.LikeUsers.length}}
                                             </div>
@@ -84,8 +102,7 @@
                             </div>
                             <div class="tweet-item-right  ml-3">
                                 <div class="tweet-item-title">
-                                    <span class="mt-1"><a
-                                            href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
+                                    <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
                                 </div>
                                 <div class="tweet-text">
                                     <span class="user-account">
@@ -112,8 +129,7 @@
                             </div>
                             <div class="tweet-item-right  ml-3">
                                 <div class="tweet-item-title">
-                                    <span class="mt-1"><a
-                                            href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
+                                    <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
                                 </div>
                                 <div class="tweet-text">
                                     <span class="user-account">
@@ -123,8 +139,7 @@
                             </div>
                             {{/each}}
                         </div>
-                        <div class="tab-pane fade" id="nav-replies" role="tabpanel"
-                            aria-labelledby="nav-profile-tab">
+                        <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">
                             ...</div>
                         <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">
                             ...
