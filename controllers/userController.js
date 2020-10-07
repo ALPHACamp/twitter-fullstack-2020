@@ -373,10 +373,9 @@ const userController = {
         Tweet
       ]
     }).then(user => {
-      console.log(user.toJSON().Replies[0].Tweet.User)
       const replies = user.Replies.map(reply => ({
         // Reply
-        ...reply,
+        ...reply.dataValues,
         avatar: user.toJSON().avatar,
         account: user.toJSON().account,
         name: user.toJSON().name,
@@ -387,6 +386,7 @@ const userController = {
         isReplyLiked: loginUser.Likes.map(like => like.ReplyId).includes(reply.id),
         // Tweet
         tweetId: reply.TweetId,
+        tweetUserId: reply.Tweet.User.id,
         tweetUserAccount: reply.Tweet.User.account,
         tweetUserName: reply.Tweet.User.name,
         tweetDescription: reply.Tweet.description.substring(0, 160),
@@ -394,7 +394,6 @@ const userController = {
         tweetLikeCount: reply.Tweet.Likes.length,
         isLiked: loginUser.Likes.map(like => like.TweetId).includes(reply.TweetId)
       }))
-
       const isFollowed = user.Followers.map(followers => followers.id).includes(loginUser.id)
 
       // Right side
@@ -408,13 +407,11 @@ const userController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
-
         users.forEach((user, index, arr) => {
           if(user.role === "admin") {
               arr.splice(index, 1);
           }
         })
-
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -424,6 +421,7 @@ const userController = {
           more = more + 10
         }
         users = users.slice(0, more)
+
         return res.render('userReplies', {
           replies,
           userId: user.toJSON().id,
@@ -460,6 +458,7 @@ const userController = {
       console.log(user)
       const data = user.Likes.map(r => ({
         ...r.dataValues,
+        id: r.dataValues.Tweet.User.id,
         avatar: r.dataValues.Tweet.User.avatar,
         account: r.dataValues.Tweet.User.account,
         name: r.dataValues.Tweet.User.name,
@@ -532,6 +531,7 @@ const userController = {
       const name = data.toJSON().name
       data = data.Followers.map(r => ({
         ...r.dataValues,
+        id: r.id,
         avatar: r.avatar,
         account: r.account,
         name: r.name,
@@ -543,6 +543,8 @@ const userController = {
       }))
       // 排序
       data = data.sort((a, b) => b.followshipCreatedAt - a.followshipCreatedAt)
+      console.log('=================================')
+      console.log('data:', data)
 
       // Right side
       // filter the tweets to those that user followings & user himself
@@ -574,7 +576,8 @@ const userController = {
           users, // for right partials
           data,
           name: name,
-          tweetsCount: tweetsCount
+          tweetsCount: tweetsCount,
+          loginUser
         })
       })
     })
@@ -593,6 +596,7 @@ const userController = {
       const name = data.toJSON().name
       data = data.Followings.map(r => ({
         ...r.dataValues,
+        id: r.id,
         avatar: r.avatar,
         account: r.account,
         name: r.name,
@@ -634,7 +638,8 @@ const userController = {
           users,
           data,
           name: name,
-          tweetsCount: tweetsCount
+          tweetsCount: tweetsCount,
+          loginUser
         })
       })
     })

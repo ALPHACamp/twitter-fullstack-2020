@@ -22,20 +22,24 @@
   {{#each data}}
   <div class="row border-bottom">
     <div class="d-flex p-2">
-      <a href="/users/{{../user.id}}/tweets">
+      <a href="/users/{{this.id}}/tweets">
         <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
       </a>
       <div class="col">
-        <span class="bold">{{this.name}}</span><br>
-        <span style="color: grey">@{{this.account}}</span><br>
+        <a href="/users/{{this.id}}/tweets" style="color:black; text-decoration:none;">
+          <span class="bold">{{this.name}}</span><br>
+        </a>
+        <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
+          <span style="color: grey">@{{this.account}}</span><br>
+        </a>
         <span><small>{{this.introduction}}<br></small></span>
       </div>
       <div>
         {{#if this.isFollowed}}
         <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</button></form>
         {{else}}
-        <form action="/followships" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter rounded-pill">跟隨</button></form>
-        {{/if}}
+        <form action="/followships" method="POST" style="display: contents;"><button type="submit" class="btn btn-outline-twitter rounded-pill" name="id" value="{{this.id}}">跟隨</button></form>
+        {{/if}} 
       </div>
     </div>
   </div>

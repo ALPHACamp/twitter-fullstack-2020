@@ -29,32 +29,31 @@
         {{/if}}
       {{/ifCond}}
     </div>
-    </div>
   </div>
   <div class="row">
     <div class="col">
-      <a href="/users/{{userId}}/tweets">
+      <a href="/users/{{userId}}/tweets" style="color:black; text-decoration:none;">
         <span class="bold"><b>{{name}}</b></span><br>
       </a>
-      <a href="/users/{{userId}}/tweets">
+      <a href="/users/{{userId}}/tweets" style="color:black; text-decoration:none;">
         <span style="color: grey">@{{account}}</span><br>
       </a>
       <span>{{introduction}}</span><br>
-      {{followingsCount}}個 <a href="/users/{{user.id}}/followings"><span style="color: grey">跟隨中</span></a>
-      {{followersCount}}位 <a href="/users/{{user.id}}/followers"><span style="color: grey">跟隨者</span></a>
+      {{followingsCount}}個 <a href="/users/{{user.id}}/followings"><span style="color: grey; text-decoration:none;">跟隨中</span></a>
+      {{followersCount}}位 <a href="/users/{{user.id}}/followers"><span style="color: grey; text-decoration:none;">跟隨者</span></a>
     </div>
   </div>
   <div class="row border-bottom">
     <div class="col">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link unselected_nav" href="/users/{{userId}}/tweets">推文</a>
+          <a class="nav-link unselected_nav" href="/users/{{userId}}/tweets" style="text-decoration:none;">推文</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link selected_nav" href="/users/{{userId}}/replies">推文與回覆</a>
+          <a class="nav-link selected_nav" href="/users/{{userId}}/replies" style="text-decoration:none;">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link unselected_nav" href="/users/{{userId}}/likes">喜歡的內容</a>
+          <a class="nav-link unselected_nav" href="/users/{{userId}}/likes" style="text-decoration:none;">喜歡的內容</a>
         </li>
       </ul>
     </div>
@@ -65,7 +64,7 @@
       <div class="row">
         <dir class="col mx-3 p-0 border-bottom" >
           <span><small>
-              <a href="/tweets/{{this.tweetId}}">{{this.tweetUserName}} @{{this.tweetUserAccount}}</a><br>
+              <a href="/users/{{this.tweetUserId}}/tweets" style="color:black; text-decoration:none;">{{this.tweetUserName}} @{{this.tweetUserAccount}}</a><br>
               {{this.tweetDescription}}<br>
             </small></span>
           <span style="color: grey"><small>
@@ -78,13 +77,13 @@
           <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
         </a>
         <div class="col">
-          <a href="/users/{{this.UserId}}/tweets">
+          <a href="/users/{{this.UserId}}/tweets" style="color:black; text-decoration:none;">
             <span class="bold">{{this.name}}</span>
           </a>
-          <a href="/users/{{this.UserId}}/tweets">
-            <span style="color: grey">@{{this.account}}</span><br>
+          <a href="/users/{{this.UserId}}/tweets" style="text-decoration:none;">
+            <span style="color: grey">@{{this.account}}</span>
           </a>
-          <span style="color: grey">・{{moment this.updatedAt}}</span>
+          <span style="color: grey">・{{moment this.updatedAt}}</span><br>
           <span >
             <small>
               {{this.comment}}<br>
