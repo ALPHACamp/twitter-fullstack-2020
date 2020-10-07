@@ -167,6 +167,30 @@ const tweetController = {
     }
   },
 
+  postReplies: (req, res) => {
+    let tweetId = req.params.id
+    let replyId = req.params.rid
+    let replyText = req.body.replyText.trim()
+    if (!replyText.length) {
+      return res.redirect('back')
+    } else {
+      return Reply.create({
+        UserId: helpers.getUser(req).id,
+        TweetId: tweetId,
+        ReplyId: replyId,
+        comment: replyText
+      })
+        .then(() => {
+          req.flash('successFlashMessage', '成功回覆推文!')
+          return res.redirect('back')
+        })
+        .catch(() => {
+          req.flash('errorFlashMessage', '回覆推文失敗!')
+          return res.redirect('back')
+        })
+    }
+  },
+
   getTweet: (req, res) => {
     console.log('req.params', req.params.id)
     Tweet.findByPk(req.params.id,
@@ -183,7 +207,7 @@ const tweetController = {
         ]
       })
       .then(tweet => {
-        // console.log('tweet######', tweet.toJSON().Replies) 
+        // console.log('tweet######', tweet.toJSON().Replies)
         // console.log('tweet######@@@@@@######', tweet.toJSON().Replies[1].followingByReply[0].Likes)
         const isLiked = tweet.Likes.map((i) => i.UserId).includes(helpers.getUser(req).id)
         res.render('tweet', {
