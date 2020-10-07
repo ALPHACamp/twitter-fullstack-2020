@@ -313,7 +313,8 @@ const userController = {
         //   likes: user.LikeTweets
         // });
       })
-  }
+  },
+
 }
 
 module.exports = userController
