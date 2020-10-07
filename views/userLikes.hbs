@@ -15,8 +15,8 @@
     </div>
     <div class="col mt-3">
       {{#ifCond userId loginUser.id}}
-      {{!-- <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button> --}}
-      <a href="/users/{{userId}}" class="btn rounded-pill float-right btn-outline-twitter">編輯個人資料</a>
+      <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button>
+      {{!-- <a href="/users/{{userId}}" class="btn rounded-pill float-right btn-outline-twitter">編輯個人資料</a> --}}
       {{else}}
         {{#if isFollowed}}
         <form action="/followships/{{userId}}?_method=DELETE" method="POST">
