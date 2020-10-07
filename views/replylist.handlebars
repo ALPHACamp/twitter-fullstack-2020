@@ -1,72 +1,76 @@
 <div id="left">
-	<ul class="nav flex-column justify-content-between" style="height: 100vh;">
-		<div class="flex-colum ">
-			<a class="navbar-brand ml-3 mb-3" href="/">
-			<img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
-			height="30" alt="">
-			</a>
+	<div id="left-container">
+		<ul class="nav flex-column justify-content-between" style="height: 100vh;">
+			<div class="flex-colum ">
+				<a class="navbar-brand ml-3" href="/">
+					<img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
+						height="30" alt="">
+				</a>
+				<li class="nav-item">
+					<a class="nav-link" href="/tweets" style="color: black; "><i class="fas fa-home"></i>首頁</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/users/{{user.id}}/tweets" style="color:black;"><i class="fas fa-user"></i>個人資料</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/setting/{{user.id}}" style="color: black;margin-bottom: 19px"><i
+							class="fas fa-cog"></i>設定</a>
+				</li>
+				<button type="button" class="btn btn-block" style="border-radius: 23px;background:#ff6600; color:white"
+					data-toggle="modal" data-target="#tweetModal">
+					推文
+				</button>
+			</div>
 			<li class="nav-item">
-				<a class="nav-link" href="/tweets" style="color: black;"><i class="fas fa-home mr-2"></i>首頁</a>
+				<a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt"></i>登出</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/users/{{user.id}}/tweets" style="color: black;"><i class="fas fa-user mr-2"></i>個人資料</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/setting/{{user.id}}" style="color: black;"><i class="fas fa-cog mr-2"></i>設定</a>
-			</li>
-			<button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#tweetModal">
-				推文
-			</button>
-		</div>
-		<li class="nav-item">
-		<a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
-		</li>
-	</ul>
+		</ul>
+	</div>
 </div>
-<h1>推文</h1>
-<a href="javascript:history.back()">回上一頁</a>
-<hr />
-<br/>
-<br/>
-<div class="main">
-  <div class="col-md-11">
-    <a href="/users/{{reply.User.id}}/tweets">
-    <img class="rounded-circle" src="{{ reply.User.avatar }}" width="50" height="50">
-    </a>
-    <span>{{reply.User.name}}</span>
-    <h3>
-    <p>{{reply.description}}</p>
-    </h3>
-    {{moment reply.createdAt}}
-    <hr>
-  </div>
-</div>
-<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#replyModal">
-	回覆
-</button>
-{{!-- like --}}
-{{#if isLiked }}
+
+<div id="main">
+	<div class="main-follow-top">
+		<a href="javascript:history.back()" style="margin-right:43px ;color:black"><i class="fas fa-arrow-left"></i></a>
+		推文
+	</div>
+	<div class="col-md-11">
+		<a href="/users/{{reply.User.id}}/tweets">
+			<img class="rounded-circle" src="{{ reply.User.avatar }}" width="50" height="50">
+		</a>
+		<span>{{reply.User.name}}</span>
+		<h3>
+			<p>{{reply.description}}</p>
+		</h3>
+		{{moment reply.createdAt}}
+		<hr>
+	</div>
+	<button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#replyModal">
+		回覆
+	</button>
+	{{!-- like --}}
+	{{#if isLiked }}
 	<form action="/like/{{reply.id}}?_method=DELETE" method="POST">
 		<button type="submit" class="fas fa-heart"></button>
 	</form>
-{{else}}
+	{{else}}
 	<form action="/like/{{reply.id}}" method="POST">
 		<button type="submit" class="far fa-heart"></button>
 	</form>
-{{/if}}
-<hr>
-<br/>
-<br/>
-<h3>所有回覆</h3>
-<div class="col-md-11">
-	{{#each reply.Replies}}
-	<blockquote class="blockquote mb-0">
-		<h4><a href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a></h4>
-		<p>{{this.comment}}</p>
-		<footer class="blockquote-footer">{{moment this.createdAt}}</footer>
-	</blockquote>
-	<hr />
-	{{/each}}
+	{{/if}}
+	<hr>
+	<br />
+	<br />
+	<h3>所有回覆</h3>
+	<div class="col-md-11">
+		{{#each reply.Replies}}
+		<blockquote class="blockquote mb-0">
+			<h4><a href="/users/{{this.User.id}}/tweets">{{this.User.name}}</a></h4>
+			<p>{{this.comment}}</p>
+			<footer class="blockquote-footer">{{moment this.createdAt}}</footer>
+		</blockquote>
+		<hr />
+		{{/each}}
+	</div>
 </div>
 {{!-- 右邊 --}}
 <div id="right">
@@ -75,60 +79,59 @@
 
 <!-- Modal -->
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<div class="col-md-8">
-			<a href="/users/{{reply.User.id}}/tweets">
-				<img class="rounded-circle" src="{{ reply.User.avatar }}" width="50" height="50">
-			</a>
-			<span>{{reply.User.name}}/{{moment reply.createdAt}}</span>
-			<p>{{reply.description}}</p>
-			回覆給
-			<a href="/users/{{reply.User.id}}/tweets">
-				@{{reply.User.account}}
-			</a>
-			<hr>
-  		</div>
-		<form action="/replylist/{{ reply.id }}" method="POST">
-		<div class="form-group">
-			<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;"></textarea>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="col-md-8">
+					<a href="/users/{{reply.User.id}}/tweets">
+						<img class="rounded-circle" src="{{ reply.User.avatar }}" width="50" height="50">
+					</a>
+					<span>{{reply.User.name}}/{{moment reply.createdAt}}</span>
+					<p>{{reply.description}}</p>
+					回覆給
+					<a href="/users/{{reply.User.id}}/tweets">
+						@{{reply.User.account}}
+					</a>
+					<hr>
+				</div>
+				<form action="/replylist/{{ reply.id }}" method="POST">
+					<div class="form-group">
+						<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;"></textarea>
+					</div>
+					<input type="hidden" name="tweetId" value="{{reply.id}}" />
+					<button type="submit" class="btn btn-info">回覆</button>
+				</form>
+			</div>
 		</div>
-		<input type="hidden" name="tweetId" value="{{reply.id}}" />
-		<button type="submit" class="btn btn-info">回覆</button>
-		</form>
-      </div>
-    </div>
-  </div>
+	</div>
 </div>
 
 <!-- tweetModal -->
 <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<form action="/tweets" method="POST">
-			<div class="form-group">
-				<img src="{{ user.avatar }}" class="rounded-circle" width="100" height="100">
-				<span>有什麼新鮮事?</span>
-				<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"> </textarea>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
-			<input type="hidden" name="tweetId" value="{{user.description}}" />
-			<button type="submit" class="btn btn-warning btn-lg">推文</button>
-		</form>
-      </div>
-    </div>
-  </div>
+			<div class="modal-body">
+				<form action="/tweets" method="POST">
+					<div class="form-group">
+						<img src="{{ user.avatar }}" class="rounded-circle" width="100" height="100">
+						<span>有什麼新鮮事?</span>
+						<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;"
+							placeholder="what's on your mind?"> </textarea>
+					</div>
+					<input type="hidden" name="tweetId" value="{{user.description}}" />
+					<button type="submit" class="btn btn-warning btn-lg">推文</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
-
-
