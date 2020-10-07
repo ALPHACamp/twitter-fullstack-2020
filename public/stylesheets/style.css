@@ -136,16 +136,16 @@ font-weight:bold;
 .tweets-reply-button {
   background: none;
   border: none;
-  color:#6E7783;
+  color: #7B7B7B;
 }
 .tweets-like-button {
   background: none;
   border: none;
-  color:#D81159;
+  color:#FF0088;
 }
 
 .tweets-unlike-button {
   background: none;
   border: none;
-  color:#6E7783;
+  color:#7B7B7B;
 }
