@@ -30,30 +30,18 @@ const tweetController = {
   },
 
   getTweet: (req, res) => {
-    Tweet.findByPk(req.params.id, {
+    return Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: Reply, include: [User] },
-        { model: User, as: 'LikeUsers' },
+        {model: Reply, include: [ User ]},
+        {model: User, as: 'LikeUsers'}
       ],
-      order: [['Replies', 'createdAt', 'DESC']]
+      order: [['Replies', 'createdAt', 'DESC'  ]]
     }).then(tweet => {
-      const isLiked = tweet.LikeUsers.map(user => user.id).includes(req.user.id)
-      return res.render('tweet', {
-        tweet,
-        isLiked: isLiked,
-      })
-
-      // return User.findOne({ where: { id: req.user.id } })
-      // .then(user => {
-      //   console.log(user)
-      //   return res.render('tweet', {
-      //     tweet,
-      //     isLiked
-      //   })
-      // })
+      const UserId = req.user.id
+      const isLiked = tweet.LikeUsers.map(d => d.id).includes(req.user.id)
+      return res.render('tweet', { tweet, isLiked })
     })
-      .catch(error => console.log(error))
   },
 
   createTweet: (req, res) => {
