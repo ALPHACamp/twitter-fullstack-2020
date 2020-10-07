@@ -83,41 +83,56 @@ const userController = {
     return res.render('setting')
   },
 
-  putSetting: (req, res) => {
-    const { account, name, email, password, checkPassword } = req.body
+  putSetting: async (req, res) => {
     const id = req.params.id
+    const { email: currentEmail, account: currentAccount } = helpers.getUser(req)
+    const { account, name, email, password, checkPassword } = req.body
 
+    const error = []
+    let newEmail = ''
+    let newAccount = ''
+
+    if (currentEmail === email) { newEmail = currentEmail }
+    if (currentAccount === account) { newAccount = currentAccount }
     if (password !== checkPassword) {
-      req.flash('error_messages', '請再次確認密碼')
-      return res.redirect('back')
+      error.push({ message: '密碼不相同, 請再次確認密碼' })
     }
-    else {
-      User.findOne({ where: { email: email } }).then(user => {
-        if (user) {
-          req.flash('error_messages', '信箱已註冊')
-          return res.redirect('back')
-        } else {
-          User.findOne({ where: { account: account } }).then(user => {
-            if (user) {
-              req.flash('error_messages', '帳號已註冊')
-              return res.redirect('back')
-            } else {
-              return User.findByPk(id)
-                .then((user) => {
-                  user.update({
-                    email: email,
-                    name: name,
-                    account: account,
-                    password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-                  }).then((user) => {
-                    req.flash('success_messages', '成功更新帳號資訊!')
-                    return res.redirect('/tweets')
-                  })
-                })
-            }
-          })
-        }
-      })
+
+    if (currentEmail !== email) {
+      await User.findOne({ where: { email } })
+        .then(user => {
+          if (user) { error.push({ message: '信箱已經被註冊' }) }
+          else { newEmail = email }
+        })
+    }
+
+    if (currentAccount !== account) {
+      await User.findOne({ where: { account } })
+        .then(user => {
+          if (user) { error.push({ message: '帳號已存在' }) }
+          else { newAccount = account }
+        })
+    }
+
+    if (error.length !== 0) {
+      return res.render('setting', { error })
+    }
+
+    if (!password) {
+      return User.findByPk(id)
+        .then(user => user.update({ name, email: newEmail, account: newAccount }))
+        .then(() => {
+          const success = []
+          success.push({ message: '成功更新帳號資訊!' })
+          return res.render('setting', { success })
+        })
+    } else {
+      return User.findByPk(id)
+        .then(user => user.update({ name, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), email: newEmail, account: newAccount }))
+        .then(() => {
+          req.flash('success_messages', '成功更新帳號資訊!')
+          res.redirect('/tweets')
+        })
     }
   },
 
