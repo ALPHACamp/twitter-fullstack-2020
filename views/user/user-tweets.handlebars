@@ -50,14 +50,41 @@
                                             <div class="tweet-footer">
                                                 <!-- Button trigger modal -->
                                                 <button type="button" data-toggle="modal"
-                                                    data-target="#user-tweet-modal" style="background: none;border: none;">
+                                                    data-target="#user-tweet-modal-{{ this.id }}" style="background: none;border: none;">
                                                     <i class="far fa-comment"></i> {{this.Replies.length}}
                                                 </button>
-
-                                                {{>modal}}
-
+                                                <div class="modal fade" id="user-tweet-modal-{{ this.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        </div>
+                                                        <div class="modal-title">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                            <img src="{{../pageUser.avatar}}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
+                                                            <span class="mt-1"><a href="#">{{../pageUser.name}}</a></span>
+                                                            <span class="user-account">
+                                                            {{../pageUser.account}}．{{moment this.createdAt}}
+                                                            </span>
+                                                        </div>
+                                                        <div class="modal-body" class="d-flex">
+                                                            <div class="tweet-text d-flex align-items-stretch">
+                                                            {{ this.description }}
+                                                            </div>
+                                                            <form method="POST" action="/tweets/{{this.id}}/replies">
+                                                                <textarea name="comment" cols="55" rows="5"
+                                                                    style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+                                                                    placeholder="say something"></textarea>
+                                                                    <button type="submit"
+                                                                        style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+                                                                    <span style="color: #FFFFFF;">回覆</span></button>
+                                                            </form>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 {{#if this.isLiked }}
-
                                                 <form action="/like/{{this.id}}?_method=DELETE" method="POST"
                                                     style="display:inline;">
                                                     <button type="submit" class="button reply-link mt-4 mb-4"

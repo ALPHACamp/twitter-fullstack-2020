@@ -112,7 +112,7 @@ const tweetController = {
     if (req.body.comment.length > 140) {
       return res.redirect('back')
     }
-    Reply.create({
+    return Reply.create({
       TweetId: req.params.id,
       UserId: req.user.id,
       comment: req.body.comment,
