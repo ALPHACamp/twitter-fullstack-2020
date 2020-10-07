@@ -27,6 +27,8 @@
     </div>
   </nav>
 
+  {{> addTweet}}
+
   <div style="width: 100%">
     <div class="admin-title">
       帳戶設定
@@ -47,7 +49,7 @@
 
       <div class="form-label-group">
         <label for="email" class="sign-label-text">Email</label>
-        <input type="text" name="email" class="form-control" autofocus value="{{user.email}}">
+        <input type="email" name="email" class="form-control" autofocus value="{{user.email}}">
       </div>
 
       <div class="form-label-group">
@@ -66,5 +68,9 @@
       </div>
     </form>
 
+  </div>
+
+  <div class="right-content">
+    {{> right-column}}
   </div>
 </div>

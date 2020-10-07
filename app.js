@@ -8,7 +8,7 @@ const db = require('./models')
 const session = require('express-session')
 const flash = require('connect-flash')
 const app = express()
-const port = 3000
+const PORT = process.env.PORT || 3000
 
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
@@ -57,6 +57,6 @@ app.use((req, res, next) => {
 })
 
 
-module.exports = app.listen(port, () => console.log(`Express is listening on http://localhost:${port}`))
+module.exports = app.listen(PORT, () => console.log(`Express is listening on http://localhost:${PORT}`))
 
 require('./routes')(app, passport)

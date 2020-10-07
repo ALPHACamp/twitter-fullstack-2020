@@ -4,6 +4,9 @@
       {{> left-column}}
     </div>
   </nav>
+
+  {{> addTweet}}
+
   <div class="center-content d-flex" id="tweet-content">
     <div class="head  justify-content-between ">
       <a href="javascript:history.back()" style="color: black;">
@@ -16,10 +19,10 @@
       <div class="user-selection-bar">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" href="/users/{{users.id}}/followers">跟隨者</a>
+            <a class="nav-link " href="/users/{{users.id}}/followers">跟隨者</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/{{users.id}}/followings">正在跟隨</a>
+            <a class="nav-link active" href="/users/{{users.id}}/followings">正在跟隨</a>
           </li>
         </ul>
       </div>
@@ -62,7 +65,7 @@
 
 
   <div class="right-content">
-    {{>right-column}}
+    {{> right-column}}
   </div>
 
   {{> userEdit}}
