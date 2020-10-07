@@ -67,7 +67,7 @@
     </div>
 	{{!-- 編輯個人資料 --}}
 	{{#ifCond profile.id user.id }}
-    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUser">
 			Edit Profile
 		</button>
   	{{/ifCond}}
@@ -107,7 +107,7 @@
 			<div class="card mb-3" style="max-width: 900px;">
 				<div class="row no-gutters">
 					<div class="col-md-4">
-					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
+					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar width="150" height="150">
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
@@ -142,7 +142,7 @@
 			<div class="card mb-3" style="max-width: 900px;">
 				<div class="row no-gutters">
 					<div class="col-md-4">
-					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar">
+					<img src="{{this.User.avatar}}" class="rounded-circle" alt="user avatar" width="150" height="150">
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
@@ -172,51 +172,62 @@
 <div id="right">
 	{{>rightColumn}}
 </div>
-{{!-- modal --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-			<form
-				action="/users/{{user.id}}/edit"
-				method='POST'
-			>
-			<div class='col-md-8'>
-			<div class='form-group'>
-				<input
-				type='text'
-				class='form-control form-control-lg'
-				name='name'
-				id='name'
-				placeholder='Name'
-				value="{{user.name}}"
-				required
-				/>
-			</div>
-			<div class='form-group'>
-				<textarea
-				class='form-control'
-				name='introduction'
-				id='introduction'
-				rows='8'
-				placeholder='Type anything about you here...'
-				>{{user.introduction}}</textarea>
-			</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary">Save changes</button>
-			</div>
-			</form>
-			</div>
-		</div>
-	</div>
+{{!-- editModal --}}
+<div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUser" aria-hidden="true">
+  <form action="/users/{{profile.id}}/edit?_method=PUT" method="post" enctype="multipart/form-data">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header m-2 p-2">
+          <div class="row" style="width: 100%;">
+            <div class="col-1 text-left">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span style="color: #FF6600;" aria-hidden="true">x</span>
+              </button>
+            </div>
+            <div class="col-8">
+              <h5 class="modal-title "><strong>編輯個人資料</strong></h5>
+            </div>
+            <div class="col-3 text-right">
+              <button type="submit" class="btn rounded-pill" style="background-color: #FF6600; color:white">
+                儲存
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body m-1 p-1">
+          {{!-- cover&avatar --}}
+          <div class="img-wrapper d-flex flex-column flex-nowrap" style="position:relative;">
+            <label for="cover" class="btn btn-light">
+              <input type="file" id="cover" name="cover" class="form-control-file" style="display: none;">
+              <i class="fas fa-camera" aria-hidden="true"></i>上傳背景圖
+              <img src="{{profile.cover}}" class="card-img-top" alt="background" width="100%" height="200px"
+                style="object-fit: cover;">
+            </label>
+            <label for="avatar" class="btn btn-light">
+              <input type="file" id="avatar" name="avatar" class="form-control-file" style="display: none;">
+              <i class="fas fa-camera" aria-hidden="true"></i>上傳大頭貼
+              <img src="{{profile.avatar}}" class="rounded-circle mb-5" alt="avatar" width="140" height="140"
+                style="border: 4px solid #FFFFFF; position:absolute; top:60%; left:20px;">
+            </label>
+          </div>
+          <div class="d-flex flex-column mt-5">
+            <div class="p-2 mt-3">
+              <span class="mt-3">名稱</span><br>
+			  <div class="md-form">
+              <textarea type="text" name="name" id="name" cols="60" rows="1" 
+			  class="md-textarea form-control ">{{profile.name}}</textarea>
+			  </div>
+            </div>
+            <div class="p-2 mt-3">
+              <span class="mt-3">自我介紹</span><br>
+              <textarea type="text" name="introduction" id="introduction" cols="60" rows="4"
+                class="md-textarea form-control ">{{profile.introduction}}</textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
 <!-- tweetModal -->
 <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">

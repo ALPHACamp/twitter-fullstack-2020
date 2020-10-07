@@ -2,6 +2,9 @@ const { User, Reply, Tweet, Like, Followship } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { Op } = require('sequelize')
 const helpers = require('../_helpers')
+const imgur = require('imgur-node-api')
+
+
 
 
 const userController = {
@@ -198,16 +201,85 @@ const userController = {
     }
   },
   putUser: (req, res) => {
-    return User.findByPk(req.params.id).then(user => {
-      user
-        .update({
-          name: req.body.name,
-          introduction: req.body.introduction
+    const uploadImg = (filePath) => {
+      return new Promise((resolve, reject) => {
+        imgur.setClientID(process.env.IMGUR_CLIENT_ID)
+        if (filePath) {
+          imgur.upload(filePath, (err, img) => {
+            if (err) reject(err)
+            resolve(img)
+          })
+        } else {
+          reject(Error, "file doesn't exist.")
+        }
+      })
+    }
+    const { files } = req
+    if ((Object.keys(files).length === 0)) {
+      return User.findByPk(req.params.id).then((user) => {
+        user
+          .update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            cover: user.cover,
+            avatar: user.avatar
+          })
+          .then((user) => {
+            req.flash('success_message', 'User successfully update')
+            res.redirect(`/users/${req.params.id}/tweets`)
+          })
+      })
+    } else if ((Object.keys(files).length === 2)) {
+      uploadImg(files.cover[0].path).then((cover) => {
+        uploadImg(files.avatar[0].path).then((avatar) => {
+          return User.findByPk(req.params.id).then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              cover: cover.data.link,
+              avatar: avatar.data.link
+            })
+          })
         })
-        .then(user => {
+      })
+        .then(() => {
+          req.flash('success_message', 'User successfully update')
           res.redirect(`/users/${req.params.id}/tweets`)
         })
-    })
+    } else {
+      if (files.cover) {
+        uploadImg(files.cover[0].path).then((cover) => {
+          return User.findByPk(req.params.id).then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              cover: cover.data.link,
+              avatar: user.avatar
+            })
+          })
+        })
+          .then(() => {
+            req.flash('success_message', 'User successfully update')
+            res.redirect(`/users/${req.params.id}/tweets`)
+          })
+      }
+      if (files.avatar) {
+        uploadImg(files.avatar[0].path).then((avatar) => {
+          return User.findByPk(req.params.id).then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              cover: user.cover,
+              avatar: avatar.data.link
+            })
+          })
+        })
+          .then(() => {
+            req.flash('success_message', 'User successfully update')
+            res.redirect(`/users/${req.params.id}/tweets`)
+          })
+      }
+    }
   },
   addFollowing: (req, res) => {
     if (helpers.getUser(req).id === Number(req.body.id)) {
