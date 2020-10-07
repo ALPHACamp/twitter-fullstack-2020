@@ -86,8 +86,19 @@
             </div>
             <div class="footer">
               <div class="footer-item reply-item">
-                <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
-                  <i class="icon-reply"></i> {{this.followingByReply.length}}
+                <button type="button" class="btn btn-reply" data-toggle="modal">
+                  <ul class="reply-text" style="display:none">
+                    <li>{{this.UserId}}</li>
+                    <li>{{this.User.name}}</li>
+                    <li>{{this.User.account}}</li>
+                    <li>{{moment this.updatedAt}}</li>
+                    <li>{{this.comment}}</li>
+                    <li>{{this.User.avatar}}</li>
+                    <li>{{../tweet.id}}</li>
+                    <li>{{this.id}}</li>
+                  </ul>
+                  <i class="icon-reply replies-on" style="font-size: 22px"></i>
+                  {{this.followingByReply.length}}
                 </button>
               </div>
               <div class="footer-item like-item">
@@ -122,12 +133,12 @@
                   {{subText this.comment 140}}
                 </div>
                 <div class="footer">
-                  <div class="reply-item">
-                    <button type="button" class="btn" data-toggle="modal" data-target="#replyModal">
+                  {{!-- <div class="reply-item">
+                    <button type="button" class="btn" data-toggle="modal">
                       <i class="icon-reply"></i> {{this.followingByReply.length}}
                     </button>
-                  </div>
-                  <div class="like-item">
+                  </div> --}}
+                  <div class="footer-item like-item">
                     <button type="button" class="btn">
                       <i class="icon-like"></i> {{this.Likes.length}}
                     </button>
