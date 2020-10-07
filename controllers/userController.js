@@ -101,11 +101,11 @@ const userController = {
         {
           model: Tweet,
           include: [Reply, Like],
-          order: [['updatedAt', 'DESC']],
         },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
+      order: [['Tweets', 'updatedAt', 'DESC']],
     }).then((user) => {
       if (user !== null && user.isAdmin === false) {
         // const targetUser = user.toJSON();
@@ -177,53 +177,137 @@ const userController = {
     let selfId = Number(helpers.getUser(req).id);
     return User.findByPk(UserId, {
       include: [
-        Tweet,
+        { model: Tweet, attributes: ['id'] },
         {
           model: Reply,
-          include: [
-            { model: Tweet, include: [Like, User, Reply] },
-            { model: Reply, as: 'followingByReply' },
-            Like,
-            User,
-          ],
-          order: [['updatedAt', 'DESC']],
+          where: { ReplyId: null },
+          attributes: ['id', 'TweetId'],
         },
+        // {
+        //   model: Reply,
+        //   include: [
+        //     { model: Tweet, include: [Like, User, Reply] },
+        //     { model: Reply, as: 'followingByReply' },
+        //     Like,
+        //     User,
+        //   ],
+        // },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
-      order: [['Replies', 'updatedAt', 'ASC']],
+      //order: [['Replies', 'updatedAt', 'DESC']],
     }).then((user) => {
-      //console.log(user.dataValues);
-      user.Tweets = user.Tweets.length;
-      let replies = user.toJSON().Replies;
-      let tweets = user.toJSON().Replies.map((r) => r.Tweet);
-      //console.log(tweets);
-      tweets = tweets.reduce((arr, value) => {
-        if (arr.findIndex((v) => v.id === value.id) === -1) {
-          arr.push(value);
-        }
-        return arr.sort((a, b) => {
+      let repliesIds = user.toJSON().Replies.map((i) => i.id);
+      let uniqueTweets = [
+        ...new Set([user.toJSON().Replies.map((i) => i.TweetId)]),
+      ];
+      console.log('tweets id', uniqueTweets);
+
+      return Reply.findAll({
+        where: { id: repliesIds },
+        include: [
+          { model: Like, attributes: ['UserId'] },
+          User,
+          { model: Reply, as: 'followingByReply', attributes: ['id'] },
+        ],
+        order: [['updatedAt', 'DESC']],
+      }).then((replies) => {
+        //console.log('replies', replies);
+        let allReplies = replies.map((r) => r.dataValues);
+        allReplies.forEach((r) => {
+          r.User = Object.assign({}, r.User.dataValues);
+          r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
+        });
+
+        //console.log('replies', allReplies);
+        allReplies = allReplies.sort((a, b) => {
           return new Date(b.updatedAt) - new Date(a.updatedAt);
         });
-      }, []);
 
-      tweets.forEach((t) => {
-        const reply = [];
-        replies.forEach((r) => {
-          r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
-          if (r.Tweet.id === t.id) {
-            reply.push(r);
-          }
+        return Tweet.findAll({
+          where: { id: uniqueTweets },
+          include: [
+            User,
+            { model: Like, attributes: ['UserId'] },
+            { model: Reply, where: { ReplyId: null }, attributes: ['id'] },
+          ],
+        }).then((tweets) => {
+          let alltweets = tweets.map((t) => t.dataValues);
+          alltweets.forEach((t) => {
+            t.User = Object.assign({}, t.User.dataValues);
+            t.isLikeBySelf = t.Likes.map((t) => t.UserId).includes(selfId);
+          });
+
+          const resultTweets = [];
+
+          allReplies.forEach((r) => {
+            let targetTweetId = r.TweetId;
+            if (
+              resultTweets.length === 0 ||
+              resultTweets.findIndex((t) => t.id === targetTweetId) === -1
+            ) {
+              let targetTweet = alltweets.find((t) => t.id === targetTweetId);
+
+              let repliesIntweet = [];
+              repliesIntweet.push(r);
+
+              targetTweet.replies = Array.from(repliesIntweet);
+              resultTweets.push(targetTweet);
+            } else {
+              resultTweets.find((t) => t.id === targetTweetId).replies.push(r);
+            }
+          });
+
+          //console.log('tweets', resultTweets);
+          //let allTweets = tweets.dataValues;
+
+          return res.render('user-replies', {
+            user: helpers.getUser(req),
+            visitUser: user,
+            tweets: resultTweets,
+          });
         });
-        t.replies = Array.from(reply);
-        t.isLikeBySelf = t.Likes.map((l) => l.UserId).includes(selfId);
       });
 
-      return res.render('user-replies', {
-        user: helpers.getUser(req),
-        visitUser: user,
-        tweets,
-      });
+      //console.log('replies@@@', allReplies);
+      //console.log('tweets@@@2', tweets);
+
+      //console.log(user.dataValues);
+      // console.log(user.toJSON());
+      // user.Tweets = user.Tweets.length;
+      // let replies = user.toJSON().Replies;
+
+      // let tweets = user.toJSON().Replies.map((r) => r.Tweet);
+      // //console.log(tweets);
+      // tweets = tweets.reduce((arr, value) => {
+      //   if (arr.findIndex((v) => v.id === value.id) === -1) {
+      //     arr.push(value);
+      //   }
+      //   return arr.sort((a, b) => {
+      //     return new Date(b.updatedAt) - new Date(a.updatedAt);
+      //   });
+      // }, []);
+
+      // tweets.forEach((t) => {
+      //   const reply = [];
+      //   replies.forEach((r) => {
+      //     r.isLikeBySelf = r.Likes.map((l) => l.UserId).includes(selfId);
+      //     delete r.Likes;
+      //     if (r.Tweet.id === t.id) {
+      //       reply.push(r);
+      //     }
+      //   });
+      //   t.replies = Array.from(reply);
+      //   t.isLikeBySelf = t.Likes.map((l) => l.UserId).includes(selfId);
+      //   delete t.Likes;
+      //   t.Replies = t.Replies.length;
+      //});
+      //return res.json(user.toJSON());
+      // return res.render('user-replies', {
+      //   user: helpers.getUser(req),
+      //   visitUser: user,
+      //   tweets,
+      // });
     });
   },
   getFollowersPage: (req, res) => {

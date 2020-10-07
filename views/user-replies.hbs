@@ -7,7 +7,7 @@
       <a href="/tweets" style="text-align: center;"><i class="user-arrow icon icon-arrow"></i></a>
       <div class="user-header-info">
         <div class="user-header-name">{{visitUser.name}}</div>
-        <div class="user-header-tweet-count">{{visitUser.Tweets}} 推文</div>
+        <div class="user-header-tweet-count">{{visitUser.Tweets.length}} 推文</div>
       </div>
     </div>
 
@@ -73,8 +73,10 @@
         <div class="card-body tweets-body">
           <div class="left-item">
             <a href="/users/{{this.User.id}}">
-              <img src="{{this.User.avatar}}" class="rounded-circle"
-                style="width: 50px;height:50px;background-color:#C4C4C4;">
+
+              <div class="tweet-user-avatar"
+                style="width: 50px;height:50px;background:url({{this.User.avatar}})#C4C4C4;background-repeat:no-repeat;background-position: center;background-size: cover;">
+              </div>
             </a>
           </div>
           <div class="right-item">

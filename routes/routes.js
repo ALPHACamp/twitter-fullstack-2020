@@ -36,7 +36,7 @@ const userAuthenticated = (req, res, next) => {
     helpers.ensureAuthenticated(req) &&
     (helpers.getUser(req).role || helpers.getUser(req).isAdmin)
   )
-    return res.redirect('admin/tweets');
+    return res.redirect('/admin/tweets');
   return res.redirect('/signin');
 };
 
@@ -49,6 +49,7 @@ router.get('/', (req, res) => {
 router.post('/tweets', userAuthenticated, tweetController.postTweets);
 router.get('/tweets', userAuthenticated, tweetController.getTweets);
 router.get('/tweets/:id', userAuthenticated, tweetController.getTweet);
+router.get('/tweets/:id/replies', userAuthenticated, tweetController.getTweet);  //for test
 router.post('/tweets/:id/like', userAuthenticated, tweetController.postTweetLike);
 router.post('/tweets/:id/unlike', userAuthenticated, tweetController.postTweetUnlike);
 router.post('/replies/:id/like', userAuthenticated, tweetController.postReplyLike);

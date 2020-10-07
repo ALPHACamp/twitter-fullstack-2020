@@ -37,6 +37,18 @@ module.exports = {
       acc.push(user);
       return acc;
     }, arr);
+    const admin2 = {
+      name: 'root',
+      email: 'root@example.com2',
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      account: 'root@example.com',
+      cover: randomCover(),
+      avatar: randomAvater(),
+      introduction: faker.lorem.text(160),
+      isAdmin: true,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
     //console.log(users);
     return queryInterface.bulkInsert('Users', users, {});
     /*

@@ -58,7 +58,7 @@
       </div>
     </div>
     <div class="tweets-list">
-      {{#each tweet.Replies}}
+      {{#each reply}}
       <div class="card tweets-content">
         <div class="card-body tweets-body">
           <div class="left-item">
@@ -102,9 +102,21 @@
                 </button>
               </div>
               <div class="footer-item like-item">
-                <button type="button" class="btn">
-                  <i class="icon-like"></i> {{this.Likes.length}}
-                </button>
+              {{#if this.isLiked}}
+        <form action="/replies/{{this.id}}/unlike" method="post" class="form-like">
+          <button type="submit" class="btn">
+            <i class="like icon-like-fill" style="font-size: 22px;"></i>
+          </button>
+          <div class="like-item-count item-count">{{this.Likes.length}}</div>
+          {{else}}
+          <form action="/replies/{{this.id}}/like" method="post" class="form-like">
+            <button type="submit" class="btn">
+              <i class="icon-like" style="font-size: 22px;"></i>
+            </button>
+            <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+            {{/if}}
+          </form>
+
               </div>
             </div>
             {{#each this.followingByReply}}
@@ -134,9 +146,21 @@
                 </div>
                 <div class="footer">
                   <div class="footer-item like-item">
-                    <button type="button" class="btn">
-                      <i class="icon-like"></i> {{this.Likes.length}}
-                    </button>
+
+                  {{#if this.isLiked}}
+                          <form action="/replies/{{this.id}}/unlike" method="post" class="form-like">
+                            <button type="submit" class="btn">
+                              <i class="like icon-like-fill" style="font-size: 22px;"></i>
+                            </button>
+                            <div class="like-item-count item-count">{{this.Likes.length}}</div>
+                            {{else}}
+                            <form action="/replies/{{this.id}}/like" method="post" class="form-like">
+                              <button type="submit" class="btn">
+                                <i class="icon-like" style="font-size: 22px;"></i>
+                              </button>
+                              <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+                              {{/if}}
+                            </form>
                   </div>
                 </div>
               </div>

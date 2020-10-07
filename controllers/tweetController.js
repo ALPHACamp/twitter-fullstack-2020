@@ -147,7 +147,7 @@ const tweetController = {
 
   postReply: (req, res) => {
     let tweetId = req.params.id
-    let replyText = req.body.replyText.trim()
+    let replyText = req.body.comment.trim()
     if (!replyText.length) {
       return res.redirect('back')
     } else {
@@ -200,18 +200,27 @@ const tweetController = {
             model: Reply, include: [Like, User,
               {
                 model: Reply, as: 'followingByReply',
-                include: [User, Like, { model: Reply, as: 'followingByReply' }]
+                include: [User, Like]
+                // include: [User, Like, { model: Reply, as: 'followingByReply' }]
               }]
           },
         ]
       })
       .then(tweet => {
         // console.log('tweet######', tweet.toJSON().Replies)
-        // console.log('tweet######@@@@@@######', tweet.toJSON().Replies[1].followingByReply[0].Likes)
+        // console.log('tweet######@@@@@@######', tweet.toJSON().Replies[0].followingByReply[0].Likes) //.userId
         const isLiked = tweet.Likes.map((i) => i.UserId).includes(helpers.getUser(req).id)
+        const reply = tweet.toJSON().Replies.map(i => {
+          i.isLiked = i.Likes.map(id => id.UserId).includes(helpers.getUser(req).id)
+          i.followingByReply.map(j => {
+            j.isLiked = j.Likes.map(id => id.UserId).includes(helpers.getUser(req).id)
+          })
+          return i
+        })
         res.render('tweet', {
           isLiked,
           tweet: tweet.toJSON(),
+          reply,
           LocaleDate: tweet.toJSON().updatedAt.toLocaleDateString(),
           LocaleTime: tweet.toJSON().updatedAt.toLocaleTimeString(),
         })
