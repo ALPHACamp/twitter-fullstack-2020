@@ -1,9 +1,47 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-md-3 pl-0">
+<<<<<<< HEAD
+            <div class="left-zone">
+            <div class="AC-icon">
+                <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+                style="width:75px">
+            </div>
+
+            </br>
+            </br>
+
+            <div class="home" name="home">
+                <a class="left-zone-items" href="/tweets" style="text-decoration: none"><i class="fas fa-home"></i>&ensp;首頁</a>
+            </div>
+
+            </br>
+            </br>
+
+            <div class="profile" name="profile">
+                <a class="left-zone-items" href="/user/self" style="text-decoration: none"><i
+                    class="far fa-user"></i>&ensp;個人資料</a>
+            </div>
+
+            </br>
+            </br>
+
+            <div class="setting" name="setting">
+                <a class="left-zone-items" href="/setting" style="text-decoration: none"><i class="fas fa-cog"></i>&ensp;設定</a>
+            </div>
+
+            </br>
+            </br>
+
+            <form action="/user/tweets">
+                <button type="submit" class="left-zone-btn">
+                推文</button>
+            </form>
+=======
      {{>left}}
         </div>
  <div class="col-md-6 px-3 border-left border-right">
+>>>>>>> master
 
       <div class="row ml-1 align-items-center ">
      <a href="/tweets" style="text-decoration: none; color:black">
@@ -15,6 +53,9 @@
       </div>
     </div>
 
+<<<<<<< HEAD
+            <a href="/logout" class="logout" style="text-decoration: none"><i class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+=======
       <div class="row">
         <img src="{{user.background}}" alt="user-cover" class="img-fluid" style="width: 100%;
   height: 200px; object-fit: cover;">
@@ -25,6 +66,7 @@
         <button class="m-3" data-toggle="modal" data-target="#editModal" style="border-radius: 50px;
   width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">正在追蹤</button>
       </div>
+>>>>>>> master
 
         <h2>{{ user.name }}</h2>
         <h6>@{{ user.account }}</h6>
@@ -38,7 +80,25 @@
             style="text-decoration: none; color:black">{{users.dataValues.Followers.length}}位</a>
           <p style="color:#7B7B7B">跟隨者</p>
         </div>
+<<<<<<< HEAD
+        <div class="col-md-6 pl-0 border-left">
+            <div class="main">
+                <div class="header">
+                    <div class="background">
+                        <img src="{{ user.background }}" alt="">
+                    </div>
+                    <div class="avatar">
+                        <img src="{{ user.avatar }}" alt="">
+                    </div>
+                    <h2>{{ user.name }}</h2>
+                    <h6>
+                        <p style="color:#7B7B7B">@{{ user.account }}</p>
+                    </h6>
+                    <p>{{ user.introduction }}</p>
+                </div>
+=======
 
+>>>>>>> master
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-tweets" role="tab"
@@ -50,8 +110,7 @@
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel"
-                        aria-labelledby="nav-home-tab">
+                    <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel" aria-labelledby="nav-home-tab">
                         <div class="col">
                             <div class="tweet-list">
                                 {{#each tweets}}
@@ -59,8 +118,7 @@
                                     <div class="tweet-item-left d-flex align-items-stretch">
                                         <div class="tweet-left d-flex align-items-stretch">
                                             <a href="#">
-                                                <img src="{{ this.userAvatar }}" class="rounded-circle"
-                                                    style="background-size:cover; width: 50px;height: 50px;">
+                                                <img src="{{ this.userAvatar }}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
                                             </a>
                                         </div>
                                         <div class="tweet-item-right ml-3">
@@ -73,29 +131,16 @@
                                             <div class="tweet-text">
                                                 {{this.description}}
                                             </div>
-
-                                            <div class="tweet-footer ml-5">
+                                            <div class="tweet-footer">
                                                 <!-- Button trigger modal -->
-                                                <button type="button" class="mt-4 mb-4" data-toggle="modal"
+                                                <button type="button" data-toggle="modal"
                                                     data-target="#replyModal" style="background: none;border: none;">
-                                                    <i class="far fa-comment"></i> {{this.Replies.length}}
+                                                    <i class="far fa-comment"></i> {{this.countReplies}}
                                                 </button>
-                                                {{#if this.isLiked }}
-                                                <form action="/like/{{this.id}}?_method=DELETE" method="POST"
-                                                    style="display:inline;">
-                                                    <button type="submit" class="button reply-link mt-4 mb-4"
-                                                        style="background: red;border: none;">
-                                                        <i class="far fa-heart"></i>
-                                                    </button>
-                                                </form>
-                                                {{else}}
-                                                <form action="/like/{{this.id}}" method="POST" style="display:inline;">
-                                                    <button type="submit" class="button reply-link mt-4 mb-4"
-                                                        style="background: none;border: none;">
-                                                        <i class="far fa-heart"></i>
-                                                    </button>
-                                                </form>
-                                                {{/if}}
+                                                <button type="button" data-toggle="modal"
+                                                    data-target="#replyModal" style="background: none;border: none;">
+                                                    <i class="far fa-heart"></i> {{this.countLikeUser}}
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -127,6 +172,29 @@
                                             <div class="tweet-text">
                                                 {{ this.tweet.description }}
                                             </div>
+                                            <div class="tweet-footer">
+                                                <button type="button" class="mt-4 mb-4" data-toggle="modal"
+                                                    data-target="#replyModal" style="background: none;border: none;">
+                                                    <i class="far fa-comment"></i> {{ this.countReplies }}
+                                                </button>
+                                                {{#if this.isLike }}
+                                                <form action="/like/{{this.id}}?_method=DELETE" method="POST"
+                                                    style="display:inline;">
+                                                    <button type="submit" class="button reply-link mt-4 mb-4"
+                                                        style="background: red;border: none;">
+                                                        <i class="far fa-heart"></i>
+                                                    </button>
+                                                </form>
+                                                {{else}}
+                                                <form action="/like/{{this.id}}" method="POST" style="display:inline;">
+                                                    <button type="submit" class="button reply-link mt-4 mb-4"
+                                                        style="background: none;border: none;">
+                                                        <i class="far fa-heart"></i>
+                                                    </button>
+                                                </form>
+                                                {{/if}}
+                                                {{this.countLikeUser}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -157,6 +225,18 @@
                                             <div class="tweet-text">
                                                 {{ this.description }}
                                             </div>
+                                            <button type="button" class="mt-4 mb-4" data-toggle="modal"
+                                                data-target="#replyModal" style="background: none;border: none;">
+                                                <i class="far fa-comment"></i> {{ this.countReplies }}
+                                            </button>
+                                            <form action="/like/{{this.id}}?_method=DELETE" method="POST"
+                                                style="display:inline;">
+                                                <button type="submit" class="button reply-link mt-4 mb-4"
+                                                    style="background: red;border: none;">
+                                                    <i class="far fa-heart"></i>
+                                                </button>
+                                            </form>
+                                            {{ this.countLikeUser }}
                                         </div>
                                     </div>
                                 </div>
@@ -182,23 +262,14 @@
                             </div>
                             <div class="tweet-item-right  ml-3">
                                 <div class="tweet-item-title">
-                                    <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
+                                    <span class="mt-1"><a
+                                            href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
                                 </div>
                                 <div class="tweet-text">
                                     <span class="user-account">
                                         {{ this.account }}
                                     </span>
                                 </div>
-                                <p>
-                                    {{#if this.isFollowed }}
-                                <form action="/following/{{this.id}}?_method=DELETE" method="POST"
-                                    style="display: contents;">
-                                    <button type="submit" class="btn btn-danger">跟隨</button></form>
-                                {{else}}
-                                <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button
-                                        type="submit" class="btn btn-primary">正在跟隨</button></form>
-                                {{/if}}
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -219,29 +290,19 @@
                             </div>
                             <div class="tweet-item-right  ml-3">
                                 <div class="tweet-item-title">
-                                    <span class="mt-1"><a href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
+                                    <span class="mt-1"><a
+                                            href="/user/other/{{ this.id }}">{{ this.name }}</a></span>
                                 </div>
                                 <div class="tweet-text">
                                     <span class="user-account">
                                         {{ this.account }}
                                     </span>
                                 </div>
-                                <p>
-                                    {{#if user.isFollowed }}
-                                <form action="/following/{{this.id}}?_method=DELETE" method="POST"
-                                    style="display: contents;">
-                                    <button type="submit" class="btn btn-danger">跟隨</button></form>
-                                {{else}}
-                                <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button
-                                        type="submit" class="btn btn-primary">正在跟隨</button></form>
-                                {{/if}}
-                                </p>
-
                             </div>
                             {{/each}}
-
                         </div>
-                        <div class="tab-pane fade" id="nav-replies" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="tab-pane fade" id="nav-replies" role="tabpanel"
+                            aria-labelledby="nav-profile-tab">
                             ...</div>
                         <div class="tab-pane fade" id="nav-likes" role="tabpanel" aria-labelledby="nav-contact-tab">
                             ...
