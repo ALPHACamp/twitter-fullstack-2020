@@ -90,8 +90,10 @@ const userController = {
         })
       }).then(user => {
         console.log("updated!")
-        req.flash('success_messages', '資料已被更新!')
-        res.redirect('/')
+
+        req.flash('success_messages', "資料被更新！")
+        res.redirect('/tweets')
+
       })
   },
 
@@ -206,9 +208,11 @@ const userController = {
 
     const { avatar, cover } = req.files
     const { files } = req
+    console.log(typeof (helpers.getUser(req).id))
+    console.log(typeof (req.params.id))
 
-    if (helpers.getUser(req).id !== req.params.id) {
-      req.flash('errorMessage', 'error')
+    if (helpers.getUser(req).id !== Number((req.params.id))) {
+      req.flash('error_messages', 'error')
       res.redirect('/tweets')
     }
 
@@ -232,7 +236,7 @@ const userController = {
         name: req.body.name,
         introduction: req.body.introduction
       }))
-    req.flash('successMessage', '更新成功！')
+    req.flash('success_messages', '更新成功！')
     res.redirect('back')
   },
 
