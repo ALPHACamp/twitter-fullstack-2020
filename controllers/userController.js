@@ -186,6 +186,69 @@ const userController = {
       })
   },
   //austin
+  getTweets: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [Reply, { model: User, as: 'LikeUsers' },] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      order: [['Tweets', 'createdAt', 'DESC']]
+    })
+      .then(user => {
+        const pageUser = user.toJSON();
+        pageUser.Tweets.forEach(t => {
+          t.isLiked = t.LikeUsers.map(d => d.id).includes(req.user.id)
+        })
+        // pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
+        res.render('user/user-tweets', { pageUser })
+      })
+  },
+  getReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        {
+          model: Reply, include: [
+            {
+              model: Tweet, include: [
+                User,
+                Reply,
+                { model: User, as: 'LikeUsers' }]
+            }
+          ],
+        }
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
+    })
+      .then(user => {
+        const pageUser = user.toJSON();
+        pageUser.Replies.forEach(r => {
+          r.Tweet.isLiked = r.Tweet.LikeUsers.map(d => d.id).includes(req.user.id)
+        })
+        // pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+        res.render("user/user-replies", { pageUser } );
+      })
+  },
+  getlikes: (req, res)=>{
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, as: 'LikeTweets', include: [User, Reply, { model: User, as: 'LikeUsers' }] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      order: [['LikeTweets', 'createdAt', 'DESC']],
+    })
+      .then(user => {
+        const pageUser = user.toJSON();
+        pageUser.LikeTweets.forEach(l => {
+          l.isLiked = true
+        })
+        // pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+        res.render("user/user-likes", { pageUser });
+      })
+  },
   otherUser: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
