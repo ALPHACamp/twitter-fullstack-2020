@@ -22,12 +22,16 @@
   {{#each users}}
   <div class="row border-bottom">
     <div class="d-flex p-2">
-      <a href="/users/{{../user.id}}/tweets">
+      <a href="/users/{{this.id}}/tweets">
         <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
       </a>
       <div class="col">
-        <span class="bold">{{this.name}}</span><br>
-        <span style="color: grey">@{{this.account}}</span><br>
+        <a href="/users/{{this.id}}/tweets" style="color:black; text-decoration:none;">
+          <span class="bold">{{this.name}}</span><br>
+        </a>
+        <a href="/users/{{this.id}}/tweets" style="text-decoration:none;">
+          <span style="color: grey">@{{this.account}}</span><br>
+        </a>
         <span><small>{{this.introduction}}<br></small></span>
       </div>
       <div>

@@ -530,6 +530,7 @@ const userController = {
       const name = data.toJSON().name
       data = data.Followers.map(r => ({
         ...r.dataValues,
+        id: r.id,
         avatar: r.avatar,
         account: r.account,
         name: r.name,
@@ -591,6 +592,7 @@ const userController = {
       const name = data.toJSON().name
       data = data.Followings.map(r => ({
         ...r.dataValues,
+        id: r.id,
         avatar: r.avatar,
         account: r.account,
         name: r.name,
