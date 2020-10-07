@@ -9,9 +9,9 @@ const Reply = db.Reply;
 
 passport.use(
   new LocalStrategy(
-    { usernameField: 'email', passReqToCallback: true },
-    (req, email, password, cb) => {
-      User.findOne({ where: { email } }).then((user) => {
+    { usernameField: 'account', passReqToCallback: true },
+    (req, account, password, cb) => {
+      User.findOne({ where: { account } }).then((user) => {
         // console.log('@@@@', user)
         req.flash('userInput', req.body);
         if (!user) {
