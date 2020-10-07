@@ -20,7 +20,7 @@ const adminControllers = {
         return res.render('admin/tweets', { tweets })
       })
   },
-  
+
   deleteTweet: (req, res) => {
     return Tweet.findByPk(req.params.id)
       .then(tweet => {
@@ -33,6 +33,7 @@ const adminControllers = {
 
   getUsers: (req, res) => {
     return User.findAll({
+      where: { role: 'user' },
       nest: true,
       include: [
         { model: Like },
