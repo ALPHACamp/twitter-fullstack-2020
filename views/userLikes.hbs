@@ -32,15 +32,15 @@
   </div>
   <div class="row">
     <div class="col">
-      <a href="/users/{{userId}}/tweets">
+      <a href="/users/{{userId}}/tweets" style="color:black; text-decoration:none;">
         <span class="bold"><b>{{name}}</b></span><br>
       </a>
-      <a href="/users/{{userId}}/tweets">
+      <a href="/users/{{userId}}/tweets" style="color:black; text-decoration:none;">
         <span style="color: grey">@{{account}}</span><br>
       </a>
       <span>{{introduction}}</span><br>
-      {{followingsCount}}個 <a href="/users/{{user.id}}/followings"><span style="color: grey">跟隨中</span></a>
-      {{followersCount}}位 <a href="/users/{{user.id}}/followers"><span style="color: grey">跟隨者</span></a>
+      {{followingsCount}}個 <a href="/users/{{user.id}}/followings" style="text-decoration:none;"><span style="color: grey">跟隨中</span></a>
+      {{followersCount}}位 <a href="/users/{{user.id}}/followers" style="text-decoration:none;"><span style="color: grey">跟隨者</span></a>
     </div>
   </div>
   <div class="row border-bottom">
@@ -61,12 +61,17 @@
   {{#each data}}
   <div class="row border-bottom">
     <div class="d-flex p-2">
-      <a href="/users/{{../user.id}}/tweets">
+      <a href="/users/{{this.id}}/tweets">
         <img class="mr-3 user_avatar_s" src="{{ this.avatar }}" alt="Avatar">
       </a>
       <div class="col">
-        <span class="bold">{{this.name}}</span>
-        <span style="color: grey">@{{this.account}}・{{moment this.tweetUpdatedAt}}</span><br>
+        <a href="/users/{{this.id}}/tweets" style="color:black; text-decoration:none;">
+          <span class="bold">{{this.name}}</span>
+        </a>
+        <a href="/users/{{this.id}}/tweets" style="color:black; text-decoration:none;">
+         <span style="color: grey">@{{this.account}}</span>
+        </a>
+        <span>・{{moment this.tweetUpdatedAt}}</span><br>
         <span>
           <small>
             {{this.description}}<br>

@@ -420,7 +420,7 @@ const userController = {
           more = more + 10
         }
         users = users.slice(0, more)
-        
+
         return res.render('userReplies', {
           replies,
           userId: user.toJSON().id,
@@ -457,6 +457,7 @@ const userController = {
       console.log(user)
       const data = user.Likes.map(r => ({
         ...r.dataValues,
+        id: r.dataValues.Tweet.User.id,
         avatar: r.dataValues.Tweet.User.avatar,
         account: r.dataValues.Tweet.User.account,
         name: r.dataValues.Tweet.User.name,
