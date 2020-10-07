@@ -5,7 +5,6 @@
     <form action="/users/{{user.id}}/edit" enctype="multipart/form-data" method="post">
       <div class="modal-content edit-modal-content">
         <div class="edit-modal-header">
-
           <div class="edit-left-top">
             <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">&times;
             </button>
@@ -15,7 +14,6 @@
           <div class="edit-right-top">
             <button type="submit" class="btn btn-post-modal">儲存</button>
           </div>
-
         </div>
 
         <div class="edit-modal-body">
@@ -23,6 +21,7 @@
             style="background: url({{user.cover}});background-repeat:no-repeat;background-position: center;background-size: cover;">
             <label for="cover"><i class="icon-photo cover"></i></label>
             <input type="file" name="cover" class="custom-file-input" id="cover">
+            <img id="cover_img" src="{{user.cover}}" />
             <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button>
           </div>
 
@@ -30,9 +29,10 @@
             background-position:center;background-size:cover;">
             <label for="avatar"><i class="icon-photo avatar"></i></label>
             <input type="file" name="avatar" class="custom-file-input" id="avatar">
+            <img id="avatar_img" src="{{user.avatar}}" />
           </div>
 
-          <div class="edit-item-name">
+          <div class=" edit-item-name">
             <div class="item-name-top">
               <span class="item-name-top-mark">Name</span>
             </div>
