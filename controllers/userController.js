@@ -249,10 +249,6 @@ const userController = {
                 introduction: introduction,
                 cover: files ? img.data.link : user.cover,
               })
-                .then((user) => {
-                  req.flash('success_messages', 'profile was successfully to update')
-                  res.redirect(`/users/${req.params.id}/tweets`)
-                })
             })
         })
       } if (avatar) {
@@ -264,10 +260,6 @@ const userController = {
                 introduction: introduction,
                 avatar: files ? img.data.link : user.avatar,
               })
-                .then((user) => {
-                  req.flash('success_messages', 'profile was successfully to update')
-                  res.redirect(`/users/${req.params.id}/tweets`)
-                })
             })
         })
       } else {
@@ -276,12 +268,12 @@ const userController = {
             user.update({
               name: name,
               introduction: introduction
-            }).then((user) => {
-              req.flash('success_messages', 'profile was successfully to update')
-              res.redirect(`/users/${req.params.id}/tweets`)
             })
           })
       }
+
+      req.flash('success_messages', 'profile was successfully to update')
+      res.redirect(`/users/${req.params.id}/tweets`)
     }
   },
 
