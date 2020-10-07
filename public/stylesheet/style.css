@@ -19,7 +19,7 @@ html{ height:100%}
   width: 41.66%;
 }
 
-#left-container{
+#left-container {
   width:55.55%;
   margin-left: 26.45%;
   font-weight: 500;
@@ -27,11 +27,11 @@ html{ height:100%}
   font-family: 'Noto Sans TC';
 }
 
-#left-container i{
+#left-container i {
   margin-right: 20px;
 }
 
-.navbar-brand{
+.navbar-brand {
   margin-bottom: 42px;
   margin-top: 14px;
 }
@@ -40,19 +40,57 @@ html{ height:100%}
   margin-bottom: 26px;
 }
 
-.main-top{
+.main-top {
   font-weight: 500;
   font-size: 18px;
   padding: 15px;
   border-bottom: 1px solid #E6EcF0;
 }
 
-#main img{
+#main img {
   width: 50px;
   height: 50px;
   margin-left: 15px;
+  margin-top: 13px;
 }
 
-.post-area{
+.post-area {
   border-bottom: 10px solid #E6EcF0;
+}
+
+.tweet-right {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.tweet-name {
+  font-size: 15px;
+  color: black;
+  font-weight: 700;
+}
+.tweet-right a:link {
+  text-decoration: none;
+}
+
+.tweet-right p {
+  margin-bottom: 14px;
+}
+
+.tweet-reaction a {
+  color: #657786;
+}
+
+.tweet-reaction button {
+  background-color: white;
+  color: #657786;
+  border-style: none;
+  margin-left: 77px;
+}
+
+.tweet {
+  border-bottom: 1px solid #E6EcF0;
+}
+
+.tweet-reaction {
+  margin-bottom: 14px;
 }
