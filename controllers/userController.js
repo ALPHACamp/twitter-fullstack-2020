@@ -87,6 +87,16 @@ const userController = {
     return res.redirect('/tweets')
   },
 
+  emailLoginPage: (req, res) => {
+    const params = req.params.type
+    return res.render('login', { params, layout: 'mainLogin' })
+  },
+
+  emailLogin: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    return res.redirect('/tweets')
+  },
+
   logout: (req, res) => {
     req.flash('success_messages', '成功登出！')
     req.logout()
@@ -179,6 +189,16 @@ const userController = {
   },
 
   adminLogin: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    return res.redirect('/admin/tweets')
+  },
+
+  adminEmailLoginPage: (req, res) => {
+    const params = req.params.type
+    return res.render('admin/login', { params, layout: 'mainLogin' })
+  },
+
+  adminEmailLogin: (req, res) => {
     req.flash('success_messages', '成功登入！')
     return res.redirect('/admin/tweets')
   },
