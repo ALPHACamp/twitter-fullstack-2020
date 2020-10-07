@@ -4,6 +4,7 @@ const reply = require('../models/reply')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
 
 const adminController = {
   signInPage: (req, res) => {
@@ -53,18 +54,25 @@ const adminController = {
       res.render('admin/users', { users })
     })
   },
-  deleteTweet: (req, res) => {
+  deleteTweet: async (req, res) => {
     if (helpers.getUser(req).role === 'admin') {
       const id = Number(req.params.id)
 
-      return Tweet.findByPk(id).then(tweet => {
-        if (tweet === null) {
-          res.redirect('/admin/tweets')
-        } else {
+      await Tweet.findByPk(id).then(tweet => {
+        if (tweet !== null) {
           tweet.destroy()
-            .then(() => res.redirect('/admin/tweets'))
         }
       }).catch(err => console.log(err))
+
+      await Reply.destroy({ where: { TweetId: id } }).then(reply => {
+        console.log('reply destroy ok')
+      }).catch(err => console.log(err))
+
+      await Like.destroy({ where: { TweetId: id } }).then(like => {
+        console.log('like destroy ok')
+      }).catch(err => console.log(err))
+
+      return res.redirect('/admin/tweets')
     }
   }
 }
