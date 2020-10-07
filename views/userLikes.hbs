@@ -42,7 +42,7 @@
       </ul>
     </div>
   </div>
-  {{#each likes}}
+  {{#each data}}
   <div class="row border-bottom">
     <div class="d-flex p-2">
       <a href="/users/{{../user.id}}/tweets">
@@ -50,7 +50,7 @@
       </a>
       <div class="col">
         <span class="bold">{{this.name}}</span>
-        <span style="color: grey">@{{this.account}}・{{moment this.updatedAt}}</span><br>
+        <span style="color: grey">@{{this.account}}・{{moment this.tweetUpdatedAt}}</span><br>
         <span>
           <small>
             {{this.description}}<br>
@@ -59,12 +59,12 @@
                 <i class="far fa-comment mr-3" style="color: grey;"> {{this.replyCount}}</i>
               </a>
               {{#if this.isLiked}}
-              <form action="/tweets/{{this.tweetId}}/unlike" method="POST">
+              <form action="/tweets/{{this.TweetId}}/unlike" method="POST">
                 <button type="submit" class="btn-push"><i class="fas fa-heart"
                     style="color:rgb(224, 36, 94);">{{this.likeCount}}</i></button>
               </form>
               {{else}}
-              <form action="/tweets/{{this.tweetId}}/like" method="POST">
+              <form action="/tweets/{{this.TweetId}}/like" method="POST">
                 <button type="submit" class="btn-push"><i class="far fa-heart" style="color: grey;">{{this.likeCount}}</i></button>
               </form>
               {{/if}}

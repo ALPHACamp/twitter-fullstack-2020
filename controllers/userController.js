@@ -407,24 +407,26 @@ const userController = {
     return User.findByPk(reqUserId, {
       order: [[{ model: Like }, 'createdAt', 'DESC']],
       include: [ // TweetId: { $gt: 0 } --> TweetId大於0, 用來排除TweetID=Null (like reply)的情況
-        { model: Like, where: { TweetId: { $gt: 0 } }, include: [{ model: Tweet, include: [User, Reply, Like] }] },
+        // { model: Like, where: { TweetId: { $gt: 0 } }, include: [{ model: Tweet, include: [User, Reply, Like] }] },
+        { model: Like, include: [{ model: Tweet, include: [User, Reply, Like] }] },
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
         Tweet
       ]
     }).then(user => {
-      const likes = user.toJSON().Likes.map(like => ({
-        avatar: user.toJSON().avatar,
-        account: user.toJSON().account,
-        name: user.toJSON().name,
-        description: like.Tweet.description ? like.Tweet.description.substring(0, 160) : 0,
-        // description: like.Tweet.description,
-        updatedAt: like.Tweet.updatedAt,
-        replyCount: like.Tweet.Replies.length,
-        likeCount: like.Tweet.Likes.length,
-        tweetId: like.TweetId,
-        isLiked: loginUser.Likes.map(l => l.TweetId).includes(like.TweetId)
+      const data = user.Likes.map(r => ({
+        ...r.dataValues,
+        avatar: r.dataValues.Tweet.User.avatar,
+        account: r.dataValues.Tweet.User.account,
+        name: r.dataValues.Tweet.User.name,
+        description: r.dataValues.Tweet.description ? r.dataValues.Tweet.description.substring(0, 160) : '',
+        tweetUpdatedAt: r.dataValues.Tweet.updatedAt,
+        replyCount: r.dataValues.Tweet.Replies.length,
+        likeCount: r.dataValues.Tweet.Likes.length,
+
+        isLiked: loginUser.Likes.map(l => l.TweetId).includes(r.TweetId)
       }))
+
       // Right side
       // filter the tweets to those that user followings & user himself
       const tweetFollowings = []
@@ -446,7 +448,7 @@ const userController = {
         }
         users = users.slice(0, more)
         return res.render('userLikes', {
-          likes,
+          data,
           userId: user.toJSON().id,
           cover: user.toJSON().cover,
           avatar: user.toJSON().avatar,
