@@ -372,7 +372,6 @@ const userController = {
         Tweet
       ]
     }).then(user => {
-      console.log(user.toJSON().Replies[0].Tweet.User)
       const replies = user.Replies.map(reply => ({
         // Reply
         ...reply.dataValues,
@@ -394,7 +393,6 @@ const userController = {
         tweetLikeCount: reply.Tweet.Likes.length,
         isLiked: loginUser.Likes.map(like => like.TweetId).includes(reply.TweetId)
       }))
-
       const isFollowed = user.Followers.map(followers => followers.id).includes(loginUser.id)
 
       // Right side
@@ -408,13 +406,11 @@ const userController = {
           ...user.dataValues,
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
-
         users.forEach((user, index, arr) => {
           if(user.role === "admin") {
               arr.splice(index, 1);
           }
         })
-
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -424,6 +420,7 @@ const userController = {
           more = more + 10
         }
         users = users.slice(0, more)
+        
         return res.render('userReplies', {
           replies,
           userId: user.toJSON().id,
