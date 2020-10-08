@@ -152,9 +152,9 @@ const userController = {
       const followings = helpers.getUser(req).Followings.map((u) => u.id);
       const likes = helpers.getUser(req).Likes
         ? helpers
-            .getUser(req)
-            .Likes.filter((u) => u.Position === 'tweet')
-            .map((t) => t.PositionId)
+          .getUser(req)
+          .Likes.filter((u) => u.Position === 'tweet')
+          .map((t) => t.PositionId)
         : [];
 
       //console.log(likes);
@@ -313,7 +313,10 @@ const userController = {
   getFollowersPage: (req, res) => {
     let userId = req.params.id;
     User.findByPk(userId, {
-      include: [Tweet, { model: User, as: 'Followers' }],
+      order: [['Followers', 'createdAt', 'desc']],
+      include: [Tweet, {
+        model: User, as: 'Followers'
+      }]
     }).then((user) => {
       const users = user.toJSON();
       const follower = user.Followers.map((data) => ({
@@ -323,9 +326,9 @@ const userController = {
           .Followings.map((d) => d.id)
           .includes(data.id),
       }));
+      users.Followers = Array.from(follower)
       return res.render('follower', {
         users,
-        Follower: follower,
         user: helpers.getUser(req),
       });
     });
@@ -333,7 +336,10 @@ const userController = {
   getFollowingsPage: (req, res) => {
     let userId = req.params.id;
     User.findByPk(userId, {
-      include: [Tweet, { model: User, as: 'Followings' }],
+      order: [['Followings', 'createdAt', 'desc']],
+      include: [Tweet, {
+        model: User, as: 'Followings'
+      }],
     }).then((user) => {
       const users = user.toJSON();
       const following = user.Followings.map((data) => ({
@@ -343,9 +349,10 @@ const userController = {
           .Followings.map((d) => d.id)
           .includes(data.id),
       }));
+      users.Followings = Array.from(following)
+      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', users)
       return res.render('following', {
         users,
-        Following: following,
         user: helpers.getUser(req),
       });
     });

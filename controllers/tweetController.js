@@ -34,6 +34,7 @@ const tweetController = {
 
   postTweets: (req, res) => {
     const tweetText = req.body.tweetText ? req.body.tweetText.trim() : req.body.description.trim()
+
     if (!tweetText || tweetText.length > 140) return res.redirect('back')
     Tweet.create({
       UserId: helpers.getUser(req).id,

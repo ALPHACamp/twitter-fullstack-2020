@@ -17,19 +17,17 @@
         </div>
 
         <div class="edit-modal-body">
-          <div class="edit-item-cover"
-            style="background: url({{user.cover}});background-repeat:no-repeat;background-position: center;background-size: cover;">
+          <div class="edit-item-cover" id="coverImg" style="background: url({{user.cover}}); background-position:center;
+  background-size:cover;">
             <label for="cover"><i class="icon-photo cover"></i></label>
-            <input type="file" name="cover" class="custom-file-input" id="cover">
-            <img id="cover_img" src="{{user.cover}}" />
-            <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button>
+            <input type="file" onchange="readURL(this)" name="cover" class="custom-file-input" id="cover">
+            <button type="button" class="btn cover-remove"><i class="icon-delete remove" id="removeCover"></i></button>
           </div>
 
-          <div class="edit-item-avatar" style="background: url({{user.avatar}}),#C4C4C4;
-            background-position:center;background-size:cover;">
+          <div class="edit-item-avatar" id="avatarImg"
+            style="background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
             <label for="avatar"><i class="icon-photo avatar"></i></label>
-            <input type="file" name="avatar" class="custom-file-input" id="avatar">
-            <img id="avatar_img" src="{{user.avatar}}" />
+            <input type="file" onchange="readURL(this)" name="avatar" class="custom-file-input" id="avatar">
           </div>
 
           <div class=" edit-item-name">

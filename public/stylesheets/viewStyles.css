@@ -43,7 +43,6 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* position: fixed; */
   height: 100vh;
 }
 
@@ -1033,19 +1032,9 @@ a:hover {
 }
 
 .edit-item-cover {
-  position: relative;
   height: 200px;
   width: 600px;
   background-color: #f5f8fa !important;
-}
-
-.edit-item-cover img {
-  position: absolute;
-  height: 200px;
-  width: 600px;
-  top: -0.5px;
-  left: -0.1px;
-  object-fit: cover;
 }
 
 .edit-item-cover:hover {
@@ -1056,7 +1045,7 @@ a:hover {
   position: relative;
   left: 270px;
   top: 95px;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .edit-item-cover .remove {
@@ -1093,7 +1082,7 @@ a:hover {
   width: 120px;
   height: 120px;
 }
-
+/* 
 .edit-item-avatar img {
   position: absolute;
   top: -5px;
@@ -1104,13 +1093,13 @@ a:hover {
   height: 120px;
   background-position: center;
   background-size: cover;
-}
+} */
 
 .edit-item-avatar label {
   position: relative;
   left: 45px;
   top: 45px;
-  z-index: 1;
+  /* z-index: 1; */
 }
 
 .edit-item-name {
