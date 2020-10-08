@@ -189,6 +189,7 @@ describe('# user request', () => {
           .expect(200)
           .end(function(err, res) {
             if (err) return done(err);
+            console.log('@@@')
             res.text.should.include('User2')
             return done();
           });
