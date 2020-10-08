@@ -19,7 +19,7 @@ let replyController = {
   },
   postReply: (req, res) => {
     //const comment = req.body.text
-    const { comment } = req.body
+    const comment = req.body.comment
     if (!comment) {
        req.flash('error_messages', '不可空白')
       return res.redirect(`/tweets/${req.body.tweetId}/replies`)

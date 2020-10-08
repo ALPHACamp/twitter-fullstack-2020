@@ -1,35 +1,37 @@
-<div class="row">
-  <div class="col-2 ">
+<div id="left">
+  <div id="left-container">
     <ul class="nav flex-column justify-content-between" style="height: 100vh;">
       <div class="flex-colum ">
-        <a class="navbar-brand ml-3 mb-3" href="/">
+        <a class="navbar-brand ml-3" href="/">
           <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
             height="30" alt="">
         </a>
         <li class="nav-item">
-
-          <a class="nav-link" href="/" style="color: black;"><i class="fas fa-home mr-2"></i>首頁</a>
+          <a class="nav-link" href="/tweets" style="color: black;"><i class="fas fa-home"></i>首頁</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/{{user.id}}/tweets" style="color: black;"><i class="fas fa-user mr-2"></i>個人資料</a>
+          <a class="nav-link" href="/users/{{user.id}}/tweets" style="color: black;"><i class="fas fa-user"></i>個人資料</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/setting/{{user.id}}" style="color:#ff6601;" active><i
-              class="fas fa-cog mr-2"></i>設定</a>
+          <a class="nav-link" href="/setting/{{user.id}}" style="color: #ff6600;margin-bottom: 19px"><i
+              class="fas fa-cog"></i>設定</a>
         </li>
-        <button class="btn btn-block mt-2" style="border-radius: 23px;background:#ff6601; color:white"
-          type="submit">推文</button>
+        <button type="button" class="btn btn-block" style="border-radius: 23px;background:#ff6600; color:white"
+          data-toggle="modal" data-target="#tweetModal">
+          推文
+        </button>
       </div>
       <li class="nav-item">
-        <a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
+        <a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt"></i>登出</a>
       </li>
     </ul>
   </div>
-  <div class="col-10 pl-0" style="border-left:1px #e9eef2 solid">
+</div>
+<div id="main">
+  <div style="border-left:1px #e9eef2 solid">
     <h5 class="ml-0 mt-2 pb-2 pl-4 " style="border-bottom:1px #e9eef2 solid">帳戶設定</h5>
     <div class="ml-3" style="width: 50%;">
       <form class="form-signin mt-4" action="/setting/{{user.id}}?_method=PUT" method="POST">
-
         <div class="form-group"
           style="background:#f6f8fa; color:#647787;border-color:#647787;border-style:none none solid none;border-width:2px">
           <label for="account" class="pl-2" style="border-style: none;padding-bottom:0px;margin-bottom:0px">帳號</label>
@@ -60,9 +62,9 @@
 
         <div class="form-group"
           style="background:#f6f8fa; color:#647787;border-color:#647787;border-style:none none solid none;border-width:2px">
-          <label for="passwordCheck" class="pl-2"
+          <label for="checkPassword" class="pl-2"
             style="border-style: none;padding-bottom:0px;margin-bottom:0px">密碼確認</label>
-          <input type="password" id="passwordCheck" name="passwordCheck" class="pl-2" value="{{ passwordCheck }}"
+          <input type="password" id="checkPassword" name="checkPassword" class="pl-2" value="{{ passwordCheck }}"
             style="border-style:none;width:100%;background:#f6f8fa;outline:none;border-bottom:2px;font-size:15px; color:black">
         </div>
 

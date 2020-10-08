@@ -19,7 +19,6 @@ module.exports = app => {
   app.post('/tweets/:id/replies', authenticated, replyController.postReply)
 
   app.post('/tweets/:id/like', authenticated, replyController.addLike)
-  app.post('/tweets/:id/unlike', authenticated, replyController.removeLike)
   app.delete('/tweets/:id/unlike', authenticated, replyController.removeLike)
 
   // =====================admin====================================
