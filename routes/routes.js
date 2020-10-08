@@ -136,4 +136,7 @@ router.delete(
   adminController.deleteTweet,
 );
 
+router.get('/api/users/:id', userController.getEditPage)
+router.post('/api/users/:id', userAuthenticated, userController.postEditPage)
+
 module.exports = router;
