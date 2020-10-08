@@ -16,7 +16,7 @@ if (adminTweets) {
     if ((scrollTop + clientHeight >= (scrollHeight * 0.9)) && limitScroll === 1) {
       limitScroll = 0
       axios
-        .get(`http://localhost:3000/${adminItem.length}`)
+        .get(`https://morning-reef-66722.herokuapp.com/api/admin/tweets/${adminItem.length}`)
         .then(data => {
           limitScroll = 1
           tweetTemplate(data.data)
