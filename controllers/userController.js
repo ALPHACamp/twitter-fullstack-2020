@@ -149,6 +149,7 @@ const userController = {
       ],
       order: [['LikeTweets', 'updatedAt', 'DESC']],
     }).then((visitUser) => {
+      console.log('visitUser@@@@', visitUser.toJSON())
       const followings = helpers.getUser(req).Followings.map((u) => u.id);
       const likes = helpers.getUser(req).Likes
         ? helpers
@@ -164,11 +165,13 @@ const userController = {
         //console.log('before @@@', lt);
       });
       let isFollowing = followings.includes(UserId);
-
+      let mode = false
+      if (process.env.NODE_ENV === 'test') mode = true
       return res.render('user-like', {
         user: helpers.getUser(req),
         isFollowing,
         visitUser,
+        mode,
       });
     });
   },
