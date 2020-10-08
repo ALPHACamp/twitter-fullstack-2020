@@ -166,7 +166,7 @@ font-weight:bold;
 .line {
   background: #E6ECF0;
   height: 1px;
-  width: 600px;
+  width: 100%;
   left: 0px;
   top: 135px;
   border-radius: 0px;
