@@ -573,8 +573,30 @@ color:  #ff6600!important;
   color: #1C1C1C;
 }
 
+.tweet-title-user {
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 0px;
+  padding-left: 20px;
+  color: #1C1C1C;
+}
+
+.title-description-user {
+  font-size: 14px;
+  padding-left: 20px;
+  color: #657786;
+}
+
 .head {
   width: 650px;
+}
+
+.head-content {
+  height:55px
+}
+
+.head-content-user-info {
+  margin-top: 6px
 }
 
 .tweet-content {
@@ -810,6 +832,7 @@ display: flex;
     top: -5px;
     color: #657786;
 }
+
 .tweet-title-name {
     position: relative;
     top: 10px;
