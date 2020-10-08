@@ -23,31 +23,25 @@
                         <img src="{{ pageUser.avatar }}" alt="pageUser-avatar" class="rounded-circle"
                             style="mborder-radius: 50%; position: absolute; top: 160px; left: 3%; border: 5px solid #FFFFFF;">
                     </div>
+                    <div class="pt-2 pr-5" style="width: 100%;text-align: right;">
+                        {{#if isFollowed}}
+                        <form action="/following/{{ pageUser.id }}?_method=DELETE" method="POST">
+                            <button class="btn btn-warning" style="">正在跟隨</button>
+                        </form>
+                        {{else}}
+                        <form action="/following/{{ pageUser.id }}" method="POST">
+                            <button class="btn btn-outline-warning" style="">跟隨</button>
+                        </form>
+                        {{/if}}
+                    </div>
                     {{#ifCond user.id pageUser.id}}
-                        <div class="row justify-content-end">
-                            <button class="m-3" data-toggle="modal" data-target="#editModal"
+                    <div class="row justify-content-end">
+                        <button class="m-3" data-toggle="modal" data-target="#editModal"
                             style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">編輯個人資料</button>
-                        </div>
-                        {{>modal}}
-                    {{else}}
-                        <div class="row justify-content-end">
-                        {{#if pageUser.isFollowed}}     
-                            <form action="/following/{{pageUser.id}}?_method=DELETE" method="POST">
-                                <button class="m-3" data-toggle="modal" data-target="#editModal"
-                                    style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">
-                                    正在跟隨
-                                </button>
-                            </form>
-                         {{else}}
-                            <form action="/following/{{pageUser.id}}" method="POST">
-                                <button class="m-3" data-toggle="modal" data-target="#editModal"
-                                    style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">
-                                    跟隨
-                                </button>
-                            </form>
-                         {{/if}}
-                         </div>
+                    </div>
+                    {{>modal}}
                     {{/ifCond}}
+
 
                     <div class=" justify-content ml-2 mt-5">
                         <h2>{{ pageUser.name }}</h2>
@@ -55,6 +49,7 @@
                         <h6>
                             <p style="color:#7B7B7B">@{{ pageUser.account }}</p>
                         </h6>
+
 
                         <p>{{ pageUser.introduction }}</p>
                     </div>
@@ -102,37 +97,44 @@
                                             <div class="tweet-footer">
                                                 <!-- Button trigger modal -->
                                                 <button type="button" data-toggle="modal"
-                                                    data-target="#user-tweet-modal-{{ this.id }}" style="background: none;border: none;">
+                                                    data-target="#user-tweet-modal-{{ this.id }}"
+                                                    style="background: none;border: none;">
                                                     <i class="far fa-comment"></i> {{this.Replies.length}}
                                                 </button>
-                                                <div class="modal fade" id="user-tweet-modal-{{ this.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal fade" id="user-tweet-modal-{{ this.id }}"
+                                                    tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                    aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
-                                                        <div class="modal-header">
-                                                        </div>
-                                                        <div class="modal-title">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                            <img src="{{../pageUser.avatar}}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
-                                                            <span class="mt-1"><a href="#">{{../pageUser.name}}</a></span>
-                                                            <span class="user-account">
-                                                            {{../pageUser.account}}．{{moment this.createdAt}}
-                                                            </span>
-                                                        </div>
-                                                        <div class="modal-body" class="d-flex">
-                                                            <div class="tweet-text d-flex align-items-stretch">
-                                                            {{ this.description }}
+                                                            <div class="modal-header">
                                                             </div>
-                                                            <form method="POST" action="/tweets/{{this.id}}/replies">
-                                                                <textarea name="comment" cols="55" rows="5"
-                                                                    style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
-                                                                    placeholder="say something"></textarea>
+                                                            <div class="modal-title">
+                                                                <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                                <img src="{{../pageUser.avatar}}" class="rounded-circle"
+                                                                    style="background-size:cover; width: 50px;height: 50px;">
+                                                                <span class="mt-1"><a
+                                                                        href="#">{{../pageUser.name}}</a></span>
+                                                                <span class="user-account">
+                                                                    {{../pageUser.account}}．{{moment this.createdAt}}
+                                                                </span>
+                                                            </div>
+                                                            <div class="modal-body" class="d-flex">
+                                                                <div class="tweet-text d-flex align-items-stretch">
+                                                                    {{ this.description }}
+                                                                </div>
+                                                                <form method="POST"
+                                                                    action="/tweets/{{this.id}}/replies">
+                                                                    <textarea name="comment" cols="55" rows="5"
+                                                                        style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+                                                                        placeholder="say something"></textarea>
                                                                     <button type="submit"
                                                                         style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
-                                                                    <span style="color: #FFFFFF;">回覆</span></button>
-                                                            </form>
-                                                        </div>
+                                                                        <span style="color: #FFFFFF;">回覆</span></button>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

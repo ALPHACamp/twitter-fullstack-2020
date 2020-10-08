@@ -51,12 +51,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  getUser: (req, res) => {
-    User.findByPk(req.params.id)
-      .then(user => {
-        return res.render('user/self', {test:123})
-      })
-  },
   editUser: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
@@ -64,6 +58,7 @@ const userController = {
       })
   },
   putUser: (req, res) => {
+
     // if (!req.body.name) {
     //   console.log(req.body.name)
     //   req.flash('error_messages', "name didn't exist")
@@ -87,17 +82,18 @@ const userController = {
           })
       })
     } else {
-      return User.findByPk(req.params.id)
+      return user.findByPk(req.params.id)
         .then(user => {
           user.update({
             name: req.body.name,
             avatar: user.avatar,
             background: user.background,
             introduction: req.body.introduction
-          }).then(user => {
-            req.flash('success_messages', 'user was successfully update')
-            res.redirect(`/user/self`)
           })
+            .then(user => {
+              req.flash('success_messages', 'user was successfully update')
+              res.redirect('/user/{{user.id}}/self')
+            })
         })
     }
   },
@@ -191,10 +187,12 @@ const userController = {
   getTweets: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        { model: Tweet, include: [ 
-          { model: Reply}, 
-          { model: User, as: 'LikeUsers' }
-      ]},
+        {
+          model: Tweet, include: [
+            { model: Reply },
+            { model: User, as: 'LikeUsers' }
+          ]
+        },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
@@ -209,6 +207,24 @@ const userController = {
         pageUser.followersCount = pageUser.Followers.length;
         pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(req.user.id)
         res.render('user/user-tweets', { pageUser })
+      })
+  },
+  // ann
+  getTweet: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet, include: [Reply, { model: User, as: 'LikeUsers' },] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      order: [['Tweets', 'createdAt', 'DESC']]
+    })
+      .then(user => {
+        const selfUser = user.toJSON();
+        selfUser.Tweets.forEach(t => {
+          t.isLiked = t.LikeUsers.map(d => d.id).includes(req.user.id)
+        })
+        res.render('user/self', { selfUser })
       })
   },
   getReplies: (req, res) => {
@@ -237,10 +253,10 @@ const userController = {
         pageUser.followingCount = pageUser.Followings.length;
         pageUser.followersCount = pageUser.Followers.length;
         // pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
-        res.render("user/user-replies", { pageUser } );
+        res.render("user/user-replies", { pageUser });
       })
   },
-  getlikes: (req, res)=>{
+  getlikes: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
         { model: Tweet, as: 'LikeTweets', include: [User, Reply, { model: User, as: 'LikeUsers' }] },
@@ -264,11 +280,13 @@ const userController = {
     return User.findByPk(req.params.id, {
       include: [
         { model: Tweet, include: [Reply, { model: User, as: "LikeUsers" }] },
-        { model: Reply, include: [
-            {model: Tweet, include: [User, Reply, { model: User, as: "LikeUsers" }]}
+        {
+          model: Reply, include: [
+            { model: Tweet, include: [User, Reply, { model: User, as: "LikeUsers" }] }
           ]
         },
-        { model: Tweet, as: "LikeTweets", include: [
+        {
+          model: Tweet, as: "LikeTweets", include: [
             User, Reply, { model: User, as: "LikeUsers" }
           ]
         },

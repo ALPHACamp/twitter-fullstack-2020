@@ -1,27 +1,25 @@
 {{!-- 新增 tweet modal  --}}
-<div class="modal" tabindex="-1" role="dialog" id="tweetModal">
-  <div class="modal-dialog" role="document">
+
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
-      <div class="tweet-modal-header">
-        <button type="button" data-dismiss="modal" aria-label="Close"
-          class="tweet-modal-close-button btn btn-outline-warning">
+      <div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-
-      <div class="card-body">
+      <div class="modal-title pl-3 pt-2">
         <img {{#if user.avatar}}src={{user.avatar}}{{/if}}
           style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </div>
+      <div class="modal-body" class="d-flex">
         <form method="POST" action="/tweets">
-          <textarea class="tweet-modal-textarea" name="description" id="description" cols="60" rows="8"
-            placeholder="有什麼新鮮事？"></textarea>
-
-          <div class="row justify-content-center">
-            <button type="submit" data-toggle=" modal" data-target="#tweetModal"
-              style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
-              <span style="color: #FFFFFF;">推文</span></button>
-            </button>
-          </div>
+          <textarea name="description" id="description" cols="55" rows="5"
+            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+            placeholder="有什麼新鮮事嗎"></textarea>
+          <button class="align-self-end" type="submit"
+            style="width: 64px;height: 40px;left: 1000px;top: 123px;background: #FF6600;border-radius: 100px">
+            <span style="color: #FFFFFF;">Tweet</span></button>
         </form>
       </div>
     </div>
@@ -66,7 +64,7 @@
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="row ">
     <div class="modal-dialog ">
-      <form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+      <form action="/user/{{user.id}}/self?_method=PUT" method="POST" enctype="multipart/form-data">
         <div class="modal-content edit-modal-content ">
           <div class="edit-modal-header">
             <div class="d-inline-flex justify-content-between">
