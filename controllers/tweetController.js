@@ -1,4 +1,3 @@
-
 const tweetService = require('../services/tweetService')
 const db = require('../models');
 const User = db.User;

@@ -164,11 +164,15 @@ const userController = {
         //console.log('before @@@', lt);
       });
       let isFollowing = followings.includes(UserId);
-
+      let mode = false
+      if (process.env.NODE_ENV === 'test') {
+        mode = true
+      }
       return res.render('user-like', {
         user: helpers.getUser(req),
         isFollowing,
         visitUser,
+        mode
       });
     });
   },
@@ -350,7 +354,6 @@ const userController = {
           .includes(data.id),
       }));
       users.Followings = Array.from(following)
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', users)
       return res.render('following', {
         users,
         user: helpers.getUser(req),
