@@ -257,7 +257,7 @@ const userController = {
         introduction: req.body.introduction
       }))
     req.flash('success_messages', '更新成功！')
-    res.redirect(`/users/${req.params.id}`)
+    res.redirect('back')
   },
 
   getUserLikes: (req, res, next) => {

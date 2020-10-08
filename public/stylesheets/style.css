@@ -100,7 +100,8 @@ font-weight:bold;
 }
 
 .user-header .user-avatar {
-  width: 165px;
+  width: 140px;
+  height:140px;
   border-radius: 50%;
   position: absolute;
   top: 175px;
