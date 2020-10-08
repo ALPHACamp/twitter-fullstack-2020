@@ -1,23 +1,28 @@
 # twitter-fullstack-2020
-[HEROKU](https:/// "title text!")
+[HEROKU](https://salty-fortress-16177.herokuapp.com/)
 
 ## Test account:
-Admin
+
+- Admin
 ```
-Account	: root@example.com
+Account	: root
 
 Password : 12345678
-
+```
+---
 User
 ```
-Account	: user1@example.com
+Account	: user1
 
 Password : 12345678
 
+```
+
 ## 相關環境變數
-[env.example](https://.env.example "title text!")
+[env.example](https://github.com/ChubbyKay/twitter-fullstack-2020/blob/master/.env.example "env.example")
 
 ## 網頁示意圖
+![示意圖](https://i.imgur.com/IeCdIPS.png)
 
 利用Node.js、Express以及SQL關聯式資料庫建置的Simple-Twitter社群網站全端專案，
 核心功能包含Simple Twitter前後台的操作情境以及使用者的互動。
@@ -55,7 +60,7 @@ git clone https://github.com/ChubbyKay/twitter-fullstack-2020
 2.開啟Terminal，進入存放此專案的資料夾
 
 ```
-cd expense-tracker
+cd twitter-fullstack-2020
 ```
 
 3.安裝 npm套件
