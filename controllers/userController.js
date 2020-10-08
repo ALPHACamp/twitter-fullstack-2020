@@ -149,13 +149,15 @@ const userController = {
       ],
       order: [['LikeTweets', 'updatedAt', 'DESC']],
     }).then((visitUser) => {
-      console.log('visitUser@@@@', visitUser.toJSON())
+      //console.log('visitUser@@@@', visitUser.toJSON());
       const followings = helpers.getUser(req).Followings.map((u) => u.id);
+      //console.log('replies @@@', followings);
+      //console.log(followings.includes(Number(req.params.id)));
       const likes = helpers.getUser(req).Likes
         ? helpers
-          .getUser(req)
-          .Likes.filter((u) => u.Position === 'tweet')
-          .map((t) => t.PositionId)
+            .getUser(req)
+            .Likes.filter((u) => u.Position === 'tweet')
+            .map((t) => t.PositionId)
         : [];
 
       //console.log(likes);
@@ -164,15 +166,14 @@ const userController = {
         lt.dataValues.isLikeBySelf = likes.includes(lt.id);
         //console.log('before @@@', lt);
       });
-      let isFollowing = followings.includes(UserId);
-      console.log(isFollowing)
-      console.log(followings)
-      console.log(UserId)
-      let mode = false
-      if (process.env.NODE_ENV === 'test') mode = true
+
+      //let isFollowing = followings.includes(UserId);
+      let mode = false;
+      if (process.env.NODE_ENV === 'test') mode = true;
+
       return res.render('user-like', {
         user: helpers.getUser(req),
-        isFollowing,
+        isFollowing: followings.includes(Number(req.params.id)),
         visitUser,
         mode,
       });
@@ -189,15 +190,7 @@ const userController = {
           where: { ReplyId: null },
           attributes: ['id', 'TweetId'],
         },
-        // {
-        //   model: Reply,
-        //   include: [
-        //     { model: Tweet, include: [Like, User, Reply] },
-        //     { model: Reply, as: 'followingByReply' },
-        //     Like,
-        //     User,
-        //   ],
-        // },
+
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
@@ -207,6 +200,7 @@ const userController = {
       let uniqueTweets = [
         ...new Set([user.toJSON().Replies.map((i) => i.TweetId)]),
       ];
+
       console.log('tweets id', uniqueTweets);
 
       return Reply.findAll({
@@ -263,7 +257,8 @@ const userController = {
               resultTweets.find((t) => t.id === targetTweetId).replies.push(r);
             }
           });
-
+          const followings = helpers.getUser(req).Followings.map((u) => u.id);
+          let isFollowing = followings.includes(Number(req.params.id));
           //console.log('tweets', resultTweets);
           //let allTweets = tweets.dataValues;
 
@@ -271,6 +266,7 @@ const userController = {
             user: helpers.getUser(req),
             visitUser: user,
             tweets: resultTweets,
+            isFollowing,
           });
         });
       });
@@ -320,9 +316,13 @@ const userController = {
     let userId = req.params.id;
     User.findByPk(userId, {
       order: [['Followers', 'createdAt', 'desc']],
-      include: [Tweet, {
-        model: User, as: 'Followers'
-      }]
+      include: [
+        Tweet,
+        {
+          model: User,
+          as: 'Followers',
+        },
+      ],
     }).then((user) => {
       const users = user.toJSON();
       const follower = user.Followers.map((data) => ({
@@ -332,7 +332,7 @@ const userController = {
           .Followings.map((d) => d.id)
           .includes(data.id),
       }));
-      users.Followers = Array.from(follower)
+      users.Followers = Array.from(follower);
       return res.render('follower', {
         users,
         user: helpers.getUser(req),
@@ -343,9 +343,13 @@ const userController = {
     let userId = req.params.id;
     User.findByPk(userId, {
       order: [['Followings', 'createdAt', 'desc']],
-      include: [Tweet, {
-        model: User, as: 'Followings'
-      }],
+      include: [
+        Tweet,
+        {
+          model: User,
+          as: 'Followings',
+        },
+      ],
     }).then((user) => {
       const users = user.toJSON();
       const following = user.Followings.map((data) => ({
@@ -355,7 +359,7 @@ const userController = {
           .Followings.map((d) => d.id)
           .includes(data.id),
       }));
-      users.Followings = Array.from(following)
+      users.Followings = Array.from(following);
       return res.render('following', {
         users,
         user: helpers.getUser(req),
@@ -520,29 +524,30 @@ const userController = {
 
   getEditPage: (req, res) => {
     User.findByPk(req.params.id)
-      .then(user => {
+      .then((user) => {
         if (Number(req.params.id) === helpers.getUser(req).id) {
-          return res.json(user.toJSON())
+          return res.json(user.toJSON());
         }
-        return res.json({ status: 'error' })
+        return res.json({ status: 'error' });
       })
-      .catch(() => { console.log('faaaaaaaaa') })
+      .catch(() => {
+        console.log('faaaaaaaaa');
+      });
   },
 
   postEditPage: (req, res) => {
-    User.findByPk((req.params.id))
-    .then(user => {
-      user.update({
-        name: req.body.name
-      })
-      .then((data) => {
-        console.log('good')
-        return res.json(data.toJSON())
-      })
-      .catch(() => console.log('error'))
-    })
+    User.findByPk(req.params.id).then((user) => {
+      user
+        .update({
+          name: req.body.name,
+        })
+        .then((data) => {
+          console.log('good');
+          return res.json(data.toJSON());
+        })
+        .catch(() => console.log('error'));
+    });
   },
-
 };
 
 module.exports = userController;

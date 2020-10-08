@@ -49,11 +49,27 @@ router.get('/', (req, res) => {
 router.post('/tweets', userAuthenticated, tweetController.postTweets);
 router.get('/tweets', userAuthenticated, tweetController.getTweets);
 router.get('/tweets/:id', userAuthenticated, tweetController.getTweet);
-router.get('/tweets/:id/replies', userAuthenticated, tweetController.getTweet);  //for test
-router.post('/tweets/:id/like', userAuthenticated, tweetController.postTweetLike);
-router.post('/tweets/:id/unlike', userAuthenticated, tweetController.postTweetUnlike);
-router.post('/replies/:id/like', userAuthenticated, tweetController.postReplyLike);
-router.post('/replies/:id/unlike', userAuthenticated, tweetController.postReplyUnlike);
+router.get('/tweets/:id/replies', userAuthenticated, tweetController.getTweet); //for test
+router.post(
+  '/tweets/:id/like',
+  userAuthenticated,
+  tweetController.postTweetLike,
+);
+router.post(
+  '/tweets/:id/unlike',
+  userAuthenticated,
+  tweetController.postTweetUnlike,
+);
+router.post(
+  '/replies/:id/like',
+  userAuthenticated,
+  tweetController.postReplyLike,
+);
+router.post(
+  '/replies/:id/unlike',
+  userAuthenticated,
+  tweetController.postReplyUnlike,
+);
 router.post(
   '/tweets/:id/replies',
   userAuthenticated,
@@ -65,6 +81,8 @@ router.post(
   tweetController.postReplies,
 );
 
+//router.post('/api/users/:id', userController.putUserSetting);
+//router.get('/api/users/:id', userController.getUserSettingPage);
 
 router.get('/users/self', userAuthenticated, userController.getSelf);
 router.get(
@@ -136,7 +154,7 @@ router.delete(
   adminController.deleteTweet,
 );
 
-router.get('/api/users/:id', userController.getEditPage)
-router.post('/api/users/:id', userAuthenticated, userController.postEditPage)
+router.get('/api/users/:id', userController.getEditPage);
+router.post('/api/users/:id', userAuthenticated, userController.postEditPage);
 
 module.exports = router;
