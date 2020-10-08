@@ -77,7 +77,7 @@ const userController = {
               introduction: req.body.introduction
             }).then(user => {
               req.flash('success_messages', 'user was successfully update')
-              res.redirect(`/user/self`)
+              res.redirect('back')
             })
           })
       })
@@ -92,7 +92,7 @@ const userController = {
           })
             .then(user => {
               req.flash('success_messages', 'user was successfully update')
-              res.redirect('/user/{{user.id}}/self')
+              res.redirect('back')
             })
         })
     }
