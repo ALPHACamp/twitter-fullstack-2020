@@ -190,18 +190,39 @@ const userController = {
           where: { ReplyId: null },
           attributes: ['id', 'TweetId'],
         },
-
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
       //order: [['Replies', 'updatedAt', 'DESC']],
     }).then((user) => {
+      // console.log(user);
+      if (user === null) {
+        User.findByPk(UserId, {
+          include: [
+            Tweet,
+            { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' },
+          ],
+        }).then((user) => {
+          const followings = helpers.getUser(req).Followings.map((u) => u.id);
+          let isFollowing = followings.includes(Number(req.params.id));
+          //console.log('tweets', resultTweets);
+          //let allTweets = tweets.dataValues;
+
+          return res.render('user-replies', {
+            user: helpers.getUser(req),
+            visitUser: user,
+            tweets: [],
+            isFollowing,
+          });
+        });
+      }
       let repliesIds = user.toJSON().Replies.map((i) => i.id);
       let uniqueTweets = [
         ...new Set([user.toJSON().Replies.map((i) => i.TweetId)]),
       ];
 
-      console.log('tweets id', uniqueTweets);
+      //console.log('tweets id', uniqueTweets);
 
       return Reply.findAll({
         where: { id: repliesIds },
