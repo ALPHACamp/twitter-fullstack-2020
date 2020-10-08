@@ -514,6 +514,32 @@ const userController = {
         return res.redirect('/signup');
       });
   },
+
+  getEditPage: (req, res) => {
+    User.findByPk(req.params.id)
+      .then(user => {
+        if (Number(req.params.id) === helpers.getUser(req).id) {
+          return res.json(user.toJSON())
+        }
+        return res.json({ status: 'error' })
+      })
+      .catch(() => { console.log('faaaaaaaaa') })
+  },
+
+  postEditPage: (req, res) => {
+    User.findByPk((req.params.id))
+    .then(user => {
+      user.update({
+        name: req.body.name
+      })
+      .then((data) => {
+        console.log('good')
+        return res.json(data.toJSON())
+      })
+      .catch(() => console.log('error'))
+    })
+  },
+
 };
 
 module.exports = userController;
