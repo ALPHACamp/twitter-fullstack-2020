@@ -123,9 +123,20 @@
       </div>
       {{/each}}
     </div>
-
   </div>
+
+  {{#if mode}}
+  {{#each visitUser.Tweets}}
+  {{this.description}}
+  {{/each}}
+  {{/if }}
 
   {{> right-column}}
   {{> modal}}
 </div>
+
+    {{#if mode}}
+      {{#each visitUser.Tweets}}
+        {{this.description}}
+      {{/each}}
+    {{/if }}
