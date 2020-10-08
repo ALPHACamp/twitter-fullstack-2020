@@ -21,20 +21,27 @@ module.exports = (app, passport) => {
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (req.user.role) { return next() }  //如果是管理員的話
+      req.logout() //將passport給的憑證洗掉
       req.flash('error_messages', '您非管理員，請從前台登入')
       return res.redirect('/admin/signin') //如果不是就導回首頁
     }
     res.redirect("/signin");
+  };
 
+  const signinBlocker = (req, res, next) => { //block掉回到登入頁
+    if (helpers.ensureAuthenticated(req)) {
+      return res.redirect('back')
+    }
+    return next()
   };
 
   // /users/{ { user.id } } /edit
 
   //user login
   app.put('/users/:id/edit', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putSelf)
-  app.get("/signup", userController.signUpPage);
+  app.get("/signup", signinBlocker, userController.signUpPage);
   app.post("/signup", userController.signUp);
-  app.get("/signin", userController.signInPage);
+  app.get("/signin", signinBlocker, userController.signInPage);
   app.post(
     "/signin",
     passport.authenticate("local", {
@@ -44,8 +51,8 @@ module.exports = (app, passport) => {
     userController.signIn
   );
   app.get("/logout", userController.logout);
-  app.get("/users/:id/setting", userController.getSetting);
-  app.put("/users/:id/setting", userController.putSetting)
+  app.get("/users/:id/setting", authenticated, userController.getSetting);
+  app.put("/users/:id/setting", authenticated, userController.putSetting)
 
   //userController
   app.get('/users/:id', authenticated, userController.getTopFollowers, userController.getUser)
@@ -72,7 +79,7 @@ module.exports = (app, passport) => {
   app.get('/tweets/:id/replies', authenticated, tweetController.getReply)
 
   //adminController 
-  app.get('/admin/signin', adminController.signinPage)
+  app.get('/admin/signin', signinBlocker, adminController.signinPage)
   app.post('/admin/signin', passport.authenticate('local', {
     failureRedirect: '/admin/signin',
     failureFlash: true
