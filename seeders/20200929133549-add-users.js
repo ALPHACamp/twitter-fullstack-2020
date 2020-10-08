@@ -44,7 +44,7 @@ module.exports = {
       account: 'root@example.com',
       cover: randomCover(),
       avatar: randomAvater(),
-      introduction: faker.lorem.sentence(160),
+      introduction: faker.lorem.sentence(),
       isAdmin: true,
       createdAt: new Date(),
       updatedAt: new Date(),
