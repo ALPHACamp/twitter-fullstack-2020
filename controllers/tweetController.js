@@ -181,9 +181,8 @@ const tweetController = {
   },
 
   postReplies: (req, res) => {
-    let tweetId = req.params.id
     let replyId = req.params.rid
-    let replyText = req.body.replyText.trim()
+    let replyText = req.body.comment.trim()
     if (!replyText.length) {
       return res.redirect('back')
     } else {
