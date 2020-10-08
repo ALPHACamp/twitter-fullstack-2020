@@ -61,7 +61,7 @@ const userController = {
   logout: (req, res) => {
     req.flash('success_messages', '成功登出!')
     req.logout()
-    res.redirect('/signin')
+    res.redirect('back')
   },
 
   getSetting: (req, res) => {
@@ -226,6 +226,7 @@ const userController = {
     const { files } = req
     console.log(typeof (helpers.getUser(req).id))
     console.log(typeof (req.params.id))
+    console.log("files", files)
 
     if (helpers.getUser(req).id !== Number((req.params.id))) {
       req.flash('error_messages', 'error')
@@ -235,9 +236,12 @@ const userController = {
     if (files) {
       imgur.setClientID(IMGUR_CLIENT_ID)
       if (avatar) {
+        console.log("avatar", avatar)
         await imgur.upload(avatar[0].path, (err, img) => {
+          console.log("avatar:", img.data.link)
           User.findByPk(helpers.getUser(req).id)
-            .then(user => user.update({ avatar: img.data.link }))
+            .then(user =>
+              user.update({ avatar: img.data.link }))
         })
       }
       if (cover) {
