@@ -73,6 +73,10 @@ a:hover {
   margin-right: 20px;
 }
 
+.nav-item :hover {
+  color: #ff6600;
+}
+
 .navbar-footer {
   margin-left: 103px;
   display: flex;
@@ -84,6 +88,10 @@ a:hover {
 .navbar-footer a {
   text-decoration: none;
   color: #1c1c1c;
+}
+
+.navbar-footer :hover {
+  color: #ff6600;
 }
 
 .btn-tweet {
