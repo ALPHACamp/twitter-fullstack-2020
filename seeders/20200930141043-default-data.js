@@ -76,7 +76,7 @@ module.exports = {
       updatedAt: new Date()
     }], {});
 
-    for (let i = 11; i <= 51; i += 10) {
+    for (let i = 2; i <= 6; i++) {
       queryInterface.bulkInsert('Tweets',
         Array.from({ length: 10 }).map(b =>
           ({
