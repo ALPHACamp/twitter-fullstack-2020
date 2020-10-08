@@ -30,40 +30,42 @@
       </div>
 
       {{#each followerList}}
-      <div class="tweet-content-box">
-        <div class=" tweet-content-left">
+      <div class="tweet-content-box" style="margin-bottom:5px">
+        <div class="tweet-content-left">
           <a href="/users/{{this.id}}/tweets">
-            <img src={{this.avatar}} style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+            <img class="ml-2 mt-2" src={{this.avatar}}
+              style="background: #C4C4C4;  border-radius: 100%; width: 50px; height: 50px">
           </a>
         </div>
-        <div class="top-user-item d-flex align-items-center" style="width: 600px; max-height: 500px">
-          <div class="top-user-name d-flex flex-column justify-content-center">
-            <a href="/users/{{this.id}}/tweets" class="user-name">{{this.name}}</a>
-            <span class="user-account">@{{this.account}}</span>
+        <div class="tweet-content-right" style="width: 100%">
+          <div style="display: flex; justify-content: space-between">
+            <div class="tweet-content-username">
+              <a href="/users/{{this.id}}/tweets" class="user-name">{{this.name}}</a>
+              <span class="user-account">@{{this.account}}</span>
+            </div>
+            <div style="margin-top: 5px; margin-right: 5px">
+              {{#ifCond ../user.id this.id}}
+              {{else}}
+              {{#if this.isFollowed}}
+              <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                <button class="unfollow-button">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/followships" method="POST">
+                <button class="follow-button" name="id" value="{{this.id}}">跟隨</button>
+              </form>
+              {{/if}}
+              {{/ifCond}}
+            </div>
           </div>
-          <span class="tweet-content-description">{{this.introduction}}</span><br>
-          <div class="follow-content-button mr-2">
-
-            {{#if this.isFollowed}}
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-              <button class="unfollow-button">正在跟隨</button>
-            </form>
-            {{else}}
-            <form action="/followships" method="POST">
-              <button class="follow-button" name="id" value="{{this.id}}">跟隨</button>
-            </form>
-            {{/if}}
+          <div class="tweet-content-info" style="margin-top: 5px">
+            <span class="tweet-content-description">{{this.introduction}}</span><br>
           </div>
         </div>
-
-
       </div>
       {{/each}}
     </div>
   </div>
-
-
-
 
   <div class="right-content">
     {{> right-column}}
