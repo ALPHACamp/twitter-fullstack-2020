@@ -29,6 +29,7 @@ module.exports = (app, passport) => {
 
   const signinBlocker = (req, res, next) => { //block掉回到登入頁
     if (helpers.ensureAuthenticated(req)) {
+
       return res.redirect('back')
     }
     return next()
