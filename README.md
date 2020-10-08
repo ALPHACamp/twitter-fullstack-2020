@@ -1,5 +1,5 @@
 # twitter-fullstack-2020
-[HEROKU]([HEROKU](https://salty-fortress-16177.herokuapp.com/  "title text!"))
+[HEROKU](https://salty-fortress-16177.herokuapp.com/)
 
 ## Test account:
 
