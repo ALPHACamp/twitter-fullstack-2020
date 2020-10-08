@@ -20,4 +20,31 @@
 |user4|user4@example.com|12345678|
 |user5|user5@example.com|12345678|
 ## 安裝
-- 
+1. 開啟terminal，cd到存放專案位置執行：
+```
+git clone https://github.com/Rubyrubylai/twitter-fullstack-2020
+```
+2. 進入專案資料夾
+```
+cd twitter-fullstack-2020
+```
+3. 安裝npm
+```
+npm i
+```
+4. workbench新增database
+```
+create database ac_twitter_workspace
+```
+5. migrate檔案
+```
+npx sequelize db:migrate
+```
+6. 種子資料
+```
+npx sequelize db:seed:all
+```
+7. 執行專案
+```
+npm run start
+```
