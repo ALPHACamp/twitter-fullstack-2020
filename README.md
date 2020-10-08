@@ -22,6 +22,7 @@ Password : 12345678
 [env.example](https://github.com/ChubbyKay/twitter-fullstack-2020/blob/master/.env.example "env.example")
 
 ## 網頁示意圖
+![示意圖](https://i.imgur.com/IeCdIPS.png)
 
 利用Node.js、Express以及SQL關聯式資料庫建置的Simple-Twitter社群網站全端專案，
 核心功能包含Simple Twitter前後台的操作情境以及使用者的互動。
