@@ -41,27 +41,27 @@
             <div class="tweet-content-info">
               <span class="tweet-content-description">{{this.description}}</span><br>
             </div>
+            <div class="tweet-content-bottom">
+              {{!-- reply icon --}}
+              <button type="button" class="button tweet-reply-link">
+                <i class="fas fa-cus-reply" aria-hidden="true"></i>{{this.Replies.length}}
+              </button>
+              {{!-- like/unlike icon --}}
+              {{#if isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-filled-like"></i>{{this.LikedUsers.length}}
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit" class="button tweet-like-link">
+                  <i class="fas fa-cus-like"></i>{{this.LikedUsers.length}}
+                </button>
+              </form>
+              {{/if}}
+            </div>
           </div>
-        </div>
-        <div class="tweet-content-bottom" style="margin-left: 60px">
-          {{!-- reply icon --}}
-          <button type="button" class="button tweet-reply-link" data-toggle="modal" data-target="#replyModal{{@index}}">
-            <i class="fas fa-cus-reply" aria-hidden="true"></i>{{this.Replies.length}}
-          </button>
-          {{!-- like/unlike icon --}}
-          {{#if isLiked}}
-          <form action="/tweets/{{this.id}}/unlike" method="POST">
-            <button type="submit" class="button tweet-like-link">
-              <i class="fas fa-cus-filled-like"></i>{{this.LikedUsers.length}}
-            </button>
-          </form>
-          {{else}}
-          <form action="/tweets/{{this.id}}/like" method="POST">
-            <button type="submit" class="button tweet-like-link">
-              <i class="fas fa-cus-like"></i>{{this.LikedUsers.length}}
-            </button>
-          </form>
-          {{/if}}
         </div>
 
         {{!-- reply modal --}}
