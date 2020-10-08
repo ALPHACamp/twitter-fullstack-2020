@@ -1,0 +1,36 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+#left{ position:fixed; top:0; left:0; width:26.25%; height:100%; background-color:#ffffff; border-right: 1px solid #E6EcF0;}
+#main{ 
+  margin-left:26.25%; 
+  min-height: 100%;
+  width:73.75%; 
+  background-color:#ffffff;
+  font-family: 'Noto Sans TC';
+}
+
+#left-container {
+  width:55.55%;
+  margin-left: 26.45%;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Noto Sans TC';
+}
+
+#left-container i {
+  margin-right: 20px;
+}
+
+.navbar-brand {
+  margin-bottom: 42px;
+  margin-top: 14px;
+}
+
+#left-container .flex-colum .nav-item{
+  margin-bottom: 26px;
+}
+
+.error {
+  margin-left: 26.25%;
+  width: 41.66%;
+}

@@ -1,152 +1,144 @@
 <div id="left">
-	<ul class="nav flex-column justify-content-between" style="height: 100vh;">
-		<div class="flex-colum ">
-			<a class="navbar-brand ml-3 mb-3" href="/">
-			<img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
-			height="30" alt="">
-			</a>
+	<div id="left-container">
+		<ul class="nav flex-column justify-content-between" style="height: 100vh;">
+			<div class="flex-colum ">
+				<a class="navbar-brand ml-3" href="/">
+					<img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
+						height="30" alt="">
+				</a>
+				<li class="nav-item">
+					<a class="nav-link" href="/tweets" style="color: black; "><i class="fas fa-home"></i>首頁</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/users/{{user.id}}/tweets" style="color:black;"><i class="fas fa-user"></i>個人資料</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/setting/{{user.id}}" style="color: black;margin-bottom: 19px"><i
+							class="fas fa-cog"></i>設定</a>
+				</li>
+				<button type="button" class="btn btn-block" style="border-radius: 23px;background:#ff6600; color:white"
+					data-toggle="modal" data-target="#tweetModal">
+					推文
+				</button>
+			</div>
 			<li class="nav-item">
-				<a class="nav-link" href="/tweets" style="color: black;"><i class="fas fa-home mr-2"></i>首頁</a>
+				<a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt"></i>登出</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/users/{{user.id}}/tweets" style="color: black;"><i class="fas fa-user mr-2"></i>個人資料</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="/setting/{{user.id}}" style="color: black;"><i class="fas fa-cog mr-2"></i>設定</a>
-			</li>
-			<button type="button" class="btn btn-warning btn-lg btn-block" data-toggle="modal" data-target="#tweetModal">
-				推文
-			</button>
-		</div>
-		<li class="nav-item">
-		<a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
-		</li>
-	</ul>
+		</ul>
+	</div>
 </div>
 {{!-- 中間區域 --}}
-<h5>{{profile.name}}</h5>
-<a href="javascript:history.back()">回上一頁</a>
-<hr />
 <div id="main">
-    <div class="d-flex flex-nowrap border-bottom flex-row justify-content-start mt-4" style="width: 100%;">
-      <div class="text-center py-3" style="width: 130px;">
-        <a class="font-weight-bold text-decoration-none"  style="color:#FF6600"
-		  href="/users/{{results.id}}/followers">跟隨者</a>
-      </div>
-      <div class="text-center py-3" style="width: 130px;">
-        <a class="text-decoration-none" href="/users/{{results.id}}/followings">正在跟隨</a>
-      </div>
-    </div>
-        {{#each results.Followers}}
-        <div class="row border-bottom py-3" style="width: 100%;">
-          <div class="col-2 text-center">
-            <a href="/users/{{this.id}}/tweets">
-              <img class="rounded-circle mt-2" src="{{this.avatar}}" alt="img" width="75px" height="75px">
-            </a>
-          </div>
-          <div class="col-7 d-flex flex-column flex-nowrap">
-            <div class="user">
-              <a href="/users/{{this.id}}/tweets">{{this.name}}</a>
-              <br/>
-              <span class="text-muted ml-2">{{this.account}}</span>
-            </div>
-            <p class="content">{{this.introduction}}</p>
-          </div>
-          {{#if this.isFollowed}}
-          <div class="col-3 p-2 text-right">
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn rounded-pill"
-                style="color:white ;background-color:#FF6600; border: 1px solid #FF6600">正在跟隨</button>
-            </form>
-          </div>
-          {{else}}
-          <div class="col-3 p-2 text-right">
-            <form action="/followships" method="POST">
-              <input type="hidden" name="id" value="{{this.id}}">
-              <button type="submit" class="float-right px-4 py-2 float-right btn rounded-pill"
-                style="color:#FF6600; border: 1px solid #FF6600">跟隨</button>
-            </form>
-          </div>
-          {{/if}}
-        </div>
-        {{/each}}
+	<div class="main-follow-top">
+		<a href="javascript:history.back()" style="margin-right:43px ;color:black"><i class="fas fa-arrow-left"></i></a>
+		{{results.name}}
+	</div>
+	<div class="d-flex flex-nowrap border-bottom flex-row justify-content-start mt-4" style="width: 100%;">
+		<div class="text-center py-3" style="width: 130px;">
+			<a class="font-weight-bold text-decoration-none" style="color:#FF6600"
+				href="/users/{{results.id}}/followers">跟隨者</a>
+		</div>
+		<div class="text-center py-3" style="width: 130px;">
+			<a class="text-decoration-none" href="/users/{{results.id}}/followings">正在跟隨</a>
+		</div>
+	</div>
+	{{#each results.Followers}}
+	<div class="row border-bottom py-3" style="width: 100%;">
+		<div class="col-2 text-center">
+			<a href="/users/{{this.id}}/tweets">
+				<img class="rounded-circle mt-2" src="{{this.avatar}}" alt="img" width="75px" height="75px">
+			</a>
+		</div>
+		<div class="col-7 d-flex flex-column flex-nowrap">
+			<div class="user">
+				<a href="/users/{{this.id}}/tweets">{{this.name}}</a>
+				<br />
+				<small class="text-muted ml-2">@{{this.account}}</small>
+			</div>
+			<p class="content">{{this.introduction}}</p>
+		</div>
+		{{#if this.isFollowed}}
+		<div class="col-3 p-2 text-right">
+			<form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+				<button type="submit" class="btn rounded-pill"
+					style="color:white ;background-color:#FF6600; border: 1px solid #FF6600">正在跟隨</button>
+			</form>
+		</div>
+		{{else}}
+		<div class="col-3 p-2 text-right">
+			<form action="/followships" method="POST">
+				<input type="hidden" name="id" value="{{this.id}}">
+				<button type="submit" class="float-right px-4 py-2 float-right btn rounded-pill"
+					style="color:#FF6600; border: 1px solid #FF6600">跟隨</button>
+			</form>
+		</div>
+		{{/if}}
+	</div>
+	{{/each}}
 </div>
 {{!-- 右邊區域 --}}
 <div id="right">
 	{{>rightColumn}}
 </div>
 {{!-- modal --}}
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+	aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-			<form
-				action="/users/{{user.id}}/edit"
-				method='POST'
-			>
-			<div class='col-md-8'>
-			<div class='form-group'>
-				<input
-				type='text'
-				class='form-control form-control-lg'
-				name='name'
-				id='name'
-				placeholder='Name'
-				value="{{user.name}}"
-				required
-				/>
-			</div>
-			<div class='form-group'>
-				<textarea
-				class='form-control'
-				name='introduction'
-				id='introduction'
-				rows='8'
-				placeholder='Type anything about you here...'
-				>{{user.introduction}}</textarea>
-			</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary">Save changes</button>
-			</div>
-			</form>
+				<form action="/users/{{user.id}}/edit" method='POST'>
+					<div class='col-md-8'>
+						<div class='form-group'>
+							<input type='text' class='form-control form-control-lg' name='name' id='name' placeholder='Name'
+								value="{{user.name}}" required />
+						</div>
+						<div class='form-group'>
+							<textarea class='form-control' name='introduction' id='introduction' rows='8'
+								placeholder='Type anything about you here...'>{{user.introduction}}</textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
 </div>
 <!-- tweetModal -->
 <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<form action="/tweets" method="POST">
-			<div class="form-group">
-				<img src="{{user.avatar}}" class="rounded-circle" width="100" height="100">
-				<span>有什麼新鮮事?</span>
-				<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;" placeholder="what's on your mind?"> </textarea>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
-			<input type="hidden" name="tweetId" value="{{user.description}}" />
-			<button type="submit" class="btn btn-warning btn-lg">推文</button>
-		</form>
-      </div>
-    </div>
-  </div>
-  </div>
+			<div class="modal-body">
+				<form action="/tweets" method="POST">
+					<div class="form-group">
+						<img src="{{user.avatar}}" class="rounded-circle" width="100" height="100">
+						<span>有什麼新鮮事?</span>
+						<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;"
+							placeholder="what's on your mind?"> </textarea>
+					</div>
+					<input type="hidden" name="tweetId" value="{{user.description}}" />
+					<button type="submit" class="btn btn-warning btn-lg">推文</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 {{!-- 頁籤script --}}
 <script>
-    $(document).ready(function(){
-    });
+	$(document).ready(function () {
+	});
 </script>
