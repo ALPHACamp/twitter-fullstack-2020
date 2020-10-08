@@ -6,7 +6,7 @@ const Like = db.Like
 const Followship = db.Followship
 
 const adminController = {
-  getTweets: (req, res) => {
+  getTweets: (req, res, next) => {
     return Tweet.findAll({
       include: User,
       order: [['createdAt', 'DESC']]
@@ -18,19 +18,22 @@ const adminController = {
         }))
         return res.render('admin/tweets', { tweets })
       })
+      .catch(err => { next(err) })
   },
 
-  deleteTweet: (req, res) => {
+  deleteTweet: (req, res, next) => {
     return Tweet.findByPk(req.params.id)
       .then(tweet => {
         tweet.destroy()
           .then(tweet => {
             return res.redirect('back')
           })
+          .catch(err => { next(err) })
       })
+      .catch(err => { next(err) })
   },
 
-  getUsers: (req, res) => {
+  getUsers: (req, res, next) => {
     return User.findAll({
       include: [Tweet,
         { model: User, as: 'Followings' },
@@ -46,6 +49,7 @@ const adminController = {
         users = users.sort((a, b) => b.TweetsCount - a.TweetsCount)
         return res.render('admin/users', { users })
       })
+      .catch(err => { next(err) })
   },
 
   signinPage: (req, res) => {
