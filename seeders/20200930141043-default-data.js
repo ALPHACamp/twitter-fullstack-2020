@@ -82,17 +82,18 @@ module.exports = {
       updatedAt: new Date()
     }], {});
 
-    for (let i = 2; i <= 6; i++) {
-      queryInterface.bulkInsert('Tweets',
-        Array.from({ length: 10 }).map(b =>
-          ({
-            description: faker.lorem.text(),
-            UserId: i,
-            createdAt: new Date(),
-            updatedAt: new Date()
-          })
-        ), {})
-    }
+
+    queryInterface.bulkInsert('Tweets',
+      Array.from({ length: 50 }).map((b, i) =>
+        ({
+          id: i + 1,
+          description: faker.lorem.text(),
+          UserId: (i % 5) + 2,
+          createdAt: new Date(),
+          updatedAt: new Date()
+        })
+      ), {})
+
 
     for (let i = 0; i < 3; i++) {
       queryInterface.bulkInsert('Replies',
