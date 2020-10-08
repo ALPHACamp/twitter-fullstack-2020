@@ -50,7 +50,7 @@ const adminController = {
         followingsCount: item.dataValues.Followings.length,
         // RepliesCount: item.dataValues.Replies.length,
       }))
-      const users = data.sort((a, b) => b.tweetsCount - a.tweetsCount)
+      const users = data.sort((a, b) => b.TweetsCount - a.TweetsCount)
       res.render('admin/users', { users })
     })
   },
