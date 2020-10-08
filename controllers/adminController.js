@@ -16,6 +16,7 @@ const adminController = {
         }))
         return res.render('admin/tweets', {
             tweets: data,
+            css: 'adminPage'
         })
     })
   },

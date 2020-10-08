@@ -99,13 +99,17 @@
 					</a>
 					<hr>
 				</div>
-				<form action="/tweets/{{ reply.id }}/replies" method="POST">
-					<div class="form-group">
-						<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;"></textarea>
-					</div>
-					<input type="hidden" name="tweetId" value="{{reply.id}}" />
-					<button type="submit" class="btn btn-info">回覆</button>
+				{{!-- like --}}
+				{{#if isLiked }}
+				<form action="/tweets/{{reply.id}}/unlike?_method=DELETE" method="POST">
+					<button type="submit" style="outline: none;"><i class="fas fa-heart fa-sm"
+						style="color: #e0255e;"></i></button>
+					</form>
+				{{else}}
+				<form action="/tweets/{{reply.id}}/like" method="POST">
+					<button type="submit" style="outline: none;"><i class="far fa-heart fa-sm"></i></button>
 				</form>
+				{{/if}}
 			</div>
 		</div>
 	</div>

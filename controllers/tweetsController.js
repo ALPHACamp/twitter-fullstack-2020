@@ -1,5 +1,5 @@
-const { User, Tweet, Like } = require('twitter-fullstack-2020/models')
-const helpers = require("twitter-fullstack-2020/_helpers")
+const { User, Tweet, Like } = require('../models')
+const helpers = require("../_helpers")
 
 const tweetsController = {
     //main
