@@ -1,18 +1,22 @@
 # twitter-fullstack-2020
-[HEROKU](https:/// "title text!")
+[HEROKU](https://salty-fortress-16177.herokuapp.com/"HEROKU")
 
 ## Test account:
-Admin
+
+- Admin
 ```
-Account	: root@example.com
+Account	: root
 
 Password : 12345678
-
+```
+---
 User
 ```
-Account	: user1@example.com
+Account	: user1
 
 Password : 12345678
+
+```
 
 ## 相關環境變數
 [env.example](https://.env.example "title text!")
