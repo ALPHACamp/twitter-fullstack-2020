@@ -8,14 +8,17 @@
   {{> addTweet}}
 
   <div class="center-content d-flex" id="tweet-content">
-    <div class="head  justify-content-between ">
+    <div class="head justify-content-between ">
       <a href="javascript:history.back()" style="color: black;">
-        <div class="d-flex">
+        <div class="head-content d-flex">
           <i class="fas fa-arrow-left ml-2 mt-3"></i>
-          <h5 class="tweet-title">{{users.name}}</h5>
+          <div class="head-content-user-info">
+            <h5 class="tweet-title-user">{{users.name}}</h5>
+            <div class="title-description-user">{{users.Tweets.length}} 推文</div>
+          </div>
         </div>
       </a>
-      <div class="user-cover" style="top: -30px;background: #C4C4C4;width: 600px;height:200px;">
+      <div class="user-cover" style="top: -30px; background: #C4C4C4; width: 100%; height: 200px;">
         <img src="{{users.cover}}" alt="{{users.cover}}">
       </div>
       <div class="tweet-content-box">
