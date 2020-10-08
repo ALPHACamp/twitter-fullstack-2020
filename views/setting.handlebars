@@ -1,0 +1,53 @@
+<div class="row mt-3">
+  <div class="col-md-3 pl-0">
+
+    {{> left}}
+
+  </div>
+
+  <form class="col-md-9 px-3 border-left" action="/users/{{user.id}}/setting?_method=PUT" method="POST"
+    style="width: 100%;">
+
+    {{>message}}
+
+    <div class="text-left m-5 ">
+      <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
+    </div>
+
+    <div class="col-md-7 m-5">
+      <div class="form-label-group">
+        <label for="inputEmail">帳號</label>
+        <input type="text" name="account" class="form-control" placeholder="
+      {{$user.account}}" value="{{user.account}}" required autofocus>
+      </div>
+
+      <div class="form-label-group">
+        <label for="inputPassword">名稱</label>
+        <input type="name" name="name" class="form-control" placeholder="
+      {{$user.name}}" value="{{user.name}}" required>
+      </div>
+
+      <div class="form-label-group">
+        <label for="inputPassword">Email</label>
+        <input type="email" name="email" class="form-control" placeholder="
+          " value="{{user.email}}" required>
+      </div>
+
+      <div class="form-label-group">
+        <label for="inputPassword">密碼</label>
+        <input type="password" name="password" class="form-control" placeholder=" password" required>
+      </div>
+
+      <div class="form-label-group">
+        <label for="inputPasswordCheck">密碼確認</label>
+        <input type="password" name="passwordCheck" class="form-control" placeholder="請確認密碼" required>
+      </div>
+      <br />
+      <button class="btn btn-lg btn-block sign-button text-light" style=" width: 122px;
+height: 50px; border-radius: 50px;" type="submit">儲存</button>
+      </br>
+
+
+    </div>
+  </form>
+</div>

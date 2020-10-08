@@ -1,0 +1,38 @@
+<div class="right-zone">
+  <ul class="list-group">
+    <li class="list-group-item right-zone-header">
+      跟隨誰
+    </li>
+    {{#each getTopFollowers}}
+    <li class="list-group-item right-zone-body">
+      <div class="row justify-content-between align-items-center">
+        <div class="row">
+          <a href="/users/{{this.id}}" class="col">
+            <img src="{{this.avatar}}" alt="avatar" class="rounded-circle" style="width:50px">
+          </a>
+          <div class="right-zone-center">
+            <a href="/users/{{this.id}}" class="right-zone-name">{{this.name}}</a>
+            <p class="right-zone-account m-0">{{this.account}}</p>
+          </div>
+        </div>
+        <div>
+          {{#if this.isFollowed}}
+          <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="followship-following-btn mt-2 mr-2">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/following/{{this.id}}" method="POST">
+            <button type="submit" class="followship-follower-btn mt-2 mr-2">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+    </li>
+    {{/each}}
+    <li class="list-group-item right-zone-footer">
+      <a href="" style="text-decoration: none; color:black">
+        顯示更多...
+      </a>
+    </li>
+  </ul>
+</div>
