@@ -63,6 +63,7 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
   getRecommendedFollowings: (req, res, next) => {
     return User.findAll({
       include: [{ model: User, as: 'Followers' }]
@@ -78,6 +79,7 @@ const userController = {
       return next()
     })
   },
+
   getSetting: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.id)) {
       req.flash('error_messages', '無法修改其他使用者資訊')
@@ -201,12 +203,36 @@ const userController = {
     })
   },
 
-  getUserInfo: (req, res) => {
-    if (!helpers.getUser(req)) {
-      req.flash('error_messages', "can't edit other user's profile")
-      return res.redirect('back')
-    }
-    else { res.render('setting') }
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        {
+          model: Reply,
+          include: [
+            {
+              model: Tweet,
+              include: [Reply, Like, User]
+            }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ], order: [[Reply, 'createdAt', 'DESC']]
+    }).then(user => {
+      const pageUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+
+      pageUser.Replies.forEach(tweet => {
+        tweet.isLiked = tweet.Tweet.Likes.map(d => d.UserId).includes(currentUserId)
+      })
+      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+
+      return res.render('user/userReplyPage', {
+        users: pageUser,
+        currentUserId: currentUserId
+      })
+    })
   },
 
   editUser: (req, res) => {
@@ -278,38 +304,6 @@ const userController = {
     }
   },
 
-  getUserReplies: (req, res) => {
-    return User.findByPk(req.params.id, {
-      include: [
-        Tweet,
-        {
-          model: Reply,
-          include: [
-            {
-              model: Tweet,
-              include: [Reply, Like, User]
-            }
-          ]
-        },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ], order: [[Reply, 'createdAt', 'DESC']]
-    }).then(user => {
-      const pageUser = user.toJSON()
-      const currentUserId = helpers.getUser(req).id
-
-      pageUser.Replies.forEach(tweet => {
-        tweet.isLiked = tweet.Tweet.Likes.map(d => d.UserId).includes(currentUserId)
-      })
-      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
-
-      return res.render('user/userReplyPage', {
-        users: pageUser,
-        currentUserId: currentUserId
-      })
-    })
-  },
-
   // 取得 追蹤使用者 的清單
   getUserFollowers: (req, res) => {
     return User.findByPk(req.params.id, {
@@ -372,6 +366,7 @@ const userController = {
         })
     }
   },
+
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
