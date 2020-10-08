@@ -32,7 +32,7 @@ module.exports = {
         UserId: parseInt(d),
         TweetId: value.TweetId,
         ReplyId: value.id,
-        comment: faker.lorem.text(140),
+        comment: faker.lorem.sentence(140),
         createdAt: new Date(),
         updatedAt: new Date(),
       }));

@@ -135,7 +135,7 @@ const userController = {
     });
   },
   getLikesPage: (req, res) => {
-    let UserId = req.params.id;
+    let UserId = Number(req.params.id);
     return User.findByPk(UserId, {
       include: [
         Tweet,
@@ -166,9 +166,18 @@ const userController = {
         lt.dataValues.isLikeBySelf = likes.includes(lt.id);
         //console.log('before @@@', lt);
       });
+<<<<<<< HEAD
       //let isFollowing = followings.includes(UserId);
       let mode = false;
       if (process.env.NODE_ENV === 'test') mode = true;
+=======
+      let isFollowing = followings.includes(UserId);
+      console.log(isFollowing)
+      console.log(followings)
+      console.log(UserId)
+      let mode = false
+      if (process.env.NODE_ENV === 'test') mode = true
+>>>>>>> 2f5ae03d11420bb8132284ef8f7297dc41da0247
       return res.render('user-like', {
         user: helpers.getUser(req),
         isFollowing: followings.includes(Number(req.params.id)),
@@ -519,6 +528,32 @@ const userController = {
         return res.redirect('/signup');
       });
   },
+
+  getEditPage: (req, res) => {
+    User.findByPk(req.params.id)
+      .then(user => {
+        if (Number(req.params.id) === helpers.getUser(req).id) {
+          return res.json(user.toJSON())
+        }
+        return res.json({ status: 'error' })
+      })
+      .catch(() => { console.log('faaaaaaaaa') })
+  },
+
+  postEditPage: (req, res) => {
+    User.findByPk((req.params.id))
+    .then(user => {
+      user.update({
+        name: req.body.name
+      })
+      .then((data) => {
+        console.log('good')
+        return res.json(data.toJSON())
+      })
+      .catch(() => console.log('error'))
+    })
+  },
+
 };
 
 module.exports = userController;
