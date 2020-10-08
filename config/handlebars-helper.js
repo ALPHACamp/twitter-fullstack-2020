@@ -12,7 +12,9 @@ module.exports = {
   },
   subText: (content, num) => {
     let count = Number(num) ? Number(num) : 50;
-    if (content.length < count) {
+    if (content.length === 0) {
+      return '';
+    } else if (content.length < count) {
       return content;
     }
 
