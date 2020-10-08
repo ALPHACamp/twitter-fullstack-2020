@@ -354,8 +354,8 @@ const userController = {
 
     if (currentUserId === followingUser) {
       req.flash('error_messages', '請嘗試追蹤別人吧！')
-      // return res.redirect('error')
-      return res.redirect('back')
+      return res.render('error')
+      // return res.redirect('back')
     } else {
       return Followship.create({
         followerId: currentUserId,
