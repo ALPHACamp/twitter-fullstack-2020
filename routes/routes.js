@@ -81,8 +81,8 @@ router.post(
   tweetController.postReplies,
 );
 
-router.post('/api/users/:id', userController.putUserSetting);
-router.get('/api/users/:id', userController.getUserSettingPage);
+//router.post('/api/users/:id', userController.putUserSetting);
+//router.get('/api/users/:id', userController.getUserSettingPage);
 
 router.get('/users/self', userAuthenticated, userController.getSelf);
 router.get(
@@ -154,7 +154,7 @@ router.delete(
   adminController.deleteTweet,
 );
 
-router.get('/api/users/:id', userController.getEditPage)
-router.post('/api/users/:id', userAuthenticated, userController.postEditPage)
+router.get('/api/users/:id', userController.getEditPage);
+router.post('/api/users/:id', userAuthenticated, userController.postEditPage);
 
 module.exports = router;
