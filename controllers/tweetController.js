@@ -17,13 +17,13 @@ const tweetController = {
       order: [['updatedAt', 'DESC']]
     }).then(tweets => {
       const loginUser = helpers.getUser(req)
-      
+
       tweets = tweets.map(tweet => ({
         ...tweet.dataValues,
-        likesCount: tweet.dataValues.Likes.length,
-        repliesCount: tweet.dataValues.Replies.length,
-        user: tweet.dataValues.User.dataValues,
-        followerId: tweet.dataValues.User.dataValues.Followers.map(followers => followers.dataValues.id),
+        likesCount: tweet.dataValues ? tweet.dataValues.Likes.length : null,
+        repliesCount: tweet.dataValues ? tweet.dataValues.Replies.length : null,
+        user: tweet.dataValues ? tweet.dataValues.User.dataValues : null,
+        followerId: tweet.dataValues ? tweet.dataValues.User.dataValues.Followers.map(followers => followers.dataValues.id) : null,
         isLiked: loginUser.Likes.map(like => like.TweetId).includes(tweet.id)
       }))
 
@@ -48,11 +48,11 @@ const tweetController = {
           users = users.map(user => ({
             ...user.dataValues,
             isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
-          }))       
+          }))
 
           users.forEach((user, index, arr) => {
-            if(user.role === "admin") {
-                arr.splice(index, 1);
+            if (user.role === "admin") {
+              arr.splice(index, 1);
             }
           })
 
@@ -138,8 +138,8 @@ const tweetController = {
             }))
 
             users.forEach((user, index, arr) => {
-              if(user.role === "admin") {
-                  arr.splice(index, 1);
+              if (user.role === "admin") {
+                arr.splice(index, 1);
               }
             })
 
