@@ -25,7 +25,7 @@ const adminControllers = {
     return Tweet.findByPk(req.params.id)
       .then(tweet => {
         tweet.destroy()
-          .then(comment => {
+          .then(tweet => {
             res.redirect('/admin/tweets')
           })
       })
@@ -33,7 +33,7 @@ const adminControllers = {
 
   getUsers: (req, res) => {
     return User.findAll({
-      where: { role: 'user' },
+      // where: { role: 'user' },
       nest: true,
       include: [
         { model: Like },

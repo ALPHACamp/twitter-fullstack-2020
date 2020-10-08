@@ -307,7 +307,7 @@ const userController = {
       }))
 
       const isFollowed = user.Followers.map(followers => followers.id).includes(loginUser.id)
-      
+
       // Right side
       // filter the tweets to those that user followings & user himself
       const tweetFollowings = []
@@ -320,8 +320,8 @@ const userController = {
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
         users.forEach((user, index, arr) => {
-          if(user.role === "admin") {
-              arr.splice(index, 1);
+          if (user.role === "admin") {
+            arr.splice(index, 1);
           }
         })
         //sort by the amount of the followers
@@ -333,7 +333,7 @@ const userController = {
           more = more + 10
         }
         users = users.slice(0, more)
- 
+
         return res.render('userTweets', {
           tweets,
           userId: user.toJSON().id,
@@ -408,8 +408,8 @@ const userController = {
           isFollowing: user.Followers.map(follower => follower.id).includes(loginUser.id)
         }))
         users.forEach((user, index, arr) => {
-          if(user.role === "admin") {
-              arr.splice(index, 1);
+          if (user.role === "admin") {
+            arr.splice(index, 1);
           }
         })
         //sort by the amount of the followers
@@ -455,7 +455,7 @@ const userController = {
         Tweet
       ]
     }).then(user => {
-      console.log(user)
+      console.log(user.Likes)
       const data = user.Likes.map(r => ({
         ...r.dataValues,
         id: r.dataValues.Tweet.User.id,
@@ -484,11 +484,11 @@ const userController = {
         }))
 
         users.forEach((user, index, arr) => {
-          if(user.role === "admin") {
-              arr.splice(index, 1);
+          if (user.role === "admin") {
+            arr.splice(index, 1);
           }
         })
-        
+
         //sort by the amount of the followers
         users.sort((a, b) => {
           return b.Followers.length - a.Followers.length
@@ -710,7 +710,7 @@ const userController = {
     }
     updateUser()
   },
-  
+
   getUserInfo: (req, res) => {
     const id = req.params.userId
     const loginId = helpers.getUser(req).id
