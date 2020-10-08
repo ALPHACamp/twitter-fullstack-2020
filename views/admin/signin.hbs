@@ -1,0 +1,24 @@
+<div class="container mt-5">
+  <div class="row justify-content-center" style="">
+    <form class="form-signin m-auto" action="/admin/signin" method="POST" style="width: 50%;">
+      <div class="icon icon-ac-mark text-center" style="color:#FF6600;font-size: 50px;"></div>
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">後台登入</h1>
+      </div>
+      {{> message}}
+      <div class="form-label-group">
+        <input type="text" name="account" class="form-control mt-4" placeholder="帳號" style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black;" required autofocus value="{{userInput.account}}"> 
+      </div>
+      <div class="form-label-group">
+        <input type="password" name="password" class="form-control mt-4" placeholder="密碼"
+          style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black;"
+          required>
+      </div>
+      <br />
+      <button class="btn btn-lg btn-primary btn-block mt-5" type="submit" style="border-radius: 30px;background-color:#FF6600;border-color: #fff;">登入</button>
+      <div class="text-right mb-4 mt-3" style="color:#007bff;">
+        <p><a href="/signin" style="text-decoration: underline;">前台登入</a></p>
+      </div>
+    </form>
+  </div>
+</div>

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       avatar: DataTypes.STRING,
       introduction: DataTypes.TEXT,
       isAdmin: DataTypes.BOOLEAN,
+      role: DataTypes.STRING,
     },
     {},
   );
@@ -28,6 +29,16 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Followship,
       foreignKey: 'followerId',
       as: 'Followings',
+    });
+    User.belongsToMany(models.Tweet, {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikeTweets',
+    });
+    User.belongsToMany(models.Reply, {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikeReplies',
     });
   };
   return User;

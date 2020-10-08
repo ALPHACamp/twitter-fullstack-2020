@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  {{!-- left-column --}}
+  {{> left-column}}
+  <div class="follower-center">
+    <div class="follower-title">
+      <div class="follower-title-left">
+        <a href="/users/{{users.id}}/tweets">
+          <i class="icon-arrow"></i>
+        </a>
+      </div>
+      <div class="follower-title-right">
+        <div class="follower-title-top">
+          {{users.name}}
+        </div>
+        <div class="follower-title-bottom">
+          {{users.Tweets.length}} 推文
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="follow-nav navbar-nav mr-auto">
+          <a class="nav-link active" href="/users/{{users.id}}/followers">追蹤者</a>
+          <a class="nav-link" href="/users/{{users.id}}/followings">正在追蹤</a>
+      </div>
+    </nav>
+    <div class="followship-lists">
+      {{#each users.Followers}}
+      <div class="followship-content">
+        <div class="followship-left">
+          <img src="{{this.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+        </div>
+        <div class="followship-right">
+          <div class="followship-right-top">
+            <div class="right-top-name">
+              <a href="/users/{{this.id}}/tweets">
+                {{this.name}}
+              </a>
+              <span>@{{this.account}}</span>
+            </div>
+            <div class="right-top-button">
+              {{#Equal this.id ../user.id}}
+              {{else}}
+              {{#if ../this.isFollowed}}
+              <form action="/followships/{{../this.id}}?_method=DELETE" method="POST">
+                <button class="right-btn-follow" name="id" value="{{../this.id}}">正在追蹤</button>
+                {{else}}
+                <form action="/followships" method="POST">
+                  <button class="right-btn-unfollow" name="id" value="{{../this.id}}">追蹤</button>
+                  {{/if}}
+                </form>
+                {{/Equal}}
+            </div>
+          </div>
+          <p>{{subText this.introduction 100}}</p>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{!-- right-column --}}
+  {{> right-column}}
+  {{> modal}}
+</div>

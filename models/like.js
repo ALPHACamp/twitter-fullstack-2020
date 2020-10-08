@@ -3,10 +3,17 @@ module.exports = (sequelize, DataTypes) => {
   const Like = sequelize.define(
     'Like',
     {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
       UserId: DataTypes.INTEGER,
       Position: DataTypes.STRING,
       PositionId: DataTypes.INTEGER,
       isLike: DataTypes.BOOLEAN,
+      TweetId: DataTypes.INTEGER,
     },
     {},
   );
