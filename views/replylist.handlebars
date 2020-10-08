@@ -49,11 +49,11 @@
 	</button>
 	{{!-- like --}}
 	{{#if isLiked }}
-	<form action="/like/{{reply.id}}?_method=DELETE" method="POST">
+	<form action="/tweets/{{reply.id}}/unlike?_method=DELETE" method="POST">
 		<button type="submit" class="fas fa-heart"></button>
 	</form>
 	{{else}}
-	<form action="/like/{{reply.id}}" method="POST">
+	<form action="/tweets/{{reply.id}}/like" method="POST">
 		<button type="submit" class="far fa-heart"></button>
 	</form>
 	{{/if}}
@@ -99,9 +99,9 @@
 					</a>
 					<hr>
 				</div>
-				<form action="/replylist/{{ reply.id }}" method="POST">
+				<form action="/tweets/{{ reply.id }}/replies" method="POST">
 					<div class="form-group">
-						<textarea class="form-control" id="text" name="text" rows="3" style="max-width: 900px;"></textarea>
+						<textarea class="form-control" id="comment" name="comment" rows="3" style="max-width: 900px;"></textarea>
 					</div>
 					<input type="hidden" name="tweetId" value="{{reply.id}}" />
 					<button type="submit" class="btn btn-info">回覆</button>
