@@ -930,8 +930,8 @@ display: flex;
 
 .svg-inline--fa:hover {
   color: #FF6600;
-  width: 14px;
-  height: 14px;
+  /* width: 14px;
+  height: 14px; */
 }
 
 .card-user:hover {
