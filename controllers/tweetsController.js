@@ -3,7 +3,7 @@ const helpers = require("twitter-fullstack-2020/_helpers")
 
 const tweetsController = {
     //main
-    getTweets:(req, res) => {
+    getTweets: (req, res) => {
         Tweet.findAll({
             order: [['createdAt', 'DESC']],
             include: [
@@ -24,8 +24,8 @@ const tweetsController = {
     },
     //新增推文
     postTweets: (req, res) => {
-        const tweetsDesc = req.body.description.trim();
-        if (tweetsDesc === "") {
+        const tweetsDesc = req.body.text
+        if (!tweetsDesc.trim()) {
             req.flash('error_messages', '不可空白')
             return res.redirect("/tweets")
         } 
@@ -34,7 +34,7 @@ const tweetsController = {
             return res.redirect("/tweets")
         } 
         Tweet.create({
-            description: req.body.description,
+            description: req.body.text,
             UserId: helpers.getUser(req).id
         }).then((tweet) => {
             req.flash('success_messages', '新增一則tweet')

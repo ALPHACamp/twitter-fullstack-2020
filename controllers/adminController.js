@@ -15,7 +15,7 @@ const adminController = {
             description: t.dataValues.description.substring(0, 50),
         }))
         return res.render('admin/tweets', {
-            tweets: data
+            tweets: data,
         })
     })
   },
