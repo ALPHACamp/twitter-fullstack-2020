@@ -200,13 +200,13 @@ const userController = {
     })
   },
 
-  getUserInfo: (req, res) => {
-    if (!helpers.getUser(req)) {
-      req.flash('error_messages', "can't edit other user's profile")
-      return res.redirect('back')
-    }
-    else { res.render('setting') }
-  },
+  // getUserInfo: (req, res) => {
+  //   if (!helpers.getUser(req)) {
+  //     req.flash('error_messages', "can't edit other user's profile")
+  //     return res.redirect('back')
+  //   }
+  //   else { res.render('setting') }
+  // },
 
   editUser: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.id)) {
