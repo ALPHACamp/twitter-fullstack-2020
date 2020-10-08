@@ -47,11 +47,11 @@
 
   </div>
   <div class="col-md-9 pl-0 border-left">
-    <h3 class="ml-2">使用者列表</h3>
+    <h3 class="ml-5">💁‍♂️   使用者列表</h3>
     <hr>
-    <div class="row ml-1 mr-1">
+    <div class="row ml-5 mt-4">
       {{#each user}}
-      <div class="col col-lg-3 col-md-4 col-sm-6 mt-2">
+      <div class="col col-xl-3 col-lg-3 col-md-3 col-sm-3 mt-2">
         <div class="card" style="border-radius: 15px">
           <img src="{{this.avatar}}" alt="image" class="rounded-circle"
             style="position: absolute; max-width: 50%; top:25%; left:25%;border: 5px solid white;">
@@ -61,7 +61,7 @@
             <p class="card-text text-center ">{{this.account}}</p>
             <div class="row justify-content-center">
               <i class="far fa-comment mr-2">&ensp;{{this.Tweets.length}}</i>
-              <i class="far fa-heart ml-2">&ensp;{{this.LikedTweets.length}}</i>
+              <i class="far fa-heart ml-2">&ensp;{{this.LikeTweets.length}}</i>
             </div>
             <div class="row justify-content-center mt-2">
               <p class="mr-1">{{this.Followings.length}}個跟隨中</p>
