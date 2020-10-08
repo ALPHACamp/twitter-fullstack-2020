@@ -1,6 +1,6 @@
 {{#if error}}
 {{#each error}}
-<div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
+<div class="alert alert-danger" role="alert" style="margin: 30px">
   {{this.message}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
@@ -11,7 +11,7 @@
 
 {{#if success}}
 {{#each success}}
-<div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+<div class="alert alert-success" role="alert" style="margin: 30px">
   {{this.message}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>

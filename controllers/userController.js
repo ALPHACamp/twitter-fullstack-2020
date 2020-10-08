@@ -172,6 +172,7 @@ const userController = {
   getUserLikes: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
+        Tweet,
         {
           model: Like,
           include: [
@@ -280,6 +281,7 @@ const userController = {
   getUserReplies: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
+        Tweet,
         {
           model: Reply,
           include: [

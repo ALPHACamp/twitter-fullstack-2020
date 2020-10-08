@@ -40,11 +40,11 @@ const tweetController = {
   },
   postTweet: (req, res) => {
     if (!req.body.description) {
-      req.flash('error_messages', '推文字數不可為 0')
+      req.flash('error_messages', '推文不可為空白')
       res.redirect('/tweets')
     }
     else if (req.body.description.length > 140) {
-      req.flash('error_messages', '推文字數不可超過 140 個字')
+      req.flash('error_messages', '推文內容不可超過 140 個字')
       res.redirect('/tweets')
     }
     else {
@@ -58,7 +58,7 @@ const tweetController = {
   },
   postReply: (req, res) => {
     if (!req.body.comment) {
-      req.flash('error_messages', '推文字數不可為 0')
+      req.flash('error_messages', '回覆不可為空白')
       return res.redirect('back')
     }
     Reply.create({
