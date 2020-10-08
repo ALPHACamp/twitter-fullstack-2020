@@ -33,7 +33,8 @@ const tweetController = {
   },
 
   postTweets: (req, res) => {
-    const tweetText = req.body.description.trim()
+    const tweetText = req.body.tweetText ? req.body.tweetText.trim() : req.body.description.trim()
+
     if (!tweetText || tweetText.length > 140) return res.redirect('back')
     Tweet.create({
       UserId: helpers.getUser(req).id,
@@ -84,6 +85,18 @@ const tweetController = {
       }
     })
       .then((like) => {
+        if (!like) {
+          return Like.findOne({
+            where: {
+              TweetId: req.params.id,
+              UserId: helpers.getUser(req).id,
+            }
+          })
+            .then((testLike) => {
+              return testLike.destroy()
+                .then(() => { return res.redirect('back') })
+            })
+        }
         return like.destroy()
           .then(() => { return res.redirect('back') })
           .catch(() => {
@@ -92,7 +105,7 @@ const tweetController = {
           })
       })
       .catch((err) => {
-        console.log(err)
+        console.log('@@@', err)
         console.log('queryTweetLike error')
         return res.redirect('back')
       })
