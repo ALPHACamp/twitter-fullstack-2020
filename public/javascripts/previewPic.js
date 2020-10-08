@@ -16,5 +16,5 @@ function readURL(input) {
 }
 
 removeCover.addEventListener('click', (e) => {
-  coverImg.style = `background:url(""); background-color: #f5f8fa;`
+  coverImg.style = `background:url(''); background-color: #f5f8fa;`
 })
