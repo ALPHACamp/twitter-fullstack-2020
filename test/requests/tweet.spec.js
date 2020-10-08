@@ -78,7 +78,7 @@ describe('# tweet request', () => {
       it('will redirect to index', (done) => {
         request(app)
           .post('/tweets')
-          .send('description=description')
+          .send('text=description')
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
@@ -110,7 +110,7 @@ describe('# tweet request', () => {
       it('will redirect index', (done) => {
         request(app)
           .post('/tweets')
-          .send('description=description')
+          .send('text=description')
           .set('Accept', 'application/json')
           .expect(302)
           .end(function(err, res) {
