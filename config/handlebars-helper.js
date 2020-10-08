@@ -22,3 +22,5 @@ module.exports = {
     return content.substring(0, count) + '...';
   },
 };
+
+

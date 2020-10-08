@@ -353,7 +353,6 @@ const userController = {
           .includes(data.id),
       }));
       users.Followings = Array.from(following)
-      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', users)
       return res.render('following', {
         users,
         user: helpers.getUser(req),
