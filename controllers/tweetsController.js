@@ -25,7 +25,7 @@ const tweetsController = {
     //新增推文
     postTweets: (req, res) => {
         const tweetsDesc = req.body.text
-        if (!tweetsDesc) {
+        if (!tweetsDesc.trim()) {
             req.flash('error_messages', '不可空白')
             return res.redirect("/tweets")
         } 

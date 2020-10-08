@@ -1,4 +1,5 @@
 <div id="left">
+	<div id="left-container">
   <ul class="nav flex-column justify-content-between" style="height: 100vh;">
     <div class="flex-colum ">
       <a class="navbar-brand ml-3 mb-3" href="/">
@@ -6,37 +7,41 @@
           height="30" alt="">
       </a>
       <li class="nav-item">
-        <a class="nav-link" href="/admin/tweets" style="color: black;"><i class="far fa-comment-dots mr-2"></i>推文清單</a>
+        <a class="nav-link" href="/admin/tweets" style="color: black;"><i class="fas fa-home mr-2"></i>推文清單</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/admin/users" style="color: black;"><i class="fas fa-user mr-2"></i>使用者列表</a>
+        <a class="nav-link" href="/admin/users" style="color: #ff6600; "><i class="fas fa-user mr-2"></i>使用者列表</a>
       </li>
     </div>
     <li class="nav-item">
       <a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
     </li>
   </ul>
+	</div>
 </div>
-<h2>使用者清單</h2>
-<hr />
-<div class="row">
-  {{#each users}}
-    <div class="col-md-4">
-      <div class="card mb-4 shadow-sm">
-        <img class="card-img-top" src="{{this.cover}}" alt="/" width="286px" height="180px">
-        <img src="{{ this.avatar }}" class="rounded-circle" alt="no avatar" width="50" height="50">
-        <div class="card-body">
-          <h5>{{ this.name }}</h5>
-          <h7>@{{this.account}}</h7>
-          <br>
-          <i class="far fa-comment-dots">推文:{{this.Tweets.length}}則</i>
-          <i class="fas fa-heart">喜歡的推文:{{this.LikedTweets.length}}</i>
-          <br>
-          <i class="fas fa-running">{{this.Followings.length}}個跟隨中</i>
-          <i class="fas fa-walking">{{this.Followers.length}}位跟隨者</i>
+<div id="admain">
+  <div class="main-top">使用者清單</div>
+    <div class="row">
+    {{#each users}}
+        <div class="col-md-3">
+          <div class="card mb-4 shadow-sm">
+            <img class="us1" src="{{this.cover}}" alt="/" width="240px" height="180px">
+            <div class="usavatar" style="position:absolute;z-index:2;left:60px;top:70px;">
+              <img src="{{ this.avatar }}" class="rounded-circle" alt="no avatar">
+            </div>
+            <div class="card-body">
+              <h5>{{ this.name }}</h5>
+              <h7>@{{this.account}}</h7>
+              <br>
+              <i class="far fa-comment-dots">推文:{{this.Tweets.length}}則</i>
+              <i class="fas fa-heart">喜歡的推文:{{this.LikedTweets.length}}</i>
+              <br>
+              <i class="fas fa-running">跟隨中:{{this.Followings.length}}位</i>
+              <i class="fas fa-walking">跟隨者:{{this.Followers.length}}位</i>
+            </div>
+          </div>
         </div>
-      </div>
+    {{/each}}
     </div>
-  {{/each}}
 </div>
 
