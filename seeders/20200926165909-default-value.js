@@ -14,7 +14,7 @@ module.exports = {
         avatar: faker.image.avatar(),
         introduction: faker.lorem.sentences(),
         isAdmin: true,
-        background: `https://loremflickr.com/g/320/240/paris/lock=1`,
+        background: `https://loremflickr.com/g/320/240/paris/?lock=1`,
         createdAt: new Date(),
         updatedAt: new Date(),
       },
