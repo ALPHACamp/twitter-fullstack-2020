@@ -34,7 +34,7 @@ const userController = {
           }).then(user => {
             req.flash('success_messages', 'registered successfully')
             return res.redirect('/signin')
-          })
+          }).catch(err=>console.log(err));
         }
       })
     }
