@@ -25,7 +25,7 @@ module.exports = {
         role: 'user',
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.text(),
+        introduction: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -38,7 +38,7 @@ module.exports = {
         role: 'user',
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.text(),
+        introduction: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -51,7 +51,7 @@ module.exports = {
         role: 'user',
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.text(),
+        introduction: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -64,7 +64,7 @@ module.exports = {
         role: 'user',
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.text(),
+        introduction: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -77,7 +77,7 @@ module.exports = {
         role: 'user',
         avatar: faker.image.avatar(),
         cover: faker.image.nature(),
-        introduction: faker.lorem.text(),
+        introduction: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       }
