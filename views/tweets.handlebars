@@ -64,6 +64,38 @@
                   data-target="#replyModal">
                   <i class="far fa-comment"></i> {{this.Replies.length}}
                 </button>
+                <!-- Modal -->
+                <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+
+                      </div>
+                      <div class="modal-title">
+                        <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" class="d-flex">
+                        <img src="{{this.User.dataValues.avatar}}" class="rounded-circle"
+                          style="background-size:cover; width: 50px;height: 50px;">
+                        <span class="mt-1">{{this.User.dataValues.name}}</span>
+                        <div class="tweet-text d-flex align-items-stretch">
+                          {{this.User.dataValues.description}}
+                        </div>
+                        <form method="POST" action="/tweets/{{this.id}}/replies">
+                          <textarea name="comment" cols="55" rows="5"
+                            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+                            placeholder="推你的回覆"></textarea>
+                          <button type="submit"
+                            style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+                            <span style="color: #FFFFFF;">回覆</span></button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 {{#if isLiked}}
                 <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
@@ -91,38 +123,6 @@
 
       {{> right}}
 
-    </div>
-  </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-
-      </div>
-      <div class="modal-title">
-        <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" class="d-flex">
-        <img src="{{user.dataValues.avatar}}" class="rounded-circle"
-          style="background-size:cover; width: 50px;height: 50px;">
-        <span class="mt-1">{{user.dataValues.name}}</span>
-        <div class="tweet-text d-flex align-items-stretch">
-          {{user.dataValues.description}}
-        </div>
-        <form method="POST" action="/tweets/{{user.dataValues.id}}/replies">
-          <textarea name="comment" cols="55" rows="5"
-            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
-            placeholder="推你的回覆"></textarea>
-          <button type="submit"
-            style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
-            <span style="color: #FFFFFF;">回覆</span></button>
-        </form>
-      </div>
     </div>
   </div>
 </div>
