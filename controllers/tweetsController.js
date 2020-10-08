@@ -1,7 +1,7 @@
 const { User, Tweet, Like } = require('../models')
 const helpers = require("../_helpers")
 
-const tweetController = {
+const tweetsController = {
     //main
     getTweets: (req, res) => {
         Tweet.findAll({
@@ -25,24 +25,22 @@ const tweetController = {
     //新增推文
     postTweets: (req, res) => {
         const tweetsDesc = req.body.text
-        if (!tweetsDesc.trim()) {
+        if (!tweetsDesc) {
             req.flash('error_messages', '不可空白')
             return res.redirect("/tweets")
-        } else {
-            if (tweetsDesc.length > 140) {
-                req.flash('error_messages', '不可超過140字')
-                return res.redirect("/tweets")
-            } else {
-                return Tweet.create({
-                    description: tweetsDesc,
-                    UserId: helpers.getUser(req).id
-                }).then((tweet) => {
-                    req.flash('success_messages', '新增一則tweet')
-                    return res.redirect("/tweets")
-                })
-            }
-        }
+        } 
+        if (tweetsDesc.length > 140) {
+            req.flash('error_messages', '不可超過140字')
+            return res.redirect("/tweets")
+        } 
+        Tweet.create({
+            description: req.body.text,
+            UserId: helpers.getUser(req).id
+        }).then((tweet) => {
+            req.flash('success_messages', '新增一則tweet')
+            return res.redirect("/tweets")
+        })
     },
 }
 
-module.exports = tweetController
+module.exports = tweetsController

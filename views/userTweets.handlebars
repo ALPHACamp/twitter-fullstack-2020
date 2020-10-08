@@ -109,13 +109,13 @@
 					<div class="tweet-right">
 						<a class="tweet-name" href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
 						<small class="text-muted">@{{this.User.account}}•{{moment this.createdAt }}</small>
-						<div onclick="location.href='/replylist/{{ this.id }}';">
+						<div onclick="location.href='/tweets/{{ this.id }}/replies';">
 							<p style="overflow: hidden; word-break:break-word">
 								{{ this.description }}
 							</p>
 						</div>
 						<div class="tweet-reaction d-flex" style="background-color:#ffffff">
-							<form action="/replylist/{{ this.id }}" method="POST">
+							<form action="/tweets/{{ this.id }}/replies" method="POST" style="display: inline;">
 								<!-- a modal -->
 								<a data-toggle="modal" href="#exampleModalCenter{{ this.id }}"><i class="far fa-comment fa-sm"></i></a>
 								<!-- Reply Modal -->
@@ -137,7 +137,7 @@
 											<div class="form-group">
 												<img src="{{ ../user.avatar }}" class="rounded-circle" width="50" height="50">
 												<span>推你的回覆</span>
-												<textarea class="form-control" id="text" name="text" rows="3"
+												<textarea class="form-control" id="comment" name="comment" rows="3"
 													style="max-width: 900px;"></textarea>
 											</div>
 											<input type="hidden" name="tweetId" value="{{this.id}}" />
@@ -148,12 +148,12 @@
 							</form>
 							{{!-- like --}}
 							{{#if isLiked }}
-							<form action="/like/{{this.id}}?_method=DELETE" method="POST">
+							<form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
 								<button type="submit" style="outline: none;"><i class="fas fa-heart fa-sm"
 										style="color: #e0255e;"></i></button>
 							</form>
 							{{else}}
-							<form action="/like/{{this.id}}" method="POST">
+							<form action="/tweets/{{this.id}}/like" method="POST">
 								<button type="submit" style="outline: none;"><i class="far fa-heart fa-sm"></i></button>
 							</form>
 							{{/if}}
@@ -161,7 +161,7 @@
 					</div>
 				</div>
 			</div>
-			{{/each}}
+		{{/each}}
 		</div>
 		{{!-- 推文與回覆 --}}
 		<div class="tab-pane" id="tweetreply">
@@ -176,27 +176,16 @@
 					<div class="tweet-right">
 						<a class="tweet-name" href="/users/{{ this.User.id }}/tweets">{{ this.User.name }}</a>
 						<small class="text-muted">@{{this.User.account}}•{{moment this.createdAt }}</small>
-						<div onclick="location.href='/replylist/{{ this.id }}';">
+						<div onclick="location.href='/tweets/{{ this.id }}/replies';">
 							<p style="overflow: hidden; word-break:break-word">
 								{{ this.description }}
 							</p>
 						</div>
 						<div class="tweet-reaction d-flex" style="background-color:#ffffff">
-							<form action="/replylist/{{ this.id }}" method="POST">
+							<form action="/tweets/{{ this.id }}/replies" method="POST" style="display: inline;">
 								<!-- a modal -->
 								<a><i class="far fa-comment fa-sm"></i></a>
 							</form>
-							{{!-- like --}}
-							{{#if isLiked }}
-							<form action="/like/{{this.id}}?_method=DELETE" method="POST">
-								<button type="submit" style="outline: none;"><i class="fas fa-heart fa-sm"
-										style="color: #e0255e;"></i></button>
-							</form>
-							{{else}}
-							<form action="/like/{{this.id}}" method="POST">
-								<button type="submit" style="outline: none;"><i class="far fa-heart fa-sm"></i></button>
-							</form>
-							{{/if}}
 						</div>
 					</div>
 				</div>
@@ -227,7 +216,7 @@
 								<a><i class="far fa-comment fa-sm"></i></a>
 							</form>
 							{{!-- like --}}
-							<form action="/like/{{this.id}}?_method=DELETE" method="POST">
+							<form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
 								<button type="submit" style="outline: none;"><i class="fas fa-heart fa-sm"
 										style="color: #e0255e;"></i></button>
 							</form>
@@ -327,6 +316,6 @@
 </div>
 {{!-- 頁籤script --}}
 <script>
-	$(document).ready(function () {
-	});
+    $(document).ready(function (){
+    });
 </script>

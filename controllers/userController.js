@@ -88,7 +88,11 @@ const userController = {
         { model: User, as: "Followers" },
         // 使用者追蹤的人
         { model: User, as: "Followings" },
-        { model: Tweet, as: 'LikedTweets', include: [User] },
+        { 
+          model: Tweet, as: 'LikedTweets',
+          order: [["createdAt", "DESC"]],
+          include: [User] 
+        },
         { model: Tweet, as: 'ReplyTweet', include: [User] }
       ]
     })
@@ -110,7 +114,6 @@ const userController = {
         res.render('userTweets', { profile: user, tweets })
       })
   },
-
   getSetting: async (req, res) => {
     const user = await User.findByPk(req.params.id)
     if (user.id === helpers.getUser(req).id) {

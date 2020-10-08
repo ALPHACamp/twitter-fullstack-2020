@@ -1,4 +1,4 @@
-const tweetsController = require('../controllers/tweetController.js')
+const tweetsController = require('../controllers/tweetsController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController')
 const replyController = require('../controllers/replyController.js')
@@ -15,11 +15,11 @@ module.exports = app => {
   app.get('/tweets', authenticated, userController.getTopUsers, tweetsController.getTweets)
   app.post('/tweets', authenticated, tweetsController.postTweets)
 
-  app.get('/replylist/:id', authenticated, userController.getTopUsers, replyController.getReplylist)
-  app.post('/replylist/:id', authenticated, replyController.postReply)
+  app.get('/tweets/:id/replies', authenticated, userController.getTopUsers, replyController.getReplylist)
+  app.post('/tweets/:id/replies', authenticated, replyController.postReply)
 
-  app.post('/like/:id', authenticated, replyController.addLike)
-  app.delete('/like/:id', authenticated, replyController.removeLike)
+  app.post('/tweets/:id/like', authenticated, replyController.addLike)
+  app.delete('/tweets/:id/unlike', authenticated, replyController.removeLike)
 
   // =====================admin====================================
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))

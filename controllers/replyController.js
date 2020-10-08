@@ -11,7 +11,6 @@ let replyController = {
       ]
     }).then(reply => {
       const isLiked = reply.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-        console.log(reply)
         return res.render('replylist', {
           reply: reply.toJSON(),
           isLiked: isLiked
@@ -19,18 +18,19 @@ let replyController = {
     })
   },
   postReply: (req, res) => {
-    const replyDesc = req.body.text
-    if (replyDesc.length === 0) {
+    //const comment = req.body.text
+    const comment = req.body.comment
+    if (!comment) {
        req.flash('error_messages', '不可空白')
-      return res.redirect(`/replylist/${req.body.tweetId}`)
+      return res.redirect(`/tweets/${req.body.tweetId}/replies`)
     }
     return Reply.create({
-      comment: replyDesc,
-      TweetId: req.body.tweetId,
-      UserId: helpers.getUser(req).id
+      UserId: helpers.getUser(req).id,
+      comment: req.body.comment, 
+      TweetId: req.body.tweetId
     })
     .then((reply) => {
-      res.redirect(`/replylist/${req.body.tweetId}`)
+      res.redirect(`/tweets/${req.body.tweetId}/replies`)
     })
   },
   addLike: (req, res) => {
