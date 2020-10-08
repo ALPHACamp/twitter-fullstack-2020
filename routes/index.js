@@ -51,8 +51,8 @@ module.exports = (app, passport) => {
     userController.signIn
   );
   app.get("/logout", userController.logout);
-  app.get("/users/:id/setting", userController.getSetting);
-  app.put("/users/:id/setting", userController.putSetting)
+  app.get("/users/:id/setting", authenticated, userController.getSetting);
+  app.put("/users/:id/setting", authenticated, userController.putSetting)
 
   //userController
   app.get('/users/:id', authenticated, userController.getTopFollowers, userController.getUser)
