@@ -12,6 +12,9 @@ module.exports = {
         email: 'root@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         role: 'admin',
+        avatar: faker.image.avatar(),
+        cover: faker.image.nature(),
+        introduction: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
 
