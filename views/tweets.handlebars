@@ -4,31 +4,33 @@
     {{> left}}
 
   </div>
-  <div class="col-md-6 px-0 border-left">
+  <div class="col-md-9 px-0 border-left">
 
     {{> message}}
 
     <div class="main">
 
-      <div class="header ml-3 tweets-index">
+      <div class="header"
+        style="width: 600px;height: 55px;left: 378px;top: -1px;background: #FFFFFF;box-sizing: border-box;">
         首頁</div>
       <div class="body">
         <div class="body-avatar d-flex align-items-stretch">
           <div class="right">
-            <img src="{{users.dataValues.avatar}}" class="rounded-circle ml-3 mr-3"
+            <img src="{{users.dataValues.avatar}}" class="rounded-circle"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </div>
 
           <div class="left" class="d-flex">
             <form method="POST" action="/tweets/{{users.dataValues.id}}">
-              <textarea name="description" class="tweets-description" cols="40" rows="5"
+              <textarea name="description" cols="55" rows="5"
+                style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
                 placeholder="有什麼新鮮事"></textarea>
-              <button type="submit" class="btn mb-2" style="background: #FF6600;border-radius: 100px;">
+              <button type="submit" class="btn" style="background: #FF6600;border-radius: 100px;">
                 <span style="color: #FFFFFF;">推文</span></button>
             </form>
           </div>
         </div>
-        <div class="divider" style="width: 500px;height: 10px;left: 378px;top: 173px;background: #E6ECF0;">
+        <div class="divider" style="width: 600px;height: 10px;left: 378px;top: 173px;background: #E6ECF0;">
         </div>
 
       </div>
@@ -45,9 +47,9 @@
               </div>
 
               <div class="tweet-item-right  ml-3">
-                <div class="tweet-item-title mb-2">
+                <div class="tweet-item-title">
                   <span class="mt-1">{{this.User.dataValues.name}}</span>
-                  <span class="tweets-user-account ml-2">
+                  <span class="user-account">
                     {{this.User.dataValues.account}}．{{moment this.createdAt}}
                   </span>
                 </div>
@@ -60,18 +62,18 @@
 
             </div>
             <div class="footer ml-5">
-              <button type="button" class="mt-4 mb-4 ml-2  tweets-reply-button" data-toggle="modal"
-                data-target="#replyModal" style="background: none;border: none; ">
+              <button type="button" class="mt-4 mb-4" data-toggle="modal" data-target="#replyModal"
+                style="background: none;border: none;">
                 <i class="far fa-comment"></i> {{this.Replies.length}}
               </button>
 
               {{#if isLiked}}
               <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
-                <button type="submit" class="mt-4 mb-4 tweets-like-button">
+                <button type="submit" class="mt-4 mb-4" style="background: none;border: none;">
                   <i class="fas fa-heart"></i>
                   {{else}}
                   <form action="/like/{{this.id}}" method="POST" style="display:inline; ">
-                    <button type="submit" class="mt-4 mb-4 tweets-unlike-button">
+                    <button type="submit" class="mt-4 mb-4" style="background: none;border: none;">
                       <i class="far fa-heart"></i>
                       {{/if}}
                       {{this.LikedUsers.length}}
@@ -85,13 +87,6 @@
       </div>
 
     </div>
-
-
-  </div>
-  <div class="col-md-3">
-
-    {{> right}}
-
   </div>
 </div>
 
@@ -106,19 +101,15 @@
         <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-        <img src="{{users.dataValues.avatar}}" class="rounded-circle m-3"
-          style="background-size:cover; width: 50px;height: 50px;">
-        <span class="mt-1">{{users.dataValues.name}}</span>
-        <span class="tweets-user-account ml-2">
-          {{users.dataValues.account}}
-        </span>
-        <div class="tweet-text d-flex align-items-stretch">
-          {{users.dataValues.description}}
-        </div>
       </div>
       <div class="modal-body" class="d-flex">
-
-        <form method="POST" action="/tweets/{{users.dataValues.id}}/replies">
+        <img src="{{user.dataValues.avatar}}" class="rounded-circle"
+          style="background-size:cover; width: 50px;height: 50px;">
+        <span class="mt-1">{{user.dataValues.name}}</span>
+        <div class="tweet-text d-flex align-items-stretch">
+          {{user.dataValues.description}}
+        </div>
+        <form method="POST" action="/tweets/{{user.dataValues.id}}/replies">
           <textarea name="comment" cols="55" rows="5"
             style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
             placeholder="推你的回覆"></textarea>
@@ -129,5 +120,4 @@
       </div>
     </div>
   </div>
-
 </div>

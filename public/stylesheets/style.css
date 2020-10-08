@@ -17,7 +17,6 @@ font-size: large;
 }
 
 .left-zone-btn {
-  cursor: pointer;
   width: 70%;
   height: 50px;
   max-width: 200px;
@@ -64,7 +63,6 @@ font-size: large;
 }
 
 .followship-following-btn{
-  cursor: pointer;
 width: 90px;
 height: 30px;
 background: #FF6600;
@@ -75,7 +73,6 @@ font-weight:bold;
 }
 
 .followship-follower-btn {
-  cursor: pointer;
   width: 60px;
   height: 30px;
   border: 1px solid#FF6600;
@@ -106,7 +103,6 @@ font-weight:bold;
 }
 
 .user-edit-btn {
-  cursor: pointer;
   border-radius: 50px;
   width: 120px;
   height: 45px;
