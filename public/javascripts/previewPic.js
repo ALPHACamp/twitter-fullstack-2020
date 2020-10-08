@@ -1,37 +1,20 @@
-const remove = document.querySelector('#removeCover')
-let coverImg = document.querySelector('#coverImg')
-remove.addEventListener('click', (event) => {
-  const bg = 'https://i.imgur.com/MrQpqrv.jpg'
-  coverImg.src = "https://i.imgur.com/MrQpqrv.jpg"
-  console.log(coverImg)
-  readCoverURL(bg)
+const coverImg = document.querySelector('#coverImg')
+const avatarImg = document.querySelector('#avatarImg')
+const removeCover = document.querySelector('#removeCover')
+
+function readURL(input) {
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    if (input.id === 'cover') {
+      coverImg.style = `url(${e.target.result})background-position:center;
+  background-size:cover;`
+    } else if (input.id === 'avatar') {
+      avatarImg.style = `style="background: url(${e.target.result}),#C4C4C4; background-position:center;background-size:cover;`
+    }
+  }
+  reader.readAsDataURL(input.files[0]);
+}
+
+removeCover.addEventListener('click', (e) => {
+  coverImg.style = `background:url(""); background-color: #f5f8fa;`
 })
-
-$("#cover").change(function () {
-  readCoverURL(this);
-});
-function readCoverURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      $("#cover_img").attr('src', e.target.result);
-    }
-    reader.readAsDataURL(input.files[0]);
-  } else if (input === 'https://i.imgur.com/MrQpqrv.jpg') {
-    $("#cover_img").attr('src', input)
-  }
-}
-
-$("#avatar").change(function () {
-  readAvatarURL(this);
-});
-function readAvatarURL(input) {
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      $("#avatar_img").attr('src', e.target.result);
-    }
-    reader.readAsDataURL(input.files[0]);
-  }
-}
-

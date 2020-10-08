@@ -23,7 +23,7 @@ const tweetController = {
           isLiked: t.toJSON().Likes.map((i) => i.UserId).includes(helpers.getUser(req).id),
         }))
         const likes = helpers.getUser(req).Likes
-        const isLiked = likes.map((i) => i.id).includes(data.id)
+        const isLiked = likes ? likes.map((i) => i.id).includes(data.id) : false;
         return res.render('tweets', {
           isLiked: isLiked,
           tweets: data,
@@ -33,7 +33,7 @@ const tweetController = {
   },
 
   postTweets: (req, res) => {
-    const tweetText = req.body.tweetText.trim()
+    const tweetText = req.body.description.trim()
     if (!tweetText || tweetText.length > 140) return res.redirect('back')
     Tweet.create({
       UserId: helpers.getUser(req).id,
@@ -91,7 +91,8 @@ const tweetController = {
             return res.redirect('back')
           })
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         console.log('queryTweetLike error')
         return res.redirect('back')
       })
