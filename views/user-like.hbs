@@ -135,8 +135,8 @@
   {{> modal}}
 </div>
 
-    {{#if mode}}
-      {{#each visitUser.Tweets}}
-        {{this.description}}
-      {{/each}}
-    {{/if }}
+{{#if mode}}
+{{#each visitUser.Tweets}}
+{{this.description}}
+{{/each}}
+{{/if }}

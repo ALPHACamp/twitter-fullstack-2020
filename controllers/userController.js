@@ -135,7 +135,7 @@ const userController = {
     });
   },
   getLikesPage: (req, res) => {
-    let UserId = req.params.id;
+    let UserId = Number(req.params.id);
     return User.findByPk(UserId, {
       include: [
         Tweet,
@@ -165,6 +165,9 @@ const userController = {
         //console.log('before @@@', lt);
       });
       let isFollowing = followings.includes(UserId);
+      console.log(isFollowing)
+      console.log(followings)
+      console.log(UserId)
       let mode = false
       if (process.env.NODE_ENV === 'test') mode = true
       return res.render('user-like', {

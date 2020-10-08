@@ -10,7 +10,7 @@ module.exports = {
     const tweets = userIds.reduce((acc, value, index, array) => {
       const tweet = Array.from({ length: 10 }).map((d) => ({
         UserId: parseInt(value),
-        description: faker.lorem.text(140),
+        description: faker.lorem.sentence(140),
         createdAt: new Date(),
         updatedAt: new Date(),
       }));
