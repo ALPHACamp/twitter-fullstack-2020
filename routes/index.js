@@ -37,13 +37,13 @@ module.exports = (app, passport) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
         req.flash('error_messages', '賬號類型錯誤，請使用一般賬號登入')
-        return res.redirect('/signin')
+        return res.redirect('/admin/tweets')
       }
       return next()
     }
     return res.redirect('/signin')
   }
-  
+
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') {
