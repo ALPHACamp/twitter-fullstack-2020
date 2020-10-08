@@ -28,11 +28,7 @@ module.exports = {
         account: `user${index + 1}`,
         cover: randomCover(),
         avatar: randomAvater(),
-<<<<<<< HEAD
         introduction: faker.lorem.sentence(),
-=======
-        introduction: faker.lorem.sentence(160),
->>>>>>> 2f5ae03d11420bb8132284ef8f7297dc41da0247
         isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -48,11 +44,7 @@ module.exports = {
       account: 'root@example.com',
       cover: randomCover(),
       avatar: randomAvater(),
-<<<<<<< HEAD
       introduction: faker.lorem.sentence(),
-=======
-      introduction: faker.lorem.sentence(160),
->>>>>>> 2f5ae03d11420bb8132284ef8f7297dc41da0247
       isAdmin: true,
       createdAt: new Date(),
       updatedAt: new Date(),
