@@ -33,16 +33,25 @@
               </a><br>
             </div>
             {{else}}
-              <div class="col">
-                <a href="/" class="btn" style="color: black;">
-                  <h6><i class="fa fa-home fa-lg m-3"></i>首頁</h6>
-                </a><br>
-                <a href="/users/{{user.id}}/tweets" class="btn" style="color: black;">
-                  <h6><i class="fa fa-user fa-lg m-3"></i>個人資料</h6>
-                </a><br>
-                <a href="/users/settings" class="btn" style="color: black;">
-                  <h6><i class="fa fa-cog fa-lg m-3"></i>設定</h6>
-                </a><br>
+              <div class="col list-group">
+                <a href="/" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fa fa-home fa-lg m-2"></i>首頁</h6>
+                </a>
+                <a href="#" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fas fa-bell fa-lg m-2"></i>通知</h6>
+                </a>
+                <a href="#" class="list-group-item border-0" style="color:black;">
+                  <h6><i class="fas fa-comments m-2"></i>公開聊天室</h6>
+                </a>
+                <a href="#" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fas fa-envelope fa-lg m-2"></i>私人訊息</h6>
+                </a>
+                <a href="/users/{{user.id}}/tweets" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fa fa-user fa-lg m-2"></i>個人資料</h6>
+                </a>
+                <a href="/users/settings" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fa fa-cog fa-lg m-2"></i>設定</h6>
+                </a>
 
               <button data-toggle="modal" data-target="#createTweet" class="btn btn-create rounded-pill" style="width: 180px">推文</button>
               <!-- pop up create tweet message -->
