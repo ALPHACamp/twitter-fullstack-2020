@@ -9,7 +9,7 @@ const helpers = require('./_helpers');
 
 const app = express()
 const port = process.env.PORT || 3000
-if(process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
@@ -53,5 +53,12 @@ app.use(express.static('public'))
 
 // 跟資料庫同步
 //app.get('/', (req, res) => res.send('Hello World!'))
-module.exports = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+const io = require('socket.io')(server)
+
 require('./routes')(app)
+require('./server_socket')(io)
+
+module.exports = server

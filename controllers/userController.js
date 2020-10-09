@@ -88,10 +88,10 @@ const userController = {
         { model: User, as: "Followers" },
         // 使用者追蹤的人
         { model: User, as: "Followings" },
-        { 
+        {
           model: Tweet, as: 'LikedTweets',
           order: [["createdAt", "DESC"]],
-          include: [User] 
+          include: [User]
         },
         { model: Tweet, as: 'ReplyTweet', include: [User] }
       ]
@@ -342,6 +342,9 @@ const userController = {
         res.locals.topUsers = users
         return next()
       })
+  },
+  getChatroom: (req, res) => {
+    return res.render('chatroom')
   }
 }
 
