@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
+const socket = require('socket.io')
 require("dotenv").config();
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
@@ -17,6 +18,7 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+app.use(express.static('public'))
 app.use(bodyParser.json())
 
 
@@ -35,9 +37,25 @@ app.set('view engine', 'handlebars')
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.get('/', (req, res) => res.render('signin'))
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
+const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+//socket.io
+
+const io = socket(server)
+
+let onlineUsers = []
+
+io.on('connection', socket => {
+  
+  socket.emit("message", "welcome to chatcord");
+
+  socket.broadcast.emit("message", "a user has join chat");
+
+  socket.on("disconnect", ()=>{
+    io.emit("message", "a user has left chat")
+  })
+})
 
 // module.exports = app
 require('./routes')(app, passport)
