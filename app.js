@@ -46,16 +46,23 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
 
+let loginID
+
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
   res.locals.user = helpers.getUser(req)
-  // console.log(req.user)
+
+  if (helpers.getUser(req)) {
+    loginID = helpers.getUser(req).id
+  }
+
   next()
 })
 
@@ -76,6 +83,7 @@ io.on('connection', async socket => {
       text: item.dataValues.text,
       name: item.dataValues.User.name,
       avatar: item.dataValues.User.avatar,
+      isLoginUser: loginID === item.dataValues.User.id ? true : false,
       time: moment(item.dataValues.createdAt).format('LLL')
     }))
   })

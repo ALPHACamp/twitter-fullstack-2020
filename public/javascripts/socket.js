@@ -3,7 +3,6 @@ const socket = io()
 // message from server
 
 console.log('hi')
-socket.emit('message', 'Hi! Robby');
 
 socket.on('chat', data => {
   console.log('Get chat')
@@ -14,19 +13,33 @@ socket.on('chat', data => {
 // get history messages
 socket.on('history', data => {
   data.forEach(message => {
-    // console.log(message)
-    chatmessage.innerHTML += `
-      <div class="media w-50 mb-3">
-        <img src="${message.avatar}" alt="user"
-          width="50" class="rounded-circle">
-        <div class="media-body ml-3">
-          <div class="bg-light rounded py-2 px-3 mb-2">
-            <p class="text-small mb-0 text-muted">${message.text}</p>
+    if (message.isLoginUser === true) {
+      // Sender Message
+      chatmessage.innerHTML += `
+        <div class="send-msg w-50 ml-auto mb-3">
+          <div class="media-body">
+            <div class=" rounded py-2 px-3 mb-2" style="background: #ff6600;">
+              <p class="text-small mb-0 text-white">${message.text}</p>
+            </div>
+            <p class="small text-muted">${message.time}</p>
           </div>
-          <p class="small text-muted">${message.time}</p>
         </div>
-      </div>
-    `
+      `
+    } else {
+      // Reciever Message
+      chatmessage.innerHTML += `
+        <div class="media w-50 mb-3">
+          <img src="${message.avatar}" alt="user"
+            width="50" class="rounded-circle">
+          <div class="media-body ml-3">
+            <div class="bg-light rounded py-2 px-3 mb-2">
+              <p class="text-small mb-0 text-muted">${message.text}</p>
+            </div>
+            <p class="small text-muted">${message.time}</p>
+          </div>
+        </div>
+      `
+    }
   });
 })
 
