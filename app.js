@@ -47,18 +47,18 @@ app.use((req, res, next) => {
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 // run when a client connects
-io.on('connection', (socket) => {
-  console.log('a user connected')
-  socket.on('disconnect', () => {
-    console.log('user disconnected')
-  })
+// io.on('connection', (socket) => {
+//   console.log('a user connected')
+//   socket.on('disconnect', () => {
+//     console.log('user disconnected')
+//   })
 
-  // listen for chat message
-  socket.on('chatMessage', (msg) => {
-    io.emit('chatMessage', msg)
-    console.log('message: ' + msg)
-  })
-})
+//   // listen for chat message
+//   socket.on('chatMessage', (msg) => {
+//     io.emit('chatMessage', msg)
+//     console.log('message: ' + msg)
+//   })
+// })
 
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
