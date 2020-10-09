@@ -59,14 +59,16 @@
               </div>
             </div>
             <div class="tweet-footer ml-5">
-              <!-- Reply Button trigger modal -->
-              <button type="button" class="mt-4 mb-4" data-toggle="modal" data-target="#replyModal"
+              
+               <a href="/tweets/{{this.id}}" style="text-decoration: none; color:black; cursor:pointer">
+                               <button type="button" class="mt-4 mb-4"
                 style="background: none;border: none;">
                 <i class="far fa-comment"></i> {{this.Replies.length}}
               </button>
+                  </a>
+         
 
-              <!-- Reply Modal -->
-              {{>modal}}
+           
               
               {{!-- add like button --}}
               {{#if this.isLiked }}

@@ -94,7 +94,6 @@ const tweetController = {
 
         return res.render('tweet', { tweet: data })
       })
-      .catch(error => console.log(error))
   },
   postReply: (req, res) => {
     if (req.body.comment.length > 140) {
