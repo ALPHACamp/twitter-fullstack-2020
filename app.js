@@ -5,6 +5,8 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express')
 const exphbs = require('express-handlebars')
 const db = require('./models')
+const Message = db.Message
+const User = db.User
 const session = require('express-session')
 const flash = require('connect-flash')
 const app = express()
@@ -17,6 +19,7 @@ const path = require('path')
 const Handlebars = require('handlebars')
 const helpers = require('./_helpers')
 const socket = require('socket.io')
+const moment = require('moment')
 
 // This package can help you disable prototype checks for your models.
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
@@ -24,7 +27,6 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 app.use(express.static('public'))
 
 app.use('/upload', express.static(__dirname + '/upload'))
-
 
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
@@ -61,8 +63,25 @@ app.use((req, res, next) => {
 const server = app.listen(PORT, () => console.log(`Express is listening on http://localhost:${PORT}`))
 const io = socket(server)
 
-io.on('connection', socket => {
+io.on('connection', async socket => {
   console.log('a user connected!');
+
+  // get history message
+  let historyMessages
+  await Message.findAll({
+    include: [User],
+    order: [['createdAt', 'ASC']]
+  }).then(messages => {
+    historyMessages = messages.map(item => ({
+      text: item.dataValues.text,
+      name: item.dataValues.User.name,
+      avatar: item.dataValues.User.avatar,
+      time: moment(item.dataValues.createdAt).format('LLL')
+    }))
+  })
+
+  // emit history message to user
+  socket.emit('history', historyMessages)
 
   socket.on('message', data => {
     console.log('Get message')
