@@ -2,6 +2,7 @@ const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
+const messageController = require('../controllers/messageController')
 const helpers = require('../_helpers');
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -117,4 +118,6 @@ module.exports = (app, passport) => {
   app.get('/api/users/:userId', apiAuthenticated, userController.apiGetUserInfo)
   app.post('/api/users/:userId', apiAuthenticated, userController.apiPostUserInfo)
   app.post('/api/signin', userController.apiSignIn)
+
+  app.get('/message', messageController.getMessage)
 }
