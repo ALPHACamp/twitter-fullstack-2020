@@ -36,9 +36,11 @@
           <hr class="mt-2 mb-2 ml-2" style="width:100%;" />
 
           <div class="footer mr-2 py-1">
-            <button type="button" class=" mb-2 ml-2" style=" background: none;border: none;">
+            <button type="button" class=" mb-2 ml-2" data-toggle="modal" data-target="#replyModal"style=" background: none;border: none;">
               <i class="far fa-comment"></i> {{tweet.Replies.length}}
             </button>
+            
+            {{>modal}}
     
 
 
@@ -65,25 +67,26 @@
       {{#each tweet.Replies}}
       <div class="reply-item d-flex">
         <div class="left mr-2 mb-1">
-          <a href="/tweets/{{this.User.dataValues.id}}" class="user-avatar mt-1">
-            <img src="{{this.User.dataValues.avatar}}" class="rounded-circle ml-2"
+          <p>hello world</p>
+          <a href="/tweets/{{this.User.id}}" class="user-avatar mt-1">
+            <img src="{{this.User.avatar}}" class="rounded-circle ml-2"
               style="width: 50px;height: 50px;background: #C4C4C4;">
           </a>
         </div>
         <div class="right">
           <div>
-            <a href="/user/{{this.User.dataValues.id}}/tweets" class="user-name mt-1" style="text-decoration: none; color:black">
-              {{this.User.dataValues.name}}
+            <a href="/user/{{this.User.id}}/tweets" class="user-name mt-1" style="text-decoration: none; color:black">
+              {{this.User.name}}
             </a>
-            <span class="account">@{{this.User.dataValues.account}}．{{moment this.dataValues.createdAt}}</span>
+            <span class="account">@{{this.User.account}}．{{moment this.createdAt}}</span>
           </div>
           <div>
             <span class="reply">回覆</span> <span class="user-account-color-span"><a
-                href="/tweets/{{../tweet.User.dataValues.id}}"
-                style="color: #ff6600;">@{{../tweet.User.dataValues.account}}</a></span>
+                href="/tweets/{{../tweet.User.id}}"
+                style="color: #ff6600;">@{{../tweet.User.account}}</a></span>
           </div>
           <div class="reply-comment mt-2">
-            {{this.dataValues.comment}}
+            {{this.comment}}
            
           </div>
 
@@ -92,7 +95,10 @@
      
       </div>
         <hr class="mt-2 mb-2 ml-2" style="width:100%;" />
-      {{/each}}
+      {{/each}} 
+
+
+
     </div>
   </div>
   <div class="col-md-3 p-0">

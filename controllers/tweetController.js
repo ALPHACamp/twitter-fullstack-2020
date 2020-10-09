@@ -46,11 +46,11 @@ const tweetController = {
 
   createTweet: (req, res) => {
     if (!req.body.description) {
-      req.flash('error_message', "it can't be blank.")
+      req.flash('error_messages', "it can't be blank.")
       return res.redirect('back')
     }
     if (req.body.description.length > 140) {
-      req.flash('error_message', "it can't be longer than 140 characters.")
+      req.flash('error_messages', "it can't be longer than 140 characters.")
       return res.redirect('back')
     }
     return Tweet.create({
@@ -94,7 +94,6 @@ const tweetController = {
 
         return res.render('tweet', { tweet: data })
       })
-      .catch(error => console.log(error))
   },
   postReply: (req, res) => {
     if (req.body.comment.length > 140) {

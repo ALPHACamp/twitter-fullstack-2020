@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
+require("dotenv").config();
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(flash())
