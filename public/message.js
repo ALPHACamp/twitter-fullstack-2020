@@ -1,12 +1,23 @@
-$(function () {
-  var socket = io()
-  $('form').submit(function (e) {
-    e.preventDefault() // prevents page reloading
-    socket.emit('chat message', $('#message').val())
-    $('#message').val('')
-    return false
-  })
-  socket.on('chat message', function (msg) {
-    $('#messages').append($('<li>').text(msg))
-  })
+var socket = io()
+
+const chatForm = document.getElementById('chat-form')
+
+chatForm.addEventListener('submit', (e, req, res) => {
+  e.preventDefault()
+
+  const msg = e.target.elements.message.value
+
+  socket.emit('chatMessage', msg)
+
+  console.log(req)
 })
+socket.on('chatMessage', (msg) => {
+  console.log(msg)
+  appendData(msg)
+});
+
+function appendData(message) {
+  const el = document.getElementById('messages')
+  el.appendChild((document.createElement('div'))).innerHTML = `${message}`
+
+}
