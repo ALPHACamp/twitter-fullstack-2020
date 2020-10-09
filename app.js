@@ -7,7 +7,7 @@ const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const port = process.env.PORT || 3000
-let sequelize = new Sequelize('database', 'username', 'password', {
+let sequelize = new Sequelize('Heroku-twitter', 'b423f244b3010c', 'e0a33201', {
   host: 'localhost',
   port: 3306,
   dialect: 'mysql',
