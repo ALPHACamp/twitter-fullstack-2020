@@ -5,8 +5,8 @@
     </div>
   </nav>
 
-  <div class="center-content d-flex" id="tweet-content">
-    <div class="head justify-content-between">
+  <div class="center-content d-flex col-12" id="tweet-content">
+    <div class="chatbox justify-content-between">
       <div class="row rounded-lg overflow-hidden ">
         <!-- 上線使用者-->
         <div class="col-5 pr-0" style="border-right: 1px solid #E6ECF0">
@@ -16,7 +16,7 @@
               <p class="h5 mb-0 font-weight-bold">上線使用者(N)</p>
             </div>
 
-            <div class="contacts-box">
+            <div class="contacts-box" style="overflow-y: scroll; height: 510px;">
               <div class="list-group rounded-0">
                 <a class="list-group-item list-group-item-action text-white rounded-0 p-1"
                   style="border:none; border-bottom: 1px solid #E6ECF0">
@@ -41,7 +41,7 @@
           <div class="bg-gray px-3 py-2 bg-light" style="border-bottom: 1px solid #E6ECF0">
             <p class="h5 mb-0 font-weight-bold">公開聊天室</p>
           </div>
-          <div id="chatmessage" class="px-4 py-5 chat-box bg-white">
+          <div id="chatmessage" class="px-4 py-5 chat-box bg-white" style="overflow-y: scroll; height: 510px;">
             {{!-- <!-- Reciever Message-->
             <div class="media w-50 mb-3"><img
                 src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
@@ -86,6 +86,6 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/zh-tw.js'></script>
 
-<div class="right-content">
+{{!-- <div class="right-content">
   {{> right-column}}
-</div>
+</div> --}}

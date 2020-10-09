@@ -50,7 +50,7 @@ socket.on('message', (data) => {
 
 document.querySelector('#button-addon2').addEventListener('click', () => {
   Send();
-  console.log('send!')
+  // console.log('send!')
 });
 
 function Send() {
@@ -70,13 +70,19 @@ function Send() {
 function appendData(data) {
 
   chatmessage.innerHTML += `
-            <div class="send-msg w-50 ml-auto mb-3">
-              <div class="media-body">
-                <div class=" rounded py-2 px-3 mb-2" style="background: #ff6600;">
-                  <p class="text-small mb-0 text-white">${data}</p>
-                </div>
-                <p class="small text-muted">${moment(data.time).fromNow()}</p>
-              </div>
-            </div>
-          `
+    <div class="send-msg w-50 ml-auto mb-3">
+      <div class="media-body">
+        <div class=" rounded py-2 px-3 mb-2" style="background: #ff6600;">
+          <p class="text-small mb-0 text-white">${data}</p>
+        </div>
+        <p class="small text-muted">${moment(data.time).fromNow()}</p>
+      </div>
+    </div>
+  `
+  scrollWindow()
+}
+
+function scrollWindow() {
+  let h = document.querySelector('.chat-box')
+  h.scrollTop = h.scrollHeight;
 }
