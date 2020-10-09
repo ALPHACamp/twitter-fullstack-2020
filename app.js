@@ -52,7 +52,7 @@ app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
 
-let loginID
+let loginID, loginName
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
@@ -61,6 +61,7 @@ app.use((req, res, next) => {
 
   if (helpers.getUser(req)) {
     loginID = helpers.getUser(req).id
+    loginName = helpers.getUser(req).name
   }
 
   next()
@@ -91,21 +92,18 @@ io.on('connection', async socket => {
   // emit history message to user
   socket.emit('history', historyMessages)
 
-  socket.on('message', data => {
-    console.log('Get message')
-    // socket.broadcast.emit('chat', 'A join chat room')
-    io.emit("chat", 'A join chat room');
-    io.emit("message", data);
-  })
-
-  socket.on('disconnect', function () {
-    console.log('a user go out');
-  })
+  // broadcast online
+  socket.broadcast.emit('message', `${loginName} 上線`)
 
   socket.on("message", data => {
     console.log('send message')
-    io.emit("message", 'data');
-  });
+    io.emit("message", 'data')
+  })
+
+  socket.on('disconnect', function () {
+    console.log('a user go out')
+    socket.broadcast.emit('message', `${loginName} 離線`)
+  })
 })
 
 

@@ -44,7 +44,13 @@ socket.on('history', data => {
 })
 
 socket.on('message', (data) => {
-  console.log(data);
+  chatmessage.innerHTML += `
+    <div style="text-align: center">
+      <div class="bg-light rounded py-2 px-3 mb-3" style="width:auto !important; display:inline-block">
+        <p class=" text-small mb-0 text-muted">${data}</p>
+      </div>
+    </div>
+  `
 });
 
 
