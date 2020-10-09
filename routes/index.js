@@ -97,7 +97,7 @@ module.exports = (app, passport) => {
   app.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
   //  chat 相關路由
-  app.get('/chat', chatController.getChat)
+  app.get('/chat', authenticated, chatController.getChat)
 
 
 }
