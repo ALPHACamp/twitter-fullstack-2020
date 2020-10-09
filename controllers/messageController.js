@@ -1,4 +1,3 @@
-const { Model } = require('sequelize')
 const db = require('../models')
 const User = db.User
 
