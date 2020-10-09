@@ -2,13 +2,13 @@ const express = require('express')
 const helpers = require('./_helpers');
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-const port = process.env.PORT || 3000
 const app = express()
 const server = require('http').createServer(app)
 const io = require('socket.io')(server)
 const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
+const port = process.env.PORT || 3000
 
 const flash = require('connect-flash')
 const session = require('express-session')
