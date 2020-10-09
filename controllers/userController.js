@@ -7,6 +7,9 @@ const Tweet = db.Tweet;
 const Reply = db.Reply;
 const Followship = db.Followship;
 const helpers = require('../_helpers')
+const { Sequelize } = require('../models')
+const Op = Sequelize.Op
+
 
 
 const userController = {
@@ -21,9 +24,11 @@ const userController = {
       return res.redirect('/signup')
     } else {
       // confirm unique user
-      User.findOne({ where: { account: req.body.account } }).then(user => {
+      User.findOne({ where: { [Op.or]: [{ email: req.body.email }, { account: req.body.account }] }, raw: true
+      }).then(user => {
         if (user) {
-          req.flash('error_messages', 'same account')
+          if (user.email === req.body.email) { req.flash('error_messages', '此email已經被註冊') }
+          if (user.account === req.body.account) { req.flash('error_messages', '此account已經被註冊') }
           return res.redirect('/signup')
         } else {
           User.create({
@@ -57,46 +62,82 @@ const userController = {
         return res.render('user/self/edit')
       })
   },
-  putUser: (req, res) => {
+  putSelf: async (req, res) => {
 
-    // if (!req.body.name) {
-    //   console.log(req.body.name)
-    //   req.flash('error_messages', "name didn't exist")
-    //   return res.redirect('back')
-    // }
-    const { file } = req
-    if (file) {
-      imgur.setClientID(IMGUR_CLIENT_ID)
-      imgur.upload(file.path, (err, img) => {
-        return User.findByPk(req.params.id)
-          .then(user => {
-            user.update({
-              name: req.body.name,
-              avatar: file ? img.data.link : null,
-              background: file ? img.data.link : null,
-              introduction: req.body.introduction
-            }).then(user => {
-              req.flash('success_messages', 'user was successfully update')
-              res.redirect(`/user/self`)
-            })
-          })
-      })
-    } else {
-      return user.findByPk(req.params.id)
-        .then(user => {
-          user.update({
-            name: req.body.name,
-            avatar: user.avatar,
-            background: user.background,
-            introduction: req.body.introduction
-          })
-            .then(user => {
-              req.flash('success_messages', 'user was successfully update')
-              res.redirect('/user/{{user.id}}/self')
-            })
-        })
+    const { avatar, cover } = req.files
+    const { files } = req
+
+    if (req.user.id !== Number((req.params.id))) {
+      req.flash('error_messages', 'error')
+      res.redirect('/tweets')
     }
+
+    if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      if (avatar) {
+        console.log("avatar", avatar)
+        await imgur.upload(avatar[0].path, (err, img) => {
+          console.log("avatar:", img.data.link)
+          User.findByPk(req.user.id)
+            .then(user =>
+              user.update({ avatar: img.data.link }))
+        })
+      }
+      if (cover) {
+        await imgur.upload(cover[0].path, (err, img) => {
+          User.findByPk(req.user.id)
+            .then(user => user.update({ cover: img.data.link }))
+        })
+      }
+    }
+    await User.findByPk(req.user.id).then(user =>
+      user.update({
+        name: req.body.name,
+        introduction: req.body.introduction
+      }))
+    req.flash('success_messages', '更新成功！')
+    res.redirect('back')
   },
+  // putUser: (req, res) => {
+
+  //   // if (!req.body.name) {
+  //   //   console.log(req.body.name)
+  //   //   req.flash('error_messages', "name didn't exist")
+  //   //   return res.redirect('back')
+  //   // }
+  //   const { file } = req
+  //   if (file) {
+  //     imgur.setClientID(IMGUR_CLIENT_ID)
+  //     imgur.upload(file.path, (err, img) => {
+  //       return User.findByPk(req.params.id)
+  //         .then(user => {
+  //           user.update({
+  //             name: req.body.name,
+  //             avatar: file ? img.data.link : null,
+  //             background: file ? img.data.link : null,
+  //             introduction: req.body.introduction
+  //           }).then(user => {
+  //             req.flash('success_messages', 'user was successfully update')
+  //             res.redirect('/user/self')
+  //           })
+  //         })
+  //     })
+  //   } else {
+  //     return user.findByPk(req.params.id)
+  //       .then(user => {
+  //         user.update({
+  //           name: req.body.name,
+  //           avatar: user.avatar,
+  //           background: user.background,
+  //           introduction: req.body.introduction
+  //         })
+  //           .then(user => {
+  //             req.flash('success_messages', 'user was successfully update')
+  //             res.redirect('/user/self')
+  //           })
+  //       })
+  //   }
+  // },
   getSetting: (req, res) => {
     return res.render('setting')
   },
