@@ -5,6 +5,7 @@ const userController = require('../controllers/userController')
 const helpers = require('../_helpers')
 
 const multer = require('multer')
+const chatController = require('../controllers/chatController')
 const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
@@ -94,4 +95,9 @@ module.exports = (app, passport) => {
   // follow 相關路由
   app.post('/followships', authenticated, userController.addFollowing)
   app.delete('/followships/:userId', authenticated, userController.removeFollowing)
+
+  //  chat 相關路由
+  app.get('/chat', chatController.getChat)
+
+
 }
