@@ -97,7 +97,7 @@ module.exports = {
         })
       ), {})
     // 每篇 post 有隨機 3 個留言者，每個人有 1 則留言
-    return queryInterface.bulkInsert('Replies',
+    queryInterface.bulkInsert('Replies',
       Array.from({ length: 150 }).map((item, index) => ({
         TweetId: (index % 50) + 1,
         UserId: Math.floor(Math.random() * 5) + 2,
@@ -106,10 +106,21 @@ module.exports = {
         updatedAt: new Date(),
       })
       ), {})
+    // 每個使用者有 3 則 messages
+    return queryInterface.bulkInsert('Messages',
+      Array.from({ length: 15 }).map((item, index) => ({
+        id: index + 1,
+        text: faker.lorem.sentence(),
+        UserId: (index % 5) + 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+      ), {})
   },
   down: (queryInterface, Sequelize) => {
     queryInterface.bulkDelete('Users', null, {})
     queryInterface.bulkDelete('Tweets', null, {})
-    return queryInterface.bulkDelete('Replies', null, {})
+    queryInterface.bulkDelete('Replies', null, {})
+    return queryInterface.bulkDelete('Messages', null, {})
   }
 };
