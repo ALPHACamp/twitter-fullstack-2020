@@ -7,7 +7,19 @@ const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const port = process.env.PORT || 3000
-
+let sequelize = new Sequelize('database', 'username', 'password', {
+  host: 'localhost',
+  port: 3306,
+  dialect: 'mysql',
+  dialectOptions: {
+    socketPath: '/tmp/mysql.sock' // 指定套接字檔案路徑
+  },
+  pool: {
+    max: 5,
+    min: 0,
+    idle: 10000
+  }
+});
 const flash = require('connect-flash')
 const session = require('express-session')
 
