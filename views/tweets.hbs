@@ -50,7 +50,7 @@
             </div>
             {{#if this.isLiked}}
               <form action="/tweets/{{this.id}}/unlike" method="POST" style="float:left;">
-                <button type="submit" class="btn-push"><i class="fas fa-heart" style="color: rgb(224, 36, 94); ;"></i></button>
+                <button type="submit" class="btn-push"><i class="fas fa-heart" style="color: rgb(224, 36, 94);"></i></button>
               </form>
               <div style="float:left;"> {{this.likesCount}}</div>
             {{else}}
