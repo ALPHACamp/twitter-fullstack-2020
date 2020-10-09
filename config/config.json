@@ -20,7 +20,7 @@
     "protocol": "postgres",
     "ssl": {
       "rejectUnauthorized": false
-    }
+    },
   },
   "travis": {
     "username": "travis",
