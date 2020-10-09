@@ -39,7 +39,7 @@
             <p class="h5 mb-0">公開聊天室</p>
           </div>
           <div id="chatmessage" class="px-4 py-5 chat-box bg-white">
-            <!-- Sender Message-->
+            <!-- Reciever Message-->
             <div class="media w-50 mb-3"><img
                 src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
                 class="rounded-circle">
@@ -51,8 +51,8 @@
               </div>
             </div>
 
-            <!-- Reciever Message-->
-            <div class="media w-50 ml-auto mb-3">
+            <!-- Sender Message-->
+            <div class="send-msg w-50 ml-auto mb-3">
               <div class="media-body">
                 <div class=" rounded py-2 px-3 mb-2" style="background: #ff6600;">
                   <p class="text-small mb-0 text-white">Test</p>
@@ -67,7 +67,7 @@
           <form action="#" class="bg-light">
             <div class="input-group">
               <input type="text" placeholder="輸入訊息" aria-describedby="button-addon2"
-                class="form-control rounded-0 border-0 py-4 bg-light">
+                class="form-control rounded-0 border-0 py-4 bg-light" id="msg">
               <div class="input-group-append">
                 <button id="button-addon2" type="submit" class="btn btn-link"> <i
                     class="fa fa-paper-plane"></i></button>
@@ -82,6 +82,8 @@
 </div>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/javascripts/socket.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/zh-tw.js'></script>
 
 <div class="right-content">
   {{> right-column}}

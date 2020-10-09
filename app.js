@@ -87,11 +87,17 @@ io.on('connection', async socket => {
     console.log('Get message')
     // socket.broadcast.emit('chat', 'A join chat room')
     io.emit("chat", 'A join chat room');
+    io.emit("message", data);
   })
 
   socket.on('disconnect', function () {
     console.log('a user go out');
   })
+
+  socket.on("message", data => {
+    console.log('send message')
+    io.emit("message", 'data');
+  });
 })
 
 
