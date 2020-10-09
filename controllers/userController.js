@@ -7,6 +7,9 @@ const Tweet = db.Tweet;
 const Reply = db.Reply;
 const Followship = db.Followship;
 const helpers = require('../_helpers')
+const { Sequelize } = require('../models')
+const Op = Sequelize.Op
+
 
 
 const userController = {
@@ -21,9 +24,11 @@ const userController = {
       return res.redirect('/signup')
     } else {
       // confirm unique user
-      User.findOne({ where: { account: req.body.account } }).then(user => {
+      User.findOne({ where: { [Op.or]: [{ email: req.body.email }, { account: req.body.account }] }, raw: true
+      }).then(user => {
         if (user) {
-          req.flash('error_messages', 'same account')
+          if (user.email === req.body.email) { req.flash('error_messages', '此email已經被註冊') }
+          if (user.account === req.body.account) { req.flash('error_messages', '此account已經被註冊') }
           return res.redirect('/signup')
         } else {
           User.create({
