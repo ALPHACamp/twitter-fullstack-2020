@@ -7,15 +7,15 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
-
 const app = express()
+var server = require('http').createServer(app)
+var io = require('socket.io')(server)
+
 const port = process.env.PORT || 3000
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const passport = require('./config/passport')
-
-app.use(express.static('public'))
 
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
@@ -46,8 +46,21 @@ app.use((req, res, next) => {
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// run when a client connects
+io.on('connection', (socket) => {
+  console.log('a user connected')
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg)
+    console.log('message: ' + msg)
+  })
+})
 
-require('./routes')(app, passport)
+
+server.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+require('./routes')(app, passport, io)
 
 module.exports = app

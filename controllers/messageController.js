@@ -1,4 +1,3 @@
-const { Model } = require('sequelize')
 const db = require('../models')
 const User = db.User
 
@@ -13,4 +12,4 @@ const messageController = {
   }
 }
 
-module.exports =messageController
+module.exports = messageController
