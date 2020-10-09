@@ -6,24 +6,27 @@
   </nav>
 
   <div class="center-content d-flex" id="tweet-content">
-    <div class="head justify-content-between ">
+    <div class="head justify-content-between">
       <div class="row rounded-lg overflow-hidden ">
         <!-- 上線使用者-->
-        <div class="col-5 ">
+        <div class="col-5 pr-0" style="border-right: 1px solid #E6ECF0">
           <div class="bg-white">
 
-            <div class="bg-gray px-4 py-2 bg-light">
-              <p class="h5 mb-0 ">上線使用者(N)</p>
+            <div class="bg-gray px-3 py-2 bg-light" style="border-bottom: 1px solid #E6ECF0">
+              <p class="h5 mb-0 font-weight-bold">上線使用者(N)</p>
             </div>
 
             <div class="contacts-box">
               <div class="list-group rounded-0">
-                <a class="list-group-item list-group-item-action  text-white rounded-0">
-                  <div class="media"><img class="ml-2 mt-2" {{#if user.avatar}}src={{user.avatar}}{{/if}}
+                <a class="list-group-item list-group-item-action text-white rounded-0 p-1"
+                  style="border:none; border-bottom: 1px solid #E6ECF0">
+                  <div class="media">
+                    <img class="m-1" {{#if user.avatar}}src={{user.avatar}}{{/if}}
                       style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
-                    <div class="media-body ml-4">
-                      <div class="d-flex align-items-center justify-content-between mb-1">
-                        <span class="user-account">{{user.name}}@{{user.account}}</span>
+                    <div class="media-body ml-2 align-self-center">
+                      <div class="mb-1">
+                        <span class="user-name">{{user.name}}</span>
+                        <span class="user-account">@{{user.account}}</span><br>
                       </div>
                     </div>
                   </div>
@@ -34,12 +37,12 @@
           </div>
         </div>
         <!-- Chat Box-->
-        <div class="col-7">
-          <div class="bg-gray px-4 py-2 bg-light">
-            <p class="h5 mb-0">公開聊天室</p>
+        <div class="col-7 pl-0">
+          <div class="bg-gray px-3 py-2 bg-light" style="border-bottom: 1px solid #E6ECF0">
+            <p class="h5 mb-0 font-weight-bold">公開聊天室</p>
           </div>
           <div id="chatmessage" class="px-4 py-5 chat-box bg-white">
-            <!-- Reciever Message-->
+            {{!-- <!-- Reciever Message-->
             <div class="media w-50 mb-3"><img
                 src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
                 class="rounded-circle">
@@ -50,7 +53,6 @@
                 <p class="small text-muted">12:00 PM | Aug 13</p>
               </div>
             </div>
-
             <!-- Sender Message-->
             <div class="send-msg w-50 ml-auto mb-3">
               <div class="media-body">
@@ -59,8 +61,7 @@
                 </div>
                 <p class="small text-muted">12:00 PM | Aug 13</p>
               </div>
-            </div>
-
+            </div> --}}
           </div>
 
           <!-- Typing area -->
