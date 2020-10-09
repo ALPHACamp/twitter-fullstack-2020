@@ -13,4 +13,4 @@ const messageController = {
   }
 }
 
-module.exports =messageController
+module.exports = messageController

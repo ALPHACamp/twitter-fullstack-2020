@@ -29,19 +29,38 @@
       <strong>公開聊天室</strong>
     </li>
     <li class="list-group-item">
-      <div style="height: 77vh;"></div>
+      <div style="height: 77vh;">
+        <ul id="messages" style="list-style: none;"></ul>
+      </div>
     </li>
     <li class="list-group-item">
-      <div style="width:90%; float: left;">
-        <textarea placeholder="輸入訊息..." class="form-control" id="description" name="description" rows="1" style="border: none; background-color:lightgrey; border-radius:20px;"></textarea>
-      </div>
-      <div style="display: flex;">
-        <button type="submit" style="background-color:white; border:none;"><i class="fas fa-paper-plane" style="color:rgb(255, 102, 0);"></i></button>
-      </div>
+      <form action="">
+        <div style="width:90%; float: left;">
+          <textarea placeholder="輸入訊息..." class="form-control" id="message" name="description" rows="1" style="border: none; background-color:lightgrey; border-radius:20px;"></textarea>
+        </div>
+        <div style="display: flex;">
+          <button style="background-color:white; border:none;"><i class="fas fa-paper-plane" style="color:rgb(255, 102, 0);"></i></button>
+        </div>
+      </form>
     </li>
   </ul>
 </div>
 <script src="/socket.io/socket.io.js"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
-  var socket = io();
+  $(function () {
+    var socket = io()
+    $('form').submit(function(e) {
+      e.preventDefault() // prevents page reloading
+      socket.emit('chat message', $('#message').val())
+      $('#message').val('')
+      return false
+    })
+    socket.on('chat message', function(msg){
+      $('#messages').append($('<li>').text(msg))
+    })
+  })
 </script>
+
