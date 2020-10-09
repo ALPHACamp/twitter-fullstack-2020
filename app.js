@@ -16,6 +16,7 @@ const passport = require('./config/passport')
 const path = require('path')
 const Handlebars = require('handlebars')
 const helpers = require('./_helpers')
+const socket = require('socket.io')
 
 // This package can help you disable prototype checks for your models.
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
@@ -57,6 +58,24 @@ app.use((req, res, next) => {
 })
 
 
-module.exports = app.listen(PORT, () => console.log(`Express is listening on http://localhost:${PORT}`))
+const server = app.listen(PORT, () => console.log(`Express is listening on http://localhost:${PORT}`))
+const io = socket(server)
+
+io.on('connection', socket => {
+  console.log('a user connected!');
+
+  socket.on('message', data => {
+    console.log('Get message')
+    // socket.broadcast.emit('chat', 'A join chat room')
+    io.emit("chat", 'A join chat room');
+  })
+
+  socket.on('disconnect', function () {
+    console.log('a user go out');
+  })
+})
+
 
 require('./routes')(app, passport)
+
+module.exports = app
