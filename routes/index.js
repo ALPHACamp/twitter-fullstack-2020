@@ -15,7 +15,7 @@ const passport = require('../config/passport')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-module.exports = (app, passport) => {
+module.exports = (app, passport, io) => {
   // const apiAuthenticated = passport.authenticate('jwt', { session: false })
   const apiAuthenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {

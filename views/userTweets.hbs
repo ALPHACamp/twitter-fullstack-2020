@@ -15,6 +15,8 @@
       </a>
     </div>
     <div class="col mt-3">
+      <i class="far fa-comments fa-2x mt-1 mx-2" style="color: rgb(255, 102, 0);"></i>
+      <i class="far fa-bell fa-2x mt-1 mx-2" style="color: rgb(255, 102, 0);"></i>
       {{#ifCond userId loginUser.id}}
       <button class="btn rounded-pill float-right btn-outline-twitter" data-toggle="modal" data-target="#show-detail-modal" data-id="{{userId}}">編輯個人資料</button>
       {{!-- <a href="/users/{{userId}}" class="btn rounded-pill float-right btn-outline-twitter">編輯個人資料</a> --}}
