@@ -7,6 +7,10 @@ const app = express()
 const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
+const User = db.User
+
+let id, name, account, avatar
+
 
 
 //chat 
@@ -17,20 +21,27 @@ const http = require('http')
 const server = http.createServer(app);
 const io = socketio(server)
 
+
+const users = {}
+
 //run with client connects
 io.on('connection', socket => {
-  console.log('a user connected', socket.id)
 
+
+  console.log('username', name)
+
+  console.log('a user connected', socket.id)
   //Welcome current user
   socket.emit('message', 'Welcome to Chat')
-
   //broadcast when a user connects
   socket.broadcast.emit('message', 'A user has joined the chat')
 
+
   socket.on('chat-message', data => {
     io.sockets.emit('chat-message', data)
-    console.log(data)
+    console.log("chatroom 傳來的資訊 ", data)
   })
+
   //handle chat event
   socket.on('chat', data => {
     io.sockets.emit('chat', data);
@@ -39,6 +50,7 @@ io.on('connection', socket => {
   // Runs when a user is typing
   socket.on('typing', data => {
     socket.broadcast.emit('typing', data)
+    console.log("typing", data)
   })
 
   //Runs when client disconnects
