@@ -8,8 +8,7 @@ const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const User = db.User
-
-let id, name, account, avatar
+const formatMessage = require('./public/messages.js');
 
 
 
@@ -22,20 +21,28 @@ const server = http.createServer(app);
 const io = socketio(server)
 
 
-const users = {}
+
+const botName = 'ChatCord Bot'
 
 //run with client connects
 io.on('connection', socket => {
 
+  socket.on('joinRoom', ({ username }) => {
 
-  console.log('username', name)
+  })
 
   console.log('a user connected', socket.id)
-  //Welcome current user
-  socket.emit('message', 'Welcome to Chat')
-  //broadcast when a user connects
-  socket.broadcast.emit('message', 'A user has joined the chat')
 
+  //Welcome current user
+  socket.emit('message', formatMessage(botName, 'Welcome to ChatRoom'))
+
+  //broadcast when a user connects
+  socket.broadcast.emit('message', formatMessage(botName, 'A user has joined the chat'))
+
+  //Runs when client disconnects
+  socket.on('disconnect', () => {
+    io.emit('message', formatMessage(botName, 'A user has left the chat'))
+  });
 
   socket.on('chat-message', data => {
     io.sockets.emit('chat-message', data)
@@ -53,10 +60,7 @@ io.on('connection', socket => {
     console.log("typing", data)
   })
 
-  //Runs when client disconnects
-  socket.on('disconnect', () => {
-    io.emit('message', 'A user hase left the chat')
-  });
+
 })
 
 

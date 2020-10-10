@@ -1,3 +1,5 @@
+const user = require("../models/user")
+
 const socket = io('http://localhost:3000')
 const message = document.getElementById('message')
 const name = document.getElementById('name')
@@ -5,12 +7,22 @@ const avatar = document.getElementById('avatar')
 const btn = document.getElementById('send')
 const output = document.getElementById('output')
 const feedback = document.getElementById('feedback')
+const chatMessages = document.querySelector('.chat-messages')
 
+//get username from URL
+const { username } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true
+})
 
+socket.emit('joinRoom', { username })
 
 //提示訊息
 socket.on('message', message => {
   console.log(message)
+  outPutmessage(message)
+
+  //scrolldown
+  chatMessages.scrollTop = chatMessages.scrollHeight
 })
 
 socket.on('chat-message', data => {
@@ -47,14 +59,17 @@ socket.on('typing', data => {
 })
 
 
-
-// messageForm.addEventListener('submit', e => {
-//   e.preventDefault()
-//   const message = messageInput.value
-//   socket.emit('send-chat-message', message)
-//   messageInput.value = ''
-// })
-
+//Output message to DOM
+function outPutmessage(message) {
+  const div = document.createElement('div')
+  div.classList.add('message');
+  div.innerHTML = `
+<p class="meta">${message.username}</span></p>
+<p class="meta">${message.text}</span></p>
+<p class="meta">${message.time}</span></p>
+  `;
+  document.querySelector('.chat-messages').appendChild(div)
+}
 
 console.log('a user connected')
 socket.emit('chat-message', 'helloworld')
