@@ -2,7 +2,7 @@ const time = require('../config/handlebars-helpers').time
 const db = require('../models')
 const Message = db.Message
 
-module.exports = (io, user, chatUserId) => {
+module.exports = (io, user, messageToId) => {
   io.on('connection', (socket) => {
     console.log('a user connected')
     // announce user online
@@ -36,9 +36,14 @@ module.exports = (io, user, chatUserId) => {
     })
 
     socket.on('joinRoom', (msg) => {
-      //const roomId = chatUserId ? chatUserId : null || user.id.toString() 
-      socket.join(chatUserId || user.id.toString())
-      io.to(chatUserId || user.id.toString()).emit('privateMessage', {
+      Message.create({
+        messageFromId: user.id,
+        messageToId: messageToId,
+        message: msg
+      })
+      //const roomId = messageToId || user.id.toString() 
+      socket.join(messageToId || user.id.toString())
+      io.to(user.id.toString()).to(messageToId).emit('privateMessage', {
         id: user.id,
         username: user.name,
         account: user.account,
