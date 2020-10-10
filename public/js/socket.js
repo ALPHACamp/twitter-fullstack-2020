@@ -30,14 +30,14 @@ chatForm.addEventListener("submit", (e)=>{
 
 // Public Fuctions
 function outputMessage(data){
-    if(data.currentUser === true){
-        const div = document.createElement("DIV");
-        div.classList.add("self-message");
-        div.innerHTML = `
-        <div class="self-text">${data.message}</div>
-        <div class="chat-time">${data.time}</div>`;
-        chatOutput.appendChild(div);
-    }else{
+    // if(data.currentUser === true){
+    //     const div = document.createElement("DIV");
+    //     div.classList.add("self-message");
+    //     div.innerHTML = `
+    //     <div class="self-text">${data.message}</div>
+    //     <div class="chat-time">${data.time}</div>`;
+    //     chatOutput.appendChild(div);
+    // }else{
         const div = document.createElement("DIV");
         div.classList.add("chat-message");
         div.innerHTML = `
@@ -47,5 +47,5 @@ function outputMessage(data){
         <div class="chat-time">${data.time}</div>
         </div>`;
         chatOutput.appendChild(div);
-    }
+    // }
 }
