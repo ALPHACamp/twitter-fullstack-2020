@@ -97,9 +97,21 @@ io.on('connection', async socket => {
     }))
   })
 
+  let users
+  await User.findAll().then(results => {
+    // console.log(results[0].dataValues)
+    users = results.map(item => ({
+      ...item.dataValues,
+      account: item.dataValues.account,
+      name: item.dataValues.name,
+      avatar: item.dataValues.avatar,
+    }))
+  })
+
+
+
   // emit history message to user
   socket.emit('history', historyMessages)
-
   // broadcast online
   socket.broadcast.emit('message', `${loginUser.loginName} 上線`)
 
@@ -111,6 +123,13 @@ io.on('connection', async socket => {
     io.emit("message", 'data')
   })
 
+  socket.on("connected", users => {
+    console.log('send user')
+    console.log('users:', users)
+
+    io.emit("connected", users)
+  })
+
   socket.on('disconnect', function () {
     console.log('a user go out')
     socket.broadcast.emit('message', `${loginUser.loginName} 離線`)
@@ -119,6 +138,7 @@ io.on('connection', async socket => {
     onlineUsers = onlineUsers.filter(user => user.loginID !== loginUser.loginID)
     socket.broadcast.emit('onlineUsers', onlineUsers)
   })
+
 })
 
 
