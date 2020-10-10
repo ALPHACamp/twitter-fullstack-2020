@@ -2,10 +2,10 @@
   <div class="col-md-3 pl-0">
     {{> left}}
   </div>
-  <div class="col-md-3 border-left border-right">
+  <div id="online-user-content" class="col-md-3 border-left border-right">
     <h5 class="">上線使用者(<span id="online">0</span>)</h5>
     <hr>
-    <div class="row align-items-center">
+    <div id=" " class="row align-items-center">
       <div class="ml-2">
         <img src="{{user.avatar}}" alt="" class="rounded-circle" style="width: 50px">
       </div>
@@ -18,14 +18,13 @@
     </div>
     <hr>
 
+
   </div>
 
-  <div class="col">
+  <div class="col chat-room content">
 
     <div class="col">
       <h5 class="">公開聊天室</h5>
-
-
       <hr>
 
 
@@ -41,6 +40,8 @@
           <input id="name" type="hidden" value="{{user.name}}">
           <input id="message" type="text" placeholder="輸入訊息">
           <button type="submit" class="btn" id="send">Send</button>
+
+
         </div>
       </div>
     </div>
