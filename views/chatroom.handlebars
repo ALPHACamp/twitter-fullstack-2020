@@ -43,13 +43,42 @@
 
 <div id="chat-room">
   <div class="main-top">公開聊天室</div>
+  <div class="show-message">
+    <div class="messages d-flex flex-column justify-content-end">
+      <div class='d-flex flex-row justify-content-start my-2'>
+        <div class="d-flex align-items-center flex-column align-items-start">
+          <img class="message-image rounded-circle mr-2"
+            src="https://s3.amazonaws.com/uifaces/faces/twitter/cadikkara/128.jpg" alt="">
+          <div class="received-message">
+            <div class="message">好棒棒啊.............</div>
+            <small class="received-time text-muted">下午7:20</small>
+          </div>
+        </div>
+      </div>
+      <div class='d-flex flex-row justify-content-center my-2'>
+        <div class="status-message">abcdu3 加入聊天室</div>
+      </div>
+      <div class='d-flex flex-row justify-content-end my-2'>
+        <div class="d-flex align-items-center">
+          <div class="send-message d-flex flex-column align-items-end ">
+            <div class="message">好棒棒啊.............</div>
+            <small class="send-time text-muted">下午7:20</small>
+          </div>
+          <img class="message-image rounded-circle ml-2"
+            src="https://s3.amazonaws.com/uifaces/faces/twitter/cadikkara/128.jpg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
   <form id="send-form">
-    <input type="hidden" name="name" id="name" placeholder="暱稱" value={{user.name}}>
+    <input type="hidden" name="name" id="name" value={{user.name}}>
     <input type="hidden" name="avatar" id="avatar" value={{user.avatar}}>
-    <textarea type="text" name="msg" id="msg" cols="60" rows="4"></textarea>
-    <input type="submit" value="送出" class="btn btn-primary btn-block">
+    <div class="sendMessageArea">
+      <textarea type="text" name="msg" id="msg" cols="60" rows="1" placeholder="輸入訊息..."></textarea>
+      <button type="submit" class="btn"><i class="far fa-paper-plane"></i></button>
+    </div>
   </form>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
-<script type="text/javascript" src="/javascript/client_socket.js"></script>
+<script type="text/javascript" src="/javascript/chatroom_socket.js"></script>
