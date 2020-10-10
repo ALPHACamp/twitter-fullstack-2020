@@ -89,3 +89,39 @@
   color: #FF6600 !important;
   font-size: 18px;
 }
+.online-user-column {
+  height: 500px;
+  margin-left: 15px;
+  background: #F5F8FA;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.online-user-item,
+.mailbox-user-item {
+  border-bottom: 1px solid #E6ECF0;
+  display: flex;
+  padding: 10px 15px;
+  align-items: center;
+}
+
+.online-user-avatar,
+.mailbox-user-avatar {
+  border-radius: 100%;
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+}
+
+.online-user-name,
+.mailbox-user-name {
+  font-weight: 600;
+}
+
+.online-user-name span,
+.mailbox-user-name span {
+  font-weight: 500;
+  color: rgb(105, 120, 129);
+}
