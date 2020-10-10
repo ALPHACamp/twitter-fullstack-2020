@@ -62,7 +62,7 @@ io.on('connection', socket => {
   user.currentUser = true;
   socket.emit("message", `歡迎加入聊天室 ${user.name}`);
   socket.broadcast.emit("message", `${user.name} 加入聊天室`);
-
+ 
   socket.on("disconnect", ()=>{
     io.emit("message", `${user.name} 離開聊天室`)
   });

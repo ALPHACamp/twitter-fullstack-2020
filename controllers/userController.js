@@ -50,7 +50,7 @@ const userController = {
   },
   signIn: (req, res) => {
     req.flash('success_messages', "成功登入！")
-    res.redirect('/chat')
+    res.redirect('/tweets')
   },
   logout: (req, res) => {
     req.flash('success_messages', '成功登出!')
@@ -247,7 +247,7 @@ const userController = {
         })
         pageUser.followingCount = pageUser.Followings.length;
         pageUser.followersCount = pageUser.Followers.length;
-        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(req.user.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render('user/user-tweets', { pageUser })
       })
   },
@@ -294,7 +294,7 @@ const userController = {
         })
         pageUser.followingCount = pageUser.Followings.length;
         pageUser.followersCount = pageUser.Followers.length;
-        // pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render("user/user-replies", { pageUser });
       })
   },
@@ -314,7 +314,7 @@ const userController = {
         })
         pageUser.followingCount = pageUser.Followings.length;
         pageUser.followersCount = pageUser.Followers.length;
-        // pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render("user/user-likes", { pageUser });
       })
   },
