@@ -114,8 +114,12 @@ io.on('connection', socket => {
   socket.on('typing', data => {
     socket.broadcast.emit('typing', data)
   })
-
-
+  socket.on('disconnect', () => {
+    // 有人離線, 扣人數
+    onlineCount = (onlineCount < 0) ? 0 : onlineCount -= 1
+    io.emit("online", onlineCount)
+    io.emit('message', 'A user hase left the chat')
+  })
 })
 
 
