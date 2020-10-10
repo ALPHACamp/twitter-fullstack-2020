@@ -10,59 +10,12 @@ const passport = require('./config/passport')
 const User = db.User
 const formatMessage = require('./public/messages.js');
 
-
-
-//chat 
-
+// chatroom參數
 const path = require('path')
 const socketio = require('socket.io')
 const http = require('http')
 const server = http.createServer(app);
 const io = socketio(server)
-
-
-
-const botName = 'ChatCord Bot'
-
-//run with client connects
-io.on('connection', socket => {
-
-  socket.on('joinRoom', ({ username }) => {
-
-  })
-
-  console.log('a user connected', socket.id)
-
-  //Welcome current user
-  socket.emit('message', formatMessage(botName, 'Welcome to ChatRoom'))
-
-  //broadcast when a user connects
-  socket.broadcast.emit('message', formatMessage(botName, 'A user has joined the chat'))
-
-  //Runs when client disconnects
-  socket.on('disconnect', () => {
-    io.emit('message', formatMessage(botName, 'A user has left the chat'))
-  });
-
-  socket.on('chat-message', data => {
-    io.sockets.emit('chat-message', data)
-    console.log("chatroom 傳來的資訊 ", data)
-  })
-
-  //handle chat event
-  socket.on('chat', data => {
-    io.sockets.emit('chat', data);
-  })
-
-  // Runs when a user is typing
-  socket.on('typing', data => {
-    socket.broadcast.emit('typing', data)
-    console.log("typing", data)
-  })
-
-
-})
-
 
 //flash
 const flash = require('connect-flash')
@@ -106,6 +59,66 @@ app.use(express.static('public'))
 
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+//以下為chatroom
+//current user 
+let id, name, account, avatar
+app.use((req, res, next) => {
+  if (helpers.getUser(req)) {
+    ({ id, name, account, avatar } = helpers.getUser(req))
+    console.log("user是", name)
+  }
+  next()
+})
+
+let onlineUsers = []
+
+//run with client connects
+io.on('connection', socket => {
+
+  // online user list
+  onlineUsers.push({ id, name, account, avatar });
+  let set = new Set();
+  onlineUsers = onlineUsers.filter((item) =>
+    !set.has(item.id) ? set.add(item.id) : false,
+  );
+  const user = onlineUsers.find((user) => user.id === id);
+  user.current = true;
+
+  //Welcome current user
+  socket.emit('message', formatMessage(user.name, 'You join the chatroom'))
+
+  //broadcast when a user connects
+  socket.broadcast.emit('message', formatMessage(user.name, ' has joined the chat'))
+
+  //Runs when client disconnects
+  socket.on('disconnect', () => {
+    io.emit('message', formatMessage(user.name, ' has left the chat'))
+  });
+
+  socket.on('chat-message', data => {
+    io.sockets.emit('chat-message', data)
+    console.log("chatroom client 傳來的資訊 ", data)
+  })
+
+  //handle chat event
+  socket.on('chat', data => {
+    io.sockets.emit('chat', data);
+  })
+
+  // Runs when a user is typing
+  socket.on('typing', data => {
+    socket.broadcast.emit('typing', data)
+  })
+
+
+})
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,3 @@
-const user = require("../models/user")
-
 const socket = io('http://localhost:3000')
 const message = document.getElementById('message')
 const name = document.getElementById('name')
@@ -9,18 +7,9 @@ const output = document.getElementById('output')
 const feedback = document.getElementById('feedback')
 const chatMessages = document.querySelector('.chat-messages')
 
-//get username from URL
-const { username } = Qs.parse(location.search, {
-  ignoreQueryPrefix: true
-})
-
-socket.emit('joinRoom', { username })
-
 //提示訊息
 socket.on('message', message => {
-  console.log(message)
-  outPutmessage(message)
-
+  outPutmessage(message)  //output到DOM上
   //scrolldown
   chatMessages.scrollTop = chatMessages.scrollHeight
 })
@@ -40,13 +29,12 @@ btn.addEventListener('click', e => {
       name: name.value,
       avatar: avatar.value
     }
-
   )
   messageInput.value = ''
 });
 
 message.addEventListener('keypress', () => {
-  socket.emit('typing', handle);
+  socket.emit('typing', name);
 })
 
 //Listen for events
@@ -71,8 +59,7 @@ function outPutmessage(message) {
   document.querySelector('.chat-messages').appendChild(div)
 }
 
-console.log('a user connected')
-socket.emit('chat-message', 'helloworld')
-socket.on('send-chat-message', message => {
-  console.log(message)
-})
+
+// socket.on('send-chat-message', message => {
+//   console.log(message)
+// })
