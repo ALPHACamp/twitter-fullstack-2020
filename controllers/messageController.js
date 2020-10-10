@@ -1,13 +1,15 @@
 const db = require('../models')
 const User = db.User
+const Message = db.Message
 
 const messageController = {
   getMessage: (req, res) => {
-    User.findAll({
+    Message.findAll({
       raw: true,
       nest: true
-    }).then(users => {
-      return res.render('chat', { users })
+    }).then(messages => {
+      const loginUser = req.user
+      return res.render('chat', { messages, loginUser })
     })
   }
 }

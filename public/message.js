@@ -3,10 +3,12 @@ var socket = io()
 const chatForm = document.getElementById('chat-form')
 const chatMessages = document.getElementById('chat-messages')
 
+
 chatForm.addEventListener('submit', e => {
   e.preventDefault()
   const msg = e.target.elements.message.value
   socket.emit('chatMessage', msg)
+
   //clear inputs
   e.target.elements.message.value = ''
 })
@@ -20,6 +22,8 @@ socket.on('chatMessage', (data) => {
 });
 
 function appendData(data) {
+
+
   const el = document.getElementById('chat-messages')
   let htmlString
   htmlString = `<img src="${data.avatar}" class="user-avatar"> ${data.message}`

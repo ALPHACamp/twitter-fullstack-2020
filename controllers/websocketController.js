@@ -1,6 +1,7 @@
 const time = require('../config/handlebars-helpers').time
-
-
+const db = require('../models')
+const Message = db.Message
+ 
 
 module.exports = (io, user) => {
   io.once('connection', (socket) => {
@@ -8,11 +9,14 @@ module.exports = (io, user) => {
 
     socket.on('disconnect', () => {
       console.log('user disconnected')
-      socket.removeAllListeners()
     })
 
     // listen for chat message
     socket.on('chatMessage', (msg) => {
+      Message.create({
+        messageFromId: user.id,
+        message: msg
+      })
       io.emit('chatMessage', {
         id: user.id,
         username: user.name,
