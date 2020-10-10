@@ -4,7 +4,7 @@ const Message = db.Message
  
 
 module.exports = (io, user) => {
-  io.once('connection', (socket) => {
+  io.on('connection', (socket) => {
     console.log('a user connected')
 
     io.emit('message', {
