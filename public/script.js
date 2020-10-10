@@ -45,6 +45,9 @@ socket.on('typing', data => {
   feedback.innerHTML = ' <p><em>' + data + ' is typing a message......</em></p>'
 })
 
+socket.on('online', onlineCount => {
+  online.innerText = onlineCount
+})
 
 //Output message to DOM
 function outPutmessage(message) {

@@ -14,7 +14,7 @@ const tweetController = {
     })
       .then(tweets => {
         const UserId = helpers.getUser(req).id
-        console.log("tweets", tweets)
+        // console.log("tweets", tweets)
         const data = tweets.map(t => ({
           ...t.dataValues,
           description: t.dataValues.description,
@@ -86,7 +86,7 @@ const tweetController = {
       req.flash('error_messages', '貼文不得超過140個字')
       return res.redirect('back')
     }
-    if(!req.body.comment){
+    if (!req.body.comment) {
       req.flash('error_messages', '回覆不可空白')
       return res.redirect('back')
     }

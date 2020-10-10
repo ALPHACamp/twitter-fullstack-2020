@@ -134,6 +134,7 @@ io.on('connection', socket => {
 
 
 
+
+
+
 require('./routes')(app, passport) // passport 傳入 routes
-
-

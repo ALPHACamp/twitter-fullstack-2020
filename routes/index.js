@@ -1,5 +1,5 @@
-const userController = require("../controllers/userController");
-const tweetController = require("../controllers/tweetController");
+const userController = require("../controllers/userController")
+const tweetController = require("../controllers/tweetController")
 const adminController = require('../controllers/adminController')
 const chatRoomController = require('../controllers/chatRoomController')
 const helpers = require('../_helpers.js')
