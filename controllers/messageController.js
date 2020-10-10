@@ -2,6 +2,7 @@ const db = require('../models')
 const User = db.User
 const Message = db.Message
 const { Op } = require("sequelize")
+const time = require('../config/handlebars-helpers').time
 
 const messageController = {
   getMessage: (req, res) => {
@@ -18,7 +19,7 @@ const messageController = {
   getPrivateMessage: (req, res) => {
     console.log(req.user.id)
     console.log(req.params.userId)
-    Message.find({
+    Message.findAll({
       where: {
         [Op.or]: [
           { messageToId: req.user.id,
@@ -28,7 +29,6 @@ const messageController = {
         ]
       }
     }).then(messages =>{
-      console.log(messages)
       const loginUser = req.user
       return res.render('chat', { messages, loginUser })
     })
