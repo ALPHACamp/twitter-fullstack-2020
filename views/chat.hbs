@@ -12,20 +12,12 @@
         <div class="col-3 px-0" style="border-right: 1px solid #E6ECF0">
           <div class="bg-white">
 
-            <div class="bg-gray px-3 py-2 bg-light" style="border-bottom: 1px solid #E6ECF0">
+            <div class="bg-gray px-3 py-2 bg-light" id="usertitle" style="border-bottom: 1px solid #E6ECF0">
               <p class="h5 mb-0 font-weight-bold">上線使用者(N)</p>
             </div>
 
-            <<<<<<< HEAD <<<<<<< HEAD <div class="contacts-box" style="overflow-y: scroll; height: 510px;">
-              <div class="list-group rounded-0" id="onlineuser">
-                =======
-                <div class="contacts-box" id="chatUserlist" style="overflow-y: scroll; height: 510px;">
-                  {{!-- <div class="list-group rounded-0">
->>>>>>> f2f2d9a75f915eb1c218e4f7795dd8d2b1f9d0fe
-=======
             <div class="contacts-box" id="chatUserlist" style="overflow-y: scroll; height: 598px;">
               {{!-- <div class="list-group rounded-0">
->>>>>>> ade650823f299521e602a2b836bd4badb640fca6
                 <a class="list-group-item list-group-item-action text-white rounded-0 p-1"
                   style="border:none; border-bottom: 1px solid #E6ECF0">
                   <div class="media">
@@ -40,16 +32,16 @@
                   </div>
                 </a>
               </div> --}}
-                </div>
-              </div>
-          </div>
-          <!-- Chat Box-->
-          <div class="col-9 px-0">
-            <div class="bg-gray px-3 py-2 bg-light" style="border-bottom: 1px solid #E6ECF0">
-              <p class="h5 mb-0 font-weight-bold">公開聊天室</p>
             </div>
-            <div id="chatmessage" class="px-4 py-5 chat-box bg-white" style="overflow-y: scroll; height: 550px;">
-              {{!-- <!-- Reciever Message-->
+          </div>
+        </div>
+        <!-- Chat Box-->
+        <div class="col-9 px-0">
+          <div class="bg-gray px-3 py-2 bg-light" style="border-bottom: 1px solid #E6ECF0">
+            <p class="h5 mb-0 font-weight-bold">公開聊天室</p>
+          </div>
+          <div id="chatmessage" class="px-4 py-5 chat-box bg-white" style="overflow-y: scroll; height: 550px;">
+            {{!-- <!-- Reciever Message-->
             <div class="media w-50 mb-3"><img
                 src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
                 class="rounded-circle">
@@ -70,37 +62,37 @@
               </div>
             </div> --}}
 
-              {{!-- broadcast user online/leave --}}
-              {{!-- <div style="text-align: center">
+            {{!-- broadcast user online/leave --}}
+            {{!-- <div style="text-align: center">
               <div class="bg-light rounded py-2 px-3 mb-3" style="width:auto !important; display:inline-block">
                 <p class=" text-small mb-0 text-muted">xxx 上線了</p>
               </div>
             </div> --}}
-            </div>
-
-
-            <!-- Typing area -->
-            <form action="#" class="bg-light">
-              <div class="input-group">
-                <input type="text" placeholder="輸入訊息" aria-describedby="button-addon2"
-                  class="form-control rounded-0 border-0 py-4 bg-light" id="msg">
-                <div class="input-group-append">
-                  <button id="button-addon2" type="submit" class="btn btn-link"> <i
-                      class="fa fa-paper-plane"></i></button>
-                </div>
-              </div>
-            </form>
-
           </div>
+
+
+          <!-- Typing area -->
+          <form action="#" class="bg-light">
+            <div class="input-group">
+              <input type="text" placeholder="輸入訊息" aria-describedby="button-addon2"
+                class="form-control rounded-0 border-0 py-4 bg-light" id="msg">
+              <div class="input-group-append">
+                <button id="button-addon2" type="submit" class="btn btn-link"> <i
+                    class="fa fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </form>
+
         </div>
       </div>
     </div>
   </div>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/javascripts/socket.js"></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js'></script>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/zh-tw.js'></script>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/socket.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/zh-tw.js'></script>
 
-  {{!-- <div class="right-content">
+{{!-- <div class="right-content">
   {{> right-column}}
 </div> --}}

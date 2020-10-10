@@ -74,6 +74,7 @@ socket.on('onlineUsers', (data) => {
         </a>
       </div>
     `
+    usertitle.innerHTML = `<p class="h5 mb-0 font-weight-bold">上線使用者(${data.length})</p>`
   })
 
   chatUserlist.innerHTML = userlists
