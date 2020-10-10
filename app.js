@@ -20,6 +20,13 @@ const io = socketio(server)
 //run with client connects
 io.on('connection', socket => {
   console.log('a user connected', socket.id)
+
+  //Welcome current user
+  socket.emit('message', 'Welcome to Chat')
+
+  //broadcast when a user connects
+  socket.broadcast.emit('message', 'A user has joined the chat')
+
   socket.on('chat-message', data => {
     io.sockets.emit('chat-message', data)
     console.log(data)
@@ -28,9 +35,16 @@ io.on('connection', socket => {
   socket.on('chat', data => {
     io.sockets.emit('chat', data);
   })
+
+  // Runs when a user is typing
   socket.on('typing', data => {
     socket.broadcast.emit('typing', data)
   })
+
+  //Runs when client disconnects
+  socket.on('disconnect', () => {
+    io.emit('message', 'A user hase left the chat')
+  });
 })
 
 

@@ -5,6 +5,12 @@ const btn = document.getElementById('send')
 const output = document.getElementById('output')
 const feedback = document.getElementById('feedback')
 
+socket.on('message', message => {
+  console.log(message)
+})
+
+
+
 socket.on('chat-message', data => {
   console.log(data)
 })
@@ -17,7 +23,7 @@ btn.addEventListener('click', e => {
   socket.emit('chat-message',
     {
       message: message.value,
-      handle: handle.value
+      // handle: handle.value
     }
   )
   messageInput.value = ''
@@ -36,7 +42,6 @@ socket.on('chat-message', (data) => {
 socket.on('typing', data => {
   feedback.innerHTML = ' <p><em>' + data + 'is typing a message......</em></p>'
 })
-
 
 messageForm.addEventListener('submit', e => {
   e.preventDefault()
