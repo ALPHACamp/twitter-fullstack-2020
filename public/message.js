@@ -3,6 +3,31 @@ var socket = io()
 const chatForm = document.getElementById('chat-form')
 const chatMessages = document.getElementById('chat-messages')
 
+//online user
+socket.on('message', (data) => {
+  const u = document.getElementById('user-list')
+  let htmlContent 
+  htmlContent = `
+    <div class="flex-container">
+      <div class="mr-2">
+        <a href="/users/${data.id}/tweets">
+          <img src="${data.avatar}" alt="user avatar" class="user-avatar"
+            style="border-radius: 50%; height:50px; width: 50px">
+        </a>
+      </div>
+      <div style="display: flex; align-items: center">
+        <a href="/users/${data.id}/tweets" style="text-decoration:none; color:black"><strong>${data.username}</strong></a>
+        <font class="text-muted"> @${data.account}</font>
+      </div>
+    </div>
+  `
+  var li = document.createElement('li')
+  li.className = 'list-group-item'
+  li.innerHTML = htmlContent
+  u.appendChild(li)
+})
+  
+
 
 chatForm.addEventListener('submit', e => {
   e.preventDefault()
@@ -22,14 +47,13 @@ socket.on('chatMessage', (data) => {
 });
 
 function appendData(data) {
+  //chat message
   const loginUserId = document.getElementById('loginUserId').value
   const el = document.getElementById('chat-messages')
   let htmlString
-  htmlString = `<img src="${data.avatar}" class="user-avatar"> ${data.message}`
-
   if (Number(data.id) === Number(loginUserId)) {
     htmlString = `
-      <div>
+      <div class="m-2">
         <section style="background-color:coral; float: right; width:270px; border-radius:20px; padding:6px; float:right;">
           ${data.message}
         </section>
@@ -40,7 +64,7 @@ function appendData(data) {
   } 
   else {
     htmlString = `
-    <div class="flex-container">
+    <div class="flex-container m-2">
       <div>
         <img src="${data.avatar}" class="user-avatar" style="margin-right:4px;">
       </div>
@@ -49,10 +73,13 @@ function appendData(data) {
         ${data.message}
       </section>
         
-      <font class="text-muted" size="2px">${data.time}</font>
+      <font class="text-muted" size="2px">@${data.account}</font>
     </div>
 
     `
   }
   el.appendChild((document.createElement('div'))).innerHTML = htmlString
+
+  
+  
 }
