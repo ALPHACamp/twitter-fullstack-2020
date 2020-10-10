@@ -76,7 +76,7 @@ function appendData(data) {
 socket.on('chat', data => {
   console.log('Get chat')
   console.log('chat data', data)
-
+  // data.forEach(message => {
   chatmessage.innerHTML += `
         <div class="media w-50 mb-3">
           <img src="${data.avatar}" alt="user"
@@ -91,6 +91,8 @@ socket.on('chat', data => {
       `
   scrollWindow()
 })
+// })
+
 
 function scrollWindow() {
   let h = document.querySelector('.chat-box')

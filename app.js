@@ -99,6 +99,7 @@ io.on('connection', async socket => {
 
   // emit history message to user
   socket.emit('history', historyMessages)
+  // console.log(historyMessages)
 
   // broadcast online
   socket.broadcast.emit('message', `${loginUser.loginName} 上線`)
@@ -120,21 +121,19 @@ io.on('connection', async socket => {
     socket.broadcast.emit('onlineUsers', onlineUsers)
   })
 
-  // 接收 chat 發出的訊息，無法即時
-  socket.on('chat', msg => {
+  // 接收 chat 發出的訊息
+  socket.on('chat', async msg => {
     // console.log('測試能否抓到 chat 的訊息內容:', msg)
-    let receiverMessage = ""
-    Message.create({
+    // let receiverMessage
+    await Message.create({
       UserId: loginUser.loginID,
       text: msg
     }).then((messages => {
-      // console.log('messages', messages)
-      // console.log('Message text:', messages.dataValues.text)
-      receiverMessage = Object.keys(messages).forEach(item => ({
+      receiverMessage = {
         text: messages.dataValues.text,
-        avatar: messages.dataValues.avatar,
-        time: messages.dataValues.createdAt
-      }))
+        avatar: loginUser.loginAvatar,
+        time: moment(messages.dataValues.createdAt).format('LLL')
+      }
     }))
     socket.broadcast.emit('chat', receiverMessage)
   })
