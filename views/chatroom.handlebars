@@ -36,8 +36,19 @@
     </ul>
   </div>
 </div>
-<div id="chat-list" data-id="{{user.id}}">
+<div id="chat-list" data-id="{{user.id}}" data-avatar="{{user.avatar}}">
+  <div class="main-top">上線使用者</div>
+  <div class="user-list"></div>
+</div>
 
+<div id="chat-room">
+  <div class="main-top">公開聊天室</div>
+  <form id="send-form">
+    <input type="hidden" name="name" id="name" placeholder="暱稱" value={{user.name}}>
+    <input type="hidden" name="avatar" id="avatar" value={{user.avatar}}>
+    <textarea type="text" name="msg" id="msg" cols="60" rows="4"></textarea>
+    <input type="submit" value="送出" class="btn btn-primary btn-block">
+  </form>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

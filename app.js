@@ -58,6 +58,17 @@ const server = app.listen(port, () => console.log(`Example app listening on port
 
 const io = require('socket.io')(server)
 
+// const sessionMiddleware = session({
+//   secret: 'secret',
+//   resave: false,
+//   saveUninitialized: false
+// })
+// app.use(sessionMiddleware)
+
+// io.use((socket, next) => {
+//   sessionMiddleware(socket.request, socket.request.res, next)
+// })
+
 require('./routes')(app)
 require('./server_socket')(io)
 
