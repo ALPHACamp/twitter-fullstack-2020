@@ -5,16 +5,13 @@ const avatar = document.getElementById('avatar')
 const btn = document.getElementById('send')
 const output = document.getElementById('output')
 const feedback = document.getElementById('feedback')
-const online = document.getElementById('online')
-
-// 當觸發連線時, 傳送 userOnline 事件給伺服器
-socket.on("connect", () => {
-  socket.emit("userOnline")
-})
+const chatMessages = document.querySelector('.chat-messages')
 
 //提示訊息
 socket.on('message', message => {
-  console.log(message)
+  outPutmessage(message)  //output到DOM上
+  //scrolldown
+  chatMessages.scrollTop = chatMessages.scrollHeight
 })
 
 socket.on('chat-message', data => {
@@ -32,13 +29,12 @@ btn.addEventListener('click', e => {
       name: name.value,
       avatar: avatar.value
     }
-
   )
   messageInput.value = ''
 });
 
 message.addEventListener('keypress', () => {
-  socket.emit('typing', handle);
+  socket.emit('typing', name);
 })
 
 //Listen for events
@@ -50,20 +46,23 @@ socket.on('typing', data => {
   feedback.innerHTML = ' <p><em>' + data.name + 'is typing a message......</em></p>'
 })
 
-socket.on('online', amount => {
-  online.innerText = amount
+socket.on('online', onlineCount => {
+  online.innerText = onlineCount
 })
 
-// messageForm.addEventListener('submit', e => {
-//   e.preventDefault()
-//   const message = messageInput.value
-//   socket.emit('send-chat-message', message)
-//   messageInput.value = ''
+//Output message to DOM
+function outPutmessage(message) {
+  const div = document.createElement('div')
+  div.classList.add('message');
+  div.innerHTML = `
+<p class="meta">${message.username}</span></p>
+<p class="meta">${message.text}</span></p>
+<p class="meta">${message.time}</span></p>
+  `;
+  document.querySelector('.chat-messages').appendChild(div)
+}
+
+
+// socket.on('send-chat-message', message => {
+//   console.log(message)
 // })
-
-
-console.log('a user connected')
-socket.emit('chat-message', 'helloworld')
-socket.on('send-chat-message', message => {
-  console.log(message)
-})
