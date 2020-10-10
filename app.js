@@ -57,6 +57,7 @@ io.use((socket, next) => {
 })
 
 // run when a client connects
+<<<<<<< HEAD
 io.on('connection', (socket) => {
 
   const currentUser = socket.request.session
@@ -75,6 +76,20 @@ io.on('connection', (socket) => {
     console.log('message: ' + msg)
   })
 })
+=======
+// io.on('connection', (socket) => {
+//   console.log('a user connected')
+//   socket.on('disconnect', () => {
+//     console.log('user disconnected')
+//   })
+
+//   // listen for chat message
+//   socket.on('chatMessage', (msg) => {
+//     io.emit('chatMessage', msg)
+//     console.log('message: ' + msg)
+//   })
+// })
+>>>>>>> master
 
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))

@@ -9,13 +9,13 @@ chatForm.addEventListener('submit', e => {
   
   socket.emit('chatMessage', msg)
 })
-socket.on('chatMessage', (msg) => {
-  console.log(msg)
-  appendData(msg)
+
+socket.on('chatMessage', (data) => {
+  appendData(data)
 });
 
-function appendData(message) {
+function appendData(data) {
   const el = document.getElementById('messages')
-  el.appendChild((document.createElement('div'))).innerHTML = `${message}`
-
+  const htmlString = `<img src="${data.avatar}" class="user-avatar"> ${data.username}: ${data.message}`
+  el.appendChild((document.createElement('div'))).innerHTML = htmlString
 }
