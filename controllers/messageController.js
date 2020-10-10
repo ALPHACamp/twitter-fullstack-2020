@@ -7,7 +7,7 @@ const messageController = {
       raw: true,
       nest: true
     }).then(users => {
-      return res.render('message', { users })
+      return res.render('chat', { users })
     })
   }
 }

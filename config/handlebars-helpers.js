@@ -26,5 +26,19 @@ module.exports = {
     }
     return t + h + ':' + m + ' • ' + Y + '年' + M + '月' + D + '日'
 
+  },
+
+  time: function(a) {
+    let h = a.getHours()
+    let m = a.getMinutes()
+    let t
+    if (h >= 12) {
+      t = '下午'
+      h = h - 12
+    } else {
+      t = '上午'
+    }
+    return t + h + ':' + m
+
   }
 }
