@@ -77,6 +77,11 @@ const io = socket(server)
 io.on('connection', async socket => {
   console.log('a user connected!');
 
+  // push user data to online user list
+  onlineUsers.push({ loginID, loginName, loginAvatar, loginAccount })
+  // record user info
+  const user = onlineUsers.find(users => users.loginID === loginID)
+
   // get history message
   let historyMessages
   await Message.findAll({
@@ -87,7 +92,7 @@ io.on('connection', async socket => {
       text: item.dataValues.text,
       name: item.dataValues.User.name,
       avatar: item.dataValues.User.avatar,
-      isLoginUser: loginID === item.dataValues.User.id ? true : false,
+      isLoginUser: user.loginID === item.dataValues.User.id ? true : false,
       time: moment(item.dataValues.createdAt).format('LLL')
     }))
   })
@@ -96,10 +101,7 @@ io.on('connection', async socket => {
   socket.emit('history', historyMessages)
 
   // broadcast online
-  socket.broadcast.emit('message', `${loginName} 上線`)
-
-  // push user data to online user list
-  onlineUsers.push({ loginID, loginName, loginAvatar, loginAccount })
+  socket.broadcast.emit('message', `${user.loginName} 上線`)
 
   // emit online user
   io.emit('onlineUsers', onlineUsers)
@@ -111,10 +113,10 @@ io.on('connection', async socket => {
 
   socket.on('disconnect', function () {
     console.log('a user go out')
-    socket.broadcast.emit('message', `${loginName} 離線`)
+    socket.broadcast.emit('message', `${user.loginName} 離線`)
 
     // delete user date in online user list
-    onlineUsers = onlineUsers.filter(user => user.loginID !== loginID)
+    onlineUsers = onlineUsers.filter(users => users.loginID !== user.loginID)
     socket.broadcast.emit('onlineUsers', onlineUsers)
   })
 })
