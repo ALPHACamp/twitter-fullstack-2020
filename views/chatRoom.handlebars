@@ -1,0 +1,96 @@
+<div class="row mt-3">
+  <div class="col-md-3 pl-0">
+
+    {{> left}}
+
+  </div>
+
+  <div class="col-md-3 border-left border-right">
+
+    <h5 class="">上線使用者(999)</h5>
+    <hr>
+    <div class="row align-items-center">
+      <div class="ml-2">
+        <img src="{{user.avatar}}" alt="" class="rounded-circle" style="width: 50px">
+      </div>
+      <div class="ml-2">
+        <h4> {{user.name}} </h4>
+      </div>
+      <div class="ml-2">
+        <h4 style="color:#7B7B7B"> {{user.account}} </h4>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row align-items-center">
+      <div class="ml-2">
+        <img src="{{user.avatar}}" alt="" class="rounded-circle" style="width: 50px">
+      </div>
+      <div class="ml-2">
+        <h4> {{user.name}} </h4>
+      </div>
+      <div class="ml-2">
+        <h4 style="color:#7B7B7B"> {{user.account}} </h4>
+      </div>
+    </div>
+    <hr>
+
+    <div class="row align-items-center">
+      <div class="ml-2">
+        <img src="{{user.avatar}}" alt="" class="rounded-circle" style="width: 50px">
+      </div>
+      <div class="ml-2">
+        <h4> {{user.name}} </h4>
+      </div>
+      <div class="ml-2">
+        <h4 style="color:#7B7B7B"> {{user.account}} </h4>
+      </div>
+    </div>
+    <hr>
+  </div>
+
+  <div class="col">
+    <h5 class="">公開聊天室</h5>
+
+
+    <hr>
+
+    <div id="mario chat">
+
+      <div id="chat-window">
+        <div id="output"> </div>
+        <div id="feedback"></div>
+      </div>
+      <input id="handle" type="text" placeholder="handle">
+      <input id="message" type="text" placeholder="input">
+      <button type="submit" class="btn" id="send">Send</button>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+{{!-- 
+<div id="mario chat">
+
+  <div id="chat-window">
+    <div id="output"> </div>
+    <div id="feedback"></div>
+  </div>
+  <input id="handle" type="text" placeholder="message-input">
+  <input id="message" type="text" placeholder="input">
+  <button type="submit" class="btn" id="send">Send</button>
+</div>
+
+
+
+
+ --}}
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/script.js"></script>

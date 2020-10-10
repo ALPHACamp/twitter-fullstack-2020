@@ -8,6 +8,33 @@ const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 
+
+//chat 
+
+const path = require('path')
+const socketio = require('socket.io')
+const http = require('http')
+const server = http.createServer(app);
+const io = socketio(server)
+
+//run with client connects
+io.on('connection', socket => {
+  console.log('a user connected', socket.id)
+  socket.on('chat-message', data => {
+    io.sockets.emit('chat-message', data)
+    console.log(data)
+  })
+  //handle chat event
+  socket.on('chat', data => {
+    io.sockets.emit('chat', data);
+  })
+  socket.on('typing', data => {
+    socket.broadcast.emit('typing', data)
+  })
+})
+
+
+//flash
 const flash = require('connect-flash')
 const session = require('express-session')
 
@@ -48,8 +75,9 @@ app.use((req, res, next) => {
 app.use(express.static('public'))
 
 
+server.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
 
 require('./routes')(app, passport) // passport 傳入 routes
 

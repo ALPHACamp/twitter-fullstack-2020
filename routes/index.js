@@ -1,6 +1,7 @@
 const userController = require("../controllers/userController");
 const tweetController = require("../controllers/tweetController");
 const adminController = require('../controllers/adminController')
+const chatRoomController = require('../controllers/chatRoomController')
 const helpers = require('../_helpers.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -89,6 +90,13 @@ module.exports = (app, passport) => {
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+
+  //chatRoomController
+  app.get('/chatRoom', chatRoomController.getChatRoom)
+
+
+  //chat
+  app.get('/chat', (req, res) => res.render('chat'))
 
 
 }
