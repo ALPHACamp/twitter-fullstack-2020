@@ -60,11 +60,14 @@
   </div>
 </div>
 {{!-- user Edit modal --}}
+
 <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="row ">
     <div class="modal-dialog ">
-      <form action="/user/{{user.id}}/self?_method=PUT" method="POST" enctype="multipart/form-data">
+      <form class="col-md-9 pl-0 border-left" action="/users/{{user.id}}/edit?_method=PUT" method="POST"
+        enctype="multipart/form-data">
+
         <div class="modal-content edit-modal-content ">
           <div class="edit-modal-header">
             <div class="d-inline-flex justify-content-between">
@@ -83,13 +86,12 @@
 
             <div class="edit-item-avatar rounded-circle" style="background: url({{user.avatar}}),#C4C4C4;
                       position: absolute; max-width: 20%; top:22%; left:8%;border: 5px solid white;">
-
               <label for="avatar"><i class="icon-photo avatar"></i></label>
               <input type="file" name="avatar" class="custom-file-input" id="avatar">
             </div>
 
             <div class="edit-item-cover"
-              style="background: url({{user.background}});border-radius: 15px 15px 15px 15px width:100%;height: 150px">
+              style="background: url({{user.background}});border-radius: 15px 15px 15px 15px width:200%;height: 150px">
               <label for="background"><i class="icon-photo background"></i></label>
               <input type="file" name="background" class="custom-file-input" id="background">
               {{!-- <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button> --}}
@@ -110,7 +112,7 @@
                 <span class="item-text-top-mark ">自我介紹</span>
               </div>
               <textarea name="introduction" id="introduction" placeholder="introduction" maxlength="160"
-                class="item-text-center ml-2 mr-2" cols="60" rows="10">{{user.introduction}}</textarea>
+                class="item-text-center ml-2 mr-2" cols="25" rows="10">{{user.introduction}}</textarea>
               <div class="item-text-bottom row justify-content-center">
                 <span>{{user.introduction.length}}/160</span>
               </div>
@@ -130,7 +132,7 @@
       </form>
     </div>
   </div>
-</div>
+</div> 
 {{!-- other user --}}
 <div class="modal fade" id="user-tweet-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
