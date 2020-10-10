@@ -7,36 +7,10 @@
 
   <div class="col-md-3 border-left border-right">
 
-    <h5 class="">上線使用者(999)</h5>
+    <h5 class="">上線使用者(<span id="online">0</span>)</h5>
     <hr>
     <div class="row align-items-center">
-      <div class="ml-2">
-        <img src="{{user.avatar}}" alt="" class="rounded-circle" style="width: 50px">
-      </div>
-      <div class="ml-2">
-        <h4> {{user.name}} </h4>
-      </div>
-      <div class="ml-2">
-        <h4 style="color:#7B7B7B"> {{user.account}} </h4>
-      </div>
-    </div>
-    <hr>
-
-    <div class="row align-items-center">
-      <div class="ml-2">
-        <img src="{{user.avatar}}" alt="" class="rounded-circle" style="width: 50px">
-      </div>
-      <div class="ml-2">
-        <h4> {{user.name}} </h4>
-      </div>
-      <div class="ml-2">
-        <h4 style="color:#7B7B7B"> {{user.account}} </h4>
-      </div>
-    </div>
-    <hr>
-
-    <div class="row align-items-center">
-      <div class="ml-2">
+      <div class="onlineList ml-2">
         <img src="{{user.avatar}}" alt="" class="rounded-circle" style="width: 50px">
       </div>
       <div class="ml-2">
@@ -65,7 +39,7 @@
       <input id="avatar" type="hidden" value="{{user.avatar}}">
       <input id="name" type="hidden" value="{{user.name}}">
       <input id="message" type="text" placeholder="輸入訊息">
-      <button type="submit" class="btn" id="send">Send</button>
+      <button type="submit" class="btn" id="send"><i class="fas fa-paper-plane"></i></button>
     </div>
   </div>
 

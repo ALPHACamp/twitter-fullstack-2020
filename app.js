@@ -23,19 +23,25 @@ const io = socketio(server)
 
 
 const users = {}
+let onlineCount = 0
 
 //run with client connects
 io.on('connection', socket => {
+  // 有連線發生時增加人數
+  onlineCount++;
+  // 發送人數給網頁
+  io.emit("online", onlineCount)
 
+  socket.on('userOnline', () => {
+    socket.emit('userOnline', 'Hi, User')
+  })
 
   console.log('username', name)
-
   console.log('a user connected', socket.id)
   //Welcome current user
   socket.emit('message', 'Welcome to Chat')
   //broadcast when a user connects
   socket.broadcast.emit('message', 'A user has joined the chat')
-
 
   socket.on('chat-message', data => {
     io.sockets.emit('chat-message', data)
@@ -55,6 +61,9 @@ io.on('connection', socket => {
 
   //Runs when client disconnects
   socket.on('disconnect', () => {
+    // 有人離線, 扣人數
+    onlineCount = (onlineCount < 0) ? 0 : onlineCount -= 1
+    io.emit("online", onlineCount)
     io.emit('message', 'A user hase left the chat')
   });
 })

@@ -5,8 +5,12 @@ const avatar = document.getElementById('avatar')
 const btn = document.getElementById('send')
 const output = document.getElementById('output')
 const feedback = document.getElementById('feedback')
+const online = document.getElementById('online')
 
-
+// 當觸發連線時, 傳送 userOnline 事件給伺服器
+socket.on("connect", () => {
+  socket.emit("userOnline")
+})
 
 //提示訊息
 socket.on('message', message => {
@@ -46,7 +50,9 @@ socket.on('typing', data => {
   feedback.innerHTML = ' <p><em>' + data.name + 'is typing a message......</em></p>'
 })
 
-
+socket.on('online', amount => {
+  online.innerText = amount
+})
 
 // messageForm.addEventListener('submit', e => {
 //   e.preventDefault()
