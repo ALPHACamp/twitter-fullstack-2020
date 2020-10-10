@@ -52,7 +52,7 @@ app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
 
-let loginID, loginName, loginAvatar
+let loginID, loginName, loginAvatar, loginAccount
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
@@ -63,13 +63,13 @@ app.use((req, res, next) => {
     loginID = helpers.getUser(req).id
     loginName = helpers.getUser(req).name
     loginAvatar = helpers.getUser(req).avatar
-    // loginAccount = helpers.getUser(req).account
-    // console.log(helpers.getUser(req))
+    loginAccount = helpers.getUser(req).account
   }
 
   next()
 })
 
+let onlineUsers = []
 
 const server = app.listen(PORT, () => console.log(`Express is listening on http://localhost:${PORT}`))
 const io = socket(server)
@@ -112,6 +112,12 @@ io.on('connection', async socket => {
   socket.broadcast.emit('message', `${loginName} 上線`)
   socket.broadcast.emit('online', loginAvatar)
 
+  // push user data to online user list
+  onlineUsers.push({ loginID, loginName, loginAvatar, loginAccount })
+
+  // emit online user
+  io.emit('onlineUsers', onlineUsers)
+
   socket.on("message", data => {
     console.log('send message')
     io.emit("message", 'data')
@@ -127,6 +133,10 @@ io.on('connection', async socket => {
   socket.on('disconnect', function () {
     console.log('a user go out')
     socket.broadcast.emit('message', `${loginName} 離線`)
+
+    // delete user date in online user list
+    onlineUsers = onlineUsers.filter(user => user.loginID !== loginID)
+    socket.broadcast.emit('onlineUsers', onlineUsers)
   })
 
 })
