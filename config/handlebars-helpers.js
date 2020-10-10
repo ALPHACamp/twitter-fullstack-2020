@@ -39,6 +39,5 @@ module.exports = {
       t = '上午'
     }
     return t + h + ':' + m
-
   }
 }
