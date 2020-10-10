@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Message } = require('../models')
 let chatroomList = []
 
 async function joinChatroomList(newUserId, socketId, io, socket) {
@@ -30,6 +30,12 @@ function disconnectUser(socketId, io) {
   io.emit('chat list', chatroomList)
 }
 
+async function saveMessage(socket, msgInfo) {
+  await Message.create({ text: msgInfo.msg, UserId: msgInfo.userId })
+  socket.broadcast.emit('new message', msgInfo)
+  console.log('message: .......................' + msgInfo)
+}
+
 module.exports = io => {
   io.on('connection', (socket) => {
     console.log('user connect socketid=', socket.id)
@@ -39,9 +45,8 @@ module.exports = io => {
     socket.on('disconnect', () => {
       disconnectUser(socket.id, io)
     })
-    socket.on('chat message', (msg) => {
-      socket.broadcast.emit('new message', msg)
-      console.log('message: .......................' + msg)
+    socket.on('chat message', (msgInfo) => {
+      saveMessage(socket, msgInfo)
     })
   })
 }

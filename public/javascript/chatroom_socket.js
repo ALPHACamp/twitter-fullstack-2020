@@ -47,12 +47,13 @@
   })
 
   chatForm.addEventListener('submit', (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const msg = document.querySelector('#msg').value
-    const createdTime = moment().calendar()
-    const msgInfo = { msg, avatar: userAvatar, userId, createdTime }
-    socket.emit('chat message', msgInfo)
-    chatMessages.innerHTML += `
+    if (msg.trim()) {
+      const createdTime = moment().calendar()
+      const msgInfo = { msg, avatar: userAvatar, userId, createdTime }
+      socket.emit('chat message', msgInfo)
+      chatMessages.innerHTML += `
     <div class='d-flex flex-row justify-content-end my-2'>
         <div class="d-flex align-items-center">
           <div class="send-message d-flex flex-column align-items-end ">
@@ -64,6 +65,7 @@
         </div>
       </div>
     `
+    }
     document.querySelector('#msg').value = ''
   })
 

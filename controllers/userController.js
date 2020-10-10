@@ -1,11 +1,8 @@
-const { User, Reply, Tweet, Like, Followship } = require('../models')
+const { User, Reply, Tweet, Like, Followship, Message } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { Op } = require('sequelize')
 const helpers = require('../_helpers')
 const imgur = require('imgur-node-api')
-
-
-
 
 const userController = {
   registerPage: (req, res) => {
@@ -343,8 +340,15 @@ const userController = {
         return next()
       })
   },
-  getChatroom: (req, res) => {
-    return res.render('chatroom')
+  getChatroom: async (req, res) => {
+    const messages = await Message.findAll({
+      raw: true,
+      nest: true,
+      include: [User],
+      order: [["createdAt", "ASC"]]
+    })
+    console.log('message............', messages)
+    return res.render('chatroom', { messages })
   }
 }
 

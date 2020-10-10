@@ -66,6 +66,7 @@ html{ height:100%}
   color:#FF6600;
   padding-left:0px;
   padding-right: 20px;
+  outline: none;
 }
 
 .received-message{
