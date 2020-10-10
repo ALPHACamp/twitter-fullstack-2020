@@ -21,7 +21,6 @@ socket.on('chat-message', data => {
 
 //chatroomhandlebars傳來的資訊
 btn.addEventListener('click', e => {
-  console.log('成功')
   e.preventDefault()
   socket.emit('chat-message',
     {
@@ -34,7 +33,7 @@ btn.addEventListener('click', e => {
 });
 
 message.addEventListener('keypress', () => {
-  socket.emit('typing', name);
+  socket.emit('typing', name.value);
 })
 
 //Listen for events
@@ -43,7 +42,7 @@ socket.on('chat-message', (data) => {
 })
 
 socket.on('typing', data => {
-  feedback.innerHTML = ' <p><em>' + data.name + 'is typing a message......</em></p>'
+  feedback.innerHTML = ' <p><em>' + data + ' is typing a message......</em></p>'
 })
 
 
