@@ -62,8 +62,10 @@ io.on('connection', socket => {
   user.currentUser = true;
   socket.emit("message", `歡迎加入聊天室 ${user.name}`);
   socket.broadcast.emit("message", `${user.name} 加入聊天室`);
- 
+  io.emit('onlineUsers', onlineUsers)
   socket.on("disconnect", ()=>{
+    onlineUsers = onlineUsers.filter(user => user.id !== id)
+    io.emit('onlineUsers', onlineUsers)
     io.emit("message", `${user.name} 離開聊天室`)
   });
   // user get msg from input & send back
