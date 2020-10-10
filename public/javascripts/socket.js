@@ -35,8 +35,41 @@ socket.on('history', data => {
   });
 })
 socket.on('message', (data) => {
-  console.log(data);
-});
+  chatmessage.innerHTML += `
+    <div style="text-align: center">
+      <div class="bg-light rounded py-2 px-3 mb-3" style="width:auto !important; display:inline-block">
+        <p class=" text-small mb-0 text-muted">${data}</p>
+      </div>
+    </div>
+  `
+})
+
+socket.on('onlineUsers', (data) => {
+  let userlists = ``;
+
+  data.forEach(user => {
+    userlists += `
+      <div class="list-group rounded-0">
+        <a class="list-group-item list-group-item-action text-white rounded-0 p-1"
+              style="border:none; border-bottom: 1px solid #E6ECF0">
+          <div class="media">
+            <img class="m-1" src=${user.loginAvatar}
+                  style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+              <div class="media-body ml-2 align-self-center">
+                <div class="mb-1">
+                  <span class="user-name">${user.loginName}</span>
+                  <span class="user-account">@${user.loginAccount}</span><br>
+                </div>
+              </div>
+          </div>
+        </a>
+      </div>
+    `
+    usertitle.innerHTML = `<p class="h5 mb-0 font-weight-bold">上線使用者(${data.length})</p>`
+  })
+
+  chatUserlist.innerHTML = userlists
+})
 
 // 監聽按鈕
 document.querySelector('#button-addon2').addEventListener('click', () => {
@@ -72,11 +105,29 @@ function appendData(data) {
   scrollWindow()
 }
 
+function appendUser(users) {
+  onlineuser.innerHTML += `
+    <a class="list-group-item list-group-item-action text-white rounded-0 p-1"
+      style="border:none; border-bottom: 1px solid #E6ECF0">
+      <div class="media">
+        <img class="m-1" {{#if user.avatar}}src={{user.avatar}}{{/if}}
+          style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+        <div class="media-body ml-2 align-self-center">
+          <div class="mb-1">
+            <span class="user-name">{{user.name}}</span>
+            <span class="user-account">@${users.loginAvatar}</span><br>
+          </div>
+        </div>
+      </div>
+    </a>
+  `
+  scrollWindow()
+}
+
 // 傳送訊息給大家
 socket.on('chat', data => {
   console.log('Get chat')
   console.log('chat data', data)
-  // data.forEach(message => {
   chatmessage.innerHTML += `
         <div class="media w-50 mb-3">
           <img src="${data.avatar}" alt="user"
@@ -91,8 +142,6 @@ socket.on('chat', data => {
       `
   scrollWindow()
 })
-// })
-
 
 function scrollWindow() {
   let h = document.querySelector('.chat-box')
