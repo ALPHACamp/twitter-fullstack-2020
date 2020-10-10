@@ -16,10 +16,7 @@ const passport = require('../config/passport')
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 module.exports = (app, passport, io) => {
-  const websocket = (req, res, next) => {
-    require('../controllers/websocketController')(io, helpers.getUser(req), req.params.userId)
-    return next()
-  }
+  
 
   const apiAuthenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -123,6 +120,6 @@ module.exports = (app, passport, io) => {
   app.post('/api/users/:userId', apiAuthenticated, userController.apiPostUserInfo)
   app.post('/api/signin', userController.apiSignIn)
 
-  app.get('/message', authenticated, websocket, messageController.getMessage)
-  app.get('/message/:userId', authenticated, websocket, messageController.getPrivateMessage)
+  app.get('/message', authenticated, messageController.getMessage)
+  app.get('/privateMessage', authenticated, messageController.getPrivateMessage)
 }

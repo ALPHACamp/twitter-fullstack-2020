@@ -2,6 +2,7 @@ var socket = io()
 
 const chatForm = document.getElementById('chat-form')
 const chatMessages = document.getElementById('chat-messages')
+var queryString = require('query-string')
 
 //online user
 socket.on('message', (data) => {
@@ -31,6 +32,7 @@ function appendUserData(data) {
   u.appendChild(li)
 }
 
+//send message
 chatForm.addEventListener('submit', e => {
   e.preventDefault()
   const msg = e.target.elements.message.value
@@ -39,12 +41,12 @@ chatForm.addEventListener('submit', e => {
   if (selector.value === 'public') {
     //public message
     socket.emit('chatMessage', msg)
-    console.log('public')
   }
   else {
+    // let { messageToId } = queryString.parse(window.location.search)
+    // console.log(messageToId)
     //private message
-    socket.emit('joinRoom', msg)
-    console.log('private')
+    socket.emit('joinRoom', { msg, messageToId})
   }
 
   //clear inputs
@@ -68,7 +70,6 @@ socket.on('privateMessage', (data) => {
 })
 
 function appendData(data) {
-  //chat message
   const loginUserId = document.getElementById('loginUserId').value
   const el = document.getElementById('chat-messages')
   let htmlString
@@ -101,3 +102,13 @@ function appendData(data) {
   }
   el.appendChild((document.createElement('div'))).innerHTML = htmlString
 }
+
+//alert
+socket.on('alert', () => {
+  const privateMessage = document.getElementById('private-message')
+  let htmlString = `
+  <div style="border:4px red solid;border-radius:2px;" ></div>
+  `
+  console.log(htmlString)
+  privateMessage.appendChild((document.createElement('div'))).innerHTML = htmlString
+})
