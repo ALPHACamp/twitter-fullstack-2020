@@ -4,6 +4,33 @@ const chatOutput = document.getElementById('output');
 const chatForm = document.getElementById("chat-form");
 const onlineUserColumn = document.querySelector(".online-user-column");
 let onlineUsers = []
+// history message
+socket.on('history', data => {
+  for (let i = 0; i < data.length; i++) {
+    // if (data[i].currentUser === true) {
+    //   output.innerHTML += `
+    //   <div class="self-message">
+    //       <div class="self-text">${data[i].message}</div>
+    //       <div class="chat-time">${data[i].time}</div>
+    //     </div>
+    //   `
+    // }
+    // else {
+      output.innerHTML += `
+        <div class="chat-message">
+          <div class="chat-avatar" style="background: url('${data[i].avatar}'),#C4C4C4; background-position:center;background-size:cover;">
+            </div>
+          <div class="column">
+            <div class="chat-text"><span>${data[i].name} :</span>${data[i].message}</div>
+            <div class="chat-time">${data[i].time}</div>
+          </div>
+        </div>
+      `
+    // }
+  }
+
+  chatOutput.scrollTop = chatOutput.scrollHeight
+})
 
 // user come in
 socket.on('message', data => {
