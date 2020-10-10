@@ -61,83 +61,38 @@
         <div id="output"> </div>
         <div id="feedback"></div>
       </div>
-      <input id="handle" type="text" value="{{user.name}}" placeholder="handle">
+
+      <input id="avatar" type="hidden" value="{{user.avatar}}">
+      <input id="name" type="hidden" value="{{user.name}}">
       <input id="message" type="text" placeholder="輸入訊息">
       <button type="submit" class="btn" id="send">Send</button>
     </div>
   </div>
 
-  {{!-- <div class="col-6 border-right">
-    <h5 class="">公開聊天室</h5>
-    <hr>
 
-    <ul id="messages"></ul>
-    <form action="">
-      <input id="m" autocomplete="off" placeholder="輸入訊息..." /><button><i class="far fa-paper-plane"></i></button>
-    </form>
 
-  </div> --}}
 
 </div>
+
+{{!-- 
+<div id="mario chat">
+
+  <div id="chat-window">
+    <div id="output"> </div>
+    <div id="feedback"></div>
+  </div>
+  <input id="handle" type="text" placeholder="message-input">
+  <input id="message" type="text" placeholder="input">
+  <button type="submit" class="btn" id="send">Send</button>
+</div>
+
+
+
+
+ --}}
+
+
+
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script>
-  $(function () {
-    var socket = io();
-    $('form').submit(function (e) {
-      e.preventDefault(); // prevents page reloading
-      socket.emit('chat message', $('#m').val());
-      $('#m').val('');
-      return false;
-    });
-    socket.on('chat message', function (msg) {
-      $('#messages').append($('<li>').text(msg));
-    });
-  });
-</script>
-
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  form {
-    width: 35%;
-    padding: 3px;
-    position: fixed;
-    bottom: 2rem;
-  }
-
-  form input {
-    border: 0;
-    padding: 10px;
-    width: 90%;
-    margin-right: 0.5%;
-    border-radius: 50px;
-    background-color: antiquewhite;
-    outline: none;
-  }
-
-  form button {
-    border: none;
-    padding: 10px;
-    outline: none;
-    background: rgba(255, 255, 255, 0.5)
-  }
-
-  #messages {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  #messages li {
-    padding: 5px 10px;
-  }
-
-  #messages li:nth-child(odd) {
-    background: #eee;
-  }
-</style>
+<script src="/script.js"></script>

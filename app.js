@@ -2,14 +2,65 @@ const express = require('express')
 const helpers = require('./_helpers');
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
+const port = process.env.PORT || 3000
 const app = express()
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
 const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
-const port = process.env.PORT || 3000
+const User = db.User
 
+let id, name, account, avatar
+
+
+
+//chat 
+
+const path = require('path')
+const socketio = require('socket.io')
+const http = require('http')
+const server = http.createServer(app);
+const io = socketio(server)
+
+
+const users = {}
+
+//run with client connects
+io.on('connection', socket => {
+
+
+  console.log('username', name)
+
+  console.log('a user connected', socket.id)
+  //Welcome current user
+  socket.emit('message', 'Welcome to Chat')
+  //broadcast when a user connects
+  socket.broadcast.emit('message', 'A user has joined the chat')
+
+
+  socket.on('chat-message', data => {
+    io.sockets.emit('chat-message', data)
+    console.log("chatroom 傳來的資訊 ", data)
+  })
+
+  //handle chat event
+  socket.on('chat', data => {
+    io.sockets.emit('chat', data);
+  })
+
+  // Runs when a user is typing
+  socket.on('typing', data => {
+    socket.broadcast.emit('typing', data)
+    console.log("typing", data)
+  })
+
+  //Runs when client disconnects
+  socket.on('disconnect', () => {
+    io.emit('message', 'A user hase left the chat')
+  });
+})
+
+
+//flash
 const flash = require('connect-flash')
 const session = require('express-session')
 
@@ -56,6 +107,8 @@ io.on('connection', (socket) => {
 });
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+
 
 require('./routes')(app, passport) // passport 傳入 routes
 
