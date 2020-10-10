@@ -77,7 +77,6 @@ let onlineCount = 0
 
 //run with client connects
 io.on('connection', socket => {
-
   // 有連線發生時增加人數
   onlineCount++;
   // 發送人數給網頁
@@ -125,6 +124,9 @@ io.on('connection', socket => {
   socket.on('typing', data => {
     socket.broadcast.emit('typing', data)
   })
+
+
+  console.log("user", onlineUsers)
 
 
 })

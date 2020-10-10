@@ -60,7 +60,7 @@ socket.on('onlinePPL', data => {
   onlineUsers.push(data)
   let package = ``
 
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 1; i < data.length; i++) {
     package += `
     <div class="row align-items-center">
       <div class="ml-2">
