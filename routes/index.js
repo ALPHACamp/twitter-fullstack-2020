@@ -53,4 +53,5 @@ module.exports = app => {
   app.delete('/followships/:followingId', authenticated, userController.removeFollowing)
 
   app.get('/chatroom/', authenticated, userController.getChatroom)
+  app.get('/pm/:id', authenticated, userController.getPrivateChat)
 }

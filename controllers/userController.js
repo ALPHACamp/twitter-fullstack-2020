@@ -347,8 +347,13 @@ const userController = {
       include: [User],
       order: [["createdAt", "ASC"]]
     })
-    console.log('message............', messages)
     return res.render('chatroom', { messages })
+  },
+  getPrivateChat: async (req, res) => {
+    const relativeId = req.params.id
+    let relativeUser = await User.findByPk(relativeId)
+    relativeUser = relativeUser.toJSON()
+    return res.render('privateChat', { relativeId, relativeName: relativeUser.name })
   }
 }
 

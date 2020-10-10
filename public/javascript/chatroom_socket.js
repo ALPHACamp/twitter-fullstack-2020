@@ -60,8 +60,6 @@
             <div class="message">${msg}</div>
             <small class="send-time text-muted">${createdTime}</small>
           </div>
-          <img class="message-image rounded-circle ml-2"
-            src="${userAvatar}" alt="">
         </div>
       </div>
     `
