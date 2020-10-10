@@ -81,3 +81,9 @@
   background:rgb(255, 102, 0);
   color:white;
 }
+
+#chat-messages {
+  padding: 30px;
+  max-height: 550px;
+	overflow-y: scroll;
+}

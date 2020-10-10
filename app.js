@@ -28,7 +28,13 @@ app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+const sessionMiddleware = session({
+  secret: 'secret', 
+  resave: false, 
+  saveUninitialized: false
+})
+
+app.use(sessionMiddleware)
 app.use(methodOverride('_method'))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -46,6 +52,10 @@ app.use((req, res, next) => {
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, socket.request.res || {}, next)
+})
+
 // run when a client connects
 // io.on('connection', (socket) => {
 //   console.log('a user connected')
@@ -59,7 +69,6 @@ app.use((req, res, next) => {
 //     console.log('message: ' + msg)
 //   })
 // })
-
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

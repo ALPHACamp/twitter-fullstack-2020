@@ -31,7 +31,21 @@
     </li>
     <li class="list-group-item">
       <div style="height: 77vh;">
-        <ul id="messages" style="list-style: none;"></ul>
+        <ul id="chat-messages" style="list-style: none;">
+          {{#each messages}}
+          <div class="flex-container">
+            <div>
+              <img src="{{../loginUser.avatar}}" class="user-avatar" style="margin-right:4px;">
+            </div>
+            <div>
+              <section style="background-color:lightgrey; float: right; width:270px; border-radius:20px; padding:6px;">
+                {{this.message}}
+              </section>
+              <font class="text-muted" size="2px">{{time this.createdAt}}</font>
+            </div>
+          </div>
+          {{/each}}
+        </ul>
       </div>
     </li>
     <li class="list-group-item">
