@@ -52,7 +52,7 @@ app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
 
-let loginID, loginName
+let loginID, loginName, loginAvatar
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
@@ -62,6 +62,9 @@ app.use((req, res, next) => {
   if (helpers.getUser(req)) {
     loginID = helpers.getUser(req).id
     loginName = helpers.getUser(req).name
+    loginAvatar = helpers.getUser(req).avatar
+    // loginAccount = helpers.getUser(req).account
+    // console.log(helpers.getUser(req))
   }
 
   next()
@@ -73,6 +76,7 @@ const io = socket(server)
 
 io.on('connection', async socket => {
   console.log('a user connected!');
+
 
   // get history message
   let historyMessages
@@ -89,21 +93,42 @@ io.on('connection', async socket => {
     }))
   })
 
+  let users
+  await User.findAll().then(results => {
+    // console.log(results[0].dataValues)
+    users = results.map(item => ({
+      ...item.dataValues,
+      account: item.dataValues.account,
+      name: item.dataValues.name,
+      avatar: item.dataValues.avatar,
+    }))
+  })
+
+
+
   // emit history message to user
   socket.emit('history', historyMessages)
-
   // broadcast online
   socket.broadcast.emit('message', `${loginName} 上線`)
+  socket.broadcast.emit('online', loginAvatar)
 
   socket.on("message", data => {
     console.log('send message')
     io.emit("message", 'data')
   })
 
+  socket.on("connected", users => {
+    console.log('send user')
+    console.log('users:', users)
+
+    io.emit("connected", users)
+  })
+
   socket.on('disconnect', function () {
     console.log('a user go out')
     socket.broadcast.emit('message', `${loginName} 離線`)
   })
+
 })
 
 

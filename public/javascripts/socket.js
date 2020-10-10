@@ -6,7 +6,7 @@ console.log('hi')
 
 socket.on('chat', data => {
   console.log('Get chat')
-  console.log(data)
+  // console.log(data)
   // socket.emit('message', 'Hi! Robby');
 })
 
@@ -51,6 +51,11 @@ socket.on('message', (data) => {
       </div>
     </div>
   `
+  appendUser(data)
+});
+
+socket.on('online', (data) => {
+  appendUser(data)
 });
 
 
@@ -84,6 +89,26 @@ function appendData(data) {
         <p class="small text-muted">${moment(data.time).fromNow()}</p>
       </div>
     </div>
+  `
+  scrollWindow()
+}
+
+
+function appendUser(users) {
+  onlineuser.innerHTML += `
+    <a class="list-group-item list-group-item-action text-white rounded-0 p-1"
+      style="border:none; border-bottom: 1px solid #E6ECF0">
+      <div class="media">
+        <img class="m-1" {{#if user.avatar}}src={{user.avatar}}{{/if}}
+          style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+        <div class="media-body ml-2 align-self-center">
+          <div class="mb-1">
+            <span class="user-name">{{user.name}}</span>
+            <span class="user-account">@${users.loginAvatar}</span><br>
+          </div>
+        </div>
+      </div>
+    </a>
   `
   scrollWindow()
 }
