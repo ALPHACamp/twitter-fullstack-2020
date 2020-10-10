@@ -23,13 +23,29 @@
                         <img src="{{ pageUser.avatar }}" alt="pageUser-avatar" class="rounded-circle"
                             style="mborder-radius: 50%; position: absolute; top: 160px; left: 3%; border: 5px solid #FFFFFF;">
                     </div>
-                    {{#ifCond user.id pageUser.id}}
-                        <div class="row justify-content-end">
-                            <button class="m-3" data-toggle="modal" data-target="#editModal"
-                            style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">編輯個人資料</button>
-                        </div>
-                        {{>modal}}
-                    {{/ifCond}}
+                     <div class="pt-2 pr-5" style="width: 100%;text-align: right;">
+                        {{#ifCond user.id pageUser.id}}
+                            <div class="row justify-content-end">
+                                <button class="m-3" data-toggle="modal" data-target="#editModal"
+                                    style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">編輯個人資料</button>
+                            </div>
+                        {{else}}
+                            {{#if pageUser.isFollowed}}
+                                <a href="mailto:{{user.email}}">
+                                    <i class="far fa-envelope"></i>
+                                </a>
+                                <i class="far fa-bell"></i>
+                                <form action="/following/{{ pageUser.id }}?_method=DELETE" method="POST">
+                                    <button class="btn btn-warning" style="">正在跟隨</button>
+                                </form>
+                            {{else}}
+                                <form action="/following/{{ pageUser.id }}" method="POST">
+                                    <button class="btn btn-outline-warning" style="">跟隨</button>
+                                </form>
+                            {{/if}}
+                        {{/ifCond}}
+                    </div>
+                    {{>modal}}
                     <div class=" justify-content ml-2 mt-5">
                         <h2>{{ pageUser.name }}</h2>
 

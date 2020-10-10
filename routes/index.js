@@ -22,6 +22,8 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  app.get('/chat', authenticated, (req, res) => res.render('chatroom'))
+
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   app.get("/admin/tweets", authenticatedAdmin, adminController.getTweets);
   app.get('/admin/signin', adminController.signinPage)

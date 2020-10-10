@@ -40,7 +40,7 @@ const userController = {
           }).then(user => {
             req.flash('success_messages', 'registered successfully')
             return res.redirect('/signin')
-          })
+          }).catch(err=>console.log(err));
         }
       })
     }
@@ -247,7 +247,7 @@ const userController = {
         })
         pageUser.followingCount = pageUser.Followings.length;
         pageUser.followersCount = pageUser.Followers.length;
-        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(req.user.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render('user/user-tweets', { pageUser })
       })
   },
@@ -294,7 +294,7 @@ const userController = {
         })
         pageUser.followingCount = pageUser.Followings.length;
         pageUser.followersCount = pageUser.Followers.length;
-        // pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render("user/user-replies", { pageUser });
       })
   },
@@ -314,7 +314,7 @@ const userController = {
         })
         pageUser.followingCount = pageUser.Followings.length;
         pageUser.followersCount = pageUser.Followers.length;
-        // pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+        pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
         res.render("user/user-likes", { pageUser });
       })
   },
