@@ -17,8 +17,6 @@ const messageController = {
   },
 
   getPrivateMessage: (req, res) => {
-    console.log(req.user.id)
-    console.log(req.params.userId)
     Message.findAll({
       where: {
         [Op.or]: [
