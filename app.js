@@ -3,23 +3,13 @@ const helpers = require('./_helpers');
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const app = express()
+const server = require('http').Server(app)
+const io = require('socket.io')(server)
 const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const port = process.env.PORT || 3000
-let sequelize = new Sequelize('Heroku-twitter', 'b423f244b3010c', 'e0a33201', {
-  host: 'localhost',
-  port: 3306,
-  dialect: 'mysql',
-  dialectOptions: {
-    socketPath: '/tmp/mysql.sock' // 指定套接字檔案路徑
-  },
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  }
-});
+
 const flash = require('connect-flash')
 const session = require('express-session')
 
@@ -59,8 +49,13 @@ app.use((req, res, next) => {
 //使用public 資料夾
 app.use(express.static('public'))
 
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+server.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes')(app, passport) // passport 傳入 routes
 

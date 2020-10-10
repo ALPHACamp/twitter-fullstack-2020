@@ -18,23 +18,9 @@
 
 <body>
   <div class="container">
-
+    <div id="msg"></div>
 
     {{{body}}}
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-      $(function () {
-        var socket = io();
-        $('form').submit(function (e) {
-          e.preventDefault(); // prevents page reloading
-          socket.emit('chat message', $('#m').val());
-          $('#m').val('');
-          return false;
-        });
-      });
-    </script>
 
 </body>
 

@@ -93,4 +93,5 @@ module.exports = (app, passport) => {
 
   //chatRoomController
   app.get('/chatRoom', chatRoomController.getChatRoom)
+
 }
