@@ -56,8 +56,13 @@ app.use((req, res, next) => {
 //   sessionMiddleware(socket.request, socket.request.res || {}, next)
 // })
 
+
+
+
 // run when a client connects
 // io.on('connection', (socket) => {
+//   const currentUser = socket.request.session
+//   console.log(currentUser.avatar)
 //   console.log('a user connected')
 //   socket.on('disconnect', () => {
 //     console.log('user disconnected')
@@ -69,6 +74,8 @@ app.use((req, res, next) => {
 //     console.log('message: ' + msg)
 //   })
 // })
+
+
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

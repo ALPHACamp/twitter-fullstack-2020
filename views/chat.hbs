@@ -14,7 +14,13 @@
 <div class="col">
   <ul class="list-group">
     <li class="list-group-item">
-      <strong>公開聊天室</strong>
+      {{#if public}}
+      <strong>公開聊天室</strong>      
+      <input class="selector" style="display: none;" value="public">
+      {{else}}
+      <strong>私人訊息</strong>
+      <input class="selector" style="display: none;" value="private">
+      {{/if}}
     </li>
     <li class="list-group-item">
       <div style="height: 77vh;">
