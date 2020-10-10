@@ -2,6 +2,7 @@ const time = require('../config/handlebars-helpers').time
 const db = require('../models')
 const Message = db.Message
 
+
 module.exports = (io, user, messageToId) => {
   io.on('connection', (socket) => {
     console.log('a user connected')
