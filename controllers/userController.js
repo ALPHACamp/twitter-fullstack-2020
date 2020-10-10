@@ -24,7 +24,8 @@ const userController = {
       return res.redirect('/signup')
     } else {
       // confirm unique user
-      User.findOne({ where: { [Op.or]: [{ email: req.body.email }, { account: req.body.account }] }, raw: true
+      User.findOne({
+        where: { [Op.or]: [{ email: req.body.email }, { account: req.body.account }] }, raw: true
       }).then(user => {
         if (user) {
           if (user.email === req.body.email) { req.flash('error_messages', '此email已經被註冊') }
@@ -64,7 +65,7 @@ const userController = {
   },
   putSelf: async (req, res) => {
 
-    const { avatar, cover } = req.files
+    const { avatar, background } = req.files
     const { files } = req
 
     if (req.user.id !== Number((req.params.id))) {
@@ -83,10 +84,10 @@ const userController = {
               user.update({ avatar: img.data.link }))
         })
       }
-      if (cover) {
-        await imgur.upload(cover[0].path, (err, img) => {
+      if (background) {
+        await imgur.upload(background[0].path, (err, img) => {
           User.findByPk(req.user.id)
-            .then(user => user.update({ cover: img.data.link }))
+            .then(user => user.update({ background: img.data.link }))
         })
       }
     }

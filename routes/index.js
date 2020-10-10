@@ -66,7 +66,7 @@ module.exports = (app, passport) => {
   app.get('/user/self/:id', authenticated, userController.getTweet)
   // app.get('/users/:id', authenticated, userController.editUser)
   // app.put('/user/:id', authenticated, userController.putUser)
-  app.put('/users/:id/edit', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putSelf)
+  app.put('/users/:id/edit', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'background', maxCount: 1 }]), userController.putSelf)
 
 
   app.get('/user/:id/follower', userController.getUsersHavingTopFollowers, authenticated, userController.getFollower)
