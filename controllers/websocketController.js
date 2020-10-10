@@ -7,8 +7,18 @@ module.exports = (io, user) => {
   io.once('connection', (socket) => {
     console.log('a user connected')
 
+    io.emit('message', {
+      id: user.id,
+      username: user.name,
+      account: user.account,
+      avatar: user.avatar
+    })
+
+    // run when user disconnects
     socket.on('disconnect', () => {
       console.log('user disconnected')
+      io.emit('message')
+
     })
 
     // listen for chat message
@@ -20,6 +30,7 @@ module.exports = (io, user) => {
       io.emit('chatMessage', {
         id: user.id,
         username: user.name,
+        account: user.account,
         avatar: user.avatar,
         message: msg,
         time: time(new Date())

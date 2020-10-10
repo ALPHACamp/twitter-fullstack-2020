@@ -5,23 +5,9 @@
       <strong>上線使用者</strong>
       <input id="loginUserId" style="display: none;" value="{{loginUser.id}}">
     </li>
-    {{#each users}}
-      <li class="list-group-item">
-        <div class="flex-container">
-          <div class="mr-2">
-            <a href="/users/{{this.id}}/tweets">
-              <img src="{{this.avatar}}" alt="user avatar" class="user-avatar"
-                style="border-radius: 50%; height:50px; width: 50px">
-            </a>
-          </div>
-          <div style="display: flex; align-items: center">
-            <a href="/users/{{this.id}}/tweets"
-              style="text-decoration:none; color:black"><strong>{{this.name}}</strong></a>
-            <font class="text-muted">@{{this.account}} </font>
-          </div>
-        </div>
-      </li>
-    {{/each}}
+    <div id="user-list">
+
+    </div>
   </ul>
 </div>
 {{!-- Right side --}}
@@ -35,7 +21,7 @@
         <ul id="chat-messages" style="list-style: none;">
           {{#each messages}}
           {{#ifCond ../loginUser.id this.messageFromId}}
-          <div>
+          <div class="m-2">
             <section style="background-color:coral; float: right; width:270px; border-radius:20px; padding:6px; float:right;">
               {{this.message}}
             </section>
@@ -44,7 +30,7 @@
           </div>
           
           {{else}}
-          <div class="flex-container">
+          <div class="flex-container m-2">
             <div>
               <img src="{{../loginUser.avatar}}" class="user-avatar" style="margin-right:4px;">
             </div>
