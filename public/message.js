@@ -23,14 +23,11 @@ socket.on('chatMessage', (data) => {
 
 function appendData(data) {
   const loginUserId = document.getElementById('loginUserId').value
-  console.log(loginUserId)
-  console.log(data.id)
   const el = document.getElementById('chat-messages')
   let htmlString
   htmlString = `<img src="${data.avatar}" class="user-avatar"> ${data.message}`
 
   if (Number(data.id) === Number(loginUserId)) {
-    console.log('b')
     htmlString = `
       <div>
         <section style="background-color:coral; float: right; width:270px; border-radius:20px; padding:6px; float:right;">
@@ -42,7 +39,6 @@ function appendData(data) {
     `
   } 
   else {
-    console.log('a')
     htmlString = `
     <div class="flex-container">
       <div>
