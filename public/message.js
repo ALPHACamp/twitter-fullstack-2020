@@ -22,19 +22,27 @@ socket.on('chatMessage', (data) => {
 });
 
 function appendData(data) {
-
-
+  const loginUserId = document.getElementById('loginUserId').value
+  console.log(loginUserId)
+  console.log(data.id)
   const el = document.getElementById('chat-messages')
   let htmlString
   htmlString = `<img src="${data.avatar}" class="user-avatar"> ${data.message}`
-  //console.log(helpers.getUser(req).id)
-  //console.log('c')
-  // if (data.id === req.user.id) {
-  //   console.log('b')
-  //   htmlString = `${data.message}`
-  // } 
-  // else {
-  //   console.log('a')
+
+  if (Number(data.id) === Number(loginUserId)) {
+    console.log('b')
+    htmlString = `
+      <div>
+        <section style="background-color:coral; float: right; width:270px; border-radius:20px; padding:6px; float:right;">
+          ${data.message}
+        </section>
+        <font class="text-muted" size="2px" style="float: right;">${data.time}</font>
+        <div class="clearfix"></div>
+      </div>
+    `
+  } 
+  else {
+    console.log('a')
     htmlString = `
     <div class="flex-container">
       <div>
@@ -49,6 +57,6 @@ function appendData(data) {
     </div>
 
     `
-  // }
+  }
   el.appendChild((document.createElement('div'))).innerHTML = htmlString
 }

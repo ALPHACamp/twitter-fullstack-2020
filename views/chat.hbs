@@ -3,6 +3,7 @@
   <ul class="list-group">
     <li class="list-group-item">
       <strong>上線使用者</strong>
+      <input id="loginUserId" style="display: none;" value="{{loginUser.id}}">
     </li>
     {{#each users}}
       <li class="list-group-item">
@@ -33,6 +34,16 @@
       <div style="height: 77vh;">
         <ul id="chat-messages" style="list-style: none;">
           {{#each messages}}
+          {{#ifCond ../loginUser.id this.messageFromId}}
+          <div>
+            <section style="background-color:coral; float: right; width:270px; border-radius:20px; padding:6px; float:right;">
+              {{this.message}}
+            </section>
+            <font class="text-muted" size="2px" style="float: right;">{{time this.createdAt}}</font>
+            <div class="clearfix"></div>
+          </div>
+          
+          {{else}}
           <div class="flex-container">
             <div>
               <img src="{{../loginUser.avatar}}" class="user-avatar" style="margin-right:4px;">
@@ -44,6 +55,7 @@
               <font class="text-muted" size="2px">{{time this.createdAt}}</font>
             </div>
           </div>
+          {{/ifCond}}
           {{/each}}
         </ul>
       </div>
