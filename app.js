@@ -73,8 +73,15 @@ app.use((req, res, next) => {
 
 let onlineUsers = []
 
+let onlineCount = 0
+
 //run with client connects
 io.on('connection', socket => {
+
+  // 有連線發生時增加人數
+  onlineCount++;
+  // 發送人數給網頁
+  io.emit("online", onlineCount)
 
   // online user list
   onlineUsers.push({ id, name, account, avatar });
@@ -93,6 +100,11 @@ io.on('connection', socket => {
 
   //Runs when client disconnects
   socket.on('disconnect', () => {
+
+    // 有人離線, 扣人數
+    onlineCount = (onlineCount < 0) ? 0 : onlineCount -= 1
+    io.emit("online", onlineCount)
+
     io.emit('message', formatMessage(user.name, ' has left the chat'))
   });
 
