@@ -5,6 +5,10 @@ const chatMessages = document.getElementById('chat-messages')
 
 //online user
 socket.on('message', (data) => {
+  appendUserData(data)
+})
+  
+function appendUserData(data) {
   const u = document.getElementById('user-list')
   let htmlContent 
   htmlContent = `
@@ -25,26 +29,43 @@ socket.on('message', (data) => {
   li.className = 'list-group-item'
   li.innerHTML = htmlContent
   u.appendChild(li)
-})
-  
-
+}
 
 chatForm.addEventListener('submit', e => {
   e.preventDefault()
   const msg = e.target.elements.message.value
-  socket.emit('chatMessage', msg)
+
+  const selector = document.querySelector('.selector')
+  if (selector.value === 'public') {
+    //public message
+    socket.emit('chatMessage', msg)
+    console.log('public')
+  }
+  else {
+    //private message
+    socket.emit('joinRoom', msg)
+    console.log('private')
+  }
 
   //clear inputs
   e.target.elements.message.value = ''
 })
-//const helpers = require('../_helpers')
 
+//public message
 socket.on('chatMessage', (data) => {
   appendData(data)
   console.log(data)
   //scroll down
   chatMessages.scrollTop = chatMessages.scrollHeight
-});
+})
+
+//private message
+socket.on('privateMessage', (data) => {
+  appendData(data)
+  console.log(data)
+
+  chatMessages.scrollTop = chatMessages.scrollHeight
+})
 
 function appendData(data) {
   //chat message
@@ -73,13 +94,10 @@ function appendData(data) {
         ${data.message}
       </section>
         
-      <font class="text-muted" size="2px">@${data.account}</font>
+      <font class="text-muted" size="2px">${data.time}</font>
     </div>
 
     `
   }
   el.appendChild((document.createElement('div'))).innerHTML = htmlString
-
-  
-  
 }

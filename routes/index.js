@@ -17,7 +17,7 @@ const passport = require('../config/passport')
 
 module.exports = (app, passport, io) => {
   const websocket = (req, res, next) => {
-    require('../controllers/websocketController')(io, helpers.getUser(req))
+    require('../controllers/websocketController')(io, helpers.getUser(req), req.params.userId)
     return next()
   }
 
@@ -124,4 +124,5 @@ module.exports = (app, passport, io) => {
   app.post('/api/signin', userController.apiSignIn)
 
   app.get('/message', authenticated, websocket, messageController.getMessage)
+  app.get('/message/:userId', authenticated, websocket, messageController.getPrivateMessage)
 }
