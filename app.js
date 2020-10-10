@@ -2,6 +2,8 @@ const express = require('express')
 const helpers = require('./_helpers');
 const handlebars = require('express-handlebars')
 const db = require('./models')
+const Message = db.Message;
+const User = db.User;
 const app = express()
 const port = process.env.PORT || 3000
 const passport = require('./config/passport')
@@ -11,6 +13,7 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const socket = require('socket.io')
 const { formatMessage } = require("./chat")
+const moment = require('moment');
 require("dotenv").config();
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
@@ -53,16 +56,36 @@ const server = app.listen(port, () => console.log(`Example app listening on port
 
 const io = socket(server)
 
-io.on('connection', socket => {
+io.on('connection', async socket => {
   //set up users
   onlineUsers.push({id, name, account, avatar});
   let set = new Set();
   onlineUsers = onlineUsers.filter(item => !set.has(item.id) ? set.add(item.id) : false);
   const user = onlineUsers.find(user => user.id === id);
   user.currentUser = true;
+
+  // history message
+  let historyMessages;
+  await Message.findAll({
+    include: [User],
+    order: [['createdAt', 'ASC']]
+  }).then(data=>{
+    historyMessages = data.map(item=>({
+      message: item.dataValues.message,
+      name: item.dataValues.User.name,
+      avatar: item.dataValues.User.avatar,
+      currentUser: user.id === item.dataValues.User.id ? true : false,
+      time: moment(item.dataValues.createdAt).format('LT')
+    }))
+  })
+  socket.emit("history", historyMessages);
+
   socket.emit("message", `歡迎加入聊天室 ${user.name}`);
   socket.broadcast.emit("message", `${user.name} 加入聊天室`);
-  io.emit('onlineUsers', onlineUsers)
+
+
+  io.emit('onlineUsers', onlineUsers);
+  
   socket.on("disconnect", ()=>{
     onlineUsers = onlineUsers.filter(user => user.id !== id)
     io.emit('onlineUsers', onlineUsers)
@@ -70,6 +93,11 @@ io.on('connection', socket => {
   });
   // user get msg from input & send back
   socket.on("chatMessage", data=>{
+    console.log(data);
+    Message.create({
+      message: data,
+      UserId: user.id
+    });
     io.emit("chat", formatMessage(user.name, data, user.avatar, user.currentUser));
   })
 })
