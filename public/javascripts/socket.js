@@ -51,8 +51,33 @@ socket.on('message', (data) => {
       </div>
     </div>
   `
-});
+})
 
+socket.on('onlineUsers', (data) => {
+  let userlists = ``;
+
+  data.forEach(user => {
+    userlists += `
+      <div class="list-group rounded-0">
+        <a class="list-group-item list-group-item-action text-white rounded-0 p-1"
+              style="border:none; border-bottom: 1px solid #E6ECF0">
+          <div class="media">
+            <img class="m-1" src=${user.loginAvatar}
+                  style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+              <div class="media-body ml-2 align-self-center">
+                <div class="mb-1">
+                  <span class="user-name">${user.loginName}</span>
+                  <span class="user-account">@${user.loginAccount}</span><br>
+                </div>
+              </div>
+          </div>
+        </a>
+      </div>
+    `
+  })
+
+  chatUserlist.innerHTML = userlists
+})
 
 document.querySelector('#button-addon2').addEventListener('click', () => {
   Send();
