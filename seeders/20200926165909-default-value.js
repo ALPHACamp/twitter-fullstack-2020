@@ -6,6 +6,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     queryInterface.bulkInsert('Users', [
       {
+        id: 0,
         account: 'root',
         email: 'root@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -19,6 +20,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 1,
         account: 'user1',
         email: 'user1@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -32,13 +34,14 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 2,
         account: 'user2',
         email: 'user2@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         name: faker.name.firstName(),
         avatar: faker.image.avatar(),
         introduction: faker.lorem.sentences(),
-        isAdmin: true,
+        isAdmin: false,
         background: faker.image.imageUrl(),
         
         // `https://loremflickr.com/g/320/240/paris?lock=3`,
@@ -46,6 +49,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 3,
         account: 'user3',
         email: 'user3@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -59,6 +63,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 4,
         account: 'user4',
         email: 'user4@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -72,6 +77,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 5,
         account: 'user5',
         email: 'user5@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -88,7 +94,7 @@ module.exports = {
     queryInterface.bulkInsert('Tweets',
       Array.from({ length: 50 }).map((item, index) => ({
         id: index + 1,
-        UserId: Math.floor(Math.random() * 5) + 2,
+        UserId: Math.floor(Math.random() * 5) + 1,
         description: faker.lorem.sentences().substring(0, 140),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -97,7 +103,7 @@ module.exports = {
     return queryInterface.bulkInsert('Replies',
       Array.from({ length: 150 }).map((item, index) => ({
         id: index + 1,
-        UserId: Math.floor(Math.random() * 5) + 2,
+        UserId: Math.floor(Math.random() * 5) + 1,
         TweetId: (index % 50) + 1,
         comment: faker.lorem.words(),
         createdAt: new Date(),
