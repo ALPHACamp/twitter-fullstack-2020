@@ -38,7 +38,7 @@ module.exports = {
         name: faker.name.firstName(),
         avatar: faker.image.avatar(),
         introduction: faker.lorem.sentences(),
-        isAdmin: true,
+        isAdmin: false,
         background: faker.image.imageUrl(),
         
         // `https://loremflickr.com/g/320/240/paris?lock=3`,

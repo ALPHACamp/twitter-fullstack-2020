@@ -1,21 +1,21 @@
 {
   "development": {
     "username": "root",
-    "password": "password",
+    "password": "Austin108306",
     "database": "ac_twitter_workspace",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "root",
-    "password": "password",
+    "password": "Austin108306",
     "database": "ac_twitter_workspace_test",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "logging": false
   },
   "production": {
-    "use_env_variable": "DATABASE_URL"
+    "use_env_variable": "CLEARDB_DATABASE_URL"
   },
   "travis": {
     "username": "travis",
