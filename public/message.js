@@ -44,13 +44,21 @@ chatForm.addEventListener('submit', e => {
   else {
     //private message
     const messageToId = window.location.pathname.split('/')[2]
-
-    socket.emit('joinRoom', {msg, messageToId})
+    socket.emit('joinRoom', {messageToId, msg})
   }
-
   //clear inputs
   e.target.elements.message.value = ''
 })
+
+const privateMessage = document.body.getElementById('private-message')
+privateMessage.addEventListener('click', e => {
+  //private message
+  const messageToId = window.location.pathname.split('/')[2]
+  console.log('cccc')
+  console.log(messageToId)
+  socket.emit('joinRoom', {messageToId, msg})
+})
+
 
 
 //public message
