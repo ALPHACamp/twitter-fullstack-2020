@@ -2,7 +2,6 @@ var socket = io()
 
 const chatForm = document.getElementById('chat-form')
 const chatMessages = document.getElementById('chat-messages')
-var queryString = require('query-string')
 
 //online user
 socket.on('message', (data) => {
@@ -43,10 +42,8 @@ chatForm.addEventListener('submit', e => {
     socket.emit('chatMessage', msg)
   }
   else {
-    // let { messageToId } = queryString.parse(window.location.search)
-    // console.log(messageToId)
     //private message
-    socket.emit('joinRoom', { msg, messageToId})
+    socket.emit('joinRoom', msg)
   }
 
   //clear inputs
