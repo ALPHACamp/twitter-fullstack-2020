@@ -100,12 +100,12 @@ function appendData(data) {
   el.appendChild((document.createElement('div'))).innerHTML = htmlString
 }
 
-//alert
-socket.on('alert', () => {
-  const privateMessage = document.getElementById('private-message')
-  let htmlString = `
-  <div style="border:4px red solid;border-radius:2px;" ></div>
-  `
-  console.log(htmlString)
-  privateMessage.appendChild((document.createElement('div'))).innerHTML = htmlString
-})
+// //alert
+// socket.on('alert', () => {
+//   const privateMessage = document.getElementById('private-message')
+//   let htmlString = `
+//   <div style="border:4px red solid;border-radius:2px;" ></div>
+//   `
+//   console.log(htmlString)
+//   privateMessage.appendChild((document.createElement('div'))).innerHTML = htmlString
+// })

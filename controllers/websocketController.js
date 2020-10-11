@@ -7,8 +7,6 @@ const User = db.User
 module.exports = (io, user, messageToId) => {
   io.on('connection', (socket) => {
     const currentUser = socket.request.session
-    
-    //console.log(currentUser)
     console.log('a user connected')
 
     // announce user online
