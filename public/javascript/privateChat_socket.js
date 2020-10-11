@@ -32,7 +32,7 @@
     const msg = document.querySelector('#msg').value
     if (msg.trim()) {
       const createdTime = moment().calendar()
-      const msgInfo = { msg, avatar: userAvatar, userId, createdTime }
+      const msgInfo = { msg, avatar: userAvatar, userId, createdTime, relativeId }
       socket.emit('chat private message', msgInfo)
       chatMessages.innerHTML += `
       <div class='d-flex flex-row justify-content-end my-2'>

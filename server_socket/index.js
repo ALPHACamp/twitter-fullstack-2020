@@ -1,4 +1,4 @@
-const { User, Message } = require('../models')
+const { User, Message, Privatechat } = require('../models')
 let chatroomList = []
 let privateRoomList = []
 
@@ -70,11 +70,12 @@ function privateChatList(socket, id, relativeId) {
   }
 }
 
-function privateChat(socket, msgInfo) {
+async function privateChat(socket, msgInfo) {
   const index = privateRoomList.findIndex(e => (e.socketId === socket.id))
   if (index === -1) {
     console.log('handle wrong ..............')
   } else {
+    await Privatechat.create({ text: msgInfo.msg, UserId: msgInfo.userId, relativeId: msgInfo.relativeId })
     const roomID = privateRoomList[index].roomID
     socket.to(roomID).emit('receive private message', msgInfo)
   }

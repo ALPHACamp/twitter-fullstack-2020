@@ -1,6 +1,7 @@
-const { User, Reply, Tweet, Like, Followship, Message } = require('../models')
+const { User, Reply, Tweet, Like, Followship, Message, Privatechat } = require('../models')
 const bcrypt = require('bcrypt-nodejs')
 const { Op } = require('sequelize')
+const sequelize = require('sequelize')
 const helpers = require('../_helpers')
 const imgur = require('imgur-node-api')
 
@@ -353,7 +354,46 @@ const userController = {
     const relativeId = req.params.id
     let relativeUser = await User.findByPk(relativeId)
     relativeUser = relativeUser.toJSON()
-    return res.render('privateChat', { relativeId, relativeName: relativeUser.name })
+    const messages = await Privatechat.findAll({
+      raw: true,
+      nest: true,
+      where: {
+        UserId: [req.user.id, relativeId],
+        relativeId: [req.user.id, relativeId]
+      },
+      order: [["createdAt", "ASC"]]
+    })
+
+    let listMessage = await Privatechat.findAll({
+      raw: true,
+      nest: true,
+      where: {
+        [Op.or]: [{ UserId: req.user.id }, { relativeId: req.user.id }]
+      },
+      order: [["id", "DESC"]]
+    })
+
+    const newListMessage = []
+    for (let i = 0; i < listMessage.length; i++) {
+      if (listMessage[i].UserId === req.user.id) {
+        if (!newListMessage.find(e => (e.id === listMessage[i].relativeId))) {
+          newListMessage.push({ id: listMessage[i].relativeId, createdAt: listMessage[i].createdAt, text: listMessage[i].text })
+        }
+      } else {
+        if (!newListMessage.find(e => (e.id === listMessage[i].UserId))) {
+          newListMessage.push({ id: listMessage[i].UserId, createdAt: listMessage[i].createdAt, text: listMessage[i].text })
+        }
+      }
+    }
+
+    for (let i = 0; i < newListMessage.length; i++) {
+      let user = await User.findByPk(newListMessage[i].id)
+      user = user.toJSON()
+      newListMessage[i].name = user.name
+      newListMessage[i].avatar = user.avatar
+    }
+
+    return res.render('privateChat', { relativeId, relativeName: relativeUser.name, messages, relativeAvatar: relativeUser.avatar, newListMessage })
   }
 }
 

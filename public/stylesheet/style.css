@@ -73,6 +73,11 @@ html{ height:100%}
   width:100%;
 }
 
+.user-list a{
+  color: inherit;
+  text-decoration: none
+}
+
 .received-message .message{
   background-color: #d4dadd;
   border-radius: 20px 20px 20px 0px;
