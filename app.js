@@ -72,7 +72,9 @@ app.use((req, res, next) => {
 })
 
 let onlineUsers = []
+
 let onlineCount = 0
+
 //run with client connects
 io.on('connection', socket => {
   // 有連線發生時增加人數
@@ -89,6 +91,9 @@ io.on('connection', socket => {
   const user = onlineUsers.find((user) => user.id === id);
   user.current = true;
 
+  //online users
+  io.emit('onlinePPL', onlineUsers)
+
   //Welcome current user
   socket.emit('message', formatMessage(user.name, 'You join the chatroom'))
 
@@ -97,6 +102,11 @@ io.on('connection', socket => {
 
   //Runs when client disconnects
   socket.on('disconnect', () => {
+    // 有人離線, 扣人數
+    onlineCount = (onlineCount < 0) ? 0 : onlineCount -= 1
+    io.emit("online", onlineCount)
+    io.emit('onlinePPL', onlineUsers)
+
     io.emit('message', formatMessage(user.name, ' has left the chat'))
   });
 
@@ -114,13 +124,15 @@ io.on('connection', socket => {
   socket.on('typing', data => {
     socket.broadcast.emit('typing', data)
   })
-  socket.on('disconnect', () => {
-    // 有人離線, 扣人數
-    onlineCount = (onlineCount < 0) ? 0 : onlineCount -= 1
-    io.emit("online", onlineCount)
-    io.emit('message', 'A user hase left the chat')
-  })
+
+
+  console.log("user", onlineUsers)
+
+
 })
+
+
+
 
 
 

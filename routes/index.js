@@ -1,5 +1,5 @@
-const userController = require("../controllers/userController")
-const tweetController = require("../controllers/tweetController")
+const userController = require("../controllers/userController");
+const tweetController = require("../controllers/tweetController");
 const adminController = require('../controllers/adminController')
 const chatRoomController = require('../controllers/chatRoomController')
 const helpers = require('../_helpers.js')
@@ -92,7 +92,7 @@ module.exports = (app, passport) => {
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
   //chatRoomController
-  app.get('/chatRoom', chatRoomController.getChatRoom)
+  app.get('/chatRoom', authenticated, chatRoomController.getChatRoom)
 
 
   //chat
