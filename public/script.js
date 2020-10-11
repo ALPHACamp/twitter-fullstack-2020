@@ -116,9 +116,13 @@ function outPutmessage(message) {
   // <p class="meta">${message.time}</span></p>
   //   `;
   div.innerHTML = `
-  <div class="row justify-content-center" style="background-color:#F0F0F0;border-radius: 15px; width: 30%">
-    <p class="">${message.username}</span></p>
-    <p class="">${message.text}</span></p >
+  <div class="d-flex  justify-content-center"  style="background-color:#F0F0F0;border-radius: 15px; width: 50%; box-sizing: border-box; left: 50px">
+
+    <div style="padding: 10px;" class="text-center ">${message.username}</span>${message.text}</div>
+    </br>
+
+    <small class="send-time text-muted">${message.time}</small>
+    
   </div >
     `;
   document.querySelector('.chat-messages').appendChild(div)

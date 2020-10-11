@@ -95,7 +95,7 @@ io.on('connection', socket => {
   io.emit('onlinePPL', onlineUsers)
 
   //Welcome current user
-  socket.emit('message', formatMessage(user.name, 'You join the chatroom'))
+  socket.emit('message', formatMessage(' ', 'You join the chatroom'))
 
   //broadcast when a user connects
   socket.broadcast.emit('message', formatMessage(user.name, ' has joined the chat'))
