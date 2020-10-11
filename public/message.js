@@ -10,8 +10,8 @@ socket.on('message', (data) => {
   
 function appendUserData(data) {
   const u = document.getElementById('user-list')
-  let htmlContent 
-  htmlContent = `
+  let htmlString 
+  htmlString = `
     <div class="flex-container">
       <div class="mr-2">
         <a href="/users/${data.id}/tweets">
@@ -27,7 +27,7 @@ function appendUserData(data) {
   `
   var li = document.createElement('li')
   li.className = 'list-group-item'
-  li.innerHTML = htmlContent
+  li.innerHTML = htmlString
   u.appendChild(li)
 }
 
@@ -43,12 +43,15 @@ chatForm.addEventListener('submit', e => {
   }
   else {
     //private message
-    socket.emit('joinRoom', msg)
+    const messageToId = window.location.pathname.split('/')[2]
+
+    socket.emit('joinRoom', {msg, messageToId})
   }
 
   //clear inputs
   e.target.elements.message.value = ''
 })
+
 
 //public message
 socket.on('chatMessage', (data) => {
