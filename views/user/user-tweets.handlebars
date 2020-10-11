@@ -31,7 +31,7 @@
                             </div>
                         {{else}}
                             {{#if pageUser.isFollowed }}
-                                <a href="mailto:{{user.email}}">
+                                <a href="/mailbox/{{ pageUser.id }}">
                                     <i class="far fa-envelope"></i>
                                 </a>
                                 <i class="far fa-bell"></i>

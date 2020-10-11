@@ -1,4 +1,6 @@
 const socket = io();
+const input = document.querySelector('#input');
+const typing = document.querySelector('.typing');
 const mainChat = document.querySelector('.chat-main');
 const chatOutput = document.getElementById('output');
 const chatForm = document.getElementById("chat-form");
@@ -31,7 +33,14 @@ socket.on('history', data => {
 
   chatOutput.scrollTop = chatOutput.scrollHeight
 })
-
+// listening user typing
+socket.on('typing', data => {
+  if (data.isExist) {
+    typing.innerHTML = `${data.name} is typing...`
+  } else {
+    typing.innerHTML = ''
+  }
+})
 // user come in
 socket.on('message', data => {
     const div = document.createElement("DIV");
@@ -70,7 +79,13 @@ chatForm.addEventListener("submit", (e)=>{
     // socket.emit('typing', { isExist: false })
     return false
 })
-
+input.addEventListener('input', (e) => {
+  if (e.target.value) {
+    socket.emit('typing', { isExist: true })
+  } else {
+    socket.emit('typing', { isExist: false })
+  }
+})
 // Public Fuctions
 function outputMessage(data){
     // if(data.currentUser === true){

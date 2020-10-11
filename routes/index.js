@@ -23,6 +23,8 @@ module.exports = (app, passport) => {
   }
 
   app.get('/chat', authenticated, (req, res) => res.render('chatroom'))
+  app.get('/mailbox', authenticated, (req, res) => res.render('mailbox'))
+  app.get('/mailbox/:id', authenticated, userController.getMailPage)
 
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   app.get("/admin/tweets", authenticatedAdmin, adminController.getTweets);

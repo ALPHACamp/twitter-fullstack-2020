@@ -80,6 +80,11 @@ io.on('connection', async socket => {
   })
   socket.emit("history", historyMessages);
 
+  socket.on('typing', data => {
+    data.name = user.name
+    socket.broadcast.emit('typing', data)
+  })
+
   socket.emit("message", `歡迎加入聊天室 ${user.name}`);
   socket.broadcast.emit("message", `${user.name} 加入聊天室`);
 
@@ -99,6 +104,11 @@ io.on('connection', async socket => {
       UserId: user.id
     });
     io.emit("chat", formatMessage(user.name, data, user.avatar, user.currentUser));
+  })
+  //Private Message
+  socket.on('privateMessage', data => {
+    const senderId = Number(user.id)
+    const receiverId = data.receiverId;
   })
 })
 
