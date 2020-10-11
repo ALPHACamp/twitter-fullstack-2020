@@ -59,8 +59,6 @@ privateMessage.addEventListener('click', e => {
   socket.emit('joinRoom', {messageToId, msg})
 })
 
-
-
 //public message
 socket.on('chatMessage', (data) => {
   appendData(data)
