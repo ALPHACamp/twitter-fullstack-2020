@@ -108,9 +108,8 @@ io.on('connection', async socket => {
   //Private Message
   socket.on('privateMessage', data => {
     const senderId = Number(user.id)
-    const receiverId = data.receiverId
+    const receiverId = data.receiverId;
   })
-
 })
 
 // module.exports = app
