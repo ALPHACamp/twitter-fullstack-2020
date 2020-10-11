@@ -42,15 +42,33 @@ message.addEventListener('keypress', () => {
 //Listen for events
 socket.on('chat-message', (data) => {
   // output.innerHTML += '<P><strong>' + data.name + ': </strong>' + data.message + '</p>'
-  output.innerHTML += `<div class='d-flex flex-row justify-content-end my-2'>
+
+
+
+  if (data.name === name.value) {
+    output.innerHTML += `<div class='d-flex flex-row justify-content-end my-2'>
         <div class="d-flex align-items-center" >
           <div class="send-message d-flex flex-column align-items-end " style="color: #FF0000">
-            <div class="message">${data.message}</div>
+            <div class="receiver-message">${data.message}</div>
             <small class="send-time text-muted">上午 06:00</small>
           </div>
           <img class="message-image rounded-circle ml-2" src="${data.avatar}" alt="" style="width:60px">
         </div>
       </div>`
+  } else {
+
+    output.innerHTML += `<div class='d-flex flex-row justify-content-start my-2'>
+        <div class="d-flex align-items-center" >
+        <img class="message-image rounded-circle ml-2" src="${data.avatar}" alt="" style="width:60px">
+          <div class="send-message d-flex flex-column align-items-end " style="color: #FF0000">
+            <div class="sender-message ">${data.message}</div>
+            <small class="send-time text-muted">上午 06:00</small>
+          </div>
+        </div>
+      </div>`
+
+  }
+
 })
 
 //when someone is typing

@@ -112,7 +112,7 @@ io.on('connection', socket => {
 
   socket.on('chat-message', data => {
     io.sockets.emit('chat-message', data)
-    console.log("chatroom client 傳來的資訊 ", data)
+    console.log("chatroom client 傳來的資訊 ", data)  //{message: , avatar, name}
   })
 
   //handle chat event
