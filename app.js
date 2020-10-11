@@ -52,11 +52,11 @@ app.use((req, res, next) => {
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-// io.use((socket, next) => {
-//   sessionMiddleware(socket.request, socket.request.res || {}, next)
-// })
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, socket.request.res || {}, next)
+})
 
-
+require('./controllers/websocketController')(io)
 
 
 // run when a client connects
