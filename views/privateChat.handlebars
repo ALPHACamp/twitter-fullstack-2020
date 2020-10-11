@@ -54,7 +54,7 @@
 <div id="chat-room" data-relative="{{relativeId}}">
   <div class="main-top">{{relativeName}}</div>
   <div class="show-message">
-    <div class="messages d-flex flex-column justify-content-end">
+    <div class="messages">
       {{#each messages}}
       {{#ifCond this.UserId ../user.id}}
       <div class='d-flex flex-row justify-content-end my-2'>
