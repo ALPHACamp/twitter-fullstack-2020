@@ -41,7 +41,16 @@ message.addEventListener('keypress', () => {
 
 //Listen for events
 socket.on('chat-message', (data) => {
-  output.innerHTML += '<P><strong>' + data.name + ': </strong>' + data.message + '</p>'
+  // output.innerHTML += '<P><strong>' + data.name + ': </strong>' + data.message + '</p>'
+  output.innerHTML += `<div class='d-flex flex-row justify-content-end my-2'>
+        <div class="d-flex align-items-center" >
+          <div class="send-message d-flex flex-column align-items-end " style="color: #FF0000">
+            <div class="message">${data.message}</div>
+            <small class="send-time text-muted">上午 06:00</small>
+          </div>
+          <img class="message-image rounded-circle ml-2" src="${data.avatar}" alt="" style="width:60px">
+        </div>
+      </div>`
 })
 
 //when someone is typing
@@ -83,11 +92,17 @@ socket.on('onlinePPL', data => {
 function outPutmessage(message) {
   const div = document.createElement('div')
   div.classList.add('message');
+  //   div.innerHTML = `
+  // <p class="meta">${message.username}</span></p>
+  // <p class="meta">${message.text}</span></p>
+  // <p class="meta">${message.time}</span></p>
+  //   `;
   div.innerHTML = `
-<p class="meta">${message.username}</span></p>
-<p class="meta">${message.text}</span></p>
-<p class="meta">${message.time}</span></p>
-  `;
+  <div class="row justify-content-center" style="background-color:#F0F0F0;border-radius: 15px; width: 30%">
+    <p class="">${message.username}</span></p>
+    <p class="">${message.text}</span></p >
+  </div >
+    `;
   document.querySelector('.chat-messages').appendChild(div)
 }
 
