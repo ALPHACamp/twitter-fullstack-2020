@@ -3,6 +3,8 @@ const userController = require('../controllers/userController.js')
 const tweetController = require("../controllers/tweetController");
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+const db = require("../models");
+const User = db.User;
 
 
 module.exports = (app, passport) => {
@@ -22,6 +24,17 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  const isAdmin = (req, res, next) => {
+    User.findOne({where: { email: req.body.email }})
+    .then(user=>{
+      if(user.toJSON().isAdmin){
+        req.flash('error_messages', '此為admin帳戶，請註冊使用者帳戶')
+        res.redirect('/signin') 
+      }
+      next()
+    })
+  }
+
   app.get('/chat', authenticated, (req, res) => res.render('chatroom'))
   app.get('/mailbox', authenticated, (req, res) => res.render('mailbox'))
   app.get('/mailbox/:id', authenticated, userController.getMailPage)
@@ -39,7 +52,7 @@ module.exports = (app, passport) => {
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
   app.get('/signin', userController.signInPage)
-  app.post('/signin', passport.authenticate('local', {
+  app.post('/signin', isAdmin, passport.authenticate('local', {
     failureRedirect: '/signin',
     failureFlash: true
   }), userController.signIn)
