@@ -84,7 +84,7 @@
         <input type="hidden" name="avatar" id="avatar" value={{user.avatar}}>
         <div class="sendMessageArea">
           <textarea type="text" name="msg" id="msg" cols="60" rows="1" placeholder="輸入訊息..."></textarea>
-          <button type="submit" class="btn"><i class="far fa-paper-plane"></i></button>
+          <button type="submit" class="btn" onClick="window.location.reload();"><i class="far fa-paper-plane"></i></button>
         </div>
       </form>
       {{/ifCond}}
