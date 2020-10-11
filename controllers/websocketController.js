@@ -50,14 +50,15 @@ module.exports = (io, user, messageToId) => {
         })
     
         // room
-        socket.on('joinRoom', (msg) => {
+        socket.on('joinRoom', (msg, messageToId) => {
+          console.log(messageToId)
           Message.create({
             messageFromId: user.id,
-            //messageToId: messageToId,
+            messageToId: msg.id,
             message: msg
           })
           //const roomId = messageToId || user.id.toString() 
-          //socket.join(messageToId || user.id.toString())
+          socket.join(messageToId || user.id.toString())
           io.to(user.id.toString()).to(messageToId).emit('privateMessage', {
             id: user.id,
             username: user.name,
