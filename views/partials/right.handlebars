@@ -4,6 +4,9 @@
             跟隨誰
         </li>
     {{#each users}}
+        {{#isAdmin this.isAdmin}}
+
+        {{else}}
         <li class="list-group-item d-flex">
             <div class="tweet-item-left d-flex align-items-stretch">
               <div class="tweet-left d-flex align-items-stretch">
@@ -33,6 +36,7 @@
                 {{/if}}
             </div>
         </li>
+        {{/isAdmin}}
     {{/each}}
         <li class="list-group-item d-flex">
             <a href="/user/{{ user.id }}/follower">顯示更多</a>
