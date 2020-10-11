@@ -6,6 +6,7 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     queryInterface.bulkInsert('Users', [
       {
+        id: 0,
         account: 'root',
         email: 'root@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -19,6 +20,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 1,
         account: 'user1',
         email: 'user1@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -32,6 +34,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 2,
         account: 'user2',
         email: 'user2@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -46,6 +49,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 3,
         account: 'user3',
         email: 'user3@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -59,6 +63,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 4,
         account: 'user4',
         email: 'user4@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -72,6 +77,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        id: 5,
         account: 'user5',
         email: 'user5@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
