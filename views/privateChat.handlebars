@@ -1,0 +1,96 @@
+<div id="left">
+  <div id="left-container">
+    <ul class="nav flex-column justify-content-between" style="height: 100vh;">
+      <div class="flex-colum ">
+        <a class="navbar-brand ml-3" href="/">
+          <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
+            height="30" alt="">
+        </a>
+        <li class="nav-item">
+          <a class="nav-link" href="/tweets" style="color: black;"><i class="fas fa-home"></i>首頁</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/tweets" style="color: black;"><i class="far fa-bell"></i>通知</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/chatroom" style="color:black"><i class="far fa-envelope"></i>公開聊天室</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/pm/{{user.id}}" style="color:#ff6600;"><i class="far fa-envelope"></i>私人訊息</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/{{user.id}}/tweets" style="color: black;"><i class="fas fa-user"></i>個人資料</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/setting/{{user.id}}" style="color: black;margin-bottom: 19px"><i
+              class="fas fa-cog"></i>設定</a>
+        </li>
+        <button type="button" class="btn btn-block" style="border-radius: 23px;background:#ff6600; color:white"
+          data-toggle="modal" data-target="#tweetModal">
+          推文
+        </button>
+      </div>
+      <li class="nav-item">
+        <a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt"></i>登出</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div id="chat-list" data-id="{{user.id}}" data-avatar="{{user.avatar}}">
+  <div class="main-top">訊息</div>
+  <div class="user-list">
+    {{#each newListMessage}}
+    <a href="/pm/{{this.id}}">
+      <div class="single-list d-flex align-items-center">
+        <img src="{{this.avatar}}" class="rounded-circle mr-2" alt="no avatar">
+        <div class="mr-2" style="font-style:bold;">{{this.name}}</div>
+        <small class="text-muted">{{this.text}}</small>
+      </div>
+    </a>
+    {{/each}}
+  </div>
+</div>
+
+<div id="chat-room" data-relative="{{relativeId}}">
+  <div class="main-top">{{relativeName}}</div>
+  <div class="show-message">
+    <div class="messages d-flex flex-column justify-content-end">
+      {{#each messages}}
+      {{#ifCond this.UserId ../user.id}}
+      <div class='d-flex flex-row justify-content-end my-2'>
+        <div class="d-flex align-items-center">
+          <div class="send-message d-flex flex-column align-items-end ">
+            <div class="message">{{this.text}}</div>
+            <small class="send-time text-muted">{{momentC this.createdAt}}</small>
+          </div>
+        </div>
+      </div>
+      {{else}}
+      <div class='d-flex flex-row justify-content-start my-2'>
+        <div class="d-flex align-items-center">
+          <img class="message-image rounded-circle mr-2" src="{{../relativeAvatar}}" alt="">
+          <div class="received-message d-flex flex-column align-items-start">
+            <div class="message">{{this.text}}</div>
+            <small class="received-time text-muted">{{momentC this.createdAt}}</small>
+          </div>
+        </div>
+      </div>
+      {{/ifCond}}
+      {{/each}}
+      {{#ifCond relativeId user.id}}
+      {{else}}
+      <form id="send-form">
+        <input type="hidden" name="name" id="name" value={{user.name}}>
+        <input type="hidden" name="avatar" id="avatar" value={{user.avatar}}>
+        <div class="sendMessageArea">
+          <textarea type="text" name="msg" id="msg" cols="60" rows="1" placeholder="輸入訊息..."></textarea>
+          <button type="submit" class="btn"><i class="far fa-paper-plane"></i></button>
+        </div>
+      </form>
+      {{/ifCond}}
+    </div>
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/javascript/privateChat_socket.js"></script>

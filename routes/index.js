@@ -51,4 +51,7 @@ module.exports = app => {
   app.get('/users/:id/followings', authenticated, userController.getTopUsers, userController.getFollowing)
   app.post('/followships', authenticated, userController.addFollowing)
   app.delete('/followships/:followingId', authenticated, userController.removeFollowing)
+
+  app.get('/chatroom/', authenticated, userController.getChatroom)
+  app.get('/pm/:id', authenticated, userController.getPrivateChat)
 }
