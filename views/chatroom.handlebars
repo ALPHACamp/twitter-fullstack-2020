@@ -44,7 +44,7 @@
 <div id="chat-room">
   <div class="main-top">公開聊天室</div>
   <div class="show-message">
-    <div class="messages d-flex flex-column justify-content-end">
+    <div class="messages">
       {{#each messages}}
       {{#ifCond this.UserId ../user.id}}
       <div class='d-flex flex-row justify-content-end my-2'>
