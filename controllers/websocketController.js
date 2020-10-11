@@ -51,11 +51,11 @@ module.exports = (io, user, messageToId) => {
         })
     
         // room
-        socket.on('joinRoom', (msg, messageToId) => {
+        socket.on('joinRoom', ({ messageToId, msg }) => {
           console.log(messageToId)
           Message.create({
             messageFromId: user.id,
-            messageToId: msg.id,
+            messageToId: messageToId,
             message: msg
           })
           //const roomId = messageToId || user.id.toString() 
