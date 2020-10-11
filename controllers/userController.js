@@ -318,6 +318,12 @@ const userController = {
         res.render("user/user-likes", { pageUser });
       })
   },
+  getMailPage: (req, res) => {
+    return User.findByPk(req.params.id)
+            .then(pageUser => {
+              res.render("mailbox", { pageUser });
+            })
+  },
   otherUser: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
