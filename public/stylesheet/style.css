@@ -121,7 +121,7 @@ html{ height:100%}
 	overflow: auto;
   overflow-y:scroll;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 .sendMessageArea button i {
