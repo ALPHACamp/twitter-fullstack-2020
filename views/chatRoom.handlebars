@@ -30,19 +30,32 @@
       <hr>
 
 
-      <div class="chat-messages">
+      <div class="chat-messages  ">
         <div id="mario chat">
 
           <div id="chat-window">
-            <div id="output"> </div>
-            <div id="feedback"></div>
+
+            <div id="output">
+
+              {{!-- 內容 --}}
+
+            </div>
+            <div id="feedback">
+
+            </div>
+
           </div>
 
-          <input id="avatar" type="hidden" value="{{user.avatar}}">
-          <input id="name" type="hidden" value="{{user.name}}">
-          <input id="message" type="text" placeholder="輸入訊息">
-          <button type="submit" class="btn" id="send">Send</button>
-
+          <div class="row col send-btn" style="position: fixed; bottom: 220px ;width:25%">
+            </br>
+            <input id="avatar" type="hidden" value="{{user.avatar}}">
+            <input id="name" type="hidden" value="{{user.name}}">
+            <div class="form-group row " style="width:95%">
+              <input id="message" type="text" class="form-control col-10" placeholder="輸入訊息">
+              <button id="send" class="col btn" style="background-color:white; border:none;  outline:none"><i
+                  class="far fa-paper-plane" style="color:rgb(255, 102, 0);"></i></button>
+            </div>
+          </div>
 
         </div>
       </div>

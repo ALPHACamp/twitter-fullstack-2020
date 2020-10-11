@@ -205,3 +205,27 @@ font-weight:bold;
   line-height: 22px;
   color: #1C1C1C;
 }
+
+.receiver-message {
+  float: right;
+  background: #FF6600;
+  color: #FFF;
+  text-align: right;
+  padding: 10px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  border-radius: 70px;
+
+}
+
+.sender-message {
+  float: right;
+  background:#C4C4C4;;;
+  color: #FFF;
+  text-align: right;
+  padding: 10px;
+  margin-bottom: 4px;
+  font-size: 13px;
+  border-radius: 70px;
+
+}
