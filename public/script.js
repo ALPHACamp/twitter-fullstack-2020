@@ -93,9 +93,11 @@ socket.on('onlinePPL', data => {
       <div class="ml-2">
         <img src="${data[i].avatar}" alt="" class="rounded-circle" style="width: 50px">
       </div>
+
       <div class="ml-2">
         <h4> ${data[i].name} </h4>
       </div>
+
       <div class="ml-2">
         <h4 style="color:#7B7B7B"> ${data[i].account} </h4>
       </div>
@@ -110,13 +112,11 @@ socket.on('onlinePPL', data => {
 function outPutmessage(message) {
   const div = document.createElement('div')
   div.classList.add('message');
-  //   div.innerHTML = `
-  // <p class="meta">${message.username}</span></p>
-  // <p class="meta">${message.text}</span></p>
-  // <p class="meta">${message.time}</span></p>
-  //   `;
+
   div.innerHTML = `
-  <div class="d-flex  justify-content-center"  style="background-color:#F0F0F0;border-radius: 15px; width: 50%; box-sizing: border-box; left: 50px">
+  <div class="d-flex flex-row justify-content-center">
+
+  <div class="row align-items-center" style="background-color:#F0F0F0;border-radius: 15px; width: 50%; box-sizing: border-box; left: 50px">
 
     <div style="padding: 10px;" class="text-center ">${message.username}</span>${message.text}</div>
     </br>
@@ -124,8 +124,9 @@ function outPutmessage(message) {
     <small class="send-time text-muted">${message.time}</small>
     
   </div >
+  </div>
     `;
-  document.querySelector('.chat-messages').appendChild(div)
+  output.appendChild(div)
 }
 
 
