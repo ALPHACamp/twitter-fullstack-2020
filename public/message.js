@@ -45,21 +45,12 @@ chatForm.addEventListener('submit', e => {
     //private message
     const messageToId = window.location.pathname.split('/')[2]
 
-    console.log(formatMessage(msg, messageToId))
-    socket.emit('joinRoom', formatMessage(msg, messageToId))
+    socket.emit('joinRoom', {msg, messageToId})
   }
 
   //clear inputs
   e.target.elements.message.value = ''
 })
-
-function formatMessage(msg, messageToId) {
-  return {
-    msg,
-    messageToId
-  }
-}
-
 
 
 //public message
