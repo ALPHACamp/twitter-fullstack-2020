@@ -1,5 +1,8 @@
 const express = require('express')
 const helpers = require('./_helpers');
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config()
+}
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 3000
