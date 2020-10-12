@@ -27,11 +27,14 @@ module.exports = (app, passport) => {
   const isAdmin = (req, res, next) => {
     User.findOne({where: { email: req.body.email }})
     .then(user=>{
-      if(user.toJSON().isAdmin){
+      if(!user){
+        next()
+      }else if(user.toJSON().isAdmin){
         req.flash('error_messages', '此為admin帳戶，請註冊使用者帳戶')
         res.redirect('/signin') 
+      }else{
+        next()
       }
-      next()
     })
   }
 
