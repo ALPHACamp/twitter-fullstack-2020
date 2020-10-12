@@ -53,11 +53,12 @@
               </div>
               <div class="footer ml-5">
                 <button type="button" class="mt-4 mb-4 tweets-reply-button" data-toggle="modal"
-                  data-target="#replyModal">
+                  data-target="#modal{{this.id}}">
                   <i class="far fa-comment"></i> {{this.Replies.length}}
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+
+                <div class="modal fade" id="modal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
                   aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -71,17 +72,24 @@
                         <img src="{{this.User.dataValues.avatar}}" class="rounded-circle"
                           style="background-size:cover; width: 50px;height: 50px;">
                         <span class="mt-1">{{this.User.dataValues.name}}</span>
+                        </br>
+                        </br>
+
                         <div class="tweet-text d-flex align-items-stretch">
-                          {{this.User.dataValues.description}}
+                          {{this.description}}
                         </div>
+                        </br>
+                        </br>
                         <form method="POST" action="/tweets/{{this.id}}/replies">
                           <textarea name="comment" cols="55" rows="5"
                             style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
                             placeholder="推你的回覆"></textarea>
+                          </br>
                           <button type="submit"
                             style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
                             <span style="color: #FFFFFF;">回覆</span></button>
                         </form>
+                        </br>
                       </div>
                     </div>
                   </div>

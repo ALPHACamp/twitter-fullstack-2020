@@ -94,11 +94,11 @@ height: 140px;">
             <i class="far fa-comment" style="color: #7B7B7B">&ensp;{{this.Replies.length}}</i>
             {{#if isLiked}}
             <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
-              <button type="submit" class="ml-5" style="color: #7B7B7B;background: none;border: none;">
+              <button type="submit" class="ml-5 tweets-like-button" style="background: none;border: none;">
                 <i class="fas fa-heart">&ensp;{{this.Likes.length}}</i>
                 {{else}}
                 <form action="/like/{{this.id}}" method="POST" style="display:inline; ">
-                  <button type="submit" class="ml-5" style="color: #7B7B7B;background: none;border: none;">
+                  <button type="submit" class="ml-5 tweets-unlike-button" style="background: none;border: none;">
                     <i class="far fa-heart">&ensp;{{this.Likes.length}}</i>
                     {{/if}}
                   </button>

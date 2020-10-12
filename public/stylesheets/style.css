@@ -149,17 +149,20 @@ font-weight:bold;
   font-size:14px;
 }
 .tweets-reply-button {
+  cursor: pointer;
   background: none;
   border: none;
   color: #7B7B7B;
 }
 .tweets-like-button {
+  cursor: pointer;
   background: none;
   border: none;
   color:#FF0088;
 }
 
 .tweets-unlike-button {
+  cursor: pointer;
   background: none;
   border: none;
   color:#7B7B7B;
