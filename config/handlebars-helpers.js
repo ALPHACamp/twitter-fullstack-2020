@@ -18,6 +18,4 @@ module.exports = {
   // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 
-
-
 }
