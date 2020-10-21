@@ -214,16 +214,18 @@ const userController = {
     return User.findAll({
       include: [{ model: User, as: 'Followers' }]
     })
-      .then(users => {
-        users = users.map(user => ({
-          ...user.dataValues,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
-          FollowersCount: user.Followers.length
-        }))
-        users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
-        res.locals.users = users;
-        return next()
-      })
+    .then(users => {
+      users = users.map(user => ({
+        ...user.dataValues,
+        // austin fix in 2020/10/12
+        isFollowed: user.Followers.some(d => d.id === user.id),
+        FollowersCount: user.Followers.length
+      }))
+      users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
+      res.locals.users = users;
+      return next()
+    })
+    .catch(err=>console.log(err))
   },
   //austin
   getTweets: (req, res) => {

@@ -15,6 +15,10 @@ module.exports = {
   },
 
   moment: function (a) {
-    return moment(a).fromNow()
+    return moment(a).format('LLL')
+  },
+
+  momentTime: function (a){
+    return moment(a).fromNow();
   }
 }

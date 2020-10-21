@@ -3,99 +3,60 @@
    {{>left}}
    {{>modal}}
   </div>
-  <div class="col-md-7 p-1 border-left">
+  <div class="col-md-7 p-0 border-left border-right">
     <div class="main">
-      <div class="header pl-3 font-weight-bold" style="width: 600px;height: 30px;left: 400px;top: -1px;">
-        首頁
-      </div>
-        <hr class="mt-0 mb-2 ml-2" style="width:80%;" />
-      <div class="body">
-        <div class="body-avatar d-flex align-items-stretch">
-          <div class="right">
-            <a href="/user/{{user.id}}/tweets">
-              <img src="{{user.avatar}}" class="rounded-circle"
-                style="width: 50px;height: 50px;background: #C4C4C4;">
-            </a>
-          </div>
-          <div class="left" class="d-flex">
-            <form method="POST" action="/tweets">
-              <textarea name="description" cols="55" rows="5"
-                style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
-                placeholder="有什麼新鮮事?"></textarea>
-              <button type="submit"
-                style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
-                <span style="color: #FFFFFF;">Tweet</span></button>
-            </form>
-          </div>
-        </div>
-        <div class="divider" style="width: 600px;height: 10px;left: 378px;top: 173px;background: #E6ECF0;">
-        </div>
-
+      <div class="col h4 font-weight-bold border-bottom pb-2">首頁</div>
+      <div class="col tweet-block">
+        <a href="/user/{{user.id}}/tweets" class="avatar">
+          <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height: 50px;background: #C4C4C4;">
+        </a>
+        <div class="text">有什麼新鮮事兒?</div>
+        <div class="btn" data-toggle="modal" data-target="#tweetModal">推文</div>
       </div>
       <div class="col">
-        <div class="tweet-list" style="width: 600px;height: 136px;left: 0px;top: 0px;">
+        <div class="tweet-list mt-3">
           {{#each tweets}}
           <div class="tweet">
-            <div class="tweet-item-left d-flex align-items-stretch">
-              <div class="tweet-left d-flex align-items-stretch">
-                <a href="/user/{{ this.UserId }}/tweets">
-                  <img src="{{this.User.dataValues.avatar}}" class="rounded-circle"
-                    style="background-size:cover; width: 50px;height: 50px;">
+            <div class="d-flex align-items-stretch">
+              <div class="tweet-item-left">
+                <a href="/user/{{ this.User.id }}/tweets">
+                  <img src="{{this.User.avatar}}" class="rounded-circle">
                 </a>
               </div>
-              <div class="tweet-item-right  ml-3">
+              <div class="tweet-item-right ml-3">
                 <div class="tweet-item-title">
-                  <span class="mt-1"><a href="/user/{{ this.UserId }}/tweets">{{this.User.dataValues.name}}</a></span>
+                  <span class="user-name mt-1"><a href="/user/{{ this.User.id }}/tweets">{{this.User.name}}</a></span>
                   <span class="user-account">
-                    {{this.User.dataValues.account}}．{{moment this.createdAt}}
+                    @{{this.User.account}}．{{moment this.createdAt}}
                   </span>
-
                 </div>
                 <div class="tweet-text">
-                  <a href="/tweets/{{this.id}}" style="text-decoration: none; color:black; cursor:pointer">
                     {{this.description}}
-                  </a>
                 </div>
               </div>
             </div>
-            <div class="tweet-footer ml-5">
-              
-               <a href="/tweets/{{this.id}}" style="text-decoration: none; color:black; cursor:pointer">
-                               <button type="button" class="mt-4 mb-4"
-                style="background: none;border: none;">
-                <i class="far fa-comment"></i> {{this.Replies.length}}
-              </button>
-                  </a>
-         
-
-           
-              
+            <div class="tweet-footer d-flex">  
+              <a href="/tweets/{{this.id}}" class="mr-5">
+                <i class="far fa-comment"></i> {{this.replyNum}}
+              </a>
               {{!-- add like button --}}
               {{#if this.isLiked }}
-              <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display:inline;"><button
-                  type="submit" class="button reply-link mt-4 mb-4" style="background: none;border: none;">
-                  <i class="fas fa-heart"></i></form>
+              <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit"> 
+                  <i class="fas fa-heart like"></i>
               {{else}}
-              <form action="/like/{{this.id}}" method="POST" style="display:inline;"><button type="submit"
-                  class="button reply-link mt-4 mb-4" style="background: none;border: none;">
+              <form action="/like/{{this.id}}" method="POST">
+                <button type="submit">
                   <i class="far fa-heart"></i>
-              </form>
               {{/if}}
               {{this.LikeUsers.length}}
-              </button>
+                </button>
               </form>
-
-
-
             </div>
           </div>
-
           {{/each}}
-         
         </div>
-       
       </div>
-
     </div>
   </div>
   <div class="col-md-3 p-0">

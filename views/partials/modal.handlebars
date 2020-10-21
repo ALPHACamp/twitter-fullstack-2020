@@ -1,32 +1,30 @@
-{{!-- 新增 tweet modal  --}}
-
-<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{!-- create modal  --}}
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <div class="modal-header py-0">
+        <button type="button" class="new-tweet-close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-title pl-3 pt-2">
-        <img {{#if user.avatar}}src={{user.avatar}}{{/if}}
-          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-      </div>
-      <div class="modal-body" class="d-flex">
-        <form method="POST" action="/tweets">
-          <textarea name="description" id="description" cols="55" rows="5"
-            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
-            placeholder="有什麼新鮮事嗎"></textarea>
-          <button class="align-self-end" type="submit"
-            style="width: 64px;height: 40px;left: 1000px;top: 123px;background: #FF6600;border-radius: 100px">
-            <span style="color: #FFFFFF;">Tweet</span></button>
+      <div class="modal-title"></div>
+      <div class="modal-body">
+        <form class="row" action="/tweets" method="POST">
+          <div class="col-md-2 pr-0">
+            <img class="avatar" {{#if user.avatar}}src={{user.avatar}}{{/if}} >
+          </div>
+          <div class="col-md-8 p-0">
+            <textarea name="description" id="description" cols="42" rows="10" placeholder="有什麼新鮮事兒嗎 ?"></textarea>
+          </div>
+          <div class="col-md-2">
+            <button class="btn">推文</button>
+          </div>
         </form>
       </div>
     </div>
   </div>
 </div>
-
-{{!-- reply Modal --}}
+{{!-- reply modal --}}
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
