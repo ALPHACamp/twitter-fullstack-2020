@@ -13,8 +13,6 @@ const tweetController = {
         User,
         { model: User, as: 'LikeUsers' }
       ],
-      raw: true,
-      nest: true,
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
       Reply.findAll({
@@ -25,7 +23,7 @@ const tweetController = {
         tweets.forEach(tweet=>{
           let replyNum = 0;
           replies.forEach(reply=>{
-            if(tweet.id === reply.TweetId) replyNum++;
+            if(tweet.toJSON().id === reply.TweetId) replyNum++;
           })
           tweet.replyNum = replyNum;
           tweet.isLiked = req.user.LikeTweets.map(d => d.id).includes(tweet.id)

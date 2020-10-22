@@ -3,7 +3,7 @@
         <div class="col-md-2 pl-0">
             {{>left}}
         </div>
-        <div class="col-md-7 pl-0 border-left">
+        <div class="col-md-7 pl-0 pr-0 border-left border-right">
             <div class="row ml-1 align-items-center ">
                 <a href="/tweets" style="text-decoration: none; color:black">
                     <i class="fas fa-arrow-left fa-lg"></i>
@@ -13,21 +13,18 @@
                     <p class="followship-tweetsCount m-0" style="color:#7B7B7B">{{pageUser.Tweets.length}}推文</p>
                 </div>
             </div>
-            <div class="main">
+            <div class="personal-page">
                 <div class="header">
                     <div class="background">
-                        <img src="{{ pageUser.background }}" alt="pageUser-background" class="img-fluid" style="width: 100%;
-                    height: 200px; object-fit: cover;">
+                        <img src="{{ pageUser.background }}" alt="pageUser-background">
                     </div>
                     <div class="avatar">
-                        <img src="{{ pageUser.avatar }}" alt="pageUser-avatar" class="rounded-circle"
-                            style="mborder-radius: 50%; position: absolute; top: 160px; left: 3%; border: 5px solid #FFFFFF;">
+                        <img src="{{ pageUser.avatar }}" alt="pageUser-avatar">
                     </div>
-                     <div class="pt-2 pr-5" style="width: 100%;text-align: right;">
+                     <div class="button-block pt-2 pr-5">
                         {{#ifCond user.id pageUser.id}}
-                            <div class="row justify-content-end">
-                                <button class="m-3" data-toggle="modal" data-target="#editModal"
-                                    style="border-radius: 50px;width: 120px; height: 45px; background-color: #FFFFFF; color: #FF6600; border: 2px solid#FF6600; font-weight: bold; cursor: pointer;">編輯個人資料</button>
+                            <div class="edit row justify-content-end">
+                                <button class="m-3" data-toggle="modal" data-target="#editModal">編輯個人資料</button>
                             </div>
                         {{else}}
                             {{#if pageUser.isFollowed}}
@@ -46,7 +43,7 @@
                         {{/ifCond}}
                     </div>
                     {{>modal}}
-                    <div class=" justify-content ml-2 mt-5">
+                    <div class=" justify-content ml-2 mt-2">
                         <h2>{{ pageUser.name }}</h2>
 
                         <h6>
@@ -57,10 +54,14 @@
                     </div>
                     <div class="d-flex justify-content ml-2 mb-3">
                         <div class="ml-2">
-                            <strong>{{ pageUser.followingCount }}個</strong> 跟隨中
+                            <a class="user-followings font-weight-bold" href="/user/{{user.id}}/following"
+                                style="text-decoration: none; color:black">
+                                {{pageUser.followingCount}}個</a> 跟隨中
                         </div>
                         <div class="ml-4">
-                            <strong>{{ pageUser.followersCount }}位</strong> 跟隨者
+                            <a class="user-followings font-weight-bold" href="/user/{{user.id}}/follower"
+                                style="text-decoration: none; color:black">
+                                {{pageUser.followersCount}}個</a> 跟隨者
                         </div>
                     </div>
                 </div>
@@ -68,16 +69,16 @@
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
                         <a class="nav-link" href="/user/{{ pageUser.id }}/tweets">推文</a>
                         <a class="nav-link" href="/user/{{ pageUser.id }}/replies">推文與回覆</a>
-                        <a class="nav-link active" href="/user/{{ pageUser.id }}/likes">喜歡</a>
+                        <a class="nav-link select" href="/user/{{ pageUser.id }}/likes">喜歡的內容</a>
                     </div>
                 </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-tweets" role="tabpanel"
                         aria-labelledby="nav-home-tab">
-                        <div class="col">
+                        <div class="col px-0">
                             <div class="tweet-list">
                                 {{#each pageUser.LikeTweets}}
-                                <div class="tweet">
+                                <div class="tweet p-3 border-bottom">
                                     <div class="tweet-item-left d-flex align-items-stretch">
                                         <div class="tweet-left d-flex align-items-stretch">
                                             <a href="/user/{{ this.User.id }}/tweets">
@@ -90,20 +91,20 @@
                                                 <span class="mt-1"><a
                                                         href="/user/{{ this.User.id }}/tweets">{{ this.User.name }}</a></span>
                                                 <span class="user-account">
-                                                    {{ this.User.account }}．{{moment this.createdAt}}
+                                                    @{{ this.User.account }}．{{momentTime this.createdAt}}
                                                 </span>
                                             </div>
-                                            <div class="tweet-text">
+                                            <div class="tweet-text my-2">
                                                 {{this.description}}
                                             </div>
-                                            <div class="tweet-footer">
+                                            <div class="">
                                                 <!-- Button trigger modal -->
                                                 <button type="button" data-toggle="modal" data-target="#replyModal"
                                                     style="background: none;border: none;">
                                                     <i class="far fa-comment"></i> {{this.Replies.length}}
                                                 </button>
-                                                <button type="submit" class="button reply-link mt-4 mb-4"
-                                                    style="background:none;border: none;">
+                                                <button type="submit" class="button reply-link"
+                                                    style="background:none;border: none; color:red">
                                                     <i class="fas fa-heart"></i>
                                                 </button>
                                                 {{this.LikeUsers.length}}
