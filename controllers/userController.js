@@ -64,15 +64,12 @@ const userController = {
       })
   },
   putSelf: async (req, res) => {
-
     const { avatar, background } = req.files
     const { files } = req
-
     if (req.user.id !== Number((req.params.id))) {
       req.flash('error_messages', 'error')
       res.redirect('/tweets')
     }
-
     if (files) {
       imgur.setClientID(IMGUR_CLIENT_ID)
       if (avatar) {
@@ -97,7 +94,7 @@ const userController = {
         introduction: req.body.introduction
       }))
     req.flash('success_messages', '更新成功！')
-    res.redirect('back')
+    res.redirect(`/user/${req.user.id}/tweets`)
   },
   // putUser: (req, res) => {
 
@@ -218,7 +215,7 @@ const userController = {
       users = users.map(user => ({
         ...user.dataValues,
         // austin fix in 2020/10/12
-        isFollowed: user.Followers.some(d => d.id === user.id),
+        isFollowed: user.Followers.some(d => d.id === req.user.id),
         FollowersCount: user.Followers.length
       }))
       users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)

@@ -1,44 +1,40 @@
  <div class="right-zone p-2">
-    <ul class="list-group">
-        <li class="list-group-item d-flex">
+    <ul class="top-following">
+        <li class="font-weight-bold">
             跟隨誰
         </li>
-    {{#each users}}
-        {{#isAdmin this.isAdmin}}
-
-        {{else}}
-        <li class="list-group-item d-flex">
-            <div class="tweet-item-left d-flex align-items-stretch">
-              <div class="tweet-left d-flex align-items-stretch">
-                <a href="/user/{{ this.id }}/tweets">
-                  <img src="{{this.avatar}}" class="rounded-circle"
-                    style="background-size:cover; width: 50px;height: 50px;">
-                </a>
-              </div>
-              <div class="tweet-item-right ml-3">
-                <div class="tweet-item-title">
-                    <span class="mt-1"><a href="/user/{{ this.id }}/tweets">{{this.name}}</a></span>
+        {{#each users}}
+            {{#isAdmin this.isAdmin}}
+            {{else}}
+            <li class="">
+                <div class="d-flex">
+                    <div class="">
+                        <a href="/user/{{ this.id }}/tweets">
+                            <img src="{{this.avatar}}">
+                        </a>
+                    </div>
+                    <div class="ml-2 mt-2 name-account">
+                        <div class="name font-weight-bold">
+                            <a href="/user/{{ this.id }}/tweets">{{this.name}}</a>
+                        </div>
+                        <div class="account">@{{this.account}}</div>
+                    </div>
+                    <div class="follow-btn">
+                        {{#if this.isFollowed}}
+                        <form action="/following/{{ this.id }}?_method=DELETE" method="POST">
+                            <button class="following">正在跟隨</button>
+                        </form>
+                        {{else}}
+                        <form action="/following/{{ this.id }}" method="POST">
+                            <button class="follow">跟隨</button>
+                        </form>
+                        {{/if}}
+                    </div>
                 </div>
-                <div class="tweet-text">
-                    <span class="mt-1 text-secondary" style="font-size: .5rem;">@{{this.account}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="pt-2" style="width: 100%;text-align: right;">
-                {{#if this.isFollowed}}
-                <form action="/following/{{ this.id }}?_method=DELETE" method="POST">
-                    <button class="btn btn-warning" style="">正在跟隨</button>
-                </form>
-                {{else}}
-                <form action="/following/{{ this.id }}" method="POST">
-                    <button class="btn btn-outline-warning" style="">跟隨</button>
-                </form>
-                {{/if}}
-            </div>
-        </li>
-        {{/isAdmin}}
-    {{/each}}
-        <li class="list-group-item d-flex">
+            </li>
+            {{/isAdmin}}
+        {{/each}}
+        <li style="border-bottom: none">
             <a href="/user/{{ user.id }}/follower">顯示更多</a>
         </li>
     </ul>

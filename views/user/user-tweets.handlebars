@@ -27,19 +27,21 @@
                                 <button class="m-3" data-toggle="modal" data-target="#editModal">編輯個人資料</button>
                             </div>
                         {{else}}
+                            <div class="follow row justify-content-end mt-3">
                             {{#if pageUser.isFollowed }}
                                 <a href="/mailbox/{{ pageUser.id }}">
                                     <i class="far fa-envelope"></i>
                                 </a>
-                                <i class="far fa-bell"></i>
+                                {{!-- <i class="far fa-bell"></i> --}}
                                 <form action="/following/{{ pageUser.id }}?_method=DELETE" method="POST">
-                                    <button class="btn btn-warning" style="">正在跟隨</button>
+                                    <button class="following">正在跟隨</button>
                                 </form>
                             {{else}}
                                 <form action="/following/{{ pageUser.id }}" method="POST">
-                                    <button class="btn btn-outline-warning" style="">跟隨</button>
+                                    <button class="isFollow">跟隨</button>
                                 </form>
                             {{/if}}
+                            </div>
                         {{/ifCond}}
                     </div>
                     {{>modal}}
@@ -172,3 +174,4 @@
         </div>
     </div>
 </div>
+<script src="/js/edit.js"></script>

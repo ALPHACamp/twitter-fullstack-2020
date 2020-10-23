@@ -58,68 +58,50 @@
   </div>
 </div>
 {{!-- user Edit modal --}}
-
 <div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="row ">
     <div class="modal-dialog ">
       <form class="" action="/users/{{user.id}}/edit?_method=PUT" method="POST" enctype="multipart/form-data">
-
         <div class="modal-content edit-modal-content ">
-          <div class="edit-modal-header">
-            <div class="d-inline-flex justify-content-between">
-              <div class="edit-left-top">
-                <button type="button" data-dismiss="modal" aria-label="Close"
-                  class="tweet-modal-close-button btn btn-outline-warning">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <a class="font-weight-bold"><span>編輯個人資料</span></a>
-              </div>
+          <div class="header d-flex">
+            <div class="button-block">
+              <button type="button" data-dismiss="modal" aria-label="Close"
+                class="tweet-modal-close-button">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="edit-text">
+              <span class="font-weight-bold">編輯個人資料</span>
+            </div>
+            <div class="edit-btn">
+              <input type="submit" value="儲存">
             </div>
           </div>
-
-
-          <div class="edit-modal-body">
-
-            <div class="edit-item-avatar rounded-circle" style="background: url({{user.avatar}}),#C4C4C4;
-                      position: absolute; max-width: 20%; top:23%; left:8%;border: 5px solid white;">
-              <label for="avatar"><i class="icon-photo avatar"></i></label>
-              <input type="file" name="avatar" class="custom-file-input" id="avatar">
+          <div class="edit-body">
+            <div class="edit-background">
+              <img id="edit-background-img" src="{{user.background}}" alt="">
+              <i class="far fa-images fa-2x" id="edit-background"></i>
+              <input type="file" name="background" id="edit-background-input">
             </div>
-
-            <div class="edit-item-cover" style="background: url({{user.background}}); background-position:center;
-    background-size:cover;height:150px;">
-              <label for="background"><i class="icon-photo background"></i></label>
-              <input type="file" name="background" class="custom-file-input" id="background">
-              {{!-- <button type="button" class="btn cover-remove"><i class="icon-delete remove"></i></button> --}}
+            <div class="edit-avatar"> 
+              <img id="edit-avatar-img" src="{{user.avatar}}" alt="">
+              <i class="far fa-images fa-2x" id="edit-avatar"></i>
+              <input type="file" name="avatar" id="edit-avatar-input">
             </div>
-
-
-            <div class="edit-item-name row justify-content-center mt-5">
-              <div class="item-name-top">
-                <span class="item-name-top-mark">Name</span>
+            <div class="px-3">
+              <div class="edit-name">
+                <div class="label">名稱</div>
+                <input type="text" id="name" name="name" placeholder="名稱" maxlength="50" value="{{user.name}}">
               </div>
-              <input type="text" id="name" name="name" placeholder="name" maxlength="50" value="{{user.name}}">
-              <div class="item-name-bottom ">
-                <span>{{user.name.length}}/50</span>
+              <div class="name-count">{{user.name.length}}/50</div>
+              <div class="edit-introduction">
+                <div class="label">自我介紹</div>
+                <textarea name="introduction" id="introduction" placeholder="介紹" maxlength="160"
+                  class="" cols="60" rows="10">{{user.introduction}}</textarea>
               </div>
-            </div>
-            <div class="edit-item-text ">
-              <div class="item-text-top row justify-content-center mt-2">
-                <span class="item-text-top-mark ">自我介紹</span>
-              </div>
-              <textarea name="introduction" id="introduction" placeholder="introduction" maxlength="160"
-                class="item-text-center ml-2 mr-2" cols="60" rows="10">{{user.introduction}}</textarea>
               <div class="item-text-bottom row justify-content-end mr-3">
                 <span>{{user.introduction.length}}/160</span>
-              </div>
-              <div class="edit-right-top">
-
-                <div class="row justify-content-end mr-2 mb-2">
-                  <button type="submit"
-                    style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
-                    <span style="color: #FFFFFF;">儲存</span></button>
-                </div>
               </div>
             </div>
           </div>

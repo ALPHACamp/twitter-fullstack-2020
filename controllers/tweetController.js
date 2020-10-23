@@ -8,6 +8,7 @@ const Like = db.Like
 
 const tweetController = {
   getTweets: (req, res) => {
+    console.log(res.locals.users);
     Tweet.findAll({
       include: [
         User,

@@ -82,8 +82,6 @@ module.exports = (app, passport) => {
 
   // 使用者能編輯自己的自我介紹、個人頭像與封面
   app.get('/user/self/:id', authenticated, userController.getTweet)
-  // app.get('/users/:id', authenticated, userController.editUser)
-  // app.put('/user/:id', authenticated, userController.putUser)
   app.put('/users/:id/edit', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'background', maxCount: 1 }]), userController.putSelf)
 
 
