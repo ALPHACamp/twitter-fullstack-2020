@@ -1,6 +1,12 @@
 const moment = require('moment')
 
 module.exports = {
+  record: function(number, options){
+    return number + 1;
+  },
+  isNumberOne: function(number, options){
+    if(number === 0) return options.fn(this);
+  },
   isAdmin: function(isAdmin, options){
     if(isAdmin){
       return options.fn(this)

@@ -35,6 +35,16 @@ button:focus { outline:0 !important; }
 .top-following li .name-account .account{
     color: #657786;
 }
+.top-following li .user-avatar {
+    position: relative;
+}
+.top-following li .user-avatar .no1{
+    position: absolute;
+    color: #DAA520;
+    top: -8px;
+    left: -5px;
+    transform: rotate(-45deg);
+}
 .top-following li .follow-btn{
     width: 100%;
     text-align: right;
@@ -347,4 +357,22 @@ button:focus { outline:0 !important; }
 .personal-page nav #nav-tab a.select{
     border-bottom: 3px solid #FF6600;
     color: #FF6600;
+}
+.followship-following-btn{
+    background: #FF6600;
+    color: #FFFFFF;
+    border: 1px solid #FF6600;
+    box-sizing: border-box;
+    border-radius: 100px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+.followship-follower-btn{
+    background:#FFFFFF;
+    color: #FF6600;
+    border: 1px solid #FF6600;
+    box-sizing: border-box;
+    border-radius: 100px;
+    padding: 4px 10px;
+    cursor: pointer;
 }

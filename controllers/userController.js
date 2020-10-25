@@ -36,9 +36,11 @@ const userController = {
             account: req.body.account,
             name: req.body.name,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+            avatar: `https://medgoldresources.com/wp-content/uploads/2018/02/avatar-placeholder.gif`,
+            background: `https://icchabazar.com/wp-content/uploads/2019/05/electro-home-placeholder-background-1.png.jpg`
           }).then(user => {
-            req.flash('success_messages', 'registered successfully')
+            req.flash('success_messages', '註冊成功，請登入')
             return res.redirect('/signin')
           }).catch(err=>console.log(err));
         }
@@ -167,7 +169,6 @@ const userController = {
           ...user.dataValues,
           isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
         }))
-        console.log(followerList);
         return res.render('follower', { user, followerList })
       })
   },
