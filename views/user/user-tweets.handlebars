@@ -97,13 +97,17 @@
                                             <div class="tweet-text my-2">
                                                 {{this.description}}
                                             </div>
-                                            <div class="">
+                                            <div class="tweet-buttom">
+                                                <a href="/tweets/{{this.id}}" class="mr-5">
+                                                    <i class="far fa-comment mr-1"></i>{{this.Replies.length}}
+                                                </a>
                                                 <!-- Button trigger modal -->
-                                                <button type="button" data-toggle="modal"
-                                                    data-target="#user-tweet-modal-{{ this.id }}"
+                                                {{!-- <button type="button" data-toggle="modal"
+                                                    data-target="#user-tweet-modal-
+                                                    "
                                                     style="background: none;border: none;">
-                                                    <i class="far fa-comment"></i> {{this.Replies.length}}
-                                                </button>
+                                                    <i class="far fa-comment"></i> --}}
+                                                {{!-- </button> --}}
                                                 <div class="modal fade" id="user-tweet-modal-{{ this.id }}"
                                                     tabindex="-1" aria-labelledby="exampleModalLabel"
                                                     aria-hidden="true">

@@ -4,7 +4,7 @@
             跟隨誰
         </li>
         {{#each users}}
-            {{#isAdmin this.isAdmin}}
+            {{#isAdmin this.isAdmin }}
             {{else}}
             <li class="">
                 <div class="d-flex">
@@ -35,7 +35,7 @@
             {{/isAdmin}}
         {{/each}}
         <li style="border-bottom: none">
-            <a href="/user/{{ user.id }}/follower">顯示更多</a>
+            <a href="/user/{{ user.id }}/follower" style="color:#FF6600; text-decoration: none">顯示更多</a>
         </li>
     </ul>
  </div>

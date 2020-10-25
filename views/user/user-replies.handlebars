@@ -97,12 +97,10 @@
                                             <div class="tweet-text my-2">
                                                 {{this.Tweet.description}}
                                             </div>
-                                            <div class="">
-                                                <!-- Button trigger modal -->
-                                                <button type="button" data-toggle="modal" data-target="#replyModal"
-                                                    style="background: none;border: none;">
-                                                    <i class="far fa-comment"></i> {{this.Tweet.Replies.length}}
-                                                </button>
+                                            <div class="tweet-buttom">
+                                                <a href="/tweets/{{this.Tweet.id}}" class="mr-5">
+                                                    <i class="far fa-comment mr-1"></i>{{this.Tweet.Replies.length}}
+                                                </a>
                                                 {{#if this.Tweet.isLiked }}
                                                 <form action="/like/{{this.Tweet.id}}?_method=DELETE" method="POST"
                                                     style="display:inline;">

@@ -99,16 +99,28 @@
                                             <div class="tweet-text my-2">
                                                 {{this.description}}
                                             </div>
-                                            <div class="">
+                                            <div class="tweet-buttom">
                                                 <!-- Button trigger modal -->
-                                                <button type="button" data-toggle="modal" data-target="#replyModal"
-                                                    style="background: none;border: none;">
-                                                    <i class="far fa-comment"></i> {{this.Replies.length}}
-                                                </button>
-                                                <button type="submit" class="button reply-link"
-                                                    style="background:none;border: none; color:red">
-                                                    <i class="fas fa-heart"></i>
-                                                </button>
+                                                <a href="/tweets/{{this.id}}" class="mr-5">
+                                                    <i class="far fa-comment mr-1"></i>{{this.Replies.length}}
+                                                </a>
+                                                {{#if this.isLiked }}
+                                                <form action="/like/{{this.id}}?_method=DELETE" method="POST"
+                                                    style="display:inline;">
+                                                    <button type="submit" class="button reply-link"
+                                                        style="background:none;border: none; color: red">
+                                                        <i class="fas fa-heart"></i>
+                                                    </button>
+                                                </form>
+                                                {{else}}
+                                                <form action="/like/{{this.id}}" method="POST"
+                                                    style="display:inline;">
+                                                    <button type="submit" class="button reply-link"
+                                                        style="background: none;border: none;">
+                                                        <i class="far fa-heart"></i>
+                                                    </button>
+                                                </form>
+                                                {{/if}}
                                                 {{this.LikeUsers.length}}
                                             </div>
                                         </div>

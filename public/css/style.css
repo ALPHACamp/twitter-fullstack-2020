@@ -238,6 +238,13 @@ button:focus { outline:0 !important; }
 .tweet .tweet-item-right .user-account{
     color: #657786;
 }
+.tweet .tweet-item-right .tweet-buttom a{
+    text-decoration: none;
+    color: black;
+}
+.tweet .tweet-item-right .tweet-buttom .reply-link{
+    cursor: pointer;
+}
 .tweet .tweet-footer{
     margin:10px 0 10px 64px;
 }
