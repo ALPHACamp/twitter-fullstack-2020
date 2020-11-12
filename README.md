@@ -1,6 +1,6 @@
 # Simple Twitter
 
-Heroku: https://salty-oasis-94184.herokuapp.com/restaurants
+Heroku:https://radiant-depths-21853.herokuapp.com/signin
 
 # 網站畫面
 
@@ -76,9 +76,9 @@ node app.js or nodemon app.js
 # 測試帳號
 | 帳號 | 密碼 |
 | :------------- | :------------- |
-| root | 12345678  |
-| user1 | 12345678  |
-| user2| 12345678  |
+| @root | 12345678  |
+| @user1 | 12345678  |
+| @user2| 12345678  |
 
 
 # Dependencies
