@@ -103,7 +103,9 @@ node app.js or nodemon app.js
 + method-override": "^3.0.0"
 + socket.io": "^2.3.0" 
 
-# 開發人員
+# 共同開發人員
+
 ShengYao: https://github.com/ShengYaoHuang
+
 Eric Hsu: https://github.com/hsiyu1121/restaurant_forum
 
