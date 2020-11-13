@@ -30,6 +30,8 @@ twitter頁面
 
 + 使用者可以到貼文底下留言按like
 
++ 使用者可以在公開聊天室與同時在線的朋友聊天
+
 
 # How to run this project
 1. To build this project locally:
