@@ -107,5 +107,5 @@ node app.js or nodemon app.js
 
 ShengYao: https://github.com/ShengYaoHuang
 
-Eric Hsu: https://github.com/hsiyu1121/restaurant_forum
+Eric Hsu: https://github.com/hsiyu1121/
 
