@@ -93,6 +93,15 @@ node app.js or nodemon app.js
 + mysql2: v2.1.0
 + sequelize: v6.3.5
 + sequelize-cli: v6.2.0
++ imgur-node-api": "^0.1.0"
++ dotenv": "^8.2.0"
++ express": "^4.16.4"
++ express-handlebars": "^5.1.0"
++ express-session": "^1.17.1"
++ faker": "^4.1.0"
++ imgur-node-api": "^0.1.0"
++ method-override": "^3.0.0"
++ socket.io": "^2.3.0" 
 
 # 開發人員
 ShengYao: https://github.com/ShengYaoHuang
