@@ -1,6 +1,6 @@
 # Simple Twitter
 
-Heroku:https://radiant-depths-21853.herokuapp.com/signin
+Heroku: https://radiant-depths-21853.herokuapp.com/signin
 
 # 網站畫面
 
@@ -12,6 +12,9 @@ twitter頁面
 
 ![image](https://user-images.githubusercontent.com/65526955/98960698-b385f480-253f-11eb-87e0-619ea913cb5c.png)
 
+ 公開聊天室
+ 
+ ![image](https://user-images.githubusercontent.com/65526955/99030085-1c588580-25af-11eb-91a4-85310cf46e76.png)
 
 # 網站功能
 
