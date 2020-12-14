@@ -13,7 +13,15 @@
 <body>
 
   <div class="container">
-    <div class="py-5 bg-light">
+
+    <div class="py-5 bg-light row">
+      {{#if error_msg}}
+      <div class="alert alert-warning alert-dismissible col-md-8 mx-auto" role="alert">
+        {{error_msg}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {{/if}}
+
       {{{body}}}
     </div>
   </div>
