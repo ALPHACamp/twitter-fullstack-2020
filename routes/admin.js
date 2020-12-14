@@ -3,6 +3,7 @@ const router = express.Router()
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
+const adminController = require('../controllers/adminController')
 
 router.get('/signin', (req, res) => {
   return res.render('admin/signin')
