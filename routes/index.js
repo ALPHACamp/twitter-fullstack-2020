@@ -3,7 +3,7 @@ const router = express.Router()
 const admin = require('./admin')
 const users = require('./users')
 const tweets = require('./tweets')
-const auth = require('../middleware/auth.js')
+const auth = require('../middleware/auth')
 
 
 router.use('/admin', admin)
