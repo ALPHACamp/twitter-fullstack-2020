@@ -13,13 +13,13 @@ const db = require('../../../models')
 describe('# Admin::User login request', () => {
 
   context('go to admin login page', () => {
-    
+
     describe('if admin want to log in', () => {
-      before(async() => {
+      before(async () => {
         await db.User.create({
-          name: 'User1', 
-          email: 'User1', 
-          account: 'User1', 
+          name: 'User1',
+          email: 'User1',
+          account: 'User1',
           password: bcrypt.hashSync('User1', bcrypt.genSaltSync(10)),
           role: 'admin'
         })
@@ -29,7 +29,7 @@ describe('# Admin::User login request', () => {
         request(app)
           .get('/admin/signin')
           .expect(200)
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
             done();
           });
@@ -42,10 +42,10 @@ describe('# Admin::User login request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .expect('Location', '/admin/tweets')
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
-              return done();
-            })
+            return done();
+          })
       });
 
       it('login fail', (done) => {
@@ -55,18 +55,18 @@ describe('# Admin::User login request', () => {
           .set('Accept', 'application/json')
           .expect(302)
           .expect('Location', '/admin/signin')
-          .end(function(err, res) {
+          .end(function (err, res) {
             if (err) return done(err);
-              return done();
-            })
+            return done();
+          })
       });
 
-      
+
       after(async () => {
-        await db.User.destroy({where: {},truncate: true})
+        await db.User.destroy({ where: {}, truncate: true })
       })
 
     });
-    
+
   });
 });
