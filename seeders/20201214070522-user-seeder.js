@@ -34,6 +34,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('User', null, {})
+    return queryInterface.bulkDelete('Users', null, {})
   }
 };
