@@ -6,7 +6,14 @@
   "scripts": {
     "start": "NODE_ENV=development node app.js",
     "dev": "NODE_ENV=development nodemon app.js",
-    "test": "mocha test --exit --recursive --timeout 5000"
+    "test_model": "set \"NODE_ENV=test\" && mocha test/models/*.js --exit --recursive --timeout 5000",
+    "test_model_users": "set \"NODE_ENV=test\" && mocha test/models/User.spec.js --exit --recursive --timeout 5000",
+    "test_model_tweets": "set \"NODE_ENV=test\" && mocha test/models/Tweet.spec.js --exit --recursive --timeout 5000",
+    "test_model_replies": "set \"NODE_ENV=test\" && mocha test/models/Reply.spec.js --exit --recursive --timeout 5000",
+    "test_model_likes": "set \"NODE_ENV=test\" && mocha test/models/Like.spec.js --exit --recursive --timeout 5000",
+    "test_model_followship": "set \"NODE_ENV=test\" && mocha test/models/Followship.spec.js --exit --recursive --timeout 5000",
+    "test_requests": "set \"NODE_ENV=test\" && mocha test/requests/*.js --exit --recursive --timeout 5000",
+    "test_admin": "set \"NODE_ENV=test\" && mocha test/requests/admin/*.js --exit --recursive --timeout 5000"
   },
   "author": "",
   "license": "ISC",
@@ -20,17 +27,15 @@
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
     "method-override": "^3.0.0",
-    "mocha": "^6.0.2",
+    "mocha": "^6.2.3",
     "mysql2": "^1.6.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "sequelize": "^4.42.0",
+    "sequelize": "^6.3.5",
     "sequelize-cli": "^5.5.0",
-    "sinon": "^7.2.3",
-    "sinon-chai": "^3.3.0"
-  },
-  "devDependencies": {
     "sequelize-test-helpers": "^1.0.7",
+    "sinon": "^7.2.3",
+    "sinon-chai": "^3.3.0",
     "supertest": "^3.3.0"
   }
 }

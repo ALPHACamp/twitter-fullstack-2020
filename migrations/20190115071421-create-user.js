@@ -8,13 +8,19 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      name: {
+        type: Sequelize.STRING
+      },
       email: {
         type: Sequelize.STRING
       },
       password: {
         type: Sequelize.STRING
       },
-      name: {
+      account: {
+        type: Sequelize.STRING
+      },
+      cover: {
         type: Sequelize.STRING
       },
       avatar: {
@@ -23,15 +29,13 @@ module.exports = {
       introduction: {
         type: Sequelize.TEXT
       },
-      role: {
-        type: Sequelize.STRING
+      isAdmin: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       updatedAt: {
-        allowNull: false,
         type: Sequelize.DATE
       }
     });
