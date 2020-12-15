@@ -1,5 +1,5 @@
 const { Model } = require("sequelize");
-const helpers = require('./_helpers')
+const helpers = require('../_helpers')
 
 module.exports = {
   authenticated: (req, res, next) => {
