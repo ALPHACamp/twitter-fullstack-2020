@@ -14,7 +14,7 @@ const passport = require('./config/passport')
 const app = express()
 const port = process.env.PORT || 3000
 
-app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs' }))
+app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs', helpers: require('./config/handlebars-helper') }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'simpleTweetSecret', resave: false, saveUninitialized: false }))

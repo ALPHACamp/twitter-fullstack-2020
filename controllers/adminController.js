@@ -1,4 +1,6 @@
-
+const db = require('../models')
+const User = db.User
+const Tweet = db.Tweet
 
 
 module.exports = {
@@ -7,6 +9,15 @@ module.exports = {
   },
 
   getTweets: (req, res) => {
-    return res.render('admin/tweet')
+    Tweet.findAll({ include: [User] }).then(tweets => {
+      tweets = tweets.map((t, _) => ({
+        ...t.dataValues,
+        description: t.description.substring(0, 50)
+      }))
+
+      res.render('admin/tweets', {
+        tweets
+      })
+    })
   }
 }
