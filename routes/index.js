@@ -7,12 +7,12 @@ module.exports = (app) => {
 
   app.get('/admin/tweets', (req, res) => {
     Tweet.findAll({
+      raw: true, nest: true,
       include: [User], order: [['createdAt', 'DESC']]
     }).then(tweets => {
-      console.log(tweets)
       tweets = tweets.map(tweet => ({
-        ...tweet.dataValues,
-        description: tweet.dataValues.description.substring(0, 50),
+        ...tweet,
+        description: tweet.description.substring(0, 50),
       }))
       return res.render('admin/tweets', { tweets: tweets })
     }
