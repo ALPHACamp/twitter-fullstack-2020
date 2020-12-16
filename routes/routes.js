@@ -17,7 +17,7 @@ const passport = require('../config/passport')
 ///////
 router.get('/admin/signin', adminController.signin)
 router.get('/admin/tweets', adminController.getTweets)
-router.delete('/admin/tweet/:id', adminController.deleteTweet)
+router.delete('/admin/tweets/:id', adminController.deleteTweet)
 
 ///////
 // User
