@@ -1,0 +1,54 @@
+<div class="d-flex flex-column align-items-center mt-5">
+
+  <img class="my-3"
+    src="https://uploads-ssl.webflow.com/5d3a7aed4e11722bc1d46f10/5d43a805a4923b6b4285c376_medium_alpha-logo-square-89%20256x256.png"
+    alt="" style="max-width: 40px;height: auto;">
+
+  <h5 class="font-weight-bold my-2">建立你的帳戶</h5>
+  <form class="col-md-4 form-signup" action="/signup" method="POST" style="width: 100%;">
+
+    <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mt-2 mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-light border-0" style="height:20px;">帳號</span>
+      </div>
+      <input type="text" name="account" class="form-control bg-light border-0 w-100" placeholder="" style="height:30px;"
+        required autofocus>
+    </div>
+
+    <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-light border-0" style="height:20px;">名稱</span>
+      </div>
+      <input type="text" name="name" class="form-control  bg-light border-0 w-100" placeholder="" style="height:30px;"
+        required>
+    </div>
+
+    <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-light border-0" style="height:20px;">Email</span>
+      </div>
+      <input type="email" name="email" class="form-control  bg-light border-0 w-100" placeholder="" style="height:30px;"
+        required>
+    </div>
+
+    <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-light border-0" style="height:20px;">密碼</span>
+      </div>
+      <input type="password" name="password" class="form-control  bg-light border-0 w-100" placeholder=""
+        style="height:30px;" required>
+    </div>
+
+    <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text bg-light border-0" style="height:20px;">密碼確認</span>
+      </div>
+      <input type="password" name="checkPassword" class="form-control  bg-light border-0 w-100" placeholder=""
+        style="height:30px;" required>
+    </div>
+
+    <button class="btn btn-lg btn-block font-weight-bold mt-4" type="submit"
+      style="color:white; background-color:#FF6103; border-radius: 25px;">註冊</button>
+  </form>
+  <a class="border-bottom border-primary pb-0 mt-4" href="/signin">取消</a>．
+</div>
