@@ -5,19 +5,15 @@ const passport = require('../config/passport')
 const db = require('../models')
 const User = db.User
 const adminController = require('../controllers/adminController')
+const { authenticatedAdmin } = require('../middleware/auth')
 
-router.get('/signin', (req, res) => {
-  return res.render('admin/signin')
-})
-
+router.get('/signin', adminController.signInPage)
 router.post('/signin', passport.authenticate('local', {
   successRedirect: '/admin/tweets',
   failureRedirect: '/admin/signin',
   failureFlash: true
 }))
 
-router.get('/tweets', (req, res) => {
-  return res.render('admin/tweet')
-})
+router.get('/tweets', authenticatedAdmin, adminController.getTweets)
 
 module.exports = router
