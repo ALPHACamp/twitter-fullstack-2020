@@ -18,4 +18,12 @@ module.exports = (app) => {
     }
     )
   })
+
+  app.delete('/admin/tweet/:id', (req, res) => {
+    console.log(req.params.id)
+    Tweet.findByPk(req.params.id).then(tweet => {
+      tweet.destroy()
+      return res.redirect('back')
+    })
+  })
 }
