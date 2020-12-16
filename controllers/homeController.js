@@ -4,7 +4,6 @@ const db = require('../models')
 const { name } = require("faker")
 const User = db.User
 
-
 module.exports = {
   signInPage: (req, res) => {
     return res.render('signin')
@@ -13,7 +12,11 @@ module.exports = {
   signUpPage: (req, res) => {
     return res.render('signup')
   },
-
+  
+  signIn: (req, res) => {
+    res.redirect('/tweets')
+  },
+  
   signup: (req, res) => {
     const { account, name, email, password, confirmPassword } = req.body
     const errors = []
