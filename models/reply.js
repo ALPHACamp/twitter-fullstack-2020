@@ -1,21 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Reply = sequelize.define('Reply', {
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.INTEGER
-    },
-    UserId: {
-      type: DataTypes.INTEGER
-    },
-    TweetId: {
-      type: DataTypes.INTEGER
-    },
     comment: {
-      type: DataTypes.TEXT
-    }
+      type: DataTypes.TEXT,
+    },
   }, {});
   Reply.associate = function (models) {
     Reply.belongsTo(models.User)
@@ -23,3 +11,22 @@ module.exports = (sequelize, DataTypes) => {
   };
   return Reply;
 };
+
+/*
+
+'use strict';
+const { Model } = require('sequelize');
+
+module.exports = (sequelize, DataTypes) => {
+  class Reply extends Model {
+    static associate(models) {
+    }
+  };
+  Reply.init({
+    comment: DataTypes.TEXT,
+  }, {
+    sequelize,
+    modelName: 'Reply',
+  });
+  return Reply;
+};*/
