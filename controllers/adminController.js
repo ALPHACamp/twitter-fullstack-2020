@@ -19,5 +19,13 @@ module.exports = {
         tweets
       })
     })
+  },
+
+  deleteTweet: (req, res) => {
+    Tweet.findOne({ where: { id: req.params.id } })
+      .then(tweet => {
+        return tweet.destroy()
+          .then(tweet => res.redirect('/admin/tweets'))
+      })
   }
 }

@@ -21,9 +21,8 @@
           </div>
         </div>
 
-        <form action="/admin/tweets/{{this.id}}?_method=DELETE" class="col">
-          <button type="submit" class="btn-close" onclick="return confirm('Sure to delete?')" data-bs-dismiss="alert"
-            aria-label="Close"></button>
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="col">
+          <button type="submit" class="btn-close" onclick="return confirm('Sure to delete?')"></button>
         </form>
       </div>
     </div>
