@@ -12,6 +12,17 @@ const helplers = require('../_helpers')
 
 const passport = require('../config/passport')
 
+const authenticated = passport.authenticate('jwt', { session: false })
+
+const authenticatedAdmin = (req, res, next) => {
+  if (req.user) {
+    if (req.user.role) { return next() }
+    return res.redirect('/admin/signin')
+  } else {
+    return res.redirect('/admin/signin')
+  }
+}
+
 ///////
 // admin
 ///////
