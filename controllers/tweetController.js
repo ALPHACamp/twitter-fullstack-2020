@@ -22,6 +22,9 @@ module.exports = {
             res.render('tweets', { data: data })
         })
     },
+    getTweet: (req,res) => {
+        res.send(req.params.id)
+    },
     replyTweet: (req, res) => {
         const reply = {
             UserId: req.user.id,

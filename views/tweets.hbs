@@ -10,19 +10,23 @@
                 <p><span style="font-weight: bolder;">{{this.User.name}}</span><span
                         style="color: gray;">@taiwan．{{moment this.createdAt}}</span></p>
             </div>
-            <div class="row">
-                <p>{{this.description}}</p>
-            </div>
+            <a href="/tweets/{{this.id}}" style="text-decoration:none;color:#333;">
+                <div class="row">
+                    <p>{{this.description}}</p>
+                </div>
+            </a>
             <div class="row action-bar">
                 <a href="#" class="" style="margin-right:40px; width: 40px" data-bs-toggle="modal"
                     data-bs-target="#tweet-{{this.id}}"><i class="far fa-comment" style="color: gray;"><span
                             style="margin-left: 10px;">{{this.countReplies}}</span></i></a>
                 {{#if this.isLike}}
-                <a href="/tweets/{{this.id}}/unlike" class="col-2 " style="margin-right:40px; width: 40px"><i class="like fas fa-heart "
-                        style="color: #e0245e"><span style="margin-left: 10px;">{{this.countLikes}}</span></i></a>
+                <a href="/tweets/{{this.id}}/unlike" class="col-2 " style="margin-right:40px; width: 40px"><i
+                        class="like fas fa-heart " style="color: #e0245e"><span
+                            style="margin-left: 10px;">{{this.countLikes}}</span></i></a>
                 {{else}}
-                <a href="/tweets/{{this.id}}/like" class="col-2 " style="margin-right:40px; width: 40px"><i class="unlike far fa-heart"
-                        style="color: gray;"><span style="margin-left: 3px;">{{this.countLikes}}</span></i></a>
+                <a href="/tweets/{{this.id}}/like" class="col-2 " style="margin-right:40px; width: 40px"><i
+                        class="unlike far fa-heart" style="color: gray;"><span
+                            style="margin-left: 3px;">{{this.countLikes}}</span></i></a>
                 {{/if}}
             </div>
         </div>
@@ -66,8 +70,8 @@
                                 <img class="rounded-circle" src="{{../user.avatar}}" alt="" width="50px" height="50px">
                             </div>
                             <div class="col-10">
-                                <textarea name="comment" id="comment" cols="30" rows="10" style="resize:none; border: 0px;"
-                                    placeholder="推你的回覆"></textarea>
+                                <textarea name="comment" id="comment" cols="30" rows="10"
+                                    style="resize:none; border: 0px;" placeholder="推你的回覆"></textarea>
                             </div>
                         </div>
                     </div>
