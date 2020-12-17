@@ -46,6 +46,11 @@ const userController = {
             })
         }
     },
+
+    getSetting: (req, res) => {
+        return res.render('setting')
+    },
+
 }
 
 module.exports = userController
