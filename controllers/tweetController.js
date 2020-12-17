@@ -1,7 +1,7 @@
-const { Console } = require('console')
 const db = require('../models')
 const tweet = require('../models/tweet')
 const { Op } = require('sequelize')
+const helper = require('../_helpers')
 const Tweet = db.Tweet
 const User = db.User
 const Like = db.Like
@@ -10,9 +10,9 @@ const Reply = db.Reply
 
 module.exports = {
     getTweets: (req, res) => {
-        Tweet.findAll({ include: [{ model: User }, Like, Reply] }).then(tweets => {
+        Tweet.findAll({ include: [User, Like, Reply], order: [['createdAt', 'DESC']] }).then(tweets => {
             tweets = JSON.parse(JSON.stringify(tweets))
-            const userLiked = req.user.Likes.map(d => d.TweetId)
+            const userLiked = helper.getUser(req).Likes ? helper.getUser(req).Likes.map(d => d.TweetId) : []
             const data = tweets.map(tweet => ({
                 ...tweet,
                 countLikes: tweet.Likes.length,
@@ -22,13 +22,17 @@ module.exports = {
             res.render('tweets', { data: data })
         })
     },
-    getTweet: (req,res) => {
+    getReply: (req, res) => {
         res.send(req.params.id)
     },
     postTweets: (req, res) => {
-        console.log(req.params)
+        if (req.body.description.length > 140 || req.body.description.length < 1) {
+            req.flash('error_msg', '字數限制140字')
+            res.redirect('/tweets')
+            return
+        }
         const tweet = {
-            UserId: req.user.id,
+            UserId: helper.getUser(req).id,
             description: req.body.description
         }
         Tweet.create(tweet).then(() => {
@@ -36,8 +40,13 @@ module.exports = {
         }).catch(err => console.log(err))
     },
     postReply: (req, res) => {
+        if (req.body.comment < 1) {
+            req.flash('error_msg', '請輸入內容')
+            res.redirect('/tweets')
+            return
+        }
         const reply = {
-            UserId: req.user.id,
+            UserId: helper.getUser(req).id,
             TweetId: req.params.id,
             comment: req.body.comment
         }
@@ -47,8 +56,8 @@ module.exports = {
     },
     likeTweet: (req, res) => {
         const like = {
-            UserId: req.user.id,
-            TweetId: req.params.id,
+            UserId: helper.getUser(req).id,
+            TweetId: req.params.id
         }
         Like.create(like).then(() => {
             res.redirect('/tweets')
@@ -56,7 +65,7 @@ module.exports = {
     },
     unlikeTweet: (req, res) => {
         const unlike = {
-            UserId: req.user.id,
+            UserId: helper.getUser(req).id,
             TweetId: req.params.id,
         }
         Like.findOne({ where: unlike }).then(like => {

@@ -1,5 +1,6 @@
 <div class="col-3"></div>
 <div class="col-6">
+    {{> msg}}
     <div class="card row mb-2">
         <ul class="list-group list-group-flush ">
             <li class="list-group-item"><strong>
@@ -12,7 +13,7 @@
                             <img class="rounded-circle" src="{{user.avatar}}" alt="" width="50px" height="50px">
                         </div>
                         <div class="col-10">
-                            <textarea name="description" id="description" cols="50" rows="3"
+                            <textarea name="description" id="description" 
                                 style="resize:none; border: 0px;" placeholder="推你的回覆"></textarea>
                         </div>
                     </div>
@@ -26,30 +27,35 @@
     {{#each data}}
     <div class=" card d-flex flex-row row">
         <div class="col-2 d-flex justify-content-center mt-3">
+            <a href="/users/{{this.User.id}}/tweets">
             <img class="rounded-circle" src="{{this.User.avatar}}" alt="" width="50px" height="50px">
+            </a>
         </div>
         <div class="col-10 card-body">
             <div class="row">
                 <p><span style="font-weight: bolder;">{{this.User.name}}</span><span
-                        style="color: gray;">@taiwan．{{moment this.createdAt}}</span></p>
+                        style="color: gray;">@{{this.account}}．{{moment this.createdAt}}</span></p>
             </div>
-            <a href="/tweets/{{this.id}}" style="text-decoration:none;color:#333;">
+            <a href="/tweets/{{this.id}}/replies" style="text-decoration:none;color:#333;">
                 <div class="row">
                     <p>{{this.description}}</p>
                 </div>
             </a>
             <div class="row action-bar">
-                <a href="#" class="" style="margin-right:40px; width: 40px" data-bs-toggle="modal"
+                <button href="#" class="btn btn-link col-3" style="margin-right:40px; width: 40px" data-bs-toggle="modal"
                     data-bs-target="#tweet-{{this.id}}"><i class="far fa-comment" style="color: gray;"><span
-                            style="margin-left: 10px;">{{this.countReplies}}</span></i></a>
+                            style="margin-left: 10px;">{{this.countReplies}}</span></i></button>
                 {{#if this.isLike}}
-                <a href="/tweets/{{this.id}}/unlike" class="col-2 " style="margin-right:40px; width: 40px"><i
-                        class="like fas fa-heart " style="color: #e0245e"><span
-                            style="margin-left: 10px;">{{this.countLikes}}</span></i></a>
+                <form class="col-3" action="/tweets/{{this.id}}/like" method="post">
+                    <button type="submit" class="btn btn-link"><i class="like fas fa-heart "
+                            style="color: #e0245e"><span
+                                style="margin-left: 10px;">{{this.countLikes}}</span></i></button>
+                </form>
                 {{else}}
-                <a href="/tweets/{{this.id}}/like" class="col-2 " style="margin-right:40px; width: 40px"><i
-                        class="unlike far fa-heart" style="color: gray;"><span
-                            style="margin-left: 3px;">{{this.countLikes}}</span></i></a>
+                <form class="col-3" action="/tweets/{{this.id}}/like" method="post">
+                    <button type="submit" class="btn btn-link"><i class="unlike far fa-heart" style="color: gray;"><span
+                                style="margin-left: 3px;">{{this.countLikes}}</span></i></button>
+                </form>
                 {{/if}}
             </div>
         </div>
