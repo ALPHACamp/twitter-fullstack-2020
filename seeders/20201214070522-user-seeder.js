@@ -7,8 +7,9 @@ module.exports = {
     return Promise.all([
       queryInterface.bulkInsert('Users',
         Array.from({ length: 5 }).map((d, index) => ({
-          email: faker.internet.email(),
-          password: faker.internet.password(),
+          id: index + 2,
+          email: `user${index + 1}@example.com`,
+          password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
           name: faker.name.findName(),
           account: faker.finance.account(),
           avatar: `https://loremflickr.com/320/320/portrait/?lock=${index}`,
@@ -19,6 +20,7 @@ module.exports = {
           updatedAt: new Date(),
         })), {}),
       queryInterface.bulkInsert('Users', [{
+        id: 1,
         email: 'root@example.com',
         password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
         name: 'root',
