@@ -7,16 +7,25 @@ const twitterController = require('../controllers/twitterController.js')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
-const helplers = require('../_helpers')
+const helpers = require('../_helpers')
 // const { authenticated, authenticatedAdmin, isOwnProfile, editOwnProfile } = require('../middleware/check-auth')
 
 const passport = require('../config/passport')
+const user = require('../models/user.js')
 
-const authenticated = passport.authenticate('jwt', { session: false })
+// const authenticated = passport.authenticate('jwt', { session: false })
 
-const authenticatedAdmin = (req, res, next) => {
+const authenticated = (req, res, next) => {
+  console.log(req.user)
   if (req.user) {
-    if (req.user.role) { return next() }
+    return next()
+  }
+  res.redirect('/admin/signin')
+}
+
+authenticatedAdmin = (req, res, next) => {
+  if (req.user) {
+    if (req.user.role === 'admin') { return next() }
     return res.redirect('/admin/signin')
   } else {
     return res.redirect('/admin/signin')
@@ -28,7 +37,7 @@ const authenticatedAdmin = (req, res, next) => {
 ///////
 router.get('/admin/signin', adminController.signinPage)
 router.post('/admin/signin', adminController.signin)
-router.get('/admin/tweets', adminController.getTweets)
+router.get('/admin/tweets', passport.authenticate('jwt', { session: false }), authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', adminController.deleteTweet)
 router.get('/admin/users', adminController.getUsers)
 
