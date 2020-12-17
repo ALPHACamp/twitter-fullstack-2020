@@ -19,8 +19,17 @@ module.exports = {
                 countReplies: tweet.Replies.length,
                 isLike: userLiked.includes(tweet.id)
             }))
-            console.log(data[0])
             res.render('tweets', { data: data })
+        })
+    },
+    replyTweet: (req, res) => {
+        const reply = {
+            UserId: req.user.id,
+            TweetId: req.params.id,
+            comment: req.body.comment
+        }
+        Reply.create(reply).then(() => {
+            res.redirect('/tweets')
         })
     }
 }
