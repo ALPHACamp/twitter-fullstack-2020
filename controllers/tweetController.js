@@ -25,7 +25,17 @@ module.exports = {
     getTweet: (req,res) => {
         res.send(req.params.id)
     },
-    replyTweet: (req, res) => {
+    postTweets: (req, res) => {
+        console.log(req.params)
+        const tweet = {
+            UserId: req.user.id,
+            description: req.body.description
+        }
+        Tweet.create(tweet).then(() => {
+            res.redirect('tweets')
+        }).catch(err => console.log(err))
+    },
+    postReply: (req, res) => {
         const reply = {
             UserId: req.user.id,
             TweetId: req.params.id,

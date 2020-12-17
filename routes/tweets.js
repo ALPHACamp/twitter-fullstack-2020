@@ -4,7 +4,8 @@ const tweetController = require('../controllers/tweetController')
 
 router.get('/', tweetController.getTweets)
 router.get('/:id', tweetController.getTweet)
-router.post('/:id/replies', tweetController.replyTweet)
+router.post('/', tweetController.postTweets)
+router.post('/:id/replies', tweetController.postReply)
 router.get('/:id/like', tweetController.likeTweet)
 router.get('/:id/unlike', tweetController.unlikeTweet)
 
