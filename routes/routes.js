@@ -12,23 +12,23 @@ const helplers = require('../_helpers')
 
 const passport = require('../config/passport')
 
-///////
+/// ////
 // admin
-///////
+/// ////
 router.get('/admin/signin', adminController.signin)
 
-///////
+/// ////
 // User
-///////
-router.get('/', userController.signInPage)
+/// ////
+router.get('/', (req, res) => res.render('tweets'))
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
-///////
+/// ////
 // tweet
-///////
+/// ////
 router.get('/tweets', twitterController.getTwitters)
 
 module.exports = router
