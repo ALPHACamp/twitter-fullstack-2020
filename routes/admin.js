@@ -17,4 +17,6 @@ router.post('/signin', passport.authenticate('local', {
 router.get('/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
+router.get('/users', authenticatedAdmin, adminController.getUsers)
+
 module.exports = router
