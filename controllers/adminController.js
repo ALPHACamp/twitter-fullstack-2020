@@ -2,6 +2,7 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
+const helpers = require('../_helpers')
 
 
 module.exports = {
@@ -32,15 +33,20 @@ module.exports = {
 
   getUsers: (req, res) => {
     User.findAll({
-      include: [Tweet, Like]
+      include: [
+        Tweet,
+        Like,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
     })
       .then(users => {
         users = users.map(user => ({
           ...user.dataValues,
           NumberOfTweets: user.Tweets.length,
           NumberOfLikes: user.Likes.length,
-          NumberOfFollowers: req.user.Followers.length,
-          NumberOfFollowings: req.user.Followings.length
+          NumberOfFollowers: user.Followers.length,
+          NumberOfFollowings: user.Followings.length
         }))
 
         res.render('admin/users', {
