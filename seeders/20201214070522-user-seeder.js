@@ -11,7 +11,7 @@ module.exports = {
           email: `user${index + 1}@example.com`,
           password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
           name: faker.name.findName(),
-          account: faker.finance.account(),
+          account: `user${index + 1}`,
           avatar: `https://loremflickr.com/320/320/portrait/?lock=${index}`,
           cover: `https://loremflickr.com/320/320/background/?lock=${index}`,
           introduction: faker.lorem.text(),
