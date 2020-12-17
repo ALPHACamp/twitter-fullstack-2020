@@ -1,10 +1,12 @@
 const helpers = require('../_helpers')
 
 module.exports = {
-  authenticated: (req, res, next) => {
-    // if(req.isAuthenticated)
+  authenticatedUser: (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      return next()
+      if (helpers.getUser(req).role === "") { return next() }
+      req.flash('error_messages', 'admin帳號無法登入...')
+    } else {
+      req.flash('error_messages', '帳號密碼錯誤')
     }
     res.redirect('/signin')
   },

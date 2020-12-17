@@ -8,7 +8,7 @@ const twitterController = require('../controllers/twitterController.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 const helplers = require('../_helpers')
-// const { authenticated, authenticatedAdmin, isOwnProfile, editOwnProfile } = require('../middleware/check-auth')
+const { authenticatedUser, authenticatedAdmin, isOwnProfile, editOwnProfile } = require('../middleware/check-auth')
 
 const passport = require('../config/passport')
 
@@ -24,7 +24,7 @@ router.get('/admin/signin', adminController.signin)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedUser, userController.signIn)
 
 router.get('/user/setting', userController.getSetting)
 router.put('/user/setting', userController.updateSetting)
