@@ -3,7 +3,7 @@
     <h6 class="font-weight-bold ml-3">帳戶設定</h6>
     <hr/>
     <div class="d-flex flex-column mt-1">
-        <form class="col-md-6 form-signin" action="/user/setting" method="PUT" style="width: 100%;">
+        <form class="col-md-6 form-signin" action="/user/setting?_method=PUT" method="POST" style="width: 100%;">
             <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mt-2 mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text bg-light border-0" style="height:15px; font-size:0.8em;">帳號</span>
@@ -33,7 +33,7 @@
                     <span class="input-group-text bg-light border-0" style="height:15px; font-size:0.8em;">密碼</span>
                 </div>
                 <input type="password" name="password" class="form-control  bg-light border-0 w-100" placeholder=""
-                    style="height:30px;" required>
+                    style="height:30px;">
             </div>
 
             <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mb-3">
@@ -41,7 +41,7 @@
                     <span class="input-group-text bg-light border-0" style="height:15px; font-size:0.8em;">密碼確認</span>
                 </div>
                 <input type="password" name="checkPassword" class="form-control  bg-light border-0 w-100" placeholder=""
-                    style="height:30px;" required>
+                    style="height:30px;">
             </div>
             <div class="float-right  mt-2">
                 <button class="btn btn-lg btn-block font-weight-bold" type="submit"

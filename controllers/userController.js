@@ -1,8 +1,15 @@
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User //input the user schema
 
 const userController = {
+
+    ////////
+    // login
+    ////////
     signInPage: (req, res) => {
         return res.render('signin')
     },
@@ -47,10 +54,77 @@ const userController = {
         }
     },
 
+    ////////
+    // setting
+    ////////
     getSetting: (req, res) => {
         return res.render('setting')
     },
+    updateSetting: (req, res) => {
 
+        if (!req.body.account) {
+            req.flash('error_messages', "account didn't exist")
+            return res.redirect('back')
+        }
+
+        if (!req.body.name) {
+            req.flash('error_messages', "name didn't exist")
+            return res.redirect('back')
+        }
+
+        if (!req.body.email) {
+            req.flash('error_messages', "email didn't exist")
+            return res.redirect('back')
+        }
+
+        if (req.body.password !== req.body.checkPassword) {
+            req.flash('error_messages', "兩次密碼輸入不同！")
+            return res.redirect('back')
+        }
+
+        User.findOne({ where: { id: {[Op.ne]: req.user.id}, email: req.body.email } }).then(mailuser => {
+            if (mailuser) {
+                req.flash('error_messages', '信箱重複！')
+                return res.redirect('back')
+            } else {
+                User.findOne({ where: { id: {[Op.ne]: req.user.id}, account: req.body.account } }).then(user => {
+                    if (user) {
+                        req.flash('error_messages', '帳號重複！')
+                        return res.redirect('back')
+                    } else {
+                        if (!req.body.password) {
+                            return User.findByPk(req.user.id)
+                            .then((user) => {
+                            user.update({
+                                account: req.body.account,
+                                name: req.body.name,
+                                email: req.body.email,
+                            })
+                                .then((user) => {
+                                req.flash('success_messages', 'setting infomation was successfully to update')
+                                res.redirect('setting')
+                                })
+                            })
+                        } else {
+                            return User.findByPk(req.user.id)
+                            .then((user) => {
+                            user.update({
+                                account: req.body.account,
+                                name: req.body.name,
+                                email: req.body.email,
+                                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+                            })
+                                .then((user) => {
+                                req.flash('success_messages', 'setting infomation was successfully to update')
+                                res.redirect('setting')
+                                })
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    },
 }
 
 module.exports = userController

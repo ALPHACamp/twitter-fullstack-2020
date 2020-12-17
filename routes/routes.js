@@ -27,6 +27,7 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 
 router.get('/user/setting', userController.getSetting)
+router.put('/user/setting', userController.updateSetting)
 
 ///////
 // tweet
