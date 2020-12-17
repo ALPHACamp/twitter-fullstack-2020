@@ -15,9 +15,11 @@ const passport = require('../config/passport')
 ///////
 // admin
 ///////
-router.get('/admin/signin', adminController.signin)
+router.get('/admin/signin', adminController.signinPage)
+router.post('/admin/signin', adminController.signin)
 router.get('/admin/tweets', adminController.getTweets)
 router.delete('/admin/tweets/:id', adminController.deleteTweet)
+router.get('/admin/users', adminController.getUsers)
 
 ///////
 // User

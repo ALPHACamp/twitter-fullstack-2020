@@ -1,10 +1,14 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
+const user = require('../models/user')
 const { User, Tweet, Reply, Like } = db
 
 const adminController = {
-  signin: (req, res) => {
+  signinPage: (req, res) => {
     return res.render('admin/signin')
+  },
+  signin: (req, res) => {
+    return res.redirect('/admin/tweets')
   },
   getTweets: (req, res) => {
     Tweet.findAll({
@@ -24,6 +28,23 @@ const adminController = {
       tweet.destroy()
       return res.redirect('back')
     })
-  }
+  },
+  getUsers: (req, res) => {
+    User.findAll({
+      where: { role: "" }, include: [Tweet, Like, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
+    })
+      .then(users => {
+        users = users.map(user => ({
+          ...user.dataValues,
+          tweetCount: user.Tweets.length,
+          followingCount: user.Followings.length,
+          followerCount: user.Followers.length,
+          tweetLiked: user.Likes.filter(like => like.likeOrNot === true).length,
+          tweetDisliked: user.Likes.filter(unlike => unlike.likeOrNot === false).length
+        }))
+        users = users.sort((a, b) => b.tweetCount - a.tweetCount)
+        return res.render('admin/users', { users })
+      }).catch(err => console.log(err))
+  },
 }
 module.exports = adminController

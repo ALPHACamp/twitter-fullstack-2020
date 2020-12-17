@@ -1,0 +1,19 @@
+{{#each users}}
+
+<img src="{{this.cover}}" alt="">
+<img src="{{this.avatar}}" alt="">
+<div class="">{{this.name}}</div>
+<div class="">@{{this.account}}</div>
+
+<div class="">tweet數量：{{this.tweetCount}}</div>
+<div class="">關注人數：{{this.followingCount}}</div>
+<div class="">追隨者：{{this.followerCount}}</div>
+<div class="">Like：{{this.tweetLiked}}</div>
+<div class="">Unlike：{{this.tweetDisliked}}</div>
+{{/each}}
+
+{{!-- tweetCount: user.Tweets.length,
+followingCount: user.Followings.length,
+followerCount: user.Followers.length,
+tweetLike: user.Likes.filter(like => like.likeOrNot === 1),
+tweetUnlike: user.Likes.filter(unlike => unlike.likeOrNot === 0) --}}
