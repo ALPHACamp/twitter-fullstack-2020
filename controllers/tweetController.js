@@ -30,7 +30,16 @@ module.exports = {
         }
         Reply.create(reply).then(() => {
             res.redirect('/tweets')
-        })
+        }).catch(err => console.log(err))
+    },
+    likeTweet: (req, res) => {
+        const like = {
+            UserId: req.user.id,
+            TweetId: req.params.id,
+        }
+        Like.create(like).then(() => {
+            res.redirect('/tweets')
+        }).catch(err => console.log(err))
     }
 }
 
