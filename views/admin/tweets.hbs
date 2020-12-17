@@ -1,0 +1,57 @@
+<div class="container">
+  {{!-- <ul class="list-group"> --}}
+    <li class="list-group-item title">
+      <h3 class="text-center">推文清單</h3>
+    </li>
+    {{#each tweets}}
+    <li class="list-group-item tweets">
+      <div class="row">
+        <div class="col-auto mr-auto left-info d-flex">
+          <div class="col-auto avatar">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4;"
+              class="border border-light rounded-circle">
+          </div>
+          <div class="col-auto content">
+            <div class="personAndTime">
+              <div class="name font-weight-bold" style="display: inline">{{this.User.name}}</div>
+              <div class="accountAndTime small" style="display: inline ;color: #657786" ;>
+                @{{this.User.account}}．{{moment this.User.createdAt}}
+              </div>
+            </div>
+            <div class="description">{{this.description}}</div>
+          </div>
+        </div>
+        <div class=" col-auto right-info" style="display:inline;">
+          <a class="btn" role="button" style="display:contents" data-toggle="modal"
+            data-target="#exampleModal{{this.id}}"><i class="fas fa-trash-alt"></i></a>
+
+        </div>
+      </div>
+    </li>
+    {{!--
+  </ul> --}}
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">警吿：</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
+        </div>
+        <div class="modal-body">
+          是否確定刪除此則推文：<br />{{this.description}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">刪除</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+
+</div>

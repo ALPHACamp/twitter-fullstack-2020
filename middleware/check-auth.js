@@ -10,14 +10,16 @@ module.exports = {
     }
     res.redirect('/signin')
   },
+
   authenticatedAdmin: (req, res, next) => {
-    // if(req.isAuthenticated)
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).isAdmin) { return next() }
-      return res.redirect('/')
+      if (req.user.role === 'admin') { return next() }
+      return res.redirect('/admin/signin')
+    } else {
+      return res.redirect('/admin/signin')
     }
-    res.redirect('/signin')
   },
+
   isOwnProfile: (req, res, next) => {
     const userId = res.locals.user.id.toString() //user id of the authenticated user
     const profileUserId = req.params.id // user id of the user profile
