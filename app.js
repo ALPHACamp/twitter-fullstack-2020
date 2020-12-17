@@ -5,14 +5,14 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
 const helpers = require('./_helpers');
-
+const app = express()
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
 const db = require('./models') // 引入資料庫
-const app = express()
+
 const port = process.env.PORT || 3000
 
 const passport = require('./config/passport')

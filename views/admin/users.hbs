@@ -1,19 +1,42 @@
-{{#each users}}
+<div class="container">
+  <li class="list-group-item title">
+    <h3 class="text-center">使用者清單</h3>
+  </li>
+  <li class="list-group-item list d-flex flex-wrap">
+    {{#each users}}
+    <div class="card mr-2 mb-2" style="width: 18rem;">
+      <img src=" " class="card-img-top" alt="" style="background-color: rgb(226, 180, 119)">
+      <div class="">
+        <img src="{{this.avatar}}" alt="" class="border border-light rounded-circle  ">
+      </div>
+      <div class="card-body">
+        <div class="">{{this.name}}</div>
+        <div class="">@{{this.account}}</div>
+        <div class="tweetsLikes">
+          <div class="">tweet數量：{{this.tweetCount}}</div>
+          <div class="">Like：{{this.tweetLiked}}</div>
+          <div class="">Unlike：{{this.tweetDisliked}}</div>
+        </div>
+        <div class="followship">
+          <div class="">關注人數：{{this.followingCount}}</div>
+          <div class="">追隨者：{{this.followerCount}}</div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </li>
+</div>
+
+
+
+{{!-- {{#each users}}
 
 <img src="{{this.cover}}" alt="">
-<img src="{{this.avatar}}" alt="">
-<div class="">{{this.name}}</div>
-<div class="">@{{this.account}}</div>
+
 
 <div class="">tweet數量：{{this.tweetCount}}</div>
 <div class="">關注人數：{{this.followingCount}}</div>
 <div class="">追隨者：{{this.followerCount}}</div>
 <div class="">Like：{{this.tweetLiked}}</div>
 <div class="">Unlike：{{this.tweetDisliked}}</div>
-{{/each}}
-
-{{!-- tweetCount: user.Tweets.length,
-followingCount: user.Followings.length,
-followerCount: user.Followers.length,
-tweetLike: user.Likes.filter(like => like.likeOrNot === 1),
-tweetUnlike: user.Likes.filter(unlike => unlike.likeOrNot === 0) --}}
+{{/each}} --}}

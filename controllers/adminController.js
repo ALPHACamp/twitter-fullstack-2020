@@ -1,13 +1,17 @@
 const bcrypt = require('bcryptjs')
+const passport = require('../config/passport')
 const db = require('../models')
 const user = require('../models/user')
 const { User, Tweet, Reply, Like } = db
+
+
 
 const adminController = {
   signinPage: (req, res) => {
     return res.render('admin/signin')
   },
   signin: (req, res) => {
+
     return res.redirect('/admin/tweets')
   },
   getTweets: (req, res) => {
