@@ -40,6 +40,17 @@ module.exports = {
         Like.create(like).then(() => {
             res.redirect('/tweets')
         }).catch(err => console.log(err))
+    },
+    unlikeTweet: (req, res) => {
+        const unlike = {
+            UserId: req.user.id,
+            TweetId: req.params.id,
+        }
+        Like.findOne({ where: unlike }).then(like => {
+            like.destroy()
+        }).then(() => {
+            res.redirect('/tweets')
+        }).catch(err => console.log(err))
     }
 }
 
