@@ -1,19 +1,37 @@
-{{#each users}}
-
-<img src="{{this.cover}}" alt="">
-<img src="{{this.avatar}}" alt="">
-<div class="">{{this.name}}</div>
-<div class="">@{{this.account}}</div>
-
-<div class="">tweet數量：{{this.tweetCount}}</div>
-<div class="">關注人數：{{this.followingCount}}</div>
-<div class="">追隨者：{{this.followerCount}}</div>
-<div class="">Like：{{this.tweetLiked}}</div>
-<div class="">Unlike：{{this.tweetDisliked}}</div>
-{{/each}}
-
-{{!-- tweetCount: user.Tweets.length,
-followingCount: user.Followings.length,
-followerCount: user.Followers.length,
-tweetLike: user.Likes.filter(like => like.likeOrNot === 1),
-tweetUnlike: user.Likes.filter(unlike => unlike.likeOrNot === 0) --}}
+<div class="container">
+  <li class="list-group-item title">
+    <h3 class="text-center">使用者清單</h3>
+  </li>
+  <li class="list-group-item list d-flex flex-wrap p-1">
+    {{#each users}}
+    <div class="card  me-2 mb-2" style="width:245px;height:314px">
+      <div class="" style="">
+        <img src="" class="card-img-top" alt="" style=" height:140px ; background-color:  #C4C4C4;">
+      </div>
+      <div class=" card-body text-center" style=" height:174px">
+        <div class="card-body">
+          <img src="{{this.avatar}}" alt="" class=" border border-light rounded-circle position-absolute "
+            style="width:100px ; height:100px ; top:20% ; left:30%">
+          <div class="fw-bold mb-1">{{this.name}}</div>
+          <div class="mb-2" style="color: #657786">@{{this.account}}</div>
+          <div class="tweetsLikes d-flex justify-content-evenly mb-3">
+            <div class=""><i class="far fa-comment"></i> {{this.tweetCount}}</div>
+            <div class=""><i class="far fa-thumbs-up"></i> {{this.tweetLiked}}</div>
+            <div class=""><i class="far fa-thumbs-down"></i> {{this.tweetDisliked}}</div>
+            {{!-- <div class=""><i class="fas fa-heart"></i></i>{{this.tweetDisliked}}</div>
+            <div class=""><i class="fas fa-heart-broken"></i>{{this.tweetLiked}}</div> --}}
+          </div>
+          <div class="followship d-flex justify-content-evenly small">
+            <div class=""><strong>{{this.followingCount}}</strong><strong>個</strong>
+              <span style="color: #657786"> 跟隨中 </span>
+            </div>
+            <div class=""><strong>{{this.followerCount}}</strong><strong>位</strong>
+              <span style="color: #657786"> 跟隨者 </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </li>
+</div>

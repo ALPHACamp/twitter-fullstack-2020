@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs')
+const passport = require('../config/passport')
 const db = require('../models')
 const user = require('../models/user')
 const { User, Tweet, Reply, Like } = db
