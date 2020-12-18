@@ -20,15 +20,44 @@ module.exports = {
         // console.log(user.dataValues.Followings)
         // console.log(user.toJSON().Followings[0].Followship)
         // console.log(user.dataValues.Followings[0])
+        const currentUser = helper.getUser(req)
         const followings = user.dataValues.Followings.map(f => ({
           ...f.dataValues,
           introduction: f.introduction.substring(0, 150),
-          isFollowed: helper.getUser(req).Followings.map(v => v.id).includes(f.id)
+          isFollowed: currentUser.Followings.map(v => v.id).includes(f.id)
         }))
 
         res.render('followings', {
           user: user.toJSON(),
+          currentUser,
           followings
+        })
+      })
+  },
+
+  getFollowers: (req, res) => {
+    User.findOne({
+      where: { id: req.params.id },
+      include: [{
+        model: User,
+        as: 'Followers',
+        through: {
+          attributes: ['createdAt']
+        }
+      }]
+    })
+      .then(user => {
+        const currentUser = helper.getUser(req)
+        const followers = user.dataValues.Followers.map(f => ({
+          ...f.dataValues,
+          introduction: f.introduction.substring(0, 150),
+          isFollowed: currentUser.Followings.map(v => v.id).includes(f.id)
+        }))
+
+        res.render('followers', {
+          user: user.toJSON(),
+          currentUser,
+          followers
         })
       })
   }
