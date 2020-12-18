@@ -14,15 +14,15 @@ const { authenticatedUser, authenticatedAdmin, isOwnProfile, editOwnProfile } = 
 const passport = require('../config/passport')
 const user = require('../models/user.js')
 
-// const authenticated = passport.authenticate('jwt', { session: false })
+
 
 
 ///////
 // admin
 ///////
 router.get('/admin/signin', adminController.signinPage)
-router.post('/admin/signin', authenticatedAdmin, adminController.signin)
-router.get('/admin/tweets', passport.authenticate('jwt', { session: false }), authenticatedAdmin, adminController.getTweets)
+router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), authenticatedAdmin, adminController.signin)
+router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 

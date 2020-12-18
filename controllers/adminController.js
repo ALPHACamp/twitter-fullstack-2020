@@ -15,25 +15,8 @@ const adminController = {
     return res.render('admin/signin')
   },
   signin: (req, res) => {
-    // 檢查必要資料
-    if (!req.body.account || !req.body.password) {
-      return res.redirect('/admin/signin')
-    }
-    // 檢查 user 是否存在與密碼是否正確
-    let username = req.body.account
-    let password = req.body.password
-
-    User.findOne({ where: { account: username } }).then(user => {
-      if (!user) return res.status(401).redirect('/admin/signin')
-      if (!bcrypt.compareSync(password, user.password)) {
-        return res.status(401).redirect('/admin/signin')
-      }
-      if (user.role !== 'admin') return res.status(401).redirect('/admin/signin')
-      // 簽發 token
-      let payload = { id: user.id }
-      let token = jwt.sign(payload, process.env.JWT_SECRET)
-      return res.redirect('/admin/tweets')
-    }).catch(err => console.log(err))
+    req.flash('success_messages', '登入成功')
+    res.redirect('/admin/tweets')
   },
   getTweets: (req, res) => {
     Tweet.findAll({
