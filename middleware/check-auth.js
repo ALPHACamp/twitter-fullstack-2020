@@ -5,19 +5,16 @@ module.exports = {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "") { return next() }
       req.flash('error_messages', 'admin帳號無法登入...')
-    } else {
-      req.flash('error_messages', '帳號密碼錯誤')
-    }
-    res.redirect('/signin')
+    } 
+    return res.redirect('/signin')
   },
 
   authenticatedAdmin: (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (req.user.role === 'admin') { return next() }
-      return res.redirect('/admin/signin')
-    } else {
-      return res.redirect('/admin/signin')
-    }
+      if (helpers.getUser(req).role === 'admin') { return next() }
+      req.flash('error_messages', 'user帳號無法登入...')
+    } 
+    return res.redirect('/admin/signin')
   },
 
   isOwnProfile: (req, res, next) => {
