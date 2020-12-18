@@ -7,33 +7,42 @@ const twitterController = require('../controllers/twitterController.js')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+
 const helplers = require('../_helpers')
-// const { authenticated, authenticatedAdmin, isOwnProfile, editOwnProfile } = require('../middleware/check-auth')
+const { authenticatedUser, authenticatedAdmin, isOwnProfile, editOwnProfile } = require('../middleware/check-auth')
 
 const passport = require('../config/passport')
+const user = require('../models/user.js')
+
+// const authenticated = passport.authenticate('jwt', { session: false })
 
 
 ///////
 // admin
 ///////
 router.get('/admin/signin', adminController.signinPage)
-router.post('/admin/signin', adminController.signin)
-router.get('/admin/tweets', adminController.getTweets)
-router.delete('/admin/tweets/:id', adminController.deleteTweet)
-router.get('/admin/users', adminController.getUsers)
+router.post('/admin/signin', authenticatedAdmin, adminController.signin)
+router.get('/admin/tweets', passport.authenticate('jwt', { session: false }), authenticatedAdmin, adminController.getTweets)
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 ///////
 // User
 ///////
-router.get('/', userController.signInPage)
+// router.get('/', userController.signInPage)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedUser, userController.signIn)
+
+router.get('/user/setting', authenticatedUser, userController.getSetting)
+router.put('/user/setting', authenticatedUser, userController.updateSetting)
+
+router.get('/user/:id', authenticatedUser, userController.getUserProfile)
 
 ///////
 // tweet
 ///////
-router.get('/tweets', twitterController.getTwitters)
+router.get('/tweets', authenticatedUser, twitterController.getTwitters)
 
 module.exports = router
