@@ -1,3 +1,4 @@
+const colors = require('colors')
 const express = require('express')
 const handlebars = require('express-handlebars') // 引入 handlebars
 const bodyParser = require('body-parser')
@@ -27,6 +28,7 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+app.use(colors())
 
 // flash words in global
 app.use((req, res, next) => {
