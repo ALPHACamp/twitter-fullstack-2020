@@ -1,0 +1,44 @@
+<!-- Right Side-->
+<div class="col-2">
+  <!-- 若要使用此導覽列，請載入userControlller.getRecommendedUsers  --->
+  <div class="col-4 mt-3">
+    <div class="row justify-content-center mt-3 ml-3 p-0 m-0" style="width:350px">
+      <div class="col align-self-center m-0 p-0" style="background-color: #F5F8FA;border-radius:10px">
+        <div class="h6 m-3 " style="font-weight: bold;">跟隨誰</div>
+        <hr class="m-0 p-0">
+        {{!-- {{#each recommendedUsers}} --}}
+        <div class="card m-0 p-0  " style="border-color:transparent; border-radius:0 ;background-color:#F5F8FA;">
+          <div class="row no-gutters">
+            <div class="m-2">
+              <a href="/users/{{this.id}}/tweets">
+                <img src="{{this.avatar}}" class="card-img" alt="img" style="border-radius: 50%; width:50px">
+              </a>
+            </div>
+            <div class="col d-flex flex-column justify-content-center">
+              <span style="font-weight: bold;">{{this.name}}</span>
+              <span class="text-muted" style="font-weight: bold;">{{this.account}}</span>
+            </div>
+            {{!-- {{#if this.isFollowed}} --}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="post" class="row align-items-center mr-3">
+              <div class="col ml-auto ">
+                <button type="submit" class="btn rounded-pill"
+                  style="background-color: #FF6600; color:white">取消跟隨</button>
+              </div>
+            </form>
+            {{!-- {{else}} --}}
+            <form action="/followships" method="post" class="row align-items-center mr-3">
+              <input type="hidden" name="id" value="{{this.id}}">
+              <div class="col ml-auto">
+                <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600">跟隨</button>
+              </div>
+            </form>
+            {{!-- {{/if}} --}}
+          </div>
+        </div>
+        <hr class="m-0 p-0">
+        {{!-- {{/each}} --}}
+        <div class="h6 m-3"></div>
+      </div>
+    </div>
+  </div>
+</div>
