@@ -22,14 +22,24 @@
     <div class="row my-0 border" style="width:100%; height:200px; background-color:white;">
         <div class="col-md-12">
             <div class="d-flex flex-row-reverse">
+                {{#ifcond profileUser.id "===" user.id}} 
                 <button class="btn btn-lg btn-block font-weight-bold mt-2" type="submit"
             style="color:#FF6103; background-color:white; border-radius: 25px; border: 1px solid #FF6103; width:150px; font-size:0.9em;">編輯個人資料</button>
+                {{else}}
+                    {{#if ../isFollowed}}
+                    <button class="btn btn-lg btn-block font-weight-bold mt-2" type="submit"
+                style="color:white; background-color:#FF6103; border-radius: 25px; border: 1px solid white; width:150px; font-size:0.9em;">正在跟隨</button>
+                    {{else}}
+                    <button class="btn btn-lg btn-block font-weight-bold mt-2" type="submit"
+                style="color:#FF6103; background-color:white; border-radius: 25px; border: 1px solid #FF6103; width:150px; font-size:0.9em;">跟隨</button>                  
+                    {{/if}}
+                {{/ifcond}}
             </div>
             <div class="col-md-12 mt-3">
                 <h4 style="margin:0;">{{profileUser.name}}</h4>
                 <h6 style="margin:0;">{{profileUser.email}}</h6>
                 <div style="margin-left:0;height: 44px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">{{profileUser.introduction}}</div>
-                <div class="my-2">{{profileUser.Followings.length}}個 <a href="#">跟隨中</a>        {{profileUser.Followers.length}}個 <a href="#">跟隨者</a></div>               
+                <div class="my-2">{{profileUser.Followings.length}}個 <a href="#">跟隨中</a>　　{{profileUser.Followers.length}}個 <a href="#">跟隨者</a></div>               
             </div>
         </div>
     </div>

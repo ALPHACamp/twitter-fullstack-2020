@@ -141,7 +141,8 @@ const userController = {
             ]
             })
         profileUser = profileUser.dataValues
-        return res.render('userProfile', {profileUser})
+        const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
+        return res.render('userProfile', {profileUser, isFollowed})
     },
 }
 
