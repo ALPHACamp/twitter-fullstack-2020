@@ -6,6 +6,7 @@ const db = require('../models')
 const User = db.User //input the user schema
 const Tweet = db.Tweet 
 const Reply = db.Reply
+const Like  = db.Like
 
 const userController = {
 
@@ -134,8 +135,8 @@ const userController = {
     getUserProfile: async (req, res) => {
         let profileUser = await User.findByPk(req.params.id, {
             include: [
-                { model: Reply},
-                { model: Tweet},
+                { model: Reply, include: [Tweet]},
+                { model: Tweet, include: [User, Like, Reply]},
                 { model: User, as: 'Followers' },
                 { model: User, as: 'Followings' },
             ]
