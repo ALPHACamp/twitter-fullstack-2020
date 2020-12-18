@@ -30,6 +30,7 @@
           </div>
 
         </div>
+        {{{body}}}
       </nav>
       <div class="col-8 col-md-5 mx-auto" id="mainSectionContainer">
         {{#if success_messages}}
@@ -43,16 +44,19 @@
         </div>
         {{/if}}
         <h1>Home</h1>
+
         <div class="titleContainer">
+
           <div class="postFormContainer">
-            <div class="userImageContainer"><img src="" alt="User's profile picture" /></div>
+            <div class="userImageContainer"><img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1600px-Image_created_with_a_mobile_phone.png"
+                alt="User's profile picture" /></div>
             <div class="textareaContainer"><textarea id="postTextarea" placeholder="What's happening?"></textarea>
               <div class="buttonsContainer"><button id="submitPostButton" disabled="">Post</button></div>
             </div>
           </div>
-          {{{body}}}
-        </div>
 
+        </div>
 
 
       </div>
