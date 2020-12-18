@@ -27,6 +27,7 @@ module.exports = {
         }))
 
         res.render('followings', {
+          user: user.toJSON(),
           followings
         })
       })
