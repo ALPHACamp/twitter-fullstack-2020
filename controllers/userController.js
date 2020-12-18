@@ -4,9 +4,9 @@ const Op = Sequelize.Op;
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User //input the user schema
-const Tweet = db.Tweet 
+const Tweet = db.Tweet
 const Reply = db.Reply
-const Like  = db.Like
+const Like = db.Like
 
 const userController = {
 
@@ -85,43 +85,43 @@ const userController = {
             return res.redirect('back')
         }
 
-        User.findOne({ where: { id: {[Op.ne]: req.user.id}, email: req.body.email } }).then(mailuser => {
+        User.findOne({ where: { id: { [Op.ne]: req.user.id }, email: req.body.email } }).then(mailuser => {
             if (mailuser) {
                 req.flash('error_messages', '信箱重複！')
                 return res.redirect('back')
             } else {
-                User.findOne({ where: { id: {[Op.ne]: req.user.id}, account: req.body.account } }).then(user => {
+                User.findOne({ where: { id: { [Op.ne]: req.user.id }, account: req.body.account } }).then(user => {
                     if (user) {
                         req.flash('error_messages', '帳號重複！')
                         return res.redirect('back')
                     } else {
                         if (!req.body.password) {
                             return User.findByPk(req.user.id)
-                            .then((user) => {
-                            user.update({
-                                account: req.body.account,
-                                name: req.body.name,
-                                email: req.body.email,
-                            })
                                 .then((user) => {
-                                req.flash('success_messages', 'setting infomation was successfully to update')
-                                res.redirect('setting')
+                                    user.update({
+                                        account: req.body.account,
+                                        name: req.body.name,
+                                        email: req.body.email,
+                                    })
+                                        .then((user) => {
+                                            req.flash('success_messages', 'setting infomation was successfully to update')
+                                            res.redirect('setting')
+                                        })
                                 })
-                            })
                         } else {
                             return User.findByPk(req.user.id)
-                            .then((user) => {
-                            user.update({
-                                account: req.body.account,
-                                name: req.body.name,
-                                email: req.body.email,
-                                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-                            })
                                 .then((user) => {
-                                req.flash('success_messages', 'setting infomation was successfully to update')
-                                res.redirect('setting')
+                                    user.update({
+                                        account: req.body.account,
+                                        name: req.body.name,
+                                        email: req.body.email,
+                                        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+                                    })
+                                        .then((user) => {
+                                            req.flash('success_messages', 'setting infomation was successfully to update')
+                                            res.redirect('setting')
+                                        })
                                 })
-                            })
                         }
                     }
                 })
@@ -135,15 +135,15 @@ const userController = {
     getUserProfile: async (req, res) => {
         let profileUser = await User.findByPk(req.params.id, {
             include: [
-                { model: Reply, include: [Tweet]},
-                { model: Tweet, include: [User, Like, Reply]},
+                { model: Reply, include: [Tweet] },
+                { model: Tweet, include: [User, Like, Reply] },
                 { model: User, as: 'Followers' },
                 { model: User, as: 'Followings' },
             ]
-            })
+        })
         profileUser = profileUser.dataValues
         const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
-        return res.render('userProfile', {profileUser, isFollowed})
+        return res.render('userProfile', { profileUser, isFollowed })
     },
 }
 

@@ -4,16 +4,18 @@ module.exports = {
   authenticatedUser: (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "") { return next() }
-      req.flash('error_messages', 'admin帳號無法登入...')
-    } 
+      req.flash('error_messages', '管理者帳號後台登入')
+      return res.redirect('/admin/tweets')
+    }
     return res.redirect('/signin')
   },
 
   authenticatedAdmin: (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === 'admin') { return next() }
-      req.flash('error_messages', 'user帳號無法登入...')
-    } 
+      req.flash('error_messages', '使用者帳號前台登入')
+      return res.redirect('/tweets')
+    }
     return res.redirect('/admin/signin')
   },
 
