@@ -1,4 +1,3 @@
-const colors = require('colors')
 const express = require('express')
 const handlebars = require('express-handlebars') // 引入 handlebars
 const bodyParser = require('body-parser')

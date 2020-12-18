@@ -40,7 +40,9 @@
         {{/if}}
         <h1>Home</h1>
 
-        <div class="titleContainer">
+        {{{body}}}
+
+        {{!-- <div class="titleContainer">
 
           <div class="postFormContainer">
             <div class="userImageContainer"><img
@@ -51,8 +53,7 @@
             </div>
           </div>
 
-        </div>
-
+        </div> --}}
 
       </div>
       <!-- 右邊-->
@@ -63,7 +64,7 @@
             <div class="col align-self-center m-0 p-0" style="background-color: #F5F8FA;border-radius:10px">
               <div class="h6 m-3 " style="font-weight: bold;">跟隨誰</div>
               <hr class="m-0 p-0">
-              {{#each recommendedUsers}}
+              {{!-- {{#each recommendedUsers}} --}}
               <div class="card m-0 p-0  " style="border-color:transparent; border-radius:0 ;background-color:#F5F8FA;">
                 <div class="row no-gutters">
                   <div class="m-2">
@@ -75,7 +76,7 @@
                     <span style="font-weight: bold;">{{this.name}}</span>
                     <span class="text-muted" style="font-weight: bold;">{{this.account}}</span>
                   </div>
-                  {{#if this.isFollowed}}
+                  {{!-- {{#if this.isFollowed}} --}}
                   <form action="/followships/{{this.id}}?_method=DELETE" method="post"
                     class="row align-items-center mr-3">
                     <div class="col ml-auto ">
@@ -83,18 +84,18 @@
                         style="background-color: #FF6600; color:white">取消跟隨</button>
                     </div>
                   </form>
-                  {{else}}
+                  {{!-- {{else}} --}}
                   <form action="/followships" method="post" class="row align-items-center mr-3">
                     <input type="hidden" name="id" value="{{this.id}}">
                     <div class="col ml-auto">
                       <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600">跟隨</button>
                     </div>
                   </form>
-                  {{/if}}
+                  {{!-- {{/if}} --}}
                 </div>
               </div>
               <hr class="m-0 p-0">
-              {{/each}}
+              {{!-- {{/each}} --}}
               <div class="h6 m-3"></div>
             </div>
           </div>
