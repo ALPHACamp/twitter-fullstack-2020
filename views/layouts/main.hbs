@@ -14,34 +14,29 @@
 </head>
 
 <body>
-  <div class="container-fluid">
+
+  <div class="wrapper">
     <div class="row">
-      <nav class="col-2 col-md-5">
-        <div class="mx-auto" id="sticky-sidebar">
-          <a><i class="fas fa-dove"></i></a>
-          <a href="/"><i class="fas fa-home"></i></a>
-          <a href="/users/{{user.id}}"><i class=" fas fa-user"></i></a>
-          <a href="/"><i class="fas fa-cog"></i></a>
-          <!--發文樣式再修改 -->
-          <div class="div">
-            <button class="my-2" type="submit" style="color:white; background-color:#FF6103;">發文</button>
+      <!-- Left-->
+      <nav class="col-2 .d-none.d-md-block">
+        <a><i class="fas fa-dove"></i></a>
+        <a href="/"><i class="fas fa-home"></i></a>
+        <a href="/users/{{user.id}}"><i class=" fas fa-user"></i></a>
+        <a href="/"><i class="fas fa-cog"></i></a>
+        <!--發文樣式再修改 -->
+        <div class="div">
+          <button type="submit" style="color:white; background-color:#FF6103;">發文</button>
 
-            <div class="row align-items-end"><a href="#"><i class="fas fa-sign-out-alt"></i></a></div>
-          </div>
-
+          <div class="row align-items-end"><a href="#"><i class="fas fa-sign-out-alt"></i></a></div>
         </div>
         {{{body}}}
       </nav>
-      <div class="col-8 col-md-5 mx-auto" id="mainSectionContainer">
-        {{#if success_messages}}
-        <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
-          {{success_messages}}
-        </div>
-        {{/if}}
+      <div class="col-8 col-md-5" id="mainSectionContainer">
         {{#if error_messages}}
-        <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
-          {{error_messages}}
-        </div>
+        {{> messages}}
+        {{/if}}
+        {{#if success_messages}}
+        {{> messages}}
         {{/if}}
         <h1>Home</h1>
 
@@ -62,16 +57,53 @@
       </div>
       <!-- 右邊-->
       <div class="col-2">
-        <h1>跟隨誰</h1>
+        <!-- 若要使用此導覽列，請載入userControlller.getRecommendedUsers  --->
+        <div class="col-4 mt-3">
+          <div class="row justify-content-center mt-3 ml-3 p-0 m-0" style="width:350px">
+            <div class="col align-self-center m-0 p-0" style="background-color: #F5F8FA;border-radius:10px">
+              <div class="h6 m-3 " style="font-weight: bold;">跟隨誰</div>
+              <hr class="m-0 p-0">
+              {{#each recommendedUsers}}
+              <div class="card m-0 p-0  " style="border-color:transparent; border-radius:0 ;background-color:#F5F8FA;">
+                <div class="row no-gutters">
+                  <div class="m-2">
+                    <a href="/users/{{this.id}}/tweets">
+                      <img src="{{this.avatar}}" class="card-img" alt="img" style="border-radius: 50%; width:50px">
+                    </a>
+                  </div>
+                  <div class="col d-flex flex-column justify-content-center">
+                    <span style="font-weight: bold;">{{this.name}}</span>
+                    <span class="text-muted" style="font-weight: bold;">{{this.account}}</span>
+                  </div>
+                  {{#if this.isFollowed}}
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="post"
+                    class="row align-items-center mr-3">
+                    <div class="col ml-auto ">
+                      <button type="submit" class="btn rounded-pill"
+                        style="background-color: #FF6600; color:white">取消跟隨</button>
+                    </div>
+                  </form>
+                  {{else}}
+                  <form action="/followships" method="post" class="row align-items-center mr-3">
+                    <input type="hidden" name="id" value="{{this.id}}">
+                    <div class="col ml-auto">
+                      <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600">跟隨</button>
+                    </div>
+                  </form>
+                  {{/if}}
+                </div>
+              </div>
+              <hr class="m-0 p-0">
+              {{/each}}
+              <div class="h6 m-3"></div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
   integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-
 
 </html>

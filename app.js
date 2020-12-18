@@ -28,7 +28,6 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
-app.use(colors())
 
 // flash words in global
 app.use((req, res, next) => {
