@@ -25,11 +25,15 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
   res.locals.error_msg = req.flash('error_msg')
+  res.locals.user = req.user
   next()
 })
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+<<<<<<< HEAD
 // app.get('/', (req, res) => res.send('Hello World!'))
+=======
+>>>>>>> ac2bfdff36a8e13f2ecab37eb02b885f3a0983ce
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
