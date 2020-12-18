@@ -1,21 +1,25 @@
 const helpers = require('../_helpers')
 
 module.exports = {
-  authenticated: (req, res, next) => {
-    // if(req.isAuthenticated)
+  authenticatedUser: (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      return next()
+      if (helpers.getUser(req).role === "") { return next() }
+      req.flash('error_messages', 'admin帳號無法登入...')
+    } else {
+      req.flash('error_messages', '帳號密碼錯誤')
     }
     res.redirect('/signin')
   },
+
   authenticatedAdmin: (req, res, next) => {
-    // if(req.isAuthenticated)
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).isAdmin) { return next() }
-      return res.redirect('/')
+      if (req.user.role === 'admin') { return next() }
+      return res.redirect('/admin/signin')
+    } else {
+      return res.redirect('/admin/signin')
     }
-    res.redirect('/signin')
   },
+
   isOwnProfile: (req, res, next) => {
     const userId = res.locals.user.id.toString() //user id of the authenticated user
     const profileUserId = req.params.id // user id of the user profile

@@ -7,30 +7,14 @@ const twitterController = require('../controllers/twitterController.js')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
-const helpers = require('../_helpers')
-// const { authenticated, authenticatedAdmin, isOwnProfile, editOwnProfile } = require('../middleware/check-auth')
+
+const helplers = require('../_helpers')
+const { authenticatedUser, authenticatedAdmin, isOwnProfile, editOwnProfile } = require('../middleware/check-auth')
 
 const passport = require('../config/passport')
 const user = require('../models/user.js')
 
 // const authenticated = passport.authenticate('jwt', { session: false })
-
-const authenticated = (req, res, next) => {
-  console.log(req.user)
-  if (req.user) {
-    return next()
-  }
-  res.redirect('/admin/signin')
-}
-
-authenticatedAdmin = (req, res, next) => {
-  if (req.user) {
-    if (req.user.role === 'admin') { return next() }
-    return res.redirect('/admin/signin')
-  } else {
-    return res.redirect('/admin/signin')
-  }
-}
 
 ///////
 // admin
@@ -48,7 +32,7 @@ router.get('/admin/users', adminController.getUsers)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedUser, userController.signIn)
 
 router.get('/user/setting', userController.getSetting)
 router.put('/user/setting', userController.updateSetting)

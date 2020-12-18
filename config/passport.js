@@ -53,7 +53,6 @@ jwtOptions.secretOrKey = process.env.JWT_SECRET
 let strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
   User.findByPk(jwt_payload.id, {
     include: [
-      { model: db.Tweet, as: 'LikedTweets' },
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' }
     ]
