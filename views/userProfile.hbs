@@ -54,36 +54,82 @@
 
     <ul class="nav nav-tabs mt-2">
         <li class="nav-item">
-            <a class="nav-link fw-bolder" href="#" style="color:#FF6103; border-bottom: 3px solid #FF6103;">推文</a>
+            <a class="nav-link fw-bolder" href="/user/{{profileUser.id}}?target=tweets" {{#ifcond target "===" "tweets"
+                }} style="color:#FF6103; border-bottom: 3px solid #FF6103;" {{else}} style="color:#A39480;"
+                {{/ifcond}}>推文</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link fw-bolder" href="#" style="color:#A39480;">推文與回覆</a>
+            <a class="nav-link fw-bolder" href="/user/{{profileUser.id}}?target=replies" {{#ifcond
+                target "===" "replies" }} style="color:#FF6103; border-bottom: 3px solid #FF6103;" {{else}}
+                style="color:#A39480;" {{/ifcond}}>推文與回覆</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link fw-bolder" href="#" style="color:#A39480;">喜歡的內容</a>
+            <a class="nav-link fw-bolder" href="/user/{{profileUser.id}}?target=likes" {{#ifcond target "===" "likes" }}
+                style="color:#FF6103; border-bottom: 3px solid #FF6103;" {{else}} style="color:#A39480;"
+                {{/ifcond}}>喜歡的內容</a>
         </li>
     </ul>
 
-    {{#each profileUser.Tweets}}
-    <div class="d-flex py-2" style="border-bottom: 1px solid #C0C0C0;">
-        <div class="mx-2">
-            <img src="{{this.dataValues.User.dataValues.avatar}}" alt=""
-                style="height: 40px; width: 40px; border-radius: 50%;">
-        </div>
-        <div class="mx-2">
-            <div class="row">
-                <h6 class="fw-bolder mr-2" style="margin:0;">{{this.dataValues.User.dataValues.name}}</h6>
-                <h6 style="margin:0; color:#A39480;">{{this.dataValues.User.dataValues.email}}．</h6>
+
+    <div style="max-height: 470px; overflow-y: auto; overflow-x: hidden;">
+        {{#each profileUser.Tweets}}
+        <div class="d-flex py-2" style="border-bottom: 1px solid #C0C0C0;">
+            <div class="mx-2">
+                <img src="{{this.User.dataValues.avatar}}" alt=""
+                    style="height: 40px; width: 40px; border-radius: 50%;">
             </div>
-            <div style="margin-left:0;height: 66px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">
-                {{this.dataValues.description}}</div>
-            <div class="col-md-12 mt-2" style="color:#A39480;">
-                <a href="#" class="ms-3 me-1" style="color:#C0C0C0;"><i class="far fa-comment"></i></a>
-                {{this.dataValues.Replies.length}}
-                <a href="#" class="ms-3 me-1" style="color:#C0C0C0;"><i class="far fa-heart"></i></a>
-                {{this.dataValues.Likes.length}}
+            <div class="mx-2">
+                <div class="row">
+                    <h6 class="fw-bolder mr-2" style="margin:0;">{{this.User.dataValues.name}}</h6>
+                    <h6 style="margin:0; color:#A39480;">{{this.User.dataValues.email}}．</h6>
+                </div>
+                <div style="margin-left:0;height: 66px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">
+                    {{this.description}}</div>
+                <div class="col-md-12 d-flex mt-2">
+
+                    {{#ifcond this.Replies.length "===" "0"}}
+                    <div style="color:#A39480;">
+                        <a href="/tweets/{{this.id}}" class="ms-3 me-1" style="color:#C0C0C0;"><i
+                                class="far fa-comment"></i></a> {{this.Replies.length}}
+                    </div>
+                    {{else}}
+                    <div style="color:#2F4F4F;">
+                        <a href="/tweets/{{this.id}}" class="ms-3 me-1" style="color:#7AC5CD;"><i
+                                class="far fa-comment-dots"></i></a> {{this.Replies.length}}
+                    </div>
+                    {{/ifcond}}
+
+                    {{#ifcond this.tweetLiked "===" 0}}
+                    <div style="color:#A39480;">
+                        <a href="/tweets/{{this.id}}/thumbs_up" class="ms-3 me-1" style="color:#C0C0C0;"><i
+                                class="far fa-thumbs-up"></i></a>
+                        {{this.tweetLiked}}
+                    </div>
+                    {{else}}
+                    <div style="color:#2F4F4F;">
+                        <a href="/tweets/{{this.id}}/thumbs_up" class="ms-3 me-1" style="color:#0000FF;"><i
+                                class="far fa-thumbs-up"></i></a>
+                        {{this.tweetLiked}}
+                    </div>
+                    {{/ifcond}}
+
+                    {{#ifcond this.tweetDisliked "===" 0}}
+                    <div style="color:#A39480;">
+                        <a href="/tweets/{{this.id}}/thumbs_down" class="ms-3 me-1" style="color:#C0C0C0;"><i
+                                class="far fa-thumbs-down"></i></a>
+                        {{this.tweetDisliked}}
+                    </div>
+                    {{else}}
+                    <div style="color:#2F4F4F;">
+                        <a href="/tweets/{{this.id}}/thumbs_down" class="ms-3 me-1" style="color:#CD5C5C;"><i
+                                class="far fa-thumbs-down"></i></a>
+                        {{this.tweetDisliked}}
+                    </div>
+                    {{/ifcond}}
+
+                </div>
             </div>
         </div>
+        {{/each}}
     </div>
-    {{/each}}
 </div>

@@ -142,8 +142,24 @@ const userController = {
             ]
         })
         profileUser = profileUser.dataValues
+
+        const target = req.query.target || "tweets"
+        if (target === "replies") {
+            profileUser.Tweets = profileUser.Tweets.filter(tweet => tweet.dataValues.Replies.map(d => d.dataValues.UserId).includes(profileUser.id))
+        }
+        if (target === "likes") {
+            profileUser.Tweets = profileUser.Tweets.filter(tweet => tweet.dataValues.Likes.map(d => d.dataValues.UserId).includes(profileUser.id))
+        }
+
+        profileUser.Tweets = profileUser.Tweets.map(tweet => ({
+            ...tweet.dataValues,
+            tweetLiked: tweet.Likes.filter(like => like.likeOrNot === true).length,
+            tweetDisliked: tweet.Likes.filter(unlike => unlike.likeOrNot === false).length
+        }))
+
         const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
-        return res.render('userProfile', { profileUser, isFollowed })
+        profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.updatedAt - a.updatedAt)
+        return res.render('userProfile', { profileUser, isFollowed, target })
     },
 }
 
