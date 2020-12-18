@@ -26,7 +26,7 @@ module.exports = {
           isFollowed: helper.getUser(req).Followings.map(v => v.id).includes(f.id)
         }))
 
-        res.render('followship', {
+        res.render('followings', {
           followings
         })
       })
