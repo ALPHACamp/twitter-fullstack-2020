@@ -19,7 +19,7 @@
         </div>
     </div>    
     {{/ifcond}}
-    <div class="row my-0 border" style="width:100%; height:200px; background-color:white;">
+    <div class="row my-0" style="width:100%; height:200px; background-color:white;">
         <div class="col-md-12">
             <div class="d-flex flex-row-reverse">
                 {{#ifcond profileUser.id "===" user.id}} 
@@ -37,10 +37,23 @@
             </div>
             <div class="col-md-12 mt-3">
                 <h4 style="margin:0;">{{profileUser.name}}</h4>
-                <h6 style="margin:0;">{{profileUser.email}}</h6>
+                <h6 style="margin:0; color:#A39480;">{{profileUser.email}}</h6>
                 <div style="margin-left:0;height: 44px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">{{profileUser.introduction}}</div>
-                <div class="my-2">{{profileUser.Followings.length}}個 <a href="#">跟隨中</a>　　{{profileUser.Followers.length}}個 <a href="#">跟隨者</a></div>               
+                <div class="my-2 font-weight-bold">{{profileUser.Followings.length}}個 <a href="#">跟隨中</a>　　{{profileUser.Followers.length}}位 <a href="#">跟隨者</a></div>               
             </div>
         </div>
     </div>
 </div>
+
+<ul class="nav nav-tabs mt-2">
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold" href="/restaurants" style="color:#FF6103; border-bottom: 3px solid #FF6103;" >推文</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold" href="/restaurants/feeds" style="color:#A39480;" >推文與回覆</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link font-weight-bold" href="/restaurants/top" style="color:#A39480;" >喜歡的內容</a>
+  </li>
+</ul>
+<br /><br />
