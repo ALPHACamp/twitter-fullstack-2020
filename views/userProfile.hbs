@@ -6,11 +6,19 @@
             <p class="my-0 py-0" style="font-size:0.55em;"> 推文數 {{profileUser.Tweets.length}}</p>
         </div> 
     </div>
+    {{#ifcond profileUser.cover "===" ""}} 
+    <div class="row my-0" style="width:100%; height:200px; background-color:#808A87; background-size:cover; background-repeat:no-repeat; background-position: center;">
+        <div style="position: relative;left: 15px; top: 140px;">
+            <img src="{{profileUser.avatar}}" alt="" style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
+        </div>
+    </div>  
+    {{else}}
     <div class="row my-0" style="width:100%; height:200px; background-image:url({{profileUser.cover}}); background-size:cover; background-repeat:no-repeat; background-position: center;">
         <div style="position: relative;left: 15px; top: 140px;">
             <img src="{{profileUser.avatar}}" alt="" style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
         </div>
-    </div>
+    </div>    
+    {{/ifcond}}
     <div class="row my-0 border" style="width:100%; height:200px; background-color:white;">
         <div class="col-md-12">
             <div class="d-flex flex-row-reverse">
@@ -20,8 +28,8 @@
             <div class="col-md-12 mt-3">
                 <h4 style="margin:0;">{{profileUser.name}}</h4>
                 <h6 style="margin:0;">{{profileUser.email}}</h6>
-                <p style="margin-left:0;">{{profileUser.introduction}}</p>
-                <p style="margin-left:0;">{{profileUser.Followings.length}}個 <a href="#">跟隨中</a>        {{profileUser.Followers.length}}個 <a href="#">跟隨者</a></p>               
+                <div style="margin-left:0;height: 44px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">{{profileUser.introduction}}</div>
+                <div class="my-2">{{profileUser.Followings.length}}個 <a href="#">跟隨中</a>        {{profileUser.Followers.length}}個 <a href="#">跟隨者</a></div>               
             </div>
         </div>
     </div>
