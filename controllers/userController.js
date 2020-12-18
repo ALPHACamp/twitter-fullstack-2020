@@ -4,6 +4,8 @@ const Op = Sequelize.Op;
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User //input the user schema
+const Tweet = db.Tweet 
+const Reply = db.Reply
 
 const userController = {
 
@@ -124,6 +126,22 @@ const userController = {
                 })
             }
         })
+    },
+
+    //////////////
+    //Profile
+    //////////////
+    getUserProfile: async (req, res) => {
+        let profileUser = await User.findByPk(req.params.id, {
+            include: [
+                { model: Reply},
+                { model: Tweet},
+                { model: User, as: 'Followers' },
+                { model: User, as: 'Followings' },
+            ]
+            })
+        profileUser = profileUser.dataValues
+        return res.render('userProfile', {profileUser})
     },
 }
 
