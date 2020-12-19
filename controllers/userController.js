@@ -43,10 +43,10 @@ const userController = {
     ]).then(([user, tweets, users]) => {
       tweets = tweets.map(tweet => ({
         ...tweet.dataValues,
-        likeLength: tweet.Likes.length,
-        replyLength: tweet.Replies.length,
+        countLikes: tweet.Likes.length,
+        countReplies: tweet.Replies.length,
         User: tweet.User.dataValues,
-        isLiked: tweet.Likes.map(d => d.UserId).includes(Number(req.params.id)),
+        isLike: tweet.Likes.map(d => d.UserId).includes(Number(req.params.id)),
       }))
       console.log(tweets)
 
@@ -60,7 +60,8 @@ const userController = {
         user: user.toJSON(),
         FollowersLength: user.dataValues.Followers.length,
         FollowingsLength: user.dataValues.Followings.length,
-        tweets: tweets,
+        tweetsLength: tweets.length,
+        data: tweets,
         users: users
       })
     })
