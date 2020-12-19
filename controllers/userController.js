@@ -145,9 +145,15 @@ const userController = {
 
         const target = req.query.target || "tweets"
         if (target === "replies") {
-            profileUser.Tweets = profileUser.Tweets.filter(tweet => tweet.dataValues.Replies.map(d => d.dataValues.UserId).includes(profileUser.id))
+            profileUser.Tweets = await Tweet.findAll({
+                include: [User, Like, Reply]
+            })
+            profileUser.Tweets.filter(tweet => tweet.dataValues.Replies.map(d => d.dataValues.UserId).includes(profileUser.id))
         }
         if (target === "likes") {
+            profileUser.Tweets = await Tweet.findAll({
+                include: [User, Like, Reply]
+            })
             profileUser.Tweets = profileUser.Tweets.filter(tweet => tweet.dataValues.Likes.map(d => d.dataValues.UserId).includes(profileUser.id))
         }
 
