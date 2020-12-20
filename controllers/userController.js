@@ -1,6 +1,11 @@
+const { sequelize } = require('../models')
+const db = require('../models')
+const User = db.User
+const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
 
-
-
-module.exports = {
-
+const userController = {
 }
+
+module.exports = userController

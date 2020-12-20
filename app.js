@@ -32,5 +32,7 @@ app.use((req, res, next) => {
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-module.exports = app
+
 app.use(routes)
+
+module.exports = app
