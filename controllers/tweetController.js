@@ -23,7 +23,19 @@ module.exports = {
         })
     },
     getReply: (req, res) => {
-        res.send(req.params.id)
+        const id = req.params.id
+        Tweet.findByPk(id, { include: [User, { model: Reply, include: [User], raw: true }, Like] }).then(tweet => {
+            tweet = tweet.toJSON()
+            const userLiked = helper.getUser(req).Likes ? helper.getUser(req).Likes.map(d => d.TweetId) : []
+            const data = {
+                ...tweet,
+                countLikes: tweet.Likes.length,
+                countReplies: tweet.Replies.length,
+                isLike: userLiked.includes(tweet.id)
+            }
+            console.log(data)
+            res.render('tweet', { data })
+        })
     },
     postTweets: (req, res) => {
         if (req.body.description.length > 140 || req.body.description.length < 1) {
