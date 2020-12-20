@@ -1,6 +1,10 @@
 .DS_Store
 *.DS_Store
 
+# imgur
+temp/
+upload/
+
 # Logs
 logs
 *.log
