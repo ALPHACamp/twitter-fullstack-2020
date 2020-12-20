@@ -40,7 +40,7 @@ const userController = {
       User.findAll({
         include: [{ model: User, as: 'Followers' }]
       })
-    ]).then(([user, tweets, users]) => {
+    ]).then(([user, tweets, followings]) => {
       tweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         countLikes: tweet.Likes.length,
@@ -48,13 +48,13 @@ const userController = {
         User: tweet.User.dataValues,
         isLike: tweet.Likes.map(d => d.UserId).includes(Number(req.params.id)),
       }))
-      console.log(tweets)
+      // console.log(tweets)
 
-      users = users.map(user => ({
+      followings = followings.map(user => ({
         ...user.dataValues,
         isFollowed: user.Followers.map(d => d.id).includes(Number(req.params.id))
       }))
-      // console.log(users)
+      console.log(followings)
 
       return res.render('profile', {
         user: user.toJSON(),
@@ -62,7 +62,7 @@ const userController = {
         FollowingsLength: user.dataValues.Followings.length,
         tweetsLength: tweets.length,
         data: tweets,
-        users: users
+        followings: followings
       })
     })
   }
