@@ -12,6 +12,6 @@ module.exports = {
     },
     momentFormat: function (a) {
         moment.locale('zh-tw')
-        return moment(a).format('mm:ss a ． YYYY MMMM Do')
+        return moment(a).format('a mm:ss ． YYYY MMMM Do')
     }
 }
