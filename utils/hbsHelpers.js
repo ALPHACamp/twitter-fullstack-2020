@@ -1,4 +1,5 @@
 const moment = require('moment')
+const tc = require('thousands-counter')
 
 module.exports = {
   ifcond: function (v1, operator, v2, options) {
@@ -30,5 +31,10 @@ module.exports = {
 
   moment: function (a) {
     return moment(a).fromNow()
+  },
+
+  tc: function (a) {
+    return tc(a, { digits: 1, uppercase: true })
   }
+
 }

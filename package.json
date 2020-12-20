@@ -38,6 +38,7 @@
     "sequelize-test-helpers": "^1.0.7",
     "sinon": "^7.2.3",
     "sinon-chai": "^3.3.0",
-    "supertest": "^3.3.0"
+    "supertest": "^3.3.0",
+    "thousands-counter": "^2.1.0"
   }
 }
