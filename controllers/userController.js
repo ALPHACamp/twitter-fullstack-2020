@@ -1,12 +1,20 @@
 const { sequelize } = require('../models')
+
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 
+
+
+// -----------------------------------------------------------------------------------
+
 const userController = {
-  getUser: async (req, res) => {
+  getUser: (req, res) => {
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
@@ -53,7 +61,119 @@ const userController = {
         followings: followings
       })
     })
-  }
+  },
+
+  putUser: async (req, res) => {
+    const nextURL = `/users/${req.params.id}`
+
+    if (!req.body.name) {
+      req.flash('error_messages', 'name didn\'t exist')
+      return res.redirect(nextURL)
+    }
+
+    if (!req.body.introduction) {
+      req.flash('error_messages', 'introduction didn\'t exist')
+      return res.redirect(nextURL)
+    }
+
+    const user = await User.findByPk(req.params.id)
+    const avatarFile = req.files.avatar
+    const coverFile = req.files.cover
+
+    imgur.setClientID(process.env.IMGUR_CLIENT_ID);
+    console.log(process.env.IMGUR_CLIENT_ID)
+
+    if (coverFile) {
+      imgur.upload(coverFile[0].path, (err, img) => {
+        return user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          cover: coverFile ? img.data.link : user.cover,
+          avatar: user.avatar,
+        })
+          .then(() => {
+            if (avatarFile) {
+              imgur.upload(avatarFile[0].path, (err, img) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  avatar: avatarFile ? img.data.link : user.avatar,
+                  cover: user.cover,
+                }).then(() => {
+                  return user.update({
+                    name: req.body.name,
+                    introduction: req.body.introduction,
+                    cover: user.cover,
+                    avatar: user.avatar,
+                  }).then(() => {
+                    return res.redirect(`/users/${req.params.id}`)
+                  })
+                })
+              })
+            } else {
+              return user.update({
+                name: req.body.name,
+                introduction: req.body.introduction,
+                cover: user.cover,
+                avatar: user.avatar,
+              }).then(() => {
+                return res.redirect(`/users/${req.params.id}`)
+              })
+            }
+          })
+      })
+    }
+
+    if (avatarFile) {
+      imgur.upload(avatarFile[0].path, (err, img) => {
+        return user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          avatar: avatarFile ? img.data.link : user.avatar,
+          cover: user.cover,
+        })
+          .then(() => {
+            if (coverFile) {
+              imgur.upload(coverFile[0].path, (err, img) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  cover: coverFile ? img.data.link : user.cover,
+                  avatar: user.avatar,
+                }).then(() => {
+                  return user.update({
+                    name: req.body.name,
+                    introduction: req.body.introduction,
+                    cover: user.cover,
+                    avatar: user.avatar,
+                  }).then(() => {
+                    return res.redirect(`/users/${req.params.id}`)
+                  })
+                })
+              })
+            } else {
+              return user.update({
+                name: req.body.name,
+                introduction: req.body.introduction,
+                cover: user.cover,
+                avatar: user.avatar,
+              }).then(() => {
+                return res.redirect(`/users/${req.params.id}`)
+              })
+            }
+          })
+      })
+    }
+
+    return user.update({
+      name: req.body.name,
+      introduction: req.body.introduction,
+      cover: user.cover,
+      avatar: user.avatar,
+    }).then(() => {
+      return res.redirect(`/users/${req.params.id}`)
+    })
+  },
 }
 
 module.exports = userController
