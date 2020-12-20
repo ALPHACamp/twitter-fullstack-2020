@@ -33,7 +33,6 @@ module.exports = {
                 countReplies: tweet.Replies.length,
                 isLike: userLiked.includes(tweet.id)
             }
-            console.log(data)
             res.render('tweet', { data })
         })
     },
@@ -63,7 +62,7 @@ module.exports = {
             comment: req.body.comment
         }
         Reply.create(reply).then(() => {
-            res.redirect('/tweets')
+            res.redirect('back')
         }).catch(err => console.log(err))
     },
     likeTweet: (req, res) => {
@@ -72,7 +71,7 @@ module.exports = {
             TweetId: req.params.id
         }
         Like.create(like).then(() => {
-            res.redirect('/tweets')
+            res.redirect('back')
         }).catch(err => console.log(err))
     },
     unlikeTweet: (req, res) => {
@@ -83,7 +82,7 @@ module.exports = {
         Like.findOne({ where: unlike }).then(like => {
             like.destroy()
         }).then(() => {
-            res.redirect('/tweets')
+            res.redirect('back')
         }).catch(err => console.log(err))
     }
 }
