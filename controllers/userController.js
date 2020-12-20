@@ -13,7 +13,8 @@ const Like = db.Like
 
 // -----------------------------------------------------------------------------------
 
-const userController = {
+module.exports = {
+
   getUser: (req, res) => {
     return Promise.all([
       User.findByPk(req.params.id, {
@@ -173,7 +174,6 @@ const userController = {
     }).then(() => {
       return res.redirect(`/users/${req.params.id}`)
     })
-  },
-}
+  }
 
-module.exports = userController
+}
