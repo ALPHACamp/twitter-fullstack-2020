@@ -1,6 +1,6 @@
 {{#each data}}
-    <div class=" card d-flex flex-row row">
-        <div class="col-2 d-flex justify-content-center mt-3">
+    <li class=" list-group-item d-flex row">
+        <div class="col-2 mt-3">
             <a href="/users/{{this.User.id}}/tweets">
             <img class="rounded-circle" src="{{this.User.avatar}}" alt="" width="50px" height="50px">
             </a>
@@ -20,7 +20,7 @@
                     data-bs-target="#tweet-{{this.id}}"><i class="far fa-comment" style="color: gray;"><span
                             style="margin-left: 10px;">{{this.countReplies}}</span></i></button>
                 {{#if this.isLike}}
-                <form class="col-3" action="/tweets/{{this.id}}/like" method="post">
+                <form class="col-3" action="/tweets/{{this.id}}/unlike" method="post">
                     <button type="submit" class="btn btn-link"><i class="like fas fa-heart "
                             style="color: #e0245e"><span
                                 style="margin-left: 10px;">{{this.countLikes}}</span></i></button>
@@ -33,7 +33,7 @@
                 {{/if}}
             </div>
         </div>
-    </div>
+    </li>
     <!-- Modal -->
     <form action="/tweets/{{this.id}}/replies" method="POST">
         <div class="modal fade" id="tweet-{{this.id}}" tabindex="-1" aria-labelledby="tweet-{{this.id}}Label"
