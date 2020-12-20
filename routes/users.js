@@ -10,7 +10,6 @@ const upload = multer({ dest: 'temp/' })
 
 router.get('/:id', userController.getUser)
 router.put('/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putUser)
-// router.put('/:id', upload.single('cover'), userController.putUser)
 
 // -----------------------------------------------------------------------------------
 
