@@ -1,0 +1,98 @@
+<div class="col mt-2 mx-0 px-0">
+  <div class="d-flex align-items-center justify-content-start my-0" style="height:40px;">
+    <a href="javascript:history.back()" style="color:black;"><i class="fas fa-arrow-left"></i></a>
+    <div class="mx-3 my-0 py-0">
+      <h6 class="fw-bolder my-0 py-0">{{profileUser.name}}</h6>
+      <p class="my-0 py-0" style="font-size:0.55em;"> 推文數 {{profileUser.Tweets.length}}</p>
+    </div>
+  </div>
+
+  <ul class="nav nav-tabs mt-2">
+    <li class="nav-item">
+      <a class="nav-link fw-bolder" href="/user/followship/{{profileUser.id}}?target=follower" {{#ifcond
+        target "===" "follower" }} style="color:#FF6103; border-bottom: 3px solid #FF6103;" {{else}}
+        style="color:#A39480;" {{/ifcond}}>跟隨者</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link fw-bolder" href="/user/followship/{{profileUser.id}}?target=following" {{#ifcond
+        target "===" "following" }} style="color:#FF6103; border-bottom: 3px solid #FF6103;" {{else}}
+        style="color:#A39480;" {{/ifcond}}>正在跟隨</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link fw-bolder" href="/user/followship/{{profileUser.id}}?target=both" {{#ifcond target "===" "both"
+        }} style="color:#FF6103; border-bottom: 3px solid #FF6103;" {{else}} style="color:#A39480;" {{/ifcond}}>相互追蹤</a>
+    </li>
+  </ul>
+
+  <div style="max-height: 900px; overflow-y: auto; overflow-x: hidden;">
+
+    {{#ifcond target "===" "follower" }}
+    {{#each profileUser.Followers}}
+    {{#if this.relate}}
+    {{else}}
+    <div class="d-flex py-2" style="border-bottom: 1px solid #C0C0C0;">
+      <a class="mx-2" href="/user/{{this.id}}">
+        <img src="{{this.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 50%;">
+      </a>
+      <div class="mx-2">
+        <div class="row">
+          <h6 class="fw-bolder mr-2" style="margin:0;">{{this.name}}</h6>
+          <h6 style="margin:0; color:#A39480;">
+            {{this.email}}</h6>
+        </div>
+        <div style="margin-left:0;height: 44px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">
+          {{this.introduction}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    {{/each}}
+    {{/ifcond}}
+
+    {{#ifcond target "===" "following" }}
+    {{#each profileUser.Followings}}
+    {{#if this.relate}}
+    {{else}}
+    <div class="d-flex py-2" style="border-bottom: 1px solid #C0C0C0;">
+      <a class="mx-2" href="/user/{{this.id}}">
+        <img src="{{this.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 50%;">
+      </a>
+      <div class="mx-2">
+        <div class="row">
+          <h6 class="fw-bolder mr-2" style="margin:0;">{{this.name}}</h6>
+          <h6 style="margin:0; color:#A39480;">
+            {{this.email}}</h6>
+        </div>
+        <div style="margin-left:0;height: 44px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">
+          {{this.introduction}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    {{/each}}
+    {{/ifcond}}
+
+    {{#ifcond target "===" "both" }}
+    {{#each profileUser.Followings}}
+    {{#if this.relate}}
+    <div class="d-flex py-2" style="border-bottom: 1px solid #C0C0C0;">
+      <a class="mx-2" href="/user/{{this.id}}">
+        <img src="{{this.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 50%;">
+      </a>
+      <div class="mx-2">
+        <div class="row">
+          <h6 class="fw-bolder mr-2" style="margin:0;">{{this.name}}</h6>
+          <h6 style="margin:0; color:#A39480;">
+            {{this.email}}</h6>
+        </div>
+        <div style="margin-left:0;height: 44px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">
+          {{this.introduction}}
+        </div>
+      </div>
+    </div>
+    {{/if}}
+    {{/each}}
+    {{/ifcond}}
+
+  </div>
+</div>

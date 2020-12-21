@@ -7,6 +7,7 @@ const User = db.User //input the user schema
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
 
 const userController = {
 
@@ -175,6 +176,35 @@ const userController = {
     }
 
     return res.render('userProfile', { profileUser, isFollowed, target })
+  },
+
+  getUserFollowShip: async (req, res) => {
+    let profileUser = await User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet },
+        { model: User, as: 'Followers', include: [{ model: User, as: 'Followers' }] },
+        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] },
+      ]
+    })
+    profileUser = profileUser.dataValues
+
+    const target = req.query.target || "follower"
+
+    if (target === "follower") {
+      profileUser.Followers = profileUser.Followers.map(follower => ({
+        ...follower.dataValues,
+        relate: follower.Followers.map(d => d.dataValues.id).includes(profileUser.id)
+      }))
+    }
+
+    if (target === "following" || target === "both") {
+      profileUser.Followings = profileUser.Followings.map(following => ({
+        ...following.dataValues,
+        relate: following.Followings.map(d => d.dataValues.id).includes(profileUser.id)
+      }))
+    }
+
+    return res.render('userFollowship', { profileUser, target })
   },
 }
 

@@ -46,8 +46,11 @@
                 <h6 style="margin:0; color:#A39480;">{{profileUser.email}}</h6>
                 <div style="margin-left:0;height: 44px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">
                     {{profileUser.introduction}}</div>
-                <div class="my-2 fw-bolder">{{profileUser.Followings.length}}個 <a
-                        href="#">跟隨中</a>　　{{profileUser.Followers.length}}位 <a href="#">跟隨者</a></div>
+                <div class="my-2 fw-bolder">
+                    {{profileUser.Followers.length}}個 <a href="/user/followship/{{profileUser.id}}">跟隨者</a>　　
+                    {{profileUser.Followings.length}}位 <a
+                        href="/user/followship/{{profileUser.id}}?target=following">跟隨中</a>
+                </div>
             </div>
         </div>
     </div>
@@ -74,10 +77,10 @@
     <div style="max-height: 470px; overflow-y: auto; overflow-x: hidden;">
         {{#each profileUser.Tweets}}
         <div class="d-flex py-2" style="border-bottom: 1px solid #C0C0C0;">
-            <div class="mx-2">
+            <a class="mx-2" href="/user/{{this.User.dataValues.id}}">
                 <img src="{{this.User.dataValues.avatar}}" alt=""
                     style="height: 40px; width: 40px; border-radius: 50%;">
-            </div>
+            </a>
             <div class="mx-2">
                 <div class="row">
                     <h6 class="fw-bolder mr-2" style="margin:0;">{{this.User.dataValues.name}}</h6>
