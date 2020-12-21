@@ -33,16 +33,12 @@ const userController = {
         // raw: true,
         // nest: true,
         include: [{ model: User, as: 'Followers' }]
+      }),
+      Like.findAll({
+        where: { UserId: req.params.id },
+        include: [User, { model: Tweet, include: [User, Reply, Like] }],
       })
-    ]).then(([user, tweets, followings]) => {
-      tweets = tweets.map(tweet => ({
-        ...tweet.dataValues,
-        countLikes: tweet.Likes.length,
-        countReplies: tweet.Replies.length,
-        User: tweet.User.dataValues,
-        isLike: tweet.Likes.map(d => d.UserId).includes(Number(req.params.id)),
-      }))
-      // console.log(tweets)
+    ]).then(([user, tweets, followings, likedTweets]) => {
 
       followings = followings.map(user => ({
         ...user.dataValues,
@@ -50,15 +46,37 @@ const userController = {
       }))
       followings = followings.filter(user => user.role !== "admin")
       followings = followings.filter(user => user.id !== Number(req.params.id))
-      console.log(followings)
+      // console.log(req.query.page)
+
+      // switch for pages, including '', reply, like
+      let data = null
+      if (req.query.page === '') {
+        data = tweets.map(tweet => ({
+          ...tweet.dataValues,
+          countLikes: tweet.Likes.length,
+          countReplies: tweet.Replies.length,
+          User: tweet.User.dataValues,
+          isLike: tweet.Likes.map(d => d.UserId).includes(Number(req.params.id)),
+        }))
+      } else if (req.query.page === 'like') {
+        data = likedTweets.map(like => ({
+          ...like.dataValues,
+          User: like.Tweet.dataValues.User.dataValues,
+          countLikes: like.Tweet.dataValues.Likes.length,
+          countReplies: like.Tweet.dataValues.Replies.length,
+          description: like.Tweet.dataValues.description,
+          isLike: true,
+        }))
+      }
 
       return res.render('profile', {
         user: user.toJSON(),
         FollowersLength: user.dataValues.Followers.length,
         FollowingsLength: user.dataValues.Followings.length,
         tweetsLength: tweets.length,
-        data: tweets,
-        followings: followings
+        data: data,
+        followings: followings,
+        page: req.query.page
       })
     })
   },
