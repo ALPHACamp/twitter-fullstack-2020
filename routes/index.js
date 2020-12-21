@@ -7,7 +7,7 @@ const home = require('./home')
 const api = require('./api')
 const auth = require('../middleware/auth')
 
-router.use('/api', auth.authenticated, api)
+router.use('/api', api)
 router.use('/admin', admin)
 router.use('/users', auth.authenticated, users)
 router.use('/tweets', auth.authenticated, tweets)
