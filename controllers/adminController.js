@@ -13,7 +13,6 @@ const JwtStrategy = passportJWT.Strategy
 const adminController = {
   signinPage: (req, res) => {
     return res.render('admin/signin')
-<<<<<<< HEAD
   },
   signin: (req, res) => {
     req.flash('success_messages', '登入成功')
@@ -21,12 +20,14 @@ const adminController = {
   },
   getTweets: (req, res) => {
     Tweet.findAll({
-      raw: true, nest: true,
-      include: [User], order: [['createdAt', 'DESC']]
+      raw: true,
+      nest: true,
+      include: [User],
+      order: [['createdAt', 'DESC']]
     }).then(tweets => {
       tweets = tweets.map(tweet => ({
         ...tweet,
-        description: tweet.description.substring(0, 50),
+        description: tweet.description.substring(0, 50)
       }))
       return res.render('admin/tweets', { tweets: tweets })
     }
@@ -40,7 +41,7 @@ const adminController = {
   },
   getUsers: (req, res) => {
     User.findAll({
-      where: { role: "" }, include: [Tweet, Like, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
+      where: { role: '' }, include: [Tweet, Like, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
     })
       .then(users => {
         users = users.map(user => ({
@@ -54,11 +55,6 @@ const adminController = {
         users = users.sort((a, b) => b.tweetCount - a.tweetCount)
         return res.render('admin/users', { users })
       }).catch(err => console.log(err))
-  },
-}
-=======
   }
 }
-
->>>>>>> layout
 module.exports = adminController

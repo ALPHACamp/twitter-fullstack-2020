@@ -8,15 +8,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     likeOrNot: {
-<<<<<<< HEAD
-      type: DataTypes.BOOLEAN,
-    },
-  }, {});
-=======
       type: DataTypes.BOOLEAN
     }
   }, {})
->>>>>>> layout
   Like.associate = function (models) {
     Like.belongsTo(models.User)
     Like.belongsTo(models.Tweet)
