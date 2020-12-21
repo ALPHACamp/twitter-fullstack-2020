@@ -2,11 +2,11 @@
   <li class="list-group-item title">
     <h3 class="text-center">使用者清單</h3>
   </li>
-  <li class="list-group-item list d-flex flex-wrap p-1">
+  <div class="list-group-item d-flex flex-wrap list p-3">
     {{#each users}}
-    <div class="card  me-2 mb-2" style="width:245px;height:314px">
+    <div class=" card me-2 mb-2" style="width:245px;height:314px">
       <div class="" style="">
-        <img src="" class="card-img-top" alt="" style=" height:140px ; background-color:  #C4C4C4;">
+        <img src="{{this.cover}}" class="card-img-top" alt="" style=" height:140px ; background-color:  #C4C4C4;">
       </div>
       <div class=" card-body text-center" style=" height:174px">
         <div class="card-body">
@@ -15,17 +15,17 @@
           <div class="fw-bold mb-1">{{this.name}}</div>
           <div class="mb-2" style="color: #657786">@{{this.account}}</div>
           <div class="tweetsLikes d-flex justify-content-evenly mb-3">
-            <div class=""><i class="far fa-comment"></i> {{this.tweetCount}}</div>
-            <div class=""><i class="far fa-thumbs-up"></i> {{this.tweetLiked}}</div>
-            <div class=""><i class="far fa-thumbs-down"></i> {{this.tweetDisliked}}</div>
-            {{!-- <div class=""><i class="fas fa-heart"></i></i>{{this.tweetDisliked}}</div>
-            <div class=""><i class="fas fa-heart-broken"></i>{{this.tweetLiked}}</div> --}}
+            <div class=""><i class="far fa-comment"></i> {{tc this.tweetCount}}</div>
+            <div class=""><i class="far fa-thumbs-up"></i> {{tc this.tweetLiked}}</div>
+            <div class=""><i class="far fa-thumbs-down"></i> {{tc this.tweetDisliked}}</div>
+            {{!-- <div class=""><i class="fas fa-heart"></i></i> {{this.tweetDisliked}}</div>
+            <div class=""><i class="fas fa-heart-broken"></i> {{this.tweetLiked}}</div> --}}
           </div>
           <div class="followship d-flex justify-content-evenly small">
-            <div class=""><strong>{{this.followingCount}}</strong><strong>個</strong>
+            <div class=""><strong>{{tc this.followingCount}}</strong><strong>個</strong>
               <span style="color: #657786"> 跟隨中 </span>
             </div>
-            <div class=""><strong>{{this.followerCount}}</strong><strong>位</strong>
+            <div class=""><strong>{{tc this.followerCount}}</strong><strong>位</strong>
               <span style="color: #657786"> 跟隨者 </span>
             </div>
           </div>
@@ -33,5 +33,5 @@
       </div>
     </div>
     {{/each}}
-  </li>
-</div>
+    </li>
+  </div>
