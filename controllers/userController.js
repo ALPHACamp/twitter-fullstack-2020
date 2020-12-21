@@ -145,6 +145,7 @@ const userController = {
                 { model: User, as: 'Followings' },
             ]
         })
+        console.log(profileUser)
         profileUser = profileUser.dataValues
         const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
 
@@ -162,6 +163,26 @@ const userController = {
                 console.log(error)
             })
             .then(data => { return res.render('userProfile', { profileUser, isFollowed, data }) })
+
+    },
+    updateProfile: (req, res) => {
+        const id = helpers.getUser(req).id
+        axios({
+            method: 'post',
+            url: `http://localhost:3000/api/users/${id}`,
+            headers: {
+                'Content-type': 'application/json'
+                // 'application/x-www-form-urlencoded'
+            },
+            data: {
+                'name': req.body.name,
+                'introduction': req.body.introduction
+            }
+        }).then(function (response) {
+            console.log(response)
+        }).catch(function (error) {
+            console.log(error)
+        }).then(data => { return res.redirect(`/user/${id}`) })
 
     }
 }

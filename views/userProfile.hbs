@@ -91,90 +91,92 @@
     data-bs-whatever="@mdo">編輯個人資料</button>
 
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="header d-flex">
-                    <div class="header-left d-flex">
-                        <button type="button" class="btn-close me-4" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                        <h5 class="modal-title" id="exampleModalLabel">編輯個人檔案</h5>
+    <form action='/user/{{data.id}}' method="POST">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="header d-flex">
+                        <div class="header-left d-flex">
+                            <button type="button" class="btn-close me-4" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            <h5 class="modal-title" id="exampleModalLabel">編輯個人檔案</h5>
+                        </div>
                     </div>
+                    <div class="header-right col-auto"><button type="submit" class="btn"
+                            style="background-color:#FF6103 ; color:antiquewhite">儲存</button></div>
                 </div>
-                <div class="header-right col-auto"><button type="button" class="btn"
-                        style="background-color:#FF6103 ; color:antiquewhite">儲存</button></div>
-            </div>
-            <div class="modal-body">
-                <div class="cover bg-default">
-                    {{#ifcond data.cover "===" ""}}
-                    <div class="cover bg-user"
-                        style="width:100%; height:200px; background-color:#808A87; background-size:cover; background-repeat:no-repeat; background-position: center;">
-                        <div class="cover-hover">
-                            <div class="cover-mask text-center" style="width:100%; height:200px;background-size:cover;
+                <div class="modal-body">
+                    <div class="cover bg-default">
+                        {{#ifcond data.cover "===" ""}}
+                        <div class="cover bg-user"
+                            style="width:100%; height:200px; background-color:#808A87; background-size:cover; background-repeat:no-repeat; background-position: center;">
+                            <div class="cover-hover">
+                                <div class="cover-mask text-center" style="width:100%; height:200px;background-size:cover;
                                                 background-repeat:no-repeat; background-position: center;">
-                                <i class="fas fa-camera me-4" style="line-height:200px"></i>
-                                <i class="fas fa-times" style="line-height:200px"></i>
+                                    <i class="fas fa-camera me-4" style="line-height:200px"></i>
+                                    <i class="fas fa-times" style="line-height:200px"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="avatar" style="position:relative;left: 30px; top: 140px;">
-                            <img src="{{data.avatar}}" alt=""
-                                style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
-                            <div class="avatar-hover">
-                                <div class="avatar-mask text-center"
-                                    style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white line-height:120px;">
-                                    <i class="fas fa-camera" style="line-height:120px"></i>
+                            <div class="avatar" style="position:relative;left: 30px; top: 140px;">
+                                <img src="{{data.avatar}}" alt=""
+                                    style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
+                                <div class="avatar-hover">
+                                    <div class="avatar-mask text-center"
+                                        style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white line-height:120px;">
+                                        <i class="fas fa-camera" style="line-height:120px"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    {{else}}
-                    <div class="cover bg-user"
-                        style="width:100%; height:200px; background-image:url({{data.cover}}); background-size:cover; background-repeat:no-repeat; background-position: center;">
-                        <div class="cover-hover">
-                            <div class="cover-mask text-center" style="width:100%; height:200px;background-size:cover;
+                        {{else}}
+                        <div class="cover bg-user"
+                            style="width:100%; height:200px; background-image:url({{data.cover}}); background-size:cover; background-repeat:no-repeat; background-position: center;">
+                            <div class="cover-hover">
+                                <div class="cover-mask text-center" style="width:100%; height:200px;background-size:cover;
                             background-repeat:no-repeat; background-position: center;">
-                                <i class="fas fa-camera me-4" style="line-height:200px"></i>
-                                <i class="fas fa-times" style="line-height:200px"></i>
+                                    <i class="fas fa-camera me-4" style="line-height:200px"></i>
+                                    <i class="fas fa-times" style="line-height:200px"></i>
+                                </div>
                             </div>
-                        </div>
-                        <div class="avatar" style="position:relative;left: 30px; top: 140px;">
-                            <img src="{{data.avatar}}" alt=""
-                                style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
-                            <div class="avatar-hover">
-                                <div class="avatar-mask text-center"
-                                    style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white line-height:120px;">
-                                    <i class="fas fa-camera" style="line-height:120px"></i>
+                            <div class="avatar" style="position:relative;left: 30px; top: 140px;">
+                                <img src="{{data.avatar}}" alt=""
+                                    style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
+                                <div class="avatar-hover">
+                                    <div class="avatar-mask text-center"
+                                        style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white line-height:120px;">
+                                        <i class="fas fa-camera" style="line-height:120px"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {{/ifcond}}
+                        {{/ifcond}}
 
-                    <div class="name-introduction mt-5">
-                        <form>
-                            <div class="name mb-3">
-                                <div class="border-bottom border-secondary bg-light">
-                                    <label for="recipient-name" class="col-form-label">名稱:</label>
-                                    <input type="text" class="form-control border-0 bg-light" id="recipient-name"
-                                        value="{{data.name}}">
+                        <div class="name-introduction mt-5">
+                            <form>
+                                <div class="name mb-3">
+                                    <div class="border-bottom border-secondary bg-light">
+                                        <label for="recipient-name" class="col-form-label">名稱:</label>
+                                        <input type="text" class="form-control border-0 bg-light" id="recipient-name"
+                                            name="name" value="{{data.name}}">
+                                    </div>
+                                    <div class="text-end mt-0">123/50</div>
                                 </div>
-                                <div class="text-end mt-0">123/50</div>
-                            </div>
-                            <div class="introduction">
-                                <div class="border-bottom border-secondary bg-light">
-                                    <label for="message-text" class="col-form-label" style="small">自我介紹:</label>
-                                    <textarea class="form-control border-0 bg-light" id="message-text"
-                                        rows='3'>{{data.introduction}}</textarea>
+                                <div class="introduction">
+                                    <div class="border-bottom border-secondary bg-light">
+                                        <label for="message-text" class="col-form-label" style="small">自我介紹:</label>
+                                        <textarea class="form-control border-0 bg-light" id="message-text" rows='3'
+                                            name="introduction">{{data.introduction}}</textarea>
+                                    </div>
+                                    <div class="text-end mt-0">123/160</div>
                                 </div>
-                                <div class="text-end mt-0">123/160</div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </div>
 {{!-- sef-profile update-cover modal --}}
 

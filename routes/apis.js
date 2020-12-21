@@ -9,6 +9,7 @@ const { authenticatedUser, authenticatedAdmin, isOwnProfile, editOwnProfile } = 
 // User
 ///////
 router.get('/users/:id', userController.userProfile)
+router.post('/users/:id', userController.updateProfile)
 
 
 

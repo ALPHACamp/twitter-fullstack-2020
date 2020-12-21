@@ -40,7 +40,7 @@ router.get('/user/setting', authenticatedUser, userController.getSetting)
 router.put('/user/setting', authenticatedUser, userController.updateSetting)
 
 router.get('/user/:id', authenticatedUser, userController.getUserProfile)
-
+router.post('/user/:id', authenticatedUser, userController.updateProfile)
 
 
 ///////
