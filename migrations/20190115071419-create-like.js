@@ -14,6 +14,9 @@ module.exports = {
       TweetId: {
         type: Sequelize.INTEGER
       },
+      likeOrNot: {
+        type: Sequelize.BOOLEAN
+      },      
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

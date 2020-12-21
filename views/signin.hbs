@@ -1,0 +1,32 @@
+<div class="d-flex flex-column align-items-center mt-5">
+
+    <img class="my-3"
+        src="https://uploads-ssl.webflow.com/5d3a7aed4e11722bc1d46f10/5d43a805a4923b6b4285c376_medium_alpha-logo-square-89%20256x256.png"
+        alt="" style="max-width: 40px;height: auto;">
+
+    <h5 class="font-weight-bold my-2">登入 Alphitter</h5>
+    <form class="col-md-4 form-signin" action="/signin" method="POST" style="width: 100%;">
+        <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mt-2 mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-light border-0" style="height:20px;">帳號</span>
+            </div>
+            <input type="text" name="account" class="form-control bg-light border-0 w-100" placeholder=""
+                style="height:30px;" required autofocus>
+        </div>
+        <div class="input-group d-flex flex-column border-bottom border-secondary bg-light mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-light border-0" style="height:20px;">密碼</span>
+            </div>
+            <input type="password" name="password" class="form-control  bg-light border-0 w-100" placeholder=""
+                style="height:30px;" required>
+        </div>
+        <button class="btn bold mt-4" type="submit"
+            style="color:white; background-color:#FF6103; border-radius: 25px;">登入</button>
+        <div class="text-center mb-4">
+            <p class="text-right font-weight-bold mt-3">
+                <a class="border-bottom border-primary pb-0" href="/signup">註冊 Alphitter</a>．
+                <a class="border-bottom border-primary pb-0" href="/admin/signin">後台登入</a>
+            </p>
+        </div>
+    </form>
+</div>
