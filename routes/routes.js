@@ -20,7 +20,7 @@ router.get('/admin/signin', adminController.signin)
 /// ////
 // User
 /// ////
-router.get('/', (req, res) => res.render('home'))
+// router.get('/', userController.signInPage)
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
