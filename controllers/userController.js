@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const axios = require('axios')
+const helpers = require('../_helpers')
 
 const bcrypt = require('bcryptjs')
 const db = require('../models')
@@ -7,6 +9,8 @@ const User = db.User //input the user schema
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+
+
 
 const userController = {
 
@@ -118,7 +122,7 @@ const userController = {
                                         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
                                     })
                                         .then((user) => {
-                                            req.flash('success_messages', 'setting infomation was successfully to update')
+                                            req.flash('success_messages', 'setting information was successfully to update')
                                             res.redirect('setting')
                                         })
                                 })
@@ -143,8 +147,26 @@ const userController = {
         })
         profileUser = profileUser.dataValues
         const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
-        return res.render('userProfile', { profileUser, isFollowed })
-    },
+
+        const id = helpers.getUser(req).id
+
+        axios.get(`http://localhost:3000/api/users/${id}`)
+            .then(function (response) {
+                // 1.handle success
+                console.log(response)
+                let data = response.data
+                return data
+            })
+            .catch(function (error) {
+                // 2.handle error
+                console.log(error)
+            })
+            .then(data => { return res.render('userProfile', { profileUser, isFollowed, data }) })
+
+    }
 }
+
+
+
 
 module.exports = userController

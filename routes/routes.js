@@ -17,6 +17,7 @@ const user = require('../models/user.js')
 
 
 
+
 ///////
 // admin
 ///////
@@ -39,6 +40,8 @@ router.get('/user/setting', authenticatedUser, userController.getSetting)
 router.put('/user/setting', authenticatedUser, userController.updateSetting)
 
 router.get('/user/:id', authenticatedUser, userController.getUserProfile)
+
+
 
 ///////
 // tweet
