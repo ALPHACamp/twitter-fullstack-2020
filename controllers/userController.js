@@ -144,26 +144,36 @@ const userController = {
 
     const target = req.query.target || "tweets"
     if (target === "replies") {
-        profileUser.Tweets = await Tweet.findAll({
-            include: [User, Like, Reply]
-        })
-        profileUser.Tweets.filter(tweet => tweet.dataValues.Replies.map(d => d.dataValues.UserId).includes(profileUser.id))
+      profileUser.Tweets = await Tweet.findAll({
+        include: [User, Like, Reply]
+      })
+      profileUser.Tweets.filter(tweet => tweet.dataValues.Replies.map(d => d.dataValues.UserId).includes(profileUser.id))
     }
     if (target === "likes") {
-        profileUser.Tweets = await Tweet.findAll({
-            include: [User, Like, Reply]
-        })
-        profileUser.Tweets = profileUser.Tweets.filter(tweet => tweet.dataValues.Likes.map(d => d.dataValues.UserId).includes(profileUser.id))
+      profileUser.Tweets = await Tweet.findAll({
+        include: [User, Like, Reply]
+      })
+      profileUser.Tweets = profileUser.Tweets.filter(tweet => tweet.dataValues.Likes.map(d => d.dataValues.UserId).includes(profileUser.id))
     }
 
     profileUser.Tweets = profileUser.Tweets.map(tweet => ({
-        ...tweet.dataValues,
-        tweetLiked: tweet.Likes.filter(like => like.likeOrNot === true).length,
-        tweetDisliked: tweet.Likes.filter(unlike => unlike.likeOrNot === false).length
+      ...tweet.dataValues,
+      tweetLiked: tweet.Likes.filter(like => like.likeOrNot === true).length,
+      tweetDisliked: tweet.Likes.filter(unlike => unlike.likeOrNot === false).length,
+      latestReplytime: Math.max(...tweet.Replies.map(reply => reply.updatedAt)),
+      latestLiketime: Math.max(...tweet.Likes.map(like => like.updatedAt))
     }))
 
     const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
-    profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.updatedAt - a.updatedAt)
+
+    if (target === "tweets") {
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.updatedAt - b.updatedAt)
+    } else if (target === "replies") {
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.latestReplytime - b.latestReplytime)
+    } else if (target === "likes") {
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.latestLiketime - b.latestLiketime)
+    }
+
     return res.render('userProfile', { profileUser, isFollowed, target })
   },
 }

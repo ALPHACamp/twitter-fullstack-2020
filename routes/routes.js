@@ -41,5 +41,7 @@ router.get('/user/:id', authenticatedUser, userController.getUserProfile)
 // tweet
 /// ////
 router.get('/tweets', authenticatedUser, twitterController.getTwitters)
+router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
+router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)
 
 module.exports = router

@@ -81,7 +81,8 @@
             <div class="mx-2">
                 <div class="row">
                     <h6 class="fw-bolder mr-2" style="margin:0;">{{this.User.dataValues.name}}</h6>
-                    <h6 style="margin:0; color:#A39480;">{{this.User.dataValues.email}}．</h6>
+                    <h6 style="margin:0; color:#A39480;">
+                        {{this.User.dataValues.email}}．{{moment this.User.dataValues.updatedAt}}</h6>
                 </div>
                 <div style="margin-left:0;height: 66px;line-height: 22px;text-overflow: ellipsis;overflow: hidden;">
                     {{this.description}}</div>
@@ -90,40 +91,52 @@
                     {{#ifcond this.Replies.length "===" "0"}}
                     <div style="color:#A39480;">
                         <a href="/tweets/{{this.id}}" class="ms-3 me-1" style="color:#C0C0C0;"><i
-                                class="far fa-comment"></i></a> {{this.Replies.length}}
+                                class="far fa-comment"></i></a> {{tc this.Replies.length}}
                     </div>
                     {{else}}
                     <div style="color:#2F4F4F;">
                         <a href="/tweets/{{this.id}}" class="ms-3 me-1" style="color:#7AC5CD;"><i
-                                class="far fa-comment-dots"></i></a> {{this.Replies.length}}
+                                class="far fa-comment-dots"></i></a> {{tc this.Replies.length}}
                     </div>
                     {{/ifcond}}
 
                     {{#ifcond this.tweetLiked "===" 0}}
                     <div style="color:#A39480;">
-                        <a href="/tweets/{{this.id}}/thumbs_up" class="ms-3 me-1" style="color:#C0C0C0;"><i
-                                class="far fa-thumbs-up"></i></a>
-                        {{this.tweetLiked}}
+                        <form action="/tweets/{{this.id}}/thumbs_up" method="POST">
+                            <button type="submit" class="btn btn-link m-0 p-0 ms-3"
+                                style="color:#C0C0C0;text-decoration:none;">
+                                <i class="far fa-thumbs-up"></i>　{{tc this.tweetLiked}}
+                            </button>
+                        </form>
                     </div>
                     {{else}}
                     <div style="color:#2F4F4F;">
-                        <a href="/tweets/{{this.id}}/thumbs_up" class="ms-3 me-1" style="color:#0000FF;"><i
-                                class="far fa-thumbs-up"></i></a>
-                        {{this.tweetLiked}}
+                        <form action="/tweets/{{this.id}}/thumbs_up" method="POST">
+                            <button type="submit" class="btn btn-link m-0 p-0 ms-3"
+                                style="color:#0000FF;text-decoration:none;">
+                                <i class="far fa-thumbs-up"></i>　{{tc this.tweetLiked}}
+                            </button>
+                        </form>
                     </div>
                     {{/ifcond}}
 
                     {{#ifcond this.tweetDisliked "===" 0}}
                     <div style="color:#A39480;">
-                        <a href="/tweets/{{this.id}}/thumbs_down" class="ms-3 me-1" style="color:#C0C0C0;"><i
-                                class="far fa-thumbs-down"></i></a>
-                        {{this.tweetDisliked}}
+                        <form action="/tweets/{{this.id}}/thumbs_down" method="POST">
+                            <button type="submit" class="btn btn-link m-0 p-0 ms-3"
+                                style="color:#C0C0C0;text-decoration:none;">
+                                <i class="far fa-thumbs-down"></i>　{{tc this.tweetDisliked}}
+                            </button>
+                        </form>
                     </div>
                     {{else}}
                     <div style="color:#2F4F4F;">
-                        <a href="/tweets/{{this.id}}/thumbs_down" class="ms-3 me-1" style="color:#CD5C5C;"><i
-                                class="far fa-thumbs-down"></i></a>
-                        {{this.tweetDisliked}}
+                        <form action="/tweets/{{this.id}}/thumbs_down" method="POST">
+                            <button type="submit" class="btn btn-link m-0 p-0 ms-3"
+                                style="color:#CD5C5C;text-decoration:none;">
+                                <i class="far fa-thumbs-down"></i>　{{tc this.tweetDisliked}}
+                            </button>
+                        </form>
                     </div>
                     {{/ifcond}}
 
