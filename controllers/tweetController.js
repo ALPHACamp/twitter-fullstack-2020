@@ -23,7 +23,18 @@ module.exports = {
         })
     },
     getReply: (req, res) => {
-        res.send(req.params.id)
+        const id = req.params.id
+        Tweet.findByPk(id, { include: [User, { model: Reply, include: [User], raw: true }, Like] }).then(tweet => {
+            tweet = tweet.toJSON()
+            const userLiked = helper.getUser(req).Likes ? helper.getUser(req).Likes.map(d => d.TweetId) : []
+            const data = {
+                ...tweet,
+                countLikes: tweet.Likes.length,
+                countReplies: tweet.Replies.length,
+                isLike: userLiked.includes(tweet.id)
+            }
+            res.render('tweet', { data })
+        })
     },
     postTweets: (req, res) => {
         if (req.body.description.length > 140 || req.body.description.length < 1) {
@@ -51,7 +62,7 @@ module.exports = {
             comment: req.body.comment
         }
         Reply.create(reply).then(() => {
-            res.redirect('/tweets')
+            res.redirect('back')
         }).catch(err => console.log(err))
     },
     likeTweet: (req, res) => {
@@ -60,7 +71,7 @@ module.exports = {
             TweetId: req.params.id
         }
         Like.create(like).then(() => {
-            res.redirect('/tweets')
+            res.redirect('back')
         }).catch(err => console.log(err))
     },
     unlikeTweet: (req, res) => {
@@ -71,7 +82,7 @@ module.exports = {
         Like.findOne({ where: unlike }).then(like => {
             like.destroy()
         }).then(() => {
-            res.redirect('/tweets')
+            res.redirect('back')
         }).catch(err => console.log(err))
     }
 }

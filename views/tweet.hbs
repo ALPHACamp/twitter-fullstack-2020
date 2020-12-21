@@ -1,0 +1,124 @@
+<div class="col-3"></div>
+<div class="col-6">
+    <div class="row">
+        <li class="list-group-item row">
+        <p class="my-1">
+            <a href="/tweets" style="width: 20px;"><i class="fas fa-arrow-left"></i></a>
+            <strong class="ms-3">推文</strong>
+        </p>
+        </li>
+
+        <li class=" list-group-item row">
+            <div class="row mt-3">
+                <a href="/users/{{data.User.id}}/tweets" class="col-1">
+                    <img class="rounded-circle" src="{{data.User.avatar}}" alt="" width="50px" height="50px">
+                </a>
+                <div class="col-10 ms-3">
+                    <p style="font-weight: bolder; margin:0;">{{data.User.name}}</p>
+                    <p style="color: gray;">@{{data.User.account}}</p>
+                </div>
+            </div>
+            <div class="row card-body">
+                <div class="row">
+                    <a href="/tweets/{{data.id}}/replies" style="text-decoration:none;color:#333;"></a>
+                    <p class="fs-5"><strong>{{data.description}}</strong></p>
+                    </a>
+                </div>
+            </div>
+            <div class="row ">
+                <p style="color: gray;" class="fs-6">
+                    {{momentFormat data.createdAt}}
+                </p>
+            </div>
+            <hr>
+            <div class="info">
+                <p style="color: #788895;">
+                    <strong class="mx-2" style="color: black;">{{data.countReplies}}</strong>回覆
+                    <strong class="mx-2" style="color: black;">{{data.countLikes}}</strong>喜歡
+                </p>
+            </div>
+            <hr>
+            <div class="action-bar row mb-3">
+                <button href="#" class="btn btn-link col-3 ms-3" style=" width: 50px" data-bs-toggle="modal"
+                    data-bs-target="#tweet-{{data.id}}"><i class="far fa-comment" style="color: gray;"></i></button>
+                {{#if data.isLike}}
+                <form class="col-3 ms-3" action="/tweets/{{data.id}}/unlike" method="post">
+                    <button type="submit" class="btn btn-link"><i class="like fas fa-heart "
+                            style="color: #e0245e"></i></button>
+                </form>
+                {{else}}
+                <form class="col-3 ms-3" action="/tweets/{{data.id}}/like" method="post">
+                    <button type="submit" class="btn btn-link"><i class="unlike far fa-heart"
+                            style="color: gray;"></i></button>
+                </form>
+                {{/if}}
+            </div>
+        </li>
+        {{#each data.Replies}}
+        <li class="list-group-item row ">
+            <div class="row  mt-3">
+                <a href="/users/{{this.User.id}}/tweets" class="col-1">
+                    <img class="rounded-circle" src="{{this.User.avatar}}" alt="" width="50px" height="50px">
+                </a>
+                <div class="col-10 ms-2">
+                    <p class="mb-0"><strong>{{this.User.name}}</strong> <span
+                            style="color: gray;">@{{this.User.account}}．{{moment this.createdAt}}</span></p>
+                    <p><span style="color: #788895;">回覆</span><span style="color: #ef6330;">@{{../data.User.account}}</span></p>
+                    <p>{{this.comment}}</p>
+                </div>
+            </div>
+        </li>
+        {{/each}}
+    </div>
+</div>
+</div>
+<div class="col-3"></div>
+<!-- Modal -->
+<form action="/tweets/{{data.id}}/replies" method="POST">
+    <div class="modal fade" id="tweet-{{data.id}}" tabindex="-1" aria-labelledby="tweet-{{data.id}}Label"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+
+                <div class="modal-body d-flex flex-row row">
+                    {{!-- 推文 --}}
+                    <div class="row d-flex flex-row ">
+                        <div class="col-2 d-flex justify-content-center mt-3">
+                            <img class="rounded-circle" src="{{data.User.avatar}}" alt="" width="50px" height="50px">
+                        </div>
+                        <div class="col-10 ">
+                            <div class="row">
+                                <p><span style="font-weight: bolder;">{{data.User.name}}</span><span
+                                        style="color: gray;">@taiwan．{{moment data.createdAt}}</span></p>
+                            </div>
+                            <div class="row">
+                                <p>{{data.description}}</p>
+                            </div>
+                            <div class="row">
+                                <p style="color: gray;">回覆給<span style="color: #ff6600;">＠{{data.User.account}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {{!-- 回文 --}}
+                    <div class="row mt-3">
+                        <div class="col-2">
+                            <img class="rounded-circle" src="{{user.avatar}}" alt="" width="50px" height="50px">
+                        </div>
+                        <div class="col-10">
+                            <textarea name="comment" id="comment" cols="40" rows="5" style="resize:none; border: 0px;"
+                                placeholder="推你的回覆"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
