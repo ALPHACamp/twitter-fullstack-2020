@@ -1,22 +1,22 @@
-'use strict';
+'use strict'
 module.exports = (sequelize, DataTypes) => {
   const Like = sequelize.define('Like', {
     UserId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     TweetId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER
     },
     likeOrNot: {
-      type: DataTypes.BOOLEAN,
-    },
-  }, {});
+      type: DataTypes.BOOLEAN
+    }
+  }, {})
   Like.associate = function (models) {
     Like.belongsTo(models.User)
     Like.belongsTo(models.Tweet)
-  };
-  return Like;
-};
+  }
+  return Like
+}
 
 /*
 'use strict';
@@ -36,4 +36,4 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Like',
   });
   return Like;
-};*/
+}; */
