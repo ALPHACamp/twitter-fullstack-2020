@@ -11,7 +11,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const db = require('./models') // 引入資料庫
-
+const app = express()
 const port = process.env.PORT || 3000
 
 const passport = require('./config/passport')
