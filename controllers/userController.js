@@ -206,6 +206,25 @@ const userController = {
 
     return res.render('userFollowship', { profileUser, target })
   },
+
+  postUserFollowShip: (req, res) => {
+    Followship.create({
+      followId: req.user.id,
+      followeingId: req.params.id
+    })
+      .then(user => {
+        return res.redirect('back')
+      })
+  },
+
+  deleteUserFollowShip: (req, res) => {
+    Followship.findOne({
+      where: { followId: req.user.id, followeingId: req.params.id }
+    }).then(followship => {
+      followship.destroy()
+      return res.redirect('back')
+    })
+  },
 }
 
 module.exports = userController

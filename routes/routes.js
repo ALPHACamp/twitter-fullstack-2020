@@ -37,6 +37,8 @@ router.put('/user/setting', authenticatedUser, userController.updateSetting)
 
 router.get('/user/:id', authenticatedUser, userController.getUserProfile)
 router.get('/user/followship/:id', authenticatedUser, userController.getUserFollowShip)
+router.post('/user/followship/:id', authenticatedUser, userController.postUserFollowShip)
+router.delete('/user/followship/:id', authenticatedUser, userController.deleteUserFollowShip)
 
 /// ////
 // tweet
