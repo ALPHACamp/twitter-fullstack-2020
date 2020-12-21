@@ -27,7 +27,8 @@
             <button type="submit" class="btn btn-primary">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}" method="POST" class="col text-end">
+          <form action="/followships" method="POST" class="col text-end">
+            <input type="hidden" name="id" value="{{this.id}}" />
             <button type="submit" class="btn btn-secondary" {{#ifCond this.id
               ../currentUser.id}}disabled{{/ifCond}}>跟隨</button>
           </form>
