@@ -13,6 +13,7 @@ const JwtStrategy = passportJWT.Strategy
 const adminController = {
   signinPage: (req, res) => {
     return res.render('admin/signin')
+<<<<<<< HEAD
   },
   signin: (req, res) => {
     req.flash('success_messages', '登入成功')
@@ -55,4 +56,9 @@ const adminController = {
       }).catch(err => console.log(err))
   },
 }
+=======
+  }
+}
+
+>>>>>>> layout
 module.exports = adminController
