@@ -9,7 +9,7 @@ const { authenticatedUser, authenticatedAdmin, isOwnProfile, editOwnProfile } = 
 // User
 ///////
 router.get('/users/:id', userController.userProfile)
-router.post('/users/:id', userController.updateProfile)
+router.post('/users/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)
 
 
 

@@ -3,6 +3,7 @@ const Op = Sequelize.Op;
 const axios = require('axios')
 const helpers = require('../_helpers')
 
+
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User //input the user schema
@@ -10,7 +11,16 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 
+const fs = require('fs')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+// const imgur = require('imgur')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
+// 
+
+// '386b8dce07c07a9'
 
 const userController = {
 
@@ -22,7 +32,7 @@ const userController = {
     },
     signIn: (req, res) => {
         req.flash('success_messages', '成功登入！')
-        res.redirect('/tweets')
+        res.redirect('/user/11')
     },
 
     signUpPage: (req, res) => {
@@ -165,24 +175,106 @@ const userController = {
             .then(data => { return res.render('userProfile', { profileUser, isFollowed, data }) })
 
     },
+    // updateProfile: (req, res) => {
+    //     const { name, introduction } = req.body
+    //     const id = helpers.getUser(req).id
+    //     //找出圖片的link
+    //     let fileLink = ""
+    //     const { files } = req
+    //     let file = ""
+    //     let fieldName = ""
+    //     if (files) {
+    //         fieldName = Object.keys(files)[0];
+    //         if (fieldName === 'avatar') {      //判斷檔案是avatar或cover
+    //             file = files.avatar[0]
+    //         } else {
+    //             file = files.cover[0]
+    //         }
+    //     }
+    //     imgur.setClientID(process.env.IMGUR_CLIENT_ID);
+    //     imgur.upload(file.path, (err, img) => {
+    //         fileLink = img.data.link
+    //         console.log(`===============`)
+    //         console.log(fileLink)
+    //     })
+    //     //串ＡＰＩ
+    //     axios({
+    //         method: 'post',
+    //         url: `http://localhost:3000/api/users/${id}`,
+    //         headers: {
+    //             'Content-type': "application/json"
+    //         },
+    //         data: {
+    //             'name': req.body.name,
+    //             'introduction': req.body.introduction,
+    //             'avatar': fieldName === 'avatar' ? fileLink : helpers.getUser(req).avatar,
+    //             'cover': fieldName === 'cover' ? fileLink : helpers.getUser(req).cover
+    //         }
+    //     }).then(function (response) {
+    //         console.log(response)
+    //     }).catch(function (error) {
+    //         console.log(error)
+    //     }).then(data => { return res.redirect(`/user/${id}`) })
+
+
+    // },
+
     updateProfile: (req, res) => {
+        const { name, introduction } = req.body
         const id = helpers.getUser(req).id
-        axios({
-            method: 'post',
-            url: `http://localhost:3000/api/users/${id}`,
-            headers: {
-                'Content-type': 'application/json'
-                // 'application/x-www-form-urlencoded'
-            },
-            data: {
-                'name': req.body.name,
-                'introduction': req.body.introduction
+        const { files } = req
+
+        if (files) {
+            const fieldName = Object.keys(files)[0];
+            let file = ""
+            if (fieldName === 'avatar') {      //判斷檔案是avatar或cover
+                file = files.avatar[0]
+            } else {
+                file = files.cover[0]
             }
-        }).then(function (response) {
-            console.log(response)
-        }).catch(function (error) {
-            console.log(error)
-        }).then(data => { return res.redirect(`/user/${id}`) })
+            imgur.setClientID(process.env.IMGUR_CLIENT_ID);
+            imgur.upload(file.path, (err, img) => {
+                console.log(img)
+                return User.findByPk(id)
+                    .then((user) => {
+                        user.update({
+                            cover: file.fieldname === "cover" ? img.data.link : user.cover,
+                            avatar: file.fieldname === "avatar" ? img.data.link : user.avatar,
+                            name: user.name,
+                            introduction: user.introduction
+                        })
+                            .then((user) => {
+                                return res.redirect(`/user/${id}`)
+                            }).catch(err => console.log(err))
+                    })
+            })
+        }
+        else {
+            return User.findByPk(id)
+                .then(user => {
+                    user.update({
+                        cover: user.cover,
+                        avatar: user.avatar,
+                        name: name ? name : user.name,
+                        introduction: introduction ? introduction : user.introduction
+                    }).then((user) => {
+                        return res.redirect(`/user/${id}`)
+                    }).catch(err => console.log(err))
+                })
+        }
+    },
+
+    deleteImage: (req, res) => {
+        const id = helpers.getUser(req).id
+        const { cover, avatar } = req.body
+        const image = cover || avatar
+
+        User.findByPk(id)
+            .then(user => {
+                user.update({ image: null })
+                return res.redirect(`/user/${id}`)
+            })
+
 
     }
 }
