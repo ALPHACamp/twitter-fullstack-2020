@@ -1,8 +1,9 @@
 const { Op } = require("sequelize")
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const { name } = require("faker")
+const Followship = db.Followship
 const User = db.User
+const helper = require('../_helpers')
 
 module.exports = {
   signInPage: (req, res) => {
@@ -12,11 +13,11 @@ module.exports = {
   signUpPage: (req, res) => {
     return res.render('signup')
   },
-  
+
   signIn: (req, res) => {
     res.redirect('/tweets')
   },
-  
+
   signup: (req, res) => {
     const { account, name, email, password, confirmPassword } = req.body
     const errors = []
@@ -62,6 +63,31 @@ module.exports = {
           }))
           .then(user => res.redirect('/signin'))
           .catch(err => console.log(err))
+      })
+  },
+
+  addFollowing: (req, res) => {
+    if (helper.getUser(req).id === Number(req.body.id)) {
+      return res.redirect(200, 'back')
+    }
+
+    return Followship.create({
+      followerId: helper.getUser(req).id,
+      followingId: req.body.id
+    })
+      .then(followship => res.redirect('back'))
+  },
+
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: helper.getUser(req).id,
+        followingId: req.params.id
+      }
+    })
+      .then(followship => {
+        followship.destroy()
+          .then(followship => res.redirect('back'))
       })
   }
 }
