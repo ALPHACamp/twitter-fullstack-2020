@@ -176,11 +176,11 @@ const userController = {
     const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
 
     if (target === "tweets") {
-      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.updatedAt - b.updatedAt)
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.updatedAt - a.updatedAt)
     } else if (target === "replies") {
-      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.latestReplytime - b.latestReplytime)
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.latestReplytime - a.latestReplytime)
     } else if (target === "likes") {
-      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.latestLiketime - b.latestLiketime)
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.latestLiketime - a.latestLiketime)
     }
 
     return res.render('userProfile', { profileUser, isFollowed, target })
