@@ -11,8 +11,8 @@ router.get('/:id/followers', userController.getFollowers)
 
 // -----------------------------------------------------------------------------------
 
-router.get('/:id', userController.getUser)
-router.put('/:id', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putUser)
+router.get('/:id/tweets', userController.getUser)
+router.put('/:id/tweets', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putUser)
 
 // -----------------------------------------------------------------------------------
 
