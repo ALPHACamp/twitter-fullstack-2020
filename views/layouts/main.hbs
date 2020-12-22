@@ -14,15 +14,25 @@
 </head>
 
 <body>
-  <div class="container-fluid m-0 p-0">
-    {{#if error_messages}}
-    {{> messages}}
-    {{/if}}
-    {{#if success_messages}}
-    {{> messages}}
-    {{/if}}
+  <div class="container">
+    <div class="row d-flex" >
+      <div class="col-2" style="border-right: 1px solid #C0C0C0;">
+        {{> leftColumn}}
+      </div>
+      <div class="col-7">
+        {{#if error_messages}}
+        {{> messages}}
+        {{/if}}
+        {{#if success_messages}}
+        {{> messages}}
+        {{/if}}
 
-    {{{body}}}
+        {{{body}}}
+      </div>
+      <div class="col-3" >
+        {{> rightColumn}}
+      </div>      
+    </div>
   </div>
 
   {{!-- <!-- Left-->
