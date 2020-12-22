@@ -6,6 +6,9 @@ const userController = require('../controllers/userController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
+router.get('/:id/followings', userController.getFollowings)
+router.get('/:id/followers', userController.getFollowers)
+
 // -----------------------------------------------------------------------------------
 
 router.get('/:id', userController.getUser)

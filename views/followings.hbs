@@ -1,0 +1,43 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/users/{{user.id}}/followers">跟隨者</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/users/{{user.id}}/followings">正在跟隨</a>
+  </li>
+</ul>
+
+<ul class="list-group list-group-flush">
+
+  {{#each followings}}
+  <div class="card">
+    <div class="row g-0 p-1">
+      <div class="col-md-2"
+        style="border-radius: 50%; border: 1px; width: 85px; height: 85px; background-image: url(https://cdn.pixabay.com/photo/2017/02/22/17/06/wave-2089959_960_720.jpg);">
+      </div>
+      <div class="col">
+        <div class="d-flex card-body">
+          <div class="d-flex flex-column">
+            <h4 class="mb-1">{{this.name}}</h4>
+            <span class="lead">@{{this.account}}</span>
+          </div>
+
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST" class="col text-end">
+            <button type="submit" class="btn btn-primary">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships" method="POST" class="col text-end">
+            <input type="hidden" name="id" value="{{this.id}}" />
+            <button type="submit" class="btn btn-secondary" {{#ifCond this.id
+              ../currentUser.id}}disabled{{/ifCond}}>跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+
+        <p class="card-text px-3">{{this.introduction}}</p>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</ul>
