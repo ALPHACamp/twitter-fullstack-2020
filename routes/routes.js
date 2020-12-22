@@ -9,7 +9,7 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 const helplers = require('../_helpers')
-const { authenticatedUser, authenticatedAdmin, beSigned} = require('../middleware/check-auth')
+const { authenticatedUser, authenticatedAdmin, beSigned } = require('../middleware/check-auth')
 
 const passport = require('../config/passport')
 const user = require('../models/user.js')
@@ -26,6 +26,7 @@ router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 /// ////
 // User
 /// ////
+router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/signup', beSigned, userController.signUpPage)
 router.post('/signup', beSigned, userController.signUp)
 router.get('/signin', beSigned, userController.signInPage)
