@@ -13,7 +13,7 @@ h1 {
     margin: 0;
 }
 
-nav {
+.leftColumn {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -21,7 +21,7 @@ nav {
     justify-content: center;
 }
 
-nav a {
+.leftColumn a {
     padding: 10px;
     font-size: 30px;
     width: 55px;
@@ -32,11 +32,8 @@ nav a {
     color: #212529;
 }
 
-
-
-
-nav a.blue {
-    color: var(--blue);
+.leftColumn a:hover {
+    color: #FF6103;
 }
 
 #mainSectionContainer {

@@ -10,6 +10,14 @@ const Like = db.Like
 const Followship = db.Followship
 
 const userController = {
+  //////////////
+  //log out
+  //////////////
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
+  },
 
   /// /////
   // login
@@ -166,12 +174,12 @@ const userController = {
 
     const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
 
-    if (target === 'tweets') {
-      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.updatedAt - b.updatedAt)
-    } else if (target === 'replies') {
-      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.latestReplytime - b.latestReplytime)
-    } else if (target === 'likes') {
-      profileUser.Tweets = profileUser.Tweets.sort((a, b) => a.latestLiketime - b.latestLiketime)
+    if (target === "tweets") {
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.updatedAt - a.updatedAt)
+    } else if (target === "replies") {
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.latestReplytime - a.latestReplytime)
+    } else if (target === "likes") {
+      profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.latestLiketime - a.latestLiketime)
     }
 
     return res.render('userProfile', { profileUser, isFollowed, target })
@@ -208,8 +216,8 @@ const userController = {
 
   postUserFollowShip: (req, res) => {
     Followship.create({
-      followId: req.user.id,
-      followeingId: req.params.id
+      followerId: req.user.id,
+      followingId: req.params.id
     })
       .then(user => {
         return res.redirect('back')
@@ -218,7 +226,7 @@ const userController = {
 
   deleteUserFollowShip: (req, res) => {
     Followship.findOne({
-      where: { followId: req.user.id, followeingId: req.params.id }
+      where: { followerId: req.user.id, followingId: req.params.id }
     }).then(followship => {
       followship.destroy()
       return res.redirect('back')

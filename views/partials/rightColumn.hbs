@@ -4,40 +4,42 @@
   <div class="col-4 mt-3">
     <div class="row justify-content-center mt-3 ml-3 p-0 m-0" style="width:350px">
       <div class="col align-self-center m-0 p-0" style="background-color: #F5F8FA;border-radius:10px">
-        <div class="h6 m-3 " style="font-weight: bold;">跟隨誰</div>
+        <div class="h6 fw-bolder m-3 " style="font-weight: bold;">跟隨誰</div>
         <hr class="m-0 p-0">
         {{!-- {{#each recommendedUsers}} --}}
-        <div class="card m-0 p-0  " style="border-color:transparent; border-radius:0 ;background-color:#F5F8FA;">
-          <div class="row no-gutters">
-            <div class="m-2">
-              <a href="/users/{{this.id}}/tweets">
-                <img src="{{this.avatar}}" class="card-img" alt="img" style="border-radius: 50%; width:50px">
+
+        {{#each user.Top10}}
+        <div class="d-flex ms-2 py-3" style="border-bottom: 1px solid #C0C0C0;">
+            <div class="d-flex mx-auto">
+              <a class="mx-2" href="/user/{{this.id}}">
+                  <img src="{{this.avatar}}" alt=""
+                      style="height: 40px; width: 40px; border-radius: 50%;">
               </a>
+              <div class="mx-1">
+                  <div class="row">
+                      <h6 class="fw-bolder" style="margin:0;">{{this.name}}</h6>
+                      <h6 style="margin:0; color:#A39480;">
+                          {{this.email}}</h6>
+                  </div>
+              </div>                
+              {{#if this.relate}}
+              <form class="mx-0 px-0" action="/user/followship/{{this.id}}?_method=DELETE" method="POST">
+                  <button class="btn btn-lg btn-block fw-bolder mx-0" type="submit"
+                      style="color:white; background-color:#FF6103; border-radius: 25px; border: 1px solid white; width:80px; font-size:0.7em;">正在跟隨</button>
+              </form>
+              {{else}}
+              <form class="mx-0 px-0" action="/user/followship/{{this.id}}" method="POST">
+                  <button class="btn btn-lg btn-block fw-bolder mx-0" type="submit"
+                      style="color:#FF6103; background-color:white; border-radius: 25px; border: 1px solid #FF6103; width:80px; font-size:0.7em;">跟隨</button>
+              </form>
+              {{/if}}                
             </div>
-            <div class="col d-flex flex-column justify-content-center">
-              <span style="font-weight: bold;">{{this.name}}</span>
-              <span class="text-muted" style="font-weight: bold;">{{this.account}}</span>
-            </div>
-            {{!-- {{#if this.isFollowed}} --}}
-            <form action="/followships/{{this.id}}?_method=DELETE" method="post" class="row align-items-center mr-3">
-              <div class="col ml-auto ">
-                <button type="submit" class="btn rounded-pill"
-                  style="background-color: #FF6600; color:white">取消跟隨</button>
-              </div>
-            </form>
-            {{!-- {{else}} --}}
-            <form action="/followships" method="post" class="row align-items-center mr-3">
-              <input type="hidden" name="id" value="{{this.id}}">
-              <div class="col ml-auto">
-                <button class="btn rounded-pill" style="color:#FF6600;border-color:#FF6600">跟隨</button>
-              </div>
-            </form>
-            {{!-- {{/if}} --}}
-          </div>
         </div>
+        {{/each}}
+
         <hr class="m-0 p-0">
         {{!-- {{/each}} --}}
-        <div class="h6 m-3"></div>
+        <div class="h6 m-3">顯示更多</div>
       </div>
     </div>
   </div>
