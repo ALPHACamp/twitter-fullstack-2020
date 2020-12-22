@@ -26,7 +26,11 @@ router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 /// ////
 // User
 /// ////
+<<<<<<< HEAD
 router.get('/', userController.signInPage)
+=======
+// router.get('/', userController.signInPage)
+>>>>>>> 73a88b6af6e28d17ae8d1f01e5702e6ab7c85ded
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)

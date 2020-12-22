@@ -1,7 +1,6 @@
 const db = require('../models')
 const { User, Tweet, Reply, Like } = db
 
-
 const routes = require('./routes')
 // let apis = require('./apis')
 
