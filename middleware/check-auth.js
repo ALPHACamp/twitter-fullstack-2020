@@ -19,6 +19,18 @@ module.exports = {
     return res.redirect('/admin/signin')
   },
 
+  beSigned: (req, res, next) => {
+    if (helpers.getUser(req)) {
+      if (helpers.getUser(req).role === 'admin') {
+        return res.redirect('/admin/tweets')
+      } else {
+        return res.redirect('/tweets')
+      }
+    } else {
+      return next()
+    }
+  },
+
   isOwnProfile: (req, res, next) => {
     const userId = res.locals.user.id.toString() //user id of the authenticated user
     const profileUserId = req.params.id // user id of the user profile
