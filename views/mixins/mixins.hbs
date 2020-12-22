@@ -1,0 +1,8 @@
+mixin createPostForm(userLoggedIn)
+.postFormContainer
+.userImageContainer
+img(src=userLoggedIn.profilePic, alt="User's profile picture")
+.textareaContainer
+textarea#postTextarea(placeholder="有什麼新鮮事?")
+.buttonsContainer
+button#submitPostButton(disabled="") Post
