@@ -10,7 +10,7 @@
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
   <script src="https://kit.fontawesome.com/149a22a609.js" crossorigin="anonymous"></script>
-  <!-- <link rel="stylesheet" href="/stylesheets/main.css"> -->
+  <link rel="stylesheet" href="/stylesheets/main.css">
 </head>
 
 <body>
@@ -22,13 +22,7 @@
           {{> admin_leftColumn}}
         </div>
         <div style="width:75vw;">
-          {{#if error_messages}}
           {{> messages}}
-          {{/if}}
-          {{#if success_messages}}
-          {{> messages}}
-          {{/if}}
-
           {{{body}}}
         </div>
         {{else}}
@@ -36,13 +30,7 @@
           {{> leftColumn}}
         </div>
         <div style="width:55vw;">
-          {{#if error_messages}}
           {{> messages}}
-          {{/if}}
-          {{#if success_messages}}
-          {{> messages}}
-          {{/if}}
-
           {{{body}}}
         </div>
         <div style="width:18vw;">
@@ -51,13 +39,7 @@
         {{/ifcond}}
       {{else}}
       <div >
-        {{#if error_messages}}
         {{> messages}}
-        {{/if}}
-        {{#if success_messages}}
-        {{> messages}}
-        {{/if}}
-
         {{{body}}}
       </div>
       {{/if}}
