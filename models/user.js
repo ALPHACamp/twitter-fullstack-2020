@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT
     },
     role: {
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
+      defaultValue: ""
     }
   }, {})
   User.associate = function (models) {
@@ -41,11 +42,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followingId',
       as: 'Followers'
     }),
-    User.belongsToMany(User, {
-      through: models.Followship,
-      foreignKey: 'followerId',
-      as: 'Followings'
-    })
+      User.belongsToMany(User, {
+        through: models.Followship,
+        foreignKey: 'followerId',
+        as: 'Followings'
+      })
   }
   return User
 };
