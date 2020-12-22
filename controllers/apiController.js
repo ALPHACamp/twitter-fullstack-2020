@@ -4,7 +4,7 @@ const helper = require('../_helpers')
 
 module.exports = {
     getUser: (req, res) => {
-        const userId = helper.getUser(req).id
+        const userId = req.query.userId ? req.query.userId : helper.getUser(req).id
         const id = req.params.id
         if (Number(userId) !== Number(id)) {
             return res.json({ status: 'error', message: 'Access denied' })

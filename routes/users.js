@@ -13,6 +13,7 @@ router.get('/:id/followers', userController.getFollowers)
 router.get('/:id/tweets', userController.getUser)
 router.put('/:id/tweets', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putUser)
 router.get('/:id/edit', userController.getEdit)
+router.put('/:id', userController.putUserInfo)
 
 // -----------------------------------------------------------------------------------
 
