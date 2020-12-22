@@ -36,10 +36,15 @@ router.get('/user/setting', authenticatedUser, userController.getSetting)
 router.put('/user/setting', authenticatedUser, userController.updateSetting)
 
 router.get('/user/:id', authenticatedUser, userController.getUserProfile)
+router.get('/user/followship/:id', authenticatedUser, userController.getUserFollowShip)
+router.post('/user/followship/:id', authenticatedUser, userController.postUserFollowShip)
+router.delete('/user/followship/:id', authenticatedUser, userController.deleteUserFollowShip)
 
 /// ////
 // tweet
 /// ////
 router.get('/tweets', authenticatedUser, twitterController.getTwitters)
+router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
+router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)
 
 module.exports = router
