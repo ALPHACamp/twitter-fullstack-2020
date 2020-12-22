@@ -16,10 +16,41 @@
 <body>
   <div class="container mx-0 px-0 ms-5">
     <div class="row d-flex flex-nowrap mx-auto">
-      <div style="width:18vw; border-right: 1px solid #C0C0C0;">
-        {{> leftColumn}}
-      </div>
-      <div style="width:55vw;">
+      {{#if user}}
+        {{#ifcond user.role "===" "admin"}}
+        <div style="width:18vw; border-right: 1px solid #C0C0C0;">
+          {{> leftColumn}}
+        </div>
+        <div style="width:75vw;">
+          {{#if error_messages}}
+          {{> messages}}
+          {{/if}}
+          {{#if success_messages}}
+          {{> messages}}
+          {{/if}}
+
+          {{{body}}}
+        </div>
+        {{else}}
+        <div style="width:18vw; border-right: 1px solid #C0C0C0;">
+          {{> leftColumn}}
+        </div>
+        <div style="width:55vw;">
+          {{#if error_messages}}
+          {{> messages}}
+          {{/if}}
+          {{#if success_messages}}
+          {{> messages}}
+          {{/if}}
+
+          {{{body}}}
+        </div>
+        <div style="width:18vw;">
+          {{> rightColumn}}
+        </div>    
+        {{/ifcond}}
+      {{else}}
+      <div >
         {{#if error_messages}}
         {{> messages}}
         {{/if}}
@@ -29,9 +60,9 @@
 
         {{{body}}}
       </div>
-      <div style="width:18vw;">
-        {{> rightColumn}}
-      </div>      
+      {{/if}}
+
+  
     </div>
   </div>
 </body>
