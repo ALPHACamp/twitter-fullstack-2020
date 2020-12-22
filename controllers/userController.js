@@ -209,8 +209,8 @@ const userController = {
 
   postUserFollowShip: (req, res) => {
     Followship.create({
-      followId: req.user.id,
-      followeingId: req.params.id
+      followerId: req.user.id,
+      followingId: req.params.id
     })
       .then(user => {
         return res.redirect('back')
@@ -219,7 +219,7 @@ const userController = {
 
   deleteUserFollowShip: (req, res) => {
     Followship.findOne({
-      where: { followId: req.user.id, followeingId: req.params.id }
+      where: { followerId: req.user.id, followingId: req.params.id }
     }).then(followship => {
       followship.destroy()
       return res.redirect('back')
