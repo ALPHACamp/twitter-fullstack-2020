@@ -1,15 +1,18 @@
-<div class="col mt-2 mx-0 px-0">
-    <h6 class="font-weight-bold ml-3">首頁</h6>
-    <hr/>
-    <div class="col-md-12">
-        <div class="row">
-            <img src="{{user.avatar}}" alt="" style="height: 40px; width: auto; border-radius: 50%;">
-            <p>有什麼新鮮事？</p>
+<div class="wrapper">
+  <nav class="col-2"></nav>
+  <div class="mainSectionContainer col-10 col-md-8 col-lg-6">
+    <div class="titleContainer">
+      <h1>Home</h1>
+      <div class="postFormContainer">
+        <div class="userImageContainer">
+          <img src="{{user.avatar}}" alt="User's profile picture" />
         </div>
-        <button>推文</button>
-        <a class="border-bottom border-primary pb-0 mt-4" href="/user/{{user.id}}">to user profilw</a>．
+        <div class="textareaContainer">
+          <textarea id="postTextarea" placeholder="有什麼新鮮事?"></textarea>
+          <div class="buttonsContainer"><button id="submitPostButton">Post</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row">
-        tweets
-    </div>
+  </div>
 </div>

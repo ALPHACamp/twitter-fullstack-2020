@@ -28,15 +28,28 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 
-passport.deserializeUser((id, cb) => {
+passport.deserializeUser( (id, cb) => {
   User.findByPk(id, {
     include: [
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' }
     ]
   }).then(user => {
-    user = user.toJSON()
-    return cb(null, user)
+    User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    })
+      .then(allusers => {
+        user = user.toJSON()
+        user.Top10 = allusers.map(alluser => ({
+          ...alluser.dataValues,
+          // 計算追蹤者人數
+          FollowerCount: alluser.Followers.length,
+          relate: user.Followings.map(d => d.id).includes(alluser.dataValues.id)
+        })) 
+        user.Top10 = user.Top10.filter(user => user.role === "")
+        user.Top10 = user.Top10.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+        return cb(null, user)            
+      })
   })
 })
 

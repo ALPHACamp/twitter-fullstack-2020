@@ -1,31 +1,32 @@
-'use strict';
+'use strict'
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     name: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     email: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     password: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     account: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     cover: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     avatar: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING
     },
     introduction: {
-      type: DataTypes.TEXT,
+      type: DataTypes.TEXT
     },
     role: {
       type: DataTypes.STRING,
-    },
-  }, {});
+      defaultValue: ""
+    }
+  }, {})
   User.associate = function (models) {
     User.hasMany(models.Tweet)
     User.hasMany(models.Reply)
@@ -35,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Like,
       foreignKey: 'UserId',
       as: 'LikedTweets'
-    }),*/
+    }), */
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followingId',
@@ -46,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'followerId',
         as: 'Followings'
       })
-  };
-  return User;
+  }
+  return User
 };
 
 /*
@@ -89,4 +90,4 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'User',
   });
   return User;
-};*/
+}; */

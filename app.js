@@ -14,7 +14,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const db = require('./models') // 引入資料庫
-
 const port = process.env.PORT || 3000
 
 const passport = require('./config/passport')
@@ -26,7 +25,7 @@ app.set('view engine', 'hbs') // 設定使用 Handlebars 做為樣板引擎
 app.use(express.static('public'))
 app.use('/upload', express.static(__dirname + '/upload'))
 
-
+app.use(express.static('public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(methodOverride('_method'))
