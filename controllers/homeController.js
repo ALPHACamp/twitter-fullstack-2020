@@ -67,9 +67,13 @@ module.exports = {
   },
 
   addFollowing: (req, res) => {
+    if (helper.getUser(req).id === Number(req.body.id)) {
+      return res.redirect(200, 'back')
+    }
+
     return Followship.create({
       followerId: helper.getUser(req).id,
-      followingId: req.params.id
+      followingId: req.body.id
     })
       .then(followship => res.redirect('back'))
   },

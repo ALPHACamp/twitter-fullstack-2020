@@ -11,7 +11,7 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/signup', homeController.signUpPage)
 router.post('/signup', homeController.signup)
 
-router.post('/followships/:id', authenticated, homeController.addFollowing)
+router.post('/followships', authenticated, homeController.addFollowing)
 router.delete('/followships/:id', authenticated, homeController.removeFollowing)
 
 module.exports = router
