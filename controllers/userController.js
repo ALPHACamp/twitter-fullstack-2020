@@ -1,9 +1,9 @@
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User //input the user schema
+const User = db.User // input the user schema
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
@@ -19,9 +19,9 @@ const userController = {
     res.redirect('/signin')
   },
 
-  ////////
+  /// /////
   // login
-  ////////
+  /// /////
   signInPage: (req, res) => {
     return res.render('signin')
   },
@@ -65,14 +65,13 @@ const userController = {
       })
     }
   },
-  ////////
+  /// /////
   // setting
-  ////////
+  /// /////
   getSetting: (req, res) => {
     return res.render('setting')
   },
   updateSetting: (req, res) => {
-
     if (!req.body.account) {
       req.flash('error_messages', "account didn't exist")
       return res.redirect('back')
@@ -89,7 +88,7 @@ const userController = {
     }
 
     if (req.body.password !== req.body.checkPassword) {
-      req.flash('error_messages', "兩次密碼輸入不同！")
+      req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('back')
     }
 
@@ -109,7 +108,7 @@ const userController = {
                   user.update({
                     account: req.body.account,
                     name: req.body.name,
-                    email: req.body.email,
+                    email: req.body.email
                   })
                     .then((user) => {
                       req.flash('success_messages', 'setting infomation was successfully to update')
@@ -137,28 +136,28 @@ const userController = {
     })
   },
 
-  //////////////
-  //Profile
-  //////////////
+  /// ///////////
+  // Profile
+  /// ///////////
   getUserProfile: async (req, res) => {
     let profileUser = await User.findByPk(req.params.id, {
       include: [
         { model: Reply, include: [Tweet] },
         { model: Tweet, include: [User, Like, Reply] },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
+        { model: User, as: 'Followings' }
       ]
     })
     profileUser = profileUser.dataValues
 
-    const target = req.query.target || "tweets"
-    if (target === "replies") {
+    const target = req.query.target || 'tweets'
+    if (target === 'replies') {
       profileUser.Tweets = await Tweet.findAll({
         include: [User, Like, Reply]
       })
       profileUser.Tweets.filter(tweet => tweet.dataValues.Replies.map(d => d.dataValues.UserId).includes(profileUser.id))
     }
-    if (target === "likes") {
+    if (target === 'likes') {
       profileUser.Tweets = await Tweet.findAll({
         include: [User, Like, Reply]
       })
@@ -191,21 +190,21 @@ const userController = {
       include: [
         { model: Tweet },
         { model: User, as: 'Followers', include: [{ model: User, as: 'Followers' }] },
-        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] },
+        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] }
       ]
     })
     profileUser = profileUser.dataValues
 
-    const target = req.query.target || "follower"
+    const target = req.query.target || 'follower'
 
-    if (target === "follower") {
+    if (target === 'follower') {
       profileUser.Followers = profileUser.Followers.map(follower => ({
         ...follower.dataValues,
         relate: follower.Followers.map(d => d.dataValues.id).includes(profileUser.id)
       }))
     }
 
-    if (target === "following" || target === "both") {
+    if (target === 'following' || target === 'both') {
       profileUser.Followings = profileUser.Followings.map(following => ({
         ...following.dataValues,
         relate: following.Followings.map(d => d.dataValues.id).includes(profileUser.id)
@@ -232,7 +231,7 @@ const userController = {
       followship.destroy()
       return res.redirect('back')
     })
-  },
+  }
 }
 
 module.exports = userController
