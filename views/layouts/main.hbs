@@ -14,37 +14,37 @@
 </head>
 
 <body>
-  <div class="container mx-0 px-0 ms-5">
-    <div class="row d-flex flex-nowrap mx-auto">
+  <div class="d-flex justify-content-center w-100">
+    <div class="row d-flex flex-nowrap mt-0 mx-auto w-100 ">
       {{#if user}}
-        {{#ifcond user.role "===" "admin"}}
-        <div style="width:18vw; border-right: 1px solid #C0C0C0;">
-          {{> admin_leftColumn}}
-        </div>
-        <div style="width:75vw;">
-          {{> messages}}
-          {{{body}}}
-        </div>
-        {{else}}
-        <div style="width:18vw; border-right: 1px solid #C0C0C0;">
-          {{> leftColumn}}
-        </div>
-        <div style="width:55vw;">
-          {{> messages}}
-          {{{body}}}
-        </div>
-        <div style="width:18vw;">
-          {{> rightColumn}}
-        </div>    
-        {{/ifcond}}
+      {{#ifcond user.role "===" "admin"}}
+      <div style="width:18vw; border-right: 1px solid #C0C0C0;">
+        {{> admin_leftColumn}}
+      </div>
+      <div style="width:75vw;">
+        {{> messages}}
+        {{{body}}}
+      </div>
       {{else}}
-      <div >
+      <div style="width:18vw; border-right: 1px solid #C0C0C0;">
+        {{> leftColumn}}
+      </div>
+      <div style="width:55vw;">
+        {{> messages}}
+        {{{body}}}
+      </div>
+      <div style="width:18vw;">
+        {{> rightColumn}}
+      </div>
+      {{/ifcond}}
+      {{else}}
+      <div>
         {{> messages}}
         {{{body}}}
       </div>
       {{/if}}
 
-  
+
     </div>
   </div>
 </body>
