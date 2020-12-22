@@ -5,6 +5,9 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const helper = require('../_helpers')
 const moment = require('moment')
+const axios = require('axios')
+const { Op } = require('sequelize')
+const bcrypt = require('bcryptjs')
 
 const db = require('../models')
 const User = db.User
@@ -75,8 +78,7 @@ module.exports = {
           followers
         })
       })
-  }
-}
+  },
 
   getUser: (req, res) => {
     return Promise.all([
@@ -254,6 +256,40 @@ module.exports = {
       avatar: user.avatar,
     }).then(() => {
       return res.redirect(`/users/${req.params.id}`)
+    })
+  },
+  getEdit: (req, res) => {
+    const id = req.params.id
+    const userId = helper.getUser(req).id
+    axios.get(`http://localhost:3000/api/users/${id}?userId=${userId}`).then(function (response) {
+      const data = response.data
+      res.render('edit', { data })
+    })
+  },
+  putUserInfo: (req, res) => {
+    const { account, name, email, password, confirmPassword } = req.body
+    const data = {
+      id: req.params.id,
+      account: account,
+      name: name,
+      email: email,
+    }
+    if (password) {
+      data.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+    }
+    console.log(data)
+    const errors = []
+
+    if (password !== confirmPassword) {
+      errors.push({ message: "Password doesn't match the confirm password." })
+      console.log('password error')
+    }
+    if (errors.length) {
+      return res.render('edit', { data, errors })
+    }
+    User.findByPk(data.id).then(user => {
+      user.update(data)
+      res.redirect(`/users/${data.id}/tweets`)
     })
   }
 
