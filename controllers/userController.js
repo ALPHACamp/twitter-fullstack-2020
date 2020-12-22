@@ -19,7 +19,7 @@ const userController = {
   },
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/tweets2')
+    res.redirect('/tweets')
   },
 
   signUpPage: (req, res) => {
