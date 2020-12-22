@@ -1,13 +1,33 @@
-<!-- Left-->
-<nav class="col-2 .d-none.d-md-block">
-  <a><i class="fas fa-dove"></i></a>
-  <a href="/"><i class="fas fa-home"></i></a>
-  <a href="/users/{{user.id}}"><i class=" fas fa-user"></i></a>
-  <a href="/"><i class="fas fa-cog"></i></a>
-  <!--發文樣式再修改 -->
-  <div class="div">
-    <button type="submit" style="color:white; background-color:#FF6103;">發文</button>
+<!-- Left
+<a href="/" style="color: black; text-decoration:none;">
+-->
 
-    <div class="row align-items-end"><a href="#"><i class="fas fa-sign-out-alt"></i></a></div>
+<div class="d-flex flex-column mt-2" style="height:100vh;">
+  <div class="row py-2">
+    <i class="fas fa-dove"></i>
   </div>
-</nav>
+  <div class="row fw-bolder py-2">
+    <a href="/tweets" style="color: black; text-decoration:none;" onmouseover="this.style='color:#FF6103;text-decoration:none;';" onmouseout="this.style='color:black;text-decoration:none;';">
+      <i class="fas fa-home"></i>　首頁
+    </a>
+  </div>
+  <div class="row fw-bolder py-2">
+    <a href="/user/{{user.id}}" style="color: black; text-decoration:none;" onmouseover="this.style='color:#FF6103;text-decoration:none;';" onmouseout="this.style='color:black;text-decoration:none;';">
+      <i class="fas fa-user"></i>　個人資料
+    </a>
+  </div>
+  <div class="row fw-bolder py-2">
+    <a href="/user/setting" style="color: black; text-decoration:none;" onmouseover="this.style='color:#FF6103;text-decoration:none;';" onmouseout="this.style='color:black;text-decoration:none;';">
+      <i class="fas fa-cog"></i>　設定
+    </a>
+  </div>
+
+  <button class="btn btn-lg btn-block fw-bolder my-2 py-1 w-75" type="submit"
+      style="font-size: 14px; color:white; background-color:#FF6103; border-radius: 25px;">發文</button>
+
+  <div class="row fw-bolder mt-auto mb-3">
+    <a href="/logout" style="color: black; text-decoration:none;" onmouseover="this.style='color:#FF6103;text-decoration:none;';" onmouseout="this.style='color:black;text-decoration:none;';">
+      <i class="fas fa-sign-out-alt"></i>　登出
+    </a>
+  </div>
+</div>
