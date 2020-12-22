@@ -43,7 +43,6 @@ router.get('/user/:id', authenticatedUser, userController.getUserProfile)
 router.post('/user/:id', authenticatedUser, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)
 router.delete('/user/:id', authenticatedUser, userController.deleteImage)
 
-// upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }])
 ///////
 // tweet
 ///////

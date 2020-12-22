@@ -155,7 +155,6 @@ const userController = {
                 { model: User, as: 'Followings' },
             ]
         })
-        console.log(profileUser)
         profileUser = profileUser.dataValues
         const isFollowed = req.user.Followings.map(d => d.id).includes(profileUser.id)
 
@@ -164,7 +163,6 @@ const userController = {
         axios.get(`http://localhost:3000/api/users/${id}`)
             .then(function (response) {
                 // 1.handle success
-                console.log(response)
                 let data = response.data
                 return data
             })
@@ -266,16 +264,11 @@ const userController = {
 
     deleteImage: (req, res) => {
         const id = helpers.getUser(req).id
-        const { cover, avatar } = req.body
-        const image = cover || avatar
-
         User.findByPk(id)
             .then(user => {
-                user.update({ image: null })
+                user.update({ cover: null })
                 return res.redirect(`/user/${id}`)
-            })
-
-
+            }).catch(err => console.log(err))
     }
 }
 
