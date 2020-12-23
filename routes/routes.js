@@ -48,6 +48,9 @@ router.delete('/followships/:id', authenticatedUser, userController.deleteFollow
 
 // for test api user
 router.get('/users/:id/tweets', authenticatedUser, userController.getUserTweets)
+router.get('/users/:id/followings', authenticatedUser, userController.getUserFollowings)
+router.get('/users/:id/followers', authenticatedUser, userController.getUserFollowers)
+router.get('/users/:id/likes', authenticatedUser, userController.getUserLikes)
 
 /// ////
 // tweet

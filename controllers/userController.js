@@ -357,8 +357,49 @@ const userController = {
       .then(user => {
         return res.status(200).json({ status: 'success', message: "tweets", user:user })   
       })
-  }
+  },
 
+  getUserFollowings: async (req, res, callback) => {
+    let profileUser = await User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet },
+        { model: User, as: 'Followers', include: [{ model: User, as: 'Followers' }] },
+        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] }
+      ]
+    })
+    profileUser = profileUser.dataValues
+    profileUser.Followings = profileUser.Followings.map(following => ({
+      ...following.dataValues,
+      relate: following.Followings.map(d => d.dataValues.id).includes(profileUser.id)
+      })
+    )
+    profileUser.Followings = profileUser.Followings.sort((a, b) => b.updatedAt - a.updatedAt)
+    return res.status(200).json({ status: 'success', message: "", profileUser:profileUser })   
+  },
+
+  getUserFollowers: async (req, res, callback) => {
+    let profileUser = await User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet },
+        { model: User, as: 'Followers', include: [{ model: User, as: 'Followers' }] },
+        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] }
+      ]
+    })
+    profileUser = profileUser.dataValues
+    profileUser.Followers = profileUser.Followers.map(follower => ({
+      ...follower.dataValues,
+      relate: follower.Followers.map(d => d.dataValues.id).includes(profileUser.id)
+      })
+    )
+    profileUser.Followers = profileUser.Followers.sort((a, b) => b.updatedAt - a.updatedAt)
+    return res.status(200).json({ status: 'success', message: "", profileUser:profileUser })   
+  },
+  getUserLikes : async (req, res, callback) => {
+    let likedTweets = await Like.findAll({
+      include: [Tweet]
+    })
+    return res.status(200).json({ status: 'success', message: "", likedTweets:likedTweets })   
+  }
 }
 
 module.exports = userController
