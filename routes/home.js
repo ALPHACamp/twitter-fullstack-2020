@@ -5,6 +5,7 @@ const { authenticated } = require('../middleware/auth')
 
 const passport = require('../config/passport')
 
+router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/signin', homeController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), homeController.signIn)
 
