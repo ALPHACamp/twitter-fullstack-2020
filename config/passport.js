@@ -3,6 +3,7 @@ const user = require('../models/user')
 const LocalStrategy = require('passport-local').Strategy
 const db = require('../models')
 const User = db.User
+const Like =db.Like
 const bcrypt = require('bcryptjs')
 
 passport.use(new LocalStrategy({ usernameField: 'account', passReqToCallback: true }, (req, account, password, done) => {
@@ -24,7 +25,8 @@ passport.use(new LocalStrategy({ usernameField: 'account', passReqToCallback: tr
         User.findByPk(id, {
             include: [
                 { model: User, as: 'Followers' },
-                { model: User, as: 'Followings' }
+                { model: User, as: 'Followings' },
+                { model: Like }
             ]
         }).then(user => {
             done(null, user.toJSON())
