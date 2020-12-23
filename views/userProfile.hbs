@@ -94,8 +94,11 @@
                     <h6 style="margin:0; color:#A39480;">
                         {{this.User.dataValues.email}}．{{moment this.User.dataValues.updatedAt}}</h6>
                 </div>
-                <div style="margin-left:0;height: 54px;line-height: 18px;text-overflow: ellipsis;overflow: hidden;">
-                    {{this.description}}</div>
+                <a class="nav-link" href="/tweets/{{this.id}}" style="color:black;">
+                    <div style="margin-left:0;height: 54px;line-height: 18px;text-overflow: ellipsis;overflow: hidden;">
+                        {{this.description}}
+                    </div>                
+                </a>
                 <div class="col-md-12 d-flex mt-2">
 
                     {{#ifcond this.Replies.length "===" "0"}}
