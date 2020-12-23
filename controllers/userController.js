@@ -15,8 +15,6 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 
-
-
 // -----------------------------------------------------------------------------------
 
 module.exports = {
@@ -81,6 +79,7 @@ module.exports = {
   },
 
   getUser: (req, res) => {
+    const selfUser = helper.getUser(req)
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
@@ -106,16 +105,20 @@ module.exports = {
       })
     ]).then(([user, tweets, followings, likedTweets]) => {
 
+      followings = JSON.parse(JSON.stringify(followings))
+      followings.sort((a, b) => b.Followers.length - a.Followers.length)
+      followings.slice(0, 10)
       followings = followings.map(user => ({
-        ...user.dataValues,
-        isFollowed: user.Followers.map(d => d.id).includes(Number(req.params.id))
+        ...user,
+        isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
       }))
-      followings = followings.filter(user => user.role !== "admin")
-      followings = followings.filter(user => user.id !== Number(req.params.id))
+      followings = followings.filter(user => user.id !== selfUser.id)
+      sidebarFollowings =  followings
       // console.log(req.query.page)
 
       // switch for pages, including '', reply, like
       let data = null
+      req.query.page = req.query.page ? req.query.page : ''
       if (req.query.page === '') {
         data = tweets.map(tweet => ({
           ...tweet.dataValues,
@@ -141,8 +144,9 @@ module.exports = {
         FollowingsLength: user.dataValues.Followings.length,
         tweetsLength: tweets.length,
         data: data,
-        followings: followings,
-        page: req.query.page
+        sidebarFollowings,
+        page: req.query.page,
+        selfUser
       })
     })
   },
@@ -261,12 +265,14 @@ module.exports = {
   getEdit: (req, res) => {
     const id = req.params.id
     const userId = helper.getUser(req).id
+    const selfUser = helper.getUser(req)
     axios.get(`http://localhost:3000/api/users/${id}?userId=${userId}`).then(function (response) {
       const data = response.data
-      res.render('edit', { data })
+      res.render('edit', { data, selfUser })
     })
   },
   putUserInfo: (req, res) => {
+    const selfUser = helper.getUser(req)
     const { account, name, email, password, confirmPassword } = req.body
     const data = {
       id: req.params.id,
@@ -285,7 +291,7 @@ module.exports = {
       console.log('password error')
     }
     if (errors.length) {
-      return res.render('edit', { data, errors })
+      return res.render('edit', { data, errors, selfUser })
     }
     User.findByPk(data.id).then(user => {
       user.update(data)
