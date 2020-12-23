@@ -3,7 +3,8 @@ const helpers = require('../_helpers')
 module.exports = {
   authenticatedUser: (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === "") { return next() }
+      const role = helpers.getUser(req).role || ""
+      if (role === "" ) { return next() }
       req.flash('error_messages', '管理者帳號後台登入')
       return res.redirect('/admin/tweets')
     }

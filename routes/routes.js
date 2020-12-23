@@ -43,16 +43,17 @@ router.post('/user/followship/:id', authenticatedUser, userController.postUserFo
 router.delete('/user/followship/:id', authenticatedUser, userController.deleteUserFollowShip)
 
 // for test api followship
-router.post('/followships', userController.postFollowShips_json)
-router.delete('/followships/:id', userController.deleteFollowShips_json)
+router.post('/followships', authenticatedUser, userController.postFollowShips_json)
+router.delete('/followships/:id', authenticatedUser, userController.deleteFollowShips_json)
 
 // for test api user
-router.get('/users/:id/tweets', userController.getUserTweets)
+router.get('/users/:id/tweets', authenticatedUser, userController.getUserTweets)
 
 /// ////
 // tweet
 /// ////
 router.get('/tweets', authenticatedUser, twitterController.getTwitters)
+router.get('/tweets/:id', authenticatedUser, twitterController.getTwitters)
 router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
 router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)
 
