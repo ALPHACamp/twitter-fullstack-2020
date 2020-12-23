@@ -4,16 +4,17 @@
     <div class="titleContainer">
       <h1>Home</h1>
     </div>
-    <div class="postFormContainer">
+    <form class="postFormContainer" action="/tweets" method="POST">
       <div class="userImageContainer">
         <img src="{{user.avatar}}" alt="User's profile picture" />
       </div>
       <div class="textareaContainer">
-        <textarea id="postTextarea" placeholder="有什麼新鮮事?"></textarea>
+        <textarea id="postTextarea" name="description" placeholder="有什麼新鮮事?"></textarea>
+        <input type="hidden" name="userId" value="{{user.id}}" />
         <div class="buttonsContainer"><button id="submitPostButton">Post</button>
         </div>
       </div>
-    </div>
+    </form>
     {{#each tweets}}
     <div class='post'>
 

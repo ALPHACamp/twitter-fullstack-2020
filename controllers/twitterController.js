@@ -24,6 +24,9 @@ const twitterController = {
         res.sendStatus(400)
       })
   },
+  createTwitters: (req, res, next) => {
+    console.log(req)
+  },
 
   postTwitters_thumbs_up: (req, res) => {
     tweetId = req.params.id
