@@ -237,13 +237,17 @@ const userController = {
   },
 
   postUserFollowShip: (req, res) => {
-    Followship.create({
-      followerId: req.user.id,
-      followingId: req.params.id
-    })
-      .then(user => {
-        return res.redirect('back')
+    if (Number(req.user.id) !== Number(req.params.id)) {
+      return res.redirect('back')
+    } else {
+      Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.id
       })
+        .then(user => {
+          return res.redirect('back')
+        })      
+    }
   },
 
   deleteUserFollowShip: (req, res) => {
