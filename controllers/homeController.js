@@ -59,11 +59,18 @@ module.exports = {
             account,
             name,
             email,
-            password: hash
+            password: hash,
+            role: 'user'
           }))
           .then(user => res.redirect('/signin'))
           .catch(err => console.log(err))
       })
+  },
+
+  logout: (req, res) => {
+    req.flash('success_msg', 'logout successfully!')
+    req.logout()
+    res.redirect('/signin')
   },
 
   addFollowing: (req, res) => {
@@ -79,15 +86,14 @@ module.exports = {
   },
 
   removeFollowing: (req, res) => {
-    return Followship.findOne({
+    return Followship.destroy({
       where: {
         followerId: helper.getUser(req).id,
         followingId: req.params.id
       }
     })
       .then(followship => {
-        followship.destroy()
-          .then(followship => res.redirect('back'))
+        res.redirect('back')
       })
   }
 }
