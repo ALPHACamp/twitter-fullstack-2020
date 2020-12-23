@@ -3,7 +3,6 @@ const Op = Sequelize.Op;
 const axios = require('axios')
 const helpers = require('../_helpers')
 
-
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User // input the user schema
@@ -316,12 +315,16 @@ const userController = {
     })
   },
 
+  /// ///////////
+  // FollowShip API
+  /// ///////////
   postFollowShips_json: (req, res, callback) => {
-    if (Number(1) === Number(req.body.id)) {
+    const id = helpers.getUser(req).id
+    if (Number(id) === Number(req.body.id)) {
       return res.status(200).json({ status: 'error',  message: "you can't follow yourself." })
     } else {
       Followship.create({
-        followerId: 1,
+        followerId: id,
         followingId: req.body.id
       })
         .then(user => {
@@ -331,8 +334,9 @@ const userController = {
   },
 
   deleteFollowShips_json: (req, res, callback) => {
+    const id = helpers.getUser(req).id
     Followship.findOne({
-      where: { followerId: 1, followingId: req.params.id }
+      where: { followerId: id, followingId: req.params.id }
     }).then(followship => {
       if (followship) {
         followship.destroy()
@@ -340,8 +344,19 @@ const userController = {
       } else {
         return res.json({ status: 'error', message: "there are no data." })       
       }
-
     })
+  },
+
+  /// ///////////
+  // User API
+  /// ///////////
+  getUserTweets: (req, res, callback) => {
+    User.findByPk(req.params.id, {
+      include: [{ model: Tweet }]
+    })
+      .then(user => {
+        return res.status(200).json({ status: 'success', message: "tweets", user:user })   
+      })
   }
 
 }

@@ -9,7 +9,8 @@
     "test_model": "set \"NODE_ENV=test\" && mocha test/models/*.js --exit --recursive --timeout 5000",
     "test_login": "set \"NODE_ENV=test\" && mocha test/requests/login*.js --exit --recursive --timeout 5000",
     "test_admin": "set \"NODE_ENV=test\" && mocha test/requests/admin/*.js --exit --recursive --timeout 5000",
-    "test_followship": "set \"NODE_ENV=test\" && mocha test/requests/followship*.js --exit --recursive --timeout 5000"
+    "test_followship": "set \"NODE_ENV=test\" && mocha test/requests/followship*.js --exit --recursive --timeout 5000",
+    "test_user": "set \"NODE_ENV=test\" && mocha test/requests/user*.js --exit --recursive --timeout 5000"
   },
   "author": "",
   "license": "ISC",
