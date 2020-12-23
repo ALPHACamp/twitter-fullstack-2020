@@ -11,6 +11,7 @@ const twitterController = {
       include: [User],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
+      // console.log('tweets result', tweets)
       tweets = tweets.map(tweet => ({
         ...tweet,
         description: tweet.description.substring(0, 50)
