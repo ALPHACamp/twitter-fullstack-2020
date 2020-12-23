@@ -10,6 +10,7 @@ const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 
 const db = require('../models')
+const reply = require('../models/reply')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -102,8 +103,12 @@ module.exports = {
       Like.findAll({
         where: { UserId: req.params.id },
         include: [User, { model: Tweet, include: [User, Reply, Like] }],
+      }),
+      Reply.findAll({
+        where: { UserId: req.params.id },
+        include: [{ model: Tweet, include: [User] }]
       })
-    ]).then(([user, tweets, followings, likedTweets]) => {
+    ]).then(([user, tweets, followings, likedTweets, replies]) => {
 
       followings = JSON.parse(JSON.stringify(followings))
       followings.sort((a, b) => b.Followers.length - a.Followers.length)
@@ -113,8 +118,8 @@ module.exports = {
         isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
       }))
       followings = followings.filter(user => user.id !== selfUser.id)
-      sidebarFollowings =  followings
-      // console.log(req.query.page)
+      sidebarFollowings = followings
+      console.log(req.query.page)
 
       // switch for pages, including '', reply, like
       let data = null
@@ -127,7 +132,9 @@ module.exports = {
           User: tweet.User.dataValues,
           isLike: tweet.Likes.map(d => d.UserId).includes(Number(req.params.id)),
         }))
-      } else if (req.query.page === 'like') {
+      }
+
+      if (req.query.page === 'like') {
         data = likedTweets.map(like => ({
           ...like.dataValues,
           User: like.Tweet.dataValues.User.dataValues,
@@ -136,6 +143,15 @@ module.exports = {
           description: like.Tweet.dataValues.description,
           isLike: true,
         }))
+      }
+
+      if (req.query.page === 'reply') {
+        data = replies.map(reply => ({
+          ...reply.dataValues,
+          ...reply.Tweet.dataValues,
+          User: reply.Tweet.dataValues.User.dataValues,
+        }))
+        console.log(replies)
       }
 
       return res.render('profile', {
@@ -262,6 +278,7 @@ module.exports = {
       return res.redirect(`/users/${req.params.id}`)
     })
   },
+
   getEdit: (req, res) => {
     const id = req.params.id
     const userId = helper.getUser(req).id
@@ -271,6 +288,7 @@ module.exports = {
       res.render('edit', { data, selfUser })
     })
   },
+
   putUserInfo: (req, res) => {
     const selfUser = helper.getUser(req)
     const { account, name, email, password, confirmPassword } = req.body
