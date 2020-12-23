@@ -59,7 +59,8 @@ module.exports = {
             account,
             name,
             email,
-            password: hash
+            password: hash,
+            role: 'user'
           }))
           .then(user => res.redirect('/signin'))
           .catch(err => console.log(err))
