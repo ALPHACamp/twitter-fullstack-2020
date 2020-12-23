@@ -66,6 +66,12 @@ module.exports = {
       })
   },
 
+  logout: (req, res) => {
+    req.flash('success_msg', 'logout successfully!')
+    req.logout()
+    res.redirect('/signin')
+  },
+
   addFollowing: (req, res) => {
     if (helper.getUser(req).id === Number(req.body.id)) {
       return res.redirect(200, 'back')
