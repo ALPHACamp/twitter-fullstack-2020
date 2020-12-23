@@ -14,10 +14,15 @@ const userController = {
   //////////////
 
   userProfile: (req, res) => {
+    const user_id = helpers.getUser(req).id
     const id = req.params.id
-    User.findByPk(id)
-      .then(user => res.json(user))
-      .catch(err => console.log(err))
+    if (Number(user_id) !== Number(id)) {
+      return res.json({status: "error", message: "You don't have permission!"})
+    } else {
+      User.findByPk(id)
+        .then(user => res.json(user))
+        .catch(err => console.log(err))      
+    }
   },
 
   updateProfile: (req, res) => {

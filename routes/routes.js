@@ -42,15 +42,22 @@ router.get('/user/followship/:id', authenticatedUser, userController.getUserFoll
 router.post('/user/followship/:id', authenticatedUser, userController.postUserFollowShip)
 router.delete('/user/followship/:id', authenticatedUser, userController.deleteUserFollowShip)
 
-// for test api
-router.post('/followships', userController.postFollowShips_json)
-router.delete('/followships/:id', userController.deleteFollowShips_json)
+// for test api followship
+router.post('/followships', authenticatedUser, userController.postFollowShips_json)
+router.delete('/followships/:id', authenticatedUser, userController.deleteFollowShips_json)
+
+// for test api user
+router.get('/users/:id/tweets', authenticatedUser, userController.getUserTweets)
+router.get('/users/:id/followings', authenticatedUser, userController.getUserFollowings)
+router.get('/users/:id/followers', authenticatedUser, userController.getUserFollowers)
+router.get('/users/:id/likes', authenticatedUser, userController.getUserLikes)
 
 /// ////
 // tweet
 /// ////
 router.get('/tweets', authenticatedUser, twitterController.getTwitters)
 router.post('/tweets', authenticatedUser, twitterController.createTwitters)
+router.get('/tweets/:id', authenticatedUser, twitterController.getTwitter)
 router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
 router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)
 

@@ -3,7 +3,6 @@ const Op = Sequelize.Op;
 const axios = require('axios')
 const helpers = require('../_helpers')
 
-
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User // input the user schema
@@ -316,12 +315,16 @@ const userController = {
     })
   },
 
+  /// ///////////
+  // FollowShip API
+  /// ///////////
   postFollowShips_json: (req, res, callback) => {
-    if (Number(1) === Number(req.body.id)) {
+    const id = helpers.getUser(req).id
+    if (Number(id) === Number(req.body.id)) {
       return res.status(200).json({ status: 'error',  message: "you can't follow yourself." })
     } else {
       Followship.create({
-        followerId: 1,
+        followerId: id,
         followingId: req.body.id
       })
         .then(user => {
@@ -331,8 +334,9 @@ const userController = {
   },
 
   deleteFollowShips_json: (req, res, callback) => {
+    const id = helpers.getUser(req).id
     Followship.findOne({
-      where: { followerId: 1, followingId: req.params.id }
+      where: { followerId: id, followingId: req.params.id }
     }).then(followship => {
       if (followship) {
         followship.destroy()
@@ -340,10 +344,62 @@ const userController = {
       } else {
         return res.json({ status: 'error', message: "there are no data." })       
       }
-
     })
-  }
+  },
 
+  /// ///////////
+  // User API
+  /// ///////////
+  getUserTweets: (req, res, callback) => {
+    User.findByPk(req.params.id, {
+      include: [{ model: Tweet }]
+    })
+      .then(user => {
+        return res.status(200).json({ status: 'success', message: "tweets", user:user })   
+      })
+  },
+
+  getUserFollowings: async (req, res, callback) => {
+    let profileUser = await User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet },
+        { model: User, as: 'Followers', include: [{ model: User, as: 'Followers' }] },
+        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] }
+      ]
+    })
+    profileUser = profileUser.dataValues
+    profileUser.Followings = profileUser.Followings.map(following => ({
+      ...following.dataValues,
+      relate: following.Followings.map(d => d.dataValues.id).includes(profileUser.id)
+      })
+    )
+    profileUser.Followings = profileUser.Followings.sort((a, b) => b.updatedAt - a.updatedAt)
+    return res.status(200).json({ status: 'success', message: "", profileUser:profileUser })   
+  },
+
+  getUserFollowers: async (req, res, callback) => {
+    let profileUser = await User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet },
+        { model: User, as: 'Followers', include: [{ model: User, as: 'Followers' }] },
+        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] }
+      ]
+    })
+    profileUser = profileUser.dataValues
+    profileUser.Followers = profileUser.Followers.map(follower => ({
+      ...follower.dataValues,
+      relate: follower.Followers.map(d => d.dataValues.id).includes(profileUser.id)
+      })
+    )
+    profileUser.Followers = profileUser.Followers.sort((a, b) => b.updatedAt - a.updatedAt)
+    return res.status(200).json({ status: 'success', message: "", profileUser:profileUser })   
+  },
+  getUserLikes : async (req, res, callback) => {
+    let likedTweets = await Like.findAll({
+      include: [Tweet]
+    })
+    return res.status(200).json({ status: 'success', message: "", likedTweets:likedTweets })   
+  }
 }
 
 module.exports = userController
