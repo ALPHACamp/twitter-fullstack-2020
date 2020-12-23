@@ -1,18 +1,56 @@
-<div class="row ms-4 mb-4" style="width: 2em; height: 2em; color: #FF6600;">
-  <i class="fas fa-4x fa-at"></i>
-</div>
-<br />
-<div class="btn-group-vertical mt-4  ps-4">
-  <a type="button" class="btn" href="/" style="height: 4em;text-align: left;">
-    <i class="fas fa-2x fa-home"> 首頁</i>
-  </a>
-  <a type="button" class="btn" href="/users/{{user.id}}" style="height: 4em;text-align: left;">
-    <i class="far fa-2x fa-user"> 個人資料</i>
-  </a>
-  <a type=" button" class="btn" href="/users/{{user.id}}/edit" style="height: 4em;text-align: left;">
-    <i class="fas fa-2x fa-cog"> 設定</i>
-  </a>
-</div>
-<br />
-<br />
-<button type="" class="edit" style="width: 98%;font-size:3em; background-color:#FF6600; color:white;">推文</button>
+<li class="list-group-item row" style="height: 100%;">
+  <div>
+    <div class=" row ">
+      <a href="/tweets">
+        <img src="https://lighthouse.alphacamp.co/images/logo-simple.jpg" alt="" style="width: 4rem;">
+      </a>
+    </div>
+    <br />
+    <div class="btn-group-vertical  mt-4  ps-4">
+      <a type="button" class="btn " href="/tweets" style="height: 4em;text-align: left;">
+        <i class="fas fa-2x fa-home"> 首頁</i>
+      </a>
+      <a type="button" class="btn" href="/users/{{user.id}}/tweets" style="height: 4em;text-align: left;">
+        <i class="far fa-2x fa-user"> 個人資料</i>
+      </a>
+      <a type=" button" class="btn" href="/users/{{user.id}}/edit" style="height: 4em;text-align: left;">
+        <i class="fas fa-2x fa-cog"> 設定</i>
+      </a>
+      <button type="" class="btn btn-primary rounded-pill mt-5" data-bs-toggle="modal" data-bs-target="#tweet-{{selfUser.id}}"
+        style="width: 80%;">推文</button>
+    </div>
+  </div>
+  <a href="logout" class="btn  rounded-pill"
+    style="position: absolute; bottom:0px; font-size: 1.5rem; text-align: center;"><i
+      class="fas fa-sign-out-alt"></i><strong class="ms-2">登出</strong></a>
+</li>
+
+{{!-- modal --}}
+<form action="/tweets" method="POST">
+  <div class="modal fade" id="tweet-{{selfUser.id}}" tabindex="-1" aria-labelledby="tweet-{{this.id}}Label"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+
+        <div class="modal-body d-flex flex-row row">
+          <div class="row mt-3">
+            <div class="col-2">
+              <img class="rounded-circle" src="{{selfUser.avatar}}" alt="" width="50px" height="50px">
+            </div>
+            <div class="col-10">
+              <textarea name="description" id="description" style="resize:none; border: 0px; width: 100%; height: 100%;"
+                placeholder="有什麼新鮮事"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary rounded-pill">推文</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
