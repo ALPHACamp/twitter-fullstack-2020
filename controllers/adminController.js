@@ -12,9 +12,9 @@ module.exports = {
   },
 
   getTweets: (req, res) => {
-    Tweet.findAll({ include: [User] }).then(tweets => {
+    Tweet.findAll({ include: [User], raw: true, nest: true }).then(tweets => {
       tweets = tweets.map((t, _) => ({
-        ...t.dataValues,
+        ...t,
         description: t.description.substring(0, 50)
       }))
 
@@ -49,6 +49,8 @@ module.exports = {
           NumberOfFollowers: user.Followers.length,
           NumberOfFollowings: user.Followings.length
         }))
+
+        users.sort((a, b) => b.NumberOfTweets - a.NumberOfTweets)
 
         res.render('admin/users', {
           users
