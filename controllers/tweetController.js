@@ -10,6 +10,7 @@ const Reply = db.Reply
 
 module.exports = {
     getTweets: (req, res) => {
+        const selfUser = helper.getUser(req)
         Tweet.findAll({ include: [User, Like, Reply], order: [['createdAt', 'DESC']] }).then(tweets => {
             tweets = JSON.parse(JSON.stringify(tweets))
             const userLiked = helper.getUser(req).Likes ? helper.getUser(req).Likes.map(d => d.TweetId) : []
@@ -19,11 +20,12 @@ module.exports = {
                 countReplies: tweet.Replies.length,
                 isLike: userLiked.includes(tweet.id)
             }))
-            res.render('tweets', { data: data })
+            res.render('tweets', { data, selfUser })
         })
     },
     getReply: (req, res) => {
         const id = req.params.id
+        const selfUser = helper.getUser(req)
         Tweet.findByPk(id, { include: [User, { model: Reply, include: [User], raw: true }, Like] }).then(tweet => {
             tweet = tweet.toJSON()
             const userLiked = helper.getUser(req).Likes ? helper.getUser(req).Likes.map(d => d.TweetId) : []
@@ -33,7 +35,7 @@ module.exports = {
                 countReplies: tweet.Replies.length,
                 isLike: userLiked.includes(tweet.id)
             }
-            res.render('tweet', { data })
+            res.render('tweet', { data, selfUser })
         })
     },
     postTweets: (req, res) => {

@@ -81,6 +81,7 @@ module.exports = {
   },
 
   getUser: (req, res) => {
+    const selfUser = helper.getUser(req)
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
@@ -116,6 +117,7 @@ module.exports = {
 
       // switch for pages, including '', reply, like
       let data = null
+      req.query.page = req.query.page ? req.query.page : '' 
       if (req.query.page === '') {
         data = tweets.map(tweet => ({
           ...tweet.dataValues,
@@ -142,7 +144,8 @@ module.exports = {
         tweetsLength: tweets.length,
         data: data,
         followings: followings,
-        page: req.query.page
+        page: req.query.page,
+        selfUser
       })
     })
   },
@@ -261,12 +264,14 @@ module.exports = {
   getEdit: (req, res) => {
     const id = req.params.id
     const userId = helper.getUser(req).id
+    const selfUser = helper.getUser(req)
     axios.get(`http://localhost:3000/api/users/${id}?userId=${userId}`).then(function (response) {
       const data = response.data
-      res.render('edit', { data })
+      res.render('edit', { data, selfUser })
     })
   },
   putUserInfo: (req, res) => {
+    const selfUser = helper.getUser(req)
     const { account, name, email, password, confirmPassword } = req.body
     const data = {
       id: req.params.id,
@@ -285,7 +290,7 @@ module.exports = {
       console.log('password error')
     }
     if (errors.length) {
-      return res.render('edit', { data, errors })
+      return res.render('edit', { data, errors, selfUser })
     }
     User.findByPk(data.id).then(user => {
       user.update(data)
