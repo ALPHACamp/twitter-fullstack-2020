@@ -15,8 +15,6 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 
-
-
 // -----------------------------------------------------------------------------------
 
 module.exports = {
@@ -107,17 +105,15 @@ module.exports = {
       })
     ]).then(([user, tweets, followings, likedTweets]) => {
 
-      followings = followings.map(user => ({
-        ...user.dataValues,
-        isFollowed: user.Followers.map(d => d.id).includes(Number(req.params.id))
-      }))
-      followings = followings.filter(user => user.role !== "admin")
-      followings = followings.filter(user => user.id !== Number(req.params.id))
+      followings = JSON.parse(JSON.stringify(followings))
+      followings.sort((a, b) => b.Followers.length - a.Followers.length)
+      followings.slice(0, 10)
+      sidebarFollowings =  followings
       // console.log(req.query.page)
 
       // switch for pages, including '', reply, like
       let data = null
-      req.query.page = req.query.page ? req.query.page : '' 
+      req.query.page = req.query.page ? req.query.page : ''
       if (req.query.page === '') {
         data = tweets.map(tweet => ({
           ...tweet.dataValues,
@@ -143,7 +139,7 @@ module.exports = {
         FollowingsLength: user.dataValues.Followings.length,
         tweetsLength: tweets.length,
         data: data,
-        followings: followings,
+        sidebarFollowings,
         page: req.query.page,
         selfUser
       })
