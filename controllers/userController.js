@@ -10,7 +10,6 @@ const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 
 const db = require('../models')
-const reply = require('../models/reply')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -119,7 +118,7 @@ module.exports = {
       }))
       followings = followings.filter(user => user.id !== selfUser.id)
       sidebarFollowings = followings
-      console.log(req.query.page)
+      // console.log(req.query.page)
 
       // switch for pages, including '', reply, like
       let data = null
