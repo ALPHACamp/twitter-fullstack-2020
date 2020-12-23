@@ -3,6 +3,7 @@ const passport = require('../config/passport')
 const db = require('../models')
 const user = require('../models/user')
 const { User, Tweet, Reply, Like } = db
+const pageLimit = 10
 
 // JWT
 const jwt = require('jsonwebtoken')
@@ -19,17 +20,25 @@ const adminController = {
     res.redirect('/admin/tweets')
   },
   getTweets: (req, res) => {
-    Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User],
-      order: [['createdAt', 'DESC']]
-    }).then(tweets => {
-      tweets = tweets.map(tweet => ({
-        ...tweet,
-        description: tweet.description.substring(0, 50)
+    let offset = 0
+
+    if (req.query.page) {
+      offset = (Number(req.query.page) - 1) * pageLimit
+    }
+    Tweet.findAndCountAll({
+      include: [User], raw: true, nest: true, order: [['createdAt', 'DESC']], offset: offset, limit: pageLimit
+    }).then(result => {
+      const page = Number(req.query.page) || 1
+      const pages = Math.ceil(result.count / pageLimit)
+      const totalPages = Array.from({ length: pages }).map((item, index) => index + 1)
+      const prev = page - 1 <= 0 ? 1 : page - 1
+      const next = page + 1 > pages ? pages : page + 1
+      const tweets = result.rows.map(t => ({
+        ...t,
+        description: t.description.substring(0, 50),
+        User: t.User
       }))
-      return res.render('admin/tweets', { tweets: tweets })
+      return res.render('admin/tweets', { tweets, totalPages, prev, next, page })
     }
     )
   },
