@@ -1,5 +1,6 @@
 const db = require('../models')
 const { User, Like, Tweet, Reply } = db
+const helpers = require('../_helpers')
 
 const twitterController = {
   getTwitters: (req, res) => {
@@ -63,6 +64,21 @@ const twitterController = {
       .then((tweet) => {
         res.render('replies', { tweet: tweet.toJSON() })
       }).catch(err => console.log(err))
+  },
+  postReply: (req, res) => {
+    const tweetId = req.params.id
+    const comment = req.body.comment
+    if (!comment) {
+      req.flash('error_messages', '內容不能為空白')
+      return res.redirect('back')
+    }
+    return Reply.create({
+      TweetId: tweetId,
+      UserId: helpers.getUser(req).id,
+      comment: req.body.comment
+    }).then(reply => {
+      res.redirect('back')
+    })
   }
 }
 
