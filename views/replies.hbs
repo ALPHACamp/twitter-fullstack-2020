@@ -1,0 +1,24 @@
+<div class="">推文</div>
+<div class="">推文者的圖片:
+  <img src="{{tweet.User.avatar}}" alt="">
+</div>
+<div class="">推文這的帳號: {{tweet.User.account}}</div>
+<div class="">推文時間:{{moment tweet.User.createdAt}}</div>
+<div class="">推文內容:{{tweet.description}}</div>
+<br />
+<div class="">
+  <h2>回文者內容</h2>
+</div>
+{{#each tweet.Replies}}
+<div class="">回文者的圖片:
+  <img src="{{this.User.avatar}}" alt="">
+</div>
+<div class="">回文這的帳號:{{this.User.account}}</div>
+<div class="">回文時間:{{this.createdAt}}</div>
+<div class="">回文內容:{{this.comment}}</div>
+{{/each}}
+<br />
+<div class="">使用者</div>
+<div class="">使用者的頭像:
+  <img src="{{user.avatar}}" alt="">
+</div>

@@ -48,5 +48,6 @@ router.delete('/user/followship/:id', authenticatedUser, userController.deleteUs
 router.get('/tweets', authenticatedUser, twitterController.getTwitters)
 router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
 router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)
+router.get('/tweets/:id/replies', authenticatedUser, twitterController.getReplies)
 
 module.exports = router

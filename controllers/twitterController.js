@@ -1,6 +1,5 @@
 const db = require('../models')
-const User = db.User //input the user schema
-const Like = db.Like
+const { User, Like, Tweet, Reply } = db
 
 const twitterController = {
   getTwitters: (req, res) => {
@@ -58,7 +57,14 @@ const twitterController = {
       }
     })
   },
+  getReplies: (req, res) => {
+    const tweetId = req.params.id
 
+    Tweet.findByPk(tweetId, { include: [{ model: Reply, include: [User] }, User] })
+      .then((tweet) => {
+        res.render('replies', { tweet: tweet.toJSON() })
+      }).catch(err => console.log(err))
+  }
 }
 
 module.exports = twitterController
