@@ -42,6 +42,10 @@ router.get('/user/followship/:id', authenticatedUser, userController.getUserFoll
 router.post('/user/followship/:id', authenticatedUser, userController.postUserFollowShip)
 router.delete('/user/followship/:id', authenticatedUser, userController.deleteUserFollowShip)
 
+// for test api
+router.post('/followships', userController.postFollowShips_json)
+router.delete('/followships/:id', userController.deleteFollowShips_json)
+
 /// ////
 // tweet
 /// ////

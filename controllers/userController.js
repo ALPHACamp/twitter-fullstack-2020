@@ -207,57 +207,6 @@ const userController = {
 
   },
 
-  getUserFollowShip: async (req, res) => {
-    let profileUser = await User.findByPk(req.params.id, {
-      include: [
-        { model: Tweet },
-        { model: User, as: 'Followers', include: [{ model: User, as: 'Followers' }] },
-        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] }
-      ]
-    })
-    profileUser = profileUser.dataValues
-
-    const target = req.query.target || 'follower'
-
-    if (target === 'follower') {
-      profileUser.Followers = profileUser.Followers.map(follower => ({
-        ...follower.dataValues,
-        relate: follower.Followers.map(d => d.dataValues.id).includes(profileUser.id)
-      }))
-    }
-
-    if (target === 'following' || target === 'both') {
-      profileUser.Followings = profileUser.Followings.map(following => ({
-        ...following.dataValues,
-        relate: following.Followings.map(d => d.dataValues.id).includes(profileUser.id)
-      }))
-    }
-
-    return res.render('userFollowship', { profileUser, target })
-  },
-
-  postUserFollowShip: (req, res) => {
-    if (Number(req.user.id) !== Number(req.params.id)) {
-      return res.redirect('back')
-    } else {
-      Followship.create({
-        followerId: req.user.id,
-        followingId: req.params.id
-      })
-        .then(user => {
-          return res.redirect('back')
-        })      
-    }
-  },
-
-  deleteUserFollowShip: (req, res) => {
-    Followship.findOne({
-      where: { followerId: req.user.id, followingId: req.params.id }
-    }).then(followship => {
-      followship.destroy()
-      return res.redirect('back')
-    })
-  },
   updateProfile: (req, res) => {
     const { name, introduction } = req.body
     const id = helpers.getUser(req).id
@@ -310,7 +259,91 @@ const userController = {
         user.update({ cover: null })
         return res.redirect(`/user/${id}`)
       }).catch(err => console.log(err))
+  },
+
+  /// ///////////
+  // FollowShip
+  /// ///////////
+  getUserFollowShip: async (req, res) => {
+    let profileUser = await User.findByPk(req.params.id, {
+      include: [
+        { model: Tweet },
+        { model: User, as: 'Followers', include: [{ model: User, as: 'Followers' }] },
+        { model: User, as: 'Followings', include: [{ model: User, as: 'Followings' }] }
+      ]
+    })
+    profileUser = profileUser.dataValues
+
+    const target = req.query.target || 'follower'
+
+    if (target === 'follower') {
+      profileUser.Followers = profileUser.Followers.map(follower => ({
+        ...follower.dataValues,
+        relate: follower.Followers.map(d => d.dataValues.id).includes(profileUser.id)
+      }))
+    }
+
+    if (target === 'following' || target === 'both') {
+      profileUser.Followings = profileUser.Followings.map(following => ({
+        ...following.dataValues,
+        relate: following.Followings.map(d => d.dataValues.id).includes(profileUser.id)
+      }))
+    }
+
+    return res.render('userFollowship', { profileUser, target })
+  },
+
+  postUserFollowShip: (req, res) => {
+    if (Number(req.user.id) === Number(req.params.id)) {
+      return res.redirect('back')
+    } else {
+      Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.id
+      })
+        .then(user => {
+          return res.redirect('back')
+        })      
+    }
+  },
+
+  deleteUserFollowShip: (req, res) => {
+    Followship.findOne({
+      where: { followerId: req.user.id, followingId: req.params.id }
+    }).then(followship => {
+      followship.destroy()
+      return res.redirect('back')
+    })
+  },
+
+  postFollowShips_json: (req, res, callback) => {
+    if (Number(1) === Number(req.body.id)) {
+      return res.status(200).json({ status: 'error',  message: "you can't follow yourself." })
+    } else {
+      Followship.create({
+        followerId: 1,
+        followingId: req.body.id
+      })
+        .then(user => {
+          return res.status(302).json({ status: 'success', message: ""})
+        })      
+    }
+  },
+
+  deleteFollowShips_json: (req, res, callback) => {
+    Followship.findOne({
+      where: { followerId: 1, followingId: req.params.id }
+    }).then(followship => {
+      if (followship) {
+        followship.destroy()
+        return res.status(302).json({ status: 'success', message: "" })       
+      } else {
+        return res.json({ status: 'error', message: "there are no data." })       
+      }
+
+    })
   }
+
 }
 
 module.exports = userController
