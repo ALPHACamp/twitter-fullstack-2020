@@ -29,10 +29,12 @@
         <div class="col-md-12">
             <div class="d-flex flex-row-reverse">
                 {{#ifcond profileUser.id "===" user.id}}
-                <form action="/user/{{profileUser.id}}/edit" method="GET">
-                    <button class="btn btn-lg btn-block fw-bolder mt-2" type="submit"
-                        style="color:#FF6103; background-color:white; border-radius: 25px; border: 1px solid #FF6103; width:150px; font-size:0.9em;">編輯個人資料</button>
-                </form>
+                {{!-- <form action="/user/{{profileUser.id}}/edit" method="GET">
+                    <-----}} <button class="btn btn-lg btn-block fw-bolder mt-2" type="submit"
+                        style="color:#FF6103; background-color:white; border-radius: 25px; border: 1px solid #FF6103; width:150px; font-size:0.9em;"
+                        data-bs-toggle="modal" data-bs-target="#profileModal">編輯個人資料</button>
+                        {{!--
+                </form> --}}
                 {{else}}
                 {{#if isFollowed}}
                 <form action="/user/followship/{{profileUser.id}}?_method=DELETE" method="POST">
@@ -60,7 +62,6 @@
             </div>
         </div>
     </div>
-
     <ul class="nav nav-tabs mt-2">
         <li class="nav-item">
             <a class="nav-link fw-bolder" href="/user/{{profileUser.id}}?target=tweets" {{#ifcond target "===" "tweets"
@@ -153,5 +154,181 @@
             </div>
         </div>
         {{/each}}
+    </div>
+
+    {{!-- sef-profile modal --}}
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action='/user/{{data.id}}' method="POST">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="header d-flex">
+                            <div class="header-left d-flex">
+                                <button type="button" class="btn-close me-4" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                                <h5 class="modal-title" id="exampleModalLabel">編輯個人檔案</h5>
+                            </div>
+                        </div>
+                        <div class="header-right col-auto"><button type="submit" class="btn"
+                                style="background-color:#FF6103 ; color:antiquewhite">儲存</button></div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="cover">
+                            <div class="cover bg-user"
+                                style="width:100%; height:200px; background-image:url({{data.cover}}); background-size:cover; background-repeat:no-repeat; background-position: center; background-color:#808A87">
+                                <div class="cover-hover">
+                                    <div class="cover-mask text-center d-flex align-items-center justify-content-center"
+                                        style="width:100%; height:200px;background-size:cover;
+                            background-repeat:no-repeat; background-position: center;">
+
+                                        <div class="icon">
+                                            <a class="avatar-hover me-4" role="button" data-bs-toggle="modal"
+                                                data-bs-target="#updateCoverModal"
+                                                style="text-decoration: none ;color: inherit">
+                                                <i class="fas fa-camera"></i>
+                                            </a>
+                                            <a class="avatar-hover" role="button" data-bs-toggle="modal"
+                                                data-bs-target="#deleteCoverModal"
+                                                style="text-decoration: none ; color: inherit">
+                                                <i class="fas fa-times"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="avatar"
+                                    style="position:absolute;left: 30px;top: 140px; width: 120px;height:120px">
+                                    <img src="{{data.avatar}}" alt=""
+                                        style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
+                                    <a class="avatar-hover" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#updateAvatarModal">
+                                        <div class="avatar-mask text-center"
+                                            style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white line-height:120px;">
+                                            <i class="fas fa-camera" style="line-height:120px"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="name-introduction mt-5">
+                                <form>
+                                    <div class="name mb-3">
+                                        <div class="border-bottom border-secondary bg-light">
+                                            <label for="recipient-name" class="col-form-label py-0"
+                                                style="color:#657786;font-size:15px">名稱:</label>
+                                            <input type="text" class="form-control border-0 bg-light"
+                                                id="recipient-name" name="name" value="{{data.name}}">
+                                        </div>
+                                        <div class="text-end mt-0" style="color:#657786;font-size:15px">123/50</div>
+                                    </div>
+                                    <div class="introduction">
+                                        <div class="border-bottom border-secondary bg-light">
+                                            <label for="message-text" class="col-form-label py-0"
+                                                style="color:#657786;font-size:15px">自我介紹:</label>
+                                            <textarea class="form-control border-0 bg-light" id="message-text" rows='3'
+                                                name="introduction">{{data.introduction}}</textarea>
+                                        </div>
+                                        <div class="text-end mt-0" style="color:#657786;font-size:15px">123/160</div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {{!-- sef-profile update-cover modal --}}
+    <div class="modal fade" id="updateAvatarModal" tabindex="-1" role="dialog" aria-labelledby="updateAvatarModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form action='/user/{{data.id}}' method="POST" enctype="multipart/form-data">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div class="header d-flex">
+                            <button type="button" class="btn-close me-4" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            <h5 class="modal-title" id="exampleModalLongTitle">更新大頭貼照</h5>
+                        </div>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="avatar" role="button" class="btn btn-primary">+上傳照片</label>
+                                    <input type="file" class="form-control-file" id="avatar" name="avatar">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 ml-auto"></div>
+                                <div class="col-md-2 ml-auto"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        <button type=" submit" class="btn btn-primary">儲存變更</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{!-- sef-profile update-avatar modal --}}
+<div class="modal fade" id="updateCoverModal" tabindex="-1" role="dialog" aria-labelledby="updateAvatarModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <form action='/user/{{data.id}}' method="POST" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="header d-flex">
+                        <button type="button" class="btn-close me-4" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                        <h5 class="modal-title" id="exampleModalLongTitle">更新封面照</h5>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="cover" role="button" class="btn btn-primary">+上傳照片</label>
+                                <input type="file" class="form-control-file" id="cover" name="cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">儲存變更</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{{!-- sef-profile delete-cover modal --}}
+<div class="modal fade" id="deleteCoverModal" tabindex="-1" role="dialog" aria-labelledby="updateAvatarModalTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="header d-flex">
+                    <button type="button" class="btn-close me-4" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="exampleModalLongTitle">刪除封面</h5>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p>是否確定要刪除封面？</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <form action='/user/{{data.id}}?_method=DELETE' method="POST">
+                    <button type="submit" class="btn btn-primary">確定</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
