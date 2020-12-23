@@ -1,8 +1,6 @@
 const db = require('../models')
-const User = db.User // input the user schema
-const Like = db.Like
-const Tweet = db.Tweet
-const Reply = db.Reply
+const { User, Like, Tweet, Reply } = db
+const helpers = require('../_helpers')
 
 const twitterController = {
   getTwitters: (req, res) => {
@@ -39,7 +37,7 @@ const twitterController = {
     })
       .then(tweet => {
         tweet = tweet.dataValues
-        tweet.tweetLiked    = tweet.Likes.filter(like => like.likeOrNot === true).length
+        tweet.tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
         tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
         return res.render('tweet', { tweet })
       })
@@ -95,8 +93,29 @@ const twitterController = {
           })
       }
     })
+  },
+  getReplies: (req, res) => {
+    const tweetId = req.params.id
+    Tweet.findByPk(tweetId, { include: [{ model: Reply, include: [User] }, User] })
+      .then((tweet) => {
+        res.render('replies', { tweet: tweet.toJSON() })
+      }).catch(err => console.log(err))
+  },
+  postReply: (req, res) => {
+    const tweetId = req.params.id
+    const comment = req.body.comment
+    if (!comment) {
+      req.flash('error_messages', '內容不能為空白')
+      return res.redirect('back')
+    }
+    return Reply.create({
+      TweetId: tweetId,
+      UserId: helpers.getUser(req).id,
+      comment: req.body.comment
+    }).then(reply => {
+      res.redirect('back')
+    })
   }
-
 }
 
 module.exports = twitterController

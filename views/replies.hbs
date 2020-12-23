@@ -1,0 +1,78 @@
+<div class="container-fluid" style="width:55vw">
+  <div class="back mb-1">
+    <a href="javascript:history.back()" style="color:black;"><i class="fas fa-arrow-left"></i></a>
+  </div>
+  <div class="main">
+    <div class="tweet mb-2">
+      <div class="row">
+        <div class="col-auto me-auto d-flex position-relative">
+          <div class="col-auto avatar me-3 d-flex flex-column justify-content-between ">
+            <img src="{{tweet.User.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4;"
+              class="border border-light rounded-circle">
+            <div class="line mt-2" style="height: 100%; position:relative;">
+              <div class="border-start "
+                style=" width: 1px; height:100%; background: #CCD6DD; position:absolute; left:50%">
+              </div>
+            </div>
+          </div>
+          <div class="col-auto content" style="width:45vw">
+            <div class="personAndTime">
+              <div class="name fw-bold" style="display: inline">{{tweet.User.name}}</div>
+              <div class="accountAndTime small" style="display: inline ;color: #657786" ;>
+                @{{tweet.User.account}}．{{moment tweet.User.createdAt}}
+              </div>
+            </div>
+            <div class="description">{{tweet.description}}</div>
+            <div class="reply-account mt-3"><span style="font-size:13px ;color: #657786">回覆給</span> <span
+                style="font-size:13px ;color:#FF6103">@{{tweet.User.account}}</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reply">
+      {{#each tweet.Replies}}
+      <div class="row">
+        <div class="col-auto me-auto d-flex mb-2">
+          <div class="col-auto avatar me-3 d-flex flex-column justify-content-between;">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4;"
+              class="border border-light rounded-circle">
+            <div class="line mt-2" style="height: 100%; position:relative;">
+              <div class="border-start"
+                style=" width: 1px; height:100%; background: #CCD6DD; position:absolute; left:50%">
+              </div>
+            </div>
+          </div>
+          <div class="col-auto content" style="width:45vw">
+            <div class="personAndTime">
+              <div class="name fw-bold" style="display: inline">{{this.User.name}}</div>
+              <div class="accountAndTime small" style="display: inline ;color: #657786" ;>
+                @{{this.User.account}}．{{moment this.createdAt}}
+              </div>
+            </div>
+            <div class="comment">{{this.comment}}</div>
+            <div class="reply-account mt-2"><span style="font-size:13px ;color: #657786">回覆給</span> <span
+                style="font-size:13px ;color:#FF6103">@{{this.User.account}}</span></div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="user">
+      <form action="/tweets/{{tweet.id}}/replies" method="POST">
+        <div class="user-left d-flex">
+          <img src="{{user.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4;"
+            class="border border-light rounded-circle me-3">
+          <div class="user-right">
+            <input type="text" name="comment" value="{{comment}}" class="form-control" placeholder="推你的回覆"
+              aria-label="Username" aria-describedby="addon-wrapping"
+              style="border-radius: 25px ; width:45vw; height:50px;">
+            <div class="d-flex justify-content-end mt-3">
+              <button type="submit" class="btn "
+                style="background:#FF6103; color:antiquewhite; border-radius: 25px">回覆</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
