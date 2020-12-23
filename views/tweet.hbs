@@ -1,4 +1,4 @@
-<div class="col-md-3">
+<div class="col-3">
     {{>nav}}
 </div>
 <div class="col-6">
@@ -74,8 +74,9 @@
         {{/each}}
     </div>
 </div>
+<div class="col-3">
+    {{>followings}}
 </div>
-<div class="col-3"></div>
 <!-- Modal -->
 <form action="/tweets/{{data.id}}/replies" method="POST">
     <div class="modal fade" id="tweet-{{data.id}}" tabindex="-1" aria-labelledby="tweet-{{data.id}}Label"

@@ -1,0 +1,25 @@
+<div class="col ">
+      <ul class="list-group">
+        <li class="list-group-item disabled">跟隨誰</li>
+        {{#each sidebarFollowings}}
+        <li class="list-group-item">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex">
+              <a href="/users/{{this.id}}/tweets">
+                <img class="rounded-circle" src="{{this.avatar}}" alt="" width="50px" height="50px">
+              </a>
+              <div class="ms-2">
+                <div>{{this.name}}</div>
+                <div>@{{this.account}}</div>
+              </div>
+            </div>
+            {{#if this.isFollowed}}
+            <button type="button" class="btn btn-primary rounded-pill">正在跟隨</button>
+            {{else}}
+            <button type="button" class="btn btn-outline-primary rounded-pill">跟隨</button>
+            {{/if}}
+          </div>
+        </li>
+        {{/each}}
+      </ul>
+    </div>

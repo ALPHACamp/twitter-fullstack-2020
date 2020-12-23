@@ -70,31 +70,7 @@
       {{> tweets}}
     </div>
     {{!-- start following --}}
-    <div class="col ps-4">
-      <ul class="list-group">
-        <li class="list-group-item disabled">跟隨誰</li>
-        {{#each followings}}
-        <li class="list-group-item">
-          <div class="d-flex justify-content-between">
-            <div class="d-flex">
-              <a href="/users/{{this.User.id}}/tweets">
-                <img class="rounded-circle" src="{{this.avatar}}" alt="" width="50px" height="50px">
-              </a>
-              <div class="ms-2">
-                <div>{{this.name}}</div>
-                <div>@{{this.account}}</div>
-              </div>
-            </div>
-            {{#if this.isFollowed}}
-            <button type="button" class="btn-primary">正在跟隨</button>
-            {{else}}
-            <button type="button" class="btn-outline-primary">跟隨</button>
-            {{/if}}
-          </div>
-        </li>
-        {{/each}}
-      </ul>
-    </div>
+    {{> followings}}
     {{!-- end following --}}
   </div>
 </div>

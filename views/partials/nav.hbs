@@ -1,12 +1,11 @@
 <li class="list-group-item row " style="height: 100%; min-height: 500px">
   <div>
-    <div class=" row ">
-      <a href="/tweets">
-        <img src="https://lighthouse.alphacamp.co/images/logo-simple.jpg" alt="" style="width: 4rem;">
-      </a>
-    </div>
-    <br />
+
     <div class="btn-group-vertical  mt-4  ps-4">
+      <a href="/tweets">
+        <img src="https://lighthouse.alphacamp.co/images/logo-simple.jpg" class="mb-5 ms-2" alt=""
+          style=" width:3em">
+      </a>
       <a type="button" class="btn " href="/tweets" style="height: 4em;text-align: left;">
         <i class="fas fa-2x fa-home"> 首頁</i>
       </a>
@@ -16,8 +15,8 @@
       <a type=" button" class="btn" href="/users/{{user.id}}/edit" style="height: 4em;text-align: left;">
         <i class="fas fa-2x fa-cog"> 設定</i>
       </a>
-      <button type="" class="btn btn-primary rounded-pill mt-5" data-bs-toggle="modal" data-bs-target="#tweet-{{selfUser.id}}"
-        style="width: 80%;">推文</button>
+      <button type="" class="btn btn-primary rounded-pill mt-5" data-bs-toggle="modal"
+        data-bs-target="#tweet-{{selfUser.id}}" style="width: 80%;">推文</button>
     </div>
   </div>
   <a href="logout" class="btn  rounded-pill"
