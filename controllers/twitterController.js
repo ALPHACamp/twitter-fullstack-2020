@@ -1,10 +1,27 @@
 const db = require('../models')
-const User = db.User //input the user schema
+const User = db.User // input the user schema
 const Like = db.Like
+const Tweet = db.Tweet
 
 const twitterController = {
   getTwitters: (req, res) => {
-    return res.render('tweets')
+    Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: [User],
+      order: [['createdAt', 'DESC']]
+    }).then(tweets => {
+      tweets = tweets.map(tweet => ({
+        ...tweet,
+        description: tweet.description.substring(0, 50)
+      }))
+      return res.status(200).render('tweets', { tweets: tweets })
+    }
+    )
+      .catch(error => {
+        console.log(error)
+        res.sendStatus(400)
+      })
   },
 
   postTwitters_thumbs_up: (req, res) => {
@@ -57,7 +74,7 @@ const twitterController = {
           })
       }
     })
-  },
+  }
 }
 
 module.exports = twitterController
