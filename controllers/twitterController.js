@@ -25,7 +25,18 @@ const twitterController = {
       })
   },
   createTwitters: (req, res, next) => {
-    console.log(req)
+    const description = req.body.description
+    const UserId = req.user.id
+    Tweet.create({
+      UserId, description
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+      .catch(error => {
+        console.log('createTwitter is error', error)
+        res.sendStatus(400)
+      })
   },
 
   postTwitters_thumbs_up: (req, res) => {
