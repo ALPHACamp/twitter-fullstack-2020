@@ -7,14 +7,6 @@ const Tweet = db.Tweet
 const User = db.User
 const Like = db.Like
 const Reply = db.Reply
-function getFollowings() {
-    User.findAll({ include: [{ model: User, as: 'Followers' }] }).then(users => {
-        users = JSON.parse(JSON.stringify(users))
-        users.sort((a, b) => b.Followers.length - a.Followers.length)
-        users.slice(0, 10)
-        return users
-    })
-}
 
 
 
