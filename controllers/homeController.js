@@ -88,8 +88,10 @@ module.exports = {
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
-        followerId: helper.getUser(req).id,
-        followingId: req.params.id
+        [Op.and]: [
+          { followerId: helper.getUser(req).id },
+          { followingId: req.params.id }
+        ]
       }
     })
       .then(followship => {
