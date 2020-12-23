@@ -7,26 +7,34 @@
     <i class="fas fa-dove"></i>
   </div>
   <div class="row fw-bolder py-2">
-    <a href="/tweets" style="color: black; text-decoration:none;" onmouseover="this.style='color:#FF6103;text-decoration:none;';" onmouseout="this.style='color:black;text-decoration:none;';">
+    <a href="/tweets" style="color: black; text-decoration:none;"
+      onmouseover="this.style='color:#FF6103;text-decoration:none;';"
+      onmouseout="this.style='color:black;text-decoration:none;';">
       <i class="fas fa-home"></i>　首頁
     </a>
   </div>
   <div class="row fw-bolder py-2">
-    <a href="/user/{{user.id}}" style="color: black; text-decoration:none;" onmouseover="this.style='color:#FF6103;text-decoration:none;';" onmouseout="this.style='color:black;text-decoration:none;';">
+    <a role="button" style="color: black; text-decoration:none;"
+      onmouseover="this.style='color:#FF6103;text-decoration:none;';"
+      onmouseout="this.style='color:black;text-decoration:none" ; data-bs-toggle="modal" data-bs-target="#profileModal">
       <i class="fas fa-user"></i>　個人資料
     </a>
   </div>
   <div class="row fw-bolder py-2">
-    <a href="/user/setting" style="color: black; text-decoration:none;" onmouseover="this.style='color:#FF6103;text-decoration:none;';" onmouseout="this.style='color:black;text-decoration:none;';">
+    <a href="/user/setting" style="color: black; text-decoration:none;"
+      onmouseover="this.style='color:#FF6103;text-decoration:none;';"
+      onmouseout="this.style='color:black;text-decoration:none;';">
       <i class="fas fa-cog"></i>　設定
     </a>
   </div>
 
   <button class="btn btn-lg btn-block fw-bolder my-2 py-1 w-75" type="submit"
-      style="font-size: 14px; color:white; background-color:#FF6103; border-radius: 25px;">發文</button>
+    style="font-size: 14px; color:white; background-color:#FF6103; border-radius: 25px;">發文</button>
 
   <div class="row fw-bolder mt-auto mb-3">
-    <a href="/logout" style="color: black; text-decoration:none;" onmouseover="this.style='color:#FF6103;text-decoration:none;';" onmouseout="this.style='color:black;text-decoration:none;';">
+    <a href="/logout" style="color: black; text-decoration:none;"
+      onmouseover="this.style='color:#FF6103;text-decoration:none;';"
+      onmouseout="this.style='color:black;text-decoration:none;';">
       <i class="fas fa-sign-out-alt"></i>　登出
     </a>
   </div>

@@ -1,5 +1,8 @@
-const Sequelize = require('sequelize')
-const Op = Sequelize.Op
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+const axios = require('axios')
+const helpers = require('../_helpers')
+
 
 const bcrypt = require('bcryptjs')
 const db = require('../models')
@@ -8,6 +11,12 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
+
+const fs = require('fs')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
   //////////////
@@ -182,9 +191,79 @@ const userController = {
       profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.latestLiketime - a.latestLiketime)
     }
 
-    return res.render('userProfile', { profileUser, isFollowed, target })
+    const id = helpers.getUser(req).id
+
+    axios.get(`http://localhost:3000/api/users/${id}`)
+      .then(function (response) {
+        // 1.handle success
+        let data = response.data
+        return data
+      })
+      .catch(function (error) {
+        // 2.handle error
+        console.log(error)
+      })
+      .then(data => { return res.render('userProfile', { profileUser, isFollowed, target, data }) })
+
   },
 
+  updateProfile: (req, res) => {
+    const { name, introduction } = req.body
+    const id = helpers.getUser(req).id
+    const { files } = req
+
+    if (files) {
+      const fieldName = Object.keys(files)[0];
+      let file = ""
+      if (fieldName === 'avatar') {      //判斷檔案是avatar或cover
+        file = files.avatar[0]
+      } else {
+        file = files.cover[0]
+      }
+      imgur.setClientID(process.env.IMGUR_CLIENT_ID);
+      imgur.upload(file.path, (err, img) => {
+        console.log(img)
+        return User.findByPk(id)
+          .then((user) => {
+            user.update({
+              cover: file.fieldname === "cover" ? img.data.link : user.cover,
+              avatar: file.fieldname === "avatar" ? img.data.link : user.avatar,
+              name: user.name,
+              introduction: user.introduction
+            })
+              .then((user) => {
+                return res.redirect(`/user/${id}`)
+              }).catch(err => console.log(err))
+          })
+      })
+    }
+    else {
+      return User.findByPk(id)
+        .then(user => {
+          user.update({
+            cover: user.cover,
+            avatar: user.avatar,
+            name: name ? name : user.name,
+            introduction: introduction ? introduction : user.introduction
+          }).then((user) => {
+            return res.redirect(`/user/${id}`)
+          }).catch(err => console.log(err))
+        })
+    }
+  },
+
+  deleteImage: (req, res) => {
+    const id = helpers.getUser(req).id
+    User.findByPk(id)
+      .then(user => {
+        user.update({ cover: null })
+        return res.redirect(`/user/${id}`)
+      }).catch(err => console.log(err))
+  },
+
+  /// ///////////
+  // FollowShip
+  /// ///////////
   getUserFollowShip: async (req, res) => {
     let profileUser = await User.findByPk(req.params.id, {
       include: [
@@ -215,13 +294,17 @@ const userController = {
   },
 
   postUserFollowShip: (req, res) => {
-    Followship.create({
-      followerId: req.user.id,
-      followingId: req.params.id
-    })
-      .then(user => {
-        return res.redirect('back')
+    if (Number(req.user.id) === Number(req.params.id)) {
+      return res.redirect('back')
+    } else {
+      Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.id
       })
+        .then(user => {
+          return res.redirect('back')
+        })      
+    }
   },
 
   deleteUserFollowShip: (req, res) => {
@@ -231,7 +314,36 @@ const userController = {
       followship.destroy()
       return res.redirect('back')
     })
+  },
+
+  postFollowShips_json: (req, res, callback) => {
+    if (Number(1) === Number(req.body.id)) {
+      return res.status(200).json({ status: 'error',  message: "you can't follow yourself." })
+    } else {
+      Followship.create({
+        followerId: 1,
+        followingId: req.body.id
+      })
+        .then(user => {
+          return res.status(302).json({ status: 'success', message: ""})
+        })      
+    }
+  },
+
+  deleteFollowShips_json: (req, res, callback) => {
+    Followship.findOne({
+      where: { followerId: 1, followingId: req.params.id }
+    }).then(followship => {
+      if (followship) {
+        followship.destroy()
+        return res.status(302).json({ status: 'success', message: "" })       
+      } else {
+        return res.json({ status: 'error', message: "there are no data." })       
+      }
+
+    })
   }
+
 }
 
 module.exports = userController

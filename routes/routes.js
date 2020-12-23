@@ -14,7 +14,7 @@ const { authenticatedUser, authenticatedAdmin, beSigned } = require('../middlewa
 const passport = require('../config/passport')
 const user = require('../models/user.js')
 
-/// ////
+
 // admin
 /// ////
 router.get('/admin/signin', beSigned, adminController.signinPage)
@@ -37,9 +37,15 @@ router.get('/user/setting', authenticatedUser, userController.getSetting)
 router.put('/user/setting', authenticatedUser, userController.updateSetting)
 
 router.get('/user/:id', authenticatedUser, userController.getUserProfile)
+router.post('/user/:id', authenticatedUser, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)
+router.delete('/user/:id', authenticatedUser, userController.deleteImage)
 router.get('/user/followship/:id', authenticatedUser, userController.getUserFollowShip)
 router.post('/user/followship/:id', authenticatedUser, userController.postUserFollowShip)
 router.delete('/user/followship/:id', authenticatedUser, userController.deleteUserFollowShip)
+
+// for test api
+router.post('/followships', userController.postFollowShips_json)
+router.delete('/followships/:id', userController.deleteFollowShips_json)
 
 /// ////
 // tweet
