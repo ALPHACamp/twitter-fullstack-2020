@@ -1,7 +1,7 @@
 <li class="list-group-item row " style="height: 100%; min-height: 500px">
-  <div>
+  <div style="min-height: 700PX;">
 
-    <div class="btn-group-vertical  mt-4  ps-4">
+    <div class="btn-group-vertical  mt-4  ps-4" style="">
       <a href="/tweets">
         <img src="https://lighthouse.alphacamp.co/images/logo-simple.jpg" class="mb-5 ms-2" alt=""
           style=" width:3em">
@@ -15,18 +15,18 @@
       <a type=" button" class="btn" href="/users/{{user.id}}/edit" style="height: 4em;text-align: left;">
         <i class="fas fa-2x fa-cog"> 設定</i>
       </a>
-      <button type="" class="btn btn-primary rounded-pill mt-5" data-bs-toggle="modal"
-        data-bs-target="#tweet-{{selfUser.id}}" style="width: 80%;">推文</button>
+      <button type="" class="btn btn-primary rounded-pill mt-3" data-bs-toggle="modal"
+        data-bs-target="#nav-{{selfUser.id}}" style="width: 80%;">推文</button>
+        <a href="logout" class="btn  rounded-pill mt-5"
+    style=" font-size: 1.5rem; text-align: left;"><i
+      class="fas fa-sign-out-alt"></i><strong class="ms-2">登出</strong></a>
     </div>
   </div>
-  <a href="logout" class="btn  rounded-pill"
-    style="position: absolute; bottom:0px; font-size: 1.5rem; text-align: center;"><i
-      class="fas fa-sign-out-alt"></i><strong class="ms-2">登出</strong></a>
 </li>
 
 {{!-- modal --}}
 <form action="/tweets" method="POST">
-  <div class="modal fade" id="tweet-{{selfUser.id}}" tabindex="-1" aria-labelledby="tweet-{{this.id}}Label"
+  <div class="modal fade" id="nav-{{selfUser.id}}" tabindex="-1" aria-labelledby="tweet-{{this.id}}Label"
     aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

@@ -1,9 +1,9 @@
 <div class="col-3">
     {{>nav}}
 </div>
-<div class="col-6 bg-white list-group-item">
+<div class="col-9 bg-white list-group-item">
     {{> msg}}
-    <div class="row border-bottom  "><h3><strong>帳戶設定</strong></h3></div>
+    <div class="row border-bottom "><h3><strong>帳戶設定</strong></h3></div>
     <form class="row g-3 " action="/users/{{data.id}}?_method=PUT" method="POST">
         <div class="col-md-10">
             <label for="account" class="form-label">帳號</label>

@@ -108,6 +108,11 @@ module.exports = {
       followings = JSON.parse(JSON.stringify(followings))
       followings.sort((a, b) => b.Followers.length - a.Followers.length)
       followings.slice(0, 10)
+      followings = followings.map(user => ({
+        ...user,
+        isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
+      }))
+      followings = followings.filter(user => user.id !== selfUser.id)
       sidebarFollowings =  followings
       // console.log(req.query.page)
 

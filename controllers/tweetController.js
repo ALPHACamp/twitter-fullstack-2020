@@ -21,25 +21,32 @@ function getFollowings() {
 module.exports = {
     getTweets: (req, res) => {
         const selfUser = helper.getUser(req)
-        Promise.all([User.findAll({ include: [{ model: User, as: 'Followers' }] }).then(users => {
-            users = JSON.parse(JSON.stringify(users))
-            users.sort((a, b) => b.Followers.length - a.Followers.length)
-            users.slice(0, 10)
-            return users
-        }), Tweet.findAll({ include: [User, Like, Reply], order: [['createdAt', 'DESC']] }).then(tweets => {
-            tweets = JSON.parse(JSON.stringify(tweets))
-            const userLiked = helper.getUser(req).Likes ? helper.getUser(req).Likes.map(d => d.TweetId) : []
-            const data = tweets.map(tweet => ({
-                ...tweet,
-                countLikes: tweet.Likes.length,
-                countReplies: tweet.Replies.length,
-                isLike: userLiked.includes(tweet.id)
-            }))
-            return data
-        })]).then(([sidebarFollowings, data]) => {
-            console.log(sidebarFollowings)
-            res.render('tweets', { data, selfUser, sidebarFollowings })
-        })
+        Promise.all([
+            User.findAll({ include: [{ model: User, as: 'Followers' }] }).then(users => {
+                users = JSON.parse(JSON.stringify(users))
+                users.sort((a, b) => b.Followers.length - a.Followers.length)
+                users.slice(0, 10)
+                users = users.map(user => ({
+                    ...user,
+                    isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
+                }))
+                users = users.filter(user => user.id !== selfUser.id)
+                return users
+            }),
+            Tweet.findAll({ include: [User, Like, Reply], order: [['createdAt', 'DESC']] }).then(tweets => {
+                tweets = JSON.parse(JSON.stringify(tweets))
+                const userLiked = helper.getUser(req).Likes ? helper.getUser(req).Likes.map(d => d.TweetId) : []
+                const data = tweets.map(tweet => ({
+                    ...tweet,
+                    countLikes: tweet.Likes.length,
+                    countReplies: tweet.Replies.length,
+                    isLike: userLiked.includes(tweet.id)
+                }))
+                return data
+            })]).then(([sidebarFollowings, data]) => {
+                console.log(sidebarFollowings)
+                res.render('tweets', { data, selfUser, sidebarFollowings })
+            })
 
     },
     getReply: (req, res) => {
@@ -61,6 +68,11 @@ module.exports = {
                 users = JSON.parse(JSON.stringify(users))
                 users.sort((a, b) => b.Followers.length - a.Followers.length)
                 users.slice(0, 10)
+                users = users.map(user => ({
+                    ...user,
+                    isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
+                }))
+                users = users.filter(user => user.id !== selfUser.id)
                 return users
             })
         ]).then(([data, sidebarFollowings]) => res.render('tweet', { data, selfUser, sidebarFollowings }))
