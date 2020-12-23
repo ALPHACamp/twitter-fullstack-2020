@@ -11,7 +11,7 @@ passport.use(new LocalStrategy(
   {
     usernameField: 'account',
     passwordField: 'password',
-    passReqToCallback: true //grab "req" to update the req.flash
+    passReqToCallback: true // grab "req" to update the req.flash
   },
   // authenticate user
   (req, username, password, cb) => {
@@ -28,7 +28,7 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 
-passport.deserializeUser( (id, cb) => {
+passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
     include: [
       { model: User, as: 'Followers' },
@@ -45,10 +45,10 @@ passport.deserializeUser( (id, cb) => {
           // 計算追蹤者人數
           FollowerCount: alluser.Followers.length,
           relate: user.Followings.map(d => d.id).includes(alluser.dataValues.id)
-        })) 
-        user.Top10 = user.Top10.filter(user => user.role === "")
+        }))
+        user.Top10 = user.Top10.filter(user => user.role === '')
         user.Top10 = user.Top10.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-        return cb(null, user)            
+        return cb(null, user)
       })
   })
 })
@@ -59,11 +59,11 @@ const passportJWT = require('passport-jwt')
 const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
 
-let jwtOptions = {}
+const jwtOptions = {}
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
 jwtOptions.secretOrKey = process.env.JWT_SECRET
 
-let strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
+const strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
   User.findByPk(jwt_payload.id, {
     include: [
       { model: User, as: 'Followers' },
@@ -75,6 +75,5 @@ let strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
   })
 })
 passport.use(strategy)
-
 
 module.exports = passport
