@@ -14,7 +14,6 @@ const { authenticatedUser, authenticatedAdmin, beSigned } = require('../middlewa
 const passport = require('../config/passport')
 const user = require('../models/user.js')
 
-
 // admin
 /// ////
 router.get('/admin/signin', beSigned, adminController.signinPage)
@@ -26,6 +25,7 @@ router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 /// ////
 // User
 /// ////
+router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/signup', beSigned, userController.signUpPage)
 router.post('/signup', beSigned, userController.signUp)
 router.get('/signin', beSigned, userController.signInPage)
@@ -53,6 +53,7 @@ router.get('/users/:id/tweets', authenticatedUser, userController.getUserTweets)
 // tweet
 /// ////
 router.get('/tweets', authenticatedUser, twitterController.getTwitters)
+router.post('/tweets', authenticatedUser, twitterController.createTwitters)
 router.get('/tweets/:id', authenticatedUser, twitterController.getTwitter)
 router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
 router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)

@@ -3,16 +3,56 @@
   <div class="mainSectionContainer col-10 col-md-8 col-lg-6">
     <div class="titleContainer">
       <h1>Home</h1>
-      <div class="postFormContainer">
-        <div class="userImageContainer">
-          <img src="{{user.avatar}}" alt="User's profile picture" />
+    </div>
+    <form class="postFormContainer" action="/tweets" method="POST">
+      <div class="userImageContainer">
+        <img src="{{user.avatar}}" alt="User's profile picture" />
+      </div>
+      <div class="textareaContainer">
+        <textarea id="postTextarea" name="description" placeholder="有什麼新鮮事?"></textarea>
+        <input type="hidden" name="userId" value="{{user.id}}" />
+        <div class="buttonsContainer"><button id="submitPostButton">Post</button>
         </div>
-        <div class="textareaContainer">
-          <textarea id="postTextarea" placeholder="有什麼新鮮事?"></textarea>
-          <div class="buttonsContainer"><button id="submitPostButton">Post</button>
+      </div>
+    </form>
+    {{#each tweets}}
+    <div class='post'>
+
+      <div class='mainContentContainer'>
+        <div class='userImageContainer'>
+          <img src='{{this.User.avatar}}'>
+        </div>
+        <div class='postContentContainer'>
+          <div class='header'>
+            <a href='/profile' class='displayName'>{{this.User.name}}</a>
+            <span class='username'>@${{this.User.name}}</span>
+            <span class='date'>${{moment this.User.createdAt}}</span>
+          </div>
+          <div class='postBody'>
+            <span>{{this.description}}</span>
+          </div>
+          <div class='postFooter'>
+            <div class='postButtonContainer'>
+              <button>
+                <i class='far fa-comment'></i>
+              </button>
+            </div>
+            <div class='postButtonContainer'>
+              <button>
+                <i class='fas fa-retweet'></i>
+              </button>
+            </div>
+            <div class='postButtonContainer'>
+              <button>
+                <i class='far fa-heart'></i>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    {{/each}}
   </div>
+
+</div>
 </div>
