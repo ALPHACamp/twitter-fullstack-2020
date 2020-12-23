@@ -86,17 +86,14 @@ module.exports = {
   },
 
   removeFollowing: (req, res) => {
-    return Followship.findOne({
+    return Followship.destroy({
       where: {
-        [Op.and]: [
-          { followerId: helper.getUser(req).id },
-          { followingId: req.params.id }
-        ]
+        followerId: helper.getUser(req).id,
+        followingId: req.params.id
       }
     })
       .then(followship => {
-        followship.destroy()
-          .then(followship => res.redirect('back'))
+        res.redirect('back')
       })
   }
 }
