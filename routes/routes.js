@@ -53,7 +53,7 @@ router.get('/users/:id/tweets', authenticatedUser, userController.getUserTweets)
 // tweet
 /// ////
 router.get('/tweets', authenticatedUser, twitterController.getTwitters)
-router.get('/tweets/:id', authenticatedUser, twitterController.getTwitters)
+router.get('/tweets/:id', authenticatedUser, twitterController.getTwitter)
 router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
 router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)
 

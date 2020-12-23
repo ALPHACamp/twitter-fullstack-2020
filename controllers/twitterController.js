@@ -1,10 +1,28 @@
 const db = require('../models')
 const User = db.User //input the user schema
 const Like = db.Like
+const Tweet = db.Tweet
+const Reply = db.Reply
 
 const twitterController = {
   getTwitters: (req, res) => {
     return res.render('tweets')
+  },
+
+  getTwitter: (req, res) => {
+    tweetId = req.params.id
+    Tweet.findByPk(tweetId, {
+      include: [
+        { model: Like },
+        { model: Reply, include: [User] }
+      ]
+    })
+      .then(tweet => {
+        tweet = tweet.dataValues
+        tweet.tweetLiked    = tweet.Likes.filter(like => like.likeOrNot === true).length
+        tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
+        return res.render('tweet', { tweet })
+      })
   },
 
   postTwitters_thumbs_up: (req, res) => {
