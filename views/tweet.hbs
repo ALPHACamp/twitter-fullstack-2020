@@ -1,11 +1,13 @@
-<div class="col-3"></div>
+<div class="col-md-3">
+    {{>nav}}
+</div>
 <div class="col-6">
-    <div class="row">
+    <div class="">
         <li class="list-group-item row">
-        <p class="my-1">
-            <a href="/tweets" style="width: 20px;"><i class="fas fa-arrow-left"></i></a>
-            <strong class="ms-3">推文</strong>
-        </p>
+            <p class="my-1">
+                <a href="/tweets" style="width: 20px;"><i class="fas fa-arrow-left"></i></a>
+                <strong class="ms-3">推文</strong>
+            </p>
         </li>
 
         <li class=" list-group-item row">
@@ -63,7 +65,8 @@
                 <div class="col-10 ms-2">
                     <p class="mb-0"><strong>{{this.User.name}}</strong> <span
                             style="color: gray;">@{{this.User.account}}．{{moment this.createdAt}}</span></p>
-                    <p><span style="color: #788895;">回覆</span><span style="color: #ef6330;">@{{../data.User.account}}</span></p>
+                    <p><span style="color: #788895;">回覆</span><span
+                            style="color: #ef6330;">@{{../data.User.account}}</span></p>
                     <p>{{this.comment}}</p>
                 </div>
             </div>
