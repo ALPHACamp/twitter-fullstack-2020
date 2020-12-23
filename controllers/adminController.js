@@ -50,6 +50,8 @@ module.exports = {
           NumberOfFollowings: user.Followings.length
         }))
 
+        users.sort((a, b) => b.NumberOfTweets - a.NumberOfTweets)
+
         res.render('admin/users', {
           users
         })
