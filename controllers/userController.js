@@ -191,7 +191,8 @@ const userController = {
     }
 
     const id = helpers.getUser(req).id
-
+    return res.render('userProfile', { profileUser, isFollowed, target })
+    /*
     axios.get(`http://localhost:3000/api/users/${id}`)
       .then(function (response) {
         // 1.handle success
@@ -203,7 +204,7 @@ const userController = {
         console.log(error)
       })
       .then(data => { return res.render('userProfile', { profileUser, isFollowed, target, data }) })
-
+    */
   },
 
   updateProfile: (req, res) => {
@@ -313,6 +314,27 @@ const userController = {
       followship.destroy()
       return res.redirect('back')
     })
+  },
+
+  /// ///////////
+  // Users
+  /// ///////////
+  getUsers: (req, res) => {
+    User.findAll({
+      where: { role: '' }, include: [Tweet, Like, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
+    })
+      .then(users => {
+        users = users.map(user => ({
+          ...user.dataValues,
+          tweetCount: user.Tweets.length,
+          followingCount: user.Followings.length,
+          followerCount: user.Followers.length,
+          tweetLiked: user.Likes.filter(like => like.likeOrNot === true).length,
+          tweetDisliked: user.Likes.filter(unlike => unlike.likeOrNot === false).length
+        }))
+        users = users.sort((a, b) => b.followerCount - a.followerCount)
+        return res.render('users', { users })
+      }).catch(err => console.log(err))
   },
 
   /// ///////////

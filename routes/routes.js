@@ -35,6 +35,7 @@ router.get('/logout', userController.logout)
 router.get('/user/setting', authenticatedUser, userController.getSetting)
 router.put('/user/setting', authenticatedUser, userController.updateSetting)
 
+router.get('/users', authenticatedUser, userController.getUsers)
 router.get('/user/:id', authenticatedUser, userController.getUserProfile)
 router.post('/user/:id', authenticatedUser, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)
 router.delete('/user/:id', authenticatedUser, userController.deleteImage)
