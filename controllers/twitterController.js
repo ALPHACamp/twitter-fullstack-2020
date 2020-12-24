@@ -4,6 +4,7 @@ const Like = db.Like
 const Tweet = db.Tweet
 const Reply = db.Reply
 const pageLimit = 10
+const helpers = require('../utils/hbsHelpers')
 
 const twitterController = {
   getTwitters: (req, res) => {
@@ -13,9 +14,8 @@ const twitterController = {
       offset = (Number(req.query.page) - 1) * pageLimit
     }
     Tweet.findAndCountAll({
-      include: [User], raw: true, nest: true, order: [['createdAt', 'DESC']], offset: offset, limit: pageLimit
+      include: [User, { model: Like }, { model: Reply, include: [User] }], order: [['createdAt', 'DESC']], offset: offset, limit: pageLimit
     }).then(result => {
-      console.log(result)
       const page = Number(req.query.page) || 1
       const pages = Math.ceil(result.count / pageLimit)
       const totalPages = Array.from({ length: pages }).map((item, index) => index + 1)
@@ -23,11 +23,12 @@ const twitterController = {
       const next = page + 1 > pages ? pages : page + 1
       const tweets = result.rows.map(t => ({
         ...t,
-        description: t.description.substring(0, 50),
-        User: t.User
-        // likeOrNot: t.Likes.filter(like => like.likeOrNot === true).length
+        description: t.dataValues.description.substring(0, 50),
+        User: t.User.dataValues,
+        replies: t.Replies,
+        tweetLiked: t.Likes.filter(like => like.likeOrNot === true).length,
+        tweetDisliked: t.Likes.filter(like => like.likeOrNot === false).length
       }))
-      // console.log('islike', tweets.likeOrNot)
       return res.render('tweets', { tweets, totalPages, prev, next, page })
     }
     )
