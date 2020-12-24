@@ -4744,8 +4744,8 @@ textarea.form-control-lg {
 .list-group-item.active {
   z-index: 2;
   color: #fff;
-  background-color: #0d6efd;
-  border-color: #0d6efd;
+  background-color: #DF691A;
+  border-color: #DF691A;
 }
 .list-group-item + .list-group-item {
   border-top-width: 0;
