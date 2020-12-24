@@ -36,7 +36,7 @@ module.exports = {
                 }))
                 return data
             })]).then(([sidebarFollowings, data]) => {
-                res.render('tweets', { data, currentUser, sidebarFollowings })
+                res.render('tweets', { data, currentUser, sidebarFollowings, navPage: 'index' })
             })
 
     },
@@ -66,7 +66,7 @@ module.exports = {
                 users = users.filter(user => user.id !== currentUser.id)
                 return users
             })
-        ]).then(([data, sidebarFollowings]) => res.render('tweet', { data, currentUser, sidebarFollowings }))
+        ]).then(([data, sidebarFollowings]) => res.render('tweet', { data, currentUser, sidebarFollowings, navPage: 'index' }))
     },
     postTweets: (req, res) => {
         if (req.body.description.length > 140 || req.body.description.length < 1) {
