@@ -54,5 +54,29 @@
     {{/each}}
   </div>
 
+  {{!-- 分頁 --}}
+  <div class="pagination d-flex justify-content-center mt-5">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item">
+          <a class="page-link" href="/tweets?page={{prev}}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {{#each totalPages}}
+        {{#ifcond this "===" ../page}}
+        <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+        {{else}}
+        <li class="page-item"><a class="page-link" href="/tweets?page={{this}}">{{this}}</a></li>
+        {{/ifcond}}
+        {{/each}}
+        <a class="page-link" href="/tweets?page={{next}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
 </div>
 </div>
