@@ -1,7 +1,11 @@
-<div class="container-fluid" style="width:55vw">
-  <div class="back mb-1">
+<div class="container-fluid mt-2" style="width:55vw ; max-height:100vh">
+
+  <div class="back d-flex align-items-center justify-content-start my-0"
+    style="height:40px; border-bottom: 1px solid #A39480;">
     <a href="javascript:history.back()" style="color:black;"><i class="fas fa-arrow-left"></i></a>
+    <h6 class="fw-bolder my-0 mx-3 py-0">推文</h6>
   </div>
+
   <div class="main">
     <div class="tweet mb-2">
       <div class="row">
@@ -29,9 +33,9 @@
         </div>
       </div>
     </div>
-    <div class="reply">
+    <div class="reply" style="max-height: 500px; overflow-y: auto; overflow-x: hidden">
       {{#each tweet.Replies}}
-      <div class="row">
+      <div class="row ">
         <div class="col-auto me-auto d-flex mb-2">
           <div class="col-auto avatar me-3 d-flex flex-column justify-content-between;">
             <img src="{{this.User.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4;"
@@ -44,14 +48,14 @@
           </div>
           <div class="col-auto content" style="width:45vw">
             <div class="personAndTime">
-              <div class="name fw-bold" style="display: inline">{{this.User.name}}</div>
+              <div class="name fw-bold" style="display: inline">{{tweet.User.account}}</div>
               <div class="accountAndTime small" style="display: inline ;color: #657786" ;>
                 @{{this.User.account}}．{{moment this.createdAt}}
               </div>
             </div>
             <div class="comment">{{this.comment}}</div>
             <div class="reply-account mt-2"><span style="font-size:13px ;color: #657786">回覆給</span> <span
-                style="font-size:13px ;color:#FF6103">@{{this.User.account}}</span></div>
+                style="font-size:13px ;color:#FF6103">@{{../tweet.User.account}}</span></div>
           </div>
         </div>
       </div>

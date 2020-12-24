@@ -1,0 +1,28 @@
+{{!-- sef-profile delete-cover modal --}}
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postTweetModal">
+  推文
+</button>
+
+<div class="modal fade" id="postTweetModal" tabindex="-1" role="dialog" aria-labelledby="updateAvatarModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="header d-flex">
+          <button type="button" class="btn-close me-4" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="exampleModalLongTitle">刪除封面</h5>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p>是否確定要刪除封面？</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+        <form action='/user/{{user.id}}?_method=DELETE' method="POST">
+          <button type="submit" class="btn btn-primary">確定</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

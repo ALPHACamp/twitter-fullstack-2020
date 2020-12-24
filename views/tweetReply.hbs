@@ -1,0 +1,139 @@
+<div class="container-fluid mt-2" style="width:55vw ; max-height:100vh">
+  <div class="back d-flex align-items-center justify-content-start my-0"
+    style="height:40px; border-bottom: 1px solid #A39480;">
+    <a href="javascript:history.back()" style="color:black;"><i class="fas fa-arrow-left"></i></a>
+    <h6 class="fw-bolder my-0 mx-3 py-0">推文</h6>
+  </div>
+  <div class="main">
+    <div class="tweet mb-2" style="max-height:20%">
+      <div class="tweet">
+        <div class="d-flex py-2">
+          <div class="col-auto avatar pe-2 ">
+            <a class="" href="/user/{{user.id}}">
+              <img src="{{tweet.User.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4;"
+                class=" pe-0 border border-light rounded-circle">
+            </a>
+          </div>
+          <div class="col-auto personAndAccount" style="width:45vw">
+            <div class="row">
+              <div class="name fw-bold" style="margin:0">{{tweet.User.name}}</div>
+              <div class="account small" style="margin:0; color:#657786">@{{tweet.User.account}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="fw-bolder description py-2">
+          <h4>{{tweet.description}}</h4>
+        </div>
+        <div class="time small" style="color:#657786">
+          {{date tweet.User.updatedAt}}
+        </div>
+      </div>
+      <div class="d-flex mx-auto pb-2" style="border-bottom:1px solid #E6ECF0;">
+
+        <div class="col-md-12 d-flex mt-2">
+          {{#ifcond tweet.Replies.length "===" "0"}}
+          <div style="color:#A39480;">
+            <a href="/tweets/{{this.id}}/replies" class="ms-3 me-1" style="color:#C0C0C0;"><i
+                class="far fa-comment"></i></a>
+            {{tc
+            tweet.Replies.length}}
+          </div>
+          {{else}}
+          <div style="color:#2F4F4F;">
+            <a href="/tweets/{{tweet.id}}" class="ms-3 me-1" style="color:#7AC5CD;"><i
+                class="far fa-comment-dots"></i></a>
+            {{tc tweet.Replies.length}}
+          </div>
+          {{/ifcond}}
+
+          {{#ifcond tweet.tweetLiked "===" 0}}
+          <div style="color:#A39480;">
+            <form action="/tweets/{{tweet.id}}/thumbs_up" method="POST">
+              <button type="submit" class="btn btn-link m-0 p-0 ms-3" style="color:#C0C0C0;text-decoration:none;">
+                <i class="far fa-thumbs-up"></i>　{{tc tweet.tweetLiked}}
+              </button>
+            </form>
+          </div>
+          {{else}}
+          <div style="color:#2F4F4F;">
+            <form action="/tweets/{{tweet.id}}/thumbs_up" method="POST">
+              <button type="submit" class="btn btn-link m-0 p-0 ms-3" style="color:#0000FF;text-decoration:none;">
+                <i class="far fa-thumbs-up"></i>　{{tc tweet.tweetLiked}}
+              </button>
+            </form>
+          </div>
+          {{/ifcond}}
+
+          {{#ifcond tweet.tweetDisliked "===" 0}}
+          <div style="color:#A39480;">
+            <form action="/tweets/{{tweet.id}}/thumbs_down" method="POST">
+              <button type="submit" class="btn btn-link m-0 p-0 ms-3" style="color:#C0C0C0;text-decoration:none;">
+                <i class="far fa-thumbs-down"></i>　{{tc tweet.tweetDisliked}}
+              </button>
+            </form>
+          </div>
+          {{else}}
+          <div style="color:#2F4F4F;">
+            <form action="/tweets/{{tweet.id}}/thumbs_down" method="POST">
+              <button type="submit" class="btn btn-link m-0 p-0 ms-3" style="color:#CD5C5C;text-decoration:none;">
+                <i class="far fa-thumbs-down"></i>　{{tc tweet.tweetDisliked}}
+              </button>
+            </form>
+          </div>
+          {{/ifcond}}
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="reply" style="max-height:600px; overflow-y: auto; overflow-x: hidden ; border-bottom:1px solid #E6ECF0">
+      {{#each tweet.Replies}}
+      <div class="row ">
+        <div class="col-auto me-auto d-flex mb-2">
+          <div class="col-auto avatar me-3 d-flex flex-column justify-content-between;">
+            <img src="{{this.User.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4"
+              class="border border-light rounded-circle">
+            <div class="line mt-2" style="height: 100%; position:relative;">
+              <div class="border-start"
+                style=" width: 1px; height:100%; background: #CCD6DD; position:absolute; left:50%">
+              </div>
+            </div>
+          </div>
+          <div class="col-auto content p-2" style="width:45vw ;background-color:#f5f5f5; border-radius: 10px">
+            <div class="personAndTime">
+              <div class="name fw-bold" style="display: inline">{{this.User.account}}</div>
+              <div class="accountAndTime small" style="display: inline ;color: #657786" ;>
+                @{{this.User.account}}．{{moment this.createdAt}}
+              </div>
+            </div>
+            <div class="reply-account"><span style="font-size:13px ;color: #657786">回覆給</span> <span
+                style="font-size:13px ;color:#FF6103">@{{../tweet.User.account}}</span></div>
+            <div class="comment">{{this.comment}}</div>
+
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="user mt-3">
+    <form action="/tweets/{{tweet.id}}/replies" method="POST">
+      <div class="d-flex">
+        <div class="user-left">
+          <img src="{{user.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4;"
+            class="border border-light rounded-circle me-3">
+        </div>
+        <div class="user-right">
+          <input type="text" name="comment" value="{{comment}}" class="form-control" placeholder="推你的回覆"
+            aria-label="Username" aria-describedby="addon-wrapping"
+            style="border-radius: 25px ; width:45vw; height:50px;">
+          <div class="d-flex justify-content-end mt-3">
+            <button type=" submit" class="btn" style="background:#FF6103; color:antiquewhite; border-radius: 25px">
+              回覆</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

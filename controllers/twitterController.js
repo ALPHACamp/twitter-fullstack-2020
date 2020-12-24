@@ -98,7 +98,7 @@ const twitterController = {
     const tweetId = req.params.id
     Tweet.findByPk(tweetId, { include: [{ model: Reply, include: [User] }, User] })
       .then((tweet) => {
-        res.render('replies', { tweet: tweet.toJSON() })
+        res.render('tweetReply', { tweet: tweet.toJSON() })
       }).catch(err => console.log(err))
   },
   postReply: (req, res) => {
