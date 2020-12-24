@@ -36,7 +36,6 @@ module.exports = {
                 }))
                 return data
             })]).then(([sidebarFollowings, data]) => {
-                console.log(sidebarFollowings)
                 res.render('tweets', { data, selfUser, sidebarFollowings })
             })
 
