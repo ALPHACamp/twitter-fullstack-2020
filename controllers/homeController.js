@@ -19,13 +19,13 @@ module.exports = {
   },
 
   signup: (req, res) => {
-    const { account, name, email, password, confirmPassword } = req.body
+    const { account, name, email, password, checkPassword } = req.body
     const errors = []
 
-    if (!account || !name || !email || !password || !confirmPassword) {
+    if (!account || !name || !email || !password || !checkPassword) {
       errors.push({ message: 'All fields are required.' })
     }
-    if (password !== confirmPassword) {
+    if (password !== checkPassword) {
       errors.push({ message: "Password doesn't match the confirm password." })
     }
     if (errors.length) {
@@ -34,7 +34,7 @@ module.exports = {
         name,
         email,
         password,
-        confirmPassword,
+        checkPassword,
         errors
       })
     }
@@ -48,7 +48,7 @@ module.exports = {
             name,
             email,
             password,
-            confirmPassword,
+            checkPassword,
             errors
           })
         }
@@ -62,7 +62,7 @@ module.exports = {
             password: hash,
             role: 'user'
           }))
-          .then(user => res.redirect('/signin'))
+          .then(user => res.redirect(302,'/signin'))
           .catch(err => console.log(err))
       })
   },
