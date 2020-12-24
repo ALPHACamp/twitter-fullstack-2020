@@ -1,0 +1,25 @@
+{{#each data}}
+<li class=" list-group-item d-flex row">
+    <div class="col-2 mt-3">
+        <a href="/users/{{this.User.id}}/tweets">
+            <img class="rounded-circle" src="{{this.User.avatar}}" alt="" width="100px" height="100px">
+        </a>
+    </div>
+    <div class="col-10 card-body">
+        <div class="row">
+            <p><span style="font-weight: bolder;">{{this.User.name}}</span><span
+                    style="color: gray;">@{{this.User.account}}．{{moment this.createdAt}}</span></p>
+        </div>
+        <a href="/tweets/{{this.id}}/replies" style="text-decoration:none;color:#333;">
+            <div class="row">
+                <p style="word-wrap:break-word">{{this.description}}</p>
+            </div>
+            <div class="row">
+                <p style="word-wrap:break-word">
+                    <sub>{{this.comment}}</sub>
+                </p>
+            </div>
+        </a>
+    </div>
+</li>
+{{/each}}
