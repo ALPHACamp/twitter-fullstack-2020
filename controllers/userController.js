@@ -19,63 +19,91 @@ const Like = db.Like
 
 module.exports = {
   getFollowings: (req, res) => {
-    User.findOne({
-      where: { id: req.params.id },
-      include: [{
-        model: User,
-        as: 'Followings',
-        through: {
-          attributes: ['createdAt']
-        }
-      }]
-    })
-      .then(user => {
-        const currentUser = helper.getUser(req)
-        const followings = user.dataValues.Followings.map(f => ({
-          ...f.dataValues,
-          introduction: f.introduction ? f.introduction.substring(0, 150) : '',
-          isFollowed: currentUser.Followings.map(v => v.id).includes(f.id),
-          timestamp: moment(f.Followship.dataValues.createdAt).format('X')
-        }))
-
-        followings.sort((a, b) => b.timestamp - a.timestamp)
-
-        res.render('followings', {
-          user: user.toJSON(),
-          currentUser,
-          followings
-        })
+    const currentUser = helper.getUser(req)
+    return Promise.all([
+      User.findOne({
+        where: { id: req.params.id },
+        include: [{
+          model: User,
+          as: 'Followings',
+          through: {
+            attributes: ['createdAt']
+          }
+        }]
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
       })
+    ]).then(([user, users]) => {
+      const followings = user.dataValues.Followings.map(f => ({
+        ...f.dataValues,
+        introduction: f.introduction ? f.introduction.substring(0, 150) : '',
+        isFollowed: currentUser.Followings.map(v => v.id).includes(f.id),
+        timestamp: moment(f.Followship.dataValues.createdAt).format('X')
+      }))
+      followings.sort((a, b) => b.timestamp - a.timestamp)
+
+      users = JSON.parse(JSON.stringify(users))
+      users.sort((a, b) => b.Followers.length - a.Followers.length)
+      users.slice(0, 10)
+      users = users.map(user => ({
+        ...user,
+        isFollowed: user.Followers.map(d => d.id).includes(currentUser.id)
+      }))
+      users = users.filter(user => user.id !== currentUser.id)
+      sidebarFollowings = users
+
+      res.render('followings', {
+        user: user.toJSON(),
+        currentUser,
+        followings,
+        sidebarFollowings
+      })
+    })
   },
 
   getFollowers: (req, res) => {
-    User.findOne({
-      where: { id: req.params.id },
-      include: [{
-        model: User,
-        as: 'Followers',
-        through: {
-          attributes: ['createdAt']
-        }
-      }]
-    })
-      .then(user => {
-        const currentUser = helper.getUser(req)
-        const followers = user.dataValues.Followers.map(f => ({
-          ...f.dataValues,
-          introduction: f.introduction ? f.introduction.substring(0, 150) : '',
-          isFollowed: currentUser.Followings.map(v => v.id).includes(f.id),
-          timestamp: moment(f.Followship.dataValues.createdAt).format('X')
-        }))
-
-        followers.sort((a, b) => b.timestamp - a.timestamp)
-
-        res.render('followers', {
-          user: user.toJSON(),
-          currentUser,
-          followers
-        })
+    const currentUser = helper.getUser(req)
+    return Promise.all([
+      User.findOne({
+        where: { id: req.params.id },
+        include: [{
+          model: User,
+          as: 'Followers',
+          through: {
+            attributes: ['createdAt']
+          }
+        }]
+      }),
+      User.findAll({
+        include: [{ model: User, as: 'Followers' }]
       })
+    ]).then(([user, users]) => {
+      const followers = user.dataValues.Followers.map(f => ({
+        ...f.dataValues,
+        introduction: f.introduction ? f.introduction.substring(0, 150) : '',
+        isFollowed: currentUser.Followings.map(v => v.id).includes(f.id),
+        timestamp: moment(f.Followship.dataValues.createdAt).format('X')
+      }))
+      followers.sort((a, b) => b.timestamp - a.timestamp)
+
+      users = JSON.parse(JSON.stringify(users))
+      users.sort((a, b) => b.Followers.length - a.Followers.length)
+      users.slice(0, 10)
+      users = users.map(user => ({
+        ...user,
+        isFollowed: user.Followers.map(d => d.id).includes(currentUser.id)
+      }))
+      users = users.filter(user => user.id !== currentUser.id)
+      sidebarFollowings = users
+
+      res.render('followers', {
+        user: user.toJSON(),
+        currentUser,
+        followers,
+        sidebarFollowings
+      })
+    })
   },
 
   getUser: (req, res) => {
