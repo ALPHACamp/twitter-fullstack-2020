@@ -33,7 +33,7 @@ module.exports = {
         const currentUser = helper.getUser(req)
         const followings = user.dataValues.Followings.map(f => ({
           ...f.dataValues,
-          introduction: f.introduction.substring(0, 150),
+          introduction: f.introduction ? f.introduction.substring(0, 150) : '',
           isFollowed: currentUser.Followings.map(v => v.id).includes(f.id),
           timestamp: moment(f.Followship.dataValues.createdAt).format('X')
         }))
@@ -63,7 +63,7 @@ module.exports = {
         const currentUser = helper.getUser(req)
         const followers = user.dataValues.Followers.map(f => ({
           ...f.dataValues,
-          introduction: f.introduction.substring(0, 150),
+          introduction: f.introduction ? f.introduction.substring(0, 150) : '',
           isFollowed: currentUser.Followings.map(v => v.id).includes(f.id),
           timestamp: moment(f.Followship.dataValues.createdAt).format('X')
         }))
@@ -113,7 +113,7 @@ module.exports = {
         isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
       }))
       followings = followings.filter(user => user.id !== selfUser.id)
-      sidebarFollowings =  followings
+      sidebarFollowings = followings
       // console.log(req.query.page)
 
       // switch for pages, including '', reply, like
