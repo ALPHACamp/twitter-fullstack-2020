@@ -7,12 +7,12 @@
         </div>
     </div>
 
-    {{#ifcond profileUser.cover "===" ""}}
+    {{#ifcond profileUser.cover "===" null}}
     <div class="row my-0"
         style="width:100%; height:120px; background-color:#808A87; background-size:cover; background-repeat:no-repeat; background-position: center;">
         <div style="position: relative;left: 15px; top: 60px; height: 120px; width: 120px;">
             <img src="{{profileUser.avatar}}" alt=""
-                style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
+                style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;background-color:#C4C4C4">
         </div>
     </div>
     {{else}}
@@ -20,7 +20,7 @@
         style="width:100%; height:120px; background-image:url({{profileUser.cover}}); background-size:cover; background-repeat:no-repeat; background-position: center;">
         <div style="position: relative;left: 15px; top: 60px; height: 120px; width: 120px;">
             <img src="{{profileUser.avatar}}" alt=""
-                style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
+                style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;background-color:#C4C4C4">
         </div>
     </div>
     {{/ifcond}}
@@ -29,13 +29,11 @@
         <div class="col-md-12">
             <div class="d-flex flex-row-reverse">
                 {{#ifcond profileUser.id "===" user.id}}
-                {{!-- <form action="/user/{{profileUser.id}}/edit" method="GET">
-                    <-----}} <button class="btn btn-lg btn-block fw-bolder mt-2" type="submit"
-                        style="color:#FF6103; background-color:white; border-radius: 25px; border: 1px solid #FF6103; width:150px; font-size:0.9em;"
-                        data-bs-toggle="modal" data-bs-target="#profileModal">編輯個人資料</button>
-                        {{!--
-                </form> --}}
+                <button class="btn btn-lg btn-block fw-bolder mt-2" type="submit"
+                    style="color:#FF6103; background-color:white; border-radius: 25px; border: 1px solid #FF6103; width:150px; font-size:0.9em;"
+                    data-bs-toggle="modal" data-bs-target="#profileModal">編輯個人資料</button>
                 {{else}}
+
                 {{#if isFollowed}}
                 <form action="/user/followship/{{profileUser.id}}?_method=DELETE" method="POST">
                     <button class="btn btn-lg btn-block fw-bolder mt-2" type="submit"
@@ -97,7 +95,7 @@
                 <a class="nav-link" href="/tweets/{{this.id}}" style="color:black;">
                     <div style="margin-left:0;height: 54px;line-height: 18px;text-overflow: ellipsis;overflow: hidden;">
                         {{this.description}}
-                    </div>                
+                    </div>
                 </a>
                 <div class="col-md-12 d-flex mt-2">
 
@@ -161,7 +159,7 @@
 
     {{!-- sef-profile modal --}}
     <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form action='/user/{{data.id}}' method="POST">
+        <form action='/user/{{user.id}}' method="POST">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -178,7 +176,7 @@
                     <div class="modal-body">
                         <div class="cover">
                             <div class="cover bg-user"
-                                style="width:100%; height:200px; background-image:url({{data.cover}}); background-size:cover; background-repeat:no-repeat; background-position: center; background-color:#808A87">
+                                style="width:100%; height:200px; background-image:url({{user.cover}}); background-size:cover; background-repeat:no-repeat; background-position: center; background-color:#808A87">
                                 <div class="cover-hover">
                                     <div class="cover-mask text-center d-flex align-items-center justify-content-center"
                                         style="width:100%; height:200px;background-size:cover;
@@ -200,8 +198,8 @@
                                 </div>
                                 <div class="avatar"
                                     style="position:absolute;left: 30px;top: 140px; width: 120px;height:120px">
-                                    <img src="{{data.avatar}}" alt=""
-                                        style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;">
+                                    <img src="{{user.avatar}}" alt=""
+                                        style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;background-color:#C4C4C4">
                                     <a class="avatar-hover" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#updateAvatarModal">
                                         <div class="avatar-mask text-center"
@@ -211,26 +209,32 @@
                                     </a>
                                 </div>
                             </div>
-
+                            <br />
                             <div class="name-introduction mt-5">
                                 <form>
                                     <div class="name mb-3">
                                         <div class="border-bottom border-secondary bg-light">
                                             <label for="recipient-name" class="col-form-label py-0"
                                                 style="color:#657786;font-size:15px">名稱:</label>
-                                            <input type="text" class="form-control border-0 bg-light"
-                                                id="recipient-name" name="name" value="{{data.name}}">
+                                            <input type="text" class="nameInput form-control border-0 bg-light"
+                                                id="recipient-name" name="name" onkeyup="countWords(name,50)"
+                                                maxlength="50" value="{{user.name}}">
                                         </div>
-                                        <div class="text-end mt-0" style="color:#657786;font-size:15px">123/50</div>
+                                        <div class="nameCount text-end mt-0" style="color:#657786;font-size:15px">
+                                            {{user.name.length}}/50
+                                        </div>
                                     </div>
                                     <div class="introduction">
                                         <div class="border-bottom border-secondary bg-light">
                                             <label for="message-text" class="col-form-label py-0"
                                                 style="color:#657786;font-size:15px">自我介紹:</label>
-                                            <textarea class="form-control border-0 bg-light" id="message-text" rows='3'
-                                                name="introduction">{{data.introduction}}</textarea>
+                                            <textarea class="introductionInput form-control border-0 bg-light"
+                                                id="message-text" rows='3' name="introduction"
+                                                onkeyup="countWords(name,160)"
+                                                maxlength="160">{{user.introduction}}</textarea>
                                         </div>
-                                        <div class="text-end mt-0" style="color:#657786;font-size:15px">123/160</div>
+                                        <div class="introductionCount text-end mt-0"
+                                            style="color:#657786;font-size:15px">{{user.introduction.length}}/160</div>
                                     </div>
                                 </form>
                             </div>
@@ -245,7 +249,7 @@
     <div class="modal fade" id="updateAvatarModal" tabindex="-1" role="dialog" aria-labelledby="updateAvatarModalTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <form action='/user/{{data.id}}' method="POST" enctype="multipart/form-data">
+            <form action='/user/{{user.id}}' method="POST" enctype="multipart/form-data">
                 <div class="modal-content">
                     <div class="modal-header">
                         <div class="header d-flex">
@@ -259,7 +263,8 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="avatar" role="button" class="btn btn-primary">+上傳照片</label>
+                                    <label for="avatar" role="button"
+                                        class="btn btn-primary upload-file-btn">+上傳照片</label>
                                     <input type="file" class="form-control-file" id="avatar" name="avatar">
                                 </div>
                             </div>
@@ -283,7 +288,7 @@
 <div class="modal fade" id="updateCoverModal" tabindex="-1" role="dialog" aria-labelledby="updateAvatarModalTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <form action='/user/{{data.id}}' method="POST" enctype="multipart/form-data">
+        <form action='/user/{{user.id}}' method="POST" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <div class="header d-flex">
@@ -328,7 +333,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                <form action='/user/{{data.id}}?_method=DELETE' method="POST">
+                <form action='/user/{{user.id}}?_method=DELETE' method="POST">
                     <button type="submit" class="btn btn-primary">確定</button>
                 </form>
             </div>

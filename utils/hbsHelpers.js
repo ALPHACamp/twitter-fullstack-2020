@@ -33,6 +33,10 @@ module.exports = {
     return moment(a).fromNow()
   },
 
+  date: function (a) {
+    return moment(a).format("h:mm A , MMMM Do YYYY ")
+  },
+
   tc: function (a) {
     return tc(a, { digits: 1, uppercase: true })
   }
