@@ -34,13 +34,13 @@
                 <div class="col-md-12 d-flex mt-2">
                     {{#ifcond tweet.Replies.length "===" "0"}}
                     <div style="color:#A39480;">
-                        <a href="/tweets/{{this.id}}" class="me-1" style="color:#C0C0C0;"><i
+                        <a href="/tweets/{{this.id}}/replies" class="me-1" style="color:#C0C0C0;"><i
                                 class="far fa-comment"></i></a>
                         {{tc tweet.Replies.length}}
                     </div>
                     {{else}}
                     <div style="color:#2F4F4F;">
-                        <a href="/tweets/{{tweet.id}}" class="me-1" style="color:#7AC5CD;"><i
+                        <a href="/tweets/{{tweet.id}}/replies" class="me-1" style="color:#7AC5CD;"><i
                                 class="far fa-comment-dots"></i></a>
                         {{tc tweet.Replies.length}}
                     </div>

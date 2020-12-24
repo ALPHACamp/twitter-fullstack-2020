@@ -92,7 +92,7 @@
                     <h6 style="margin:0; color:#A39480;">
                         {{this.User.dataValues.email}}．{{moment this.User.dataValues.updatedAt}}</h6>
                 </div>
-                <a class="nav-link" href="/tweets/{{this.id}}" style="color:black;">
+                <a class="nav-link" href="/tweets/{{this.id}}/replies" style="color:black;">
                     <div style="margin-left:0;height: 54px;line-height: 18px;text-overflow: ellipsis;overflow: hidden;">
                         {{this.description}}
                     </div>
@@ -101,12 +101,12 @@
 
                     {{#ifcond this.Replies.length "===" "0"}}
                     <div style="color:#A39480;">
-                        <a href="/tweets/{{this.id}}" class="ms-3 me-1" style="color:#C0C0C0;"><i
+                        <a href="/tweets/{{this.id}}/replies" class="ms-3 me-1" style="color:#C0C0C0;"><i
                                 class="far fa-comment"></i></a> {{tc this.Replies.length}}
                     </div>
                     {{else}}
                     <div style="color:#2F4F4F;">
-                        <a href="/tweets/{{this.id}}" class="ms-3 me-1" style="color:#7AC5CD;"><i
+                        <a href="/tweets/{{this.id}}/replies" class="ms-3 me-1" style="color:#7AC5CD;"><i
                                 class="far fa-comment-dots"></i></a> {{tc this.Replies.length}}
                     </div>
                     {{/ifcond}}
