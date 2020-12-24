@@ -112,9 +112,7 @@ module.exports = {
             TweetId: req.params.id,
         }
         Like.findOne({ where: unlike }).then(like => {
-            like.destroy()
-        }).then(() => {
-            res.redirect('back')
+            like.destroy().then(() => res.redirect('back'))
         }).catch(err => console.log(err))
     }
 }

@@ -19,13 +19,14 @@ module.exports = {
   },
 
   signup: (req, res) => {
-    const { account, name, email, password, confirmPassword } = req.body
+    const { account, name, email, password, checkPassword } = req.body
     const errors = []
     const random = Math.random() * 999
-    if (!account || !name || !email || !password || !confirmPassword) {
+    
+    if (!account || !name || !email || !password || !checkPassword) {
       errors.push({ message: 'All fields are required.' })
     }
-    if (password !== confirmPassword) {
+    if (password !== checkPassword) {
       errors.push({ message: "Password doesn't match the confirm password." })
     }
     if (errors.length) {
@@ -34,7 +35,7 @@ module.exports = {
         name,
         email,
         password,
-        confirmPassword,
+        checkPassword,
         errors
       })
     }
@@ -48,7 +49,7 @@ module.exports = {
             name,
             email,
             password,
-            confirmPassword,
+            checkPassword,
             errors
           })
         }
@@ -64,7 +65,7 @@ module.exports = {
             avatar: `https://loremflickr.com/320/320/portrait/?lock=${random}`,
             cover: `https://loremflickr.com/686/200/background/?lock=${random}`
           }))
-          .then(user => res.redirect('/signin'))
+          .then(user => res.redirect(302,'/signin'))
           .catch(err => console.log(err))
       })
   },
