@@ -13,7 +13,7 @@ module.exports = {
           name: faker.name.findName(),
           account: `user${index + 1}`,
           avatar: `https://loremflickr.com/320/320/portrait/?lock=${index}`,
-          cover: `https://loremflickr.com/320/320/background/?lock=${index}`,
+          cover: `https://loremflickr.com/686/320/background/?lock=${index}`,
           introduction: faker.lorem.text(),
           role: '',
           createdAt: new Date(),

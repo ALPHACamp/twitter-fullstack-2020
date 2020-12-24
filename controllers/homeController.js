@@ -62,7 +62,7 @@ module.exports = {
             password: hash,
             role: 'user',
             avatar: `https://loremflickr.com/320/320/portrait/?lock=${random}`,
-            cover: `https://loremflickr.com/320/320/background/?lock=${random}`
+            cover: `https://loremflickr.com/686/200/background/?lock=${random}`
           }))
           .then(user => res.redirect('/signin'))
           .catch(err => console.log(err))
