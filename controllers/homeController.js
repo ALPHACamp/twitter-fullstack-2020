@@ -21,7 +21,7 @@ module.exports = {
   signup: (req, res) => {
     const { account, name, email, password, confirmPassword } = req.body
     const errors = []
-
+    const random = Math.random() * 999
     if (!account || !name || !email || !password || !confirmPassword) {
       errors.push({ message: 'All fields are required.' })
     }
@@ -60,7 +60,9 @@ module.exports = {
             name,
             email,
             password: hash,
-            role: 'user'
+            role: 'user',
+            avatar: `https://loremflickr.com/320/320/portrait/?lock=${random}`,
+            cover: `https://loremflickr.com/320/320/background/?lock=${random}`
           }))
           .then(user => res.redirect('/signin'))
           .catch(err => console.log(err))
