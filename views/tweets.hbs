@@ -9,7 +9,7 @@
     <div class="textareaContainer">
       <textarea id="postTextarea" name="description" placeholder="有什麼新鮮事?"></textarea>
       <input type="hidden" name="userId" value="{{user.id}}" />
-      <div class="buttonsContainer"><button id="submitPostButton">Post</button>
+      <div class="buttonsContainer"><button id="submitPostButton">發文</button>
       </div>
     </div>
   </form>
@@ -22,7 +22,7 @@
       </div>
       <div class='postContentContainer'>
         <div class='header'>
-          <a href='/profile' class='displayName'>{{this.User.name}}</a>
+          <a href='/user/{{this.User.id}}' class='displayName'>{{this.User.name}}</a>
           <span class='username'>@${{this.User.name}}</span>
           <span class='date'>${{moment this.User.createdAt}}</span>
         </div>
@@ -32,17 +32,17 @@
         <div class='postFooter'>
           <div class='postButtonContainer'>
             <button>
-              <i class='far fa-comment'></i>
+              <i class='far fa-comment'>{{tc tweet.Replies.length}}</i>
             </button>
           </div>
           <div class='postButtonContainer'>
             <button>
-              <i class='fas fa-retweet'></i>
+              <i class='far fa-thumbs-up'></i>
             </button>
           </div>
           <div class='postButtonContainer'>
             <button>
-              <i class='far fa-heart'></i>
+              <i class='far fa-thumbs-down'></i>
             </button>
           </div>
         </div>
