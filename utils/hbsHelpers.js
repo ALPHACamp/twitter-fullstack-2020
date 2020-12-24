@@ -34,7 +34,7 @@ module.exports = {
   },
 
   date: function (a) {
-    return moment(a).format("h:mm:A , MMMM Do YYYY ")
+    return moment(a).format("h:mm A , MMMM Do YYYY ")
   },
 
   tc: function (a) {

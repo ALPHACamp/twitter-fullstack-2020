@@ -27,22 +27,6 @@ const twitterController = {
     console.log(req)
   },
 
-  getTwitter: (req, res) => {
-    tweetId = req.params.id
-    Tweet.findByPk(tweetId, {
-      include: [
-        { model: Like },
-        { model: Reply, include: [User] }
-      ]
-    })
-      .then(tweet => {
-        tweet = tweet.dataValues
-        tweet.tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
-        tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
-        return res.render('tweet', { tweet })
-      })
-  },
-
   postTwitters_thumbs_up: (req, res) => {
     tweetId = req.params.id
     userId = req.user.id
@@ -94,13 +78,17 @@ const twitterController = {
       }
     })
   },
-  getReplies: (req, res) => {
+
+  getTwitter: (req, res) => {
     const tweetId = req.params.id
-    Tweet.findByPk(tweetId, { include: [{ model: Reply, include: [User] }, User] })
+    Tweet.findByPk(tweetId, { include: [{ model: Like }, { model: Reply, include: [User] }, User] })
       .then((tweet) => {
-        res.render('tweetReply', { tweet: tweet.toJSON() })
+        tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
+        tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
+        res.render('tweet', { tweet: tweet.toJSON(), tweetLiked, tweetDisliked })
       }).catch(err => console.log(err))
   },
+
   postReply: (req, res) => {
     const tweetId = req.params.id
     const comment = req.body.comment
