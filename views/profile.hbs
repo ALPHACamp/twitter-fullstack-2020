@@ -48,26 +48,26 @@
         </div>
       </div>
       <div class="row ">
-        <ul class="nav nav-tabs border bg-white">
+        <ul class="nav nav-tabs border bg-white" >
           <li class="nav-item ">
             {{#ifCond page ''}}
-            <a class="nav-link active" href="/users/{{user.id}}/tweets?page=">推文</a>
+            <a class="nav-link active" href="/users/{{user.id}}/tweets?page=" >推文</a>
             {{else}}
-            <a class="nav-link" href="/users/{{user.id}}/tweets?page=">推文</a>
+            <a class="nav-link" href="/users/{{user.id}}/tweets?page=" >推文</a>
             {{/ifCond}}
           </li>
           <li class="nav-item">
             {{#ifCond page 'reply'}}
-            <a class="nav-link active" href="/users/{{user.id}}/replies?page=reply">推文與回復</a>
+            <a class="nav-link active" href="/users/{{user.id}}/replies?page=reply" >推文與回復</a>
             {{else}}
-            <a class="nav-link" href="/users/{{user.id}}/replies?page=reply">推文與回復</a>
+            <a class="nav-link" href="/users/{{user.id}}/replies?page=reply" >推文與回復</a>
             {{/ifCond}}
           </li>
           <li class="nav-item">
             {{#ifCond page 'like'}}
-            <a class="nav-link active" href="/users/{{user.id}}/likes?page=like">喜歡的內容</a>
+            <a class="nav-link active" href="/users/{{user.id}}/likes?page=like" >喜歡的內容</a>
             {{else}}
-            <a class="nav-link" href="/users/{{user.id}}/likes?page=like">喜歡的內容</a>
+            <a class="nav-link" href="/users/{{user.id}}/likes?page=like" >喜歡的內容</a>
             {{/ifCond}}
           </li>
         </ul>
@@ -415,5 +415,10 @@
     border: 1px solid #FF6600;
     box-sizing: border-box;
     border-radius: 100px;
+  }
+
+  .nav-item{
+    width: 10em;
+    text-align: center;
   }
 </style>

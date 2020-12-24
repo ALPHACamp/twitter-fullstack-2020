@@ -193,7 +193,8 @@ module.exports = {
         data: data,
         sidebarFollowings,
         page: req.query.page,
-        currentUser
+        currentUser,
+        navPage: 'profile'
       })
     })
   },
@@ -315,7 +316,7 @@ module.exports = {
     const currentUser = helper.getUser(req)
     axios.get(`http://localhost:3000/api/users/${id}?userId=${userId}`).then(function (response) {
       const data = response.data
-      res.render('edit', { data, currentUser })
+      res.render('edit', { data, currentUser, navPage: 'setting' })
     })
   },
 

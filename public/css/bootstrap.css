@@ -3708,7 +3708,9 @@ textarea.form-control-lg {
 .btn-group-vertical > .btn.active {
   z-index: 1;
 }
-
+.btn-group-vertical .active{
+  color: #DF6A2C;
+}
 .btn-toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -3792,6 +3794,7 @@ textarea.form-control-lg {
   padding: 0.5rem 1rem;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+  color: #8c99a4;
 }
 @media (prefers-reduced-motion: reduce) {
   .nav-link {
@@ -3823,9 +3826,9 @@ textarea.form-control-lg {
 }
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-  color: #495057;
+  color: #DF6A2C;
   background-color: #fff;
-  border-color: #dee2e6 #dee2e6 #fff;
+  border-bottom: #DF6A2C 2px solid;
 }
 .nav-tabs .dropdown-menu {
   margin-top: -1px;
