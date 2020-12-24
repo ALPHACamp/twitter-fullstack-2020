@@ -17,11 +17,11 @@ const userController = {
     const user_id = helpers.getUser(req).id
     const id = req.params.id
     if (Number(user_id) !== Number(id)) {
-      return res.json({status: "error", message: "You don't have permission!"})
+      return res.json({ status: "error", message: "You don't have permission!" })
     } else {
       User.findByPk(id)
         .then(user => res.json(user))
-        .catch(err => console.log(err))      
+        .catch(err => console.log(err))
     }
   },
 
@@ -40,7 +40,6 @@ const userController = {
       }
       imgur.setClientID(process.env.IMGUR_CLIENT_ID);
       imgur.upload(file.path, (err, img) => {
-        console.log(img)
         return User.findByPk(id)
           .then((user) => {
             user.update({
@@ -68,7 +67,32 @@ const userController = {
           }).catch(err => console.log(err))
         })
     }
+  },
+
+  getReplies: (req, res) => {
+    const tweetId = req.params.id
+    Tweet.findByPk(tweetId, { include: [{ model: Reply, include: [User] }, User] })
+      .then((tweet) => {
+        res.json(tweet)
+      }).catch(err => console.log(err))
+  },
+
+  postReply: (req, res) => {
+    const tweetId = req.params.id
+    const comment = req.body.comment
+    if (!comment) {
+      return res.json({ status: "error", message: "empty input" })
+    }
+    return Reply.create({
+      TweetId: tweetId,
+      UserId: helpers.getUser(req).id,
+      comment: req.body.comment
+    }).then(reply => {
+      res.json({ status: 'success', message: '' })
+    })
   }
 }
+
+
 
 module.exports = userController

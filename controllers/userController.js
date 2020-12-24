@@ -190,19 +190,7 @@ const userController = {
       profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.latestLiketime - a.latestLiketime)
     }
 
-    const id = helpers.getUser(req).id
-
-    axios.get(`http://localhost:3000/api/users/${id}`)
-      .then(function (response) {
-        // 1.handle success
-        let data = response.data
-        return data
-      })
-      .catch(function (error) {
-        // 2.handle error
-        console.log(error)
-      })
-      .then(data => { return res.render('userProfile', { profileUser, isFollowed, target, data }) })
+    return res.render('userProfile', { profileUser, isFollowed, target })
 
   },
 
@@ -302,7 +290,7 @@ const userController = {
       })
         .then(user => {
           return res.redirect('back')
-        })      
+        })
     }
   },
 
@@ -321,15 +309,15 @@ const userController = {
   postFollowShips_json: (req, res, callback) => {
     const id = helpers.getUser(req).id
     if (Number(id) === Number(req.body.id)) {
-      return res.status(200).json({ status: 'error',  message: "you can't follow yourself." })
+      return res.status(200).json({ status: 'error', message: "you can't follow yourself." })
     } else {
       Followship.create({
         followerId: id,
         followingId: req.body.id
       })
         .then(user => {
-          return res.status(302).json({ status: 'success', message: ""})
-        })      
+          return res.status(302).json({ status: 'success', message: "" })
+        })
     }
   },
 
@@ -340,9 +328,9 @@ const userController = {
     }).then(followship => {
       if (followship) {
         followship.destroy()
-        return res.status(302).json({ status: 'success', message: "" })       
+        return res.status(302).json({ status: 'success', message: "" })
       } else {
-        return res.json({ status: 'error', message: "there are no data." })       
+        return res.json({ status: 'error', message: "there are no data." })
       }
     })
   },
@@ -355,7 +343,7 @@ const userController = {
       include: [{ model: Tweet }]
     })
       .then(user => {
-        return res.status(200).json({ status: 'success', message: "tweets", user:user })   
+        return res.status(200).json({ status: 'success', message: "tweets", user: user })
       })
   },
 
@@ -371,10 +359,10 @@ const userController = {
     profileUser.Followings = profileUser.Followings.map(following => ({
       ...following.dataValues,
       relate: following.Followings.map(d => d.dataValues.id).includes(profileUser.id)
-      })
+    })
     )
     profileUser.Followings = profileUser.Followings.sort((a, b) => b.updatedAt - a.updatedAt)
-    return res.status(200).json({ status: 'success', message: "", profileUser:profileUser })   
+    return res.status(200).json({ status: 'success', message: "", profileUser: profileUser })
   },
 
   getUserFollowers: async (req, res, callback) => {
@@ -389,16 +377,16 @@ const userController = {
     profileUser.Followers = profileUser.Followers.map(follower => ({
       ...follower.dataValues,
       relate: follower.Followers.map(d => d.dataValues.id).includes(profileUser.id)
-      })
+    })
     )
     profileUser.Followers = profileUser.Followers.sort((a, b) => b.updatedAt - a.updatedAt)
-    return res.status(200).json({ status: 'success', message: "", profileUser:profileUser })   
+    return res.status(200).json({ status: 'success', message: "", profileUser: profileUser })
   },
-  getUserLikes : async (req, res, callback) => {
+  getUserLikes: async (req, res, callback) => {
     let likedTweets = await Like.findAll({
       include: [Tweet]
     })
-    return res.status(200).json({ status: 'success', message: "", likedTweets:likedTweets })   
+    return res.status(200).json({ status: 'success', message: "", likedTweets: likedTweets })
   }
 }
 
