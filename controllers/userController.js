@@ -212,7 +212,6 @@ module.exports = {
     const coverFile = req.files.cover
 
     imgur.setClientID(process.env.IMGUR_CLIENT_ID);
-    console.log(process.env.IMGUR_CLIENT_ID)
 
     if (coverFile) {
       imgur.upload(coverFile[0].path, (err, img) => {
@@ -328,12 +327,10 @@ module.exports = {
     if (password) {
       data.password = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
     }
-    console.log(data)
     const errors = []
 
     if (password !== confirmPassword) {
       errors.push({ message: "Password doesn't match the confirm password." })
-      console.log('password error')
     }
     if (errors.length) {
       return res.render('edit', { data, errors, selfUser })
