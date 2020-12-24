@@ -4,7 +4,8 @@
     --lightGrey: rgb(230, 236, 240);
     --orange: #FF6103;
     --spacing: 15px;
-    
+    --greyText: rgb(101,119,134);
+    --greyButtonText: rgba(0,0,0,0.34);
 }
 
 h1 {
@@ -187,8 +188,16 @@ h1 {
     display: flex;
 }
 
+.username
+.date {
+    color: var(--grey)
+}
+
 .postFooter .postButtonContainer button {
-    padding: 2px 5px;
+    background-color: transparent;
+    border: none;
+    color: var(--greyButtonText);
+    padding: 0 5px;
 }
 
 .header a:hover {
@@ -204,4 +213,5 @@ h1 {
     background-color: #d4edff;
     color: var(--blue);
     border-radius: 50%;
+
 }
