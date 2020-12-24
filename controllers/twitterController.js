@@ -30,10 +30,16 @@ const twitterController = {
     }
     )
   },
+
   createTwitters: (req, res, next) => {
     const description = req.body.description
     const UserId = req.user.id
-    Tweet.create({
+
+    if (!description) {
+      req.flash('error_messages', '內容不能為空白')
+      return res.redirect('back')
+    }
+    return Tweet.create({
       UserId, description
     })
       .then(() => {
