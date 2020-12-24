@@ -1,8 +1,4 @@
-{{!-- sef-profile delete-cover modal --}}
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postTweetModal">
-  推文
-</button>
+{{!-- navbar left-column post-tweet modal --}}
 
 <div class="modal fade" id="postTweetModal" tabindex="-1" role="dialog" aria-labelledby="updateAvatarModalTitle"
   aria-hidden="true">
@@ -11,16 +7,30 @@
       <div class="modal-header">
         <div class="header d-flex">
           <button type="button" class="btn-close me-4" data-bs-dismiss="modal" aria-label="Close"></button>
-          <h5 class="modal-title" id="exampleModalLongTitle">刪除封面</h5>
         </div>
       </div>
       <div class="modal-body">
-        <p>是否確定要刪除封面？</p>
+        <div class="d-flex bg-light" style="border-radius:8px">
+          <div class="avatar me-1">
+            <a class="" href="/user/{{user.id}}">
+              <img src="{{tweet.User.avatar}}" alt="" style="width: 50px; height:50px; background-color:#C4C4C4;"
+                class=" pe-0 border border-light rounded-circle">
+            </a>
+          </div>
+          <div class="text w-100">
+            <textarea class="introductionInput form-control border-0 bg-light" id="message-text" rows='6'
+              style="width:100%" name="introduction" onkeyup="countWords(name,140)" maxlength="140"
+              placeholder="有什麼新鮮事？"></textarea>
+          </div>
+        </div>
+        <div class="introductionCount text-end mt-0" style="color:#657786;font-size:15px">
+          0/140
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
         <form action='/user/{{user.id}}?_method=DELETE' method="POST">
-          <button type="submit" class="btn btn-primary">確定</button>
+          <button type="submit" class="btn"
+            style="border-radius: 25px; color:white; background-color:#FF6103;">推文</button>
         </form>
       </div>
     </div>
