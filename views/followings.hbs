@@ -16,12 +16,14 @@
 
     {{#each followings}}
     <div class="card">
-      <div class="row g-0 p-1">
-        <div class="col-md-2"
-          style="border-radius: 50%; border: 1px; width: 85px; height: 85px; background-image: url(https://cdn.pixabay.com/photo/2017/02/22/17/06/wave-2089959_960_720.jpg);">
+      <div class="row g-0 p-2">
+        <div class="col-md-2 py-2 text-center">
+          <a href="/users/{{this.id}}/tweets">
+            <img class="rounded-circle" src="{{this.avatar}}" alt="" width="50px" height="50px">
+          </a>
         </div>
         <div class="col">
-          <div class="d-flex card-body">
+          <div class="d-flex card-body p-2">
             <div class="d-flex flex-column">
               <h4 class="mb-1">{{this.name}}</h4>
               <span class="lead">@{{this.account}}</span>
@@ -29,12 +31,12 @@
 
             {{#if this.isFollowed}}
             <form action="/followships/{{this.id}}?_method=DELETE" method="POST" class="col text-end">
-              <button type="submit" class="btn btn-primary">正在跟隨</button>
+              <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
             </form>
             {{else}}
             <form action="/followships" method="POST" class="col text-end">
               <input type="hidden" name="id" value="{{this.id}}" />
-              <button type="submit" class="btn btn-secondary" {{#ifCond this.id
+              <button type="submit" class="btn btn-secondary rounded-pill" {{#ifCond this.id
                 ../currentUser.id}}disabled{{/ifCond}}>跟隨</button>
             </form>
             {{/if}}
