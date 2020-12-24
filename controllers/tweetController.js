@@ -14,7 +14,7 @@ module.exports = {
     getTweets: (req, res) => {
         const currentUser = helper.getUser(req)
         Promise.all([
-            User.findAll({ include: [{ model: User, as: 'Followers', where: { role: 'user' } }] }).then(users => {
+            User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } }).then(users => {
                 users = JSON.parse(JSON.stringify(users))
                 users.sort((a, b) => b.Followers.length - a.Followers.length)
                 users.slice(0, 10)
@@ -55,7 +55,7 @@ module.exports = {
                 }
                 return data
             }),
-            User.findAll({ include: [{ model: User, as: 'Followers', where: { role: 'user' } }] }).then(users => {
+            User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } }).then(users => {
                 users = JSON.parse(JSON.stringify(users))
                 users.sort((a, b) => b.Followers.length - a.Followers.length)
                 users.slice(0, 10)
