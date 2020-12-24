@@ -32,7 +32,8 @@ module.exports = {
         }]
       }),
       User.findAll({
-        include: [{ model: User, as: 'Followers' }]
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user' }
       })
     ]).then(([user, users]) => {
       const followings = user.dataValues.Followings.map(f => ({
@@ -76,7 +77,8 @@ module.exports = {
         }]
       }),
       User.findAll({
-        include: [{ model: User, as: 'Followers' }]
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user' }
       })
     ]).then(([user, users]) => {
       const followers = user.dataValues.Followers.map(f => ({
@@ -107,7 +109,7 @@ module.exports = {
   },
 
   getUser: (req, res) => {
-    const selfUser = helper.getUser(req)
+    const currentUser = helper.getUser(req)
     return Promise.all([
       User.findByPk(req.params.id, {
         include: [
@@ -125,7 +127,8 @@ module.exports = {
       User.findAll({
         // raw: true,
         // nest: true,
-        include: [{ model: User, as: 'Followers' }]
+        include: [{ model: User, as: 'Followers' }],
+        where: { role: 'user' }
       }),
       Like.findAll({
         where: { UserId: req.params.id },
@@ -142,9 +145,9 @@ module.exports = {
       followings.slice(0, 10)
       followings = followings.map(user => ({
         ...user,
-        isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
+        isFollowed: user.Followers.map(d => d.id).includes(currentUser.id)
       }))
-      followings = followings.filter(user => user.id !== selfUser.id)
+      followings = followings.filter(user => user.id !== currentUser.id)
       sidebarFollowings = followings
       // console.log(req.query.page)
 
@@ -164,6 +167,7 @@ module.exports = {
       if (req.query.page === 'like') {
         data = likedTweets.map(like => ({
           ...like.dataValues,
+          id: like.Tweet.dataValues.id,
           User: like.Tweet.dataValues.User.dataValues,
           countLikes: like.Tweet.dataValues.Likes.length,
           countReplies: like.Tweet.dataValues.Replies.length,
@@ -189,7 +193,7 @@ module.exports = {
         data: data,
         sidebarFollowings,
         page: req.query.page,
-        selfUser
+        currentUser
       })
     })
   },
@@ -308,15 +312,15 @@ module.exports = {
   getEdit: (req, res) => {
     const id = req.params.id
     const userId = helper.getUser(req).id
-    const selfUser = helper.getUser(req)
+    const currentUser = helper.getUser(req)
     axios.get(`http://localhost:3000/api/users/${id}?userId=${userId}`).then(function (response) {
       const data = response.data
-      res.render('edit', { data, selfUser })
+      res.render('edit', { data, currentUser })
     })
   },
 
   putUserInfo: (req, res) => {
-    const selfUser = helper.getUser(req)
+    const currentUser = helper.getUser(req)
     const { account, name, email, password, confirmPassword } = req.body
     const data = {
       id: req.params.id,
@@ -333,7 +337,7 @@ module.exports = {
       errors.push({ message: "Password doesn't match the confirm password." })
     }
     if (errors.length) {
-      return res.render('edit', { data, errors, selfUser })
+      return res.render('edit', { data, errors, currentUser })
     }
     User.findByPk(data.id).then(user => {
       user.update(data)

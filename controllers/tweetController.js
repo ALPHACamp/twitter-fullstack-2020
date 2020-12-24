@@ -12,17 +12,17 @@ const Reply = db.Reply
 
 module.exports = {
     getTweets: (req, res) => {
-        const selfUser = helper.getUser(req)
+        const currentUser = helper.getUser(req)
         Promise.all([
-            User.findAll({ include: [{ model: User, as: 'Followers' }] }).then(users => {
+            User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } }).then(users => {
                 users = JSON.parse(JSON.stringify(users))
                 users.sort((a, b) => b.Followers.length - a.Followers.length)
                 users.slice(0, 10)
                 users = users.map(user => ({
                     ...user,
-                    isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
+                    isFollowed: user.Followers.map(d => d.id).includes(currentUser.id)
                 }))
-                users = users.filter(user => user.id !== selfUser.id)
+                users = users.filter(user => user.id !== currentUser.id)
                 return users
             }),
             Tweet.findAll({ include: [User, Like, Reply], order: [['createdAt', 'DESC']] }).then(tweets => {
@@ -36,13 +36,13 @@ module.exports = {
                 }))
                 return data
             })]).then(([sidebarFollowings, data]) => {
-                res.render('tweets', { data, selfUser, sidebarFollowings })
+                res.render('tweets', { data, currentUser, sidebarFollowings })
             })
 
     },
     getReply: (req, res) => {
         const id = req.params.id
-        const selfUser = helper.getUser(req)
+        const currentUser = helper.getUser(req)
         Promise.all([
             Tweet.findByPk(id, { include: [User, { model: Reply, include: [User], raw: true }, Like] }).then(tweet => {
                 tweet = tweet.toJSON()
@@ -55,18 +55,18 @@ module.exports = {
                 }
                 return data
             }),
-            User.findAll({ include: [{ model: User, as: 'Followers' }] }).then(users => {
+            User.findAll({ include: [{ model: User, as: 'Followers' }], where: { role: 'user' } }).then(users => {
                 users = JSON.parse(JSON.stringify(users))
                 users.sort((a, b) => b.Followers.length - a.Followers.length)
                 users.slice(0, 10)
                 users = users.map(user => ({
                     ...user,
-                    isFollowed: user.Followers.map(d => d.id).includes(selfUser.id)
+                    isFollowed: user.Followers.map(d => d.id).includes(currentUser.id)
                 }))
-                users = users.filter(user => user.id !== selfUser.id)
+                users = users.filter(user => user.id !== currentUser.id)
                 return users
             })
-        ]).then(([data, sidebarFollowings]) => res.render('tweet', { data, selfUser, sidebarFollowings }))
+        ]).then(([data, sidebarFollowings]) => res.render('tweet', { data, currentUser, sidebarFollowings }))
     },
     postTweets: (req, res) => {
         if (req.body.description.length > 140 || req.body.description.length < 1) {
