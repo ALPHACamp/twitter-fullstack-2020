@@ -1,8 +1,8 @@
 const nameCount = document.querySelector('.nameCount')
 const nameInput = document.querySelector('.nameInput')
 
-const descriptionInput = document.querySelector('.descriptionInput')
-const descriptionCount = document.querySelector('.descriptionCount')
+const introductionInput = document.querySelector('.introductionInput')
+const introductionCount = document.querySelector('.introductionCount')
 
 
 function countWords(name, wordslimit) {
@@ -10,8 +10,8 @@ function countWords(name, wordslimit) {
     let total = nameInput.value.length;
     return nameCount.innerHTML = `${total}/${wordslimit}`
   } else if (name === "introduction") {
-    let total = descriptionInput.value.length;
-    return descriptionCount.innerHTML = `${total}/${wordslimit}`
+    let total = introductionInput.value.length;
+    return introductionCount.innerHTML = `${total}/${wordslimit}`
   }
 }
 
