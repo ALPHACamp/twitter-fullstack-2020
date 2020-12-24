@@ -164,6 +164,7 @@ module.exports = {
       if (req.query.page === 'like') {
         data = likedTweets.map(like => ({
           ...like.dataValues,
+          id: like.Tweet.dataValues.id,
           User: like.Tweet.dataValues.User.dataValues,
           countLikes: like.Tweet.dataValues.Likes.length,
           countReplies: like.Tweet.dataValues.Replies.length,
