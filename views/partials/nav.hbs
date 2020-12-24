@@ -9,14 +9,14 @@
       <a type="button" class="btn " href="/tweets" style="height: 4em;text-align: left;">
         <i class="fas fa-2x fa-home"> 首頁</i>
       </a>
-      <a type="button" class="btn" href="/users/{{selfUser.id}}/tweets" style="height: 4em;text-align: left;">
+      <a type="button" class="btn" href="/users/{{currentUser.id}}/tweets" style="height: 4em;text-align: left;">
         <i class="far fa-2x fa-user"> 個人資料</i>
       </a>
-      <a type=" button" class="btn" href="/users/{{selfUser.id}}/edit" style="height: 4em;text-align: left;">
+      <a type=" button" class="btn" href="/users/{{currentUser.id}}/edit" style="height: 4em;text-align: left;">
         <i class="fas fa-2x fa-cog"> 設定</i>
       </a>
       <button type="" class="btn btn-primary rounded-pill mt-3" data-bs-toggle="modal"
-        data-bs-target="#nav-{{selfUser.id}}" style="width: 80%;">推文</button>
+        data-bs-target="#nav-{{currentUser.id}}" style="width: 80%;">推文</button>
         <a href="/logout" class="btn  rounded-pill mt-5"
     style=" font-size: 1.5rem; text-align: left;"><i
       class="fas fa-sign-out-alt"></i><strong class="ms-2">登出</strong></a>
@@ -26,7 +26,7 @@
 
 {{!-- modal --}}
 <form action="/tweets" method="POST">
-  <div class="modal fade" id="nav-{{selfUser.id}}" tabindex="-1" aria-labelledby="tweet-{{this.id}}Label"
+  <div class="modal fade" id="nav-{{currentUser.id}}" tabindex="-1" aria-labelledby="tweet-{{this.id}}Label"
     aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -38,7 +38,7 @@
         <div class="modal-body d-flex flex-row row">
           <div class="row mt-3">
             <div class="col-2">
-              <img class="rounded-circle" src="{{selfUser.avatar}}" alt="" width="50px" height="50px">
+              <img class="rounded-circle" src="{{currentUser.avatar}}" alt="" width="50px" height="50px">
             </div>
             <div class="col-10">
               <textarea name="description" id="description" style="resize:none; border: 0px; width: 100%; height: 100%;"

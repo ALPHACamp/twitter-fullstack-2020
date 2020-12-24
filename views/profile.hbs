@@ -27,7 +27,7 @@
               <img alt="avatar" src="{{user.avatar}}">
             </span>
             <span class="float-right m-3">
-              {{#ifCond user.id selfUser.id }}
+              {{#ifCond user.id currentUser.id }}
               <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                 data-bs-target="#userEdit">編輯個人資料</button>
               {{/ifCond}}
