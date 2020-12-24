@@ -15,7 +15,7 @@ module.exports = {
           avatar: `https://loremflickr.com/320/320/portrait/?lock=${index}`,
           cover: `https://loremflickr.com/686/320/background/?lock=${index}`,
           introduction: faker.lorem.text(),
-          role: '',
+          role: 'user',
           createdAt: new Date(),
           updatedAt: new Date(),
         })), {}),

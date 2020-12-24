@@ -32,7 +32,7 @@ module.exports = {
         }]
       }),
       User.findAll({
-        include: [{ model: User, as: 'Followers' }]
+        include: [{ model: User, as: 'Followers', where: { role: 'user' } }]
       })
     ]).then(([user, users]) => {
       const followings = user.dataValues.Followings.map(f => ({
@@ -76,7 +76,7 @@ module.exports = {
         }]
       }),
       User.findAll({
-        include: [{ model: User, as: 'Followers' }]
+        include: [{ model: User, as: 'Followers', where: { role: 'user' } }]
       })
     ]).then(([user, users]) => {
       const followers = user.dataValues.Followers.map(f => ({
@@ -125,7 +125,7 @@ module.exports = {
       User.findAll({
         // raw: true,
         // nest: true,
-        include: [{ model: User, as: 'Followers' }]
+        include: [{ model: User, as: 'Followers', where: { role: 'user' } }]
       }),
       Like.findAll({
         where: { UserId: req.params.id },
