@@ -12,10 +12,10 @@ const twitterController = {
     if (req.query.page) {
       offset = (Number(req.query.page) - 1) * pageLimit
     }
-
     Tweet.findAndCountAll({
       include: [User], raw: true, nest: true, order: [['createdAt', 'DESC']], offset: offset, limit: pageLimit
     }).then(result => {
+      console.log(result)
       const page = Number(req.query.page) || 1
       const pages = Math.ceil(result.count / pageLimit)
       const totalPages = Array.from({ length: pages }).map((item, index) => index + 1)
@@ -25,7 +25,9 @@ const twitterController = {
         ...t,
         description: t.description.substring(0, 50),
         User: t.User
+        // likeOrNot: t.Likes.filter(like => like.likeOrNot === true).length
       }))
+      // console.log('islike', tweets.likeOrNot)
       return res.render('tweets', { tweets, totalPages, prev, next, page })
     }
     )
@@ -57,6 +59,7 @@ const twitterController = {
         tweet = tweet.dataValues
         tweet.tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
         tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
+        console.log(tweet)
         return res.render('tweet', { tweet })
       })
   },
