@@ -10,6 +10,7 @@ const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 
 const db = require('../models')
+const { debug } = require('request')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -200,7 +201,7 @@ module.exports = {
   },
 
   putUser: async (req, res) => {
-    const nextURL = `/users/${req.params.id}`
+    const nextURL = `/users/${req.params.id}/tweets`
 
     if (!req.body.name) {
       req.flash('error_messages', 'name didn\'t exist')
@@ -241,7 +242,7 @@ module.exports = {
                     cover: user.cover,
                     avatar: user.avatar,
                   }).then(() => {
-                    return res.redirect(`/users/${req.params.id}`)
+                    return res.redirect(nextURL)
                   })
                 })
               })
@@ -252,7 +253,7 @@ module.exports = {
                 cover: user.cover,
                 avatar: user.avatar,
               }).then(() => {
-                return res.redirect(`/users/${req.params.id}`)
+                return res.redirect(nextURL)
               })
             }
           })
@@ -282,7 +283,7 @@ module.exports = {
                     cover: user.cover,
                     avatar: user.avatar,
                   }).then(() => {
-                    return res.redirect(`/users/${req.params.id}`)
+                    return res.redirect(nextURL)
                   })
                 })
               })
@@ -293,7 +294,7 @@ module.exports = {
                 cover: user.cover,
                 avatar: user.avatar,
               }).then(() => {
-                return res.redirect(`/users/${req.params.id}`)
+                return res.redirect(nextURL)
               })
             }
           })
@@ -306,7 +307,7 @@ module.exports = {
       cover: user.cover,
       avatar: user.avatar,
     }).then(() => {
-      return res.redirect(`/users/${req.params.id}`)
+      return res.redirect(nextURL)
     })
   },
 
