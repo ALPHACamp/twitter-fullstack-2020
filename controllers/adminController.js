@@ -43,10 +43,12 @@ const adminController = {
     )
   },
   deleteTweet: (req, res) => {
-    Tweet.findByPk(req.params.id).then(tweet => {
-      tweet.destroy()
-      return res.redirect('back')
-    })
+    Tweet.findOne({ id: req.params.id })
+      .then(tweet => {
+        tweet.destroy()
+        return res.redirect('back')
+      })
+      .catch(err => { console.log(err) })
   },
   getUsers: (req, res) => {
     User.findAll({
