@@ -40,7 +40,7 @@ const twitterController = {
   },
 
   createTwitters: (req, res, next) => {
-    const description = req.body.description
+    const description = req.body.homeDescription
     const UserId = helpers.getUser(req).id
 
     if (!description) {
