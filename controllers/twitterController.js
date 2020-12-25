@@ -35,32 +35,36 @@ const twitterController = {
         tweetLiked: t.Likes.filter(like => like.likeOrNot === true).length,
         tweetDisliked: t.Likes.filter(like => like.likeOrNot === false).length
       }))
-      console.log('result', result)
-      console.log('result.count', result.count)
-      console.log('req.query.page', req.query.page)
-      console.log('totalPages', totalPages)
-      console.log('offset', offset)
+      // console.log('result', result)
+      // console.log('result.count', result.count)
+      // console.log('req.query.page', req.query.page)
+      // console.log('totalPages', totalPages)
+      // console.log('offset', offset)
       return res.render('tweets', { tweets, totalPages, prev, next, page })
     })
   },
 
   createTwitters: (req, res, next) => {
     const description = req.body.description
-    const UserId = req.user.id
+    const UserId = helpers.getUser(req).id
 
     if (!description) {
       req.flash('error_messages', '內容不能為空白')
-      return res.redirect('back')
+      return res.status(302).redirect('back')
+    } else if (description.length > 140) {
+      req.flash('error_messages', '內容不能超過140字')
+      return res.status(302).redirect('back')
     }
+
     return Tweet.create({
       UserId, description
     })
-      .then(() => {
-        return res.redirect('back')
+      .then((tweet) => {
+        return res.status(302).redirect('back')
       })
       .catch(error => {
         console.log('createTwitter is error', error)
-        res.sendStatus(400)
+        return res.status(400).redirect('back')
       })
   },
 
@@ -76,14 +80,14 @@ const twitterController = {
         tweet = tweet.dataValues
         tweet.tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
         tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
-        console.log(tweet)
+        // console.log(tweet)
         return res.render('tweet', { tweet })
       })
   },
 
   postTwitters_thumbs_up: (req, res) => {
     tweetId = req.params.id
-    userId = req.user.id
+    userId = helpers.getUser(req).id
     Like.findOne({
       where: { UserId: userId, TweetId: tweetId }
     }).then(like => {
@@ -109,7 +113,7 @@ const twitterController = {
 
   postTwitters_thumbs_down: (req, res) => {
     tweetId = req.params.id
-    userId = req.user.id
+    userId = helpers.getUser(req).id
     Like.findOne({
       where: { UserId: userId, TweetId: tweetId }
     }).then(like => {
@@ -156,6 +160,20 @@ const twitterController = {
       comment: req.body.comment
     }).then(reply => {
       res.redirect('back')
+    })
+  },
+  
+  /// /////
+  // tweet test like
+  /// /////
+  postTwitters_unlike: (req, res) => {
+    tweetId = req.params.id
+    userId = helpers.getUser(req).id
+    Like.findOne({
+      where: { UserId: userId, TweetId: tweetId }
+    }).then(like => {
+      like.destroy()
+      return res.redirect('back')
     })
   }
 }
