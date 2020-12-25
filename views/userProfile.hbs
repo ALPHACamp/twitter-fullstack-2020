@@ -11,16 +11,20 @@
     <div class="row my-0"
         style="width:100%; height:120px; background-color:#808A87; background-size:cover; background-repeat:no-repeat; background-position: center;">
         <div style="position: relative;left: 15px; top: 60px; height: 120px; width: 120px;">
-            <img src="{{profileUser.avatar}}" alt=""
-                style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;background-color:#C4C4C4">
+            <a class="nav-link fw-bolder p-0 m-0" href="/user/{{profileUser.id}}?target=tweets">
+                <img src="{{profileUser.avatar}}" alt=""
+                    style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;background-color:#C4C4C4">
+            </a>
         </div>
     </div>
     {{else}}
     <div class="row my-0"
         style="width:100%; height:120px; background-image:url({{profileUser.cover}}); background-size:cover; background-repeat:no-repeat; background-position: center;">
         <div style="position: relative;left: 15px; top: 60px; height: 120px; width: 120px;">
-            <img src="{{profileUser.avatar}}" alt=""
-                style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;background-color:#C4C4C4">
+            <a class="nav-link fw-bolder p-0 m-0" href="/user/{{profileUser.id}}?target=tweets">
+                <img src="{{profileUser.avatar}}" alt=""
+                    style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;background-color:#C4C4C4">
+            </a>
         </div>
     </div>
     {{/ifcond}}

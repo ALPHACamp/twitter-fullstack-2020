@@ -4,7 +4,9 @@
   </div>
   <form class="postFormContainer" action="/tweets" method="POST">
     <div class="userImageContainer">
-      <img src="{{user.avatar}}" alt="User's profile picture" />
+      <a class="nav-link fw-bolder p-0 m-0" href="/user/{{user.id}}?target=tweets">
+        <img src="{{user.avatar}}" alt="User's profile picture" />
+      </a>
     </div>
     <div class="textareaContainer">
       <textarea class="home-descriptionInput" id="postTextarea" name="homeDescription" placeholder="有什麼新鮮事?"
