@@ -228,7 +228,7 @@ module.exports = {
     return Promise.all([
       imgur.uploadFile(avatarPath).then((img) => {
         return User.findByPk(req.params.id).then((user) => {
-          const newAvatar = req.files.avatar ? img.data.link : user.avatar,
+          const newAvatar = req.files.avatar ? img.data.link : user.avatar
           return newAvatar
         })
       }),
