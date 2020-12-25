@@ -5,11 +5,6 @@ const user = require('../models/user')
 const { User, Tweet, Reply, Like } = db
 const pageLimit = 10
 
-// JWT
-const jwt = require('jsonwebtoken')
-const passportJWT = require('passport-jwt')
-const ExtractJwt = passportJWT.ExtractJwt
-const JwtStrategy = passportJWT.Strategy
 
 const adminController = {
   signinPage: (req, res) => {

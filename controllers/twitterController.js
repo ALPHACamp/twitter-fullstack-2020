@@ -4,7 +4,6 @@ const { User, Like, Tweet, Reply } = db
 const helpers = require('../_helpers')
 const pageLimit = 10
 
-
 const twitterController = {
   getTwitters: (req, res) => {
     let offset = 0
@@ -42,7 +41,11 @@ const twitterController = {
   createTwitters: (req, res, next) => {
     const description = req.body.description
     const UserId = req.user.id
-    Tweet.create({
+    if (!description) {
+      req.flash('error_messages', '內容不能為空白')
+      return res.redirect('back')
+    }
+    return Tweet.create({
       UserId, description
     })
       .then(() => {
@@ -51,23 +54,6 @@ const twitterController = {
       .catch(error => {
         console.log('createTwitter is error', error)
         res.sendStatus(400)
-      })
-  },
-
-  getTwitter: (req, res) => {
-    tweetId = req.params.id
-    Tweet.findByPk(tweetId, {
-      include: [
-        { model: Like },
-        { model: Reply, include: [User] }
-      ]
-    })
-      .then(tweet => {
-        tweet = tweet.dataValues
-        tweet.tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
-        tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
-        console.log(tweet)
-        return res.render('tweet', { tweet })
       })
   },
 

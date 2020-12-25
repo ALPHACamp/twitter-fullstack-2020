@@ -5,11 +5,7 @@ const helpers = require('../_helpers')
 
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User // input the user schema
-const Tweet = db.Tweet
-const Reply = db.Reply
-const Like = db.Like
-const Followship = db.Followship
+const { User, Like, Tweet, Reply, Followship } = db
 
 const fs = require('fs')
 const multer = require('multer')
@@ -190,8 +186,9 @@ const userController = {
       profileUser.Tweets = profileUser.Tweets.sort((a, b) => b.latestLiketime - a.latestLiketime)
     }
 
-    return res.render('userProfile', { profileUser, isFollowed, target })
 
+    const id = helpers.getUser(req).id
+    return res.render('userProfile', { profileUser, isFollowed, target })
   },
 
   updateProfile: (req, res) => {
@@ -301,6 +298,27 @@ const userController = {
       followship.destroy()
       return res.redirect('back')
     })
+  },
+
+  /// ///////////
+  // Users
+  /// ///////////
+  getUsers: (req, res) => {
+    User.findAll({
+      where: { role: '' }, include: [Tweet, Like, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]
+    })
+      .then(users => {
+        users = users.map(user => ({
+          ...user.dataValues,
+          tweetCount: user.Tweets.length,
+          followingCount: user.Followings.length,
+          followerCount: user.Followers.length,
+          tweetLiked: user.Likes.filter(like => like.likeOrNot === true).length,
+          tweetDisliked: user.Likes.filter(unlike => unlike.likeOrNot === false).length
+        }))
+        users = users.sort((a, b) => b.followerCount - a.followerCount)
+        return res.render('users', { users })
+      }).catch(err => console.log(err))
   },
 
   /// ///////////
