@@ -228,32 +228,24 @@ module.exports = {
     return Promise.all([
       imgur.uploadFile(avatarPath).then((img) => {
         return User.findByPk(req.params.id).then((user) => {
-          user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            avatar: req.files.avatar ? img.data.link : user.avatar,
-            cover: user.cover
-          })
+          const newAvatar = req.files.avatar ? img.data.link : user.avatar,
+          return newAvatar
         })
       }),
       imgur.uploadFile(coverPath).then((img) => {
         return User.findByPk(req.params.id).then((user) => {
-          user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            avatar: user.avatar,
-            cover: req.files.cover ? img.data.link : user.cover
-          })
+          const newCover = req.files.cover ? img.data.link : user.cover
+          return newCover
         })
       })
     ])
-      .then(() => {
+      .then(([avatar, cover]) => {
         return User.findByPk(req.params.id).then((user) => {
           user.update({
             name: req.body.name,
             introduction: req.body.introduction,
-            avatar: user.avatar,
-            cover: user.cover
+            avatar: avatar,
+            cover: cover
           }).then(() => {
             return res.redirect('back')
           })
