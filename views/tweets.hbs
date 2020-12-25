@@ -7,9 +7,13 @@
       <img src="{{user.avatar}}" alt="User's profile picture" />
     </div>
     <div class="textareaContainer">
-      <textarea id="postTextarea" name="description" placeholder="有什麼新鮮事?"></textarea>
+      <textarea class="home-descriptionInput" id="postTextarea" name="homeDescription" placeholder="有什麼新鮮事?"
+        onkeyup="countWords(name,140)" maxlength="140"></textarea>
+      <div class="home-descriptionCount text-end mt-0" style="color:#657786;font-size:15px">
+        0/140
+      </div>
       <input type="hidden" name="userId" value="{{user.id}}" />
-      <div class="buttonsContainer"><button id="submitPostButton">發文</button>
+      <div class="buttonsContainer mt-1"><button id="submitPostButton">發文</button>
       </div>
     </div>
   </form>
