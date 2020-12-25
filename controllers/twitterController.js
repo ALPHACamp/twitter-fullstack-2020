@@ -35,11 +35,6 @@ const twitterController = {
         tweetLiked: t.Likes.filter(like => like.likeOrNot === true).length,
         tweetDisliked: t.Likes.filter(like => like.likeOrNot === false).length
       }))
-      // console.log('result', result)
-      // console.log('result.count', result.count)
-      // console.log('req.query.page', req.query.page)
-      // console.log('totalPages', totalPages)
-      // console.log('offset', offset)
       return res.render('tweets', { tweets, totalPages, prev, next, page })
     })
   },
@@ -65,23 +60,6 @@ const twitterController = {
       .catch(error => {
         console.log('createTwitter is error', error)
         return res.status(400).redirect('back')
-      })
-  },
-
-  getTwitter: (req, res) => {
-    tweetId = req.params.id
-    Tweet.findByPk(tweetId, {
-      include: [
-        { model: Like },
-        { model: Reply, include: [User] }
-      ]
-    })
-      .then(tweet => {
-        tweet = tweet.dataValues
-        tweet.tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
-        tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
-        // console.log(tweet)
-        return res.render('tweet', { tweet })
       })
   },
 
@@ -162,7 +140,7 @@ const twitterController = {
       res.redirect('back')
     })
   },
-  
+
   /// /////
   // tweet test like
   /// /////

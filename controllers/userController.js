@@ -5,11 +5,7 @@ const helpers = require('../_helpers')
 
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User // input the user schema
-const Tweet = db.Tweet
-const Reply = db.Reply
-const Like = db.Like
-const Followship = db.Followship
+const { User, Like, Tweet, Reply, Followship } = db
 
 const fs = require('fs')
 const multer = require('multer')
@@ -193,23 +189,6 @@ const userController = {
 
     const id = helpers.getUser(req).id
     return res.render('userProfile', { profileUser, isFollowed, target })
-    /*
-    axios.get(`http://localhost:3000/api/users/${id}`)
-      .then(function (response) {
-        // 1.handle success
-        let data = response.data
-        return data
-      })
-      .catch(function (error) {
-        // 2.handle error
-        console.log(error)
-      })
-      .then(data => { return res.render('userProfile', { profileUser, isFollowed, target, data }) })
-    */
-
-    return res.render('userProfile', { profileUser, isFollowed, target })
-
-
   },
 
   updateProfile: (req, res) => {

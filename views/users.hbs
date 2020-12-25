@@ -1,7 +1,6 @@
-
-  <div class="list-group-item d-flex flex-wrap p-3">
-    {{#each users}}
-    <div class=" card me-2 mb-2" style="width:245px;height:314px">
+<div class="list-group-item d-flex flex-wrap p-3">
+  {{#each users}}
+  <div class=" card me-2 mb-2" style="width:245px;height:314px">
     <a href="/user/{{this.id}}" class="nav-link" style="color:black;">
       <div class="" style="">
         <img src="{{this.cover}}" class="card-img-top" alt="" style=" height:140px ; background-color:  #C4C4C4;">
@@ -16,8 +15,6 @@
             <div class=""><i class="far fa-comment"></i> {{tc this.tweetCount}}</div>
             <div class=""><i class="far fa-thumbs-up"></i> {{tc this.tweetLiked}}</div>
             <div class=""><i class="far fa-thumbs-down"></i> {{tc this.tweetDisliked}}</div>
-            {{!-- <div class=""><i class="fas fa-heart"></i></i> {{this.tweetDisliked}}</div>
-            <div class=""><i class="fas fa-heart-broken"></i> {{this.tweetLiked}}</div> --}}
           </div>
           <div class="followship d-flex justify-content-evenly small">
             <div class=""><strong>{{tc this.followingCount}}</strong><strong>個</strong>
@@ -30,6 +27,6 @@
         </div>
       </div>
     </a>
-    </div>
-    {{/each}}
+  </div>
+  {{/each}}
 </div>

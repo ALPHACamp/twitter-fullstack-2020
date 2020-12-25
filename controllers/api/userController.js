@@ -69,7 +69,7 @@ const userController = {
     }
   },
 
-  getReplies: (req, res) => {
+  getTwitter: (req, res) => {
     const tweetId = req.params.id
     Tweet.findByPk(tweetId, { include: [{ model: Reply, include: [User] }, User] })
       .then((tweet) => {
