@@ -31,8 +31,8 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "request": "^2.88.2",
-    "sequelize": "^4.42.0",
     "sequelize-cli": "^5.5.0",
+    "sequelize": "^4.42.0",
     "sinon": "^7.2.3",
     "sinon-chai": "^3.3.0"
   },

@@ -1,18 +1,15 @@
 const { sequelize } = require('../models')
 
-const fs = require('fs');
-
 const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const helper = require('../_helpers')
 const moment = require('moment')
 const axios = require('axios')
-const { Op, TimeoutError } = require('sequelize')
+const { Op } = require('sequelize')
 const bcrypt = require('bcryptjs')
 
 const db = require('../models')
-const { debug } = require('request')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -217,32 +214,28 @@ module.exports = {
 
     // ---------------------------------------------------------------------------------------
 
-    const user = await User.findByPk(req.params.id)
     const tempFileAddr = __dirname + '\\..\\icon\\temp.png'
     const avatarPath = req.files.avatar ? req.files.avatar[0].path : tempFileAddr
     const coverPath = req.files.cover ? req.files.cover[0].path : tempFileAddr
 
-    imgur.setClientId(process.env.IMGUR_CLIENT_ID);
+    // console.log('--------------------------------------------------------------------------')
+    // console.log('avatarPath ' + avatarPath)
+    // console.log('coverPath ' + coverPath)
 
-    console.log('--------------------------------------------------------------------------')
-    console.log('avatarPath ' + avatarPath)
-    console.log('coverPath ' + coverPath)
+    imgur.setClientId(process.env.IMGUR_CLIENT_ID);
 
     return Promise.all([
       imgur.uploadFile(avatarPath).then((img) => {
-        try {
-          return User.findByPk(req.params.id).then((user) => {
-            user.update({
-              name: req.body.name,
-              introduction: req.body.introduction,
-              avatar: req.files.avatar ? img.data.link : user.avatar,
-              cover: user.cover
-            })
+        return User.findByPk(req.params.id).then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: req.files.avatar ? img.data.link : user.avatar,
+            cover: user.cover
           })
-        } catch (err) { }
+        })
       }),
       imgur.uploadFile(coverPath).then((img) => {
-
         return User.findByPk(req.params.id).then((user) => {
           user.update({
             name: req.body.name,
