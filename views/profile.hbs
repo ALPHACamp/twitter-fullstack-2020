@@ -30,6 +30,17 @@
               {{#ifCond user.id currentUser.id }}
               <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                 data-bs-target="#userEdit">編輯個人資料</button>
+              {{else}}
+              {{#if currentUser.isFollowed}}
+              <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/followships" method="POST">
+                <input type="hidden" value="{{user.id}}" name="id">
+                <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+              </form>
+              {{/if}}
               {{/ifCond}}
             </span>
           </div>
@@ -48,26 +59,26 @@
         </div>
       </div>
       <div class="row ">
-        <ul class="nav nav-tabs border bg-white" >
+        <ul class="nav nav-tabs border bg-white">
           <li class="nav-item ">
             {{#ifCond page ''}}
-            <a class="nav-link active" href="/users/{{user.id}}/tweets?page=" >推文</a>
+            <a class="nav-link active" href="/users/{{user.id}}/tweets?page=">推文</a>
             {{else}}
-            <a class="nav-link" href="/users/{{user.id}}/tweets?page=" >推文</a>
+            <a class="nav-link" href="/users/{{user.id}}/tweets?page=">推文</a>
             {{/ifCond}}
           </li>
           <li class="nav-item">
             {{#ifCond page 'reply'}}
-            <a class="nav-link active" href="/users/{{user.id}}/replies?page=reply" >推文與回復</a>
+            <a class="nav-link active" href="/users/{{user.id}}/replies?page=reply">推文與回復</a>
             {{else}}
-            <a class="nav-link" href="/users/{{user.id}}/replies?page=reply" >推文與回復</a>
+            <a class="nav-link" href="/users/{{user.id}}/replies?page=reply">推文與回復</a>
             {{/ifCond}}
           </li>
           <li class="nav-item">
             {{#ifCond page 'like'}}
-            <a class="nav-link active" href="/users/{{user.id}}/likes?page=like" >喜歡的內容</a>
+            <a class="nav-link active" href="/users/{{user.id}}/likes?page=like">喜歡的內容</a>
             {{else}}
-            <a class="nav-link" href="/users/{{user.id}}/likes?page=like" >喜歡的內容</a>
+            <a class="nav-link" href="/users/{{user.id}}/likes?page=like">喜歡的內容</a>
             {{/ifCond}}
           </li>
         </ul>
@@ -105,8 +116,7 @@
         <div class="modal-body">
           <div class="form-group"
             style="background: url({{user.cover}}); height:8em; background-size: cover; background-repeat: no-repeat">
-            <label for="cover"
-              style="position: relative; left:45%; top: 48%; font-size:20px; color:gray; "><i
+            <label for="cover" style="position: relative; left:45%; top: 48%; font-size:20px; color:gray; "><i
                 class="fas fa-camera"></i></label>
             <input type="file" class="form-control-file" id="cover" name="cover" style="display: none;">
             <div>
@@ -417,7 +427,7 @@
     border-radius: 100px;
   }
 
-  .nav-item{
+  .nav-item {
     width: 10em;
     text-align: center;
   }
