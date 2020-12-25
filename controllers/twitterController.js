@@ -152,7 +152,8 @@ const twitterController = {
     }).then(like => {
       like.destroy()
         .then((u) => {
-          return res.status(302).json({ status: 'success', message: "" })
+          return res.status(302).redirect('back')
+          // return res.status(302).json({ status: 'success', message: "" })
         })
       // return res.redirect('back')
     })
