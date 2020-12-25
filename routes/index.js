@@ -9,8 +9,7 @@ const auth = require('../middleware/auth')
 
 router.use('/api', api)
 router.use('/admin', admin)
-// router.use('/users', auth.authenticated, users)
-router.use('/users', users)
+router.use('/users', auth.authenticated, users)
 router.use('/tweets', auth.authenticated, tweets)
 router.use('/', home)
 
