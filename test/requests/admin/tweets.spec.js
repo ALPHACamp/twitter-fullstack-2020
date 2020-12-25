@@ -63,7 +63,6 @@ describe('# Admin::Tweet request', () => {
           .end(function (err, res) {
             if (err) return done(err);
             res.text.should.include('Tweet1')
-            db.Tweet.findAll({ raw: true }).then(tweet => console.log(tweet))
 
             done();
           });
