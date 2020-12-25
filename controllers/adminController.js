@@ -40,11 +40,29 @@ const adminController = {
   deleteTweet: (req, res) => {
     Tweet.findOne({ where: { id: req.params.id } })
       .then(tweet => {
-        tweet.destroy()
-        return res.redirect('back')
+        if (tweet) {
+          tweet.destroy()
+            .then((u) => {
+              return res.status(302).redirect('back')
+            })
+        }
       })
       .catch(err => { console.log(err) })
   },
+
+  deleteTweets: (req, res) => {
+    Tweet.findAll()
+      .then(tweets => {
+        for (const tweet of tweets) {
+          tweet.destroy()
+            .then((u) => {
+              return res.status(302).redirect('back')
+            })
+        }
+      })
+      .catch(err => { console.log(err) })
+  },
+
   getUsers: (req, res) => {
     User.findAll({
       where: { role: '' }, include: [Tweet, Like, { model: User, as: 'Followers' }, { model: User, as: 'Followings' }]

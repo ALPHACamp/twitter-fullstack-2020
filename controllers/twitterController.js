@@ -40,7 +40,7 @@ const twitterController = {
   },
 
   createTwitters: (req, res, next) => {
-    const description = req.body.homeDescription
+    const description = req.body.homeDescription || req.body.description
     const UserId = helpers.getUser(req).id
 
     if (!description) {
@@ -151,7 +151,11 @@ const twitterController = {
       where: { UserId: userId, TweetId: tweetId }
     }).then(like => {
       like.destroy()
-      return res.redirect('back')
+        .then((u) => {
+          return res.status(302).redirect('back')
+          // return res.status(302).json({ status: 'success', message: "" })
+        })
+      // return res.redirect('back')
     })
   }
 }

@@ -298,8 +298,12 @@ const userController = {
     Followship.findOne({
       where: { followerId: req.user.id, followingId: req.params.id }
     }).then(followship => {
+      console.log("before delete=", followship)
       followship.destroy()
-      return res.redirect('back')
+        .then((u) => {
+          return res.status(302).json({ status: 'success', message: "" })
+          return res.redirect('back')
+        })
     })
   },
 
@@ -349,7 +353,9 @@ const userController = {
     }).then(followship => {
       if (followship) {
         followship.destroy()
-        return res.status(302).json({ status: 'success', message: "" })
+          .then((u) => {
+            return res.status(302).json({ status: 'success', message: "" })
+          })
       } else {
         return res.json({ status: 'error', message: "there are no data." })
       }
