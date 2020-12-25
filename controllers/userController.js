@@ -315,10 +315,8 @@ module.exports = {
     const id = req.params.id
     const userId = helper.getUser(req).id
     const currentUser = helper.getUser(req)
-    axios.get(`http://localhost:3000/api/users/${id}?userId=${userId}`).then(function (response) {
-      const data = response.data
-      res.render('edit', { data, currentUser, navPage: 'setting' })
-    })
+    const data = currentUser
+    res.render('edit', { data, currentUser, navPage: 'setting' })
   },
 
   putUserInfo: (req, res) => {
