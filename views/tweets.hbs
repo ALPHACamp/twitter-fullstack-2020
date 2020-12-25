@@ -38,15 +38,15 @@
           <div class='postButtonContainer'>
             <a href="/tweets/{{this.id}}/replies">
               <button>
-                <i class='far fa-comment'>{{tc tweet.Replies.length}}</i>
+                <i class='far fa-comment'>{{tc this.Replies.length}}</i>
               </button>
             </a>
           </div>
           {{else}}
           <div class='postButtonContainer'>
             <a href="/tweets/{{this.id}}/replies">
-              <button style="color:#1FA2F1"">
-                <i class='far fa-comment'>{{tc tweet.Replies.length}}</i>
+              <button style="color:#1FA2F1">
+                <i class='far fa-comment'>{{tc this.Replies.length}}</i>
               </button>
             </a>
           </div>
@@ -54,10 +54,10 @@
           {{#ifcond tweetLiked "===" 0}}
           <div class='postButtonContainer'>
             <form action=" /tweets/{{this.id}}/thumbs_up" method="POST">
-                <button type="submit">
-                  <i class='far fa-thumbs-up'></i>{{tc tweetLiked}}
-                </button>
-                </form>
+              <button type="submit">
+                <i class='far fa-thumbs-up'></i>{{tc tweetLiked}}
+              </button>
+            </form>
           </div>
           {{else}}
           <div class='postButtonContainer'>

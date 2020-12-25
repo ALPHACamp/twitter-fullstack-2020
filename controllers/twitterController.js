@@ -5,21 +5,29 @@ const helpers = require('../_helpers')
 const pageLimit = 10
 
 const twitterController = {
+
   getTwitters: (req, res) => {
     let offset = 0
 
     if (req.query.page) {
       offset = (Number(req.query.page) - 1) * pageLimit
     }
-    Tweet.findAndCountAll({
-      include: [User, { model: Like }, { model: Reply, include: [User] }], order: [['createdAt', 'DESC']], offset: offset, limit: pageLimit
-    }).then(result => {
+
+    Promise.all([
+      Tweet.count(),
+      Tweet.findAll({
+        include: [User, { model: Like }, { model: Reply, include: [User] }],
+        order: [['createdAt', 'DESC']],
+        offset: offset,
+        limit: pageLimit
+      })
+    ]).then(([count, result]) => {
       const page = Number(req.query.page) || 1
-      const pages = Math.ceil(result.count / pageLimit)
+      const pages = Math.ceil(count / pageLimit)
       const totalPages = Array.from({ length: pages }).map((item, index) => index + 1)
       const prev = page - 1 <= 0 ? 1 : page - 1
       const next = page + 1 > pages ? pages : page + 1
-      const tweets = result.rows.map(t => ({
+      const tweets = result.map(t => ({
         ...t.dataValues,
         description: t.dataValues.description.substring(0, 50),
         User: t.User.dataValues,
@@ -33,13 +41,18 @@ const twitterController = {
       console.log('totalPages', totalPages)
       console.log('offset', offset)
       return res.render('tweets', { tweets, totalPages, prev, next, page })
-    }
-    )
+    })
   },
+
   createTwitters: (req, res, next) => {
     const description = req.body.description
     const UserId = req.user.id
-    Tweet.create({
+
+    if (!description) {
+      req.flash('error_messages', '內容不能為空白')
+      return res.redirect('back')
+    }
+    return Tweet.create({
       UserId, description
     })
       .then(() => {
