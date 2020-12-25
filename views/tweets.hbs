@@ -13,6 +13,7 @@
       </div>
     </div>
   </form>
+
   {{#each tweets}}
   <div class='post'>
 
@@ -23,33 +24,68 @@
       <div class='postContentContainer'>
         <div class='header'>
           <a href='/user/{{this.User.id}}' class='displayName'>{{this.User.name}}</a>
+          <span class='username'>${{this.User.name}}</span>
           <span class='date'>${{moment this.User.createdAt}}</span>
         </div>
         <div class='postBody'>
-          <span>{{this.description}}</span>
+
+          <span><a href="/tweets/{{this.id}}/replies" style='text-decoration:none; color:black'
+              ;>{{this.description}}</a></span>
+
         </div>
         <div class='postFooter'>
+          {{#ifcond tweet.Replies.length "===" "0"}}
           <div class='postButtonContainer'>
-            <a href="/tweets/{{this.User.id}}">
+            <a href="/tweets/{{this.id}}/replies">
               <button>
-
-                <i class='far fa-comment'>
-                  <span>{{this.replies.length}}</span></i>
+                <i class='far fa-comment'>{{tc tweet.Replies.length}}</i>
               </button>
             </a>
           </div>
+          {{else}}
           <div class='postButtonContainer'>
-            <button>
-              <i class='far fa-thumbs-up'></i>
-              <span>{{this.tweetLiked.length}}</span>
-            </button>
+            <a href="/tweets/{{this.id}}/replies">
+              <button style="color:#1FA2F1"">
+                <i class='far fa-comment'>{{tc tweet.Replies.length}}</i>
+              </button>
+            </a>
           </div>
+          {{/ifcond}}
+          {{#ifcond tweetLiked "===" 0}}
           <div class='postButtonContainer'>
-            <button>
-              <i class='far fa-thumbs-down'></i>
-              <span>{{this.tweetDisliked.length}}</span>
-            </button>
+            <form action=" /tweets/{{this.id}}/thumbs_up" method="POST">
+                <button type="submit">
+                  <i class='far fa-thumbs-up'></i>{{tc tweetLiked}}
+                </button>
+                </form>
           </div>
+          {{else}}
+          <div class='postButtonContainer'>
+            <form action="/tweets/{{this.id}}/thumbs_up" method="POST">
+              <button type="submit" style="color:#1FA2F1">
+                <i class='far fa-thumbs-up'></i>{{tc tweetLiked}}
+              </button>
+            </form>
+          </div>
+          {{/ifcond}}
+
+          {{#ifcond tweetDisliked "===" 0}}
+          <div class='postButtonContainer'>
+            <form action="/tweets/{{this.id}}/thumbs_down" method="POST">
+              <button type="submit">
+                <i class='far fa-thumbs-down'></i>{{tc tweetDisliked}}
+              </button>
+            </form>
+          </div>
+          {{else}}
+          <div class='postButtonContainer'>
+            <form action="/tweets/{{this.id}}/thumbs_down" method="POST">
+              <button type="submit" style="color:#1FA2F1" ;>
+                <i class='far fa-thumbs-down'></i>{{tc tweetDisliked}}
+              </button>
+            </form>
+          </div>
+          {{/ifcond}}
         </div>
       </div>
     </div>
