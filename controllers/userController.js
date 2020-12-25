@@ -200,7 +200,7 @@ module.exports = {
     })
   },
 
-  putUser: async (req, res) => {
+  putUser: (req, res) => {
     const nextURL = `/users/${req.params.id}/tweets`
 
     if (!req.body.name) {
