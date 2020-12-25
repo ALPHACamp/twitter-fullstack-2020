@@ -1,12 +1,14 @@
 const { sequelize } = require('../models')
 
-const imgur = require('imgur-node-api')
+const fs = require('fs');
+
+const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const helper = require('../_helpers')
 const moment = require('moment')
 const axios = require('axios')
-const { Op } = require('sequelize')
+const { Op, TimeoutError } = require('sequelize')
 const bcrypt = require('bcryptjs')
 
 const db = require('../models')
@@ -213,102 +215,56 @@ module.exports = {
       return res.redirect(nextURL)
     }
 
+    // ---------------------------------------------------------------------------------------
+
     const user = await User.findByPk(req.params.id)
-    const avatarFile = req.files.avatar
-    const coverFile = req.files.cover
+    const tempFileAddr = __dirname + '\\..\\icon\\temp.png'
+    const avatarPath = req.files.avatar ? req.files.avatar[0].path : tempFileAddr
+    const coverPath = req.files.cover ? req.files.cover[0].path : tempFileAddr
 
-    imgur.setClientID(process.env.IMGUR_CLIENT_ID);
+    imgur.setClientId(process.env.IMGUR_CLIENT_ID);
 
-    if (coverFile) {
-      imgur.upload(coverFile[0].path, (err, img) => {
-        return user.update({
-          name: req.body.name,
-          introduction: req.body.introduction,
-          cover: coverFile ? img.data.link : user.cover,
-          avatar: user.avatar,
-        })
-          .then(() => {
-            if (avatarFile) {
-              imgur.upload(avatarFile[0].path, (err, img) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: avatarFile ? img.data.link : user.avatar,
-                  cover: user.cover,
-                }).then(() => {
-                  return user.update({
-                    name: req.body.name,
-                    introduction: req.body.introduction,
-                    cover: user.cover,
-                    avatar: user.avatar,
-                  }).then(() => {
-                    return res.redirect(nextURL)
-                  })
-                })
-              })
-            } else {
-              return user.update({
-                name: req.body.name,
-                introduction: req.body.introduction,
-                cover: user.cover,
-                avatar: user.avatar,
-              }).then(() => {
-                return res.redirect(nextURL)
-              })
-            }
+    console.log('--------------------------------------------------------------------------')
+    console.log('avatarPath ' + avatarPath)
+    console.log('coverPath ' + coverPath)
+
+    return Promise.all([
+      imgur.uploadFile(avatarPath).then((img) => {
+        try {
+          return User.findByPk(req.params.id).then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              avatar: req.files.avatar ? img.data.link : user.avatar,
+              cover: user.cover
+            })
           })
-      })
-    }
+        } catch (err) { }
+      }),
+      imgur.uploadFile(coverPath).then((img) => {
 
-    if (avatarFile) {
-      imgur.upload(avatarFile[0].path, (err, img) => {
-        return user.update({
-          name: req.body.name,
-          introduction: req.body.introduction,
-          avatar: avatarFile ? img.data.link : user.avatar,
-          cover: user.cover,
-        })
-          .then(() => {
-            if (coverFile) {
-              imgur.upload(coverFile[0].path, (err, img) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  cover: coverFile ? img.data.link : user.cover,
-                  avatar: user.avatar,
-                }).then(() => {
-                  return user.update({
-                    name: req.body.name,
-                    introduction: req.body.introduction,
-                    cover: user.cover,
-                    avatar: user.avatar,
-                  }).then(() => {
-                    return res.redirect(nextURL)
-                  })
-                })
-              })
-            } else {
-              return user.update({
-                name: req.body.name,
-                introduction: req.body.introduction,
-                cover: user.cover,
-                avatar: user.avatar,
-              }).then(() => {
-                return res.redirect(nextURL)
-              })
-            }
+        return User.findByPk(req.params.id).then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: user.avatar,
+            cover: req.files.cover ? img.data.link : user.cover
           })
+        })
       })
-    }
-
-    return user.update({
-      name: req.body.name,
-      introduction: req.body.introduction,
-      cover: user.cover,
-      avatar: user.avatar,
-    }).then(() => {
-      return res.redirect(nextURL)
-    })
+    ])
+      .then(() => {
+        return User.findByPk(req.params.id).then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: user.avatar,
+            cover: user.cover
+          }).then(() => {
+            return res.redirect('back')
+          })
+        })
+      })
   },
 
   getEdit: (req, res) => {
