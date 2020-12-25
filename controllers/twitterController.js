@@ -5,21 +5,29 @@ const helpers = require('../_helpers')
 const pageLimit = 10
 
 const twitterController = {
+
   getTwitters: (req, res) => {
     let offset = 0
 
     if (req.query.page) {
       offset = (Number(req.query.page) - 1) * pageLimit
     }
-    Tweet.findAndCountAll({
-      include: [User, { model: Like }, { model: Reply, include: [User] }], order: [['createdAt', 'DESC']], offset: offset, limit: pageLimit
-    }).then(result => {
+
+    Promise.all([
+      Tweet.count(),
+      Tweet.findAll({
+        include: [User, { model: Like }, { model: Reply, include: [User] }],
+        order: [['createdAt', 'DESC']],
+        offset: offset,
+        limit: pageLimit
+      })
+    ]).then(([count, result]) => {
       const page = Number(req.query.page) || 1
-      const pages = Math.ceil(result.count / pageLimit)
+      const pages = Math.ceil(count / pageLimit)
       const totalPages = Array.from({ length: pages }).map((item, index) => index + 1)
       const prev = page - 1 <= 0 ? 1 : page - 1
       const next = page + 1 > pages ? pages : page + 1
-      const tweets = result.rows.map(t => ({
+      const tweets = result.map(t => ({
         ...t.dataValues,
         description: t.dataValues.description.substring(0, 50),
         User: t.User.dataValues,
@@ -27,50 +35,37 @@ const twitterController = {
         tweetLiked: t.Likes.filter(like => like.likeOrNot === true).length,
         tweetDisliked: t.Likes.filter(like => like.likeOrNot === false).length
       }))
-      console.log('result', result)
-      console.log('result.count', result.count)
-      console.log('req.query.page', req.query.page)
-      console.log('totalPages', totalPages)
-      console.log('offset', offset)
       return res.render('tweets', { tweets, totalPages, prev, next, page })
-    }
-    )
+    })
   },
+
   createTwitters: (req, res, next) => {
     const description = req.body.description
-    const UserId = req.user.id
-    Tweet.create({
+    const UserId = helpers.getUser(req).id
+
+    if (!description) {
+      req.flash('error_messages', '內容不能為空白')
+      return res.status(302).redirect('back')
+    } else if (description.length > 140) {
+      req.flash('error_messages', '內容不能超過140字')
+      return res.status(302).redirect('back')
+    }
+
+    return Tweet.create({
       UserId, description
     })
-      .then(() => {
-        return res.redirect('back')
+      .then((tweet) => {
+        return res.status(302).redirect('back')
       })
       .catch(error => {
         console.log('createTwitter is error', error)
-        res.sendStatus(400)
-      })
-  },
-
-  getTwitter: (req, res) => {
-    tweetId = req.params.id
-    Tweet.findByPk(tweetId, {
-      include: [
-        { model: Like },
-        { model: Reply, include: [User] }
-      ]
-    })
-      .then(tweet => {
-        tweet = tweet.dataValues
-        tweet.tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
-        tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
-        console.log(tweet)
-        return res.render('tweet', { tweet })
+        return res.status(400).redirect('back')
       })
   },
 
   postTwitters_thumbs_up: (req, res) => {
     tweetId = req.params.id
-    userId = req.user.id
+    userId = helpers.getUser(req).id
     Like.findOne({
       where: { UserId: userId, TweetId: tweetId }
     }).then(like => {
@@ -96,7 +91,7 @@ const twitterController = {
 
   postTwitters_thumbs_down: (req, res) => {
     tweetId = req.params.id
-    userId = req.user.id
+    userId = helpers.getUser(req).id
     Like.findOne({
       where: { UserId: userId, TweetId: tweetId }
     }).then(like => {
@@ -143,6 +138,20 @@ const twitterController = {
       comment: req.body.comment
     }).then(reply => {
       res.redirect('back')
+    })
+  },
+
+  /// /////
+  // tweet test like
+  /// /////
+  postTwitters_unlike: (req, res) => {
+    tweetId = req.params.id
+    userId = helpers.getUser(req).id
+    Like.findOne({
+      where: { UserId: userId, TweetId: tweetId }
+    }).then(like => {
+      like.destroy()
+      return res.redirect('back')
     })
   }
 }
