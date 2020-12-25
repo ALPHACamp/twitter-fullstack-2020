@@ -3,8 +3,6 @@ const db = require('../models')
 const { User, Like, Tweet, Reply } = db
 const helpers = require('../_helpers')
 const pageLimit = 10
-const helpers = require('../utils/hbsHelpers')
-
 
 const twitterController = {
   getTwitters: (req, res) => {
@@ -22,13 +20,18 @@ const twitterController = {
       const prev = page - 1 <= 0 ? 1 : page - 1
       const next = page + 1 > pages ? pages : page + 1
       const tweets = result.rows.map(t => ({
-        ...t,
+        ...t.dataValues,
         description: t.dataValues.description.substring(0, 50),
         User: t.User.dataValues,
         replies: t.Replies,
         tweetLiked: t.Likes.filter(like => like.likeOrNot === true).length,
         tweetDisliked: t.Likes.filter(like => like.likeOrNot === false).length
       }))
+      console.log('result', result)
+      console.log('result.count', result.count)
+      console.log('req.query.page', req.query.page)
+      console.log('totalPages', totalPages)
+      console.log('offset', offset)
       return res.render('tweets', { tweets, totalPages, prev, next, page })
     }
     )
@@ -47,7 +50,6 @@ const twitterController = {
         res.sendStatus(400)
       })
   },
-
 
   getTwitter: (req, res) => {
     tweetId = req.params.id
