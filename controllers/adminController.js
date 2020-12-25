@@ -38,7 +38,7 @@ const adminController = {
     )
   },
   deleteTweet: (req, res) => {
-    Tweet.findOne({ id: req.params.id })
+    Tweet.findOne({ where: { id: req.params.id } })
       .then(tweet => {
         tweet.destroy()
         return res.redirect('back')
