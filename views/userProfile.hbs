@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="avatar"
                                     style="position:absolute;left: 30px;top: 140px; width: 120px;height:120px">
-                                    <img src="{{user.avatar}}" alt=""
+                                    <img class="edit-avatar" src="{{user.avatar}}" alt=""
                                         style="height: 120px; width: 120px; border-radius: 50%; border: 3px solid white;background-color:#C4C4C4">
                                     <a class="avatar-hover" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                         data-bs-target="#updateAvatarModal">
@@ -263,8 +263,7 @@
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label for="avatar" role="button"
-                                        class="btn btn-primary upload-file-btn">+上傳照片</label>
+                                    <label for="avatar" class="upload-file-btn"></label>
                                     <input type="file" class="form-control-file" id="avatar" name="avatar">
                                 </div>
                             </div>
@@ -301,7 +300,7 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="cover" role="button" class="btn btn-primary">+上傳照片</label>
+                                <label for="cover"></label>
                                 <input type="file" class="form-control-file" id="cover" name="cover">
                             </div>
                         </div>
