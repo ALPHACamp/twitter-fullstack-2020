@@ -6,7 +6,7 @@ module.exports = {
     return Promise.all(Array.from({ length: 5 }).map((d, i) => (
       queryInterface.bulkInsert('Tweets',
         Array.from({ length: 10 }).map((currentValue, j) => ({
-          UserId: i + 2,
+          UserId: Math.floor(Math.random() * 5) + 1,
           description: faker.lorem.sentence(),
           createdAt: new Date(),
           updatedAt: new Date()
