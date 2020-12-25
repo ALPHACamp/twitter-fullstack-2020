@@ -1,32 +1,54 @@
 const db = require('../models')
-const User = db.User // input the user schema
-const Like = db.Like
-const Tweet = db.Tweet
-const Reply = db.Reply
+
+const { User, Like, Tweet, Reply } = db
+const helpers = require('../_helpers')
+const pageLimit = 10
 
 const twitterController = {
   getTwitters: (req, res) => {
-    Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User],
-      order: [['createdAt', 'DESC']]
-    }).then(tweets => {
-      // console.log('tweets result', tweets)
-      tweets = tweets.map(tweet => ({
-        ...tweet,
-        description: tweet.description.substring(0, 50)
+    let offset = 0
+
+    if (req.query.page) {
+      offset = (Number(req.query.page) - 1) * pageLimit
+    }
+    Tweet.findAndCountAll({
+      include: [User, { model: Like }, { model: Reply, include: [User] }], order: [['createdAt', 'DESC']], offset: offset, limit: pageLimit
+    }).then(result => {
+      const page = Number(req.query.page) || 1
+      const pages = Math.ceil(result.count / pageLimit)
+      const totalPages = Array.from({ length: pages }).map((item, index) => index + 1)
+      const prev = page - 1 <= 0 ? 1 : page - 1
+      const next = page + 1 > pages ? pages : page + 1
+      const tweets = result.rows.map(t => ({
+        ...t.dataValues,
+        description: t.dataValues.description.substring(0, 50),
+        User: t.User.dataValues,
+        replies: t.Replies,
+        tweetLiked: t.Likes.filter(like => like.likeOrNot === true).length,
+        tweetDisliked: t.Likes.filter(like => like.likeOrNot === false).length
       }))
-      return res.status(200).render('tweets', { tweets: tweets })
+      console.log('result', result)
+      console.log('result.count', result.count)
+      console.log('req.query.page', req.query.page)
+      console.log('totalPages', totalPages)
+      console.log('offset', offset)
+      return res.render('tweets', { tweets, totalPages, prev, next, page })
     }
     )
-      .catch(error => {
-        console.log(error)
-        res.sendStatus(400)
-      })
   },
   createTwitters: (req, res, next) => {
-    console.log(req)
+    const description = req.body.description
+    const UserId = req.user.id
+    Tweet.create({
+      UserId, description
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+      .catch(error => {
+        console.log('createTwitter is error', error)
+        res.sendStatus(400)
+      })
   },
 
   getTwitter: (req, res) => {
@@ -39,8 +61,9 @@ const twitterController = {
     })
       .then(tweet => {
         tweet = tweet.dataValues
-        tweet.tweetLiked    = tweet.Likes.filter(like => like.likeOrNot === true).length
+        tweet.tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
         tweet.tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
+        console.log(tweet)
         return res.render('tweet', { tweet })
       })
   },
@@ -95,8 +118,33 @@ const twitterController = {
           })
       }
     })
-  }
+  },
 
+  getTwitter: (req, res) => {
+    const tweetId = req.params.id
+    Tweet.findByPk(tweetId, { include: [{ model: Like }, { model: Reply, include: [User] }, User] })
+      .then((tweet) => {
+        tweetLiked = tweet.Likes.filter(like => like.likeOrNot === true).length
+        tweetDisliked = tweet.Likes.filter(like => like.likeOrNot === false).length
+        res.render('tweet', { tweet: tweet.toJSON(), tweetLiked, tweetDisliked })
+      }).catch(err => console.log(err))
+  },
+
+  postReply: (req, res) => {
+    const tweetId = req.params.id
+    const comment = req.body.comment
+    if (!comment) {
+      req.flash('error_messages', '內容不能為空白')
+      return res.redirect('back')
+    }
+    return Reply.create({
+      TweetId: tweetId,
+      UserId: helpers.getUser(req).id,
+      comment: req.body.comment
+    }).then(reply => {
+      res.redirect('back')
+    })
+  }
 }
 
 module.exports = twitterController

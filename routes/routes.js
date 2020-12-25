@@ -58,8 +58,9 @@ router.get('/users/:id/likes', authenticatedUser, userController.getUserLikes)
 /// ////
 router.get('/tweets', authenticatedUser, twitterController.getTwitters)
 router.post('/tweets', authenticatedUser, twitterController.createTwitters)
-router.get('/tweets/:id', authenticatedUser, twitterController.getTwitter)
+router.get('/tweets/:id/replies', authenticatedUser, twitterController.getTwitter)
 router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
 router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)
+router.post('/tweets/:id/replies', authenticatedUser, twitterController.postReply)
 
 module.exports = router
