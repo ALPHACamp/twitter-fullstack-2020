@@ -16,6 +16,19 @@ const passport = require('./config/passport')
 const app = express()
 const port = process.env.PORT || 3000
 
+//socket
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+io.on('connection', (socket) => {
+  socket.emit('hi', 'hi');
+
+  console.log('a user connected')
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
+server.listen(3000);
+
 app.use(express.static('public'))
 app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs', helpers: require('./config/handlebars-helper') }))
 app.set('view engine', 'hbs')
@@ -34,10 +47,14 @@ app.use((req, res, next) => {
 
 app.use('/upload', express.static(__dirname + '/upload'))
 
+app.get('/chat', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+})
+
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
 app.use(routes)
