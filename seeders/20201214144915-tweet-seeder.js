@@ -7,7 +7,7 @@ module.exports = {
       queryInterface.bulkInsert('Tweets',
         Array.from({ length: 10 }).map((currentValue, j) => ({
           id: i * 10 + j + 1,
-          userId: i + 2,
+          UserId: i + 2,
           description: faker.lorem.sentence(),
           createdAt: new Date(),
           updatedAt: new Date()
