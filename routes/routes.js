@@ -62,5 +62,7 @@ router.get('/tweets/:id/replies', authenticatedUser, twitterController.getTwitte
 router.post('/tweets/:id/thumbs_up', authenticatedUser, twitterController.postTwitters_thumbs_up)
 router.post('/tweets/:id/thumbs_down', authenticatedUser, twitterController.postTwitters_thumbs_down)
 router.post('/tweets/:id/replies', authenticatedUser, twitterController.postReply)
+router.post('/tweets/:id/like', authenticatedUser, twitterController.postTwitters_thumbs_up)
+router.post('/tweets/:id/unlike', authenticatedUser, twitterController.postTwitters_unlike)
 
 module.exports = router
