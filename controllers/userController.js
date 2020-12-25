@@ -176,15 +176,16 @@ module.exports = {
         }))
       }
 
+      currentUser.isFollowed = currentUser.Followings.map(d => d.id).includes(Number(req.params.id))
+
       if (req.query.page === 'reply') {
         data = replies.map(reply => ({
           ...reply.dataValues,
           ...reply.Tweet.dataValues,
           User: reply.Tweet.dataValues.User.dataValues,
         }))
-        console.log(replies)
       }
-
+      console.log(currentUser)
       return res.render('profile', {
         user: user.toJSON(),
         FollowersLength: user.dataValues.Followers.length,

@@ -30,6 +30,17 @@
               {{#ifCond user.id currentUser.id }}
               <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
                 data-bs-target="#userEdit">編輯個人資料</button>
+              {{else}}
+              {{#if currentUser.isFollowed}}
+              <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/followships" method="POST">
+                <input type="hidden" value="{{user.id}}" name="id">
+                <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+              </form>
+              {{/if}}
               {{/ifCond}}
             </span>
           </div>
@@ -105,13 +116,12 @@
         <div class="modal-body">
           <div class="form-group"
             style="background: url({{user.cover}}); height:8em; background-size: cover; background-repeat: no-repeat">
-            <label for="cover"
-              style="position: relative; left:45%; top: 48%; font-size:20px; color:gray; opacity: .5;"><i
+            <label for="cover" style="position: relative; left:45%; top: 48%; font-size:20px; color:gray; "><i
                 class="fas fa-camera"></i></label>
             <input type="file" class="form-control-file" id="cover" name="cover" style="display: none;">
             <div>
               <img src="{{user.avatar}}" alt="" class="rounded-circle mt-5" width="100em">
-              <label for="avatar" style="position: relative; left:-14%; top:30px; color:gray; opacity: .50;"><i
+              <label for="avatar" style="position: relative; left:-14%; top:30px; color:gray; "><i
                   class="fas fa-camera"></i></label>
               <input type="file" class="form-control-file" id="avatar" name="avatar" style="display: none;">
             </div>

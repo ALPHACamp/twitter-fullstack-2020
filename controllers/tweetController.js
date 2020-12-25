@@ -70,7 +70,7 @@ module.exports = {
     },
     postTweets: (req, res) => {
         if (req.body.description.length > 140 || req.body.description.length < 1) {
-            req.flash('error_msg', '字數限制140字')
+            req.flash('error_msg', '字數限制0~140字')
             res.redirect('/tweets')
             return
         }
@@ -85,7 +85,7 @@ module.exports = {
     postReply: (req, res) => {
         if (req.body.comment < 1) {
             req.flash('error_msg', '請輸入內容')
-            res.redirect('/tweets')
+            res.redirect('back')
             return
         }
         const reply = {
