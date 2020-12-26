@@ -19,14 +19,14 @@ const user = require('../models/user.js')
 router.get('/admin/signin', beSigned, adminController.signinPage)
 router.post('/admin/signin', beSigned, passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), authenticatedAdmin, adminController.signin)
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-router.delete('/admin/tweet/:id', authenticatedAdmin, adminController.deleteTweet)
-router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweets)
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 /// ////
 // User
 /// ////
-router.get('/', (req, res) => res.redirect('/tweets'))
+// router.get('/', (req, res) => res.redirect('/tweets'))
+router.get('/', (req, res) => res.render('chat'))
 router.get('/signup', beSigned, userController.signUpPage)
 router.post('/signup', beSigned, userController.signUp)
 router.get('/signin', beSigned, userController.signInPage)
