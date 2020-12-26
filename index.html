@@ -71,8 +71,8 @@
         return false;
       });
       socket.on('chat message', function (data) {
-        const { id, msg } = data
-        const message = `${id} : ${msg}`
+        const { id, msg, user } = data
+        const message = `${user.id} : ${msg}`
         $('#messages').append($('<li>').text(message));
       });
     });
