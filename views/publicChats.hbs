@@ -1,0 +1,54 @@
+<div class="container" style="width: 100%">
+  <div class="row">
+    <div class="col-3">
+      {{> nav}}
+    </div>
+    <div class="col-3">
+      {{> onlineUsers}}
+    </div>
+    <div class="col-6">
+      <div class="card text-start">
+        <div class="card-header"><strong>公開聊天室</strong></div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            {{#each chattingUsers}}
+            {{#ifCond this.status 'online'}}
+            <li class="list-group-item text-center chat-message ">{{this.account}} 上線</li>
+            {{/ifCond}}
+            {{#ifCond this.status 'offline'}}
+            <li class="list-group-item text-center chat-message ">{{this.account}} 離線</li>
+            {{/ifCond}}
+            {{#ifCond this.status 'chatting'}}
+            {{#if this.isMe}}
+            <li class="list-group-item text-end chat-message ">{{this.message}}</li>
+            {{else}}
+            <li class="list-group-item text-start chat-message ">{{this.message}}</li>
+            {{/if}}
+            {{/ifCond}}
+            {{/each}}
+          </ul>
+        </div>
+        <div class="card-footer text-muted">
+          <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+          </form>
+        </div>
+      </div>
+      {{!-- <div>
+        <div class="container" style="width: 100%">
+          <ul id="messages"></ul>
+          <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+          </form>
+        </div>
+      </div> --}}
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .chat-message {
+    border: 0px;
+  }
+</style>

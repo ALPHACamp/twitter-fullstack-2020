@@ -1,7 +1,7 @@
 {
-  "name": "test",
+  "name": "twitter-fullstack-2020-team",
   "version": "1.0.0",
-  "description": "",
+  "description": "Alpha Camp session-3, final project",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development node app.js",
