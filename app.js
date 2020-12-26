@@ -41,12 +41,11 @@ io.on('connection', (socket) => {
 
   socket.broadcast.emit("hello", socket.request.user.name)
 
-  // socket.on('new user', (data) => {
-  //   console.log(data)
-  //   socket.userId = data
-  //   activeUsers.add(data)
-  //   io.emit('new user', [...activeUsers])
-  // })
+  socket.on('new user', (data) => {
+    console.log(socket.request.user)
+    activeUsers.add(socket.request.user)
+    io.emit('new user', [...activeUsers])
+  })
 
   socket.on('chat message', (data) => {
     data.user = socket.request.user

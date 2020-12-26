@@ -77,6 +77,10 @@
   <script>
     const socket = io()
 
+    socket.on('connect', () => {
+      socket.emit('new user', socket.id)
+    })
+
     $(function () {
       $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
@@ -124,6 +128,12 @@
       $('.messages__history').append(msg)
     };
 
+    //顯示在線使用者
+    socket.on('new user', (data) => {
+      data.map(user => $('.inbox__people').append($('<li>').text(user.name)))
+    })
+
+    //通知所有在線使用者
     socket.on("hello", (id) => {
       const msg = `${id} 上線`
       $('.messages__history').append($('<li>').text(msg))
