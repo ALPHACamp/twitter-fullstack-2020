@@ -48,9 +48,15 @@ require('./routes')(app)
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 const io = require('socket.io')(server)
-
+const { Message } = db
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
+    Message.create({
+      type: 0,
+      body: { type: "txt", msg: msg },
+      fromId: 1,
+      toId: 2,
+    })
     console.log('message: ' + msg);
     io.emit('chat message', msg);
   });
