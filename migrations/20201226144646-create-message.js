@@ -14,10 +14,10 @@ module.exports = {
       body: {
         type: Sequelize.JSON
       },
-      fromId: {
+      FromId: {
         type: Sequelize.INTEGER
       },
-      toId: {
+      ToId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

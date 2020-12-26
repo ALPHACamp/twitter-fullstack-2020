@@ -26,6 +26,14 @@
         {{> messages}}
         {{{body}}}
       </div>
+      {{else}} {{#if OpenChat}}
+      <div style="width:18vw; border-right: 1px solid #C0C0C0;">
+        {{> admin_leftColumn}}
+      </div>
+      <div style="width:75vw;">
+        {{> messages}}
+        {{{body}}}
+      </div>
       {{else}}
       <div style="width:18vw; border-right: 1px solid #C0C0C0;">
         {{> leftColumn}}
@@ -37,6 +45,7 @@
       <div style="width:18vw;">
         {{> rightColumn}}
       </div>
+      {{/if}}
       {{/ifcond}}
       {{else}}
       <div>

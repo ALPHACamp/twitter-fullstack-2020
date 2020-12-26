@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col w-25">
+    <div class="row my-0 py-3" style="border-bottom: 1px solid #C0C0C0">
+      <h6>上線使用者 (5)</h6>
+    </div>
+    <div class="row my-0 py-3" style="border-bottom: 1px solid #C0C0C0">
+      <div class="d-flex mx-auto">
+        <a class="mx-2" href="/user/{{user.id}}">
+          <img src="{{user.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 50%;">
+        </a>
+        <h6 class="fw-bolder" style="margin:0;">{{user.name}}</h6>
+        <h6 style="margin:0; color:#A39480;">{{user.email}}</h6>
+      </div>
+    </div>
+    <div class="row my-0 py-3" style="border-bottom: 1px solid #C0C0C0">
+      <div class="d-flex mx-auto">
+        <a class="mx-2" href="/user/{{user.id}}">
+          <img src="{{user.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 50%;">
+        </a>
+        <h6 class="fw-bolder" style="margin:0;">{{user.name}}</h6>
+        <h6 style="margin:0; color:#A39480;">{{user.email}}</h6>
+      </div>
+    </div>
+  </div>
+  <div class="col w-75">
+
+  </div>
+</div>
+
+
+<ul id="messages"></ul>
+<form action="">
+  <input type="hidden" id="id" name="id" value="{{user.id}}">
+  <input type="hidden" id="name" name="name" value="{{user.name}}">
+  <input type="hidden" id="avater" name="avater" value="{{user.avatar}}">
+  <input type="hidden" id="type" name="type" value="1">
+  <input type="hidden" id="toId" name="toId" value="">
+  <input id="m" autocomplete="off" name="comment" />
+  <button>Send</button>
+</form>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="/javascripts/chat.js"></script>

@@ -54,8 +54,8 @@ io.on('connection', (socket) => {
     Message.create({
       type: msg.type,
       body: msg.body,
-      fromId: Number(msg.fromId),
-      toId: Number(msg.toId)
+      FromId: Number(msg.fromId),
+      ToId: Number(msg.toId)
     })
     io.emit('chat message', msg);
   });
