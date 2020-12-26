@@ -39,11 +39,11 @@ const Tweet = db.Tweet
 io.on('connection', (socket) => {
   console.log(`new connection ${socket.id}`)
   console.log(socket.request.user)
-  Tweet.create({
-    UserId: socket.request.user.id
-  })
-  socket.broadcast.emit("hello", socket.request.user.id)
-
+  socket.broadcast.emit("hello", socket.request.user.name)
+  const activeUsers = new Set()
+  activeUsers.add(socket.request.user.name)
+  console.log(activeUsers)
+  io.emit('new user', [...activeUsers])
   // socket.on('new user', (data) => {
   //   console.log(data)
   //   socket.userId = data

@@ -3,6 +3,7 @@
 
 <head>
   <title>Socket.IO chat</title>
+  <link rel="stylesheet" href="/css/bootstrap.css">
   <style>
     * {
       margin: 0;
@@ -53,7 +54,7 @@
 </head>
 
 <body>
-  <ul id="messages"></ul>
+  <ul id="messages" class="d-flex flex-column align-items-end"></ul>
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
@@ -72,7 +73,8 @@
       });
       socket.on('chat message', function (data) {
         const { id, msg, user } = data
-        addNewMessage({ user, msg })
+        console.log(msg)
+        addNewMessage({ user: user, message: msg })
         // const message = `${id} : ${msg}`
         // $('#messages').append($('<li>').text(message));
       });
@@ -84,32 +86,34 @@
       const formattedTime = time.toLocaleString("zh-TW", { hour: "numeric", minute: "numeric" })
 
       const receivedMsg = `
+      <li class="rounded-pill p-3 m-2">
         <div class="incoming__message">
           <div class="received__message">
-            <p>${message}</p>
+            <p><strong>${message}</strong></p>
             <div class="message__info">
-              <span class="message__author">${user}</span>
+              <span class="message__author"><strong>${user.name}</strong></span>
               <span class="time_date">${formattedTime}</span>
             </div>
           </div>
-        </div>`;
+        </div>
+        </li>`;
+      // const myMsg = `
+      //   <div class="outgoing__message">
+      //     <div class="sent__message">
+      //       <p>${message}</p>
+      //       <div class="message__info">
+      //         <span class="time_date">${formattedTime}</span>
+      //       </div>
+      //     </div>
+      //   </div>`;
 
-      const myMsg = `
-        <div class="outgoing__message">
-          <div class="sent__message">
-            <p>${message}</p>
-            <div class="message__info">
-              <span class="time_date">${formattedTime}</span>
-            </div>
-          </div>
-        </div>`;
-
-      const msg = user === user ? myMsg : receivedMsg
-      $('#messages').append(msg)
+      // const msg = user === user ? myMsg : receivedMsg
+      $('#messages').append(receivedMsg)
     };
 
-    socket.on("hello", (id) => {
-      const msg = `${id} 上線`
+    socket.on("hello", (name) => {
+      console.log(name, socket.id)
+      const msg = `${name} 上線`
       $('#messages').append($('<li>').text(msg))
     })
 
@@ -118,6 +122,8 @@
       $('#messages').append($('<li>').text(msg))
     })
   </script>
+  <script src="/js/popper.min.js"></script>
+  <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
