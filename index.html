@@ -72,10 +72,41 @@
       });
       socket.on('chat message', function (data) {
         const { id, msg, user } = data
-        const message = `${user.id} : ${msg}`
-        $('#messages').append($('<li>').text(message));
+        addNewMessage({ user, msg })
+        // const message = `${id} : ${msg}`
+        // $('#messages').append($('<li>').text(message));
       });
     });
+
+    /* function */
+    const addNewMessage = ({ user, message }) => {
+      const time = new Date();
+      const formattedTime = time.toLocaleString("zh-TW", { hour: "numeric", minute: "numeric" })
+
+      const receivedMsg = `
+        <div class="incoming__message">
+          <div class="received__message">
+            <p>${message}</p>
+            <div class="message__info">
+              <span class="message__author">${user}</span>
+              <span class="time_date">${formattedTime}</span>
+            </div>
+          </div>
+        </div>`;
+
+      const myMsg = `
+        <div class="outgoing__message">
+          <div class="sent__message">
+            <p>${message}</p>
+            <div class="message__info">
+              <span class="time_date">${formattedTime}</span>
+            </div>
+          </div>
+        </div>`;
+
+      const msg = user === user ? myMsg : receivedMsg
+      $('#messages').append(msg)
+    };
 
     socket.on("hello", (id) => {
       const msg = `${id} 上線`

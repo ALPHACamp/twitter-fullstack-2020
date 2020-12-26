@@ -15,10 +15,52 @@ const passport = require('./config/passport')
 
 const app = express()
 const port = process.env.PORT || 3000
+const sessionMiddleware = session({ secret: 'simpleTweetSecret', resave: false, saveUninitialized: false })
 
 //socket
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const wrap = middleware => (socket, next) => middleware(socket.request, {}, next);
+const activeUsers = new Set()
+
+io.use(wrap(sessionMiddleware));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
+
+io.use((socket, next) => {
+  if (socket.request.user) {
+    next();
+  } else {
+    next(new Error('unauthorized'))
+  }
+});
+const db = require('./models')
+const Tweet = db.Tweet
+io.on('connection', (socket) => {
+  console.log(`new connection ${socket.id}`)
+  console.log(socket.request.user)
+  Tweet.create({
+    UserId: socket.request.user.id
+  })
+  socket.broadcast.emit("hello", socket.request.user.id)
+
+  // socket.on('new user', (data) => {
+  //   console.log(data)
+  //   socket.userId = data
+  //   activeUsers.add(data)
+  //   io.emit('new user', [...activeUsers])
+  // })
+
+  socket.on('chat message', (data) => {
+    data.user = socket.request.user
+    io.emit('chat message', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`${socket.id} is disconnected`)
+    io.emit('user disconnected', socket.id)
+  })
+});
 
 server.listen(3000);
 
@@ -26,7 +68,7 @@ app.use(express.static('public'))
 app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs', helpers: require('./config/handlebars-helper') }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(session({ secret: 'simpleTweetSecret', resave: false, saveUninitialized: false }))
+app.use(sessionMiddleware)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride('_method'))
@@ -41,31 +83,14 @@ app.use((req, res, next) => {
 app.use('/upload', express.static(__dirname + '/upload'))
 
 app.get('/chat', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-
-  const activeUsers = new Set()
-  io.on('connection', (socket) => {
-    console.log('a user connected')
-
-    socket.broadcast.emit("hello", socket.id)
-
-    socket.on('new user', (data) => {
-      console.log(data)
-      socket.userId = data
-      activeUsers.add(data)
-      io.emit('new user', [...activeUsers])
-    })
-
-    socket.on('chat message', (data) => {
-      data.user = req.user
-      io.emit('chat message', data);
-    });
-
-    socket.on('disconnect', () => {
-      console.log(`${socket.id} is disconnected`)
-      io.emit('user disconnected', socket.id)
-    })
-  });
+  const isAuthenticated = !!req.user;
+  if (isAuthenticated) {
+    console.log(`user is authenticated, session is ${req.session.id}`);
+    return res.sendFile(__dirname + '/index.html');
+  } else {
+    console.log("unknown user");
+    return res.redirect('/signin')
+  }
 })
 
 
