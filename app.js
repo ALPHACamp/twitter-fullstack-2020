@@ -35,16 +35,15 @@ io.use((socket, next) => {
   }
 });
 const db = require('./models')
+const moment = require('moment')
+moment.locale('zh-TW')
 const Tweet = db.Tweet
 const Chat = db.Chat
+const User = db.User
 io.on('connection', (socket) => {
   console.log(`new connection ${socket.id}`)
   socket.broadcast.emit("hello", socket.request.user.name)
 
-  const activeUsers = new Set()
-  activeUsers.add(socket.request.user.name)
-  console.log(activeUsers)
-  io.emit('new user', [...activeUsers])
   socket.on('new user', (data) => {
     console.log(socket.request.user)
     activeUsers.add(socket.request.user)
@@ -64,6 +63,18 @@ io.on('connection', (socket) => {
     console.log(`${socket.id} is disconnected`)
 
     io.emit('user disconnected', socket.request.user.name)
+  })
+  socket.on('history', () => {
+    Chat.findAll({ raw: true, nest: true, order: [['createdAt', 'ASC']], include: [User] }).then(msgs => {
+      msgs = msgs.map(item => ({
+        user: item.User.name,
+        message: item.message,
+        formattedTime: moment(item.createdAt).format('a h:mm'),
+        currentUser: item.User.id === socket.request.user.id ? true : false
+      }))
+      console.log(msgs)
+      io.emit('history', {msgs})
+    })
   })
 });
 

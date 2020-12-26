@@ -112,6 +112,37 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
   const socket = io()
+  function historuMessage  ( msgs )  {
+    console.log(msgs)
+
+    const receivedMsg = `<li class="rounded-pill mt-2 p-3">
+        <div class="incoming__message">
+          <div class="received__message  ">
+            <p><strong>${msgs.message}</strong></p>
+            <div class="message__info text-end">
+              <span class="message__author"><strong>${msgs.user}</strong></span>
+              <span class="time_date"><strong>${msgs.formattedTime}</strong></span>
+            </div>
+          </div>
+          </div>
+        </li>`;
+
+    const myMsg = `
+      <li class="rounded-pill mt-2 my-msg p-3">
+        <div class="outgoing__message ">
+          <div class="sent__message  ">
+            <p><strong>${msgs.message}</strong></p>
+            <div class="message__info text-end">
+              <span class="time_date"><strong>${msgs.formattedTime}</strong></span>
+            </div>
+          </div>
+        </div>
+      </li>`
+
+    const msg = msgs.currentUser ? myMsg : receivedMsg
+
+    $('#messages').append(msg)
+  };
 
   $(function () {
     $('form').submit(function (e) {
@@ -138,7 +169,7 @@
         <div class="incoming__message">
           <div class="received__message  ">
             <p><strong>${message}</strong></p>
-            <div class="message__info">
+            <div class="message__info text-end">
               <span class="message__author"><strong>${user}</strong></span>
               <span class="time_date"><strong>${formattedTime}</strong></span>
             </div>
@@ -151,7 +182,7 @@
         <div class="outgoing__message ">
           <div class="sent__message  ">
             <p><strong>${message}</strong></p>
-            <div class="message__info">
+            <div class="message__info text-end">
               <span class="time_date"><strong>${formattedTime}</strong></span>
             </div>
           </div>
@@ -166,6 +197,7 @@
 
   socket.on('connect', (user) => {
     socket.emit('new user', socket.id)
+    socket.emit('history')
   })
 
 
@@ -188,6 +220,12 @@
     $('#messages').append(msg)
   })
 
+  socket.on('history', ({ msgs }) => {
+    msgs.forEach(msgs => {
+      console.log(msgs)
+      historuMessage(msgs)
+    })
+  })
 </script>
 <script src="/js/popper.min.js"></script>
 <script src="/js/bootstrap.bundle.min.js"></script>
