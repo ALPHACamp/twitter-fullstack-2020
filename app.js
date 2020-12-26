@@ -45,8 +45,9 @@ app.use((req, res, next) => {
 
 require('./routes')(app)
 
-const http = require('http').createServer(app);
-const io = require('socket.io')(http)
+const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+const io = require('socket.io')(server)
 
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
@@ -55,6 +56,5 @@ io.on('connection', (socket) => {
   });
 });
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app
