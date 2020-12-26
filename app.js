@@ -52,12 +52,11 @@ const { Message } = db
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
     Message.create({
-      type: 0,
-      body: { type: "txt", msg: msg },
-      fromId: 1,
-      toId: 2,
+      type: msg.type,
+      body: msg.body,
+      fromId: Number(msg.fromId),
+      toId: Number(msg.toId)
     })
-    console.log('message: ' + msg);
     io.emit('chat message', msg);
   });
 });
