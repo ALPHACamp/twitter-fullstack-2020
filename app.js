@@ -36,29 +36,34 @@ io.use((socket, next) => {
 });
 const db = require('./models')
 const Tweet = db.Tweet
+const Chat = db.Chat
 io.on('connection', (socket) => {
   console.log(`new connection ${socket.id}`)
-  console.log(socket.request.user)
   socket.broadcast.emit("hello", socket.request.user.name)
+
   const activeUsers = new Set()
   activeUsers.add(socket.request.user.name)
   console.log(activeUsers)
   io.emit('new user', [...activeUsers])
-  // socket.on('new user', (data) => {
-  //   console.log(data)
-  //   socket.userId = data
-  //   activeUsers.add(data)
-  //   io.emit('new user', [...activeUsers])
-  // })
+  socket.on('new user', (data) => {
+    console.log(socket.request.user)
+    activeUsers.add(socket.request.user)
+    io.emit('new user', [...activeUsers])
+  })
 
   socket.on('chat message', (data) => {
     data.user = socket.request.user
+    console.log(socket.request.user.id)
+    Chat.create({
+      UserId: socket.request.user.id,
+      message: data.msg
+    })
     io.emit('chat message', data);
   });
-
   socket.on('disconnect', () => {
     console.log(`${socket.id} is disconnected`)
-    io.emit('user disconnected', socket.id)
+
+    io.emit('user disconnected', socket.request.user.name)
   })
 });
 
@@ -86,7 +91,7 @@ app.get('/chat', (req, res) => {
   const isAuthenticated = !!req.user;
   if (isAuthenticated) {
     console.log(`user is authenticated, session is ${req.session.id}`);
-    return res.sendFile(__dirname + '/index.html');
+    return res.render('publicChats');
   } else {
     console.log("unknown user");
     return res.redirect('/signin')
