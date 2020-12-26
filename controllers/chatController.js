@@ -11,14 +11,17 @@ const chatController = {
   //global
   //////////////
   getGlobalChat: async (req, res) => {
-    const talkers = await Message.findAll({
+    let talkers = await Message.findAll({
       where: { type: "1" },
       include: [
         { model: User, as: "fromId" },
         { model: User, as: "toId" }
       ]
     })
-    console.log(talkers)
+
+    if (talkers.length > 1) {
+      talkers = talkers.sort((a, b) => a.dataValues.updatedAt - b.dataValues.updatedAt)
+    }
     res.render('globalChat', { OpenChat: true, talkers })
   }
 }

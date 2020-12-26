@@ -23,21 +23,32 @@
     </div>
   </div>
   <div class="col w-75">
-
+    <div class="row my-0 py-3" style="border-bottom: 1px solid #C0C0C0">
+      <h6>公開聊天室</h6>
+    </div>
+    <ul id="messages">
+      {{#each talkers}}
+      <li>
+        <img src="{{this.fromId.dataValues.avatar}}" alt="" style="width: 50px; height:50px">
+        {{this.dataValues.body.msg}}
+      </li>
+      {{/each}}
+    </ul>
+    <form action="">
+      <input type="hidden" id="id" name="id" value="{{user.id}}">
+      <input type="hidden" id="name" name="name" value="{{user.name}}">
+      <input type="hidden" id="avater" name="avater" value="{{user.avatar}}">
+      <input type="hidden" id="type" name="type" value="1">
+      <input type="hidden" id="toId" name="toId" value="">
+      <input id="m" autocomplete="off" name="comment" />
+      <button>Send</button>
+    </form>
   </div>
+</div>
 </div>
 
 
-<ul id="messages"></ul>
-<form action="">
-  <input type="hidden" id="id" name="id" value="{{user.id}}">
-  <input type="hidden" id="name" name="name" value="{{user.name}}">
-  <input type="hidden" id="avater" name="avater" value="{{user.avatar}}">
-  <input type="hidden" id="type" name="type" value="1">
-  <input type="hidden" id="toId" name="toId" value="">
-  <input id="m" autocomplete="off" name="comment" />
-  <button>Send</button>
-</form>
+
 
 
 
