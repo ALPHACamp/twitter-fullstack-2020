@@ -45,6 +45,15 @@ app.use((req, res, next) => {
 
 require('./routes')(app)
 
+const http = require('http').createServer(app);
+const io = require('socket.io')(http)
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

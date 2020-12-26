@@ -6,8 +6,6 @@
   "scripts": {
     "start": "NODE_ENV=development node app.js",
     "dev": "NODE_ENV=development nodemon app.js",
-    "start": "NODE_ENV=development node app.js",
-    "dev": "NODE_ENV=development nodemon app.js",
     "test_model": "set \"NODE_ENV=test\" && mocha test/models/*.js --exit --recursive --timeout 5000",
     "test_login": "set \"NODE_ENV=test\" && mocha test/requests/login*.js --exit --recursive --timeout 5000",
     "test_admin": "set \"NODE_ENV=test\" && mocha test/requests/admin/*.js --exit --recursive --timeout 5000",
@@ -34,6 +32,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
+    "http": "0.0.1-security",
     "imgur": "^0.3.1",
     "imgur-node-api": "^0.1.0",
     "jsonwebtoken": "^8.5.1",
@@ -50,6 +49,7 @@
     "sequelize-test-helpers": "^1.0.7",
     "sinon": "^7.2.3",
     "sinon-chai": "^3.3.0",
+    "socket.io": "^3.0.4",
     "supertest": "^3.3.0",
     "thousands-counter": "^2.1.0"
   }

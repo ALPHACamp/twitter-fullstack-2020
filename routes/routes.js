@@ -26,7 +26,8 @@ router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 /// ////
 // User
 /// ////
-router.get('/', (req, res) => res.redirect('/tweets'))
+// router.get('/', (req, res) => res.redirect('/tweets'))
+router.get('/', (req, res) => res.render('chat'))
 router.get('/signup', beSigned, userController.signUpPage)
 router.post('/signup', beSigned, userController.signUp)
 router.get('/signin', beSigned, userController.signInPage)
