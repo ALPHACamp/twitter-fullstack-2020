@@ -38,11 +38,8 @@ const db = require('./models')
 const Tweet = db.Tweet
 io.on('connection', (socket) => {
   console.log(`new connection ${socket.id}`)
-  console.log(socket.request.user)
-  Tweet.create({
-    UserId: socket.request.user.id
-  })
-  socket.broadcast.emit("hello", socket.request.user.id)
+
+  socket.broadcast.emit("hello", socket.request.user.name)
 
   // socket.on('new user', (data) => {
   //   console.log(data)
@@ -58,7 +55,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     console.log(`${socket.id} is disconnected`)
-    io.emit('user disconnected', socket.id)
+    io.emit('user disconnected', socket.request.user.name)
   })
 });
 

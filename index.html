@@ -36,24 +36,38 @@
       padding: 10px;
     }
 
-    #messages {
+    .messages__history {
       list-style-type: none;
       margin: 0;
       padding: 0;
     }
 
-    #messages li {
+    .messages__history li {
       padding: 5px 10px;
     }
 
-    #messages li:nth-child(odd) {
+    .messages__history li:nth-child(odd) {
       background: #eee;
+    }
+
+    .sent__message {
+      text-align: end;
     }
   </style>
 </head>
 
 <body>
-  <ul id="messages"></ul>
+
+  <div class="inbox">
+    <div class="inbox__people">
+      <h4>Active users</h4>
+    </div>
+    <div class="inbox__messages">
+      <div class="messages__history"></div>
+      <div class="fallback"></div>
+    </div>
+  </div>
+
   <form action="">
     <input id="m" autocomplete="off" /><button>Send</button>
   </form>
@@ -72,14 +86,15 @@
       });
       socket.on('chat message', function (data) {
         const { id, msg, user } = data
-        addNewMessage({ user, msg })
+
+        addNewMessage({ id, user: user.name, message: msg })
         // const message = `${id} : ${msg}`
         // $('#messages').append($('<li>').text(message));
       });
     });
 
     /* function */
-    const addNewMessage = ({ user, message }) => {
+    const addNewMessage = ({ id, user, message }) => {
       const time = new Date();
       const formattedTime = time.toLocaleString("zh-TW", { hour: "numeric", minute: "numeric" })
 
@@ -104,18 +119,19 @@
           </div>
         </div>`;
 
-      const msg = user === user ? myMsg : receivedMsg
-      $('#messages').append(msg)
+      const msg = socket.id === id ? myMsg : receivedMsg
+
+      $('.messages__history').append(msg)
     };
 
     socket.on("hello", (id) => {
       const msg = `${id} 上線`
-      $('#messages').append($('<li>').text(msg))
+      $('.messages__history').append($('<li>').text(msg))
     })
 
-    socket.on('user disconnected', (id) => {
-      msg = `${id} is disconnected`
-      $('#messages').append($('<li>').text(msg))
+    socket.on('user disconnected', (name) => {
+      msg = `${name} is disconnected`
+      $('.messages__history').append($('<li>').text(msg))
     })
   </script>
 </body>
