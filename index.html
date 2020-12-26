@@ -61,21 +61,31 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script>
+    const socket = io()
+
     $(function () {
-      var socket = io();
       $('form').submit(function (e) {
         e.preventDefault(); // prevents page reloading
-        socket.emit('chat message', $('#m').val());
+        socket.emit('chat message', { id: socket.id, msg: $('#m').val() });
         $('#m').val('');
         return false;
       });
-      socket.on('chat message', function (msg) {
-        $('#messages').append($('<li>').text(msg));
-      });
-      socket.on('hi', (elem1) => {
-        console.log(elem1);
+      socket.on('chat message', function (data) {
+        const { id, msg } = data
+        const message = `${id} : ${msg}`
+        $('#messages').append($('<li>').text(message));
       });
     });
+
+    socket.on("hello", (id) => {
+      const msg = `${id} 上線`
+      $('#messages').append($('<li>').text(msg))
+    })
+
+    socket.on('user disconnected', (id) => {
+      msg = `${id} is disconnected`
+      $('#messages').append($('<li>').text(msg))
+    })
   </script>
 </body>
 
