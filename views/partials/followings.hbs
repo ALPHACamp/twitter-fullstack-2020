@@ -1,30 +1,30 @@
 <div class="col ">
-      <ul class="list-group">
-        <li class="list-group-item " ><strong>跟隨誰</strong></li>
-        {{#each sidebarFollowings}}
-        <li class="list-group-item" >
-          <div class="d-flex justify-content-between">
-            <div class="d-flex">
-              <a href="/users/{{this.id}}/tweets">
-                <img class="rounded-circle" src="{{this.avatar}}" alt="" width="50px" height="50px">
-              </a>
-              <div class="ms-2">
-                <div><strong>{{this.name}}</strong></div>
-                <div style="color: gray;">@{{this.account}}</div>
-              </div>
-            </div>
-            {{#if this.isFollowed}}
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
-            </form>
-            {{else}}
-            <form action="/followships" method="POST">
-            <input type="hidden" value="{{this.id}}" name="id">
-            <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
-            </form>
-            {{/if}}
+  <ul class="list-group">
+    <li class="list-group-item "><strong>跟隨誰</strong></li>
+    {{#each sidebarFollowings}}
+    <li class="list-group-item">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <a href="/users/{{this.id}}/tweets">
+            <img class="rounded-circle" src="{{this.avatar}}" alt="" width="50px" height="50px">
+          </a>
+          <div class="ms-2">
+            <div><strong>{{this.name}}</strong></div>
+            <div style="color: gray;">@{{this.account}}</div>
           </div>
-        </li>
-        {{/each}}
-      </ul>
-    </div>
+        </div>
+        {{#if this.isFollowed}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <input type="hidden" value="{{this.id}}" name="id">
+          <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+        </form>
+        {{/if}}
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
