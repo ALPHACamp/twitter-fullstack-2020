@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
-const helpers = require('./_helpers');
+const helpers = require('./_helpers')
 const app = express()
 const axios = require('axios')
 const cors = require('cors')
@@ -42,10 +42,23 @@ app.use((req, res, next) => {
   next()
 })
 
-
 require('./routes')(app)
+const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+const io = require('socket.io')(server)
+const { Message } = db
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    Message.create({
+      type: msg.type,
+      body: msg.body,
+      fromId: Number(msg.fromId),
+      toId: Number(msg.toId)
+    })
+    io.emit('chat message', msg)
+  })
+})
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app

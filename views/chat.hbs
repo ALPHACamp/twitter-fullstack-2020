@@ -1,0 +1,16 @@
+<ul id="messages"></ul>
+<form action="">
+  <input type="hidden" id="id" name="id" value="{{user.id}}">
+  <input type="hidden" id="name" name="name" value="{{user.name}}">
+  <input type="hidden" id="avater" name="avater" value="{{user.avatar}}">
+  <input type="hidden" id="type" name="type" value="1">
+  <input type="hidden" id="toId" name="toId" value="">
+  <input id="m" autocomplete="off" name="comment" />
+  <button>Send</button>
+</form>
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="/javascripts/chat.js"></script>
