@@ -50,6 +50,10 @@ const server = app.listen(port, () => console.log(`Example app listening on port
 const io = require('socket.io')(server)
 const { Message } = db
 io.on('connection', (socket) => {
+  socket.on('opentt', (msg) => {
+    console.log(msg + "41646")
+    console.log('user connected');
+  })
   socket.on('chat message', (msg) => {
     Message.create({
       type: msg.type,
@@ -58,6 +62,10 @@ io.on('connection', (socket) => {
       ToId: Number(msg.toId)
     })
     io.emit('chat message', msg);
+  });
+
+  socket.on('disconnect', function () {
+    console.log('user disconnected');
   });
 });
 

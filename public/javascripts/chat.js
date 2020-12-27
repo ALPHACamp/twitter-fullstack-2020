@@ -1,5 +1,6 @@
 
 var socket = io();   //Notice that I’m not specifying any URL when I call io(), since it defaults to trying to connect to the host that serves the page.
+socket.emit('opentt', "now open");
 $('form').submit(function (e) {
   e.preventDefault(); // prevents page reloading
   const object = {
