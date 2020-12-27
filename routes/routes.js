@@ -71,6 +71,7 @@ router.post('/tweets/:id/unlike', authenticatedUser, twitterController.postTwitt
 // chat
 /// ////
 router.get('/globalChat', authenticatedUser, chatController.getGlobalChat)
-
+router.get('/privateChat', authenticatedUser, chatController.getPrivateChat)
+router.get('/privateChat/:id', authenticatedUser, chatController.getPrivateChat_with)
 
 module.exports = router

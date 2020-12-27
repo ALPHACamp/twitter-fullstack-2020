@@ -28,7 +28,7 @@
     </a>
   </div>
   <div class="row fw-bolder py-2">
-    <a href="#" style="color: black; text-decoration:none;"
+    <a href="/privateChat" style="color: black; text-decoration:none;"
       onmouseover="this.style='color:#FF6103;text-decoration:none;';"
       onmouseout="this.style='color:black;text-decoration:none;';">
       <i class="fas fa-user"></i>　私人訊息
@@ -60,6 +60,7 @@
       <i class="fas fa-sign-out-alt"></i>　登出
     </a>
   </div>
+  <input type="hidden" id="global_userId" name="global_userId" value="{{user.id}}">
 </div>
 
 {{!-- navbar left-column post-tweet modal --}}
