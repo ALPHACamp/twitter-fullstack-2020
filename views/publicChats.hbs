@@ -112,7 +112,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
   const socket = io()
-  function historuMessage  ( msgs )  {
+  function historuMessage(msgs) {
     console.log(msgs)
 
     const receivedMsg = `<li class="rounded-pill mt-2 p-3">
@@ -204,6 +204,9 @@
   //顯示在線使用者
   socket.on('new user', (data) => {
     data.map(user => {
+      if (!!document.querySelector(`.user-${user.id}`)) {
+        return
+      }
       $('#activeUsers').append($('<li>').addClass(`user-${user.id}`).text(user.name))
     })
   })

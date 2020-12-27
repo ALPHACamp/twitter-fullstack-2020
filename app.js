@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
         currentUser: item.User.id === socket.request.user.id ? true : false
       }))
       console.log(msgs)
-      io.emit('history', {msgs})
+      io.emit('history', { msgs })
     })
   })
 });
