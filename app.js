@@ -115,14 +115,16 @@ io.on('connection', (socket) => {
                   msg = msg[0]
                 }
               }
-              if (msg) { msgs.push(msg) }
+              if (msg) {
+                msg.avatar_From_ToId = user.dataValues.avatar
+                msg.name_From_ToId = user.dataValues.name
+                msg.email_From_ToId = user.dataValues.email
+                msgs.push(msg)
+              }
             }
             console.log(msgs)
             io.emit('push_to_other', obj, msgs);
           })
-
-
-
       })
 
 
