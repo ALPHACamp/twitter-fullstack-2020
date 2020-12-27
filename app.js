@@ -59,12 +59,12 @@ io.on('connection', (socket) => {
         where: { login: true }
       })
         .then(users => {
+          console.log("users.length=", users.length)
           io.emit('update_loginUsers', users);
         })
     }
   })
   socket.on('chat message', (msg) => {
-    console.log(msg)
     Message.create({
       type: msg.type,
       body: msg.body,
@@ -87,7 +87,6 @@ io.on('connection', (socket) => {
       where: { type: "0", ToId: toId }
     })
       .then(messages => {
-        console.log("messagesN=", messages.length)
         User.findAll()
           .then(users => {
             let msgs = []
@@ -116,13 +115,14 @@ io.on('connection', (socket) => {
                 }
               }
               if (msg) {
+                msg.id_From_ToId = user.dataValues.id
                 msg.avatar_From_ToId = user.dataValues.avatar
                 msg.name_From_ToId = user.dataValues.name
-                msg.email_From_ToId = user.dataValues.email
+                msg.account_From_ToId = user.dataValues.account
                 msgs.push(msg)
               }
             }
-            console.log(msgs)
+            msgs = msgs.sort((a, b) => a.dataValues.updatedAt - b.dataValues.updatedAt)
             io.emit('push_to_other', obj, msgs);
           })
       })
@@ -135,7 +135,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
-    if (socket['UserId']) {
+    if (!userinfo && socket['UserId']) {
       User.findByPk(socket['UserId'])
         .then(user => {
           user.update({
