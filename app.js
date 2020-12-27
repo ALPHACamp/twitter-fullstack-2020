@@ -81,13 +81,50 @@ io.on('connection', (socket) => {
   });
 
   socket.on('push_to_other', (obj) => {
-    const toId = Number(obj.toId)
+    const fromId = Number(obj.fromId) //A
+    const toId = Number(obj.toId) //B
     Message.findAll({
       where: { type: "0", ToId: toId }
     })
       .then(messages => {
-        console.log(messages)
-        io.emit('push_to_other', obj, messages);
+        console.log("messagesN=", messages.length)
+        User.findAll()
+          .then(users => {
+            let msgs = []
+            for (let user of users) {
+              let msg = messages.filter(message => message.FromId === user.dataValues.id)
+              if (Number(fromId) === Number(user.dataValues.id)) {
+                msg = [{
+                  dataValues: {
+                    type: obj.type,
+                    body: obj.body,
+                    FromId: Number(obj.fromId),
+                    ToId: Number(obj.toId),
+                    createAt: new Date(),
+                    updatedAt: new Date()
+                  }
+                }]
+              }
+
+              if (msg.length > 1) {
+                msg = msg.sort((a, b) => a.dataValues.updatedAt - b.dataValues.updatedAt)[0].dataValues
+              } else {
+                if (msg[0]) {
+                  msg = msg[0].dataValues
+                } else {
+                  msg = msg[0]
+                }
+              }
+              if (msg) {
+                msg.avatar_From_ToId = user.dataValues.avatar
+                msg.name_From_ToId = user.dataValues.name
+                msg.email_From_ToId = user.dataValues.email
+                msgs.push(msg)
+              }
+            }
+            console.log(msgs)
+            io.emit('push_to_other', obj, msgs);
+          })
       })
 
 

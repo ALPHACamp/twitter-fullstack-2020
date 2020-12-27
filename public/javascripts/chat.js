@@ -39,7 +39,7 @@ $('#globalchat').submit(function (e) {
     fromId: $('#id').val(),
     toId: $('#toId').val(),
     name: $('#name').val(),
-    avater: $('#avater').val()
+    avatar: $('#avatar').val()
   }
   socket.emit('chat message', object);
 
@@ -55,7 +55,7 @@ $('#globalchat').submit(function (e) {
 socket.on('chat message', function (object) {
   console.log(object)
   msg = object.body.msg
-  if (($('#id').val() === object.fromId && $('#toId').val() === object.toId) || ($('#id').val() === object.toId && $('#toId').val() === object.fromId)) {
+  if (($('#id').val() === object.fromId && $('#toId').val() === object.toId) || ($('#id').val() === object.toId && $('#toId').val() === object.fromId) || object.toId === "") {
     $('#messages').append(`<li><img src="${object.avatar}" alt="" style="width: 50px; height:50px">${msg}</li>`);
   }
 });
