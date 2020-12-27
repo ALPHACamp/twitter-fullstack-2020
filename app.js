@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
-const helpers = require('./_helpers');
+const helpers = require('./_helpers')
 const app = express()
 const axios = require('axios')
 const cors = require('cors')
@@ -34,18 +34,55 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 
+let userinfo = null
 // flash words in global
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
   res.locals.user = req.user
+  userinfo = req.user
   next()
 })
 
-
 require('./routes')(app)
+const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+const io = require('socket.io')(server)
+const { Message, User } = db
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+io.on('connection', (socket) => {
+  socket.on('open', (msg) => {
+    console.log('user connected')
+    if (userinfo) {
+      socket.UserId = userinfo.id
+      User.findAll({
+        where: { login: true }
+      })
+        .then(users => {
+          console.log('users N=', users.length)
+          io.emit('update_loginUsers', users)
+        })
+    }
+  })
+  socket.on('chat message', (msg) => {
+    Message.create({
+      type: msg.type,
+      body: msg.body,
+      FromId: Number(msg.fromId),
+      ToId: Number(msg.toId)
+    })
+    io.emit('chat message', msg)
+  })
+
+  socket.on('disconnect', function () {
+    console.log('user disconnected')
+    User.findByPk(socket.UserId)
+      .then(user => {
+        user.update({
+          login: false
+        })
+      })
+  })
+})
 
 module.exports = app

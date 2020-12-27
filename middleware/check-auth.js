@@ -1,10 +1,21 @@
 const helpers = require('../_helpers')
+const db = require('../models')
+const { User } = db
 
 module.exports = {
-  authenticatedUser: (req, res, next) => {
+  authenticatedUser: async (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       const role = helpers.getUser(req).role || ""
-      if (role === "" ) { return next() }
+      if (role === "") {
+        update = await User.findByPk(helpers.getUser(req).id)
+          .then(user => {
+            return user.update({
+              login: true,
+              logintimeAt: new Date()
+            })
+          })
+        return next()
+      }
       req.flash('error_messages', '管理者帳號後台登入')
       return res.redirect('/admin/tweets')
     }

@@ -24,70 +24,40 @@ module.exports = (sequelize, DataTypes) => {
     },
     role: {
       type: DataTypes.STRING,
-      defaultValue: ""
+      defaultValue: ''
+    },
+    login: {
+      type: DataTypes.BOOLEAN
+    },
+    logintimeAt: {
+      type: DataTypes.DATE
     }
   }, {})
   User.associate = function (models) {
     User.hasMany(models.Tweet)
     User.hasMany(models.Reply)
     User.hasMany(models.Like)
-    /*
-    User.belongsToMany(models.Tweet, {
-      through: models.Like,
-      foreignKey: 'UserId',
-      as: 'LikedTweets'
-    }), */
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followingId',
       as: 'Followers'
     }),
-      User.belongsToMany(User, {
-        through: models.Followship,
-        foreignKey: 'followerId',
-        as: 'Followings'
-      })
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'Followings'
+    })
+
+    User.belongsToMany(User, {
+      through: models.Message,
+      foreignKey: 'FromId',
+      as: 'toIds'
+    }),
+    User.belongsToMany(User, {
+      through: models.Message,
+      foreignKey: 'ToId',
+      as: 'fromIds'
+    })
   }
   return User
-};
-
-/*
-'use strict';
-const { Model } = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-      User.hasMany(models.Tweet)
-      User.hasMany(models.Reply)
-      User.belongsToMany(models.Tweet, {
-        through: models.Like,
-        foreignKey: 'UserId',
-        as: 'LikedTweets'
-      }),
-      User.belongsToMany(User, {
-        through: models.Followship,
-        foreignKey: 'followingId',
-        as: 'Followers'
-      }),
-      User.belongsToMany(User, {
-        through: models.Followship,
-        foreignKey: 'followerId',
-        as: 'Followings'
-      })
-    }
-  };
-  User.init({
-    name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    account: DataTypes.STRING,
-    cover: DataTypes.STRING,
-    avatar: DataTypes.STRING,
-    introduction: DataTypes.TEXT,
-    isAdmin: DataTypes.BOOLEAN,
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
-  return User;
-}; */
+}

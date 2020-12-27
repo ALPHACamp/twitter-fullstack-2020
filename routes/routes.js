@@ -4,6 +4,7 @@ const router = express.Router()
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 const twitterController = require('../controllers/twitterController.js')
+const chatController = require('../controllers/chatController.js')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -14,19 +15,21 @@ const { authenticatedUser, authenticatedAdmin, beSigned } = require('../middlewa
 const passport = require('../config/passport')
 const user = require('../models/user.js')
 
+router.get('/', (req, res) => res.render('personChat'))
+
 // admin
 /// ////
 router.get('/admin/signin', beSigned, adminController.signinPage)
 router.post('/admin/signin', beSigned, passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), authenticatedAdmin, adminController.signin)
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-router.delete('/admin/tweet/:id', authenticatedAdmin, adminController.deleteTweet)
-router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweets)
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 /// ////
 // User
 /// ////
-router.get('/', (req, res) => res.redirect('/tweets'))
+// router.get('/', (req, res) => res.render('/personChat'))
+// router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/signup', beSigned, userController.signUpPage)
 router.post('/signup', beSigned, userController.signUp)
 router.get('/signin', beSigned, userController.signInPage)
@@ -65,5 +68,11 @@ router.get('/tweets/:id/replies', authenticatedUser, twitterController.getTwitte
 router.post('/tweets/:id/replies', authenticatedUser, twitterController.postReply)
 router.post('/tweets/:id/like', authenticatedUser, twitterController.postTwitters_thumbs_up)
 router.post('/tweets/:id/unlike', authenticatedUser, twitterController.postTwitters_unlike)
+
+/// ////
+// chat
+/// ////
+router.get('/globalChat', authenticatedUser, chatController.getGlobalChat)
+// router.get('/personChat')
 
 module.exports = router
