@@ -25,32 +25,38 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       defaultValue: ''
+    },
+    login: {
+      type: DataTypes.BOOLEAN
+    },
+    logintimeAt: {
+      type: DataTypes.DATE
     }
   }, {})
   User.associate = function (models) {
     User.hasMany(models.Tweet)
     User.hasMany(models.Reply)
     User.hasMany(models.Like)
-    /*
-    User.belongsToMany(models.Tweet, {
-      through: models.Like,
-      foreignKey: 'UserId',
-      as: 'LikedTweets'
-    }), */
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followingId',
       as: 'Followers'
     }),
     User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'Followings'
+    })
+
+    User.belongsToMany(User, {
       through: models.Message,
-      foreignKey: 'toId',
-      as: 'Senders'
+      foreignKey: 'FromId',
+      as: 'toIds'
     }),
     User.belongsToMany(User, {
       through: models.Message,
-      foreignKey: 'fromId',
-      as: 'Receivers'
+      foreignKey: 'ToId',
+      as: 'fromIds'
     })
   }
   return User
