@@ -59,6 +59,7 @@ io.on('connection', (socket) => {
         where: { login: true }
       })
         .then(users => {
+          console.log("users.length=", users.length)
           io.emit('update_loginUsers', users);
         })
     }
@@ -133,7 +134,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
-    if (socket['UserId']) {
+    if (!userinfo && socket['UserId']) {
       User.findByPk(socket['UserId'])
         .then(user => {
           user.update({
