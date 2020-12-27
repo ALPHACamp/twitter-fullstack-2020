@@ -1,26 +1,16 @@
-<html lang="en">
+<ul id="messages"></ul>
+<form action="">
+  <input type="hidden" id="id" name="id" value="{{user.id}}">
+  <input type="hidden" id="name" name="name" value="{{user.name}}">
+  <input type="hidden" id="avater" name="avater" value="{{user.avatar}}">
+  <input type="hidden" id="type" name="type" value="1">
+  <input type="hidden" id="toId" name="toId" value="">
+  <input id="m" autocomplete="off" name="comment" />
+  <button>Send</button>
+</form>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
-    integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-  <link rel="stylesheet" href="css/style.css">
-  <title>ChatCord App</title>
-</head>
 
-<body>
-  <div class="chat-container">
 
-    <div class="chat-form-container">
-      <form id="chat-form">
-        <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
-        <button class="btn"><i class="fas fa-paper-plane"></i> Send</button>
-      </form>
-    </div>
-  </div>
-
-  <script src="js/main.js"></script>
-</body>
-
-</html>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="/javascripts/chat.js"></script>
