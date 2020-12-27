@@ -51,6 +51,7 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', (data) => {
     data.user = socket.request.user
+    console.log('----------------------- this is data in "chat message"' + data)
     Chat.create({
       UserId: socket.request.user.id,
       message: data.msg
@@ -65,6 +66,7 @@ io.on('connection', (socket) => {
     Chat.findAll({ raw: true, nest: true, order: [['createdAt', 'ASC']], include: [User] }).then(msgs => {
       msgs = msgs.map(item => ({
         user: item.User.name,
+        avatar: item.User.avatar,
         message: item.message,
         formattedTime: moment(item.createdAt).format('a h:mm'),
         currentUser: item.User.id === socket.request.user.id ? true : false

@@ -1,108 +1,41 @@
 <style>
   .chat-message {
     border: 0px;
+    background-color: LightGray;
   }
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font: 13px Helvetica, Arial;
-  }
-
-  form {
-    padding: 3px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-  }
-
-  form input {
-    background: white;
-    border: #DF6A2C 1px solid;
-    padding: 10px;
-    width: 30%;
-    margin-right: 0.5%;
-  }
-
-  form button {
-    width: 9%;
-    background: rgb(130, 224, 255);
-    border: none;
-    padding: 10px;
-  }
-
-  #messages {
-    position: relative;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  #messages li {
-    width: 20em;
-    background: #eee;
-    padding: 5px 10px;
-  }
-
-  #messages li:nth-child(odd) {
-    background: #eee;
-  }
-
-  .my-msg {
-    position: relative;
-    right: 0;
+  .currentUser-chat-messahe {
+    border: 0px;
+    background-color: orange;
   }
 </style>
+
 <div class="container" style="width: 100%">
   <div class="row">
     <div class="col-3">
       {{> nav}}
     </div>
     <div class="col-3" id="activeUsers">
-      {{> onlineUsers}}
+      <div class="col">
+        <ul class="list-group">
+          <li class="list-group-item ">上線使用者 (<span id="onlineUserLength"></span>)</li>
+        </ul>
+      </div>
     </div>
     <div class="col-6">
       <div class="card text-start" style=" height:50em">
         <div class="card-header"><strong>公開聊天室</strong></div>
         <div class="card-body" style="overflow: auto;">
           <ul class="list-group list-group-flush" id="messages">
-            {{#each chattingUsers}}
-            {{#ifCond this.status 'online'}}
-            <li class="list-group-item text-center chat-message ">{{this.account}} 上線</li>
-            {{/ifCond}}
-            {{#ifCond this.status 'offline'}}
-            <li class="list-group-item text-center chat-message ">{{this.account}} 離線</li>
-            {{/ifCond}}
-            {{#ifCond this.status 'chatting'}}
-            {{#if this.isMe}}
-            <li class="list-group-item text-end chat-message ">{{this.message}}</li>
-            {{else}}
-            <li class="list-group-item text-start chat-message ">{{this.message}}</li>
-            {{/if}}
-            {{/ifCond}}
-            {{/each}}
           </ul>
         </div>
         <div class="card-footer text-muted">
-          <form action="">
-            <input id="m" autocomplete="off" /><button>Send</button>
+          <form action="" class="d-flex justify-content-center">
+            <input id="m" autocomplete="off" class="rounded-pill me-3" style="width: 20em;" />
+            <button class="rounded-pill"><i class="fas fa-paper-plane"></i></button>
           </form>
         </div>
       </div>
-      {{!-- <div>
-        <div class="container" style="width: 100%">
-          <ul id="messages"></ul>
-          <form action="">
-            <input id="m" autocomplete="off" /><button>Send</button>
-          </form>
-        </div>
-      </div> --}}
-
-
     </div>
   </div>
 </div>
@@ -112,36 +45,11 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
   const socket = io()
-  function historuMessage(msgs) {
 
-    const receivedMsg = `<li class="rounded-pill mt-2 p-3">
-        <div class="incoming__message">
-          <div class="received__message  ">
-            <p><strong>${msgs.message}</strong></p>
-            <div class="message__info text-end">
-              <span class="message__author"><strong>${msgs.user}</strong></span>
-              <span class="time_date"><strong>${msgs.formattedTime}</strong></span>
-            </div>
-          </div>
-          </div>
-        </li>`;
+  // ----------------------------------------------
 
-    const myMsg = `
-      <li class="rounded-pill mt-2 my-msg p-3">
-        <div class="outgoing__message ">
-          <div class="sent__message  ">
-            <p><strong>${msgs.message}</strong></p>
-            <div class="message__info text-end">
-              <span class="time_date"><strong>${msgs.formattedTime}</strong></span>
-            </div>
-          </div>
-        </div>
-      </li>`
 
-    const msg = msgs.currentUser ? myMsg : receivedMsg
-
-    $('#messages').append(msg)
-  };
+  // ----------------------------------------------
 
   $(function () {
     $('form').submit(function (e) {
@@ -151,43 +59,56 @@
       return false;
     });
     socket.on('chat message', function (data) {
-      const { id, msg, user } = data
-      addNewMessage({ id: id, user: user.name, message: msg })
+      const { id, msg, user, avatar } = data
+      console.log(data)
+      addNewMessage({ id: id, user: user.name, message: msg, avatar: user.avatar })
       // const message = `${id} : ${msg}`
       // $('#messages').append($('<li>').text(message));
     });
   });
 
   /* function */
-  const addNewMessage = ({ id, user, message }) => {
+  function getMyMessage(formattedTime, message) {
+    return `<li class="list-group-item text-start d-flex justify-content-end">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex flex-column align-items-end ms-2">
+                  <div class="rounded-pill mt-2 my-msg currentUser-chat-messahe" style="width: 25em;">
+                    <div class="ps-3 pe-3">${message}</div>
+                  </div>
+                  <div>${formattedTime}</div>
+                </div>
+              </div>
+            </li>`
+  }
+
+  function getReceivedMsg(id, formattedTime, message, avatar) {
+    return `<li class="list-group-item text-start d-flex justify-content-start">
+              <div class="d-flex justify-content-between">
+                <div class="d-flex">
+                  <a href="/users/${id}/tweets">
+                    <img class="rounded-circle" src="${avatar}" alt="" width="50px" height="50px">
+                  </a>
+                  <div class="d-flex flex-column align-items-start ms-2">
+                    <div class="rounded-pill mt-2 my-msg chat-message" style="width: 25em;">
+                      <div class="ps-3 pe-3">${message}</div>
+                    </div>
+                    <div>${formattedTime}</div>
+                  </div>
+                </div>
+              </div>
+            </li>`
+  }
+
+  const addNewMessage = ({ id, user, message, avatar }) => {
     const time = new Date();
     const formattedTime = time.toLocaleString("zh-TW", { hour: "numeric", minute: "numeric" })
 
-    const receivedMsg = `<li class="rounded-pill mt-2 p-3">
-        <div class="incoming__message">
-          <div class="received__message  ">
-            <p><strong>${message}</strong></p>
-            <div class="message__info text-end">
-              <span class="message__author"><strong>${user}</strong></span>
-              <span class="time_date"><strong>${formattedTime}</strong></span>
-            </div>
-          </div>
-          </div>
-        </li>`;
-
-    const myMsg = `
-      <li class="rounded-pill mt-2 my-msg p-3">
-        <div class="outgoing__message ">
-          <div class="sent__message  ">
-            <p><strong>${message}</strong></p>
-            <div class="message__info text-end">
-              <span class="time_date"><strong>${formattedTime}</strong></span>
-            </div>
-          </div>
-        </div>
-      </li>`
-
-    const msg = socket.id === id ? myMsg : receivedMsg
+    let msg = ''
+    if (socket.id === id) {
+      msg = getMyMessage(formattedTime, message);
+    } else {
+      msg = getReceivedMsg(id, formattedTime, message, avatar);
+    }
 
     $('#messages').append(msg)
   };
@@ -201,20 +122,40 @@
 
   //顯示在線使用者
   socket.on('new user', (data) => {
+    $('#onlineUserLength').text(`${data.length}`)
+
     data.map(user => {
       if (!!document.querySelector(`.user-${user.id}`)) {
         return
       }
-      $('#activeUsers').append($('<li>').addClass(`user-${user.id}`).text(user.name))
+
+      const onlineUserHTML = `<li class="list-group-item user-${user.id}">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <a href="/users/${user.id}/tweets">
+            <img class="rounded-circle" src="${user.avatar}" alt="" width="50px" height="50px">
+          </a>
+          <div class="d-flex align-items-center ms-2">
+            <div><strong>${user.name}</strong></div>
+            <div class="ms-2" style="color: gray;">@${user.account}</div>
+          </div>
+        </div>
+      </div>
+    </li>`
+
+      $('#activeUsers').append(onlineUserHTML)
     })
   })
 
   //broadcast通知所有在線使用者
   socket.on("hello", (name) => {
-    const msg = `<li class="rounded-pill mt-2">
-        <p>${name} 上線</p>
-      </li>`
+    const msg = `<li class="list-group-item d-flex justify-content-center" style="border: 0px;">
+              <div class="rounded-pill mt-2 my-msg chat-message text-center" style="width: ${name.length}em;">${name} 上線</div>
+            </li>`
     $('#messages').append(msg)
+
+    const onlineUserLength = Number($('#onlineUserLength').text())
+    $('#onlineUserLength').text(onlineUserLength + 1)
   })
 
   //使用者正在輸入
@@ -222,16 +163,26 @@
   //使用者離線
   socket.on('user disconnected', (data) => {
     const { id, name } = data
-    msg = `<li class="rounded-pill mt-2">
-        <p>${name} 離線</p>
-      </li>`
+    msg = `<li class="list-group-item d-flex justify-content-center" style="border: 0px;">
+              <div class="rounded-pill mt-2 my-msg chat-message text-center" style="width: ${name.length}em;">${name} 離線</div>
+            </li>`
     $('#messages').append(msg)
     $(`.user-${id}`).remove()
+
+    const onlineUserLength = Number($('#onlineUserLength').text())
+    $('#onlineUserLength').text(onlineUserLength - 1)
   })
 
   socket.once('history', ({ msgs }) => {
-    msgs.forEach(msgs => {
-      historuMessage(msgs)
+    msgs.forEach(msg => {
+      let html = ''
+      if (msg.currentUser) {
+        html = getReceivedMsg(msg.id, msg.formattedTime, msg.message, msg.avatar)
+      } else {
+        html = getMyMessage(msg.formattedTime, msg.message)
+      }
+
+      $('#messages').append(html)
     })
   })
 </script>
