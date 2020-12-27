@@ -59,30 +59,55 @@ io.on('connection', (socket) => {
         where: { login: true }
       })
         .then(users => {
-          console.log('users N=', users.length)
-          io.emit('update_loginUsers', users)
+          io.emit('update_loginUsers', users);
         })
     }
   })
   socket.on('chat message', (msg) => {
+    console.log(msg)
     Message.create({
       type: msg.type,
       body: msg.body,
       FromId: Number(msg.fromId),
       ToId: Number(msg.toId)
     })
-    io.emit('chat message', msg)
+    io.emit('chat message', msg);
+
+    // if (Number(msg.toId) !== 0) {
+    //   const names = [msg.fromId, msg.toId].sort()
+    //   const roomName = names[0] + names[1]
+    //   io.emit("get_room", roomName, msg);
+    // }
+  });
+
+  socket.on('push_to_other', (obj) => {
+    const toId = Number(obj.toId)
+    Message.findAll({
+      where: { type: "0", ToId: toId }
+    })
+      .then(messages => {
+        console.log(messages)
+        io.emit('push_to_other', obj, messages);
+      })
+
+
+    // io.emit('push_to_other', msg, roomName);
+
   })
 
+
   socket.on('disconnect', function () {
-    console.log('user disconnected')
-    User.findByPk(socket.UserId)
-      .then(user => {
-        user.update({
-          login: false
+    console.log('user disconnected');
+    if (socket['UserId']) {
+      User.findByPk(socket['UserId'])
+        .then(user => {
+          user.update({
+            login: false
+          })
         })
-      })
-  })
-})
+    }
+  });
+});
+
 
 module.exports = app
