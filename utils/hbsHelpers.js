@@ -37,6 +37,10 @@ module.exports = {
     return moment(a).format("h:mm A , MMMM Do YYYY ")
   },
 
+  time: function (a) {
+    return moment(a).format("h:mm a")
+  },
+
   tc: function (a) {
     return tc(a, { digits: 1, uppercase: true })
   }
