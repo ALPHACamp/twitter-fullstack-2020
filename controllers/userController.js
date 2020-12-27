@@ -175,15 +175,16 @@ module.exports = {
         }))
       }
 
+      currentUser.isFollowed = currentUser.Followings.map(d => d.id).includes(Number(req.params.id))
+
       if (req.query.page === 'reply') {
         data = replies.map(reply => ({
           ...reply.dataValues,
           ...reply.Tweet.dataValues,
           User: reply.Tweet.dataValues.User.dataValues,
         }))
-        console.log(replies)
       }
-
+      console.log(currentUser)
       return res.render('profile', {
         user: user.toJSON(),
         FollowersLength: user.dataValues.Followers.length,
@@ -198,8 +199,8 @@ module.exports = {
     })
   },
 
-  putUser: async (req, res) => {
-    const nextURL = `/users/${req.params.id}`
+  putUser: (req, res) => {
+    const nextURL = `/users/${req.params.id}/tweets`
 
     if (!req.body.name) {
       req.flash('error_messages', 'name didn\'t exist')
@@ -211,112 +212,60 @@ module.exports = {
       return res.redirect(nextURL)
     }
 
-    const user = await User.findByPk(req.params.id)
-    const avatarFile = req.files.avatar
-    const coverFile = req.files.cover
+    // ---------------------------------------------------------------------------------------
 
-    imgur.setClientID(process.env.IMGUR_CLIENT_ID);
+    const tempFileAddr = __dirname + '\\..\\icon\\temp.png'
+    const avatarPath = req.files.avatar ? req.files.avatar[0].path : tempFileAddr
+    const coverPath = req.files.cover ? req.files.cover[0].path : tempFileAddr
 
-    if (coverFile) {
-      imgur.upload(coverFile[0].path, (err, img) => {
-        return user.update({
-          name: req.body.name,
-          introduction: req.body.introduction,
-          cover: coverFile ? img.data.link : user.cover,
-          avatar: user.avatar,
-        })
-          .then(() => {
-            if (avatarFile) {
-              imgur.upload(avatarFile[0].path, (err, img) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: avatarFile ? img.data.link : user.avatar,
-                  cover: user.cover,
-                }).then(() => {
-                  return user.update({
-                    name: req.body.name,
-                    introduction: req.body.introduction,
-                    cover: user.cover,
-                    avatar: user.avatar,
-                  }).then(() => {
-                    return res.redirect(`/users/${req.params.id}`)
-                  })
-                })
-              })
-            } else {
-              return user.update({
-                name: req.body.name,
-                introduction: req.body.introduction,
-                cover: user.cover,
-                avatar: user.avatar,
-              }).then(() => {
-                return res.redirect(`/users/${req.params.id}`)
-              })
-            }
+    // console.log('--------------------------------------------------------------------------')
+    // console.log('avatarPath ' + avatarPath)
+    // console.log('coverPath ' + coverPath)
+
+    imgur.setClientId(process.env.IMGUR_CLIENT_ID);
+
+    return Promise.all([
+      imgur.uploadFile(avatarPath).then((img) => {
+        return User.findByPk(req.params.id).then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: req.files.avatar ? img.data.link : user.avatar,
+            cover: user.cover
           })
-      })
-    }
-
-    if (avatarFile) {
-      imgur.upload(avatarFile[0].path, (err, img) => {
-        return user.update({
-          name: req.body.name,
-          introduction: req.body.introduction,
-          avatar: avatarFile ? img.data.link : user.avatar,
-          cover: user.cover,
         })
-          .then(() => {
-            if (coverFile) {
-              imgur.upload(coverFile[0].path, (err, img) => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  cover: coverFile ? img.data.link : user.cover,
-                  avatar: user.avatar,
-                }).then(() => {
-                  return user.update({
-                    name: req.body.name,
-                    introduction: req.body.introduction,
-                    cover: user.cover,
-                    avatar: user.avatar,
-                  }).then(() => {
-                    return res.redirect(`/users/${req.params.id}`)
-                  })
-                })
-              })
-            } else {
-              return user.update({
-                name: req.body.name,
-                introduction: req.body.introduction,
-                cover: user.cover,
-                avatar: user.avatar,
-              }).then(() => {
-                return res.redirect(`/users/${req.params.id}`)
-              })
-            }
+      }),
+      imgur.uploadFile(coverPath).then((img) => {
+        return User.findByPk(req.params.id).then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: user.avatar,
+            cover: req.files.cover ? img.data.link : user.cover
           })
+        })
       })
-    }
-
-    return user.update({
-      name: req.body.name,
-      introduction: req.body.introduction,
-      cover: user.cover,
-      avatar: user.avatar,
-    }).then(() => {
-      return res.redirect(`/users/${req.params.id}`)
-    })
+    ])
+      .then(() => {
+        return User.findByPk(req.params.id).then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: user.avatar,
+            cover: user.cover
+          }).then(() => {
+            return res.redirect('back')
+          })
+        })
+      })
   },
 
   getEdit: (req, res) => {
     const id = req.params.id
     const userId = helper.getUser(req).id
     const currentUser = helper.getUser(req)
-    axios.get(`http://localhost:3000/api/users/${id}?userId=${userId}`).then(function (response) {
-      const data = response.data
-      res.render('edit', { data, currentUser, navPage: 'setting' })
-    })
+    const data = currentUser
+    res.render('edit', { data, currentUser, navPage: 'setting' })
   },
 
   putUserInfo: (req, res) => {

@@ -1,0 +1,202 @@
+<style>
+  .chat-message {
+    border: 0px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font: 13px Helvetica, Arial;
+  }
+
+  form {
+    padding: 3px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+
+  form input {
+    background: white;
+    border: #DF6A2C 1px solid;
+    padding: 10px;
+    width: 30%;
+    margin-right: 0.5%;
+  }
+
+  form button {
+    width: 9%;
+    background: rgb(130, 224, 255);
+    border: none;
+    padding: 10px;
+  }
+
+  #messages {
+    position: relative;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  #messages li {
+    width: 20em;
+    background: #eee;
+    padding: 5px 10px;
+  }
+
+  #messages li:nth-child(odd) {
+    background: #eee;
+  }
+
+  .my-msg {
+    position: relative;
+    right: 0;
+  }
+</style>
+<div class="container" style="width: 100%">
+  <div class="row">
+    <div class="col-3">
+      {{> nav}}
+    </div>
+    <div class="col-3" id="activeUsers">
+      {{> onlineUsers}}
+    </div>
+    <div class="col-6">
+      <div class="card text-start" style=" height:50em">
+        <div class="card-header"><strong>公開聊天室</strong></div>
+        <div class="card-body" style="overflow: auto;">
+          <ul class="list-group list-group-flush" id="messages">
+            {{#each chattingUsers}}
+            {{#ifCond this.status 'online'}}
+            <li class="list-group-item text-center chat-message ">{{this.account}} 上線</li>
+            {{/ifCond}}
+            {{#ifCond this.status 'offline'}}
+            <li class="list-group-item text-center chat-message ">{{this.account}} 離線</li>
+            {{/ifCond}}
+            {{#ifCond this.status 'chatting'}}
+            {{#if this.isMe}}
+            <li class="list-group-item text-end chat-message ">{{this.message}}</li>
+            {{else}}
+            <li class="list-group-item text-start chat-message ">{{this.message}}</li>
+            {{/if}}
+            {{/ifCond}}
+            {{/each}}
+          </ul>
+        </div>
+        <div class="card-footer text-muted">
+          <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+          </form>
+        </div>
+      </div>
+      {{!-- <div>
+        <div class="container" style="width: 100%">
+          <ul id="messages"></ul>
+          <form action="">
+            <input id="m" autocomplete="off" /><button>Send</button>
+          </form>
+        </div>
+      </div> --}}
+
+
+    </div>
+  </div>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script>
+  const socket = io()
+
+  $(function () {
+    $('form').submit(function (e) {
+      e.preventDefault(); // prevents page reloading
+      socket.emit('chat message', { id: socket.id, msg: $('#m').val() });
+      $('#m').val('');
+      return false;
+    });
+    socket.on('chat message', function (data) {
+      const { id, msg, user } = data
+      console.log(msg)
+      addNewMessage({ id: id, user: user.name, message: msg })
+      // const message = `${id} : ${msg}`
+      // $('#messages').append($('<li>').text(message));
+    });
+  });
+
+  /* function */
+  const addNewMessage = ({ id, user, message }) => {
+    const time = new Date();
+    const formattedTime = time.toLocaleString("zh-TW", { hour: "numeric", minute: "numeric" })
+
+    const receivedMsg = `<li class="rounded-pill mt-2 p-3">
+        <div class="incoming__message">
+          <div class="received__message  ">
+            <p><strong>${message}</strong></p>
+            <div class="message__info">
+              <span class="message__author"><strong>${user}</strong></span>
+              <span class="time_date"><strong>${formattedTime}</strong></span>
+            </div>
+          </div>
+          </div>
+        </li>`;
+
+    const myMsg = `
+      <li class="rounded-pill mt-2 my-msg p-3">
+        <div class="outgoing__message ">
+          <div class="sent__message  ">
+            <p><strong>${message}</strong></p>
+            <div class="message__info">
+              <span class="time_date"><strong>${formattedTime}</strong></span>
+            </div>
+          </div>
+        </div>
+      </li>`
+
+    const msg = socket.id === id ? myMsg : receivedMsg
+
+    $('#messages').append(msg)
+  };
+
+
+  /* Event */
+  socket.on('connect', (user) => {
+    socket.emit('new user', socket.id)
+  })
+
+  //顯示在線使用者
+  socket.on('new user', (data) => {
+    data.map(user => {
+      $('#activeUsers').append($('<li>').addClass(`user-${user.id}`).text(user.name))
+    })
+  })
+
+  //broadcast通知所有在線使用者
+  socket.on("hello", (name) => {
+    console.log(name, socket.id)
+    const msg = `<li class="rounded-pill mt-2">
+        <p>${name} 上線</p>
+      </li>`
+    $('#messages').append(msg)
+  })
+
+  //使用者正在輸入
+
+  //使用者離線
+  socket.on('user disconnected', (data) => {
+    const { id, name } = data
+    msg = `<li class="rounded-pill mt-2">
+        <p>${name} 離線</p>
+      </li>`
+    $('#messages').append(msg)
+    $(`.user-${id}`).remove()
+  })
+
+</script>
+<script src="/js/popper.min.js"></script>
+<script src="/js/bootstrap.bundle.min.js"></script>

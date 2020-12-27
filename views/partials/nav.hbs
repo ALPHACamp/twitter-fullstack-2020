@@ -2,24 +2,29 @@
   <div style="min-height: 700PX;">
 
     <div class="btn-group-vertical  mt-4  ps-4" style="">
-      <a href="/tweets" >
-        <img src="https://lighthouse.alphacamp.co/images/logo-simple.jpg" class="mb-5 ms-2" alt=""
-          style=" width:3em">
+      <a href="/tweets">
+        <img src="https://lighthouse.alphacamp.co/images/logo-simple.jpg" class="mb-5 ms-2" alt="" style=" width:3em">
       </a>
-      <a type="button" class="btn {{#ifCond 'index' navPage}}active{{/ifCond}}" href="/tweets" style="height: 4em;text-align: left;">
-        <i class="fas fa-2x fa-home"> 首頁</i>
+      <a type="button" class="btn {{#ifCond 'index' navPage}}active{{/ifCond}}" href="/tweets"
+        style="text-align: left; font-size:1.5em;">
+        <i class="fas fa fa-home"> 首頁</i>
       </a>
-      <a type="button" class="btn {{#ifCond 'profile' navPage}}active{{/ifCond}}" href="/users/{{currentUser.id}}/tweets" style="height: 4em;text-align: left;">
-        <i class="far fa-2x fa-user"> 個人資料</i>
+      <a type="button" class="btn {{#ifCond 'chatpublic' navPage}}active{{/ifCond}}" href="/chats/public"
+        style="text-align: left;font-size:1.5em;">
+        <i class="far fa-envelope"> 公開聊天室</i>
       </a>
-      <a type=" button" class="btn {{#ifCond 'setting' navPage}}active{{/ifCond}}" href="/users/{{currentUser.id}}/edit" style="height: 4em;text-align: left;">
-        <i class="fas fa-2x fa-cog"> 設定</i>
+      <a type="button" class="btn {{#ifCond 'profile' navPage}}active{{/ifCond}}"
+        href="/users/{{currentUser.id}}/tweets" style="text-align: left;font-size:1.5em;">
+        <i class="far fa fa-user"> 個人資料</i>
+      </a>
+      <a type=" button" class="btn {{#ifCond 'setting' navPage}}active{{/ifCond}}" href="/users/{{currentUser.id}}/edit"
+        style="text-align: left;font-size:1.5em;">
+        <i class="fas fa fa-cog"> 設定</i>
       </a>
       <button type="" class="btn btn-primary rounded-pill mt-3" data-bs-toggle="modal"
         data-bs-target="#nav-{{currentUser.id}}" style="width: 80%;">推文</button>
-        <a href="/logout" class="btn  rounded-pill mt-5"
-    style=" font-size: 1.5rem; text-align: left;"><i
-      class="fas fa-sign-out-alt"></i><strong class="ms-2">登出</strong></a>
+      <a href="/logout" class="btn  rounded-pill mt-5" style=" font-size: 1.5rem; text-align: left;"><i
+          class="fas fa-sign-out-alt"></i><strong class="ms-2">登出</strong></a>
     </div>
   </div>
 </li>
