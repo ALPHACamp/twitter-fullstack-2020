@@ -1,27 +1,80 @@
-<div class="row">
-  <div id="global_loginuser" class="col w-25">
-  </div>
-  <div class="col w-75">
-    <div class="row my-0 py-3" style="border-bottom: 1px solid #C0C0C0">
-      <h6>私人訊息</h6>
+<div class="row" style="height:100vh">
+  <div class="col-4" style="border-right: 1px solid #C0C0C0">
+    <div class="row my-0 py-3" id="onlineUsers" style="border-bottom: 1px solid #C0C0C0">
+      <h5>上線使用者 ({{onlineUsers.length}})</h5>
     </div>
-    <ul id="messages">
-      {{#each talkers}}
-      <li>
-        <img src="{{this.fromId.dataValues.avatar}}" alt="" style="width: 50px; height:50px">
-        {{this.dataValues.body.msg}}
-      </li>
+    <div id="global_loginuser" class="row my-0 py-3">
+      {{#each onlineUsers}}
+      <div class="d-flex mx-auto mb-2" style="border-bottom: 1px solid #C0C0C0">
+        <a class="mx-2" href="/user/{{this.dataValues.id}}" style="display:contents">
+          <img src="{{this.dataValues.avatar}}" alt="" style="height: 40px; width: 40px; border-radius: 50%;">
+        </a>
+        <h6 class="fw-bolder" style="margin:0;">{{this.dataValues.name}}</h6>
+        <span class="small" style="margin:0;color:#808A87">@{{this.dataValues.account}}</span>
+      </div>
       {{/each}}
-    </ul>
-    <form id="globalchat" action="">
-      <input type="hidden" id="id" name="id" value="{{user.id}}">
-      <input type="hidden" id="name" name="name" value="{{user.name}}">
-      <input type="hidden" id="avatar" name="avatar" value="{{user.avatar}}">
-      <input type="hidden" id="type" name="type" value="0">
-      <input type="hidden" id="toId" name="toId" value="{{userId_2}}">
-      <input id="m" autocomplete="off" name="comment" />
-      <button>Send</button>
-    </form>
+    </div>
   </div>
-</div>
+  <div class=" col-8">
+    <div class="row my-0 py-3" style="border-bottom: 1px solid #C0C0C0">
+      <h5>私人訊息</h6>
+    </div>
+    <div class="information d-flex flex-column justify-content-between py-2">
+      <div class=" message" id="chat-message" style="max-height:80vh; overflow-y: auto; overflow-x: hidden ;">
+        <ul id="messages">
+          {{#each talkers}}
+
+          {{#ifcond this.fromId.dataValues.id "===" ../user.id}}
+          <div class="d-flex justify-content-end">
+            <li class="user mb-2 " style="list-style-type:none">
+              <div class="comment">
+                <div class="p-3 text-end" style=" color:white; background-color:#FF6103; border-radius:8px">
+                  {{this.dataValues.body.msg}}</div>
+              </div>
+              <div class="time text-end small" style="color:#808A87">{{time
+                this.fromId.dataValues.createdAt}}
+              </div>
+            </li>
+          </div>
+
+          {{else}}
+          <li class="nonUser mb-2" style="list-style-type:none">
+            <div class="avatar-comment d-flex align-items-end">
+              <img class="avatar me-2" src="{{this.fromId.dataValues.avatar}}" alt=""
+                style="width: 50px; height:50px ; border-radius: 50%;background-color:#C4C4C4">
+
+              <div class="p-3" style=" background-color:#f2f3f5; border-radius:8px">
+                <span>{{this.dataValues.body.msg}}</span>
+              </div>
+            </div>
+            <div class="time ms-5 mt-0">
+              <span class="ms-1 ps-2 mt-0 text-start small" style="color:#808A87">{{time
+                this.fromId.dataValues.createdAt}}</span>
+
+            </div>
+          </li>
+          {{/ifcond}}
+          {{/each}}
+        </ul>
+      </div>
+      <div class="sendMessage" style="border-top: 1px solid #C0C0C0">
+        <form action="" id="globalchat" class="mt-2">
+          <div class="row  d-flex justify-content-between">
+            <div class="col-10" style="">
+              <input type="hidden" id="id" name="id" value="{{user.id}}">
+              <input type="hidden" id="name" name="name" value="{{user.name}}">
+              <input type="hidden" id="avatar" name="avatar" value="{{user.avatar}}">
+              <input type="hidden" id="type" name="type" value="1">
+              <input type="hidden" id="toId" name="toId" value="">
+              <input id="m" autocomplete="off" name="comment"
+                style="width:100% ; border-radius: 25px; background-color:#f2f3f5" class="p-2 me-2 border-0"
+                placeholder="輸入訊息">
+            </div>
+            <div class="col-2"><button class="border-0" style="background-color:white;display: contents"><i
+                  class="fas fa-paper-plane"></i></button></div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
