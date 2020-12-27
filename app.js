@@ -57,23 +57,13 @@ io.on('connection', (socket) => {
     console.log('user connected');
     if (userinfo) {
       socket['UserId'] = userinfo.id
-      User.findByPk(userinfo.id)
-        .then(user => {
-          user.update({
-            login: true,
-            logintimeAt: new Date()
-          })
-            .then(user => {
-              User.findAll({
-                where: { login: true }
-              })
-                .then(users => {
-                  console.log("users N=", users.length)
-                  io.emit('update_loginUsers', users);
-                })
-            })
+      User.findAll({
+        where: { login: true }
+      })
+        .then(users => {
+          console.log("users N=", users.length)
+          io.emit('update_loginUsers', users);
         })
-
     }
   })
   socket.on('chat message', (msg) => {
