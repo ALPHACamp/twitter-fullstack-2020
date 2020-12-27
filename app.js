@@ -64,6 +64,9 @@ io.on('connection', (socket) => {
           console.log("users N=", users.length)
           io.emit('update_loginUsers', users);
         })
+      socket.on(msg, (msg) => {
+        console.log(msg)
+      })
     }
   })
   socket.on('chat message', (msg) => {
@@ -78,12 +81,14 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
-    User.findByPk(socket['UserId'])
-      .then(user => {
-        user.update({
-          login: false
+    if (socket['UserId']) {
+      User.findByPk(socket['UserId'])
+        .then(user => {
+          user.update({
+            login: false
+          })
         })
-      })
+    }
   });
 });
 

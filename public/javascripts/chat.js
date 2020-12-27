@@ -1,6 +1,8 @@
 
 var socket = io();   //Notice that I’m not specifying any URL when I call io(), since it defaults to trying to connect to the host that serves the page.
-socket.emit('open', "update loginTime");
+// socket.emit('open', "update loginTime");
+socket.emit('open', "loginTime");
+socket.emit('loginTime', "13546");
 
 //更新目前線上使用者
 socket.on('update_loginUsers', function (object) {
@@ -41,13 +43,16 @@ $('#globalchat').submit(function (e) {
     avatar: $('#avatar').val(),
   }
   socket.emit('chat message', object);
+
+  //保存訊息在頁面上
+  socket.on('chat message', function (object) {
+    msg = object.body.msg
+    // $('#messages').append($('<li>').text(msg));
+    $('#messages').append(`<li><img src="${object.avatar}" alt="" style="width: 50px; height:50px">${msg}</li>`);
+  });
+
   $('#m').val('');
   return false;
 });
-//保存訊息在頁面上
-socket.on('chat message', function (object) {
-  msg = object.body.msg
-  // $('#messages').append($('<li>').text(msg));
-  $('#messages').append(`<li><img src="${object.avatar}" alt="" style="width: 50px; height:50px">${msg}</li>`);
-});
+
 
