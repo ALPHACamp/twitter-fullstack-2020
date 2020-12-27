@@ -28,7 +28,7 @@
       </div>
       {{else}} {{#if OpenChat}}
       <div style="width:18vw; border-right: 1px solid #C0C0C0;">
-        {{> admin_leftColumn}}
+        {{> leftColumn}}
       </div>
       <div style="width:75vw;">
         {{> messages}}
@@ -54,9 +54,9 @@
       </div>
       {{/if}}
 
-
     </div>
   </div>
+
   {{#if user}}
   <script src="/socket.io/socket.io.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>

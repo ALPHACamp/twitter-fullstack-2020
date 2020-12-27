@@ -51,19 +51,29 @@ const server = app.listen(port, () => console.log(`Example app listening on port
 
 const io = require('socket.io')(server)
 const { Message, User } = db
-let UserId = ""
+
 io.on('connection', (socket) => {
   socket.on('open', (msg) => {
     console.log('user connected');
     if (userinfo) {
-      UserId = userinfo.id
+      socket['UserId'] = userinfo.id
       User.findByPk(userinfo.id)
         .then(user => {
           user.update({
             login: true,
             logintimeAt: new Date()
           })
+            .then(user => {
+              User.findAll({
+                where: { login: true }
+              })
+                .then(users => {
+                  console.log("users N=", users.length)
+                  io.emit('update_loginUsers', users);
+                })
+            })
         })
+
     }
   })
   socket.on('chat message', (msg) => {
@@ -78,7 +88,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
-    User.findByPk(UserId)
+    User.findByPk(socket['UserId'])
       .then(user => {
         user.update({
           login: false
