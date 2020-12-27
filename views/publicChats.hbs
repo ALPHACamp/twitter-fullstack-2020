@@ -113,7 +113,6 @@
 <script>
   const socket = io()
   function historuMessage(msgs) {
-    console.log(msgs)
 
     const receivedMsg = `<li class="rounded-pill mt-2 p-3">
         <div class="incoming__message">
@@ -153,7 +152,6 @@
     });
     socket.on('chat message', function (data) {
       const { id, msg, user } = data
-      console.log(msg)
       addNewMessage({ id: id, user: user.name, message: msg })
       // const message = `${id} : ${msg}`
       // $('#messages').append($('<li>').text(message));
@@ -213,7 +211,6 @@
 
   //broadcast通知所有在線使用者
   socket.on("hello", (name) => {
-    console.log(name, socket.id)
     const msg = `<li class="rounded-pill mt-2">
         <p>${name} 上線</p>
       </li>`
@@ -232,9 +229,8 @@
     $(`.user-${id}`).remove()
   })
 
-  socket.on('history', ({ msgs }) => {
+  socket.once('history', ({ msgs }) => {
     msgs.forEach(msgs => {
-      console.log(msgs)
       historuMessage(msgs)
     })
   })

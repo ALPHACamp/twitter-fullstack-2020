@@ -51,7 +51,6 @@ io.on('connection', (socket) => {
 
   socket.on('chat message', (data) => {
     data.user = socket.request.user
-    console.log(socket.request.user.id)
     Chat.create({
       UserId: socket.request.user.id,
       message: data.msg
@@ -59,7 +58,6 @@ io.on('connection', (socket) => {
     io.emit('chat message', data);
   });
   socket.on('disconnect', () => {
-    console.log(`${socket.id} is disconnected`)
     activeUsers.delete(socket.request.user)
     io.emit('user disconnected', { id: socket.request.user.id, name: socket.request.user.name })
   })
@@ -71,7 +69,6 @@ io.on('connection', (socket) => {
         formattedTime: moment(item.createdAt).format('a h:mm'),
         currentUser: item.User.id === socket.request.user.id ? true : false
       }))
-      console.log(msgs)
       io.emit('history', { msgs })
     })
   })
