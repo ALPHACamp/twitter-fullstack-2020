@@ -38,6 +38,12 @@ module.exports = {
       role: {
         type: Sequelize.STRING
       },
+      login: {
+        type: Sequelize.BOOLEAN
+      },
+      logintimeAt: {
+        type: Sequelize.DATE
+      },
       createdAt: {
         type: Sequelize.DATE
       },

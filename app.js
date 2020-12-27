@@ -34,11 +34,13 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 
+let userinfo = null
 // flash words in global
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
   res.locals.user = req.user
+  userinfo = req.user
   next()
 })
 
@@ -48,11 +50,21 @@ require('./routes')(app)
 const server = app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 const io = require('socket.io')(server)
-const { Message } = db
+const { Message, User } = db
+let UserId = ""
 io.on('connection', (socket) => {
-  socket.on('opentt', (msg) => {
-    console.log(msg + "41646")
+  socket.on('open', (msg) => {
     console.log('user connected');
+    if (userinfo) {
+      UserId = userinfo.id
+      User.findByPk(userinfo.id)
+        .then(user => {
+          user.update({
+            login: true,
+            logintimeAt: new Date()
+          })
+        })
+    }
   })
   socket.on('chat message', (msg) => {
     Message.create({
@@ -66,6 +78,12 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', function () {
     console.log('user disconnected');
+    User.findByPk(UserId)
+      .then(user => {
+        user.update({
+          login: false
+        })
+      })
   });
 });
 

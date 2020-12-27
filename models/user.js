@@ -25,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       defaultValue: ""
+    },
+    login: {
+      type: DataTypes.BOOLEAN
+    },
+    logintimeAt: {
+      type: DataTypes.DATE
     }
   }, {})
   User.associate = function (models) {
