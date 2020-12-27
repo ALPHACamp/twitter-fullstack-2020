@@ -12,34 +12,24 @@
 
   <div class="resultsContainer"></div><button id="createChatButton">Create chat</button>
 
-</div>
+  <script>
+    var timer
+    const userSearchTextbox = document.getElementById('userSearchTextbox')
+    const resultsContainer = document.getElementsByClassName('resultsContainer')
 
-<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-
-<script>
-  var timer
-  const userSearchTextbox = document.getElementById('userSearchTextbox')
-  const resultsContainer = document.getElementsByClassName('resultsContainer')
-
-  userSearchTextbox.addEventListener('keydown', event => {
-    if (value === '' && event.keycode === 8) {
-      return
-    }
-    timer = setTimeout(() => {
-      value = textbox.val().trim()
-
-      if (value == '') {
-        alert('No word')
-      } else {
-        alert('Hello')
+    userSearchTextbox.addEventListener('keydown', event => {
+      if (event.value === '' && event.keycode === 8) {
+        return
       }
-    }, 1000)
+      else {
+        searchUsers()
+      }
+    })
 
-  })
-
-  function searchUsers(searchTerm) {
-    console.log('hi')
-  }
+    function searchUsers(searchTerm) {
+      console.log('hi')
+    }
 
 
-</script>
+  </script>
+</div>
