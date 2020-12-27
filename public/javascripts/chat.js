@@ -16,7 +16,7 @@ socket.on('update_loginUsers', function (object) {
       <span class="small" style="margin:0;color:#808A87">@${obj.account}</span>
     </div>`;
   }
-  $('#global_loginuser').append(text);
+  $('#global_loginuser').empty().append(text);
   $('#onlineUsers').empty().append(`<h5>上線使用者 (${object.length})</h5>`);
 });
 
