@@ -1,0 +1,45 @@
+<h6>PesonalChat</h6>
+<a href="/messages/new"><i class="fas fa-plus-far"></i></a>
+<hr>
+
+<div class="chatPageContainer">
+
+  <div class="chatTitleBar"><label for="userSearchTextbox">To:</label>
+
+    <div id="selectedUsers"><input id="userSearchTextbox" type="text" placeholder="Type the name of the person" /></div>
+  </div>
+
+
+  <div class="resultsContainer"></div><button id="createChatButton">Create chat</button>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+<script>
+  var timer
+  const userSearchTextbox = document.getElementById('userSearchTextbox')
+  const resultsContainer = document.getElementsByClassName('resultsContainer')
+
+  userSearchTextbox.addEventListener('keydown', event => {
+    if (value === '' && event.keycode === 8) {
+      return
+    }
+    timer = setTimeout(() => {
+      value = textbox.val().trim()
+
+      if (value == '') {
+        alert('No word')
+      } else {
+        alert('Hello')
+      }
+    }, 1000)
+
+  })
+
+  function searchUsers(searchTerm) {
+    console.log('hi')
+  }
+
+
+</script>

@@ -215,3 +215,41 @@ h1 {
     border-radius: 50%;
 
 }
+
+.chatPageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.chatTitleBar {
+  border-bottom: 1px solid color rgb(101,119,134);
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: 10px;
+}
+
+ .chatTitleBar label {
+    margin-right: 10px;
+} 
+
+#userSearchTextbox {
+    border: none;
+    flex: 1;
+    font-weight: 200;
+    min-width: 350px;
+}
+#createChatButton {
+    border: none;
+    background-color: var(--blue);
+    color: #fff;
+    padding: 7px 20px;
+    margin: 10px auto;
+    border-radius: 40px;
+}
+
+#createChatButton:disabled{
+    background-color: var(--lightGrey);
+    color: var(--greyText);
+}

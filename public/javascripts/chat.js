@@ -33,13 +33,13 @@ $('#globalchat').submit(function (e) {
   const object = {
     type: $('#type').val(),
     body: {
-      type: "txt",
+      type: 'txt',
       msg: $('#m').val()
     },
     fromId: $('#id').val(),
     toId: $('#toId').val(),
     name: $('#name').val(),
-    avatar: $('#avatar').val(),
+    avater: $('#avater').val()
   }
   socket.emit('chat message', object);
 
@@ -53,6 +53,7 @@ $('#globalchat').submit(function (e) {
 
 //保存訊息在頁面上
 socket.on('chat message', function (object) {
+  console.log(object)
   msg = object.body.msg
   if (($('#id').val() === object.fromId && $('#toId').val() === object.toId) || ($('#id').val() === object.toId && $('#toId').val() === object.fromId)) {
     $('#messages').append(`<li><img src="${object.avatar}" alt="" style="width: 50px; height:50px">${msg}</li>`);
