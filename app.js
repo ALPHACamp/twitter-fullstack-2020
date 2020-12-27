@@ -64,7 +64,6 @@ io.on('connection', (socket) => {
     }
   })
   socket.on('chat message', (msg) => {
-    console.log(msg)
     Message.create({
       type: msg.type,
       body: msg.body,
@@ -87,7 +86,6 @@ io.on('connection', (socket) => {
       where: { type: "0", ToId: toId }
     })
       .then(messages => {
-        console.log("messagesN=", messages.length)
         User.findAll()
           .then(users => {
             let msgs = []
