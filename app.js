@@ -115,13 +115,14 @@ io.on('connection', (socket) => {
                 }
               }
               if (msg) {
+                msg.id_From_ToId = user.dataValues.id
                 msg.avatar_From_ToId = user.dataValues.avatar
                 msg.name_From_ToId = user.dataValues.name
-                msg.email_From_ToId = user.dataValues.email
+                msg.account_From_ToId = user.dataValues.account
                 msgs.push(msg)
               }
             }
-            console.log(msgs)
+            msgs = msgs.sort((a, b) => a.dataValues.updatedAt - b.dataValues.updatedAt)
             io.emit('push_to_other', obj, msgs);
           })
       })

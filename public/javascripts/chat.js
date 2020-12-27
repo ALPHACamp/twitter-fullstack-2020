@@ -98,7 +98,28 @@ socket.on('chat message', function (object) {
 
 socket.on('push_to_other', function (obj, messages) {
   if (obj.toId === $('#global_userId').val()) {
-    $('#messages').append("激發新對話框")
+    let text = "";
+    for (let msg of messages) {
+      text = text + `
+      <div class="d-flex mx-auto mb-2" style="border-bottom: 1px solid #C0C0C0">
+        <a class="mx-2" href="/user/${this.id_From_ToId}" style="display:contents">
+          <img src="${this.avatar_From_ToId}" alt="" style="height: 40px; width: 40px; border-radius: 50%;">
+        </a>
+        <a href="/privateChat/${this.id_From_ToId}" class="nav-link" style="color:black;">
+          <div class="row d-flex mx-0 px-0">
+            <h6 class="fw-bolder mx-0 px-0" style="margin:0;">
+              ${this.name_From_ToId}
+              <span class="small" style="margin:0;color:#808A87">@${this.account_From_ToId}</span>
+            </h6>
+          </div>
+          <div class="row mx-0 px-0">
+            ${this.dataValues.body.msg}
+          </div>
+        </a>
+      </div>`;
+    }
+    $('#latestNew').empty().append(text);
+    // $('#latestNew').append("激發新對話框")
   }
 });
 
