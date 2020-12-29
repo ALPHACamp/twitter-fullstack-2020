@@ -1,0 +1,58 @@
+.cover{
+position: relative
+}
+
+.cover-mask {
+  position: absolute;
+  top:0;
+  left:0;
+  background:rgba(0,0,0,.6);
+  color: #ffffff;
+  opacity: 0;
+}
+
+.cover .cover-hover:hover .cover-mask { 
+    opacity: 1;
+}
+
+.avatar{
+position: relative
+}
+
+.avatar-mask {
+  position: absolute;
+  top:0;
+  left:0;
+  background:rgba(0,0,0,.6);
+  color: #ffffff;
+  opacity: 0;
+}
+
+
+.avatar .avatar-hover:hover .avatar-mask { 
+    opacity: 1;
+}
+
+
+/* input[type="file"] {
+    width: 100%; */
+    /* height: 0.5px; 
+    padding: 0; */
+    /* margin: -3px; 
+    overflow: hidden; 
+    clip: rect(0,0,0,0); */
+    /* border: 0px solid white;
+    background-color: teal; */
+    
+/* } */
+
+/* .upload-file-btn{
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: teal;
+} */
+ 
+
+

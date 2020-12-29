@@ -1,0 +1,255 @@
+:root {
+    --blue: #1FA2F1;
+    --buttonHoverBg: #d4edff;
+    --lightGrey: rgb(230, 236, 240);
+    --orange: #FF6103;
+    --spacing: 15px;
+    --greyText: rgb(101,119,134);
+    --greyButtonText: rgba(0,0,0,0.34);
+}
+
+h1 {
+    font-size: 19px;
+    font-weight: 800px;
+    margin: 0;
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 100%;
+    justify-content: center;
+}
+
+.leftColumn a {
+    padding: 10px;
+    font-size: 30px;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #212529;
+}
+
+.leftColumn a:hover {
+    color: #FF6103;
+}
+
+#mainSectionContainer {
+    display: flex;
+    border-left: 1px solid var(--lightGrey);
+    border-right: 1px solid var(--lightGrey);
+    padding: 0;
+    flex-direction: column;
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    height: 53px;
+    padding: 0;
+    padding: var(--spacing);
+    border-bottom: 1px solid var(--lightGrey);
+    align-items: center;
+}
+.userImageContainer{
+    width: 50px;
+    height: 50px;
+}
+.userImageContainer img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.titleContainer h1 {
+    flex: 1;
+}
+
+.postFormContainer {
+    display: flex;
+    padding: var(--spacing);
+    border-bottom: 10px solid rgb(230, 236, 240);
+    flex-shrink: 0; 
+}
+.textareaContainer {
+    flex: 1;
+    padding-left: var(--spacing);
+}
+
+.textareaContainer textarea {
+    width: 100%;
+    border: none;
+    resize: none;
+    font-size: 19px;
+}
+
+#submitPostButton {
+    background-color: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 7px 15px;
+    float: right;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing);
+    cursor: pointer;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink: 0;
+}
+
+.mainContentContainer {
+    flex: 1;
+    display: flex;
+}
+
+.postContentContainer {
+    padding-left: var(--spacing);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.username,
+.date {
+    color: var(--greyText)
+}
+
+.displayName {
+    font-weight: bold;
+}
+
+.postFooter {
+    display: flex;
+    align-items: center;
+}
+
+.postFooter .postButtonContainer {
+    flex: 1;
+    display: flex;
+}
+
+.postFooter .postButtonContainer button {
+    padding: 2px 5px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.header a,
+.header span {
+    padding-right: 5px;
+}
+
+.postButtonContainer button:hover {
+    background-color: #d4edff;
+    color: var(--blue);
+    border-radius: 50%;
+}
+
+.post {
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing);
+    cursor: pointer;
+    border-bottom: 1px solid var(--lightGrey);
+    flex-shrink: 0;
+}
+
+.mainContentContainer {
+    flex: 1;
+    display: flex;
+}
+
+.postContentContainer {
+    padding-left: var(--spacing);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.displayName {
+    font-weight: bold;
+}
+
+.postFooter {
+    display: flex;
+    align-items: center;
+}
+
+.postFooter .postButtonContainer {
+    flex: 1;
+    display: flex;
+}
+
+.username
+.date {
+    color: var(--grey)
+}
+
+.postFooter .postButtonContainer button {
+    background-color: transparent;
+    border: none;
+    color: var(--greyButtonText);
+    padding: 0 5px;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+.header a,
+.header span {
+    padding-right: 5px;
+}
+
+.postButtonContainer button:hover {
+    background-color: #d4edff;
+    color: var(--blue);
+    border-radius: 50%;
+
+}
+
+.chatPageContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.chatTitleBar {
+  border-bottom: 1px solid color rgb(101,119,134);
+  display: flex;
+  align-items: center;
+  min-height: 60px;
+  padding: 10px;
+}
+
+ .chatTitleBar label {
+    margin-right: 10px;
+} 
+
+#userSearchTextbox {
+    border: none;
+    flex: 1;
+    font-weight: 200;
+    min-width: 350px;
+}
+#createChatButton {
+    border: none;
+    background-color: var(--blue);
+    color: #fff;
+    padding: 7px 20px;
+    margin: 10px auto;
+    border-radius: 40px;
+}
+
+#createChatButton:disabled{
+    background-color: var(--lightGrey);
+    color: var(--greyText);
+}

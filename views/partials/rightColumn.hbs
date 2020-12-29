@@ -1,0 +1,45 @@
+<!-- Right Side-->
+<div class="col-2">
+  <!-- 若要使用此導覽列，請載入userControlller.getRecommendedUsers  --->
+  <div class="col-4 mt-3">
+    <div class="row justify-content-center mt-3 ml-3 p-0 m-0" style="width:350px">
+      <div class="col align-self-center m-0 p-0" style="background-color: #F5F8FA;border-radius:10px">
+        <div class="h6 fw-bolder m-3 " style="font-weight: bold;">跟隨誰</div>
+        <hr class="m-0 p-0">
+        {{!-- {{#each recommendedUsers}} --}}
+
+        {{#each user.Top10}}
+        <div class="d-flex ms-2 py-3" style="border-bottom: 1px solid #C0C0C0;">
+            <div class="d-flex mx-auto">
+              <a class="mx-2" href="/user/{{this.id}}">
+                  <img src="{{this.avatar}}" alt=""
+                      style="height: 40px; width: 40px; border-radius: 50%;">
+              </a>
+              <div class="mx-1 px-0" style="width:50%;">
+                  <div class="row">
+                      <h6 class="fw-bolder" style="margin:0;">{{this.name}}</h6>
+                      <h6 style="margin:0; color:#A39480;">{{this.email}}</h6>
+                  </div>
+              </div>                
+              {{#if this.relate}}
+              <form class="mx-0 px-0 w-25" action="/user/followship/{{this.id}}?_method=DELETE" method="POST">
+                  <button class="btn btn-lg btn-block fw-bolder mx-0" type="submit"
+                      style="color:white; background-color:#FF6103; border-radius: 25px; border: 1px solid white; width:100%; font-size:0.7em;">正在跟隨</button>
+              </form>
+              {{else}}
+              <form class="mx-0 px-0 w-25" action="/user/followship/{{this.id}}" method="POST">
+                  <button class="btn btn-lg btn-block fw-bolder mx-0" type="submit"
+                      style="color:#FF6103; background-color:white; border-radius: 25px; border: 1px solid #FF6103; width:100%; font-size:0.7em;">跟隨</button>
+              </form>
+              {{/if}}                
+            </div>
+        </div>
+        {{/each}}
+
+        <hr class="m-0 p-0">
+        {{!-- {{/each}} --}}
+        <div class="h6 "> <a href="/users" class="nav-link fw-bolder" style="color:#FF6103;">顯示更多</a></div>
+      </div>
+    </div>
+  </div>
+</div>
