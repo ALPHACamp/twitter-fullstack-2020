@@ -1,0 +1,35 @@
+<h6>PesonalChat</h6>
+<a href="/messages/new"><i class="fas fa-plus-far"></i></a>
+<hr>
+
+<div class="chatPageContainer">
+
+  <div class="chatTitleBar"><label for="userSearchTextbox">To:</label>
+
+    <div id="selectedUsers"><input id="userSearchTextbox" type="text" placeholder="Type the name of the person" /></div>
+  </div>
+
+
+  <div class="resultsContainer"></div><button id="createChatButton">Create chat</button>
+
+  <script>
+    var timer
+    const userSearchTextbox = document.getElementById('userSearchTextbox')
+    const resultsContainer = document.getElementsByClassName('resultsContainer')
+
+    userSearchTextbox.addEventListener('keydown', event => {
+      if (event.value === '' && event.keycode === 8) {
+        return
+      }
+      else {
+        searchUsers()
+      }
+    })
+
+    function searchUsers(searchTerm) {
+      console.log('hi')
+    }
+
+
+  </script>
+</div>

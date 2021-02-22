@@ -18,17 +18,14 @@ describe('# User Model', () => {
   before(done => {
     done()
   })
-
   const User = UserModel(sequelize, dataTypes)
   const user = new User()
   checkModelName(User)('User')
-
   context('properties', () => {
     ;[
       'name', 'email', 'password', 'account',  'cover', 'avatar'
     ].forEach(checkPropertyExists(user))
   })
-
   context('associations', () => {
     const Reply = 'Reply'
     const Tweet = 'Tweet'
@@ -40,7 +37,6 @@ describe('# User Model', () => {
       User.associate({ Like })
       User.associate({ User })
     })
-
     it('should have many replies', (done) => {
       expect(User.hasMany).to.have.been.calledWith(Reply)
       done()
@@ -58,7 +54,6 @@ describe('# User Model', () => {
       done()
     })
   })
-
   context('action', () => {
     let data = null
 
