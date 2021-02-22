@@ -1,0 +1,434 @@
+<div class="container" style="width: 100%">
+  <div class="row">
+    <div class="col">
+      {{> nav}}
+    </div>
+    <div class=" col-6">
+      <div class="row list-group-item">
+        <div class="d-flex">
+          <div class="pe-5 mt-2">
+            <a href="javascript:history.back()" class="">
+              <i class="fas fa-arrow-left " style="font-size: 1.5em;"></i>
+            </a>
+          </div>
+          <div class="d-flex flex-column">
+            <div class="username">{{user.name}}</div>
+            <div class="secondary">{{tweetsLength}} 推文</div>
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="card hovercard list-group-item">
+
+          <div class="cardheader" style="background: url({{user.cover}}); background-size: cover;">
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="avatar">
+              <img alt="avatar" src="{{user.avatar}}">
+            </span>
+            <span class="float-right m-3">
+              {{#ifCond user.id currentUser.id }}
+              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                data-bs-target="#userEdit">編輯個人資料</button>
+              {{else}}
+              {{#if currentUser.isFollowed}}
+              <form action="/followships/{{user.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/followships" method="POST">
+                <input type="hidden" value="{{user.id}}" name="id">
+                <button type="submit" class="btn btn-outline-primary rounded-pill">跟隨</button>
+              </form>
+              {{/if}}
+              {{/ifCond}}
+            </span>
+          </div>
+          <div class="d-flex align-items-start flex-column">
+            <div class="username">{{user.name}}</div>
+            <div class="secondary" style="font-size: 1em;">@{{user.account}}</div>
+            <br />
+            <div class="introduction">{{user.introduction}}</div>
+            <div class="follow mt-5">
+              <a href="/users/{{user.id}}/followings" style="color: black;"><span
+                  class="me-3">{{FollowingsLength}}個跟隨中</span></a>
+              <a href="/users/{{user.id}}/followers" style="color: black;"><span>{{FollowersLength}}位跟隨者</span></a>
+            </div>
+            <br />
+          </div>
+        </div>
+      </div>
+      <div class="row ">
+        <ul class="nav nav-tabs border bg-white">
+          <li class="nav-item ">
+            {{#ifCond page ''}}
+            <a class="nav-link active" href="/users/{{user.id}}/tweets?page=">推文</a>
+            {{else}}
+            <a class="nav-link" href="/users/{{user.id}}/tweets?page=">推文</a>
+            {{/ifCond}}
+          </li>
+          <li class="nav-item">
+            {{#ifCond page 'reply'}}
+            <a class="nav-link active" href="/users/{{user.id}}/replies?page=reply">推文與回復</a>
+            {{else}}
+            <a class="nav-link" href="/users/{{user.id}}/replies?page=reply">推文與回復</a>
+            {{/ifCond}}
+          </li>
+          <li class="nav-item">
+            {{#ifCond page 'like'}}
+            <a class="nav-link active" href="/users/{{user.id}}/likes?page=like">喜歡的內容</a>
+            {{else}}
+            <a class="nav-link" href="/users/{{user.id}}/likes?page=like">喜歡的內容</a>
+            {{/ifCond}}
+          </li>
+        </ul>
+        <br />
+      </div>
+      {{#ifCond page 'reply'}}
+      {{> replies}}
+      {{else}}
+      {{> tweets}}
+      {{/ifCond}}
+    </div>
+    {{!-- start following --}}
+    {{> followings}}
+    {{!-- end following --}}
+  </div>
+</div>
+
+{{!-- --------------------------------------------------- modal for edit user --}}
+
+
+<div class="modal fade" id="userEdit" tabindex="-1" aria-labelledby="userEditLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/users/{{user.id}}/tweets?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="modal-header">
+          <div class="d-flex">
+            <div>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+            <div>編輯個人資料</div>
+          </div>
+          <button type="submit" class="btn btn-primary rounded-pill">儲存</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group"
+            style="background: url({{user.cover}}); height:8em; background-size: cover; background-repeat: no-repeat">
+            <label for="cover" style="position: relative; left:45%; top: 48%; font-size:20px; color:gray; "><i
+                class="fas fa-camera"></i></label>
+            <input type="file" class="form-control-file" id="cover" name="cover" style="display: none;">
+            <div>
+              <img src="{{user.avatar}}" alt="" class="rounded-circle mt-5" width="100em">
+              <label for="avatar" style="position: relative; left:-14%; top:30px; color:gray; "><i
+                  class="fas fa-camera"></i></label>
+              <input type="file" class="form-control-file" id="avatar" name="avatar" style="display: none;">
+            </div>
+          </div>
+          <div class="mt-5">
+            <label for="username" class="col-form-label">姓名</label>
+            <input type="text" class="form-control" id="username" name="name" value="{{user.name}}" maxlength="50">
+          </div>
+          <div class="mb-3">
+            <label for="introduction" class="col-form-label">自我介紹</label>
+            <textarea class="form-control" id="introduction" name="introduction"
+              maxlength="160">{{user.introduction}}</textarea>
+          </div>
+        </div>
+    </div>
+    </form>
+
+  </div>
+</div>
+
+
+{{!-- --------------------------------------------------- css setting for profile --}}
+
+<style>
+  .card {
+    padding-top: 20px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .card .card-heading {
+    padding: 0 20px;
+    margin: 0;
+  }
+
+  .card .card-heading.simple {
+    font-size: 20px;
+    font-weight: 300;
+    color: #777;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .card .card-heading.image img {
+    display: inline-block;
+    width: 46px;
+    height: 46px;
+    margin-right: 15px;
+    vertical-align: top;
+    border: 0;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+  }
+
+  .card .card-heading.image .card-heading-header {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .card .card-heading.image .card-heading-header h3 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 16px;
+    color: #262626;
+  }
+
+  .card .card-heading.image .card-heading-header span {
+    font-size: 12px;
+    color: #999999;
+  }
+
+  .card .card-body {
+    padding: 0 20px;
+    margin-top: 20px;
+  }
+
+  .card .card-media {
+    padding: 0 20px;
+    margin: 0 -14px;
+  }
+
+  .card .card-media img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .card .card-actions {
+    min-height: 30px;
+    padding: 0 20px 20px 20px;
+    margin: 20px 0 0 0;
+  }
+
+  .card .card-comments {
+    padding: 20px;
+    margin: 0;
+    background-color: #f8f8f8;
+  }
+
+  .card .card-comments .comments-collapse-toggle {
+    padding: 0;
+    margin: 0 20px 12px 20px;
+  }
+
+  .card .card-comments .comments-collapse-toggle a,
+  .card .card-comments .comments-collapse-toggle span {
+    padding-right: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card-comments .media-heading {
+    font-size: 13px;
+    font-weight: bold;
+  }
+
+  .card.people {
+    position: relative;
+    display: inline-block;
+    width: 170px;
+    height: 300px;
+    padding-top: 0;
+    margin-left: 20px;
+    overflow: hidden;
+    vertical-align: top;
+  }
+
+  .card.people:first-child {
+    margin-left: 0;
+  }
+
+  .card.people .card-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 170px;
+    height: 150px;
+    background-color: #ffffff;
+  }
+
+  .card.people .card-top.green {
+    background-color: #53a93f;
+  }
+
+  .card.people .card-top.blue {
+    background-color: #427fed;
+  }
+
+  .card.people .card-info {
+    position: absolute;
+    top: 150px;
+    display: inline-block;
+    width: 100%;
+    height: 101px;
+    overflow: hidden;
+    background: #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .card.people .card-info .title {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #404040;
+  }
+
+  .card.people .card-info .desc {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 16px;
+    color: #737373;
+    text-overflow: ellipsis;
+  }
+
+  .card.people .card-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    line-height: 29px;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .card.hovercard .cardheader {
+    background-size: cover;
+    height: 15em;
+  }
+
+  .card.hovercard .avatar {
+    position: relative;
+    top: -50px;
+    margin-bottom: -50px;
+    float: left;
+  }
+
+  .card.hovercard .avatar img {
+    width: 140px;
+    height: 140px;
+    max-width: 140px;
+    max-height: 140px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+  }
+
+  .card.hovercard .info {
+    padding: 4px 8px 10px;
+  }
+
+  .card.hovercard .info .title {
+    margin-bottom: 4px;
+    font-size: 24px;
+    line-height: 1;
+    color: #262626;
+    vertical-align: middle;
+  }
+
+  .card.hovercard .info .desc {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+  }
+
+  .card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+  }
+
+  .username {
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 19px;
+    line-height: 28px;
+
+    color: #1C1C1C;
+  }
+
+  .secondary {
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 19px;
+    /* identical to box height */
+
+    color: #657786;
+  }
+
+  .introduction {
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #000000;
+  }
+
+  .follow {
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #000000;
+  }
+
+  .edit {
+    border: 1px solid #FF6600;
+    box-sizing: border-box;
+    border-radius: 100px;
+  }
+
+  .nav-item {
+    width: 10em;
+    text-align: center;
+  }
+</style>

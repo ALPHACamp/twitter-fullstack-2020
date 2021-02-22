@@ -1,0 +1,55 @@
+<div class="col-3">
+  {{> nav}}
+</div>
+
+<div class="col-6">
+  <ul class="nav nav-tabs border bg-white">
+    <li class="nav-item">
+      <a class="nav-link" href="/users/{{user.id}}/followers" >跟隨者</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/users/{{user.id}}/followings" >正在跟隨</a>
+    </li>
+  </ul>
+
+  <ul class="list-group list-group-flush">
+
+    {{#each followings}}
+    <div class="card">
+      <div class="row g-0 p-2">
+        <div class="col-md-2 py-2 text-center">
+          <a href="/users/{{this.id}}/tweets">
+            <img class="rounded-circle" src="{{this.avatar}}" alt="" width="50px" height="50px">
+          </a>
+        </div>
+        <div class="col">
+          <div class="d-flex card-body p-2">
+            <div class="d-flex flex-column">
+              <h4 class="mb-1">{{this.name}}</h4>
+              <span class="lead">@{{this.account}}</span>
+            </div>
+
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST" class="col text-end">
+              <button type="submit" class="btn btn-primary rounded-pill">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships" method="POST" class="col text-end">
+              <input type="hidden" name="id" value="{{this.id}}" />
+              <button type="submit" class="btn btn-outline-primary rounded-pill" {{#ifCond this.id
+                ../currentUser.id}}disabled{{/ifCond}}>跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+
+          <p class="card-text px-3">{{this.introduction}}</p>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </ul>
+</div>
+
+<div class="col-3">
+  {{>followings}}
+</div>

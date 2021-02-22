@@ -1,0 +1,38 @@
+<div class="row m-0 px-3">
+  <div class="list-group col-md-2">
+    <a href="/tweets">
+      <img src="https://lighthouse.alphacamp.co/images/logo-simple.jpg" class="mb-5 ms-2" alt="" style=" width:3em">
+    </a>
+    <a href="/admin/tweets" class="list-group-item list-group-item-action text-start active">
+      <i class="fas fa-home"> 推文清單</i>
+    </a>
+    <a href="/admin/users" class="list-group-item list-group-item-action text-start">
+      <i class="far fa-user"> 使用者列表</i>
+    </a>
+    <a href="/logout" class="btn rounded-pill mt-5" style=" font-size: 1.5rem; text-align: left;"><i
+        class="fas fa-sign-out-alt"></i><strong class="ms-2">登出</strong></a>
+  </div>
+
+  <div class="col-md-10">
+    <li class="list-group-item">推文清單</li>
+    {{#each tweets}}
+    <div class="card">
+      <div class="row g-0 p-2">
+        <div class="col-md-2 rounded-circle text-center" style="border: 1px; width: 85px; height: 85px;">
+          <img class="rounded-circle" src="{{this.User.avatar}}" alt="" width="50px" height="50px">
+        </div>
+        <div class="col-md-9 col-lg-10">
+          <h4 class="card-title" style="display: contents;">{{this.User.name}}</h4>
+          <span class="lead">@{{this.User.account}}．</span>
+          <span class="lead">{{moment this.createdAt}}</span>
+          <p class="card-text">{{this.description}}</p>
+        </div>
+
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+          <button type="submit" class="btn-close" onclick="return confirm('Sure to delete?')"></button>
+        </form>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

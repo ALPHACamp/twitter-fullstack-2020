@@ -1,0 +1,42 @@
+<div class="row m-0 px-3">
+  <div class="list-group col-md-2">
+    <a href="/tweets">
+      <img src="https://lighthouse.alphacamp.co/images/logo-simple.jpg" class="mb-5 ms-2" alt="" style=" width:3em">
+    </a>
+    <a href="/admin/tweets" class="list-group-item list-group-item-action text-start">
+      <i class="fas fa-home"> 推文清單</i>
+    </a>
+    <a href="/admin/users" class="list-group-item list-group-item-action text-start active">
+      <i class="far fa-user"> 使用者列表</i>
+    </a>
+    <a href="/logout" class="btn rounded-pill mt-5" style=" font-size: 1.5rem; text-align: left;"><i
+        class="fas fa-sign-out-alt"></i><strong class="ms-2">登出</strong></a>
+  </div>
+
+  <div class="col-md-10">
+    <li class="list-group-item">使用者列表</li>
+    <div class="row mt-1">
+      {{#each users}}
+      <div class="col-3 mb-3">
+        <div class="card" style="height: 100%; position: relative;">
+          <img src="{{this.cover}}" width="245px" height="140px" class="card-img-top cover">
+          <img class="rounded-circle mx-auto" src="{{this.avatar}}" width="100px" height="100px"
+            style="position: absolute; top: 22%; left:0; right:0; border: 4px solid #fff;">
+          <div class="card-body mt-5">
+            <h5 class="card-title text-center">{{this.name}}</h5>
+            <h6 class="card-subtitle mb-1 text-muted text-center">@{{this.account}}</h6>
+            <div class="user-info text-center px-2">
+              <i class="me-2 far fa-comment"> {{this.NumberOfTweets}}</i>
+              <i class="far fa-heart"> {{this.NumberOfLikes}}</i>
+              <br />
+              <span>{{this.NumberOfFollowings}}<span class="text-black-50">個跟隨中</span></span>
+              <span>{{this.NumberOfFollowers}}<span class="text-black-50">位跟隨者</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+</div>
