@@ -9,6 +9,8 @@ const Like = db.Like
 const tweetController = {
   getTweets: (req, res) => {
     Tweet.findAll({
+      raw: true,
+      nest: true,
       include: [
         User,
         { model: User, as: 'LikeUsers' }
@@ -23,14 +25,14 @@ const tweetController = {
         tweets.forEach(tweet=>{
           let replyNum = 0;
           replies.forEach(reply=>{
-            if(tweet.toJSON().id === reply.TweetId) replyNum++;
+            if(tweet.id === reply.TweetId) replyNum++;
           })
           tweet.replyNum = replyNum;
           tweet.isLiked = req.user.LikeTweets.map(d => d.id).includes(tweet.id)
         })
         return User.findOne({ where: { id: helpers.getUser(req).id } })
               .then(user => {
-                return res.render('tweets', { tweets, user, users: res.locals.users })
+                return res.render('tweets', { tweets, user: user.toJSON(), users: res.locals.users })
               })
       })
     })
