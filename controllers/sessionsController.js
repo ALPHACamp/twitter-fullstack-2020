@@ -12,7 +12,7 @@ const sessionsController = {
       password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
       name: req.body.name
     }).then(user => {
-      return res.redirect('/login')
+      return res.redirect('/')
     })
   }
 };
