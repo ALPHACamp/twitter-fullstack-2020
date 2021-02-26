@@ -1,27 +1,31 @@
-<form class="form-signin" action="/signup" method="POST" style="width: 100%;">
-  <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+<form class="form-regist m-3" action="/regist" method="POST" style="width: 100%;">
+  <div>
+    <img class="logo img-fluid mx-auto d-block"
+      src="https://uploads-ssl.webflow.com/5d3a7aed4e11722bc1d46f10/5d3e6d42b1eba491c41fc0a9_AC%20nav%20logo.png">
+    <h1 class="mt-3 text-center h3 font-weight-normal">建立你的帳號</h1>
   </div>
-  <div class="form-label-group">
-    <label for="inputName">Name</label>
-    <input type="text" name="name" class="form-control" placeholder="Name" required autofocus>
+  <div class="col-6 mx-auto">
+    <div class="form-label-group m-3">
+      <input type="text" name="" class="form-control" placeholder="帳號" required autofocus>
+    </div>
+    <div class="form-label-group m-3">
+      <input type="text" name="name" class="form-control" placeholder="名稱" required autofocus>
+    </div>
+    <div class="form-label-group m-3">
+      <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
+    </div>
+    <div class="form-label-group m-3">
+      <input type="password" name="password" class="form-control" placeholder="密碼" required>
+    </div>
+    <div class="form-label-group m-3">
+      <input type="password" name="passwordCheck" class="form-control" placeholder="密碼確認" required>
+    </div>
+    <br />
+    <button class="btn btn-block rounded-pill mt-3 btn-warning text-dark" type="submit">註冊</button>
+    <div class="text-center mb-4">
+      <p><a href="/signin">取消</a></p>
+    </div>
   </div>
-  <div class="form-label-group">
-    <label for="inputEmail">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
-  </div>
-  <div class="form-label-group">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
-  </div>
-  <div class="form-label-group">
-    <label for="inputPasswordCheck">Password Check</label>
-    <input type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required>
-  </div>
-  <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-  <div class="text-center mb-4">
-    <p><a href="/signin">Sign In</a></p>
-  </div>
-  <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
+
+  <p class="mt-5 mb-3 text-muted text-center">© 2021</p>
 </form>
