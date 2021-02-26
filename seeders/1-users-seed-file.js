@@ -14,7 +14,7 @@ module.exports = {
       createdAt   : new Date(),
       updatedAt   : new Date(),
     }];
-    [21, 31, 41, 51, 61].forEach((e) => {
+    [11, 21, 31, 41, 51].forEach((e) => {
       users.push({
         id          : e,
         email       : `user${e}@example.com`,
