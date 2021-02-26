@@ -1,0 +1,53 @@
+/* HELPER CLASSES */
+.max-vh-100 {
+  max-height: 100vh;
+}
+
+.header-block {
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
+  top: 0;
+}
+
+.logo {
+  max-height: 50px;
+}
+
+.item-header .info,
+.item-other {
+  color: rgba(0, 0, 0, .525);
+}
+
+/* COLUMN SETUP */
+.container-fluid .row > * {
+  height: 100vh;
+  overflow: scroll;
+}
+
+/* PER COLUMN STYLE */
+#column_nav {
+  padding-right: 3rem;
+  padding-left: 3rem;
+}
+
+#column_main {
+  border-left: 2px solid rgba(0, 0, 0, .125);
+  border-right: 2px solid rgba(0, 0, 0, .125);
+}
+
+#column_main > *:not(:last-child) {
+  border-bottom: 2px solid rgba(0, 0, 0, .125);
+}
+
+#mainblock-list .list-item:not(:last-child) {
+  border-bottom: 2px solid rgba(0, 0, 0, .125);
+}
+
+#mainblock-list .list-item img {
+  max-height: 70px;
+}
+
+#mainblock-list .list-item .item-other > *:not(:last-of-type) {
+  margin-right: 3rem;
+}
