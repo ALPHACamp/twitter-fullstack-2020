@@ -8,7 +8,10 @@ const express = require('express');
 // Project packages
 const expressHandlebars = require('express-handlebars');
 const methodOverride = require('method-override');
-const path = require('path');
+const session = require('express-session');
+const flash = require('connect-flash');
+const usePassport = require('./config/passport');
+
 const routes = require('./routes');
 const helpers = require('./_helpers');
 
@@ -20,6 +23,18 @@ app.set('view engine', 'hbs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public/`));
 app.use(methodOverride('_method'));
+app.use(session({
+  secret           : process.env.SESSION_SECRET,
+  resave           : false,
+  saveUninitialized: true,
+}));
+usePassport(app);
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_messages = req.flash('success_messages');
+  res.locals.error_messages = req.flash('error_messages');
+  next();
+});
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
