@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const helpers = require('../_helpers')
 const Followship = db.Followship
 const userController = {
   signUpPage: (req, res) => {
@@ -54,8 +55,30 @@ const userController = {
     res.redirect('/signin')
   },
 
-  addFollow: (req, res) => {
+  addFollowing: async (req, res) => {
+    console.log(req.body.id)
+    if (Number(helpers.getUser(req).id) !== Number(req.body.id)) {
+      await Followship.create({
+        followerId: helpers.getUser(req).id,
+        followingId: req.body.id
+      })
+      console.log(helpers.getUser(req))
+      console.log('success')
+      return res.redirect('back')
+    }
+    console.log('fail')
+    return res.render('testFollow')
 
+
+  },
+
+  removeFollowing: async (req, res) => {
+    const awaitRemove = await Followship.findOne({
+      where: { followerId: helpers.getUser(req).id, followingId: req.params.id }
+    })
+    await awaitRemove.destroy()
+    req.flash('success_messages', '成功取消追隨')
+    return res.redirect('back')
   }
 }
 
