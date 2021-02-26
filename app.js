@@ -11,7 +11,10 @@ const app = express()
 const port = 3000
 
 
-app.engine('handlebars', handlebars())
+app.engine('handlebars', handlebars({
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
+}))
 app.set('view engine', 'handlebars')
 
 // use helpers.getUser(req) to replace req.user
