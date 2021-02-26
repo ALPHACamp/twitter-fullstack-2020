@@ -1,35 +1,21 @@
-const tweetController = require('../controllers/tweetController')
-const userController = require('../controllers/userController')
-const adminController = require('../controllers/adminController')
+const express = require('express')
+const router = express.Router()
+//admin
+const adminHome = require('./admin/home')
+const adminUser = require('./admin/user')
+const adminTweet = require('./admin/tweet')
 
+const home = require('./home')
+const user = require('./user')
+const tweet = require('./tweet')
+const followship = require('./followship')
 
-module.exports = (app, passport) => {
-  const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      return next()
-    }
-    res.redirect('/signin')
-  }
-  const authenticatedAdmin = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      if (req.user.role) { return next() }
-      return res.redirect('/')
-    }
-    res.redirect('/signin')
-  }
+router.use('/users', user)
+router.use('/tweets', tweet)
+router.use('/', home)
+router.use('/followships', followship)
+router.use('/admin/users', adminUser)
+router.use('/admin/tweets', adminTweet)
+router.use('/admin', adminHome)
 
-  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetController.getTweet)
-
-  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
-  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweet)
-
-  app.get('/signup', userController.signUpPage)
-  app.post('/signup', userController.signUp)
-
-  app.get('/signin', userController.signInPage)
-  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-  app.get('/logout', userController.logout)
-
-
-}
+module.exports = router
