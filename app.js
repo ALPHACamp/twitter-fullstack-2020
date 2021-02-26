@@ -24,8 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public/`));
 app.use(methodOverride('_method'));
 app.use(session({
-  secret           : process.env.SESSION_SECRET,
-  resave           : false,
+  secret: process.env.SESSION_SECRET,
+  resave: false,
   saveUninitialized: true,
 }));
 usePassport(app);
