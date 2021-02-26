@@ -14,6 +14,18 @@ const sessionsController = {
     }).then(user => {
       return res.redirect('/')
     })
+  },
+  loginPage: (req, res) => {
+    return res.render('login')
+  },
+
+  login: (req, res) => {
+    res.redirect('/')
+  },
+
+  logout: (req, res) => {
+    req.logout()
+    res.redirect('/signin')
   }
 };
 module.exports = sessionsController;
