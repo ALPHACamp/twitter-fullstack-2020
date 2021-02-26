@@ -61,5 +61,7 @@ npm run start
 ## Contributor
 
 > [Thumper](https://github.com/thumperL)
+
 > [Newush](https://github.com/newush)
+
 > [YounChu](https://github.com/linchuaccount)
