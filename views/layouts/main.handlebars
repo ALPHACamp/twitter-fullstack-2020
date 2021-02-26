@@ -12,15 +12,16 @@
 
 <body>
   {{!-- Navbar --}}
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark d-flex flex-column">
     <a class="navbar-brand" href="/">Tweet</a>
-    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+    <div class="d-flex flex-column navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
       </ul>
       <div>
-        {{#if user.isAdmin}}
+        {{#ifCond user.role 'admin'}}
         <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
-        {{/if}}
+        {{/ifCond}}
         {{#if user}}
         <span style="color: white;margin-right: 10px;">Hi, {{user.email}}</span>
         <a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
@@ -29,6 +30,7 @@
       </div>
     </div>
   </nav>
+
   <br />
   <main role="main">
     <div class="album py-5 bg-light">

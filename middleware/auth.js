@@ -9,7 +9,7 @@ exports.authenticated = (req, res, next) => {
 
 exports.authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).isAdmin === 'admin') {
       return next()
     }
     return res.redirect('/')
