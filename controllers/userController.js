@@ -88,7 +88,7 @@ const userController = {
   },
 
   getUserPage: async (req, res) => {
-    let user = await User.findByPk(req.params.id, {
+    let userView = await User.findByPk(req.params.id, {
       include: [
         { model: Like },
         { model: User, as: 'Followings' },
@@ -97,7 +97,7 @@ const userController = {
         { model: Reply }
       ]
     })
-    userView = user.toJSON()
+    userView = userView.toJSON()
     totalReplies = userView.Replies.length
     totalLikes = userView.Likes.length
     totalFollowers = userView.Followers.length
@@ -151,6 +151,28 @@ const userController = {
       introduction: req.body.introduction
     })
     return res.redirect('back')
+  },
+
+  getUserFollowingPage: async (req, res) => {
+    let user = await User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followings' }
+      ]
+    })
+    user = user.toJSON()
+    return res.render('userFollowing', { user })
+  },
+  getUserFollowerPage: async (req, res) => {
+    let user = await User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    })
+    user = user.toJSON()
+    user.Followers.map(user => {
+      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+    })
+    return res.render('userFollower', { user })
   }
 }
 
