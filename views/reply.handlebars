@@ -1,0 +1,104 @@
+<H1>單一推文回覆</H1>
+
+<div class="d-flex flex-column mr-5">
+  <!--單一推文-->
+
+  <div class="card mb-3" style="width: 540px;">
+    <div class="row g-0">
+
+
+      <div class="card-body d-flex">
+        <a href="/user/{{tweet.UserId}}" style="text-decoration: none;">
+          <img src="{{tweet.User.avatar}}" alt="..." syle="max-height:75px; max-width:75px;">
+        </a>
+        <div>
+          <h5 class="card-title">{{tweet.User.name}}{{tweet.User.account}}</h5>
+          <p class="card-text">{{tweet.description}}</p>
+        </div>
+        </a>
+      </div>
+
+      <div>
+        <h1>{{moment_format tweet.createdAt}}</h1>
+      </div>
+
+      <div calss="col-md-2">
+        <div class="card-footer">
+          <div class="d-flex">
+            <div class="mr-5">
+              <p>{{ReplyCount}}</p>
+              <h5>reply ICON</h5>
+            </div>
+            <div>
+              <p>{{LikedCount}}</p>
+              {{#if isLiked}}
+              <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+                <button type="submit" class="btn btn-danger">unlike</button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{tweet.id}}/like" method="POST">
+                <button type="submit" class="btn btn-danger">like</button>
+              </form>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--回覆版塊-->
+  {{#each tweet.Replies}}
+  <div class="card mb-3" style="width: 540px;">
+    <div class="row g-0">
+
+      <div class="card-body d-flex">
+        <a href="/user/{{this.UserId}}" style="text-decoration: none;">
+          <img src="{{this.User.avatar}}" alt="..." syle="max-height:75px; max-width:75px;">
+        </a>
+        <div>
+          <h5 class="card-title">
+            {{this.User.name}}{{this.User.account}}----{{moment_fromNow this.User.createdAt}}
+          </h5>
+          <p class="card-text">{{this.comment}}</p>
+        </div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+  {{/each}}
+
+</div>
+
+{{!-- 跟隨 --}}
+<div calss="d-flex flex-column ml-5">
+  <h4>跟隨誰</h4>
+  {{#each users}}
+  <div class="card mb-3" style="width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{this.avatar}}" alt="..." style="max-width: 100px; max-height:100px;">
+      </div>
+      <div class="col-md-6">
+        <div class="card-body">
+          <h5 class="card-title">{{this.name}}</h5>
+          <p class="card-text">{{this.account}}</p>
+        </div>
+      </div>
+      <div calss="col-md-2">
+        {{#if this.isFollowed}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/" method="POST">
+          <input type="hidden" name="id" value="{{this.id}}">
+          <button type="submit" class="btn btn-danger">跟隨</button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
