@@ -24,10 +24,7 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id);
 });
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then((user) => {
-    user = user.toJSON();
-    return cb(null, user);
-  });
+  User.findByPk(id).then((user) => cb(null, user.toJSON()));
 });
 
 module.exports = passport;

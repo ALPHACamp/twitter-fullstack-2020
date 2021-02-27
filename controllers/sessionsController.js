@@ -18,25 +18,24 @@ const sessionsController = {
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect('/regist');
     }
-    User.findOne({
+    return User.findOne({
       where: { [Op.or]: [{ email }, { account }] },
     }).then((user) => {
       if (user) {
         if (user.account === account) {
           req.flash('error_messages', '帳號已經有人用了');
-          return res.redirect('/regist');
         }
         if (user.email === email) {
           req.flash('error_messages', '此 Email 已存在');
-          return res.redirect('/regist');
         }
+        return res.redirect('/regist');
       }
       return User.create({
         email   : req.body.email,
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
         name    : req.body.name,
         account : req.body.account,
-      }).then((user) => {
+      }).then(() => {
         req.flash('success_messages', '成功註冊帳號');
         res.redirect('/login');
       })
