@@ -120,12 +120,17 @@ const userController = {
   editUserFromEditPage: async (req, res) => {
     const user = await User.findByPk(req.params.id)
     const { files } = req
+    let avatarLink, coverLink = ''
     if (files) {
       imgur.setClientID(IMGUR_CLIENT_ID)
       async function start() {
         try {
-          let avatarLink = await imgPromise(files.avatar[0])
-          let coverLink = await imgPromise(files.cover[0])
+          if (files.avatar) {
+            avatarLink = await imgPromise(files.avatar[0])
+          }
+          if (files.cover) {
+            coverLink = await imgPromise(files.cover[0])
+          }
           user.update({
             avatar: avatarLink,
             cover: coverLink,
