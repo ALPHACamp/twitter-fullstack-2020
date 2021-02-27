@@ -21,7 +21,7 @@ const tweetController = {
       userAvatar: t.User.avatar,
       LikedCount: t.Likes.length,
       ReplyCount: t.Replies.length,
-      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
+      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false      
     }))
     //user data
     let users = await User.findAll({
@@ -47,12 +47,18 @@ const tweetController = {
       include: [
         { model: User, as: 'Followers' } //找出每個User被追蹤的名單(user.Followers)
       ]
-    })
+    })    
+    
     users = users.map(user => ({
-      ...user.dataValues,
+      ...user.dataValues,         
       isFollowed: helpers.getUser(req).Followings.some(d => d.id === user.id)
     }))
-    return res.render('tweets', { users, tweets })
+    currentUser = users.filter(user => user.id === helpers.getUser(req).id)      
+    // console.log(currentUser)
+    // console.log('avatar',currentUser.avatar)
+    // console.log('id',currentUser.id)
+
+    return res.render('tweets', { users, tweets, currentUser })
   },
 
   postTweet: async (req, res) => {
@@ -69,6 +75,60 @@ const tweetController = {
       description: req.body.description
     })
     return res.redirect('/tweets')
+  },
+
+  getReply: async (req, res) => {
+    let tweet = await Tweet.findByPk(req.params.id, {
+      order: [[{ model: Reply }, 'createdAt', 'DESC']],
+      include: [
+        User,
+        Like,
+        { model: Reply, include: [User] },        
+      ]
+    })  
+    
+    tweet = tweet.toJSON()      
+    const isLiked = tweet.Likes ? tweet.Likes.some(d => d.UserId === helpers.getUser(req).id) : false 
+    
+    //////////////////////////////user data
+    let users = await User.findAll({
+      limit: 10,
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followingId = User.id
+            )`),
+            'FollowerCount'
+          ]
+        ]
+      },
+      order: [
+        [sequelize.literal('FollowerCount'), 'DESC']
+      ],
+      where: {
+        role: 'user'
+      },
+      include: [
+        { model: User, as: 'Followers' } //找出每個User被追蹤的名單(user.Followers)
+      ]
+    })    
+    
+    users = users.map(user => ({
+      ...user.dataValues,         
+      isFollowed: helpers.getUser(req).Followings.some(d => d.id === user.id)
+    }))
+    /////////////////////////////////////////////////
+    
+    return res.render('reply', {
+        tweet,        
+        ReplyCount: tweet.Replies.length,
+        LikedCount: tweet.Likes.length,        
+        isLiked,
+        users
+    })          
   },
 
   addLike: async (req, res) => {

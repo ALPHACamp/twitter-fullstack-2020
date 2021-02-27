@@ -10,5 +10,6 @@ router.use(authenticated)
 
 router.get('/:id', userController.getUserPage)
 router.post('/:id/edit', upload.fields([{ name: 'cover' }, { name: 'avatar' }]), userController.editUserFromEditPage)
-
+router.get('/:id/followings', userController.getUserFollowingPage)
+router.get('/:id/followers', userController.getUserFollowerPage)
 module.exports = router
