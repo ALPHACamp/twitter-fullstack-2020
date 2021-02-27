@@ -13,14 +13,16 @@ const tweetController = {
     let tweets = await Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [User, Like, Reply]
-    })   
+    })
     tweets = tweets.map(t => ({
       ...t.dataValues,
-      userName: t.User.name,      
+      userName: t.User.name,
+      userId: t.User.id,
+      userAvatar: t.User.avatar,
       LikedCount: t.Likes.length,
       ReplyCount: t.Replies.length,
       isLiked: helpers.getUser(req).Likes.some(d => d.TweetId === t.id)
-    }))     
+    }))
     //user data
     let users = await User.findAll({
       limit: 10,
@@ -47,13 +49,13 @@ const tweetController = {
       ]
     })
     users = users.map(user => ({
-      ...user.dataValues,      
-      isFollowed: helpers.getUser(req).Followings.some (d => d.id === user.id)
-    }))    
+      ...user.dataValues,
+      isFollowed: helpers.getUser(req).Followings.some(d => d.id === user.id)
+    }))
     return res.render('tweets', { users, tweets })
-  },  
+  },
 
-  postTweet: async (req, res) => {    
+  postTweet: async (req, res) => {
     if (!req.body.description.trim()) {
       req.flash('error_messages', '請輸入些甚麼')
       return res.redirect('back')
@@ -68,7 +70,7 @@ const tweetController = {
     })
     return res.redirect('/tweets')
   },
-  
+
   addLike: async (req, res) => {
     await Like.create({
       UserId: helpers.getUser(req).id,

@@ -23,7 +23,7 @@
       <div class="col-md-4">
 
         <a href="/users/{{this.User.id}}/tweets">
-          <img src="{{this.User.avatar}}" alt="...">
+          <img src="{{this.userAvatar}}" alt="..." syle="height:75px; width:75px;">
         </a>
 
       </div>
@@ -31,7 +31,7 @@
 
         <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;">
           <div class="card-body">
-            <h5 class="card-title">{{this.userName}}{{this.userAccount}}</h5>
+            <h5 class="card-title"><a href="/users/{{this.userId}}">{{this.userName}}</a>{{this.userAccount}}</h5>
             <p class="card-text">{{this.description}}</p>
           </div>
         </a>
