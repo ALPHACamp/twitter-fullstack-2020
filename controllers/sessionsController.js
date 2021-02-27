@@ -16,7 +16,7 @@ const sessionsController = {
     }).then((user) => {
       if (user) {
         if (user.account === req.body.account) {
-          req.flash('error messages', '帳號已經有人用了');
+          req.flash('error_messages', '帳號已經有人用了');
           return res.redirect('/regist');
         }
         if (user.email === req.body.email) {
@@ -30,7 +30,7 @@ const sessionsController = {
         name    : req.body.name,
         account : req.body.account,
       }).then((user) => {
-        req.flash('success_message', '成功註冊帳號');
+        req.flash('success_messages', '成功註冊帳號');
         res.redirect('/login');
       })
       .catch((error) => console.log('register error', error));
@@ -45,6 +45,7 @@ const sessionsController = {
   },
 
   logout: (req, res) => {
+    req.flash('success_messages', '登出成功');
     req.logout();
     res.redirect('/login');
   },
