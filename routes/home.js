@@ -5,7 +5,6 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const passport = require('passport')
 
-
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, tweetController.getTweet)
 

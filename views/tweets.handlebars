@@ -1,3 +1,14 @@
-<div>
-  Twitter
+<div class="d-flex flex-column">
+  {{#each users}}
+  <div class="d-flex justify-content-between">
+    <div>
+      <img src="{{this.avatar}}">
+    </div>
+    <div>
+      <div>{{this.name}}{{this.name}}</div>
+      <div>{{this.tweetContent}}</div>
+      <div>{{this.totalReplies}}{{this.totalLikes}}</div>
+    </div>
+  </div>
+  {{/each}}
 </div>

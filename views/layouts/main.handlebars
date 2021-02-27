@@ -12,29 +12,23 @@
 
 <body>
   {{!-- Navbar --}}
-
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark d-flex flex-column">
-    <a class="navbar-brand" href="/">Tweet</a>
-    <div class="d-flex flex-column navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-      </ul>
+  <div class="d-flex mx-auto" style="display:inline-block; width:460px;">
+    <nav class="navbar navbar-expand-lg navbar-dark d-flex flex-column justify-content-between mr-2"
+      style="height: 1080px; ">
       <div>
-        {{#ifCond user.role 'admin'}}
-        <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
-        {{/ifCond}}
+        <h4><a href="/tweets">首頁</a></h4>
         {{#if user}}
-        <span style="color: white;margin-right: 10px;">Hi, {{user.email}}</span>
-        <a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
-        <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
-        {{/if}}
+        <h4><a href="/users/{{user.id}}/edit">個人資料</a></h4>
+        <h4><a href="/users/{{user.id}}/edit">設定</a></h4>
       </div>
-    </div>
-  </nav>
+      <div>
+        <h4><a href="/logout">登出</a></h4>
+      </div>
+      {{/if}}
+    </nav>
 
-  <br />
-  <main role="main">
     <div class="album py-5 bg-light">
-      <div class="container">
+      <div class="d-flex container">
         {{#if success_messages}}
         <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
           {{success_messages}}
@@ -48,7 +42,7 @@
         {{{body}}}
       </div>
     </div>
-  </main>
+  </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
   integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
