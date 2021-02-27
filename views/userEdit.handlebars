@@ -10,7 +10,8 @@
     </button>
 
     {{/ifCond}}
-    <p class="card-text"><small class="text-muted">{{totalFollowings}}個跟隨中 {{totalFollowers}}位跟隨者</small></p>
+    <p class="card-text"><small class="text-muted"><a href="/users/{{user.id}}/followings">{{totalFollowings}}個跟隨中</a><a
+          href="/users/{{user.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
   </div>
   {{#each userView.Tweets}}
   <div class="card mb-3" style="width: 540px;">

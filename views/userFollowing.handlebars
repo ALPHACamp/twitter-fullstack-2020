@@ -1,0 +1,30 @@
+<div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link" href="/users/{{user.id}}/followers">跟隨者</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/users/{{user.id}}/followings">正在跟隨</a>
+    </li>
+  </ul>
+  {{#each user.Followings}}
+  <div class="card mb-3 " style="width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-2">
+        <img src="{{this.avatar}}" alt="..." style="max-width:75px; max-height:75px;">
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title"><a href="/users/{{this.id}}">{{this.name}}</a>
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-danger">正在跟隨</button>
+            </form>
+          </h5>
+          <p class="card-text">{{this.account}}</p>
+          <p>{{this.introduction}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
