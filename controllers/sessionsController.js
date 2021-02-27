@@ -7,20 +7,27 @@ const { User } = db;
 const sessionsController = {
   registerPage: (req, res) => res.render('regist'),
   register    : (req, res) => {
-    if (req.body.passwordCheck !== req.body.password) {
+    const {
+      name, email, account, password, passwordCheck,
+    } = req.body;
+    if (!name || !email || !account || !password || !passwordCheck) {
+      req.flash('error_messages', '所有欄位都是必填');
+      return res.redirect('/regist');
+    }
+    if (passwordCheck !== password) {
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect('/regist');
     }
     User.findOne({
-      where: { [Op.or]: [{ email: req.body.email }, { account: req.body.account }] },
+      where: { [Op.or]: [{ email }, { account }] },
     }).then((user) => {
       if (user) {
-        if (user.account === req.body.account) {
+        if (user.account === account) {
           req.flash('error_messages', '帳號已經有人用了');
           return res.redirect('/regist');
         }
-        if (user.email === req.body.email) {
-          req.flash('error_messages', '此信箱已存在');
+        if (user.email === email) {
+          req.flash('error_messages', '此 Email 已存在');
           return res.redirect('/regist');
         }
       }
