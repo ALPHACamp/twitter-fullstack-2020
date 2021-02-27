@@ -3,6 +3,15 @@ const db = require('../models')
 const User = db.User
 const helpers = require('../_helpers')
 const Followship = db.Followship
+const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
+const imgPromise = require('../_helpers').imgPromise
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -62,12 +71,9 @@ const userController = {
         followerId: helpers.getUser(req).id,
         followingId: req.body.id
       })
-      console.log(helpers.getUser(req))
-      console.log('success')
       return res.redirect('back')
     }
-    console.log('fail')
-    return res.render('testFollow')
+    return res.render('tweets')
 
 
   },
@@ -78,6 +84,67 @@ const userController = {
     })
     await awaitRemove.destroy()
     req.flash('success_messages', '成功取消追隨')
+    return res.redirect('back')
+  },
+
+  getUserPage: async (req, res) => {
+    let user = await User.findByPk(req.params.id, {
+      include: [
+        { model: Like },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet },
+        { model: Reply }
+      ]
+    })
+    userView = user.toJSON()
+    totalReplies = userView.Replies.length
+    totalLikes = userView.Likes.length
+    totalFollowers = userView.Followers.length
+    totalFollowings = userView.Followings.length
+
+
+
+    return res.render('userEdit', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings })
+  },
+
+  getUsers: async (req, res) => {
+    let users = await User.findAll()
+    users = users.map(user => ({
+      ...user.dataValues,
+      isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+    }))
+    return users
+  },
+
+  editUserFromEditPage: async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    const { files } = req
+    if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      async function start() {
+        try {
+          let avatarLink = await imgPromise(files.avatar[0])
+          let coverLink = await imgPromise(files.cover[0])
+          user.update({
+            avatar: avatarLink,
+            cover: coverLink,
+            name: req.body.name,
+            introduction: req.body.introduction
+          })
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      await start()
+      return res.redirect('back')
+    }
+    user.update({
+      avatar: user.avatar,
+      cover: user.cover,
+      name: req.body.name,
+      introduction: req.body.introduction
+    })
     return res.redirect('back')
   }
 }

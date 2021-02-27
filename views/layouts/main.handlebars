@@ -6,8 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Twitter</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 </head>
 
 <body>
@@ -18,8 +18,8 @@
       <div>
         <h4><a href="/tweets">首頁</a></h4>
         {{#if user}}
-        <h4><a href="/users/{{user.id}}/edit">個人資料</a></h4>
-        <h4><a href="/users/{{user.id}}/edit">設定</a></h4>
+        <h4><a href="/users/{{user.id}}">個人資料</a></h4>
+        <h4><a href="/users/{{user.id}}/set">設定</a></h4>
       </div>
       <div>
         <h4><a href="/logout">登出</a></h4>

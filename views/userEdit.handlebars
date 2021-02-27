@@ -1,0 +1,96 @@
+<div class="card mb-3">
+  <img src="{{userView.cover}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{userView.name}}</h5>
+    <p class="card-text">{{userView.introduction}}</p>
+    <!-- Button trigger modal -->
+    {{#ifCond userView.id user.id}}
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      編輯個人資料
+    </button>
+
+    {{/ifCond}}
+    <p class="card-text"><small class="text-muted">{{totalFollowings}}個跟隨中 {{totalFollowers}}位跟隨者</small></p>
+  </div>
+  {{#each userView.Tweets}}
+  <div class="card mb-3" style="width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-2">
+        <img src="{{../userView.avatar}}" alt="..." style="max-width:75px; max-height:75px;">
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title"><a href="/users/{{../userView.id}}">{{../userView.name}}</a></h5>
+          <p class="card-text">{{this.description}}</p>
+          <p>{{../totalReplies}}</p>
+          <p>{{../totalLikes}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<div calss="d-flex flex-column ml-5">
+  <h4>跟隨誰</h4>
+  {{#each users}}
+  <div class="card mb-3" style="width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{this.avatar}}" alt="..." style="max-width: 100px; max-height:100px;">
+      </div>
+      <div class="col-md-6">
+        <div class="card-body">
+          <h5 class="card-title"><a href="/users/{{this.id}}">{{this.name}}</a></h5>
+          <p class="card-text">{{this.account}}</p>
+        </div>
+      </div>
+      <div calss="col-md-2">
+        {{#if this.isFollowed}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/" method="POST">
+          <input type="hidden" name="id" value="{{this.id}}">
+          <button type="submit" class="btn btn-danger">跟隨</button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">X</button>
+        <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
+        <form action="/users/{{user.id}}/edit" method="POST" enctype="multipart/form-data">
+          <button type="submit" class="btn btn-primary">儲存</button>
+      </div>
+      <div class="modal-body">
+        <div calss="form-group">
+          <label for="avatar">cover</label>
+          <input type="file" class="form-control-file" id="cover" name="cover">
+        </div>
+        <div calss="form-group">
+          <label for="avatar">avatar</label>
+          <input type="file" class="form-control-file" id="avatar" name="avatar">
+        </div>
+        <div class="form-group">
+          <label for="recipient-name" class="col-form-label">名稱:</label>
+          <input type="text" class="form-control" id="recipient-name" name="name" value="{{user.name}}">
+        </div>
+        <div class="form-group">
+          <label for="message-text" class="col-form-label">自我介紹:</label>
+          <textarea class="form-control" id="message-text" name="introduction"></textarea>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
