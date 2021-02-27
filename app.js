@@ -24,18 +24,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public/`));
 app.use(methodOverride('_method'));
 app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
+  secret           : process.env.SESSION_SECRET,
+  resave           : false,
   saveUninitialized: true,
 }));
+app.use(flash());
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(flash());
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');
+  res.locals.me = helpers.getUser(req);
   next();
 });
 

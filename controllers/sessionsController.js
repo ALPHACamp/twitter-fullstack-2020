@@ -1,31 +1,26 @@
 const bcrypt = require('bcryptjs');
 const db = require('../models');
-const User = db.User;
+
+const { User } = db;
 
 const sessionsController = {
-  registerPage: (req, res) => {
-    return res.render('regist')
-  },
-  register: (req, res) => {
+  registerPage: (req, res) => res.render('regist'),
+  register    : (req, res) => {
     User.create({
-      email: req.body.email,
+      email   : req.body.email,
       password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-      name: req.body.name
-    }).then(user => {
-      return res.redirect('/')
-    })
+      name    : req.body.name,
+    }).then((user) => res.redirect('/'));
   },
-  loginPage: (req, res) => {
-    return res.render('login')
-  },
+  loginPage: (req, res) => res.render('login'),
 
   login: (req, res) => {
-    res.redirect('/')
+    res.redirect('/');
   },
 
   logout: (req, res) => {
-    req.logout()
-    res.redirect('/signin')
-  }
+    req.logout();
+    res.redirect('/login');
+  },
 };
 module.exports = sessionsController;
