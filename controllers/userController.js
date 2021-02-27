@@ -6,6 +6,7 @@ const Followship = db.Followship
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const sequelize = require('sequelize')
 const imgPromise = require('../_helpers').imgPromise
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -98,14 +99,14 @@ const userController = {
       ]
     })
     userView = userView.toJSON()
-    totalReplies = userView.Replies.length
-    totalLikes = userView.Likes.length
-    totalFollowers = userView.Followers.length
-    totalFollowings = userView.Followings.length
+    const totalReplies = userView.Replies.length
+    const totalLikes = userView.Likes.length
+    const totalFollowers = userView.Followers.length
+    const totalFollowings = userView.Followings.length
 
 
 
-    return res.render('userEdit', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings })
+    return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings })
   },
 
   getUsers: async (req, res) => {
@@ -115,6 +116,29 @@ const userController = {
       isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     }))
     return users
+  },
+
+  getUserTweetsAndRepliesPage: async (req, res) => {
+    //todo
+  },
+  getUserLikesPage: async (req, res) => {
+    let userView = await User.findByPk(req.params.id, {
+      include: [
+        { model: Like, include: [{ model: Tweet, include: [User] }] },
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+      ],
+      order: [
+        [Like, 'createdAt', 'DESC']
+      ]
+    })
+    userView = userView.toJSON()
+    userView.tweets = userView.Likes.map(like => {
+      return like.Tweet
+    })
+    const totalFollowers = userView.Followers.length
+    const totalFollowings = userView.Followings.length
+    return res.render('likes', { userView, totalFollowers, totalFollowings })
   },
 
   editUserFromEditPage: async (req, res) => {
