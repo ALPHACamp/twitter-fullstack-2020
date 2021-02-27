@@ -71,12 +71,9 @@ const userController = {
         followerId: helpers.getUser(req).id,
         followingId: req.body.id
       })
-      console.log(helpers.getUser(req))
-      console.log('success')
       return res.redirect('back')
     }
-    console.log('fail')
-    return res.render('testFollow')
+    return res.render('tweets')
 
 
   },
@@ -105,6 +102,8 @@ const userController = {
     totalLikes = userView.Likes.length
     totalFollowers = userView.Followers.length
     totalFollowings = userView.Followings.length
+
+
 
     return res.render('userEdit', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings })
   },
