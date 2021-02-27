@@ -10,7 +10,6 @@ const sequelize = require('sequelize')
 
 const tweetController = {
   getTweet: async (req, res) => {
-    console.log(req.user)
     //tweet data
     let tweets = await Tweet.findAll({
       order: [['createdAt', 'DESC']],
