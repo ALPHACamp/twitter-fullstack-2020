@@ -5,11 +5,12 @@ const helpers = require('../_helpers')
 const Followship = db.Followship
 const Tweet = db.Tweet
 const Like = db.Like
-
+const sequelize = require('sequelize')
 
 
 const tweetController = {
   getTweet: async (req, res) => {
+    //tweet data
     let tweets = await Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [User]
@@ -17,9 +18,34 @@ const tweetController = {
     tweets = tweets.map(t => ({
       ...t.dataValues,
       userName: t.User.name,
+      userId: t.User.id,
       isLiked: helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id)
     }))
-    let users = await User.findAll()
+    //user data
+    let users = await User.findAll({
+      limit: 10,
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followingId = User.id
+            )`),
+            'FollowerCount'
+          ]
+        ]
+      },
+      order: [
+        [sequelize.literal('FollowerCount'), 'DESC']
+      ],
+      where: {
+        role: 'user'
+      },
+      include: [
+        { model: User, as: 'Followers' } //找出每個User被追蹤的名單(user.Followers)
+      ]
+    })
     users = users.map(user => ({
       ...user.dataValues,
       isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)

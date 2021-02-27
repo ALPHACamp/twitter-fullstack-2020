@@ -90,7 +90,7 @@ const userController = {
     return res.redirect('back')
   },
 
-  getUserEditPage: async (req, res) => {
+  getUserPage: async (req, res) => {
     let user = await User.findByPk(req.params.id, {
       include: [
         { model: Like },

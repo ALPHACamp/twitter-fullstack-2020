@@ -8,7 +8,7 @@ const authenticated = require('../middleware/auth').authenticated
 
 router.use(authenticated)
 
-router.get('/:id/edit', userController.getUserEditPage)
+router.get('/:id', userController.getUserPage)
 router.post('/:id/edit', upload.fields([{ name: 'cover' }, { name: 'avatar' }]), userController.editUserFromEditPage)
 
 module.exports = router
