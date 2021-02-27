@@ -31,6 +31,36 @@
   {{/each}}
 </div>
 
+<div calss="d-flex flex-column ml-5">
+  <h4>跟隨誰</h4>
+  {{#each users}}
+  <div class="card mb-3" style="width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{this.avatar}}" alt="..." style="max-width: 100px; max-height:100px;">
+      </div>
+      <div class="col-md-6">
+        <div class="card-body">
+          <h5 class="card-title"><a href="/users/{{this.id}}">{{this.name}}</a></h5>
+          <p class="card-text">{{this.account}}</p>
+        </div>
+      </div>
+      <div calss="col-md-2">
+        {{#if this.isFollowed}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/" method="POST">
+          <input type="hidden" name="id" value="{{this.id}}">
+          <button type="submit" class="btn btn-danger">跟隨</button>
+        </form>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
