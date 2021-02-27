@@ -21,7 +21,7 @@ const tweetController = {
       userAvatar: t.User.avatar,
       LikedCount: t.Likes.length,
       ReplyCount: t.Replies.length,
-      isLiked: helpers.getUser(req).Likes.some(d => d.TweetId === t.id)
+      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
     }))
     //user data
     let users = await User.findAll({
