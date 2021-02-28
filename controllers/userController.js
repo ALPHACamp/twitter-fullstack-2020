@@ -6,11 +6,16 @@ const Followship = db.Followship
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const sequelize = require('sequelize')
 const imgPromise = require('../_helpers').imgPromise
+const getTopUser = require('../_helpers').getTopUser
+const getSingleUserData = require('../_helpers').getSingleUserData
+const getTotalTweets = require('../_helpers').getTotalTweets
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const imgur = require('imgur-node-api')
+const followship = require('../models/followship')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const userController = {
   signUpPage: (req, res) => {
@@ -65,7 +70,24 @@ const userController = {
   },
 
   addFollowing: async (req, res) => {
-    console.log(req.body.id)
+    //tweet data
+    let tweets = await Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [User, Like, Reply]
+    })
+    tweets = tweets.map(t => ({
+      ...t.dataValues,
+      userName: t.User.name,
+      userId: t.User.id,
+      userAvatar: t.User.avatar,
+      userAccount: t.User.account,
+      LikedCount: t.Likes.length,
+      ReplyCount: t.Replies.length,
+      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
+    }))
+    //getTopUser
+    let users = await getTopUser(req)
+
     if (Number(helpers.getUser(req).id) !== Number(req.body.id)) {
       await Followship.create({
         followerId: helpers.getUser(req).id,
@@ -73,9 +95,7 @@ const userController = {
       })
       return res.redirect('back')
     }
-    return res.render('tweets')
-
-
+    return res.render('tweets', { users, tweets })
   },
 
   removeFollowing: async (req, res) => {
@@ -88,33 +108,32 @@ const userController = {
   },
 
   getUserPage: async (req, res) => {
-    let userView = await User.findByPk(req.params.id, {
-      include: [
-        { model: Like },
-        { model: User, as: 'Followings' },
-        { model: User, as: 'Followers' },
-        { model: Tweet },
-        { model: Reply }
-      ]
-    })
-    userView = userView.toJSON()
-    totalReplies = userView.Replies.length
-    totalLikes = userView.Likes.length
-    totalFollowers = userView.Followers.length
-    totalFollowings = userView.Followings.length
+    //取userView是為了後續跟當前登入者user的id比對去決定是否顯示編輯個人資料
+    let userView = await getSingleUserData(req.params.id)
+    const totalReplies = userView.Replies.length
+    const totalLikes = userView.Likes.length
+    const totalFollowers = userView.Followers.length
+    const totalFollowings = userView.Followings.length
+    let users = await getTopUser(req)
 
-
-
-    return res.render('userEdit', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings })
+    return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users })
   },
 
-  getUsers: async (req, res) => {
-    let users = await User.findAll()
-    users = users.map(user => ({
-      ...user.dataValues,
-      isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
-    }))
-    return users
+
+  getUserTweetsAndRepliesPage: async (req, res) => {
+    //user data to show top 10 user
+    let users = await getTopUser(req)
+  },
+  getUserLikesPage: async (req, res) => {
+    let userView = await getSingleUserData(req.params.id)
+    userView.tweets = userView.Likes.map(like => {
+      return like.Tweet
+    })
+    const totalFollowers = userView.Followers.length
+    const totalFollowings = userView.Followings.length
+
+    let users = await getTopUser(req)
+    return res.render('likes', { userView, totalFollowers, totalFollowings, users })
   },
 
   editUserFromEditPage: async (req, res) => {
@@ -154,25 +173,17 @@ const userController = {
   },
 
   getUserFollowingPage: async (req, res) => {
-    let user = await User.findByPk(req.params.id, {
-      include: [
-        { model: User, as: 'Followings' }
-      ]
-    })
-    user = user.toJSON()
-    return res.render('userFollowing', { user })
+    let user = await getTotalTweets(req.params.id)
+    let users = await getTopUser(req)
+    return res.render('userFollowing', { user, users })
   },
   getUserFollowerPage: async (req, res) => {
-    let user = await User.findByPk(req.params.id, {
-      include: [
-        { model: User, as: 'Followers' }
-      ]
-    })
-    user = user.toJSON()
+    let user = await getTotalTweets(req.params.id)
     user.Followers.map(user => {
       user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     })
-    return res.render('userFollower', { user })
+    let users = await getTopUser(req)
+    return res.render('userFollower', { user, users })
   }
 }
 

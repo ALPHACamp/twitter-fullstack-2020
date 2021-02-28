@@ -7,18 +7,23 @@
   <hr>
   <hr>
 
-  <img src="{{cUser.avatar}}" alt="">
-  <h1>{{cUser.id}}</h1>
-  <h3>使用者個人圖片</h3>
-  <form action="/tweets" method="post">
-    <textarea name="description" placeholder="有什麼新鮮事..."></textarea>
-    <button class="btn" type="submit">推文</button>
-  </form>
+
+
 
 </div>
-
+<!--================= 推文 ================= -->
 <div class="d-flex flex-column mr-5">
-  <!--推文版塊-->
+
+  <h3>首頁</h3>
+  <hr />
+  {{!-- 使用者個人圖片 --}}
+  <div>
+    <img src="{{user.avatar}}" alt="">
+    <form action="/tweets" method="post">
+      <textarea name="description" placeholder="有什麼新鮮事..."></textarea>
+      <button class="btn" type="submit">推文</button>
+    </form>
+  </div>
   {{#each tweets}}
   <div class="card mb-3" style="width: 540px;">
     <div class="row g-0">
@@ -31,7 +36,7 @@
         <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;">
           <div>
             <h5 class="card-title">
-              {{this.userName}}{{this.userAccount}}---{{moment_fromNow this.createdAt}}
+              {{this.userName}}---{{this.userAccount}}---{{moment_fromNow this.createdAt}}
             </h5>
             <p class="card-text">{{this.description}}</p>
           </div>
@@ -43,7 +48,11 @@
           <div class="d-flex">
             <div class="mr-5">
               <p>{{this.ReplyCount}}</p>
-              <h5>reply ICON</h5>
+              {{!-- ==================回覆============ --}}
+              <button class="btn btn-primary" data-toggle="modal" data-target="#reply{{this.id}}">
+                回覆ICON
+              </button>
+              {{!-- ==================回覆============ --}}
             </div>
             <div>
               <p>{{this.LikedCount}}</p>
@@ -64,6 +73,7 @@
   </div>
   {{/each}}
 </div>
+<!--================= 跟隨 ================= -->
 <div calss="d-flex flex-column ml-5">
   <h4>跟隨誰</h4>
   {{#each users}}
@@ -95,7 +105,7 @@
   {{/each}}
 </div>
 
-<!--================= Modal ================= -->
+<!--================= 側邊欄推文 Modal ================= -->
 <div class="modal fade" id="postTweet" tabindex="-1" aria-labelledby="postTweetModalLabel" aria-hidden="true">
   <form action="/tweets" method="post">
     <div class="modal-dialog">
@@ -122,3 +132,48 @@
     </div>
   </form>
 </div>
+
+<!--================= 回覆 Modal ================= -->
+{{#each tweets}}
+<div class="modal fade" id="reply{{this.id}}" tabindex="-1" aria-labelledby="postTweetModalLabel" aria-hidden="true">
+  <form action="/tweets/{{this.id}}/replies" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+
+            <div class="col-1">
+              <img src="{{this.userAvatar}}" style="width: 50px;height: 50px" alt="">
+            </div>
+
+            <div class="col-11">
+
+              <p>{{this.userName}}·{{this.userAccount}}·{{moment_fromNow this.createdAt}}</p>
+              <p>{{this.description}}</p>
+              <p>回覆給 {{this.userAccount}}</p>
+            </div>
+          </div>
+
+          <hr>
+          {{!-- 使用者個人圖片 --}}
+          <div class="d-flex">
+            <div class="col-1">
+              <img src="{{../user.avatar}}" style="width: 50px;height: 50px" alt="">
+            </div>
+
+            <div class="col-11">
+              <textarea placeholder="推你的回覆" name="comment"></textarea>
+              <button type="submit" class="btn">回覆</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+{{/each}}

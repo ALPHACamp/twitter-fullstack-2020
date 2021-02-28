@@ -8,7 +8,7 @@
 
 
       <div class="card-body d-flex">
-        <a href="/user/{{tweet.UserId}}" style="text-decoration: none;">
+        <a href="/users/{{tweet.UserId}}" style="text-decoration: none;">
           <img src="{{tweet.User.avatar}}" alt="..." syle="max-height:75px; max-width:75px;">
         </a>
         <div>
@@ -27,7 +27,13 @@
           <div class="d-flex">
             <div class="mr-5">
               <p>{{ReplyCount}}</p>
-              <h5>reply ICON</h5>
+
+              {{!-- ==================回覆============ --}}
+              <button class="btn btn-primary" data-toggle="modal" data-target="#reply{{tweet.id}}">
+                回覆ICON
+              </button>
+              {{!-- ==================回覆============ --}}
+
             </div>
             <div>
               <p>{{LikedCount}}</p>
@@ -53,7 +59,7 @@
     <div class="row g-0">
 
       <div class="card-body d-flex">
-        <a href="/user/{{this.UserId}}" style="text-decoration: none;">
+        <a href="/users/{{this.UserId}}" style="text-decoration: none;">
           <img src="{{this.User.avatar}}" alt="..." syle="max-height:75px; max-width:75px;">
         </a>
         <div>
@@ -71,7 +77,7 @@
 
 </div>
 
-{{!-- 跟隨 --}}
+<!--================= 跟隨 ================= -->
 <div calss="d-flex flex-column ml-5">
   <h4>跟隨誰</h4>
   {{#each users}}
@@ -101,4 +107,48 @@
     </div>
   </div>
   {{/each}}
+</div>
+
+<!--================= 回覆 Modal ================= -->
+
+<div class="modal fade" id="reply{{tweet.id}}" tabindex="-1" aria-labelledby="postTweetModalLabel" aria-hidden="true">
+  <form action="" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">X</button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row">
+
+            <div class="col-1">
+              <img src="{{tweet.User.avatar}}" style="width: 50px;height: 50px" alt="">
+            </div>
+
+            <div class="col-11">
+
+              <p>{{tweet.User.id}}·{{tweet.User.name}}·{{moment_fromNow tweet.Users.createdAt}}</p>
+              <p>{{tweet.description}}</p>
+              <p>回覆給 {{tweet.User.account}}</p>
+            </div>
+          </div>
+
+          <hr>
+          {{!-- 使用者個人圖片 --}}
+          <div class="d-flex">
+            <div class="">
+              <img src="{{user.avatar}}" style="width: 50px;height: 50px" alt="">
+            </div>
+
+            <div class="">
+              <textarea placeholder="推你的回覆" name="comment"></textarea>
+              <button type="submit" class="btn">回覆</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
 </div>

@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card mb-3 mr-5">
   <img src="{{userView.cover}}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{userView.name}}</h5>
@@ -10,9 +10,21 @@
     </button>
 
     {{/ifCond}}
-    <p class="card-text"><small class="text-muted"><a href="/users/{{user.id}}/followings">{{totalFollowings}}個跟隨中</a><a
-          href="/users/{{user.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
+    <p class="card-text"><small class="text-muted"><a
+          href="/users/{{userView.id}}/followings">{{totalFollowings}}個跟隨中</a><a
+          href="/users/{{userView.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
   </div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="/users/{{userView.id}}/tweets">推文</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/users/{{userView.id}}/tweetsreply">推文與回覆</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/users/{{userView.id}}/likes">喜歡的內容</a>
+    </li>
+  </ul>
   {{#each userView.Tweets}}
   <div class="card mb-3" style="width: 540px;">
     <div class="row g-0">
@@ -32,6 +44,7 @@
   {{/each}}
 </div>
 
+<!--================= 跟隨 ================= -->
 <div calss="d-flex flex-column ml-5">
   <h4>跟隨誰</h4>
   {{#each users}}
@@ -42,7 +55,7 @@
       </div>
       <div class="col-md-6">
         <div class="card-body">
-          <h5 class="card-title"><a href="/users/{{this.id}}">{{this.name}}</a></h5>
+          <h5 class="card-title">{{this.name}}</h5>
           <p class="card-text">{{this.account}}</p>
         </div>
       </div>
@@ -63,6 +76,8 @@
   {{/each}}
 </div>
 
+
+<!--Modal--->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -70,7 +85,7 @@
       <div class="modal-header d-flex justify-content-between">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">X</button>
         <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
-        <form action="/users/{{user.id}}/edit" method="POST" enctype="multipart/form-data">
+        <form action="/users/{{user.id}}/" method="POST" enctype="multipart/form-data">
           <button type="submit" class="btn btn-primary">儲存</button>
       </div>
       <div class="modal-body">

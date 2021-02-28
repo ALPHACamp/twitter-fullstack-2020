@@ -19,54 +19,25 @@ const tweetController = {
       userName: t.User.name,
       userId: t.User.id,
       userAvatar: t.User.avatar,
+      userAccount: t.User.account,
       LikedCount: t.Likes.length,
       ReplyCount: t.Replies.length,
-      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false      
+      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
     }))
-    //user data
-    let users = await User.findAll({
-      limit: 10,
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followingId = User.id
-            )`),
-            'FollowerCount'
-          ]
-        ]
-      },
-      order: [
-        [sequelize.literal('FollowerCount'), 'DESC']
-      ],
-      where: {
-        role: 'user'
-      },
-      include: [
-        { model: User, as: 'Followers' } //找出每個User被追蹤的名單(user.Followers)
-      ]
-    })    
-    
-    users = users.map(user => ({
-      ...user.dataValues,         
-      isFollowed: helpers.getUser(req).Followings.some(d => d.id === user.id)
-    }))
-    currentUser = users.filter(user => user.id === helpers.getUser(req).id)      
-    // console.log(currentUser)
-    // console.log('avatar',currentUser.avatar)
-    // console.log('id',currentUser.id)
 
-    return res.render('tweets', { users, tweets, currentUser })
+    //user data
+    let users = await helpers.getTopUser(req)
+
+    return res.render('tweets', { users, tweets })
   },
 
   postTweet: async (req, res) => {
-    if (!req.body.description.trim()) {
+    const { description } = req.body
+    if (!description.trim()) {
       req.flash('error_messages', '請輸入些甚麼')
       return res.redirect('back')
     }
-    if (req.body.description.length > 140) {
+    if (description.length > 140) {
       req.flash('error_messages', '超過140字。')
       return res.redirect('back')
     }
@@ -83,52 +54,44 @@ const tweetController = {
       include: [
         User,
         Like,
-        { model: Reply, include: [User] },        
+        { model: Reply, include: [User] },
       ]
-    })  
-    
-    tweet = tweet.toJSON()      
-    const isLiked = tweet.Likes ? tweet.Likes.some(d => d.UserId === helpers.getUser(req).id) : false 
-    
+    })
+
+    tweet = tweet.toJSON()
+    const isLiked = tweet.Likes ? tweet.Likes.some(d => d.UserId === helpers.getUser(req).id) : false
+
     //////////////////////////////user data
-    let users = await User.findAll({
-      limit: 10,
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followingId = User.id
-            )`),
-            'FollowerCount'
-          ]
-        ]
-      },
-      order: [
-        [sequelize.literal('FollowerCount'), 'DESC']
-      ],
-      where: {
-        role: 'user'
-      },
-      include: [
-        { model: User, as: 'Followers' } //找出每個User被追蹤的名單(user.Followers)
-      ]
-    })    
-    
-    users = users.map(user => ({
-      ...user.dataValues,         
-      isFollowed: helpers.getUser(req).Followings.some(d => d.id === user.id)
-    }))
-    /////////////////////////////////////////////////
-    
+    let users = await helpers.getTopUser(req)
+    /////////////////////////////////////////////////     
+
     return res.render('reply', {
-        tweet,        
-        ReplyCount: tweet.Replies.length,
-        LikedCount: tweet.Likes.length,        
-        isLiked,
-        users
-    })          
+      tweet,
+      ReplyCount: tweet.Replies.length,
+      LikedCount: tweet.Likes.length,
+      isLiked,
+      users
+    })
+  },
+
+  postReply: async (req, res) => {
+    const tweetId = Number(req.params.id)
+    const { comment } = req.body
+
+    if (!comment.trim()) {
+      req.flash('error_messages', '請輸入些甚麼')
+      return res.redirect('back')
+    }
+    if (comment.length > 140) {
+      req.flash('error_messages', '超過140字。')
+      return res.redirect('back')
+    }
+    await Reply.create({
+      UserId: helpers.getUser(req).id,
+      TweetId: tweetId,
+      comment
+    })
+    return res.redirect('back')
   },
 
   addLike: async (req, res) => {
