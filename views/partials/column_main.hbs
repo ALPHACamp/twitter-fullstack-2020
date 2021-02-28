@@ -7,15 +7,23 @@
     首頁
   {{/if}}
 </div>
+{{>message}}
 <div id="mainblock-main" class="overflow-scroll w-100 p-3">
   {{!-- TODO: 按照UX設計去抓的話，這邊是主要內容，像是new tweet block還有tweet info block --}}
-  <textarea class="w-100 border-0" name="" id="" rows="10">你想說什麼</textarea>
+  <div class="d-flex align-items-start p-3" style="min-height: 120px;">
+    <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
+    <form action="/" method="POST">
+        <textarea class="w-1000 border-0" name="description" id="description" rows="2" cols="90" placeholder="有什麼新鮮事?"></textarea>
+        <button type="submit" class="btn rounded-pill btn-warning" style="float:right">推文</button>
+    </form>
+  </div>
 </div>
+
 <div id="mainblock-list" class="overflow-scroll w-100">
   {{!-- TODO: 把 reply items 還有 tweet items 包裝成一樣的命名，例如 image, name, username, content, replyCount, likeCount --}}
   {{#each tweets}}
     <div class="list-item d-flex align-items-start p-3" style="min-height: 120px;">
-      <img class="img-fluid rounded-circle mr-3" src="https://dummyimage.com/100x100/000/fff" alt="">
+      <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="">
       <div>
         <div class="item-header d-flex d-row d-flex align-items-center">
           <div class="name pr-2">
