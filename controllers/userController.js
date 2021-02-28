@@ -67,6 +67,52 @@ const userController = {
   },
 
   addFollowing: async (req, res) => {
+    //tweet data
+    let tweets = await Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [User, Like, Reply]
+    })
+    tweets = tweets.map(t => ({
+      ...t.dataValues,
+      userName: t.User.name,
+      userId: t.User.id,
+      userAvatar: t.User.avatar,
+      userAccount: t.User.account,
+      LikedCount: t.Likes.length,
+      ReplyCount: t.Replies.length,
+      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
+    }))
+    //user data
+    let users = await User.findAll({
+      limit: 10,
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followingId = User.id
+            )`),
+            'FollowerCount'
+          ]
+        ]
+      },
+      order: [
+        [sequelize.literal('FollowerCount'), 'DESC']
+      ],
+      where: {
+        role: 'user'
+      },
+      include: [
+        { model: User, as: 'Followers' } //找出每個User被追蹤的名單(user.Followers)
+      ]
+    })
+
+    users = users.map(user => ({
+      ...user.dataValues,
+      isFollowed: helpers.getUser(req).Followings.some(d => d.id === user.id)
+    }))
+
     if (Number(helpers.getUser(req).id) !== Number(req.body.id)) {
       await Followship.create({
         followerId: helpers.getUser(req).id,
@@ -74,9 +120,7 @@ const userController = {
       })
       return res.redirect('back')
     }
-    return res.render('tweets')
-
-
+    return res.render('tweets', { users, tweets })
   },
 
   removeFollowing: async (req, res) => {
@@ -194,7 +238,6 @@ const userController = {
       ]
     })
     user = user.toJSON()
-    user.Followings = user.Followings.reverse()
     return res.render('userFollowing', { user })
   },
   getUserFollowerPage: async (req, res) => {
@@ -216,7 +259,6 @@ const userController = {
       ]
     })
     user = user.toJSON()
-    user.Followers = user.Followers.reverse()
     user.Followers.map(user => {
       user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     })
