@@ -1,19 +1,8 @@
-<div class="d-flex flex-column mr-5">
-  <button class="btn" data-toggle="modal" data-target="#postTweet">
-    側邊欄推文
-  </button>
+{{> nav}}
 
-  <hr>
-  <hr>
-  <hr>
-
-
-
-
-</div>
 <!--================= 推文 ================= -->
 <div class="d-flex flex-column mr-5">
-
+  {{> message}}
   <h3>首頁</h3>
   <hr />
   {{!-- 使用者個人圖片 --}}
@@ -74,36 +63,7 @@
   {{/each}}
 </div>
 <!--================= 跟隨 ================= -->
-<div calss="d-flex flex-column ml-5">
-  <h4>跟隨誰</h4>
-  {{#each users}}
-  <div class="card mb-3" style="width: 540px;">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img src="{{this.avatar}}" alt="..." style="max-width: 100px; max-height:100px;">
-      </div>
-      <div class="col-md-6">
-        <div class="card-body">
-          <h5 class="card-title">{{this.name}}</h5>
-          <p class="card-text">{{this.account}}</p>
-        </div>
-      </div>
-      <div calss="col-md-2">
-        {{#if this.isFollowed}}
-        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-          <button type="submit" class="btn btn-danger">正在跟隨</button>
-        </form>
-        {{else}}
-        <form action="/followships/" method="POST">
-          <input type="hidden" name="id" value="{{this.id}}">
-          <button type="submit" class="btn btn-danger">跟隨</button>
-        </form>
-        {{/if}}
-      </div>
-    </div>
-  </div>
-  {{/each}}
-</div>
+{{> follower}}
 
 <!--================= 側邊欄推文 Modal ================= -->
 <div class="modal fade" id="postTweet" tabindex="-1" aria-labelledby="postTweetModalLabel" aria-hidden="true">
@@ -117,8 +77,7 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-1">
-              使用者個人圖片
-              <img src="" alt="">
+              <img src="{{user.avatar}}" style="width: 50px;height: 50px" alt="">
             </div>
 
             <div class="col-11">

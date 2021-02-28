@@ -1,0 +1,16 @@
+<nav class="navbar d-flex flex-column" style="min-width: 235px">
+  <div>
+    <h4><a href="/tweets">首頁</a></h4>
+    {{#if user}}
+    <h4><a href="/users/{{user.id}}">個人資料</a></h4>
+    <h4><a href="/users/{{user.id}}/set">設定</a></h4>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#postTweet">
+      推文
+    </button>
+  </div>
+
+  <div>
+    <h4><a href="/logout">登出</a></h4>
+  </div>
+  {{/if}}
+</nav>
