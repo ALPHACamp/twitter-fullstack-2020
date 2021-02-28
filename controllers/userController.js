@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const imgur = require('imgur-node-api')
+const followship = require('../models/followship')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const userController = {
   signUpPage: (req, res) => {
@@ -66,7 +67,6 @@ const userController = {
   },
 
   addFollowing: async (req, res) => {
-    console.log(req.body.id)
     if (Number(helpers.getUser(req).id) !== Number(req.body.id)) {
       await Followship.create({
         followerId: helpers.getUser(req).id,
@@ -103,8 +103,6 @@ const userController = {
     const totalLikes = userView.Likes.length
     const totalFollowers = userView.Followers.length
     const totalFollowings = userView.Followings.length
-
-
 
     return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings })
   },
@@ -179,20 +177,46 @@ const userController = {
 
   getUserFollowingPage: async (req, res) => {
     let user = await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Tweets AS Tweet
+              WHERE Tweet.UserId = ${req.params.id}
+            )`),
+            'TweetsCount'
+          ]
+        ]
+      },
       include: [
-        { model: User, as: 'Followings' }
+        { model: User, as: 'Followings' },
       ]
     })
     user = user.toJSON()
+    user.Followings = user.Followings.reverse()
     return res.render('userFollowing', { user })
   },
   getUserFollowerPage: async (req, res) => {
     let user = await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Tweets AS Tweet
+              WHERE Tweet.UserId = ${req.params.id}
+            )`),
+            'TweetsCount'
+          ]
+        ]
+      },
       include: [
         { model: User, as: 'Followers' }
       ]
     })
     user = user.toJSON()
+    user.Followers = user.Followers.reverse()
     user.Followers.map(user => {
       user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     })
