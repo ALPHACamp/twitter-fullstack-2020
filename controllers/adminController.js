@@ -27,7 +27,12 @@ const adminController = {
             res.redirect('/admin/tweets')
           })
       })
-  }
+  },
+  getUsers: (req, res) => {
+    return User.findAll({ raw: true, nest: true }).then(users => {
+      return res.render('admin/userlist', { users: users })
+    })
+  },
 }
 
 module.exports = adminController

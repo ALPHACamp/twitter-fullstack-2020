@@ -1,0 +1,29 @@
+<div class="row">
+  <div>
+    <h1>後台管理系統</h1>
+    <a href="/admin/tweets">Tweet總覽</a>
+    <br />
+    <br />
+  </div>
+  {{#each users}}
+  <div class="col-md-4">
+    <div class="card mb-4 shadow-sm">
+      <img class="card-img-top" src="{{this.cover}}" alt="Card image cap" width="286px" height="180px">
+      <div class="card-body">
+        <p class="card-text">
+          <a href="/users/{{this.id}}">
+            {{this.name}}
+          </a>
+        </p>
+        <span class="badge badge-secondary">{{this.introduction}}</span>
+        <p class="card-text">{{this.description}}</p>
+        <p class="card-text"><small class="text-muted"><a
+              href="/users/{{this.id}}/followings">{{totalFollowings}}個跟隨中</a><a
+              href="/users/{{this.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+<br />
+<br / <div class="row">

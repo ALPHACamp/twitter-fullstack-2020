@@ -33,6 +33,6 @@ router.post('/admin/signin', authenticatedAdmin, passport.authenticate('local', 
 ///
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-
+router.get('/admin/userlist', authenticatedAdmin, adminController.getUsers)
 
 module.exports = router
