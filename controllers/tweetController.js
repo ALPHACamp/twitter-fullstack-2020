@@ -22,38 +22,11 @@ const tweetController = {
       userAccount: t.User.account,
       LikedCount: t.Likes.length,
       ReplyCount: t.Replies.length,
-      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false      
-    }))    
+      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
+    }))
+
     //user data
-    let users = await User.findAll({
-      limit: 10,
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followingId = User.id
-            )`),
-            'FollowerCount'
-          ]
-        ]
-      },
-      order: [
-        [sequelize.literal('FollowerCount'), 'DESC']
-      ],
-      where: {
-        role: 'user'
-      },
-      include: [
-        { model: User, as: 'Followers' } //找出每個User被追蹤的名單(user.Followers)
-      ]
-    })    
-    
-    users = users.map(user => ({
-      ...user.dataValues,         
-      isFollowed: helpers.getUser(req).Followings.some(d => d.id === user.id)
-    }))    
+    let users = await helpers.getTopUser(req)
 
     return res.render('tweets', { users, tweets })
   },
@@ -73,7 +46,7 @@ const tweetController = {
       description: req.body.description
     })
     return res.redirect('/tweets')
-  },  
+  },
 
   getReply: async (req, res) => {
     let tweet = await Tweet.findByPk(req.params.id, {
@@ -81,58 +54,30 @@ const tweetController = {
       include: [
         User,
         Like,
-        { model: Reply, include: [User] },        
+        { model: Reply, include: [User] },
       ]
-    })  
-    
-    tweet = tweet.toJSON()      
-    const isLiked = tweet.Likes ? tweet.Likes.some(d => d.UserId === helpers.getUser(req).id) : false 
-    
+    })
+
+    tweet = tweet.toJSON()
+    const isLiked = tweet.Likes ? tweet.Likes.some(d => d.UserId === helpers.getUser(req).id) : false
+
     //////////////////////////////user data
-    let users = await User.findAll({
-      limit: 10,
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followingId = User.id
-            )`),
-            'FollowerCount'
-          ]
-        ]
-      },
-      order: [
-        [sequelize.literal('FollowerCount'), 'DESC']
-      ],
-      where: {
-        role: 'user'
-      },
-      include: [
-        { model: User, as: 'Followers' } //找出每個User被追蹤的名單(user.Followers)
-      ]
-    })    
-    
-    users = users.map(user => ({
-      ...user.dataValues,           
-      isFollowed: helpers.getUser(req).Followings.some(d => d.id === user.id)
-    }))
+    let users = await helpers.getTopUser(req)
     /////////////////////////////////////////////////     
-    
+
     return res.render('reply', {
-        tweet,        
-        ReplyCount: tweet.Replies.length,
-        LikedCount: tweet.Likes.length,        
-        isLiked,
-        users        
-    })          
+      tweet,
+      ReplyCount: tweet.Replies.length,
+      LikedCount: tweet.Likes.length,
+      isLiked,
+      users
+    })
   },
 
   postReply: async (req, res) => {
-    const tweetId = Number(req.params.id)   
-    const { comment } = req.body     
-        
+    const tweetId = Number(req.params.id)
+    const { comment } = req.body
+
     if (!comment.trim()) {
       req.flash('error_messages', '請輸入些甚麼')
       return res.redirect('back')

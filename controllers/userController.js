@@ -9,6 +9,8 @@ const Like = db.Like
 const sequelize = require('sequelize')
 const imgPromise = require('../_helpers').imgPromise
 const getTopUser = require('../_helpers').getTopUser
+const getSingleUserData = require('../_helpers').getSingleUserData
+const getTotalTweets = require('../_helpers').getTotalTweets
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -107,58 +109,29 @@ const userController = {
 
   getUserPage: async (req, res) => {
     //取userView是為了後續跟當前登入者user的id比對去決定是否顯示編輯個人資料
-    let userView = await User.findByPk(req.params.id, {
-      include: [
-        { model: Like },
-        { model: User, as: 'Followings' },
-        { model: User, as: 'Followers' },
-        { model: Tweet },
-        { model: Reply }
-      ]
-    })
-    userView = userView.toJSON()
+    let userView = await getSingleUserData(req.params.id)
     const totalReplies = userView.Replies.length
     const totalLikes = userView.Likes.length
     const totalFollowers = userView.Followers.length
     const totalFollowings = userView.Followings.length
-    //////////////////////////////user data to show top 10 user
     let users = await getTopUser(req)
 
     return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users })
   },
 
-  getUsers: async (req, res) => {
-    let users = await User.findAll()
-    users = users.map(user => ({
-      ...user.dataValues,
-      isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
-    }))
-    return users
-  },
 
   getUserTweetsAndRepliesPage: async (req, res) => {
     //user data to show top 10 user
     let users = await getTopUser(req)
   },
   getUserLikesPage: async (req, res) => {
-    let userView = await User.findByPk(req.params.id, {
-      include: [
-        { model: Like, include: [{ model: Tweet, include: [User] }] },
-        { model: User, as: 'Followings' },
-        { model: User, as: 'Followers' },
-      ],
-      order: [
-        [Like, 'createdAt', 'DESC']
-      ]
-    })
-    userView = userView.toJSON()
+    let userView = await getSingleUserData(req.params.id)
     userView.tweets = userView.Likes.map(like => {
       return like.Tweet
     })
     const totalFollowers = userView.Followers.length
     const totalFollowings = userView.Followings.length
 
-    //user data to show top 10 user
     let users = await getTopUser(req)
     return res.render('likes', { userView, totalFollowers, totalFollowings, users })
   },
@@ -200,53 +173,15 @@ const userController = {
   },
 
   getUserFollowingPage: async (req, res) => {
-    //user following data
-    let user = await User.findByPk(req.params.id, {
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Tweets AS Tweet
-              WHERE Tweet.UserId = ${req.params.id}
-            )`),
-            'TweetsCount'
-          ]
-        ]
-      },
-      include: [
-        { model: User, as: 'Followings' },
-      ]
-    })
-    user = user.toJSON()
-    //users data to show top user on right side
+    let user = await getTotalTweets(req.params.id)
     let users = await getTopUser(req)
     return res.render('userFollowing', { user, users })
   },
   getUserFollowerPage: async (req, res) => {
-    //User follower Data
-    let user = await User.findByPk(req.params.id, {
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Tweets AS Tweet
-              WHERE Tweet.UserId = ${req.params.id}
-            )`),
-            'TweetsCount'
-          ]
-        ]
-      },
-      include: [
-        { model: User, as: 'Followers' }
-      ]
-    })
-    user = user.toJSON()
+    let user = await getTotalTweets(req.params.id)
     user.Followers.map(user => {
       user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     })
-    //users data to show top user on right side
     let users = await getTopUser(req)
     return res.render('userFollower', { user, users })
   }

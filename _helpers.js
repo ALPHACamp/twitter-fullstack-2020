@@ -1,6 +1,9 @@
 const imgur = require('imgur-node-api')
 const db = require('./models')
 const User = db.User
+const Like = db.Like
+const Tweet = db.Tweet
+const Reply = db.Reply
 const sequelize = require('sequelize')
 function ensureAuthenticated(req) {
   return req.isAuthenticated();
@@ -54,9 +57,51 @@ const getTopUser = async (req) => {
   return users
 }
 
+const getSingleUserData = async (id) => {
+  let user = await User.findByPk(id, {
+    include: [
+      { model: Like, include: [{ model: Tweet, include: [User] }] },
+      { model: User, as: 'Followings' },
+      { model: User, as: 'Followers' },
+      { model: Tweet },
+      { model: Reply }
+    ],
+    order: [
+      [Like, 'createdAt', 'DESC'],
+      [Tweet, 'createdAt', 'DESC'],
+      [Reply, 'createdAt', 'DESC']
+    ]
+  })
+  return user.toJSON()
+}
+
+const getTotalTweets = async (id) => {
+  let user = await User.findByPk(id, {
+    attributes: {
+      include: [
+        [
+          sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Tweets AS Tweet
+              WHERE Tweet.UserId = ${id}
+            )`),
+          'TweetsCount'
+        ]
+      ]
+    },
+    include: [
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' },
+    ]
+  })
+  return user.toJSON()
+}
+
 module.exports = {
   ensureAuthenticated,
   getUser,
   imgPromise,
-  getTopUser
+  getTopUser,
+  getSingleUserData,
+  getTotalTweets
 };
