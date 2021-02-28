@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const authenticatedAdmin = require('../../_helpers').authenticatedAdmin
+const authenticatedAdmin = require('../../middleware/auth').authenticatedAdmin
 const adminController = require('../../controllers/adminController')
 //admin/user
-router.get('/', adminController.getUsers)
+router.get('/', authenticatedAdmin, adminController.getUsers)
 
 module.exports = router
