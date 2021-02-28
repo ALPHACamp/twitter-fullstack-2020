@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card mb-3 mr-5">
   <img src="{{userView.cover}}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{userView.name}}</h5>
@@ -44,6 +44,7 @@
   {{/each}}
 </div>
 
+<!--================= 跟隨 ================= -->
 <div calss="d-flex flex-column ml-5">
   <h4>跟隨誰</h4>
   {{#each users}}
@@ -54,7 +55,7 @@
       </div>
       <div class="col-md-6">
         <div class="card-body">
-          <h5 class="card-title"><a href="/users/{{this.id}}">{{this.name}}</a></h5>
+          <h5 class="card-title">{{this.name}}</h5>
           <p class="card-text">{{this.account}}</p>
         </div>
       </div>
@@ -75,6 +76,8 @@
   {{/each}}
 </div>
 
+
+<!--Modal--->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
