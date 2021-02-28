@@ -40,7 +40,6 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/', (req, res) => res.send('test'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 routers(app)
