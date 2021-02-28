@@ -14,4 +14,5 @@ router.get('/:id/tweets', userController.getUserPage)
 router.get('/:id/followings', userController.getUserFollowingPage)
 router.get('/:id/followers', userController.getUserFollowerPage)
 router.get('/:id/likes', userController.getUserLikesPage)
+router.get('/:id/replies', userController.getUserTweetsRepliesPage)
 module.exports = router

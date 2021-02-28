@@ -19,27 +19,22 @@
       <a class="nav-link " href="/users/{{userView.id}}/tweets">推文</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link " href="/users/{{userView.id}}/tweetsreply">推文與回覆</a>
+      <a class="nav-link active " href="/users/{{userView.id}}/replies">推文與回覆</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link active" href="/users/{{userView.id}}/likes">喜歡的內容</a>
+      <a class="nav-link" href="/users/{{userView.id}}/likes">喜歡的內容</a>
     </li>
   </ul>
-  {{#each userView.tweets}}
+  {{#each userView.Replies}}
   <div class="card mb-3" style="width: 540px;">
     <div class="row g-0">
       <div class="col-md-2">
-        <img src="{{this.User.avatar}}" alt="..." style="max-width:75px; max-height:75px;">
+        <img src="{{../userView.avatar}}" alt="..." style="max-width:75px; max-height:75px;">
       </div>
       <div class="col-md-10">
         <div class="card-body">
-          <h5 class="card-title"><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h5>
-          <p class="card-text">{{this.description}}</p>
-        </div>
-        <div class="card-footer">
-          <form action="/tweets/{{this.id}}/unlike" method="POST">
-            <button type="submit" class="btn btn-danger">unlike</button>
-          </form>
+          <h5 class="card-title"><a href="/users/{{../userView.id}}">{{../userView.name}}</a></h5>
+          <p class="card-text">{{this.comment}}</p>
         </div>
       </div>
     </div>
