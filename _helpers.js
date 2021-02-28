@@ -69,8 +69,7 @@ const getSingleUserData = async (id) => {
     order: [
       [Like, 'createdAt', 'DESC'],
       [Tweet, 'createdAt', 'DESC'],
-      [Reply, 'createdAt', 'DESC'],
-      ['Followings', 'createdAt', 'DESC']
+      [Reply, 'createdAt', 'DESC']
     ]
   })
   return user.toJSON()
