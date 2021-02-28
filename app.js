@@ -10,7 +10,7 @@ const expressHandlebars = require('express-handlebars');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
-const usePassport = require('./config/passport');
+const passport = require('./config/passport');
 
 const routes = require('./routes');
 const helpers = require('./_helpers');
@@ -28,11 +28,15 @@ app.use(session({
   resave           : false,
   saveUninitialized: true,
 }));
-usePassport(app);
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');
+  res.locals.me = helpers.getUser(req);
   next();
 });
 

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     createdAt   : DataTypes.DATE,
     updatedAt   : DataTypes.DATE,
   }, {});
-  User.associate = function (models) {
+  User.associate = (models) => {
     User.hasMany(models.Tweet);
     User.hasMany(models.Reply);
     User.hasMany(models.Like);
