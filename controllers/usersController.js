@@ -4,7 +4,7 @@ const db = require('../models');
 
 const { User } = db;
 
-const sessionsController = {
+const usersController = {
   registerPage: (req, res) => res.render('regist'),
   register    : (req, res) => {
     const {
@@ -56,4 +56,4 @@ const sessionsController = {
     res.redirect('/login');
   },
 };
-module.exports = sessionsController;
+module.exports = usersController;
