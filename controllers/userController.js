@@ -120,9 +120,14 @@ const userController = {
   },
 
 
-  getUserTweetsAndRepliesPage: async (req, res) => {
+  getUserTweetsRepliesPage: async (req, res) => {
     //user data to show top 10 user
     let users = await getTopUser(req)
+    let userView = await getSingleUserData(req.params.id)
+    const totalFollowers = userView.Followers.length
+    const totalFollowings = userView.Followings.length
+
+    return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings })
   },
   getUserLikesPage: async (req, res) => {
     let userView = await getSingleUserData(req.params.id)

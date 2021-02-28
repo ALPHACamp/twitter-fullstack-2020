@@ -7,15 +7,15 @@ module.exports = {
       Array.from({ length: 50 }).map((_, i) =>
       ({
         id: i * 10 + 1,
-        UserId: (i % 5) * 10 + 1,        
+        UserId: (i % 5) * 10 + 1,
         description: faker.lorem.sentence(),
         createdAt: new Date(),
-        updatedAt: new Date()        
+        updatedAt: new Date()
       })
       ), {})
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Tweets', null, {})
+    await queryInterface.bulkDelete('Tweets', null, { truncate: true })
   }
 };
