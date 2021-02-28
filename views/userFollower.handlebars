@@ -1,4 +1,4 @@
-<div>
+<div class="mr-5">
   <div>
     <div>
       <a href="javascript:history.back()">回上一頁</a>
@@ -39,6 +39,38 @@
           <p class="card-text">{{this.account}}</p>
           <p>{{this.introduction}}</p>
         </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<!--================= 跟隨 ================= -->
+<div calss="d-flex flex-column ml-5">
+  <h4>跟隨誰</h4>
+  {{#each users}}
+  <div class="card mb-3" style="width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="{{this.avatar}}" alt="..." style="max-width: 100px; max-height:100px;">
+      </div>
+      <div class="col-md-6">
+        <div class="card-body">
+          <h5 class="card-title">{{this.name}}</h5>
+          <p class="card-text">{{this.account}}</p>
+        </div>
+      </div>
+      <div calss="col-md-2">
+        {{#if this.isFollowed}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-danger">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/" method="POST">
+          <input type="hidden" name="id" value="{{this.id}}">
+          <button type="submit" class="btn btn-danger">跟隨</button>
+        </form>
+        {{/if}}
       </div>
     </div>
   </div>
