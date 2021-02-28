@@ -10,9 +10,21 @@
     </button>
 
     {{/ifCond}}
-    <p class="card-text"><small class="text-muted"><a href="/users/{{user.id}}/followings">{{totalFollowings}}個跟隨中</a><a
-          href="/users/{{user.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
+    <p class="card-text"><small class="text-muted"><a
+          href="/users/{{userView.id}}/followings">{{totalFollowings}}個跟隨中</a><a
+          href="/users/{{userView.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
   </div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="/users/{{userView.id}}/tweets">推文</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/users/{{userView.id}}/tweetsreply">推文與回覆</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/users/{{userView.id}}/likes">喜歡的內容</a>
+    </li>
+  </ul>
   {{#each userView.Tweets}}
   <div class="card mb-3" style="width: 540px;">
     <div class="row g-0">
@@ -70,7 +82,7 @@
       <div class="modal-header d-flex justify-content-between">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">X</button>
         <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
-        <form action="/users/{{user.id}}/edit" method="POST" enctype="multipart/form-data">
+        <form action="/users/{{user.id}}/" method="POST" enctype="multipart/form-data">
           <button type="submit" class="btn btn-primary">儲存</button>
       </div>
       <div class="modal-body">
