@@ -23,7 +23,7 @@ router.post('/signin', passport.authenticate('local', {
 router.get('/logout', userController.logout)
 
 ///admin router
-router.get('/admin/signin', adminController.signInPage)
+/*router.get('/admin/signin', adminController.signInPage)
 ///一直導錯
 router.post('/admin/signin', authenticatedAdmin, passport.authenticate('local', {
   successRedirect: 'admin/tweets',
@@ -33,6 +33,6 @@ router.post('/admin/signin', authenticatedAdmin, passport.authenticate('local', 
 ///
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-router.get('/admin/userlist', authenticatedAdmin, adminController.getUsers)
+router.get('/admin/userlist', authenticatedAdmin, adminController.getUsers)*/
 
 module.exports = router
