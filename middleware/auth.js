@@ -2,9 +2,7 @@ const helpers = require('../_helpers')
 
 exports.authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'user') {
-      return next()
-    }
+    return next()
   }
   res.redirect('/signin')
 }
