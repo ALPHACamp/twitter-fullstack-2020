@@ -12,7 +12,11 @@ const adminController = {
   },
   getTweets: (req, res) => {
     return Tweet.findAll({ raw: true, nest: true }).then(tweets => {
-      return res.render('admin/tweets', { tweets: tweets })
+      const data = tweets.map(t => {
+        t.description = t.description.substring(0, 50)
+        return t
+      })
+      return res.render('admin/tweets', { tweets: data })
     })
   },
   deleteTweet: (req, res) => {
