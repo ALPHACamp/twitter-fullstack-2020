@@ -1,3 +1,31 @@
 <div>
-  admin twitter
+  <h1>後台管理系統</h1>
+  <a href="/admin/userlist">使用者清單</a>
+  <br />
+  <br />
+
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">#Description</th>
+        <th scope="col">#</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each tweets}}
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.name}}</td>
+        <td>{{this.description}}</td>
+        <td>
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 </div>
