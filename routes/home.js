@@ -1,11 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const authenticated = require('../middleware/auth').authenticated
-const authenticatedAdmin = require('../middleware/auth').authenticatedAdmin
 const userauthenticated = require('../middleware/auth').userauthenticated
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
-const adminController = require('../controllers/adminController')
 const passport = require('passport')
 
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))

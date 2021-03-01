@@ -1,11 +1,9 @@
 const db = require('../models')
 const User = db.User
 const helpers = require('../_helpers')
-const Followship = db.Followship
 const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
-const sequelize = require('sequelize')
 
 const tweetController = {
   getTweet: async (req, res) => {
