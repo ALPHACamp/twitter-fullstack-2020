@@ -22,7 +22,10 @@ module.exports = app => {
             return done(null, user)
           })
       })
-      .catch(err => done(err, false))
+      .catch(err => {
+        res.render('error', { message: 'error !' })
+        done(err, false)
+      })
   }))
 
   passport.serializeUser((user, done) => {
@@ -33,6 +36,9 @@ module.exports = app => {
       .then((user) => {
         user = user.toJSON()
         done(null, user)
-      }).catch(err => done(err, null))
+      }).catch(err => {
+        res.render('error', { message: 'error !' })
+        done(err, null)
+      })
   })
 }
