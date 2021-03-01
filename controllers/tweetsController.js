@@ -14,6 +14,7 @@ const tweetsController = {
     .then((tweets) => {
       const tweetsObj = tweets.map((tweet) => ({
         ...tweet.dataValues,
+        User      : tweet.dataValues.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
       }));
