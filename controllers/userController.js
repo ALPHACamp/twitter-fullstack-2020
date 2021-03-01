@@ -164,7 +164,7 @@ const userController = {
       avatar: avatarLink ? avatarLink : user.avatar,
       cover: coverLink ? coverLink : user.cover,
       name: req.body.name,
-      introduction: req.body.introduction
+      introduction: req.body.introduction ? req.body.introduction : user.introduction
     })
     return res.redirect('back')
   },
