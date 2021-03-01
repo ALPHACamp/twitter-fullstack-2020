@@ -108,6 +108,6 @@ http://localhost:3000
 
 # Contributor
 
-[ddssads](https://github.com/ddssads)
-[Jin](https://github.com/Jin0704)
-[yun](https://github.com/yun856839)
+[x] [ddssads](https://github.com/ddssads)
+[x] [Jin](https://github.com/Jin0704)
+[x] [yun](https://github.com/yun856839)
