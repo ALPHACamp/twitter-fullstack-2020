@@ -1,16 +1,36 @@
-<nav class="navbar d-flex flex-column" style="min-width: 235px">
-  <div>
-    <h4><a href="/tweets">首頁</a></h4>
+<nav class="navbar d-flex flex-column" style="max-height: 1200px; min-width: 235px">
+  <div style="font-weight: bold;font-size: 18px;">
+
+    <div>
+      icon
+    </div>
+
+    <div style="margin-top: 51px;">
+      <a href="/tweets" style="color: black; text-decoration: none;">首頁</a>
+    </div>
+
     {{#if user}}
-    <h4><a href="/users/{{user.id}}">個人資料</a></h4>
-    <h4><a href="/users/{{user.id}}/set">設定</a></h4>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#postTweet">
+    <div style="margin-top: 34px; margin-bottom: 34px;">
+      <a href="/users/{{user.id}}" style="color: black; text-decoration: none;">個人資料</a>
+    </div>
+
+    <div style="margin-bottom: 34px;">
+      <a href="/users/{{user.id}}/set" style="color: black; text-decoration: none;">設定</a>
+    </div>
+
+    <button class="btn" data-toggle="modal" data-target="#postTweet"
+      style="width: 210px; height: 45px; font-weight: 500; font-size: 18px; background: #FF6600; border-radius: 100px; color: white">
       推文
     </button>
-  </div>
 
-  <div>
-    <h4><a href="/logout">登出</a></h4>
+
+
+
+    <div style="margin-top: 844px;">
+      <a href="/logout" style="color: black; text-decoration: none;">登出</a>
+    </div>
+
+    {{/if}}
+
   </div>
-  {{/if}}
 </nav>
