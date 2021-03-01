@@ -35,7 +35,9 @@
       <div class="col-md-10">
         <div class="card-body">
           <h5 class="card-title"><a href="/users/{{this.User.id}}">{{this.User.name}}</a></h5>
-          <p class="card-text">{{this.description}}</p>
+          <a href="/tweets/{{this.id}}/replies">
+            <p class="card-text">{{this.description}}</p>
+          </a>
         </div>
         <div class="card-footer">
           <form action="/tweets/{{this.id}}/unlike" method="POST">
