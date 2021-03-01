@@ -6,14 +6,13 @@ const Followship = db.Followship
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
-const imgPromise = require('../_helpers').imgPromise
 const getTopUser = require('../_helpers').getTopUser
 const getSingleUserData = require('../_helpers').getSingleUserData
 const getTotalTweets = require('../_helpers').getTotalTweets
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-const imgur = require('imgur-node-api')
+const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const userController = {
   signUpPage: (req, res) => {
@@ -143,6 +142,7 @@ const userController = {
     const user = await User.findByPk(req.params.id)
     const avatar = req.files.avatar
     const cover = req.files.cover
+    console.log(avatar)
     let avatarLink, coverLink = ''
     if (!avatar && !cover) {
       await user.update({
@@ -153,12 +153,12 @@ const userController = {
       })
       return res.redirect('back')
     }
-    imgur.setClientID(IMGUR_CLIENT_ID)
+    imgur.setClientId(IMGUR_CLIENT_ID)
     if (avatar) {
-      avatarLink = await imgPromise(avatar[0])
+      avatarLink = await helpers.imgPromise(avatar[0])
     }
     if (cover) {
-      coverLink = await imgPromise(cover[0])
+      coverLink = await helpers.imgPromise(cover[0])
     }
     await user.update({
       avatar: avatarLink ? avatarLink : user.avatar,

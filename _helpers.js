@@ -1,4 +1,4 @@
-const imgur = require('imgur-node-api')
+const imgur = require('imgur')
 const db = require('./models')
 const User = db.User
 const Like = db.Like
@@ -15,12 +15,14 @@ function getUser(req) {
 
 const imgPromise = (file) => {
   return new Promise((resolve, reject) => {
-    imgur.upload(file.path, (err, img) => {
-      if (err) {
-        return reject(err)
-      }
-      return resolve(img.data.link)
-    })
+    imgur.uploadFile(file.path)
+      .then(function (json) {
+        console.log(json.link)
+        return resolve(json.link)
+      })
+      .catch((err) => {
+        return reject(console.log(err))
+      })
   })
 }
 
@@ -100,8 +102,8 @@ const getTotalTweets = async (id) => {
 module.exports = {
   ensureAuthenticated,
   getUser,
-  imgPromise,
   getTopUser,
   getSingleUserData,
-  getTotalTweets
+  getTotalTweets,
+  imgPromise
 };
