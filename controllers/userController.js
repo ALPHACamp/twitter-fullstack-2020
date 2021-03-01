@@ -141,34 +141,28 @@ const userController = {
 
   editUserFromEditPage: async (req, res) => {
     const user = await User.findByPk(req.params.id)
-    const { files } = req
+    const avatar = req.files.avatar
+    const cover = req.files.cover
     let avatarLink, coverLink = ''
-    if (files) {
-      imgur.setClientID(IMGUR_CLIENT_ID)
-      async function start() {
-        try {
-          if (files.avatar) {
-            avatarLink = await imgPromise(files.avatar[0])
-          }
-          if (files.cover) {
-            coverLink = await imgPromise(files.cover[0])
-          }
-          user.update({
-            avatar: avatarLink,
-            cover: coverLink,
-            name: req.body.name,
-            introduction: req.body.introduction
-          })
-        } catch (e) {
-          console.log(e)
-        }
-      }
-      await start()
+    if (!avatar && !cover) {
+      await user.update({
+        avatar: user.avatar,
+        cover: user.cover,
+        name: req.body.name,
+        introduction: req.body.introduction
+      })
       return res.redirect('back')
     }
-    user.update({
-      avatar: user.avatar,
-      cover: user.cover,
+    imgur.setClientID(IMGUR_CLIENT_ID)
+    if (avatar) {
+      avatarLink = await imgPromise(avatar[0])
+    }
+    if (cover) {
+      coverLink = await imgPromise(cover[0])
+    }
+    await user.update({
+      avatar: avatarLink ? avatarLink : user.avatar,
+      cover: coverLink ? coverLink : user.cover,
       name: req.body.name,
       introduction: req.body.introduction
     })
