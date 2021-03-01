@@ -58,5 +58,19 @@ const usersController = {
     req.logout();
     res.redirect('/login');
   },
+
+  editAccount: (req, res) => {
+    User.findByPk(req.params.id)
+    .then((user) => {
+      if (user.id !== req.user.id) {
+        req.flash('error_messages', '無法設定他人帳戶');
+        res.redirect('back');
+      } else {
+        res.render('setting', {
+          user: user.dataValues,
+        });
+      }
+    });
+  },
 };
 module.exports = usersController;

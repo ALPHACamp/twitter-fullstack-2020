@@ -1,0 +1,34 @@
+<div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3">
+  <title>帳戶設定</title>
+</div>
+<div id="mainblock-main" class="overflow-scroll w-100 p-3">
+
+<form class="form-setting m-3" action="/{{me.id}}/setting" method="POST" style="width: 100%;">
+
+  <div class="mx-auto form-group">
+    {{>message}}
+    <div class="form-label-group m-3">
+      <label for="account">帳號</label>
+      <input type="text" name="account" class="form-control" placeholder="帳號" value="{{me.account}}" autofocus>
+    </div>
+    <div class="form-label-group m-3">
+      <label for="account">名稱</label>
+      <input type="text" name="name" class="form-control" placeholder="名稱" value="{{me.name}}" autofocus>
+    </div>
+    <div class="form-label-group m-3">
+      <label for="account">Email</label>
+      <input type="text" name="email" class="form-control" placeholder="Email" value="{{me.email}}" autofocus>
+    </div>
+    <div class="form-label-group m-3">
+      <label for="account">密碼</label>
+      <input type="password" name="password" class="form-control" placeholder="密碼">
+    </div>
+    <div class="form-label-group m-3">
+      <label for="account">密碼確認</label>
+      <input type="password" name="passwordCheck" class="form-control" placeholder="密碼確認">
+    </div>
+    <br />
+    <button class="btn btn-block rounded-pill mt-3 btn-warning text-dark" type="submit">儲存</button>
+  </div>
+</form>
+</div>
