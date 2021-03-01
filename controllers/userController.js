@@ -18,23 +18,23 @@ const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
   },
-
+  ///signup test
   signUp: (req, res) => {
     // confirm password
     if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/signup')
+      return res.redirect('/signin')
     } else {
       // confirm unique user
       User.findOne({ where: { email: req.body.email } }).then(user => {
         if (user) {
           req.flash('error_messages', '信箱重複！')
-          return res.redirect('/signup')
+          return res.redirect('/signin')
         } else {
           User.findOne({ where: { account: req.body.account } }).then(user => {
             if (user) {
               req.flash('error_messages', '帳號重複')
-              return res.redirect('/signup')
+              return res.redirect('/signin')
             } else
               User.create({
                 account: req.body.account,
@@ -43,7 +43,7 @@ const userController = {
                 password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
               }).then(user => {
                 req.flash('success_messages', '成功註冊帳號！')
-                return res.redirect('/signin')
+                return res.redirect('/signup')
               })
           })
 
