@@ -28,3 +28,11 @@ exports.userauthenticated = (req, res, next) => {
   }
   res.redirect('/signin')
 }
+
+exports.getUser = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).id === Number(req.params.id)) return next()
+    return res.redirect('back')
+  }
+  res.redirect('/signin')
+}
