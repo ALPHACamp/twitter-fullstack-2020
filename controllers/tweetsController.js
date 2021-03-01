@@ -35,6 +35,7 @@ const tweetsController = {
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
+      req.flash('success_messages', '推文成功!');
       res.redirect('/');
     });
   },
