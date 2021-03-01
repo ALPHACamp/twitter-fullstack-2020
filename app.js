@@ -15,6 +15,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
+const passport = require('./config/passport')
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
@@ -31,6 +32,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+
+passport(app)
 
 app.use(flash())
 
