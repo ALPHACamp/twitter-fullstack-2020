@@ -196,13 +196,14 @@ const userController = {
           account: req.body.account,
           name: req.body.name,
           email: req.body.eamil,
-          password: req.body.password
+          password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
         })
           .then((user) => {
             req.flash('success_messages', 'User was successfully to update')
             return res.redirect('/tweets')
           })
       })
+
   },
 
 }
