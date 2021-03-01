@@ -14,6 +14,15 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
+const calculatorUserDataCount = (data) => {
+  const totalReplies = data.Replies.length
+  const totalLikes = data.Likes.length
+  const totalFollowers = data.Followers.length
+  const totalFollowings = data.Followings.length
+  return { totalReplies, totalLikes, totalFollowers, totalFollowings }
+}
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -83,7 +92,7 @@ const userController = {
       isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
     }))
     //getTopUser
-    let users = await getTopUser(req)
+    const users = await getTopUser(req)
 
     if (Number(helpers.getUser(req).id) !== Number(req.body.id)) {
       await Followship.create({
@@ -106,12 +115,9 @@ const userController = {
 
   getUserPage: async (req, res) => {
     //取userView是為了後續跟當前登入者user的id比對去決定是否顯示編輯個人資料
-    let userView = await getSingleUserData(req.params.id)
-    const totalReplies = userView.Replies.length
-    const totalLikes = userView.Likes.length
-    const totalFollowers = userView.Followers.length
-    const totalFollowings = userView.Followings.length
-    let users = await getTopUser(req)
+    const userView = await getSingleUserData(req.params.id)
+    const { totalReplies, totalLikes, totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
+    const users = await getTopUser(req)
 
     return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users })
   },
@@ -119,24 +125,22 @@ const userController = {
 
   getUserTweetsRepliesPage: async (req, res) => {
     //user data to show top 10 user
-    let users = await getTopUser(req)
-    let userView = await getSingleUserData(req.params.id)
-    const totalFollowers = userView.Followers.length
-    const totalFollowings = userView.Followings.length
+    const users = await getTopUser(req)
+    const userView = await getSingleUserData(req.params.id)
+    const { totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
     userView.Replies.map(r => {
       r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
     })
     return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings })
   },
   getUserLikesPage: async (req, res) => {
-    let userView = await getSingleUserData(req.params.id)
+    const userView = await getSingleUserData(req.params.id)
     userView.tweets = userView.Likes.map(like => {
       return like.Tweet
     })
-    const totalFollowers = userView.Followers.length
-    const totalFollowings = userView.Followings.length
+    const { totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
 
-    let users = await getTopUser(req)
+    const users = await getTopUser(req)
     return res.render('likes', { userView, totalFollowers, totalFollowings, users })
   },
 
@@ -172,8 +176,8 @@ const userController = {
   },
 
   getUserFollowingPage: async (req, res) => {
-    let user = await getTotalTweets(req.params.id)
-    let users = await getTopUser(req)
+    const user = await getTotalTweets(req.params.id)
+    const users = await getTopUser(req)
     return res.render('userFollowing', { user, users })
   },
   getUserFollowerPage: async (req, res) => {
@@ -181,7 +185,7 @@ const userController = {
     user.Followers.map(user => {
       user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     })
-    let users = await getTopUser(req)
+    const users = await getTopUser(req)
     return res.render('userFollower', { user, users })
   },
 
