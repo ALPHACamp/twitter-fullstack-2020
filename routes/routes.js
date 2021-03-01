@@ -8,6 +8,7 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', {
   failureRedirect: '/signin'
 }), userController.signIn)
+router.get('/signout', userController.logout)
 
 router.get('/', (req, res) => res.send('test'))
 
