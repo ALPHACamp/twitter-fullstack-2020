@@ -35,8 +35,10 @@
       </div>
       <div class="col-md-10">
         <div class="card-body">
-          <h5 class="card-title"><a href="/users/{{../userView.id}}">{{../userView.name}}</a></h5>
-          <p class="card-text">{{this.comment}}</p>
+          <a href="/tweets/{{this.Tweet.id}}/replies">
+            <p calss="card-text">{{this.Tweet.description}}</p>
+            <p class="card-text">{{this.comment}}</p>
+          </a>
         </div>
       </div>
     </div>

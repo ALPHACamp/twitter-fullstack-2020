@@ -123,7 +123,9 @@ const userController = {
     let userView = await getSingleUserData(req.params.id)
     const totalFollowers = userView.Followers.length
     const totalFollowings = userView.Followings.length
-
+    userView.Replies.map(r => {
+      r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
+    })
     return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings })
   },
   getUserLikesPage: async (req, res) => {
