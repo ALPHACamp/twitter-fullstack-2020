@@ -12,19 +12,21 @@ const userController = {
   },
   signIn: (req, res) => {
     if (helpers.getUser(req).role !== 'admin') {
-      req.flash('success_messages', 'Sign in successfully！')
-      return res.redirect('/')
+      req.flash('success_messages', '登入成功！')
+      res.redirect('/tweets')
+    } else {
+      req.flash('error_messages', '管理者請從後台登入！')
+      res.redirect('/signin')
     }
-    req.flash('success_messages', 'permission denied！')
-    res.redirect('/signin')
   },
   AdminSignIn: (req, res) => {
     if (helpers.getUser(req).role === 'admin') {
       req.flash('success_messages', 'Sign in successfully！')
-      return res.redirect('/')
+      res.redirect('/admin/tweets')
+    } else {
+      req.flash('error_messages', '使用者請從前台登入！')
+      res.redirect('/admin/signin')
     }
-    req.flash('success_messages', 'permission denied！')
-    res.redirect('/signin')
   },
   logout: (req, res) => {
     req.flash('success_messages', 'Sign out successfully！')

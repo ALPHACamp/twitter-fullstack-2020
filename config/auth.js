@@ -6,10 +6,10 @@ module.exports = {
       if (helpers.getUser(req).role !== 'admin') {
         return next()
       }
-      req.flash('success_messages', 'permission denied！')
+      req.flash('error_messages', '請登入！')
       res.redirect('/signin')
     }
-    req.flash('success_messages', 'Please sign in！')
+    req.flash('error_messages', '請登入！')
     res.redirect('/signin')
   },
   authenticatedAdmin: (req, res, next) => {
@@ -17,10 +17,10 @@ module.exports = {
       if (helpers.getUser(req).role === 'admin') {
         return next()
       }
-      req.flash('success_messages', 'permission denied！')
-      res.redirect('/signin')
+      req.flash('error_messages', '請登入！')
+      res.redirect('/admin/signin')
     }
-    req.flash('success_messages', 'Please sign in！')
-    res.redirect('/signin')
+    req.flash('error_messages', '請登入！')
+    res.redirect('/admin/signin')
   }
 }

@@ -11,10 +11,11 @@ router.post('/signin', passport.authenticate('local', {
   failureRedirect: '/signin'
 }), userController.signIn)
 router.post('/admin/signin', passport.authenticate('local', {
-  failureRedirect: '/signin'
+  failureRedirect: '/admin/signin'
 }), userController.AdminSignIn)
 router.get('/signout', userController.logout)
 
-router.get('/', auth.authenticatedUser, (req, res) => res.render('tweets'))
+router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('tweets'))
+router.get('/admin/tweets', auth.authenticatedAdmin, (req, res) => res.render('tweets'))
 
 module.exports = router
