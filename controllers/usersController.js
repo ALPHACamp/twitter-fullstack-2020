@@ -72,7 +72,7 @@ const usersController = {
       }
     });
   },
-  putAccount: (req, res) => {
+  putAccount: async (req, res) => {
     const {
       name, email, account, password, passwordCheck,
     } = req.body;
@@ -84,20 +84,30 @@ const usersController = {
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect(`/${req.params.id}/setting/`);
     }
-    // === 尚未解 ====
-    // return User.findOne({
-    //   where: { [Op.or]: [{ email }, { account }] },
-    // })
-    // .then((user) => {
-    //   if (user) {
-    //     if (user.account === account) {
-    //       req.flash('error_messages', '帳號已經有人用了');
-    //     }
-    //     if (user.email === email) {
-    //       req.flash('error_messages', '此 Email 已存在');
-    //     }
-    //     return res.redirect(`/${req.params.id}/setting/`);
-    //   }
+    if (req.user.email !== email) {
+      const userWtihSameEmail = await User.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (userWtihSameEmail) {
+        req.flash('error_messages', 'Email 已經有人使用');
+        return res.redirect(`/${req.params.id}/setting/`);
+      }
+    }
+    if (req.user.account !== account) {
+      const userWithSameAccount = await User.findOne({
+        where: {
+          account,
+        },
+      });
+
+      if (userWithSameAccount) {
+        req.flash('error_messages', '帳號已經有人使用');
+        return res.redirect(`/${req.params.id}/setting/`);
+      }
+    }
     return User.findByPk(req.params.id)
     .then((me) => {
       me.update({
@@ -111,7 +121,6 @@ const usersController = {
       })
       .catch((error) => console.log('edit error', error));
     });
-    // });
   },
 };
 module.exports = usersController;
