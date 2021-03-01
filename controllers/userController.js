@@ -6,7 +6,6 @@ const Followship = db.Followship
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
-const sequelize = require('sequelize')
 const imgPromise = require('../_helpers').imgPromise
 const getTopUser = require('../_helpers').getTopUser
 const getSingleUserData = require('../_helpers').getSingleUserData
@@ -15,7 +14,6 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const imgur = require('imgur-node-api')
-const followship = require('../models/followship')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const userController = {
   signUpPage: (req, res) => {
