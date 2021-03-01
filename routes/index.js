@@ -45,6 +45,7 @@ router.post(
   usersController.adminLogin,
 );
 router.get('/admin_main', authenticatedAdmin, usersController.adminMain);
+router.get('/admin_users', authenticatedAdmin, usersController.adminUsers);
 
 // 匯出路由器
 module.exports = router;
