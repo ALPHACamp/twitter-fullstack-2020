@@ -59,7 +59,7 @@ const usersController = {
     res.redirect('/login');
   },
 
-  editAccount: (req, res) => {
+  getAccount: (req, res) => {
     User.findByPk(req.params.id)
     .then((user) => {
       if (user.id !== req.user.id) {
@@ -72,5 +72,6 @@ const usersController = {
       }
     });
   },
+
 };
 module.exports = usersController;
