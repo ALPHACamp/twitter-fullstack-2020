@@ -189,7 +189,30 @@ const userController = {
     })
     let users = await getTopUser(req)
     return res.render('userFollower', { user, users })
-  }
+  },
+
+  setUserPage: async (req, res) => {
+    return User.findByPk(req.params.id, { raw: true }).then(user => {
+      return res.render('userSet', { user: user })
+    })
+  },
+
+  setUser: (req, res) => {
+    User.findByPk(req.params.id)
+      .then((user) => {
+        user.update({
+          account: req.body.account,
+          name: req.body.name,
+          email: req.body.eamil,
+          password: req.body.password
+        })
+          .then((user) => {
+            req.flash('success_messages', 'User was successfully to update')
+            return res.redirect('/tweets')
+          })
+      })
+  },
+
 }
 
 module.exports = userController

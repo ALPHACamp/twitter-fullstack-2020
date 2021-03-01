@@ -16,4 +16,6 @@ router.get('/:id/followings', userauthenticated, userController.getUserFollowing
 router.get('/:id/followers', userauthenticated, userController.getUserFollowerPage)
 router.get('/:id/likes', userauthenticated, userController.getUserLikesPage)
 router.get('/:id/replies', userauthenticated, userController.getUserTweetsRepliesPage)
+router.get('/:id/set', userauthenticated, userController.setUserPage)
+router.put('/:id/set', userauthenticated, userController.setUser)
 module.exports = router
