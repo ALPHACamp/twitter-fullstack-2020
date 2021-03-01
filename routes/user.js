@@ -5,14 +5,15 @@ const upload = multer({ dest: 'temp/' })
 
 const userController = require('../controllers/userController')
 const authenticated = require('../middleware/auth').authenticated
+const userauthenticated = require('../middleware/auth').userauthenticated
 
 router.use(authenticated)
 
-router.get('/:id', userController.getUserPage)
-router.post('/:id/edit', upload.fields([{ name: 'cover' }, { name: 'avatar' }]), userController.editUserFromEditPage)
-router.get('/:id/tweets', userController.getUserPage)
-router.get('/:id/followings', userController.getUserFollowingPage)
-router.get('/:id/followers', userController.getUserFollowerPage)
-router.get('/:id/likes', userController.getUserLikesPage)
-router.get('/:id/replies', userController.getUserTweetsRepliesPage)
+router.get('/:id', userauthenticated, userController.getUserPage)
+router.post('/:id/edit', userauthenticated, upload.fields([{ name: 'cover' }, { name: 'avatar' }]), userController.editUserFromEditPage)
+router.get('/:id/tweets', userauthenticated, userController.getUserPage)
+router.get('/:id/followings', userauthenticated, userController.getUserFollowingPage)
+router.get('/:id/followers', userauthenticated, userController.getUserFollowerPage)
+router.get('/:id/likes', userauthenticated, userController.getUserLikesPage)
+router.get('/:id/replies', userauthenticated, userController.getUserTweetsRepliesPage)
 module.exports = router

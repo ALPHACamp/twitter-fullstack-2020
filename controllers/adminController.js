@@ -30,7 +30,7 @@ const adminController = {
   },
   getUsers: (req, res) => {
     return User.findAll({ raw: true, nest: true }).then(users => {
-      return res.render('admin/userlist', { users: users })
+      return res.render('admin/users', { users: users })
     })
   },
 }
