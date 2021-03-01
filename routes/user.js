@@ -10,7 +10,7 @@ const userauthenticated = require('../middleware/auth').userauthenticated
 router.use(authenticated)
 
 router.get('/:id', userauthenticated, userController.getUserPage)
-router.post('/:id/edit', userauthenticated, upload.fields([{ name: 'cover' }, { name: 'avatar' }]), userController.editUserFromEditPage)
+router.post('/:id/edit', userauthenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.editUserFromEditPage)
 router.get('/:id/tweets', userauthenticated, userController.getUserPage)
 router.get('/:id/followings', userauthenticated, userController.getUserFollowingPage)
 router.get('/:id/followers', userauthenticated, userController.getUserFollowerPage)
