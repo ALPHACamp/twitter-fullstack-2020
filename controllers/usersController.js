@@ -76,10 +76,7 @@ const usersController = {
     const {
       name, email, account, password, passwordCheck,
     } = req.body;
-    if (!name || !email || !account || !password || !passwordCheck) {
-      req.flash('error_messages', '所有欄位都是必填');
-      return res.redirect(`/${req.params.id}/setting/`);
-    }
+
     if (passwordCheck !== password) {
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect(`/${req.params.id}/setting/`);
@@ -108,14 +105,20 @@ const usersController = {
         return res.redirect(`/${req.params.id}/setting/`);
       }
     }
+
+    const changes = {};
+    if (email !== '') {
+      changes.email = req.body.email;
+    } if (password !== '') {
+      changes.password = req.body.password;
+    } if (name !== '') {
+      changes.name = req.body.name;
+    } if (account !== '') {
+      changes.account = req.body.account;
+    }
     return User.findByPk(req.params.id)
     .then((me) => {
-      me.update({
-        email   : req.body.email,
-        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-        name    : req.body.name,
-        account : req.body.account,
-      }).then(() => {
+      me.update(changes).then(() => {
         req.flash('success_messages', '成功更新');
         res.redirect('/');
       })
