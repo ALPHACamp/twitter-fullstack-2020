@@ -4,15 +4,49 @@ const helpers = require('../_helpers')
 const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
-
+const pageLimit = 7 
 const tweetController = {
+  // getTweet: async (req, res) => {
+  //   //tweet data
+  //   let tweets = await Tweet.findAll({
+  //     order: [['createdAt', 'DESC']],
+  //     include: [User, Like, Reply]
+  //   })
+  //   tweets = tweets.map(t => ({
+  //     ...t.dataValues,
+  //     userName: t.User.name,
+  //     userId: t.User.id,
+  //     userAvatar: t.User.avatar,
+  //     userAccount: t.User.account,
+  //     LikedCount: t.Likes.length,
+  //     ReplyCount: t.Replies.length,
+  //     isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
+  //   }))
+
+  //   //user data
+  //   let users = await helpers.getTopUser(req)
+
+  //   return res.render('tweets', { users, tweets })
+  // },
+  // 分頁
   getTweet: async (req, res) => {
+    let offset = 0
+    if (req.query.page) {
+      offset = (req.query.page - 1) * pageLimit
+    }
     //tweet data
-    let tweets = await Tweet.findAll({
+    let tweets = await Tweet.findAndCountAll({
+      offset, limit: pageLimit,
       order: [['createdAt', 'DESC']],
       include: [User, Like, Reply]
-    })
-    tweets = tweets.map(t => ({
+    })    
+    const page = Number(req.query.page) || 1 
+    const pages = Math.ceil((tweets.count - 100) / pageLimit)    
+    const totalPage = Array.from({ length: pages }).map((_, index) => index + 1) 
+    const prev = page - 1 < 1 ? 1 : page - 1
+    const next = page + 1 < pages ? pages : page + 1
+    
+    tweets = tweets.rows.map(t => ({
       ...t.dataValues,
       userName: t.User.name,
       userId: t.User.id,
@@ -26,8 +60,8 @@ const tweetController = {
     //user data
     let users = await helpers.getTopUser(req)
 
-    return res.render('tweets', { users, tweets })
-  },
+    return res.render('tweets', { users, tweets, page, totalPage, prev, next })
+  },  
 
   postTweet: async (req, res) => {
     const { description } = req.body

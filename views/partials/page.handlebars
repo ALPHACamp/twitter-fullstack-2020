@@ -1,0 +1,22 @@
+<div class="align-items-center">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-between">
+      <li class="page-item">
+        <a class="page-link" href="/tweets?page={{prev}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {{#each totalPage}}
+      {{#ifCond this ../page}}
+      <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+      {{else}}
+      <li class="page-item"><a class="page-link" href="/tweets?page={{this}}">{{this}}</a></li>
+      {{/ifCond}}
+      {{/each}}
+      <a class="page-link" href="/tweets?page={{next}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+      </li>
+    </ul>
+  </nav>
+</div>
