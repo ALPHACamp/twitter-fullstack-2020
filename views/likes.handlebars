@@ -35,8 +35,8 @@
     {{/if}}
     {{/ifCond}}
     <p class="card-text"><small class="text-muted"><a
-          href="/users/{{userView.id}}/followings">{{totalFollowings}}個跟隨中</a><a
-          href="/users/{{userView.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
+          href="/users/{{userView.id}}/followings">{{userView.FollowingCount}}個跟隨中</a><a
+          href="/users/{{userView.id}}/followers">{{userView.FollowerCount}}位跟隨者</a></small></p>
   </div>
   <ul class="nav nav-tabs">
     <li class="nav-item">
@@ -61,10 +61,11 @@
           <a href="/tweets/{{this.id}}/replies">
             <p class="card-text">{{this.description}}</p>
           </a>
-        </div>
-        <div class="card-footer">
           <form action="/tweets/{{this.id}}/unlike" method="POST">
-            <button type="submit" class="btn btn-danger">unlike</button>
+            <button type="submit" style="border: none; background: none;">
+              <i class="fas fa-heart"></i>
+              <span>{{../totalLikes}}</span>
+            </button>
           </form>
         </div>
       </div>

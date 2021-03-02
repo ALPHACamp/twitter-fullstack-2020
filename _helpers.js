@@ -70,6 +70,22 @@ const getSingleUserData = async (id) => {
               WHERE Tweet.UserId = ${id}
             )`),
           'TweetsCount'
+        ],
+        [
+          sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followerId = ${id}
+            )`),
+          'FollowingCount'
+        ],
+        [
+          sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followingId = ${id}
+            )`),
+          'FollowerCount'
         ]
       ]
     },
@@ -77,7 +93,7 @@ const getSingleUserData = async (id) => {
       { model: Like, include: [{ model: Tweet, include: [User] }] },
       { model: User, as: 'Followings' },
       { model: User, as: 'Followers' },
-      { model: Tweet, include: [{ model: Like, include: [User] }] },
+      { model: Tweet },
       { model: Reply, include: [Tweet] }
     ],
     order: [

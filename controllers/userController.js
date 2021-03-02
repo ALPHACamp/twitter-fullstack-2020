@@ -6,6 +6,7 @@ const Followship = db.Followship
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const sequelize = require('sequelize')
 const getTopUser = require('../_helpers').getTopUser
 const getSingleUserData = require('../_helpers').getSingleUserData
 if (process.env.NODE_ENV !== 'production') {
@@ -14,13 +15,7 @@ if (process.env.NODE_ENV !== 'production') {
 const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
-const calculatorUserDataCount = (data) => {
-  const totalReplies = data.Replies.length
-  const totalLikes = data.Likes.length
-  const totalFollowers = data.Followers.length
-  const totalFollowings = data.Followings.length
-  return { totalReplies, totalLikes, totalFollowers, totalFollowings }
-}
+
 
 const userController = {
   signUpPage: (req, res) => {
@@ -95,16 +90,63 @@ const userController = {
   },
 
   getUserPage: async (req, res) => {
-    //取userView是為了後續跟當前登入者user的id比對去決定是否顯示編輯個人資料
-    const userView = await getSingleUserData(req.params.id)
-    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
-    const { totalReplies, totalLikes, totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
     const users = await getTopUser(req)
-    //check isLiked
-    userView.Tweets.map(t => {
-      t.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
+    let tweets = await Tweet.findAll({
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Tweets AS Tweet
+              WHERE Tweet.UserId = ${req.params.id}
+            )`),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followerId = ${req.params.id}
+            )`),
+            'FollowingCount'
+          ],
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships As Followship
+              WHERE Followship.followingId = ${req.params.id}
+            )`),
+            'FollowerCount'
+          ]
+        ]
+      },
+      order: [['createdAt', 'DESC']],
+      where: { UserId: req.params.id },
+      include: {
+        model: User, include: [
+          { model: Like },
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+          { model: Reply }
+        ]
+      }
     })
-    return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users, isFollowed })
+
+    tweets = tweets.map(r => ({
+      ...r.dataValues,
+      userName: r.User.name,
+      userId: r.User.id,
+      userAvatar: r.User.avatar,
+      userCover: r.User.cover,
+      userIntroduction: r.User.introduction,
+      userAccount: r.User.account,
+      totalLikes: r.User.Likes.length,
+      totalReplies: r.User.Replies.length,
+      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.id) : false
+    }))
+    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(Number(req.params.id))
+
+    return res.render('user', { tweets, users, isFollowed })
   },
 
 
@@ -112,13 +154,14 @@ const userController = {
     //user data to show top 10 user
     const users = await getTopUser(req)
     const userView = await getSingleUserData(req.params.id)
-    const { totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
     userView.Replies.map(r => {
       r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
       r.Tweet.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.Tweet.id) : false
     })
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
-    return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings, isFollowed })
+    const totalLikes = userView.Likes.length
+    console.log(userView.Replies)
+    return res.render('tweetsReplies', { users, userView, isFollowed, totalLikes })
   },
   getUserLikesPage: async (req, res) => {
     const userView = await getSingleUserData(req.params.id)
@@ -126,10 +169,9 @@ const userController = {
       return like.Tweet
     })
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
-    const { totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
-
+    const totalLikes = userView.Likes.length
     const users = await getTopUser(req)
-    return res.render('likes', { userView, totalFollowers, totalFollowings, users, isFollowed })
+    return res.render('likes', { userView, users, isFollowed, totalLikes })
   },
 
   editUserFromEditPage: async (req, res) => {
