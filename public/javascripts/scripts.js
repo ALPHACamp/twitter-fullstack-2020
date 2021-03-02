@@ -14,7 +14,7 @@ $(() => {
     this.addEventListener('input', (event) => {
       const maxLength = event.target.getAttribute('maxlength');
       const currentLength = event.target.value.length;
-      if (currentLength >= maxLength) {
+      if (currentLength > maxLength) {
         event.target.nextElementSibling.querySelector('.btn').setAttribute('disabled', '');
       } else {
         event.target.nextElementSibling.querySelector('.btn').removeAttribute('disabled');
