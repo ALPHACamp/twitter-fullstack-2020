@@ -10,6 +10,7 @@ const tweets = require('./modules/tweets');
 const passport = require('../config/passport');
 const helpers = require('../_helpers');
 const usersController = require('../controllers/usersController');
+const adminController = require('../controllers/adminController');
 
 // User Auth middleware
 const authenticated = (req, res, next) => {
@@ -31,7 +32,7 @@ router.use('/', tweets);
 router.use('/', users);
 
 // Admin Portal
-router.get('/admin', usersController.adminLoginPage);
+router.get('/admin', adminController.adminLoginPage);
 router.post(
   '/admin',
   passport.authenticate('local', { failureRedirect: '/admin' }),
@@ -42,10 +43,10 @@ router.post(
     req.flash('error_messages', 'No access allowed.');
     return res.redirect('/login');
   },
-  usersController.adminLogin,
+  adminController.adminLogin,
 );
-router.get('/admin_main', authenticatedAdmin, usersController.adminMain);
-router.get('/admin_users', authenticatedAdmin, usersController.adminUsers);
+router.get('/admin_main', authenticatedAdmin, adminController.adminMain);
+router.get('/admin_users', authenticatedAdmin, adminController.adminUsers);
 
 // 匯出路由器
 module.exports = router;
