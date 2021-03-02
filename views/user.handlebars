@@ -62,6 +62,15 @@
           <p class="card-text">{{this.description}}</p>
           <p>{{../totalReplies}}</p>
           <p>{{../totalLikes}}</p>
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST">
+            <button type="submit" class="btn btn-danger">unlike</button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST">
+            <button type="submit" class="btn btn-danger">like</button>
+          </form>
+          {{/if}}
         </div>
       </div>
     </div>
