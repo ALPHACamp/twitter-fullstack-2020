@@ -108,6 +108,8 @@
 /* Admin Site */
 .user-card .card-img-top {
   max-height: 150px;
+  height: 150px;
+  width: auto;
 }
 .user-card .avatar {
   width: 100px;
