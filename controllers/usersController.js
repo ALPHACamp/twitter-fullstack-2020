@@ -2,7 +2,9 @@ const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const db = require('../models');
 
-const { User } = db;
+const {
+  Tweet, User, Reply, Like, Followship,
+} = db;
 
 const usersController = {
   registerPage: (req, res) => res.render('regist'),

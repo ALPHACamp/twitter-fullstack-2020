@@ -1,0 +1,30 @@
+<div class="row w-100 m-0 p-1">
+  <div class="col-12 title"><strong>推文清單</strong></div>
+</div>
+<div class="row w-100 m-0">
+  {{#each tweets}}
+    <div class="list-item d-flex p-3 border-bottom border-3 w-100" style="min-height: 120px;">
+      <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="" style="max-width: 100px;">
+      <div>
+        <div class="item-header d-flex d-row d-flex align-items-center">
+          <div class="name pr-2">
+            <strong>{{this.User.name}}</strong>
+          </div>
+          <div class="info">
+            <span class="username">@{{this.User.account}}</span>
+            &#183;
+            {{!-- <span class="posttime">{{moment this.createdAt}}</span> --}}
+          </div>
+        </div>
+        <div class="item-desc pt-2 pb-3">
+          {{this.description}}
+        </div>
+      </div>
+      <div class="ml-auto">
+        <form action="/admin_tweetDelete/{{this.id}}?_method=DELETE" method="POST" style="display: inline;" onsubmit="return confirm('Do you really want to delete this tweet?');">
+            <button type="submit" class="btn btn-link">X</button>
+        </form>
+      </div>
+    </div>
+  {{/each}}
+</div>
