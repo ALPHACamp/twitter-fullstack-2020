@@ -3,12 +3,12 @@
 <!--================= 推文 ================= -->
 <div class="flex-column" style="min-width: 600px; border: 1px solid #E6ECF0">
   {{> message}}
-  <div class="mt-2 ml-3" style="font-weight: bold; font-size: 18px;">首頁</div>
+  <div class="mt-2 ml-3" style="height: 55px;font-weight: bold; font-size: 18px;">首頁</div>
   <hr class="m-0">
 
   {{!-- 使用者個人圖片 --}}
   <div class="card" style="border-radius:0; border-color:transparent">
-    <div class="row no-gutters">
+    <div class="row no-gutters" style="max-height: 120px;">
       <div class="col-md-1 ml-3" style="margin-top: 10px; margin-right: 10px">
         <img src="{{user.avatar}}" style="width: 50px;
           height: 50px; border-radius: 50%" alt="">
@@ -18,7 +18,7 @@
         <div class="card-body p-0">
           <form action="/tweets" method="post">
             <textarea name="description" placeholder="有什麼新鮮事..."
-              style="width: 510px;height: 80px; overflow-y: hidden; resize: none; outline: none; wrap:off; border-color: transparent;"></textarea>
+              style="width: 510px;height: 40px; overflow-y: hidden; resize: none; outline: none; wrap:off; border-color: transparent;"></textarea>
 
             <div class="card-text text-right">
               <button class="btn"
@@ -35,8 +35,8 @@
   <hr class="m-0" style="border-width: 10px; border-color: #E6ECF0;">
 
   {{#each tweets}}
-  <div class="card" style="border-radius: 0; border: 1px solid #E6ECF0">
-    <div class="row no-gutters">
+  <div class="card" style="min-height: 136px;border-radius: 0; border: 1px solid #E6ECF0">
+    <div class="row no-gutters" style="">
 
       <div class="col-md-1 ml-3" style="margin-top: 10px; margin-right: 10px">
         <a href="/users/{{this.userId}}" style="text-decoration: none;">
@@ -57,30 +57,44 @@
 
           </div>
         </a>
-        <div class="col-md-12">
-          <span>{{this.ReplyCount}}</span>
-          {{!-- ==================回覆============ --}}
-          <button class="btn btn-primary" data-toggle="modal" data-target="#reply{{this.id}}">
-            回覆ICON
+
+        {{!-- ==================留言數，喜歡數，ICON============ --}}
+        <div class="row">
+          <button class="ml-2" type="submit" style="border: none; background: none;" data-toggle="modal"
+            data-target="#reply{{this.id}}">
+            <i class="far fa-comment"></i>
+            <span>{{this.ReplyCount}}</span>
           </button>
-          {{!-- ==================回覆============ --}}
-          <span>{{this.LikedCount}}</span>
+
+
           {{#if this.isLiked}}
           <form action="/tweets/{{this.id}}/unlike" method="POST">
-            <button type="submit" class="btn btn-danger">unlike</button>
+            <button type="submit" style="border: none; background: none;">
+              <i class="fas fa-heart"></i>
+              <span>{{this.LikedCount}}</span>
+            </button>
           </form>
           {{else}}
           <form action="tweets/{{this.id}}/like" method="POST">
-            <button type="submit" class="btn btn-danger">like</button>
+            <button type="submit" style="border: none; background: none;">
+              <i class="far fa-heart"></i>
+              <span>{{this.LikedCount}}</span>
+            </button>
           </form>
           {{/if}}
         </div>
+        {{!-- ==================留言數，喜歡數，ICON============ --}}
+
       </div>
-
-
     </div>
+
   </div>
   {{/each}}
+
+  <!--================= page ================= -->
+  {{#if page}} {{> page}} {{/if}}
+  <!--================= page ================= -->
+
 </div>
 <!--================= 跟隨 ================= -->
 {{> follower}}
