@@ -61,6 +61,15 @@
           <a href="/tweets/{{this.Tweet.id}}/replies">
             <p calss="card-text">{{this.Tweet.description}}</p>
             <p class="card-text">{{this.comment}}</p>
+            {{#if this.Tweet.isLiked}}
+            <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
+              <button type="submit" class="btn btn-danger">unlike</button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
+              <button type="submit" class="btn btn-danger">like</button>
+            </form>
+            {{/if}}
           </a>
         </div>
       </div>
