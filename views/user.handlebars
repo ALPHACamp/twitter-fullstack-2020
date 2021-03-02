@@ -10,8 +10,23 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
       編輯個人資料
     </button>
+    {{else}}
+    {{#if isFollowed}}
+    <form class="" action="/followships/{{userView.id}}?_method=DELETE" method="POST">
 
+      <button type="submit" class="btn"
+        style="background: #FF6600; border-radius: 100px; color: white; width: 92px; height: 30px; font-size: 15px; line-height: 15px;">正在跟隨</button>
+
+    </form>
+    {{else}}
+    <form action="/followships/" method="POST">
+      <input type="hidden" name="id" value="{{userView.id}}">
+      <button type="submit" class="btn"
+        style="border: 1px solid #FF6600; border-radius: 100px; color: #FF6600; width: 62px; height: 30px; font-size: 15px; line-height: 15px;">跟隨</button>
+    </form>
+    {{/if}}
     {{/ifCond}}
+
     <p class="card-text"><small class="text-muted"><a
           href="/users/{{userView.id}}/followings">{{totalFollowings}}個跟隨中</a><a
           href="/users/{{userView.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>

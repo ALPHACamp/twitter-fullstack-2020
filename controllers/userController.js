@@ -98,10 +98,11 @@ const userController = {
   getUserPage: async (req, res) => {
     //取userView是為了後續跟當前登入者user的id比對去決定是否顯示編輯個人資料
     const userView = await getSingleUserData(req.params.id)
+    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     const { totalReplies, totalLikes, totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
     const users = await getTopUser(req)
 
-    return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users })
+    return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users, isFollowed })
   },
 
 
@@ -113,17 +114,19 @@ const userController = {
     userView.Replies.map(r => {
       r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
     })
-    return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings })
+    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
+    return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings, isFollowed })
   },
   getUserLikesPage: async (req, res) => {
     const userView = await getSingleUserData(req.params.id)
     userView.tweets = userView.Likes.map(like => {
       return like.Tweet
     })
+    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     const { totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
 
     const users = await getTopUser(req)
-    return res.render('likes', { userView, totalFollowers, totalFollowings, users })
+    return res.render('likes', { userView, totalFollowers, totalFollowings, users, isFollowed })
   },
 
   editUserFromEditPage: async (req, res) => {
