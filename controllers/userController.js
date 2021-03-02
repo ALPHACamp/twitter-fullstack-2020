@@ -8,7 +8,6 @@ const Reply = db.Reply
 const Like = db.Like
 const getTopUser = require('../_helpers').getTopUser
 const getSingleUserData = require('../_helpers').getSingleUserData
-const getTotalTweets = require('../_helpers').getTotalTweets
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -76,24 +75,6 @@ const userController = {
   },
 
   addFollowing: async (req, res) => {
-    //tweet data
-    let tweets = await Tweet.findAll({
-      order: [['createdAt', 'DESC']],
-      include: [User, Like, Reply]
-    })
-    tweets = tweets.map(t => ({
-      ...t.dataValues,
-      userName: t.User.name,
-      userId: t.User.id,
-      userAvatar: t.User.avatar,
-      userAccount: t.User.account,
-      LikedCount: t.Likes.length,
-      ReplyCount: t.Replies.length,
-      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
-    }))
-    //getTopUser
-    const users = await getTopUser(req)
-
     if (Number(helpers.getUser(req).id) !== Number(req.body.id)) {
       await Followship.create({
         followerId: helpers.getUser(req).id,
@@ -101,7 +82,7 @@ const userController = {
       })
       return res.redirect('back')
     }
-    return res.render('tweets', { users, tweets })
+    return res.redirect('back')
   },
 
   removeFollowing: async (req, res) => {
@@ -116,10 +97,11 @@ const userController = {
   getUserPage: async (req, res) => {
     //取userView是為了後續跟當前登入者user的id比對去決定是否顯示編輯個人資料
     const userView = await getSingleUserData(req.params.id)
+    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     const { totalReplies, totalLikes, totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
     const users = await getTopUser(req)
 
-    return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users })
+    return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users, isFollowed })
   },
 
 
@@ -131,17 +113,19 @@ const userController = {
     userView.Replies.map(r => {
       r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
     })
-    return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings })
+    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
+    return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings, isFollowed })
   },
   getUserLikesPage: async (req, res) => {
     const userView = await getSingleUserData(req.params.id)
     userView.tweets = userView.Likes.map(like => {
       return like.Tweet
     })
+    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     const { totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
 
     const users = await getTopUser(req)
-    return res.render('likes', { userView, totalFollowers, totalFollowings, users })
+    return res.render('likes', { userView, totalFollowers, totalFollowings, users, isFollowed })
   },
 
   editUserFromEditPage: async (req, res) => {
@@ -176,17 +160,19 @@ const userController = {
   },
 
   getUserFollowingPage: async (req, res) => {
-    const user = await getTotalTweets(req.params.id)
+    //userView為了partials左邊nav的user.id區隔開
+    const userView = await getSingleUserData(req.params.id)
     const users = await getTopUser(req)
-    return res.render('userFollowing', { user, users })
+    return res.render('userFollowing', { userView, users })
   },
   getUserFollowerPage: async (req, res) => {
-    let user = await getTotalTweets(req.params.id)
-    user.Followers.map(user => {
-      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+    //userView為了partials左邊nav的user.id區隔開
+    let userView = await getSingleUserData(req.params.id)
+    userView.Followers.map(user => {
+      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     })
     const users = await getTopUser(req)
-    return res.render('userFollower', { user, users })
+    return res.render('userFollower', { userView, users })
   },
 
   setUserPage: async (req, res) => {
