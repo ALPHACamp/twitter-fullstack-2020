@@ -21,6 +21,7 @@ const usersController = {
       tweets = tweets.map((tweet) => ({
         id         : tweet.id,
         description: tweet.description.slice(0, 49),
+        createdAt  : tweet.createdAt,
         updatedAt  : tweet.updatedAt,
         User       : {
           id     : tweet.User.id,
