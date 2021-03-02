@@ -70,14 +70,14 @@
           {{#if this.isLiked}}
           <form action="/tweets/{{this.id}}/unlike" method="POST">
             <button type="submit" style="border: none; background: none;">
-              <i class="fas fa-heart"></i>
+              <i class="fas fa-heart" style="color: red;"></i>
               <span>{{this.LikedCount}}</span>
             </button>
           </form>
           {{else}}
           <form action="tweets/{{this.id}}/like" method="POST">
             <button type="submit" style="border: none; background: none;">
-              <i class="far fa-heart"></i>
+              <i class="far fa-heart" style="color: red;"></i>
               <span>{{this.LikedCount}}</span>
             </button>
           </form>
@@ -140,9 +140,11 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <div class="modal-title">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
 
         <div class="modal-body">

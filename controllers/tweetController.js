@@ -35,18 +35,26 @@ const tweetController = {
       offset = (req.query.page - 1) * pageLimit
     }
     //tweet data
-    let tweets = await Tweet.findAndCountAll({
+    let tweets = await Tweet.findAll({
       offset, limit: pageLimit,
       order: [['createdAt', 'DESC']],
       include: [User, Like, Reply]
     })    
+
+    //-----------------------------page
+    let pageCount = await Tweet.findAndCountAll({
+      offset, limit: pageLimit,
+      order: [['createdAt', 'DESC']]      
+    })    
+    console.log(pageCount)
     const page = Number(req.query.page) || 1 
-    const pages = Math.ceil((tweets.count - 100) / pageLimit)    
+    const pages = Math.ceil(pageCount.count / pageLimit)    
     const totalPage = Array.from({ length: pages }).map((_, index) => index + 1) 
     const prev = page - 1 < 1 ? 1 : page - 1
     const next = page + 1 < pages ? pages : page + 1
+    //-----------------------------page
     
-    tweets = tweets.rows.map(t => ({
+    tweets = tweets.map(t => ({
       ...t.dataValues,
       userName: t.User.name,
       userId: t.User.id,
@@ -55,7 +63,7 @@ const tweetController = {
       LikedCount: t.Likes.length,
       ReplyCount: t.Replies.length,
       isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
-    }))
+    }))    
 
     //user data
     let users = await helpers.getTopUser(req)
