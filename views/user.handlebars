@@ -5,22 +5,22 @@
       <a href="javascript:history.back()">回上一頁</a>
     </div>
     <div>
-      <h4>{{userView.name}}</h4>
-      <p>{{userView.TweetsCount}}推文</p>
+      <h4>{{tweets.1.userName}}</h4>
+      <p>{{tweets.1.TweetsCount}}推文</p>
     </div>
   </div>
-  <img src="{{userView.cover}}" class="card-img-top" alt="...">
+  <img src="{{tweets.1.userCover}}" class="card-img-top" alt="...">
   <div class="card-body">
-    <h5 class="card-title">{{userView.name}}</h5>
-    <p class="card-text">{{userView.introduction}}</p>
+    <h5 class="card-title">{{tweets.1.userName}}</h5>
+    <p class="card-text">{{tweets.1.userIntroduction}}</p>
     <!-- Button trigger modal -->
-    {{#ifCond userView.id user.id}}
+    {{#ifCond tweets.1.userId user.id}}
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
       編輯個人資料
     </button>
     {{else}}
     {{#if isFollowed}}
-    <form class="" action="/followships/{{userView.id}}?_method=DELETE" method="POST">
+    <form class="" action="/followships/{{tweets.1.userId}}?_method=DELETE" method="POST">
 
       <button type="submit" class="btn"
         style="background: #FF6600; border-radius: 100px; color: white; width: 92px; height: 30px; font-size: 15px; line-height: 15px;">正在跟隨</button>
@@ -28,7 +28,7 @@
     </form>
     {{else}}
     <form action="/followships/" method="POST">
-      <input type="hidden" name="id" value="{{userView.id}}">
+      <input type="hidden" name="id" value="{{results.1.userId}}">
       <button type="submit" class="btn"
         style="border: 1px solid #FF6600; border-radius: 100px; color: #FF6600; width: 62px; height: 30px; font-size: 15px; line-height: 15px;">跟隨</button>
     </form>
@@ -36,47 +36,56 @@
     {{/ifCond}}
 
     <p class="card-text"><small class="text-muted"><a
-          href="/users/{{userView.id}}/followings">{{totalFollowings}}個跟隨中</a><a
-          href="/users/{{userView.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
+          href="/users/{{tweets.1.userId}}/followings">{{tweets.1.FollowingCount}}個跟隨中</a><a
+          href="/users/{{tweets.1.userId}}/followers">{{tweets.1.FollowerCount}}位跟隨者</a></small></p>
   </div>
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" href="/users/{{userView.id}}/tweets">推文</a>
+      <a class="nav-link active" href="/users/{{tweets.1.userId}}/tweets">推文</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/users/{{userView.id}}/replies">推文與回覆</a>
+      <a class="nav-link" href="/users/{{tweets.1.userId}}/replies">推文與回覆</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/users/{{userView.id}}/likes">喜歡的內容</a>
+      <a class="nav-link" href="/users/{{tweets.1.userId}}/likes">喜歡的內容</a>
     </li>
   </ul>
-  {{#each userView.Tweets}}
+  {{#each tweets}}
   <div class="card mb-3" style="width: 540px;">
     <div class="row g-0">
       <div class="col-md-2">
-        <img src="{{../userView.avatar}}" alt="..." style="max-width:75px; max-height:75px;">
+        <img src="{{this.userAvatar}}" alt="..." style="max-width:75px; max-height:75px;">
       </div>
       <div class="col-md-10">
         <div class="card-body">
-          <h5 class="card-title"><a href="/users/{{../userView.id}}">{{../userView.name}}</a></h5>
+          <h5 class="card-title"><a href="/users/{{this.userId}}">{{this.userName}}</a></h5>
           <p class="card-text">{{this.description}}</p>
-          <p>{{../totalReplies}}</p>
-          <p>{{../totalLikes}}</p>
-          {{#if this.isLiked}}
-          <form action="/tweets/{{this.id}}/unlike" method="POST">
-            <button type="submit" class="btn btn-danger">unlike</button>
-          </form>
-          {{else}}
-          <form action="/tweets/{{this.id}}/like" method="POST">
-            <button type="submit" class="btn btn-danger">like</button>
-          </form>
-          {{/if}}
+          <div class="row">
+            <i class="far fa-comment"></i>
+            <span>{{this.totalReplies}}</span>
+            {{#if this.isLiked}}
+            <form action="/tweets/{{this.id}}/unlike" method="POST">
+              <button type="submit" style="border: none; background: none;">
+                <i class="fas fa-heart"></i>
+                <span>{{this.totalLikes}}</span>
+              </button>
+            </form>
+            {{else}}
+            <form action="/tweets/{{this.id}}/like" method="POST">
+              <button type="submit" style="border: none; background: none;">
+                <i class="far fa-heart"></i>
+                <span>{{this.totalLikes}}</span>
+              </button>
+            </form>
+            {{/if}}
+          </div>
         </div>
       </div>
     </div>
   </div>
   {{/each}}
 </div>
+<!--icon-->
 
 <!--================= 跟隨 ================= -->
 {{> follower}}
