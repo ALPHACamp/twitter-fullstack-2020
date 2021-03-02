@@ -12,7 +12,7 @@ $(() => {
   // Tweets Textarea Counter
   document.querySelectorAll('textarea[name=description]').forEach(() => {
     this.addEventListener('input', (event) => {
-      const maxLength = event.target.getAttribute('maxlength');
+      const maxLength = 140;
       const currentLength = event.target.value.length;
       if (currentLength > maxLength) {
         event.target.nextElementSibling.querySelector('.btn').setAttribute('disabled', '');
