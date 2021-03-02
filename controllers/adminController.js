@@ -59,5 +59,18 @@ const usersController = {
       res.render('admin', { users: usersObj });
     });
   },
+  deleteTweet: (req, res) => {
+    Tweet.findByPk(req.params.id)
+    .then((tweet) => {
+      tweet.destroy()
+      .then(() => {
+        req.flash('success_messages', 'Tweet has been deleted successfully');
+        return res.redirect('/admin_main');
+      });
+    })
+    .catch((e) => {
+      console.error(e);
+    });
+  },
 };
 module.exports = usersController;

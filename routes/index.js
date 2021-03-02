@@ -47,6 +47,7 @@ router.post(
 );
 router.get('/admin_main', authenticatedAdmin, adminController.adminMain);
 router.get('/admin_users', authenticatedAdmin, adminController.adminUsers);
+router.delete('/admin_tweetDelete/:id', authenticatedAdmin, adminController.deleteTweet);
 
 // 匯出路由器
 module.exports = router;
