@@ -23,4 +23,7 @@ router.get('/admin/tweets', auth.authenticatedAdmin, (req, res) => res.render('t
 router.get('/followships', auth.authenticatedUser, userController.addFavorite)
 router.delete('/followships/:id', auth.authenticatedUser, userController.removeFavorite)
 
+router.post('/tweets/:tweetId/like', auth.authenticatedUser, userController.addLike)
+router.delete('/tweets/:tweetId/unlike', auth.authenticatedUser, userController.removeLike)
+
 module.exports = router

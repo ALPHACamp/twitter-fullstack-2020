@@ -70,6 +70,41 @@ const userController = {
         console.log(error)
         res.render('error', { message: 'error !' })
       })
+  },
+  addLike: (req, res) => {
+    const likeTweetId = Number(req.params.tweetId)
+    const currentUserId = Number(helpers.getUser(req).id)
+    return Like.create({
+      UserId: currentUserId,
+      TweetId: likeTweetId
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+      .catch(error => {
+        console.log(error)
+        res.render('error', { message: 'error !' })
+      })
+  },
+  removeLike: (req, res) => {
+    const likeTweetId = req.params.tweetId
+    const currentUserId = helpers.getUser(req).id
+    return Like.findOne({
+      where: {
+        UserId: currentUserId,
+        TweetId: likeTweetId
+      }
+    })
+      .then(like => {
+        like.destroy()
+          .then(() => {
+            return res.redirect('back')
+          })
+      })
+      .catch(error => {
+        console.log(error)
+        res.render('error', { message: 'error !' })
+      })
   }
 }
 
