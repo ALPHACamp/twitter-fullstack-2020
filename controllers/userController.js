@@ -8,7 +8,6 @@ const Reply = db.Reply
 const Like = db.Like
 const getTopUser = require('../_helpers').getTopUser
 const getSingleUserData = require('../_helpers').getSingleUserData
-const getTotalTweets = require('../_helpers').getTotalTweets
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -162,13 +161,13 @@ const userController = {
 
   getUserFollowingPage: async (req, res) => {
     //userView為了partials左邊nav的user.id區隔開
-    const userView = await getTotalTweets(req.params.id)
+    const userView = await getSingleUserData(req.params.id)
     const users = await getTopUser(req)
     return res.render('userFollowing', { userView, users })
   },
   getUserFollowerPage: async (req, res) => {
     //userView為了partials左邊nav的user.id區隔開
-    let userView = await getTotalTweets(req.params.id)
+    let userView = await getSingleUserData(req.params.id)
     userView.Followers.map(user => {
       user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     })

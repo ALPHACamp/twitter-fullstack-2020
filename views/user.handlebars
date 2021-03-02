@@ -1,6 +1,14 @@
 {{> nav}}
-
 <div class="flex-column" style="min-width: 600px; border: 1px solid #E6ECF0">
+  <div>
+    <div>
+      <a href="javascript:history.back()">回上一頁</a>
+    </div>
+    <div>
+      <h4>{{userView.name}}</h4>
+      <p>{{userView.TweetsCount}}推文</p>
+    </div>
+  </div>
   <img src="{{userView.cover}}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{userView.name}}</h5>
