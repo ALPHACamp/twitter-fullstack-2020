@@ -102,7 +102,7 @@ const userController = {
     const users = await getTopUser(req)
     //check isLiked
     userView.Tweets.map(t => {
-      t.isLiked = helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id)
+      t.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
     })
     return res.render('user', { userView, totalReplies, totalLikes, totalFollowers, totalFollowings, users, isFollowed })
   },
@@ -115,7 +115,7 @@ const userController = {
     const { totalFollowers, totalFollowings } = calculatorUserDataCount(userView)
     userView.Replies.map(r => {
       r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
-      r.Tweet.isLiked = helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.Tweet.id)
+      r.Tweet.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.Tweet.id) : false
     })
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     return res.render('tweetsReplies', { users, userView, totalFollowers, totalFollowings, isFollowed })
