@@ -8,6 +8,8 @@ const userController = require('../controllers/userController')
 router.get('/', (req, res) => res.redirect('/signin'))
 router.get('/signin', userController.signInPage)
 router.get('/admin/signin', userController.AdminSignInPage)
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
 router.post('/signin', passport.authenticate('local', {
   failureRedirect: '/signin'
 }), userController.signIn)
