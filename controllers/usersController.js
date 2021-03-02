@@ -110,7 +110,7 @@ const usersController = {
     if (email !== '') {
       changes.email = req.body.email;
     } if (password !== '') {
-      changes.password = req.body.password;
+      changes.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null);
     } if (name !== '') {
       changes.name = req.body.name;
     } if (account !== '') {
