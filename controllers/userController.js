@@ -76,24 +76,6 @@ const userController = {
   },
 
   addFollowing: async (req, res) => {
-    //tweet data
-    let tweets = await Tweet.findAll({
-      order: [['createdAt', 'DESC']],
-      include: [User, Like, Reply]
-    })
-    tweets = tweets.map(t => ({
-      ...t.dataValues,
-      userName: t.User.name,
-      userId: t.User.id,
-      userAvatar: t.User.avatar,
-      userAccount: t.User.account,
-      LikedCount: t.Likes.length,
-      ReplyCount: t.Replies.length,
-      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
-    }))
-    //getTopUser
-    const users = await getTopUser(req)
-
     if (Number(helpers.getUser(req).id) !== Number(req.body.id)) {
       await Followship.create({
         followerId: helpers.getUser(req).id,
@@ -101,7 +83,7 @@ const userController = {
       })
       return res.redirect('back')
     }
-    return res.render('tweets', { users, tweets })
+    return res.redirect('back')
   },
 
   removeFollowing: async (req, res) => {
@@ -176,17 +158,19 @@ const userController = {
   },
 
   getUserFollowingPage: async (req, res) => {
-    const user = await getTotalTweets(req.params.id)
+    //userView為了partials左邊nav的user.id區隔開
+    const userView = await getTotalTweets(req.params.id)
     const users = await getTopUser(req)
-    return res.render('userFollowing', { user, users })
+    return res.render('userFollowing', { userView, users })
   },
   getUserFollowerPage: async (req, res) => {
-    let user = await getTotalTweets(req.params.id)
-    user.Followers.map(user => {
-      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+    //userView為了partials左邊nav的user.id區隔開
+    let userView = await getTotalTweets(req.params.id)
+    userView.Followers.map(user => {
+      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     })
     const users = await getTopUser(req)
-    return res.render('userFollower', { user, users })
+    return res.render('userFollower', { userView, users })
   },
 
   setUserPage: async (req, res) => {

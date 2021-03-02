@@ -33,11 +33,11 @@ const tweetController = {
     const { description } = req.body
     if (!description.trim()) {
       req.flash('error_messages', '請輸入些甚麼')
-      return res.redirect('back')
+      return res.redirect('/tweets')
     }
     if (description.length > 140) {
       req.flash('error_messages', '超過140字。')
-      return res.redirect('back')
+      return res.redirect('/tweets')
     }
     await Tweet.create({
       UserId: helpers.getUser(req).id,
