@@ -5,6 +5,7 @@ const router = express.Router();
 
 const users = require('./modules/users');
 const tweets = require('./modules/tweets');
+const likes = require('./modules/likes');
 
 // For Authentication and Admin Login
 const passport = require('../config/passport');
@@ -32,6 +33,7 @@ router.delete('/admin_tweetDelete/:id', authenticationHelper.authenticatedAdmin,
 router.use('/', users);
 
 // Main functions
+router.use('/likes/', authenticationHelper.authenticatedNonAdmin, likes);
 router.use('/', authenticationHelper.authenticatedNonAdmin, tweets);
 
 // 匯出路由器
