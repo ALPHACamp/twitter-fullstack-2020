@@ -6,7 +6,10 @@
   "scripts": {
     "start": "NODE_ENV=development node app.js",
     "dev": "nodemon app.js",
-    "test": "set \"NODE_ENV=test\" && mocha test/*/*.js --exit --recursive --timeout 5000"
+    "test": "set \"NODE_ENV=test\" && mocha test/*/*.js --exit --recursive --timeout 5000",
+    "reqFollowship": "npx mocha test/requests/followship.spec.js --exit",
+    "reqTweet": "npx mocha test/requests/tweet.spec.js --exit",
+    "admTweet": "npx mocha test/requests/admin/tweets.spec.js --exit"
   },
   "author": "",
   "license": "ISC",
