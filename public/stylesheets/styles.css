@@ -1,3 +1,6 @@
+body {
+  background: #fff;
+}
 /* HELPER CLASSES */
 .max-vh-100 {
   max-height: 100vh;
@@ -15,6 +18,25 @@
   background-color: rgba(0, 0, 0, .525);
 }
 
+.text-orange {
+  color: #ff6600;
+}
+
+.bg-orange {
+  background-color: #ff6600;
+}
+
+.btn-orange {
+  color: #fff;
+  background-color: #ff6600;
+  border-color: #ff6600;
+}
+.btn-orange:hover {
+  color: #fff;
+  background-color: #e65c00;
+  border-color: #e65c00;
+}
+
 .header-block {
   height: 50px;
   min-height: 50px;
@@ -29,6 +51,14 @@
 .item-header .info,
 .item-other {
   color: rgba(0, 0, 0, .525);
+}
+
+/* Main Frame */
+.navbar .nav-item .nav-link {
+  color: #212529;
+}
+.navbar .nav-item.active .nav-link {
+  color: #ff6600;
 }
 
 /* COLUMN SETUP */
