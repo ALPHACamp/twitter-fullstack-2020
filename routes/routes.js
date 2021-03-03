@@ -8,20 +8,28 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 router.get('/', (req, res) => res.redirect('/signin'))
+
+// 一般使用者登入
 router.get('/signin', userController.signInPage)
+router.post('/signin', passport.authenticate('local', {
+  failureRedirect: '/signin', failureFlash: true
+}), userController.signIn)
+router.get('/logout', userController.logout)
+
+// Admin
 router.get('/admin/signin', userController.AdminSignInPage)
+router.post('/admin/signin', passport.authenticate('local', {
+  failureRedirect: '/admin/signin', failureFlash: true
+}), userController.AdminSignIn)
+router.get('/admin/tweets', auth.authenticatedAdmin, (req, res) => res.render('tweets'))
+
+// 註冊
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
-router.post('/signin', passport.authenticate('local', {
-  failureRedirect: '/signin'
-}), userController.signIn)
-router.post('/admin/signin', passport.authenticate('local', {
-  failureRedirect: '/admin/signin'
-}), userController.AdminSignIn)
+
 router.get('/signout', userController.logout)
 
 router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('tweets'))
-router.get('/admin/tweets', auth.authenticatedAdmin, (req, res) => res.render('tweets'))
 
 router.get('/followships', auth.authenticatedUser, userController.addFavorite)
 router.delete('/followships/:id', auth.authenticatedUser, userController.removeFavorite)
