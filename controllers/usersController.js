@@ -181,5 +181,21 @@ const usersController = {
       }
     });
   },
+  putUser: (req, res) => {
+    const {
+      name, introduction,
+    } = req.body;
+    return User.findByPk(req.params.id)
+    .then((me) => {
+      me.update({
+        name        : req.body.name,
+        introduction: req.body.introduction,
+      }).then(() => {
+        req.flash('success_message', '成功更新');
+        res.redirect('/');
+      })
+      .catch((error) => console.log('edit error', error));
+    });
+  },
 };
 module.exports = usersController;

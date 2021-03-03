@@ -24,4 +24,5 @@ router.get('/user/self/tweetsReplies/', authenticated, usersController.getSelfTw
 // 使用者喜歡的內容清單
 router.get('/user/self/like/', authenticated, usersController.getSelfLikes);
 
+router.put('/:id/self/edit', usersController.putUser);
 module.exports = router;

@@ -53,6 +53,7 @@
                   </button>
                   <h5 class="modal-title ml-3">編輯個人資料</h5 >
                 </div>
+                <form action="/{{me.id}}/self/edit?_method=PUT" method="POST">
                   <button type="submit" class="btn rounded-pill btn-warning" style="float:right">儲存</button>
               </div>
             <div class="modal-body m-0 p-0">
@@ -73,19 +74,16 @@
               </div>
                 
               <div class="modal-form d-flex flex-column align-items-center justify-content-center mt-5">                    
-                <form action="/" method="POST">
                   <div class="d-flex flex-column">
                     <label for="name">名稱</label>
-                    <textarea class="w-1000 border-0" name="myName" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
+                    <textarea class="w-1000 border-0" name="name" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
                       <div class="textarea-util d-flex justify-content-end">
                         <div class="text-counter text-right">0/50</div>
                       </div>
                   </div>
-                </form>
-                <form action="/" method="POST">
                   <div class="d-flex flex-column mt-3">
                     <label for="introduction">自我介紹</label>
-                    <textarea class="w-1000 border-0" name="myIntro" rows="7" cols="50" placeholder="自我介紹">{{me.introduction}}</textarea>
+                    <textarea class="w-1000 border-0" name="introduction" rows="7" cols="50" placeholder="自我介紹">{{me.introduction}}</textarea>
                       <div class="textarea-util d-flex justify-content-end">
                         <div class="text-counter text-right">0/160</div>
                       </div>
