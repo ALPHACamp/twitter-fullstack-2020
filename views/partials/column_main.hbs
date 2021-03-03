@@ -41,9 +41,17 @@
       <div class="item-desc pt-2 pb-3">
         {{this.description}}
       </div>
-      <div class="item-other">
-        <span><i class="far fa-comment pr-2"></i>{{this.ReplyCount}}</span>
-        <span><i class="far fa-heart pr-2"></i>{{this.LikeCount}}</span>
+      <div class="item-other d-flex flex-row">
+        <span class="pr-3 mr-3"><i class="far fa-comment pr-2"></i>{{this.ReplyCount}}</span>
+        {{#if this.isLiked }}
+          <form action="/likes/{{this.id}}?_method=DELETE" method="POST" class="ml-3 pl-3">
+            <button class="btn btn-link text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i>{{this.LikeCount}}</button>
+          </form>
+        {{else}}
+          <form action="/likes/{{this.id}}" method="POST" class="ml-3 pl-3">
+            <button class="btn btn-link text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i>{{this.LikeCount}}</button>
+          </form>
+        {{/if}}
       </div>
     </div>
   </div>
