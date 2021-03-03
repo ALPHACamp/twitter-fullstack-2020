@@ -32,7 +32,7 @@ router.delete('/admin_tweetDelete/:id', authenticationHelper.authenticatedAdmin,
 router.use('/', users);
 
 // Main functions
-router.use('/', authenticationHelper.authenticated, tweets);
+router.use('/', authenticationHelper.authenticatedNonAdmin, tweets);
 
 // 匯出路由器
 module.exports = router;
