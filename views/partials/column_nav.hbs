@@ -20,8 +20,8 @@
       <div class="modal fade" id="tweet-create-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header p-0">
-              <button type="button" class="btn btn-lg btn-link text-orange pl-3" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header p-0 d-flex align-items-center">
+              <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -41,51 +41,62 @@
         </div>
       </div>
       {{!-- Self Setting Modal--}}
-          <div class="modal fade" id="self-setting-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog" role="document">
-          
-              <div class="modal-content">
-                <div class="modal-header d-flex align-items-center" style="display: flex">
-                  <div class="d-flex justify-content-around">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <div class="modal fade" id="self-setting-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+          aria-hidden="true">
+          <div class="modal-dialog" role="document">
+        
+            <div class="modal-content">
+              <div class="modal-header d-flex align-items-center" style="display: flex">
+                <div class="d-flex justify-content-around">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                    </button>
-                    <b class="ml-3">編輯個人資料</b >
-                  </div>
-                 
-                    <button type="submit" class="btn rounded-pill btn-warning" style="float:right">儲存</button>
+                  </button>
+                  <h5 class="modal-title ml-3">編輯個人資料</h5 >
                 </div>
-                <div class="modal-body m-0 p-0">
-                  <div class="modal-group">
-                    <img src="{{me.cover}}" class="self-edit-modal card-img-top bg-light p-0 m-0" loading="lazy">
-                    <div class="d-flex justify-content-start avatar-wrap">
-                      <img class="self-edit-modal avatar bg-light" src="{{me.avatar}}" loading="lazy" alt="">
-                    </div>
-                    </div>
-                    <div class="modal-group d-flex flex-column align-items-center justify-content-center mt-3">
-                      <form action="/" method="POST">
-                        <textarea class="w-1000 border-0" name="myName" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
-                        <div class="textarea-util d-flex justify-content-end">
-                          <div class="text-counter text-right">0/50</div>
-                      
-                        </div>
-                      </form>
-                    <form action="/" method="POST">
-                      <textarea class="w-1000 border-0 mt-3" name="myIntro" rows="7" cols="50"
-                        placeholder="自我介紹"></textarea>
-                      <div class="textarea-util d-flex justify-content-end">
-                        <div class="text-counter text-right">0/160</div>
-                        
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                <div class="modal-footer">
+                  <button type="submit" class="btn rounded-pill btn-warning" style="float:right">儲存</button>
+              </div>
+            <div class="modal-body m-0 p-0">
+              <div class="modal-edit-pictures">
+                <img src="{{me.cover}}" class="self-edit-modal card-img-top bg-light p-0 m-0" loading="lazy">
+                <div class="d-flex justify-content-start">
+                  <img class="self-edit-modal avatar bg-light" src="{{me.avatar}}" loading="lazy" alt="">
                 </div>
               </div>
+              <div class="modal-edit-icons d-flex flex-column align-items-center mb-10">
+                <div class="d-flex flex-row justify-content-around col-8">
+                  <i class="fas fa-camera fa-lg"></i>
+                  <i class="fas fa-times fa-lg"></i>
+                </div>   
+                <div class="d-flex justify-content-start col-10">
+                  <i class="fas fa-camera fa-lg"></i>
+                </div>
+              </div>
+                
+              <div class="modal-form d-flex flex-column align-items-center justify-content-center mt-5">                    
+                <form action="/" method="POST">
+                  <div class="d-flex flex-column">
+                    <label for="name">名稱</label>
+                    <textarea class="w-1000 border-0" name="myName" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
+                      <div class="textarea-util d-flex justify-content-end">
+                        <div class="text-counter text-right">0/50</div>
+                      </div>
+                  </div>
+                </form>
+                <form action="/" method="POST">
+                  <div class="d-flex flex-column mt-3">
+                    <label for="introduction">自我介紹</label>
+                    <textarea class="w-1000 border-0" name="myIntro" rows="7" cols="50" placeholder="自我介紹"></textarea>
+                      <div class="textarea-util d-flex justify-content-end">
+                        <div class="text-counter text-right">0/160</div>
+                      </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+              <div class="modal-footer"></div>
             </div>
           </div>
+        </div>
     </li>
   </ul>
   <a class="nav-link text-dark mt-auto pl-0" href="/logout"> <i class="fas fa-sign-out-alt pr-3"></i>登出 </a>

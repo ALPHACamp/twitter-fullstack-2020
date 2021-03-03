@@ -236,3 +236,13 @@ body {
   margin-top: -50px;
   border: 2px solid #fff;
 }
+.modal-edit-icons {
+  margin-top: -120px;
+  color:white;
+}
+.modal-header .close {
+  color:#ff6600
+}
+.modal-form {
+  margin-top: 8rem!important;
+}
