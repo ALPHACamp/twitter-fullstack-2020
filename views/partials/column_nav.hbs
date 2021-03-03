@@ -40,7 +40,52 @@
           </div>
         </div>
       </div>
-      <!-- Tweet Creation Modal -->
+      {{!-- Self Setting Modal--}}
+          <div class="modal fade" id="self-setting-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+          
+              <div class="modal-content">
+                <div class="modal-header d-flex align-items-center" style="display: flex">
+                  <div class="d-flex justify-content-around">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                    <b class="ml-3">編輯個人資料</b >
+                  </div>
+                 
+                    <button type="submit" class="btn rounded-pill btn-warning" style="float:right">儲存</button>
+                </div>
+                <div class="modal-body m-0 p-0">
+                  <div class="modal-group">
+                    <img src="{{me.cover}}" class="self-edit-modal card-img-top bg-light p-0 m-0" loading="lazy">
+                    <div class="d-flex justify-content-start avatar-wrap">
+                      <img class="self-edit-modal avatar bg-light" src="{{me.avatar}}" loading="lazy" alt="">
+                    </div>
+                    </div>
+                    <div class="modal-group d-flex flex-column align-items-center justify-content-center mt-3">
+                      <form action="/" method="POST">
+                        <textarea class="w-1000 border-0" name="myName" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
+                        <div class="textarea-util d-flex justify-content-end">
+                          <div class="text-counter text-right">0/50</div>
+                      
+                        </div>
+                      </form>
+                    <form action="/" method="POST">
+                      <textarea class="w-1000 border-0 mt-3" name="myIntro" rows="7" cols="50"
+                        placeholder="自我介紹"></textarea>
+                      <div class="textarea-util d-flex justify-content-end">
+                        <div class="text-counter text-right">0/160</div>
+                        
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+              </div>
+            </div>
+          </div>
     </li>
   </ul>
   <a class="nav-link text-dark mt-auto pl-0" href="/logout"> <i class="fas fa-sign-out-alt pr-3"></i>登出 </a>

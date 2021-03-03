@@ -164,5 +164,22 @@ const usersController = {
       return res.render('index', { user: getUser(req), likedTweets });
     });
   },
+  getUser: (req, res) => {
+    User.findByPk(req.params.id)
+    .then((user) => {
+      if (!user) {
+        req.flash('error_messages', '此頁面不存在');
+        res.redirect('back');
+      }
+      if (user.id !== req.user.id) {
+        req.flash('error_messages', '無法設定他人帳戶');
+        res.redirect('back');
+      } else {
+        res.render('setting', {
+          user: user.dataValues,
+        });
+      }
+    });
+  },
 };
 module.exports = usersController;
