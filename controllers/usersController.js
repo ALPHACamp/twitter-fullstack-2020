@@ -58,5 +58,76 @@ const usersController = {
     req.logout();
     res.redirect('/login');
   },
+
+  getAccount: (req, res) => {
+    User.findByPk(req.params.id)
+    .then((user) => {
+      if (!user) {
+        req.flash('error_messages', '此頁面不存在');
+        res.redirect('back');
+      }
+      if (user.id !== req.user.id) {
+        req.flash('error_messages', '無法設定他人帳戶');
+        res.redirect('back');
+      } else {
+        res.render('setting', {
+          user: user.dataValues,
+        });
+      }
+    });
+  },
+  putAccount: async (req, res) => {
+    const {
+      name, email, account, password, passwordCheck,
+    } = req.body;
+
+    if (passwordCheck !== password) {
+      req.flash('error_messages', '兩次密碼輸入不一致');
+      return res.redirect(`/${req.params.id}/setting/`);
+    }
+    if (req.user.email !== email) {
+      const userWtihSameEmail = await User.findOne({
+        where: {
+          email,
+        },
+      });
+
+      if (userWtihSameEmail) {
+        req.flash('error_messages', 'Email 已經有人使用');
+        return res.redirect(`/${req.params.id}/setting/`);
+      }
+    }
+    if (req.user.account !== account) {
+      const userWithSameAccount = await User.findOne({
+        where: {
+          account,
+        },
+      });
+
+      if (userWithSameAccount) {
+        req.flash('error_messages', '帳號已經有人使用');
+        return res.redirect(`/${req.params.id}/setting/`);
+      }
+    }
+
+    const changes = {};
+    if (email !== '') {
+      changes.email = req.body.email;
+    } if (password !== '') {
+      changes.password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null);
+    } if (name !== '') {
+      changes.name = req.body.name;
+    } if (account !== '') {
+      changes.account = req.body.account;
+    }
+    return User.findByPk(req.params.id)
+    .then((me) => {
+      me.update(changes).then(() => {
+        req.flash('success_messages', '成功更新');
+        res.redirect('/');
+      })
+      .catch((error) => console.log('edit error', error));
+    });
+  },
 };
 module.exports = usersController;
