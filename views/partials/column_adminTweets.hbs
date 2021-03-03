@@ -1,7 +1,7 @@
 <div class="row w-100 m-0 p-1">
   <div class="col-12 title"><strong>推文清單</strong></div>
 </div>
-<div class="row w-100 m-0">
+<div class="row w-100 m-0 overflow-auto">
   {{#each tweets}}
     <div class="list-item d-flex p-3 border-bottom border-3 w-100" style="min-height: 120px;">
       <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="" style="max-width: 100px;">
