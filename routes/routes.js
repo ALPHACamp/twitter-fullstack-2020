@@ -4,6 +4,8 @@ const passport = require('passport')
 
 const auth = require('../config/auth')
 const userController = require('../controllers/userController')
+const adminController = require('../controllers/adminController')
+
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
@@ -21,7 +23,11 @@ router.get('/admin/signin', userController.AdminSignInPage)
 router.post('/admin/signin', passport.authenticate('local', {
   failureRedirect: '/admin/signin', failureFlash: true
 }), userController.AdminSignIn)
-router.get('/admin/tweets', auth.authenticatedAdmin, (req, res) => res.render('tweets'))
+router.get('/signout', userController.logout)
+
+router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('test'))
+router.get('/admin/tweets', auth.authenticatedAdmin, adminController.getTweets)
+router.delete('/admin/tweets/:tweetId', auth.authenticatedAdmin, adminController.deleteTweet)
 
 // 註冊
 router.get('/signup', userController.signUpPage)
