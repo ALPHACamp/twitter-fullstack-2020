@@ -1,5 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    id: {
+      allowNull    : false,
+      autoIncrement: true,
+      primaryKey   : true,
+      type         : DataTypes.INTEGER,
+    },
     email: {
       type  : DataTypes.STRING,
       unique: true,
@@ -14,13 +20,24 @@ module.exports = (sequelize, DataTypes) => {
     introduction: DataTypes.TEXT,
     cover       : DataTypes.STRING,
     role        : DataTypes.STRING,
-    createdAt   : DataTypes.DATE,
-    updatedAt   : DataTypes.DATE,
+    createdAt   : {
+      allowNull: false,
+      type     : DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type     : DataTypes.DATE,
+    },
   }, {});
   User.associate = (models) => {
     User.hasMany(models.Tweet);
     User.hasMany(models.Reply);
     User.hasMany(models.Like);
+    User.belongsToMany(models.Tweet, {
+      through   : models.Like,
+      foreignKey: 'UserId',
+      as        : 'LikedTweets',
+    });
     User.belongsToMany(User, {
       through   : models.Followship,
       foreignKey: 'followingId',
