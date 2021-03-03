@@ -4,6 +4,8 @@ const passport = require('passport')
 
 const auth = require('../config/auth')
 const userController = require('../controllers/userController')
+const adminController = require('../controllers/adminController')
+
 
 router.get('/', (req, res) => res.redirect('/signin'))
 router.get('/signin', userController.signInPage)
@@ -19,8 +21,7 @@ router.post('/admin/signin', passport.authenticate('local', {
 router.get('/signout', userController.logout)
 
 router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('test'))
-router.get('/admin/tweets', auth.authenticatedAdmin, (req, res) => res.render('tweets'))
-
+router.get('/admin/tweets', auth.authenticatedAdmin, adminController.getTweets)
 
 router.get('/followships', auth.authenticatedUser, userController.addFavorite)
 router.delete('/followships/:id', auth.authenticatedUser, userController.removeFavorite)
