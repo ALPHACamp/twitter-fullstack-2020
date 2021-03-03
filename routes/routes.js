@@ -22,6 +22,8 @@ router.get('/signout', userController.logout)
 
 router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('test'))
 router.get('/admin/tweets', auth.authenticatedAdmin, adminController.getTweets)
+router.delete('/admin/tweets/:tweetId', auth.authenticatedAdmin, adminController.deleteTweet)
+
 
 router.get('/followships', auth.authenticatedUser, userController.addFavorite)
 router.delete('/followships/:id', auth.authenticatedUser, userController.removeFavorite)

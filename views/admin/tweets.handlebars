@@ -25,8 +25,8 @@
             </div>
           </div>
           <div>
-            <form action="/admin/tweets/{{this.id}}">
-              <button type="button" class="close">
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </form>

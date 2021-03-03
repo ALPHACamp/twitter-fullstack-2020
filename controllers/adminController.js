@@ -32,6 +32,21 @@ const adminController = {
         console.log(error)
         res.render('error', { message: 'error !' })
       })
+  },
+  deleteTweet: (req, res) => {
+    const id = req.params.tweetId
+    return Tweet.findByPk(id)
+      .then(tweet => {
+        tweet.destroy()
+      })
+      .then(() => {
+        req.flash('success_messages', '推文刪除成功！')
+        return res.redirect('back')
+      })
+      .catch(error => {
+        console.log(error)
+        res.render('error', { message: 'error !' })
+      })
   }
 }
 
