@@ -2,7 +2,6 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const Followship = db.Followship
-const Like = db.Like
 const Tweet = db.Tweet
 const helpers = require('../_helpers')
 const imgur = require('imgur-node-api')
@@ -71,68 +70,33 @@ const userController = {
       })
     }
   },
-  addFavorite: (req, res) => {
-    const favoriteTargetId = req.query.id
+  follow: (req, res) => {
+    const followTargetId = req.body.id
     const currentUserId = helpers.getUser(req).id
-    if (Number(favoriteTargetId) === Number(currentUserId)) {
+    if (Number(followTargetId) === currentUserId) {
       req.flash('error_messages', '不能追蹤自己喔！')
-      return res.redirect('back')
+      return res.render('error')
     } else {
       return Followship.create({
         followerId: currentUserId,
-        followingId: favoriteTargetId
+        followingId: followTargetId
       })
         .then(() => {
           return res.redirect('back')
         })
     }
   },
-  removeFavorite: (req, res) => {
-    const favoriteTargetId = req.params.id
+  unfollow: (req, res) => {
+    const followTargetId = req.params.id
     const currentUserId = helpers.getUser(req).id
     return Followship.findOne({
       where: {
         followerId: currentUserId,
-        followingId: favoriteTargetId
+        followingId: followTargetId
       }
     })
       .then(favorite => {
         favorite.destroy()
-          .then(() => {
-            return res.redirect('back')
-          })
-      })
-      .catch(error => {
-        console.log(error)
-        res.render('error', { message: 'error !' })
-      })
-  },
-  addLike: (req, res) => {
-    const likeTweetId = Number(req.params.tweetId)
-    const currentUserId = Number(helpers.getUser(req).id)
-    return Like.create({
-      UserId: currentUserId,
-      TweetId: likeTweetId
-    })
-      .then(() => {
-        return res.redirect('back')
-      })
-      .catch(error => {
-        console.log(error)
-        res.render('error', { message: 'error !' })
-      })
-  },
-  removeLike: (req, res) => {
-    const likeTweetId = req.params.tweetId
-    const currentUserId = helpers.getUser(req).id
-    return Like.findOne({
-      where: {
-        UserId: currentUserId,
-        TweetId: likeTweetId
-      }
-    })
-      .then(like => {
-        like.destroy()
           .then(() => {
             return res.redirect('back')
           })

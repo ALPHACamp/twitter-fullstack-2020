@@ -4,7 +4,11 @@ const passport = require('passport')
 
 const auth = require('../config/auth')
 const userController = require('../controllers/userController')
+
+const tweetController = require('../controllers/tweetController')
+
 const adminController = require('../controllers/adminController')
+
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -17,6 +21,10 @@ router.post('/signin', passport.authenticate('local', {
   failureRedirect: '/signin', failureFlash: true
 }), userController.signIn)
 router.get('/logout', userController.logout)
+
+// User Tweets
+router.post('/tweets/:id/like', auth.authenticatedUser, tweetController.like)
+router.post('/tweets/:id/unlike', auth.authenticatedUser, tweetController.unLike)
 
 // Admin
 router.get('/admin/signin', userController.AdminSignInPage)
@@ -33,12 +41,11 @@ router.delete('/admin/tweets/:tweetId', auth.authenticatedAdmin, adminController
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
-router.get('/signout', userController.logout)
-
 router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('tweets'))
 
-router.get('/followships', auth.authenticatedUser, userController.addFavorite)
-router.delete('/followships/:id', auth.authenticatedUser, userController.removeFavorite)
+// following
+router.post('/followships', auth.authenticatedUser, userController.follow)
+router.delete('/followships/:id', auth.authenticatedUser, userController.unfollow)
 
 // user edit 相關路由
 router.get('/api/users/:id', auth.authenticatedUser, userController.editUser)
@@ -50,8 +57,5 @@ router.get('/users/:id/followings', auth.authenticatedUser, userController.getRe
 // setting 相關路由
 router.get('/users/:id/setting', auth.authenticatedUser, userController.getSetting)
 router.post('/api/users/:id', auth.authenticatedUser, userController.putSetting)
-
-router.post('/tweets/:tweetId/like', auth.authenticatedUser, userController.addLike)
-router.delete('/tweets/:tweetId/unlike', auth.authenticatedUser, userController.removeLike)
 
 module.exports = router
