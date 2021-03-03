@@ -1,5 +1,6 @@
 <div class="p-3">
-  <img class="logo img-fluid" src="https://uploads-ssl.webflow.com/5d3a7aed4e11722bc1d46f10/5d3e6d42b1eba491c41fc0a9_AC%20nav%20logo.png">
+  <img class="logo img-fluid"
+    src="https://uploads-ssl.webflow.com/5d3a7aed4e11722bc1d46f10/5d3e6d42b1eba491c41fc0a9_AC%20nav%20logo.png">
 </div>
 <nav class="navbar px-3 py-0">
   <ul class="nav navbar-nav w-100">
@@ -13,7 +14,41 @@
       <a class="nav-link text-dark" href="#"> <i class="fas fa-cog pr-3"></i>設定 </a>
     </li>
     <li class="nav-item">
-      <a class="btn btn-block rounded-pill mt-3 btn-warning text-dark" href="#"> 推文 </a>
+      {{!-- <a class="btn btn-block rounded-pill mt-3 btn-warning text-dark" href="#"> 推文 </a> --}}
+
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">
+        推文
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+
+          <div class="modal-content">
+            <div class="modal-header" style="display: flex">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-group d-flex">
+                <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
+                <form action="/" method="POST">
+                  <textarea class="w-1000 border-0" name="description" rows="7" cols="50" placeholder="有什麼新鮮事? (字數限制140字)"></textarea>
+                  <div class="textarea-util d-flex justify-content-between">
+                    <div class="text-counter text-right">0/140</div>
+                    <button type="submit" class="btn rounded-pill btn-warning" style="float:right">推文</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
     </li>
   </ul>
   <a class="nav-link text-dark" href="/logout"> <i class="fas fa-sign-out-alt pr-3"></i>登出 </a>

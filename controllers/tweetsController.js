@@ -1,4 +1,44 @@
+const db = require('../models');
+
+const {
+  Tweet, Reply, Like, User,
+} = db;
+const helpers = require('../_helpers');
+
 const tweetsController = {
-  getIndexPage: (req, res) => res.render('index'),
+  getIndexPage: (req, res) => {
+    Tweet.findAll({
+      order  : [['createdAt', 'DESC']],
+      include: [User, Reply, Like],
+    })
+    .then((tweets) => {
+      const tweetsObj = tweets.map((tweet) => ({
+        ...tweet.dataValues,
+        User      : tweet.dataValues.User.dataValues,
+        ReplyCount: tweet.Replies.length,
+        LikeCount : tweet.Likes.length,
+      }));
+      return res.render('index', { tweets: tweetsObj });
+    });
+  },
+
+  createTweet: (req, res) => {
+    const { description } = req.body;
+    if (!description.trim()) {
+      req.flash('error_messages', '請輸入文字再送出推文');
+      return res.redirect('/');
+    }
+    if (description.length > 140) {
+      req.flash('error_messages', '推文字數不能超過140字');
+      return res.redirect('/');
+    }
+    return Tweet.create({
+      description: req.body.description,
+      UserId     : helpers.getUser(req).id,
+    }).then((tweet) => {
+      req.flash('success_messages', '推文成功!');
+      res.redirect('/');
+    });
+  },
 };
 module.exports = tweetsController;

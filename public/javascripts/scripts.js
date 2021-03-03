@@ -8,4 +8,18 @@ $(() => {
       setTimeout(() => { msgDiv.classList.remove('show'); }, 3000);
     }
   }
+
+  // Tweets Textarea Counter
+  document.querySelectorAll('textarea[name=description]').forEach(() => {
+    this.addEventListener('input', (event) => {
+      const maxLength = 140;
+      const currentLength = event.target.value.length;
+      if (currentLength > maxLength) {
+        event.target.nextElementSibling.querySelector('.btn').setAttribute('disabled', '');
+      } else {
+        event.target.nextElementSibling.querySelector('.btn').removeAttribute('disabled');
+      }
+      event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
+    });
+  });
 });
