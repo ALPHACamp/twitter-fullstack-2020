@@ -29,12 +29,14 @@
           <h5 class="card-title"><a href="/users/{{this.id}}">{{this.name}}</a>
             {{#if this.isFollowed}}
             <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn btn-danger">正在跟隨</button>
+              <button type="submit" class="btn btn-danger"
+                style="background: #FF6600; border-radius: 100px; color: white; width: 92px; height: 30px; font-size: 15px; line-height: 15px;">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/" method="POST">
+            <form action=" /followships/" method="POST">
               <input type="hidden" name="id" value="{{this.id}}">
-              <button type="submit" class="btn btn-danger">跟隨</button>
+              <button type="submit" class="btn btn-danger"
+                style="background: #FF6600; border-radius: 100px; color: white; width: 92px; height: 30px; font-size: 15px; line-height: 15px;">跟隨</button>
             </form>
             {{/if}}
           </h5>
