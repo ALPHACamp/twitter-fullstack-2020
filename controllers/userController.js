@@ -35,6 +35,15 @@ function followerCount(id) {
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+//check 
+function isLiked(req, tweet) {
+  return helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(tweet.id) : false
+}
+
+function checkIsFollowed(req, userId) {
+  return helpers.getUser(req).Followings ? helpers.getUser(req).Followings.map(d => d.id).includes(Number(userId)) : false
+}
+
 const imgur = require('imgur')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -133,16 +142,19 @@ const userController = {
       },
       include: [
         { model: Tweet, include: [Reply, Like] }
+      ],
+      order: [
+        [Tweet, 'createdAt', 'DESC']
       ]
     })
     userView = userView.toJSON()
     userView.Tweets.map(t => {
       t.totalReplies = t.Replies.length
       t.totalLikes = t.Likes.length
-      t.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
+      t.isLiked = isLiked(req, t)
     })
 
-    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(Number(req.params.id))
+    const isFollowed = checkIsFollowed(req, req.params.id)
 
     return res.render('user', { userView, users, isFollowed })
   },
@@ -178,11 +190,11 @@ const userController = {
     userView = userView.toJSON()
     userView.Replies.map(r => {
       r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
-      r.Tweet.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.Tweet.id) : false
+      r.Tweet.isLiked = isLiked(req, r.Tweet)
       r.Tweet.totalReplies = r.Tweet.Replies.length
       r.Tweet.totalLikes = r.Tweet.Likes.length
     })
-    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
+    const isFollowed = checkIsFollowed(req, userView.id)
 
     return res.render('tweetsReplies', { users, userView, isFollowed })
   },
@@ -217,11 +229,12 @@ const userController = {
     userView.tweets = userView.Likes.map(like => {
       return like.Tweet
     })
-    const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
+    const isFollowed = checkIsFollowed(req, userView.id)
     const users = await getTopUser(req)
     userView.tweets.map(t => {
       t.totalReplies = t.Replies.length
       t.totalLikes = t.Likes.length
+      t.isLiked = isLiked(req, t)
     })
     return res.render('likes', { userView, users, isFollowed })
   },
@@ -301,7 +314,7 @@ const userController = {
     })
     userView = userView.toJSON()
     userView.Followers.map(user => {
-      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      user.isFollowed = checkIsFollowed(req, user.id)
     })
     const users = await getTopUser(req)
     return res.render('userFollower', { userView, users })
