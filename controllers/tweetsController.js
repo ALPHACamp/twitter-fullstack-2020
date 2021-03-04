@@ -25,7 +25,7 @@ const tweetsController = {
       }).then(users => {
         const usersObj = users.map(user => ({
           ...user.dataValues,
-          // isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
         }))
         return res.render('index', {
           tweets: tweetsObj,
