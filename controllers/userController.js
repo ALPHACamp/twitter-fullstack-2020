@@ -9,9 +9,6 @@ const userController = {
   signInPage: (_req, res) => {
     return res.render('signin')
   },
-  AdminSignInPage: (_req, res) => {
-    return res.render('adminSignin')
-  },
   signIn: (req, res) => {
     if (helpers.getUser(req).role !== 'admin') {
       req.flash('success_messages', '登入成功！')
@@ -19,15 +16,6 @@ const userController = {
     } else {
       req.flash('error_messages', '管理者請從後台登入！')
       res.redirect('/signin')
-    }
-  },
-  AdminSignIn: (req, res) => {
-    if (helpers.getUser(req).role === 'admin') {
-      req.flash('success_messages', 'Sign in successfully！')
-      res.redirect('/admin/tweets')
-    } else {
-      req.flash('error_messages', '使用者請從前台登入！')
-      res.redirect('/admin/signin')
     }
   },
   logout: (req, res) => {

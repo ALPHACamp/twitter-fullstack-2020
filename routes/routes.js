@@ -8,7 +8,8 @@ const adminController = require('../controllers/adminController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
-router.get('/', (req, res) => res.redirect('/signin'))
+// root
+router.get('/', auth.authenticatedUser, (req, res) => res.redirect('/tweets'))
 
 // 一般使用者登入
 router.get('/signin', userController.signInPage)
@@ -18,17 +19,16 @@ router.post('/signin', passport.authenticate('local', {
 router.get('/logout', userController.logout)
 
 // User Tweets
+router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('tweets'))
 router.post('/tweets/:id/like', auth.authenticatedUser, tweetController.like)
 router.post('/tweets/:id/unlike', auth.authenticatedUser, tweetController.unLike)
 
 // Admin
-router.get('/admin/signin', userController.AdminSignInPage)
+router.get('/admin/signin', adminController.AdminSignInPage)
 router.post('/admin/signin', passport.authenticate('local', {
   failureRedirect: '/admin/signin', failureFlash: true
-}), userController.AdminSignIn)
+}), adminController.AdminSignIn)
 router.get('/signout', userController.logout)
-
-router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('test'))
 router.get('/admin/tweets', auth.authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:tweetId', auth.authenticatedAdmin, adminController.deleteTweet)
 
