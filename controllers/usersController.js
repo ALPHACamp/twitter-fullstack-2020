@@ -1,7 +1,11 @@
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const db = require('../models');
+<<<<<<< HEAD
 const { getUser } = require('../middleware/authenticationHelper');
+=======
+const helpers = require('../_helpers');
+>>>>>>> feat: add getUser and user.hbs page & move user setting modal to column_userSelf.hbs
 
 const {
   Tweet, User, Reply, Like, Followship,
@@ -165,7 +169,7 @@ const usersController = {
     });
   },
   getUser: (req, res) => {
-    User.findByPk(req.params.id)
+    User.findByPk(helpers.getUser(req).id)
     .then((user) => {
       if (!user) {
         req.flash('error_messages', '此頁面不存在');
@@ -175,7 +179,7 @@ const usersController = {
         req.flash('error_messages', '無法設定他人帳戶');
         res.redirect('back');
       } else {
-        res.render('setting', {
+        res.render('user', {
           user: user.dataValues,
         });
       }

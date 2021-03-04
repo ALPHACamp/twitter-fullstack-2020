@@ -25,5 +25,6 @@ router.get('/user/self/tweetsReplies/', authenticated, usersController.getSelfTw
 router.get('/user/self/like/', authenticated, usersController.getSelfLikes);
 
 router.put('/:id/self/edit', usersController.putUser);
+router.get('/user/self', authenticated, usersController.getUser);
 router.put('/user/self/edit', usersController.putUser);
 module.exports = router;
