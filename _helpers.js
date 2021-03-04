@@ -59,57 +59,11 @@ const getTopUser = async (req) => {
   return users
 }
 
-const getSingleUserData = async (id) => {
-  let user = await User.findByPk(id, {
-    attributes: {
-      include: [
-        [
-          sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Tweets AS Tweet
-              WHERE Tweet.UserId = ${id}
-            )`),
-          'TweetsCount'
-        ],
-        [
-          sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followerId = ${id}
-            )`),
-          'FollowingCount'
-        ],
-        [
-          sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followingId = ${id}
-            )`),
-          'FollowerCount'
-        ]
-      ]
-    },
-    include: [
-      { model: Like, include: [{ model: Tweet, include: [User, Reply] }] },
-      { model: User, as: 'Followings' },
-      { model: User, as: 'Followers' },
-      { model: Tweet },
-      { model: Reply, include: [{ model: Tweet, include: [Reply] }] }
-    ],
-    order: [
-      [Like, 'createdAt', 'DESC'],
-      [Tweet, 'createdAt', 'DESC'],
-      [Reply, 'createdAt', 'DESC']
-    ]
-  })
-  return user.toJSON()
-}
 
 
 module.exports = {
   ensureAuthenticated,
   getUser,
   getTopUser,
-  getSingleUserData,
   imgPromise
 };

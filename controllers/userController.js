@@ -8,7 +8,30 @@ const Reply = db.Reply
 const Like = db.Like
 const sequelize = require('sequelize')
 const getTopUser = require('../_helpers').getTopUser
-const getSingleUserData = require('../_helpers').getSingleUserData
+
+//sequelize literal
+function tweetsCouont(id) {
+  return `(
+    SELECT COUNT(*)
+              FROM Tweets AS Tweet
+              WHERE Tweet.UserId = ${id}
+  )`
+}
+function followingCount(id) {
+  return `(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followerId = ${id}
+          )`
+}
+function followerCount(id) {
+  return `(
+              SELECT COUNT(*)
+              FROM Followships As Followship
+              WHERE Followship.followingId = ${id}
+            )`
+}
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -95,27 +118,15 @@ const userController = {
       attributes: {
         include: [
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Tweets AS Tweet
-              WHERE Tweet.UserId = ${req.params.id}
-            )`),
+            sequelize.literal(tweetsCouont(req.params.id)),
             'TweetsCount'
           ],
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followerId = ${req.params.id}
-            )`),
+            sequelize.literal(followingCount(req.params.id)),
             'FollowingCount'
           ],
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships As Followship
-              WHERE Followship.followingId = ${req.params.id}
-            )`),
+            sequelize.literal(followerCount(req.params.id)),
             'FollowerCount'
           ]
         ]
@@ -157,27 +168,15 @@ const userController = {
       attributes: {
         include: [
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Tweets AS Tweet
-              WHERE Tweet.UserId = ${req.params.id}
-            )`),
+            sequelize.literal(tweetsCouont(req.params.id)),
             'TweetsCount'
           ],
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followerId = ${req.params.id}
-            )`),
+            sequelize.literal(followingCount(req.params.id)),
             'FollowingCount'
           ],
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followingId = ${req.params.id}
-            )`),
+            sequelize.literal(followerCount(req.params.id)),
             'FollowerCount'
           ]
         ]
@@ -203,18 +202,42 @@ const userController = {
 
 
   getUserLikesPage: async (req, res) => {
-    const userView = await getSingleUserData(req.params.id)
+    let userView = await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(tweetsCouont(req.params.id)),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(followingCount(req.params.id)),
+            'FollowingCount'
+          ],
+          [
+            sequelize.literal(followerCount(req.params.id)),
+            'FollowerCount'
+          ]
+        ]
+      },
+      include: [
+        { model: Like, include: [{ model: Tweet, include: [User, Reply, Like] }] }
+      ],
+      order: [
+        [Like, 'createdAt', 'DESC'],
+      ]
+    })
+    userView = userView.toJSON()
     userView.tweets = userView.Likes.map(like => {
       return like.Tweet
     })
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
-    const totalLikes = userView.Likes.length
     const users = await getTopUser(req)
     userView.tweets.map(t => {
-      return t.totalReplies = t.Replies.length
+      t.totalReplies = t.Replies.length
+      t.totalLikes = t.Likes.length
     })
-    console.log(userView.tweets)
-    return res.render('likes', { userView, users, isFollowed, totalLikes })
+    console.log(userView)
+    return res.render('likes', { userView, users, isFollowed })
   },
 
 
@@ -251,17 +274,52 @@ const userController = {
 
   getUserFollowingPage: async (req, res) => {
     //userView為了partials左邊nav的user.id區隔開
-    const userView = await getSingleUserData(req.params.id)
+    let userView = await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(tweetsCouont(req.params.id)),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(followingCount(req.params.id)),
+            'FollowingCount'
+          ]
+        ]
+      },
+      include: [
+        { model: User, as: 'Followings' }
+      ]
+    })
+    userView = userView.toJSON()
     const users = await getTopUser(req)
     return res.render('userFollowing', { userView, users })
   },
   getUserFollowerPage: async (req, res) => {
     //userView為了partials左邊nav的user.id區隔開
-    let userView = await getSingleUserData(req.params.id)
+    let userView = await await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(tweetsCouont(req.params.id)),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(followerCount(req.params.id)),
+            'FollowerCount'
+          ]
+        ]
+      },
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    })
+    userView = userView.toJSON()
     userView.Followers.map(user => {
-      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
+      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     })
     const users = await getTopUser(req)
+    console.log(userView)
     return res.render('userFollower', { userView, users })
   },
 
