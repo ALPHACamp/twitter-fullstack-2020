@@ -160,8 +160,9 @@ const userController = {
     })
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     const totalLikes = userView.Likes.length
-    console.log(userView.Replies)
-    return res.render('tweetsReplies', { users, userView, isFollowed, totalLikes })
+    const totalReplies = userView.Replies.length
+    console.log(userView)
+    return res.render('tweetsReplies', { users, userView, isFollowed, totalLikes, totalReplies })
   },
   getUserLikesPage: async (req, res) => {
     const userView = await getSingleUserData(req.params.id)
