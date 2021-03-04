@@ -30,6 +30,7 @@ const tweetController = {
   // },
   // 分頁
   getTweet: async (req, res) => {
+    //-----------------------------page
     let offset = 0
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit
@@ -42,16 +43,12 @@ const tweetController = {
     })    
 
     //-----------------------------page
-    let pageCount = await Tweet.findAndCountAll({
-      offset, limit: pageLimit,
-      order: [['createdAt', 'DESC']]      
-    })    
-    console.log(pageCount)
+    let pageCount = await Tweet.findAndCountAll({}) 
     const page = Number(req.query.page) || 1 
     const pages = Math.ceil(pageCount.count / pageLimit)    
     const totalPage = Array.from({ length: pages }).map((_, index) => index + 1) 
     const prev = page - 1 < 1 ? 1 : page - 1
-    const next = page + 1 < pages ? pages : page + 1
+    const next = page + 1 > pages ? pages : page + 1
     //-----------------------------page
     
     tweets = tweets.map(t => ({
@@ -88,8 +85,8 @@ const tweetController = {
     return res.redirect('/tweets')
   },
 
-  getReply: async (req, res) => {
-    let tweet = await Tweet.findByPk(req.params.id, {
+  getReply: async (req, res) => {    
+    let tweet = await Tweet.findByPk(req.params.id, {      
       order: [[{ model: Reply }, 'createdAt', 'DESC']],
       include: [
         User,
@@ -97,7 +94,7 @@ const tweetController = {
         { model: Reply, include: [User] },
       ]
     })
-
+    
     tweet = tweet.toJSON()
     const isLiked = tweet.Likes ? tweet.Likes.some(d => d.UserId === helpers.getUser(req).id) : false
 
