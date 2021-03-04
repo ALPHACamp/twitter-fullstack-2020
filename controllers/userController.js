@@ -133,6 +133,9 @@ const userController = {
       },
       include: [
         { model: Tweet, include: [Reply, Like] }
+      ],
+      order: [
+        [Tweet, 'createdAt', 'DESC']
       ]
     })
     userView = userView.toJSON()
