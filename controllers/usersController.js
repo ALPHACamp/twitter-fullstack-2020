@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
-const fs = require('fs');
+const fs = require('fs').promises;
 const db = require('../models');
 <<<<<<< HEAD
 const { getUser } = require('../middleware/authenticationHelper');
@@ -186,10 +186,11 @@ const usersController = {
       }
     });
   },
-  putUser: (req, res) => {
+  putUser: async (req, res) => {
     const {
       name, introduction,
     } = req.body;
+    const me = await User.findByPk(req.user.id);
 
     if (name.length > 50) {
       req.flash('error_messages', '名稱不能超過50字');
@@ -201,35 +202,35 @@ const usersController = {
     }
     const { file } = req;
     if (file) {
-      fs.readFile(file.path, (err, data) => {
-        if (err) console.log('Error: ', err);
-        fs.writeFile(`upload/${file.originalname}`, data, () => User.findByPk(req.user.id)
-        .then((me) => {
-          me.update({
-            name        : req.body.name,
-            introduction: req.body.introduction,
-            cover       : file ? `/upload/${file.originalname}` : null,
-          }).then(() => {
-            req.flash('success_messages', '成功更新');
-            res.redirect('/');
-          })
-          .catch((error) => console.log('edit error', error));
-        }));
-      });
-    } else {
-      return User.findByPk(req.user.id)
-      .then((me) => {
-        me.update({
-          name        : req.body.name,
-          introduction: req.body.introduction,
-          cover       : me.image,
-        }).then(() => {
-          req.flash('success_messages', '成功更新');
-          res.redirect('/');
-        })
-        .catch((error) => console.log('edit error', error));
+      const data = file ? await fs.readFile(file.path) : null;
+      // const avatar = file ? await fs.readFile(`/upload/${file.originalname}`) : null;
+
+      await fs.writeFile(`upload/${file.originalname}`, data);
+      me.update({
+        name        : req.body.name,
+        introduction: req.body.introduction,
+        cover       : `/upload/${file.originalname}`,
+      // avatar      : avatar
+      }).then(() => {
+        req.flash('success_messages', '成功更新');
+        res.redirect('/');
       });
     }
+    // else {
+    //   return User.findByPk(req.user.id)
+    //   .then((me) => {
+    //     me.update({
+    //       name        : req.body.name,
+    //       introduction: req.body.introduction,
+    //       cover       : me.image,
+    //       avatar      : me.avatar,
+    //     }).then(() => {
+    //       req.flash('success_messages', '成功更新');
+    //       res.redirect('/');
+    //     })
+    //     .catch((error) => console.log('edit error', error));
+    //   });
+    // }
   },
 };
 module.exports = usersController;
