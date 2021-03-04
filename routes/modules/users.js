@@ -29,5 +29,5 @@ router.get('/user/self/like/', authenticated, usersController.getSelfLikes);
 
 router.put('/:id/self/edit', usersController.putUser);
 router.get('/user/self', authenticated, usersController.getUser);
-router.put('/user/self/edit', authenticated, upload.single('cover'), usersController.putUser);
+router.put('/user/self/edit', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.putUser);
 module.exports = router;

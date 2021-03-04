@@ -190,6 +190,9 @@ const usersController = {
     const {
       name, introduction,
     } = req.body;
+    const cover = req.files.cover[0];
+    const avatar = req.files.avatar[0];
+
     const me = await User.findByPk(req.user.id);
 
     if (name.length > 50) {
@@ -200,17 +203,18 @@ const usersController = {
       req.flash('error_messages', '自我介紹不能超過160字');
       return res.redirect('/');
     }
-    const { file } = req;
-    if (file) {
-      const data = file ? await fs.readFile(file.path) : null;
-      // const avatar = file ? await fs.readFile(`/upload/${file.originalname}`) : null;
 
-      await fs.writeFile(`upload/${file.originalname}`, data);
+    if (cover || avatar) {
+      const coverData = cover ? await fs.readFile(cover.path) : null;
+      const coverAvatar = avatar ? await fs.readFile(avatar.path) : null;
+      await fs.writeFile(`upload/${cover.originalname}`, coverData);
+      await fs.writeFile(`upload/${avatar.originalname}`, coverAvatar);
+
       me.update({
         name        : req.body.name,
         introduction: req.body.introduction,
-        cover       : `/upload/${file.originalname}`,
-      // avatar      : avatar
+        cover       : `/upload/${cover.originalname}`,
+        avatar      : `/upload/${avatar.originalname}`,
       }).then(() => {
         req.flash('success_messages', '成功更新');
         res.redirect('/');
