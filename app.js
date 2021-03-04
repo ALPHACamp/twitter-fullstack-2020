@@ -4,8 +4,6 @@ const app = express()
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
-
-const helpers = require('./_helpers')
 const routers = require('./routes')
 
 const port = 3000
