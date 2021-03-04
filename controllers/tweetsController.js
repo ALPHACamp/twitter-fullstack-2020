@@ -23,10 +23,16 @@ const tweetsController = {
           { model: User, as: 'Followers' }
         ]
       }).then(users => {
-        const usersObj = users.map(user => ({
+          users = users.map(user => ({
           ...user.dataValues,
           isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
         }))
+        let usersObj = []
+        users.forEach((user) => {
+          if ( user.id !== req.user.id && user.role !== 'admin'){
+            usersObj.push(user)
+          }
+        })
         return res.render('index', {
           tweets: tweetsObj,
           users: usersObj,
