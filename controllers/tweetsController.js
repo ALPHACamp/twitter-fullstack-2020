@@ -1,4 +1,6 @@
+const { Op } = require('sequelize');
 const db = require('../models');
+const sequelize = require('sequelize');
 
 const {
   Tweet, Reply, Like, User,
@@ -19,20 +21,20 @@ const tweetsController = {
         isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
       }));
       User.findAll({
-        include: [
-          { model: User, as: 'Followers' }
-        ]
+        where  : { 
+          role      : { [Op.ne]: 'admin' }, 
+          id        : { [Op.ne]: req.user.id} },
+          attributes: {
+            include: [
+              [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.FollowingId = User.id)'), 'FollowshipCount']]
+            },
+          order     : [[sequelize.literal('FollowshipCount'), 'DESC']],
+          limit     : 10,
       }).then(users => {
-          users = users.map(user => ({
+          let usersObj = users.map(user => ({
           ...user.dataValues,
           isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
         }))
-        let usersObj = []
-        users.forEach((user) => {
-          if ( user.id !== req.user.id && user.role !== 'admin'){
-            usersObj.push(user)
-          }
-        })
         return res.render('index', {
           tweets: tweetsObj,
           users: usersObj,
