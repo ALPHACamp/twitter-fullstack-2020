@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const db = require('../models');
+const { getUser } = require('../middleware/authenticationHelper');
 
 const {
   Tweet, User, Reply, Like, Followship,
@@ -127,6 +128,40 @@ const usersController = {
         res.redirect('/');
       })
       .catch((error) => console.log('edit error', error));
+    });
+  },
+
+  // 使用者個人推文清單
+  getSelfTweets: (req, res) => {
+    res.redirect('back');
+  },
+  // 使用者個人推文及回覆清單
+  getSelfTweetsReplies: (req, res) => {
+    res.redirect('back');
+  },
+  // 使用者喜歡的內容清單
+  getSelfLikes: (req, res) => {
+    Tweet.findAll({
+      order  : [['createdAt', 'DESC']],
+      include: [
+        User,
+        Reply,
+        Like,
+      ],
+    })
+    .then((tweets) => {
+      const tweetsObj = tweets.map((tweet) => ({
+        ...tweet.dataValues,
+        User      : tweet.User.dataValues,
+        ReplyCount: tweet.Replies.length,
+        LikeCount : tweet.Likes.length,
+        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+      }));
+      const likedTweets = tweetsObj.filter(
+        (tweet) => (tweet.LikeCount > 0 && tweet.isLiked === true),
+      );
+
+      return res.render('index', { user: getUser(req), likedTweets });
     });
   },
 };
