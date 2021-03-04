@@ -114,7 +114,7 @@ const userController = {
 
   getUserPage: async (req, res) => {
     const users = await getTopUser(req)
-    let tweets = await Tweet.findAll({
+    let userView = await User.findByPk(req.params.id, {
       attributes: {
         include: [
           [
@@ -131,33 +131,20 @@ const userController = {
           ]
         ]
       },
-      order: [['createdAt', 'DESC']],
-      where: { UserId: req.params.id },
-      include: {
-        model: User, include: [
-          { model: Like },
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' },
-          { model: Reply }
-        ]
-      }
+      include: [
+        { model: Tweet, include: [Reply, Like] }
+      ]
+    })
+    userView = userView.toJSON()
+    userView.Tweets.map(t => {
+      t.totalReplies = t.Replies.length
+      t.totalLikes = t.Likes.length
+      t.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
     })
 
-    tweets = tweets.map(r => ({
-      ...r.dataValues,
-      userName: r.User.name,
-      userId: r.User.id,
-      userAvatar: r.User.avatar,
-      userCover: r.User.cover,
-      userIntroduction: r.User.introduction,
-      userAccount: r.User.account,
-      totalLikes: r.User.Likes.length,
-      totalReplies: r.User.Replies.length,
-      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.id) : false
-    }))
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(Number(req.params.id))
 
-    return res.render('user', { tweets, users, isFollowed })
+    return res.render('user', { userView, users, isFollowed })
   },
 
 
@@ -236,7 +223,6 @@ const userController = {
       t.totalReplies = t.Replies.length
       t.totalLikes = t.Likes.length
     })
-    console.log(userView)
     return res.render('likes', { userView, users, isFollowed })
   },
 
@@ -245,7 +231,6 @@ const userController = {
     const user = await User.findByPk(req.params.id)
     const avatar = req.files.avatar
     const cover = req.files.cover
-    console.log(avatar)
     let avatarLink, coverLink = ''
     if (!avatar && !cover) {
       await user.update({
@@ -319,7 +304,6 @@ const userController = {
       user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     })
     const users = await getTopUser(req)
-    console.log(userView)
     return res.render('userFollower', { userView, users })
   },
 
