@@ -8,7 +8,30 @@ const Reply = db.Reply
 const Like = db.Like
 const sequelize = require('sequelize')
 const getTopUser = require('../_helpers').getTopUser
-const getSingleUserData = require('../_helpers').getSingleUserData
+
+//sequelize literal
+function tweetsCouont(id) {
+  return `(
+    SELECT COUNT(*)
+              FROM Tweets AS Tweet
+              WHERE Tweet.UserId = ${id}
+  )`
+}
+function followingCount(id) {
+  return `(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followerId = ${id}
+          )`
+}
+function followerCount(id) {
+  return `(
+              SELECT COUNT(*)
+              FROM Followships As Followship
+              WHERE Followship.followingId = ${id}
+            )`
+}
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -91,94 +114,123 @@ const userController = {
 
   getUserPage: async (req, res) => {
     const users = await getTopUser(req)
-    let tweets = await Tweet.findAll({
+    let userView = await User.findByPk(req.params.id, {
       attributes: {
         include: [
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Tweets AS Tweet
-              WHERE Tweet.UserId = ${req.params.id}
-            )`),
+            sequelize.literal(tweetsCouont(req.params.id)),
             'TweetsCount'
           ],
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships AS Followship
-              WHERE Followship.followerId = ${req.params.id}
-            )`),
+            sequelize.literal(followingCount(req.params.id)),
             'FollowingCount'
           ],
           [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM Followships As Followship
-              WHERE Followship.followingId = ${req.params.id}
-            )`),
+            sequelize.literal(followerCount(req.params.id)),
             'FollowerCount'
           ]
         ]
       },
-      order: [['createdAt', 'DESC']],
-      where: { UserId: req.params.id },
-      include: {
-        model: User, include: [
-          { model: Like },
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' },
-          { model: Reply }
-        ]
-      }
+      include: [
+        { model: Tweet, include: [Reply, Like] }
+      ]
+    })
+    userView = userView.toJSON()
+    userView.Tweets.map(t => {
+      t.totalReplies = t.Replies.length
+      t.totalLikes = t.Likes.length
+      t.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(t.id) : false
     })
 
-    tweets = tweets.map(r => ({
-      ...r.dataValues,
-      userName: r.User.name,
-      userId: r.User.id,
-      userAvatar: r.User.avatar,
-      userCover: r.User.cover,
-      userIntroduction: r.User.introduction,
-      userAccount: r.User.account,
-      totalLikes: r.User.Likes.length,
-      totalReplies: r.User.Replies.length,
-      isLiked: helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.id) : false
-    }))
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(Number(req.params.id))
 
-    return res.render('user', { tweets, users, isFollowed })
+    return res.render('user', { userView, users, isFollowed })
   },
 
 
   getUserTweetsRepliesPage: async (req, res) => {
     //user data to show top 10 user
     const users = await getTopUser(req)
-    const userView = await getSingleUserData(req.params.id)
+    let userView = await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(tweetsCouont(req.params.id)),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(followingCount(req.params.id)),
+            'FollowingCount'
+          ],
+          [
+            sequelize.literal(followerCount(req.params.id)),
+            'FollowerCount'
+          ]
+        ]
+      },
+      include: [
+        { model: Reply, include: [{ model: Tweet, include: [Reply, Like] }] }
+      ],
+      order: [
+        [Reply, 'createdAt', 'DESC']
+      ]
+    })
+    userView = userView.toJSON()
     userView.Replies.map(r => {
       r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
       r.Tweet.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.Tweet.id) : false
+      r.Tweet.totalReplies = r.Tweet.Replies.length
+      r.Tweet.totalLikes = r.Tweet.Likes.length
     })
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
-    const totalLikes = userView.Likes.length
-    console.log(userView.Replies)
-    return res.render('tweetsReplies', { users, userView, isFollowed, totalLikes })
+
+    return res.render('tweetsReplies', { users, userView, isFollowed })
   },
+
+
   getUserLikesPage: async (req, res) => {
-    const userView = await getSingleUserData(req.params.id)
+    let userView = await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(tweetsCouont(req.params.id)),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(followingCount(req.params.id)),
+            'FollowingCount'
+          ],
+          [
+            sequelize.literal(followerCount(req.params.id)),
+            'FollowerCount'
+          ]
+        ]
+      },
+      include: [
+        { model: Like, include: [{ model: Tweet, include: [User, Reply, Like] }] }
+      ],
+      order: [
+        [Like, 'createdAt', 'DESC'],
+      ]
+    })
+    userView = userView.toJSON()
     userView.tweets = userView.Likes.map(like => {
       return like.Tweet
     })
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
-    const totalLikes = userView.Likes.length
     const users = await getTopUser(req)
-    return res.render('likes', { userView, users, isFollowed, totalLikes })
+    userView.tweets.map(t => {
+      t.totalReplies = t.Replies.length
+      t.totalLikes = t.Likes.length
+    })
+    return res.render('likes', { userView, users, isFollowed })
   },
+
 
   editUserFromEditPage: async (req, res) => {
     const user = await User.findByPk(req.params.id)
     const avatar = req.files.avatar
     const cover = req.files.cover
-    console.log(avatar)
     let avatarLink, coverLink = ''
     if (!avatar && !cover) {
       await user.update({
@@ -207,15 +259,49 @@ const userController = {
 
   getUserFollowingPage: async (req, res) => {
     //userView為了partials左邊nav的user.id區隔開
-    const userView = await getSingleUserData(req.params.id)
+    let userView = await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(tweetsCouont(req.params.id)),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(followingCount(req.params.id)),
+            'FollowingCount'
+          ]
+        ]
+      },
+      include: [
+        { model: User, as: 'Followings' }
+      ]
+    })
+    userView = userView.toJSON()
     const users = await getTopUser(req)
     return res.render('userFollowing', { userView, users })
   },
   getUserFollowerPage: async (req, res) => {
     //userView為了partials左邊nav的user.id區隔開
-    let userView = await getSingleUserData(req.params.id)
+    let userView = await await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(tweetsCouont(req.params.id)),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(followerCount(req.params.id)),
+            'FollowerCount'
+          ]
+        ]
+      },
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    })
+    userView = userView.toJSON()
     userView.Followers.map(user => {
-      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
+      user.isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     })
     const users = await getTopUser(req)
     return res.render('userFollower', { userView, users })
