@@ -52,7 +52,7 @@
           </button>
           <h5 class="modal-title ml-3">編輯個人資料</h5>
         </div>
-        <form action="/user/self/edit?_method=PUT" method="POST">
+        <form action="/user/self/edit?_method=PUT" method="POST" enctype="multipart/form-data">
           <button type="submit" class="btn rounded-pill btn-warning save-btn" id="save-btn"
             style="float:right">儲存</button>
       </div>
@@ -65,7 +65,10 @@
         </div>
         <div class="modal-edit-icons d-flex flex-column align-items-center mb-10">
           <div class="d-flex flex-row justify-content-around col-8">
+            <label for="cover">
             <i class="fas fa-camera fa-lg"></i>
+            </label>
+           <input type="file" class="form-control-file" id="cover" name="cover">
             <i class="fas fa-times fa-lg"></i>
           </div>
           <div class="d-flex justify-content-start col-10">

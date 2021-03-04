@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const fs = require('fs');
 const db = require('../models');
 <<<<<<< HEAD
 const { getUser } = require('../middleware/authenticationHelper');
@@ -198,18 +199,37 @@ const usersController = {
       req.flash('error_messages', '自我介紹不能超過160字');
       return res.redirect('/');
     }
-
-    return User.findByPk(req.params.id)
-    .then((me) => {
-      me.update({
-        name        : req.body.name,
-        introduction: req.body.introduction,
-      }).then(() => {
-        req.flash('success_messages', '成功更新');
-        res.redirect('/');
-      })
-      .catch((error) => console.log('edit error', error));
-    });
+    const { file } = req;
+    if (file) {
+      fs.readFile(file.path, (err, data) => {
+        if (err) console.log('Error: ', err);
+        fs.writeFile(`upload/${file.originalname}`, data, () => User.findByPk(req.user.id)
+        .then((me) => {
+          me.update({
+            name        : req.body.name,
+            introduction: req.body.introduction,
+            cover       : file ? `/upload/${file.originalname}` : null,
+          }).then(() => {
+            req.flash('success_messages', '成功更新');
+            res.redirect('/');
+          })
+          .catch((error) => console.log('edit error', error));
+        }));
+      });
+    } else {
+      return User.findByPk(req.user.id)
+      .then((me) => {
+        me.update({
+          name        : req.body.name,
+          introduction: req.body.introduction,
+          cover       : me.image,
+        }).then(() => {
+          req.flash('success_messages', '成功更新');
+          res.redirect('/');
+        })
+        .catch((error) => console.log('edit error', error));
+      });
+    }
   },
 };
 module.exports = usersController;

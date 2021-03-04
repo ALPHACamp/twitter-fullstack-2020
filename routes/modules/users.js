@@ -1,6 +1,9 @@
 const express = require('express');
 
 const router = express.Router();
+const multer = require('multer');
+
+const upload = multer({ dest: 'temp/' });
 const passport = require('../../config/passport');
 
 const { authenticated, authenticatedNonAdmin } = require('../../middleware/authenticationHelper');
@@ -26,5 +29,5 @@ router.get('/user/self/like/', authenticated, usersController.getSelfLikes);
 
 router.put('/:id/self/edit', usersController.putUser);
 router.get('/user/self', authenticated, usersController.getUser);
-router.put('/user/self/edit', usersController.putUser);
+router.put('/user/self/edit', authenticated, upload.single('cover'), usersController.putUser);
 module.exports = router;
