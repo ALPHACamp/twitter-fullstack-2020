@@ -190,8 +190,8 @@ const usersController = {
     const {
       name, introduction,
     } = req.body;
-    const cover = req.files.cover[0];
-    const avatar = req.files.avatar[0];
+    const cover = req.files.cover ? req.files.cover[0] : null;
+    const avatar = req.files.avatar ? req.files.avatar[0] : null;
 
     const me = await User.findByPk(req.user.id);
 
