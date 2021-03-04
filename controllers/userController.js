@@ -153,17 +153,55 @@ const userController = {
   getUserTweetsRepliesPage: async (req, res) => {
     //user data to show top 10 user
     const users = await getTopUser(req)
-    const userView = await getSingleUserData(req.params.id)
+    let userView = await User.findByPk(req.params.id, {
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Tweets AS Tweet
+              WHERE Tweet.UserId = ${req.params.id}
+            )`),
+            'TweetsCount'
+          ],
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followerId = ${req.params.id}
+            )`),
+            'FollowingCount'
+          ],
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM Followships AS Followship
+              WHERE Followship.followingId = ${req.params.id}
+            )`),
+            'FollowerCount'
+          ]
+        ]
+      },
+      include: [
+        { model: Reply, include: [{ model: Tweet, include: [Reply, Like] }] }
+      ],
+      order: [
+        [Reply, 'createdAt', 'DESC']
+      ]
+    })
+    userView = userView.toJSON()
     userView.Replies.map(r => {
       r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
       r.Tweet.isLiked = helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(r.Tweet.id) : false
+      r.Tweet.totalReplies = r.Tweet.Replies.length
+      r.Tweet.totalLikes = r.Tweet.Likes.length
     })
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
-    const totalLikes = userView.Likes.length
-    const totalReplies = userView.Replies.length
-    console.log(userView)
-    return res.render('tweetsReplies', { users, userView, isFollowed, totalLikes, totalReplies })
+
+    return res.render('tweetsReplies', { users, userView, isFollowed })
   },
+
+
   getUserLikesPage: async (req, res) => {
     const userView = await getSingleUserData(req.params.id)
     userView.tweets = userView.Likes.map(like => {

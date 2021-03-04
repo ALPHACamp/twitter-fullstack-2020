@@ -94,7 +94,7 @@ const getSingleUserData = async (id) => {
       { model: User, as: 'Followings' },
       { model: User, as: 'Followers' },
       { model: Tweet },
-      { model: Reply, include: [Tweet] }
+      { model: Reply, include: [{ model: Tweet, include: [Reply] }] }
     ],
     order: [
       [Like, 'createdAt', 'DESC'],
