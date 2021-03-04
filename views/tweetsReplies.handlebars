@@ -13,6 +13,7 @@
   <img src="{{userView.cover}}" class="card-img-top" alt="...">
   <div class="card-body">
     <h5 class="card-title">{{userView.name}}</h5>
+    <span>{{userView.account}}</span>
     <p class="card-text">{{userView.introduction}}</p>
     <!-- Button trigger modal -->
     {{#ifCond userView.id user.id}}
@@ -51,39 +52,58 @@
     </li>
   </ul>
   {{#each userView.Replies}}
-  <div class="card mb-3" style="width: 540px;">
-    <div class="row g-0">
-      <div class="col-md-2">
-        <img src="{{../userView.avatar}}" alt="..." style="max-width:75px; max-height:75px;">
+  <div class="card" style="min-height: 136px;border-radius: 0; border: 1px solid #E6ECF0">
+    <div class="row no-gutters" style="">
+
+      <div class="col-md-1 ml-3" style="margin-top: 10px; margin-right: 10px">
+        <img src="{{../userView.avatar}}" alt="..." style="width: 50px;
+            height: 50px; border-radius: 50%">
+
       </div>
-      <div class="col-md-10">
-        <div class="card-body">
-          <a href="/tweets/{{this.Tweet.id}}/replies">
-            <p calss="card-text">{{this.Tweet.description}}</p>
-          </a>
-          <p class="card-text">{{this.comment}}</p>
+      <div class="col-md" style="margin-top: 10px;">
+        <a href="/tweets/{{this.Tweet.id}}/replies" style="text-decoration: none;color: black">
+          <div class="card-body p-0" style="width: 510px">
+            <div class="card-text">
+              <span style="color: #1C1C1C">{{../userView.name}}</span>
+              <span style="color: #657786;">{{../userView.account}} ‧ {{moment_fromNow this.createdAt}}</span>
+              <p>{{this.comment}}</p>
+            </div>
+
+          </div>
+        </a>
+        {{!-- ==================留言數，喜歡數，ICON============ --}}
+        <div class="row">
+          <button class="ml-2" type="submit" style="border: none; background: none;" data-toggle="modal"
+            data-target="#reply{{this.id}}">
+            <i class="far fa-comment"></i>
+            <span>{{this.Tweet.totalReplies}}</span>
+          </button>
+
+
           {{#if this.Tweet.isLiked}}
           <form action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
             <button type="submit" style="border: none; background: none;">
-              <i class="fas fa-heart"></i>
-              <span>{{../totalLikes}}</span>
+              <i class="fas fa-heart" style="color: red;"></i>
+              <span>{{this.Tweet.totalLikes}}</span>
             </button>
           </form>
           {{else}}
           <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
             <button type="submit" style="border: none; background: none;">
-              <i class="far fa-heart"></i>
-              <span>{{../totalLikes}}</span>
+              <i class="far fa-heart" style="color: red;"></i>
+              <span>{{this.Tweet.totalLikes}}</span>
             </button>
           </form>
           {{/if}}
-
         </div>
+        {{!-- ==================留言數，喜歡數，ICON============ --}}
       </div>
     </div>
+
   </div>
   {{/each}}
 </div>
+<!--icon-->
 
 <!--================= 跟隨 ================= -->
 {{> follower}}
