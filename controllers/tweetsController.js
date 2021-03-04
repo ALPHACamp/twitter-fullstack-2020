@@ -17,6 +17,7 @@ const tweetsController = {
         User      : tweet.dataValues.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
+        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
       }));
       return res.render('index', { tweets: tweetsObj });
     });
