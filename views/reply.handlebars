@@ -4,7 +4,11 @@
   {{> message}}
   <!--單一推文-->
   <div class="d-flex header" style="height: 55px;">
-    <div class="mt-2 ml-3">icon</div>
+    <div class="mt-2 ml-3">
+      <a href="javascript:history.back()" style="text-decoration: none; color: black">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+    </div>
     <div class="mt-2" style="margin-left: 43px;font-weight: bold; font-size: 18px;">推文</div>
   </div>
 
@@ -77,29 +81,38 @@
     </div>
   </div>
 
-  <!--回覆版塊-->
-  {{#each tweet.Replies}}
-  <div class="card mb-3" style="width: 540px;">
-    <div class="row g-0">
+  <div class="" style="max-height: 749px;overflow: auto">
+    <!--================= 回覆版塊 ================= -->
+    {{#each tweet.Replies}}
+    <div class="card" style="min-height: 136px;border-radius: 0; border: 1px solid #E6ECF0">
+      <div class="row no-gutters">
 
-      <div class="card-body d-flex">
-        <a href="/users/{{this.UserId}}" style="text-decoration: none;">
-          <img src="{{this.User.avatar}}" alt="..." syle="max-height:75px; max-width:75px;">
-        </a>
-        <div>
-          <h5 class="card-title">
-            {{this.User.name}}{{this.User.account}}----{{moment_fromNow this.User.createdAt}}
-          </h5>
-          <p class="card-text">{{this.comment}}</p>
+        <div class="col-md-1 ml-3" style="margin-top: 10px; margin-right: 10px">
+          <a href="/users/{{this.UserId}}" style="text-decoration: none;">
+            <img src="{{this.User.avatar}}" alt="..." style="width: 50px;
+            height: 50px; border-radius: 50%">
+          </a>
         </div>
-        </a>
+
+        <div class="col-md" style="margin-top: 10px;">
+          <div class="card-body p-0" style="width: 510px">
+            <div class="card-text" style="font-size: 15px; font-weight: 500;">
+              <span style="color: #1C1C1C; font-weight: bold;">{{this.User.name}}</span>
+              <span style="color: #657786;">{{this.User.account}} ‧ {{moment_fromNow this.User.createdAt}}</span>
+              <p class="" style="color: #657786; margin-top: 4px; margin-bottom: 5px">回覆
+                <span style="color: #FF6600;">{{../tweet.User.account}}</span>
+              </p>
+              <p class="m-0" style="font-weight: normal;">{{this.comment}}</p>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-
     </div>
+    {{/each}}
+    <!--================= 回覆版塊 ================= -->
   </div>
-  {{/each}}
-
-  {{> page}}
 
 </div>
 
