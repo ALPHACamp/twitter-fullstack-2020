@@ -90,7 +90,7 @@ const getSingleUserData = async (id) => {
       ]
     },
     include: [
-      { model: Like, include: [{ model: Tweet, include: [User] }] },
+      { model: Like, include: [{ model: Tweet, include: [User, Reply] }] },
       { model: User, as: 'Followings' },
       { model: User, as: 'Followers' },
       { model: Tweet },

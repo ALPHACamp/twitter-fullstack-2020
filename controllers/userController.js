@@ -172,8 +172,13 @@ const userController = {
     const isFollowed = helpers.getUser(req).Followings.map(d => d.id).includes(userView.id)
     const totalLikes = userView.Likes.length
     const users = await getTopUser(req)
+    userView.tweets.map(t => {
+      return t.totalReplies = t.Replies.length
+    })
+    console.log(userView.tweets)
     return res.render('likes', { userView, users, isFollowed, totalLikes })
   },
+
 
   editUserFromEditPage: async (req, res) => {
     const user = await User.findByPk(req.params.id)
