@@ -19,8 +19,8 @@ if (window.location.pathname !== '/login' && window.location.pathname !== '/regi
 }
 
 // Tweets Textarea Counter
-document.querySelectorAll('textarea[name=description]').forEach(() => {
-  this.addEventListener('input', (event) => {
+document.querySelectorAll('textarea[name=description]').forEach((textarea) => {
+  textarea.addEventListener('input', (event) => {
     const maxLength = 140;
     const currentLength = event.target.value.length;
     if (currentLength > maxLength) {
@@ -29,5 +29,22 @@ document.querySelectorAll('textarea[name=description]').forEach(() => {
       event.target.nextElementSibling.querySelector('.btn').removeAttribute('disabled');
     }
     event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
+  });
+});
+
+// Self Edit Name Counter
+document.querySelectorAll('textarea[name=name]').forEach((textarea) => {
+  textarea.addEventListener('input', (event) => {
+    const maxLength = 50;
+    const currentLength = event.target.value.length;
+    event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
+  });
+});
+
+document.querySelectorAll('textarea[name=introduction]').forEach((textarea) => {
+  textarea.addEventListener('input', (introEvent) => {
+    const maxLength = 160;
+    const currentLength = introEvent.target.value.length;
+    introEvent.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
   });
 });

@@ -29,7 +29,7 @@
               <div  class="d-flex align-items-start ">
                 <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
                 <form action="/" method="POST" class="w-100">
-                  <textarea class="w-100" name="description" rows="5" cols="90" maxLength="140" placeholder="有什麼新鮮事? (字數限制140字)"></textarea>
+                  <textarea class="w-100" name="description" rows="5" cols="90" placeholder="有什麼新鮮事? (字數限制140字)"></textarea>
                   <div class="textarea-util d-flex justify-content-between">
                     <div class="text-counter text-lightgrey">0/140</div>
                     <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">推文</button>
@@ -78,14 +78,14 @@
                     <label for="name">名稱</label>
                     <textarea class="w-1000 border-0" name="name" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
                       <div class="textarea-util d-flex justify-content-end">
-                        <div class="text-counter text-right">0/50</div>
+                        <div class="text-counter text-right">0 / 50</div>
                       </div>
                   </div>
                   <div class="d-flex flex-column mt-3">
                     <label for="introduction">自我介紹</label>
                     <textarea class="w-1000 border-0" name="introduction" rows="7" cols="50" placeholder="自我介紹">{{me.introduction}}</textarea>
                       <div class="textarea-util d-flex justify-content-end">
-                        <div class="text-counter text-right">0/160</div>
+                        <div class="text-counter text-right">0 / 160</div>
                       </div>
                   </div>
                 </form>
