@@ -1,6 +1,5 @@
 const db = require('../models')
-const User = db.User
-const Tweet = db.Tweet
+const { User, Tweet } = db
 
 const adminController = {
   getTweets: (req, res) => {

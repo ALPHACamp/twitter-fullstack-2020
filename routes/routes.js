@@ -1,15 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-
 const auth = require('../config/auth')
 const userController = require('../controllers/userController')
-
 const tweetController = require('../controllers/tweetController')
-
 const adminController = require('../controllers/adminController')
-
-
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
@@ -47,12 +42,15 @@ router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('tweets')
 router.post('/followships', auth.authenticatedUser, userController.follow)
 router.delete('/followships/:id', auth.authenticatedUser, userController.unfollow)
 
-// user edit 相關路由
+// user 相關路由
 router.get('/api/users/:id', auth.authenticatedUser, userController.editUser)
 router.put('/users/:id/edit', auth.authenticatedUser,
   upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putUserInfo)
 router.get('/users/:id/followers', auth.authenticatedUser, userController.getRecommendedFollowings, userController.getUserFollowers) // 被追蹤
 router.get('/users/:id/followings', auth.authenticatedUser, userController.getRecommendedFollowings, userController.getUserFollowings) // 追蹤人
+router.get('/users/:id/replies', auth.authenticatedUser, userController.getRecommendedFollowings, userController.getUserReplies)
+router.get('/users/:id/likes', auth.authenticatedUser, userController.getRecommendedFollowings, userController.getUserLikes)
+router.get('/users/:id/tweets', auth.authenticatedUser, userController.getRecommendedFollowings, userController.getUserTweets)
 
 // setting 相關路由
 router.get('/users/:id/setting', auth.authenticatedUser, userController.getSetting)
