@@ -31,6 +31,7 @@ router.post('/admin/signin', passport.authenticate('local', {
 router.get('/signout', userController.logout)
 router.get('/admin/tweets', auth.authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:tweetId', auth.authenticatedAdmin, adminController.deleteTweet)
+router.get('/admin/users', auth.authenticatedAdmin, adminController.getUsers)
 
 // 註冊
 router.get('/signup', userController.signUpPage)
