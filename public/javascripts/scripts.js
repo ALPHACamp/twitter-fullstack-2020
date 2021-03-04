@@ -37,14 +37,24 @@ document.querySelectorAll('textarea[name=name]').forEach((textarea) => {
   textarea.addEventListener('input', (event) => {
     const maxLength = 50;
     const currentLength = event.target.value.length;
+    if (currentLength > maxLength) {
+      document.querySelector('.save-btn').setAttribute('disabled', '');
+    } else {
+      document.querySelector('.save-btn').removeAttribute('disabled');
+    }
     event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
   });
 });
 
 document.querySelectorAll('textarea[name=introduction]').forEach((textarea) => {
-  textarea.addEventListener('input', (introEvent) => {
+  textarea.addEventListener('input', (event) => {
     const maxLength = 160;
-    const currentLength = introEvent.target.value.length;
-    introEvent.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
+    const currentLength = event.target.value.length;
+    if (currentLength > maxLength) {
+      document.querySelector('.save-btn').setAttribute('disabled', '');
+    } else {
+      document.querySelector('.save-btn').removeAttribute('disabled');
+    }
+    event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
   });
 });
