@@ -1,15 +1,23 @@
 <div class="card w-100 mt-3">
   <div class="card-header">
-    追蹤誰
+    跟隨誰
   </div>
   <ul class="list-group list-group-flush">
-    {{#each items}}
-      <li class="list-group-item">
-        {{this}}
-      </li>
-    {{/each}}
+    {{#each users}}
     <li class="list-group-item">
-      sample display only
+      <div class="d-flex align-items-start ">
+        <img class="img-fluid rounded-circle mr-3" src="{{this.avatar}}" alt="" style=" max-height: 70px;">
+        <div class="name pr-2 align-items-center">
+          <strong>{{this.name}}</strong>
+          <div class="info"><span class="username">@{{this.account}}</span></div>
+        </div>
+        <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">跟隨</button>
+      </div>
+
+    </li>
+    {{/each}}
+    <li class="list-group-item text-orange">
+      顯示更多
     </li>
   </ul>
 </div>

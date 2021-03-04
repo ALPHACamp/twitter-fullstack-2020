@@ -10,8 +10,7 @@ const tweetsController = {
     Tweet.findAll({
       order  : [['createdAt', 'DESC']],
       include: [User, Reply, Like],
-    })
-    .then((tweets) => {
+    }).then((tweets) => {
       const tweetsObj = tweets.map((tweet) => ({
         ...tweet.dataValues,
         User      : tweet.dataValues.User.dataValues,
@@ -19,7 +18,20 @@ const tweetsController = {
         LikeCount : tweet.Likes.length,
         isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
       }));
-      return res.render('index', { tweets: tweetsObj });
+      User.findAll({
+        include: [
+          { model: User, as: 'Followers' }
+        ]
+      }).then(users => {
+        const usersObj = users.map(user => ({
+          ...user.dataValues,
+          // isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        }))
+        return res.render('index', {
+          tweets: tweetsObj,
+          users: usersObj,
+        })
+      })
     });
   },
 
