@@ -5,21 +5,25 @@
   <ul class="list-group list-group-flush">
     {{#each users}}
     <li class="list-group-item">
-      <div class="d-flex align-items-start ">
-        <img class="img-fluid rounded-circle mr-3" src="{{this.avatar}}" alt="" style=" max-height: 70px;">
-        <div class="name pr-2 align-items-center">
+      <div class="d-flex justify-content-between">
+        <div class="d-flex align-item-start">
+         <img class="img-fluid rounded-circle mr-3 my-auto" src="{{this.avatar}}" alt="" style="max-height: 70px;">
+        <div class="name pr-2 align-items-center my-auto">
           <strong>{{this.name}}</strong>
           <div class="info"><span class="username">@{{this.account}}</span></div>
         </div>
+        </div>
+        <div class="my-auto">
         {{#if this.isFollowed}}
           <form action="/following/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">正在跟隨</button>
+            <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right;">正在跟隨</button>
           </form>
         {{else}}
           <form action="/following/{{this.id}}" method="POST">
-            <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">跟隨</button>
+            <button type="submit" class="btn btn-sm btn-white rounded-pill" style="float:right;">跟隨</button>
           </form>
         {{/if}}
+        </div>
       </div>
 
     </li>
