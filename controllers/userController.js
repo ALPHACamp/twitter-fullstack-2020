@@ -245,6 +245,14 @@ const userController = {
     const avatar = req.files.avatar
     const cover = req.files.cover
     let avatarLink, coverLink = ''
+    if (req.body.introduction.length > 140 || !req.body.introduction.trim()) {
+      req.flash('error_messages', '自我介紹不能超過140個字或是空白')
+      return res.redirect('back')
+    }
+    if (!req.body.name.trim()) {
+      req.flash('error_messages', '名字不能為空白')
+      return res.redirect('back')
+    }
     if (!avatar && !cover) {
       await user.update({
         avatar: user.avatar,
