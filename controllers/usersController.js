@@ -219,22 +219,17 @@ const usersController = {
         req.flash('success_messages', '成功更新');
         res.redirect('/');
       });
+    } else {
+      me.update({
+        name        : req.body.name,
+        introduction: req.body.introduction,
+        cover       : me.cover,
+        avatar      : me.avatar,
+      }).then(() => {
+        req.flash('success_messages', '成功更新');
+        res.redirect('/');
+      });
     }
-    // else {
-    //   return User.findByPk(req.user.id)
-    //   .then((me) => {
-    //     me.update({
-    //       name        : req.body.name,
-    //       introduction: req.body.introduction,
-    //       cover       : me.image,
-    //       avatar      : me.avatar,
-    //     }).then(() => {
-    //       req.flash('success_messages', '成功更新');
-    //       res.redirect('/');
-    //     })
-    //     .catch((error) => console.log('edit error', error));
-    //   });
-    // }
   },
 };
 module.exports = usersController;
