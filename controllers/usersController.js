@@ -185,13 +185,23 @@ const usersController = {
     const {
       name, introduction,
     } = req.body;
+
+    if (name.length > 50) {
+      req.flash('error_messages', '名稱不能超過50字');
+      return res.redirect('/');
+    }
+    if (introduction.length > 160) {
+      req.flash('error_messages', '自我介紹不能超過160字');
+      return res.redirect('/');
+    }
+
     return User.findByPk(req.params.id)
     .then((me) => {
       me.update({
         name        : req.body.name,
         introduction: req.body.introduction,
       }).then(() => {
-        req.flash('success_message', '成功更新');
+        req.flash('success_messages', '成功更新');
         res.redirect('/');
       })
       .catch((error) => console.log('edit error', error));
