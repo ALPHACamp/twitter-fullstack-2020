@@ -1,11 +1,22 @@
 const db = require('../models')
-const User = db.User
-const Tweet = db.Tweet
+const { User, Tweet } = db
+const helpers = require('../_helpers')
 
 const adminController = {
+  AdminSignInPage: (_req, res) => {
+    return res.render('adminSignin')
+  },
+  AdminSignIn: (req, res) => {
+    if (helpers.getUser(req).role === 'admin') {
+      req.flash('success_messages', 'Sign in successfully！')
+      res.redirect('/admin/tweets')
+    } else {
+      req.flash('error_messages', '使用者請從前台登入！')
+      res.redirect('/admin/signin')
+    }
+  },
   getTweets: (req, res) => {
     let offset = 0
-    const whereQuery = {}
     const pageLimit = 7
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit

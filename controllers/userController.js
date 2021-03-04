@@ -1,8 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User
-const Followship = db.Followship
-const Tweet = db.Tweet
+const { User, Followship, Tweet, Reply, Like } = db
 const helpers = require('../_helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -11,9 +9,6 @@ const userController = {
   signInPage: (_req, res) => {
     return res.render('signin')
   },
-  AdminSignInPage: (_req, res) => {
-    return res.render('adminSignin')
-  },
   signIn: (req, res) => {
     if (helpers.getUser(req).role !== 'admin') {
       req.flash('success_messages', '登入成功！')
@@ -21,15 +16,6 @@ const userController = {
     } else {
       req.flash('error_messages', '管理者請從後台登入！')
       res.redirect('/signin')
-    }
-  },
-  AdminSignIn: (req, res) => {
-    if (helpers.getUser(req).role === 'admin') {
-      req.flash('success_messages', 'Sign in successfully！')
-      res.redirect('/admin/tweets')
-    } else {
-      req.flash('error_messages', '使用者請從前台登入！')
-      res.redirect('/admin/signin')
     }
   },
   logout: (req, res) => {
@@ -274,6 +260,99 @@ const userController = {
       return res.render('user/following', {
         users: pageUser,
         followingList
+      })
+    })
+  },
+  getUserTweets: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Tweet,
+          include: [
+            Reply,
+            { model: User, as: 'LikedUsers' }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
+      order: [[Tweet, 'createdAt', 'DESC']]
+    }).then(user => {
+      const pageUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+
+      pageUser.Tweets.forEach(tweet => {
+        tweet.isLiked = tweet.LikedUsers.map(d => d.id).includes(currentUserId)
+      })
+      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(user.id)
+
+      return res.render('user/userPage', {
+        users: pageUser,
+        currentUserId: currentUserId
+      })
+    })
+  },
+  getUserLikes: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        {
+          model: Like,
+          include: [
+            {
+              model: Tweet,
+              include: [Reply, Like, User]
+            }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
+      order: [[Like, 'createdAt', 'DESC']]
+    }).then(user => {
+      const pageUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+
+      pageUser.Likes.forEach(tweet => {
+        tweet.isLiked = tweet.Tweet.Likes.map(d => d.UserId).includes(currentUserId)
+      })
+      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+
+      return res.render('user/like', {
+        users: pageUser,
+        currentUserId: currentUserId
+      })
+    })
+  },
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        {
+          model: Reply,
+          include: [
+            {
+              model: Tweet,
+              include: [Reply, Like, User]
+            }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
+      order: [[Reply, 'createdAt', 'DESC']]
+    }).then(user => {
+      const pageUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+
+      pageUser.Replies.forEach(tweet => {
+        tweet.isLiked = tweet.Tweet.Likes.map(d => d.UserId).includes(currentUserId)
+      })
+      pageUser.isFollowed = helpers.getUser(req).Followings.map(item => item.id).includes(pageUser.id)
+
+      return res.render('user/reply', {
+        users: pageUser,
+        currentUserId: currentUserId
       })
     })
   }

@@ -1,6 +1,6 @@
 const helpers = require('../_helpers')
 const db = require('../models')
-const Like = db.Like
+const { Like } = db
 
 const tweetController = {
   like: (req, res) => {
