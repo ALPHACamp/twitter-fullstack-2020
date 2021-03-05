@@ -37,6 +37,17 @@ body {
   border-color: #e65c00 !important;
 }
 
+.btn-outline-orange {
+  color: #e65c00!important;
+  background-color: #fff !important;
+  border-color: #e65c00 !important;
+}
+.btn-outline-orange:hover {
+  color: #fff !important;
+  background-color: #ff6600 !important;
+  border-color: #ff6600 !important;
+}
+
 .header-block {
   height: 50px;
   min-height: 50px;
@@ -245,4 +256,16 @@ body {
 }
 .modal-form {
   margin-top: 8rem!important;
+}
+
+i.fa-camera.fa-lg {
+  margin: 10px;
+  cursor: pointer;
+  font-size: 30px;
+}
+i.fa-camera.fa-lg:hover {
+  opacity: 0.6;
+}
+input#avatar, input#cover {
+  display: none;
 }

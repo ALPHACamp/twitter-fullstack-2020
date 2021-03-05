@@ -2,11 +2,8 @@ const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const fs = require('fs').promises;
 const db = require('../models');
-<<<<<<< HEAD
 const { getUser } = require('../middleware/authenticationHelper');
-=======
 const helpers = require('../_helpers');
->>>>>>> feat: add getUser and user.hbs page & move user setting modal to column_userSelf.hbs
 
 const {
   Tweet, User, Reply, Like, Followship,
@@ -169,6 +166,7 @@ const usersController = {
       return res.render('index', { user: getUser(req), likedTweets });
     });
   },
+  // 這段先暫用 .getUser 等 user/self/like 網頁整合為 user/self 後就可將這個路徑和 getuser() 刪除
   getUser: (req, res) => {
     User.findByPk(helpers.getUser(req).id)
     .then((user) => {
@@ -186,6 +184,7 @@ const usersController = {
       }
     });
   },
+
   putUser: async (req, res) => {
     const {
       name, introduction,

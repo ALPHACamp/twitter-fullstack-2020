@@ -17,6 +17,8 @@
       <div class="item-other d-flex justify-content-start">
         <span class="mr-3 text-dark">{{user.followingCount}} 位<span class="text-lightgrey">追蹤中</span></span>
         <span class="text-dark">{{user.followerCount}} 位<span class="text-lightgrey">跟隨者</span></span>
+        <button type="button" class="btn btn-outline btn-outline-orange rounded-pill ml-auto" data-toggle="modal"
+        data-target="#self-setting-modal">編輯個人資料</button>
       </div>
     </div>
   </div>
@@ -36,3 +38,68 @@
     </li>
   </ul>
 {{/if}}
+{{!-- Self Setting Modal--}}
+<div class="modal fade" id="self-setting-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header d-flex align-items-center" style="display: flex">
+        <div class="d-flex justify-content-around">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h5 class="modal-title ml-3">編輯個人資料</h5>
+        </div>
+        <form action="/user/self/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+          <button type="submit" class="btn btn-orange rounded-pill btn-warning save-btn" id="save-btn"
+            style="float:right">儲存</button>
+      </div>
+      <div class="modal-body m-0 p-0">
+        <div class="modal-edit-pictures">
+          <img src="{{me.cover}}" class="self-edit-modal bg-light m-0 w-100" loading="lazy">
+          <div class="d-flex justify-content-start">
+            <img class="self-edit-modal avatar bg-light" src="{{me.avatar}}" loading="lazy" alt="">
+          </div>
+        </div>
+        <div class="modal-edit-icons d-flex flex-column align-items-center mb-10">
+          {{!-- edit cover and avatar icons --}}
+          <div class="d-flex flex-row justify-content-around col-8">
+            <label for="cover">
+              <i class="fas fa-camera fa-lg"></i>
+            </label>
+            <input type="file" class="form-control-file" id="cover" name="cover">
+            <i class="fas fa-times fa-lg"></i>
+          </div>
+
+          <div class="d-flex justify-content-start col-10">
+            <label for="avatar">
+              <i class="fas fa-camera fa-lg"></i>
+            </label>
+            <input type="file" class="form-control-file" id="avatar" name="avatar">
+          </div>
+        </div>
+
+        <div class="modal-form d-flex flex-column align-items-center justify-content-center mt-5">
+          <div class="d-flex flex-column">
+            <label for="name">名稱</label>
+            <textarea class="w-1000 border-0" name="name" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
+            <div class="textarea-util d-flex justify-content-end">
+              <div class="text-counter text-right">0 / 50</div>
+            </div>
+          </div>
+          <div class="d-flex flex-column mt-3">
+            <label for="introduction">自我介紹</label>
+            <textarea class="w-1000 border-0" name="introduction" rows="7" cols="50"
+              placeholder="自我介紹">{{me.introduction}}</textarea>
+            <div class="textarea-util d-flex justify-content-end">
+              <div class="text-counter text-right">0 / 160</div>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
