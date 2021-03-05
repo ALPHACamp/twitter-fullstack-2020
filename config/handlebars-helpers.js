@@ -1,7 +1,10 @@
-const moment = require('moment')
+const moment = require('moment');
 
 module.exports = {
-  moment: function (a) {
-    return moment(a).fromNow()
-  }
-}
+  moment(a) {
+    return moment(a).fromNow();
+  },
+  isdefined(value) {
+    return value !== undefined;
+  },
+};

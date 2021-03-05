@@ -25,7 +25,7 @@
 </div>
 
 {{!-- tabs display --}}
-{{#if likedTweets}}
+{{#if (isdefined likedTweets)}}
   <ul class="nav nav-tabs border-0">
     <li class="nav-item w-25 text-center">
       <a class="nav-link" href="/user/self/">推文</a>

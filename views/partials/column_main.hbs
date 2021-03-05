@@ -22,7 +22,7 @@
       </form>
     </div>
   {{/if}}
-  {{#if likedTweets}}
+  {{#if (isdefined likedTweets)}}
     {{>column_main_user}}
   {{/if}}
 </div>
@@ -38,5 +38,8 @@
     {{#each likedTweets}}
       {{>listitem_tweet}}
     {{/each}}
+  {{/if}}
+  {{#if (isdefined likedTweets)}}
+    {{>listitem_noitem}}
   {{/if}}
 </div>
