@@ -1,0 +1,27 @@
+<div calss="flex-column" style="background: #F5F8FA;min-width: 350px;height: 517px;">
+  <h1>上線使用者</h1>
+  <div class="chat-users">
+
+  </div>
+</div>
+
+<div class="flex-column" style="min-width: 600px; border: 1px solid #E6ECF0">
+  <h1>公開聊天室</h1>
+  <div class="chat-messages">
+
+  </div>
+  <div class="mt-5">
+    <form id="chat-form">
+      <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
+      <button class="btn btn-primary">Send</button>
+    </form>
+  </div>
+</div>
+
+
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+</script>

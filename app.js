@@ -9,7 +9,11 @@ const routes = require('./routes/index')
 const methodOverride = require('method-override')
 const app = express()
 const port = process.env.PORT || 3000
-
+//----------------socket.io-----------------
+const http = require('http')
+const httpServer = require("http").createServer(app)
+const io = require("socket.io")(httpServer)
+//----------------socket.io-----------------
 
 app.engine('handlebars', handlebars({
   defaultLayout: 'main',
@@ -37,8 +41,21 @@ app.use((req, res, next) => {
 
 app.use(routes)
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+//----------------socket.io-----------------
 
+io.on('connection', function(socket){
+  //console.log(socket)
+  
+  console.log('a user connected', socket.id); 
+  
+  socket.on('disconnect', () => {      
+    console.log('gone')
+  })
+  
+});
 
+//----------------socket.io-----------------
+
+httpServer.listen(port, () => console.log(`httpServer is running on port ${port}!`))
 
 module.exports = app
