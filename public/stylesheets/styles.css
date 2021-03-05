@@ -115,12 +115,12 @@ body {
 }
 
 #column_main .user-block .avatar {
-  width: 130px;
-  height: auto;
-  max-height: 130px;
+  object-fit: cover;
   border-radius: 50%;
-  margin-top: -73px;
+  height: 130px;
+  width: 130px;
   border: 2px solid #fff;
+  margin-top: -73px;
 }
 
 #column_main .nav-tabs .nav-item.active {
