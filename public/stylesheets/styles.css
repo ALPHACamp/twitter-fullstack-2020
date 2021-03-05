@@ -123,6 +123,7 @@ body {
 #column_main .user-block .cover-image-wrap {
   overflow: hidden;
   max-height: 200px;
+  height: 200px;
 }
 
 #column_main .user-block .avatar {
@@ -171,6 +172,11 @@ body {
     -moz-transition: all .1s;
     -o-transition: all .1s;
     transition: all .1s;
+}
+
+#column_main #self-setting-modal .modal-content {
+  border-radius: 20px;
+  border: 1px solid #fff;
 }
 
 #mainblock-list .list-item:not(:last-child) {
@@ -264,9 +270,6 @@ body {
 }
 .modal-header .close {
   color:#ff6600
-}
-.modal-form {
-  margin-top: 8rem!important;
 }
 
 i.fa-camera.fa-lg {
