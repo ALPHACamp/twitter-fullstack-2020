@@ -37,6 +37,16 @@ body {
   border-color: #e65c00 !important;
 }
 
+.btn-white {
+  border-color: #ff9800;
+  color:#ff9800;
+}
+
+.btn-white:hover {
+  border-color: #ff9800;
+  color:#ff9800;
+}
+
 .header-block {
   height: 50px;
   min-height: 50px;

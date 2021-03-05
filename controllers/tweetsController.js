@@ -1,4 +1,6 @@
+const { Op } = require('sequelize');
 const db = require('../models');
+const sequelize = require('sequelize');
 
 const {
   Tweet, Reply, Like, User,
@@ -10,8 +12,7 @@ const tweetsController = {
     Tweet.findAll({
       order  : [['createdAt', 'DESC']],
       include: [User, Reply, Like],
-    })
-    .then((tweets) => {
+    }).then((tweets) => {
       const tweetsObj = tweets.map((tweet) => ({
         ...tweet.dataValues,
         User      : tweet.dataValues.User.dataValues,
@@ -19,7 +20,26 @@ const tweetsController = {
         LikeCount : tweet.Likes.length,
         isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
       }));
-      return res.render('index', { tweets: tweetsObj });
+      User.findAll({
+        where  : { 
+          role      : { [Op.ne]: 'admin' }, 
+          id        : { [Op.ne]: req.user.id} },
+          attributes: {
+            include: [
+              [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.FollowingId = User.id)'), 'FollowshipCount']]
+            },
+          order     : [[sequelize.literal('FollowshipCount'), 'DESC']],
+          limit     : 10,
+      }).then(users => {
+          let usersObj = users.map(user => ({
+          ...user.dataValues,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
+        }))
+        return res.render('index', {
+          tweets: tweetsObj,
+          users: usersObj,
+        })
+      })
     });
   },
 
