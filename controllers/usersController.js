@@ -159,8 +159,58 @@ const usersController = {
     });
   },
   // 使用者個人推文及回覆清單
-  getSelfTweetsReplies: (req, res) => {
-    res.redirect('back');
+  getSelfTweetsReplies: async (req, res) => {
+    // Gathered list of tweets where user tweeted and/or replied
+    const [selfTweets, selfReplies] = await Promise.all([
+      Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        where: {
+          UserId: req.user.id,
+        },
+        include: [
+          User,
+          Reply,
+          Like,
+        ],
+      })
+      .then((tweets) => {
+        const tweetsObj = tweets.map((tweet) => ({
+          ...tweet.dataValues,
+          User      : tweet.User.dataValues,
+          ReplyCount: tweet.Replies.length,
+          LikeCount : tweet.Likes.length,
+          isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+        }));
+        return tweetsObj;
+      }),
+      Tweet.findAll({
+        order  : [['createdAt', 'DESC']],
+        include: [
+          User,
+          {
+            model: Reply,
+            where: {
+              UserId: req.user.id,
+            },
+          },
+          Like,
+        ],
+      })
+      .then((tweets) => {
+        const tweetsObj = tweets.map((tweet) => ({
+          ...tweet.dataValues,
+          User      : tweet.User.dataValues,
+          ReplyCount: tweet.Replies.length,
+          LikeCount : tweet.Likes.length,
+          isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+        }));
+
+        return tweetsObj;
+      }),
+    ]);
+    // Todo: combine together and rank based on interaction datetime, then return data
+    req.flash('error_messages', 'page is still under construction!');
+    return res.redirect('back');
   },
   // 使用者喜歡的內容清單
   getSelfLikes: (req, res) => {
