@@ -1,5 +1,5 @@
 <div class="row mt-3">
-  <div class="col-md-3 pl-0">
+  <div class="col-md-3 d-flex justify-content-center">
 
     {{> adminLeftColumn}}
 
@@ -13,13 +13,15 @@
       <div class="row row-cols-4 row-cols-md-4">
         {{#each users}}
         <div class="col mb-4">
-          <div class="card" style="width: 16rem; border-radius:15px; height: 25rem;">
+          <div class="card"
+            style="width: 14rem; border-radius:15px; height: 23rem; background-color: rgb(243, 243, 243);">
             {{#if this.cover}}
-            <div style="width: 16rem; position: relative; z-index: 1;">
-              <img src="{{this.cover}}" class="card-img-cover" alt="cover" style="width: 100%;">
+            <div style="width: 14rem; position: relative; z-index: 1;">
+              <img src="{{this.cover}}" class="card-img-cover" alt="cover"
+                style="width: 100%; border-radius: 20px 20px 0 0;">
             </div>
             {{else}}
-            <div style="width: 16rem; position: relative; z-index: 1;">
+            <div style="width: 14rem; position: relative; z-index: 1; border-radius: 20px 20px 0 0;">
               <img
                 src="https://www.kingleader.com.tw/images/joomgallery/thumbnails/gallery_2/_11/u968_st9_20200911_1886238692.jpg"
                 class="card-img-cover" alt="cover" style="width: 100%;">
@@ -28,7 +30,7 @@
             {{#if this.avatar}}
             <div style="width: 7rem; height: 7rem; position: relative; z-index: 2;">
               <img src="{{this.avatar}}" class="card-img-avatar" alt="avatar"
-                style="width: 100%; height: 100%;     border-radius: 50%; border: 5px solid white; position: relative; bottom: 80px; left: 70px;">
+                style="width: 100%; height: 100%;     border-radius: 50%; border: 5px solid white; position: relative; bottom: 80px; left: 56px;">
             </div>
             {{else}}
             <div style="width: 7rem; height: 7rem; position: relative; z-index: 2;">
@@ -38,8 +40,7 @@
                 style="width: 100%; height: 100%;     border-radius: 50%; border: 5px solid white; position: relative; bottom: 80px; left: 70px;">
             </div>
             {{/if}}
-            <div class="card-body pt-5"
-              style="position: relative; bottom: 110px; background-color: rgb(243, 243, 243); position: relative; z-index: 1;">
+            <div class="card-body pt-5" style="position: relative; bottom: 110px; z-index: 1;">
               <h5 class="user-name" style="text-align: center;"><strong>{{this.name}}</strong></h5>
               <h6 class="user-account" style="text-align: center;">{{this.account}}</h6>
               <div class="d-flex justify-content-center">
