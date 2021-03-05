@@ -135,7 +135,28 @@ const usersController = {
 
   // 使用者個人推文清單
   getSelfTweets: (req, res) => {
-    res.redirect('back');
+    Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      where: {
+        UserId: req.user.id,
+      },
+      include: [
+        User,
+        Reply,
+        Like,
+      ],
+    })
+    .then((tweets) => {
+      const tweetsObj = tweets.map((tweet) => ({
+        ...tweet.dataValues,
+        User      : tweet.User.dataValues,
+        ReplyCount: tweet.Replies.length,
+        LikeCount : tweet.Likes.length,
+        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+      }));
+
+      return res.render('index', { user: getUser(req), selfTweets: tweetsObj });
+    });
   },
   // 使用者個人推文及回覆清單
   getSelfTweetsReplies: (req, res) => {
@@ -164,24 +185,6 @@ const usersController = {
       );
 
       return res.render('index', { user: getUser(req), likedTweets });
-    });
-  },
-  // 這段先暫用 .getUser 等 user/self/like 網頁整合為 user/self 後就可將這個路徑和 getuser() 刪除
-  getUser: (req, res) => {
-    User.findByPk(helpers.getUser(req).id)
-    .then((user) => {
-      if (!user) {
-        req.flash('error_messages', '此頁面不存在');
-        res.redirect('back');
-      }
-      if (user.id !== req.user.id) {
-        req.flash('error_messages', '無法設定他人帳戶');
-        res.redirect('back');
-      } else {
-        res.render('user', {
-          user: user.dataValues,
-        });
-      }
     });
   },
 

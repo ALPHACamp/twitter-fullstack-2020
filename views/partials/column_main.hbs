@@ -10,7 +10,7 @@
 
 <div id="mainblock-main" class="w-100">
   {{!-- TODO: 按照UX設計去抓的話，這邊是主要內容，像是new tweet block還有tweet info block --}}
-  {{#if tweets}}
+  {{#if (isdefined tweets)}}
     <div id="add-tweet-block" class="d-flex align-items-start p-3">
       <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
       <form action="/" method="POST" class="w-100">
@@ -21,25 +21,47 @@
         </div>
       </form>
     </div>
-  {{/if}}
-  {{#if (isdefined likedTweets)}}
-    {{>column_main_user}}
+  {{else}}
+    {{#if (isdefined selfTweets)}}
+      {{>column_main_user}}
+    {{/if}}
+    {{#if (isdefined likedTweets)}}
+      {{>column_main_user}}
+    {{/if}}
   {{/if}}
 </div>
 
 <div id="mainblock-list" class="overflow-auto w-100">
-  {{!-- TODO: 把reply items還有tweet items包裝成一樣的命名，例如 image, name, username, content, replyCount, likeCount --}}
-  {{#if tweets}}
-    {{#each tweets}}
-      {{>listitem_tweet}}
-    {{/each}}
+  {{!-- Main Index Page --}}
+  {{#if (isdefined tweets)}}
+    {{#if tweets}}
+      {{#each tweets}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
   {{/if}}
-  {{#if likedTweets}}
-    {{#each likedTweets}}
-      {{>listitem_tweet}}
-    {{/each}}
+
+  {{!-- User Self Tweets page --}}
+  {{#if (isdefined selfTweets)}}
+    {{#if selfTweets}}
+      {{#each selfTweets}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
   {{/if}}
+
+  {{!-- User Self Liked Tweets page --}}
   {{#if (isdefined likedTweets)}}
-    {{>listitem_noitem}}
+    {{#if likedTweets}}
+      {{#each likedTweets}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
   {{/if}}
 </div>

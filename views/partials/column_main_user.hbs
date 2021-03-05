@@ -25,6 +25,19 @@
 </div>
 
 {{!-- tabs display --}}
+{{#if (isdefined selfTweets)}}
+  <ul class="nav nav-tabs border-0">
+    <li class="nav-item w-25 text-center active">
+      <a class="nav-link text-orange" href="/user/self/">推文</a>
+    </li>
+    <li class="nav-item w-25 text-center">
+      <a class="nav-link" href="/user/self/tweetsReplies">推文與回覆</a>
+    </li>
+    <li class="nav-item w-25 text-center">
+      <a class="nav-link" href="/user/self/like">喜歡的內容</a>
+    </li>
+  </ul>
+{{/if}}
 {{#if (isdefined likedTweets)}}
   <ul class="nav nav-tabs border-0">
     <li class="nav-item w-25 text-center">
