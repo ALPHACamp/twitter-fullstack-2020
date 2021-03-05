@@ -29,6 +29,7 @@ app.use(session({
   saveUninitialized: true,
 }));
 app.use(flash());
+app.use('/upload', express.static(`${__dirname}/upload`));
 
 app.use(passport.initialize());
 app.use(passport.session());

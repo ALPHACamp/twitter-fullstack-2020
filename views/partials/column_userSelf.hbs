@@ -1,3 +1,4 @@
+{{!-- //之後與 column_main_user 整合 就可以把這頁刪掉 --}}
 <div class="user-block">
   <div class="mb-3">
     <div class="cover-image-wrap">
@@ -18,26 +19,12 @@
         <span class="mr-3 text-dark">{{user.followingCount}} 位<span class="text-lightgrey">追蹤中</span></span>
         <span class="text-dark">{{user.followerCount}} 位<span class="text-lightgrey">跟隨者</span></span>
         <button type="button" class="btn btn-outline btn-outline-orange rounded-pill ml-auto" data-toggle="modal"
-        data-target="#self-setting-modal">編輯個人資料</button>
+          data-target="#self-setting-modal">編輯個人資料</button>
       </div>
     </div>
   </div>
 </div>
 
-{{!-- tabs display --}}
-{{#if likedTweets}}
-  <ul class="nav nav-tabs border-0">
-    <li class="nav-item w-25 text-center">
-      <a class="nav-link" href="/user/self/">推文</a>
-    </li>
-    <li class="nav-item w-25 text-center">
-      <a class="nav-link" href="/user/self/tweetsReplies">推文與回覆</a>
-    </li>
-    <li class="nav-item w-25 text-center active">
-      <a class="nav-link text-orange" href="/user/self/like">喜歡的內容</a>
-    </li>
-  </ul>
-{{/if}}
 {{!-- Self Setting Modal--}}
 <div class="modal fade" id="self-setting-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
@@ -52,8 +39,8 @@
           <h5 class="modal-title ml-3">編輯個人資料</h5>
         </div>
         <form action="/user/self/edit?_method=PUT" method="POST" enctype="multipart/form-data">
-          <button type="submit" class="btn btn-orange rounded-pill btn-warning save-btn" id="save-btn"
-            style="float:right">儲存</button>
+            <button type="submit" class="btn btn-orange rounded-pill btn-warning save-btn" id="save-btn"
+              style="float:right">儲存</button>
       </div>
       <div class="modal-body m-0 p-0">
         <div class="modal-edit-pictures">
@@ -66,15 +53,15 @@
           {{!-- edit cover and avatar icons --}}
           <div class="d-flex flex-row justify-content-around col-8">
             <label for="cover">
-              <i class="fas fa-camera fa-lg"></i>
+            <i class="fas fa-camera fa-lg"></i>
             </label>
-            <input type="file" class="form-control-file" id="cover" name="cover">
+           <input type="file" class="form-control-file" id="cover" name="cover">
             <i class="fas fa-times fa-lg"></i>
           </div>
 
           <div class="d-flex justify-content-start col-10">
             <label for="avatar">
-              <i class="fas fa-camera fa-lg"></i>
+            <i class="fas fa-camera fa-lg"></i>
             </label>
             <input type="file" class="form-control-file" id="avatar" name="avatar">
           </div>

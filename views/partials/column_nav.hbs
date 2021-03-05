@@ -7,7 +7,7 @@
       <a class="nav-link" href="/"> <i class="fas fa-home pr-3"></i>首頁 </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="/user/self/like"> <i class="far fa-user pr-3"></i>個人資料 </a>
+      <a class="nav-link" href="/user/self"> <i class="far fa-user pr-3"></i>個人資料 </a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="/{{me.id}}/setting"> <i class="fas fa-cog pr-3"></i>設定 </a>
@@ -20,8 +20,8 @@
       <div class="modal fade" id="tweet-create-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <div class="modal-header p-0">
-              <button type="button" class="btn btn-lg btn-link text-orange pl-3" data-dismiss="modal" aria-label="Close">
+            <div class="modal-header p-0 d-flex align-items-center">
+              <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -29,7 +29,7 @@
               <div  class="d-flex align-items-start ">
                 <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
                 <form action="/" method="POST" class="w-100">
-                  <textarea class="w-100" name="description" rows="5" cols="90" maxLength="140" placeholder="有什麼新鮮事? (字數限制140字)"></textarea>
+                  <textarea class="w-100" name="description" rows="5" cols="90" placeholder="有什麼新鮮事? (字數限制140字)"></textarea>
                   <div class="textarea-util d-flex justify-content-between">
                     <div class="text-counter text-lightgrey">0/140</div>
                     <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">推文</button>
@@ -40,7 +40,6 @@
           </div>
         </div>
       </div>
-      <!-- Tweet Creation Modal -->
     </li>
   </ul>
   <a class="nav-link text-dark mt-auto pl-0" href="/logout"> <i class="fas fa-sign-out-alt pr-3"></i>登出 </a>

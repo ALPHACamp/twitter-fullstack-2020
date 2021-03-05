@@ -1,7 +1,9 @@
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const fs = require('fs').promises;
 const db = require('../models');
 const { getUser } = require('../middleware/authenticationHelper');
+const helpers = require('../_helpers');
 
 const {
   Tweet, User, Reply, Like, Followship,
@@ -163,6 +165,79 @@ const usersController = {
 
       return res.render('index', { user: getUser(req), likedTweets });
     });
+  },
+  // 這段先暫用 .getUser 等 user/self/like 網頁整合為 user/self 後就可將這個路徑和 getuser() 刪除
+  getUser: (req, res) => {
+    User.findByPk(helpers.getUser(req).id)
+    .then((user) => {
+      if (!user) {
+        req.flash('error_messages', '此頁面不存在');
+        res.redirect('back');
+      }
+      if (user.id !== req.user.id) {
+        req.flash('error_messages', '無法設定他人帳戶');
+        res.redirect('back');
+      } else {
+        res.render('user', {
+          user: user.dataValues,
+        });
+      }
+    });
+  },
+
+  putUser: async (req, res) => {
+    const {
+      name, introduction,
+    } = req.body;
+    const cover = req.files.cover ? req.files.cover[0] : null;
+    const avatar = req.files.avatar ? req.files.avatar[0] : null;
+
+    const me = await User.findByPk(req.user.id);
+
+    if (name.length > 50) {
+      req.flash('error_messages', '名稱不能超過50字');
+      return res.redirect('/');
+    }
+    if (introduction.length > 160) {
+      req.flash('error_messages', '自我介紹不能超過160字');
+      return res.redirect('/');
+    }
+
+    if (cover || avatar) {
+      let updateData = {};
+      if (cover) {
+        const coverData = await fs.readFile(cover.path);
+        await fs.writeFile(`upload/${cover.originalname}`, coverData);
+        updateData = {
+          name        : req.body.name,
+          introduction: req.body.introduction,
+          cover       : `/upload/${cover.originalname}`,
+        };
+      } else if (avatar) {
+        const avatarData = await fs.readFile(avatar.path);
+        await fs.writeFile(`upload/${avatar.originalname}`, avatarData);
+        updateData = {
+          name        : req.body.name,
+          introduction: req.body.introduction,
+          avatar      : `/upload/${avatar.originalname}`,
+        };
+      }
+
+      me.update(updateData).then(() => {
+        req.flash('success_messages', '成功更新');
+        res.redirect('/');
+      });
+    } else {
+      me.update({
+        name        : req.body.name,
+        introduction: req.body.introduction,
+        cover       : me.cover,
+        avatar      : me.avatar,
+      }).then(() => {
+        req.flash('success_messages', '成功更新');
+        res.redirect('/');
+      });
+    }
   },
 };
 module.exports = usersController;

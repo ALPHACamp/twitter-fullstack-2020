@@ -37,6 +37,18 @@ body {
   border-color: #e65c00 !important;
 }
 
+.btn-outline-orange {
+  color: #e65c00!important;
+  background-color: #fff !important;
+  border-color: #e65c00 !important;
+}
+
+.btn-outline-orange:hover {
+  color: #fff !important;
+  background-color: #ff6600 !important;
+  border-color: #ff6600 !important;
+}
+
 .btn-white {
   border-color: #ff9800;
   color:#ff9800;
@@ -114,12 +126,12 @@ body {
 }
 
 #column_main .user-block .avatar {
-  width: 130px;
-  height: auto;
-  max-height: 130px;
+  object-fit: cover;
   border-radius: 50%;
-  margin-top: -73px;
+  height: 130px;
+  width: 130px;
   border: 2px solid #fff;
+  margin-top: -73px;
 }
 
 #column_main .nav-tabs .nav-item.active {
@@ -228,4 +240,43 @@ body {
   border-radius: 50%;
   margin-top: -82px;
   border: 2px solid #fff;
+}
+
+/* Self Editing Modal*/
+.self-edit-modal.card-img-top {
+  max-height: 150px;
+  height: 150px;
+  width: 100%;
+  border: 0.5px solid #fff;
+}
+.self-edit-modal.avatar {
+  margin-left: 1em;
+  width: 100px;
+  height: auto;
+  max-height: 100px;
+  border-radius: 50%;
+  margin-top: -50px;
+  border: 2px solid #fff;
+}
+.modal-edit-icons {
+  margin-top: -120px;
+  color:white;
+}
+.modal-header .close {
+  color:#ff6600
+}
+.modal-form {
+  margin-top: 8rem!important;
+}
+
+i.fa-camera.fa-lg {
+  margin: 10px;
+  cursor: pointer;
+  font-size: 30px;
+}
+i.fa-camera.fa-lg:hover {
+  opacity: 0.6;
+}
+input#avatar, input#cover {
+  display: none;
 }
