@@ -204,17 +204,26 @@ const usersController = {
     }
 
     if (cover || avatar) {
-      const coverData = cover ? await fs.readFile(cover.path) : null;
-      const avatarData = avatar ? await fs.readFile(avatar.path) : null;
-      await fs.writeFile(`upload/${cover.originalname}`, coverData);
-      await fs.writeFile(`upload/${avatar.originalname}`, avatarData);
+      let updateData = {};
+      if (cover) {
+        const coverData = await fs.readFile(cover.path);
+        await fs.writeFile(`upload/${cover.originalname}`, coverData);
+        updateData = {
+          name        : req.body.name,
+          introduction: req.body.introduction,
+          cover       : `/upload/${cover.originalname}`,
+        };
+      } else if (avatar) {
+        const avatarData = await fs.readFile(avatar.path);
+        await fs.writeFile(`upload/${avatar.originalname}`, avatarData);
+        updateData = {
+          name        : req.body.name,
+          introduction: req.body.introduction,
+          avatar      : `/upload/${avatar.originalname}`,
+        };
+      }
 
-      me.update({
-        name        : req.body.name,
-        introduction: req.body.introduction,
-        cover       : `/upload/${cover.originalname}`,
-        avatar      : `/upload/${avatar.originalname}`,
-      }).then(() => {
+      me.update(updateData).then(() => {
         req.flash('success_messages', '成功更新');
         res.redirect('/');
       });
