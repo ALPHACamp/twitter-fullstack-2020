@@ -20,7 +20,7 @@ app.engine('handlebars', handlebars({
   helpers: require('./config/handlebars-helpers')
 }))
 app.set('view engine', 'handlebars')
-
+app.use(express.static('public'))
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
@@ -44,12 +44,21 @@ app.use(routes)
 //----------------socket.io-----------------
 
 io.on('connection', function(socket){
-  //console.log(socket)
+  //console.log(socket)    
+
+  socket.emit('message', `Welcome to chatroom, ${socket.id}`)
+
+  // 顯示加入聊天室訊息給全部的人
+  socket.broadcast.emit('message', `A user ${socket.id} is join us`)
   
-  console.log('a user connected', socket.id); 
-  
-  socket.on('disconnect', () => {      
+  socket.on('disconnect', () => {   
+    io.emit('message', `A user ${socket.id} is gone`)   
     console.log('gone')
+  })
+
+  // 監聽聊天訊息
+  socket.on('chatMessage', msg => {
+    io.emit('message', msg)
   })
   
 });
