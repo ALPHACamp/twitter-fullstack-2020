@@ -42,10 +42,21 @@ body {
   background-color: #fff !important;
   border-color: #e65c00 !important;
 }
+
 .btn-outline-orange:hover {
   color: #fff !important;
   background-color: #ff6600 !important;
   border-color: #ff6600 !important;
+}
+
+.btn-white {
+  border-color: #ff9800;
+  color:#ff9800;
+}
+
+.btn-white:hover {
+  border-color: #ff9800;
+  color:#ff9800;
 }
 
 .header-block {
