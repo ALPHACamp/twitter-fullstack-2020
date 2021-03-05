@@ -205,9 +205,9 @@ const usersController = {
 
     if (cover || avatar) {
       const coverData = cover ? await fs.readFile(cover.path) : null;
-      const coverAvatar = avatar ? await fs.readFile(avatar.path) : null;
+      const avatarData = avatar ? await fs.readFile(avatar.path) : null;
       await fs.writeFile(`upload/${cover.originalname}`, coverData);
-      await fs.writeFile(`upload/${avatar.originalname}`, coverAvatar);
+      await fs.writeFile(`upload/${avatar.originalname}`, avatarData);
 
       me.update({
         name        : req.body.name,
