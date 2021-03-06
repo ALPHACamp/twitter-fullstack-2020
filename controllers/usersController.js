@@ -1,9 +1,11 @@
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const fs = require('fs').promises;
+const imgur = require('imgur');
 const db = require('../models');
 const { getUser } = require('../middleware/authenticationHelper');
-const helpers = require('../_helpers');
+
+const { IMGUR_CLIENT_ID } = process.env;
 
 const {
   Tweet, User, Reply, Like, Followship,
@@ -237,7 +239,7 @@ const usersController = {
       return res.render('index', { user: getUser(req), likedTweets });
     });
   },
-
+  // 使用者編輯個人資料
   putUser: async (req, res) => {
     const {
       name, introduction,
@@ -259,13 +261,38 @@ const usersController = {
     if (cover || avatar) {
       let updateData = {};
       if (cover) {
-        const coverData = await fs.readFile(cover.path);
-        await fs.writeFile(`upload/${cover.originalname}`, coverData);
+        console.log('cover.path', cover.path);
+        console.log('cover', cover);
+        console.log(IMGUR_CLIENT_ID);
+
+        imgur.setClientId(IMGUR_CLIENT_ID);
+        // imgur.setAPIUrl('https://api.imgur.com/3/');
+
+        let img;
+
+        try {
+          img = await imgur.uploadFile(cover.path);
+        } catch (error) {
+          console.log('imgur error', error);
+        }
+
+        console.log('img', img);
+
         updateData = {
           name        : req.body.name,
           introduction: req.body.introduction,
-          cover       : `/upload/${cover.originalname}`,
+          cover       : img.data.link,
         };
+        // const img = await imgur.uploadFile(cover.path);
+
+        // const coverData = await fs.readFile(cover.path);
+        // await fs.writeFile(`upload/${cover.originalname}`, coverData);
+
+        // updateData = {
+        //   name        : req.body.name,
+        //   introduction: req.body.introduction,
+        //   cover       : `/upload/${cover.originalname}`,
+        // };
       } else if (avatar) {
         const avatarData = await fs.readFile(avatar.path);
         await fs.writeFile(`upload/${avatar.originalname}`, avatarData);
@@ -276,10 +303,10 @@ const usersController = {
         };
       }
 
-      me.update(updateData).then(() => {
-        req.flash('success_messages', '成功更新');
-        res.redirect('/');
-      });
+      // me.update(updateData).then(() => {
+      //   req.flash('success_messages', '成功更新');
+      //   res.redirect('/');
+      // });
     } else {
       me.update({
         name        : req.body.name,
