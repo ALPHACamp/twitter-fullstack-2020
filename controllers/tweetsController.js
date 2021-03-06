@@ -64,8 +64,8 @@ const tweetsController = {
 
   getReplyPage: (req, res) => {
     Tweet.findByPk(req.params.tweetId,{
-      include: 
-      [ User, Like, { model: Reply, include: [User] } ]
+      include: [User, Like, {model: Reply, include: [User]}],
+      order  : [[Reply, 'createdAt', 'DESC']],
     })
     .then(tweet => {
       const tweetObj = {
@@ -74,7 +74,11 @@ const tweetsController = {
         LikeCount : tweet.Likes.length,
         isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
       }
-      return res.render( 'index', { tweet: tweetObj } )
+      return res.render( 'index', { 
+        tweet  : tweetObj, 
+        notMain: true,
+        title  :'推文',
+       })
     })
   },
 };
