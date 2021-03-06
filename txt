@@ -1,1 +1,0 @@
-curl --location --request POST 'https://api.imgur.com/3/image' --header 'Authorization: Client-ID 418bdcef6bcb614' --form 'image=R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
