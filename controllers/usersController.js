@@ -184,34 +184,40 @@ const usersController = {
         }));
         return tweetsObj;
       }),
-      Tweet.findAll({
-        order  : [['createdAt', 'DESC']],
+
+      Reply.findAll({
+        order: [['createdAt', 'DESC']],
+        where: {
+          UserId: req.user.id,
+        },
         include: [
-          User,
           {
-            model: Reply,
-            where: {
-              UserId: req.user.id,
-            },
+            model  : Tweet,
+            include: [User, Reply, Like],
           },
-          Like,
         ],
       })
-      .then((tweets) => {
-        const tweetsObj = tweets.map((tweet) => ({
-          ...tweet.dataValues,
-          User      : tweet.User.dataValues,
-          ReplyCount: tweet.Replies.length,
-          LikeCount : tweet.Likes.length,
-          isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+      .then((replies) => {
+        const tweetsObj = replies.map((reply) => ({
+          id         : reply.dataValues.Tweet.id,
+          UserId     : reply.dataValues.Tweet.UserId,
+          description: reply.dataValues.Tweet.description,
+          createdAt  : reply.dataValues.createdAt,
+          updatedAt  : reply.dataValues.updatedAt,
+          User       : reply.dataValues.Tweet.User.dataValues,
+          ReplyCount : reply.dataValues.Tweet.Replies.length,
+          LikeCount  : reply.dataValues.Tweet.Likes.length,
+          isLiked    : req.user.LikedTweets.map((d) => d.id).includes(reply.dataValues.Tweet.id),
         }));
 
         return tweetsObj;
       }),
     ]);
-    // Todo: combine together and rank based on interaction datetime, then return data
-    req.flash('error_messages', 'page is still under construction!');
-    return res.redirect('back');
+
+    const tweets = selfTweets.concat(selfReplies).sort((a, b) => b.createdAt - a.createdAt);
+    const uniqueTweets = [...new Map(tweets.map((item) => [item.id, item])).values()];
+
+    return res.render('index', { user: getUser(req), selfTweetsReplies: uniqueTweets });
   },
   // 使用者喜歡的內容清單
   getSelfLikes: (req, res) => {

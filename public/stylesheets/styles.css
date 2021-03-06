@@ -79,7 +79,8 @@ body {
 .navbar .nav-item .nav-link, .nav-tabs .nav-item .nav-link {
   color: #212529;
 }
-.navbar .nav-item.active .nav-link, .nav-tabs .nav-item.active .nav-link {
+.navbar .nav-item.active .nav-link,
+#column_main .nav-tabs .nav-item.active .nav-link {
   color: #ff6600;
 }
 
@@ -122,22 +123,27 @@ body {
 
 #column_main .user-block .cover-image-wrap {
   overflow: hidden;
-  max-height: 200px;
-  height: 200px;
+  max-height: 210px;
+  height: 210px;
 }
 
 #column_main .user-block .avatar {
   object-fit: cover;
   border-radius: 50%;
-  height: 130px;
-  width: 130px;
-  border: 2px solid #fff;
-  margin-top: -73px;
+  height: 140px;
+  width: 140px;
+  border: 4px solid #fff;
+  margin-top: -78px;
+  margin-bottom: 0.5rem;
 }
 
 #column_main .nav-tabs .nav-item.active {
   margin-top: -2px;
   padding-top: 0px;
+}
+
+#column_main .nav-tabs .nav-item {
+  width: 15%;
 }
 
 #column_main .nav-tabs .nav-item .nav-link {
@@ -177,6 +183,10 @@ body {
 #column_main #self-setting-modal .modal-content {
   border-radius: 20px;
   border: 1px solid #fff;
+}
+
+#column_main .user-block span, .user-block div, .user-block p {
+  font-size: 15px;
 }
 
 #mainblock-list .list-item:not(:last-child) {

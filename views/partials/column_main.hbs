@@ -25,6 +25,9 @@
     {{#if (isdefined selfTweets)}}
       {{>column_main_user}}
     {{/if}}
+    {{#if (isdefined selfTweetsReplies)}}
+      {{>column_main_user}}
+    {{/if}}
     {{#if (isdefined likedTweets)}}
       {{>column_main_user}}
     {{/if}}
@@ -36,6 +39,17 @@
   {{#if (isdefined tweets)}}
     {{#if tweets}}
       {{#each tweets}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User Self Tweets and Replies page --}}
+  {{#if (isdefined selfTweetsReplies)}}
+    {{#if selfTweetsReplies}}
+      {{#each selfTweetsReplies}}
         {{>listitem_tweet}}
       {{/each}}
     {{else}}
