@@ -63,9 +63,10 @@ const tweetsController = {
   },
 
   getReplyPage: (req, res) => {
-    Tweet.findByPk(
-      req.params.tweetId,
-       {include: [User, Reply, Like]} )
+    Tweet.findByPk(req.params.tweetId,{
+      include: 
+      [ User, Like, { model: Reply, include: [User] } ]
+    })
     .then(tweet => {
       const tweetObj = {
         ...tweet.dataValues,

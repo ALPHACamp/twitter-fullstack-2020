@@ -1,24 +1,24 @@
 
 <div class="list-item d-flex align-items-start p-3" style="min-height: 120px;">
-   <div class="align-items-start p-3">
-     <div class="d-flex align-item-start">
-       <img class="img-fluid rounded-circle mr-3" src="{{tweet.User.avatar}}" alt="" style="max-height: 70px;">
-       <div class="name pr-2 align-items-center my-auto">
-         <strong>{{tweet.User.name}}</strong>
-         <div class="info"><span class="username">@{{tweet.User.account}}</span></div>
+  <div class="align-items-start p-3">
+    <div class="d-flex align-item-start">
+      <img class="img-fluid rounded-circle mr-3" src="{{tweet.User.avatar}}" alt="" style="max-height: 70px;">
+      <div class="name pr-2 align-items-center my-auto">
+        <strong>{{tweet.User.name}}</strong>
+        <div class="info"><span class="username">@{{tweet.User.account}}</span></div>
       </div>
-     </div> 
-     <div class="item-desc pt-2 pb-3 w-70" style="word-wrap:break-word; font-size:1.3em; font-weight:bold;">
+    </div> 
+    <div class="item-desc pt-2 pb-3 w-70" style="word-wrap:break-word; font-size:1.3em; font-weight:bold;">
       {{tweet.description}}
-     </div>
-     <span class="posttime">{{tweet.createdAt}}</span>
-   
-   <div class="d-flex flex-row pt-2">
-     <div class="mr-4"><strong>{{tweet.ReplyCount}}</strong>回覆</div>
-     <div><strong>{{tweet.LikeCount}}</strong>喜歡</div>
-   </div>
+    </div>
+    <span class="posttime">{{tweet.createdAt}}</span>
+  
+    <div class="d-flex flex-row pt-2">
+      <div class="mr-4"><strong>{{tweet.ReplyCount}}</strong>回覆</div>
+      <div><strong>{{tweet.LikeCount}}</strong>喜歡</div>
+    </div>
 
-   <div class="item-other d-flex flex-row pt-2">
+    <div class="item-other d-flex flex-row pt-2">
       <span class="pr-3 mr-5"><i class="far fa-comment pr-2"></i>{{this.ReplyCount}}</span>
       {{#if tweet.isLiked }}
         <form action="/likes/{{tweet.id}}?_method=DELETE" method="POST" class="ml-3 pl-3">
@@ -30,8 +30,33 @@
         </form>
       {{/if}}
     </div>
-    </div>
-    </div>
+    
+    <div class="reply-list">
+      {{#each tweet.Replies}}
+        <div class="list-item d-flex align-items-start pr-3 py-3" style="min-height: 120px;">
+          <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="" style="max-height: 70px;">
+          <div>
+            <div class="item-header d-flex d-row d-flex align-items-center">
+              <div class="name pr-2">
+                <strong>{{this.User.name}}</strong>
+              </div>
+              <div class="info">
+                <span class="username">@{{this.User.account}}</span>
+                &#183;
+                <span class="posttime">{{moment this.createdAt}}</span>
+              </div>
+            </div>
+            <div class="pt-2">回覆@{{../tweet.User.account}}</div>
+            <div class="item-desc pt-2 pb-3">
+              {{this.comment}}
+            </div>
+          </div>
+        </div>
+      {{/each}}
+   </div>
+  </div>
+
+</div>
    
 
  
