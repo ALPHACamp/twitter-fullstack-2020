@@ -66,19 +66,19 @@ const tweetsController = {
   getReplyPage: (req, res) => {
     Tweet.findByPk(req.params.tweetId, {
       include: [User, Like, { model: Reply, include: [User] }],
-      order  : [[Reply, 'createdAt', 'DESC']],
+      order  : [[Reply, 'createdAt', 'ASC']],
     })
     .then((tweet) => {
-      const time = tweet.createdAt
-      const noon = new Date('Y-m-d 12:00:00')
-      const ampm = (time.getTime()<noon.getTime())?'上午':'下午'
-      const tweetTime = ampm + ' '+ time.toLocaleString('zh-TW', { hour: 'numeric', minute: 'numeric', hour12: true, }).slice(0,4) +  ' ・ ' + time.getFullYear() + '年' + (time.getMonth()+1)+'月' + (time.getDate())+'日'
+      const time = tweet.createdAt;
+      const noon = new Date('Y-m-d 12:00:00');
+      const ampm = (time.getTime() < noon.getTime()) ? '上午' : '下午';
+      const tweetTime = `${ampm} ${time.toLocaleString('zh-TW', { hour: 'numeric', minute: 'numeric', hour12: true }).slice(0, 4)} ・ ${time.getFullYear()}年${time.getMonth() + 1}月${time.getDate()}日`;
       const tweetObj = {
         ...tweet.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
         isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
-        createdAt : tweetTime
+        createdAt : tweetTime,
       };
       return res.render('index', {
         tweet  : tweetObj,
