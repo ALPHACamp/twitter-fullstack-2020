@@ -1,7 +1,7 @@
 <div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3" style="white-space: pre-wrap;">
   {{!-- TODO: 如果不是主頁就需要顯示那個頁面的標題 --}}
   {{#if notMain}}
-  <i class="fas fa-arrow-left pr-2"></i>
+  <a class="nav-link" href="javascript:history.back()"><i class="fas fa-arrow-left pr-2"></i></a>
   {{title}}
   {{else}}
   首頁

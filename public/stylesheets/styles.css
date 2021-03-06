@@ -180,6 +180,15 @@ body {
     transition: all .1s;
 }
 
+#column_main .header-block .nav-link .fa-arrow-left {
+  color: rgba(0, 0, 0, .525);
+}
+
+#column_main .header-block .nav-link .fa-arrow-left:hover {
+  color: #ff6600;
+  transition: all .1s;
+}
+
 #column_main #self-setting-modal .modal-content {
   border-radius: 20px;
   border: 1px solid #fff;
