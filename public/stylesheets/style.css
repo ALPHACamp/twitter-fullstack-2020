@@ -416,3 +416,8 @@
   padding-left: 15px;
   text-align: left;
 }
+
+.user-list {
+  height: 225px;
+  overflow: hidden;
+}
