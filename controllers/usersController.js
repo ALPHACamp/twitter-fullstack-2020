@@ -1,9 +1,10 @@
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
-const fs = require('fs').promises;
+
+const helpers = require('../_helpers');
+
 const db = require('../models');
 const { getUser } = require('../middleware/authenticationHelper');
-const helpers = require('../_helpers');
 
 const {
   Tweet, User, Reply, Like, Followship,
@@ -237,15 +238,13 @@ const usersController = {
       return res.render('index', { user: getUser(req), likedTweets });
     });
   },
-
+  // 使用者編輯個人資料
   putUser: async (req, res) => {
     const {
       name, introduction,
     } = req.body;
     const cover = req.files.cover ? req.files.cover[0] : null;
     const avatar = req.files.avatar ? req.files.avatar[0] : null;
-
-    const me = await User.findByPk(req.user.id);
 
     if (name.length > 50) {
       req.flash('error_messages', '名稱不能超過50字');
@@ -257,38 +256,39 @@ const usersController = {
     }
 
     if (cover || avatar) {
-      let updateData = {};
-      if (cover) {
-        const coverData = await fs.readFile(cover.path);
-        await fs.writeFile(`upload/${cover.originalname}`, coverData);
-        updateData = {
-          name        : req.body.name,
-          introduction: req.body.introduction,
-          cover       : `/upload/${cover.originalname}`,
-        };
-      } else if (avatar) {
-        const avatarData = await fs.readFile(avatar.path);
-        await fs.writeFile(`upload/${avatar.originalname}`, avatarData);
-        updateData = {
-          name        : req.body.name,
-          introduction: req.body.introduction,
-          avatar      : `/upload/${avatar.originalname}`,
-        };
-      }
-
-      me.update(updateData).then(() => {
-        req.flash('success_messages', '成功更新');
-        res.redirect('/');
-      });
-    } else {
-      me.update({
+      const updateData = {
         name        : req.body.name,
         introduction: req.body.introduction,
-        cover       : me.cover,
-        avatar      : me.avatar,
-      }).then(() => {
-        req.flash('success_messages', '成功更新');
-        res.redirect('/');
+      };
+
+      if (cover) {
+        const image = await helpers.uploadFile(cover);
+        updateData.cover = image.link;
+      }
+
+      if (avatar) {
+        const image = await helpers.uploadFile(avatar);
+        updateData.avatar = image.link;
+      }
+
+      User.findByPk(req.user.id).then((me) => {
+        me.update(updateData)
+        .then(() => {
+          req.flash('success_messages', '成功更新');
+          return res.redirect('back');
+        });
+      });
+    } else {
+      User.findByPk(req.user.id).then((me) => {
+        me.update({
+          name        : req.body.name,
+          introduction: req.body.introduction,
+          cover       : me.cover,
+          avatar      : me.avatar,
+        }).then(() => {
+          req.flash('success_messages', '成功更新');
+          res.redirect('/');
+        });
       });
     }
   },
