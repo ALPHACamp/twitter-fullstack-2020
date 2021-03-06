@@ -35,11 +35,6 @@ const usersController = {
   },
   adminUsers: (req, res) => {
     User.findAll({
-      where: {
-        role: {
-          [Op.not]: 'admin',
-        },
-      },
       include: [
         Tweet,
         Like,
@@ -57,7 +52,7 @@ const usersController = {
       }))
       .sort((a, b) => b.tweetCount - a.tweetCount);
 
-      res.render('admin', { users: usersObj });
+      return res.render('admin', { users: usersObj });
     });
   },
   deleteTweet: (req, res) => {
