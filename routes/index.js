@@ -36,6 +36,7 @@ router.use('/', users);
 // Main functions
 router.use('/following/', authenticationHelper.authenticatedNonAdmin, followships)
 router.use('/likes/', authenticationHelper.authenticatedNonAdmin, likes);
+router.use('/reply_list/', authenticationHelper.authenticatedNonAdmin, tweets);
 router.use('/', authenticationHelper.authenticatedNonAdmin, tweets);
 
 
