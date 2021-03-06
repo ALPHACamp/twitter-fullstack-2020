@@ -19,9 +19,9 @@ router.post('/signin', passport.authenticate('local', {
 router.get('/logout', userController.logout)
 
 // User Tweets
-router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('tweets'))
-router.post('/tweets/:id/like', auth.authenticatedUser, tweetController.like)
-router.post('/tweets/:id/unlike', auth.authenticatedUser, tweetController.unLike)
+router.get('/tweets', auth.authenticatedUser, userController.getRecommendedFollowings, (req, res) => res.render('tweets'))
+router.post('/tweets/:id/like', auth.authenticatedUser, userController.getRecommendedFollowings, tweetController.like)
+router.post('/tweets/:id/unlike', auth.authenticatedUser, userController.getRecommendedFollowings, tweetController.unLike)
 
 // Admin
 router.get('/admin/signin', adminController.AdminSignInPage)
@@ -36,8 +36,6 @@ router.get('/admin/users', auth.authenticatedAdmin, adminController.getUsers)
 // 註冊
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
-
-router.get('/tweets', auth.authenticatedUser, (req, res) => res.render('tweets'))
 
 // following
 router.post('/followships', auth.authenticatedUser, userController.follow)
