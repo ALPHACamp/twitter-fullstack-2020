@@ -156,7 +156,12 @@ const usersController = {
         isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
       }));
 
-      return res.render('index', { user: getUser(req), selfTweets: tweetsObj });
+      return res.render('index', {
+        notMain   : true,
+        title     : `${req.user.name}\n${tweets.length} 推文`,
+        user      : getUser(req),
+        selfTweets: tweetsObj,
+      });
     });
   },
   // 使用者個人推文及回覆清單
