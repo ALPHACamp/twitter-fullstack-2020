@@ -136,10 +136,11 @@ const usersController = {
 
   // 使用者個人推文清單
   getSelfTweets: (req, res) => {
+    const user = helpers.getUser(req);
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       where: {
-        UserId: req.user.id,
+        UserId: user.id,
       },
       include: [
         User,
@@ -153,13 +154,13 @@ const usersController = {
         User      : tweet.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+        isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
 
       return res.render('index', {
         notMain   : true,
-        title     : `${req.user.name}\n${tweets.length} 推文`,
-        user      : getUser(req),
+        title     : `${user.name}\n${tweets.length} 推文`,
+        user,
         selfTweets: tweetsObj,
       });
     });
@@ -240,7 +241,7 @@ const usersController = {
         User      : tweet.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+        isLiked   : (helpers.getUser(req).LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
       const likedTweets = tweetsObj.filter(
         (tweet) => (tweet.LikeCount > 0 && tweet.isLiked === true),
