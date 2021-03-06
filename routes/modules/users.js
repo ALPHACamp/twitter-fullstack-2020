@@ -17,8 +17,8 @@ router.get('/signin', usersController.loginPage);
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedNonAdmin, usersController.login);
 router.get('/logout', usersController.logout);
 
-router.get('/:id/setting', authenticated, usersController.getAccount);
-router.put('/:id/setting', authenticated, usersController.putAccount);
+router.get('/users/:id/edit', authenticated, usersController.getAccount);
+router.put('/users/:id/edit', authenticated, usersController.putAccount);
 
 // 使用者個人推文清單
 router.get('/users/:id/tweets', authenticated, usersController.getSelfTweets);
