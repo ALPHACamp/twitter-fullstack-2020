@@ -1,11 +1,15 @@
 const { Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
-const fs = require('fs').promises;
+
 const imgur = require('imgur');
+
+imgur.setClientId(process.env.IMGUR_CLIENT_ID);
+imgur.setAPIUrl('https://api.imgur.com/3/');
+
+const fs = require('fs').promises;
+
 const db = require('../models');
 const { getUser } = require('../middleware/authenticationHelper');
-
-const { IMGUR_CLIENT_ID } = process.env;
 
 const {
   Tweet, User, Reply, Like, Followship,
@@ -261,28 +265,24 @@ const usersController = {
     if (cover || avatar) {
       let updateData = {};
       if (cover) {
-        console.log('cover.path', cover.path);
-        console.log('cover', cover);
-        console.log(IMGUR_CLIENT_ID);
+        imgur.uploadFile(cover.path)
+        .then((img) => {
+          updateData = {
+            name        : req.body.name,
+            introduction: req.body.introduction,
+            cover       : img.link,
+          };
 
-        imgur.setClientId(IMGUR_CLIENT_ID);
-        // imgur.setAPIUrl('https://api.imgur.com/3/');
+          me.update(updateData)
+          .then(() => {
+            req.flash('success_messages', '成功更新');
+            return res.redirect('back');
+          });
+        })
+        .catch((err) => {
+          console.error('imgur upload failed', err.message);
+        });
 
-        let img;
-
-        try {
-          img = await imgur.uploadFile(cover.path);
-        } catch (error) {
-          console.log('imgur error', error);
-        }
-
-        console.log('img', img);
-
-        updateData = {
-          name        : req.body.name,
-          introduction: req.body.introduction,
-          cover       : img.data.link,
-        };
         // const img = await imgur.uploadFile(cover.path);
 
         // const coverData = await fs.readFile(cover.path);
@@ -302,11 +302,6 @@ const usersController = {
           avatar      : `/upload/${avatar.originalname}`,
         };
       }
-
-      // me.update(updateData).then(() => {
-      //   req.flash('success_messages', '成功更新');
-      //   res.redirect('/');
-      // });
     } else {
       me.update({
         name        : req.body.name,
