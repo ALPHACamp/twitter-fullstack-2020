@@ -1,0 +1,37 @@
+
+<div class="list-item d-flex align-items-start p-3" style="min-height: 120px;">
+   <div class="align-items-start p-3">
+     <div class="d-flex align-item-start">
+       <img class="img-fluid rounded-circle mr-3" src="{{tweet.User.avatar}}" alt="" style="max-height: 70px;">
+       <div class="name pr-2 align-items-center my-auto">
+         <strong>{{tweet.User.name}}</strong>
+         <div class="info"><span class="username">@{{tweet.User.account}}</span></div>
+      </div>
+     </div> 
+     <div class="item-desc pt-2 pb-3 w-70" style="word-wrap:break-word; font-size:1.3em; font-weight:bold;">
+      {{tweet.description}}
+     </div>
+     <span class="posttime">{{tweet.createdAt}}</span>
+   
+   <div class="d-flex flex-row pt-2">
+     <div class="mr-4"><strong>{{tweet.ReplyCount}}</strong>回覆</div>
+     <div><strong>{{tweet.LikeCount}}</strong>喜歡</div>
+   </div>
+
+   <div class="item-other d-flex flex-row pt-2">
+      <span class="pr-3 mr-5"><i class="far fa-comment pr-2"></i>{{this.ReplyCount}}</span>
+      {{#if tweet.isLiked }}
+        <form action="/likes/{{tweet.id}}?_method=DELETE" method="POST" class="ml-3 pl-3">
+          <button class="btn btn-link text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i></button>
+        </form>
+      {{else}}
+        <form action="/likes/{{tweet.id}}" method="POST" class="ml-3 pl-3">
+          <button class="btn btn-link text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i></button>
+        </form>
+      {{/if}}
+    </div>
+    </div>
+    </div>
+   
+
+ 

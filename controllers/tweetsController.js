@@ -61,5 +61,20 @@ const tweetsController = {
       res.redirect('/');
     });
   },
+
+  getReplyPage: (req, res) => {
+    Tweet.findByPk(
+      req.params.tweetId,
+       {include: [User, Reply, Like]} )
+    .then(tweet => {
+      const tweetObj = {
+        ...tweet.dataValues,
+        ReplyCount: tweet.Replies.length,
+        LikeCount : tweet.Likes.length,
+        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+      }
+      return res.render( 'index', { tweet: tweetObj } )
+    })
+  },
 };
 module.exports = tweetsController;
