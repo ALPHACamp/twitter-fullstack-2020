@@ -21,11 +21,11 @@ router.get('/:id/setting', authenticated, usersController.getAccount);
 router.put('/:id/setting', authenticated, usersController.putAccount);
 
 // 使用者個人推文清單
-router.get('/user/self/', authenticated, usersController.getSelfTweets);
+router.get('/users/:id/tweets', authenticated, usersController.getSelfTweets);
 // 使用者個人推文及回覆清單
 router.get('/user/self/tweetsReplies/', authenticated, usersController.getSelfTweetsReplies);
 // 使用者喜歡的內容清單
-router.get('/user/self/like/', authenticated, usersController.getSelfLikes);
+router.get('/users/:id/likes', authenticated, usersController.getSelfLikes);
 
 router.put('/user/self/edit', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.putUser);
 
