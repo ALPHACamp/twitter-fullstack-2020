@@ -11,18 +11,23 @@ module.exports = {
   },
   authenticatedNonAdmin: (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (module.exports.getUser(req, res, next).role !== 'admin') { return next(); }
+      if (module.exports.getUser(req, res, next).role !== 'admin') {
+        return next();
+      }
       req.flash('error_messages', 'Please login via administrator portal！');
-      return res.redirect('/admin');
+      return res.redirect('/admin/tweets');
     }
     req.flash('error_messages', 'Login Failed, please try again.');
     return res.redirect('/signin');
   },
   authenticatedAdmin: (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (module.exports.getUser(req, res, next).role === 'admin') { return next(); }
+      if (module.exports.getUser(req, res, next).role === 'admin') {
+        return next();
+      }
+      return res.redirect('/tweets');
     }
     req.flash('error_messages', 'Please login first！');
-    return res.redirect('/admin');
+    return res.redirect('/admin/signin');
   },
 };

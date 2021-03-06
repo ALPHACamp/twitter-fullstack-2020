@@ -1,4 +1,4 @@
-<form class="form-regist m-3" action="{{#if adminLogin}}/admin{{else}}/signin{{/if}}" method="POST" style="width: 100%;">
+<form class="form-regist m-3" action="{{#if adminLogin}}/admin/signin{{else}}/signin{{/if}}" method="POST" style="width: 100%;">
   <div>
     <img class="logo img-fluid mx-auto d-block"
       src="/images/Icon.svg">
@@ -21,7 +21,7 @@
       {{else}}
         <p class="mr-1"><a href="/signup">註冊Alphitter</a></p>
         <p class="mr-1">·</p>
-        <p><a href="/admin">後台登入</a></p>
+        <p><a href="/admin/signin">後台登入</a></p>
       {{/if}}
       
     </div>

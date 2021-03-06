@@ -14,21 +14,22 @@ const authenticationHelper = require('../middleware/authenticationHelper');
 const adminController = require('../controllers/adminController');
 
 // Admin Portal
-router.get('/admin', adminController.adminLoginPage);
+router.get('/admin/', adminController.adminLoginPage);
+router.get('/admin/signin', adminController.adminLoginPage);
 router.post(
-  '/admin',
-  passport.authenticate('local', { failureRedirect: '/admin' }),
+  '/admin/signin',
+  passport.authenticate('local', { failureRedirect: '/admin/signin' }),
   (req, res, next) => {
     if (req.user.toJSON().role === 'admin') {
-      res.redirect('/admin_main');
+      return res.redirect('/admin/tweets');
     }
-    req.flash('error_messages', 'No access allowed.');
-    return res.redirect('/login');
+
+    return res.redirect('/');
   },
 );
-router.get('/admin_main', authenticationHelper.authenticatedAdmin, adminController.adminMain);
-router.get('/admin_users', authenticationHelper.authenticatedAdmin, adminController.adminUsers);
-router.delete('/admin_tweetDelete/:id', authenticationHelper.authenticatedAdmin, adminController.deleteTweet);
+router.get('/admin/tweets', authenticationHelper.authenticatedAdmin, adminController.adminMain);
+router.get('/admin/users', authenticationHelper.authenticatedAdmin, adminController.adminUsers);
+router.delete('/admin/tweets/:id', authenticationHelper.authenticatedAdmin, adminController.deleteTweet);
 
 // User authentication
 router.use('/', users);

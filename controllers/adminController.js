@@ -7,7 +7,7 @@ const {
 
 const usersController = {
   adminLoginPage: (req, res) => res.render('login', { adminLogin: true }),
-  adminLogin    : (req, res) => res.redirect('/admin_main'),
+  adminLogin    : (req, res) => res.redirect('/admin/tweets'),
   adminMain     : (req, res) => {
     Tweet.findAll({
       raw    : true,
@@ -66,7 +66,7 @@ const usersController = {
       tweet.destroy()
       .then(() => {
         req.flash('success_messages', 'Tweet has been deleted successfully');
-        return res.redirect('/admin_main');
+        return res.redirect('/admin/tweets');
       });
     })
     .catch((e) => {
