@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
-const db = require('../models');
 const sequelize = require('sequelize');
+const db = require('../models');
 
 const {
   Tweet, Reply, Like, User,
@@ -21,25 +21,26 @@ const tweetsController = {
         isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
       }));
       User.findAll({
-        where  : { 
-          role      : { [Op.ne]: 'admin' }, 
-          id        : { [Op.ne]: req.user.id} },
-          attributes: {
-            include: [
-              [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.FollowingId = User.id)'), 'FollowshipCount']]
-            },
-          order     : [[sequelize.literal('FollowshipCount'), 'DESC']],
-          limit     : 10,
-      }).then(users => {
-          let usersObj = users.map(user => ({
+        where: {
+          role: { [Op.ne]: 'admin' },
+          id  : { [Op.ne]: req.user.id },
+        },
+        attributes: {
+          include: [
+            [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.FollowingId = User.id)'), 'FollowshipCount']],
+        },
+        order: [[sequelize.literal('FollowshipCount'), 'DESC']],
+        limit: 10,
+      }).then((users) => {
+        const usersObj = users.map((user) => ({
           ...user.dataValues,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
-        }))
+          isFollowed: req.user.Followings.map((d) => d.id).includes(user.id),
+        }));
         return res.render('index', {
           tweets: tweetsObj,
-          users: usersObj,
-        })
-      })
+          users : usersObj,
+        });
+      });
     });
   },
 
@@ -63,23 +64,28 @@ const tweetsController = {
   },
 
   getReplyPage: (req, res) => {
-    Tweet.findByPk(req.params.tweetId,{
-      include: [User, Like, {model: Reply, include: [User]}],
+    Tweet.findByPk(req.params.tweetId, {
+      include: [User, Like, { model: Reply, include: [User] }],
       order  : [[Reply, 'createdAt', 'DESC']],
     })
-    .then(tweet => {
+    .then((tweet) => {
+      const time = tweet.createdAt
+      const noon = new Date('Y-m-d 12:00:00')
+      const ampm = (time.getTime()<noon.getTime())?'上午':'下午'
+      const tweetTime = ampm + ' '+ time.toLocaleString('zh-TW', { hour: 'numeric', minute: 'numeric', hour12: true, }).slice(0,4) +  ' ・ ' + time.getFullYear() + '年' + (time.getMonth()+1)+'月' + (time.getDate())+'日'
       const tweetObj = {
         ...tweet.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
         isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
-      }
-      return res.render( 'index', { 
-        tweet  : tweetObj, 
+        createdAt : tweetTime
+      };
+      return res.render('index', {
+        tweet  : tweetObj,
         notMain: true,
-        title  :'推文',
-       })
-    })
+        title  : '推文',
+      });
+    });
   },
 };
 module.exports = tweetsController;
