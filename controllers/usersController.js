@@ -14,15 +14,15 @@ const usersController = {
   registerPage: (req, res) => res.render('regist'),
   register    : (req, res) => {
     const {
-      name, email, account, password, passwordCheck,
+      name, email, account, password, checkPassword,
     } = req.body;
-    if (!name || !email || !account || !password || !passwordCheck) {
+    if (!name || !email || !account || !password || !checkPassword) {
       req.flash('error_messages', '所有欄位都是必填');
-      return res.redirect('/regist');
+      return res.redirect('/signup');
     }
-    if (passwordCheck !== password) {
+    if (checkPassword !== password) {
       req.flash('error_messages', '兩次密碼輸入不一致');
-      return res.redirect('/regist');
+      return res.redirect('/signup');
     }
     return User.findOne({
       where: { [Op.or]: [{ email }, { account }] },
@@ -34,7 +34,7 @@ const usersController = {
         if (user.email === email) {
           req.flash('error_messages', '此 Email 已存在');
         }
-        return res.redirect('/regist');
+        return res.redirect('/signup');
       }
       return User.create({
         email   : req.body.email,
@@ -43,7 +43,7 @@ const usersController = {
         account : req.body.account,
       }).then(() => {
         req.flash('success_messages', '成功註冊帳號');
-        res.redirect('/login');
+        res.redirect('/signin');
       })
       .catch((error) => console.log('register error', error));
     });
@@ -54,13 +54,13 @@ const usersController = {
 
   login: (req, res) => {
     req.flash('success_messages', '登入成功');
-    res.redirect('/');
+    return res.redirect('/tweets');
   },
 
   logout: (req, res) => {
     req.flash('success_messages', '登出成功');
     req.logout();
-    res.redirect('/login');
+    res.redirect('/signin');
   },
 
   getAccount: (req, res) => {
@@ -82,10 +82,10 @@ const usersController = {
   },
   putAccount: async (req, res) => {
     const {
-      name, email, account, password, passwordCheck,
+      name, email, account, password, checkPassword,
     } = req.body;
 
-    if (passwordCheck !== password) {
+    if (checkPassword !== password) {
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect(`/${req.params.id}/setting/`);
     }

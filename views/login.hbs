@@ -1,4 +1,4 @@
-<form class="form-regist m-3" action="{{#if adminLogin}}/admin{{else}}/login{{/if}}" method="POST" style="width: 100%;">
+<form class="form-regist m-3" action="{{#if adminLogin}}/admin{{else}}/signin{{/if}}" method="POST" style="width: 100%;">
   <div>
     <img class="logo img-fluid mx-auto d-block"
       src="/images/Icon.svg">
@@ -8,7 +8,7 @@
   <div class="col-6 mx-auto">
     {{>message}}
     <div class="form-label-group m-3">
-      <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
+      <input type="text" name="account" class="form-control" placeholder="帳戶" required autofocus>
     </div>
     <div class="form-label-group m-3">
       <input type="password" name="password" class="form-control" placeholder="密碼" required>
@@ -17,9 +17,9 @@
     <button class="btn btn-block rounded-pill mt-3 btn-orange" type="submit">登入</button>
     <div class="d-flex m-3 justify-content-end">
       {{#if adminLogin}}
-        <p><a href="/login">前台登入</a></p>
+        <p><a href="/signin">前台登入</a></p>
       {{else}}
-        <p class="mr-1"><a href="/regist">註冊Alphitter</a></p>
+        <p class="mr-1"><a href="/signup">註冊Alphitter</a></p>
         <p class="mr-1">·</p>
         <p><a href="/admin">後台登入</a></p>
       {{/if}}

@@ -10,11 +10,11 @@ const { authenticated, authenticatedNonAdmin } = require('../../middleware/authe
 
 const usersController = require('../../controllers/usersController');
 
-router.get('/regist', usersController.registerPage);
-router.post('/regist', usersController.register);
+router.get('/signup', usersController.registerPage);
+router.post('/signup', usersController.register);
 
-router.get('/login', usersController.loginPage);
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), authenticatedNonAdmin, usersController.login);
+router.get('/signin', usersController.loginPage);
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedNonAdmin, usersController.login);
 router.get('/logout', usersController.logout);
 
 router.get('/:id/setting', authenticated, usersController.getAccount);
@@ -27,8 +27,7 @@ router.get('/user/self/tweetsReplies/', authenticated, usersController.getSelfTw
 // 使用者喜歡的內容清單
 router.get('/user/self/like/', authenticated, usersController.getSelfLikes);
 
-// 這段先暫用 .getUser 等 user/self/like 網頁整合為 user/self 後就可將這個路徑和 getuser() 刪除
-// router.get('/user/self', authenticated, usersController.getUser);
-
 router.put('/user/self/edit', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.putUser);
+
+router.get('/', (req, res) => res.redirect('/tweets'));
 module.exports = router;
