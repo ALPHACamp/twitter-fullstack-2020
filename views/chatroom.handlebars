@@ -1,8 +1,8 @@
 <div calss="flex-column" style="background: #F5F8FA;min-width: 350px;height: 517px;">
   <h1>上線使用者</h1>
   <div class="chat-users">
-    <img src="{{user.avatar}}" style="width: 50px; height: 50px" alt="">
-    <div>{{user.id}}||||{{user.account}}</div>
+    {{!-- <img src="{{user.avatar}}" style="width: 50px; height: 50px" alt="">
+    <div>{{user.id}}||||{{user.account}}</div> --}}
 
   </div>
 </div>
@@ -20,7 +20,14 @@
   </div>
 </div>
 
+{{!-- style="display:none" --}}
+<div class="now-user">
+  <img class="avatar" src="{{user.avatar}}" style="width: 50px; height: 50px" alt="">
+  <div class="user-id">{{user.id}}</div>
+  <div class="user-name">{{user.name}}</div>
+  <div class="user-account">{{user.account}}</div>
 
+</div>
 
 
 <script src="/socket.io/socket.io.js"></script>

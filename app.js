@@ -13,6 +13,7 @@ const port = process.env.PORT || 3000
 const http = require('http')
 const httpServer = require("http").createServer(app)
 const io = require("socket.io")(httpServer)
+const moment = require('moment')
 //----------------socket.io-----------------
 
 app.engine('handlebars', handlebars({
@@ -42,26 +43,52 @@ app.use((req, res, next) => {
 app.use(routes)
 
 //----------------socket.io-----------------
+let onlineUser = []
 
-io.on('connection', function(socket){
-  //console.log(socket)    
 
-  socket.emit('message', `Welcome to chatroom, ${socket.id}`)
+io.on('connection', (socket) => {
+  
+  //console.log(socket)   
+  socket.on('loginUser', (currentUser) => {
+    
+    const set = new Set()
+    onlineUser = onlineUser.filter(item=>!set.has(item.name)?set.add(item.name):false) 
+
+    console.log('currentUser----------------------', currentUser)
+    onlineUser.push(currentUser)    
+    
+    io.emit('onlineUser', onlineUser)
+    
+  }) 
+  
+  console.log('onlineUser----------------------', onlineUser)
+  socket.emit('message', formatMessage(socket.id, '上線'))
+  
 
   // 顯示加入聊天室訊息給全部的人
-  socket.broadcast.emit('message', `A user ${socket.id} is join us`)
+  socket.broadcast.emit('message', formatMessage(socket.id, '上線'))
+  
   
   socket.on('disconnect', () => {   
-    io.emit('message', `A user ${socket.id} is gone`)   
+    io.emit('message', formatMessage(socket.id, '離線'))
+    
     console.log('gone')
   })
 
-  // 監聽聊天訊息
+  //監聽聊天訊息
   socket.on('chatMessage', msg => {
-    io.emit('message', msg)
+    io.emit('message', formatMessage(socket.id, msg))
   })
   
 });
+
+function formatMessage(username, text) {
+  return { 
+    username, 
+    text, 
+    time: moment().format('a h:mm') 
+  }
+}
 
 //----------------socket.io-----------------
 
