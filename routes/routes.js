@@ -38,7 +38,7 @@ router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 
 // following
-router.get('/followships', auth.authenticatedUser, userController.follow)
+router.post('/followships', auth.authenticatedUser, userController.follow)
 router.delete('/followships/:id', auth.authenticatedUser, userController.unfollow)
 
 // user 相關路由

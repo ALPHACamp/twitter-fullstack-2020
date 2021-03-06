@@ -57,7 +57,7 @@ const userController = {
     }
   },
   follow: (req, res) => {
-    const followTargetId = req.query.id
+    const followTargetId = req.body.id
     const currentUserId = helpers.getUser(req).id
     if (Number(followTargetId) === currentUserId) {
       req.flash('error_messages', '不能追蹤自己喔！')
