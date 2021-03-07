@@ -13,6 +13,9 @@ router.post('/:tweetId/replies', tweetsController.creatReply);
 router.get('/', tweetsController.getIndexPage);
 router.post('/', tweetsController.createTweet);
 
+/* GET reply page. */
+router.get('/:tweetId', tweetsController.getReplyPage);
+
 router.post('/:tweetId/like', likesController.addLike);
 router.delete('/:tweetId/unlike', likesController.removeLike);
 

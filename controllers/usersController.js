@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const helpers = require('../_helpers');
 
 const db = require('../models');
-const { getUser } = require('../middleware/authenticationHelper');
 
 const {
   Tweet, User, Reply, Like, Followship,
@@ -135,8 +134,9 @@ const usersController = {
   },
 
   // 使用者個人推文清單
-  getSelfTweets: (req, res) => {
-    const user = helpers.getUser(req);
+  getSelfTweets: async (req, res) => {
+    const user = await User.findByPk(req.params.id);
+
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       where: {
@@ -167,12 +167,14 @@ const usersController = {
   },
   // 使用者個人推文及回覆清單
   getSelfTweetsReplies: async (req, res) => {
+    const user = await User.findByPk(req.params.id);
+
     // Gathered list of tweets where user tweeted and/or replied
     const [selfTweets, selfReplies] = await Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
         where: {
-          UserId: req.user.id,
+          UserId: user.id,
         },
         include: [
           User,
@@ -186,7 +188,7 @@ const usersController = {
           User      : tweet.User.dataValues,
           ReplyCount: tweet.Replies.length,
           LikeCount : tweet.Likes.length,
-          isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+          isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
         }));
         return tweetsObj;
       }),
@@ -194,7 +196,7 @@ const usersController = {
       Reply.findAll({
         order: [['createdAt', 'DESC']],
         where: {
-          UserId: req.user.id,
+          UserId: user.id,
         },
         include: [
           {
@@ -223,10 +225,17 @@ const usersController = {
     const tweets = selfTweets.concat(selfReplies).sort((a, b) => b.createdAt - a.createdAt);
     const uniqueTweets = [...new Map(tweets.map((item) => [item.id, item])).values()];
 
-    return res.render('index', { user: getUser(req), selfTweetsReplies: uniqueTweets });
+    return res.render('index', {
+      notMain          : true,
+      user,
+      selfTweetsReplies: uniqueTweets,
+      title            : `${user.name}\n${tweets.length} 推文`,
+    });
   },
   // 使用者喜歡的內容清單
-  getSelfLikes: (req, res) => {
+  getSelfLikes: async (req, res) => {
+    const user = await User.findByPk(req.params.id, { include: [Like] });
+
     Tweet.findAll({
       order  : [['createdAt', 'DESC']],
       include: [
@@ -241,13 +250,18 @@ const usersController = {
         User      : tweet.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-        isLiked   : (helpers.getUser(req).LikedTweets || []).map((d) => d.id).includes(tweet.id),
+        isLiked   : user.Likes.map((d) => d.TweetId).includes(tweet.id),
       }));
       const likedTweets = tweetsObj.filter(
         (tweet) => (tweet.LikeCount > 0 && tweet.isLiked === true),
       );
 
-      return res.render('index', { user: getUser(req), likedTweets });
+      return res.render('index', {
+        notMain: true,
+        user,
+        likedTweets,
+        title  : `${user.name}\n${tweets.length} 推文`,
+      });
     });
   },
   // 使用者編輯個人資料
