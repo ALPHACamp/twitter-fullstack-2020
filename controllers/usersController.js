@@ -14,15 +14,15 @@ const usersController = {
   registerPage: (req, res) => res.render('regist'),
   register    : (req, res) => {
     const {
-      name, email, account, password, passwordCheck,
+      name, email, account, password, checkPassword,
     } = req.body;
-    if (!name || !email || !account || !password || !passwordCheck) {
+    if (!name || !email || !account || !password || !checkPassword) {
       req.flash('error_messages', '所有欄位都是必填');
-      return res.redirect('/regist');
+      return res.redirect('/signup');
     }
-    if (passwordCheck !== password) {
+    if (checkPassword !== password) {
       req.flash('error_messages', '兩次密碼輸入不一致');
-      return res.redirect('/regist');
+      return res.redirect('/signup');
     }
     return User.findOne({
       where: { [Op.or]: [{ email }, { account }] },
@@ -34,7 +34,7 @@ const usersController = {
         if (user.email === email) {
           req.flash('error_messages', '此 Email 已存在');
         }
-        return res.redirect('/regist');
+        return res.redirect('/signup');
       }
       return User.create({
         email   : req.body.email,
@@ -43,7 +43,7 @@ const usersController = {
         account : req.body.account,
       }).then(() => {
         req.flash('success_messages', '成功註冊帳號');
-        res.redirect('/login');
+        res.redirect('/signin');
       })
       .catch((error) => console.log('register error', error));
     });
@@ -54,13 +54,13 @@ const usersController = {
 
   login: (req, res) => {
     req.flash('success_messages', '登入成功');
-    res.redirect('/');
+    return res.redirect('/tweets');
   },
 
   logout: (req, res) => {
     req.flash('success_messages', '登出成功');
     req.logout();
-    res.redirect('/login');
+    res.redirect('/signin');
   },
 
   getAccount: (req, res) => {
@@ -82,10 +82,10 @@ const usersController = {
   },
   putAccount: async (req, res) => {
     const {
-      name, email, account, password, passwordCheck,
+      name, email, account, password, checkPassword,
     } = req.body;
 
-    if (passwordCheck !== password) {
+    if (checkPassword !== password) {
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect(`/${req.params.id}/setting/`);
     }
@@ -136,10 +136,11 @@ const usersController = {
 
   // 使用者個人推文清單
   getSelfTweets: (req, res) => {
+    const user = helpers.getUser(req);
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       where: {
-        UserId: req.user.id,
+        UserId: user.id,
       },
       include: [
         User,
@@ -153,10 +154,15 @@ const usersController = {
         User      : tweet.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+        isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
 
-      return res.render('index', { user: getUser(req), selfTweets: tweetsObj });
+      return res.render('index', {
+        notMain   : true,
+        title     : `${user.name}\n${tweets.length} 推文`,
+        user,
+        selfTweets: tweetsObj,
+      });
     });
   },
   // 使用者個人推文及回覆清單
@@ -184,34 +190,40 @@ const usersController = {
         }));
         return tweetsObj;
       }),
-      Tweet.findAll({
-        order  : [['createdAt', 'DESC']],
+
+      Reply.findAll({
+        order: [['createdAt', 'DESC']],
+        where: {
+          UserId: req.user.id,
+        },
         include: [
-          User,
           {
-            model: Reply,
-            where: {
-              UserId: req.user.id,
-            },
+            model  : Tweet,
+            include: [User, Reply, Like],
           },
-          Like,
         ],
       })
-      .then((tweets) => {
-        const tweetsObj = tweets.map((tweet) => ({
-          ...tweet.dataValues,
-          User      : tweet.User.dataValues,
-          ReplyCount: tweet.Replies.length,
-          LikeCount : tweet.Likes.length,
-          isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+      .then((replies) => {
+        const tweetsObj = replies.map((reply) => ({
+          id         : reply.dataValues.Tweet.id,
+          UserId     : reply.dataValues.Tweet.UserId,
+          description: reply.dataValues.Tweet.description,
+          createdAt  : reply.dataValues.createdAt,
+          updatedAt  : reply.dataValues.updatedAt,
+          User       : reply.dataValues.Tweet.User.dataValues,
+          ReplyCount : reply.dataValues.Tweet.Replies.length,
+          LikeCount  : reply.dataValues.Tweet.Likes.length,
+          isLiked    : req.user.LikedTweets.map((d) => d.id).includes(reply.dataValues.Tweet.id),
         }));
 
         return tweetsObj;
       }),
     ]);
-    // Todo: combine together and rank based on interaction datetime, then return data
-    req.flash('error_messages', 'page is still under construction!');
-    return res.redirect('back');
+
+    const tweets = selfTweets.concat(selfReplies).sort((a, b) => b.createdAt - a.createdAt);
+    const uniqueTweets = [...new Map(tweets.map((item) => [item.id, item])).values()];
+
+    return res.render('index', { user: getUser(req), selfTweetsReplies: uniqueTweets });
   },
   // 使用者喜歡的內容清單
   getSelfLikes: (req, res) => {
@@ -229,7 +241,7 @@ const usersController = {
         User      : tweet.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+        isLiked   : (helpers.getUser(req).LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
       const likedTweets = tweetsObj.filter(
         (tweet) => (tweet.LikeCount > 0 && tweet.isLiked === true),

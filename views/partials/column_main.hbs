@@ -1,7 +1,7 @@
-<div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3">
+<div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3" style="white-space: pre-wrap;">
   {{!-- TODO: 如果不是主頁就需要顯示那個頁面的標題 --}}
   {{#if notMain}}
-  <i class="fas fa-arrow-left pr-2"></i>
+  <a class="nav-link" href="javascript:history.back()"><i class="fas fa-arrow-left pr-2"></i></a>
   {{title}}
   {{else}}
   首頁
@@ -13,7 +13,7 @@
   {{#if (isdefined tweets)}}
     <div id="add-tweet-block" class="d-flex align-items-start p-3">
       <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
-      <form action="/" method="POST" class="w-100">
+      <form action="/tweets" method="POST" class="w-100">
         <textarea class="w-100" name="description" rows="3" cols="90" placeholder="有什麼新鮮事? (字數限制140字)"></textarea>
         <div class="textarea-util d-flex justify-content-between">
           <div class="text-counter text-lightgrey">0/140</div>
@@ -23,6 +23,9 @@
     </div>
   {{else}}
     {{#if (isdefined selfTweets)}}
+      {{>column_main_user}}
+    {{/if}}
+    {{#if (isdefined selfTweetsReplies)}}
       {{>column_main_user}}
     {{/if}}
     {{#if (isdefined likedTweets)}}
@@ -36,6 +39,17 @@
   {{#if (isdefined tweets)}}
     {{#if tweets}}
       {{#each tweets}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User Self Tweets and Replies page --}}
+  {{#if (isdefined selfTweetsReplies)}}
+    {{#if selfTweetsReplies}}
+      {{#each selfTweetsReplies}}
         {{>listitem_tweet}}
       {{/each}}
     {{else}}

@@ -7,7 +7,7 @@ const {
 
 const usersController = {
   adminLoginPage: (req, res) => res.render('login', { adminLogin: true }),
-  adminLogin    : (req, res) => res.redirect('/admin_main'),
+  adminLogin    : (req, res) => res.redirect('/admin/tweets'),
   adminMain     : (req, res) => {
     Tweet.findAll({
       raw    : true,
@@ -35,11 +35,6 @@ const usersController = {
   },
   adminUsers: (req, res) => {
     User.findAll({
-      where: {
-        role: {
-          [Op.not]: 'admin',
-        },
-      },
       include: [
         Tweet,
         Like,
@@ -57,7 +52,7 @@ const usersController = {
       }))
       .sort((a, b) => b.tweetCount - a.tweetCount);
 
-      res.render('admin', { users: usersObj });
+      return res.render('admin', { users: usersObj });
     });
   },
   deleteTweet: (req, res) => {
@@ -66,7 +61,7 @@ const usersController = {
       tweet.destroy()
       .then(() => {
         req.flash('success_messages', 'Tweet has been deleted successfully');
-        return res.redirect('/admin_main');
+        return res.redirect('/admin/tweets');
       });
     })
     .catch((e) => {

@@ -8,7 +8,7 @@
       <button type="button" class="btn btn-outline btn-outline-orange rounded-pill m-3" data-toggle="modal" data-target="#self-setting-modal">編輯個人資料</button>
     </div>
     <div class="card-body d-flex flex-column pt-0">
-      <div class="d-flex flex-column justify-content-start mt-3">
+      <div class="d-flex flex-column justify-content-start">
         <h5 class="mb-0">{{user.name}}</h5>
         <span class="text-lightgrey">@{{user.account}}</span>
       </div>
@@ -24,32 +24,18 @@
 </div>
 
 {{!-- tabs display --}}
-{{#if (isdefined selfTweets)}}
-  <ul class="nav nav-tabs border-0">
-    <li class="nav-item w-25 text-center active">
-      <a class="nav-link text-orange" href="/user/self/">推文</a>
-    </li>
-    <li class="nav-item w-25 text-center">
-      <a class="nav-link" href="/user/self/tweetsReplies">推文與回覆</a>
-    </li>
-    <li class="nav-item w-25 text-center">
-      <a class="nav-link" href="/user/self/like">喜歡的內容</a>
-    </li>
-  </ul>
-{{/if}}
-{{#if (isdefined likedTweets)}}
-  <ul class="nav nav-tabs border-0">
-    <li class="nav-item w-25 text-center">
-      <a class="nav-link" href="/user/self/">推文</a>
-    </li>
-    <li class="nav-item w-25 text-center">
-      <a class="nav-link" href="/user/self/tweetsReplies">推文與回覆</a>
-    </li>
-    <li class="nav-item w-25 text-center active">
-      <a class="nav-link text-orange" href="/user/self/like">喜歡的內容</a>
-    </li>
-  </ul>
-{{/if}}
+<ul class="nav nav-tabs border-0">
+  <li class="nav-item text-center {{#if (isdefined selfTweets)}}active{{/if}}">
+    <a class="nav-link" href="/users/{{user.id}}/tweets/">推文</a>
+  </li>
+  <li class="nav-item text-center {{#if (isdefined selfTweetsReplies)}}active{{/if}}">
+    <a class="nav-link" href="/user/self/tweetsReplies">推文與回覆</a>
+  </li>
+  <li class="nav-item text-center {{#if (isdefined likedTweets)}}active{{/if}}">
+    <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+  </li>
+</ul>
+
 {{!-- Self Setting Modal--}}
 <div class="modal fade" id="self-setting-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
