@@ -1,146 +1,73 @@
 {{> nav}}
-<div class="flex-column" style="min-width: 600px; border: 1px solid #E6ECF0">
-  {{> message}}
+{{>userInfo}}
 
-  <div class="d-flex header" style="height: 55px;">
-    <div class="mt-2 ml-3" style="margin-right: 43px;">
-      <a href="javascript:history.back()" style="text-decoration: none; color: black">
-        <i class="fas fa-arrow-left"></i>
-      </a>
-    </div>
-
-    <div class="d-flex flex-column">
-      <span style="font-weight: 900; font-size: 19px; color: #1C1C1C;">{{userView.name}}</span>
-      <span style="font-weight: 500; font-size: 13px; color: #657786;">{{userView.TweetsCount}} 推文</span>
-    </div>
-
+<div class="tabs d-flex"
+  style="height: 54px; margin-left: 51px; margin-top: 36px;font-weight: bold; font-size: 15px; color: #657786;">
+  <div>
+    <a class="p-0 nav-link active" href="/users/{{userView.id}}/tweets">推文</a>
   </div>
 
-  <hr class="m-0">
-
-  <div class="user-info" style="height: 375px; position: relative;">
-    <div class="cover-photo" style="height: 200px;">
-      <img src="{{userView.cover}}" style="object-fit: cover;width: 100%; height: 100%" alt="...">
-    </div>
-
-    <div class="photo">
-      <img src="{{userView.avatar}}"
-        style="width: 140px; height: 140px; border: 4px solid #FFFFFF; border-radius: 50%; position: absolute; top: 124px; left: 14px"
-        alt="">
-    </div>
-
-    <div class="text-right" style="margin-top: 10px; margin-right: 15px">
-      {{#ifCond userView.id user.id}}
-      <button type="submit" class="btn" data-toggle="modal" data-target="#exampleModal"
-        style="border: 1px solid #FF6600; border-radius: 100px; color: #FF6600; width: 120px; height: 40px; font-weight: bold; font-size: 15px; line-height: 15px;">編輯個人資料</button>
-      {{else}}
-      {{#if isFollowed}}
-      <form class="" action="/followships/{{userView.id}}?_method=DELETE" method="POST">
-
-        <button type="submit" class="btn"
-          style="background: #FF6600; border-radius: 100px; color: white; width: 120px; height: 40px; font-weight: bold; font-size: 15px; line-height: 15px;">正在跟隨</button>
-
-      </form>
-      {{else}}
-      <form action="/followships/" method="POST">
-        <input type="hidden" name="id" value="{{userView.id}}">
-        <button type="submit" class="btn"
-          style="border: 1px solid #FF6600; border-radius: 100px; color: #FF6600; width: 120px; font-weight: bold; height: 40px; font-size: 15px; line-height: 15px;">跟隨</button>
-      </form>
-      {{/if}}
-      {{/ifCond}}
-    </div>
-
-    <div class="d-flex flex-column" style="margin-top: 19px; margin-left: 15px">
-      <span style="font-weight: 900; font-size: 19px; color: #1C1C1C;">{{userView.name}}</span>
-      <span style="font-weight: 500; font-size: 15px; color: #657786;">{{userView.account}}</span>
-    </div>
-
-    <div style="font-size: 14px; max-width: 600px; margin: 10px 15px 0px 15px;">
-      <span style="width: 570px; word-wrap: break-word">{{userView.introduction}}</span>
-    </div>
-
-    <div class="d-flex" style="margin-top: 10px; margin-left: 15px; font-weight: 500;font-size: 14px;">
-      <div>
-        <a href="/users/{{userView.id}}/followings" style="text-decoration: none;">
-          <span style="color: #1C1C1C">{{userView.FollowingCount}}</span> <span style="color: #657786;">個跟隨中</span>
-        </a>
-      </div>
-      <div style="margin-left: 20px;">
-        <a href="/users/{{userView.id}}/followers" style="text-decoration: none;">
-          <span style="color: #1C1C1C">{{userView.FollowerCount}}</span> <span style="color: #657786;">位跟隨者</span>
-        </a>
-      </div>
-    </div>
+  <div style="margin-right: 55px; margin-left: 77px;">
+    <a class="p-0 nav-link" href="/users/{{userView.id}}/replies">推文與回覆</a>
   </div>
 
-  <div class="tabs d-flex"
-    style="height: 54px; margin-left: 51px; margin-top: 36px;font-weight: bold; font-size: 15px; color: #657786;">
-    <div>
-      <a class="p-0 nav-link active" href="/users/{{userView.id}}/tweets">推文</a>
-    </div>
-
-    <div style="margin-right: 55px; margin-left: 77px;">
-      <a class="p-0 nav-link" href="/users/{{userView.id}}/replies">推文與回覆</a>
-    </div>
-
-    <div>
-      <a class="p-0 nav-link" href="/users/{{userView.id}}/likes">喜歡的內容</a>
-    </div>
+  <div>
+    <a class="p-0 nav-link" href="/users/{{userView.id}}/likes">喜歡的內容</a>
   </div>
+</div>
 
-  <div class="" style="max-height: 680px; overflow: auto; overflow-x: hidden;">
-    {{#each userView.Tweets}}
-    <div class="card" style="min-height: 136px;border-radius: 0; border: 1px solid #E6ECF0">
-      <div class="row no-gutters">
+<div class="" style="max-height: 680px; overflow: auto; overflow-x: hidden;">
+  {{#each userView.Tweets}}
+  <div class="card" style="min-height: 136px;border-radius: 0; border: 1px solid #E6ECF0">
+    <div class="row no-gutters">
 
-        <div class="col-md-1 ml-3" style="margin-top: 10px; margin-right: 10px">
-          <img src="{{../userView.avatar}}" alt="..." style="width: 50px;
+      <div class="col-md-1 ml-3" style="margin-top: 10px; margin-right: 10px">
+        <img src="{{../userView.avatar}}" alt="..." style="width: 50px;
           height: 50px; border-radius: 50%">
-        </div>
+      </div>
 
-        <div class="col-md" style="margin-top: 10px;">
-          <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color: black">
-            <div class="card-body p-0" style="width: 507px">
-              <div class="card-text">
-                <span style="color: #1C1C1C">{{../userView.name}}</span>
-                <span style="color: #657786;">{{../userView.account}} ‧ {{moment_fromNow this.createdAt}}</span>
-                {{!-- --}}
-                <p>{{this.description}}</p>
-              </div>
+      <div class="col-md" style="margin-top: 10px;">
+        <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color: black">
+          <div class="card-body p-0" style="width: 507px">
+            <div class="card-text">
+              <span style="color: #1C1C1C">{{../userView.name}}</span>
+              <span style="color: #657786;">{{../userView.account}} ‧ {{moment_fromNow this.createdAt}}</span>
+              {{!-- --}}
+              <p>{{this.description}}</p>
             </div>
-          </a>
-
-          <div class="row">
-            <button class="ml-2" type="submit" style="border: none; background: none;" data-toggle="modal"
-              data-target="#reply{{this.id}}">
-              <i class="far fa-comment"></i>
-              <span>{{this.totalReplies}}</span>
-            </button>
-
-            {{#if this.isLiked}}
-            <form action="/tweets/{{this.id}}/unlike" method="POST">
-              <button type="submit" style="border: none; background: none;">
-                <i class="fas fa-heart" style="color: red;"></i>
-                <span>{{this.totalLikes}}</span>
-              </button>
-            </form>
-            {{else}}
-            <form action="/tweets/{{this.id}}/like" method="POST">
-              <button type="submit" style="border: none; background: none;">
-                <i class="far fa-heart" style="color: red;"></i>
-                <span>{{this.totalLikes}}</span>
-              </button>
-            </form>
-            {{/if}}
           </div>
+        </a>
 
+        <div class="row">
+          <button class="ml-2" type="submit" style="border: none; background: none;" data-toggle="modal"
+            data-target="#reply{{this.id}}">
+            <i class="far fa-comment"></i>
+            <span>{{this.totalReplies}}</span>
+          </button>
+
+          {{#if this.isLiked}}
+          <form action="/tweets/{{this.id}}/unlike" method="POST">
+            <button type="submit" style="border: none; background: none;">
+              <i class="fas fa-heart" style="color: red;"></i>
+              <span>{{this.totalLikes}}</span>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.id}}/like" method="POST">
+            <button type="submit" style="border: none; background: none;">
+              <i class="far fa-heart" style="color: red;"></i>
+              <span>{{this.totalLikes}}</span>
+            </button>
+          </form>
+          {{/if}}
         </div>
 
       </div>
+
     </div>
-    {{/each}}
   </div>
+  {{/each}}
+</div>
 
 </div>
 <!--icon-->
