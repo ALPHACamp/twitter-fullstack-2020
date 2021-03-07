@@ -1,6 +1,11 @@
 body {
   background: #fff;
 }
+
+p, a, div, span, button {
+  font-size: 15px;
+}
+
 /* HELPER CLASSES */
 .max-vh-100 {
   max-height: 100vh;
@@ -79,6 +84,11 @@ body {
   color: rgba(0, 0, 0, .525);
 }
 
+.name {
+  font-weight: 600;
+  line-height: 1.1;
+}
+
 /* Main Frame */
 .navbar .nav-item .nav-link, .nav-tabs .nav-item .nav-link {
   color: #212529;
@@ -147,7 +157,7 @@ body {
 }
 
 #column_main .nav-tabs .nav-item {
-  width: 15%;
+  min-width: 120px;
 }
 
 #column_main .nav-tabs .nav-item .nav-link {
@@ -216,6 +226,11 @@ body {
 .list-item .item-other > *:not(:last-of-type) {
   margin-right: 3rem;
 }
+
+.list-item .profile-img {
+  min-width: 60px;
+}
+
 #column_side .list-item {
   background-color: rgba(0,0,0,.03);
 }

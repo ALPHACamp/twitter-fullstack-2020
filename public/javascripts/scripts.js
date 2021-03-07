@@ -3,9 +3,9 @@ if (window.location.pathname === '/') {
   document.querySelector('.nav-link[href="/"]').parentElement.classList.add('active');
 } else if (window.location.pathname.endsWith('setting')) {
   document.querySelector('.nav-link[href$="setting"]').parentElement.classList.add('active');
-} else if (window.location.pathname.startsWith('/user/self/')) {
-  document.querySelector('.navbar .nav-link[href$="/user/self"]').parentElement.classList.add('active');
-  document.querySelector(`.nav-link[href$="${window.location.pathname}"]`).parentElement.classList.add('active');
+} else if (window.location.pathname.startsWith('/users/') && document.querySelectorAll('[data-target="#self-setting-modal"').length) {
+  document.querySelector('.navbar .nav-link[href^="/user"]').parentElement.classList.add('active');
+  document.querySelector(`.nav-tabs .nav-link[href^="${window.location.pathname}"]`).parentElement.classList.add('active');
 } else if (document.querySelector(`.nav-link[href*="${window.location.pathname}"]`) !== null) {
   // Default to match nav items
   document.querySelector(`.nav-link[href*="${window.location.pathname}"]`).parentElement.classList.add('active');
