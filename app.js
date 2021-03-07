@@ -15,6 +15,8 @@ const passport = require('./config/passport');
 const routes = require('./routes');
 const helpers = require('./_helpers');
 
+const usersController = require('./controllers/usersController');
+
 const app = express();
 const port = process.env.PORT;
 
@@ -38,6 +40,11 @@ app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');
   res.locals.me = helpers.getUser(req);
+  usersController.getTopFollowing(req)
+  .then((users) => {
+    res.locals.topFollowingsUsers = users;
+  });
+
   next();
 });
 

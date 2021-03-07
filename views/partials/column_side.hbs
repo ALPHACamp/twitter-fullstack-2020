@@ -1,40 +1,13 @@
-<div class="card w-100 mt-3">
-  <div class="card-header">
-    跟隨誰
-  </div>
-  <ul class="list-group list-group-flush">
-    {{#each users}}
-    <li class="list-group-item">
-      <div class="d-flex justify-content-between">
-        <div class="d-flex align-item-start">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="img-fluid rounded-circle mr-3" src="{{this.avatar}}" alt=""style="max-height: 70px;">
-          </a>
- 
-        <div class="name pr-2 align-items-center my-auto">
-          <a href="/users/{{this.id}}/tweets"><strong>{{this.name}}</strong></a>
-          <div class="info"><span class="username"><a href="/users/{{this.id}}/tweets">@{{this.account}}</span></a>
-          </div>
-          </a>
-        </div>
-        </div>
-        <div class="my-auto">
-        {{#if this.isFollowed}}
-          <form action="/following/{{this.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right;">正在跟隨</button>
-          </form>
-        {{else}}
-          <form action="/following/{{this.id}}" method="POST">
-            <button type="submit" class="btn btn-sm btn-white rounded-pill" style="float:right;">跟隨</button>
-          </form>
-        {{/if}}
-        </div>
-      </div>
-
-    </li>
+{{#if (isdefined topFollowingsUsers)}}
+  <div class="card w-100 mt-3">
+    <div class="card-header">
+      跟隨誰
+    </div>
+    {{#each topFollowingsUsers}}
+      {{>listitem_user}}
     {{/each}}
-    <li class="list-group-item text-orange">
+    <div class="list-group-item text-orange">
       顯示更多
-    </li>
-  </ul>
-</div>
+    </div>
+  </div>
+{{/if}}
