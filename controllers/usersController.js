@@ -223,7 +223,12 @@ const usersController = {
     const tweets = selfTweets.concat(selfReplies).sort((a, b) => b.createdAt - a.createdAt);
     const uniqueTweets = [...new Map(tweets.map((item) => [item.id, item])).values()];
 
-    return res.render('index', { user: getUser(req), selfTweetsReplies: uniqueTweets });
+    return res.render('index', {
+      notMain          : true,
+      user             : getUser(req),
+      selfTweetsReplies: uniqueTweets,
+      title            : `${getUser(req).name}\n${tweets.length} 推文`,
+    });
   },
   // 使用者喜歡的內容清單
   getSelfLikes: (req, res) => {
@@ -247,7 +252,12 @@ const usersController = {
         (tweet) => (tweet.LikeCount > 0 && tweet.isLiked === true),
       );
 
-      return res.render('index', { user: getUser(req), likedTweets });
+      return res.render('index', {
+        notMain: true,
+        user   : getUser(req),
+        likedTweets,
+        title  : `${getUser(req).name}\n${tweets.length} 推文`,
+      });
     });
   },
   // 使用者編輯個人資料
