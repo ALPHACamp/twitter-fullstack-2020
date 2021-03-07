@@ -2,10 +2,18 @@
 <div class="list-item d-flex align-items-start p-3" style="min-height: 120px;">
   <div class="align-items-start p-3">
     <div class="d-flex align-item-start">
+      <a href="/users/{{tweet.User.id}}/tweets">
       <img class="img-fluid rounded-circle mr-3" src="{{tweet.User.avatar}}" alt="" style="max-height: 70px;">
+      </a>
       <div class="name pr-2 align-items-center my-auto">
-        <strong>{{tweet.User.name}}</strong>
-        <div class="info"><span class="username">@{{tweet.User.account}}</span></div>
+        <a href="/users/{{tweet.User.id}}/tweets">
+          <strong>{{tweet.User.name}}</strong>
+        </a>
+        <div class="info">
+          <a href="/users/{{tweet.User.id}}/tweets">
+          <span class="username">@{{tweet.User.account}}</span>
+          </a>
+        </div>
       </div>
     </div> 
     <div class="item-desc pt-2 pb-3 w-70" style="word-wrap:break-word; font-size:1.3em; font-weight:bold;">
@@ -34,19 +42,24 @@
     <div class="reply-list">
       {{#each tweet.Replies}}
         <div class="list-item d-flex align-items-start pr-3 py-3" style="min-height: 120px;">
-          <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="" style="max-height: 70px;">
+          <a href="/users/{{this.User.id}}/tweets">
+          <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="" style="max-height: 70px;"></a>
           <div>
             <div class="item-header d-flex d-row d-flex align-items-center">
               <div class="name pr-2">
+                <a href="/users/{{this.User.id}}/tweets">
                 <strong>{{this.User.name}}</strong>
+                </a>
               </div>
               <div class="info">
+                <a href="/users/{{this.User.id}}/tweets">
                 <span class="username">@{{this.User.account}}</span>
+                </a>
                 &#183;
                 <span class="posttime">{{moment this.createdAt}}</span>
               </div>
             </div>
-            <div class="pt-2">回覆@{{../tweet.User.account}}</div>
+            <div class="pt-2">回覆<a href="/users/{{../tweet.User.id}}/tweets">@{{../tweet.User.account}}</a></div>
             <div class="item-desc pt-2 pb-3">
               {{this.comment}}
             </div>

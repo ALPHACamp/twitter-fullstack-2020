@@ -1,32 +1,38 @@
-<a href="/reply_list/{{this.id}}" style="text-decoration:none;color:black;">
 <div class="list-item d-flex align-items-start p-3 pointer tweet-gray" style="min-height: 120px;">
-  <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="">
+  <a href="/users/{{this.User.id}}/tweets">
+    <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="" style="max-height: 70px;">
+  </a>
   <div>
     <div class="item-header d-flex d-row d-flex align-items-center">
       <div class="name pr-2">
-        <strong>{{this.User.name}}</strong>
+        <a href="/users/{{this.User.id}}/tweets"><strong>{{this.User.name}}</strong></a>
       </div>
       <div class="info">
-        <span class="username">{{this.User.account}}</span>
+        <a href="/users/{{this.User.id}}/tweets">
+          <span class="username">@{{this.User.account}}</span>
+        </a>
         &#183;
         <span class="posttime">{{moment this.createdAt}}</span>
       </div>
     </div>
-    <div class="item-desc pt-2 pb-3">
-      {{this.description}}
-    </div>
+    <a href="/reply_list/{{this.id}}" style="text-decoration:none;color:black;">
+      <div class="item-desc pt-2 pb-3">
+        {{this.description}}
+      </div>
+    </a>
     <div class="item-other d-flex flex-row">
       <span class="pr-3 mr-3"><i class="far fa-comment pr-2"></i>{{this.ReplyCount}}</span>
       {{#if this.isLiked }}
-        <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST" class="ml-3 pl-3">
-          <button class="btn btn-link text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i>{{this.LikeCount}}</button>
-        </form>
+      <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST" class="ml-3 pl-3">
+        <button class="btn btn-link text-orange p-0" type="submit"><i
+            class="far fa-heart pr-2 text-orange"></i>{{this.LikeCount}}</button>
+      </form>
       {{else}}
-        <form action="/tweets/{{this.id}}/like/" method="POST" class="ml-3 pl-3">
-          <button class="btn btn-link text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i>{{this.LikeCount}}</button>
-        </form>
+      <form action="/tweets/{{this.id}}/like/" method="POST" class="ml-3 pl-3">
+        <button class="btn btn-link text-lightgrey p-0" type="submit"><i
+            class="far fa-heart pr-2"></i>{{this.LikeCount}}</button>
+      </form>
       {{/if}}
     </div>
   </div>
 </div>
-</a>
