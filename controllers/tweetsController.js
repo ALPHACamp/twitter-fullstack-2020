@@ -1,6 +1,8 @@
 const { Op } = require('sequelize');
 const sequelize = require('sequelize');
 const db = require('../models');
+const moment = require('moment');
+moment.locale('zh-TW');
 
 const {
   Tweet, Reply, Like, User,
@@ -48,18 +50,18 @@ const tweetsController = {
     const { description } = req.body;
     if (!description.trim()) {
       req.flash('error_messages', '請輸入文字再送出推文');
-      return res.redirect('/');
+      return res.redirect('/tweets');
     }
     if (description.length > 140) {
       req.flash('error_messages', '推文字數不能超過140字');
-      return res.redirect('/');
+      return res.redirect('/tweets');
     }
     return Tweet.create({
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
       req.flash('success_messages', '推文成功!');
-      res.redirect('/');
+      res.redirect('/tweets');
     });
   },
 
@@ -70,9 +72,7 @@ const tweetsController = {
     })
     .then((tweet) => {
       const time = tweet.createdAt;
-      const noon = new Date('Y-m-d 12:00:00');
-      const ampm = (time.getTime() < noon.getTime()) ? '上午' : '下午';
-      const tweetTime = `${ampm} ${time.toLocaleString('zh-TW', { hour: 'numeric', minute: 'numeric', hour12: true }).slice(0, 4)} ・ ${time.getFullYear()}年${time.getMonth() + 1}月${time.getDate()}日`;
+      const tweetTime = ` ${moment(time).format('a h:MM')}・ ${moment(time).format('LL')}`;
       const tweetObj = {
         ...tweet.dataValues,
         ReplyCount: tweet.Replies.length,
@@ -85,6 +85,27 @@ const tweetsController = {
         notMain: true,
         title  : '推文',
       });
+    });
+  },
+
+  creatReply: (req, res) => {
+    const { tweetId } = req.params
+    const comment = req.body.description;
+    if (!comment) {
+      req.flash('error_messages', '請輸入文字再送出推文');
+      return res.redirect(`/tweets/${tweetId}/replies`);
+    }
+    if (comment.length > 140) {
+      req.flash('error_messages', '回覆字數不能超過140字');
+      return res.redirect(`/tweets/${tweetId}/replies`);
+    }
+    return Reply.create({
+      comment    : comment,
+      UserId     : helpers.getUser(req).id,
+      TweetId    : req.params.tweetId
+    }).then((reply) => {
+      req.flash('success_messages', '回覆成功!');
+      res.redirect(`/tweets/${tweetId}/replies`);
     });
   },
 };
