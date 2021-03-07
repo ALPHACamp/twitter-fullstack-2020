@@ -1,16 +1,10 @@
 <div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3" style="white-space: pre-wrap;">
   {{!-- TODO: 如果不是主頁就需要顯示那個頁面的標題 --}}
-  {{!-- {{#if notMain}}
-  <a class="nav-link" href="/tweets"><i class="fas fa-arrow-left pr-2"></i></a>
-  {{title}}
-  {{else}}
-  首頁
-  {{/if}} --}}
   {{#if (isdefined title)}}
     <a class="nav-link" href="/tweets"><i class="fas fa-arrow-left pr-2"></i></a>
     {{>column_pageTitle}}
   {{else}}
-    首頁
+    <h5>首頁</h5>
   {{/if}}
 </div>
 

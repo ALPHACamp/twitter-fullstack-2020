@@ -1,7 +1,8 @@
 const { Op } = require('sequelize');
 const sequelize = require('sequelize');
-const db = require('../models');
 const moment = require('moment');
+const db = require('../models');
+
 moment.locale('zh-TW');
 
 const {
@@ -81,15 +82,16 @@ const tweetsController = {
         createdAt : tweetTime,
       };
       return res.render('index', {
-        tweet  : tweetObj,
-        notMain: true,
-        title  : '推文',
+        tweet: tweetObj,
+        title: {
+          text: '推文',
+        },
       });
     });
   },
 
   creatReply: (req, res) => {
-    const { tweetId } = req.params
+    const { tweetId } = req.params;
     const comment = req.body.description;
     if (!comment) {
       req.flash('error_messages', '請輸入文字再送出推文');
@@ -100,9 +102,9 @@ const tweetsController = {
       return res.redirect(`/tweets/${tweetId}/replies`);
     }
     return Reply.create({
-      comment    : comment,
-      UserId     : helpers.getUser(req).id,
-      TweetId    : req.params.tweetId
+      comment,
+      UserId : helpers.getUser(req).id,
+      TweetId: req.params.tweetId,
     }).then((reply) => {
       req.flash('success_messages', '回覆成功!');
       res.redirect(`/tweets/${tweetId}/replies`);

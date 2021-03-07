@@ -75,7 +75,10 @@ const usersController = {
         res.redirect('back');
       } else {
         res.render('setting', {
-          user: user.dataValues,
+          user : user.dataValues,
+          title: {
+            text: '帳戶設定',
+          },
         });
       }
     });
@@ -160,7 +163,8 @@ const usersController = {
       }));
 
       return res.render('index', {
-        title: {
+        userPage: true,
+        title   : {
           user_name       : user.name,
           user_tweetsCount: tweets.length,
         },
@@ -234,6 +238,7 @@ const usersController = {
     return res.render('index', {
       user,
       selfTweetsReplies: uniqueTweets,
+      userPage         : true,
       title            : {
         user_name       : user.name,
         user_tweetsCount: user.tweetCount,
@@ -257,6 +262,7 @@ const usersController = {
     return res.render('index', {
       user,
       likedTweets: tweetsObj,
+      userPage   : true,
       title      : {
         user_name       : user.name,
         user_tweetsCount: user.tweetCount,
@@ -274,7 +280,8 @@ const usersController = {
     return res.render('index', {
       user,
       userFollowings,
-      title: {
+      userPage: true,
+      title   : {
         user_name       : user.name,
         user_tweetsCount: user.tweetCount,
       },
@@ -291,7 +298,8 @@ const usersController = {
     return res.render('index', {
       user,
       userFollowers,
-      title: {
+      userPage: true,
+      title   : {
         user_name       : user.name,
         user_tweetsCount: user.tweetCount,
       },
