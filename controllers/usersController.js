@@ -1,4 +1,5 @@
 const { Op } = require('sequelize');
+const sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 const helpers = require('../_helpers');
@@ -264,6 +265,21 @@ const usersController = {
       });
     });
   },
+  // 使用者的追蹤清單
+  getFollowingsPage: async (req, res) => {
+    const [userFollowings, topFollowings] = await Promise.all([
+      usersController.getUserFollowings(getUser(req).id, req),
+      usersController.getTopFollowing(req),
+    ]);
+
+    return res.render('index', { user: getUser(req), userFollowings, topFollowings });
+  },
+  // 使用者的被追蹤清單
+  getFollowers: async (req, res) => {
+    const userFollowers = await usersController.getUserFollowers(getUser(req).id, req);
+    return res.render('index', { user: getUser(req), userFollowers });
+  },
+
   // 使用者編輯個人資料
   putUser: async (req, res) => {
     const {
@@ -318,5 +334,75 @@ const usersController = {
       });
     }
   },
+
+  // Helper functions
+  getUserFollowers: (userId, req) => new Promise((resolve, reject) => {
+    User.findByPk(userId, {
+      include: [
+        { model: User, as: 'Followers' },
+      ],
+    })
+    .then((user) => {
+      const followersArr = user.dataValues.Followers.map((follower) => ({
+        id          : follower.dataValues.id,
+        email       : follower.dataValues.id,
+        account     : follower.dataValues.account,
+        name        : follower.dataValues.name,
+        avatar      : follower.dataValues.avatar,
+        introduction: follower.dataValues.introduction,
+        cover       : follower.dataValues.cover,
+        role        : follower.dataValues.role,
+        createdAt   : follower.dataValues.createdAt,
+        isFollowed  : req.user.Followings.map((d) => d.id).includes(following.id),
+      }));
+
+      return resolve(followersArr);
+    });
+  }),
+  getUserFollowings: (userId, req) => new Promise((resolve, reject) => {
+    User.findByPk(userId, {
+      include: [
+        { model: User, as: 'Followings' },
+      ],
+    })
+    .then((user) => {
+      const followingsArr = user.dataValues.Followings.map((following) => ({
+        id          : following.dataValues.id,
+        email       : following.dataValues.id,
+        account     : following.dataValues.account,
+        name        : following.dataValues.name,
+        avatar      : following.dataValues.avatar,
+        introduction: following.dataValues.introduction,
+        cover       : following.dataValues.cover,
+        role        : following.dataValues.role,
+        createdAt   : following.dataValues.createdAt,
+        isFollowed  : req.user.Followings.map((d) => d.id).includes(following.id),
+      }));
+
+      return resolve(followingsArr);
+    });
+  }),
+  getTopFollowing: (req) => new Promise((resolve, reject) => {
+    User.findAll({
+      where: {
+        role: { [Op.ne]: 'admin' },
+        id  : { [Op.ne]: req.user.id },
+      },
+      attributes: {
+        include: [
+          [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.FollowingId = User.id)'), 'FollowshipCount']],
+      },
+      order: [[sequelize.literal('FollowshipCount'), 'DESC']],
+      limit: 10,
+    }).then((users) => {
+      users = users.map((user) => ({
+        ...user.dataValues,
+        isFollowed: req.user.Followings.map((d) => d.id).includes(user.id),
+      }));
+
+      return resolve(users);
+    });
+  }),
+
 };
 module.exports = usersController;
