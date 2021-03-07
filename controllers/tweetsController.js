@@ -3,6 +3,7 @@ const sequelize = require('sequelize');
 const moment = require('moment');
 const db = require('../models');
 const usersController = require('./usersController');
+
 moment.locale('zh-TW');
 
 const {
@@ -67,7 +68,7 @@ const tweetsController = {
   },
 
   getReplyPage: async (req, res) => {
-    const tweetId = Number(req.params.tweetId)
+    const tweetId = Number(req.params.tweetId);
     const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
     const user = await usersController.getUserDetails(userId);
     Tweet.findByPk(tweetId, {
@@ -95,7 +96,7 @@ const tweetsController = {
 
   creatReply: (req, res) => {
     const tweetId = Number(req.params.tweetId);
-    const comment = req.body.description;
+    const { comment } = req.body;
     const userId = helpers.getUser(req).id;
     if (!comment) {
       req.flash('error_messages', '請輸入文字再送出推文');

@@ -48,7 +48,7 @@
             <div class="item-header d-flex d-row d-flex align-items-center">
               <div class="name pr-2">
                 <a href="/users/{{this.User.id}}/tweets" class="text-dark text-decoration-none">
-                <strong>{{this.User.name}}</strong>
+               {{this.User.name}}
                 </a>
               </div>
               <div class="info">
@@ -104,7 +104,7 @@
                   <div class="reply-part d-flex align-items-start">
                     <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
                     <form action="/tweets/{{tweet.id}}/replies" method="POST" class="w-100">
-                      <textarea class="w-100" name="description" rows="5" cols="90" placeholder="推你的回覆? (字數限制140字)"></textarea>
+                      <textarea class="w-100" name="comment" rows="5" cols="90" placeholder="推你的回覆? (字數限制140字)"></textarea>
                       <div class="textarea-util d-flex justify-content-between">
                       <div class="text-counter text-lightgrey">0/140</div>
                       <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">回覆</button>
