@@ -1,29 +1,75 @@
 <div class="row">
   <div>
     <h1>後台管理系統</h1>
-    <a href="/admin/tweets">Tweet總覽</a>
     <br />
     <br />
+    <div style="font-weight: bold;font-size: 18px;">
+
+      <div style="margin-top: 51px;">
+        <a href="/admin/tweets">推文總覽</a>
+      </div>
+
+      <div style="margin-top: 51px;">
+        <a href="/admin/users">使用者清單</a>
+      </div>
+
+      {{#if user}}
+
+
+      <div style="margin-top: 844px;">
+        <a href="/logout" style="color: black; text-decoration: none;">
+          <span><i class="fas fa-sign-out-alt fa-rotate-180"></i></span>
+          <span style="margin-left: 23px;">登出</span>
+        </a>
+      </div>
+
+      {{/if}}
+
+
+    </div>
+
   </div>
   {{#each users}}
-  <div class="col-md-4">
-    <div class="card mb-4 shadow-sm">
-      <img class="card-img-top" src="{{this.cover}}" alt="Card image cap" width="286px" height="180px">
-      <div class="card-body">
-        <p class="card-text">
-          <a href="/users/{{this.id}}">
-            {{this.name}}
-          </a>
-        </p>
-        <span class="badge badge-secondary">{{this.introduction}}</span>
-        <p class="card-text">{{this.description}}</p>
-        <p class="card-text"><small class="text-muted"><a
-              href="/users/{{this.id}}/followings">{{totalFollowings}}個跟隨中</a><a
-              href="/users/{{this.id}}/followers">{{totalFollowers}}位跟隨者</a></small></p>
+  <div class="user-info">
+    <div class="cover-photo">
+      <img src="{{this.cover}}" style="object-fit: cover;width: 100%; height: 100%" alt="...">
+    </div>
+
+    <div class="photo">
+      <img src="{{this.avatar}}" style="width: 140px; height: 140px; border: 4px solid #FFFFFF; border-radius: 50%; 
+        ">
+    </div>
+    <div class="d-flex flex-column" style="margin-top: 19px; margin-left: 15px">
+      <span style="font-weight: 900; font-size: 19px; color: #1C1C1C;">{{this.name}}</span>
+      <span style="font-weight: 500; font-size: 15px; color: #657786;">{{this.account}}</span>
+    </div>
+
+    <div style="font-size: 14px; max-width: 600px; margin: 10px 15px 0px 15px;">
+      <span style="width: 570px; word-wrap: break-word">{{this.introduction}}</span>
+    </div>
+
+    <div class="d-flex" style="margin-top: 10px; margin-left: 15px; font-weight: 500;font-size: 14px;">
+      <div>
+        <span style="color: #1C1C1C">{{this.FollowingCount}}</span> <span style="color: #657786;">個跟隨中</span>
       </div>
+      <div style="margin-left: 20px;">
+        <span style="color: #1C1C1C">{{this.FollowerCount}}</span> <span style="color: #657786;">位跟隨者</span>
+      </div>
+
+    </div>
+    <div>
+      <button class="ml-2" type="submit" style="border: none; background: none;" data-toggle="modal"
+        data-target="#reply{{this.id}}">
+        <i class="far fa-comment"></i>
+        <span>{{this.tweetsCount}}</span>
+      </button>
+      <button type="submit" style="border: none; background: none;">
+        <i class="fas fa-heart" style="color: red;"></i>
+        <span>{{this.likesCount}}</span>
+      </button>
     </div>
   </div>
   {{/each}}
 </div>
 <br />
-<br / <div class="row">
+<br />
