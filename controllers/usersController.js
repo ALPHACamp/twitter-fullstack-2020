@@ -280,7 +280,7 @@ const usersController = {
     });
   },
   // 使用者的被追蹤清單
-  getFollowers: async (req, res) => {
+  getFollowersPage: async (req, res) => {
     const userId = Number(req.params.userId);
     const [user, userFollowers] = await Promise.all([
       usersController.getUserDetails(userId),
