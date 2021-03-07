@@ -167,15 +167,14 @@ const usersController = {
     });
   },
   // 使用者個人推文及回覆清單
-  getSelfTweetsReplies: async (req, res) => {
-    const user = await User.findByPk(req.params.id);
-
+  getTweetsReplies: async (req, res) => {
+    const userId = Number(req.params.userId);
     // Gathered list of tweets where user tweeted and/or replied
     const [selfTweets, selfReplies] = await Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
         where: {
-          UserId: user.id,
+          UserId: userId,
         },
         include: [
           User,
@@ -197,7 +196,7 @@ const usersController = {
       Reply.findAll({
         order: [['createdAt', 'DESC']],
         where: {
-          UserId: user.id,
+          UserId: userId,
         },
         include: [
           {
