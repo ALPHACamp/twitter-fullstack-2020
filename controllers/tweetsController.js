@@ -90,7 +90,7 @@ const tweetsController = {
 
   creatReply: (req, res) => {
     const { tweetId } = req.params
-    const { comment } = req.body;
+    const comment = req.body.description;
     if (!comment) {
       req.flash('error_messages', '請輸入文字再送出推文');
       return res.redirect(`/tweets/${tweetId}/replies`);
@@ -100,7 +100,7 @@ const tweetsController = {
       return res.redirect(`/tweets/${tweetId}/replies`);
     }
     return Reply.create({
-      comment: req.body.comment,
+      comment    : comment,
       UserId     : helpers.getUser(req).id,
       TweetId    : req.params.tweetId
     }).then((reply) => {

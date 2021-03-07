@@ -21,11 +21,11 @@
     <div class="item-other d-flex flex-row pt-2">
         <span class="pr-3 mr-5" data-toggle="modal" data-target="#reply-create-modal"><i class="far fa-comment pr-2"></i>{{this.ReplyCount}}</span>
       {{#if tweet.isLiked }}
-        <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST" class="ml-3 pl-3">
+        <form action="/tweets/{{tweet.id}}/unlike?_method=DELETE" method="POST" class="ml-3 pl-3">
           <button class="btn btn-link text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i></button>
         </form>
       {{else}}
-        <form action="/tweets/{{this.id}}/like/" method="POST" class="ml-3 pl-3">
+        <form action="/tweets/{{tweet.id}}/like/" method="POST" class="ml-3 pl-3">
           <button class="btn btn-link text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i></button>
         </form>
       {{/if}}
@@ -91,7 +91,7 @@
                   <div class="reply-part d-flex align-items-start">
                     <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
                     <form action="/tweets/{{tweet.id}}/replies" method="POST" class="w-100">
-                      <textarea class="w-100" name="comment" rows="5" cols="90" placeholder="推你的回覆? (字數限制140字)"></textarea>
+                      <textarea class="w-100" name="description" rows="5" cols="90" placeholder="推你的回覆? (字數限制140字)"></textarea>
                       <div class="textarea-util d-flex justify-content-between">
                       <div class="text-counter text-lightgrey">0/140</div>
                       <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">回覆</button>
