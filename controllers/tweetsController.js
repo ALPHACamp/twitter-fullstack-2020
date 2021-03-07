@@ -2,7 +2,7 @@ const { Op } = require('sequelize');
 const sequelize = require('sequelize');
 const moment = require('moment');
 const db = require('../models');
-
+const usersController = require('./usersController');
 moment.locale('zh-TW');
 
 const {
@@ -21,12 +21,12 @@ const tweetsController = {
         User      : tweet.dataValues.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+        isLiked   : helpers.getUser(req).LikedTweets.map((d) => d.id).includes(tweet.id),
       }));
       User.findAll({
         where: {
           role: { [Op.ne]: 'admin' },
-          id  : { [Op.ne]: req.user.id },
+          id  : { [Op.ne]: helpers.getUser(req).id },
         },
         attributes: {
           include: [
@@ -37,7 +37,7 @@ const tweetsController = {
       }).then((users) => {
         const usersObj = users.map((user) => ({
           ...user.dataValues,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(user.id),
+          isFollowed: helpers.getUser(req).Followings.map((d) => d.id).includes(user.id),
         }));
         return res.render('index', {
           tweets: tweetsObj,
@@ -66,8 +66,11 @@ const tweetsController = {
     });
   },
 
-  getReplyPage: (req, res) => {
-    Tweet.findByPk(req.params.tweetId, {
+  getReplyPage: async (req, res) => {
+    const tweetId = Number(req.params.tweetId)
+    const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
+    const user = await usersController.getUserDetails(userId);
+    Tweet.findByPk(tweetId, {
       include: [User, Like, { model: Reply, include: [User] }],
       order  : [[Reply, 'createdAt', 'ASC']],
     })
@@ -78,7 +81,7 @@ const tweetsController = {
         ...tweet.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-        isLiked   : req.user.LikedTweets.map((d) => d.id).includes(tweet.id),
+        isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
         createdAt : tweetTime,
       };
       return res.render('index', {
@@ -91,8 +94,9 @@ const tweetsController = {
   },
 
   creatReply: (req, res) => {
-    const { tweetId } = req.params;
+    const tweetId = Number(req.params.tweetId);
     const comment = req.body.description;
+    const userId = helpers.getUser(req).id;
     if (!comment) {
       req.flash('error_messages', '請輸入文字再送出推文');
       return res.redirect(`/tweets/${tweetId}/replies`);
@@ -103,8 +107,8 @@ const tweetsController = {
     }
     return Reply.create({
       comment,
-      UserId : helpers.getUser(req).id,
-      TweetId: req.params.tweetId,
+      UserId : userId,
+      TweetId: tweetId,
     }).then((reply) => {
       req.flash('success_messages', '回覆成功!');
       res.redirect(`/tweets/${tweetId}/replies`);

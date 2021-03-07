@@ -466,7 +466,7 @@ const usersController = {
     User.findAll({
       where: {
         role: { [Op.ne]: 'admin' },
-        id  : { [Op.ne]: req.user.id },
+        id  : { [Op.ne]: helpers.getUser(req).id },
       },
       attributes: {
         include: [
