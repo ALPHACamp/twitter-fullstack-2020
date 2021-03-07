@@ -159,8 +159,10 @@ const usersController = {
       }));
 
       return res.render('index', {
-        notMain   : true,
-        title     : `${user.name}\n${tweets.length} 推文`,
+        title: {
+          user_name       : user.name,
+          user_tweetsCount: tweets.length,
+        },
         user,
         selfTweets: tweetsObj,
       });
@@ -169,6 +171,9 @@ const usersController = {
   // 使用者個人推文及回覆清單
   getTweetsReplies: async (req, res) => {
     const userId = Number(req.params.userId);
+    const likedTweets = await usersController.getUserLikedTweets(userId);
+    const user = helpers.getUser(req);
+
     // Gathered list of tweets where user tweeted and/or replied
     const [selfTweets, selfReplies] = await Promise.all([
       Tweet.findAll({
@@ -188,7 +193,7 @@ const usersController = {
           User      : tweet.User.dataValues,
           ReplyCount: tweet.Replies.length,
           LikeCount : tweet.Likes.length,
-          isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
+          isLiked   : (likedTweets || []).map((d) => d.id).includes(tweet.id),
         }));
         return tweetsObj;
       }),
@@ -215,7 +220,7 @@ const usersController = {
           User       : reply.dataValues.Tweet.User.dataValues,
           ReplyCount : reply.dataValues.Tweet.Replies.length,
           LikeCount  : reply.dataValues.Tweet.Likes.length,
-          isLiked    : req.user.LikedTweets.map((d) => d.id).includes(reply.dataValues.Tweet.id),
+          isLiked    : likedTweets.map((d) => d.id).includes(reply.dataValues.Tweet.id),
         }));
 
         return tweetsObj;
@@ -226,10 +231,12 @@ const usersController = {
     const uniqueTweets = [...new Map(tweets.map((item) => [item.id, item])).values()];
 
     return res.render('index', {
-      notMain          : true,
       user,
       selfTweetsReplies: uniqueTweets,
-      title            : `${user.name}\n${tweets.length} 推文`,
+      title            : {
+        user_name       : user.name,
+        user_tweetsCount: tweets.length,
+      },
     });
   },
   // 使用者喜歡的內容清單
@@ -257,26 +264,48 @@ const usersController = {
       );
 
       return res.render('index', {
-        notMain: true,
         user,
         likedTweets,
-        title  : `${user.name}\n${tweets.length} 推文`,
+        title: {
+          user_name       : user.name,
+          user_tweetsCount: tweets.length,
+        },
       });
     });
   },
   // 使用者的追蹤清單
   getFollowingsPage: async (req, res) => {
-    const [userFollowings, topFollowings] = await Promise.all([
-      usersController.getUserFollowings(getUser(req).id, req),
-      usersController.getTopFollowing(req),
+    const userId = Number(req.params.userId);
+    const [user, userFollowings, topFollowings] = await Promise.all([
+      usersController.getUserDetails(userId),
+      usersController.getUserFollowings(helpers.getUser(req).id, req),
     ]);
 
-    return res.render('index', { user: getUser(req), userFollowings, topFollowings });
+    return res.render('index', {
+      user,
+      userFollowings,
+      title: {
+        user_name       : user.name,
+        user_tweetsCount: user.tweetCount,
+      },
+    });
   },
   // 使用者的被追蹤清單
   getFollowers: async (req, res) => {
-    const userFollowers = await usersController.getUserFollowers(getUser(req).id, req);
-    return res.render('index', { user: getUser(req), userFollowers });
+    const userId = Number(req.params.userId);
+    const [user, userFollowers] = await Promise.all([
+      usersController.getUserDetails(userId),
+      usersController.getUserFollowers(userId, req),
+    ]);
+
+    return res.render('index', {
+      user,
+      userFollowers,
+      title: {
+        user_name       : user.name,
+        user_tweetsCount: user.tweetCount,
+      },
+    });
   },
 
   // 使用者編輯個人資料
@@ -358,6 +387,20 @@ const usersController = {
       return resolve(user.toJSON());
     });
   }),
+  getUserLikedTweets: (userId) => new Promise((resolve, reject) => {
+    // Return userID's list of liked tweets
+    User.findByPk(userId, {
+      include: [
+        { model: Tweet, as: 'LikedTweets' },
+      ],
+    })
+    .then((user) => {
+      const likedTweetsArr = user.dataValues.LikedTweets.map((tweet) => ({
+        ...tweet.dataValues,
+      }));
+      return resolve(likedTweetsArr);
+    });
+  }),
   getUserFollowers: (userId, req) => new Promise((resolve, reject) => {
     User.findByPk(userId, {
       include: [
@@ -375,7 +418,7 @@ const usersController = {
         cover       : follower.dataValues.cover,
         role        : follower.dataValues.role,
         createdAt   : follower.dataValues.createdAt,
-        isFollowed  : req.user.Followings.map((d) => d.id).includes(following.id),
+        isFollowed  : req.user.Followings.map((d) => d.id).includes(follower.id),
       }));
 
       return resolve(followersArr);

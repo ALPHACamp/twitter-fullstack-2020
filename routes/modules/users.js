@@ -27,9 +27,9 @@ router.get('/users/:userId/tweetsReplies/', authenticated, usersController.getTw
 // 使用者喜歡的內容清單
 router.get('/users/:id/likes', authenticated, usersController.getSelfLikes);
 // 使用者的追蹤清單
-router.get('/users/:id/followings', authenticated, usersController.getFollowingsPage);
+router.get('/users/:userId/followings', authenticated, usersController.getFollowingsPage);
 // 使用者的被追蹤清單
-router.get('/users/:id/followers', authenticated, usersController.getFollowers);
+router.get('/users/:userId/followers', authenticated, usersController.getFollowers);
 
 router.put('/user/self/edit', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.putUser);
 
