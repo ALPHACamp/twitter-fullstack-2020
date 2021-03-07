@@ -1,6 +1,8 @@
 const { Op } = require('sequelize');
 const sequelize = require('sequelize');
 const db = require('../models');
+const moment = require('moment');
+moment.locale('zh-TW');
 
 const {
   Tweet, Reply, Like, User,
@@ -70,9 +72,7 @@ const tweetsController = {
     })
     .then((tweet) => {
       const time = tweet.createdAt;
-      const noon = new Date('Y-m-d 12:00:00');
-      const ampm = (time.getTime() < noon.getTime()) ? '上午' : '下午';
-      const tweetTime = `${ampm} ${time.toLocaleString('zh-TW', { hour: 'numeric', minute: 'numeric', hour12: true }).slice(0, 4)} ・ ${time.getFullYear()}年${time.getMonth() + 1}月${time.getDate()}日`;
+      const tweetTime = ` ${moment(time).format('a h:MM')}・ ${moment(time).format('LL')}`;
       const tweetObj = {
         ...tweet.dataValues,
         ReplyCount: tweet.Replies.length,
