@@ -4,10 +4,11 @@
   </a>
   <div>
     <div class="item-header d-flex d-row d-flex align-items-center">
-      <div class="name w-100 pr-2">{{this.name}}</div>
+      <div class="name w-100 pr-2"><a href="/users/{{this.id}}/tweets" class="text-dark text-decoration-none">{{this.name}}</a></div>
     </div>
     <div class="item-username">
-      <span class="username text-lightgrey">@{{this.account}}</span>
+      <a href="/users/{{this.id}}/tweets" class="text-dark text-decoration-none">
+      <span class="username text-lightgrey">@{{this.account}}</span></a>
     </div>
     <div class="item-desc py-1">
       {{this.introduction}}
