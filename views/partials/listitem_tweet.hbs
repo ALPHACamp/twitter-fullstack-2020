@@ -26,11 +26,11 @@
       </a>
       {{#if this.isLiked }}
       <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST" class="ml-3 pl-3">
-        <a class="text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i>{{this.LikeCount}}</a>
+        <button class="btn btn-like text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i>{{this.LikeCount}}</button>
       </form>
       {{else}}
       <form action="/tweets/{{this.id}}/like/" method="POST" class="ml-3 pl-3">
-        <a class="text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i>{{this.LikeCount}}</a>
+        <button class="btn btn-like text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i>{{this.LikeCount}}</button>
       </form>
       {{/if}}
     </div>
