@@ -1,0 +1,52 @@
+{{!-- tabs display --}}
+<ul class="nav nav-tabs border-0">
+  {{#if (isdefined selfTweets)}}
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/tweets/">推文</a>
+    </li>
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/tweetsReplies">推文與回覆</a>
+    </li>
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+    </li>
+  {{/if}}
+  {{#if (isdefined selfTweetsReplies)}}
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/tweets/">推文</a>
+    </li>
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/tweetsReplies">推文與回覆</a>
+    </li>
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+    </li>
+  {{/if}}
+  {{#if (isdefined likedTweets)}}
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/tweets/">推文</a>
+    </li>
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/tweetsReplies">推文與回覆</a>
+    </li>
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
+    </li>
+  {{/if}}
+  {{#if (isdefined userFollowings)}}
+    <li class="nav-item text-center active">
+      <a class="nav-link" href="/users/{{user.id}}/followings">正在追蹤</a>
+    </li>
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/followers">跟隨者</a>
+    </li>
+  {{/if}}
+  {{#if (isdefined userFollowers)}}
+      <li class="nav-item text-center">
+        <a class="nav-link" href="/users/{{user.id}}/followings">正在追蹤</a>
+      </li>
+      <li class="nav-item text-center active">
+        <a class="nav-link" href="/users/{{user.id}}/followers">跟隨者</a>
+      </li>
+  {{/if}}
+</ul>

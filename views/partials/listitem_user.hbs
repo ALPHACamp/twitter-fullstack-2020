@@ -1,0 +1,26 @@
+<div class="list-item d-flex align-items-start p-3 pointer tweet-gray" style="min-height: 100px;">
+  <a class="profile-img mr-3" href="/users/{{this.id}}/tweets">
+    <img class="img-fluid rounded-circle" src="{{this.avatar}}" alt="">
+  </a>
+  <div>
+    <div class="item-header d-flex d-row d-flex align-items-center">
+      <div class="name w-100 pr-2"><a href="/users/{{this.id}}/tweets" class="text-dark text-decoration-none">{{this.name}}</a></div>
+    </div>
+    <div class="item-username">
+      <a href="/users/{{this.id}}/tweets" class="text-dark text-decoration-none">
+      <span class="username text-lightgrey">@{{this.account}}</span></a>
+    </div>
+    <div class="item-desc py-1">
+      {{this.introduction}}
+    </div>
+  </div>
+  {{#if this.isFollowed}}
+    <form action="/following/{{this.id}}?_method=DELETE" method="POST" class="d-flex ml-auto">
+      <button type="submit" class="btn btn-sm btn-orange rounded-pill">正在跟隨</button>
+    </form>
+  {{else}}
+    <form action="/following/{{this.id}}" method="POST" class="d-flex ml-auto">
+      <button type="submit" class="btn btn-outline-orange btn-sm rounded-pill">跟隨</button>
+    </form>
+  {{/if}}
+</div>

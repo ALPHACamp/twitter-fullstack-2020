@@ -1,6 +1,11 @@
 body {
   background: #fff;
 }
+
+p, a, div, span, button {
+  font-size: 15px;
+}
+
 /* HELPER CLASSES */
 .max-vh-100 {
   max-height: 100vh;
@@ -59,6 +64,11 @@ body {
   color:#ff9800;
 }
 
+.btn-like {
+  font-size: 15px !important;
+  margin-top: -3px;
+}
+
 .tweet-gray:hover {
   background-color:#eeeff1 ;
 }
@@ -77,6 +87,11 @@ body {
 .item-header .info,
 .item-other {
   color: rgba(0, 0, 0, .525);
+}
+
+.name {
+  font-weight: 600;
+  line-height: 1.1;
 }
 
 /* Main Frame */
@@ -147,19 +162,22 @@ body {
 }
 
 #column_main .nav-tabs .nav-item {
-  width: 15%;
+  min-width: 120px;
 }
 
 #column_main .nav-tabs .nav-item .nav-link {
   color: rgba(0, 0, 0, .525);
+  box-shadow: 0 2px 0 0 transparent;
+  border: none;
 }
 
 #column_main .nav-tabs .nav-item.active .nav-link {
-  border-bottom: 2px solid #ff6600;
+  box-shadow: 0 2px 0 0 #ff6600;
 }
 
 #column_main .nav-tabs .nav-item.active .nav-link:hover {
-  border-bottom: 2px solid #ff6600;
+  /* border-bottom: 2px solid #ff6600; */
+  /* box-shadow: 0 2px 0 0 #ff6600; */
   text-shadow:
     -0.2px -0.2px 0 #ff6600,
     0.2px -0.2px 0 #ff6600,
@@ -172,7 +190,7 @@ body {
 }
 
 #column_main .nav-tabs .nav-item .nav-link:hover {
-  border: none;
+  /* box-shadow: 0 2px 0 0 #ff6600; */
   text-shadow:
     -0.2px -0.2px 0 rgba(0, 0, 0, .25),
     0.2px -0.2px 0 rgba(0, 0, 0, .25),
@@ -202,16 +220,37 @@ body {
   font-size: 15px;
 }
 
-#mainblock-list .list-item:not(:last-child) {
+.list-item:not(:last-child) {
   border-bottom: 2px solid rgba(0, 0, 0, .125);
 }
 
-#mainblock-list .list-item img {
-  max-height: 70px;
+.list-item img {
+  max-height: 60px;
 }
 
-#mainblock-list .list-item .item-other > *:not(:last-of-type) {
+.list-item .item-other > *:not(:last-of-type) {
   margin-right: 3rem;
+}
+
+.list-item .profile-img {
+  min-width: 60px;
+}
+
+#column_side .list-item {
+  background-color: rgba(0,0,0,.03);
+}
+
+#column_side .list-item:not(:last-child) {
+  border-width: 1px;
+}
+
+#column_side .list-item > div, #column_side .list-item > form {
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+#column_side .list-item .item-desc {
+  display: none;
 }
 
 /* Toast Message for flash message */

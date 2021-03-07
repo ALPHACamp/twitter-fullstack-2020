@@ -1,10 +1,10 @@
 <div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3" style="white-space: pre-wrap;">
   {{!-- TODO: 如果不是主頁就需要顯示那個頁面的標題 --}}
-  {{#if notMain}}
-  <a class="nav-link" href="/tweets"><i class="fas fa-arrow-left pr-2"></i></a>
-  {{title}}
+  {{#if (isdefined title)}}
+    <a class="nav-link" href="/tweets"><i class="fas fa-arrow-left pr-2"></i></a>
+    {{>column_pageTitle}}
   {{else}}
-  首頁
+    <h5>首頁</h5>
   {{/if}}
 </div>
 
@@ -22,6 +22,7 @@
       </form>
     </div>
   {{else}}
+    {{!-- user information block --}}
     {{#if (isdefined selfTweets)}}
       {{>column_main_user}}
     {{/if}}
@@ -30,6 +31,23 @@
     {{/if}}
     {{#if (isdefined likedTweets)}}
       {{>column_main_user}}
+    {{/if}}
+
+    {{!-- tab nav block --}}
+    {{#if (isdefined selfTweets)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+    {{#if (isdefined selfTweetsReplies)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+    {{#if (isdefined likedTweets)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+    {{#if (isdefined userFollowings)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+    {{#if (isdefined userFollowers)}}
+      {{>listitem_tabnav}}
     {{/if}}
   {{/if}}
 </div>
@@ -73,6 +91,28 @@
     {{#if likedTweets}}
       {{#each likedTweets}}
         {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User's following list --}}
+  {{#if (isdefined userFollowings)}}
+    {{#if userFollowings}}
+      {{#each userFollowings}}
+        {{>listitem_user}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User's follower list --}}
+  {{#if (isdefined userFollowers)}}
+    {{#if userFollowers}}
+      {{#each userFollowers}}
+        {{>listitem_user}}
       {{/each}}
     {{else}}
       {{>listitem_noitem}}

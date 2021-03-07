@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const db = require('../models');
 
 const {
-  User, Tweet, Like, Reply,
+  User, Tweet,
 } = db;
 
 passport.use(new LocalStrategy(
@@ -28,9 +28,6 @@ passport.serializeUser((user, cb) => {
 passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
     include: [
-      { model: Tweet },
-      { model: Like },
-      { model: Reply },
       { model: Tweet, as: 'LikedTweets' },
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' },
@@ -39,16 +36,9 @@ passport.deserializeUser((id, cb) => {
   .then((user) => {
     // Assign user analytics
     Object.assign(user.dataValues, {
-      tweetCount    : user.dataValues.Tweets.length,
-      replyCount    : user.dataValues.Replies.length,
-      likeCount     : user.dataValues.Likes.length,
       followingCount: user.dataValues.Followings.length,
       followerCount : user.dataValues.Followers.length,
     });
-    // Remove unnecessary large payload
-    delete user.dataValues.Tweets;
-    delete user.dataValues.Replies;
-    delete user.dataValues.Likes;
 
     return cb(null, user.toJSON());
   });

@@ -1,0 +1,10 @@
+{{#if (isdefined userPage)}}
+<div class="d-flex flex-column">
+  <h5 class="m-0">{{title.user_name}}</h5>
+  <small>{{title.user_tweetsCount}} 推文</small>
+</div>
+{{else}}
+<div class="d-flex flex-column">
+  <h5 class="m-0">{{title.text}}</h5>
+</div>
+{{/if}}
