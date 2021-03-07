@@ -135,13 +135,13 @@ const usersController = {
   },
 
   // 使用者個人推文清單
-  getSelfTweets: async (req, res) => {
-    const user = await User.findByPk(req.params.id);
-
+  getTweets: (req, res) => {
+    const userId = Number(req.params.userId);
+    const user = helpers.getUser(req);
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       where: {
-        UserId: user.id,
+        UserId: userId,
       },
       include: [
         User,
@@ -335,6 +335,29 @@ const usersController = {
   },
 
   // Helper functions
+  getUserDetails: (userId) => new Promise((resolve, reject) => {
+    User.findByPk(userId, {
+      include: [
+        { model: Tweet },
+        { model: Like },
+        { model: Reply },
+      ],
+    })
+    .then((user) => {
+      // Assign user analytics
+      Object.assign(user.dataValues, {
+        tweetCount: user.dataValues.Tweets.length,
+        replyCount: user.dataValues.Replies.length,
+        likeCount : user.dataValues.Likes.length,
+      });
+      // Remove unnecessary large payload
+      delete user.dataValues.Tweets;
+      delete user.dataValues.Replies;
+      delete user.dataValues.Likes;
+
+      return resolve(user.toJSON());
+    });
+  }),
   getUserFollowers: (userId, req) => new Promise((resolve, reject) => {
     User.findByPk(userId, {
       include: [

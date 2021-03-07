@@ -21,7 +21,7 @@ router.get('/users/:id/edit', authenticated, usersController.getAccount);
 router.put('/users/:id/edit', authenticated, usersController.putAccount);
 
 // 使用者個人推文清單
-router.get('/users/:id/tweets', authenticated, usersController.getSelfTweets);
+router.get('/users/:userId/tweets', authenticated, usersController.getTweets);
 // 使用者個人推文及回覆清單
 router.get('/users/:userId/tweetsReplies/', authenticated, usersController.getTweetsReplies);
 // 使用者喜歡的內容清單
