@@ -240,37 +240,26 @@ const usersController = {
     });
   },
   // 使用者喜歡的內容清單
-  getSelfLikes: async (req, res) => {
-    const user = await User.findByPk(req.params.id, { include: [Like] });
+  getLikesPage: async (req, res) => {
+    const userId = Number(req.params.userId);
+    const [user, userLikedTweets] = await Promise.all([
+      usersController.getUserDetails(userId),
+      usersController.getUserLikedTweets(userId),
+    ]);
 
-    Tweet.findAll({
-      order  : [['createdAt', 'DESC']],
-      include: [
-        User,
-        Reply,
-        Like,
-      ],
-    })
-    .then((tweets) => {
-      const tweetsObj = tweets.map((tweet) => ({
-        ...tweet.dataValues,
-        User      : tweet.User.dataValues,
-        ReplyCount: tweet.Replies.length,
-        LikeCount : tweet.Likes.length,
-        isLiked   : user.Likes.map((d) => d.TweetId).includes(tweet.id),
-      }));
-      const likedTweets = tweetsObj.filter(
-        (tweet) => (tweet.LikeCount > 0 && tweet.isLiked === true),
-      );
-
-      return res.render('index', {
-        user,
-        likedTweets,
-        title: {
-          user_name       : user.name,
-          user_tweetsCount: tweets.length,
-        },
-      });
+    const tweetsObj = userLikedTweets.map((tweet) => ({
+      ...tweet,
+      ReplyCount: tweet.Replies.length,
+      LikeCount : tweet.Likes.length,
+      isLiked   : user.Likes.map((d) => d.TweetId).includes(tweet.id),
+    }));
+    return res.render('index', {
+      user,
+      likedTweets: tweetsObj,
+      title      : {
+        user_name       : user.name,
+        user_tweetsCount: user.tweetCount,
+      },
     });
   },
   // 使用者的追蹤清單
@@ -382,21 +371,34 @@ const usersController = {
       // Remove unnecessary large payload
       delete user.dataValues.Tweets;
       delete user.dataValues.Replies;
-      delete user.dataValues.Likes;
 
       return resolve(user.toJSON());
     });
   }),
   getUserLikedTweets: (userId) => new Promise((resolve, reject) => {
-    // Return userID's list of liked tweets
-    User.findByPk(userId, {
+    Like.findAll({
+      where: {
+        UserId: userId,
+      },
       include: [
-        { model: Tweet, as: 'LikedTweets' },
+        {
+          model  : Tweet,
+          include: [
+            User,
+            Reply,
+            Like,
+          ],
+        },
       ],
     })
-    .then((user) => {
-      const likedTweetsArr = user.dataValues.LikedTweets.map((tweet) => ({
+    .then((likes) => {
+      let likedTweetsArr = likes.map((like) => ({
+        ...like.Tweet,
+      }));
+      likedTweetsArr = likedTweetsArr.map((tweet) => ({
         ...tweet.dataValues,
+        ReplyCount: tweet.Replies.length,
+        LikeCount : tweet.Likes.length,
       }));
       return resolve(likedTweetsArr);
     });

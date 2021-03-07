@@ -25,7 +25,7 @@ router.get('/users/:userId/tweets', authenticated, usersController.getTweets);
 // 使用者個人推文及回覆清單
 router.get('/users/:userId/tweetsReplies/', authenticated, usersController.getTweetsReplies);
 // 使用者喜歡的內容清單
-router.get('/users/:id/likes', authenticated, usersController.getSelfLikes);
+router.get('/users/:userId/likes', authenticated, usersController.getLikesPage);
 // 使用者的追蹤清單
 router.get('/users/:userId/followings', authenticated, usersController.getFollowingsPage);
 // 使用者的被追蹤清單
