@@ -23,7 +23,7 @@ router.put('/users/:id/edit', authenticated, usersController.putAccount);
 // 使用者個人推文清單
 router.get('/users/:userId/tweets', authenticated, usersController.getTweetsPage);
 // 使用者個人推文及回覆清單
-router.get('/users/:userId/tweetsReplies', authenticated, usersController.getTweetsReplies);
+router.get('/users/:userId/tweetsReplies', authenticated, usersController.getTweetsRepliesPage);
 // 使用者喜歡的內容清單
 router.get('/users/:userId/likes', authenticated, usersController.getLikesPage);
 // 使用者的追蹤清單

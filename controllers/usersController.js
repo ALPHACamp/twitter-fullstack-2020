@@ -170,10 +170,10 @@ const usersController = {
     });
   },
   // 使用者個人推文及回覆清單
-  getTweetsReplies: async (req, res) => {
-    const userId = Number(req.params.userId);
+  getTweetsRepliesPage: async (req, res) => {
+    const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
     const likedTweets = await usersController.getUserLikedTweets(userId);
-    const user = helpers.getUser(req);
+    const user = await usersController.getUserDetails(userId);
 
     // Gathered list of tweets where user tweeted and/or replied
     const [selfTweets, selfReplies] = await Promise.all([
@@ -236,13 +236,13 @@ const usersController = {
       selfTweetsReplies: uniqueTweets,
       title            : {
         user_name       : user.name,
-        user_tweetsCount: tweets.length,
+        user_tweetsCount: user.tweetCount,
       },
     });
   },
   // 使用者喜歡的內容清單
   getLikesPage: async (req, res) => {
-    const userId = Number(req.params.userId);
+    const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
     const [user, userLikedTweets] = await Promise.all([
       usersController.getUserDetails(userId),
       usersController.getUserLikedTweets(userId),
