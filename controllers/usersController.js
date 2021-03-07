@@ -135,9 +135,10 @@ const usersController = {
   },
 
   // 使用者個人推文清單
-  getTweets: (req, res) => {
-    const userId = Number(req.params.userId);
-    const user = helpers.getUser(req);
+  getTweetsPage: async (req, res) => {
+    const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
+    const user = await usersController.getUserDetails(userId);
+
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       where: {
@@ -359,14 +360,18 @@ const usersController = {
         { model: Tweet },
         { model: Like },
         { model: Reply },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
       ],
     })
     .then((user) => {
       // Assign user analytics
       Object.assign(user.dataValues, {
-        tweetCount: user.dataValues.Tweets.length,
-        replyCount: user.dataValues.Replies.length,
-        likeCount : user.dataValues.Likes.length,
+        tweetCount    : user.dataValues.Tweets.length,
+        replyCount    : user.dataValues.Replies.length,
+        likeCount     : user.dataValues.Likes.length,
+        followingCount: user.dataValues.Followings.length,
+        followerCount : user.dataValues.Followers.length,
       });
       // Remove unnecessary large payload
       delete user.dataValues.Tweets;

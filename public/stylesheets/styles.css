@@ -220,7 +220,7 @@ p, a, div, span, button {
 }
 
 .list-item img {
-  max-height: 70px;
+  max-height: 60px;
 }
 
 .list-item .item-other > *:not(:last-of-type) {
