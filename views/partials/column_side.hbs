@@ -7,10 +7,15 @@
     <li class="list-group-item">
       <div class="d-flex justify-content-between">
         <div class="d-flex align-item-start">
-         <img class="img-fluid rounded-circle mr-3 my-auto" src="{{this.avatar}}" alt="" style="max-height: 70px;">
+          <a href="/users/{{this.id}}/tweets">
+            <img class="img-fluid rounded-circle mr-3" src="{{this.avatar}}" alt=""style="max-height: 70px;">
+          </a>
+ 
         <div class="name pr-2 align-items-center my-auto">
-          <strong>{{this.name}}</strong>
-          <div class="info"><span class="username">@{{this.account}}</span></div>
+          <a href="/users/{{this.id}}/tweets"><strong>{{this.name}}</strong></a>
+          <div class="info"><span class="username"><a href="/users/{{this.id}}/tweets">@{{this.account}}</span></a>
+          </div>
+          </a>
         </div>
         </div>
         <div class="my-auto">
