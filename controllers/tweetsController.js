@@ -48,18 +48,18 @@ const tweetsController = {
     const { description } = req.body;
     if (!description.trim()) {
       req.flash('error_messages', '請輸入文字再送出推文');
-      return res.redirect('/');
+      return res.redirect('/tweets');
     }
     if (description.length > 140) {
       req.flash('error_messages', '推文字數不能超過140字');
-      return res.redirect('/');
+      return res.redirect('/tweets');
     }
     return Tweet.create({
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
       req.flash('success_messages', '推文成功!');
-      res.redirect('/');
+      res.redirect('/tweets');
     });
   },
 
@@ -85,6 +85,27 @@ const tweetsController = {
         notMain: true,
         title  : '推文',
       });
+    });
+  },
+
+  creatReply: (req, res) => {
+    const { tweetId } = req.params
+    const { comment } = req.body;
+    if (!comment) {
+      req.flash('error_messages', '請輸入文字再送出推文');
+      return res.redirect(`/tweets/${tweetId}/replies`);
+    }
+    if (comment.length > 140) {
+      req.flash('error_messages', '回覆字數不能超過140字');
+      return res.redirect(`/tweets/${tweetId}/replies`);
+    }
+    return Reply.create({
+      comment: req.body.comment,
+      UserId     : helpers.getUser(req).id,
+      TweetId    : req.params.tweetId
+    }).then((reply) => {
+      req.flash('success_messages', '回覆成功!');
+      res.redirect(`/tweets/${tweetId}/replies`);
     });
   },
 };

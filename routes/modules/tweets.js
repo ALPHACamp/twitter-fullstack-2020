@@ -6,7 +6,8 @@ const tweetsController = require('../../controllers/tweetsController');
 const likesController = require('../../controllers/likesController');
 
 /* GET reply page. */
-router.get('/:tweetId', tweetsController.getReplyPage);
+router.get('/:tweetId/replies', tweetsController.getReplyPage);
+router.post('/:tweetId/replies', tweetsController.creatReply);
 
 /* GET home page. */
 router.get('/', tweetsController.getIndexPage);

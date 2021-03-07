@@ -19,13 +19,13 @@
     </div>
 
     <div class="item-other d-flex flex-row pt-2">
-      <span class="pr-3 mr-5"><i class="far fa-comment pr-2"></i>{{this.ReplyCount}}</span>
+        <span class="pr-3 mr-5" data-toggle="modal" data-target="#reply-create-modal"><i class="far fa-comment pr-2"></i>{{this.ReplyCount}}</span>
       {{#if tweet.isLiked }}
-        <form action="/likes/{{tweet.id}}?_method=DELETE" method="POST" class="ml-3 pl-3">
+        <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST" class="ml-3 pl-3">
           <button class="btn btn-link text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i></button>
         </form>
       {{else}}
-        <form action="/likes/{{tweet.id}}" method="POST" class="ml-3 pl-3">
+        <form action="/tweets/{{this.id}}/like/" method="POST" class="ml-3 pl-3">
           <button class="btn btn-link text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i></button>
         </form>
       {{/if}}
@@ -55,6 +55,55 @@
       {{/each}}
    </div>
   </div>
+
+<!-- Reply Creation Modal -->
+      <div class="modal fade" id="reply-create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header p-0 d-flex align-items-center">
+              <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div  class="d-flex align-items-start">
+                <div class="tweet-part d-flex align-items-start">
+                  <img class="img-fluid rounded-circle mr-3" src="{{tweet.User.avatar}}" alt="" style="max-height: 70px;">
+                  <div>
+                    <div class="item-header d-flex d-row d-flex align-items-center">
+                        <div class="name pr-2">
+                          <strong>{{tweet.User.name}}</strong>
+                        </div>
+                        <div class="info">
+                          <span class="username">@{{tweet.User.account}}</span>
+                          &#183;
+                          <span class="posttime">{{moment this.createdAt}}</span>
+                        </div>
+                      </div>
+                      <div class="item-desc pt-1 pb-2">
+                        {{tweet.description}}
+                      </div>
+                      <div class="account pb-4"><small><span class="text-lightgrey">回覆給</span> 
+                      <span class="text-orange">@{{tweet.User.account}}</span></small></div>
+                  </div>
+                    </div>
+                  </div>
+                  <div class="reply-part d-flex align-items-start">
+                    <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
+                    <form action="/tweets/{{tweet.id}}/replies" method="POST" class="w-100">
+                      <textarea class="w-100" name="comment" rows="5" cols="90" placeholder="推你的回覆? (字數限制140字)"></textarea>
+                      <div class="textarea-util d-flex justify-content-between">
+                      <div class="text-counter text-lightgrey">0/140</div>
+                      <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">回覆</button>
+                      </div>
+                    </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
 </div>
    
