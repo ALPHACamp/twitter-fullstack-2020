@@ -59,6 +59,10 @@ body {
   color:#ff9800;
 }
 
+.tweet-gray:hover {
+  background-color:#eeeff1 ;
+}
+
 .header-block {
   height: 50px;
   min-height: 50px;
@@ -302,3 +306,5 @@ i.fa-camera.fa-lg:hover {
 input#avatar, input#cover {
   display: none;
 }
+
+.pointer {cursor: pointer;}

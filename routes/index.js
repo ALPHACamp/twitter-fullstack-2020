@@ -36,6 +36,7 @@ router.use('/', users);
 // Main functions
 router.use('/following/', authenticationHelper.authenticatedNonAdmin, followships);
 router.use('/tweets/', authenticationHelper.authenticatedNonAdmin, tweets);
+router.use('/reply_list/', authenticationHelper.authenticatedNonAdmin, tweets);
 
 // 匯出路由器
 module.exports = router;
