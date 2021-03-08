@@ -136,6 +136,29 @@ p, a, div, span, button {
   outline-color: rgba(0, 0, 0, .125);
 }
 
+#column_main textarea[name=name] {
+  resize: none;
+  background: transparent;
+  outline-offset: 0px;
+  outline: -webkit-focus-ring-color auto 1px;
+  outline-color: rgba(0, 0, 0, .125);
+}
+
+#column_main textarea[name=name]:hover {
+  outline-color: rgba(0, 0, 0, .125);
+}
+
+#column_main textarea[name=introduction] {
+  resize: none;
+  background: transparent;
+  outline-offset: 0px;
+  outline: -webkit-focus-ring-color auto 1px;
+  outline-color: rgba(0, 0, 0, .125);
+}
+
+#column_main textarea[name=introduction]:hover {
+  outline-color: rgba(0, 0, 0, .125);
+}
 #column_main #add-tweet-block {
   border-bottom: 10px solid rgba(0, 0, 0, .125);
 }
