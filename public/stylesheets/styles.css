@@ -233,7 +233,12 @@ p, a, div, span, button {
 }
 
 .list-item .profile-img {
-  min-width: 60px;
+  min-width: 70px;
+}
+.list-item .profile-img img {
+  object-fit: cover;
+  height: 70px;
+  width: 70px;
 }
 
 #column_side .list-item {
@@ -318,13 +323,19 @@ p, a, div, span, button {
   border: 0.5px solid #fff;
 }
 .self-edit-modal.avatar {
-  margin-left: 1em;
-  width: 100px;
-  height: auto;
-  max-height: 100px;
+  object-fit: cover;
   border-radius: 50%;
-  margin-top: -50px;
-  border: 2px solid #fff;
+  height: 120px;
+  width: 120px;
+  border: 4px solid #fff;
+  margin-top: -78px;
+  margin-left: 1rem;
+}
+#self-setting-modal label[for=avatar] {
+  position: absolute;
+  margin-top: -40px;
+  left: 51px;
+  color: #fff;
 }
 .modal-edit-icons {
   margin-top: -120px;
