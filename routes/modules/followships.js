@@ -4,8 +4,8 @@ const router = express.Router();
 
 const followshipController = require('../../controllers/followshipController');
 
-router.post('/:userId', followshipController.addFollowship);
-router.delete('/:userId', followshipController.removeFollowship);
-
+router.post('/', followshipController.addFollowship);
+router.post('/:id', followshipController.addFollowship);
+router.delete('/:id', followshipController.removeFollowship);
 
 module.exports = router;
