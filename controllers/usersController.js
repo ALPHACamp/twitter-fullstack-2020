@@ -3,6 +3,7 @@ const sequelize = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 const helpers = require('../_helpers');
+const customHelpers = require('../custom_helpers');
 
 const db = require('../models');
 
@@ -330,12 +331,12 @@ const usersController = {
       };
 
       if (cover) {
-        const image = await helpers.uploadFile(cover);
+        const image = await customHelpers.uploadFile(cover);
         updateData.cover = image.link;
       }
 
       if (avatar) {
-        const image = await helpers.uploadFile(avatar);
+        const image = await customHelpers.uploadFile(avatar);
         updateData.avatar = image.link;
       }
 
