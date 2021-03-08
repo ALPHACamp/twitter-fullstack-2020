@@ -83,8 +83,7 @@
       <div class="modal-header d-flex justify-content-between">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">X</button>
         <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
-        <form action="/users/{{user.id}}/edit" method="POST" enctype="multipart/form-data">
-          <button type="submit" class="btn btn-primary">儲存</button>
+        <button type="submit" class="btn btn-primary" id="save">儲存</button>
       </div>
       <div class="modal-body">
         <div class="card" style="width: 18rem;" id="cover">
@@ -96,7 +95,6 @@
         </div>
         <div class="form-group" id="introduction">
         </div>
-        </form>
       </div>
     </div>
   </div>
@@ -199,32 +197,4 @@
 </div>
 {{/each}}
 
-<script>
-  const button = document.querySelector('#editUser')
-  const cover = document.querySelector('#cover')
-  const avatar = document.querySelector('#avatar')
-  const name = document.querySelector('#name')
-  const introduction = document.querySelector('#introduction')
-  const id = window.location.search.slice(1)
-  console.log(id)
-  button.addEventListener('click', (event) => {
-    axios.get(`/api/users/${id}`)
-      .then((res) => {
-        cover.innerHTML = `          <img class="card-img-top" src="${res.data.user.cover}" alt="Card image cap">
-          <input type="file" name="cover"> cover`
-        avatar.innerHTML = `          <img class="card-img-top" src="${res.data.user.avatar}" alt="Card image cap">
-          <input type="file" name="avatar" id="avatar"> avatar
-        `
-        name.innerHTML = `          <label for="name" class="col-form-label">名稱:</label>
-          <input type="text" class="form-control" name="name" value="${res.data.user.name}" id="name">`
-        introduction.innerHTML = `
-          <label for="message-text" class="col-form-label">自我介紹:</label>
-          <textarea class="form-control" id="message-text" name="introduction">${res.data.user.introduction}</textarea>`
-        console.log(res.data.user)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  })
-
-</script>
+<script type="text/javascript" src="/javascripts/frontend.js"></script>

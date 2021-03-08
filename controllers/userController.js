@@ -247,17 +247,12 @@ const userController = {
 
   editUserFromEditPage: async (req, res) => {
     const user = await User.findByPk(req.params.id)
-    const avatar = req.files.avatar
-    const cover = req.files.cover
+    let avatar, cover
+    if (req.files) {
+      avatar = req.files.avatar
+      cover = req.files.cover
+    }
     let avatarLink, coverLink = ''
-    if (req.body.introduction.length > 140 || !req.body.introduction.trim()) {
-      req.flash('error_messages', '自我介紹不能超過140個字或是空白')
-      return res.redirect('back')
-    }
-    if (!req.body.name.trim()) {
-      req.flash('error_messages', '名字不能為空白')
-      return res.redirect('back')
-    }
     if (!avatar && !cover) {
       await user.update({
         avatar: user.avatar,
@@ -265,7 +260,7 @@ const userController = {
         name: req.body.name,
         introduction: req.body.introduction
       })
-      return res.redirect('back')
+      return res.status(200).json({ status: 'success', message: '修改成功' })
     }
     imgur.setClientId(IMGUR_CLIENT_ID)
     if (avatar) {
@@ -280,7 +275,7 @@ const userController = {
       name: req.body.name,
       introduction: req.body.introduction ? req.body.introduction : user.introduction
     })
-    return res.redirect('back')
+    return res.status(200).json({ status: 'success', message: '修改成功' })
   },
 
   getUserFollowingPage: async (req, res) => {
@@ -339,9 +334,41 @@ const userController = {
     })
   },
 
-  setUser: (req, res) => {
-    let { account, name, email, password } = req.body
-    User.findByPk(req.params.id)
+  setUser: async (req, res) => {
+    const id = req.params.id
+    const { email: originalEmail, account: originalAccount } = helpers.getUser(req)
+    const { account, name, email, password, passwordCheck } = req.body
+    let newEmail = ''
+    let newAccount = ''
+    if (originalEmail === email) { newEmail = originalEmail }
+    if (originalAccount === account) { newAccount = originalAccount }
+    if (originalEmail !== email) {
+      await User.findOne({ where: { email } })
+        .then(user => {
+          if (user) {
+            req.flash('error_messages', '該信箱已有人使用')
+            return res.redirect('back')
+          } else {
+            newEmail = email
+          }
+        })
+    }
+    if (originalAccount !== account) {
+      await User.findOne({ where: { account } })
+        .then(user => {
+          if (user) {
+            req.flash('error_messages', '該帳號已有人使用')
+            return res.redirect('back')
+          } else {
+            newAccount = account
+          }
+        })
+    }
+    if (password !== passwordCheck) {
+      req.flash('error_messages', '兩次輸入的密碼不同')
+      return res.redirect('back')
+    }
+    return User.findByPk(id)
       .then((user) => {
         user.update({
           account,
@@ -350,22 +377,26 @@ const userController = {
           password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
         })
           .then((user) => {
-            req.flash('success_messages', 'User was successfully to update')
+            req.flash('success_messages', '更新成功')
             return res.redirect('/tweets')
           })
       })
-
   },
 
   getUserData: async (req, res) => {
     let user = await User.findByPk(req.params.id)
     user = user.toJSON()
     return res.json({ user })
+  }, 
+
+  apiEditUser: async (req, res) => {
+    console.log(req.body)
   },
 
   getChatRoom: (req, res) => {
     res.render('chatroom')
-  }
+    return res.status(200).json(user)
+  },
 
 }
 
