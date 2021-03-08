@@ -339,7 +339,7 @@ const userController = {
     })
   },
 
-  setUser: (req, res) => {
+  setUser: async (req, res) => {
     const id = req.params.id
     const { email: originalEmail, account: originalAccount } = helpers.getUser(req)
     const { account, name, email, password, passwordCheck } = req.body
@@ -348,7 +348,7 @@ const userController = {
     if (originalEmail === email) { newEmail = originalEmail }
     if (originalAccount === account) { newAccount = originalAccount }
     if (originalEmail !== email) {
-      User.findOne({ where: { email } })
+      await User.findOne({ where: { email } })
         .then(user => {
           if (user) {
             req.flash('error_messages', '該信箱已有人使用')
@@ -359,7 +359,7 @@ const userController = {
         })
     }
     if (originalAccount !== account) {
-      User.findOne({ where: { account } })
+      await User.findOne({ where: { account } })
         .then(user => {
           if (user) {
             req.flash('error_messages', '該帳號已有人使用')
