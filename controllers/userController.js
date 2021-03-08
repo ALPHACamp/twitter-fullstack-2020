@@ -360,7 +360,11 @@ const userController = {
   getUserData: async (req, res) => {
     let user = await User.findByPk(req.params.id)
     user = user.toJSON()
-    return res.json({ user })
+    return res.status(200).json(user)
+  },
+
+  apiEditUser: async (req, res) => {
+    console.log(req.body)
   }
 
 }
