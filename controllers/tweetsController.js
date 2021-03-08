@@ -22,7 +22,7 @@ const tweetsController = {
         User      : tweet.dataValues.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-        isLiked   : helpers.getUser(req).LikedTweets.map((d) => d.id).includes(tweet.id),
+        isLiked   : (helpers.getUser(req).LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
       User.findAll({
         where: {

@@ -1,25 +1,32 @@
+const { getUser } = require('../middleware/authenticationHelper');
 const db = require('../models');
 
 const { Like } = db;
 
 const likesController = {
-  addLike: (req, res) => {
+  addLike: (req, res, done) => {
     Like.create({
-      UserId : req.user.id,
+      UserId : getUser(req).id,
       TweetId: req.params.tweetId,
     })
-    .then(() => res.redirect('back'));
+    .then(() => {
+      res.redirect('back');
+      done();
+    });
   },
-  removeLike: (req, res) => {
+  removeLike: (req, res, done) => {
     Like.findOne({
       where: {
-        UserId : req.user.id,
+        UserId : getUser(req).id,
         TweetId: req.params.tweetId,
       },
     })
     .then((like) => {
       like.destroy()
-      .then(() => res.redirect('back'));
+      .then(() => {
+        res.redirect('back');
+        done();
+      });
     });
   },
 };
