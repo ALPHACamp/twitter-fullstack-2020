@@ -69,8 +69,9 @@ const tweetsController = {
 
   getReplyPage: async (req, res) => {
     const tweetId = Number(req.params.tweetId);
-    const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
-    const user = await usersController.getUserDetails(userId);
+    const user = helpers.getUser(req);
+    const userId = req.params.userId ? Number(req.params.userId) : user.id;
+    // const user = await usersController.getUserDetails(userId);
     Tweet.findByPk(tweetId, {
       include: [User, Like, { model: Reply, include: [User] }],
       order  : [[Reply, 'createdAt', 'ASC']],
@@ -85,6 +86,7 @@ const tweetsController = {
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
         createdAt : tweetTime,
       };
+
       return res.render('index', {
         tweet: tweetObj,
         title: {
