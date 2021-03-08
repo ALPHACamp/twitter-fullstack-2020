@@ -233,7 +233,12 @@ p, a, div, span, button {
 }
 
 .list-item .profile-img {
-  min-width: 60px;
+  min-width: 70px;
+}
+.list-item .profile-img img {
+  object-fit: cover;
+  height: 70px;
+  width: 70px;
 }
 
 #column_side .list-item {
