@@ -4,15 +4,15 @@
 <div class="tabs d-flex"
   style="height: 54px; margin-left: 51px; margin-top: 36px;font-weight: bold; font-size: 15px; color: #657786;">
   <div>
-    <a class="p-0 nav-link active" href="/users/{{userView.id}}/tweets">推文</a>
+    <a class="p-0 nav-link active" href="/users/{{userView.id}}/tweets?{{userView.id}}">推文</a>
   </div>
 
   <div style="margin-right: 55px; margin-left: 77px;">
-    <a class="p-0 nav-link" href="/users/{{userView.id}}/replies">推文與回覆</a>
+    <a class="p-0 nav-link" href="/users/{{userView.id}}/replies?{{userView.id}}">推文與回覆</a>
   </div>
 
   <div>
-    <a class="p-0 nav-link" href="/users/{{userView.id}}/likes">喜歡的內容</a>
+    <a class="p-0 nav-link" href="/users/{{userView.id}}/likes?{{userView.id}}">喜歡的內容</a>
   </div>
 </div>
 
@@ -87,21 +87,14 @@
           <button type="submit" class="btn btn-primary">儲存</button>
       </div>
       <div class="modal-body">
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="{{user.cover}}" alt="Card image cap">
-          <input type="file" name="cover"> cover
+        <div class="card" style="width: 18rem;" id="cover">
+
         </div>
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="{{user.avatar}}" alt="Card image cap">
-          <input type="file" name="avatar"> avatar
+        <div class="card" style="width: 18rem;" id="avatar">
         </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">名稱:</label>
-          <input type="text" class="form-control" id="recipient-name" name="name" value="{{user.name}}">
+        <div class="form-group" id="name">
         </div>
-        <div class="form-group">
-          <label for="message-text" class="col-form-label">自我介紹:</label>
-          <textarea class="form-control" id="message-text" name="introduction"></textarea>
+        <div class="form-group" id="introduction">
         </div>
         </form>
       </div>
@@ -115,9 +108,11 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <div class="modal-title">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
         </div>
 
         <div class="modal-body">
@@ -203,3 +198,33 @@
   </form>
 </div>
 {{/each}}
+
+<script>
+  const button = document.querySelector('#editUser')
+  const cover = document.querySelector('#cover')
+  const avatar = document.querySelector('#avatar')
+  const name = document.querySelector('#name')
+  const introduction = document.querySelector('#introduction')
+  const id = window.location.search.slice(1)
+  console.log(id)
+  button.addEventListener('click', (event) => {
+    axios.get(`/api/users/${id}`)
+      .then((res) => {
+        cover.innerHTML = `          <img class="card-img-top" src="${res.data.user.cover}" alt="Card image cap">
+          <input type="file" name="cover"> cover`
+        avatar.innerHTML = `          <img class="card-img-top" src="${res.data.user.avatar}" alt="Card image cap">
+          <input type="file" name="avatar" id="avatar"> avatar
+        `
+        name.innerHTML = `          <label for="name" class="col-form-label">名稱:</label>
+          <input type="text" class="form-control" name="name" value="${res.data.user.name}" id="name">`
+        introduction.innerHTML = `
+          <label for="message-text" class="col-form-label">自我介紹:</label>
+          <textarea class="form-control" id="message-text" name="introduction">${res.data.user.introduction}</textarea>`
+        console.log(res.data.user)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  })
+
+</script>

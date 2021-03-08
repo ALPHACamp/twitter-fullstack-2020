@@ -109,7 +109,7 @@ const userController = {
       })
       return res.redirect('back')
     }
-    return res.redirect('back')
+    return res.redirect(200, 'back')
   },
 
   removeFollowing: async (req, res) => {
@@ -148,12 +148,13 @@ const userController = {
       ]
     })
     userView = userView.toJSON()
-    userView.Tweets.map(t => {
-      t.totalReplies = t.Replies.length
-      t.totalLikes = t.Likes.length
-      t.isLiked = isLiked(req, t)
-    })
-
+    if (userView.Tweets) {
+      userView.Tweets.map(t => {
+        t.totalReplies = t.Replies.length
+        t.totalLikes = t.Likes.length
+        t.isLiked = isLiked(req, t)
+      })
+    }
     const isFollowed = checkIsFollowed(req, req.params.id)
 
     return res.render('user', { userView, users, isFollowed })
@@ -188,12 +189,14 @@ const userController = {
       ]
     })
     userView = userView.toJSON()
-    userView.Replies.map(r => {
-      r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
-      r.Tweet.isLiked = isLiked(req, r.Tweet)
-      r.Tweet.totalReplies = r.Tweet.Replies.length
-      r.Tweet.totalLikes = r.Tweet.Likes.length
-    })
+    if (userView.Replies) {
+      userView.Replies.map(r => {
+        r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
+        r.Tweet.isLiked = isLiked(req, r.Tweet)
+        r.Tweet.totalReplies = r.Tweet.Replies.length
+        r.Tweet.totalLikes = r.Tweet.Likes.length
+      })
+    }
     const isFollowed = checkIsFollowed(req, userView.id)
 
     return res.render('tweetsReplies', { users, userView, isFollowed })
@@ -226,16 +229,18 @@ const userController = {
       ]
     })
     userView = userView.toJSON()
-    userView.tweets = userView.Likes.map(like => {
-      return like.Tweet
-    })
+    if (userView.Likes) {
+      userView.tweets = userView.Likes.map(like => {
+        return like.Tweet
+      })
+      userView.tweets.map(t => {
+        t.totalReplies = t.Replies.length
+        t.totalLikes = t.Likes.length
+        t.isLiked = isLiked(req, t)
+      })
+    }
     const isFollowed = checkIsFollowed(req, userView.id)
     const users = await getTopUser(req)
-    userView.tweets.map(t => {
-      t.totalReplies = t.Replies.length
-      t.totalLikes = t.Likes.length
-      t.isLiked = isLiked(req, t)
-    })
     return res.render('likes', { userView, users, isFollowed })
   },
 
@@ -335,12 +340,13 @@ const userController = {
   },
 
   setUser: (req, res) => {
+    let { account, name, email, password } = req.body
     User.findByPk(req.params.id)
       .then((user) => {
         user.update({
-          account: req.body.account,
-          name: req.body.name,
-          email: req.body.eamil,
+          account,
+          name,
+          email,
           password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
         })
           .then((user) => {
@@ -350,6 +356,12 @@ const userController = {
       })
 
   },
+
+  getUserData: async (req, res) => {
+    let user = await User.findByPk(req.params.id)
+    user = user.toJSON()
+    return res.json({ user })
+  }
 
 }
 

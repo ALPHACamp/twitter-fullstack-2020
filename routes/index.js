@@ -10,6 +10,8 @@ const user = require('./user')
 const tweet = require('./tweet')
 const followship = require('./followship')
 
+const apiUser = require('./api/user')
+
 router.use('/users', user)
 router.use('/tweets', tweet)
 router.use('/followships', followship)
@@ -22,4 +24,6 @@ router.use('/admin', adminHome)
 router.get('/chatroom', (req, res) => {
   res.render('chatroom')
 })
+router.use('/api/users', apiUser)
+
 module.exports = router

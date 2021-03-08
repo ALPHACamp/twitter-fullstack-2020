@@ -8,6 +8,9 @@
 
 # 專案畫面
 
+![home-page](home-page.jpg)
+![home-page](home-page2.jpg)
+
 # 功能描述 (features)
 
 - 使用者需要創建帳號並登入
