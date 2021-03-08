@@ -72,15 +72,10 @@
           <img src="{{me.cover}}" class="self-edit-modal bg-light m-0 w-100" loading="lazy">
           <div class="d-flex justify-content-start">
             <img class="self-edit-modal avatar bg-light" src="{{me.avatar}}" loading="lazy" alt="">
-            <label for="avatar">
-              <i class="fas fa-camera fa-lg"></i>
-              <input type="file" class="form-control-file" id="avatar" name="avatar">
-            </label>
           </div>
         </div>
-        <div class="modal-edit-icons d-flex flex-column align-items-center mb-5">
-          {{!-- edit cover and avatar icons --}}
-          <div class="d-flex flex-row justify-content-around col-8">
+        <div class="modal-edit-icons d-flex flex-column align-items-center mb-10">
+          <div class="d-flex flex-row justify-content-around align-items-center col-8">
             <label for="cover">
               <i class="fas fa-camera fa-lg"></i>
               <input type="file" class="form-control-file" id="cover" name="cover">
@@ -88,13 +83,14 @@
           {{!-- 目前沒有刪除橫幅圖案功能 刪除 icon 先隱藏 --}}
             {{!-- <i class="fas fa-times fa-lg"></i> --}}
           </div>
-          <div class="d-flex justify-content-start col-10">
-            
-            
+          <div class="d-flex justify-content-start col-10 mt-5 ml-0">
+            <label for="avatar">
+              <i class="fas fa-camera fa-lg ml-0"></i>
+            </label>
+            <input type="file" class="form-control-file" id="avatar" name="avatar">
           </div>
         </div>
-
-        <div class="modal-form d-flex flex-column align-items-center justify-content-center pt-4">
+        <div class="modal-form d-flex flex-column align-items-center justify-content-center mt-5">
           <div class="d-flex flex-column">
             <label for="name">名稱</label>
             <textarea class="w-1000 border-0" name="name" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
