@@ -23,7 +23,7 @@ app.set('view engine', 'handlebars')
 //TEST
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
-
+app.use(express.static('public'))
 
 passport(app)
 app.use(flash())
