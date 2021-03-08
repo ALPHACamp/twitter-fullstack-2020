@@ -220,6 +220,53 @@ p, a, div, span, button {
   font-size: 15px;
 }
 
+#column_main #tweet-info .item-desc {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+#column_main #tweet-info .item-stats * {
+  font-size: 18px;
+}
+
+#column_main .item-action .btn {
+  font-size: 25px;
+}
+
+#column_main .item-action .btn[data-target="#reply-create-modal"]:hover, #column_main .item-action .btn[data-target="#reply-create-modal"]:focus {
+  color: #ff6600 !important;
+  border-color: transparent;
+  box-shadow: none;
+}
+#column_main .item-action .btn-reply {
+  line-height: 1;
+}
+#column_main .item-action .btn-reply svg g {
+  transition-duration: 0.2s;
+  fill: rgba(0, 0, 0, .525);
+}
+#column_main .item-action .btn-reply:hover svg g {
+  fill: #ff6600;
+}
+#column_main .item-action .btn-like svg g {
+  transition-duration: 0.2s;
+  fill: rgba(0, 0, 0, .525);
+}
+#column_main .item-action .btn-like:hover svg g {
+  fill: rgb(224, 36, 94);
+}
+#column_main .item-action .btn-unlike svg g {
+  transition-duration: 0.2s;
+  fill: rgb(224, 36, 94);
+}
+#column_main .item-action .btn-unlike:hover svg g {
+  fill: rgb(224, 127, 171);
+}
+
+#column_main .item-action .btn[data-target="#reply-create-modal"]:hover {
+
+}
+
 .list-item:not(:last-child) {
   border-bottom: 2px solid rgba(0, 0, 0, .125);
 }
