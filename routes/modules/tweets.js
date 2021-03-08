@@ -17,6 +17,7 @@ router.post('/', tweetsController.createTweet);
 router.get('/:tweetId', tweetsController.getReplyPage);
 
 router.post('/:tweetId/like', likesController.addLike);
+router.post('/:tweetId/unlike', likesController.removeLike);
 router.delete('/:tweetId/unlike', likesController.removeLike);
 
 module.exports = router;
