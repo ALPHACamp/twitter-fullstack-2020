@@ -340,12 +340,13 @@ const userController = {
   },
 
   setUser: (req, res) => {
+    let { account, name, email, password } = req.body
     User.findByPk(req.params.id)
       .then((user) => {
         user.update({
-          account: req.body.account,
-          name: req.body.name,
-          email: req.body.eamil,
+          account,
+          name,
+          email,
           password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
         })
           .then((user) => {

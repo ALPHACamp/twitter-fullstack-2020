@@ -1,33 +1,52 @@
 <div>
-  <h1>後台管理系統</h1>
+  <div>
+    <h1>後台管理系統</h1>
+  </div>
   {{> message}}
-  <a href="/admin/users">使用者清單</a>
-  <a href="/signin">logout</a>
-  <br />
-  <br />
+  <div>
+    <div class="navbar d-flex flex-column" style="max-height: 1200px; min-width: 235px">
+      <div style="font-weight: bold;font-size: 18px;">
 
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Name</th>
-        <th scope="col">#Description</th>
-        <th scope="col">#</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each tweets}}
-      <tr>
-        <th scope="row">{{this.id}}</th>
-        <td>{{this.name}}</td>
-        <td>{{this.description}}</td>
-        <td>
-          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-            <button type="submit" class="btn btn-link">Delete</button>
-          </form>
-        </td>
-      </tr>
-      {{/each}}
-    </tbody>
-  </table>
-</div>
+        <div style="margin-top: 51px;">
+          <a href="/admin/tweets">推文總覽</a>
+        </div>
+
+        <div style="margin-top: 51px;">
+          <a href="/admin/users">使用者清單</a>
+        </div>
+
+        {{#if user}}
+
+
+        <div style="margin-top: 844px;">
+          <a href="/logout" style="color: black; text-decoration: none;">
+            <span><i class="fas fa-sign-out-alt fa-rotate-180"></i></span>
+            <span style="margin-left: 23px;">登出</span>
+          </a>
+        </div>
+
+        {{/if}}
+
+
+      </div>
+
+
+      <table class="table">
+        <tbody>
+          {{#each tweets}}
+          <tr>
+            <th scope="row"></th>
+            <td>{{this.name}}</td>
+            <td>{{this.account}}</td>
+            <td>{{this.description}}</td>
+            <td>
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-link">X</button>
+              </form>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
