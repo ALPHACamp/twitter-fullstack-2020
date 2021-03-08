@@ -11,8 +11,8 @@ const adminController = {
   signIn: (req, res) => {
     return res.render('admin/main')
   },
-  getTweets: (req, res) => {
-    return Tweet.findAll({
+  getTweets: async (req, res) => {
+    await Tweet.findAll({
       include: [User]
     }).then(tweets => {
       tweets = tweets.map(item => ({
@@ -35,8 +35,8 @@ const adminController = {
           })
       })
   },
-  getUsers: (req, res) => {
-    return User.findAll({
+  getUsers: async (req, res) => {
+    await User.findAll({
       include: [
         Tweet,
         Like,
