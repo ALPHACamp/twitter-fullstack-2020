@@ -20,12 +20,12 @@ router.get('/logout', userController.logout)
 
 // User Tweets
 router.get('/tweets', auth.authenticatedUser, userController.getRecommendedFollowings, tweetController.getTweets)
-router.post("/tweets", auth.authenticatedUser, tweetController.postTweet)
-router.get("/tweets/:id", auth.authenticatedUser, tweetController.getTweet)
+router.post('/tweets', auth.authenticatedUser, tweetController.postTweet)
+router.post('/tweets/:id/like', auth.authenticatedUser, tweetController.like)
+router.delete('/tweets/:id/unlike', auth.authenticatedUser, tweetController.unLike)
+router.get('/tweets/:id', userController.getRecommendedFollowings, auth.authenticatedUser, tweetController.getTweet)
 router.post('/tweets/:id/replies', auth.authenticatedUser, tweetController.postReply)
 router.get('/tweets/:id/replies', auth.authenticatedUser, tweetController.getReply)
-router.post('/tweets/:id/like', auth.authenticatedUser, userController.getRecommendedFollowings, tweetController.like)
-router.delete('/tweets/:id/unlike', auth.authenticatedUser, userController.getRecommendedFollowings, tweetController.unLike)
 
 // Admin
 router.get('/admin/signin', adminController.AdminSignInPage)
