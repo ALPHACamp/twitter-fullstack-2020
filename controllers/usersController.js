@@ -70,7 +70,7 @@ const usersController = {
         req.flash('error_messages', '此頁面不存在');
         res.redirect('back');
       }
-      if (user.id !== req.user.id) {
+      if (user.id !== helpers.getUser(req).id) {
         req.flash('error_messages', '無法設定他人帳戶');
         res.redirect('back');
       } else {
@@ -162,7 +162,7 @@ const usersController = {
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
 
-      user.isFollowed = req.user.Followings.map((d) => d.id).includes(user.id);
+      user.isFollowed = helpers.getUser(req).Followings.map((d) => d.id).includes(user.id);
 
       return res.render('index', {
         userPage: true,
