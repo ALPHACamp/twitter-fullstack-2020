@@ -148,12 +148,13 @@ const userController = {
       ]
     })
     userView = userView.toJSON()
-    userView.Tweets.map(t => {
-      t.totalReplies = t.Replies.length
-      t.totalLikes = t.Likes.length
-      t.isLiked = isLiked(req, t)
-    })
-
+    if (userView.Tweets) {
+      userView.Tweets.map(t => {
+        t.totalReplies = t.Replies.length
+        t.totalLikes = t.Likes.length
+        t.isLiked = isLiked(req, t)
+      })
+    }
     const isFollowed = checkIsFollowed(req, req.params.id)
 
     return res.render('user', { userView, users, isFollowed })
@@ -188,12 +189,14 @@ const userController = {
       ]
     })
     userView = userView.toJSON()
-    userView.Replies.map(r => {
-      r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
-      r.Tweet.isLiked = isLiked(req, r.Tweet)
-      r.Tweet.totalReplies = r.Tweet.Replies.length
-      r.Tweet.totalLikes = r.Tweet.Likes.length
-    })
+    if (userView.Replies) {
+      userView.Replies.map(r => {
+        r.Tweet.description = `${r.Tweet.description.substring(0, 20)}...`
+        r.Tweet.isLiked = isLiked(req, r.Tweet)
+        r.Tweet.totalReplies = r.Tweet.Replies.length
+        r.Tweet.totalLikes = r.Tweet.Likes.length
+      })
+    }
     const isFollowed = checkIsFollowed(req, userView.id)
 
     return res.render('tweetsReplies', { users, userView, isFollowed })
@@ -226,16 +229,18 @@ const userController = {
       ]
     })
     userView = userView.toJSON()
-    userView.tweets = userView.Likes.map(like => {
-      return like.Tweet
-    })
+    if (userView.Likes) {
+      userView.tweets = userView.Likes.map(like => {
+        return like.Tweet
+      })
+      userView.tweets.map(t => {
+        t.totalReplies = t.Replies.length
+        t.totalLikes = t.Likes.length
+        t.isLiked = isLiked(req, t)
+      })
+    }
     const isFollowed = checkIsFollowed(req, userView.id)
     const users = await getTopUser(req)
-    userView.tweets.map(t => {
-      t.totalReplies = t.Replies.length
-      t.totalLikes = t.Likes.length
-      t.isLiked = isLiked(req, t)
-    })
     return res.render('likes', { userView, users, isFollowed })
   },
 
