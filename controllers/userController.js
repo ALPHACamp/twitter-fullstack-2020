@@ -109,7 +109,7 @@ const userController = {
       })
       return res.redirect('back')
     }
-    return res.redirect('back')
+    return res.redirect(200, 'back')
   },
 
   removeFollowing: async (req, res) => {
