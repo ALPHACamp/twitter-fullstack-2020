@@ -74,13 +74,14 @@ const tweetsController = {
     // const user = await usersController.getUserDetails(userId);
     Tweet.findByPk(tweetId, {
       include: [User, Like, { model: Reply, include: [User] }],
-      order  : [[Reply, 'createdAt', 'ASC']],
+      order  : [[Reply, 'createdAt', 'DESC']],
     })
     .then((tweet) => {
       const time = tweet.createdAt;
       const tweetTime = ` ${moment(time).format('a h:MM')}・ ${moment(time).format('LL')}`;
       const tweetObj = {
         ...tweet.dataValues,
+        User      : tweet.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
