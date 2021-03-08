@@ -7,6 +7,8 @@ const users = require('./modules/users');
 const tweets = require('./modules/tweets');
 const followships = require('./modules/followships');
 
+const apis = require('./modules/apis');
+
 // For Authentication and Admin Login
 const passport = require('../config/passport');
 const authenticationHelper = require('../middleware/authenticationHelper');
@@ -36,6 +38,9 @@ router.use('/', users);
 // Main functions
 router.use('/followships/', authenticationHelper.authenticatedNonAdmin, followships);
 router.use('/tweets/', authenticationHelper.authenticatedNonAdmin, tweets);
+
+// Api functions
+router.use('/api/', apis);
 
 // 匯出路由器
 module.exports = router;
