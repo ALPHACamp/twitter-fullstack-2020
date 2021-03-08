@@ -2,11 +2,6 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
-const helpers = require('../_helpers')
-const sequelize = require('sequelize')
-function isLiked(req, tweet) {
-  return helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(tweet.id) : false
-}
 
 
 const adminController = {
@@ -24,7 +19,8 @@ const adminController = {
         ...item.dataValues,
         description: item.description.substring(0, 50),
         name: item.User.name,
-        account: item.User.account
+        account: item.User.account,
+        avatar: item.User.avatar,
       }))
       // console.log(tweets)
       res.render('admin/tweets', { tweets })
@@ -54,7 +50,6 @@ const adminController = {
         FollowingCount: user.Followings.length,
         likesCount: user.Likes.length,
         tweetsCount: user.Tweets.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(users.id)
       }))
 
       users = users.sort((a, b) => b.tweetsCount - a.tweetsCount)
