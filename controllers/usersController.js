@@ -449,7 +449,7 @@ const usersController = {
       ],
     })
     .then((user) => {
-      const followingsArr = user.dataValues.Followings.map((following) => ({
+      const followingsArr = user.Followings.map((following) => ({
         id          : following.dataValues.id,
         email       : following.dataValues.id,
         account     : following.dataValues.account,
@@ -458,7 +458,7 @@ const usersController = {
         introduction: following.dataValues.introduction,
         cover       : following.dataValues.cover,
         role        : following.dataValues.role,
-        createdAt   : following.dataValues.createdAt,
+        createdAt   : following.Followship.dataValues.createdAt,
         isFollowed  : req.user.Followings.map((d) => d.id).includes(following.id),
       }));
 
