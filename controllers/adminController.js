@@ -35,22 +35,37 @@ const usersController = {
   },
   adminUsers: (req, res) => {
     User.findAll({
+      nest   : true,
       include: [
-        Tweet,
+        {
+          model  : Tweet,
+          include: Like,
+        },
         Like,
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
       ],
+      where: {
+        role: { [Op.ne]: 'admin' },
+      },
     })
     .then((users) => {
       const usersObj = users.map((user) => ({
         ...user.dataValues,
         tweetCount    : user.Tweets.length,
-        likeCount     : user.Likes.length,
         followerCount : user.Followers.length,
         followingCount: user.Followings.length,
       }))
       .sort((a, b) => b.tweetCount - a.tweetCount);
+
+      // Add count for likes given to all tweets of each user
+      usersObj.forEach((user, index) => {
+        let userLikesCount = 0;
+        user.Tweets.forEach((tweet) => {
+          userLikesCount += tweet.Likes.length;
+        });
+        Object.assign(usersObj[index], { likeCount: userLikesCount });
+      });
 
       return res.render('admin', { users: usersObj });
     });
