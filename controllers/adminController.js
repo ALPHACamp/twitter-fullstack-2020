@@ -1,7 +1,13 @@
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
-const pageLimit = 7
+const Like = db.Like
+const helpers = require('../_helpers')
+const sequelize = require('sequelize')
+function isLiked(req, tweet) {
+  return helpers.getUser(req).Likes ? helpers.getUser(req).Likes.map(d => d.TweetId).includes(tweet.id) : false
+}
+
 
 const adminController = {
   signInPage: (req, res) => {
@@ -37,16 +43,16 @@ const adminController = {
     return User.findAll({
       include: [
         Tweet,
+        Like,
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
-        { model: Tweet, as: 'LikedTweets' },
       ]
     }).then(users => {
       users = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
         FollowingCount: user.Followings.length,
-        likesCount: user.LikedTweets.length,
+        likesCount: user.Likes.length,
         tweetsCount: user.Tweets.length,
         isFollowed: req.user.Followings.map(d => d.id).includes(users.id)
       }))
