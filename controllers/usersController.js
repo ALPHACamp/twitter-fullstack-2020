@@ -162,6 +162,8 @@ const usersController = {
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
 
+      user.isFollowed = req.user.Followings.map((d) => d.id).includes(user.id);
+
       return res.render('index', {
         userPage: true,
         title   : {
