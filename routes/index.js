@@ -34,7 +34,7 @@ router.delete('/admin/tweets/:id', authenticationHelper.authenticatedAdmin, admi
 router.use('/', users);
 
 // Main functions
-router.use('/following/', authenticationHelper.authenticatedNonAdmin, followships);
+router.use('/followships/', authenticationHelper.authenticatedNonAdmin, followships);
 router.use('/tweets/', authenticationHelper.authenticatedNonAdmin, tweets);
 
 // 匯出路由器
