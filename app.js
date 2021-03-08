@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
   socket.on('loginUser', (currentUser) => {    
 
     const set = new Set()
-    onlineUser = onlineUser.filter(item=>!set.has(item.name)?set.add(item.name):false) 
+    onlineUser = onlineUser.filter(user => !set.has(user.name) ? set.add(user.name) : false) 
         
     onlineUser.push(currentUser)    
     
