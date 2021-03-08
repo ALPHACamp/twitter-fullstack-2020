@@ -275,7 +275,7 @@ const usersController = {
   // 使用者的追蹤清單
   getFollowingsPage: async (req, res) => {
     const userId = Number(req.params.userId);
-    const [user, userFollowings, topFollowings] = await Promise.all([
+    const [user, userFollowings] = await Promise.all([
       usersController.getUserDetails(userId),
       usersController.getUserFollowings(helpers.getUser(req).id, req),
     ]);
@@ -435,9 +435,10 @@ const usersController = {
         introduction: follower.dataValues.introduction,
         cover       : follower.dataValues.cover,
         role        : follower.dataValues.role,
-        createdAt   : follower.dataValues.createdAt,
+        createdAt   : follower.dataValues.Followship.dataValues.createdAt,
         isFollowed  : req.user.Followings.map((d) => d.id).includes(follower.id),
-      }));
+      }))
+      .sort((a, b) => b.createdAt - a.createdAt);
 
       return resolve(followersArr);
     });
@@ -458,9 +459,10 @@ const usersController = {
         introduction: following.dataValues.introduction,
         cover       : following.dataValues.cover,
         role        : following.dataValues.role,
-        createdAt   : following.Followship.dataValues.createdAt,
+        createdAt   : following.dataValues.Followship.dataValues.createdAt,
         isFollowed  : req.user.Followings.map((d) => d.id).includes(following.id),
-      }));
+      }))
+      .sort((a, b) => b.createdAt - a.createdAt);
 
       return resolve(followingsArr);
     });
