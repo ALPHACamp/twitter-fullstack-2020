@@ -30,7 +30,7 @@
 
     <div class="text-right" style="margin-top: 10px; margin-right: 15px">
       {{#ifCond userView.id user.id}}
-      <button type="submit" class="btn" data-toggle="modal" data-target="#exampleModal"
+      <button type="submit" class="btn" id="editUser" data-toggle="modal" data-target="#exampleModal"
         style="border: 1px solid #FF6600; border-radius: 100px; color: #FF6600; width: 120px; height: 40px; font-weight: bold; font-size: 15px; line-height: 15px;">編輯個人資料</button>
       {{else}}
       {{#if isFollowed}}
