@@ -4,15 +4,15 @@
 <div class="tabs d-flex"
   style="height: 54px; margin-left: 51px; margin-top: 36px;font-weight: bold; font-size: 15px; color: #657786;">
   <div>
-    <a class="p-0 nav-link" href="/users/{{userView.id}}/tweets">推文</a>
+    <a class="p-0 nav-link" href="/users/{{userView.id}}/tweets?{{userView.id}}">推文</a>
   </div>
 
   <div style="margin-right: 55px; margin-left: 77px;">
-    <a class="p-0 nav-link " href="/users/{{userView.id}}/replies">推文與回覆</a>
+    <a class="p-0 nav-link " href="/users/{{userView.id}}/replies?{{userView.id}}">推文與回覆</a>
   </div>
 
   <div>
-    <a class="p-0 nav-link active" href="/users/{{userView.id}}/likes">喜歡的內容</a>
+    <a class="p-0 nav-link active" href="/users/{{userView.id}}/likes?{{userView.id}}">喜歡的內容</a>
   </div>
 </div>
 
