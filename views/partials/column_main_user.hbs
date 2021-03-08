@@ -20,11 +20,11 @@
           <i class="far fa-bell"></i>
         </button>   
       {{#if user.isFollowed}}
-        <form action="/following/{{user.id}}?_method=DELETE" method="POST" class="">
+        <form action="/followships/{{user.id}}?_method=DELETE" method="POST" class="">
           <button type="submit" class="btn btn-sm btn-orange rounded-pill mr-2">正在跟隨</button>
         </form>
       {{else}}
-        <form action="/following/{{user.id}}" method="POST" class="">
+        <form action="/followships/{{user.id}}" method="POST" class="">
           <button type="submit" class="btn btn-outline-orange btn-sm rounded-pill mr-2">跟隨</button>
         </form>
       {{/if}}
