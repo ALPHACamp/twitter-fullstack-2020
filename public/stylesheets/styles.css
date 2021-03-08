@@ -235,7 +235,7 @@ p, a, div, span, button {
 .list-item .profile-img {
   min-width: 70px;
 }
-.list-item .profile-img img {
+.list-item .profile-img img, .img-fluid.rounded-circle {
   object-fit: cover;
   height: 70px;
   width: 70px;
