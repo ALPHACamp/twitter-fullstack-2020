@@ -62,27 +62,47 @@ chatForm.addEventListener('submit', (e) => {
 
 // 把訊息帶回聊天室窗
 function getMessage(message) {
-  const div = document.createElement('div')
-  div.classList.add('message')
-  div.innerHTML = `
-  <p> ${message} </p>
-    
+  // const div = document.createElement('div')
+  // div.classList.add('message')
+  // div.innerHTML = `
+  chatMessages.innerHTML += `
+  <div class="text-center message">
+    <p> ${message} </p>
+  </div>  
   `
-  chatMessages.appendChild(div)
+  //chatMessages.appendChild(div)
 }
 
 // 把當前使用者訊息帶回聊天室窗
 function getUserAndMessage(user) {  
-  const div = document.createElement('div')
-  div.classList.add('message')
-  div.innerHTML = `
-  <img src="${user.currentUser.avatar}" style="width: 50px; height: 50px" alt="">  
-  <p> ${user.currentUser.name} </p>
-  <p> ${user.currentUser.account} </p>
-  <p> ${user.msg} </p>
-  <p> ${user.time} </p>
-  `
-  chatMessages.appendChild(div)
+  //const div = document.createElement('div')
+  // div.classList.add('message')
+  // div.innerHTML = `
+  console.log('tttttttttttttttttt',user)
+  if (user.currentUser.userId === currentUser.userId) {
+    chatMessages.innerHTML += `
+    <div class="text-right message">
+      <img src="${user.currentUser.avatar}" style="width: 50px; height: 50px" alt="">  
+      <p> ${user.currentUser.name} </p>
+      <p> ${user.currentUser.account} </p>
+      <p> ${user.msg} </p>
+      <p> ${user.time} </p>
+    </div>
+    `
+  } else {
+    chatMessages.innerHTML += `
+    <div class="message">
+      <img src="${user.currentUser.avatar}" style="width: 50px; height: 50px" alt="">  
+      <p> ${user.currentUser.name} </p>
+      <p> ${user.currentUser.account} </p>
+      <p> ${user.msg} </p>
+      <p> ${user.time} </p>
+    </div>
+    `
+  }
+  
+
+  //chatMessages.appendChild(div)
 }
 
 

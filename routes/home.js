@@ -20,6 +20,7 @@ router.post('/signin', passport.authenticate('local', {
   failureFlash: true
 }))
 router.get('/logout', userController.logout)
+router.get('/chatroom', userauthenticated, userController.getChatRoom)
 
 ///admin router
 /*router.get('/admin/signin', adminController.signInPage)

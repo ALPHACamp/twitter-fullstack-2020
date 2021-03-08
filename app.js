@@ -49,7 +49,7 @@ io.on('connection', (socket) => {
   
   //console.log(socket)   
   socket.on('loginUser', (currentUser) => {    
-
+    
     const set = new Set()
     onlineUser = onlineUser.filter(user => !set.has(user.name) ? set.add(user.name) : false) 
         

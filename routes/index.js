@@ -21,9 +21,6 @@ router.use('/admin/users', adminUser)
 router.use('/admin/tweets', adminTweet)
 router.use('/admin', adminHome)
 
-router.get('/chatroom', (req, res) => {
-  res.render('chatroom')
-})
 router.use('/api/users', apiUser)
 
 module.exports = router

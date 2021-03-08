@@ -361,6 +361,10 @@ const userController = {
     let user = await User.findByPk(req.params.id)
     user = user.toJSON()
     return res.json({ user })
+  },
+
+  getChatRoom: (req, res) => {
+    res.render('chatroom')
   }
 
 }
