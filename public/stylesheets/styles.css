@@ -331,6 +331,12 @@ p, a, div, span, button {
   margin-top: -78px;
   margin-left: 1rem;
 }
+#self-setting-modal label[for=avatar] {
+  position: absolute;
+  margin-top: -40px;
+  left: 51px;
+  color: #fff;
+}
 .modal-edit-icons {
   margin-top: -120px;
   color:white;
