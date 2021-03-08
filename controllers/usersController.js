@@ -436,7 +436,7 @@ const usersController = {
         cover       : follower.dataValues.cover,
         role        : follower.dataValues.role,
         createdAt   : follower.dataValues.Followship.dataValues.createdAt,
-        isFollowed  : req.user.Followings.map((d) => d.id).includes(follower.id),
+        isFollowed  : helpers.getUser(req).Followings.map((d) => d.id).includes(follower.id),
       }))
       .sort((a, b) => b.createdAt - a.createdAt);
 
@@ -460,7 +460,7 @@ const usersController = {
         cover       : following.dataValues.cover,
         role        : following.dataValues.role,
         createdAt   : following.dataValues.Followship.dataValues.createdAt,
-        isFollowed  : req.user.Followings.map((d) => d.id).includes(following.id),
+        isFollowed  : helpers.getUser(req).Followings.map((d) => d.id).includes(following.id),
       }))
       .sort((a, b) => b.createdAt - a.createdAt);
 
