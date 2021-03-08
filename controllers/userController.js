@@ -247,17 +247,12 @@ const userController = {
 
   editUserFromEditPage: async (req, res) => {
     const user = await User.findByPk(req.params.id)
-    const avatar = req.files.avatar
-    const cover = req.files.cover
+    let avatar, cover
+    if (req.files) {
+      avatar = req.files.avatar
+      cover = req.files.cover
+    }
     let avatarLink, coverLink = ''
-    if (req.body.introduction.length > 140 || !req.body.introduction.trim()) {
-      req.flash('error_messages', '自我介紹不能超過140個字或是空白')
-      return res.redirect('back')
-    }
-    if (!req.body.name.trim()) {
-      req.flash('error_messages', '名字不能為空白')
-      return res.redirect('back')
-    }
     if (!avatar && !cover) {
       await user.update({
         avatar: user.avatar,
@@ -265,7 +260,7 @@ const userController = {
         name: req.body.name,
         introduction: req.body.introduction
       })
-      return res.redirect('back')
+      return res.status(200).json({ status: 'success', message: '修改成功' })
     }
     imgur.setClientId(IMGUR_CLIENT_ID)
     if (avatar) {
@@ -280,7 +275,7 @@ const userController = {
       name: req.body.name,
       introduction: req.body.introduction ? req.body.introduction : user.introduction
     })
-    return res.redirect('back')
+    return res.status(200).json({ status: 'success', message: '修改成功' })
   },
 
   getUserFollowingPage: async (req, res) => {

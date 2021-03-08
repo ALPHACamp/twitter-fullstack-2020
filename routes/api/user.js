@@ -3,6 +3,8 @@ const router = express.Router()
 const helpers = require('../../_helpers')
 const userauthenticated = require('../../middleware/auth').userauthenticated
 const userController = require('../../controllers/userController')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 router.use(userauthenticated)
 router.get('/:id', (req, res, next) => {
   if (helpers.getUser(req).id !== Number(req.params.id)) {
@@ -10,7 +12,7 @@ router.get('/:id', (req, res, next) => {
   }
   return next()
 }, userController.getUserData)
-router.post('/:id', userController.apiEditUser)
+router.post('/:id', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.editUserFromEditPage)
 
 
 module.exports = router
