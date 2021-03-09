@@ -54,6 +54,14 @@ p, a, div, span, button {
   border-color: #ff6600 !important;
 }
 
+.btn-outline-orange.btn-follow {
+  min-width: 50px !important;
+}
+
+.btn-orange.btn-following {
+  min-width: 80px !important;
+}
+
 .btn-white {
   border-color: #ff9800;
   color:#ff9800;
