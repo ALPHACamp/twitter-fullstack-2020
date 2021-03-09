@@ -57,7 +57,7 @@
             <p style="display:inline; color: grey; vertical-align: middle">{{this.Replies.length}}</p>
 
             {{#if isLiked}}
-            <form action="/tweets/{{this.id}}/unlike" method="POST" style="display:inline;">
+            <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST" style="display:inline;">
               <button type="submit" style="background: none;border: none;">
                 <i class="fas fa-heart" style="color: red;"></i>
                 {{else}}
