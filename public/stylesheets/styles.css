@@ -439,10 +439,24 @@ p, a, div, span, button {
   transform: translate(-50%, -50%);
   color: #fff;
 }
+
+/* Reply Create Modal */
+
+#reply-create-modal .modal-content {
+  height: 450px;
+}
+
+/* All Modals */
+
 .modal-edit-icons {
   margin-top: -120px;
   color:white;
 }
+
+.modal-content .modal-header {
+  height: 54px;
+}
+
 .modal-header .close {
   color:#ff6600
 }
