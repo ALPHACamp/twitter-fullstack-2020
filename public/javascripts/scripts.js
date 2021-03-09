@@ -12,7 +12,7 @@ if (window.location.pathname === '/') {
 }
 
 // Toast message for non-registration/login
-if (window.location.pathname !== '/login' && window.location.pathname !== '/regist') {
+if (window.location.pathname !== '/signin' && window.location.pathname !== '/signup') {
   // If there is any success / error message
   if (document.getElementById('snackbarMsg').innerHTML.replace(/\s/g, '') !== '') {
     const msgDiv = document.getElementById('snackbarMsg');
