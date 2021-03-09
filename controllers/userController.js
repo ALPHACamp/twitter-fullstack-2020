@@ -234,14 +234,16 @@ const userController = {
         { model: User, as: 'Followers' }
       ]
     }).then(user => {
-      const pageUser = user.toJSON()
-      const followerList = user.Followers.map(user => ({
+      user.update({ followerCount: user.Followers.length })
+      const results = user.toJSON()
+      results.Followers = user.Followers.map(user => ({
         ...user.dataValues,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
+      results.tweetCount = user.Tweets.length
+      results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
       return res.render('user/follower', {
-        users: pageUser,
-        followerList
+        results
       })
     })
   },
@@ -252,14 +254,16 @@ const userController = {
         { model: User, as: 'Followings' }
       ]
     }).then(user => {
-      const pageUser = user.toJSON()
-      const followingList = user.Followings.map(user => ({
+      user.update({ followingCount: user.Followings.length })
+      const results = user.toJSON()
+      results.Followings = user.Followings.map(user => ({
         ...user.dataValues,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
+      results.tweetCount = user.Tweets.length
+      results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
       return res.render('user/following', {
-        users: pageUser,
-        followingList
+        results
       })
     })
   },
