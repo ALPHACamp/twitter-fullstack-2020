@@ -411,8 +411,16 @@ p, a, div, span, button {
 }
 #self-setting-modal label[for=avatar] {
   position: absolute;
-  margin-top: -40px;
-  left: 51px;
+  margin-top: -20px;
+  left: 80px;
+  transform: translate(-50%, -50%);
+  color: #fff;
+}
+#self-setting-modal label[for=cover] {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: #fff;
 }
 .modal-edit-icons {
