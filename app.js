@@ -37,22 +37,20 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use((req, res, next) => {
+  res.locals.success_messages = req.flash('success_messages');
+  res.locals.error_messages = req.flash('error_messages');
+  res.locals.me = helpers.getUser(req);
+
   // Only getTopFollowing if logged in
-  if (res.locals.me !== undefined) {
+  if (res.locals.me !== undefined && !req.originalUrl.includes('/logout')) {
     usersController.getTopFollowing(req)
     .then((users) => {
       res.locals.topFollowingsUsers = users;
     });
   }
-  res.locals.success_messages = req.flash('success_messages');
-  res.locals.error_messages = req.flash('error_messages');
-  res.locals.me = helpers.getUser(req);
 
   next();
 });
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.use(routes);
 
