@@ -25,7 +25,9 @@ module.exports = {
       if (module.exports.getUser(req, res, next).role === 'admin') {
         return next();
       }
-      return res.redirect('/tweets');
+      req.flash('error_messages', 'Access Denied.');
+      req.logout();
+      return res.redirect('/signin');
     }
     req.flash('error_messages', 'Please login first！');
     return res.redirect('/admin/signin');
