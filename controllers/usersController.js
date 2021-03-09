@@ -242,7 +242,10 @@ const usersController = {
         ],
       })
       .then((replies) => {
-        const tweetsObj = replies.map((reply) => ({
+        const tweetsObj = replies
+        // If tweet has been deleted, it will show null instead of []
+        .filter((reply) => ((reply.Tweet !== null) && (reply.Tweet !== '')))
+        .map((reply) => ({
           id         : reply.dataValues.Tweet.id,
           UserId     : reply.dataValues.Tweet.UserId,
           description: reply.dataValues.Tweet.description,
@@ -444,10 +447,14 @@ const usersController = {
     })
     .then((likes) => {
       // Get all liked tweets details
-      let likedTweetsArr = likes.map((like) => ({
+      let likedTweetsArr = likes
+      // If tweet has been deleted, it will show null instead of []
+      .filter((like) => ((like.Tweet !== null) && (like.Tweet !== '')))
+      .map((like) => ({
         createdAt: like.dataValues.createdAt,
         ...like.Tweet,
       }));
+
       // Add detail counts, and rewrite createdAt to be 'liked date time', then sort DESC
       likedTweetsArr = likedTweetsArr.map((tweet) => ({
         ...tweet.dataValues,
