@@ -133,7 +133,7 @@ const usersController = {
     return User.findByPk(req.params.id)
     .then((me) => {
       me.update(changes).then(() => {
-        req.flash('success_messages', '成功更新');
+        req.flash('success_messages', '更新成功');
         res.redirect('back');
       })
       .catch((error) => console.log('edit error', error));
@@ -360,7 +360,7 @@ const usersController = {
     const avatar = req.files.avatar ? req.files.avatar[0] : null;
 
     if (name.length === 0) {
-      req.flash('error_messages', '名稱不能為空');
+      req.flash('error_messages', '名稱不能為空白');
       return res.redirect('back');
     }
 
@@ -392,7 +392,7 @@ const usersController = {
       User.findByPk(req.user.id).then((me) => {
         me.update(updateData)
         .then(() => {
-          req.flash('success_messages', '成功更新');
+          req.flash('success_messages', '更新成功');
           return res.redirect('back');
         });
       });
@@ -404,7 +404,7 @@ const usersController = {
           cover       : me.cover,
           avatar      : me.avatar,
         }).then(() => {
-          req.flash('success_messages', '成功更新');
+          req.flash('success_messages', '更新成功');
           return res.redirect('back');
         });
       });

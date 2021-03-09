@@ -72,7 +72,7 @@ const usersController = {
     .then((tweet) => {
       tweet.destroy()
       .then(() => {
-        req.flash('success_messages', 'Tweet has been deleted successfully');
+        req.flash('success_messages', '推文刪除成功');
         return res.redirect('/admin/tweets');
       });
     })

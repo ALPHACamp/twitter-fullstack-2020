@@ -62,7 +62,7 @@ const tweetsController = {
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
-      req.flash('success_messages', '推文成功!');
+      req.flash('success_messages', '推文成功');
       res.redirect('/tweets');
     });
   },
@@ -114,7 +114,7 @@ const tweetsController = {
       UserId : userId,
       TweetId: tweetId,
     }).then((reply) => {
-      req.flash('success_messages', '回覆成功!');
+      req.flash('success_messages', '回覆成功');
       res.redirect(`/tweets/${tweetId}/replies`);
     });
   },

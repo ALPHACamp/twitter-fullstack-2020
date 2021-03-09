@@ -24,7 +24,7 @@ router.post(
     if (req.user.toJSON().role === 'admin') {
       return res.redirect('/admin/tweets');
     }
-    req.flash('error_messages', 'Access Denied');
+    req.flash('error_messages', '沒有權限');
     req.logout();
     return res.redirect('/signin');
   },
