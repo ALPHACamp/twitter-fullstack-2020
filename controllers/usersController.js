@@ -433,14 +433,19 @@ const usersController = {
       ],
     })
     .then((likes) => {
+      // Get all liked tweets details
       let likedTweetsArr = likes.map((like) => ({
+        createdAt: like.dataValues.createdAt,
         ...like.Tweet,
       }));
+      // Add detail counts, and rewrite createdAt to be 'liked date time', then sort DESC
       likedTweetsArr = likedTweetsArr.map((tweet) => ({
         ...tweet.dataValues,
+        createdAt : tweet.createdAt,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-      }));
+      })).sort((a, b) => b.createdAt - a.createdAt);
+
       return resolve(likedTweetsArr);
     });
   }),
