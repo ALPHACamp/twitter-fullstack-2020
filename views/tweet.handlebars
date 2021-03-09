@@ -46,7 +46,7 @@
         </div>
 
         {{#if isLiked}}
-        <form action="/tweets/{{tweet.id}}/unlike?_method=DELETE" method="POST" style="display:inline;">
+        <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display:inline;">
           <button type="submit" style="background: none;border: none;">
             <i class="fas fa-heart" style="color: red; letter-spacing:10px; font-size: 25px;"></i>
             {{else}}
