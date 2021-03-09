@@ -394,8 +394,7 @@ const userController = {
   },
 
   getChatRoom: (req, res) => {
-    res.render('chatroom')
-    return res.status(200).json(user)
+    res.render('chatroom')    
   },
 
 }
