@@ -54,6 +54,14 @@ p, a, div, span, button {
   border-color: #ff6600 !important;
 }
 
+.btn-outline-orange.btn-follow {
+  min-width: 50px !important;
+}
+
+.btn-orange.btn-following {
+  min-width: 80px !important;
+}
+
 .btn-white {
   border-color: #ff9800;
   color:#ff9800;
@@ -403,8 +411,16 @@ p, a, div, span, button {
 }
 #self-setting-modal label[for=avatar] {
   position: absolute;
-  margin-top: -40px;
-  left: 51px;
+  margin-top: -20px;
+  left: 80px;
+  transform: translate(-50%, -50%);
+  color: #fff;
+}
+#self-setting-modal label[for=cover] {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: #fff;
 }
 .modal-edit-icons {

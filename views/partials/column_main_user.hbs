@@ -21,11 +21,11 @@
         </button>   
       {{#if user.isFollowed}}
         <form action="/followships/{{user.id}}?_method=DELETE" method="POST" class="">
-          <button type="submit" class="btn btn-sm btn-orange rounded-pill mr-2">正在跟隨</button>
+          <button type="submit" class="btn btn-sm btn-orange rounded-pill mr-2 btn-following">正在跟隨</button>
         </form>
       {{else}}
         <form action="/followships/{{user.id}}" method="POST" class="">
-          <button type="submit" class="btn btn-outline-orange btn-sm rounded-pill mr-2">跟隨</button>
+          <button type="submit" class="btn btn-outline-orange btn-sm rounded-pill mr-2 btn-follow">跟隨</button>
         </form>
       {{/if}}
       </div>
@@ -65,32 +65,26 @@
         </div>
         <form action="/user/self/edit?_method=PUT" method="POST" enctype="multipart/form-data">
           <button type="submit" class="btn btn-sm btn-orange rounded-pill btn-warning save-btn" id="save-btn"
-            style="float:right">儲存</button>
+            style="float:right; min-width:50px;">儲存</button>
       </div>
       <div class="modal-body m-0 p-0">
         <div class="modal-edit-pictures">
           <img src="{{me.cover}}" class="self-edit-modal bg-light m-0 w-100" loading="lazy">
-          <div class="d-flex justify-content-start">
-            <img class="self-edit-modal avatar bg-light" src="{{me.avatar}}" loading="lazy" alt="">
-          </div>
-        </div>
-        <div class="modal-edit-icons d-flex flex-column align-items-center mb-10">
-          <div class="d-flex flex-row justify-content-around align-items-center col-8">
             <label for="cover">
               <i class="fas fa-camera fa-lg"></i>
               <input type="file" class="form-control-file" id="cover" name="cover">
             </label>
-          {{!-- 目前沒有刪除橫幅圖案功能 刪除 icon 先隱藏 --}}
+            {{!-- 目前沒有刪除橫幅圖案功能 刪除 icon 先隱藏 --}}
             {{!-- <i class="fas fa-times fa-lg"></i> --}}
-          </div>
-          <div class="d-flex justify-content-start col-10 mt-5 ml-0">
+          <div class="d-flex justify-content-start">
+            <img class="self-edit-modal avatar bg-light" src="{{me.avatar}}" loading="lazy" alt="">
             <label for="avatar">
-              <i class="fas fa-camera fa-lg ml-0"></i>
-            </label>
+              <i class="fas fa-camera fa-lg"></i>
             <input type="file" class="form-control-file" id="avatar" name="avatar">
+            </label>
           </div>
         </div>
-        <div class="modal-form d-flex flex-column align-items-center justify-content-center mt-5">
+        <div class="modal-form d-flex flex-column align-items-center justify-content-center mt-2 mb-2">
           <div class="d-flex flex-column">
             <label for="name">名稱</label>
             <textarea class="w-1000 border-0" name="name" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>

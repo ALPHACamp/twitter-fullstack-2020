@@ -16,11 +16,11 @@
   </div>
   {{#if this.isFollowed}}
     <form action="/followships/{{this.id}}?_method=DELETE" method="POST" class="d-flex ml-auto">
-      <button type="submit" class="btn btn-sm btn-orange rounded-pill">正在跟隨</button>
+      <button type="submit" class="btn btn-sm btn-orange rounded-pill btn-following">正在跟隨</button>
     </form>
   {{else}}
     <form action="/followships/{{this.id}}" method="POST" class="d-flex ml-auto">
-      <button type="submit" class="btn btn-outline-orange btn-sm rounded-pill">跟隨</button>
+      <button type="submit" class="btn btn-outline-orange btn-sm rounded-pill btn-follow">跟隨</button>
     </form>
   {{/if}}
 </div>
