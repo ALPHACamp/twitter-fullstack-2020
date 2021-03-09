@@ -12,7 +12,7 @@ if (window.location.pathname === '/') {
 }
 
 // Toast message for non-registration/login
-if (window.location.pathname !== '/login' && window.location.pathname !== '/regist') {
+if (window.location.pathname !== '/signin' && window.location.pathname !== '/signup') {
   // If there is any success / error message
   if (document.getElementById('snackbarMsg').innerHTML.replace(/\s/g, '') !== '') {
     const msgDiv = document.getElementById('snackbarMsg');
@@ -57,6 +57,20 @@ document.querySelectorAll('textarea[name=introduction]').forEach((textarea) => {
       document.querySelector('.save-btn').setAttribute('disabled', '');
     } else {
       document.querySelector('.save-btn').removeAttribute('disabled');
+    }
+    event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
+  });
+});
+
+// Tweet Reply Text maximum length
+document.querySelectorAll('#reply-create-modal textarea[name=comment]').forEach((textarea) => {
+  textarea.addEventListener('input', (event) => {
+    const maxLength = 140;
+    const currentLength = event.target.value.length;
+    if (currentLength > maxLength) {
+      document.querySelector('#reply-create-modal button[type=submit]').setAttribute('disabled', '');
+    } else {
+      document.querySelector('#reply-create-modal button[type=submit]').removeAttribute('disabled');
     }
     event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
   });

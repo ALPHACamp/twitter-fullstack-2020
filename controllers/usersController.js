@@ -93,7 +93,7 @@ const usersController = {
 
     if (checkPassword !== password) {
       req.flash('error_messages', '兩次密碼輸入不一致');
-      return res.redirect(`/${req.params.id}/setting/`);
+      return res.redirect(`/users/${req.params.id}/edit/`);
     }
     if (req.user.email !== email) {
       const userWtihSameEmail = await User.findOne({
@@ -104,7 +104,7 @@ const usersController = {
 
       if (userWtihSameEmail) {
         req.flash('error_messages', 'Email 已經有人使用');
-        return res.redirect(`/${req.params.id}/setting/`);
+        return res.redirect(`/users/${req.params.id}/edit/`);
       }
     }
     if (req.user.account !== account) {
@@ -116,7 +116,7 @@ const usersController = {
 
       if (userWithSameAccount) {
         req.flash('error_messages', '帳號已經有人使用');
-        return res.redirect(`/${req.params.id}/setting/`);
+        return res.redirect('back');
       }
     }
 
@@ -133,8 +133,8 @@ const usersController = {
     return User.findByPk(req.params.id)
     .then((me) => {
       me.update(changes).then(() => {
-        req.flash('success_messages', '成功更新');
-        res.redirect('/');
+        req.flash('success_messages', '更新成功');
+        res.redirect('back');
       })
       .catch((error) => console.log('edit error', error));
     });
@@ -359,13 +359,18 @@ const usersController = {
     const cover = req.files.cover ? req.files.cover[0] : null;
     const avatar = req.files.avatar ? req.files.avatar[0] : null;
 
+    if (name.length === 0) {
+      req.flash('error_messages', '名稱不能為空白');
+      return res.redirect('back');
+    }
+
     if (name.length > 50) {
       req.flash('error_messages', '名稱不能超過50字');
-      return res.redirect('/');
+      return res.redirect('back');
     }
     if (introduction.length > 160) {
       req.flash('error_messages', '自我介紹不能超過160字');
-      return res.redirect('/');
+      return res.redirect('back');
     }
 
     if (cover || avatar) {
@@ -387,7 +392,7 @@ const usersController = {
       User.findByPk(req.user.id).then((me) => {
         me.update(updateData)
         .then(() => {
-          req.flash('success_messages', '成功更新');
+          req.flash('success_messages', '更新成功');
           return res.redirect('back');
         });
       });
@@ -399,8 +404,8 @@ const usersController = {
           cover       : me.cover,
           avatar      : me.avatar,
         }).then(() => {
-          req.flash('success_messages', '成功更新');
-          res.redirect('/');
+          req.flash('success_messages', '更新成功');
+          return res.redirect('back');
         });
       });
     }

@@ -15,7 +15,7 @@ const usersController = {
       req,
       res,
       (data) => {
-        req.flash('success_messages', '成功更新');
+        req.flash('success_messages', '更新成功');
         return res.json(data);
       },
       (error) => {

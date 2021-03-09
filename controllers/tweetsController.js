@@ -62,7 +62,7 @@ const tweetsController = {
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
-      req.flash('success_messages', '推文成功!');
+      req.flash('success_messages', '推文成功');
       res.redirect('/tweets');
     });
   },
@@ -77,15 +77,16 @@ const tweetsController = {
       order  : [[Reply, 'createdAt', 'DESC']],
     })
     .then((tweet) => {
-      const time = tweet.createdAt;
-      const tweetTime = ` ${moment(time).format('a h:MM')}・ ${moment(time).format('LL')}`;
+      const createdAt = tweet.createdAt;
+      const tweetTime = ` ${moment(createdAt).format('a h:MM')}・ ${moment(createdAt).format('LL')}`;
       const tweetObj = {
         ...tweet.dataValues,
         User      : tweet.User.dataValues,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
-        createdAt : tweetTime,
+        createdAt : createdAt,
+        tweetTime : tweetTime,
       };
 
       return res.render('index', {
@@ -114,7 +115,7 @@ const tweetsController = {
       UserId : userId,
       TweetId: tweetId,
     }).then((reply) => {
-      req.flash('success_messages', '回覆成功!');
+      req.flash('success_messages', '回覆成功');
       res.redirect(`/tweets/${tweetId}/replies`);
     });
   },
