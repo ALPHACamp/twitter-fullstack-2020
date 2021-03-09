@@ -45,9 +45,6 @@ const usersController = {
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
       ],
-      where: {
-        role: { [Op.ne]: 'admin' },
-      },
     })
     .then((users) => {
       const usersObj = users.map((user) => ({
