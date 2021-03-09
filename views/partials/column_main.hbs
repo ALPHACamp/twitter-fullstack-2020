@@ -145,8 +145,11 @@
       </div>
       <div class="modal-body">
         <div class="d-flex align-items-start">
-          <div class="tweet-part d-flex align-items-start">
-            <img class="img-fluid rounded-circle mr-3" src="{{tweet.User.avatar}}" alt="" style="max-height: 70px;">
+          <div class="tweet-part d-flex align-items-stretch">
+            <div class="mr-3 d-flex align-self-stretch flex-column text-center" style="max-width: 70px; width: 170px;">
+              <img class="img-fluid rounded-circle mr-3" src="{{tweet.User.avatar}}" alt="" style="max-height: 70px;">
+              <div class="d-flex align-self-stretch bg-lightgrey" style="height: 100%; margin: 5px auto; width: 2.5px;">&nbsp;</div>
+            </div>
             <div>
               <div class="item-header d-flex d-row d-flex align-items-center">
                 <div class="name pr-2">
