@@ -65,7 +65,7 @@ document.querySelectorAll('textarea[name=introduction]').forEach((textarea) => {
 // Tweet Reply Text maximum length
 document.querySelectorAll('#reply-create-modal textarea[name=comment]').forEach((textarea) => {
   textarea.addEventListener('input', (event) => {
-    const { maxLength } = event.target;
+    const maxLength = 140;
     const currentLength = event.target.value.length;
     if (currentLength > maxLength) {
       document.querySelector('#reply-create-modal button[type=submit]').setAttribute('disabled', '');
