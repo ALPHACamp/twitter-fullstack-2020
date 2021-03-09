@@ -40,7 +40,9 @@ app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
   res.locals.error_messages = req.flash('error_messages');
   res.locals.me = helpers.getUser(req);
-  if (res.locals.me !== undefined) {
+
+  // Only getTopFollowing if logged in
+  if (res.locals.me !== undefined && !req.originalUrl.includes('/logout')) {
     usersController.getTopFollowing(req)
     .then((users) => {
       res.locals.topFollowingsUsers = users;
@@ -49,9 +51,6 @@ app.use((req, res, next) => {
 
   next();
 });
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.use(routes);
 
