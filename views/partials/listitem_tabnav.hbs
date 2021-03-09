@@ -34,19 +34,19 @@
     </li>
   {{/if}}
   {{#if (isdefined userFollowings)}}
-    <li class="nav-item text-center active">
-      <a class="nav-link" href="/users/{{user.id}}/followings">正在跟隨</a>
-    </li>
     <li class="nav-item text-center">
       <a class="nav-link" href="/users/{{user.id}}/followers">跟隨者</a>
     </li>
+    <li class="nav-item text-center active">
+      <a class="nav-link" href="/users/{{user.id}}/followings">正在跟隨</a>
+    </li>
   {{/if}}
   {{#if (isdefined userFollowers)}}
-      <li class="nav-item text-center">
-        <a class="nav-link" href="/users/{{user.id}}/followings">正在跟隨</a>
-      </li>
-      <li class="nav-item text-center active">
-        <a class="nav-link" href="/users/{{user.id}}/followers">跟隨者</a>
-      </li>
+    <li class="nav-item text-center active">
+      <a class="nav-link" href="/users/{{user.id}}/followers">跟隨者</a>
+    </li>
+    <li class="nav-item text-center">
+      <a class="nav-link" href="/users/{{user.id}}/followings">正在跟隨</a>
+    </li>
   {{/if}}
 </ul>
