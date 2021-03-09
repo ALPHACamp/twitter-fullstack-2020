@@ -42,6 +42,8 @@ const usersController = {
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
         name    : req.body.name,
         account : req.body.account,
+        avatar  : `https://loremflickr.com/300/300/portrait/?lock=${Math.random() * 100}`,
+        cover   : `https://loremflickr.com/300/300/portrait/?lock=${Math.random() * 100}`,
       }).then(() => {
         req.flash('success_messages', '成功註冊帳號');
         res.redirect('/signin');
