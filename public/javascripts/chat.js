@@ -1,11 +1,15 @@
 const socket = io()
 
-chatForm = document.getElementById('chat-form')
+const chatForm = document.getElementById('chat-form')
 const chatMessages = document.querySelector('.chat-messages')
 const avatar = document.querySelector('.avatar')
 const userName = document.querySelector('.user-name')
 const userAccount = document.querySelector('.user-account')
 const userId = document.querySelector('.user-id')
+const historyMsgsBtn = document.querySelector('#historyMsgsBtn')
+const historyMessages = document.querySelector('#historyMessages')
+const hi = document.querySelector('.hi')
+const hello = document.querySelector('.hello')
 
 const currentUser = {
   avatar: avatar.src,
@@ -13,12 +17,13 @@ const currentUser = {
   name: userName.innerText,
   account: userAccount.innerText
 }
-//console.log(avatar)
-//console.log('currentUser======================', currentUser)
+
+historyMsgsBtn.addEventListener('click', getHistoryMsgsBtn)
+
 socket.emit('loginUser', currentUser)
 
 socket.on('onlineUser', onlineUser => {
-  //console.log('onlineUser======================', onlineUser)
+  
   let nowline = document.querySelector('.nowline')
   nowline.innerText = `上線使用者 ( ${onlineUser.length} )`
   let chatUsers = document.querySelector('.chat-users')
@@ -35,15 +40,13 @@ socket.on('onlineUser', onlineUser => {
   })
 })
 
-socket.on('message', message => {
-  console.log(message)
+socket.on('message', message => {  
   getMessage(message)
 
   chatMessages.scrollTop = chatMessages.scrollHeight
 })
 
-socket.on('chatMessage', (currentUser) => {
-  console.log('currentUser___________________________', currentUser)
+socket.on('chatMessage', (currentUser) => {  
   getUserAndMessage(currentUser)
   chatMessages.scrollTop = chatMessages.scrollHeight
 })
@@ -61,24 +64,19 @@ chatForm.addEventListener('submit', (e) => {
 })
 
 // 把訊息帶回聊天室窗
-function getMessage(message) {
-  // const div = document.createElement('div')
-  // div.classList.add('message')
-  // div.innerHTML = `
+function getMessage(message) {  
+
   chatMessages.innerHTML += `
   <div class="text-center message">
     <p> ${message} </p>
   </div>  
   `
-  //chatMessages.appendChild(div)
+  
 }
 
 // 把當前使用者訊息帶回聊天室窗
 function getUserAndMessage(user) {  
-  //const div = document.createElement('div')
-  // div.classList.add('message')
-  // div.innerHTML = `
-  console.log('tttttttttttttttttt',user)
+  
   if (user.currentUser.userId === currentUser.userId) {
     chatMessages.innerHTML += `
     <div class="text-right message">
@@ -100,12 +98,12 @@ function getUserAndMessage(user) {
     </div>
     `
   }
-  
 
-  //chatMessages.appendChild(div)
 }
 
-
-    // <p> ${message.username} </p>
-    // <p> ${message.text} </p>
-    // <p> ${message.time} </p>
+// 歷史訊息
+function getHistoryMsgsBtn(e) {  
+  chatMessages.children[0].classList.remove('d-none')
+  chatMessages.scrollTop = chatMessages.scrollHeight
+  e.target.classList.add('d-none')  
+}

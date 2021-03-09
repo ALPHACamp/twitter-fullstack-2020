@@ -6,6 +6,7 @@ const Followship = db.Followship
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Message = db.Message
 const sequelize = require('sequelize')
 const getTopUser = require('../_helpers').getTopUser
 
@@ -393,8 +394,13 @@ const userController = {
     console.log(req.body)
   },
 
-  getChatRoom: (req, res) => {
-    res.render('chatroom')    
+  getChatRoom: async(req, res) => {
+    let historyMsgs = await Message.findAll({
+      raw: true, nest: true,
+      include: [ User ]
+    })
+    
+    return res.render('chatroom', { historyMsgs })    
   },
 
 }
