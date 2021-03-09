@@ -1,10 +1,10 @@
-<form class="form-regist m-3" action="{{#if adminLogin}}/admin/signin{{else}}/signin{{/if}}" method="POST" style="width: 100%;">
+<form class="form-regist m-5" action="{{#if adminLogin}}/admin/signin{{else}}/signin{{/if}}" method="POST" style="width: 100%;">
   <div>
     <img class="logo img-fluid mx-auto d-block"
       src="/images/Icon.svg">
-    <h1 class="mt-3 text-center h3 font-weight-normal">{{#if adminLogin}}Alphitter 後台登入{{else}}登入 Alphitter{{/if}}</h1>
+    <h1 class="mt-5 text-center h3 font-weight-normal">{{#if adminLogin}}後台登入{{else}}登入 Alphitter{{/if}}</h1>
   </div>
-  <br>
+  
   <div class="col-6 mx-auto">
     {{>message}}
     <div class="form-label-group m-3">
