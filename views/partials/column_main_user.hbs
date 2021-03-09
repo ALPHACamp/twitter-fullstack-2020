@@ -87,15 +87,14 @@
         <div class="modal-form d-flex flex-column align-items-center justify-content-center mt-2 mb-2">
           <div class="d-flex flex-column">
             <label for="name">名稱</label>
-            <textarea class="w-1000 border-0" name="name" rows="1" cols="50" placeholder="名稱">{{me.name}}</textarea>
+            <textarea class="w-1000 border-0" name="name" rows="1" cols="50" placeholder="名稱" maxlength="50">{{me.name}}</textarea>
             <div class="textarea-util d-flex justify-content-end">
               <div class="text-counter text-right">0 / 50</div>
             </div>
           </div>
           <div class="d-flex flex-column mt-3">
             <label for="introduction">自我介紹</label>
-            <textarea class="w-1000 border-0" name="introduction" rows="7" cols="50"
-              placeholder="自我介紹">{{me.introduction}}</textarea>
+            <textarea class="w-1000 border-0" name="introduction" rows="7" cols="50" placeholder="自我介紹" maxlength="160">{{me.introduction}}</textarea>
             <div class="textarea-util d-flex justify-content-end">
               <div class="text-counter text-right">0 / 160</div>
             </div>
