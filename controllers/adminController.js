@@ -20,7 +20,7 @@ const usersController = {
     .then((tweets) => {
       tweets = tweets.map((tweet) => ({
         id         : tweet.id,
-        description: tweet.description.slice(0, 49),
+        description: tweet.description.slice(0, 50),
         createdAt  : tweet.createdAt,
         updatedAt  : tweet.updatedAt,
         User       : {
