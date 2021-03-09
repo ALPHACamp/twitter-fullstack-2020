@@ -208,7 +208,7 @@ const userController = {
             })
           })
       }
-      req.flash('success_messages', 'profile was successfully to update')
+      req.flash('success_messages', '個人資料成功更新')
       res.redirect(`/users/${req.params.id}/tweets`)
     }
   },
