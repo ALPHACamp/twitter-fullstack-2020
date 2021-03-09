@@ -361,11 +361,11 @@ const usersController = {
 
     if (name.length > 50) {
       req.flash('error_messages', '名稱不能超過50字');
-      return res.redirect('/');
+      return res.redirect('back');
     }
     if (introduction.length > 160) {
       req.flash('error_messages', '自我介紹不能超過160字');
-      return res.redirect('/');
+      return res.redirect('back');
     }
 
     if (cover || avatar) {
@@ -400,7 +400,7 @@ const usersController = {
           avatar      : me.avatar,
         }).then(() => {
           req.flash('success_messages', '成功更新');
-          res.redirect('/');
+          return res.redirect('back');
         });
       });
     }
