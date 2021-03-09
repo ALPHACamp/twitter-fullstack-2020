@@ -71,7 +71,7 @@ const usersController = {
         req.flash('error_messages', '此頁面不存在');
         res.redirect('back');
       }
-      if (user.id !== req.user.id) {
+      if (user.id !== helpers.getUser(req).id) {
         req.flash('error_messages', '無法設定他人帳戶');
         res.redirect('back');
       } else {
@@ -163,7 +163,7 @@ const usersController = {
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
 
-      user.isFollowed = req.user.Followings.map((d) => d.id).includes(user.id);
+      user.isFollowed = helpers.getUser(req).Followings.map((d) => d.id).includes(user.id);
 
       return res.render('index', {
         userPage: true,
@@ -436,7 +436,7 @@ const usersController = {
         cover       : follower.dataValues.cover,
         role        : follower.dataValues.role,
         createdAt   : follower.dataValues.Followship.dataValues.createdAt,
-        isFollowed  : req.user.Followings.map((d) => d.id).includes(follower.id),
+        isFollowed  : helpers.getUser(req).Followings.map((d) => d.id).includes(follower.id),
       }))
       .sort((a, b) => b.createdAt - a.createdAt);
 
@@ -460,7 +460,7 @@ const usersController = {
         cover       : following.dataValues.cover,
         role        : following.dataValues.role,
         createdAt   : following.dataValues.Followship.dataValues.createdAt,
-        isFollowed  : req.user.Followings.map((d) => d.id).includes(following.id),
+        isFollowed  : helpers.getUser(req).Followings.map((d) => d.id).includes(following.id),
       }))
       .sort((a, b) => b.createdAt - a.createdAt);
 
