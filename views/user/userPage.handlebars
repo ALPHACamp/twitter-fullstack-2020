@@ -105,7 +105,7 @@
                 </button>
                 {{!-- like/unlike icon --}}
                 {{#if isLiked}}
-                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
                   <button type="submit" class="btn tweet-like-link">
                     <i class="fas fa-heart mr-1"></i>{{this.LikedUsers.length}}
                   </button>

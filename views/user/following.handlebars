@@ -12,23 +12,23 @@
           <div class="head-content d-flex">
             <i class="fas fa-arrow-left ml-2 mt-3"></i>
             <div class="head-content-user-info">
-              <h5 class="tweet-title-user">{{users.name}}</h5>
-              <div class="title-description-user">{{users.Tweets.length}} tweets</div>
+              <h5 class="tweet-title-user">{{results.name}}</h5>
+              <div class="title-description-user">{{results.Tweets.length}} tweets</div>
             </div>
           </div>
         </a>
         <div class="user-selection-bar">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link " href="/users/{{users.id}}/followers">followers</a>
+              <a class="nav-link " href="/users/{{results.id}}/followers">followers</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/users/{{users.id}}/followings">followings</a>
+              <a class="nav-link active" href="/users/{{results.id}}/followings">followings</a>
             </li>
           </ul>
         </div>
 
-        {{#each followingList}}
+        {{#each results.Followings}}
         <div class="tweet-content-box" style="margin-bottom:5px">
           <div class="tweet-content-left">
             <a href="/users/{{this.id}}/tweets">
@@ -40,7 +40,7 @@
             <div style="display: flex; justify-content: space-between">
               <div class="tweet-content-username">
                 <a href="/users/{{this.id}}/tweets" class="user-name">{{this.name}}</a>
-                <span class="user-account">@{{this.account}}</span>
+                <span class="user-account">{{this.account}}</span>
               </div>
               <div style="margin-top: 5px; margin-right: 5px">
                 {{#ifCond ../user.id this.id}}
