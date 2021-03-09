@@ -7,7 +7,7 @@
     <h5>首頁</h5>
   {{/if}}
 </div>
-
+<div class="overflow-auto w-100">
 <div id="mainblock-main" class="w-100">
   {{#if (isdefined tweet)}}
     {{>column_main_tweet}}
@@ -55,7 +55,7 @@
   {{/if}}
 </div>
 
-<div id="mainblock-list" class="overflow-auto w-100">
+<div id="mainblock-list" class="w-100">
   {{!-- Main Index Page --}}
   {{#if (isdefined tweets)}}
     {{#if tweets}}
@@ -133,7 +133,7 @@
     {{/if}}
   {{/if}}
 </div>
-
+</div>
 <!-- Reply Creation Modal -->
 <div class="modal fade" id="reply-create-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
