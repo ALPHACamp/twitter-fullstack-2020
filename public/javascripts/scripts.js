@@ -61,3 +61,17 @@ document.querySelectorAll('textarea[name=introduction]').forEach((textarea) => {
     event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
   });
 });
+
+// Tweet Reply Text maximum length
+document.querySelectorAll('#reply-create-modal textarea[name=comment]').forEach((textarea) => {
+  textarea.addEventListener('input', (event) => {
+    const { maxLength } = event.target;
+    const currentLength = event.target.value.length;
+    if (currentLength > maxLength) {
+      document.querySelector('#reply-create-modal button[type=submit]').setAttribute('disabled', '');
+    } else {
+      document.querySelector('#reply-create-modal button[type=submit]').removeAttribute('disabled');
+    }
+    event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
+  });
+});
