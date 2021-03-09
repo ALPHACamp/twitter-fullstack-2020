@@ -24,8 +24,9 @@ router.post(
     if (req.user.toJSON().role === 'admin') {
       return res.redirect('/admin/tweets');
     }
-
-    return res.redirect('/');
+    req.flash('error_messages', 'Access Denied');
+    req.logout();
+    return res.redirect('/signin');
   },
 );
 router.get('/admin/tweets', authenticationHelper.authenticatedAdmin, adminController.adminMain);

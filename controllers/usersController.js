@@ -141,7 +141,18 @@ const usersController = {
   // 使用者個人推文清單
   getTweetsPage: async (req, res) => {
     const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
-    const user = await usersController.getUserDetails(userId);
+    const [user, userFollowers, userFollowings, userLikedTweets] = await Promise.all([
+      usersController.getUserDetails(userId),
+      usersController.getUserFollowers(userId),
+      usersController.getUserFollowings(userId),
+      usersController.getUserLikedTweets(userId),
+    ]);
+
+    Object.assign(user, {
+      LikedTweets   : userLikedTweets,
+      followingCount: userFollowings.length,
+      followerCount : userFollowers.length,
+    });
 
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
@@ -179,8 +190,18 @@ const usersController = {
   // 使用者個人推文及回覆清單
   getTweetsRepliesPage: async (req, res) => {
     const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
-    const likedTweets = await usersController.getUserLikedTweets(userId);
-    const user = await usersController.getUserDetails(userId);
+    const [user, userFollowers, userFollowings, userLikedTweets] = await Promise.all([
+      usersController.getUserDetails(userId),
+      usersController.getUserFollowers(userId),
+      usersController.getUserFollowings(userId),
+      usersController.getUserLikedTweets(userId),
+    ]);
+
+    Object.assign(user, {
+      LikedTweets   : userLikedTweets,
+      followingCount: userFollowings.length,
+      followerCount : userFollowers.length,
+    });
 
     // Gathered list of tweets where user tweeted and/or replied
     const [selfTweets, selfReplies] = await Promise.all([
@@ -201,7 +222,7 @@ const usersController = {
           User      : tweet.User.dataValues,
           ReplyCount: tweet.Replies.length,
           LikeCount : tweet.Likes.length,
-          isLiked   : (likedTweets || []).map((d) => d.id).includes(tweet.id),
+          isLiked   : (userLikedTweets || []).map((d) => d.id).includes(tweet.id),
         }));
         return tweetsObj;
       }),
@@ -228,7 +249,7 @@ const usersController = {
           User       : reply.dataValues.Tweet.User.dataValues,
           ReplyCount : reply.dataValues.Tweet.Replies.length,
           LikeCount  : reply.dataValues.Tweet.Likes.length,
-          isLiked    : likedTweets.map((d) => d.id).includes(reply.dataValues.Tweet.id),
+          isLiked    : userLikedTweets.map((d) => d.id).includes(reply.dataValues.Tweet.id),
         }));
 
         return tweetsObj;
@@ -251,10 +272,18 @@ const usersController = {
   // 使用者喜歡的內容清單
   getLikesPage: async (req, res) => {
     const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
-    const [user, userLikedTweets] = await Promise.all([
+    const [user, userFollowers, userFollowings, userLikedTweets] = await Promise.all([
       usersController.getUserDetails(userId),
+      usersController.getUserFollowers(userId),
+      usersController.getUserFollowings(userId),
       usersController.getUserLikedTweets(userId),
     ]);
+
+    Object.assign(user, {
+      LikedTweets   : userLikedTweets,
+      followingCount: userFollowings.length,
+      followerCount : userFollowers.length,
+    });
 
     const tweetsObj = userLikedTweets.map((tweet) => ({
       ...tweet,
@@ -371,18 +400,14 @@ const usersController = {
         { model: Tweet },
         { model: Like },
         { model: Reply },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
       ],
     })
     .then((user) => {
       // Assign user analytics
       Object.assign(user.dataValues, {
-        tweetCount    : user.dataValues.Tweets.length,
-        replyCount    : user.dataValues.Replies.length,
-        likeCount     : user.dataValues.Likes.length,
-        followingCount: user.dataValues.Followings.length,
-        followerCount : user.dataValues.Followers.length,
+        tweetCount: user.dataValues.Tweets.length,
+        replyCount: user.dataValues.Replies.length,
+        likeCount : user.dataValues.Likes.length,
       });
       // Remove unnecessary large payload
       delete user.dataValues.Tweets;
@@ -408,39 +433,46 @@ const usersController = {
       ],
     })
     .then((likes) => {
+      // Get all liked tweets details
       let likedTweetsArr = likes.map((like) => ({
+        createdAt: like.dataValues.createdAt,
         ...like.Tweet,
       }));
+      // Add detail counts, and rewrite createdAt to be 'liked date time', then sort DESC
       likedTweetsArr = likedTweetsArr.map((tweet) => ({
         ...tweet.dataValues,
+        createdAt : tweet.createdAt,
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
-      }));
+      })).sort((a, b) => b.createdAt - a.createdAt);
+
       return resolve(likedTweetsArr);
     });
   }),
   getUserFollowers: (userId, req) => new Promise((resolve, reject) => {
-    User.findByPk(userId, {
-      include: [
-        { model: User, as: 'Followers' },
-      ],
-    })
-    .then((user) => {
-      const followersArr = user.dataValues.Followers.map((follower) => ({
-        id          : follower.dataValues.id,
-        email       : follower.dataValues.id,
-        account     : follower.dataValues.account,
-        name        : follower.dataValues.name,
-        avatar      : follower.dataValues.avatar,
-        introduction: follower.dataValues.introduction,
-        cover       : follower.dataValues.cover,
-        role        : follower.dataValues.role,
-        createdAt   : follower.dataValues.Followship.dataValues.createdAt,
-        isFollowed  : helpers.getUser(req).Followings.map((d) => d.id).includes(follower.id),
-      }))
-      .sort((a, b) => b.createdAt - a.createdAt);
+    usersController.getUserFollowings(userId).then((userFollowings) => {
+      User.findByPk(userId, {
+        include: [
+          { model: User, as: 'Followers' },
+        ],
+      })
+      .then((user) => {
+        const followersArr = user.dataValues.Followers.map((follower) => ({
+          id          : follower.dataValues.id,
+          email       : follower.dataValues.id,
+          account     : follower.dataValues.account,
+          name        : follower.dataValues.name,
+          avatar      : follower.dataValues.avatar,
+          introduction: follower.dataValues.introduction,
+          cover       : follower.dataValues.cover,
+          role        : follower.dataValues.role,
+          createdAt   : follower.dataValues.Followship.dataValues.createdAt,
+          isFollowed  : userFollowings.map((d) => d.id).includes(follower.id),
+        }))
+        .sort((a, b) => b.createdAt - a.createdAt);
 
-      return resolve(followersArr);
+        return resolve(followersArr);
+      });
     });
   }),
   getUserFollowings: (userId, req) => new Promise((resolve, reject) => {
@@ -460,7 +492,7 @@ const usersController = {
         cover       : following.dataValues.cover,
         role        : following.dataValues.role,
         createdAt   : following.dataValues.Followship.dataValues.createdAt,
-        isFollowed  : helpers.getUser(req).Followings.map((d) => d.id).includes(following.id),
+        isFollowed  : true,
       }))
       .sort((a, b) => b.createdAt - a.createdAt);
 
