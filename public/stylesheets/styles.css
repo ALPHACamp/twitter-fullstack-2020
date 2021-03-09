@@ -411,10 +411,10 @@ p, a, div, span, button {
 
 /* Self Editing Modal*/
 .self-edit-modal.card-img-top {
-  max-height: 150px;
-  height: 150px;
+  object-fit: cover;
+  max-height: 200px;
   width: 100%;
-  border: 0.5px solid #fff;
+  border-style: none;
 }
 .self-edit-modal.avatar {
   object-fit: cover;
