@@ -141,15 +141,15 @@ const usersController = {
   // 使用者個人推文清單
   getTweetsPage: async (req, res) => {
     const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
-    const [user, userFollowers, userFollowings, userLikedTweets] = await Promise.all([
+    const [user, userFollowers, userFollowings, selfLikedTweets] = await Promise.all([
       usersController.getUserDetails(userId),
       usersController.getUserFollowers(userId),
       usersController.getUserFollowings(userId),
-      usersController.getUserLikedTweets(userId),
+      usersController.getUserLikedTweets(helpers.getUser(req).id),
     ]);
 
     Object.assign(user, {
-      LikedTweets   : userLikedTweets,
+      LikedTweets   : selfLikedTweets,
       followingCount: userFollowings.length,
       followerCount : userFollowers.length,
     });
@@ -190,15 +190,15 @@ const usersController = {
   // 使用者個人推文及回覆清單
   getTweetsRepliesPage: async (req, res) => {
     const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
-    const [user, userFollowers, userFollowings, userLikedTweets] = await Promise.all([
+    const [user, userFollowers, userFollowings, selfLikedTweets] = await Promise.all([
       usersController.getUserDetails(userId),
       usersController.getUserFollowers(userId),
       usersController.getUserFollowings(userId),
-      usersController.getUserLikedTweets(userId),
+      usersController.getUserLikedTweets(helpers.getUser(req).id),
     ]);
 
     Object.assign(user, {
-      LikedTweets   : userLikedTweets,
+      LikedTweets   : selfLikedTweets,
       followingCount: userFollowings.length,
       followerCount : userFollowers.length,
     });
@@ -222,7 +222,7 @@ const usersController = {
           User      : tweet.User.dataValues,
           ReplyCount: tweet.Replies.length,
           LikeCount : tweet.Likes.length,
-          isLiked   : (userLikedTweets || []).map((d) => d.id).includes(tweet.id),
+          isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
         }));
         return tweetsObj;
       }),
@@ -249,7 +249,7 @@ const usersController = {
           User       : reply.dataValues.Tweet.User.dataValues,
           ReplyCount : reply.dataValues.Tweet.Replies.length,
           LikeCount  : reply.dataValues.Tweet.Likes.length,
-          isLiked    : userLikedTweets.map((d) => d.id).includes(reply.dataValues.Tweet.id),
+          isLiked    : user.LikedTweets.map((d) => d.id).includes(reply.dataValues.Tweet.id),
         }));
 
         return tweetsObj;
@@ -272,15 +272,22 @@ const usersController = {
   // 使用者喜歡的內容清單
   getLikesPage: async (req, res) => {
     const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
-    const [user, userFollowers, userFollowings, userLikedTweets] = await Promise.all([
+    const [
+      user,
+      userFollowers,
+      userFollowings,
+      userLikedTweets,
+      selfLikedTweets,
+    ] = await Promise.all([
       usersController.getUserDetails(userId),
       usersController.getUserFollowers(userId),
       usersController.getUserFollowings(userId),
       usersController.getUserLikedTweets(userId),
+      usersController.getUserLikedTweets(helpers.getUser(req).id),
     ]);
 
     Object.assign(user, {
-      LikedTweets   : userLikedTweets,
+      LikedTweets   : selfLikedTweets,
       followingCount: userFollowings.length,
       followerCount : userFollowers.length,
     });
@@ -289,8 +296,9 @@ const usersController = {
       ...tweet,
       ReplyCount: tweet.Replies.length,
       LikeCount : tweet.Likes.length,
-      isLiked   : user.Likes.map((d) => d.TweetId).includes(tweet.id),
+      isLiked   : user.LikedTweets.map((d) => d.id).includes(tweet.id),
     }));
+
     return res.render('index', {
       user,
       likedTweets: tweetsObj,
