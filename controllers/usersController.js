@@ -359,6 +359,11 @@ const usersController = {
     const cover = req.files.cover ? req.files.cover[0] : null;
     const avatar = req.files.avatar ? req.files.avatar[0] : null;
 
+    if (name.length === 0) {
+      req.flash('error_messages', '名稱不能為空');
+      return res.redirect('back');
+    }
+
     if (name.length > 50) {
       req.flash('error_messages', '名稱不能超過50字');
       return res.redirect('back');
