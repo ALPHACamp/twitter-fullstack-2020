@@ -1,9 +1,32 @@
+{{#if error}}
+{{#each error}}
+<div class="alert alert-danger" role="alert" style="margin: 30px">
+  {{this.message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}
+{{/if}}
+
+{{#if success}}
+{{#each success}}
+<div class="alert alert-success" role="alert" style="margin: 30px">
+  {{this.message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}
+{{/if}}
+
 <div class="row mt-3">
   <div class="col-md-2 d-flex justify-content-center">
     {{>leftColumn}}
   </div>
 
-  <form class="col-md-7 d-flex justify-content-center" action="/setting?_method=PUT" method="POST" style="width: 100%;">
+  <form class="col-md-7 d-flex justify-content-center" action="/api/users/{{user.id}}" method="POST"
+    style="width: 100%;">
 
     <div class="text-center m-5 ">
       <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
@@ -34,8 +57,8 @@
       </div>
 
       <div class="form-label-group">
-        <label for="inputPasswordCheck">密碼確認</label>
-        <input type="password" name="passwordCheck" class="form-control" placeholder="請確認密碼" required>
+        <label for="checkPassword">密碼確認</label>
+        <input type="password" name="checkPassword" class="form-control" placeholder="請確認密碼" required>
       </div>
       <br />
       <button class="btn btn-lg btn-block sign-button text-dark" type="submit">儲存</button>
