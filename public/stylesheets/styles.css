@@ -321,6 +321,9 @@ p, a, div, span, button {
 
 #column_side .list-item {
   background-color: rgba(0,0,0,.03);
+  min-height: 50px !important;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 
 #column_side .list-item:not(:last-child) {
@@ -334,6 +337,15 @@ p, a, div, span, button {
 
 #column_side .list-item .item-desc {
   display: none;
+}
+
+#column_side .profile-img {
+  min-width: 50px;
+}
+
+#column_side .img-fluid.rounded-circle {
+  height: 50px;
+  width: 50px;
 }
 
 /* Toast Message for flash message */
