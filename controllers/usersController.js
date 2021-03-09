@@ -93,7 +93,7 @@ const usersController = {
 
     if (checkPassword !== password) {
       req.flash('error_messages', '兩次密碼輸入不一致');
-      return res.redirect(`/${req.params.id}/setting/`);
+      return res.redirect(`/users/${req.params.id}/edit/`);
     }
     if (req.user.email !== email) {
       const userWtihSameEmail = await User.findOne({
@@ -104,7 +104,7 @@ const usersController = {
 
       if (userWtihSameEmail) {
         req.flash('error_messages', 'Email 已經有人使用');
-        return res.redirect(`/${req.params.id}/setting/`);
+        return res.redirect(`/users/${req.params.id}/edit/`);
       }
     }
     if (req.user.account !== account) {
@@ -116,7 +116,7 @@ const usersController = {
 
       if (userWithSameAccount) {
         req.flash('error_messages', '帳號已經有人使用');
-        return res.redirect(`/${req.params.id}/setting/`);
+        return res.redirect('back');
       }
     }
 
@@ -134,7 +134,7 @@ const usersController = {
     .then((me) => {
       me.update(changes).then(() => {
         req.flash('success_messages', '成功更新');
-        res.redirect('/');
+        res.redirect('back');
       })
       .catch((error) => console.log('edit error', error));
     });
