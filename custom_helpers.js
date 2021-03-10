@@ -6,7 +6,6 @@ const { IMGUR_CLIENT_ID } = process.env;
 
 const uploadFile = async (file) => {
   const data = await fs.readFile(file.path);
-  console.log('uploadFile data', data);
   const options = {
     method : 'POST',
     url    : 'https://api.imgur.com/3/image',
@@ -22,10 +21,8 @@ const uploadFile = async (file) => {
     request(options, (error, response) => {
       if (error) {
         reject(error);
-        console.log('error', error);
       } else {
         resolve(JSON.parse(response.body).data);
-        console.log('response.body', response.body);
       }
     });
   });

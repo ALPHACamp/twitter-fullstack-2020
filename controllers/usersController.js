@@ -386,7 +386,6 @@ const usersController = {
 
       if (cover) {
         const image = await customHelpers.uploadFile(cover);
-        console.log('cover', image);
         updateData.cover = image.link;
       }
 
