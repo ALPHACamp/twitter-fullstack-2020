@@ -92,6 +92,10 @@ p, a, div, span, button {
   top: 0;
 }
 
+.header-block.online-user-header {
+  border-bottom: 2px solid rgba(0, 0, 0, .125);
+}
+
 .logo {
   max-height: 50px;
 }
@@ -321,6 +325,10 @@ p, a, div, span, button {
   object-fit: cover;
   height: 70px;
   width: 70px;
+}
+
+.chatroom_side {
+  border-left: 2px solid rgba(0, 0, 0, .125);
 }
 
 #column_side .list-item {
