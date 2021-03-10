@@ -6,7 +6,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const routers = require('./routes')
 
-const port = 3000
+const port = process.env.PORT || 3000
 
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
