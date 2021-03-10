@@ -4,7 +4,7 @@ const multer = require('multer');
 const upload = multer({ dest: 'temp/' });
 
 const usersController = require('../../controllers/api/usersController.js');
-const tweetsController = require('../../controllers/api/tweetsController')
+const tweetsController = require('../../controllers/api/tweetsController');
 const { authenticated, authenticatedNonAdmin } = require('../../middleware/authenticationHelper');
 
 const router = express.Router();
