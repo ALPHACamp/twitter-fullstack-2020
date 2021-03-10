@@ -6,7 +6,7 @@
       </div>
     </nav>
 
-    {{!-- {{> addTweet}} --}}
+    {{> postTweet}}
 
     <div class="center-content d-flex" id="tweet-content">
       <div class="head  justify-content-between ">
@@ -47,7 +47,7 @@
 
           <div class="user-info-top">
             {{#ifCond users.id currentUserId}}
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#user-info-Modal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUser">
               編輯個人資料
             </button>
             {{else}}
@@ -98,19 +98,19 @@
               </div>
               <div class="tweet-content-bottom">
                 {{!-- reply icon --}}
-                <button type="button" class="button tweet-reply-link  mr-3">
+                <button type="button" class="btn tweet-reply-link  mr-3">
                   <i class="fas fa-reply mr-1" aria-hidden="true"></i>{{this.Tweet.Replies.length}}
                 </button>
                 {{!-- like/unlike icon --}}
                 {{#if isLiked}}
                 <form action="/tweets/{{this.TweetId}}/unlike?_method=DELETE" method="POST">
-                  <button type="submit" class="button tweet-like-link">
+                  <button type="submit" class="btn tweet-like-link">
                     <i class="fas fa-heart mr-1"></i>{{this.Tweet.Likes.length}}
                   </button>
                 </form>
                 {{else}}
                 <form action="/tweets/{{this.TweetId}}/like" method="POST">
-                  <button type="submit" class="button tweet-like-link">
+                  <button type="submit" class="btn tweet-like-link">
                     <i class="far fa-heart mr-1"></i>{{this.Tweet.Likes.length}}
                   </button>
                 </form>
@@ -130,3 +130,5 @@
       {{> rightColumn}}
     </div>
   </div>
+
+  {{> editProfile}}
