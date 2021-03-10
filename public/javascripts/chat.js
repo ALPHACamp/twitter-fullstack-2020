@@ -30,9 +30,10 @@ socket.on('onlineUser', onlineUser => {
   chatUsers.innerHTML = ``
   onlineUser.forEach(user => {
     chatUsers.innerHTML += `
-    <div>
-      <img src="${user.avatar}" style="width: 50px; height: 50px" alt="">
-      <div>${user.userId}</div>
+    <div class="d-flex align-items-center">
+      <a href="/users/${user.userId}" style="text-decoration: none;">
+        <img src="${user.avatar}" style="width: 50px; height: 50px; border-radius: 50%" alt="">
+      </a>      
       <div>${user.name}</div>
       <div>${user.account}</div>
     </div>
@@ -79,23 +80,32 @@ function getUserAndMessage(user) {
   
   if (user.currentUser.userId === currentUser.userId) {
     chatMessages.innerHTML += `
-    <div class="text-right message">
-      <img src="${user.currentUser.avatar}" style="width: 50px; height: 50px" alt="">  
-      <p> ${user.currentUser.name} </p>
-      <p> ${user.currentUser.account} </p>
+    <div class="text-right message d-flex flex-column">      
       <p> ${user.msg} </p>
       <p> ${user.time} </p>
     </div>
     `
   } else {
-    chatMessages.innerHTML += `
-    <div class="message">
-      <img src="${user.currentUser.avatar}" style="width: 50px; height: 50px" alt="">  
-      <p> ${user.currentUser.name} </p>
-      <p> ${user.currentUser.account} </p>
-      <p> ${user.msg} </p>
-      <p> ${user.time} </p>
+    chatMessages.innerHTML += `    
+
+    <div class="row no-gutters">
+
+      <div class="col-md-1 m-3">
+        <a href="/users/${user.currentUser.userId}" style="text-decoration: none;">
+          <img src="${user.currentUser.avatar}" alt="..." style="width: 50px;
+      height: 50px; border-radius: 50%">
+        </a>
+      </div>
+
+      <div class="col-md d-flex flex-column justify-content-center">
+        
+        <span style="">${user.msg}</span>
+        
+        <span style="p-0" class="card-text">${user.time}</span>
+      </div>
+
     </div>
+
     `
   }
 
@@ -107,3 +117,11 @@ function getHistoryMsgsBtn(e) {
   chatMessages.scrollTop = chatMessages.scrollHeight
   e.target.classList.add('d-none')  
 }
+
+{/* <div class="message d-flex">
+      <img src="${user.currentUser.avatar}" style="width: 50px; height: 50px; border-radius: 50%" alt="">     
+      <div class="flex-column">
+        <p> ${user.msg} </p>
+        <p> ${user.time} </p>
+      </div>
+    </div> */}
