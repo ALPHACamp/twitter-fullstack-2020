@@ -31,9 +31,9 @@ const tweetsController = {
         },
         attributes: {
           include: [
-            [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.FollowingId = User.id)'), 'FollowshipCount']],
+            [sequelize.literal('(SELECT COUNT(*) FROM "Followships" WHERE "Followships"."followingId" = "User"."id")'), 'FollowshipCount']],
         },
-        order: [[sequelize.literal('FollowshipCount'), 'DESC']],
+        order: [[sequelize.literal('"FollowshipCount"'), 'DESC']],
         limit: 10,
       }).then((users) => {
         const usersObj = users.map((user) => ({
@@ -77,7 +77,7 @@ const tweetsController = {
       order  : [[Reply, 'createdAt', 'DESC']],
     })
     .then((tweet) => {
-      const createdAt = tweet.createdAt;
+      const { createdAt } = tweet;
       const tweetTime = ` ${moment(createdAt).format('a h:MM')}・ ${moment(createdAt).format('LL')}`;
       const tweetObj = {
         ...tweet.dataValues,
@@ -85,8 +85,8 @@ const tweetsController = {
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
-        createdAt : createdAt,
-        tweetTime : tweetTime,
+        createdAt,
+        tweetTime,
       };
 
       return res.render('index', {
