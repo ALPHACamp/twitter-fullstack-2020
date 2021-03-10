@@ -421,3 +421,10 @@
   height: 225px;
   overflow: hidden;
 }
+
+.connection-line {
+  width: 2px;
+  height: 100%;
+  margin-top: 5px;
+  background-color: #CCD6DD;
+}
