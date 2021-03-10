@@ -6,7 +6,7 @@
       </div>
     </nav>
 
-    {{!-- {{> addTweet}} --}}
+    {{> postTweet}}
 
     <div class="center-content d-flex" id="tweet-content">
       <div class="head justify-content-between ">
@@ -47,7 +47,7 @@
 
           <div class="user-info-top">
             {{#ifCond users.id currentUserId}}
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#user-info-Modal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUser">
               編輯個人資料
             </button>
             {{else}}
@@ -156,3 +156,5 @@
       {{> rightColumn}}
     </div>
   </div>
+
+  {{> editProfile}}
