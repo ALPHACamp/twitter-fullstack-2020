@@ -534,9 +534,9 @@ const usersController = {
       },
       attributes: {
         include: [
-          [sequelize.literal('(SELECT COUNT(*) FROM "Followships" WHERE "Followships"."followingId" = "User"."id")'), 'FollowshipCount']],
+          [sequelize.literal('(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'), 'FollowshipCount']],
       },
-      order: [[sequelize.literal('"FollowshipCount"'), 'DESC']],
+      order: [[sequelize.literal('FollowshipCount'), 'DESC']],
       limit: 10,
     }).then((users) => {
       users = users.map((user) => ({
