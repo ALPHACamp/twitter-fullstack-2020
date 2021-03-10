@@ -22,4 +22,5 @@ router.use('/admin/tweets', adminTweet)
 router.use('/admin', adminHome)
 
 router.use('/api/users', apiUser)
+
 module.exports = router
