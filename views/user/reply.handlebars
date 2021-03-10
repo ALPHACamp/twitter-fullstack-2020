@@ -126,24 +126,7 @@
             </div>
           </div>
 
-          {{!-- reply --}}
-          <div class="reply-modal-tweet d-flex">
-            <div class="tweet-content-left d-flex flex-column align-items-center">
-              <a href="/users/{{this.UserId}}/tweets">
-                <img class="mt-2" {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
-                  style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px; margin-left:15px">
-              </a>
-            </div>
-            <div class="tweet-content-right">
-              <div class="tweet-content-username">
-                <a href="/users/{{this.UserId}}/tweets" class="user-name">{{../users.name}}</a>
-                <span class="user-account">{{../users.account}}．{{moment this.createdAt}}</span><br>
-              </div>
-              <div class="tweet-content-info">
-                <span class="tweet-content-description">{{this.comment}}</span><br><br>
-              </div>
-            </div>
-          </div>
+
         </div>
         {{/each}}
 
@@ -158,3 +141,24 @@
   </div>
 
   {{> editProfile}}
+
+  {{!-- reply --}}
+  {{#each users.Replies}}
+  <div class="reply-modal-tweet d-flex">
+    <div class="tweet-content-left d-flex flex-column align-items-center">
+      <a href="/users/{{this.UserId}}/tweets">
+        <img class="mt-2" {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
+          style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px; margin-left:15px">
+      </a>
+    </div>
+    <div class="tweet-content-right">
+      <div class="tweet-content-username">
+        <a href="/users/{{this.UserId}}/tweets" class="user-name">{{../users.name}}</a>
+        <span class="user-account">{{../users.account}}．{{moment this.createdAt}}</span><br>
+      </div>
+      <div class="tweet-content-info">
+        <span class="tweet-content-description">{{this.comment}}</span><br><br>
+      </div>
+    </div>
+  </div>
+  {{/each}}
