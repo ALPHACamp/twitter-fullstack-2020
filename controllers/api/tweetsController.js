@@ -1,4 +1,5 @@
 const db = require('../../models');
+
 const {
   Tweet, User,
 } = db;
@@ -9,23 +10,23 @@ const tweetsController = {
   getReplyPage: async (req, res) => {
     const tweetId = Number(req.params.tweetId);
     const user = helpers.getUser(req);
-    Tweet.findByPk(tweetId, { 
-      include: User 
+    Tweet.findByPk(tweetId, {
+      include: User,
     })
     .then((tweet) => {
-      const createdAt = moment(tweet.createdAt).fromNow()
+      const createdAt = moment(tweet.createdAt).fromNow();
       const data = {
-        id: tweet.id,
-        avatar: tweet.User.avatar,
-        name: tweet.User.name,
-        account: tweet.User.account,
+        id         : tweet.id,
+        avatar     : tweet.User.avatar,
+        name       : tweet.User.name,
+        account    : tweet.User.account,
         description: tweet.description,
-        createdAt : createdAt,
+        createdAt,
         userAvatar : user.avatar,
       };
       return res.json({
         status: 'success',
-        tweet: data,
+        tweet : data,
       });
     });
   },
