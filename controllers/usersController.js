@@ -44,6 +44,7 @@ const usersController = {
         account : req.body.account,
         avatar  : `https://loremflickr.com/300/300/portrait/?lock=${Math.random() * 100}`,
         cover   : `https://loremflickr.com/300/300/portrait/?lock=${Math.random() * 100}`,
+        role    : 'user',
       }).then(() => {
         req.flash('success_messages', '成功註冊帳號');
         res.redirect('/signin');
