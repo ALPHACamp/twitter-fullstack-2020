@@ -2,7 +2,6 @@ const { Op } = require('sequelize');
 const sequelize = require('sequelize');
 const moment = require('moment');
 const db = require('../models');
-const usersController = require('./usersController');
 
 moment.locale('zh-TW');
 
@@ -71,7 +70,6 @@ const tweetsController = {
     const tweetId = Number(req.params.tweetId);
     const user = helpers.getUser(req);
     const userId = req.params.userId ? Number(req.params.userId) : user.id;
-    // const user = await usersController.getUserDetails(userId);
     Tweet.findByPk(tweetId, {
       include: [User, Like, { model: Reply, include: [User] }],
       order  : [[Reply, 'createdAt', 'DESC']],
@@ -116,7 +114,7 @@ const tweetsController = {
       TweetId: tweetId,
     }).then((reply) => {
       req.flash('success_messages', '回覆成功');
-      res.redirect(`/tweets/${tweetId}/replies`);
+      res.redirect('back');
     });
   },
 };
