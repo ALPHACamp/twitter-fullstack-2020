@@ -31,7 +31,7 @@ router.get('/users/:userId/followings', authenticated, usersController.getFollow
 // 使用者的被追蹤清單
 router.get('/users/:userId/followers', authenticated, usersController.getFollowersPage);
 
-router.put('/user/self/edit', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.putUser);
+router.post('/users/:id', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.putUser);
 
 router.get('/', (req, res) => res.redirect('/tweets'));
 module.exports = router;

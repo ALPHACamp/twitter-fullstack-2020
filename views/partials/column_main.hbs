@@ -7,7 +7,7 @@
     <h5>首頁</h5>
   {{/if}}
 </div>
-
+<div class="overflow-auto w-100">
 <div id="mainblock-main" class="w-100">
   {{#if (isdefined tweet)}}
     {{>column_main_tweet}}
@@ -55,7 +55,7 @@
   {{/if}}
 </div>
 
-<div id="mainblock-list" class="overflow-auto w-100">
+<div id="mainblock-list" class="w-100">
   {{!-- Main Index Page --}}
   {{#if (isdefined tweets)}}
     {{#if tweets}}
@@ -133,7 +133,7 @@
     {{/if}}
   {{/if}}
 </div>
-
+</div>
 <!-- Reply Creation Modal -->
 <div class="modal fade" id="reply-create-modal" tabindex="-1" role="dialog" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -175,8 +175,8 @@
             <textarea class="w-100" name="comment" rows="5" cols="90" placeholder="推你的回覆? (字數限制140字)"></textarea>
             <div class="textarea-util d-flex justify-content-between">
               <div class="text-counter text-lightgrey">0/140</div>
-              <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">回覆</button>
             </div>
+              <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">回覆</button>
           </form>
         </div>
       </div>
