@@ -469,6 +469,13 @@ i.fa-camera.fa-lg {
 i.fa-camera.fa-lg:hover {
   opacity: 0.6;
 }
+
+i.fa-comment {
+  cursor: pointer;
+}
+i.fa-comment:hover {
+  opacity: 0.6;
+}
 input#avatar, input#cover {
   display: none;
 }

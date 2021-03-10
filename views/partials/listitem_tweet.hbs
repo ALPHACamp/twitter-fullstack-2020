@@ -24,11 +24,11 @@
         <span class="pr-3 mr-3 tweet-reply-btn" data-tweetid="{{this.id}}"><i class="far fa-comment pr-2" data-toggle="modal" data-target="#reply-create-modal"></i>{{this.ReplyCount}}</span>
       {{#if this.isLiked }}
       <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST" class="ml-3 pl-3">
-        <button class="btn btn-like text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i>{{this.LikeCount}}</button>
+        <button class="btn btn-like text-orange p-0" type="submit"><i class="far fa-heart pr-2 text-orange"></i></button>{{this.LikeCount}}
       </form>
       {{else}}
       <form action="/tweets/{{this.id}}/like/" method="POST" class="ml-3 pl-3">
-        <button class="btn btn-like text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i>{{this.LikeCount}}</button>
+        <button class="btn btn-like text-lightgrey p-0" type="submit"><i class="far fa-heart pr-2"></i></button>{{this.LikeCount}}
       </form>
       {{/if}}
     </div>
