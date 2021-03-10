@@ -37,26 +37,25 @@
           喜歡次數
         </div>
         <hr style="width: 100%;" />
-        <div>
+        <div class="d-flex align-items-center">
           <button type="button" class="btn" style="background: none;border: none;float:left; margin-right:50px;"
             data-toggle="modal" data-target="#replyModal">
-            <i class="far fa-comment"
-              style="color: gray; lletter-spacing:50px; font-size: 25px;">{{this.Replies.length}}</i>
+            <i class="far fa-comment" style="color: gray; font-size: 25px;">{{this.Replies.length}}</i>
           </button>
-        </div>
 
-        {{#if isLiked}}
-        <form action="/tweets/{{tweet.id}}/unlike?_method=DELETE" method="POST" style="display:inline;">
-          <button type="submit" style="background: none;border: none;">
-            <i class="fas fa-heart" style="color: red; letter-spacing:10px; font-size: 25px;"></i>
-            {{else}}
-            <form action="/tweets/{{tweet.id}}/like" method="POST" style="display:inline; ">
-              <button type="submit" style="background: none;border: none;">
-                <i class="far fa-heart" style="color: gray; letter-spacing:10px; font-size: 25px;"></i>
-                {{/if}}
-                <p style="display:inline; color: grey; "></p>
-              </button>
-            </form>
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" style="background: none;border: none;">
+              <i class="fas fa-heart" style="color: red; letter-spacing:10px; font-size: 25px;"></i>
+              {{else}}
+              <form action="/tweets/{{tweet.id}}/like" method="POST" style="display:inline; ">
+                <button type="submit" style="background: none;border: none;">
+                  <i class="far fa-heart" style="color: gray; letter-spacing:10px; font-size: 25px;"></i>
+                  {{/if}}
+                  <p style="display:inline; color: grey; "></p>
+                </button>
+              </form>
+        </div>
       </li>
       {{#each tweet.Replies}}
       <li class="list-group-item">
