@@ -4,6 +4,7 @@
     {{> leftColumn}}
 
   </div>
+  {{> postTweet}}
   <div class="col-md-6 pl-0">
     <ul class="list-group">
       <li class="list-group-item right-zone-header" style="
@@ -69,7 +70,7 @@
           <div class="col-10">
             <span>{{this.User.name}}</span>
             <span style="color:gray;">{{this.User.account}} ．
-              {{moment this.User.createdAt}}</span>
+              {{moment this.createdAt}}</span>
             <div class="row col-10 mt-3">
               <p style="color: gray;">回覆</p>
               <a href="/users/{{../tweet.User.id}}/tweets" style="text-decoration:none;">
@@ -94,18 +95,29 @@
         <div class="modal-body">
           <div class="body-avatar row">
             <div class="col-2">
-              <a href="/users/{{users.id}}/tweets">
+              <a href="/users/{{tweet.User.id}}/tweets">
                 <img src="{{tweet.User.avatar}}" class="rounded-circle"
                   style="width: 50px;height: 50px;background: #C4C4C4;">
               </a>
             </div>
             <div class="col-10">
               <a href="/users/{{users.id}}/tweets"
-                style="text-decoration:none; color:black"><strong>{{users.Tweet.name}}</strong></a>
+                style="text-decoration:none; color:black"><strong>{{tweet.User.name}}</strong>
+              </a>
+              <span style="color:gray;">{{tweet.User.account}} ．
+                {{moment tweet.createdAt}}
+              </span>
+              <p>{{tweet.description}}</p>
+              <a style="color:gray; font-size: 15px">回覆給</a>
+              <span style="color: orange;">{{tweet.User.account}}</span>
+            </div>
+            <div class="col-2 mt-5">
+              <a href="/users/{{user.id}}/tweets">
+                <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height: 50px;background: #C4C4C4;">
               </a>
             </div>
             <form method="POST" action="/tweets/{{tweet.id}}/replies">
-              <div class="col-10" style="width: 400px;">
+              <div class="col-10 mt-5" style="width: 400px;">
                 <textarea placeholder="推你的回覆" class="form-control" name="content" rows="3"
                   style="border: none;"></textarea>
               </div>
