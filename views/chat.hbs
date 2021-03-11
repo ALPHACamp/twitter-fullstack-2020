@@ -1,0 +1,67 @@
+{{!-- Center --}}
+<div class="col">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>上線使用者</strong>
+      <input id="loginUserId" style="display: none;" value="{{loginUser.id}}">
+    </li>
+    <div id="user-list">
+
+    </div>
+  </ul>
+</div>
+{{!-- Right side --}}
+<div class="col">
+  <ul class="list-group">
+    <li class="list-group-item">
+      {{#if public}}
+      <strong>公開聊天室</strong>      
+      <input class="selector" style="display: none;" value="public">
+      {{else}}
+      <strong>私人訊息</strong>
+      <input class="selector" style="display: none;" value="private">
+      {{/if}}
+    </li>
+    <li class="list-group-item">
+      <div style="height: 77vh;">
+        <ul id="chat-messages" style="list-style: none;">
+          {{#each messages}}
+          {{#ifCond ../loginUser.id this.messageFromId}}
+          <div class="m-2">
+            <section style="background-color:coral; float: right; width:270px; border-radius:20px; padding:6px; float:right;">
+              {{this.message}}
+            </section>
+            <font class="text-muted" size="2px" style="float: right;">{{time this.createdAt}}</font>
+            <div class="clearfix"></div>
+          </div>        
+          {{else}}
+          <div class="flex-container m-2">
+            <div>
+              <img src="{{../loginUser.avatar}}" class="user-avatar" style="margin-right:4px;">
+            </div>
+            <div>
+              <section style="background-color:lightgrey; float: right; width:270px; border-radius:20px; padding:6px;">
+                {{this.message}}
+              </section>
+              <font class="text-muted" size="2px">{{time this.createdAt}}</font>
+            </div>
+          </div>
+          {{/ifCond}}
+          {{/each}}
+        </ul>
+      </div>
+    </li>
+    <li class="list-group-item">
+      <form action="" id="chat-form">
+        <div style="width:90%; float: left;">
+          <textarea placeholder="輸入訊息..." class="form-control" id="message" name="message" rows="1"
+            style="border: none; background-color:lightgrey; border-radius:20px;"></textarea>
+        </div>
+        <div style="display: flex;">
+          <button class="btn" style="background-color:white; border:none;"><i class="fas fa-paper-plane"
+              style="color:rgb(255, 102, 0);"></i></button>
+        </div>
+      </form>
+    </li>
+  </ul>
+</div>

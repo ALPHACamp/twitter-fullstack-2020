@@ -1,0 +1,45 @@
+<div class="col-4">
+  <ul class="list-group mt-3 ml-3">
+    <li class="list-group-item" style="background-color:rgb(245, 248, 250);">
+      <strong>跟隨誰</strong>
+    </li>
+    {{#each users}}
+      <li class="list-group-item" style="background-color:rgb(245, 248, 250);">
+        <div class="flex-container">
+          {{!-- <div class="p-3">Avatar</div> --}}
+          <div class="mr-2">
+            <a href="/users/{{this.id}}/tweets">
+              <img src="{{this.avatar}}" alt="user avatar" class="user-avatar"
+                style="border-radius: 50%; height:50px; width: 50px">
+            </a>
+          </div>
+          <div>
+            <a href="/users/{{this.id}}/tweets" style="text-decoration:none; color:black"><strong>{{this.name}}</strong><br></a>
+            <span class="text-muted">@{{this.account}}</span>
+          </div>
+          <div class="align-self-center ml-auto">
+        {{#ifCond ../loginUser.id this.id}}
+        {{else}}
+        {{#if this.isFollowing}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn btn-outline-twitter-active rounded-pill">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button name="id" value="{{this.id}}" type="submit" class="btn btn-outline-twitter rounded-pill">跟隨</button>
+        </form>
+        {{/if}}
+        {{/ifCond}}
+          </div>
+        </div>
+      </li>
+    {{/each}}
+    <li class="list-group-item" style="background-color: rgb(245, 248, 250);">
+      {{#if tweetFollowings}}
+        <a href="/tweets?more=10" style="color: rgb(255, 102, 0);">顯示更多</a>
+      {{else}}
+        <a href="/tweets/{{tweet.id}}/replies?more=10" style="color: rgb(255, 102, 0);">顯示更多</a>
+      {{/if}}
+    </li>
+  </ul>
+</div>

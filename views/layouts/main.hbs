@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Twitter</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <div class="container">
+    {{> alert}}
+    <div class="row justify-content-md-center">
+      {{!-- Left side --}}
+      <div class="col-2 mr-5">
+        <div class="row">
+          <div class="col mb-5">
+            <img style="width: 50px; height: 50px" src="https://i.imgur.com/yqet9K2.png" alt="AlphaCamp">
+          </div>
+        </div>
+        <div class="row">
+          {{#ifCond user.role 'admin'}}
+            <div class="col">
+              <a href="/admin/tweets" class="btn" style="color: black;">
+                <h6><i class="fa fa-home fa-lg m-3"></i>推文清單</h6>
+              </a><br>
+              <a href="/admin/users" class="btn" style="color: black;">
+                <h6><i class="fa fa-user fa-lg m-3"></i>使用者列表</h6>
+              </a><br>
+            </div>
+            {{else}}
+              <div class="col list-group">
+                <a href="/" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fa fa-home fa-lg m-2"></i>首頁</h6>
+                </a>
+                <a href="#" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fas fa-bell fa-lg m-2"></i>通知</h6>
+                </a>
+                <a href="/message" class="list-group-item border-0" style="color:black;">
+                  <h6><i class="fas fa-comments m-2"></i>公開聊天室</h6>
+                </a>
+                <a href="/message/{{user.id}}" id="private-message" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fas fa-envelope fa-lg m-2"></i>私人訊息</h6>
+                </a>
+                <a href="/users/{{user.id}}/tweets" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fa fa-user fa-lg m-2"></i>個人資料</h6>
+                </a>
+                <a href="/users/settings" class="list-group-item border-0" style="color: black;">
+                  <h6><i class="fa fa-cog fa-lg m-2"></i>設定</h6>
+                </a>
+
+
+              <button data-toggle="modal" data-target="#createTweet" class="btn btn-create rounded-pill" style="width: 180px">推文</button>
+              <!-- pop up create tweet message -->
+              {{> message}}
+              </div>
+          {{/ifCond}}
+        </div>
+      </div>
+      {{!-- Center/Right side --}}
+      {{{ body }}}
+    </div>
+  </div>
+  {{!-- bottom --}}
+  <div class="container fixed-bottom">
+    <div class="row">
+      <div class="col">
+        <a href="/logout" class="btn" style="color: black;">
+          <h6><i class="fas fa-sign-out-alt fa-lg m-3"></i>登出</h6>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#userInfo-modal").modal('show');
+    });
+  </script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/message.js"></script>
+</body>
+</html>

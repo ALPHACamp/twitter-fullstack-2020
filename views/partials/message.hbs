@@ -1,0 +1,164 @@
+<!-- pop up reply tweet message -->
+<div class="modal fade" id="s{{tweet.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: coral;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="flex-container mb-2">
+          <div>
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <img class="mr-3 user-avatar" src="{{tweet.User.avatar}}" alt="user avatar">
+            </a>
+          </div>
+          <div>
+            <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{tweet.User.name}}</strong></a>
+            <font color="grey">@{{tweet.User.account}} • {{moment tweet.updatedAt}}</font>
+            <p>
+              {{tweet.description}}
+            </p>
+          </div>
+        </div>
+        {{#each tweetReplies}}
+          <div class="flex-container mb-2">
+            <div>
+              <a href="/users/{{this.User.id}}/tweets">
+                <img class="mr-3 user-avatar" src="{{this.User.avatar}}" alt="user avatar">
+              </a>
+            </div>
+            <div>
+              <a href="/users/{{this.User.id}}/tweets
+              " style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
+              <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
+              <p>
+                {{this.comment}}
+              </p>
+              <font color="grey" size="2px">回覆給</font>
+              <font color="coral" size="2px">@{{../tweet.User.name}}</font>
+            </div>
+          </div>
+        {{/each}}
+        <div class="flex-container">
+          <div>
+            <img src="{{user.avatar}}" alt="user avatar" class="user-avatar">
+          </div>
+          <div style="width: 600px;">
+            <form action="/tweets/{{tweet.id}}/replies" method="POST">
+              <textarea placeholder="推你的回覆" class="form-control" id="comment" name="comment" rows="3"
+                style="border: none;"></textarea>
+              <button class="btn" type="submit"
+                style="border-radius: 18px; background:coral; color:white; width: 60px; float: right;">留言</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- pop up reply comment message -->
+{{#each tweetReplies}}
+  <div class="modal fade" id="r{{this.id}}" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color: coral;">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="flex-container mb-2">
+            <div>
+              <a href="/users/{{this.User.id}}/tweets">
+                <img class="mr-3 user-avatar" src="{{this.User.avatar}}" alt="user avatar">
+              </a>
+            </div>
+            <div>
+              <a href="/users/{{this.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
+              <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
+              <p>
+                {{this.comment}}
+              </p>
+            </div>
+          </div>
+          {{#each this.ReplyComments}}
+            <div class="flex-container mb-2">
+              <div>
+                <a href="/users/{{this.User.id}}/tweets">
+                  <img class="mr-3 user-avatar" src="{{this.User.avatar}}" alt="user avatar">
+                </a>
+              </div>
+              <div>
+                {{#ifCond ../../loginUser.id this.User.id}}
+                  <div class="dropdown show" style="position:absolute; right:20px;">
+                    <a style="color:black; text-decoration:none;" role="button" id="more" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      •••
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="more">
+                      <button data-toggle="modal" data-target="#er{{this.id}}" class="dropdown-item">修改此留言</button>
+                      <button data-toggle="modal" data-target="#cr{{this.id}}" class="dropdown-item">刪除此留言</button>
+                    </div>
+                  </div>
+                {{/ifCond}}
+                <a href="/users/{{this.User.id}}/tweets" style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
+                <font color="grey">@{{this.User.account}} • {{moment this.updatedAt}}</font>
+                <p>
+                  {{this.comment}}
+                </p>
+                <font color="grey" size="2px">回覆給</font>
+                <font color="coral" size="2px">@{{../this.User.name}}</font>
+              </div>
+            </div>
+            <!-- pop up delete reply comment message -->
+            {{> delete}}
+            <!-- pop up edit reply comment message -->
+            {{> edit}}
+          {{/each}}
+          <div class="flex-container">
+            <div>
+              <img src="{{../loginUser.avatar}}" alt="user avatar" class="user-avatar">
+            </div>
+            <div style="width: 600px;">
+              <form action="/replies/{{this.id}}" method="POST">
+                <textarea placeholder="推你的回覆" class="form-control" id="comment" name="comment" rows="3"
+                  style="border: none;"></textarea>
+                <button class="btn" type="submit"
+                  style="border-radius: 18px; background:coral; color:white; width: 60px; float: right;">留言</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}
+<!-- pop up create tweet message -->
+<div class="modal fade" id="createTweet" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:coral;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/tweets" method="POST">
+          <div class="flex-container">
+            <div>
+              <img src="{{loginUser.avatar}}" alt="user avatar" class="user-avatar"
+                style="border-radius: 50%; height: 50px; width: 50px">
+            </div>
+            <div style="width: 600px;">
+              <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"
+                style="border: none;"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-create" type="submit" style="border-radius: 18px; float: right;">推文</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

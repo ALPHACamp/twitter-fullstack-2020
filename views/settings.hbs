@@ -1,0 +1,35 @@
+<div class="col border-left">
+  <div class="row my-3 pl-3 border-bottom">
+    <h5>帳戶設定</h5>
+  </div>
+  <div class="row">
+    <div class="col">
+      <form action="/users/settings/{{user.id}}?_method=PUT" method="POST">
+        <div class="form-group">
+          <label for="account">帳號</label>
+          <input required type="text" id="account" name="account" class="form-control" placeholder="Enter account"
+            value="{{ user.account }}">
+        </div>
+        <div class="form-group">
+          <label for="name">名稱</label>
+          <input required type="text" id="name" name="name" class="form-control" placeholder="Enter Name"
+            value="{{ user.name }}">
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input required type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+            value="{{ user.email }}">
+        </div>
+        <div class="form-group">
+          <label for="password">密碼</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="********">
+        </div>
+        <div class="form-group">
+          <label for="checkPassword">密碼確認</label>
+          <input type="password" id="checkPassword" name="checkPassword" class="form-control" placeholder="********">
+        </div>
+        <button type="submit" class="btn btn-twitter rounded-pill float-right" style="width: 180px;">儲存</button>
+      </form>
+    </div>
+  </div>
+</div>

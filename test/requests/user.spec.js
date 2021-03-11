@@ -17,7 +17,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({id: 1, Followings: []});
+      ).returns({id: 1, Followings: [], Likes: []});
 
       await db.User.destroy({where: {},truncate: true})
       await db.Tweet.destroy({where: {},truncate: true})
@@ -73,7 +73,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], Likes: []});
       await db.User.create({name: 'User1'})
       await db.User.create({name: 'User2'})
     })
@@ -131,7 +131,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({id: 1, Followings: []});
+      ).returns({id: 1, Followings: [], Likes: []});
       await db.User.create({})
     })
 
@@ -168,7 +168,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({id: 1, Followings: []});
+      ).returns({id: 1, Followings: [], Likes: []});
       await db.User.create({name: 'User1'})
       await db.User.create({name: 'User2'})
       await db.User.create({name: 'User3'})
@@ -248,7 +248,7 @@ describe('# user request', () => {
       ).returns(true);
       this.getUser = sinon.stub(
         helpers, 'getUser'
-      ).returns({id: 1, Followings: []});
+      ).returns({id: 1, Followings: [], Likes: []});
       await db.User.create({})
       await db.Tweet.create({UserId: 1, description: 'Tweet1'})
       await db.Like.create({UserId: 1, TweetId: 1})

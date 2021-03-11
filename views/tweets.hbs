@@ -1,0 +1,73 @@
+{{!-- Center --}}
+<div class="col">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <strong>首頁</strong>
+    </li>
+    <li class="list-group-item" style="border-bottom-width:8px;">
+      <form action="/tweets" method="POST">
+        <div class="flex-container">
+          <div>
+            <img src="{{loginUser.avatar}}" alt="user avatar" class="user-avatar"
+              style="border-radius: 50%; height:50px; width: 50px">
+          </div>
+          <div style="width: 600px;">
+            <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"
+              style="border: none;"></textarea>
+          </div>
+        </div>
+        <button class="btn btn-create" type="submit" style="border-radius: 18px; width: 60px; float: right;">推文</button>
+      </form>
+    </li>
+    {{#each tweetFollowings}}
+      <li class="list-group-item">
+        <div class="flex-container">
+          <div class="mr-2">
+            <a href="/users/{{this.user.id}}/tweets">
+              <img src="{{this.user.avatar}}" alt="user avatar" class="user-avatar"
+                style="border-radius: 50%; height:50px; width: 50px">
+            </a>
+          </div>
+          <div>
+            {{#ifCond ../loginUser.id this.user.id}}
+              <div class="dropdown show" style="position:absolute; right:20px;">
+                <a style="color:black; text-decoration:none;" role="button" id="more" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  •••
+                </a>
+                <div class="dropdown-menu" aria-labelledby="more">
+                  <button data-toggle="modal" data-target="#et{{this.id}}" class="dropdown-item">修改此貼文</button>
+                  <button data-toggle="modal" data-target="#t{{this.id}}" class="dropdown-item">刪除此貼文</button>
+                </div>
+              </div>
+            {{/ifCond}}
+            <a href="/users/{{this.user.id}}/tweets" style="text-decoration:none; color:black"><strong>{{this.user.name}}</strong></a>
+            <font class="text-muted">@{{this.user.account}} {{moment this.createdAt}}</font>
+            <p>{{this.description}}</p>
+            <div>
+              <a href="/tweets/{{this.id}}/replies" style="float:left; color:black; margin-right:4px;"><i class="far fa-comment" style="color: grey;"></i></a>
+              <div style="float:left; margin-right:25px;"> {{this.repliesCount}}</div>
+            </div>
+            {{#if this.isLiked}}
+              <form action="/tweets/{{this.id}}/unlike" method="POST" style="float:left;">
+                <button type="submit" class="btn-push"><i class="fas fa-heart" style="color: rgb(224, 36, 94);"></i></button>
+              </form>
+              <div style="float:left;"> {{this.likesCount}}</div>
+            {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST" style="float:left;">
+                <button type="submit" class="btn-push"><i class="far fa-heart"></i></button>
+              </form>
+              <div style="float:left;"> {{this.likesCount}}</div>
+            {{/if}}
+          </div>
+        </div>
+      </li>
+      <!-- pop up edit tweet message -->
+      {{> edit}}
+      <!-- pop up delete tweet message -->
+      {{> delete}}
+    {{/each}}
+  </ul>
+</div>
+{{!-- Right side --}}
+{{> right}}

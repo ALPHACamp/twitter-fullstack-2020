@@ -1,0 +1,99 @@
+<!-- pop up edit tweet message in tweets page -->
+<div class="modal fade" id="et{{this.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>編輯貼文</h4>
+      </div>
+      <form action="/tweets/{{this.id}}?_method=PUT" method="POST">
+      <div class="modal-body flex-container">
+        <div>
+          <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar">
+        </div>
+        <div style="width: 600px;">  
+          <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;">{{this.description}}</textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn btn-edit">儲存</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- pop up edit tweet message in tweet page -->
+<div class="modal fade" id="et{{tweet.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>編輯貼文</h4>
+      </div>
+      <form action="/tweets/{{tweet.id}}?_method=PUT" method="POST">
+      <div class="modal-body flex-container">
+        <div>
+          <img src="{{loginUser.avatar}}" alt="user avatar" class="user-avatar">
+        </div>
+        <div style="width: 600px;">  
+          <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"  style="border: none;">{{tweet.description}}</textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-edit">儲存</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- pop up edit reply comment message in tweet page -->
+<div class="modal fade" id="er{{this.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>編輯留言</h4>
+      </div>
+      <form action="/replies/{{this.id}}?_method=PUT" method="POST">
+      <div class="modal-body flex-container">
+        <div>
+          <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar">
+        </div>
+        <div style="width: 600px;">  
+          <textarea placeholder="留言..." class="form-control" id="comment" name="comment" rows="3"  style="border: none;">{{this.comment}}</textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-edit">儲存</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- pop up edit reply message in tweet page -->
+<div class="modal fade" id="er{{this.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>編輯留言</h4>
+      </div>
+      <form action="/tweets/{{this.id}}/replies?_method=PUT" method="POST">
+      <div class="modal-body flex-container">
+        <div>
+          <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar">
+        </div>
+        <div style="width: 600px;">  
+          <textarea placeholder="留言..." class="form-control" id="comment" name="comment" rows="3"  style="border: none;">{{this.comment}}</textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-edit">儲存</button>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
