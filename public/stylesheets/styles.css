@@ -489,3 +489,40 @@ input#avatar, input#cover {
 }
 
 .pointer {cursor: pointer;}
+
+
+/* chatroom */
+#chat-form { 
+  background: rgba(0, 0, 0, 0.15); 
+  padding: 0.25rem; 
+  position: fixed; 
+  bottom: 0; 
+  left: 0; 
+  right: 0; 
+  display: flex; 
+  height: 3rem; 
+  box-sizing: border-box; 
+  backdrop-filter: blur(10px); 
+}
+
+  #chat-form > button { 
+    background: #333; 
+    border: none; 
+    padding: 0 1rem; 
+    margin: 0.25rem; 
+    border-radius: 3px; 
+    outline: none; 
+    color: #fff; 
+  }
+
+  #chat-input { 
+    border: none; 
+    padding: 0 1rem;
+    border-radius: 2rem; 
+    margin: 0.25rem; 
+  }
+
+  #chat-messages { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; }
