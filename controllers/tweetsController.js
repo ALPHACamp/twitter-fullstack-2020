@@ -77,15 +77,19 @@ const tweetsController = {
     .then((tweet) => {
       const { createdAt } = tweet;
       const tweetTime = ` ${moment(createdAt).format('a h:MM')}・ ${moment(createdAt).format('LL')}`;
-      const tweetObj = {
+      const tweetObj = ({
         ...tweet.dataValues,
-        User      : tweet.User.dataValues,
+        User   : tweet.User.dataValues,
+        Replies: tweet.Replies.map((reply) => ({
+          ...reply.dataValues,
+          User: { ...reply.dataValues.User.dataValues },
+        })),
         ReplyCount: tweet.Replies.length,
         LikeCount : tweet.Likes.length,
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
         createdAt,
         tweetTime,
-      };
+      });
 
       return res.render('index', {
         tweet: tweetObj,

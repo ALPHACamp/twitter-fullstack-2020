@@ -301,6 +301,7 @@ const usersController = {
 
     const tweetsObj = userLikedTweets.map((tweet) => ({
       ...tweet,
+      User      : { ...tweet.User.dataValues },
       ReplyCount: tweet.Replies.length,
       LikeCount : tweet.Likes.length,
       isLiked   : user.LikedTweets.map((d) => d.id).includes(tweet.id),
