@@ -87,5 +87,7 @@ typings/
 .dynamodb/
 
 # image upload
-temp/
 upload/
+
+temp/*
+!temp/.gitkeep
