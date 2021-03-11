@@ -7,7 +7,7 @@ module.exports = {
       'Replies',
       Array.from({ length: 150 }).map((d, i) => ({
         id: i * 10 + 1,
-        content: faker.lorem.text(),
+        comment: faker.lorem.text(),
         createdAt: new Date(),
         updatedAt: new Date(),
         UserId: (i % 5) * 10 + 11,
