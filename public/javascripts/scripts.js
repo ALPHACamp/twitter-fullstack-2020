@@ -79,7 +79,6 @@ document.querySelectorAll('#reply-create-modal textarea[name=comment]').forEach(
 // Tweet Reply Modal
 document.querySelectorAll('.tweet-reply-btn').forEach((btn) => {
   btn.addEventListener('click', (event) => {
-    console.log(event.currentTarget.dataset.tweetid);
     const tweetId = event.currentTarget.dataset.tweetid;
     const url = `http://localhost:3000/api/tweets/${tweetId}`;
     axios.get(url).then((response) => {
