@@ -264,6 +264,7 @@ const usersController = {
 
     const tweets = selfTweets.concat(selfReplies).sort((a, b) => b.createdAt - a.createdAt);
     const uniqueTweets = [...new Map(tweets.map((item) => [item.id, item])).values()];
+    user.isFollowed = helpers.getUser(req).Followings.map((d) => d.id).includes(user.id);
 
     return res.render('index', {
       user,
@@ -304,6 +305,8 @@ const usersController = {
       LikeCount : tweet.Likes.length,
       isLiked   : user.LikedTweets.map((d) => d.id).includes(tweet.id),
     }));
+
+    user.isFollowed = helpers.getUser(req).Followings.map((d) => d.id).includes(user.id);
 
     return res.render('index', {
       user,
