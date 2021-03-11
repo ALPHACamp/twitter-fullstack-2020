@@ -1,0 +1,277 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanstc.css);
+
+body{ margin:0; height:100%;}
+html{ height:100%} 
+#left{ position:fixed; top:0; left:0; width:26.25%; height:100%; background-color:#ffffff}
+#main{ 
+  margin-left:26.25%; 
+  min-height: 100%;
+  width:41.66%; 
+  background-color:#ffffff;
+  border-left: 1px solid #E6EcF0;
+  border-right: 1px solid #E6EcF0;
+  font-family: 'Noto Sans TC';
+}
+
+#chat-list{
+  margin-left:26.25%; 
+  min-height: 100%;
+  width:26.25%; 
+  background-color:#ffffff;
+  border-left: 1px solid #E6EcF0;
+  border-right: 1px solid #E6EcF0;
+  font-family: 'Noto Sans TC';
+}
+
+#admain{ 
+  margin-left:26.25%; 
+  min-height: 100%;
+  width:70%; 
+  background-color:#ffffff;
+  border-left: 1px solid #E6EcF0;
+  border-right: 1px solid #E6EcF0;
+  font-family: 'Noto Sans TC';
+}
+
+#right{ position:fixed; top:0; right:0; width:32.08%; height:100%; background-color:#ffffff}
+
+#chat-room{position:fixed; top:0; right:0; width:47.5%; height:100%; background-color:#ffffff}
+
+#send-form{
+  position:fixed;
+  right: 0;
+  bottom: 0;
+  width: 47.5%;
+  height: 40px;
+  background-color:#ffffff;
+  border-top: 1px solid #E6EcF0;
+}
+.sendMessageArea{
+  display: flex;
+}
+.sendMessageArea textarea{
+  height: 30px;
+  width: auto;
+  margin:5px 10px;
+  border-radius: 15px;
+  padding-left: 20px;
+  background-color: #e6ecf0;
+  outline: none;
+  border: none;
+  flex-grow:1;
+}
+.sendMessageArea button{
+  width: 40px;
+  align-items: center;
+  color:#FF6600;
+  padding-left:0px;
+  padding-right: 20px;
+  outline: none;
+}
+
+.received-message{
+  width:100%;
+}
+
+.user-list a{
+  color: inherit;
+  text-decoration: none
+}
+
+.received-message .message{
+  background-color: #d4dadd;
+  border-radius: 20px 20px 20px 0px;
+  padding:10px;
+  max-width: 220px;
+  word-break:break-word;
+}
+
+.send-message .message{
+  background-color: #d4dadd;
+  border-radius: 20px 20px 0px 20px;
+  padding:10px;
+  max-width: 220px;
+  word-break:break-word;
+}
+
+.status-message{
+  background-color: #e5e5e5;
+  padding: 6px;
+  border-radius:15px;
+  color: #677887;
+}
+
+.show-message{
+  position: absolute;
+  bottom:40px;
+  top:58px;
+  background-color:white;
+  width:100%;
+  padding:20px;
+  overflow: hidden;
+}
+
+.single-list{
+  border-bottom: 1px solid #E6EcF0;
+}
+
+.messages{
+  width: 100%;
+	height: 100%;    
+	overflow: auto;
+  overflow-y:scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.sendMessageArea button i {
+  margin: 0px;
+}
+
+.message-image {
+  width: 25px;
+  height: 25px;
+}
+
+.error {
+  margin-left: 26.25%;
+  width: 41.66%;
+}
+
+#left-container {
+  width:55.55%;
+  margin-left: 26.45%;
+  font-weight: 500;
+  font-size: 18px;
+  font-family: 'Noto Sans TC';
+}
+
+#left-container i {
+  margin-right: 20px;
+}
+
+.navbar-brand {
+  margin-bottom: 42px;
+  margin-top: 14px;
+}
+
+#left-container .flex-colum .nav-item{
+  margin-bottom: 26px;
+}
+
+.main-top {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px;
+  border-bottom: 1px solid #E6EcF0;
+}
+
+.main-follow-top {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 15px;
+}
+
+#main img {
+  width: 50px;
+  height: 50px;
+  margin-left: 15px;
+  margin-top: 13px;
+}
+
+.user-list img{
+  width: 50px;
+  height: 50px;
+  margin-left: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#main .ex1 {
+  width: 100%;
+  height: 200px;
+  margin: 0;
+}
+
+#main .avatar {
+  width: 140px;
+  height: 140px;
+  margin-top: -70px;
+}
+
+
+#main .profile-middle .name {
+  font-size: 19px;
+  font-weight: 900;
+}
+
+#main .profile-middle .account {
+  font-size: 15px;
+  font-weight:500;
+}
+
+#main .profile-middle .introduction {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+#main .profile-middle {
+  margin-left: 15px;
+  margin-bottom: 20px;
+}
+
+#main .profile-nav .nav-item{
+  width: 130px;
+  text-align: center;
+}
+
+#main .profile-nav a:link {
+  color:#657786;
+}
+
+#main .profile-nav a:active {
+  color:#FF6600;
+}
+
+.post-area {
+  border-bottom: 10px solid #E6EcF0;
+}
+
+.tweet-right {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.tweet-name {
+  font-size: 15px;
+  color: black;
+  font-weight: 700;
+}
+.tweet-right a:link {
+  text-decoration: none;
+}
+
+.tweet-reaction a {
+  color: #657786;
+}
+
+.tweet-reaction button {
+  background-color: white;
+  color: #657786;
+  border-style: none;
+  margin-left: 77px;
+}
+
+.tweet {
+  border-bottom: 1px solid #E6EcF0;
+}
+
+.tweet-reaction {
+  margin-bottom: 14px;
+}
+
+.right-container {
+  padding-right:17.74%;
+  padding-left: 6.49%;
+  padding-top: 15px;
+}

@@ -1,0 +1,68 @@
+<div id="left">
+	<div id="left-container">
+  <ul class="nav flex-column justify-content-between" style="height: 100vh;">
+    <div class="flex-colum ">
+      <a class="navbar-brand ml-3 mb-3" href="/">
+         <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89.png" width="30"
+          height="30" alt="">
+      </a>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/tweets" style="color: #ff6600; "><i class="fas fa-home mr-2"></i>推文清單</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/users" style="color: black;"><i class="fas fa-user mr-2"></i>使用者列表</a>
+      </li>
+    </div>
+    <li class="nav-item">
+      <a class="nav-link" href="/logout" style="color: black;"><i class="fas fa-sign-out-alt mr-2"></i>登出</a>
+    </li>
+  </ul>
+	</div>
+</div>
+{{!-- 中間區域 --}}
+<div id="main">
+  <div class="main-top">推文清單</div>
+    {{#each tweets}}
+    <div class="tweet">
+      <div class="post-area">
+        <div class="row no-gutters">
+          <div class="tweet-left">
+            <img src="{{ this.User.avatar }}" class="rounded-circle" alt="no avatar">
+          </div>
+          <div class="tweet-right" >
+                <a class="tweet-name">{{ this.User.name }}</a>
+                <small class="text-muted">@{{this.User.account}}•{{moment this.createdAt }}</small>
+                <i class="fas fa-times" type="submit" data-toggle="modal" data-target="#deleteModalCenter{{ this.id }}" style="color: #657786;"></i>
+              <!-- Modal -->
+              <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                <div class="modal fade" id="deleteModalCenter{{ this.id }}" tabindex="-1" role="dialog"
+                  aria-labelledby="deleteModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">刪除{{ this.User.name }}的推文</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body text-center">
+                        <p>{{ this.description }}</p>
+                        刪除這則推文?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">確認刪除</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <p style="overflow: hidden; word-break:break-word">
+                {{ this.description }}
+              </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+</div>
