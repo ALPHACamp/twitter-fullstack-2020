@@ -15,8 +15,6 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('./config/passport')
 const helpers = require('./_helpers')
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.engine('handlebars', handlebars({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')

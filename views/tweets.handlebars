@@ -49,7 +49,7 @@
                 <div class="col-10">
                   <a href="/users/{{this.User.id}}/tweets"
                     style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
-                  <font class=" text-muted">{{this.User.account}} · {{moment this.createdAt}}</font>
+                  <font class=" text-muted">@{{this.User.account}} · {{moment this.createdAt}}</font>
                   <a href="/tweets/{{this.id}}" style="text-decoration: none; color:black">
                     <p>{{this.description}}</p>
                   </a>
@@ -95,12 +95,12 @@
                         <a href="/users/{{this.User.id}}/tweets"
                           style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong>
                         </a>
-                        <span style="color:gray;">{{this.User.account}} ．
+                        <span style="color:gray;">@{{this.User.account}} ．
                           {{moment this.createdAt}}
                         </span>
                         <p>{{this.description}}</p>
                         <a style="color:gray; font-size: 15px">回覆給</a>
-                        <span style="color: orange;">{{this.User.account}}</span>
+                        <span style="color: orange;">@{{this.User.account}}</span>
                       </div>
                       <div class="col-2 mt-5">
                         <a href="/users/{{../user.id}}/tweets">
@@ -110,7 +110,7 @@
                       </div>
                       <form method="POST" action="/tweets/{{this.id}}/replies">
                         <div class="col-10 mt-5" style="width: 400px;">
-                          <textarea placeholder="推你的回覆" class="form-control" name="content" rows="3"
+                          <textarea placeholder="推你的回覆" class="form-control" name="comment" rows="3"
                             style="border: none;"></textarea>
                         </div>
                         <button class="btn btn-create" type="submit"

@@ -23,7 +23,6 @@ router.get('/tweets', auth.authenticatedUser, userController.getRecommendedFollo
 router.post('/tweets', auth.authenticatedUser, tweetController.postTweet)
 router.post('/tweets/:id/like', auth.authenticatedUser, tweetController.like)
 router.post('/tweets/:id/unlike', auth.authenticatedUser, tweetController.unLike)
-// router.delete('/tweets/:id/unlike', auth.authenticatedUser, tweetController.unLike)
 router.get('/tweets/:id', userController.getRecommendedFollowings, auth.authenticatedUser, tweetController.getTweet)
 router.post('/tweets/:id/replies', auth.authenticatedUser, tweetController.postReply)
 router.get('/tweets/:id/replies', auth.authenticatedUser, tweetController.getReply)
