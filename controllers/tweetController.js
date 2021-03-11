@@ -39,7 +39,7 @@ const tweetController = {
       req.flash('error_messages', '貼文不可空白')
       res.redirect('back')
     } else if (req.body.description.length > 140) {
-      req.flash('error_messages', '貼文不得超過140個字')
+      req.flash('error_messages', '貼文不得超過 140 個字')
       res.redirect('back')
     } else {
       return Tweet.create({
@@ -53,6 +53,7 @@ const tweetController = {
   },
   postReply: (req, res) => {
     if (req.body.comment.length > 140) {
+      req.flash('error_messages', '回覆不可超過 140 個字')
       return res.redirect('back')
     }
     if (!req.body.comment) {
