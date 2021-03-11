@@ -5,20 +5,21 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 
+const app = express();
+const port = process.env.PORT;
 // Project packages
 const expressHandlebars = require('express-handlebars');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 const passport = require('./config/passport');
 
 const routes = require('./routes');
 const helpers = require('./_helpers');
 
 const usersController = require('./controllers/usersController');
-
-const app = express();
-const port = process.env.PORT;
 
 app.engine('hbs', expressHandlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/handlebars-helpers') }));
 app.set('view engine', 'hbs');
@@ -54,10 +55,6 @@ app.use((req, res, next) => {
 
 app.use(routes);
 
-
-const http = require('http').createServer(app);
-const io = require('socket.io')(http);
-
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
@@ -67,7 +64,7 @@ io.on('connection', (socket) => {
 
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
+    console.log(`message: ${msg}`);
   });
 });
 
@@ -76,7 +73,6 @@ io.on('connection', (socket) => {
     io.emit('chat message', msg);
   });
 });
-
 
 http.listen(port, () => console.log(`===== Simple Twitter App starts listening on port ${port}! =====`));
 

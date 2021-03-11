@@ -492,7 +492,7 @@ input#avatar, input#cover {
 
 
 /* chatroom */
-#chat-form { 
+/* #chat-form { 
   background: rgba(0, 0, 0, 0.15); 
   padding: 0.25rem; 
   position: fixed; 
@@ -513,16 +513,30 @@ input#avatar, input#cover {
     border-radius: 3px; 
     outline: none; 
     color: #fff; 
-  }
+  } */
 
   #chat-input { 
+    background:  rgba(0,0,0,.03);
     border: none; 
     padding: 0 1rem;
     border-radius: 2rem; 
     margin: 0.25rem; 
   }
 
+  #chat-input:focus { 
+    outline: none;
+  }
+
   #chat-messages { 
     list-style-type: none; 
     margin: 0; 
-    padding: 0; }
+    padding: 0; 
+  }
+
+  #chat-messages > li {
+  padding: 0.5rem 1rem;
+  }
+
+  #chat-messages > li:nth-child(odd) {
+    background: #efefef;
+  }
