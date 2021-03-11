@@ -54,6 +54,30 @@ app.use((req, res, next) => {
 
 app.use(routes);
 
-app.listen(port, () => console.log(`===== Simple Twitter App starts listening on port ${port}! =====`));
+
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+  });
+});
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
+
+
+http.listen(port, () => console.log(`===== Simple Twitter App starts listening on port ${port}! =====`));
 
 module.exports = app;
