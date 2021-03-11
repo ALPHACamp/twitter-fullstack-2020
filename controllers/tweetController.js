@@ -52,6 +52,9 @@ const tweetController = {
     }
   },
   postReply: (req, res) => {
+    if (req.body.comment.length > 140) {
+      return res.redirect('back')
+    }
     if (!req.body.comment) {
       req.flash('error_messages', '回覆不可為空白')
       return res.redirect('back')

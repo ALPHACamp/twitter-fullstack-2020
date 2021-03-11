@@ -30,7 +30,7 @@
           <div class="tweet-content-right">
             <div class="tweet-content-username">
               <a href="/users/{{users.id}}/tweets" class="user-name">{{users.name}}</a>
-              <span class="user-account">{{users.account}}</span>
+              <span class="user-account">@{{users.account}}</span>
             </div>
             <div class="tweet-content-info">
               <span class="tweet-content-description">{{users.introduction}}</span><br>
@@ -90,7 +90,7 @@
               <div class="tweet-content-right">
                 <div class="tweet-content-username">
                   <a href="/users/{{this.Tweet.UserId}}/tweets" class="user-name">{{this.Tweet.User.name}}</a>
-                  <span class="user-account">{{this.Tweet.User.account}}．{{moment this.createdAt}}</span><br>
+                  <span class="user-account">@{{this.Tweet.User.account}}．{{moment this.createdAt}}</span><br>
                 </div>
                 <div class="tweet-content-info">
                   <span class="tweet-content-description">{{this.Tweet.description}}</span><br>
@@ -128,7 +128,7 @@
               <div class="tweet-content-right">
                 <div class="tweet-content-username">
                   <a href="/users/{{this.UserId}}/tweets" class="user-name">{{../users.name}}</a>
-                  <span class="user-account">{{../users.account}}．{{moment this.createdAt}}</span><br>
+                  <span class="user-account">@{{../users.account}}．{{moment this.createdAt}}</span><br>
                 </div>
                 <div class="tweet-content-info">
                   <span class="tweet-content-description">{{this.comment}}</span><br><br>
