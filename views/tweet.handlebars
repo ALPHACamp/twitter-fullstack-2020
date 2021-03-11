@@ -5,9 +5,7 @@
         {{> leftColumn}}
       </div>
     </nav>
-
     {{> postTweet}}
-
     <div class="center-content d-flex" id="tweet-content">
       <div class="head justify-content-between ">
         <ul class="list-group">
@@ -48,43 +46,42 @@
                 data-toggle="modal" data-target="#replyModal">
                 <i class="far fa-comment" style="color: gray; font-size: 25px;">{{this.Replies.length}}</i>
               </button>
-
               {{#if isLiked}}
-              <form action="/tweets/{{tweet.id}}/unlike?_method=DELETE" method="POST" style="display:inline;">
-                <button type="submit" style="background: none;border: none;">
-                  <i class="fas fa-heart" style="color: red; letter-spacing:10px; font-size: 25px;"></i>
-                  {{else}}
-                  <form action="/tweets/{{tweet.id}}/like" method="POST" style="display:inline; ">
-                    <button type="submit" style="background: none;border: none;">
-                      <i class="far fa-heart" style="color: gray; letter-spacing:10px; font-size: 25px;"></i>
-                      {{/if}}
-                      <p style="display:inline; color: grey; "></p>
-                    </button>
-                  </form>
+                <form action="/tweets/{{tweet.id}}/unlike?_method=DELETE" method="POST" style="display:inline;">
+                  <button type="submit" style="background: none;border: none;">
+                    <i class="fas fa-heart" style="color: red; letter-spacing:10px; font-size: 25px;"></i>
+              {{else}}
+                <form action="/tweets/{{tweet.id}}/like" method="POST" style="display:inline; ">
+                  <button type="submit" style="background: none;border: none;">
+                    <i class="far fa-heart" style="color: gray; letter-spacing:10px; font-size: 25px;"></i>
+              {{/if}}
+              <p style="display:inline; color: grey; "></p>
+              </button>
+              </form>
             </div>
           </li>
           {{#each tweet.Replies}}
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-2">
-                <a href="/users/{{this.User.id}}/tweets">
-                  <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar"
-                    style="border-radius: 50%; height:50px; width: 50px">
-                </a>
-              </div>
-              <div class="col-10">
-                <span>{{this.User.name}}</span>
-                <span style="color:gray;">{{this.User.account}} ．
-                  {{moment this.createdAt}}</span>
-                <div class="row col-10 mt-3">
-                  <p style="color: gray;">回覆</p>
-                  <a href="/users/{{../tweet.User.id}}/tweets" style="text-decoration:none;">
-                    <p class="ml-1" style="color: orange;">{{../tweet.User.account}}</p>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-2">
+                  <a href="/users/{{this.User.id}}/tweets">
+                    <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar"
+                      style="border-radius: 50%; height:50px; width: 50px">
                   </a>
                 </div>
-                <p>{{this.content}}</p>
-              </div>
-          </li>
+                <div class="col-10">
+                  <span>{{this.User.name}}</span>
+                  <span style="color:gray;">{{this.User.account}} ．
+                    {{moment this.createdAt}}</span>
+                  <div class="row col-10 mt-3">
+                    <p style="color: gray;">回覆</p>
+                    <a href="/users/{{../tweet.User.id}}/tweets" style="text-decoration:none;">
+                      <p class="ml-1" style="color: orange;">{{../tweet.User.account}}</p>
+                    </a>
+                  </div>
+                  <p>{{this.content}}</p>
+                </div>
+            </li>
           {{/each}}
         </ul>
       </div>
@@ -104,6 +101,7 @@
                     <img src="{{tweet.User.avatar}}" class="rounded-circle"
                       style="width: 50px;height: 50px;background: #C4C4C4;">
                   </a>
+                  <div class="connection-line" style="height: 80%; margin-left: 1.5em"></div>
                 </div>
                 <div class="col-10">
                   <a href="/users/{{users.id}}/tweets"
@@ -116,7 +114,7 @@
                   <a style="color:gray; font-size: 15px">回覆給</a>
                   <span style="color: orange;">{{tweet.User.account}}</span>
                 </div>
-                <div class="col-2 mt-5">
+                <div class="col-2 mt-3">
                   <a href="/users/{{user.id}}/tweets">
                     <img src="{{user.avatar}}" class="rounded-circle"
                       style="width: 50px;height: 50px;background: #C4C4C4;">
@@ -138,7 +136,6 @@
         </div>
       </div>
     </div>
-
     <div class="right-content">
       {{> rightColumn}}
     </div>

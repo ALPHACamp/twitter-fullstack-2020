@@ -5,9 +5,7 @@
         {{> leftColumn}}
       </div>
     </nav>
-
     {{> postTweet}}
-
     <div class="center-content d-flex" id="tweet-content">
       <div class="head justify-content-between ">
         <a href="javascript:history.back()" style="color: black;">
@@ -44,28 +42,25 @@
               <span>followers</span>
             </div>
           </div>
-
           <div class="user-info-top">
             {{#ifCond users.id currentUserId}}
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUser">
-              編輯個人資料
-            </button>
-            {{else}}
-            {{#if users.isFollowed}}
-            <a href="mailto:{{users.email}}"><i class="far fa-envelope"></i></a>
-            <i class="far fa-bell"></i>
-            <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="display: inline-block;">
-              <button type="submit" class="btn btn-primary">following</button>
-            </form>
-            {{else}}
-            <form action="/followships" method="POST" style="display: inline-block;">
-              <button type="submit" class="btn btn-primary" name="id" value="{{users.id}}">follow</button>
-            </form>
-            {{/if}}
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editUser">
+                編輯個人資料
+              </button>
+              {{else}}
+                {{#if users.isFollowed}}
+                  <a href="mailto:{{users.email}}"><i class="far fa-envelope"></i></a>
+                  <i class="far fa-bell"></i>
+                  <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="display: inline-block;">
+                    <button type="submit" class="btn btn-primary">following</button>
+                  </form>
+                {{else}}
+                  <form action="/followships" method="POST" style="display: inline-block;">
+                    <button type="submit" class="btn btn-primary" name="id" value="{{users.id}}">follow</button>
+                  </form>
+                {{/if}}
             {{/ifCond}}
           </div>
-
-
         </div>
         <div class="user-selection-bar">
           <ul class="nav nav-tabs">
@@ -80,55 +75,52 @@
             </li>
           </ul>
         </div>
-
         <div class="tweet-all">
           {{#each users.Tweets}}
-          <div class="tweet-content-box" onclick="location.href='/tweets/{{this.id}}'">
-            <div class="tweet-content-left">
-              <a href="/users/{{../users.id}}/tweets">
-                <img class="ml-2 mt-2" {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
-                  style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
-              </a>
-            </div>
-            <div class="tweet-content-right">
-              <div class="tweet-content-username">
-                <a href="/users/{{../users.id}}/tweets" class="user-name">{{../users.name}}</a>
-                <span class="user-account">{{../users.account}}．{{moment this.createdAt}}</span>
+            <div class="tweet-content-box" onclick="location.href='/tweets/{{this.id}}'">
+              <div class="tweet-content-left">
+                <a href="/users/{{../users.id}}/tweets">
+                  <img class="ml-2 mt-2" {{#if ../users.avatar}}src={{../users.avatar}}{{/if}}
+                    style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+                </a>
               </div>
-              <div class="tweet-content-info">
-                <span class="tweet-content-description">{{this.description}}</span><br>
-              </div>
-              <div class="tweet-content-bottom">
-                {{!-- reply icon --}}
-                <button type="button" class="btn tweet-reply-link mr-3">
-                  <i class="fas fa-reply mr-1" aria-hidden="true"></i>{{this.Replies.length}}
-                </button>
-                {{!-- like/unlike icon --}}
-                {{#if isLiked}}
-                <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
-                  <button type="submit" class="btn tweet-like-link">
-                    <i class="fas fa-heart mr-1"></i>{{this.LikedUsers.length}}
+              <div class="tweet-content-right">
+                <div class="tweet-content-username">
+                  <a href="/users/{{../users.id}}/tweets" class="user-name">{{../users.name}}</a>
+                  <span class="user-account">{{../users.account}}．{{moment this.createdAt}}</span>
+                </div>
+                <div class="tweet-content-info">
+                  <span class="tweet-content-description">{{this.description}}</span><br>
+                </div>
+                <div class="tweet-content-bottom">
+                  {{!-- reply icon --}}
+                  <button type="button" class="btn tweet-reply-link mr-3">
+                    <i class="fas fa-reply mr-1" aria-hidden="true"></i>{{this.Replies.length}}
                   </button>
-                </form>
-                {{else}}
-                <form action="/tweets/{{this.id}}/like" method="POST">
-                  <button type="submit" class="btn tweet-like-link">
-                    <i class="far fa-heart mr-1"></i>{{this.LikedUsers.length}}
-                  </button>
-                </form>
-                {{/if}}
+                  {{!-- like/unlike icon --}}
+                  {{#if isLiked}}
+                    <form action="/tweets/{{this.id}}/unlike" method="POST">
+                      <button type="submit" class="btn tweet-like-link">
+                        <i class="fas fa-heart mr-1"></i>{{this.LikedUsers.length}}
+                      </button>
+                    </form>
+                  {{else}}
+                    <form action="/tweets/{{this.id}}/like" method="POST">
+                      <button type="submit" class="btn tweet-like-link">
+                        <i class="far fa-heart mr-1"></i>{{this.LikedUsers.length}}
+                      </button>
+                    </form>
+                  {{/if}}
+                </div>
               </div>
             </div>
-          </div>
           {{/each}}
         </div>
       </div>
     </div>
-
     <div class="right-content">
       {{> rightColumn}}
     </div>
   </div>
 </div>
-
 {{> editProfile}}

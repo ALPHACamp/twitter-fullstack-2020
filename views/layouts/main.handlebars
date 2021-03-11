@@ -17,22 +17,20 @@
     <div class="album py-5 bg-light">
       <div class="container-fluid">
         {{#if success_messages}}
-        <div class="alert alert-success text-left" role="alert" style="margin: 0 auto; width: 80%;">
-          {{success_messages}}
-        </div>
+          <div class="alert alert-success text-left" role="alert" style="margin: 0 auto; width: 45%;">
+            {{success_messages}}
+          </div>
         {{/if}}
         {{#if error_messages}}
-        <div class="alert alert-danger text-left" role="alert" style="margin: 0 auto; width: 80%;">
-          {{error_messages}}
-        </div>
+          <div class="alert alert-danger text-left" role="alert" style="margin: 0 auto; width: 45%;">
+            {{error_messages}}
+          </div>
         {{/if}}
-
         {{{body}}}
       </div>
     </div>
   </main>
 </body>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
   integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
