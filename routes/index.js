@@ -6,6 +6,7 @@ const router = express.Router();
 const users = require('./modules/users');
 const tweets = require('./modules/tweets');
 const followships = require('./modules/followships');
+const chatroom = require('./modules/chatroom');
 
 const apis = require('./modules/apis');
 
@@ -39,6 +40,7 @@ router.use('/', users);
 // Main functions
 router.use('/followships/', authenticationHelper.authenticatedNonAdmin, followships);
 router.use('/tweets/', authenticationHelper.authenticatedNonAdmin, tweets);
+router.use('/', authenticationHelper.authenticatedNonAdmin, chatroom);
 
 // Api functions
 router.use('/api/', apis);

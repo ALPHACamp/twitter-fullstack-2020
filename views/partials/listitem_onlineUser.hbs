@@ -1,0 +1,30 @@
+<div class="list-item d-flex align-items-start p-3 pointer tweet-gray" style="min-height: 100px;">
+  <div class="d-flex flex-row no-wrap align-items-center">
+    <a class="profile-img mr-3" href="">
+      <img class="img-fluid rounded-circle" src="https://i.imgur.com/AoWNOVG.jpg" alt="">
+    </a>
+  {{!-- controller 建立好後 替換下方帶資料版本 --}}
+  {{!-- <a class="profile-img mr-3" href="/users/{{this.id}}/tweets"> 
+    <img class="img-fluid rounded-circle" src="{{this.avatar}}" alt=""> 
+  </a> --}}
+    <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
+      <div class="name w-100 pr-2">
+        <a href="" class="text-dark text-decoration-none">newush</a>
+          {{!-- controller 建立好後 替換下方帶資料版本 --}}
+          {{!-- <a href=""
+            class="text-dark text-decoration-none">{{this.name}}
+          </a> --}}
+      </div>
+      <div class="item-username">
+        <a href="/chatroom/{{this.id}}" class="text-dark text-decoration-none">
+          <span class="username text-lightgrey">@newush</span>
+        </a>
+        {{!-- controller 建立好後 替換下方帶資料版本 --}}
+        {{!-- <a href="/chatroom/{{this.id}}" class="text-dark text-decoration-none">
+          <span class="username text-lightgrey">@{{this.account}}
+          </span>
+        </a> --}}
+      </div>
+    </div>
+  </div>
+</div>
