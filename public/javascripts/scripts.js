@@ -75,3 +75,22 @@ document.querySelectorAll('#reply-create-modal textarea[name=comment]').forEach(
     event.target.nextElementSibling.querySelector('.text-counter').innerHTML = `${currentLength} / ${maxLength}`;
   });
 });
+
+// Tweet Reply Modal
+document.querySelectorAll('.tweet-reply-btn').forEach((btn) => {
+  btn.addEventListener('click', (event) => {
+    const tweetId = event.currentTarget.dataset.tweetid;
+    const url = `http://localhost:3000/api/tweets/${tweetId}`;
+    axios.get(url).then((response) => {
+      const { tweet } = response.data;
+      const formUrl = `/tweets/${tweet.id}/replies`;
+      document.querySelector('#tweet-user-avatar').setAttribute('src', tweet.avatar);
+      document.querySelector('#tweet-user-name').innerHTML = tweet.name;
+      document.querySelectorAll('#tweet-user-account').forEach((account) => account.innerHTML = tweet.account);
+      document.querySelector('#tweet-createdAt').innerHTML = tweet.createdAt;
+      document.querySelector('#tweet-description').innerHTML = tweet.description;
+      document.querySelector('#user-avatar').setAttribute('src', tweet.userAvatar);
+      document.querySelector('#reply-form-action').setAttribute('action', formUrl);
+    });
+  });
+});

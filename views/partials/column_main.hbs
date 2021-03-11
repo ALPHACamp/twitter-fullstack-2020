@@ -147,31 +147,29 @@
         <div class="d-flex align-items-start">
           <div class="tweet-part d-flex align-items-stretch">
             <div class="mr-3 d-flex align-self-stretch flex-column text-center" style="max-width: 70px; width: 170px;">
-              <img class="img-fluid rounded-circle mr-3" src="{{tweet.User.avatar}}" alt="" style="max-height: 70px;">
+              <img class="img-fluid rounded-circle mr-3" id="tweet-user-avatar" src="" alt="" style="max-height: 70px;">
               <div class="d-flex align-self-stretch bg-lightgrey" style="height: calc(100% - 70px - 10px); margin: 5px auto; width: 2.5px;">&nbsp;</div>
             </div>
             <div>
               <div class="item-header d-flex d-row d-flex align-items-center">
                 <div class="name pr-2">
-                  <strong>{{tweet.User.name}}</strong>
+                  <strong id="tweet-user-name"></strong>
                 </div>
                 <div class="info">
-                  <span class="username">@{{tweet.User.account}}</span>
+                  @<span class="username" id="tweet-user-account"></span>
                   &#183;
-                  <span class="posttime">{{moment tweet.createdAt}}</span>
+                  <span class="posttime" id="tweet-createdAt"></span>
                 </div>
               </div>
-              <div class="item-desc pt-1 pb-2">
-                {{tweet.description}}
-              </div>
+              <div class="item-desc pt-1 pb-2" id="tweet-description"></div>
               <div class="account pb-4"><small><span class="text-lightgrey">回覆給</span>
-                  <span class="text-orange">@{{tweet.User.account}}</span></small></div>
+                  @<span class="text-orange" id="tweet-user-account"></span></small></div>
             </div>
           </div>
         </div>
         <div class="reply-part d-flex align-items-start">
-          <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
-          <form action="/tweets/{{tweet.id}}/replies" method="POST" class="w-100">
+          <img class="img-fluid rounded-circle mr-3" id="user-avatar" src="" alt="" style=" max-height: 70px;">
+          <form action="" id="reply-form-action" method="POST" class="w-100">
             <textarea class="w-100" name="comment" rows="5" cols="90" placeholder="推你的回覆? (字數限制140字)"></textarea>
             <div class="textarea-util d-flex justify-content-between">
               <div class="text-counter text-lightgrey">0/140</div>
