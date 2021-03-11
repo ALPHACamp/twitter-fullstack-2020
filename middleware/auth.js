@@ -22,8 +22,9 @@ exports.userauthenticated = (req, res, next) => {
     return next()
   }
   if (helpers.ensureAuthenticated(req) && helpers.getUser(req).role === 'admin') {
-    req.flash('error_messages', '管理員請從後台登入')
-    return res.redirect('/signin')
+    // req.flash('error_messages', '管理員請從後台登入')
+    // return res.redirect('/signin')
+    return res.redirect('/admin/tweets')
   }
   res.redirect('/signin')
 }
