@@ -72,18 +72,16 @@ io.on('connection', (socket, req) => {
 
     // get room list
     const { rooms } = io.of('/').adapter;
-    const usersInRoom = rooms.get(room);
-    // TODO: get users with socket ID
-    // TODO: currently just dummy online user list
-    const dummyUserList = [
-      socket.request.user,
-      socket.request.user,
-      socket.request.user,
-    ];
+    const socketsInRoom = rooms.get(room);
 
-    io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom: dummyUserList });
+    // get users in the room
+    const usersInRoom = [];
+    socketsInRoom.forEach((socketId) => {
+      usersInRoom.push(io.of('/').sockets.get(socketId).request.user);
+    });
 
-    // console.log('rooms', rooms);
+    // return to frontend
+    io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom });
   });
   socket.on('disconnect', () => {
     // socket.leave('global');
