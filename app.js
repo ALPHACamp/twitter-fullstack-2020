@@ -52,7 +52,11 @@ io.use((socket, next) => {
   }
 });
 
-io.on('connection', (socket, req) => {
+const db = require('./models');
+
+const { Message } = db;
+
+io.on('connection', (socket) => {
   // Link session with socket ID to make it persistent
   const { session } = socket.request;
   session.socketId = socket.id;
@@ -88,11 +92,20 @@ io.on('connection', (socket, req) => {
   socket.on('sendMessage', (payload) => {
     // Expect payload { identifier: 'public / somethingForPrivate', message: 'message sent' }
     if (payload.identifier === 'public') {
-      // When newMessage come in, emit notify the room with sender, and his/her message
-      io.to(payload.identifier).emit('newMessage', {
-        sender : socket.request.user,
-        message: payload.message,
-      });
+      // Create message record
+      Message.create({
+        senderId: socket.request.user.id,
+        message : payload.message,
+        isPublic: true,
+      })
+      .then((message) => {
+        // When newMessage come in, emit notify the room with sender, and his/her message
+        io.to(payload.identifier).emit('newMessage', {
+          sender : socket.request.user,
+          message: message.dataValues.message,
+        });
+      })
+      .catch((err) => console.error(err));
     }
   });
 });
