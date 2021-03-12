@@ -20,6 +20,7 @@ const routes = require('./routes');
 const helpers = require('./_helpers');
 
 const usersController = require('./controllers/usersController');
+const { type } = require('os');
 
 app.engine('hbs', expressHandlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/handlebars-helpers') }));
 app.set('view engine', 'hbs');

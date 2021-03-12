@@ -529,7 +529,19 @@ input#avatar, input#cover {
     padding: 0 1rem;
     border-radius: 2rem; 
     margin: 0.25rem; 
-    
+  }
+
+  #input-btn {
+    background-color: #ffffff;
+    width: 100px;
+    justify-content: center;
+    border-radius: 16px;
+    min-width: 30px !important;
+  }
+
+  #input-btn:hover {
+    background-color: #fdbf61;
+    border-radius: 16px;
   }
 
   #chat-messages { 
@@ -543,5 +555,17 @@ input#avatar, input#cover {
   }
 
   #chat-messages > li:nth-child(odd) {
-    background: #efefef;
+    /* background: #efefef; */
+  }
+
+  #chat-bubble {
+    padding: 10px;
+    border-radius: 50px 50px 50px 5px;
+    background-color: rgb(226, 226, 226);
+    align-items: center; 
+  }
+
+  #chat-user-avatar{
+    height: 40px;
+    width: 40px;
   }

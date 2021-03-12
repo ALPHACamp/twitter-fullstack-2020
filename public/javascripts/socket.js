@@ -30,7 +30,16 @@ if (chatForm !== null) {
 
 socket.on('chat message', (msg) => {
   const item = document.createElement('li');
-  item.textContent = msg;
+  item.innerHTML = `
+    <div class="d-flex align-items-end">
+      <img id="chat-user-avatar" class="rounded-circle mr-2" src="https://i.imgur.com/AoWNOVG.jpg" alt="">
+        <div id="chat-bubble" class="item-desc pt-2 pb-1">
+          ${msg}
+        </div>
+       </div>
+      <div id="chat-createdAt" class="ml-5">下午5:00</div>
+    </div>
+  `
   messages.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
 });
