@@ -3,10 +3,17 @@ const messages = document.querySelector('#chat-messages');
 const chatForm = document.querySelector('#chat-form');
 const chatInput = document.querySelector('#chat-input');
 const chatUserList = document.querySelector('#chat-user-list');
+let myUserId;
 
 // Temporary only, demonstrate the login connection workability
 socket.on('connect', () => {
   console.log('socket.id', socket.id);
+});
+
+// 使用者本人登入 前端收到本人id。在後續動作可利用 id 判斷是否為本人
+socket.on('me', (id) => {
+  myUserId = id;
+  console.log('myUserId', myUserId);
 });
 
 // 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
@@ -68,7 +75,24 @@ if (chatForm !== null) {
 // 傳送使用者聊天訊息
 socket.on('newMessage', (message) => {
   const item = document.createElement('li');
-  item.innerHTML = `
+  // 如果傳送訊息是本人，會用這個對話格式 右側顯示+橘色泡泡 chat-bubble 加上 style=color:orange 僅做測試用
+  if (message.sender.id === myUserId) {
+    item.innerHTML = `
+    <div class="d-flex align-items-end">
+      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.sender.avatar}" alt="">
+        <div id="chat-bubble" class="item-desc pt-2 pb-1" style="color: orange">
+          ${message.message}
+        </div>
+       </div>
+      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
+    </div>
+  `;
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+  // 如果傳送訊息是對方，會出現這個對話格式 左側顯示＋灰色泡
+  else {
+    item.innerHTML = `
     <div class="d-flex align-items-end">
       <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.sender.avatar}" alt="">
         <div id="chat-bubble" class="item-desc pt-2 pb-1">
@@ -78,6 +102,7 @@ socket.on('newMessage', (message) => {
       <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
     </div>
   `;
-  messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+  }
 });

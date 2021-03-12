@@ -63,6 +63,9 @@ io.on('connection', (socket) => {
   session.socketId = socket.id;
   session.save();
 
+  // 當使用者本人登入，將userId 傳送到前端
+  socket.emit('me', socket.request.user.id);
+
   // 監聽前端的 join 要求，會傳入 room 名稱
   socket.on('join', (room) => {
     // Remove the rooms joined that's not the current one
