@@ -388,19 +388,16 @@ const userController = {
     let user = await User.findByPk(req.params.id)
     user = user.toJSON()
     return res.status(200).json(user)
-  }, 
-
-  apiEditUser: async (req, res) => {
-    console.log(req.body)
   },
 
-  getChatRoom: async(req, res) => {
+
+  getChatRoom: async (req, res) => {
     let historyMsgs = await Message.findAll({
       raw: true, nest: true,
-      include: [ User ]
+      include: [User]
     })
-    
-    return res.render('chatroom', { historyMsgs })    
+
+    return res.render('chatroom', { historyMsgs })
   },
 
 }
