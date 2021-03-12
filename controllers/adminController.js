@@ -74,7 +74,7 @@ const adminController = {
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ],
-      order: [[Tweet, 'UserID', 'DESC']]
+      order: [[Tweet, 'UserId', 'DESC']]
     })
       .then(usersResult => {
         const page = Number(req.query.page) || 1
