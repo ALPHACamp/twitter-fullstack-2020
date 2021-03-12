@@ -515,15 +515,21 @@ input#avatar, input#cover {
   } */
 
   #chat-input { 
-    background:  rgba(0,0,0,.03);
-    border: none; 
+    border: 1px solid white;
+    background-color: rgb(235, 238, 240);
     padding: 0 1rem;
     border-radius: 2rem; 
     margin: 0.25rem; 
   }
 
   #chat-input:focus { 
+    border: 1px solid #ff6600;
+    background-color: #ffffff;
     outline: none;
+    padding: 0 1rem;
+    border-radius: 2rem; 
+    margin: 0.25rem; 
+    
   }
 
   #chat-messages { 
