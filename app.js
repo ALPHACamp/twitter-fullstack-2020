@@ -53,35 +53,45 @@ io.use((socket, next) => {
 
 const onlineUsers = [];
 
-io.on('connect', (socket) => {
+io.on('connection', (socket, req) => {
   // Link session with socket ID to make it persistent
   const { session } = socket.request;
   session.socketId = socket.id;
   session.save();
 
-  onlineUsers.push(socket.request.user);
-  // console.log(`new connection ${socket.id}`);
-  // console.log('60 socket.request.user', socket.request.user);
-  // socket.on('whoami', (cb) => {
-  //   cb(socket.request.user ? socket.request.user.username : '');
-  // });
+  // 監聽前端的 join 要求，會傳入 room 名稱
+  socket.on('join', (room) => {
+    // Remove the rooms joined that's not the current one
+    socket.rooms.forEach((joinedRoom) => {
+      if (joinedRoom !== socket.id && joinedRoom !== room) {
+        socket.leave(joinedRoom);
+      }
+    });
+    socket.join(room);
 
-  // 對所有線上用戶的通知 新使用者上線
-  socket.broadcast.emit('joined', {
-    name   : socket.request.user.name,
-    account: socket.request.user.account,
-    avatar : socket.request.user.avatar,
+    // get room list
+    const { rooms } = io.of('/').adapter;
+    const usersInRoom = rooms.get(room);
+    // TODO: get users with socket ID
+    // TODO: currently just dummy online user list
+    const dummyUserList = [
+      socket.request.user,
+      socket.request.user,
+      socket.request.user,
+    ];
+
+    io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom: dummyUserList });
+
+    // console.log('rooms', rooms);
   });
-  // 同時在線使用者
-  socket.emit('userJoined', onlineUsers);
-
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    // socket.leave('global');
+    console.log('user disconnected', socket.request.user.id);
   });
   socket.on('chat message', (msg) => {
     console.log(`chat message:${msg}`);
   });
-  // message broadcasting
+  // // message broadcasting
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
@@ -104,6 +114,9 @@ app.use((req, res, next) => {
 });
 
 app.use(routes);
+
+// Make io available to router/controller
+app.io = io;
 
 http.listen(port, () => console.log(`===== Simple Twitter App starts listening on port ${port}! =====`));
 

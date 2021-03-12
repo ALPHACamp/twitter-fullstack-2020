@@ -13,10 +13,15 @@ socket.on('joined', (user) => {
   console.log('user joined', user);
 });
 
-// 同時在線使用者有誰
-socket.on('userJoined', (onlineUsers) => {
-  console.log('onlineUsers', onlineUsers);
+// 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
+socket.on('userJoined', (userObj) => {
+  console.log('userObj', userObj);
 });
+
+// 如果是公開聊天室，會向後端要求 'join' 'public'這個房間
+if (window.location.pathname === '/chat/public') {
+  socket.emit('join', 'public');
+}
 
 if (chatForm !== null) {
   chatForm.addEventListener('submit', (e) => {
