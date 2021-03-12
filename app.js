@@ -14,13 +14,13 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const { type } = require('os');
 const passport = require('./config/passport');
 
 const routes = require('./routes');
 const helpers = require('./_helpers');
 
 const usersController = require('./controllers/usersController');
-const { type } = require('os');
 
 app.engine('hbs', expressHandlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/handlebars-helpers') }));
 app.set('view engine', 'hbs');
@@ -51,8 +51,6 @@ io.use((socket, next) => {
     next(new Error('unauthorized'));
   }
 });
-
-const onlineUsers = [];
 
 io.on('connection', (socket, req) => {
   // Link session with socket ID to make it persistent
@@ -87,12 +85,15 @@ io.on('connection', (socket, req) => {
     // socket.leave('global');
     console.log('user disconnected', socket.request.user.id);
   });
-  socket.on('chat message', (msg) => {
-    console.log(`chat message:${msg}`);
-  });
-  // // message broadcasting
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+  socket.on('sendMessage', (payload) => {
+    // Expect payload { identifier: 'public / somethingForPrivate', message: 'message sent' }
+    if (payload.identifier === 'public') {
+      // When newMessage come in, emit notify the room with sender, and his/her message
+      io.to(payload.identifier).emit('newMessage', {
+        sender : socket.request.user,
+        message: payload.message,
+      });
+    }
   });
 });
 
