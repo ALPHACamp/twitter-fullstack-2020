@@ -55,7 +55,11 @@ if (chatForm !== null) {
   chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (chatInput.value) {
-      socket.emit('sendMessage', chatInput.value);
+      // 在公開聊天室，發送訊息
+      socket.emit('sendMessage', {
+        identifier: 'public',
+        message   : chatInput.value,
+      });
       chatInput.value = '';
     }
   });
