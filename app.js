@@ -56,7 +56,7 @@ io.use((socket, next) => {
 
 const db = require('./models');
 
-const { Message } = db;
+const { Message, User } = db;
 
 io.on('connection', (socket) => {
   // Link session with socket ID to make it persistent
@@ -86,9 +86,43 @@ io.on('connection', (socket) => {
     socketsInRoom.forEach((socketId) => {
       usersInRoom.push(io.of('/').sockets.get(socketId).request.user);
     });
+    if (room === 'public') {
+      // get all messages in the room
+      Promise.all([
+        Message.findAll({
+          raw  : true,
+          nest : true,
+          where: {
+            isPublic: 1,
+          },
+          include: [{
+            model: User,
+            as   : 'Sender',
+          }, {
+            model: User,
+            as   : 'Receiver',
+          }],
+        }),
+      ])
+      .then(([messages]) => {
+        const messagesArr = messages.map((message) => ({
+          ...message,
+          createdAt: `${moment(message.createdAt).format('a h:mm')}`,
+        }));
 
-    // return to frontend
-    io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom });
+        io.to(room).emit(
+          'userJoined',
+          {
+            user            : socket.request.user,
+            usersInRoom,
+            previousMessages: [...messagesArr],
+          },
+        );
+      })
+      .catch((err) => console.error(err));
+    } else {
+      return io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom });
+    }
   });
 
   // 用戶離開，傳用戶資訊到他原本在的 room 來通知誰離線
