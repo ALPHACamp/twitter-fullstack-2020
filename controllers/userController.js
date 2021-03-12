@@ -29,17 +29,17 @@ const userController = {
   signUp: (req, res) => {
     if (req.body.confirmPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/signin')
+      return res.redirect('/signup')
     } else {
       User.findOne({ where: { email: req.body.email } }).then(user => {
         if (user) {
           req.flash('error_messages', '信箱重複！')
-          return res.redirect('/signin')
+          return res.redirect('/signup')
         } else {
           User.findOne({ where: { account: req.body.account } }).then(user => {
             if (user) {
               req.flash('error_messages', '帳號重複！')
-              return res.redirect('/signin')
+              return res.redirect('/signup')
             } else {
               User.create({
                 account: req.body.account,

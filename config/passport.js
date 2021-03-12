@@ -18,12 +18,12 @@ module.exports = app => {
       User.findOne({ where: { $or: [{ email: username }, { account: username }] }, raw: true })
         .then(user => {
           if (!user) {
-            return done(null, false, req.flash('error_messages', ' That email is not registered !'))
+            return done(null, false, req.flash('error_messages', ' That account is not registered !'))
           }
           bcrypt.compare(password, user.password)
             .then(isMatch => {
               if (!isMatch) {
-                return done(null, false, req.flash('error_messages', ' Email or Password incorrect !'))
+                return done(null, false, req.flash('error_messages', ' Account or Password incorrect !'))
               }
               return done(null, user)
             })
