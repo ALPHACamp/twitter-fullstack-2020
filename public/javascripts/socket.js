@@ -13,6 +13,16 @@ socket.on('userJoined', (user) => {
   console.log('userJoinedName', user);
 });
 
+// 所有上線用戶的資料
+socket.on('usersJoined', (onlineUsers) => {
+  console.log('onlineUsers', onlineUsers);
+});
+
+// 對所有線上用戶的通知 新使用者上線
+socket.on('fromSocket', (message) => {
+  console.log('message', message);
+});
+
 if (chatForm !== null) {
   chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
