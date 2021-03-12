@@ -31,6 +31,11 @@ socket.on('userJoined', (userObj) => {
   // 傳送上線使用者資料
   const userItem = document.createElement('div');
   let rawHTML = '';
+
+  userObj.previousMessages.forEach((message) => {
+    this.appendMessage(message);
+  });
+
   usersInRoom.forEach((user) => {
     rawHTML += `
     <div class="d-flex flex-row no-wrap align-items-star pb-1">
@@ -115,3 +120,29 @@ socket.on('userLeft', (userObj) => {
   messages.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
 });
+
+function appendMessage(message) {
+  const item = document.createElement('li');
+  if (message.Sender.id === myUserId) {
+    item.innerHTML = `
+    <div class="d-flex align-items-end">
+      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.Sender.avatar}" alt="">
+      <div id="chat-bubble" class="item-desc pt-2 pb-1" style="color: orange">
+        ${message.message}
+      </div>
+      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
+    </div>
+  `;
+    messages.appendChild(item);
+  } else {
+    // 如果傳送訊息是對方，會出現這個對話格式 左側顯示＋灰色泡
+    item.innerHTML = `
+    <div class="d-flex align-items-end">
+      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.Sender.avatar}" alt="">
+      <div id="chat-bubble" class="item-desc pt-2 pb-1">${message.message}</div>
+      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
+    </div>
+  `;
+    messages.appendChild(item);
+  }
+}
