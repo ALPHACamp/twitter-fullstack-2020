@@ -90,6 +90,7 @@ io.on('connection', (socket) => {
     console.log('user disconnected', socket.request.user.id);
   });
   socket.on('sendMessage', (payload) => {
+    console.log('payload', payload);
     // Expect payload { identifier: 'public / somethingForPrivate', message: 'message sent' }
     if (payload.identifier === 'public') {
       // Create message record

@@ -11,19 +11,17 @@ socket.on('connect', () => {
 
 // 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
 socket.on('userJoined', (userObj) => {
-  
-  const usersInRoom = userObj.usersInRoom;
+  const { usersInRoom } = userObj;
   document.querySelector('#chatroom-user-count').innerHTML = usersInRoom.length;
 
-  //使用者上線提示
+  // 使用者上線提示
   const item = document.createElement('li');
   item.innerHTML = ` ${userObj.user.name} 上線 `;
   // item.setAttribute('class','mx-auto');
   messages.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
 
-
-  //傳送上線使用者資料
+  // 傳送上線使用者資料
   const userItem = document.createElement('div');
   let rawHTML = '';
   usersInRoom.forEach((user) => {
@@ -42,9 +40,9 @@ socket.on('userJoined', (userObj) => {
           </a>
         </div>
       </div>
-    </div>`
+    </div>`;
   });
-    userItem.innerHTML = rawHTML;
+  userItem.innerHTML = rawHTML;
   chatUserList.appendChild(userItem);
 });
 
@@ -57,15 +55,15 @@ if (chatForm !== null) {
   chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (chatInput.value) {
-      socket.emit('chat message', chatInput.value);
+      socket.emit('sendMessage', chatInput.value);
       chatInput.value = '';
     }
   });
 }
 
-//傳送使用者聊天訊息
+// 傳送使用者聊天訊息
 socket.on('newMessage', (message) => {
-  console.log(message)
+  console.log(message);
   const item = document.createElement('li');
   item.innerHTML = `
     <div class="d-flex align-items-end">
@@ -76,7 +74,7 @@ socket.on('newMessage', (message) => {
        </div>
       <div id="chat-createdAt" class="ml-5">下午5:00</div>
     </div>
-  `
+  `;
   messages.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
 });
