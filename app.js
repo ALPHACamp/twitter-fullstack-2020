@@ -55,10 +55,19 @@ app.use((req, res, next) => {
 
 app.use(routes);
 
+// socket
+
+let usersNumber = 0;
+
 io.on('connection', (socket) => {
   console.log('a user connected');
+  usersNumber += 1;
+  console.log(`There are ${usersNumber} online now`);
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
+    usersNumber -= 1;
+    console.log(`There are ${usersNumber} online now`);
   });
   socket.on('chat message', (msg) => {
     console.log(`chat message:${msg}`);
