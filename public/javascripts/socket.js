@@ -106,3 +106,12 @@ socket.on('newMessage', (message) => {
     window.scrollTo(0, document.body.scrollHeight);
   }
 });
+
+// 使用者離線，顯示離線訊息
+socket.on('userLeft', (userObj) => {
+  const item = document.createElement('li');
+  item.innerHTML = ` ${userObj.user.name} 離線 `;
+  // item.setAttribute('class','mx-auto');
+  messages.appendChild(item);
+  window.scrollTo(0, document.body.scrollHeight);
+});

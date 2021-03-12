@@ -90,10 +90,23 @@ io.on('connection', (socket) => {
     // return to frontend
     io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom });
   });
-  socket.on('disconnect', () => {
-    // socket.leave('global');
-    console.log('user disconnected', socket.request.user.id);
+
+  // 用戶離開，傳用戶資訊到他原本在的 room 來通知誰離線
+  socket.on('disconnecting', () => {
+    // 取得目前所有房間，準備傳離線訊息到所有房間
+    socket.rooms.forEach((room) => {
+      // return to frontend
+      io.to(room).emit('userLeft', { user: socket.request.user });
+    });
   });
+
+  // 測試用 disconnecting 和 disconnect 差別
+  socket.on('disconnect', () => {
+    // socket.rooms.size === 0
+    console.log('user', socket.request.user.id);
+    console.log('disconnect rooms', socket.rooms);
+  });
+
   socket.on('sendMessage', (payload) => {
     // Expect payload { identifier: 'public / somethingForPrivate', message: 'message sent' }
     if (payload.identifier === 'public') {
