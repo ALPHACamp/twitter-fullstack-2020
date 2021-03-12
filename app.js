@@ -23,6 +23,7 @@ const helpers = require('./_helpers');
 
 const usersController = require('./controllers/usersController');
 
+moment.locale('zh-TW');
 app.engine('hbs', expressHandlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/handlebars-helpers') }));
 app.set('view engine', 'hbs');
 app.use(express.urlencoded({ extended: true }));
@@ -107,7 +108,7 @@ io.on('connection', (socket) => {
         io.to(payload.identifier).emit('newMessage', {
           sender   : socket.request.user,
           message  : message.dataValues.message,
-          createdAt: `${moment(message.dataValues.createdAt).format('ah:MM')}`,
+          createdAt: `${moment(message.dataValues.createdAt).format('a h:mm')}`,
         });
       })
       .catch((err) => console.error(err));
