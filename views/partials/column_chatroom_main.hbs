@@ -5,13 +5,26 @@
 </div>
 
 <div id="mainblock-main" class="overflow-scroll w-100 p-3 mt-auto">
-  <ul id="chat-messages"></ul>
-</div>
+  <ul id="chat-messages">
+    {{!-- chat-bubble-template
+    <li class="d-flex d-flex flex-column p-3">
+      <div class="d-flex align-items-end">
+      <img id="chat-user-avatar" class="rounded-circle mr-2" src="https://i.imgur.com/AoWNOVG.jpg" alt="">
+        <div id="chat-bubble" class="item-desc pt-2 pb-1">
+          hello my friend
+        </div>
+      </div>
+      <div id="chat-createdAt" class="ml-5">下午5:00</div>
+      </div>
+    </li> --}}
+  </ul>
+
 <div class="chat-form w-100">
   <form id="chat-form" class="col-12 d-flex align-items-center justify-content-around" action="">
     <input type="text" id="chat-input" class="col-11 p-2" autocomplete="off" / placeholder=" 請輸入訊息...">
-    <button class="btn text-orange p-0" type="submit">
-      <i class="far fa-lg fa-paper-plane text-orange"></i>
+    <button id="input-btn"  class="btn text-orange p-0 btn-lg" type="submit">
+      <i class="far  fa-paper-plane text-orange"></i>
     </button>
   </form>
+</div>
 </div>
