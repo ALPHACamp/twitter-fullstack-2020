@@ -104,7 +104,7 @@ io.on('connection', (socket) => {
         io.to(payload.identifier).emit('newMessage', {
           sender   : socket.request.user,
           message  : message.dataValues.message,
-          createdAt: moment(message.dataValues.createdAt).fromNow(),
+          createdAt: `${moment(message.dataValues.createdAt).format('ah:MM')}`,
         });
       })
       .catch((err) => console.error(err));
