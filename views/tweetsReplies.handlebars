@@ -74,39 +74,7 @@
 {{> follower}}
 
 <!--Modal--->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header d-flex justify-content-between">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">X</button>
-        <h5 class="modal-title" id="exampleModalLabel">編輯個人資料</h5>
-        <form action="/users/{{user.id}}/edit" method="POST" enctype="multipart/form-data">
-          <button type="submit" class="btn btn-primary">儲存</button>
-      </div>
-      <div class="modal-body">
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="{{user.cover}}" alt="Card image cap">
-          <input type="file" name="cover"> cover
-        </div>
-        <div class="card" style="width: 18rem;">
-          <img class="card-img-top" src="{{user.avatar}}" alt="Card image cap">
-          <input type="file" name="avatar"> avatar
-        </div>
-        <div class="form-group">
-          <label for="recipient-name" class="col-form-label">名稱:</label>
-          <input type="text" class="form-control" id="recipient-name" name="name" value="{{user.name}}">
-        </div>
-        <div class="form-group">
-          <label for="message-text" class="col-form-label">自我介紹:</label>
-          <textarea class="form-control" id="message-text" name="introduction"></textarea>
-        </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
+{{> editModal}}
 <!--================= 側邊欄推文 Modal ================= -->
 <div class="modal fade" id="postTweet" tabindex="-1" aria-labelledby="postTweetModalLabel" aria-hidden="true">
   <form action="/tweets" method="post">
