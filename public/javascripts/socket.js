@@ -9,18 +9,13 @@ socket.on('connect', () => {
 });
 
 // 單一上線使用者資料
-socket.on('userJoined', (user) => {
-  console.log('userJoinedName', user);
+socket.on('joined', (user) => {
+  console.log('user joined', user);
 });
 
-// 所有上線用戶的資料
-socket.on('usersJoined', (onlineUsers) => {
+// 同時在線使用者有誰
+socket.on('userJoined', (onlineUsers) => {
   console.log('onlineUsers', onlineUsers);
-});
-
-// 對所有線上用戶的通知 新使用者上線
-socket.on('fromSocket', (message) => {
-  console.log('message', message);
 });
 
 if (chatForm !== null) {

@@ -52,7 +52,6 @@ io.use((socket, next) => {
 });
 
 const onlineUsers = [];
-const sockets = [];
 
 io.on('connect', (socket) => {
   // Link session with socket ID to make it persistent
@@ -61,26 +60,20 @@ io.on('connect', (socket) => {
   session.save();
 
   onlineUsers.push(socket.request.user);
-  sockets.push(socket);
   // console.log(`new connection ${socket.id}`);
   // console.log('60 socket.request.user', socket.request.user);
   // socket.on('whoami', (cb) => {
   //   cb(socket.request.user ? socket.request.user.username : '');
   // });
 
-  // 單一上線使用者資料
-  socket.emit('userJoined', {
+  // 對所有線上用戶的通知 新使用者上線
+  socket.broadcast.emit('joined', {
     name   : socket.request.user.name,
     account: socket.request.user.account,
     avatar : socket.request.user.avatar,
   });
-  // 所有上線使用者資料
-  socket.emit('usersJoined', onlineUsers);
-
-  // 每當一個用戶上線 broadcast 到所有用戶
-  sockets.forEach((s) => {
-    s.broadcast.emit('fromSocket', onlineUsers);
-  });
+  // 同時在線使用者
+  socket.emit('userJoined', onlineUsers);
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
