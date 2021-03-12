@@ -56,6 +56,9 @@ app.use((req, res, next) => {
 app.use(routes);
 
 // socket
+const db = require('./models');
+
+const { User } = db;
 
 let usersNumber = 0;
 
@@ -63,6 +66,16 @@ io.on('connection', (socket) => {
   console.log('a user connected');
   usersNumber += 1;
   console.log(`There are ${usersNumber} online now`);
+
+  socket.on('login', (userId) => {
+    User.findByPk(userId).then((user) => {
+      socket.emit('loginSuccess', {
+        name   : user.name,
+        account: user.account,
+        avatar : user.avatar,
+      });
+    });
+  });
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
