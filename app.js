@@ -26,16 +26,61 @@ app.set('view engine', 'hbs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/public/`));
 app.use(methodOverride('_method'));
-app.use(session({
+const sessionMiddleware = session({
   secret           : process.env.SESSION_SECRET,
   resave           : false,
   saveUninitialized: true,
-}));
+});
+app.use(sessionMiddleware);
 app.use(flash());
 app.use('/upload', express.static(`${__dirname}/upload`));
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Link passport login to socket.io connection, then use middleware to assign user
+const wrap = (middleware) => (socket, next) => middleware(socket.request, {}, next);
+io.use(wrap(sessionMiddleware));
+io.use(wrap(passport.initialize()));
+io.use(wrap(passport.session()));
+io.use((socket, next) => {
+  if (socket.request.user) {
+    next();
+  } else {
+    next(new Error('unauthorized'));
+  }
+});
+
+io.on('connect', (socket) => {
+  // Link session with socket ID to make it persistent
+  const { session } = socket.request;
+  session.socketId = socket.id;
+  session.save();
+
+  // console.log(`new connection ${socket.id}`);
+  // console.log('60 socket.request.user', socket.request.user);
+  // socket.on('whoami', (cb) => {
+  //   cb(socket.request.user ? socket.request.user.username : '');
+  // });
+
+  // 單一上線使用者資料
+  socket.emit('userJoined', {
+    name   : socket.request.user.name,
+    account: socket.request.user.account,
+    avatar : socket.request.user.avatar,
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  socket.on('chat message', (msg) => {
+    console.log(`chat message:${msg}`);
+  });
+  // message broadcasting
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages');
@@ -54,42 +99,6 @@ app.use((req, res, next) => {
 });
 
 app.use(routes);
-
-// socket
-const db = require('./models');
-
-const { User } = db;
-
-let usersNumber = 0;
-
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  usersNumber += 1;
-  console.log(`There are ${usersNumber} online now`);
-
-  socket.on('login', (userId) => {
-    User.findByPk(userId).then((user) => {
-      socket.emit('loginSuccess', {
-        name   : user.name,
-        account: user.account,
-        avatar : user.avatar,
-      });
-    });
-  });
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-    usersNumber -= 1;
-    console.log(`There are ${usersNumber} online now`);
-  });
-  socket.on('chat message', (msg) => {
-    console.log(`chat message:${msg}`);
-  });
-  // message broadcasting
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
-});
 
 http.listen(port, () => console.log(`===== Simple Twitter App starts listening on port ${port}! =====`));
 
