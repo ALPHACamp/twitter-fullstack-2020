@@ -1,0 +1,44 @@
+<!--================= 跟隨 ================= -->
+<div calss="flex-column" style="margin-left: 30px; background: #F5F8FA;min-width: 350px;height: 517px;">
+  <h5 class="mt-2 ml-3" style="font-weight: bold; font-size: 18px;">跟隨誰</h5>
+  {{#each users}}
+  <div class="card" style="border: 1px solid #E6ECF0; border-radius: 0; background: #F5F8FA;">
+    <div class="row no-gutters">
+
+      <div class="col-md-1 m-3">
+        <a href="/users/{{this.id}}" style="text-decoration: none;">
+          <img src="{{this.avatar}}" alt="..." style="width: 50px;
+      height: 50px; border-radius: 50%">
+        </a>
+      </div>
+
+      <div class="col-md ml-3 d-flex flex-column justify-content-center">
+        <a href="/users/{{this.id}}" style="text-decoration: none;">
+          <span style="">{{this.name}}</span>
+        </a>
+        <span style="p-0" class="card-text">{{this.account}}</span>
+      </div>
+
+      <div class="row align-items-center mr-3">
+        {{#if this.isFollowed}}
+        <form class="" action="/followships/{{this.id}}?_method=DELETE" method="POST">
+
+          <button type="submit" class="btn"
+            style="background: #FF6600; border-radius: 100px; color: white; width: 92px; height: 30px; font-size: 15px; line-height: 15px;">正在跟隨</button>
+
+        </form>
+        {{else}}
+        <form action="/followships/" method="POST">
+          <input type="hidden" name="id" value="{{this.id}}">
+          <button type="submit" class="btn"
+            style="border: 1px solid #FF6600; border-radius: 100px; color: #FF6600; width: 62px; height: 30px; font-size: 15px; line-height: 15px;">跟隨</button>
+        </form>
+        {{/if}}
+
+      </div>
+
+
+    </div>
+  </div>
+  {{/each}}
+</div>

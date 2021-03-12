@@ -1,0 +1,116 @@
+{{> nav}}
+{{> userInfo}}
+
+<div class="tabs d-flex"
+  style="height: 54px; margin-left: 51px; margin-top: 36px;font-weight: bold; font-size: 15px; color: #657786;">
+  <div>
+    <a class="p-0 nav-link" href="/users/{{userView.id}}/tweets?{{userView.id}}">推文</a>
+  </div>
+
+  <div style="margin-right: 55px; margin-left: 77px;">
+    <a class="p-0 nav-link " href="/users/{{userView.id}}/replies?{{userView.id}}">推文與回覆</a>
+  </div>
+
+  <div>
+    <a class="p-0 nav-link active" href="/users/{{userView.id}}/likes?{{userView.id}}">喜歡的內容</a>
+  </div>
+</div>
+
+{{#each userView.tweets}}
+<div class="card" style="min-height: 136px;border-radius: 0; border: 1px solid #E6ECF0">
+  <div class="row no-gutters" style="">
+
+    <div class="col-md-1 ml-3" style="margin-top: 10px; margin-right: 10px">
+      <a href="/users/{{this.UserId}}" style="text-decoration: none">
+        <img src="{{this.User.avatar}}" alt="..." style="width: 50px;
+            height: 50px; border-radius: 50%">
+      </a>
+    </div>
+
+    <div class="col-md" style="margin-top: 10px;">
+      <a href="/tweets/{{this.id}}/replies" style="text-decoration: none;color: black">
+        <div class="card-body p-0" style="width: 510px">
+          <div class="card-text">
+            <span style="color: #1C1C1C">{{this.User.name}}</span>
+            <span style="color: #657786;">{{this.User.account}} ‧ {{moment_fromNow this.createdAt}}</span>
+
+            <p>{{this.description}}</p>
+          </div>
+
+        </div>
+      </a>
+
+      {{!-- ==================留言數，喜歡數，ICON============ --}}
+      <div class="row">
+        <button class="ml-2" type="submit" style="border: none; background: none;" data-toggle="modal"
+          data-target="#reply{{this.id}}">
+          <i class="far fa-comment"></i>
+          <span>{{this.totalReplies}}</span>
+        </button>
+
+
+        {{#if this.isLiked}}
+        <form action="/tweets/{{this.id}}/unlike" method="POST">
+          <button type="submit" style="border: none; background: none;">
+            <i class="fas fa-heart" style="color: red;"></i>
+            <span>{{this.totalLikes}}</span>
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{this.id}}/like" method="POST">
+          <button type="submit" style="border: none; background: none;">
+            <i class="far fa-heart" style="color: red;"></i>
+            <span>{{this.totalLikes}}</span>
+          </button>
+        </form>
+        {{/if}}
+      </div>
+      {{!-- ==================留言數，喜歡數，ICON============ --}}
+
+    </div>
+  </div>
+
+</div>
+{{/each}}
+</div>
+
+<!--================= 跟隨 ================= -->
+{{> follower}}
+
+<!--Modal--->
+{{> editModal}}
+<!--================= 側邊欄推文 Modal ================= -->
+<div class="modal fade" id="postTweet" tabindex="-1" aria-labelledby="postTweetModalLabel" aria-hidden="true">
+  <form action="/tweets" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="row no-gutters">
+            <div class="col-md-1 mr-2">
+              <img src="{{user.avatar}}" style="width: 50px;
+              height: 50px; border-radius: 50%" alt="">
+            </div>
+
+            <div class="col-md ml-2">
+              <textarea name="description" placeholder="有什麼新鮮事..."
+                style="width: 380px;height: 80px; overflow-y: hidden; resize: none; outline: none; wrap:off; border-color: transparent;"></textarea>
+              <div class="card-text text-right">
+                <button class="btn" style="background: #FF6600;
+                border-radius: 100px; color: white" type="submit">推文</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>

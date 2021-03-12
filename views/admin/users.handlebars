@@ -1,0 +1,70 @@
+<div class="navbar d-flex flex-column" style="max-height: 1200px; ">
+  <div style="font-weight: bold;font-size: 20px;display:contents;">
+    <div style="margin-bottom:100px">
+      <img src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4" alt="" style="height: 100px;">
+    </div>
+
+    <div style="">
+      <a href="/admin/tweets" style="color: black;">推文清單</a>
+      <br>
+      <br>
+      <a href="/admin/users" style="color: black;">使用者清單</a>
+    </div>
+
+    {{#if user}}
+
+
+    <div style="margin-top: 844px;">
+      <a href="/logout" style="color: black; text-decoration: none;">
+        <span><i class="fas fa-sign-out-alt fa-rotate-180"></i></span>
+        <span style="margin-left: 23px;">登出</span>
+      </a>
+    </div>
+
+    {{/if}}
+
+
+  </div>
+
+
+  {{#each users}}
+  <div>
+    <div class="user-info" style="height: ; position: relative;border: 6px solid #FFFFFF;margin-left:200px">
+      <div class="cover-photo" style="height: 200px;">
+        <img src="{{this.cover}}" style="object-fit: cover;width: 100%; height: 100%" alt="...">
+      </div>
+
+      <div class="photo">
+        <img src="{{this.avatar}}"
+          style="width: 140px; height: 140px; border: 4px solid #FFFFFF; border-radius: 50%; position: absolute; top: 100px; left: 82px"
+          alt="">
+      </div>
+      <div class="d-flex flex-column" style="margin-top: 45px; margin-left: 125px">
+        <span style="font-weight: 900; font-size: 19px; color: #1C1C1C;">{{this.name}}</span>
+        <span style="font-weight: 500; font-size: 15px; color: #657786;">{{this.account}}</span>
+      </div>
+      <div style="margin-top: 10px; margin-left: 95px;">
+        <button class="ml-2" type="submit" style="border: none; background: none;" data-toggle="modal"
+          data-target="#reply{{this.id}}">
+          <i class="far fa-comment"></i>
+          <span>{{this.tweetsCount}}</span>
+        </button>
+        <button type="submit" style="border: none; background: none;">
+          <i class="fas fa-heart" style="color: red;"></i>
+          <span>{{this.likesCount}}</span>
+        </button>
+      </div>
+      <div class="d-flex" style="margin-top: 10px; margin-left: 69px;">
+        <div>
+          <span style="color: #1C1C1C">{{this.FollowingCount}}</span> <span style="color: #657786;">個跟隨中</span>
+        </div>
+        <div style="margin-left: 20px;">
+          <span style="color: #1C1C1C">{{this.FollowerCount}}</span> <span style="color: #657786;">位跟隨者</span>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  {{/each}}
+</div>

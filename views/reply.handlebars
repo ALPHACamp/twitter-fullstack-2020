@@ -1,0 +1,216 @@
+{{> nav}}
+
+<div class="flex-column" style="min-width: 600px; border: 1px solid #E6ECF0">
+  {{> message}}
+  <!--單一推文-->
+  <div class="d-flex header" style="height: 55px;">
+    <div class="mt-2 ml-3">
+      <a href="javascript:history.back()" style="text-decoration: none; color: black">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+    </div>
+    <div class="mt-2" style="margin-left: 43px;font-weight: bold; font-size: 18px;">推文</div>
+  </div>
+
+  <hr class="m-0">
+
+  <div class="card" style="height: 383px;border-radius:0; border-color:transparent">
+    <div class="row no-gutters">
+      <div class="col-md-1 ml-3" style="margin-top: 15px; margin-right: 10px">
+        <a href="/users/{{tweet.UserId}}" style="text-decoration: none;">
+          <img src="{{tweet.User.avatar}}" alt="..." style="width: 50px;
+          height: 50px; border-radius: 50%">
+        </a>
+      </div>
+
+      <div class="col-md d-flex flex-column justify-content-center"
+        style="margin-top: 18px; margin-bottom: 18px; font-weight: bold;font-size: 15px;">
+        <span style="">{{tweet.User.name}}</span>
+        <span style="font-weight: 500; color: #657786;">{{tweet.User.account}}</span>
+      </div>
+
+      <div class="col-md-12 ml-3" style="max-width: 510px; font-weight: 500; font-size: 23px; color: #1C1C1C;">
+        {{tweet.description}}
+      </div>
+
+      <div class="col-md-12 ml-3" style="font-weight: 500; font-size: 15px; color: #657786;">
+        {{moment_format tweet.createdAt}}
+      </div>
+
+      <div class="col-12" style="margin-top: 15px;">
+        <hr class="m-0">
+      </div>
+
+      <div class="col-md-12 ml-3 my-3" style="font-weight: bold;
+      font-size: 19px;">
+        <span style="color: #1C1C1C">{{ReplyCount}}</span> <span style="color: #657786;">回覆</span><span
+          style="margin-left: 20px; color: #1C1C1C">{{LikedCount}}</span> <span style="color: #657786;">喜歡次數</span>
+      </div>
+
+      <div class="col-12">
+        <hr class="m-0">
+      </div>
+
+      <div class="col-12 ml-3 my-3 d-flex">
+        <div>
+          <button class="p-0" type="submit" style="border: none; background: none;" data-toggle="modal"
+            data-target="#reply{{tweet.id}}">
+            <i class="far fa-comment" style="font-size: 24.69px;"></i>
+          </button>
+        </div>
+
+        <div>
+
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+            <button class="p-0" type="submit" style="margin-left: 125px; border: none; background: none;">
+              <i class="fas fa-heart" style="color: red; font-size: 23.64px;"></i>
+            </button>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST">
+            <button class="p-0" type="submit" style="margin-left: 125px; border: none; background: none;">
+              <i class="far fa-heart" style="color: red; font-size: 23.64px;"></i>
+            </button>
+          </form>
+          {{/if}}
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="" style="max-height: 749px;overflow: auto">
+    <!--================= 回覆版塊 ================= -->
+    {{#each tweet.Replies}}
+    <div class="card" style="min-height: 136px;border-radius: 0; border: 1px solid #E6ECF0">
+      <div class="row no-gutters">
+
+        <div class="col-md-1 ml-3" style="margin-top: 10px; margin-right: 10px">
+          <a href="/users/{{this.UserId}}" style="text-decoration: none;">
+            <img src="{{this.User.avatar}}" alt="..." style="width: 50px;
+            height: 50px; border-radius: 50%">
+          </a>
+        </div>
+
+        <div class="col-md" style="margin-top: 10px;">
+          <div class="card-body p-0" style="width: 510px">
+            <div class="card-text" style="font-size: 15px; font-weight: 500;">
+              <span style="color: #1C1C1C; font-weight: bold;">{{this.User.name}}</span>
+              <span style="color: #657786;">{{this.User.account}} ‧ {{moment_fromNow this.User.createdAt}}</span>
+              <p class="" style="color: #657786; margin-top: 4px; margin-bottom: 5px">回覆
+                <span style="color: #FF6600;">{{../tweet.User.account}}</span>
+              </p>
+              <p class="m-0" style="font-weight: normal;">{{this.comment}}</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {{/each}}
+    <!--================= 回覆版塊 ================= -->
+  </div>
+
+</div>
+
+<!--================= 跟隨 ================= -->
+{{> follower}}
+
+<!--================= 回覆 Modal ================= -->
+
+<div class="modal fade" id="reply{{tweet.id}}" tabindex="-1" aria-labelledby="postTweetModalLabel" aria-hidden="true">
+  <form action="" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="card" style="border-color:transparent;">
+            <div class="row no-gutters">
+
+              <div class="col-md-1 mr-2">
+                <img src="{{tweet.User.avatar}}" style="width: 50px;
+                height: 50px; border-radius: 50%" alt="">
+              </div>
+
+              <div class="col-md ml-2" style="width: 409px;">
+                <span style="font-size: 15px; color: #1C1C1C">
+                  {{tweet.User.name}}
+                </span>
+                <span style="font-size: 15px; color: #657786;">
+                  {{tweet.User.account}}·{{moment_fromNow tweet.Users.createdAt}}
+                </span>
+                <p>{{tweet.description}}</p>
+                <p style="font-size: 13px;">回覆給 {{tweet.User.account}}</p>
+              </div>
+            </div>
+
+            {{!-- 使用者個人圖片 --}}
+            <div class="row no-gutters">
+              <div class="col-md-1 mr-2">
+                <img src="{{user.avatar}}" style="width: 50px;
+                height: 50px; border-radius: 50%" alt="">
+              </div>
+
+              <div class="col-md ml-2">
+                <textarea name="comment" placeholder="推你的回覆"
+                  style="width: 409px;height: 80px; overflow-y: hidden; resize: none; outline: none; wrap:off; border-color: transparent;"></textarea>
+                <div class="card-text text-right">
+                  <button class="btn" style="background: #FF6600;
+                  border-radius: 100px; color: white" type="submit">回覆</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>
+
+<!--================= 側邊欄推文 Modal ================= -->
+<div class="modal fade" id="postTweet" tabindex="-1" aria-labelledby="postTweetModalLabel" aria-hidden="true">
+  <form action="/tweets" method="post">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-body">
+          <div class="row no-gutters">
+            <div class="col-md-1 mr-2">
+              <img src="{{user.avatar}}" style="width: 50px;
+              height: 50px; border-radius: 50%" alt="">
+            </div>
+
+            <div class="col-md ml-2">
+              <textarea name="description" placeholder="有什麼新鮮事..."
+                style="width: 380px;height: 80px; overflow-y: hidden; resize: none; outline: none; wrap:off; border-color: transparent;"></textarea>
+              <div class="card-text text-right">
+                <button class="btn" style="background: #FF6600;
+                border-radius: 100px; color: white" type="submit">推文</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+</div>

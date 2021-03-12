@@ -1,0 +1,74 @@
+<div class="flex-column" style="min-width: 600px; border: 1px solid #E6ECF0">
+  {{> message}}
+
+  <div class="d-flex header" style="height: 55px;">
+    <div class="mt-2 ml-3" style="margin-right: 43px;">
+      <a href="javascript:history.back()" style="text-decoration: none; color: black">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+    </div>
+
+    <div class="d-flex flex-column">
+      <span style="font-weight: 900; font-size: 19px; color: #1C1C1C;">{{userView.name}}</span>
+      <span style="font-weight: 500; font-size: 13px; color: #657786;">{{userView.TweetsCount}} 推文</span>
+    </div>
+
+  </div>
+
+  <hr class="m-0">
+
+  <div class="user-info" style="height: 375px; position: relative;">
+    <div class="cover-photo" style="height: 200px;">
+      <img src="{{userView.cover}}" style="object-fit: cover;width: 100%; height: 100%" alt="...">
+    </div>
+
+    <div class="photo">
+      <img src="{{userView.avatar}}"
+        style="width: 140px; height: 140px; border: 4px solid #FFFFFF; border-radius: 50%; position: absolute; top: 124px; left: 14px"
+        alt="">
+    </div>
+
+    <div class="text-right" style="margin-top: 10px; margin-right: 15px">
+      {{#ifCond userView.id user.id}}
+      <button type="submit" class="btn" id="editUser" data-toggle="modal" data-target="#exampleModal"
+        style="border: 1px solid #FF6600; border-radius: 100px; color: #FF6600; width: 120px; height: 40px; font-weight: bold; font-size: 15px; line-height: 15px;">編輯個人資料</button>
+      {{else}}
+      {{#if isFollowed}}
+      <form class="" action="/followships/{{userView.id}}?_method=DELETE" method="POST">
+
+        <button type="submit" class="btn"
+          style="background: #FF6600; border-radius: 100px; color: white; width: 120px; height: 40px; font-weight: bold; font-size: 15px; line-height: 15px;">正在跟隨</button>
+
+      </form>
+      {{else}}
+      <form action="/followships/" method="POST">
+        <input type="hidden" name="id" value="{{userView.id}}">
+        <button type="submit" class="btn"
+          style="border: 1px solid #FF6600; border-radius: 100px; color: #FF6600; width: 120px; font-weight: bold; height: 40px; font-size: 15px; line-height: 15px;">跟隨</button>
+      </form>
+      {{/if}}
+      {{/ifCond}}
+    </div>
+
+    <div class="d-flex flex-column" style="margin-top: 19px; margin-left: 15px">
+      <span style="font-weight: 900; font-size: 19px; color: #1C1C1C;">{{userView.name}}</span>
+      <span style="font-weight: 500; font-size: 15px; color: #657786;">{{userView.account}}</span>
+    </div>
+
+    <div style="font-size: 14px; max-width: 600px; margin: 10px 15px 0px 15px;">
+      <span style="width: 570px; word-wrap: break-word">{{userView.introduction}}</span>
+    </div>
+
+    <div class="d-flex" style="margin-top: 10px; margin-left: 15px; font-weight: 500;font-size: 14px;">
+      <div>
+        <a href="/users/{{userView.id}}/followings" style="text-decoration: none;">
+          <span style="color: #1C1C1C">{{userView.FollowingCount}}</span> <span style="color: #657786;">個跟隨中</span>
+        </a>
+      </div>
+      <div style="margin-left: 20px;">
+        <a href="/users/{{userView.id}}/followers" style="text-decoration: none;">
+          <span style="color: #1C1C1C">{{userView.FollowerCount}}</span> <span style="color: #657786;">位跟隨者</span>
+        </a>
+      </div>
+    </div>
+  </div>

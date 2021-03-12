@@ -1,0 +1,41 @@
+{{> nav}}
+
+<div style=" display: flex; flex-direction: column;width: 400px;margin-left: 100px; ">
+  <div class="text-center mb-4">
+    <h2 style="    display: flex;font-weight: bolder;">帳戶設定</h2>
+    {{> message}}
+  </div>
+  <div>
+    <form action="/users/{{user.id}}/set?_method=PUT" method="POST">
+      <div class="form-group" style="padding: 10px;">
+        <label for="account">Account</label>
+        <input type="text" class="form-control" name="account" id="account" placeholder="Enter account"
+          value="{{user.account}}">
+      </div>
+
+      <div class="form-group" style="padding: 10px;">
+        <label for="name">name</label>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
+      </div>
+
+      <div class="form-group" style="padding: 10px;">
+        <label for="email">Email</label>
+        <input type="text" name="email" class="form-control" id="email" placeholder="email" value="{{user.email}}">
+      </div>
+
+      <div class="form-group" style="padding: 10px;">
+        <label for="password">Password</label>
+        <input type="password" name="password" class="form-control" id="password" placeholder="password" required>
+      </div>
+
+      <div class="form-label-group" style="padding: 10px;">
+        <label for="inputPasswordCheck">Password Check</label>
+        <input type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required>
+      </div>
+      <div style=" display: flex; justify-content: flex-end;padding: 12px;">
+        <button type="submit"
+          style="border-radius: 20px;width: 130px;height:45px;background:#FF6600;color:white">更新</button>
+      </div>
+    </form>
+  </div>
+</div>
