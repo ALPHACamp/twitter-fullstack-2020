@@ -73,8 +73,7 @@ const adminController = {
         { model: Tweet, as: 'LikedTweets' },
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
-      ],
-      order: [[Tweet, 'UserId', 'DESC']]
+      ]
     })
       .then(usersResult => {
         const page = Number(req.query.page) || 1
@@ -90,6 +89,8 @@ const adminController = {
           followingAmount: user.Followings.length,
           followerAmount: user.Followers.length
         }))
+
+        data.sort((a, b) => b.userTweetAmount - a.userTweetAmount)
         res.render('admin/users', { users: data, page, totalPage, prev, next })
       })
       .catch(error => {
