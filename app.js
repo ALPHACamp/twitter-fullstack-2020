@@ -15,6 +15,7 @@ const flash = require('connect-flash');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const { type } = require('os');
+const moment = require('moment');
 const passport = require('./config/passport');
 
 const routes = require('./routes');
@@ -90,7 +91,6 @@ io.on('connection', (socket) => {
     console.log('user disconnected', socket.request.user.id);
   });
   socket.on('sendMessage', (payload) => {
-    console.log('payload', payload);
     // Expect payload { identifier: 'public / somethingForPrivate', message: 'message sent' }
     if (payload.identifier === 'public') {
       // Create message record
@@ -102,8 +102,9 @@ io.on('connection', (socket) => {
       .then((message) => {
         // When newMessage come in, emit notify the room with sender, and his/her message
         io.to(payload.identifier).emit('newMessage', {
-          sender : socket.request.user,
-          message: message.dataValues.message,
+          sender   : socket.request.user,
+          message  : message.dataValues.message,
+          createdAt: moment(message.dataValues.createdAt).fromNow(),
         });
       })
       .catch((err) => console.error(err));

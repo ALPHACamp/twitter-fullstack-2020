@@ -67,7 +67,6 @@ if (chatForm !== null) {
 
 // 傳送使用者聊天訊息
 socket.on('newMessage', (message) => {
-  console.log(message);
   const item = document.createElement('li');
   item.innerHTML = `
     <div class="d-flex align-items-end">
@@ -76,7 +75,7 @@ socket.on('newMessage', (message) => {
           ${message.message}
         </div>
        </div>
-      <div id="chat-createdAt" class="ml-5">下午5:00</div>
+      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
     </div>
   `;
   messages.appendChild(item);
