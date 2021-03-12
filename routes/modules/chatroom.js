@@ -4,6 +4,6 @@ const router = express.Router();
 
 const chatsController = require('../../controllers/chatsController');
 
-router.get('/chatroom', chatsController.chatRoomPage);
+router.get('/public/', chatsController.getPublicChatPage);
 
 module.exports = router;
