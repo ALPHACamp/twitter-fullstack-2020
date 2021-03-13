@@ -37,15 +37,15 @@ const generateUserList = (users) => {
   users.forEach((user) => {
     usersHtml += `
     <div class="d-flex flex-row no-wrap align-items-star w-100 p-3 pointer tweet-gray">
-      <a class="profile-img mr-3" href="/users/${user.id}/tweets"> 
+      <a class="profile-img mr-3" href=""> 
         <img class="img-fluid rounded-circle" src="${user.avatar}" alt=""> 
       </a>
       <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
         <div class="name w-100 pr-2">
-          <a href="/users/${user.id}/tweets class="text-dark" style="color: black; text-decoration:none">${user.name}</a>
+          <a href="/users/${user.id}/tweets" class="text-dark" style="color: black; text-decoration:none">${user.name}</a>
         </div>
         <div class="item-username">
-          <a href="/chatroom/${user.id}" class="text-dark">
+          <a href="/users/${user.id}/tweets" class="text-dark">
             <span class="username text-lightgrey">@${user.account}</span>
           </a>
         </div>
