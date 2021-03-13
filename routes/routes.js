@@ -5,6 +5,7 @@ const auth = require('../config/auth')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
+const chatroomController = require('../controllers/chatroomController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
@@ -58,5 +59,8 @@ router.get('/users/:id/tweets', auth.authenticatedUser, userController.getRecomm
 // setting 相關路由
 router.get('/users/:id/setting', auth.authenticatedUser, userController.getSetting)
 router.post('/api/users/:id', auth.authenticatedUser, userController.putSetting)
+
+// chatroom 相關路由
+router.get('/chatroom/public', auth.authenticatedUser, chatroomController.getPublic)
 
 module.exports = router
