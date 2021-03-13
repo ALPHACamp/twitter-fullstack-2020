@@ -57,7 +57,7 @@ const generateUserList = (users) => {
   });
   return usersHtml;
 };
-const updateUserList = (users) => {
+const updateUserCount = (users) => {
   document.querySelector('#chatroom-user-count').innerHTML = users.length;
 };
 
@@ -89,10 +89,10 @@ socket.on('userJoined', (userObj) => {
     });
     messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
   }
-  updateUserList(userObj.usersInRoom);
+  updateUserCount(userObj.usersInRoom);
   window.scrollTo(0, document.body.scrollHeight);
 
-  chatUserList.innerHTML += generateUserList(userObj.usersInRoom);
+  chatUserList.innerHTML = generateUserList(userObj.usersInRoom);
 });
 
 // 如果是公開聊天室，會向後端要求 'join' 'public'這個房間
@@ -122,8 +122,9 @@ socket.on('newMessage', (message) => {
 // 使用者離線，顯示離線訊息，更新在線者人數
 socket.on('userLeft', (data) => {
   // 更新在線者人數和在線使用者列表
-  console.log(data.usersInRoom);
-  updateUserList(data.usersInRoom);
+  updateUserCount(data.usersInRoom);
+  chatUserList.innerHTML = generateUserList(data.usersInRoom);
+
   // 顯示誰離開的離線訊息
   messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(userObj)}`);
 });
