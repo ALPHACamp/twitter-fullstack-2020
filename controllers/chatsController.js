@@ -71,11 +71,7 @@ const chatsController = {
       });
 
       const interactedUserList = userList
-      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i)
-      .map((user) => ({
-        ...user,
-        createdAt: `${moment(user.createdAt).format('a h:mm')}`,
-      }));
+      .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i);
 
       // 私人聊天室首頁目前與和對方聊天室頁面共用 getPrivateChatPage controller
       // 先寫以下的條件來找到receiver，因應不同情況所需要的東西。 ex. 標題切換，不同對象用戶名和帳號會跟著更改
