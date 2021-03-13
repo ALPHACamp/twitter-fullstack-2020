@@ -4,8 +4,8 @@ const chatForm = document.querySelector('#chat-form');
 const chatInput = document.querySelector('#chat-input');
 const chatUserList = document.querySelector('#chat-user-list');
 let myUserId;
-const generateUserOnlineMessage = (userObj) => `<li> ${userObj.user.name} 上線 </li>`;
-const generateUserOfflineMessage = (userObj) => `<li> ${userObj.user.name} 離線 </li>`;
+const generateUserOnlineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 bg-lightgrey badge-pill">${userObj.user.name} 上線</span> </li>`;
+const generateUserOfflineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 bg-lightgrey badge-pill">${userObj.user.name} 離線</span> </li>`;
 const generateMessage = (message) => {
   const sender = (message.Sender !== undefined) ? message.Sender : message.sender;
   let messageHTML = '';
