@@ -16,6 +16,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const { type } = require('os');
 const moment = require('moment');
+const { Op } = require('sequelize');
 const passport = require('./config/passport');
 
 const routes = require('./routes');
@@ -70,30 +71,26 @@ io.on('connection', (socket) => {
 
   // 監聽前端的 join 要求，會傳入 room 名稱
   socket.on('join', (room) => {
-    io.sockets.sockets.forEach((eaLiveSocket) => {
-      console.log('eaLiveSocket', eaLiveSocket.request.user.id);
-    });
-
-    // Remove the rooms joined that's not the current one
-    socket.rooms.forEach((joinedRoom) => {
-      if (joinedRoom !== socket.id && joinedRoom !== room) {
-        socket.leave(joinedRoom);
-      }
-    });
-    socket.join(room);
-
-    // get room list
-    const { rooms } = io.of('/').adapter;
-    const socketsInRoom = rooms.get(room);
-
-    // get users in the room
-    const usersInRoom = [];
-    socketsInRoom.forEach((socketId) => {
-      usersInRoom.push(io.of('/').sockets.get(socketId).request.user);
-    });
     if (room === 'public') {
-      // get all messages in the room
-      Promise.all([
+      // Remove the rooms joined that's not the current one
+      socket.rooms.forEach((joinedRoom) => {
+        if (joinedRoom !== socket.id && joinedRoom !== room) {
+          socket.leave(joinedRoom);
+        }
+      });
+      socket.join(room);
+
+      // get room list
+      const { rooms } = io.of('/').adapter;
+      const socketsInRoom = rooms.get(room);
+
+      // get users in the room
+      const usersInRoom = [];
+      socketsInRoom.forEach((socketId) => {
+        usersInRoom.push(io.of('/').sockets.get(socketId).request.user);
+      });
+
+      return Promise.all([
         Message.findAll({
           raw  : true,
           nest : true,
@@ -126,51 +123,148 @@ io.on('connection', (socket) => {
         );
       })
       .catch((err) => console.error(err));
-    } else {
-      // Assume if not public room, it will be private
-      if (socket.handshake.headers.referer.split('/chat/private/').length > 1) {
-        // console.log('room', room);
+    }
 
-        const privateMessageReceiverId = socket.handshake.headers.referer.split('/chat/private/')[1];
-        Promise.all([
-          User.findByPk(privateMessageReceiverId),
-          Message.findAll({
-            raw  : true,
-            nest : true,
-            where: {
-              receiverId: privateMessageReceiverId,
-            },
-            include: [{
-              model: User,
-              as   : 'Sender',
-            }, {
-              model: User,
-              as   : 'Receiver',
-            }],
-          }),
-        ])
-        .then(([receiverUser, messages]) => {
-          const messagesArr = messages.map((message) => ({
-            ...message,
-            createdAt: `${moment(message.createdAt).format('a h:mm')}`,
-          }));
+    if (room === 'private' && socket.handshake.headers.referer.split('/chat/private/').length > 1) {
+      const privateMessageSenderId = socket.request.user.id.toString();
+      const privateMessageReceiverId = socket.handshake.headers.referer.split('/chat/private/')[1];
+      const roomName = `${privateMessageSenderId}-${privateMessageReceiverId}`;
+      const roomNameAlt = `${privateMessageReceiverId}-${privateMessageSenderId}`;
+      const { rooms } = io.of('/').adapter;
+      let roomJoined = roomName;
 
-          delete receiverUser.dataValues.password;
-          delete receiverUser._previousDataValues.password;
-
-          return io.to(room).emit(
-            'userJoined',
-            {
-              roomType        : 'private',
-              user            : socket.request.user,
-              previousMessages: [...messagesArr],
-              receiverUser,
-            },
-          );
-        });
+      // If other user has initiated the chatroom, join it, other wise create and join one
+      if (rooms.has(roomName)) {
+        socket.join(roomName);
+        roomJoined = roomName;
+      } else if (rooms.has(roomNameAlt)) {
+        socket.join(roomNameAlt);
+        roomJoined = roomNameAlt;
+      } else {
+        socket.join(roomName);
+        roomJoined = roomName;
       }
 
-      return io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom });
+      // Assume if not public room, it will be private
+      Promise.all([
+        User.findByPk(privateMessageReceiverId),
+        Message.findAll({
+          raw  : true,
+          nest : true,
+          where: {
+            senderId  : privateMessageSenderId,
+            receiverId: privateMessageReceiverId,
+          },
+          include: [{
+            model: User,
+            as   : 'Sender',
+          }, {
+            model: User,
+            as   : 'Receiver',
+          }],
+        }),
+        Message.findAll({
+          raw  : true,
+          nest : true,
+          where: {
+            senderId  : privateMessageReceiverId,
+            receiverId: privateMessageSenderId,
+          },
+          include: [{
+            model: User,
+            as   : 'Sender',
+          }, {
+            model: User,
+            as   : 'Receiver',
+          }],
+        }),
+        Message.findAll({
+          raw  : true,
+          nest : true,
+          where: {
+            [Op.or]: [
+              {
+                senderId: privateMessageSenderId,
+              },
+              {
+                receiverId: privateMessageSenderId,
+              },
+            ],
+            isPublic: 0,
+          },
+          include: [{
+            model: User,
+            as   : 'Sender',
+          }, {
+            model: User,
+            as   : 'Receiver',
+          }],
+          order: [
+            // Will escape title and validate DESC against a list of valid direction parameters
+            ['createdAt', 'DESC'],
+          ],
+        }),
+      ])
+      .then(([receiverUser, sendToMessages, receivedFromMessages, interactionMessages]) => {
+        // Merge both message SENT TO other user + messages FROM other user, use id to filter
+        const messages = [];
+        sendToMessages.forEach((value) => {
+          messages.splice(value.id, 0, value);
+        });
+        receivedFromMessages.forEach((value) => {
+          messages.splice(value.id, 0, value);
+        });
+
+        // New message at top, and change createAt to moment
+        messages.sort((a, b) => a.createdAt - b.createdAt);
+        const messagesArr = messages.map((message) => ({
+          ...message,
+          createdAt: `${moment(message.createdAt).format('a h:mm')}`,
+        }));
+
+        // Modify interacted user list
+        const userList = [];
+        interactionMessages.forEach((message) => {
+          if (message.Sender.id === Number(privateMessageSenderId)) {
+            const receiverObj = message.Receiver;
+            Object.assign(receiverObj, {
+              lastMessage: message.message,
+              createdAt  : message.createdAt,
+            });
+            userList.push(receiverObj);
+          } else {
+            const senderObj = message.Sender;
+            delete senderObj.password;
+            Object.assign(senderObj, {
+              lastMessage: message.message,
+              createdAt  : message.createdAt,
+            });
+            userList.push(senderObj);
+          }
+        });
+
+        delete receiverUser.dataValues.password;
+        delete receiverUser._previousDataValues.password;
+
+        // filter out duplicated, then createdAt to momentise
+        const interactedUserList = userList
+        .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i)
+        .map((user) => ({
+          ...user,
+          createdAt: `${moment(user.createdAt).format('a h:mm')}`,
+        }));
+
+        return io.to(roomJoined).emit(
+          'userJoined',
+          {
+            roomType        : 'private',
+            user            : socket.request.user,
+            previousMessages: [...messagesArr],
+            receiverUser,
+            usersInteracted : interactedUserList,
+          },
+        );
+      });
     }
   });
 
