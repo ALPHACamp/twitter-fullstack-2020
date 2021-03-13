@@ -102,9 +102,7 @@ socket.on('userJoined', (userObj) => {
 if (window.location.pathname === '/chat/public') {
   socket.emit('join', 'public');
 } else if (window.location.pathname.includes('/chat/private')) {
-  console.log('myUserId for private room', myUserId);
-
-  socket.emit('join', myUserId);
+  socket.emit('join', 'private');
 }
 
 if (chatForm !== null) {
