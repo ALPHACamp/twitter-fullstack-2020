@@ -224,6 +224,7 @@ io.on('connection', (socket) => {
 
         // Modify interacted user list
         const userList = [];
+
         interactionMessages.forEach((message) => {
           if (message.Sender.id === Number(privateMessageSenderId)) {
             const receiverObj = message.Receiver;
@@ -243,8 +244,10 @@ io.on('connection', (socket) => {
           }
         });
 
-        delete receiverUser.dataValues.password;
-        delete receiverUser._previousDataValues.password;
+        if (receiverUser) {
+          delete receiverUser.dataValues.password;
+          delete receiverUser._previousDataValues.password;
+        }
 
         // filter out duplicated, then createdAt to momentise
         const interactedUserList = userList
@@ -299,6 +302,7 @@ io.on('connection', (socket) => {
 
   socket.on('sendMessage', (payload) => {
     // Expect payload { identifier: 'public / somethingForPrivate', message: 'message sent' }
+    console.log('payload', payload);
     if (payload.identifier === 'public') {
       // Create message record
       Message.create({
@@ -309,6 +313,25 @@ io.on('connection', (socket) => {
       .then((message) => {
         // When newMessage come in, emit notify the room with sender, and his/her message
         io.to(payload.identifier).emit('newMessage', {
+          sender   : socket.request.user,
+          message  : message.dataValues.message,
+          createdAt: `${moment(message.dataValues.createdAt).format('a h:mm')}`,
+        });
+      })
+      .catch((err) => console.error(err));
+    }
+    if (payload.identifier === 'private') {
+      // 在私人聊天室傳送訊息;
+      Message.create({
+        senderId  : socket.request.user.id,
+        receiverId: payload.receiverId,
+        message   : payload.message,
+        isPublic  : false,
+      })
+      .then((message) => {
+        // When newMessage come in, emit notify the room with sender, and his/her message
+        const room = Array.from(socket.rooms)[1];
+        io.to(room).emit('newMessage', {
           sender   : socket.request.user,
           message  : message.dataValues.message,
           createdAt: `${moment(message.dataValues.createdAt).format('a h:mm')}`,

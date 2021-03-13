@@ -22,10 +22,17 @@
 
   <div class="chat-form w-100">
     <form id="chat-form" class="col-12 d-flex align-items-center justify-content-around" action="">
-      <input type="text" id="chat-input" class="col-11 p-2" autocomplete="off" / placeholder=" 請輸入訊息...">
-      <button id="input-btn"  class="btn text-orange p-0 btn-lg" type="submit">
-        <i class="far fa-paper-plane text-orange"></i>
-      </button>
+        {{#if userMessaging }}
+      <input type="text"  data-receiver-id="{{userMessaging}}" id="chat-pm-input" class="col-11 p-2" autocomplete="off" / placeholder=" 請輸入訊息...">
+        <button id="input-btn"  class="btn text-orange p-0 btn-lg" type="submit">
+          <i class="far fa-paper-plane text-orange"></i>
+        </button>
+      {{else}}
+        <input type="text" id="chat-input" class="col-11 p-2" autocomplete="off" / placeholder=" 請輸入訊息...">
+        <button id="input-btn" class="btn text-orange p-0 btn-lg" type="submit">
+          <i class="far fa-paper-plane text-orange"></i>
+        </button>
+      {{/if}}
     </form>
   </div>
 

@@ -2,6 +2,7 @@ const socket = io();
 const messages = document.querySelector('#chat-messages');
 const chatForm = document.querySelector('#chat-form');
 const chatInput = document.querySelector('#chat-input');
+const chatPMInput = document.querySelector('#chat-pm-input');
 const publicChatUserList = document.querySelector('#public-chat-user-list');
 const privateChatUserList = document.querySelector('#private-message-list');
 let myUserId;
@@ -108,7 +109,7 @@ if (window.location.pathname === '/chat/public') {
 if (chatForm !== null) {
   chatForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    if (chatInput.value) {
+    if (chatInput) {
       // 在公開聊天室，發送訊息
       socket.emit('sendMessage', {
         identifier: 'public',
@@ -116,11 +117,21 @@ if (chatForm !== null) {
       });
       chatInput.value = '';
     }
+    if (chatPMInput) {
+      // 在私人聊天室，發送訊息
+      socket.emit('sendMessage', {
+        identifier: 'private',
+        receiverId: chatPMInput.dataset.receiverId,
+        message   : chatPMInput.value,
+      });
+      chatPMInput.value = '';
+    }
   });
 }
 
 // 傳送使用者聊天訊息
 socket.on('newMessage', (message) => {
+  console.log('message', message);
   messages.innerHTML += generateMessage(message);
   messages.scrollIntoView(false);
 });
