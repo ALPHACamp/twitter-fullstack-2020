@@ -33,6 +33,9 @@ const generateMessage = (message) => {
   return messageHTML;
 };
 const generateUserList = (users) => {
+  // 更新 user count
+  document.querySelector('#chatroom-user-count').innerHTML = users.length;
+
   let usersHtml = '';
   users.forEach((user) => {
     usersHtml += `
@@ -54,6 +57,9 @@ const generateUserList = (users) => {
   });
   return usersHtml;
 };
+const updateUserList = (users) => {
+  document.querySelector('#chatroom-user-count').innerHTML = users.length;
+};
 
 // Temporary only, demonstrate the login connection workability
 socket.on('connect', () => {
@@ -65,11 +71,6 @@ socket.on('me', (id) => {
   myUserId = id;
   console.log('myUserId', myUserId);
 });
-
-function updateUserList(users) {
-  // 總上線人數
-  document.querySelector('#chatroom-user-count').innerHTML = users.length;
-}
 
 // 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
 socket.on('userJoined', (userObj) => {
@@ -88,7 +89,7 @@ socket.on('userJoined', (userObj) => {
     });
     messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
   }
-  updateUserList(usersInRoom);
+  updateUserList(userObj.usersInRoom);
   window.scrollTo(0, document.body.scrollHeight);
 
   chatUserList.innerHTML += generateUserList(userObj.usersInRoom);
