@@ -40,7 +40,7 @@ router.use('/', users);
 // Main functions
 router.use('/followships/', authenticationHelper.authenticatedNonAdmin, followships);
 router.use('/tweets/', authenticationHelper.authenticatedNonAdmin, tweets);
-router.use('/', authenticationHelper.authenticatedNonAdmin, chatroom);
+router.use('/chat/', authenticationHelper.authenticatedNonAdmin, chatroom);
 
 // Api functions
 router.use('/api/', apis);

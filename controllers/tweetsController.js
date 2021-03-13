@@ -76,7 +76,7 @@ const tweetsController = {
     })
     .then((tweet) => {
       const { createdAt } = tweet;
-      const tweetTime = ` ${moment(createdAt).format('a h:MM')}・ ${moment(createdAt).format('LL')}`;
+      const tweetTime = ` ${moment(createdAt).format('a h:mm')}・ ${moment(createdAt).format('LL')}`;
       const tweetObj = ({
         ...tweet.dataValues,
         User   : tweet.User.dataValues,
