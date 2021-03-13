@@ -553,19 +553,27 @@ input#avatar, input#cover {
   #chat-messages > li {
   padding: 0.5rem 1rem;
   }
-
-  #chat-messages > li:nth-child(odd) {
-    /* background: #efefef; */
-  }
-
-  #chat-bubble {
+  
+  .chat-bubble-other {
     padding: 10px;
     border-radius: 50px 50px 50px 5px;
     background-color: rgb(226, 226, 226);
     align-items: center; 
   }
 
-  #chat-user-avatar{
+  .chat-bubble-self {
+    padding: 10px;
+    border-radius: 50px 50px 5px 50px;
+    background-color: #ff6600;
+    align-items: center; 
+  }
+
+  .chat-user-avatar{
     height: 40px;
     width: 40px;
+    object-fit: cover;
+  }
+
+  .user-status-message > span {
+    background-color:rgb(226, 226, 226);
   }

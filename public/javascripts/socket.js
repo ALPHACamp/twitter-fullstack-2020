@@ -4,32 +4,29 @@ const chatForm = document.querySelector('#chat-form');
 const chatInput = document.querySelector('#chat-input');
 const chatUserList = document.querySelector('#chat-user-list');
 let myUserId;
-const generateUserOnlineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 bg-lightgrey badge-pill">${userObj.user.name} 上線</span> </li>`;
-const generateUserOfflineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 bg-lightgrey badge-pill">${userObj.user.name} 離線</span> </li>`;
+const generateUserOnlineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 上線</span> </li>`;
+const generateUserOfflineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 離線</span> </li>`;
 const generateMessage = (message) => {
   const sender = (message.Sender !== undefined) ? message.Sender : message.sender;
   let messageHTML = '';
   if (sender.id === myUserId) {
     messageHTML = `
-    <li class="message-item">
-      <div class="d-flex align-items-end">
-        <img id="chat-user-avatar" class="rounded-circle mr-2" src="${sender.avatar}" alt="">
-        <div id="chat-bubble" class="item-desc pt-2 pb-1" style="color: orange">
-          ${message.message}
-        </div>
-        <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
+    <li class="message-item-self d-flex justify-content-end">
+      <div class="">
+        <div class="chat-bubble-self item-desc pt-2 pb-1">${message.message}</div>
+        <div class="chat-createdAt ml-5 text-lightgrey">${message.createdAt}</div>
       </div>
     </li>`;
     return messageHTML;
   }
   messageHTML = `
-  <li class="message-item">
-    <div class="d-flex align-items-end">
-      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${sender.avatar}" alt="">
-      <div id="chat-bubble" class="item-desc pt-2 pb-1">${message.message}</div>
-      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
-    </div>
-  </li>`;
+    <li class="message-item-other">
+      <div class="d-flex align-items-end">
+        <img class="chat-user-avatar rounded-circle mr-2" src="${sender.avatar}" alt="">
+        <div class="chat-bubble-other item-desc pt-2 pb-1">${message.message}</div>
+      </div>
+      <div class="chat-createdAt ml-5 text-lightgrey">${message.createdAt}</div>
+    </li>`;
   return messageHTML;
 };
 const generateUserList = (users) => {
@@ -39,16 +36,16 @@ const generateUserList = (users) => {
   let usersHtml = '';
   users.forEach((user) => {
     usersHtml += `
-    <div class="d-flex flex-row no-wrap align-items-star w-100 p-3">
+    <div class="d-flex flex-row no-wrap align-items-star w-100 p-3 pointer tweet-gray">
       <a class="profile-img mr-3" href="/users/${user.id}/tweets"> 
         <img class="img-fluid rounded-circle" src="${user.avatar}" alt=""> 
       </a>
       <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
         <div class="name w-100 pr-2">
-          <a href="/users/${user.id}/tweets class="text-dark text-decoration-none">${user.name}</a>
+          <a href="/users/${user.id}/tweets class="text-dark" style="color: black; text-decoration:none">${user.name}</a>
         </div>
         <div class="item-username">
-          <a href="/chatroom/${user.id}" class="text-dark text-decoration-none">
+          <a href="/chatroom/${user.id}" class="text-dark">
             <span class="username text-lightgrey">@${user.account}</span>
           </a>
         </div>

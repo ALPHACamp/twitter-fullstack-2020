@@ -1,10 +1,10 @@
-<div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3">
+<div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block">
   {{#if (isdefined title)}}
   {{>column_pageTitle}}
   {{/if}}
 </div>
 
-<div id="mainblock-main" class="overflow-scroll w-100 p-3 mt-auto">
+<div id="mainblock-main" class="overflow-auto w-100 p-3 mt-auto">
   <ul id="chat-messages">
     {{!-- chat-bubble-template
     <li class="d-flex d-flex flex-column p-3">
@@ -18,13 +18,14 @@
       </div>
     </li> --}}
   </ul>
+</div>
 
-<div class="chat-form w-100">
-  <form id="chat-form" class="col-12 d-flex align-items-center justify-content-around" action="">
-    <input type="text" id="chat-input" class="col-11 p-2" autocomplete="off" / placeholder=" 請輸入訊息...">
-    <button id="input-btn"  class="btn text-orange p-0 btn-lg" type="submit">
-      <i class="far  fa-paper-plane text-orange"></i>
-    </button>
-  </form>
-</div>
-</div>
+  <div class="chat-form w-100">
+    <form id="chat-form" class="col-12 d-flex align-items-center justify-content-around" action="">
+      <input type="text" id="chat-input" class="col-11 p-2" autocomplete="off" / placeholder=" 請輸入訊息...">
+      <button id="input-btn"  class="btn text-orange p-0 btn-lg" type="submit">
+        <i class="far  fa-paper-plane text-orange"></i>
+      </button>
+    </form>
+  </div>
+
