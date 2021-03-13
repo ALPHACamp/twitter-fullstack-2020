@@ -78,7 +78,7 @@ const chatsController = {
         title: {
           text: '私人訊息',
         },
-        usersPMSent: interactedUserList,
+        usersInteracted: interactedUserList,
         userMessaging,
       });
     });
