@@ -48,6 +48,7 @@ io.use(wrap(passport.initialize()));
 io.use(wrap(passport.session()));
 io.use((socket, next) => {
   if (socket.request.user) {
+    delete socket.request.user.password;
     next();
   } else {
     next(new Error('unauthorized'));
@@ -153,7 +154,9 @@ io.on('connection', (socket) => {
             ...message,
             createdAt: `${moment(message.createdAt).format('a h:mm')}`,
           }));
-          // TODO: only keep required info in receiverUser
+
+          delete receiverUser.dataValues.password;
+          delete receiverUser._previousDataValues.password;
 
           return io.to(room).emit(
             'userJoined',
