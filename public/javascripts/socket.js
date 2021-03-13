@@ -95,6 +95,8 @@ socket.on('userJoined', (userObj) => {
 // 如果是公開聊天室，會向後端要求 'join' 'public'這個房間
 if (window.location.pathname === '/chat/public') {
   socket.emit('join', 'public');
+} else if (window.location.pathname.includes('/chat/private')) {
+  socket.emit('join', myUserId);
 }
 
 if (chatForm !== null) {

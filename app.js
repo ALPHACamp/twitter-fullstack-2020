@@ -69,6 +69,10 @@ io.on('connection', (socket) => {
 
   // 監聽前端的 join 要求，會傳入 room 名稱
   socket.on('join', (room) => {
+    io.sockets.sockets.forEach((eaLiveSocket) => {
+      console.log('eaLiveSocket', eaLiveSocket.request.user.id);
+    });
+
     // Remove the rooms joined that's not the current one
     socket.rooms.forEach((joinedRoom) => {
       if (joinedRoom !== socket.id && joinedRoom !== room) {
@@ -113,6 +117,7 @@ io.on('connection', (socket) => {
         io.to(room).emit(
           'userJoined',
           {
+            roomType        : 'public',
             user            : socket.request.user,
             usersInRoom,
             previousMessages: [...messagesArr],
@@ -121,6 +126,47 @@ io.on('connection', (socket) => {
       })
       .catch((err) => console.error(err));
     } else {
+      // Assume if not public room, it will be private
+      if (socket.handshake.headers.referer.split('/chat/private/').length > 1) {
+        // console.log('room', room);
+
+        const privateMessageReceiverId = socket.handshake.headers.referer.split('/chat/private/')[1];
+        Promise.all([
+          User.findByPk(privateMessageReceiverId),
+          Message.findAll({
+            raw  : true,
+            nest : true,
+            where: {
+              receiverId: privateMessageReceiverId,
+            },
+            include: [{
+              model: User,
+              as   : 'Sender',
+            }, {
+              model: User,
+              as   : 'Receiver',
+            }],
+          }),
+        ])
+        .then(([receiverUser, messages]) => {
+          const messagesArr = messages.map((message) => ({
+            ...message,
+            createdAt: `${moment(message.createdAt).format('a h:mm')}`,
+          }));
+          // TODO: only keep required info in receiverUser
+
+          return io.to(room).emit(
+            'userJoined',
+            {
+              roomType        : 'private',
+              user            : socket.request.user,
+              previousMessages: [...messagesArr],
+              receiverUser,
+            },
+          );
+        });
+      }
+
       return io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom });
     }
   });
@@ -150,7 +196,7 @@ io.on('connection', (socket) => {
     // user left delete user
     socket.leave('/');
     // socket.rooms.size === 0
-    console.log('user', socket.request.user.id);
+    console.log('disconnect user', socket.request.user.id);
     console.log('disconnect rooms', socket.rooms);
   });
 
