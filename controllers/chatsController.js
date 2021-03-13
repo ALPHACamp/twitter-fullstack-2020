@@ -1,3 +1,6 @@
+const moment = require('moment');
+
+moment.locale('zh-TW');
 const { Op } = require('sequelize');
 const db = require('../models');
 
@@ -24,10 +27,10 @@ const chatsController = {
         where: {
           [Op.or]: [
             {
-              senderId: privateMessageSenderId,
+              senderId: privateMessageSenderId.id,
             },
             {
-              receiverId: privateMessageSenderId,
+              receiverId: privateMessageSenderId.id,
             },
           ],
           isPublic: 0,
