@@ -557,13 +557,14 @@ input#avatar, input#cover {
   .chat-bubble-other {
     padding: 10px;
     border-radius: 50px 50px 50px 5px;
-    background-color: rgb(226, 226, 226);
+    background-color: rgb(221, 226, 230);
     align-items: center; 
   }
 
   .chat-bubble-self {
     padding: 10px;
     border-radius: 50px 50px 5px 50px;
+    color: white;
     background-color: #ff6600;
     align-items: center; 
   }
@@ -575,5 +576,19 @@ input#avatar, input#cover {
   }
 
   .user-status-message > span {
+    color:rgb(95, 100, 129);
     background-color:rgb(226, 226, 226);
+  }
+
+  .chat-createdAt {
+    font-size: 0.8em;
+  }
+  
+  .chat-createdAt > p {
+    font-size: 0.8em;
+    text-align-last: end !important;
+  }
+
+  #chat-user-list > div {
+    border-bottom: 2px solid rgba(0, 0, 0, .125);
   }

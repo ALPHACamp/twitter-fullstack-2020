@@ -13,8 +13,8 @@ const generateMessage = (message) => {
     messageHTML = `
     <li class="message-item-self d-flex justify-content-end">
       <div class="">
-        <div class="chat-bubble-self item-desc pt-2 pb-1">${message.message}</div>
-        <div class="chat-createdAt ml-5 text-lightgrey">${message.createdAt}</div>
+        <div class="chat-bubble-self item-desc px-3 py-2">${message.message}</div>
+        <div class="chat-createdAt text-lightgrey"><p class="text-end">${message.createdAt}</p></div>
       </div>
     </li>`;
     return messageHTML;
@@ -23,7 +23,7 @@ const generateMessage = (message) => {
     <li class="message-item-other">
       <div class="d-flex align-items-end">
         <img class="chat-user-avatar rounded-circle mr-2" src="${sender.avatar}" alt="">
-        <div class="chat-bubble-other item-desc pt-2 pb-1">${message.message}</div>
+        <div class="chat-bubble-other item-desc px-3 py-2">${message.message}</div>
       </div>
       <div class="chat-createdAt ml-5 text-lightgrey">${message.createdAt}</div>
     </li>`;
