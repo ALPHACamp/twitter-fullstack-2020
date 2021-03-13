@@ -66,11 +66,13 @@ socket.on('me', (id) => {
   console.log('myUserId', myUserId);
 });
 
+function updateUserList(users) {
+  // 總上線人數
+  document.querySelector('#chatroom-user-count').innerHTML = users.length;
+}
+
 // 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
 socket.on('userJoined', (userObj) => {
-  const { usersInRoom } = userObj;
-  document.querySelector('#chatroom-user-count').innerHTML = usersInRoom.length;
-
   // 使用者上線提示
   const userOnlineMessage = generateUserOnlineMessage(userObj);
   // 更新訊息列表
@@ -86,6 +88,7 @@ socket.on('userJoined', (userObj) => {
     });
     messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
   }
+  updateUserList(usersInRoom);
   window.scrollTo(0, document.body.scrollHeight);
 
   chatUserList.innerHTML += generateUserList(userObj.usersInRoom);
@@ -115,7 +118,11 @@ socket.on('newMessage', (message) => {
   messages.innerHTML += generateMessage(message);
 });
 
-// 使用者離線，顯示離線訊息
-socket.on('userLeft', (userObj) => {
+// 使用者離線，顯示離線訊息，更新在線者人數
+socket.on('userLeft', (data) => {
+  // 更新在線者人數和在線使用者列表
+  console.log(data.usersInRoom);
+  updateUserList(data.usersInRoom);
+  // 顯示誰離開的離線訊息
   messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(userObj)}`);
 });
