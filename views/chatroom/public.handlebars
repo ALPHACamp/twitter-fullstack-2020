@@ -6,108 +6,76 @@
       </div>
     </nav>
 
-    <div class="center-content d-flex" id="tweet-content">
-      <div class="head justify-content-between">
-        <div class="row">
-          <div class="col-4">
-            <ul class="list-group">
-              <li class="list-group-item right-zone-header" style="
-                          border-top: 1px solid #F5F5F5;
-                          border-right: 1px solid #F5F5F5;
-                          border-left: 1px solid #F5F5F5;
-                          color: #000000;
-                          font-weight: bold">
-                <span>上線使用者&ensp;(5)</span>
-              </li>
-
-              <li class="list-group-item">
-                <a href="/users/{{this.User.id}}/tweets">
-                  <div class="row">
-                    <div class="col-2">
-                      <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar"
-                        style="border-radius: 50%; height:50px; width: 50px">
-                    </div>
-                    <div class="col-10">
-                      <span>Hello</span>
-                      <span style="color:gray;">&ensp;@123</span>
-                    </div>
-                  </div>
-                </a>
-              </li>
-
-            </ul>
-          </div>
-          <div class="col-8">
-            <ul class="list-group chat-container">
-              <li class="list-group-item right-zone-header" style="
-                          border-top: 1px solid #F5F5F5;
-                          border-right: 1px solid #F5F5F5;
-                          border-left: 1px solid #F5F5F5;
-                          color: #000000;
-                          font-weight: bold">
-                <span>公開聊天室</span>
-              </li>
-
-              <li class="system-info">
-                <span>Alan&ensp;上線</span>
-              </li>
-
-              <li class="system-info">
-                <span>Shun&ensp;上線</span>
-              </li>
-
-              <li class="system-info">
-                <span>Jeff&ensp;上線</span>
-              </li>
-
-              <li class="list-group-item right-zone-header" style="
-                                                    border-top: 1px solid #F5F5F5;
-                                                    border-right: 1px solid #F5F5F5;
-                                                    border-left: 1px solid #F5F5F5;
-                                                    color: #000000;
-                                                    font-weight: bold">
-                <div class="chat-box">
-                  <div class="chat-box-avatar">
-                    <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar"
-                      style="border-radius: 50%; height:50px; width: 50px">
-                  </div>
-                  <div class="chat-box-content">
-                    <span>Hellksdjngkoirefdjhngiovndfjivfniubjrivnjsioburhg</span>
-                    <span>下午5:00</span>
-                  </div>
+    <div class="d-flex" id="chat-container">
+      <div class="left-side">
+        <ul class="list-group">
+          <li class="list-group-item title">
+            <span>上線使用者&ensp;(5)</strong></span>
+          </li>
+          <li class="list-group-item">
+            <a href="/users/{{this.User.id}}/tweets">
+              <div class="row">
+                <div class="col-2 mr-4">
+                  <img src="https://loremflickr.com/320/240/avatar/?random=5.850587638241356" alt="user avatar"
+                    class="user-avatar" style="border-radius: 50%; height:50px; width: 50px;">
                 </div>
-              </li>
-              <li class="list-group-item right-zone-header" style="
-                                                                  border-top: 1px solid #F5F5F5;
-                                                                  border-right: 1px solid #F5F5F5;
-                                                                  border-left: 1px solid #F5F5F5;
-                                                                  color: #000000;
-                                                                  font-weight: bold">
-                <div class="chat-box">
-                  <div class="chat-box-content">
-                    <span>Hellksdjngkoirefdjhngiovndfjivfniubjrivnjsioburhg</span>
-                    <span>下午5:00</span>
-                  </div>
-                  <div class="chat-box-avatar">
-                    <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar"
-                      style="border-radius: 50%; height:50px; width: 50px">
-                  </div>
+                <div class="col-8 d-flex align-items-center">
+                  <span style="display:inline-block; border-radius: 50%; color:black;"><strong>Hello</strong></span>
+                  <span style="display:inline-block; color:gray;">&ensp;@123</span>
                 </div>
-              </li>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="right-side">
+        <ul class="list-group chat-container">
+          <li class="list-group-item title">
+            <span>公開聊天室</span>
+          </li>
 
-              <form action="" method="POST" class="d-flex">
-                <div style="width: 400px; margin: 7px 10px;">
-                  <textarea placeholder="輸入訊息..." class="form-control" id="description" name="description" rows="1"
-                    style="border: none;"></textarea>
-                </div>
-                <button class="btn btn-create" type="submit"
-                  style="background:white; border-radius: 18px; width: 60px; float: right;">
-                  <i class="far fa-paper-plane"></i>
-                </button>
-              </form>
-            </ul>
-          </div>
-        </div>
+          <li class="system-info">
+            <span>Alan&ensp;上線</span>
+          </li>
+
+          <li class="system-info">
+            <span>Shun&ensp;上線</span>
+          </li>
+
+          <li class="system-info">
+            <span>Jeff&ensp;上線</span>
+          </li>
+
+          <li class="list-group-item message-line">
+            <div class="d-flex">
+              <div style="width: 55px; height: 55px;">
+                <img src="https://loremflickr.com/320/240/avatar/?random=5.850587638241356" alt="user avatar"
+                  class="message-user-avatar">
+              </div>
+              <div class="left-message-box">
+                <p>Hello</p>
+              </div>
+            </div>
+            <small class="left-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+
+          <form action="" method="POST" class="d-flex">
+            <div class="input-message-zone">
+              <textarea placeholder="輸入訊息..." class="form-control input-message-area" id="description" name="message"
+                rows="1"></textarea>
+            </div>
+            <button class="btn btn-send" type="submit">
+              <i class="far fa-paper-plane" style="color: #FF6600;"></i>
+            </button>
+          </form>
+        </ul>
       </div>
     </div>
   </div>
+</div>
