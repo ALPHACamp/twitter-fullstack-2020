@@ -75,8 +75,11 @@ const chatsController = {
       }));
 
       return res.render('chatroom', {
-        title: {
-          text: '私人訊息',
+        privateMessagePage: true,
+        title             : {
+          user_name   : 'pacific rim',
+          user_account: 'pacific rim',
+          text        : '私人訊息',
         },
         usersInteracted: interactedUserList,
         userMessaging,
