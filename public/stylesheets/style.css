@@ -1,3 +1,6 @@
+* {
+  /* border: gray 1px solid; */
+}
 /* tweet-main */
 
 #tweet-content {
@@ -534,3 +537,24 @@
   height: 50px;
   border-radius: 100%;
 }
+
+/* chatroom */
+.chat-container {
+  background-color: #FFFFFF;
+}
+
+.system-info {
+    display: block;
+    min-width: 150px;
+    width: auto;
+    margin: 3px auto;
+    background-color: #F5F8FA;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.chat-box {
+  display: flex;
+}
+
