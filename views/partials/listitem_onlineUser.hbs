@@ -1,6 +1,6 @@
-{{#if (isdefined usersPMSent)}}
+{{#if (isdefined usersInteracted)}}
 <div id="private-message-list" class="d-flex align-items-start flex-column w-100">
-  {{#each usersPMSent}}
+  {{#each usersInteracted}}
   {{!-- 要補上每條私訊的連結 --}}
    <div class="d-flex flex-row no-wrap align-items-star p-3 pointer tweet-gray w-100">
      <img class="profile-img img-fluid rounded-circle" src="{{this.avatar}}" alt="">
