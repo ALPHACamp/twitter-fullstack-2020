@@ -16,22 +16,12 @@ socket.on('me', (id) => {
   console.log('myUserId', myUserId);
 });
 
-// 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
-socket.on('userJoined', (userObj) => {
-  const { usersInRoom } = userObj;
-  document.querySelector('#chatroom-user-count').innerHTML = usersInRoom.length;
+function updateUserList(users) {
+  // 總上線人數
+  document.querySelector('#chatroom-user-count').innerHTML = users.length;
 
-  // 使用者上線提示
-  const item = document.createElement('li');
-  item.innerHTML = ` ${userObj.user.name} 上線 `;
-  // item.setAttribute('class','mx-auto');
-  messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
-
-  // 傳送上線使用者資料
-  const userItem = document.createElement('div');
   let rawHTML = '';
-  usersInRoom.forEach((user) => {
+  users.forEach((user) => {
     rawHTML += `
     <div class="d-flex flex-row no-wrap align-items-star pb-1">
       <a class="profile-img mr-3" href="/users/${user.id}/tweets"> 
@@ -50,6 +40,21 @@ socket.on('userJoined', (userObj) => {
     </div>`;
   });
   chatUserList.innerHTML = rawHTML;
+}
+
+// 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
+socket.on('userJoined', (userObj) => {
+  const { usersInRoom } = userObj;
+
+  // 使用者上線提示
+  const item = document.createElement('li');
+  item.innerHTML = ` ${userObj.user.name} 上線 `;
+  // item.setAttribute('class','mx-auto');
+  messages.appendChild(item);
+  window.scrollTo(0, document.body.scrollHeight);
+
+  // 傳送上線使用者資料
+  updateUserList(usersInRoom);
 });
 
 // 如果是公開聊天室，會向後端要求 'join' 'public'這個房間
@@ -108,8 +113,9 @@ socket.on('newMessage', (message) => {
 
 // 使用者離線，顯示離線訊息，更新在線者人數
 socket.on('userLeft', (data) => {
-  // 在線者人數
+  // 更新在線者人數和在線使用者列表
   console.log(data.usersInRoom);
+  updateUserList(data.usersInRoom);
   // 顯示誰離開的離線訊息
   const item = document.createElement('li');
   item.innerHTML = ` ${data.user.name} 離線 `;
