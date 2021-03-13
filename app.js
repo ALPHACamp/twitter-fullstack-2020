@@ -330,11 +330,16 @@ io.on('connection', (socket) => {
       })
       .then((message) => {
         // When newMessage come in, emit notify the room with sender, and his/her message
-        const room = Array.from(socket.rooms)[1];
-        io.to(room).emit('newMessage', {
-          sender   : socket.request.user,
-          message  : message.dataValues.message,
-          createdAt: `${moment(message.dataValues.createdAt).format('a h:mm')}`,
+        socket.rooms.forEach((eaRoom) => {
+          if (eaRoom !== socket.id) {
+            console.log('message createdAt', `${moment(message.dataValues.createdAt).format('a h:mm')}`);
+
+            io.to(eaRoom).emit('newMessage', {
+              sender   : socket.request.user,
+              message  : message.dataValues.message,
+              createdAt: `${moment(message.dataValues.createdAt).format('a h:mm')}`,
+            });
+          }
         });
       })
       .catch((err) => console.error(err));
