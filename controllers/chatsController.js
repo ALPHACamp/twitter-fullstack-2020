@@ -13,11 +13,7 @@ const chatsController = {
     });
   },
   getPrivateChatPage: (req, res) => {
-    let userMessaging;
-    if (req.params.receiverId) {
-      req.app.set('privateMessageReceiverId', Number(req.params.receiverId));
-      userMessaging = Number(req.params.receiverId);
-    }
+    const userMessaging = (req.params.receiverId) ? Number(req.params.receiverId) : null;
 
     // TODO: get list of users the current user has sent PM to, assign it back as usersPMSent
     const usersPMSent = [
