@@ -22,19 +22,25 @@ socket.on('userJoined', (userObj) => {
   document.querySelector('#chatroom-user-count').innerHTML = usersInRoom.length;
 
   // 使用者上線提示
-  const item = document.createElement('li');
-  item.innerHTML = ` ${userObj.user.name} 上線 `;
-  // item.setAttribute('class','mx-auto');
-  messages.appendChild(item);
+  const userOnlineMessage = this.generateUserOnlineMessageHtml(userObj);
+  // 更新訊息列表
+  if (document.querySelectorAll('#chat-messages .message-item').length > 0) {
+    // 已經在聊天室裡面且有有過去訊息
+    messages.innerHTML = (`${messages.innerHTML}${userOnlineMessage}`);
+  } else {
+    // 新的使用者
+    // 建立過去訊息列表
+    let previousMessagesHtml = '';
+    userObj.previousMessages.forEach((message) => {
+      previousMessagesHtml += this.generateMessageHtml(message);
+    });
+    messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
+  }
   window.scrollTo(0, document.body.scrollHeight);
 
   // 傳送上線使用者資料
   const userItem = document.createElement('div');
   let rawHTML = '';
-
-  userObj.previousMessages.forEach((message) => {
-    this.appendMessage(message);
-  });
 
   usersInRoom.forEach((user) => {
     rawHTML += `
@@ -79,70 +85,46 @@ if (chatForm !== null) {
 
 // 傳送使用者聊天訊息
 socket.on('newMessage', (message) => {
-  const item = document.createElement('li');
-  // 如果傳送訊息是本人，會用這個對話格式 右側顯示+橘色泡泡 chat-bubble 加上 style=color:orange 僅做測試用
-  if (message.sender.id === myUserId) {
-    item.innerHTML = `
-    <div class="d-flex align-items-end">
-      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.sender.avatar}" alt="">
-        <div id="chat-bubble" class="item-desc pt-2 pb-1" style="color: orange">
-          ${message.message}
-        </div>
-       </div>
-      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
-    </div>
-  `;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-  // 如果傳送訊息是對方，會出現這個對話格式 左側顯示＋灰色泡
-  else {
-    item.innerHTML = `
-    <div class="d-flex align-items-end">
-      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.sender.avatar}" alt="">
-        <div id="chat-bubble" class="item-desc pt-2 pb-1">
-          ${message.message}
-        </div>
-       </div>
-      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
-    </div>
-  `;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-  }
+  messages.innerHTML += this.generateMessageHtml(message);
 });
 
 // 使用者離線，顯示離線訊息
 socket.on('userLeft', (userObj) => {
-  const item = document.createElement('li');
-  item.innerHTML = ` ${userObj.user.name} 離線 `;
-  // item.setAttribute('class','mx-auto');
-  messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
+  const userOfflineMessage = this.generateUserOfflineMessageHtml(userObj);
+  messages.innerHTML = (`${messages.innerHTML}${userOfflineMessage}`);
 });
 
-function appendMessage(message) {
-  const item = document.createElement('li');
-  if (message.Sender.id === myUserId) {
-    item.innerHTML = `
-    <div class="d-flex align-items-end">
-      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.Sender.avatar}" alt="">
-      <div id="chat-bubble" class="item-desc pt-2 pb-1" style="color: orange">
-        ${message.message}
+function generateMessageHtml(message) {
+  const sender = (message.Sender !== undefined) ? message.Sender : message.sender;
+  let messageHTML = '';
+  if (sender.id === myUserId) {
+    messageHTML = `
+    <li class="message-item">
+      <div class="d-flex align-items-end">
+        <img id="chat-user-avatar" class="rounded-circle mr-2" src="${sender.avatar}" alt="">
+        <div id="chat-bubble" class="item-desc pt-2 pb-1" style="color: orange">
+          ${message.message}
+        </div>
+        <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
       </div>
-      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
-    </div>
-  `;
-    messages.appendChild(item);
-  } else {
-    // 如果傳送訊息是對方，會出現這個對話格式 左側顯示＋灰色泡
-    item.innerHTML = `
+    </li>`;
+    return messageHTML;
+  }
+  messageHTML = `
+  <li class="message-item">
     <div class="d-flex align-items-end">
-      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.Sender.avatar}" alt="">
+      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${sender.avatar}" alt="">
       <div id="chat-bubble" class="item-desc pt-2 pb-1">${message.message}</div>
       <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
     </div>
-  `;
-    messages.appendChild(item);
-  }
+  </li>`;
+  return messageHTML;
+}
+
+function generateUserOnlineMessageHtml(userObj) {
+  return `<li> ${userObj.user.name} 上線 </li>`;
+}
+
+function generateUserOfflineMessageHtml(userObj) {
+  return `<li> ${userObj.user.name} 離線 </li>`;
 }
