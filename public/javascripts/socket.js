@@ -45,7 +45,7 @@ const generateUserList = (users) => {
           <a href="/users/${user.id}/tweets" class="text-dark" style="color: black; text-decoration:none">${user.name}</a>
         </div>
         <div class="item-username">
-          <a href="/users/${user.id}/tweets" class="text-dark">
+          <a href="/users/${user.id}/tweets" class="text-dark style="text-decoration:none"">
             <span class="username text-lightgrey">@${user.account}</span>
           </a>
         </div>

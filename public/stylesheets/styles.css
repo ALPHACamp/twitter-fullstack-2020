@@ -589,6 +589,6 @@ input#avatar, input#cover {
     text-align-last: end !important;
   }
 
-  #chat-user-list > div {
+  #chat-user-list > div, #private-chat-user-list > div{
     border-bottom: 2px solid rgba(0, 0, 0, .125);
   }

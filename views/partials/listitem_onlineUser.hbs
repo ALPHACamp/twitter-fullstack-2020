@@ -1,3 +1,25 @@
-<div id="chat-user-list" class="d-flex align-items-start flex-column" style="min-height: 100px;">
-  
-</div>
+{{#if (isdefined usersPMSent)}}
+  {{#each usersPMSent}}
+    <div id="private-chat-user-list" class="d-flex align-items-start flex-column" style="min-height: 100px;">  
+       <div class="d-flex flex-row no-wrap align-items-star w-100 p-3 pointer tweet-gray">
+         <a class="profile-img mr-3" href=""> 
+          <img class="img-fluid rounded-circle" src="{{this.avatar}}" alt=""> 
+         </a>
+         <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
+            <div class="name w-100 pr-2">
+              <a href="/users/${user.id}/tweets" class="text-dark" style="color: black; text-decoration:none">{{this.name}}</a>
+            </div>
+            <div class="item-username">
+              <a href="/users/${user.id}/tweets" class="text-dark" style="text-decoration:none">
+                <span class="username text-lightgrey">@{{this.account}}</span>
+              </a>
+            </div>
+          </div>
+       </div>
+     </div>
+  {{/each}}
+{{else}}
+  <div id="public-chat-user-list" class="d-flex align-items-start flex-column" style="min-height: 100px;">
+    {{!-- 從socket.js回傳公開聊天室使用者清單 --}}
+  </div>
+{{/if}}
