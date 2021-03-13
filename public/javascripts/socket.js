@@ -2,7 +2,8 @@ const socket = io();
 const messages = document.querySelector('#chat-messages');
 const chatForm = document.querySelector('#chat-form');
 const chatInput = document.querySelector('#chat-input');
-const chatUserList = document.querySelector('#chat-user-list');
+const publicChatUserList = document.querySelector('#public-chat-user-list');
+const privateChatUserList = document.querySelector('#private-chat-user-list');
 let myUserId;
 const generateUserOnlineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 上線</span> </li>`;
 const generateUserOfflineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 離線</span> </li>`;
@@ -55,7 +56,9 @@ const generateUserList = (users) => {
   return usersHtml;
 };
 const updateUserCount = (users) => {
-  document.querySelector('#chatroom-user-count').innerHTML = users.length;
+  if (document.querySelector('#chatroom-user-count') !== null) {
+    document.querySelector('#chatroom-user-count').innerHTML = users.length;
+  }
 };
 
 // Temporary only, demonstrate the login connection workability
@@ -77,7 +80,7 @@ socket.on('userJoined', (userObj) => {
   if (document.querySelectorAll('#chat-messages .message-item').length > 0) {
     // 已經在聊天室裡面且有有過去訊息
     messages.innerHTML = (`${messages.innerHTML}${generateUserOnlineMessage(userObj)}`);
-  } else {
+  } else if (userObj.previousMessages !== undefined) {
     // 新的使用者
     // 建立過去訊息列表
     let previousMessagesHtml = '';
@@ -86,16 +89,21 @@ socket.on('userJoined', (userObj) => {
     });
     messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
   }
-  updateUserCount(userObj.usersInRoom);
+  // 如果是在public chatroom
+  if (publicChatUserList !== null) {
+    updateUserCount(userObj.usersInRoom);
+    publicChatUserList.innerHTML += generateUserList(userObj.usersInRoom);
+  }
   window.scrollTo(0, document.body.scrollHeight);
-
-  chatUserList.innerHTML = generateUserList(userObj.usersInRoom);
+  messages.scrollIntoView(false);
 });
 
 // 如果是公開聊天室，會向後端要求 'join' 'public'這個房間
 if (window.location.pathname === '/chat/public') {
   socket.emit('join', 'public');
 } else if (window.location.pathname.includes('/chat/private')) {
+  console.log('myUserId for private room', myUserId);
+
   socket.emit('join', myUserId);
 }
 
@@ -122,7 +130,7 @@ socket.on('newMessage', (message) => {
 socket.on('userLeft', (data) => {
   // 更新在線者人數和在線使用者列表
   updateUserCount(data.usersInRoom);
-  chatUserList.innerHTML = generateUserList(data.usersInRoom);
+  publicChatUserList.innerHTML = generateUserList(data.usersInRoom);
 
   // 顯示誰離開的離線訊息
   messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(data)}`);
