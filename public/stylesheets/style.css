@@ -534,3 +534,121 @@
   height: 50px;
   border-radius: 100%;
 }
+
+/* chatroom */
+#chat-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 200px;
+  width: 900px;
+  height: 100%;
+  border: none;
+}
+
+.title {
+  color: #000000;
+  font-weight: bold;
+}
+
+.left-side {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 33%;
+  margin: 0px;
+  background-color: #FFFFFF;
+  border: 1px solid #E6ECF0;
+}
+
+.right-side {
+  position: relative;
+  top: 0px;
+  left: 105px;
+  width: 66%;
+  margin: 0px;
+  background-color: #FFFFFF;
+  border: 1px solid #E6ECF0;
+}
+
+.message-line {
+  border: 1px solid white;
+}
+
+.system-info {
+    display: block;
+    min-width: 150px;
+    width: auto;
+    margin: 3px auto;
+    background-color: #F5F8FA;
+    text-align: center;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.message-user-avatar {
+  position: relative;
+  top: 35%;
+  display:inline-block;
+  border-radius: 50%;
+  width: 65%;
+  height: 65%;
+}
+
+.left-message-box {
+  position: relative;
+  left: -18px;
+  width: 50%;
+  margin: 0 10px;
+  border-radius: 20px 20px 20px 0px;
+  background-color: #F5F8FA;
+}
+
+.left-message-box p, .right-message-box p {
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+
+.left-time-box {
+  position: relative;
+  top: 34%;
+  left: 49px;
+}
+
+.right-message-box {
+  position: relative;
+  left: 260px;
+  width: 50%;
+  height: 55px;
+  margin: 0 10px;
+  border-radius: 20px 20px 0px 20px;
+  background-color: #FF6600;
+  color: #FFF;
+}
+
+.right-time-box {
+  position: relative;
+  top: 34%;
+  left: 272px;
+}
+
+.input-message-zone {
+  width: 90%;
+  margin: 7px 0px 7px 10px;
+  border-radius: 20px;
+}
+
+.input-message-area {
+ border: none;
+ background-color: #F5F8FA;
+ border-radius: 20px;
+}
+
+.btn-send {
+  background:white;
+  border-radius: 18px;
+  width: 10%;
+  outline: none;
+}
