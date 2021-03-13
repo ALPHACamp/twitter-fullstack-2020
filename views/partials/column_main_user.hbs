@@ -12,10 +12,14 @@
       </div>
     {{else}}
       <div class="d-flex no-wrap justify-content-end align-items-center">
-        {{!-- 目前這兩個 buttons 沒有功用，先用 disabled 變淡 --}}
-        <button type="button" class="btn btn-outline btn-outline-orange rounded-circle mr-2 disabled" data-toggle="modal" data-target="">
-          <i class="far fa-envelope"></i>
-        </button>
+        {{!-- 目前通知 button 沒有功用，先用 disabled 變淡 --}}
+        {{!-- TODO: 私訊 icon 已加入連結，要修改 排版距離 --}}
+        <a class="nav-link" href="/chat/private/{{user.id}}">
+          <button type="button" class="btn btn-outline btn-outline-orange rounded-circle mr-2" data-toggle="modal" data-target="">
+            <i class="far fa-envelope"></i>
+          </button>
+        </a>
+      
         <button type="button" class="btn btn-outline btn-outline-orange rounded-circle mr-2 disabled">
           <i class="far fa-bell"></i>
         </button>   
