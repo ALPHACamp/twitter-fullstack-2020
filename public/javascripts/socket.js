@@ -4,26 +4,39 @@ const chatForm = document.querySelector('#chat-form');
 const chatInput = document.querySelector('#chat-input');
 const chatUserList = document.querySelector('#chat-user-list');
 let myUserId;
-
-// Temporary only, demonstrate the login connection workability
-socket.on('connect', () => {
-  console.log('socket.id', socket.id);
-});
-
-// 使用者本人登入 前端收到本人id。在後續動作可利用 id 判斷是否為本人
-socket.on('me', (id) => {
-  myUserId = id;
-  console.log('myUserId', myUserId);
-});
-
-function updateUserList(users) {
-  // 總上線人數
-  document.querySelector('#chatroom-user-count').innerHTML = users.length;
-
-  let rawHTML = '';
+const generateUserOnlineMessage = (userObj) => `<li> ${userObj.user.name} 上線 </li>`;
+const generateUserOfflineMessage = (userObj) => `<li> ${userObj.user.name} 離線 </li>`;
+const generateMessage = (message) => {
+  const sender = (message.Sender !== undefined) ? message.Sender : message.sender;
+  let messageHTML = '';
+  if (sender.id === myUserId) {
+    messageHTML = `
+    <li class="message-item">
+      <div class="d-flex align-items-end">
+        <img id="chat-user-avatar" class="rounded-circle mr-2" src="${sender.avatar}" alt="">
+        <div id="chat-bubble" class="item-desc pt-2 pb-1" style="color: orange">
+          ${message.message}
+        </div>
+        <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
+      </div>
+    </li>`;
+    return messageHTML;
+  }
+  messageHTML = `
+  <li class="message-item">
+    <div class="d-flex align-items-end">
+      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${sender.avatar}" alt="">
+      <div id="chat-bubble" class="item-desc pt-2 pb-1">${message.message}</div>
+      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
+    </div>
+  </li>`;
+  return messageHTML;
+};
+const generateUserList = (users) => {
+  let usersHtml = '';
   users.forEach((user) => {
-    rawHTML += `
-    <div class="d-flex flex-row no-wrap align-items-star pb-1">
+    usersHtml += `
+    <div class="d-flex flex-row no-wrap align-items-star w-100 p-3">
       <a class="profile-img mr-3" href="/users/${user.id}/tweets"> 
         <img class="img-fluid rounded-circle" src="${user.avatar}" alt=""> 
       </a>
@@ -39,22 +52,46 @@ function updateUserList(users) {
       </div>
     </div>`;
   });
-  chatUserList.innerHTML = rawHTML;
+  return usersHtml;
+};
+
+// Temporary only, demonstrate the login connection workability
+socket.on('connect', () => {
+  console.log('socket.id', socket.id);
+});
+
+// 使用者本人登入 前端收到本人id。在後續動作可利用 id 判斷是否為本人
+socket.on('me', (id) => {
+  myUserId = id;
+  console.log('myUserId', myUserId);
+});
+
+function updateUserList(users) {
+  // 總上線人數
+  document.querySelector('#chatroom-user-count').innerHTML = users.length;
 }
 
 // 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
 socket.on('userJoined', (userObj) => {
-  const { usersInRoom } = userObj;
-
   // 使用者上線提示
-  const item = document.createElement('li');
-  item.innerHTML = ` ${userObj.user.name} 上線 `;
-  // item.setAttribute('class','mx-auto');
-  messages.appendChild(item);
+  const userOnlineMessage = generateUserOnlineMessage(userObj);
+  // 更新訊息列表
+  if (document.querySelectorAll('#chat-messages .message-item').length > 0) {
+    // 已經在聊天室裡面且有有過去訊息
+    messages.innerHTML = (`${messages.innerHTML}${generateUserOnlineMessage(userObj)}`);
+  } else {
+    // 新的使用者
+    // 建立過去訊息列表
+    let previousMessagesHtml = '';
+    userObj.previousMessages.forEach((message) => {
+      previousMessagesHtml += generateMessage(message);
+    });
+    messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
+  }
+  updateUserList(usersInRoom);
   window.scrollTo(0, document.body.scrollHeight);
 
-  // 傳送上線使用者資料
-  updateUserList(usersInRoom);
+  chatUserList.innerHTML += generateUserList(userObj.usersInRoom);
 });
 
 // 如果是公開聊天室，會向後端要求 'join' 'public'這個房間
@@ -78,37 +115,7 @@ if (chatForm !== null) {
 
 // 傳送使用者聊天訊息
 socket.on('newMessage', (message) => {
-  const item = document.createElement('li');
-  // 如果傳送訊息是本人，會用這個對話格式 右側顯示+橘色泡泡 chat-bubble 加上 style=color:orange 僅做測試用
-  if (message.sender.id === myUserId) {
-    item.innerHTML = `
-    <div class="d-flex align-items-end">
-      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.sender.avatar}" alt="">
-        <div id="chat-bubble" class="item-desc pt-2 pb-1" style="color: orange">
-          ${message.message}
-        </div>
-       </div>
-      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
-    </div>
-  `;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-  // 如果傳送訊息是對方，會出現這個對話格式 左側顯示＋灰色泡
-  else {
-    item.innerHTML = `
-    <div class="d-flex align-items-end">
-      <img id="chat-user-avatar" class="rounded-circle mr-2" src="${message.sender.avatar}" alt="">
-        <div id="chat-bubble" class="item-desc pt-2 pb-1">
-          ${message.message}
-        </div>
-       </div>
-      <div id="chat-createdAt" class="ml-5">${message.createdAt}</div>
-    </div>
-  `;
-    messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
-  }
+  messages.innerHTML += generateMessage(message);
 });
 
 // 使用者離線，顯示離線訊息，更新在線者人數
@@ -117,9 +124,5 @@ socket.on('userLeft', (data) => {
   console.log(data.usersInRoom);
   updateUserList(data.usersInRoom);
   // 顯示誰離開的離線訊息
-  const item = document.createElement('li');
-  item.innerHTML = ` ${data.user.name} 離線 `;
-  // item.setAttribute('class','mx-auto');
-  messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
+  messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(userObj)}`);
 });
