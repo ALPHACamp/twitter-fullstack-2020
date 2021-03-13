@@ -3,7 +3,8 @@
   {{#each usersInteracted}}
   {{!-- 要補上每條私訊的連結 --}}
    <div class="d-flex flex-row no-wrap align-items-star p-3 pointer tweet-gray w-100">
-     <img class="profile-img img-fluid rounded-circle" src="{{this.avatar}}" alt="">
+  <a class="profile-img mr-3" href="/chat/private/{{this.id}}">
+     <img class="profile-img img-fluid rounded-circle" src="{{this.avatar}}" alt=""></a>
      <div class="private-message-content d-flex flex-column pl-3 w-100">
        <div class="d-flex flex-row w-100 align-items-center">
          <div class="sender-name name pr-2">

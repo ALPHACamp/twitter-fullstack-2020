@@ -17,9 +17,8 @@ const chatsController = {
     });
   },
   getPrivateChatPage: (req, res) => {
-    const userMessaging = (req.params.receiverId) ? Number(req.params.receiverId) : null;
-    const privateMessageSenderId = getUser(req);
-
+    const userMessaging = req.params.receiverId ? Number(req.params.receiverId) : null;
+    const privateMessageSender = getUser(req);
     Promise.all([
       Message.findAll({
         raw  : true,
@@ -27,10 +26,10 @@ const chatsController = {
         where: {
           [Op.or]: [
             {
-              senderId: privateMessageSenderId.id,
+              senderId: privateMessageSender.id,
             },
             {
-              receiverId: privateMessageSenderId.id,
+              receiverId: privateMessageSender.id,
             },
           ],
           isPublic: 0,
@@ -52,7 +51,7 @@ const chatsController = {
       // Modify interacted user list
       const userList = [];
       interactionMessages.forEach((message) => {
-        if (message.Sender.id === Number(privateMessageSenderId)) {
+        if (message.Sender.id === Number(privateMessageSender.id)) {
           const receiverObj = message.Receiver;
           Object.assign(receiverObj, {
             lastMessage: message.message,
@@ -77,16 +76,27 @@ const chatsController = {
         createdAt: `${moment(user.createdAt).format('a h:mm')}`,
       }));
 
-      return res.render('chatroom', {
-        privateMessagePage: true,
-        title             : {
-          user_name   : 'pacific rim',
-          user_account: 'pacific rim',
-          text        : '私人訊息',
-        },
-        usersInteracted: interactedUserList,
-        userMessaging,
-      });
+      // 私人聊天室首頁目前與和對方聊天室頁面共用 getPrivateChatPage controller
+      // 先寫以下的條件來找到receiver，因應不同情況所需要的東西。 ex. 標題切換，不同對象用戶名和帳號會跟著更改
+      if (userMessaging) {
+        User.findByPk(req.params.receiverId).then((receiver) => res.render('chatroom', {
+          privateMessagePage: true,
+          title             : {
+            user_name   : receiver.dataValues.name,
+            user_account: receiver.dataValues.account,
+          },
+          usersInteracted: interactedUserList,
+          userMessaging,
+        }));
+      } else {
+        return res.render('chatroom', {
+          title: {
+            text: '私人聊天室',
+          },
+          usersInteracted: interactedUserList,
+          userMessaging,
+        });
+      }
     });
   },
 };
