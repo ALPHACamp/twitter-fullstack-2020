@@ -124,6 +124,7 @@ if (chatForm !== null) {
 // 傳送使用者聊天訊息
 socket.on('newMessage', (message) => {
   messages.innerHTML += generateMessage(message);
+  messages.scrollIntoView(false);
 });
 
 // 使用者離線，顯示離線訊息，更新在線者人數
