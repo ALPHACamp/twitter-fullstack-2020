@@ -3,7 +3,7 @@ const messages = document.querySelector('#chat-messages');
 const chatForm = document.querySelector('#chat-form');
 const chatInput = document.querySelector('#chat-input');
 const publicChatUserList = document.querySelector('#public-chat-user-list');
-const privateChatUserList = document.querySelector('#private-chat-user-list');
+const privateChatUserList = document.querySelector('#private-message-list');
 let myUserId;
 const generateUserOnlineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 上線</span> </li>`;
 const generateUserOfflineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 離線</span> </li>`;

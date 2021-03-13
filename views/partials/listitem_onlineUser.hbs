@@ -1,23 +1,26 @@
 {{#if (isdefined usersPMSent)}}
+<div id="private-message-list" class="d-flex align-items-start flex-column w-100">
   {{#each usersPMSent}}
-    <div id="private-chat-user-list" class="d-flex align-items-start flex-column" style="min-height: 100px;">  
-       <div class="d-flex flex-row no-wrap align-items-star w-100 p-3 pointer tweet-gray">
-         <a class="profile-img mr-3" href=""> 
-          <img class="img-fluid rounded-circle" src="{{this.avatar}}" alt=""> 
-         </a>
-         <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
-            <div class="name w-100 pr-2">
-              <a href="/users/${user.id}/tweets" class="text-dark" style="color: black; text-decoration:none">{{this.name}}</a>
-            </div>
-            <div class="item-username">
-              <a href="/users/${user.id}/tweets" class="text-dark" style="text-decoration:none">
-                <span class="username text-lightgrey">@{{this.account}}</span>
-              </a>
-            </div>
-          </div>
+  {{!-- 要補上每條私訊的連結 --}}
+   <div class="d-flex flex-row no-wrap align-items-star p-3 pointer tweet-gray w-100">
+     <img class="profile-img img-fluid rounded-circle" src="{{this.avatar}}" alt="">
+     <div class="private-message-content d-flex flex-column pl-3">
+       <div class="d-flex flex-row w-100 align-items-center">
+         <div class="sender-name name pr-2">
+            <span>{{this.name}}</span>
+         </div>
+         <div class="sender-account text-lightgrey">
+            <span class="username">@{{this.account}}</span>
+         </div>
+         <div class="message-posttime text-lightgrey ml-auto">
+            <span class="posttime">{{moment this.createdAt}}</span>
+         </div>
        </div>
+       <div class="message-text text-lightgrey py-1 w-100">1231212313212313123123123....</div>
      </div>
+   </div>
   {{/each}}
+  </div>
 {{else}}
   <div id="public-chat-user-list" class="d-flex align-items-start flex-column" style="min-height: 100px;">
     {{!-- 從socket.js回傳公開聊天室使用者清單 --}}
