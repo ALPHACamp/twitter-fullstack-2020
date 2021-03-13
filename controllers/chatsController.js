@@ -20,6 +20,7 @@ const chatsController = {
     const userMessaging = req.params.receiverId ? Number(req.params.receiverId) : null;
     const privateMessageSender = getUser(req);
     Promise.all([
+      User.findByPk(req.params.receiverId),
       Message.findAll({
         raw  : true,
         nest : true,
@@ -47,7 +48,7 @@ const chatsController = {
         ],
       }),
     ])
-    .then(([interactionMessages]) => {
+    .then(([receiver, interactionMessages]) => {
       // Modify interacted user list
       const userList = [];
       interactionMessages.forEach((message) => {
@@ -79,7 +80,7 @@ const chatsController = {
       // 私人聊天室首頁目前與和對方聊天室頁面共用 getPrivateChatPage controller
       // 先寫以下的條件來找到receiver，因應不同情況所需要的東西。 ex. 標題切換，不同對象用戶名和帳號會跟著更改
       if (userMessaging) {
-        User.findByPk(req.params.receiverId).then((receiver) => res.render('chatroom', {
+        return res.render('chatroom', {
           privateMessagePage: true,
           title             : {
             user_name   : receiver.dataValues.name,
@@ -87,16 +88,15 @@ const chatsController = {
           },
           usersInteracted: interactedUserList,
           userMessaging,
-        }));
-      } else {
-        return res.render('chatroom', {
-          title: {
-            text: '私人聊天室',
-          },
-          usersInteracted: interactedUserList,
-          userMessaging,
         });
       }
+      return res.render('chatroom', {
+        title: {
+          text: '私人聊天室',
+        },
+        usersInteracted: interactedUserList,
+        userMessaging,
+      });
     });
   },
 };
