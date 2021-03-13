@@ -3,6 +3,7 @@ const messages = document.querySelector('#chat-messages');
 const chatForm = document.querySelector('#chat-form');
 const chatInput = document.querySelector('#chat-input');
 const chatUserList = document.querySelector('#chat-user-list');
+let myUserId;
 const generateUserOnlineMessage = (userObj) => `<li> ${userObj.user.name} 上線 </li>`;
 const generateUserOfflineMessage = (userObj) => `<li> ${userObj.user.name} 離線 </li>`;
 const generateMessage = (message) => {
@@ -31,6 +32,28 @@ const generateMessage = (message) => {
   </li>`;
   return messageHTML;
 };
+const generateUserList = (users) => {
+  let usersHtml = '';
+  users.forEach((user) => {
+    usersHtml += `
+    <div class="d-flex flex-row no-wrap align-items-star w-100 p-3">
+      <a class="profile-img mr-3" href="/users/${user.id}/tweets"> 
+        <img class="img-fluid rounded-circle" src="${user.avatar}" alt=""> 
+      </a>
+      <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
+        <div class="name w-100 pr-2">
+          <a href="/users/${user.id}/tweets class="text-dark text-decoration-none">${user.name}</a>
+        </div>
+        <div class="item-username">
+          <a href="/chatroom/${user.id}" class="text-dark text-decoration-none">
+            <span class="username text-lightgrey">@${user.account}</span>
+          </a>
+        </div>
+      </div>
+    </div>`;
+  });
+  return usersHtml;
+};
 
 // Temporary only, demonstrate the login connection workability
 socket.on('connect', () => {
@@ -38,7 +61,6 @@ socket.on('connect', () => {
 });
 
 // 使用者本人登入 前端收到本人id。在後續動作可利用 id 判斷是否為本人
-let myUserId;
 socket.on('me', (id) => {
   myUserId = id;
   console.log('myUserId', myUserId);
@@ -66,30 +88,7 @@ socket.on('userJoined', (userObj) => {
   }
   window.scrollTo(0, document.body.scrollHeight);
 
-  // 傳送上線使用者資料
-  const userItem = document.createElement('div');
-  let rawHTML = '';
-
-  usersInRoom.forEach((user) => {
-    rawHTML += `
-    <div class="d-flex flex-row no-wrap align-items-star pb-1">
-      <a class="profile-img mr-3" href="/users/${user.id}/tweets"> 
-        <img class="img-fluid rounded-circle" src="${user.avatar}" alt=""> 
-      </a>
-      <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
-        <div class="name w-100 pr-2">
-          <a href="/users/${user.id}/tweets class="text-dark text-decoration-none">${user.name}</a>
-        </div>
-        <div class="item-username">
-          <a href="/chatroom/${user.id}" class="text-dark text-decoration-none">
-            <span class="username text-lightgrey">@${user.account}</span>
-          </a>
-        </div>
-      </div>
-    </div>`;
-  });
-  userItem.innerHTML = rawHTML;
-  chatUserList.appendChild(userItem);
+  chatUserList.innerHTML += generateUserList(userObj.usersInRoom);
 });
 
 // 如果是公開聊天室，會向後端要求 'join' 'public'這個房間
