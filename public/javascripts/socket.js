@@ -30,8 +30,8 @@ const generateMessage = (message) => {
   return messageHTML;
 };
 const generateUserList = (users) => {
-  // 更新 user count
-  document.querySelector('#chatroom-user-count').innerHTML = users.length;
+  // // 更新 user count 外面有個函式 updateUserCount 看以後要不要放進來
+  // document.querySelector('#chatroom-user-count').innerHTML = users.length;
 
   let usersHtml = '';
   users.forEach((user) => {
@@ -123,5 +123,5 @@ socket.on('userLeft', (data) => {
   chatUserList.innerHTML = generateUserList(data.usersInRoom);
 
   // 顯示誰離開的離線訊息
-  messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(userObj)}`);
+  messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(data)}`);
 });
