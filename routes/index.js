@@ -7,7 +7,7 @@ const users = require('./modules/users');
 const tweets = require('./modules/tweets');
 const followships = require('./modules/followships');
 const chatroom = require('./modules/chatroom');
-
+const subscriptions = require('./modules/subscriptions');
 const apis = require('./modules/apis');
 
 // For Authentication and Admin Login
@@ -41,6 +41,7 @@ router.use('/', users);
 router.use('/followships/', authenticationHelper.authenticatedNonAdmin, followships);
 router.use('/tweets/', authenticationHelper.authenticatedNonAdmin, tweets);
 router.use('/chat/', authenticationHelper.authenticatedNonAdmin, chatroom);
+router.use('/subscriptions/', authenticationHelper.authenticatedNonAdmin, subscriptions);
 
 // Api functions
 router.use('/api/', apis);

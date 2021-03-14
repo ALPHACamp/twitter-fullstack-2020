@@ -19,10 +19,20 @@
             <i class="far fa-envelope"></i>
           </button>
         </a>
-      
-        <button type="button" class="btn btn-outline btn-outline-orange rounded-circle mr-2 disabled">
+        {{!-- //加訂閱，按下小鈴噹 --}}
+        {{!-- {{#if this.isSubscribed}} --}}
+          {{!-- <form action="/subscriptions/{{this.id}}?_method=DELETE" method="POST">
+            <button type="button" class="btn btn-outline btn-outline-orange rounded-circle mr-2 disabled">
+              <i class="far fa-bell"></i>
+            </button>
+          </form> --}}
+        {{!-- {{else}} --}}
+        <form action="/subscriptions/{{user.id}}" method="POST">
+          <button type="submit" class="btn btn-outline btn-outline-orange rounded-circle mr-2">
           <i class="far fa-bell"></i>
         </button>   
+       </form>
+      {{!-- {{/if}} --}}
       {{#if user.isFollowed}}
         <form action="/followships/{{user.id}}?_method=DELETE" method="POST" class="">
           <button type="submit" class="btn btn-sm btn-orange rounded-pill mr-2 btn-following">正在跟隨</button>
