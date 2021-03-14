@@ -38,20 +38,18 @@ const generateUserList = (users) => {
   let usersHtml = '';
   users.forEach((user) => {
     usersHtml += `
-    <div class="d-flex flex-row no-wrap align-items-star w-100 p-3 pointer tweet-gray">
-      <a class="profile-img mr-3" href=""> 
-        <img class="img-fluid rounded-circle" src="${user.avatar}" alt=""> 
+    <div class="d-flex flex-row no-wrap w-100 p-3 pointer tweet-gray">
+      <a class="profile-img mr-3 d-flex flex-row no-wrap w-100 text-dark text-decoration-none" href="/chat/private/{{user.id}}"> 
+        <img class="img-fluid rounded-circle mr-2" src="${user.avatar}" alt=""> 
+        <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
+          <div class="name w-100 pr-2">
+            ${user.name}
+          </div>
+          <div class="item-username">
+              <span class="username text-lightgrey">@${user.account}</span>
+          </div>
+        </div>
       </a>
-      <div class="item-header d-flex d-column no-wrap justify-content-start align-items-center">
-        <div class="name w-100 pr-2">
-          <a href="/users/${user.id}/tweets" class="text-dark" style="color: black; text-decoration:none">${user.name}</a>
-        </div>
-        <div class="item-username">
-          <a href="/users/${user.id}/tweets" class="text-dark style="text-decoration:none"">
-            <span class="username text-lightgrey">@${user.account}</span>
-          </a>
-        </div>
-      </div>
     </div>`;
   });
   return usersHtml;
