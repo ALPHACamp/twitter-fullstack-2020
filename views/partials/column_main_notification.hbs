@@ -1,7 +1,8 @@
-<div id="tweet-info" class="align-items-start p-3">
+{{#if notificationsArray}}
+<div id="tweet-info" class="d-flex align-items-start flex-column w-100 pl-4">
 
     {{!-- template --}}
-    <div class="d-flex flex-column align-items-star pointer tweet-gray w-100 p-2">
+    {{!-- <div class="d-flex flex-column align-items-star pointer tweet-gray w-100 p-2">
         <img class="profile-img img-fluid rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKKn3H0YsTzAF4z9mHZzsO4eu2Xpue00uEqg&usqp=CAU" alt="" style="max-height: 70px;">
           <div class="tweet-notify">
               <strong>{{this.data.User.name}}user11 有新的推文通知</strong>
@@ -16,17 +17,19 @@
         <div class="follow-notify">
           <strong>{{this.data.User.name}}user11 開始追蹤你</strong>
         </div>
-    </div>
+    </div> --}}
     {{!-- template --}}
 
-  <div class="d-flex align-items-start flex-column w-100">
+  {{!-- <div class="d-flex align-items-start flex-column w-100"> --}}
     {{#each notificationsArray}}  
-    <div class="d-flex flex-row align-items-center pointer tweet-gray w-100 p-2">
-        <img class="img-fluid rounded-circle mr-3" src="{{this.data.User.avatar}}" alt="" style="max-height: 70px;">
+    <div class="d-flex flex-column align-items-star pointer tweet-gray w-100 p-2">
+      <div class="pt-2">
+        <img class="profile-img img-fluid rounded-circle" src="{{this.user.avatar}}" alt="" style="max-height: 70px;">
+      </div>
             {{#ifEqual this.type "Tweet"}}
                 {{!-- <a href="/users/{{}}/tweets"> --}}
               <div class="tweet-notify">
-                  <strong>{{this.data.User.name}} 有新的推文通知</strong>
+                  <strong>{{this.user.name}} 有新的推文通知</strong>
                 <div class="item-desc">
                   {{this.data.description}}
                 </div>
@@ -34,7 +37,7 @@
             {{/ifEqual}}
             {{#ifEqual this.type "Reply"}}
               <div class="reply-notify">
-                <strong>{{this.data.User.name}} 有新的回覆</strong>
+                <strong>{{this.user.name}} 有新的回覆</strong>
                 <div class="item-desc">
                 {{this.data.description}}
                 </div>
@@ -43,16 +46,19 @@
             {{#ifEqual this.type "Followship"}}
               
               <div class="follow-notify">
-                <strong>{{this.data.User.name}} 開始追蹤你</strong>
+                <strong>{{this.user.name}} 開始追蹤你</strong>
               </div>
             {{/ifEqual}}
               
             {{#ifEqual this.type "Like"}}
               <div class="like-notify">
-                <strong>{{this.data.User.name}} 喜歡你的貼文</strong>
+                <strong>{{this.user.name}} 喜歡你的貼文</strong>
               </div>
             {{/ifEqual}}
       </div>
     {{/each}}
-    </div>
-  </div>
+    {{!-- </div> --}}
+</div>
+{{else}}
+  {{>listitem_noitem}}
+{{/if}}
