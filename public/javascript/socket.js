@@ -40,23 +40,23 @@ socket.on('message', data => {
 socket.on('onlineUsers', data => {
   onlineUsers.push(data)
   let userList = ''
-  for (let i = 0; i < data.length; i++) {
+  data.forEach(user => {
     userList += `
            <li class="list-group-item">
               <a href="/users/{{this.User.id}}/tweets">
                 <div class="row">
                   <div class="col-2 mr-4">
-                    <img src="${data[i].avatar}" alt="user avatar"
+                    <img src="${user.avatar}" alt="user avatar"
                       class="user-avatar">
                   </div>
                   <div class="col-8 d-flex align-items-center">
-                    <span class="chat-user-name"><strong>${data[i].name}</strong></span>
-                    <span class="chat-user-account">@${data[i].account}</span>
+                    <span class="chat-user-name"><strong>${user.name}</strong></span>
+                    <span class="chat-user-account">@${user.account}</span>
                   </div>
                 </div>
               </a>
             </li>
-           `
-  }
+            `
+  })
   onlineUsersList.innerHTML = userList
 })
