@@ -8,10 +8,8 @@
     </li>
     {{!-- 通知鈴鐺(小紅點) --}}
     <li class="notify-li nav-item">
-      <a class="notice-bell nav-link" href="/users/notification"> <i class="far fa-bell pr-3"></i>通知</a>
-      {{#if (isdefined notificationsArray )}}
-      <span id="bell-notify-id" class="badge badge-notify bell-notify">&nbsp;</span>
-      {{/if}}
+      <a class="notice-bell nav-link" href="/users/notification"> <i class="far fa-bell pr-3 position-relative">
+      <span id="bell-notify-id" class="badge badge-notify bell-notify">&nbsp;</span></i>通知</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="/chat/public"><i class="far fa-envelope pr-3"></i>公開聊天室</a>

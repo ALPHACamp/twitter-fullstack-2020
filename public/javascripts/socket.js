@@ -167,6 +167,14 @@ socket.on('unreadMessageNotification', (count) => {
   privateMessageCount.innerText = count.messages.length;
 });
 
-// socket.emit('checkUnreadNotification', () => {
-//   console.log('check here');
-// });
+socket.emit('checkUnreadNotification', () => {
+  console.log('check here');
+});
+
+socket.on('currentUnreadNotification', (count) => {
+  if ( count > 0 ) {
+    subcribeNotification.innerHTML = `&nbsp;`
+  } else {
+    subcribeNotification.innerHTML = ""
+  }
+})
