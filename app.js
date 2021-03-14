@@ -65,29 +65,26 @@ io.on('connection', socket => {
   // online user list
   onlineUsers.push({ id, name, account, avatar })
   const set = new Set()
-  onlineUsers = onlineUsers.filter((item) =>
+  onlineUsers = onlineUsers.filter(item =>
     !set.has(item.id) ? set.add(item.id) : false
   )
-  const user = onlineUsers.find((user) => user.id === id)
+  // get current user
+  const user = onlineUsers.find(user => user.id === id)
   user.current = true
 
   // online users
-  io.emit('onlineUser', onlineUsers)
+  io.emit('onlineUsers', onlineUsers)
 
-  // Welcome current user
-  socket.emit('message', message(' ', 'Welcome to chatroom!'))
-
-  // broadcast when user connects
-  socket.broadcast.emit('message', message(user.name, ' has joined the chat'))
+  // server message
+  socket.emit('message', `Hello, ${user.name}`)
+  socket.broadcast.emit('message', `${user.name} join this chatroom`)
 
   // Runs when client disconnects
   socket.on('disconnect', () => {
-    // 有人離線, 扣人數
-    onlineCount = (onlineCount < 0) ? 0 : onlineCount -= 1
-    io.emit('online', onlineCount)
-    io.emit('onlineUser', onlineUsers)
-
-    io.emit('message', message(user.name, ' has left the chat'))
+    onlineUsers = onlineUsers.filter(user => user.id !== id)
+    io.emit('onlineUsers', onlineUsers)
+    socket.broadcast.emit('typing', { isExist: false })
+    socket.broadcast.emit('message', `${user.name} left this chatroom`)
   })
 
   socket.on('chat-message', data => {

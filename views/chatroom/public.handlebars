@@ -14,20 +14,22 @@
           <li class="list-group-item">
             <span>佔位用</strong></span>
           </li>
-          <li class="list-group-item">
-            <a href="/users/{{this.User.id}}/tweets">
-              <div class="row">
-                <div class="col-2 mr-4">
-                  <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
-                    class="user-avatar">
+          <div id="online-user-list">
+            {{!-- <li class="list-group-item">
+              <a href="/users/{{this.User.id}}/tweets">
+                <div class="row">
+                  <div class="col-2 mr-4">
+                    <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
+                      class="user-avatar">
+                  </div>
+                  <div class="col-8 d-flex align-items-center">
+                    <span class="chat-user-name"><strong>Apple</strong></span>
+                    <span class="chat-user-account">&ensp;@123</span>
+                  </div>
                 </div>
-                <div class="col-8 d-flex align-items-center">
-                  <span class="chat-user-name"><strong>Apple</strong></span>
-                  <span class="chat-user-account">&ensp;@123</span>
-                </div>
-              </div>
-            </a>
-          </li>
+              </a>
+            </li> --}}
+          </div>
         </ul>
       </div>
       <div class="right-side">
@@ -38,14 +40,7 @@
           <li class="list-group-item">
             <span>佔位用</span>
           </li>
-          <li class="system-info">
-            <span>Alan&ensp;上線</span>
-          </li>
-          <li class="system-info">
-            <span>Shun&ensp;上線</span>
-          </li>
-          <li class="system-info">
-            <span>Jeff&ensp;上線</span>
+          <li id="output" class="system-info">
           </li>
           <li class="list-group-item message-line">
             <div class="d-flex">
