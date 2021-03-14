@@ -23,10 +23,10 @@
   <div class="list-item d-flex align-items-start flex-column w-100">
     {{#each notificationsArray}}  
     <div class="list-item pointe tweet-gray w-100 pl-4">
+            {{#ifEqual this.type "Tweet"}}
       <div class="pt-2">
         <img class="profile-img img-fluid rounded-circle" src="{{this.user.avatar}}" alt="" style="max-height: 70px;">
       </div>
-            {{#ifEqual this.type "Tweet"}}
             <a href="/tweets/{{this.data.id}}/replies" class="text-dark text-decoration-none">
               <div class="tweet-notify py-2">
                   <strong>{{this.user.name}} 有新的推文通知</strong>
@@ -37,6 +37,9 @@
             </a>
             {{/ifEqual}}
             {{#ifEqual this.type "Reply"}}
+      <div class="pt-2">
+        <img class="profile-img img-fluid rounded-circle" src="{{this.user.avatar}}" alt="" style="max-height: 70px;">
+      </div>
               <div class="reply-notify py-2">
                 <strong>{{this.user.name}} 有新的回覆</strong>
                 <div class="item-desc">
@@ -45,12 +48,18 @@
               </div>
             {{/ifEqual}}
             {{#ifEqual this.type "Followship"}}
+      <div class="pt-2">
+        <img class="profile-img img-fluid rounded-circle" src="{{this.data.avatar}}" alt="" style="max-height: 70px;">
+      </div>
               <div class="follow-notify py-2">
-                <strong>{{this.user.name}} 開始追蹤你</strong>
+                <strong>{{this.data.name}} 開始追蹤你</strong>
               </div>
             {{/ifEqual}}
               
             {{#ifEqual this.type "Like"}}
+      <div class="pt-2">
+        <img class="profile-img img-fluid rounded-circle" src="{{this.user.avatar}}" alt="" style="max-height: 70px;">
+      </div>
               <div class="like-notify py-2">
                 <strong>{{this.user.name}} 喜歡你的貼文</strong>
               </div>
