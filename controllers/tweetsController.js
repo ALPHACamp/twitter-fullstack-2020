@@ -9,6 +9,7 @@ const {
   Tweet, Reply, Like, User,
 } = db;
 const helpers = require('../_helpers');
+const { getAndNotifyFollowingUpdate } = require('../middleware/notifyHelper');
 
 const tweetsController = {
   getIndexPage: (req, res) => {
@@ -61,6 +62,7 @@ const tweetsController = {
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
+      getAndNotifyFollowingUpdate(helpers.getUser(req).id, req);
       req.flash('success_messages', '推文成功');
       res.redirect('/tweets');
     });

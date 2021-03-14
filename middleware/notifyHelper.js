@@ -1,7 +1,9 @@
 const helpers = require('../_helpers');
 const db = require('../models');
 
-const { Subscription, Tweet } = db;
+const {
+  Subscription, Tweet, Notification, User,
+} = db;
 
 module.exports = {
   getAndNotifyFollowingUpdate: (userUpdatedId = null, req, res, cb) => {
@@ -10,37 +12,54 @@ module.exports = {
     // - 目前暫定更新都是 tweet 而已
     (async () => {
       if (userUpdatedId !== null) {
-        // 抓最新的tweet
-        const latestTweet = await Tweet.findOne({
-          where: { UserId: userUpdatedId },
-          order: [['createdAt', 'DESC']],
-        });
+        // find latest tweet + subscribers
+        const [latestTweet, subscribers] = await Promise.all([
+          Tweet.findOne({
+            raw    : true,
+            nest   : true,
+            where  : { UserId: userUpdatedId },
+            include: [User],
+            order  : [['createdAt', 'DESC']],
+          }),
+          Subscription.findAll({
+            raw  : true,
+            nest : true,
+            where: {
+              subscribingId: userUpdatedId,
+            },
+          }),
+        ]);
+        const latestTweetJsonStr = JSON.stringify(latestTweet);
 
-        // 抓所有在線上的user
-        await req.app.io.sockets.sockets.forEach(async (eaSocket) => {
-          if (eaSocket.request.user !== undefined) {
-            const socketUserId = eaSocket.request.user.id;
+        const notificationUserObj = latestTweet.User;
+        delete notificationUserObj.password;
 
-            // 如果是某個用戶更新了tweet要推送給上線的用戶
-            if (userUpdatedId !== null) {
-              // 看看 user 有沒有在追蹤這個更新的用戶
-              const isSubscribed = await Subscription.findAll({
-                where: {
-                  subscriberId : socketUserId,
-                  subscribingId: userUpdatedId,
-                },
-              });
+        // Create Notification records
+        const notificationCreatePromiseArr = subscribers.map((subscriber) => new Promise(
+          (resolve, reject) => {
+            Notification.create({
+              userId: subscriber.subscriberId,
+              type  : 'Tweet',
+              data  : latestTweetJsonStr,
+            }).then((notification) => resolve(notification));
+          },
+        ));
 
-              // 這個上線的用戶有訂閱這個更新的用戶
-              if (isSubscribed.length > 0) {
-                req.app.io.to(eaSocket.id).emit('unreadNewTweetNotification', { tweet: latestTweet });
+        await Promise.all(notificationCreatePromiseArr)
+        .then((data) => {
+          // 抓所有在線上的user
+          req.app.io.sockets.sockets.forEach((eaSocket) => {
+            if (eaSocket.request.user !== undefined) {
+              const socketUserId = eaSocket.request.user.id;
+              if (subscribers.find((subscriber) => subscriber.subscriberId === socketUserId)) {
+                // 推播給已上線用戶，告知有更新
+                req.app.io.to(eaSocket.id).emit('unreadNotification', { type: 'Tweet', user: notificationUserObj, data: latestTweet });
               }
             }
-          }
-        });
+          });
+        })
+        .catch((err) => console.log(err));
       }
-      // TODO: 前面沒有做return是因為這裡後面可以 return 你抓到的更新列表傳回給user，這個是給 res.render的情況下使用的
-      // return cb();
     })();
   },
 };
