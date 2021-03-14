@@ -456,7 +456,6 @@ const usersController = {
           createdAt: notification.createdAt,
           updatedAt: notification.updatedAt,
         }));
-        console.log('notificationsObj', notificationsObj);
 
         res.render('index', {
           notification: true,

@@ -58,7 +58,9 @@ io.use((socket, next) => {
 
 const db = require('./models');
 
-const { Message, User, ReadMessage } = db;
+const {
+  Message, User, ReadMessage, Notification,
+} = db;
 
 const getAndNotifyAllUnread = () => {
   io.sockets.sockets.forEach((eaSocket) => {
@@ -331,6 +333,19 @@ io.on('connection', (socket) => {
     // socket.rooms.size === 0
     console.log('disconnect user', socket.request.user.id);
     console.log('disconnect rooms', socket.rooms);
+  });
+
+  socket.on('checkUnreadNotification', () => {
+    // user left delete user
+    const userId = socket.request.user.id;
+    Notification.findAll({
+      where: {
+        isNotified: 0,
+      },
+    })
+    .then((notifications) => {
+      socket.emit('currentUnreadNotification', notifications.length);
+    });
   });
 
   socket.on('sendMessage', (payload) => {
