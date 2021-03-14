@@ -539,37 +539,69 @@
 #chat-container {
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: space-around;
   margin-left: 200px;
-  width: 900px;
-  height: 100%;
+  width: 1000px;
+  height: 840px;
   border: none;
-}
-
-.title {
-  color: #000000;
-  font-weight: bold;
 }
 
 .left-side {
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 33%;
+  width: 330px;
+  height: 840px;
   margin: 0px;
+  overflow-x: auto;
   background-color: #FFFFFF;
   border: 1px solid #E6ECF0;
+}
+
+.left-side-title {
+  position: fixed;
+  z-index: 1;
+  top: 48.5px;
+  width: 330px;
+  color: #000000;
+  font-weight: bold;
+  border-right: none;
+}
+
+.user-avatar {
+  border-radius: 50%;
+  height:50px;
+  width: 50px;
+}
+
+.chat-user-name {
+  color: black;
+}
+
+.chat-user-account {
+  color: #657786;
 }
 
 .right-side {
   position: relative;
   top: 0px;
-  left: 105px;
-  width: 66%;
+  left: 200px;
+  width: 660px;
+  height: 840px;
   margin: 0px;
+  overflow-x: auto;
   background-color: #FFFFFF;
   border: 1px solid #E6ECF0;
+}
+
+.right-side-title {
+  position: fixed;
+  z-index: 1;
+  top: 48.8px;
+  width: 660px;
+  color: #000000;
+  font-weight: bold;
+  border-right: none;
 }
 
 .message-line {
@@ -615,11 +647,12 @@
   position: relative;
   top: 34%;
   left: 49px;
+  color: #657786;
 }
 
 .right-message-box {
   position: relative;
-  left: 260px;
+  left: 49%;
   width: 50%;
   height: 55px;
   margin: 0 10px;
@@ -631,24 +664,33 @@
 .right-time-box {
   position: relative;
   top: 34%;
-  left: 272px;
+  left: 91%;
+  color: #657786;
 }
 
 .input-message-zone {
-  width: 90%;
-  margin: 7px 0px 7px 10px;
+  position: fixed;
+  top: 837px;
+  z-index: 1;
+  width: 625px;
+  height: 50px;
   border-radius: 20px;
+  background-color: #FFFFFF;
 }
 
 .input-message-area {
  border: none;
+ margin: 7px 0px 7px 10px;
  background-color: #F5F8FA;
  border-radius: 20px;
 }
 
 .btn-send {
   background:white;
-  border-radius: 18px;
-  width: 10%;
+  width: 35px;
   outline: none;
+}
+
+* {
+  /* border: 1px solid gray; */
 }

@@ -7,20 +7,23 @@
     </nav>
     <div class="d-flex" id="chat-container">
       <div class="left-side">
+        <div class="list-group-item left-side-title">
+          <span>上線使用者&ensp;(5)</strong></span>
+        </div>
         <ul class="list-group">
-          <li class="list-group-item title online-users-list">
-            <span>上線使用者&ensp;(5)</strong></span>
+          <li class="list-group-item">
+            <span>佔位用</strong></span>
           </li>
           <li class="list-group-item">
             <a href="/users/{{this.User.id}}/tweets">
               <div class="row">
                 <div class="col-2 mr-4">
-                  <img src="https://loremflickr.com/320/240/avatar/?random=5.850587638241356" alt="user avatar"
-                    class="user-avatar" style="border-radius: 50%; height:50px; width: 50px;">
+                  <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
+                    class="user-avatar">
                 </div>
                 <div class="col-8 d-flex align-items-center">
-                  <span style="display:inline-block; border-radius: 50%; color:black;"><strong>Hello</strong></span>
-                  <span style="display:inline-block; color:gray;">&ensp;@123</span>
+                  <span class="chat-user-name"><strong>Apple</strong></span>
+                  <span class="chat-user-account">&ensp;@123</span>
                 </div>
               </div>
             </a>
@@ -28,9 +31,12 @@
         </ul>
       </div>
       <div class="right-side">
-        <ul class="list-group chat-container">
-          <li class="list-group-item title">
-            <span>公開聊天室</span>
+        <div class="list-group-item right-side-title">
+          <span>公開聊天室</span>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span>佔位用</span>
           </li>
           <li class="system-info">
             <span>Alan&ensp;上線</span>
@@ -44,7 +50,7 @@
           <li class="list-group-item message-line">
             <div class="d-flex">
               <div style="width: 55px; height: 55px;">
-                <img src="https://loremflickr.com/320/240/avatar/?random=5.850587638241356" alt="user avatar"
+                <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
                   class="message-user-avatar">
               </div>
               <div class="left-message-box">

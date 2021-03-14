@@ -62,5 +62,6 @@ router.post('/api/users/:id', auth.authenticatedUser, userController.putSetting)
 
 // chatroom 相關路由
 router.get('/chatroom/public', auth.authenticatedUser, chatroomController.getPublic)
+router.get('/chatroom/:userId/:targetId', auth.authenticatedUser, chatroomController.getPrivate)
 
 module.exports = router
