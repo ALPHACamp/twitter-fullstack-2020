@@ -5,7 +5,8 @@ const online = document.querySelector('#online')
 const typing = document.querySelector('#is-typing')
 const chatContainer = document.querySelector('#chat-container')
 const onlineUsersList = document.querySelector('.online-users-list')
-const sendBtn = document.querySelector('@send')
+const sendBtn = document.querySelector('#send')
+const output = document.querySelector('#output')
 const onlineUsers = []
 
 // 線上人數
@@ -27,4 +28,10 @@ socket.on('typing', data => {
   } else {
     typing.innerHTML = ''
   }
+})
+
+// 系統發出誰加入誰退出的訊息
+socket.on('message', data => {
+  output.innerHTML += `<div><span>${data}</span></div>`
+  chatContainer.scrollTop = chatContainer.scrollHeight
 })
