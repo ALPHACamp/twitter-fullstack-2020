@@ -394,6 +394,10 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('getAndNotifyAllUnread', () => {
+    getAndNotifyAllUnread();
+  });
+
   const markMessageRead = (readerId, messages) => {
     const messagesSetReadPromiseArr = messages.map((message) => new Promise((resolve, reject) => {
       ReadMessage.findOrCreate({

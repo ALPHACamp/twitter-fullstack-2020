@@ -65,13 +65,12 @@ const updateUserCount = (users) => {
 
 // Temporary only, demonstrate the login connection workability
 socket.on('connect', () => {
-  console.log('socket.id', socket.id);
+  socket.emit('getAndNotifyAllUnread');
 });
 
 // 使用者本人登入 前端收到本人id。在後續動作可利用 id 判斷是否為本人
 socket.on('me', (id) => {
   myUserId = id;
-  console.log('myUserId', myUserId);
 });
 
 // 使用者已上線, 會同時推送上線的使用者，以及這個使用者加入的房間裡的用戶 array
