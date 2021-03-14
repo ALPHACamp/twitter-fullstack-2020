@@ -33,6 +33,7 @@ passport.deserializeUser((id, cb) => {
       { model: User, as: 'Followings' },
       { model: User, as: 'Subscribers' },
       { model: User, as: 'Subscribings' },
+      { model: User, as: 'Receivers' },
     ],
   })
   .then((user) => {
