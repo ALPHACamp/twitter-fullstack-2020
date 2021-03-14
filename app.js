@@ -8,6 +8,8 @@ const routers = require('./routes')
 
 const port = process.env.PORT || 3000
 
+const db = require('./models')
+const Public = db.Public
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
@@ -16,7 +18,7 @@ const flash = require('connect-flash')
 const passport = require('./config/passport')
 const helpers = require('./_helpers')
 const socket = require('socket.io')
-const message = require('./public/javascript/message')
+const formatMessage = require('./public/javascript/message')
 
 app.engine('handlebars', handlebars({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'handlebars')
@@ -68,36 +70,31 @@ io.on('connection', socket => {
   onlineUsers = onlineUsers.filter(item =>
     !set.has(item.id) ? set.add(item.id) : false
   )
-  // get current user
+  // get currentUser user
   const user = onlineUsers.find(user => user.id === id)
-  user.current = true
+  user.currentUser = true
 
   // online users
   io.emit('onlineUsers', onlineUsers)
 
   // server message
   socket.emit('message', `Hello, ${user.name}`)
-  socket.broadcast.emit('message', `${user.name} join this chatroom`)
+  socket.broadcast.emit('message', `${user.name} joined this chatroom`)
 
   // Runs when client disconnects
   socket.on('disconnect', () => {
     onlineCount--
     io.emit('online', onlineCount)
-
     onlineUsers = onlineUsers.filter(user => user.id !== id)
     io.emit('onlineUsers', onlineUsers)
     socket.broadcast.emit('typing', { isExist: false })
     socket.broadcast.emit('message', `${user.name} left this chatroom`)
   })
 
-  socket.on('chat-message', data => {
-    io.sockets.emit('chat-message', data)
-    console.log('chatroom client 傳來的資訊 ', data) // {message: , avatar, name}
-  })
-
   // handle chat event
   socket.on('chat', data => {
-    io.sockets.emit('chat', data)
+    Public.create({ message: data, UserId: user.id })
+    io.emit('chat', formatMessage(user.name, data, user.avatar, user.currentUser))
   })
 
   // Runs when a user is typing

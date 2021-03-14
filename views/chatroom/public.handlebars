@@ -36,10 +36,34 @@
         <div class="list-group-item right-side-title">
           <span>公開聊天室</span>
         </div>
-        <ul class="list-group message-zone">
-          <li class="list-group-item">
+        <ul class="list-group">
+          {{!-- <li class="list-group-item">
             <span>佔位用</span>
+          </li> --}}
+          <li id="output" class="system-info">
           </li>
+          <div class="chat-message">
+            {{!-- <li class="list-group-item message-line">
+              <div class="d-flex">
+                <div style="width: 55px; height: 55px;">
+                  <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
+                    class="message-user-avatar">
+                </div>
+                <div class="left-message-box">
+                  <p>Hello</p>
+                </div>
+              </div>
+              <small class="left-time-box">下午5:00</small>
+            </li> --}}
+          </div>
+          <div class="self-message">
+            {{!-- <li class="list-group-item message-line">
+              <div class="right-message-box">
+                <p>Hello</p>
+              </div>
+              <small class="right-time-box">下午5:00</small> --}}
+            </li>
+          </div>
         </ul>
         <div id="is-typing" class="ml-5 left-message-box">
         </div>
