@@ -9,6 +9,7 @@ const {
   Tweet, Reply, Like, User,
 } = db;
 const helpers = require('../_helpers');
+const { getAndNotifyFollowingUpdate } = require('../middleware/notifyHelper');
 
 const tweetsController = {
   getIndexPage: (req, res) => {
@@ -61,6 +62,7 @@ const tweetsController = {
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
+      getAndNotifyFollowingUpdate(req, 'Tweet', tweet.dataValues);
       req.flash('success_messages', '推文成功');
       res.redirect('/tweets');
     });
@@ -117,8 +119,29 @@ const tweetsController = {
       UserId : userId,
       TweetId: tweetId,
     }).then((reply) => {
-      req.flash('success_messages', '回覆成功');
-      res.redirect('back');
+      User.findByPk(userId, {
+        raw : true,
+        nest: true,
+      })
+      .then(async (user) => {
+        delete user.password;
+
+        Tweet.findByPk(tweetId, {
+          raw : true,
+          nest: true,
+        })
+        .then(async (tweet) => {
+          const replyObj = {
+            ...reply.dataValues,
+            User: user,
+          };
+
+          await getAndNotifyFollowingUpdate(req, 'Reply', replyObj, tweet.UserId);
+
+          req.flash('success_messages', '回覆成功');
+          return res.redirect('back');
+        });
+      });
     });
   },
 };

@@ -16,6 +16,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const { type } = require('os');
 const moment = require('moment');
+const { Op, Promise, QueryTypes } = require('sequelize');
 const passport = require('./config/passport');
 
 const routes = require('./routes');
@@ -48,6 +49,7 @@ io.use(wrap(passport.initialize()));
 io.use(wrap(passport.session()));
 io.use((socket, next) => {
   if (socket.request.user) {
+    delete socket.request.user.password;
     next();
   } else {
     next(new Error('unauthorized'));
@@ -56,7 +58,35 @@ io.use((socket, next) => {
 
 const db = require('./models');
 
-const { Message, User } = db;
+const {
+  Message, User, ReadMessage, Notification,
+} = db;
+
+const getAndNotifyAllUnread = () => {
+  io.sockets.sockets.forEach((eaSocket) => {
+    if (eaSocket.request.user !== undefined) {
+      const socketUserId = eaSocket.request.user.id;
+      db.sequelize.query(
+        `SELECT m.*
+        FROM Messages m 
+        LEFT JOIN ReadMessages r ON m.id = r.messageId
+        WHERE
+          (
+            r.id IS NULL
+            OR
+            r.userId <> ${socketUserId}
+          )
+          AND
+          m.receiverId = ${socketUserId}
+        ORDER BY m.receiverId`,
+        { type: QueryTypes.SELECT },
+      )
+      .then((messages) => {
+        io.to(eaSocket.id).emit('unreadMessageNotification', { messages });
+      });
+    }
+  });
+};
 
 io.on('connection', (socket) => {
   // Link session with socket ID to make it persistent
@@ -64,31 +94,35 @@ io.on('connection', (socket) => {
   session.socketId = socket.id;
   session.save();
 
+  // Notify if message unread
+  getAndNotifyAllUnread();
+
   // 當使用者本人登入，將userId 傳送到前端
   socket.emit('me', socket.request.user.id);
+  socket.emit('checkUnreadNotification', socket.request.user.id);
 
   // 監聽前端的 join 要求，會傳入 room 名稱
   socket.on('join', (room) => {
-    // Remove the rooms joined that's not the current one
-    socket.rooms.forEach((joinedRoom) => {
-      if (joinedRoom !== socket.id && joinedRoom !== room) {
-        socket.leave(joinedRoom);
-      }
-    });
-    socket.join(room);
-
-    // get room list
-    const { rooms } = io.of('/').adapter;
-    const socketsInRoom = rooms.get(room);
-
-    // get users in the room
-    const usersInRoom = [];
-    socketsInRoom.forEach((socketId) => {
-      usersInRoom.push(io.of('/').sockets.get(socketId).request.user);
-    });
     if (room === 'public') {
-      // get all messages in the room
-      Promise.all([
+      // Remove the rooms joined that's not the current one
+      socket.rooms.forEach((joinedRoom) => {
+        if (joinedRoom !== socket.id && joinedRoom !== room) {
+          socket.leave(joinedRoom);
+        }
+      });
+      socket.join(room);
+
+      // get room list
+      const { rooms } = io.of('/').adapter;
+      const socketsInRoom = rooms.get(room);
+
+      // get users in the room
+      const usersInRoom = [];
+      socketsInRoom.forEach((socketId) => {
+        usersInRoom.push(io.of('/').sockets.get(socketId).request.user);
+      });
+
+      return Promise.all([
         Message.findAll({
           raw  : true,
           nest : true,
@@ -113,6 +147,7 @@ io.on('connection', (socket) => {
         io.to(room).emit(
           'userJoined',
           {
+            roomType        : 'public',
             user            : socket.request.user,
             usersInRoom,
             previousMessages: [...messagesArr],
@@ -120,8 +155,155 @@ io.on('connection', (socket) => {
         );
       })
       .catch((err) => console.error(err));
-    } else {
-      return io.to(room).emit('userJoined', { user: socket.request.user, usersInRoom });
+    }
+
+    if (room === 'private' && socket.handshake.headers.referer.split('/chat/private/').length > 1) {
+      const privateMessageSenderId = socket.request.user.id.toString();
+      const privateMessageReceiverId = socket.handshake.headers.referer.split('/chat/private/')[1];
+      const roomName = `${privateMessageSenderId}-${privateMessageReceiverId}`;
+      const roomNameAlt = `${privateMessageReceiverId}-${privateMessageSenderId}`;
+      const { rooms } = io.of('/').adapter;
+      let roomJoined = roomName;
+
+      // If other user has initiated the chatroom, join it, other wise create and join one
+      if (rooms.has(roomName)) {
+        socket.join(roomName);
+        roomJoined = roomName;
+      } else if (rooms.has(roomNameAlt)) {
+        socket.join(roomNameAlt);
+        roomJoined = roomNameAlt;
+      } else {
+        socket.join(roomName);
+        roomJoined = roomName;
+      }
+
+      // Assume if not public room, it will be private
+      Promise.all([
+        User.findByPk(privateMessageReceiverId),
+        Message.findAll({
+          raw  : true,
+          nest : true,
+          where: {
+            senderId  : privateMessageSenderId,
+            receiverId: privateMessageReceiverId,
+          },
+          include: [{
+            model: User,
+            as   : 'Sender',
+          }, {
+            model: User,
+            as   : 'Receiver',
+          }],
+        }),
+        Message.findAll({
+          raw  : true,
+          nest : true,
+          where: {
+            senderId  : privateMessageReceiverId,
+            receiverId: privateMessageSenderId,
+          },
+          include: [{
+            model: User,
+            as   : 'Sender',
+          }, {
+            model: User,
+            as   : 'Receiver',
+          }],
+        }),
+        Message.findAll({
+          raw  : true,
+          nest : true,
+          where: {
+            [Op.or]: [
+              {
+                senderId: privateMessageSenderId,
+              },
+              {
+                receiverId: privateMessageSenderId,
+              },
+            ],
+            isPublic: 0,
+          },
+          include: [{
+            model: User,
+            as   : 'Sender',
+          }, {
+            model: User,
+            as   : 'Receiver',
+          }],
+          order: [
+            // Will escape title and validate DESC against a list of valid direction parameters
+            ['createdAt', 'DESC'],
+          ],
+        }),
+      ])
+      .then(([receiverUser, sendToMessages, receivedFromMessages, interactionMessages]) => {
+        // Merge both message SENT TO other user + messages FROM other user, use id to filter
+        const messages = [];
+        sendToMessages.forEach((value) => {
+          messages.splice(value.id, 0, value);
+        });
+        receivedFromMessages.forEach((value) => {
+          messages.splice(value.id, 0, value);
+        });
+
+        // New message at top, and change createAt to moment
+        messages.sort((a, b) => a.createdAt - b.createdAt);
+        const messagesArr = messages.map((message) => ({
+          ...message,
+          createdAt: `${moment(message.createdAt).format('a h:mm')}`,
+        }));
+
+        // Modify interacted user list
+        const userList = [];
+
+        interactionMessages.forEach((message) => {
+          if (message.Sender.id === Number(privateMessageSenderId)) {
+            const receiverObj = message.Receiver;
+            Object.assign(receiverObj, {
+              lastMessage: message.message,
+              createdAt  : message.createdAt,
+            });
+            userList.push(receiverObj);
+          } else {
+            const senderObj = message.Sender;
+            delete senderObj.password;
+            Object.assign(senderObj, {
+              lastMessage: message.message,
+              createdAt  : message.createdAt,
+            });
+            userList.push(senderObj);
+          }
+        });
+
+        if (receiverUser) {
+          delete receiverUser.dataValues.password;
+          delete receiverUser._previousDataValues.password;
+        }
+
+        // filter out duplicated, then createdAt to momentise
+        const interactedUserList = userList
+        .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i)
+        .map((user) => ({
+          ...user,
+          createdAt: `${moment(user.createdAt).format('a h:mm')}`,
+        }));
+
+        io.to(roomJoined).emit(
+          'userJoined',
+          {
+            roomType        : 'private',
+            user            : socket.request.user,
+            previousMessages: [...messagesArr],
+            receiverUser,
+            usersInteracted : interactedUserList,
+          },
+        );
+
+        // 將傳出去的信息標記為已讀，並且觸發getAndNotifyAllUnread的動作去讓所有在線上的user收到未讀信息
+        markMessageRead(socket.request.user.id, [...messagesArr]);
+        getAndNotifyAllUnread();
+      });
     }
   });
 
@@ -149,9 +331,21 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     // user left delete user
     socket.leave('/');
-    // socket.rooms.size === 0
-    console.log('user', socket.request.user.id);
-    console.log('disconnect rooms', socket.rooms);
+  });
+
+  socket.on('checkUnreadNotification', () => {
+    // user left delete user
+    const userId = socket.request.user.id;
+    Notification.findAll({
+      where: {
+        userId,
+        isNotified: 0,
+      },
+    })
+    .then((notifications) => {
+      // console.log(notifications);
+      socket.emit('currentUnreadNotification', notifications.length);
+    });
   });
 
   socket.on('sendMessage', (payload) => {
@@ -173,7 +367,56 @@ io.on('connection', (socket) => {
       })
       .catch((err) => console.error(err));
     }
+    if (payload.identifier === 'private') {
+      // 在私人聊天室傳送訊息;
+      Message.create({
+        senderId  : socket.request.user.id,
+        receiverId: payload.receiverId,
+        message   : payload.message,
+        isPublic  : false,
+      })
+      .then((message) => {
+        // When newMessage come in, emit notify the room with sender, and his/her message
+        socket.rooms.forEach((eaRoom) => {
+          if (eaRoom !== socket.id) {
+            io.to(eaRoom).emit('newMessage', {
+              sender   : socket.request.user,
+              message  : message.dataValues.message,
+              createdAt: `${moment(message.dataValues.createdAt).format('a h:mm')}`,
+            });
+            // 將傳出去的信息標記為已讀，並且觸發getAndNotifyAllUnread的動作去讓所有在線上的user收到未讀信息
+            markMessageRead(socket.request.user.id, [message.dataValues]);
+            getAndNotifyAllUnread();
+          }
+        });
+      })
+      .catch((err) => console.error(err));
+    }
   });
+
+  socket.on('getAndNotifyAllUnread', () => {
+    getAndNotifyAllUnread();
+  });
+
+  const markMessageRead = (readerId, messages) => {
+    const messagesSetReadPromiseArr = messages.map((message) => new Promise((resolve, reject) => {
+      ReadMessage.findOrCreate({
+        where: {
+          userId   : readerId,
+          messageId: message.id,
+        },
+        defaults: {
+          userId   : readerId,
+          messageId: message.id,
+        },
+      })
+      .then((read) => resolve(read));
+    }));
+
+    Promise.all(messagesSetReadPromiseArr)
+    .then((data) => true)
+    .catch((data) => false);
+  };
 });
 
 app.use((req, res, next) => {

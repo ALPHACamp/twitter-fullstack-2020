@@ -4,11 +4,11 @@ const bcrypt = require('bcryptjs');
 
 const helpers = require('../_helpers');
 const customHelpers = require('../custom_helpers');
-
+const notifyHelper = require('../middleware/notifyHelper');
 const db = require('../models');
 
 const {
-  Tweet, User, Reply, Like, Followship,
+  Tweet, User, Reply, Like, Followship, Notification,
 } = db;
 
 const usersController = {
@@ -143,7 +143,8 @@ const usersController = {
 
   // 使用者個人推文清單
   getTweetsPage: async (req, res) => {
-    const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
+    const currentUser = helpers.getUser(req);
+    const userId = req.params.userId ? Number(req.params.userId) : currentUser.id;
     const [user, userFollowers, userFollowings, selfLikedTweets] = await Promise.all([
       usersController.getUserDetails(userId),
       usersController.getUserFollowers(userId),
@@ -177,7 +178,8 @@ const usersController = {
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
 
-      user.isFollowed = helpers.getUser(req).Followings.map((d) => d.id).includes(user.id);
+      user.isFollowed = currentUser.Followings.map((d) => d.id).includes(user.id);
+      user.isSubscribed = currentUser.Subscribings.map((s) => s.id).includes(user.id);
 
       return res.render('index', {
         userPage: true,
@@ -415,7 +417,56 @@ const usersController = {
       });
     }
   },
+  // 使用者個人通知頁面
+  getNotificationPage: (req, res) => {
+    Notification.findAll({
+      raw  : true,
+      nest : true,
+      where: {
+        userId: helpers.getUser(req).id, // Force to render user's own notifications only
+      },
+      include: [User],
+      order  : [
+        // Will escape title and validate DESC against a list of valid direction parameters
+        ['createdAt', 'DESC'],
+      ],
+    })
+    .then((notifications) => {
+      const notificationReadPromiseArr = notifications.map((notification) => new Promise(
+        (resolve, reject) => {
+          Notification.update(
+            { isNotified: true },
+            {
+              where: {
+                id: notification.id,
+              },
+              returning: true,
+              plain    : true,
+            },
+          ).then(() => resolve());
+        },
+      ));
 
+      Promise.all(notificationReadPromiseArr)
+      .then((data) => {
+        const notificationsObj = notifications.map((notification) => ({
+          type     : notification.type,
+          user     : notification.User,
+          data     : JSON.parse(notification.data),
+          createdAt: notification.createdAt,
+          updatedAt: notification.updatedAt,
+        }));
+
+        res.render('index', {
+          notification: true,
+          title       : {
+            text: '通知',
+          },
+          notificationsArray: notificationsObj,
+        });
+      });
+    });
+  },
   // Helper functions
   getUserDetails: (userId) => new Promise((resolve, reject) => {
     User.findByPk(userId, {
@@ -547,6 +598,5 @@ const usersController = {
       return resolve(users);
     });
   }),
-
 };
 module.exports = usersController;

@@ -1,7 +1,19 @@
 <div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3 online-user-header">
-  <div class="d-flex flex-column">
-    <strong><div class="m-0" style="font-size: 1.3em;">上線使用者（<span id="chatroom-user-count"></span>）</div></strong>
+  
+    {{#if (isdefined usersInteracted)}}
+    <div class="d-flex w-100 justify-content-between align-items-center">
+      <div style="font-size: 1.3em;"><strong>訊息</strong></div>
+      <div class="">
+        {{!-- <span class="fa-stack fa-1x">
+        <i class="fas fa-plus fa-stack-0.5x ml-4 pb-1"></i> --}}
+        {{!-- <i class="far fa-envelope fa-lg ml-auto"></i> --}}
+        {{!-- </span> --}}
+      </div>
     </div>
+    {{else}}
+        <strong><div class="m-0" style="font-size: 1.3em;">上線使用者&thinsp;(<span id="chatroom-user-count" style="font-size: 1.02em;"></span>)</div></strong>
+    {{/if}}
+ 
 </div>
 
 {{!-- {{#if (isdefined onlineUsers)}}--}}

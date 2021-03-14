@@ -12,13 +12,26 @@
       </div>
     {{else}}
       <div class="d-flex no-wrap justify-content-end align-items-center">
-        {{!-- 目前這兩個 buttons 沒有功用，先用 disabled 變淡 --}}
-        <button type="button" class="btn btn-outline btn-outline-orange rounded-circle mr-2 disabled" data-toggle="modal" data-target="">
-          <i class="far fa-envelope"></i>
-        </button>
-        <button type="button" class="btn btn-outline btn-outline-orange rounded-circle mr-2 disabled">
-          <i class="far fa-bell"></i>
-        </button>   
+        {{!-- TODO: icon 已加入連結，要修改 排版距離 --}}
+        <a class="nav-link p-0" href="/chat/private/{{user.id}}">
+          <button type="button" class="btn btn-outline btn-outline-orange rounded-circle mr-2" data-toggle="modal" data-target="">
+            <i class="far fa-envelope"></i>
+          </button>
+        </a>
+        {{!-- //加訂閱，按下小鈴噹 --}}
+        {{#if user.isSubscribed}}
+          <form action="/subscriptions/{{user.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-outline btn-orange rounded-circle mr-2">
+              <i class="far fa-bell"></i>
+            </button>
+          </form>
+        {{else}}
+          <form action="/subscriptions/{{user.id}}" method="POST">
+            <button type="submit" class="btn btn-outline btn-outline-orange rounded-circle mr-2">
+            <i class="far fa-bell"></i>
+          </button>   
+        </form>
+        {{/if}}
       {{#if user.isFollowed}}
         <form action="/followships/{{user.id}}?_method=DELETE" method="POST" class="">
           <button type="submit" class="btn btn-sm btn-orange rounded-pill mr-2 btn-following">正在跟隨</button>
