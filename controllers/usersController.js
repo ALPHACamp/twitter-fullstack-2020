@@ -425,26 +425,46 @@ const usersController = {
       where: {
         userId: helpers.getUser(req).id, // Force to render user's own notifications only
       },
-      order: [
+      include: [User],
+      order  : [
         // Will escape title and validate DESC against a list of valid direction parameters
         ['createdAt', 'DESC'],
       ],
     })
     .then((notifications) => {
-      const notificationsObj = notifications.map((notification) => ({
-        type     : notification.type,
-        data     : JSON.parse(notification.data),
-        createdAt: notification.createdAt,
-        updatedAt: notification.updatedAt,
-      }));
-      console.log('notificationsObj', notificationsObj);
-
-      res.render('index', {
-        notification: true,
-        title       : {
-          text: '通知',
+      const notificationReadPromiseArr = notifications.map((notification) => new Promise(
+        (resolve, reject) => {
+          Notification.update(
+            { isNotified: true },
+            {
+              where: {
+                id: notification.id,
+              },
+              returning: true,
+              plain    : true,
+            },
+          ).then(() => resolve());
         },
-        notificationsArray: notificationsObj,
+      ));
+
+      Promise.all(notificationReadPromiseArr)
+      .then((data) => {
+        const notificationsObj = notifications.map((notification) => ({
+          type     : notification.type,
+          user     : notification.User,
+          data     : JSON.parse(notification.data),
+          createdAt: notification.createdAt,
+          updatedAt: notification.updatedAt,
+        }));
+        console.log('notificationsObj', notificationsObj);
+
+        res.render('index', {
+          notification: true,
+          title       : {
+            text: '通知',
+          },
+          notificationsArray: notificationsObj,
+        });
       });
     });
   },
