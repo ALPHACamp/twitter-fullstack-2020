@@ -43,7 +43,7 @@ socket.on('onlineUsers', data => {
   data.forEach(user => {
     userList += `
            <li class="list-group-item">
-              <a href="/users/{{this.User.id}}/tweets">
+              <a href="/users/${user.id}/tweets">
                 <div class="row">
                   <div class="col-2 mr-4">
                     <img src="${user.avatar}" alt="user avatar"
