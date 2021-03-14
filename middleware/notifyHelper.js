@@ -6,7 +6,7 @@ const {
 } = db;
 
 module.exports = {
-  getAndNotifyFollowingUpdate: (req, type, data, userUpdatedId = null) => {
+  getAndNotifyFollowingUpdate: (req, type, data, userNotifiedId = null) => {
     // userUpdatedId 是發出更新的user id
     // - 可以是 null, 為了後面的自己的更新部分
     // - 目前暫定更新都是 tweet 而已
@@ -60,7 +60,30 @@ module.exports = {
         })
         .catch((err) => console.log(err));
       } else {
-
+        Notification.create({
+          userId: userNotifiedId,
+          type,
+          data  : JSON.stringify(data),
+        })
+        .then(() => {
+          User.findByPk(userNotifiedId, {
+            raw : true,
+            nest: true,
+          })
+          .then((userNotified) => {
+            delete userNotified.password;
+            // 抓所有在線上的user
+            req.app.io.sockets.sockets.forEach((eaSocket) => {
+              if (eaSocket.request.user !== undefined) {
+                const socketUserId = eaSocket.request.user.id;
+                if (userNotifiedId === socketUserId) {
+                // 推播給已上線用戶，告知有更新
+                  req.app.io.to(eaSocket.id).emit('unreadNotification', { type, user: userNotified, data });
+                }
+              }
+            });
+          });
+        });
       }
     })();
   },
