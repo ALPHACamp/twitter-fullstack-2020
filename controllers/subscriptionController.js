@@ -21,7 +21,7 @@ const subscriptionController = {
     .catch((error) => console.log('Add Subscription error', error));
   },
 
-  unSubscribe: (req, res) => {
+  unsubscribe: (req, res) => {
     const subscriberId = getUser(req).id;
     const subscribingId = Number(req.params.id);
 

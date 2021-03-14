@@ -50,12 +50,12 @@ module.exports = (sequelize, DataTypes) => {
     });
     User.belongsToMany(User, {
       through   : models.Subscription,
-      foreignKey: 'subscriberId',
+      foreignKey: 'subscribingId',
       as        : 'Subscribers',
     });
     User.belongsToMany(User, {
       through   : models.Subscription,
-      foreignKey: 'subscribingId',
+      foreignKey: 'subscriberId',
       as        : 'Subscribings',
     });
   };

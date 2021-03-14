@@ -143,7 +143,8 @@ const usersController = {
 
   // 使用者個人推文清單
   getTweetsPage: async (req, res) => {
-    const userId = req.params.userId ? Number(req.params.userId) : helpers.getUser(req).id;
+    const currentUser = helpers.getUser(req);
+    const userId = req.params.userId ? Number(req.params.userId) : currentUser.id;
     const [user, userFollowers, userFollowings, selfLikedTweets] = await Promise.all([
       usersController.getUserDetails(userId),
       usersController.getUserFollowers(userId),
@@ -177,7 +178,8 @@ const usersController = {
         isLiked   : (user.LikedTweets || []).map((d) => d.id).includes(tweet.id),
       }));
 
-      user.isFollowed = helpers.getUser(req).Followings.map((d) => d.id).includes(user.id);
+      user.isFollowed = currentUser.Followings.map((d) => d.id).includes(user.id);
+      user.isSubscribed = currentUser.Subscribings.map((s) => s.id).includes(user.id);
 
       return res.render('index', {
         userPage: true,
@@ -547,6 +549,5 @@ const usersController = {
       return resolve(users);
     });
   }),
-
 };
 module.exports = usersController;
