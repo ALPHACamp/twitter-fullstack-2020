@@ -4,7 +4,7 @@ const textarea = document.querySelector('#textarea')
 const online = document.querySelector('#online')
 const typing = document.querySelector('#is-typing')
 const chatContainer = document.querySelector('#chat-container')
-const onlineUsersList = document.querySelector('.online-users-list')
+const onlineUsersList = document.querySelector('#online-user-list')
 const sendBtn = document.querySelector('#send')
 const output = document.querySelector('#output')
 const onlineUsers = []
@@ -34,4 +34,29 @@ socket.on('typing', data => {
 socket.on('message', data => {
   output.innerHTML += `<div><span>${data}</span></div>`
   chatContainer.scrollTop = chatContainer.scrollHeight
+})
+
+// 線上使用者
+socket.on('onlineUsers', data => {
+  onlineUsers.push(data)
+  let userList = ''
+  for (let i = 0; i < data.length; i++) {
+    userList += `
+           <li class="list-group-item">
+              <a href="/users/{{this.User.id}}/tweets">
+                <div class="row">
+                  <div class="col-2 mr-4">
+                    <img src="${data[i].avatar}" alt="user avatar"
+                      class="user-avatar">
+                  </div>
+                  <div class="col-8 d-flex align-items-center">
+                    <span class="chat-user-name"><strong>${data[i].name}</strong></span>
+                    <span class="chat-user-account">@${data[i].account}</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+           `
+  }
+  onlineUsersList.innerHTML = userList
 })

@@ -65,14 +65,15 @@ io.on('connection', socket => {
   // online user list
   onlineUsers.push({ id, name, account, avatar })
   const set = new Set()
-  onlineUsers = onlineUsers.filter((item) =>
+  onlineUsers = onlineUsers.filter(item =>
     !set.has(item.id) ? set.add(item.id) : false
   )
-  const user = onlineUsers.find((user) => user.id === id)
+  // get current user
+  const user = onlineUsers.find(user => user.id === id)
   user.current = true
 
   // online users
-  io.emit('onlineUser', onlineUsers)
+  io.emit('onlineUsers', onlineUsers)
 
   // server message
   socket.emit('message', `Hello, ${user.name}`)
