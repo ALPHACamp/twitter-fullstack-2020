@@ -55,7 +55,7 @@ const chatsController = {
         if (message.Sender.id === Number(privateMessageSender.id)) {
           const receiverObj = message.Receiver;
           Object.assign(receiverObj, {
-            lastMessage: message.message,
+            lastMessage: messageShortener(message.message),
             createdAt  : message.createdAt,
           });
           userList.push(receiverObj);
@@ -69,10 +69,8 @@ const chatsController = {
           userList.push(senderObj);
         }
       });
-
       const interactedUserList = userList
       .filter((v, i, a) => a.findIndex((t) => (t.id === v.id)) === i);
-
       // 私人聊天室首頁目前與和對方聊天室頁面共用 getPrivateChatPage controller
       // 先寫以下的條件來找到receiver，因應不同情況所需要的東西。 ex. 標題切換，不同對象用戶名和帳號會跟著更改
       if (userMessaging) {
@@ -96,5 +94,16 @@ const chatsController = {
       });
     });
   },
+
 };
 module.exports = chatsController;
+
+// 私訊超過30字變成點點
+function messageShortener(message){
+    if (message >= 30) {
+      message = message.slice(0, 30) + '...'
+      return message
+    } else {
+        return message
+    }
+  };
