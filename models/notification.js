@@ -6,12 +6,26 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey   : true,
       type         : DataTypes.INTEGER,
     },
-    userId: DataTypes.INTEGER,
-    type  : DataTypes.TEXT,
-    data  : DataTypes.VARCHAR,
+    userId: {
+      type: DataTypes.INTEGER,
+    },
+    type: {
+      type: DataTypes.STRING,
+    },
+    data: {
+      type: DataTypes.TEXT,
+    },
+    createdAt: {
+      allowNull: false,
+      type     : DataTypes.DATE,
+    },
+    updatedAt: {
+      allowNull: false,
+      type     : DataTypes.DATE,
+    },
   }, {});
   Notification.associate = function (models) {
-    // associations can be defined here
+    Notification.belongsTo(models.User);
   };
-  return Notify;
+  return Notification;
 };
