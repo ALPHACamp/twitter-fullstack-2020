@@ -5,7 +5,7 @@ const chatInput = document.querySelector('#chat-input');
 const chatPMInput = document.querySelector('#chat-pm-input');
 const publicChatUserList = document.querySelector('#public-chat-user-list');
 const privateChatUserList = document.querySelector('#private-message-list');
-const privateMessageCount = document.querySelector('#message-notify-count')
+const privateMessageCount = document.querySelector('#message-notify-count');
 
 let myUserId;
 const generateUserOnlineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 上線</span> </li>`;
@@ -147,8 +147,7 @@ socket.on('userLeft', (data) => {
   messages.scrollIntoView(false);
 });
 
-//顯示未讀訊息
-socket.on('unreadMessageNotification', (count) =>{
-  console.log('unreadMessageNotification', count)
-  privateMessageCount.innerText = count.length
-})
+// 顯示未讀訊息
+socket.on('unreadMessageNotification', (count) => {
+  privateMessageCount.innerText = count.messages.length;
+});
