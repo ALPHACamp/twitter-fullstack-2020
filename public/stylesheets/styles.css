@@ -611,7 +611,7 @@ input#avatar, input#cover {
   }
 
 /* css for notify icon */
-/* .badge-notify{
+.badge-notify{
    background:#ff0000;
    color: #ffffff;
    position:relative;
@@ -632,4 +632,4 @@ input#avatar, input#cover {
     width: 10px;
     top: -35px !important;
   }
-   */
+  
