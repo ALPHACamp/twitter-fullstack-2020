@@ -10,14 +10,19 @@ const likesController = {
       UserId : getUser(req).id,
       TweetId: req.params.tweetId,
     })
-    .then(() => {
+    .then((like) => {
+      const likeObj = like.dataValues;
+      const user = getUser(req);
+      delete user.password;
+      likeObj.User = user;
+
       Tweet.findByPk(req.params.tweetId, {
         raw    : true,
         nest   : true,
         include: [User],
       })
       .then(async (tweet) => {
-        await getAndNotifyFollowingUpdate(req, 'Like', tweet, tweet.UserId);
+        await getAndNotifyFollowingUpdate(req, 'Like', likeObj, tweet.UserId);
 
         res.redirect('back');
         done();

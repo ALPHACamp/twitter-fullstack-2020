@@ -58,10 +58,10 @@
               
             {{#ifEqual this.type "Like"}}
       <div class="pt-2">
-        <img class="profile-img img-fluid rounded-circle" src="{{this.user.avatar}}" alt="" style="max-height: 70px;">
+        <img class="profile-img img-fluid rounded-circle" src="{{this.data.User.avatar}}" alt="" style="max-height: 70px;">
       </div>
               <div class="like-notify py-2">
-                <strong>{{this.user.name}} 喜歡你的貼文</strong>
+                <strong>{{this.data.User.name}} 喜歡你的貼文</strong>
               </div>
             {{/ifEqual}}
       </div>
