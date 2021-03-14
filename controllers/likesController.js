@@ -16,7 +16,6 @@ const likesController = {
         const tweetObj = {
           ...tweet.dataValues,
         };
-        console.log('tweet.dataValues.UserId', tweet.dataValues.UserId);
 
         await getAndNotifyFollowingUpdate(req, 'Like', tweetObj, tweet.dataValues.UserId);
 

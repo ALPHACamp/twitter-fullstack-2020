@@ -119,8 +119,29 @@ const tweetsController = {
       UserId : userId,
       TweetId: tweetId,
     }).then((reply) => {
-      req.flash('success_messages', '回覆成功');
-      res.redirect('back');
+      User.findByPk(userId, {
+        raw : true,
+        nest: true,
+      })
+      .then(async (user) => {
+        delete user.password;
+
+        Tweet.findByPk(tweetId, {
+          raw : true,
+          nest: true,
+        })
+        .then(async (tweet) => {
+          const replyObj = {
+            ...reply.dataValues,
+            User: user,
+          };
+
+          await getAndNotifyFollowingUpdate(req, 'Reply', replyObj, tweet.UserId);
+
+          req.flash('success_messages', '回覆成功');
+          return res.redirect('back');
+        });
+      });
     });
   },
 };
