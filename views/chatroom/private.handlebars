@@ -103,16 +103,17 @@
             <small class="right-time-box">下午5:00</small>
           </li>
         </ul>
-        <form action="" method="POST">
-          <div class="input-message-zone d-flex">
-            <textarea placeholder="輸入訊息..." class="form-control input-message-area" id="description" name="message"
-              rows="1"></textarea>
-            <button class="btn btn-send" type="submit">
-              <i class="far fa-paper-plane" style="color: #FF6600;"></i>
-            </button>
-          </div>
-        </form>
-
+        <div class="typing">
+          <form id="chat-form" action="" method="POST" class="">
+            <div class="input-message-zone d-flex">
+              <textarea placeholder="輸入訊息..." class="form-control input-message-area" id="textarea" name="message"
+                rows="1"></textarea>
+              <button class="btn btn-send" type="submit">
+                <i class="far fa-paper-plane" style="color: #FF6600;"></i>
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
