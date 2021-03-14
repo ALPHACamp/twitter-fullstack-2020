@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     data: {
       type: DataTypes.TEXT,
     },
+    isNotified: {
+      type        : DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
     createdAt: {
       allowNull: false,
       type     : DataTypes.DATE,
