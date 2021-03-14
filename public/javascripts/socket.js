@@ -78,7 +78,7 @@ socket.on('userJoined', (userObj) => {
   // 使用者上線提示
   const userOnlineMessage = generateUserOnlineMessage(userObj);
   // 更新訊息列表
-  if (document.querySelectorAll('#chat-messages .message-item').length > 0) {
+  if (document.querySelectorAll('#chat-messages .message-item-self').length > 0) {
     // 已經在聊天室裡面且有有過去訊息
     messages.innerHTML = (`${messages.innerHTML}${generateUserOnlineMessage(userObj)}`);
   } else if (userObj.previousMessages !== undefined) {
@@ -144,4 +144,5 @@ socket.on('userLeft', (data) => {
 
   // 顯示誰離開的離線訊息
   messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(data)}`);
+  messages.scrollIntoView(false);
 });
