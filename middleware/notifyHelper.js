@@ -6,7 +6,7 @@ const {
 } = db;
 
 module.exports = {
-  getAndNotifyFollowingUpdate: (req, type, data) => {
+  getAndNotifyFollowingUpdate: (req, type, data, userUpdatedId = null) => {
     // userUpdatedId 是發出更新的user id
     // - 可以是 null, 為了後面的自己的更新部分
     // - 目前暫定更新都是 tweet 而已
@@ -14,10 +14,10 @@ module.exports = {
       if (type === 'Tweet') {
         // find latest tweet + subscribers
         const latestTweet = data;
-        const userUpdatedId = data.UserId;
+        const tweetUserId = data.UserId;
 
         const [notificationUserObj, subscribers] = await Promise.all([
-          User.findByPk(userUpdatedId, {
+          User.findByPk(tweetUserId, {
             raw : true,
             nest: true,
           }),
@@ -25,7 +25,7 @@ module.exports = {
             raw  : true,
             nest : true,
             where: {
-              subscribingId: userUpdatedId,
+              subscribingId: tweetUserId,
             },
           }),
         ]);
