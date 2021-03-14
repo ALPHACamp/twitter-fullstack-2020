@@ -6,6 +6,7 @@ const chatPMInput = document.querySelector('#chat-pm-input');
 const publicChatUserList = document.querySelector('#public-chat-user-list');
 const privateChatUserList = document.querySelector('#private-message-list');
 const privateMessageCount = document.querySelector('#message-notify-count');
+const subcribeNotification = document.querySelector('#bell-notify-id')
 
 let myUserId;
 const generateUserOnlineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 上線</span> </li>`;
@@ -95,6 +96,11 @@ socket.on('userJoined', (userObj) => {
      messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
     } else {
       messages.innerHTML = `${previousMessagesHtml}`;
+    }
+  } else {
+     // 已經在聊天室裡面但沒有過去訊息
+     if ( String(userObj.roomType) !== 'private') {
+     messages.innerHTML += `${generateUserOnlineMessage(userObj)}`;
     }
   }
   // 如果是在public chatroom
