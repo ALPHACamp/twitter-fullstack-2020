@@ -5,7 +5,6 @@
         {{> leftColumn}}
       </div>
     </nav>
-
     <div class="d-flex" id="chat-container">
       <div class="left-side">
         <div class="list-group-item left-side-title">
@@ -39,19 +38,15 @@
           <li class="list-group-item">
             <span>佔位用</span>
           </li>
-
           <li class="system-info">
             <span>Alan&ensp;上線</span>
           </li>
-
           <li class="system-info">
             <span>Shun&ensp;上線</span>
           </li>
-
           <li class="system-info">
             <span>Jeff&ensp;上線</span>
           </li>
-
           <li class="list-group-item message-line">
             <div class="d-flex">
               <div style="width: 55px; height: 55px;">
@@ -70,34 +65,18 @@
             </div>
             <small class="right-time-box">下午5:00</small>
           </li>
-          <li class="list-group-item message-line">
-            <div class="right-message-box">
-              <p>Hello</p>
-            </div>
-            <small class="right-time-box">下午5:00</small>
-          </li>
-          <li class="list-group-item message-line">
-            <div class="right-message-box">
-              <p>Hello</p>
-            </div>
-            <small class="right-time-box">下午5:00</small>
-          </li>
-          <li class="list-group-item message-line">
-            <div class="right-message-box">
-              <p>Hello</p>
-            </div>
-            <small class="right-time-box">下午5:00</small>
-          </li>
         </ul>
-        <form action="" method="POST">
-          <div class="input-message-zone d-flex">
-            <textarea placeholder="輸入訊息..." class="form-control input-message-area" id="description" name="message"
-              rows="1"></textarea>
+        <div class="typing">
+          <form id="chat-form" action="" method="POST" class="d-flex">
+            <div class="input-message-zone">
+              <textarea placeholder="輸入訊息..." class="form-control input-message-area" id="textarea" name="message"
+                rows="1"></textarea>
+            </div>
             <button class="btn btn-send" type="submit">
               <i class="far fa-paper-plane" style="color: #FF6600;"></i>
             </button>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
