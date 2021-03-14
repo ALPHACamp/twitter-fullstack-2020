@@ -167,3 +167,7 @@ socket.on('userLeft', (data) => {
 socket.on('unreadMessageNotification', (count) => {
   privateMessageCount.innerText = count.messages.length;
 });
+
+// socket.emit('checkUnreadNotification', () => {
+//   console.log('check here');
+// });

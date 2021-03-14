@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const db = require('../models');
 
 const {
-  User, Tweet,
+  User, Tweet, Notification,
 } = db;
 
 passport.use(new LocalStrategy(
@@ -33,6 +33,7 @@ passport.deserializeUser((id, cb) => {
       { model: User, as: 'Followings' },
       { model: User, as: 'Subscribers' },
       { model: User, as: 'Subscribings' },
+      { model: Notification, as: 'Notifications' },
     ],
   })
   .then((user) => {
