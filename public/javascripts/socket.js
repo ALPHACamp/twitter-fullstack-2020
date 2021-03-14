@@ -170,5 +170,9 @@ socket.on('unreadMessageNotification', (count) => {
 
 // 顯示未讀通知
 socket.on('currentUnreadNotification', (count) => {
-  subcribeNotification.innerText = count;
+  if (Number(count) === 0) {
+    subcribeNotification.innerText = '';
+  } else {
+    subcribeNotification.innerText = count;
+  }
 });
