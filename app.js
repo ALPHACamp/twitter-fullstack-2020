@@ -60,11 +60,40 @@ const db = require('./models');
 
 const { Message, User, ReadMessage } = db;
 
+const getAndNotifyAllUnread = () => {
+  io.sockets.sockets.forEach((eaSocket) => {
+    if (eaSocket.request.user !== undefined) {
+      const socketUserId = eaSocket.request.user.id;
+      db.sequelize.query(
+        `SELECT m.*
+        FROM Messages m 
+        LEFT JOIN ReadMessages r ON m.id = r.messageId
+        WHERE
+          (
+            r.id IS NULL
+            OR
+            r.userId <> ${socketUserId}
+          )
+          AND
+          m.receiverId = ${socketUserId}
+        ORDER BY m.receiverId`,
+        { type: QueryTypes.SELECT },
+      )
+      .then((messages) => {
+        io.to(eaSocket.id).emit('unreadMessageNotification', { messages });
+      });
+    }
+  });
+};
+
 io.on('connection', (socket) => {
   // Link session with socket ID to make it persistent
   const { session } = socket.request;
   session.socketId = socket.id;
   session.save();
+
+  // Notify if message unread
+  getAndNotifyAllUnread();
 
   // 當使用者本人登入，將userId 傳送到前端
   socket.emit('me', socket.request.user.id);
@@ -368,32 +397,6 @@ io.on('connection', (socket) => {
     Promise.all(messagesSetReadPromiseArr)
     .then((data) => true)
     .catch((data) => false);
-  };
-
-  const getAndNotifyAllUnread = () => {
-    io.sockets.sockets.forEach((eaSocket) => {
-      if (eaSocket.request.user !== undefined) {
-        const socketUserId = eaSocket.request.user.id;
-        db.sequelize.query(
-          `SELECT m.*
-          FROM Messages m 
-          LEFT JOIN ReadMessages r ON m.id = r.messageId
-          WHERE
-            (
-              r.id IS NULL
-              OR
-              r.userId <> ${socketUserId}
-            )
-            AND
-            m.receiverId = ${socketUserId}
-          ORDER BY m.receiverId`,
-          { type: QueryTypes.SELECT },
-        )
-        .then((messages) => {
-          io.to(eaSocket.id).emit('unreadMessageNotification', { messages });
-        });
-      }
-    });
   };
 });
 
