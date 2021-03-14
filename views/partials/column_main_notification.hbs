@@ -1,5 +1,5 @@
 {{#if notificationsArray}}
-<div id="tweet-info" class="d-flex align-items-start flex-column w-100 pl-4">
+<div id="tweet-info" class="d-flex w-100">
 
     {{!-- template --}}
     {{!-- <div class="d-flex flex-column align-items-star pointer tweet-gray w-100 p-2">
@@ -20,44 +20,44 @@
     </div> --}}
     {{!-- template --}}
 
-  {{!-- <div class="d-flex align-items-start flex-column w-100"> --}}
+  <div class="list-item d-flex align-items-start flex-column w-100">
     {{#each notificationsArray}}  
-    <div class="d-flex flex-column align-items-star pointer tweet-gray w-100 p-2">
+    <div class="list-item pointe tweet-gray w-100 pl-4">
       <div class="pt-2">
         <img class="profile-img img-fluid rounded-circle" src="{{this.user.avatar}}" alt="" style="max-height: 70px;">
       </div>
             {{#ifEqual this.type "Tweet"}}
-                {{!-- <a href="/users/{{}}/tweets"> --}}
-              <div class="tweet-notify">
+            <a href="/tweets/{{this.data.id}}/replies" class="text-dark text-decoration-none">
+              <div class="tweet-notify py-2">
                   <strong>{{this.user.name}} 有新的推文通知</strong>
                 <div class="item-desc">
                   {{this.data.description}}
                 </div>
               </div>
+            </a>
             {{/ifEqual}}
             {{#ifEqual this.type "Reply"}}
-              <div class="reply-notify">
+              <div class="reply-notify py-2">
                 <strong>{{this.user.name}} 有新的回覆</strong>
                 <div class="item-desc">
-                {{this.data.description}}
+                {{this.data.comment}}
                 </div>
               </div>
             {{/ifEqual}}
             {{#ifEqual this.type "Followship"}}
-              
-              <div class="follow-notify">
+              <div class="follow-notify py-2">
                 <strong>{{this.user.name}} 開始追蹤你</strong>
               </div>
             {{/ifEqual}}
               
             {{#ifEqual this.type "Like"}}
-              <div class="like-notify">
+              <div class="like-notify py-2">
                 <strong>{{this.user.name}} 喜歡你的貼文</strong>
               </div>
             {{/ifEqual}}
       </div>
     {{/each}}
-    {{!-- </div> --}}
+    </div>
 </div>
 {{else}}
   {{>listitem_noitem}}
