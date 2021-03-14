@@ -43,11 +43,11 @@ app.use((req, res, next) => {
   next()
 })
 // chatroom
-let loginId, loginName, loginAccount, loginAvatar
+let id, name, account, avatar
 
 app.use((req, res, next) => {
   if (helpers.getUser(req)) {
-    ({ loginId, loginName, loginAccount, loginAvatar } = helpers.getUser(req))
+    ({ id, name, account, avatar } = helpers.getUser(req))
   }
   next()
 })
@@ -63,12 +63,12 @@ io.on('connection', socket => {
   io.emit('online', onlineCount)
 
   // online user list
-  onlineUsers.push({ loginId, loginName, loginAccount, loginAvatar })
+  onlineUsers.push({ id, name, account, avatar })
   const set = new Set()
   onlineUsers = onlineUsers.filter((item) =>
     !set.has(item.id) ? set.add(item.id) : false
   )
-  const user = onlineUsers.find((user) => user.id === loginId)
+  const user = onlineUsers.find((user) => user.id === id)
   user.current = true
 
   // online users
@@ -102,6 +102,7 @@ io.on('connection', socket => {
 
   // Runs when a user is typing
   socket.on('typing', data => {
+    data.name = user.name
     socket.broadcast.emit('typing', data)
   })
 
