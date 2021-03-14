@@ -16,7 +16,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const { type } = require('os');
 const moment = require('moment');
-const { Op } = require('sequelize');
+const { Op, Promise, QueryTypes } = require('sequelize');
 const passport = require('./config/passport');
 
 const routes = require('./routes');
@@ -58,7 +58,7 @@ io.use((socket, next) => {
 
 const db = require('./models');
 
-const { Message, User } = db;
+const { Message, User, ReadMessage } = db;
 
 io.on('connection', (socket) => {
   // Link session with socket ID to make it persistent
@@ -257,7 +257,7 @@ io.on('connection', (socket) => {
           createdAt: `${moment(user.createdAt).format('a h:mm')}`,
         }));
 
-        return io.to(roomJoined).emit(
+        io.to(roomJoined).emit(
           'userJoined',
           {
             roomType        : 'private',
@@ -267,6 +267,10 @@ io.on('connection', (socket) => {
             usersInteracted : interactedUserList,
           },
         );
+
+        // 將傳出去的信息標記為已讀，並且觸發getAndNotifyAllUnread的動作去讓所有在線上的user收到未讀信息
+        markMessageRead(socket.request.user.id, [...messagesArr]);
+        getAndNotifyAllUnread();
       });
     }
   });
@@ -302,7 +306,6 @@ io.on('connection', (socket) => {
 
   socket.on('sendMessage', (payload) => {
     // Expect payload { identifier: 'public / somethingForPrivate', message: 'message sent' }
-    console.log('payload', payload);
     if (payload.identifier === 'public') {
       // Create message record
       Message.create({
@@ -332,19 +335,66 @@ io.on('connection', (socket) => {
         // When newMessage come in, emit notify the room with sender, and his/her message
         socket.rooms.forEach((eaRoom) => {
           if (eaRoom !== socket.id) {
-            console.log('message createdAt', `${moment(message.dataValues.createdAt).format('a h:mm')}`);
-
             io.to(eaRoom).emit('newMessage', {
               sender   : socket.request.user,
               message  : message.dataValues.message,
               createdAt: `${moment(message.dataValues.createdAt).format('a h:mm')}`,
             });
+            // 將傳出去的信息標記為已讀，並且觸發getAndNotifyAllUnread的動作去讓所有在線上的user收到未讀信息
+            markMessageRead(socket.request.user.id, [message.dataValues]);
+            getAndNotifyAllUnread();
           }
         });
       })
       .catch((err) => console.error(err));
     }
   });
+
+  const markMessageRead = (readerId, messages) => {
+    const messagesSetReadPromiseArr = messages.map((message) => new Promise((resolve, reject) => {
+      ReadMessage.findOrCreate({
+        where: {
+          userId   : readerId,
+          messageId: message.id,
+        },
+        defaults: {
+          userId   : readerId,
+          messageId: message.id,
+        },
+      })
+      .then((read) => resolve(read));
+    }));
+
+    Promise.all(messagesSetReadPromiseArr)
+    .then((data) => true)
+    .catch((data) => false);
+  };
+
+  const getAndNotifyAllUnread = () => {
+    io.sockets.sockets.forEach((eaSocket) => {
+      if (eaSocket.request.user !== undefined) {
+        const socketUserId = eaSocket.request.user.id;
+        db.sequelize.query(
+          `SELECT m.*
+          FROM Messages m 
+          LEFT JOIN ReadMessages r ON m.id = r.messageId
+          WHERE
+            (
+              r.id IS NULL
+              OR
+              r.userId <> ${socketUserId}
+            )
+            AND
+            m.receiverId = ${socketUserId}
+          ORDER BY m.receiverId`,
+          { type: QueryTypes.SELECT },
+        )
+        .then((messages) => {
+          io.to(eaSocket.id).emit('unreadMessageNotification', { messages });
+        });
+      }
+    });
+  };
 });
 
 app.use((req, res, next) => {
