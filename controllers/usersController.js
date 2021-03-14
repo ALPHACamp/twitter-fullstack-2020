@@ -451,7 +451,7 @@ const usersController = {
       .then((data) => {
         const notificationsObj = notifications.map((notification) => ({
           type     : notification.type,
-          user     : notification.User,
+          user     : JSON.parse(notification.data).User,
           data     : JSON.parse(notification.data),
           createdAt: notification.createdAt,
           updatedAt: notification.updatedAt,

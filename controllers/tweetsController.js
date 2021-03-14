@@ -62,9 +62,16 @@ const tweetsController = {
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
-      getAndNotifyFollowingUpdate(req, 'Tweet', tweet.dataValues);
-      req.flash('success_messages', '推文成功');
-      res.redirect('/tweets');
+      Tweet.findByPk(tweet.dataValues.id, {
+        raw    : true,
+        nest   : true,
+        include: [User],
+      })
+      .then((tweet) => {
+        getAndNotifyFollowingUpdate(req, 'Tweet', tweet);
+        req.flash('success_messages', '推文成功');
+        res.redirect('/tweets');
+      });
     });
   },
 
