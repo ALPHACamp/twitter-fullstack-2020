@@ -62,7 +62,7 @@ const tweetsController = {
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
-      getAndNotifyFollowingUpdate(helpers.getUser(req).id, req);
+      getAndNotifyFollowingUpdate(req, 'Tweet', tweet.dataValues);
       req.flash('success_messages', '推文成功');
       res.redirect('/tweets');
     });

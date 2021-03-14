@@ -6,20 +6,20 @@ const {
 } = db;
 
 module.exports = {
-  getAndNotifyFollowingUpdate: (userUpdatedId = null, req) => {
+  getAndNotifyFollowingUpdate: (req, type, data) => {
     // userUpdatedId 是發出更新的user id
     // - 可以是 null, 為了後面的自己的更新部分
     // - 目前暫定更新都是 tweet 而已
     (async () => {
-      if (userUpdatedId !== null) {
+      if (type === 'Tweet') {
         // find latest tweet + subscribers
-        const [latestTweet, subscribers] = await Promise.all([
-          Tweet.findOne({
-            raw    : true,
-            nest   : true,
-            where  : { UserId: userUpdatedId },
-            include: [User],
-            order  : [['createdAt', 'DESC']],
+        const latestTweet = data;
+        const userUpdatedId = data.UserId;
+
+        const [notificationUserObj, subscribers] = await Promise.all([
+          User.findByPk(userUpdatedId, {
+            raw : true,
+            nest: true,
           }),
           Subscription.findAll({
             raw  : true,
@@ -29,10 +29,10 @@ module.exports = {
             },
           }),
         ]);
-        const latestTweetJsonStr = JSON.stringify(latestTweet);
 
-        const notificationUserObj = latestTweet.User;
         delete notificationUserObj.password;
+
+        const latestTweetJsonStr = JSON.stringify(latestTweet);
 
         // Create Notification records
         const notificationCreatePromiseArr = subscribers.map((subscriber) => new Promise(
@@ -59,6 +59,8 @@ module.exports = {
           });
         })
         .catch((err) => console.log(err));
+      } else {
+
       }
     })();
   },
