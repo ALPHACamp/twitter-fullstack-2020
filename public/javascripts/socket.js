@@ -77,10 +77,13 @@ socket.on('me', (id) => {
 socket.on('userJoined', (userObj) => {
   // 使用者上線提示
   const userOnlineMessage = generateUserOnlineMessage(userObj);
+
   // 更新訊息列表
   if (document.querySelectorAll('#chat-messages .message-item-self').length > 0) {
     // 已經在聊天室裡面且有有過去訊息
-    messages.innerHTML = (`${messages.innerHTML}${generateUserOnlineMessage(userObj)}`);
+    if ( String(userObj.roomType) !== 'private') {
+    messages.innerHTML += `${generateUserOnlineMessage(userObj)}`;
+    }
   } else if (userObj.previousMessages !== undefined) {
     // 新的使用者
     // 建立過去訊息列表
@@ -88,10 +91,15 @@ socket.on('userJoined', (userObj) => {
     userObj.previousMessages.forEach((message) => {
       previousMessagesHtml += generateMessage(message);
     });
-    messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
+    if ( String(userObj.roomType) !== 'private') {
+     messages.innerHTML = `${previousMessagesHtml}${userOnlineMessage}`;
+    } else {
+      messages.innerHTML = `${previousMessagesHtml}`;
+    }
   }
   // 如果是在public chatroom
   if (publicChatUserList !== null) {
+    publicChatUserList.innerHTML = ""
     updateUserCount(userObj.usersInRoom);
     publicChatUserList.innerHTML += generateUserList(userObj.usersInRoom);
   }
@@ -143,7 +151,9 @@ socket.on('userLeft', (data) => {
   publicChatUserList.innerHTML = generateUserList(data.usersInRoom);
 
   // 顯示誰離開的離線訊息
-  messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(data)}`);
+  if ( String(data.roomType) !== 'private' ) {
+  messages.innerHTML += (`${generateUserOfflineMessage(data)}`);
+  }
   messages.scrollIntoView(false);
 });
 

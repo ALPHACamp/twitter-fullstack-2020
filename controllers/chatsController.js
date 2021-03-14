@@ -63,7 +63,7 @@ const chatsController = {
           const senderObj = message.Sender;
           delete senderObj.password;
           Object.assign(senderObj, {
-            lastMessage: message.message,
+            lastMessage: messageShortener(message.message),
             createdAt  : message.createdAt,
           });
           userList.push(senderObj);
@@ -100,7 +100,8 @@ module.exports = chatsController;
 
 // 私訊超過30字變成點點
 function messageShortener(message){
-    if (message >= 30) {
+  let messageLength = String(message).length
+    if (messageLength >= 30) {
       message = message.slice(0, 30) + '...'
       return message
     } else {
