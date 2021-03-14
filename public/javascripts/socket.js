@@ -66,6 +66,7 @@ const updateUserCount = (users) => {
 // Temporary only, demonstrate the login connection workability
 socket.on('connect', () => {
   socket.emit('getAndNotifyAllUnread');
+  socket.emit('checkUnreadNotification');
 });
 
 // 使用者本人登入 前端收到本人id。在後續動作可利用 id 判斷是否為本人
@@ -167,14 +168,7 @@ socket.on('unreadMessageNotification', (count) => {
   privateMessageCount.innerText = count.messages.length;
 });
 
-socket.emit('checkUnreadNotification', () => {
-  console.log('check here');
-});
-
+// 顯示未讀通知
 socket.on('currentUnreadNotification', (count) => {
-  if ( count > 0 ) {
-    subcribeNotification.innerHTML = `&nbsp;`
-  } else {
-    subcribeNotification.innerHTML = ""
-  }
-})
+  subcribeNotification.innerText = count;
+});
