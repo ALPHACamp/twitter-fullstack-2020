@@ -84,6 +84,7 @@ io.on('connection', socket => {
   // Runs when client disconnects
   socket.on('disconnect', () => {
     onlineCount--
+    io.emit('online', onlineCount)
     onlineUsers = onlineUsers.filter(user => user.id !== id)
     io.emit('onlineUsers', onlineUsers)
     socket.broadcast.emit('typing', { isExist: false })
