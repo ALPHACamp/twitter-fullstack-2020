@@ -331,9 +331,6 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     // user left delete user
     socket.leave('/');
-    // socket.rooms.size === 0
-    console.log('disconnect user', socket.request.user.id);
-    console.log('disconnect rooms', socket.rooms);
   });
 
   socket.on('checkUnreadNotification', () => {
