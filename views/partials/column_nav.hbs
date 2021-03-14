@@ -14,14 +14,13 @@
     <li class="nav-item">
       <a class="nav-link" href="/chat/public"><i class="far fa-envelope pr-3"></i>公開聊天室</a>
     </li>
-    <li class="nav-item">
+    {{!-- <li class="nav-item">
       <a class="nav-link" href="/chat/private"><i class="far fa-envelope pr-3"></i>私人訊息</a>
-    </li>
-    {{!-- 私人訊息提示(數字) --}}
-    {{!-- <li class="notify-li nav-item">
-      <a class="nav-link" href="/chat/private"><i class="far fa-envelope pr-3"></i>私人訊息</a>
-      <span class="message-notify-count badge badge-notify">3</span>
     </li> --}}
+    {{!-- 私人訊息提示(數字) --}}
+    <li class="notify-li nav-item">
+      <a class="nav-link" href="/chat/private"><i class="far fa-envelope position-relative pr-3"><span id="message-notify-count" class="badge badge-notify"></span></i>私人訊息</a>
+    </li>
     <li class="nav-item">
       <a class="nav-link" href="/users/{{me.id}}/tweets"> <i class="far fa-user pr-3"></i>個人資料 </a>
     </li>

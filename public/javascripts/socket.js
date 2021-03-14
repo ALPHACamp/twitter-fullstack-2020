@@ -5,6 +5,8 @@ const chatInput = document.querySelector('#chat-input');
 const chatPMInput = document.querySelector('#chat-pm-input');
 const publicChatUserList = document.querySelector('#public-chat-user-list');
 const privateChatUserList = document.querySelector('#private-message-list');
+const privateMessageCount = document.querySelector('#message-notify-count');
+
 let myUserId;
 const generateUserOnlineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 上線</span> </li>`;
 const generateUserOfflineMessage = (userObj) => `<li class="user-status-message text-center"> <span class="w-auto py-1 px-2 badge-pill">${userObj.user.name} 離線</span> </li>`;
@@ -143,4 +145,9 @@ socket.on('userLeft', (data) => {
   // 顯示誰離開的離線訊息
   messages.innerHTML = (`${messages.innerHTML}${generateUserOfflineMessage(data)}`);
   messages.scrollIntoView(false);
+});
+
+// 顯示未讀訊息
+socket.on('unreadMessageNotification', (count) => {
+  privateMessageCount.innerText = count.messages.length;
 });
