@@ -31,7 +31,7 @@ router.get('/users/:userId/followings', authenticated, usersController.getFollow
 // 使用者的被追蹤清單
 router.get('/users/:userId/followers', authenticated, usersController.getFollowersPage);
 // 使用者的通知清單
-router.get('/users/:userId/notification', authenticated, usersController.getNotificationPage);
+router.get('/users/notification', authenticated, usersController.getNotificationPage);
 
 router.post('/users/:id', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), usersController.putUser);
 
