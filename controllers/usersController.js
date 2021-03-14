@@ -8,7 +8,7 @@ const notifyHelper = require('../middleware/notifyHelper');
 const db = require('../models');
 
 const {
-  Tweet, User, Reply, Like, Followship,
+  Tweet, User, Reply, Like, Followship, Notification,
 } = db;
 
 const usersController = {
@@ -418,12 +418,36 @@ const usersController = {
     }
   },
   // 使用者個人通知頁面
-  getNotificationPage: (req, res) => res.render('index', {
-    notification: true,
-    title       : {
-      text: '通知',
-    },
-  }),
+  getNotificationPage: (req, res) => {
+    Notification.findAll({
+      raw  : true,
+      nest : true,
+      where: {
+        userId: helpers.getUser(req).id, // Force to render user's own notifications only
+      },
+      order: [
+        // Will escape title and validate DESC against a list of valid direction parameters
+        ['createdAt', 'DESC'],
+      ],
+    })
+    .then((notifications) => {
+      const notificationsObj = notifications.map((notification) => ({
+        type     : notification.type,
+        data     : JSON.parse(notification.data),
+        createdAt: notification.createdAt,
+        updatedAt: notification.updatedAt,
+      }));
+      console.log('notificationsObj', notificationsObj);
+
+      res.render('index', {
+        notification: true,
+        title       : {
+          text: '通知',
+        },
+        notificationsArray: notificationsObj,
+      });
+    });
+  },
   // Helper functions
   getUserDetails: (userId) => new Promise((resolve, reject) => {
     User.findByPk(userId, {

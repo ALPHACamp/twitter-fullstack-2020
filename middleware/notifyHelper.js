@@ -6,7 +6,7 @@ const {
 } = db;
 
 module.exports = {
-  getAndNotifyFollowingUpdate: (userUpdatedId = null, req, res, cb) => {
+  getAndNotifyFollowingUpdate: (userUpdatedId = null, req) => {
     // userUpdatedId 是發出更新的user id
     // - 可以是 null, 為了後面的自己的更新部分
     // - 目前暫定更新都是 tweet 而已
