@@ -69,7 +69,7 @@ const getAndNotifyAllUnread = () => {
       db.sequelize.query(
         `SELECT m.*
         FROM Messages m 
-        LEFT JOIN ReadMessages r ON m.id = r.messageId
+        LEFT JOIN (SELECT * FROM ReadMessages WHERE ReadMessages.userId = ${socketUserId}) r ON m.id = r.messageId
         WHERE
           (
             r.id IS NULL
