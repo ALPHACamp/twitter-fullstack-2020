@@ -4,6 +4,12 @@
   {{/if}}
 </div>
 
+{{#if (isdefined noChatForm)}}
+<div class="m-5 text-center">
+  <p>請點選使用者讀取或發送私人訊息</p>
+</div>
+
+{{else}}
 <div id="mainblock-main" class="overflow-auto w-100 p-3 mt-auto">
   <ul id="chat-messages">
     {{!-- chat-bubble-template
@@ -35,4 +41,4 @@
       {{/if}}
     </form>
   </div>
-
+{{/if}}

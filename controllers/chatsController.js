@@ -87,9 +87,10 @@ const chatsController = {
         });
       }
       return res.render('chatroom', {
-        title: {
-          text: '私人聊天室',
-        },
+        noChatForm     : true,
+        // title     : {
+        //   // text      : '私人聊天室',
+        // },
         usersInteracted: interactedUserList,
         userMessaging,
       });
