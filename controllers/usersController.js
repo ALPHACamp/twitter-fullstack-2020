@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const helpers = require('../_helpers');
 const customHelpers = require('../custom_helpers');
-
+const notifyHelper = require('../middleware/notifyHelper');
 const db = require('../models');
 
 const {
@@ -417,7 +417,13 @@ const usersController = {
       });
     }
   },
-
+  // 使用者個人通知頁面
+  getNotificationPage: (req, res) => res.render('index', {
+    notification: true,
+    title       : {
+      text: '通知',
+    },
+  }),
   // Helper functions
   getUserDetails: (userId) => new Promise((resolve, reject) => {
     User.findByPk(userId, {

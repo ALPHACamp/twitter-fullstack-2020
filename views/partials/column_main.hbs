@@ -12,6 +12,9 @@
   {{#if (isdefined tweet)}}
     {{>column_main_tweet}}
   {{/if}}
+  {{#if (isdefined notification)}}
+    {{>column_main_notification}}
+  {{/if}}
   {{!-- TODO: 按照UX設計去抓的話，這邊是主要內容，像是new tweet block還有tweet info block --}}
   {{#if (isdefined tweets)}}
     <div id="add-tweet-block" class="d-flex align-items-start p-3">
