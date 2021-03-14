@@ -2,7 +2,7 @@ const { getUser } = require('../middleware/authenticationHelper');
 const { getAndNotifyFollowingUpdate } = require('../middleware/notifyHelper');
 const db = require('../models');
 
-const { Like, Tweet } = db;
+const { Like, Tweet, User } = db;
 
 const likesController = {
   addLike: (req, res, done) => {
@@ -11,13 +11,13 @@ const likesController = {
       TweetId: req.params.tweetId,
     })
     .then(() => {
-      Tweet.findByPk(req.params.tweetId)
+      Tweet.findByPk(req.params.tweetId, {
+        raw    : true,
+        nest   : true,
+        include: [User],
+      })
       .then(async (tweet) => {
-        const tweetObj = {
-          ...tweet.dataValues,
-        };
-
-        await getAndNotifyFollowingUpdate(req, 'Like', tweetObj, tweet.dataValues.UserId);
+        await getAndNotifyFollowingUpdate(req, 'Like', tweet, tweet.UserId);
 
         res.redirect('back');
         done();
