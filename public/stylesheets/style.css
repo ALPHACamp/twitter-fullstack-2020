@@ -536,6 +536,7 @@
 }
 
 /* chatroom */
+
 #chat-container {
   position: relative;
   display: flex;
@@ -570,7 +571,7 @@
 
 .user-avatar {
   border-radius: 50%;
-  height:50px;
+  height: 50px;
   width: 50px;
 }
 
@@ -609,20 +610,21 @@
 }
 
 .system-info {
-    display: block;
-    min-width: 150px;
-    width: auto;
-    margin: 3px auto;
-    background-color: #F5F8FA;
-    text-align: center;
-    border-radius: 20px;
-    font-size: 12px;
+  display: block;
+  min-width: 150px;
+  width: auto;
+  margin: 3px auto;
+  background-color: #F5F8FA;
+  text-align: center;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-top: 4rem;
 }
 
 .message-user-avatar {
   position: relative;
   top: 35%;
-  display:inline-block;
+  display: inline-block;
   border-radius: 50%;
   width: 65%;
   height: 65%;
@@ -679,14 +681,14 @@
 }
 
 .input-message-area {
- border: none;
- margin: 7px 0px 7px 10px;
- background-color: #F5F8FA;
- border-radius: 20px;
+  border: none;
+  margin: 7px 0px 7px 10px;
+  background-color: #F5F8FA;
+  border-radius: 20px;
 }
 
 .btn-send {
-  background:white;
+  background: white;
   width: 35px;
   outline: none;
 }

@@ -5,14 +5,15 @@ const online = document.querySelector('#online')
 const typing = document.querySelector('#is-typing')
 const chatContainer = document.querySelector('#chat-container')
 const onlineUsersList = document.querySelector('#online-user-list')
-const messageZone = document.querySelector('.message-zone')
+const chatMessage = document.querySelector('.chat-message')
+const selfMessage = document.querySelector('.self-message')
 const sendBtn = document.querySelector('#send')
 const output = document.querySelector('#output')
 const onlineUsers = []
 
-//處理時間
+// 處理時間
 const date = new Date()
-let currentTime = date.getMinutes() < 10 ? `${date.getHours()}:0${date.getMinutes()}` : `${date.getHours()}:${date.getMinutes()}`
+const currentTime = date.getMinutes() < 10 ? `${date.getHours()}:0${date.getMinutes()}` : `${date.getHours()}:${date.getMinutes()}`
 
 // 線上人數
 socket.on('online', onlineCount => {
@@ -20,13 +21,19 @@ socket.on('online', onlineCount => {
 })
 
 // 通知
-socket.on('message', message => {
-  console.log(message)
-  messageZone.innerHTML += `
-    <li class="system-info">
-      <span>${message}</span>
-    </li>
-  `
+// socket.on('message', message => {
+//   console.log(message)
+//   messageZone.innerHTML += `
+//     <li class="system-info">
+//       <span>${message}</span>
+//     </li>
+//   `
+// })
+
+// 系統發出誰加入誰退出的訊息
+socket.on('message', data => {
+  output.innerHTML += `<div><span>${data}</span></div>`
+  chatContainer.scrollTop = chatContainer.scrollHeight
 })
 
 // 監聽是否有人在打字
@@ -45,48 +52,44 @@ socket.on('typing', data => {
   }
 })
 
-//client發出訊息
-sendBtn.addEventListener('click', e => {
-  const data = {
-    text: textarea.value,
-    userId: 5
-  }
-  socket.emit('chat', data)
+// client發出訊息
+chatForm.addEventListener('click', event => {
+  event.preventDefault()
+  if (textarea.value.length === 0) { return false }
+  socket.emit('chat', textarea.value)
+  socket.emit('typing', { isExist: false })
+  textarea.value = ''
+  return false
 })
 
-//client接收其他client發出的訊息
+// client接收其他client發出的訊息
 socket.on('chat', data => {
-  if (data.userId === 5) {
-    messageZone.innerHTML += `
-    <li class="list-group-item message-line">
-      <div class="right-message-box">
-        <p>${data.text}</p>
-      </div>
-      <small class="right-time-box">${currentTime}</small>
-    </li>
+  if (data.currentUser === true) {
+    selfMessage.innerHTML += `
+            <li class="list-group-item message-line">
+              <div class="right-message-box">
+                <p>${data.message}</p>
+              </div>
+              <small class="right-time-box">${data.time}</small>
+            </li>
   `
   } else {
-    messageZone.innerHTML += `
+    chatMessage.innerHTML += `
     <li class="list-group-item message-line">
-      <div class="d-flex">
-        <div style="width: 55px; height: 55px;">
-          <img src="${onlineUsers.avatar}" alt="user avatar"
-                  class="message-user-avatar">
-        </div>
-        <div class="left-message-box">
-          <p>${data.text}</p>
-        </div>
-      </div>
-      <small class="left-time-box">${currentTime}</small>
-    </li>
+              <div class="d-flex">
+                <div style="width: 55px; height: 55px;">
+                  <img src="${data.avatar}" alt="user avatar"
+                    class="message-user-avatar">
+                </div>
+                <div class="left-message-box">
+                  <p>${data.message}</p>
+                </div>
+              </div>
+              <small class="left-time-box">${data.time}</small>
+            </li>
   `
   }
 })
-// 系統發出誰加入誰退出的訊息
-// socket.on('message', data => {
-//   output.innerHTML += `<div><span>${data}</span></div>`
-//   chatContainer.scrollTop = chatContainer.scrollHeight
-// })
 
 // 線上使用者
 socket.on('onlineUsers', data => {
