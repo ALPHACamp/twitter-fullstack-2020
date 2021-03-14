@@ -8,8 +8,9 @@
 
     <div class="d-flex" id="chat-container">
       <div class="left-side">
-        <div class="list-group-item left-side-title">
-          <span>上線使用者&ensp;(5)</strong></span>
+        <div class="list-group-item d-flex justify-content-between align-items-center left-side-title">
+          <span>訊息</strong></span>
+          <i class="far fa-envelope"></i>
         </div>
         <ul class="list-group">
           <li class="list-group-item">
@@ -22,9 +23,15 @@
                   <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
                     class="user-avatar">
                 </div>
-                <div class="col-8 d-flex align-items-center">
-                  <span class="chat-user-name"><strong>Apple</strong></span>
-                  <span class="chat-user-account">&ensp;@123</span>
+                <div class="col-8">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <span class="chat-user-name"><strong>Apple</strong></span>
+                      <span class="chat-user-account">&ensp;@123</span>
+                    </div>
+                    <span style="color: #657786;">5小時</span>
+                  </div>
+                  <p style="color: #657786;">hdsfhuishdvbdslhu</p>
                 </div>
               </div>
             </a>
@@ -33,23 +40,12 @@
       </div>
       <div class="right-side">
         <div class="list-group-item right-side-title">
-          <span>公開聊天室</span>
+          <span class="chat-user-name"><strong>Apple</strong></span>
+          <span class="chat-user-account">&ensp;@123</span>
         </div>
         <ul class="list-group">
           <li class="list-group-item">
-            <span>佔位用</span>
-          </li>
-
-          <li class="system-info">
-            <span>Alan&ensp;上線</span>
-          </li>
-
-          <li class="system-info">
-            <span>Shun&ensp;上線</span>
-          </li>
-
-          <li class="system-info">
-            <span>Jeff&ensp;上線</span>
+            <span class="chat-user-name"><strong>佔位用</strong></span>
           </li>
 
           <li class="list-group-item message-line">
@@ -88,6 +84,24 @@
             </div>
             <small class="right-time-box">下午5:00</small>
           </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
         </ul>
         <form action="" method="POST">
           <div class="input-message-zone d-flex">
@@ -98,6 +112,7 @@
             </button>
           </div>
         </form>
+
       </div>
     </div>
   </div>
