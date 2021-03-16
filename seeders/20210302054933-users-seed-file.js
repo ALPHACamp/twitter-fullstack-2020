@@ -13,8 +13,8 @@ module.exports = {
         name: i === 0 ? 'root' : `user${i}`,
         account: i === 0 ? 'root' : `user${i}`,
         introduction: faker.lorem.text(),
-        avatar: `https://loremflickr.com/320/240/avatar/?random=${Math.random() * 100}`,
-        cover: `https://loremflickr.com/320/240/background/?random=${Math.random() * 100}`,
+        avatar: `https://loremflickr.com/320/240/avatar/?lock=${Math.random() * 100}`,
+        cover: `https://loremflickr.com/320/240/background/?lock=${Math.random() * 100}`,
         role: i === 0 ? 'admin' : 'user',
         createdAt: new Date(),
         updatedAt: new Date()
