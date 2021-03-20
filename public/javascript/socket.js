@@ -74,7 +74,7 @@ socket.on('chat', data => {
             </li>
   `
   } else {
-    chatMessage.innerHTML += `
+    selfMessage.innerHTML += `
     <li class="list-group-item message-line">
               <div class="d-flex">
                 <div style="width: 55px; height: 55px;">
