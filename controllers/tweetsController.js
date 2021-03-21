@@ -9,6 +9,7 @@ const {
   Tweet, Reply, Like, User,
 } = db;
 const helpers = require('../_helpers');
+const { getAndNotifyFollowingUpdate } = require('../middleware/notifyHelper');
 
 const tweetsController = {
   getIndexPage: (req, res) => {
@@ -61,8 +62,16 @@ const tweetsController = {
       description: req.body.description,
       UserId     : helpers.getUser(req).id,
     }).then((tweet) => {
-      req.flash('success_messages', '推文成功');
-      res.redirect('/tweets');
+      Tweet.findByPk(tweet.dataValues.id, {
+        raw    : true,
+        nest   : true,
+        include: [User],
+      })
+      .then((tweet) => {
+        getAndNotifyFollowingUpdate(req, 'Tweet', tweet);
+        req.flash('success_messages', '推文成功');
+        res.redirect('/tweets');
+      });
     });
   },
 
@@ -76,7 +85,7 @@ const tweetsController = {
     })
     .then((tweet) => {
       const { createdAt } = tweet;
-      const tweetTime = ` ${moment(createdAt).format('a h:MM')}・ ${moment(createdAt).format('LL')}`;
+      const tweetTime = ` ${moment(createdAt).format('a h:mm')}・ ${moment(createdAt).format('LL')}`;
       const tweetObj = ({
         ...tweet.dataValues,
         User   : tweet.User.dataValues,
@@ -117,8 +126,29 @@ const tweetsController = {
       UserId : userId,
       TweetId: tweetId,
     }).then((reply) => {
-      req.flash('success_messages', '回覆成功');
-      res.redirect('back');
+      User.findByPk(userId, {
+        raw : true,
+        nest: true,
+      })
+      .then(async (user) => {
+        delete user.password;
+
+        Tweet.findByPk(tweetId, {
+          raw : true,
+          nest: true,
+        })
+        .then(async (tweet) => {
+          const replyObj = {
+            ...reply.dataValues,
+            User: user,
+          };
+
+          await getAndNotifyFollowingUpdate(req, 'Reply', replyObj, tweet.UserId);
+
+          req.flash('success_messages', '回覆成功');
+          return res.redirect('back');
+        });
+      });
     });
   },
 };

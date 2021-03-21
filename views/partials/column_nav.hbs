@@ -6,6 +6,18 @@
     <li class="nav-item">
       <a class="nav-link" href="/tweets"> <i class="fas fa-home pr-3"></i>首頁 </a>
     </li>
+    {{!-- 通知鈴鐺(小紅點) --}}
+    <li class="notify-li nav-item">
+      <a class="notice-bell nav-link" href="/users/notification"> <i class="far fa-bell pr-3 position-relative">
+      <span id="bell-notify-id" class="badge badge-notify bell-notify"></span></i>通知</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/chat/public"><i class="far fa-envelope pr-3"></i>公開聊天室</a>
+    </li>
+    {{!-- 私人訊息提示(數字) --}}
+    <li class="notify-li nav-item">
+      <a class="nav-link" href="/chat/private"><i class="far fa-envelope position-relative pr-3"><span id="message-notify-count" class="badge badge-notify"></span></i>私人訊息</a>
+    </li>
     <li class="nav-item">
       <a class="nav-link" href="/users/{{me.id}}/tweets"> <i class="far fa-user pr-3"></i>個人資料 </a>
     </li>

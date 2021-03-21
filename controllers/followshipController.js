@@ -1,7 +1,8 @@
 const { getUser } = require('../middleware/authenticationHelper');
+const { getAndNotifyFollowingUpdate } = require('../middleware/notifyHelper');
 const db = require('../models');
 
-const { Followship } = db;
+const { Followship, User } = db;
 
 const followshipController = {
   addFollowship: (req, res) => {
@@ -17,7 +18,19 @@ const followshipController = {
       followerId,
       followingId,
     })
-    .then((followship) => res.redirect('back'))
+    .then(async (followship) => {
+      User.findByPk(followerId, {
+        raw : true,
+        nest: true,
+      })
+      .then(async (followerUser) => {
+        delete followerUser.password;
+
+        await getAndNotifyFollowingUpdate(req, 'Followship', followerUser, followingId);
+
+        return res.redirect('back');
+      });
+    })
     .catch((error) => console.log('Add Followship error', error));
   },
 
