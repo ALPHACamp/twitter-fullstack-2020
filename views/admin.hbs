@@ -1,0 +1,11 @@
+<aside id="column_nav" class="col-3 h-100 bg-white d-flex flex-column">
+  {{>column_adminNav}}
+</aside>
+<main id="column_main" class="col-9 admin d-flex bg-white align-items-baseline flex-column max-vh-100 p-0">
+  {{#if users}}
+    {{>column_adminUsers}}
+  {{/if}}
+  {{#if tweets}}
+    {{>column_adminTweets}}
+  {{/if}}
+</main>

@@ -1,0 +1,13 @@
+{{#if (isdefined topFollowingsUsers)}}
+  <div class="card w-100 mt-3">
+    <div class="card-header">
+      跟隨誰
+    </div>
+    {{#each topFollowingsUsers}}
+      {{>listitem_user}}
+    {{/each}}
+    <div class="card-footer text-orange border-0">
+      顯示更多
+    </div>
+  </div>
+{{/if}}

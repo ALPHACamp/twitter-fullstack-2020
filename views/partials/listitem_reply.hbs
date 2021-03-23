@@ -1,0 +1,26 @@
+{{#each tweet.Replies}}
+  <div class="list-item d-flex align-items-start p-3" style="min-height: 120px;">
+    <a href="/users/{{this.User.id}}/tweets">
+      <img class="img-fluid rounded-circle mr-3" src="{{this.User.avatar}}" alt="" style="max-height: 70px;"></a>
+    <div>
+      <div class="item-header d-flex d-row d-flex align-items-center">
+        <div class="name pr-2">
+          <a href="/users/{{this.User.id}}/tweets" class="text-dark text-decoration-none">
+            {{this.User.name}}
+          </a>
+        </div>
+        <div class="info">
+          <a href="/users/{{this.User.id}}/tweets" class="text-dark text-decoration-none">
+            <span class="username">@{{this.User.account}}</span>
+          </a>
+          &#183;
+          <span class="posttime">{{moment this.createdAt}}</span>
+        </div>
+      </div>
+      <div class="pt-2">回覆<a href="/users/{{../tweet.User.id}}/tweets" class="text-dark text-decoration-none">@{{../tweet.User.account}}</a></div>
+      <div class="item-desc pt-2 pb-3">
+        {{this.comment}}
+      </div>
+    </div>
+  </div>
+{{/each}}

@@ -1,0 +1,186 @@
+<div id="mainblock-header" class="position-sticky d-flex align-items-center w-100 bg-white header-block p-3" style="white-space: pre-wrap;">
+  {{!-- TODO: 如果不是主頁就需要顯示那個頁面的標題 --}}
+  {{#if (isdefined title)}}
+    <a class="nav-link" href="/tweets"><i class="fas fa-arrow-left pr-2"></i></a>
+    {{>column_pageTitle}}
+  {{else}}
+    <h5>首頁</h5>
+  {{/if}}
+</div>
+<div class="overflow-auto w-100">
+<div id="mainblock-main" class="w-100">
+  {{#if (isdefined tweet)}}
+    {{>column_main_tweet}}
+  {{/if}}
+  {{#if (isdefined notificationsArray)}}
+    {{>column_main_notification}}
+  {{/if}}
+  {{!-- TODO: 按照UX設計去抓的話，這邊是主要內容，像是new tweet block還有tweet info block --}}
+  {{#if (isdefined tweets)}}
+    <div id="add-tweet-block" class="d-flex align-items-start p-3">
+      <img class="img-fluid rounded-circle mr-3" src="{{me.avatar}}" alt="" style=" max-height: 70px;">
+      <form action="/tweets" method="POST" class="w-100">
+        <textarea class="w-100" name="description" rows="3" cols="90" placeholder="有什麼新鮮事? (字數限制140字)"></textarea>
+        <div class="textarea-util d-flex justify-content-between">
+          <div class="text-counter text-lightgrey">0/140</div>
+          <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right; min-width:50px;">推文</button>
+        </div>
+      </form>
+    </div>
+  {{else}}
+    {{!-- user information block --}}
+    {{#if (isdefined selfTweets)}}
+      {{>column_main_user}}
+    {{/if}}
+    {{#if (isdefined selfTweetsReplies)}}
+      {{>column_main_user}}
+    {{/if}}
+    {{#if (isdefined likedTweets)}}
+      {{>column_main_user}}
+    {{/if}}
+
+    {{!-- tab nav block --}}
+    {{#if (isdefined selfTweets)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+    {{#if (isdefined selfTweetsReplies)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+    {{#if (isdefined likedTweets)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+    {{#if (isdefined userFollowings)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+    {{#if (isdefined userFollowers)}}
+      {{>listitem_tabnav}}
+    {{/if}}
+  {{/if}}
+</div>
+
+<div id="mainblock-list" class="w-100">
+  {{!-- Main Index Page --}}
+  {{#if (isdefined tweets)}}
+    {{#if tweets}}
+      {{#each tweets}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User Self Tweets and Replies page --}}
+  {{#if (isdefined selfTweetsReplies)}}
+    {{#if selfTweetsReplies}}
+      {{#each selfTweetsReplies}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User Self Tweets page --}}
+  {{#if (isdefined selfTweets)}}
+    {{#if selfTweets}}
+      {{#each selfTweets}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User Self Liked Tweets page --}}
+  {{#if (isdefined likedTweets)}}
+    {{#if likedTweets}}
+      {{#each likedTweets}}
+        {{>listitem_tweet}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User's following list --}}
+  {{#if (isdefined userFollowings)}}
+    {{#if userFollowings}}
+      {{#each userFollowings}}
+        {{>listitem_user}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- User's follower list --}}
+  {{#if (isdefined userFollowers)}}
+    {{#if userFollowers}}
+      {{#each userFollowers}}
+        {{>listitem_user}}
+      {{/each}}
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+
+  {{!-- Tweet's reply list --}}
+  {{#if (isdefined tweet)}}
+    {{#if tweet}}
+
+        {{>listitem_reply}}
+
+    {{else}}
+      {{>listitem_noitem}}
+    {{/if}}
+  {{/if}}
+</div>
+</div>
+<!-- Reply Creation Modal -->
+<div class="modal fade" id="reply-create-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header p-0 d-flex align-items-center">
+        <button type="button" class="close ml-0" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex align-items-start">
+          <div class="tweet-part d-flex align-items-stretch">
+            <div class="mr-3 d-flex align-self-stretch flex-column text-center" style="max-width: 70px; width: 170px;">
+              <img class="img-fluid rounded-circle mr-3" id="tweet-user-avatar" src="" alt="" style="max-height: 70px;">
+              <div class="d-flex align-self-stretch bg-lightgrey" style="height: calc(100% - 70px - 10px); margin: 5px auto; width: 2.5px;">&nbsp;</div>
+            </div>
+            <div>
+              <div class="item-header d-flex d-row d-flex align-items-center">
+                <div class="name pr-2">
+                  <strong id="tweet-user-name"></strong>
+                </div>
+                <div class="info">
+                  @<span class="username" id="tweet-user-account"></span>
+                  &#183;
+                  <span class="posttime" id="tweet-createdAt"></span>
+                </div>
+              </div>
+              <div class="item-desc pt-1 pb-2" id="tweet-description"></div>
+              <div class="account pb-4"><small><span class="text-lightgrey">回覆給</span>
+                  @<span class="text-orange" id="tweet-user-account"></span></small></div>
+            </div>
+          </div>
+        </div>
+        <div class="reply-part d-flex align-items-start">
+          <img class="img-fluid rounded-circle mr-3" id="user-avatar" src="" alt="" style=" max-height: 70px;">
+          <form action="" id="reply-form-action" method="POST" class="w-100">
+            <textarea class="w-100" name="comment" rows="5" cols="90" placeholder="推你的回覆? (字數限制140字)"></textarea>
+            <div class="textarea-util d-flex justify-content-between">
+              <div class="text-counter text-lightgrey">0/140</div>
+            </div>
+              <button type="submit" class="btn btn-sm btn-orange rounded-pill" style="float:right">回覆</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
