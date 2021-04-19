@@ -4,5 +4,14 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Tweet.associate = function(models) {
   };
+  Tweet.init(
+    {
+      description: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'Tweet',
+    }
+  );
   return Tweet;
 };
