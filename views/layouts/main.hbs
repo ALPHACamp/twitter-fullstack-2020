@@ -4,16 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
+  <title>Twi-Twitter</title>
   <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css" crossorigin="anonymous">
 </head>
 
 <body class="bg-light">
   <header>
-    <nav class="navbar navbar-dark bg-primary justify-content-between">
+    <nav class="navbar navbar-dark bg-info justify-content-between">
       <a class="navbar-brand" href="/">
         {{#if isAuthenticated}}{{ user.name}}'s {{/if}}
-        Todo List
+        Twi-Twitter
       </a>
       {{#if isAuthenticated}}
       <a href="/users/logout" class="btn btn-outline-light">Logout</a>
