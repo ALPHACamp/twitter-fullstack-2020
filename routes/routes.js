@@ -12,7 +12,7 @@ const adminController = require('../controllers/adminController.js')
 // 準備引入路由模組
 
 
-router.get('/', (req, res) => res.send('Hello World!'))
+router.get('/', (req, res) => res.redirect('/tweets'))
 
 router.get('/tweets', tweetController.getTweets)
 
