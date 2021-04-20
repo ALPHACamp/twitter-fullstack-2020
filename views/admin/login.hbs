@@ -1,20 +1,24 @@
-<div class="row mt-5">
-  <div class="col-md-6 m-auto">
-    <div class="card card-body">
-      <h1 class="text-center mt-3">Admin Login</h1>
-      {{!-- {{> message}} --}}
-      <form action="/login" method="POST">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email">
-        </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-      </form>
-
-    </div>
+<div class="container mt-5">
+  <div class="row justify-content-center" style="">
+    <form action="/admin/login" method="POST" style="width: 50%;">
+      <div class="icon icon-ac-mark text-center" style="color:#FF6600;font-size: 50px;"></div>
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">後台登入</h1>
+      </div>
+      {{> message}}
+            <div class="form-group">
+              <label for="account">Account</label>
+              <input type="text" id="account" name="account" class="form-control" placeholder="Enter Account">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+            </div>
+            <!--
+                                      <button type="submit" class="btn btn-primary btn-block">登入</button> 
+                                      -->
+            <a href="/admin/tweets" class="btn btn-primary btn-block">登入</a>
+            <a href="/login" class="btn btn-info btn-block">前台登入</a>
+          </form>
   </div>
 </div>
