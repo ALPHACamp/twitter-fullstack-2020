@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         is: { args: /^@.+/, msg: "Account name should start with @" }
       },
-      type: Sequelize.STRING
+      type: DataTypes.STRING
     },
     email: {
       allowNull: false,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: { msg: "Your email format is incorrect" }
       },
-      type: Sequelize.STRING
+      type: DataTypes.STRING
     },
     password: DataTypes.STRING,
     isAdmin: DataTypes.BOOLEAN,
