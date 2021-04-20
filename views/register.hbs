@@ -3,7 +3,7 @@
     <div class="card card-body">
       <h1 class="text-center mt-3">Register</h1>
       {{!-- {{> message}} --}}
-      <form action="/users/register" method="POST">
+      <form action="/register" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" value="{{ name }}">
@@ -27,7 +27,7 @@
         <a href="/auth/facebook" class="btn btn-info btn-block">Facebook</a>
       </form>
       <p class="lead mt-4">
-        Have An Account? <a href="/users/login">Login</a>
+        Have An Account? <a href="/login">Login</a>
       </p>
     </div>
   </div>
