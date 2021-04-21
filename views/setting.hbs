@@ -1,0 +1,49 @@
+<div class="container ">
+  <div class="row">
+    <div class="col-2 left-column">{{> left-column}}</div>
+    <div class="col-10 account-setting">
+      <div class="row mt-5">
+        <div class="col-md-6 m-auto">
+          <div class="text-left mt-3" style="font-weight: bold ;font-size: 19px;line-height: 28px
+">帳戶設定
+          </div>
+          <hr class="mb-3">
+          {{> message}}
+          <form action="/register" method="POST" class="de-flex">
+            <div class="form-group">
+              <label for="account" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">帳號</label>
+              <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號"
+                value="{{ account }}">
+            </div>
+            <div class="form-group">
+              <label for="name" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">名稱</label>
+              <input type="text" id="name" name="name" class="form-control" placeholder="請輸入名稱" value="{{ name }}">
+            </div>
+            <div class="form-group">
+              <label for="email"
+                style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">Email</label>
+              <input type="email" id="email" name="email" class="form-control" placeholder="請輸入Email"
+                value="{{ email }}">
+            </div>
+            <div class="form-group">
+              <label for="password"
+                style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">密碼</label>
+              <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼"
+                value="{{ password }}">
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword"
+                style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">密碼確認</label>
+              <input type="password" id="confirmPassword" name="confirmPassword" class="form-control"
+                placeholder="請重新輸入密碼" value="{{ confirmPassword }}">
+            </div>
+            <div class="d-flex flex-row-reverse">
+              <button type="submit" class="btn  btn-block  " style="border-radius: 50px; background:#FF6600;font-weight: bold;
+font-size: 18px;line-height: 26px;color: #FFFFFF;width: 122px;">儲存</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

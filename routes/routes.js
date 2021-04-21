@@ -15,6 +15,7 @@ const adminController = require('../controllers/adminController.js')
 router.get('/', (req, res) => res.redirect('/tweets'))
 
 router.get('/tweets', tweetController.getTweets)
+router.get('/setting',  userController.settingPage)
 
 router.get('/login', userController.signInPage)
 
