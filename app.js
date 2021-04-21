@@ -7,14 +7,16 @@ const routes = require('./routes');
 const app = express();
 const port = process.env.PORT || 3000;
 
+app.use(express.static(__dirname + '/public'));
+
 app.engine(
-  'hbs',
+  'handlebars',
   handlebars({
-    defaultLayout: 'main.hbs',
+    defaultLayout: 'main.handlebars',
     //helpers: require('./config/handlebars-helpers'),
   })
 );
-app.set('view engine', 'hbs');
+app.set('view engine', 'handlebars');
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 app.use('/', routes);
