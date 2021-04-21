@@ -1,8 +1,8 @@
 let userController = {
-  signInPage: (req, res) => {
+  loginPage: (req, res) => {
     return res.render('login')
   },
-  signUpPage: (req, res) => {
+  registerPage: (req, res) => {
     return res.render('register')
   },
   settingPage: (req, res) => {
