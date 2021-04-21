@@ -1,2 +1,11 @@
-{{> left-column}}
-{{> addTweet}}
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
+    <div>
+      {{> left-column}}
+    </div>
+    {{> addTweet}}
+  </nav>
+  <div class="right-content">
+    {{> right-column}}
+  </div>
+</div>
