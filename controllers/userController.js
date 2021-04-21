@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const helpers = require('./_helpers');
+const helpers = require('../_helpers');
 const User = db.User
 
 const userController = {
