@@ -1,0 +1,73 @@
+{{#if error}}
+{{#each error}}
+<div class="alert alert-danger" role="alert" style="margin: 30px">
+  {{this.message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}
+{{/if}}
+
+{{#if success}}
+{{#each success}}
+<div class="alert alert-success" role="alert" style="margin: 30px">
+  {{this.message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}
+{{/if}}
+
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
+    <div>
+      {{> left-column}}
+    </div>
+  </nav>
+
+  {{> addTweet}}
+
+  <div class="tweet-setting">
+    <div class="admin-title" style="margin: 0px; border-left: none">
+      帳戶設定
+    </div>
+    <div>
+      <br><br>
+      <form action="/api/users/{{user.id}}" method="POST">
+
+        <div class="form-label-group" style="left: 100px">
+          <label for="account" class="sign-label-text">帳號</label>
+          <input type="text" name="account" class="form-control shadow-none border-none" autofocus
+            value="{{user.account}}">
+        </div>
+
+        <div class="form-label-group" style="left: 100px">
+          <label for="name" class="sign-label-text">名稱</label>
+          <input type="text" name="name" class="form-control" autofocus value="{{user.name}}">
+        </div>
+
+        <div class="form-label-group" style="left: 100px">
+          <label for="email" class="sign-label-text">Email</label>
+          <input type="email" name="email" class="form-control" autofocus value="{{user.email}}">
+        </div>
+
+        <div class="form-label-group" style="left: 100px">
+          <label for="password" class="sign-label-text">密碼</label>
+          <input type="password" name="password" class="form-control">
+        </div>
+
+        <div class="form-label-group" style="left: 100px">
+          <label for="checkPassword" class="sign-label-text">密碼確認</label>
+          <input type="password" name="checkPassword" class="form-control">
+        </div>
+
+        <br />
+        <div class="setting-button">
+          <button type="submit" class="btn btn-lg btn-block" id="submit" style="left: 100px">儲存</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

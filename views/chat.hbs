@@ -1,0 +1,98 @@
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
+    <div>
+      {{> left-column}}
+    </div>
+  </nav>
+
+  <div class="center-content d-flex col-12 mt-4" id="tweet-content" style="max-width: 60vw">
+    <div class="chatbox justify-content-between" style="width: 100%">
+      <div class="row rounded-lg overflow-hidden ">
+        <!-- 上線使用者-->
+        <div class="col-3 px-0" style="border-right: 1px solid #E6ECF0">
+          <div class="bg-white">
+
+            <div class="bg-gray px-3 py-2 bg-light" id="usertitle" style="border-bottom: 1px solid #E6ECF0">
+              <p class="h5 mb-0 font-weight-bold">上線使用者(N)</p>
+            </div>
+
+            <div class="contacts-box" id="chatUserlist" style="overflow-y: scroll; height: 598px;">
+              {{!-- <div class="list-group rounded-0">
+                <a class="list-group-item list-group-item-action text-white rounded-0 p-1"
+                  style="border:none; border-bottom: 1px solid #E6ECF0">
+                  <div class="media">
+                    <img class="m-1" {{#if user.avatar}}src={{user.avatar}}{{/if}}
+                      style="background: #C4C4C4;border-radius: 100%; width: 50px; height: 50px">
+                    <div class="media-body ml-2 align-self-center">
+                      <div class="mb-1">
+                        <span class="user-name">{{user.name}}</span>
+                        <span class="user-account">@{{user.account}}</span><br>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              </div> --}}
+            </div>
+          </div>
+        </div>
+        <!-- Chat Box-->
+        <div class="col-9 px-0">
+          <div class="bg-gray px-3 py-2 bg-light" style="border-bottom: 1px solid #E6ECF0">
+            <p class="h5 mb-0 font-weight-bold">公開聊天室</p>
+          </div>
+          <div id="chatmessage" class="px-4 py-5 chat-box bg-white" style="overflow-y: scroll; height: 550px;">
+            {{!-- <!-- Reciever Message-->
+            <div class="media w-50 mb-3"><img
+                src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50"
+                class="rounded-circle">
+              <div class="media-body ml-3">
+                <div class="bg-light rounded py-2 px-3 mb-2">
+                  <p class="text-small mb-0 text-muted">Test</p>
+                </div>
+                <p class="small text-muted">12:00 PM | Aug 13</p>
+              </div>
+            </div>
+            <!-- Sender Message-->
+            <div class="send-msg w-50 ml-auto mb-3">
+              <div class="media-body">
+                <div class=" rounded py-2 px-3 mb-2" style="background: #ff6600;">
+                  <p class="text-small mb-0 text-white">Test</p>
+                </div>
+                <p class="small text-muted">12:00 PM | Aug 13</p>
+              </div>
+            </div> --}}
+
+            {{!-- broadcast user online/leave --}}
+            {{!-- <div style="text-align: center">
+              <div class="bg-light rounded py-2 px-3 mb-3" style="width:auto !important; display:inline-block">
+                <p class=" text-small mb-0 text-muted">xxx 上線了</p>
+              </div>
+            </div> --}}
+          </div>
+
+
+          <!-- Typing area -->
+          <form action="#" class="bg-light">
+            <div class="input-group">
+              <input type="text" placeholder="輸入訊息" aria-describedby="button-addon2"
+                class="form-control rounded-0 border-0 py-4 bg-light" id="msg">
+              <div class="input-group-append">
+                <button id="button-addon2" type="submit" class="btn btn-link"> <i
+                    class="fa fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/socket.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/locale/zh-tw.js'></script>
+
+{{!-- <div class="right-content">
+  {{> right-column}}
+</div> --}}
