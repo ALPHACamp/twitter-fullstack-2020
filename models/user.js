@@ -4,9 +4,6 @@ module.exports = (sequelize, DataTypes) => {
     account: {
       allowNull: false,
       unique: true,
-      validate: {
-        is: { args: /^@.+/, msg: "Account name should start with @" }
-      },
       type: DataTypes.STRING
     },
     email: {

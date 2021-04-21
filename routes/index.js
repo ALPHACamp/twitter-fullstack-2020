@@ -5,4 +5,5 @@ module.exports = app => {
   // app.get('/tweets', tweetController.getTweets)
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
+  app.get('/signin', userController.signInPage)
 }

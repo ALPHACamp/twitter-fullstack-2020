@@ -8,8 +8,8 @@ const userController = {
   },
   signUp: (req, res) => {
     console.log(req.body)
-    const { account, name, email, password, passwordCheck } = req.body
-    if (password !== passwordCheck) {
+    const { account, name, email, password, checkPassword } = req.body
+    if (password !== checkPassword) {
       req.flash('warning_msg', '兩次密碼輸入不同！')
       return res.render('signup', { account, name, email, password })
     }
@@ -39,6 +39,9 @@ const userController = {
         }
         return res.send(err)
       })
+  },
+  signInPage: (req, res) => {
+    return res.render('signin')
   }
 }
 
