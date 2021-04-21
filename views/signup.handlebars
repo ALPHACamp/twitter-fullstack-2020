@@ -25,21 +25,23 @@
 
 <div class="d-flex justify-content-center">
   <form action="/signup" method="POST" style="width: 60%;">
-
+    {{> message}}
     <div class="form-group">
-      <input type="text" class="form-control" name="account" id="enterAccount" placeholder="帳號" required autofocus>
+      <input type="text" class="form-control" name="account" id="enterAccount" placeholder="帳號" value="{{account}}"
+        required autofocus>
     </div>
 
     <div class="form-group">
-      <input type="text" class="form-control" name="name" id="enterName" placeholder="暱稱/名稱" required>
+      <input type="text" class="form-control" name="name" id="enterName" placeholder="暱稱/名稱" value="{{email}}" required>
     </div>
 
     <div class="form-group">
-      <input type="email" class="form-control" name="email" id="enterEmail" placeholder="信箱" required>
+      <input type="email" class="form-control" name="email" id="enterEmail" placeholder="信箱" value="{{name}}" required>
     </div>
 
     <div class="form-group">
-      <input type="password" class="form-control" name="password" id="enterPassword" placeholder="密碼" required>
+      <input type="password" class="form-control" name="password" id="enterPassword" placeholder="密碼"
+        value="{{password}}" required>
     </div>
 
     <div class="form-group">
