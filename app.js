@@ -3,6 +3,7 @@ const handlebars = require('express-handlebars')
 const { urlencoded } = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
+const passport = require('./config/passport')
 const helpers = require('./_helpers');
 
 const app = express()
@@ -16,6 +17,8 @@ app.set('view engine', 'handlebars')
 // body-parser
 app.use(urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
@@ -23,9 +26,9 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/', (req, res) => res.send('Hello World!'))
+// get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes')(app)
+require('./routes')(app, passport)
 
 module.exports = app
