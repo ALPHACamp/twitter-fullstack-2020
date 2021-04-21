@@ -1,5 +1,5 @@
 let adminController = {
-  signInPage: (req, res) => {
+  loginPage: (req, res) => {
     return res.render('admin/login')
   },
 
