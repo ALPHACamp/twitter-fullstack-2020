@@ -1,206 +1,205 @@
-
-    <ul class="list-group " style="width: 350px;background: #F5F8FA; border-radius: 14px;">
-      <li class="list-group-item right-column-title font-weight-bold"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        跟隨誰？
-      </li>
-
-
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
-            <div class="user-account">@rrmiopot</div>
-          </div>
-          <form action="/followships" method="POST">
-            <div class="btn ml-5">
-              <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
-box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
-            <div class="user-account">@rrmiopot</div>
-          </div>
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <div class="btn ml-5">
-              <button class="btn font-weight-bold" style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF
-              ;line-height: 15px;font-size: 15px;">正在跟隨</button>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
-            <div class="user-account">@rrmiopot</div>
-          </div>
-          <form action="/followships" method="POST">
-            <div class="btn ml-5">
-              <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
-      box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
-            <div class="user-account">@rrmiopot</div>
-          </div>
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <div class="btn ml-5">
-              <button class="btn font-weight-bold" style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF
-                    ;line-height: 15px;font-size: 15px;">正在跟隨</button>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
-            <div class="user-account">@rrmiopot</div>
-          </div>
-          <form action="/followships" method="POST">
-            <div class="btn ml-5">
-              <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
-box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
-            <div class="user-account">@rrmiopot</div>
-          </div>
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <div class="btn ml-5">
-              <button class="btn font-weight-bold" style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF
-              ;line-height: 15px;font-size: 15px;">正在跟隨</button>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
-            <div class="user-account">@rrmiopot</div>
-          </div>
-          <form action="/followships" method="POST">
-            <div class="btn ml-5">
-              <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
-box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
-            <div class="user-account">@rrmiopot</div>
-          </div>
-          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-            <div class="btn ml-5">
-              <button class="btn font-weight-bold" style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF
-              ;line-height: 15px;font-size: 15px;">正在跟隨</button>
-            </div>
-          </form>
-        </div>
-      </li>
+<ul class="list-group ml-5" style="width: 350px;background: #F5F8FA; border-radius: 14px;">
+  <li class="list-group-item right-column-title font-weight-bold"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    跟隨誰？
+  </li>
 
 
-
-
-      {{#each topFollowersList}}
-      <li class="list-group-item top-followers-list"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
-        <div class="top-followers-item d-flex align-items-center">
-          <a href="/users/{{this.id}}/tweets">
-            <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
-              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </a>
-          <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
-            <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">{{this.name}}</a>
-            <div class="user-account">@{{this.account}}</div>
-      </li>
-
-      {{#if this.isFollowed}}
-      <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-        <div class="btn ml-5">
-          <button class="btn font-weight-bold"
-            style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF ;line-height: 15px;font-size: 15px;">正在跟隨</button>
-        </div>
-      </form>
-      {{else}}
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
+        <div class="user-account">@rrmiopot</div>
+      </div>
       <form action="/followships" method="POST">
         <div class="btn ml-5">
           <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
-            box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
+box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
         </div>
       </form>
-      {{/if}}
-      {{/each}}
-      <li class="list-group-item top-followers-list" style="background: #F5F8FA;">
-        {{!-- 連結須設定 --}}
-        <a href="/" style="text-decoration:none;font-size: 15px;
+    </div>
+  </li>
+
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
+        <div class="user-account">@rrmiopot</div>
+      </div>
+      <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+        <div class="btn ml-5">
+          <button class="btn font-weight-bold" style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF
+              ;line-height: 15px;font-size: 15px;">正在跟隨</button>
+        </div>
+      </form>
+    </div>
+  </li>
+
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
+        <div class="user-account">@rrmiopot</div>
+      </div>
+      <form action="/followships" method="POST">
+        <div class="btn ml-5">
+          <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
+      box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
+        </div>
+      </form>
+    </div>
+  </li>
+
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
+        <div class="user-account">@rrmiopot</div>
+      </div>
+      <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+        <div class="btn ml-5">
+          <button class="btn font-weight-bold" style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF
+                    ;line-height: 15px;font-size: 15px;">正在跟隨</button>
+        </div>
+      </form>
+    </div>
+  </li>
+
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
+        <div class="user-account">@rrmiopot</div>
+      </div>
+      <form action="/followships" method="POST">
+        <div class="btn ml-5">
+          <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
+box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
+        </div>
+      </form>
+    </div>
+  </li>
+
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
+        <div class="user-account">@rrmiopot</div>
+      </div>
+      <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+        <div class="btn ml-5">
+          <button class="btn font-weight-bold" style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF
+              ;line-height: 15px;font-size: 15px;">正在跟隨</button>
+        </div>
+      </form>
+    </div>
+  </li>
+
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
+        <div class="user-account">@rrmiopot</div>
+      </div>
+      <form action="/followships" method="POST">
+        <div class="btn ml-5">
+          <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
+box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
+        </div>
+      </form>
+    </div>
+  </li>
+
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">jierwotrj</a>
+        <div class="user-account">@rrmiopot</div>
+      </div>
+      <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+        <div class="btn ml-5">
+          <button class="btn font-weight-bold" style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF
+              ;line-height: 15px;font-size: 15px;">正在跟隨</button>
+        </div>
+      </form>
+    </div>
+  </li>
+
+
+
+
+  {{#each topFollowersList}}
+  <li class="list-group-item top-followers-list"
+    style="font-size: 18px;line-height: 26px;color: #1C1C1C;background: #F5F8FA;">
+    <div class="top-followers-item d-flex align-items-center">
+      <a href="/users/{{this.id}}/tweets">
+        <img class="ml-2 mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+          style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+      </a>
+      <div class="top-follower-name d-flex flex-column justify-content-center ml-2">
+        <a href="/users/{{this.id}}/tweets" class="user-name font-weight-bold">{{this.name}}</a>
+        <div class="user-account">@{{this.account}}</div>
+  </li>
+
+  {{#if this.isFollowed}}
+  <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+    <div class="btn ml-5">
+      <button class="btn font-weight-bold"
+        style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF ;line-height: 15px;font-size: 15px;">正在跟隨</button>
+    </div>
+  </form>
+  {{else}}
+  <form action="/followships" method="POST">
+    <div class="btn ml-5">
+      <button class="btn font-weight-bold " name="id" value="{{this.id}}" style="border: 1px solid #FF6600;
+            box-sizing: border-box;border-radius: 100px;font-size: 15px;line-height: 15px;color: #FF6600;">跟隨</button>
+    </div>
+  </form>
+  {{/if}}
+  {{/each}}
+  <li class="list-group-item top-followers-list" style="background: #F5F8FA;">
+    {{!-- 連結須設定 --}}
+    <a href="/" style="text-decoration:none;font-size: 15px;
 line-height: 22px;color: #FF6600;">顯示更多</a>
-      </li>
-    </ul>
+  </li>
+</ul>
