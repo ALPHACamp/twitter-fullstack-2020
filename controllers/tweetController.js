@@ -23,10 +23,10 @@ const tweetController = {
       //   );
       //   const prev = page - 1 < 1 ? 1 : page - 1;
       //   const next = page + 1 > pages ? pages : page + 1;
-      res.json({ status: 'success', message: 'getTweets' });
-      //   return res.render('tweets', {
-      //     tweets,
-      //   });
+      // res.json({ status: 'success', message: 'getTweets' });
+        return res.render('tweets', {
+          tweets,
+        });
     } catch (err) {
       console.log(err);
     }
