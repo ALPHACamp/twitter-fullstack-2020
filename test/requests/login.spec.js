@@ -18,8 +18,8 @@ describe('# login request', () => {
       before(async () => {
         await db.User.create({
           name: 'User1',
-          email: 'User1@email.com',
-          account: '@User1',
+          email: 'User1',
+          account: 'User1',
           password: bcrypt.hashSync('User1', bcrypt.genSaltSync(10)),
         })
       })
@@ -89,7 +89,7 @@ describe('# login request', () => {
       it('signup successfully', (done) => {
         request(app)
           .post('/signup')
-          .send('account=@User1&name=User1&email=User1@example.com&password=User1&checkPassword=User1')
+          .send('account=User1&name=User1&email=User1@example.com&password=User1&checkPassword=User1')
           .set('Accept', 'application/json')
           .expect(302)
           .expect('Location', '/signin')
