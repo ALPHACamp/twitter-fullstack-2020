@@ -10,7 +10,7 @@ const authenticated = (req, res, next) => {
 }
 
 module.exports = (app, passport) => {
-  app.get('/', authenticated, (req, res) => res.redirect('/users/setting'))
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
