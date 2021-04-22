@@ -1,5 +1,6 @@
 const db = require('../models')
 const User = db.User
+const Followship = db.Followship
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 
@@ -102,33 +103,43 @@ const userController = {
       .catch(err => {
         return res.send(err)
       })
-  }
-}
-
-function definitionErrHandler(err, req, res, obj) {
-  if (err.name === 'SequelizeValidationError') {
-    req.flash('warning_msg', err.errors[0].message)
-    if (obj) {
-      return res.render('signup', obj)
-    }
-    return res.redirect('back')
-  }
-  if (err.name === 'SequelizeUniqueConstraintError') {
-    if (err.errors[0].path === 'users.account') {
-      req.flash('warning_msg', 'Sorry, account name already registered!')
-      if (obj) {
-        return res.render('signup', obj)
-      }
-      return res.redirect('back')
-    } else {
-      req.flash('warning_msg', 'Sorry, email already registered!')
-      if (obj) {
-        return res.render('signup', obj)
-      }
+  },
+  followUser: (req, res) => {
+    const followerId = Number(helpers.getUser(req).id)
+    const followingId = Number(req.params.id)
+    //不能追蹤自己
+    if (followerId === followingId) {
+      req.flash('warning_msg', 'You cannot be your own follower')
       return res.redirect('back')
     }
+    //不能重複追蹤
+    Followship.findOne({ where: { followerId, followingId } })
+      .then(followship => {
+        if (followship) {
+          req.flash('warning_msg', 'You cannot follow the same person twice')
+          return res.redirect('back')
+        }
+        return Followship.create({
+          followerId,
+          followingId
+        })
+          .then(() => res.redirect(`/users/${followingId}/tweets`))
+          .catch(err => res.send(err))
+      })
+  },
+  unfollowUser: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followeeId: req.params.userId
+      }
+    })
+      .then(followship => {
+        followship.destroy()
+          .then(() => res.redirect('back'))
+      })
+      .catch(err => res.send(err))
   }
-  return res.send(err)
 }
 
 module.exports = userController
