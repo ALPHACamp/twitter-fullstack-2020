@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="border">
+    {{> nav}}
+  </div>
+  {{!-- tweets --}}
+  <div class="">
+    {{#each tweets}}
+    {{> tweet isAdminPage=../isAdminPage}}
+    {{/each}}
+  </div>
+</div>
