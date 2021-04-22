@@ -24,22 +24,8 @@ const userController = {
         req.flash('success_msg', '註冊成功，請登入！')
         return res.redirect('/signin')
       })
-      .catch(err => {
-        if (err.name === 'SequelizeValidationError') {
-          req.flash('warning_msg', err.errors[0].message)
-          return res.render('signup', { account, name, email, password })
-        }
-        if (err.name === 'SequelizeUniqueConstraintError') {
-          if (err.errors[0].path === 'users.account') {
-            req.flash('warning_msg', 'Sorry, account name already registered!')
-            return res.render('signup', { account, name, email, password })
-          } else {
-            req.flash('warning_msg', 'Sorry, email already registered!')
-            return res.render('signup', { account, name, email, password })
-          }
-        }
-        return res.send(err)
-      })
+      .catch(err => definitionErrHandler(err, req, res, { account, name, email, password })
+      )
   },
   signInPage: (req, res) => {
     return res.render('signin')
@@ -96,22 +82,8 @@ const userController = {
               req.flash('success_msg', 'Your setting was successfully updated')
               return res.redirect('/tweets')
             })
-            .catch(err => {
-              if (err.name === 'SequelizeValidationError') {
-                req.flash('warning_msg', err.errors[0].message)
-                return res.redirect('back')
-              }
-              if (err.name === 'SequelizeUniqueConstraintError') {
-                if (err.errors[0].path === 'users.account') {
-                  req.flash('warning_msg', 'Sorry, account name already registered!')
-                  return res.redirect('back')
-                } else {
-                  req.flash('warning_msg', 'Sorry, email already registered!')
-                  return res.redirect('back')
-                }
-              }
-              return res.send(err)
-            })
+            .catch(err => definitionErrHandler(err, req, res,)
+            )
         } else {
           //update without password change
           user.update({
@@ -123,28 +95,40 @@ const userController = {
               req.flash('success_msg', 'Your setting was successfully updated')
               return res.redirect('/tweets')
             })
-            .catch(err => {
-              if (err.name === 'SequelizeValidationError') {
-                req.flash('warning_msg', err.errors[0].message)
-                return res.redirect('back')
-              }
-              if (err.name === 'SequelizeUniqueConstraintError') {
-                if (err.errors[0].path === 'users.account') {
-                  req.flash('warning_msg', 'Sorry, account name already registered!')
-                  return res.redirect('back')
-                } else {
-                  req.flash('warning_msg', 'Sorry, email already registered!')
-                  return res.redirect('back')
-                }
-              }
-              return res.send(err)
-            })
+            .catch(err => definitionErrHandler(err, req, res,)
+            )
         }
       })
       .catch(err => {
         return res.send(err)
       })
   }
+}
+
+function definitionErrHandler(err, req, res, obj) {
+  if (err.name === 'SequelizeValidationError') {
+    req.flash('warning_msg', err.errors[0].message)
+    if (obj) {
+      return res.render('signup', obj)
+    }
+    return res.redirect('back')
+  }
+  if (err.name === 'SequelizeUniqueConstraintError') {
+    if (err.errors[0].path === 'users.account') {
+      req.flash('warning_msg', 'Sorry, account name already registered!')
+      if (obj) {
+        return res.render('signup', obj)
+      }
+      return res.redirect('back')
+    } else {
+      req.flash('warning_msg', 'Sorry, email already registered!')
+      if (obj) {
+        return res.render('signup', obj)
+      }
+      return res.redirect('back')
+    }
+  }
+  return res.send(err)
 }
 
 module.exports = userController
