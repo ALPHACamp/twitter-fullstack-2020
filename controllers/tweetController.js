@@ -1,19 +1,25 @@
 const { Tweet, Reply } = require('../models')
 
 const tweetController = {
-  getTweets: async (req, res) => {
-    let tweets = await Tweet.findAll(
+  getTweets: (req, res) => {
+    Tweet.findAll(
       {
         order: [['createdAt', 'DESC']]
       }
-    )
-    tweets = tweets.map((d, i) => ({
-      ...d.dataValues,
-    }))
+    ).then((tweets) => {
 
-    const pageTitle = '首頁'
+      tweets = tweets.map((d, i) => ({
+        ...d.dataValues
+      }))
 
-    res.render('tweets', { tweets, pageTitle })
+      const pageTitle = '首頁'
+      const isUserPage = true;
+
+      res.render('tweets', { tweets, pageTitle, isUserPage })
+    })
+      .catch(e => {
+        console.warn(e)
+      })
   }
 }
 
