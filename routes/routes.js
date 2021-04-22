@@ -1,43 +1,55 @@
-const exrpess = require('express')
-const router = exrpess.Router()
-const helpers = require('../_helpers')
-const passport = require('../config/passport')
-const userController = require('../controllers/userController')
-const adminController = require('../controllers/adminController')
-const tweetController = require('../controllers/tweetController')
+const exrpess = require('express');
+const router = exrpess.Router();
+const helpers = require('../_helpers');
+const passport = require('../config/passport');
+const userController = require('../controllers/userController');
+const tweetController = require('../controllers/tweetController');
 
 //一般使用者
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    return next()
+    return next();
   }
-  res.redirect('/signin')
-}
+  res.redirect('/signin');
+};
 
 // 管理員
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).isAdmin) {
-      return next()
+      return next();
     }
-    res.redirect('/')
+    res.redirect('/');
   }
-  res.redirect('/signin')
-}
+  res.redirect('/signin');
+};
 
-router.get('/', authenticated, (req, res) => { res.redirect('/tweets') })
-router.get('/tweets', authenticated, tweetController.getTweets)
+// router.get('/', authenticated, (req, res) => {
+//   res.redirect('/tweets');
+// });
+// router.get('/tweets', authenticated, tweetController.getTweets);
 
-router.get('/signup', userController.signUpPage)
-router.post('/signup', userController.signUp)
-router.get('/signin', userController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.get('/signup', userController.signUpPage);
+router.post('/signup', userController.signUp);
+router.get('/signin', userController.signInPage);
+router.post(
+  '/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: true,
+  }),
+  userController.signIn
+);
+router.get('/logout', userController.logOut);
 
-router.get('/admin/signin', adminController.signinPage)
-router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
-router.get('/admin/tweets', adminController.tweetsPage)
-router.get('/admin/users', adminController.usersPage)
+// 推文 -- Liv 新增
+router.get('/', (req, res) => {
+  res.redirect('/tweets');
+});
+router.get('/tweets', tweetController.getTweets);
+router.get('/tweet/:id', tweetController.getTweet);
+router.post('/tweet', tweetController.postTweet);
+router.put('/tweet/:id', tweetController.putTweet);
+router.delete('/tweet/:id', tweetController.deleteTweet);
 
-router.get('/logout', userController.logOut)
-
-module.exports = router
+module.exports = router;
