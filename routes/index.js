@@ -10,11 +10,13 @@ const authenticated = (req, res, next) => {
 }
 
 module.exports = (app, passport) => {
-  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/', authenticated, (req, res) => res.redirect('/users/setting'))
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
+  app.get('/users/setting', authenticated, userController.settingPage)
+  app.put('/users/setting', authenticated, userController.putSetting)
 }
