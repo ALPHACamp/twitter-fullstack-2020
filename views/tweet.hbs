@@ -2,10 +2,8 @@
   <div class="border">
     {{> nav}}
   </div>
-  {{!-- tweets --}}
+  {{!-- tweet with reply --}}
   <div class="">
-    {{#each tweets}}
-    {{> tweetList isAdminPage=../isAdminPage}}
-    {{/each}}
+    {{> tweet}}
   </div>
 </div>

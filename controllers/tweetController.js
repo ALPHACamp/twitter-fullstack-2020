@@ -20,6 +20,25 @@ const tweetController = {
       .catch(e => {
         console.warn(e)
       })
+  },
+  getTweet: (req, res) => {
+    const tweet_id = req.params.id
+
+    Tweet.findOne(
+      {
+        where: { id: tweet_id },
+        include: [Reply]
+      }
+    ).then((tweet) => {
+
+      // console.log(tweet.Replies)
+      const pageTitle = '推文'
+
+      res.render('tweet', { tweet: tweet.toJSON(), pageTitle })
+    })
+      .catch(e => {
+        console.warn(e)
+      })
   }
 }
 
