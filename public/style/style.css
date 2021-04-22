@@ -42,21 +42,18 @@
   margin-top: 50px;
   margin-left: 13px;
 }
-.nav_tweets a {
-  color: orangered;
-}
+
 .nav_users {
   margin-top: 20px;
   margin-left: 15px;
 }
-.nav_users a {
-  color: black;
-}
+
 .nav_logout {
   margin-top: 600px;
   margin-left: 15px;
 }
 .nav_logout a {
+  text-decoration:none;
   color: black;
 }
 
@@ -94,7 +91,7 @@
   object-fit: cover;
   border-radius: 10px 10px 0 0;
 }
-.user-avatar {
+.user-card-avatar {
   width: 100px;
   height: 100px;
   object-fit: cover;

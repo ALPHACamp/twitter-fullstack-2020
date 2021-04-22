@@ -3,6 +3,7 @@ const router = exrpess.Router();
 const helpers = require('../_helpers');
 const passport = require('../config/passport');
 const userController = require('../controllers/userController');
+const adminController = require('../controllers/adminController');
 const tweetController = require('../controllers/tweetController');
 
 //一般使用者
@@ -40,7 +41,7 @@ router.post(
   }),
   userController.signIn
 );
-router.get('/logout', userController.logOut);
+
 
 // 推文 -- Liv 新增
 router.get('/', (req, res) => {
@@ -51,5 +52,12 @@ router.get('/tweet/:id', tweetController.getTweet);
 router.post('/tweet', tweetController.postTweet);
 router.put('/tweet/:id', tweetController.putTweet);
 router.delete('/tweet/:id', tweetController.deleteTweet);
+//管理員控制 -- 心憲
+router.get('/admin/signin', adminController.signinPage)
+router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
+router.get('/admin/tweets', adminController.tweetsPage)
+router.get('/admin/users', adminController.usersPage)
+
+router.get('/logout', userController.logOut);
 
 module.exports = router;
