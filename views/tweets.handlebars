@@ -1,3 +1,8 @@
-<h1>Tweets</h1>
+<h1>Tweets Page</h1>
+{{#each tweets}}
+id: {{this.id}}
+userId: {{this.UserId}}
+description: {{this.description}}
+{{/each}}
 
 {{> message}}
