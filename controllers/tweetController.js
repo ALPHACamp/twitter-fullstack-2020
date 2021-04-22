@@ -29,7 +29,6 @@ const tweetController = {
         // offset,
         // limit: pageLimit,
       });
-      console.log(tweets);
       //   const page = Number(req.query.page) || 1;
       //   const pages = Math.ceil(tweets.count / pageLimit);
       //   const totalPage = Array.from({ length: pages }).map(
