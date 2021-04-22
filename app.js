@@ -1,5 +1,6 @@
 const express = require('express')
 const helpers = require('./_helpers')
+const hbsHelpers = require('./config/handlebars-helper')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -10,7 +11,7 @@ const methodOverride = require('method-override')
 const app = express()
 const port = process.env.PORT || 3000
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', }))
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: hbsHelpers }))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))

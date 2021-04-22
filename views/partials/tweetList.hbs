@@ -1,0 +1,39 @@
+<a href="/tweets/{{ this.id }}" class="d-block text-decoration-none text-dark p-0 m-0">
+  <div class="card position-relative">
+    <div class="card-body">
+      {{#if isAdminPage}}
+      <div class="position-absolute" style="top:10px; right:10px">
+        <button class="btn btn-sm btn-link text-decoration-none text-danger"><i class="fas fa-times fa-2x"></i></button>
+      </div>
+      {{/if}}
+      <div class="media">
+        <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
+        <div class="media-body">
+          <div class="d-flex">
+            <h5>UserName {{this.UserId}}</h5>
+            <p class="ml-2 text-secondary">@Account &bull; {{moment this.createdAt}}</p>
+          </div>
+          <p>
+            {{this.description}}
+          </p>
+          {{!-- like and reply --}}
+          {{#if isUserPage}}
+          <div class="d-flex">
+            <a class="btn btn-link text-decoration-none mr-5">
+              <i class="far fa-comment"></i>
+              <span>16</span>
+            </a>
+            <a class="btn btn-link text-decoration-none">
+              {{!-- 未按讚 --}}
+              <i class="far fa-heart"></i>
+              {{!-- 已按讚 --}}
+              {{!-- <i class="fas fa-heart"></i> --}}
+              <span>12</span>
+            </a>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</a>
