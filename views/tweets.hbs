@@ -1,7 +1,6 @@
 <div class="container">
   <div class="card">
-    {{!-- 可抽出作為 component --}}
-    <h5 class="border-bottom p-3">首頁</h5>
+    {{> nav}}
     <div class="card-body">
       <div class="media">
         <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
@@ -20,24 +19,7 @@
   {{!-- tweets --}}
   <div class="mt-3">
     {{#each tweets}}
-    <div class="card">
-      <div class="card-body">
-        <div class="media">
-          <div class="media">
-            <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
-            <div class="media-body">
-              <div class="d-flex">
-                <h5>UserName {{this.UserId}}</h5>
-                <p class="ml-2 text-secondary">@Account &bull; {{moment this.createdAt}}</p>
-              </div>
-              <p>
-                {{this.description}}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    {{> tweet}}
     {{/each}}
   </div>
 </div>

@@ -11,7 +11,9 @@ const tweetController = {
       ...d.dataValues,
     }))
 
-    res.render('tweets', { tweets })
+    const pageTitle = '首頁'
+
+    res.render('tweets', { tweets, pageTitle })
   }
 }
 
