@@ -16,11 +16,13 @@ router.get('/', (req, res) => res.redirect('/tweets'))
 
 router.get('/tweets', tweetController.getTweets)
 router.get('/tweet', tweetController.getTweet)
-router.get('/setting',  userController.settingPage)
+router.get('/setting', userController.settingPage)
 
 router.get('/login', userController.loginPage)
 
 router.get('/register', userController.registerPage)
+router.post('/register', userController.userRegister)
+
 
 router.get('/admin/login', adminController.loginPage)
 router.get('/admin/tweets', adminController.getTweets)
