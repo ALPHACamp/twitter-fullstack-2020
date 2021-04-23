@@ -1,19 +1,28 @@
-const { Tweet, Reply, User } = require('../models')
+const { Tweet, Reply, User, Followship, Like } = require('../models')
 const { getUser } = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res) => {
     Tweet.findAll(
       {
-        raw: true,
-        nest: true,
-        include: [User],
+        include: [
+          User,
+          Reply,
+          // Like
+        ],
         order: [['createdAt', 'DESC']]
       }
     ).then((tweets) => {
       const pageTitle = '首頁'
       const isUserPage = true;
-
+      tweets = tweets.map(d => {
+        return {
+          ...d.dataValues,
+          name: d.User.name,
+          account: d.User.account,
+          replyAmount: d.Replies.length
+        }
+      })
       res.render('tweets', { tweets, pageTitle, isUserPage })
     })
       .catch(e => {

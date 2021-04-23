@@ -14,8 +14,8 @@
         <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
         <div class="media-body">
           <div class="d-flex">
-            <h5>{{ this.User.name }}</h5>
-            <p class="ml-2 text-secondary">{{this.User.account}} &bull; {{moment this.createdAt}}</p>
+            <h5>{{ this.name }}</h5>
+            <p class="ml-2 text-secondary">{{this.account}} &bull; {{moment this.createdAt}}</p>
           </div>
           <p>
             {{this.description}}
@@ -25,7 +25,7 @@
           <div class="d-flex">
             <a class="btn btn-link text-decoration-none mr-5">
               <i class="far fa-comment"></i>
-              <span>16</span>
+              <span>{{ this.replyAmount }}</span>
             </a>
             <a class="btn btn-link text-decoration-none">
               {{!-- 未按讚 --}}
