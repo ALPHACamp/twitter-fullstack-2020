@@ -1,17 +1,16 @@
-const { Tweet, Reply } = require('../models')
+const { Tweet, Reply, User } = require('../models')
+const { getUser } = require('../_helpers')
 
 const tweetController = {
   getTweets: (req, res) => {
     Tweet.findAll(
       {
+        raw: true,
+        nest: true,
+        include: [User],
         order: [['createdAt', 'DESC']]
       }
     ).then((tweets) => {
-
-      tweets = tweets.map((d, i) => ({
-        ...d.dataValues
-      }))
-
       const pageTitle = '首頁'
       const isUserPage = true;
 
@@ -39,6 +38,23 @@ const tweetController = {
       .catch(e => {
         console.warn(e)
       })
+  },
+  getAddTweet: (req, res) => {
+
+  },
+  addTweet: (req, res) => {
+    const user_id = getUser(req).id
+    const { description } = req.body
+
+    Tweet.create(
+      {
+        UserId: user_id,
+        description
+      }
+    ).then(() => {
+      res.redirect('back')
+    })
+      .catch(e => console.warn(e))
   }
 }
 

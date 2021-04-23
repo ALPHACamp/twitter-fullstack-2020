@@ -10,8 +10,8 @@
         <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
         <div class="media-body">
           <div class="d-flex">
-            <h5>UserName {{this.UserId}}</h5>
-            <p class="ml-2 text-secondary">@Account &bull; {{moment this.createdAt}}</p>
+            <h5>{{ this.User.name }}</h5>
+            <p class="ml-2 text-secondary">{{this.User.account}} &bull; {{moment this.createdAt}}</p>
           </div>
           <p>
             {{this.description}}
