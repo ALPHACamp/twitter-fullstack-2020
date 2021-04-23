@@ -1,6 +1,21 @@
 const { Tweet, Reply, User, Followship, Like } = require('../models')
 const { getUser } = require('../_helpers')
 
+function formatDate(date) {
+  function twoDigits(num) {
+    if (num > 10) return num
+    return '0' + num.toString()
+  }
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+  const hours = date.getHours()
+  const minutes = date.getMinutes()
+  const AMorPM_string = hours < 12 ? '上午' : '下午'
+
+  return `${AMorPM_string}${twoDigits(hours)}:${twoDigits(minutes)} • ${year}年${month}月${day}日`
+}
+
 const tweetController = {
   getTweets: (req, res) => {
     Tweet.findAll(
@@ -35,19 +50,19 @@ const tweetController = {
     Tweet.findOne(
       {
         where: { id: tweet_id },
-        include: [Reply]
+        include: [User, Reply]
       }
     ).then((tweet) => {
-
       // console.log(tweet.Replies)
       const pageTitle = '推文'
-
-      res.render('tweet', { tweet: tweet.toJSON(), pageTitle })
+      const time = formatDate(tweet.createdAt)
+      res.render('tweet', { tweet: tweet.toJSON(), pageTitle, time })
     })
       .catch(e => {
         console.warn(e)
       })
   },
+  //popup
   getAddTweet: (req, res) => {
 
   },
@@ -64,6 +79,9 @@ const tweetController = {
       res.redirect('back')
     })
       .catch(e => console.warn(e))
+  },
+  addReply: (req, res) => {
+
   }
 }
 
