@@ -1,18 +1,13 @@
-<div class="container-fluid">
-  <div class="row">
-
-    <div class="col-3">
-    </div>
-
-    <div class="col-9 pr-0">
-      <div class="card bg-light">
-        <div class="card-header d-flex justify-content-between">使用者列表<a href="/admin/tweets"
-            class="btn btn-primary">返回</a>
-        </div>
+<div class="row">
+  {{> left-column}}
+  {{> message}}
+  <div class="center-section col-9 ">
+    <div class="tweetPage">
+      <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
+        style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;"> <a
+          onclick="history.back()"><i class="fas fa-arrow-left ml-1 mr-4"></i></a>使用者列表
       </div>
-
       <div class="row row-cols-1 row-cols-md-4 m-0" style="border: 1px solid rgba(0,0,0,.125);">
-
         <div class="col p-2">
           <div class="card h-100">
             <img

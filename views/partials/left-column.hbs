@@ -3,7 +3,7 @@
     <div class="nav-item logo" style="font-size: 18px;
   line-height: 26px;color: #FF6600;font-weight: bold;margin-top: 26px"><i class="fab fa-twitter fa-2x"></i>
     </div>
-    {{!-- {{#if user.isAdmin}} --}}
+    {{#if user.isAdmin}}
     <div class="nav-item ">
       <a href="/admin/tweets/" style="text-decoration:none;">
         <div class="tweets-title" style="font-size: 18px;
@@ -18,9 +18,9 @@
         </div>
       </a>
     </div>
-    {{!-- {{else}} --}}
+    {{else}}
 
-    {{!-- <div class="nav-item home">
+    <div class="nav-item home">
       <a href="/tweets/" style="text-decoration:none;">
         <div class="home-title" style="font-size: 18px;
   line-height: 26px;color: #FF6600;font-weight: bold; margin-top: 20px;"><i class="fas fa-home pr-2"></i>首頁</div>
@@ -45,7 +45,7 @@
       <button type="button" class="nav-item btn  btn-block" data-toggle="modal" data-target="#tweetModal"
         style="border-radius: 100px; background:#FF6600;font-weight: bold;font-size: 18px;line-height: 26px;color: #FFFFFF;width: 210px; height: 45px;margin-top: 26px">推文</button>
     </div>
-    {{if}} --}}
+    {{if}}
 
     <div class="nav-item logout">
       <a href="/signout" style="text-decoration:none;">
