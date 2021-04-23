@@ -11,29 +11,14 @@
 </head>
 
 <body>
-  {{!-- Navbar --}}
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Twitter</a>
-    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-      <div>
-        {{#if user}}
-        <span style="color: white;margin-right: 10px;">Hi, {{user.name}}</span>
-        <a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
-        <a href="/logout"><button class="btn btn-outline-warning my-2 my-sm-0">LogOut</button></a>
-        {{/if}}
-      </div>
-    </div>
-  </nav>
-  <br />
+
 
   <main role="main">
-    <div class="album py-5 bg-light justify-content-center">
-      <div class="container">
-        {{> message}}
-        {{{body}}}
-      </div>
+
+    <div class="container">
+      {{> message}}
+      {{{body}}}
+
     </div>
   </main>
   <div class="container">
