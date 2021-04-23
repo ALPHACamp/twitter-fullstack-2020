@@ -1,0 +1,62 @@
+<div class="container-fluid">
+
+  <div class="follower-center">
+    <div class="follower-title">
+      <div class="follower-title-left">
+        <a href="/users/{{paramUser.id}}/tweets">
+          <i class="icon-arrow"></i>
+        </a>
+      </div>
+      <div class="follower-title-right">
+        <div class="follower-title-top">
+          {{paramUser.name}}
+        </div>
+        <div class="follower-title-bottom">
+          {{paramUser.Tweets.length}} 推文
+        </div>
+      </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="follow-nav navbar-nav mr-auto">
+          <a class="nav-link active" href="/users/{{paramUser.id}}/followers">追蹤者</a>
+          <a class="nav-link" href="/users/{{paramUser.id}}/followings">正在追蹤</a>
+      </div>
+    </nav>
+    <div class="followship-lists">
+      {{#each followers}}
+      <div class="followship-content">
+        <div class="followship-left">
+          <img src="{{this.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+        </div>
+        <div class="followship-right">
+          <div class="followship-right-top">
+            <div class="right-top-name">
+              <a href="/users/{{this.id}}/tweets">
+                {{this.name}}
+              </a>
+              <span>@{{this.account}}</span>
+            </div>
+            <div class="top-right-button">
+              {{#isEqual this.id ../loginUserId}}
+              {{else}}
+              {{#if this.isFollowed}}
+              <form action="/users/{{this.id}}/follow?_method=DELETE" method="POST">
+                <button class="right-btn-follow" name="id" value="{{this.id}}">正在追蹤</button>
+              </form>
+              {{else}}
+              <form action="/users/{{this.id}}/follow" method="POST">
+                <button class="right-btn-unfollow" name="id" value="{{this.id}}">追蹤</button>
+              </form>
+              {{/if}}
+              {{/isEqual}}
+            </div>
+          </div>
+          <p>{{this.introduction}}</p>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

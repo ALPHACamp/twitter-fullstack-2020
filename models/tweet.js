@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Tweet.hasMany(models.Reply)
+      Tweet.hasMany(models.Reply);
+      Tweet.belongsTo(models.User);
     }
   };
   Tweet.init({

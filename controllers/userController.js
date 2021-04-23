@@ -1,6 +1,7 @@
 const db = require('../models')
 const User = db.User
 const Followship = db.Followship
+const Tweet = db.Tweet
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 const sequelize = require('sequelize')
@@ -171,6 +172,36 @@ const userController = {
       .then(followship => {
         followship.destroy()
           .then(() => res.redirect('back'))
+      })
+      .catch(err => res.send(err))
+  },
+  getFollowers: (req, res) => {
+    const loginUserId = helpers.getUser(req).id
+    const paramUserId = req.params.id
+    return Promise.all([
+      User.findByPk(paramUserId, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followers' }
+        ],
+        order: [['Followers', 'createdAt', 'DESC']]
+      }),
+      User.findByPk(loginUserId, {
+        include: [
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ])
+      .then(([pUser, lUser]) => {
+        pUser.Followers = pUser.Followers.map(follower => ({
+          ...follower.dataValues,
+          isFollowed: lUser.Followings.map(f => f.id).includes(follower.id)
+        }))
+        return res.render('follower', {
+          paramUser: pUser.toJSON(),
+          followers: pUser.Followers,
+          loginUserId: lUser.id
+        })
       })
       .catch(err => res.send(err))
   }
