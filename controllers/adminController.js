@@ -1,4 +1,5 @@
 const { Tweet } = require('../models')
+const { getUser } = require('../_helpers')
 
 const showFiftyString = (str) => {
   if (str.length < 50) {
@@ -27,6 +28,22 @@ const adminController = {
       .catch(e => {
         console.warn(e)
       })
+  },
+
+  // 管理者 登入頁面
+  signInPage: (req, res) => {
+    return res.render('admin/signin')
+  },
+
+  // 管理者 登入
+  signIn: (req, res) => {
+    if(getUser(req).isAdmin) {
+      req.flash('success_messages', '成功登入管理者權限')
+      return res.redirect('/admin/tweets')
+    } else {
+      req.flash('warning_msg', '請使用管理者權限')
+      return res.redirect('/admin/signIn')
+    }
   }
 }
 
