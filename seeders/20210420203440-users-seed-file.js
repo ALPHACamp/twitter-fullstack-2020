@@ -28,6 +28,22 @@ module.exports = {
       name: 'user2',
       createdAt: new Date(),
       updatedAt: new Date()
+    }, {
+      account: 'USER3',
+      email: 'user3@example.com',
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      isAdmin: false,
+      name: 'user3',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      account: '123123',
+      email: '123@123',
+      password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
+      isAdmin: false,
+      name: '123',
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {});
   },
   down: async (queryInterface, Sequelize) => {
