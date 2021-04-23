@@ -1,0 +1,32 @@
+<h1 class="text-center">建立你的帳號</h1>
+
+<form class="row g-3" action="/signup" method="POST">
+  <div class="col-md-8 mx-auto">
+    <label for="account" class="form-label">Account</label>
+    <input type="text" class="form-control" id="account" name="account" value="{{account}}">
+  </div>
+  <div class="col-md-8 mx-auto">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" name="name" value="{{name}}">
+  </div>
+  <div class="col-md-8 mx-auto">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" name="email" value="{{email}}">
+  </div>
+  <div class="col-md-8 mx-auto">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password" value="{{password}}">
+  </div>
+  <div class="col-md-8 mx-auto">
+    <label for="confirmPassword" class="form-label">Confirm password</label>
+    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="{{confirmPassword}}">
+  </div>
+  <div class="col-8 d-grid gap-2 mx-auto">
+    <button type="submit" class="btn btn-primary">Sign up</button>
+  </div>
+  <br>
+
+  <div class="col-8 text-center mx-auto">
+    <a href="/signin">取消</a>
+  </div>
+</form>
