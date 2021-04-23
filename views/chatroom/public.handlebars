@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+      <div>
+        {{> leftColumn}}
+      </div>
+    </nav>
+    <div class="d-flex" id="chat-container">
+      <div class="left-side">
+        <div class="list-group-item left-side-title">
+          <span>上線使用者(<span id="online">0</span>)</strong></span>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span>佔位用</strong></span>
+          </li>
+          <div id="online-user-list">
+            {{!-- <li class="list-group-item">
+              <a href="/users/{{this.User.id}}/tweets">
+                <div class="row">
+                  <div class="col-2 mr-4">
+                    <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
+                      class="user-avatar">
+                  </div>
+                  <div class="col-8 d-flex align-items-center">
+                    <span class="chat-user-name"><strong>Apple</strong></span>
+                    <span class="chat-user-account">&ensp;@123</span>
+                  </div>
+                </div>
+              </a>
+            </li> --}}
+          </div>
+        </ul>
+      </div>
+      <div class="right-side">
+        <div class="list-group-item right-side-title">
+          <span>公開聊天室</span>
+        </div>
+        <ul class="list-group">
+          {{!-- <li class="list-group-item">
+            <span>佔位用</span>
+          </li> --}}
+          <li id="output" class="system-info">
+          </li>
+          <div class="chat-message">
+            {{!-- <li class="list-group-item message-line">
+              <div class="d-flex">
+                <div style="width: 55px; height: 55px;">
+                  <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
+                    class="message-user-avatar">
+                </div>
+                <div class="left-message-box">
+                  <p>Hello</p>
+                </div>
+              </div>
+              <small class="left-time-box">下午5:00</small>
+            </li> --}}
+          </div>
+          <div class="self-message">
+            {{!-- <li class="list-group-item message-line">
+              <div class="right-message-box">
+                <p>Hello</p>
+              </div>
+              <small class="right-time-box">下午5:00</small> --}}
+            </li>
+          </div>
+        </ul>
+        <div id="is-typing" class="ml-5 left-message-box">
+        </div>
+        <div class="">
+          <form id="chat-form" action="" method="" class="">
+            <div class="input-message-zone d-flex">
+              <textarea placeholder="輸入訊息..." class="form-control input-message-area" id="textarea" name="message"
+                rows="1"></textarea>
+              <button id="send" class="btn btn-send" type="button">
+                <i class="far fa-paper-plane" style="color: #FF6600;"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="/javascript/socket.js"></script>

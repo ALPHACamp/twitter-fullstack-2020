@@ -1,0 +1,133 @@
+<div class="container">
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+      <div>
+        {{> leftColumn}}
+      </div>
+    </nav>
+    {{> postTweet}}
+    <div class="center-content d-flex" id="tweet-content">
+      <div class="head justify-content-between ">
+        <ul class="list-group">
+          <li class="list-group-item right-zone-header" style="
+              border-top: 1px solid #F5F5F5;
+              border-right: 1px solid #F5F5F5;
+              border-left: 1px solid #F5F5F5;
+              color: #000000;
+              font-weight: bold">
+            首頁
+          </li>
+          <li class="list-group-item" style="border-bottom-width:8px;">
+            <form action="/tweets" method="POST">
+              <div class="row">
+                <div class="col-2 ">
+                  <a href="/users/{{user.id}}/tweets">
+                    <img src="{{user.avatar}}" alt="user avatar" class="user-avatar"
+                      style="border-radius: 50%; height:50px; width: 50px">
+                  </a>
+                </div>
+                <div class="col-10" style="width: 400px;">
+                  <textarea placeholder="有什麼新鮮事?" class="form-control" id="description" name="description" rows="3"
+                    style="border: none;"></textarea>
+                </div>
+              </div>
+              <button class="btn btn-create" type="submit"
+                style="background: #FF6600; border-radius: 18px; width: 60px; float: right;">
+                <span style="color: #FFFFFF;">推文</span>
+              </button>
+            </form>
+          </li>
+          {{#each tweets}}
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-2">
+                  <a href="/users/{{this.User.id}}/tweets">
+                    <img src="{{this.User.avatar}}" alt="user avatar" class="user-avatar"
+                      style="border-radius: 50%; height:50px; width: 50px">
+                  </a>
+                </div>
+                <div class="col-10">
+                  <a href="/users/{{this.User.id}}/tweets"
+                    style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong></a>
+                  <font class=" text-muted">@{{this.User.account}} · {{moment this.createdAt}}</font>
+                  <a href="/tweets/{{this.id}}" style="text-decoration: none; color:black">
+                    <p>{{this.description}}</p>
+                  </a>
+                  <button type="button" class="btn" style="background: none;border: none;" data-toggle="modal"
+                    data-target="#replyModal{{this.id}}">
+                    <i class="far fa-comment" style="color: gray;"></i>
+                  </button>
+                  <p style="display:inline; color: grey; vertical-align: middle">{{this.Replies.length}}</p>
+                  {{#if isLiked}}
+                    <form action="/tweets/{{this.id}}/unlike" method="POST" style="display:inline;">
+                      <button class="ml-5 mr-2" type="submit" style="background: none;border: none;">
+                        <i class="fas fa-heart" style="color: red; "></i>
+                  {{else}}
+                    <form action="/tweets/{{this.id}}/like" method="POST" style="display:inline; ">
+                      <button class="ml-5 mr-2" type="submit" style="background: none;border: none;">
+                        <i class="far fa-heart " style="color: gray; vertical-align: middle"></i>
+                  {{/if}}
+                  </button>
+                  <p style="display:inline; color: grey; vertical-align: middle">{{this.LikedUsers.length }}</p>
+                  </form>
+                </div>
+            </li>
+            <!-- Modal -->
+            <div class="modal fade" id="replyModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+              aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close mr-2" style="color : #FF6600;" data-dismiss="modal"
+                      aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="body-avatar row">
+                      <div class="col-2">
+                        <a href="/users/{{this.User.id}}/tweets">
+                          <img src="{{this.User.avatar}}" class="rounded-circle"
+                            style="width: 50px;height: 50px;background: #C4C4C4;">
+                        </a>
+                      </div>
+                      <div class="col-10">
+                        <a href="/users/{{this.User.id}}/tweets"
+                          style="text-decoration:none; color:black"><strong>{{this.User.name}}</strong>
+                        </a>
+                        <span style="color:gray;">@{{this.User.account}} ．
+                          {{moment this.createdAt}}
+                        </span>
+                        <p>{{this.description}}</p>
+                        <a style="color:gray; font-size: 15px">回覆給</a>
+                        <span style="color: orange;">@{{this.User.account}}</span>
+                      </div>
+                      <div class="col-2 mt-5">
+                        <a href="/users/{{../user.id}}/tweets">
+                          <img src={{../user.avatar}} class="rounded-circle"
+                            style="width: 50px;height: 50px;background: #C4C4C4;">
+                        </a>
+                      </div>
+                      <form method="POST" action="/tweets/{{this.id}}/replies">
+                        <div class="col-10 mt-5" style="width: 400px;">
+                          <textarea placeholder="推你的回覆" class="form-control" name="comment" rows="3"
+                            style="border: none;"></textarea>
+                        </div>
+                        <button class="btn btn-create" type="submit"
+                          style="background: #FF6600; border-radius: 18px; width: 60px; float: right;">
+                          <span style="color: #FFFFFF;">回覆</span>
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {{/each}}
+      </div>
+    </div>
+    <div class="right-content">
+      {{> rightColumn}}
+    </div>
+  </div>
+</div>

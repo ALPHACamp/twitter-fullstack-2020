@@ -1,0 +1,82 @@
+<div class="row mt-3">
+  <div class="col-md-3 d-flex justify-content-center">
+    {{> adminLeftColumn}}
+  </div>
+  <div class="col-md-9 pl-0">
+    <div>
+      <ul class="list-group mb-3">
+        <li class="list-group-item header"><strong>使用者列表</strong>
+        </li>
+      </ul>
+      <div class="row row-cols-4 row-cols-md-4">
+        {{#each users}}
+          <div class="col mb-4">
+            <div class="card"
+              style="width: 14rem; border-radius:15px; height: 23rem; background-color: rgb(243, 243, 243);">
+              {{#if this.cover}}
+                <div style="width: 14rem; position: relative; z-index: 1;">
+                  <img src="{{this.cover}}" class="card-img-cover" alt="cover"
+                    style="width: 100%; border-radius: 20px 20px 0 0;">
+                </div>
+              {{else}}
+                <div style="width: 14rem; position: relative; z-index: 1; border-radius: 20px 20px 0 0;">
+                  <img
+                    src="https://www.kingleader.com.tw/images/joomgallery/thumbnails/gallery_2/_11/u968_st9_20200911_1886238692.jpg"
+                    class="card-img-cover" alt="cover" style="width: 100%;">
+                </div>
+              {{/if}}
+              {{#if this.avatar}}
+                <div style="width: 7rem; height: 7rem; position: relative; z-index: 2;">
+                  <img src="{{this.avatar}}" class="card-img-avatar" alt="avatar"
+                    style="width: 100%; height: 100%;     border-radius: 50%; border: 5px solid white; position: relative; bottom: 80px; left: 56px;">
+                </div>
+              {{else}}
+                <div style="width: 7rem; height: 7rem; position: relative; z-index: 2;">
+                  <img
+                    src="http://imgs.gotrip.hk/wp-content/uploads/2017/11/blank-profile-picture-973460_960_720_2583405935a02dfab699c6.png"
+                    class="card-img-avatar" alt="avatar"
+                    style="width: 100%; height: 100%;     border-radius: 50%; border: 5px solid white; position: relative; bottom: 80px; left: 70px;">
+                </div>
+              {{/if}}
+              <div class="card-body pt-5" style="position: relative; bottom: 110px; z-index: 1;">
+                <h5 class="user-name" style="text-align: center;"><strong>{{this.name}}</strong></h5>
+                <h6 class="user-account" style="text-align: center;">{{this.account}}</h6>
+                <div class="d-flex justify-content-center">
+                  <div>
+                    <p class="tweet-amount far fa-comment">&ensp;{{this.userTweetAmount}}</p>
+                  </div>
+                  <p>&emsp;</p>
+                  <div>
+                    <p class="tweet-like-amount far fa-heart">&ensp;{{this.likedTweetAmount}}</p>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <div>
+                    <p class="tweet-amount">{{this.followingAmount}}&ensp;追隨中</p>
+                  </div>
+                  <p>&emsp;</p>
+                  <div>
+                    <p class="tweet-like-amount">{{this.followerAmount }}&ensp;追隨者</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="/admin/users?page={{prev}}">Previous</a></li>
+        {{#each totalPage}}
+          {{#ifCond this ../page}}
+            <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+        {{else}}
+          <li class="page-item"><a class="page-link" href="/admin/users?page={{this}}">{{this}}</a></li>
+          {{/ifCond}}
+        {{/each}}
+        <li class="page-item"><a class="page-link" href="/admin/users?page={{next}}">Next</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>

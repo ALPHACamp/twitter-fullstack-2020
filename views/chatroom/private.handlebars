@@ -1,0 +1,120 @@
+<div class="container">
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar">
+      <div>
+        {{> leftColumn}}
+      </div>
+    </nav>
+
+    <div class="d-flex" id="chat-container">
+      <div class="left-side">
+        <div class="list-group-item d-flex justify-content-between align-items-center left-side-title">
+          <span>訊息</strong></span>
+          <i class="far fa-envelope"></i>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span>佔位用</strong></span>
+          </li>
+          <li class="list-group-item">
+            <a href="/users/{{this.User.id}}/tweets">
+              <div class="row">
+                <div class="col-2 mr-4">
+                  <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
+                    class="user-avatar">
+                </div>
+                <div class="col-8">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <span class="chat-user-name"><strong>Apple</strong></span>
+                      <span class="chat-user-account">&ensp;@123</span>
+                    </div>
+                    <span style="color: #657786;">5小時</span>
+                  </div>
+                  <p style="color: #657786;">hdsfhuishdvbdslhu</p>
+                </div>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="right-side">
+        <div class="list-group-item right-side-title">
+          <span class="chat-user-name"><strong>Apple</strong></span>
+          <span class="chat-user-account">&ensp;@123</span>
+        </div>
+        <ul class="list-group">
+          <li class="list-group-item">
+            <span class="chat-user-name"><strong>佔位用</strong></span>
+          </li>
+
+          <li class="list-group-item message-line">
+            <div class="d-flex">
+              <div style="width: 55px; height: 55px;">
+                <img src="https://loremflickr.com/320/240/avatar/?lock=5.850587638241356" alt="user avatar"
+                  class="message-user-avatar">
+              </div>
+              <div class="left-message-box">
+                <p>Hello</p>
+              </div>
+            </div>
+            <small class="left-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+          <li class="list-group-item message-line">
+            <div class="right-message-box">
+              <p>Hello</p>
+            </div>
+            <small class="right-time-box">下午5:00</small>
+          </li>
+        </ul>
+        <div class="typing">
+          <form id="chat-form" action="" method="POST" class="">
+            <div class="input-message-zone d-flex">
+              <textarea placeholder="輸入訊息..." class="form-control input-message-area" id="textarea" name="message"
+                rows="1"></textarea>
+              <button class="btn btn-send" type="submit">
+                <i class="far fa-paper-plane" style="color: #FF6600;"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

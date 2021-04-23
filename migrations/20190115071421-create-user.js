@@ -14,16 +14,23 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      name: {
+      is_admin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
+      account: {
         type: Sequelize.STRING
       },
-      avatar: {
+      name: {
         type: Sequelize.STRING
       },
       introduction: {
         type: Sequelize.TEXT
       },
-      role: {
+      avatar: {
+        type: Sequelize.STRING
+      },
+      cover: {
         type: Sequelize.STRING
       },
       createdAt: {
