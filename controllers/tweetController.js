@@ -2,6 +2,20 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 
+const limitDescription = (description, limit = 50) => {
+  const newRescription = [];
+  if (description.length > limit) {
+    description.split(' ').reduce((acc, cur) => {
+      if (acc + cur.length <= limit) {
+        newRescription.push(cur);
+      }
+      return acc + cur.length;
+    }, 0);
+    return `${newRescription.join(' ')}...`;
+  }
+  return description;
+};
+
 const tweetController = {
   getTweets: async (req, res) => {
     try {
@@ -15,7 +29,6 @@ const tweetController = {
         // offset,
         // limit: pageLimit,
       });
-
       //   const page = Number(req.query.page) || 1;
       //   const pages = Math.ceil(tweets.count / pageLimit);
       //   const totalPage = Array.from({ length: pages }).map(
@@ -25,7 +38,7 @@ const tweetController = {
       //   const next = page + 1 > pages ? pages : page + 1;
       // res.json({ status: 'success', message: 'getTweets' });
       return res.render('tweets', {
-        tweets,
+        tweets: tweets.rows,
       });
     } catch (err) {
       console.log(err);
@@ -34,10 +47,10 @@ const tweetController = {
   getTweet: async (req, res) => {
     try {
       const tweet = await Tweet.findByPk(req.params.id, {});
-      res.json({ status: 'success', message: 'getTweet' });
-      //   return res.render('tweet', {
-      //     tweet: tweet.toJSON(),
-      //   });
+      // res.json({ status: 'success', message: 'getTweet' });
+      return res.render('tweet', {
+        tweet: tweet.toJSON(),
+      });
     } catch (err) {
       console.log(err);
     }
