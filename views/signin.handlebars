@@ -24,7 +24,11 @@
 </div>
 
 <div class="d-flex justify-content-center">
+  {{#if admin}}
+  <form action="/admin/signin" method="POST" style="width: 60%;">
+  {{else}}
   <form action="/signin" method="POST" style="width: 60%;">
+  {{/if}}
     {{> message}}
     <div class="form-group">
       <input type="text" class="form-control" name="account" id="enterAccount" placeholder="帳號" value="{{account}}"
@@ -40,7 +44,11 @@
     <div class="text-right">
       <span><a href="/signup">註冊Alphitter</a></span>
       ．
-      <span><a href="/admin">後台登入</a></span>
+      {{#if admin}}
+      <span><a href="/signin">使用者登入</a></span>
+      {{else}}
+      <span><a href="/admin/signin">管理者登入</a></span>
+      {{/if}}
     </div>
   </form>
 </div>
