@@ -5,20 +5,20 @@
       <div class="text-center mb-4">
         <h1 class="h3 mb-3 font-weight-normal">後台登入</h1>
       </div>
-      {{> message}}
-            <div class="form-group">
-              <label for="account">Account</label>
-              <input type="text" id="account" name="account" class="form-control" placeholder="Enter Account">
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
-            </div>
-            <!--
+      <div class="form-group">
+        <label for="account">Account</label>
+        <input type="text" id="account" name="account" class="form-control" placeholder="Enter Account">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+      </div>
+      <!--
                                       <button type="submit" class="btn btn-primary btn-block">登入</button> 
                                       -->
-            <a href="/admin/tweets" class="btn btn-primary btn-block">登入</a>
-            <a href="/login" class="btn btn-info btn-block">前台登入</a>
-          </form>
+      <button type="submit" class="btn  btn-block" style="border-radius: 50px; background:#FF6600;font-weight: bold;
+            font-size: 18px;line-height: 26px;color: #FFFFFF;">登入</button>
+      <a href="/login" class="btn btn-info btn-block">前台登入</a>
+    </form>
   </div>
 </div>

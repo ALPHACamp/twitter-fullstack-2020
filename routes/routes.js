@@ -24,10 +24,16 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-        if (helpers.getUser(req).isAdmin) { return next() }
-        return res.redirect('/')
+        if (helpers.getUser(req).isAdmin) {
+            return next()
+        }
+        else {
+            req.flash('error_messages', '登入錯誤！')
+            return res.redirect('/admin/login')
+        }
+
     }
-    res.redirect('/login')
+    res.redirect('/admin/login')
 }
 
 
@@ -37,21 +43,36 @@ const authenticatedAdmin = (req, res, next) => {
 
 router.get('/', (req, res) => res.redirect('/tweets'))
 
-router.get('/tweets', authenticated, tweetController.getTweets)
-router.get('/tweet', authenticated, tweetController.getTweet)
-router.get('/setting', userController.settingPage)
-
-router.get('/login', userController.loginPage)
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.login)
-router.get('/logout', userController.logout)
-
 router.get('/register', userController.registerPage)
 router.post('/register', userController.userRegister)
 
 
+
+//Admin
 router.get('/admin/login', adminController.loginPage)
-router.get('/admin/tweets', adminController.getTweets)
-router.get('/admin/users', adminController.getUser)
+router.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.login)
+router.get('/admin/logout', adminController.logout)
+
+router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+router.get('/admin/users', authenticatedAdmin, adminController.getUser)
+
+
+
+// User
+router.get('/login', userController.loginPage)
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.login)
+router.get('/logout', userController.logout)
+
+
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/tweet', authenticated, tweetController.getTweet)
+router.get('/setting', userController.settingPage)
+
+
+
+
+
+
 
 
 
