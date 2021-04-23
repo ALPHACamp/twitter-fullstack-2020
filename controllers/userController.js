@@ -56,9 +56,15 @@ const userController = {
     return res.render('signin');
   },
 
-  signIn: (req, res) => {
-    req.flash('success_msg', '登入成功');
-    res.redirect('/tweets');
+  signIn: async (req, res) => {
+    const user = await User.findOne({ account: req.body.account })
+    if (!user.dataValues.isAdmin) {
+      req.flash('success_msg', '登入成功');
+      res.redirect('/tweets');
+    } else {
+      req.flash('error_msg', '此帳號不是普通用戶')
+      res.render('signin')
+    }
   },
 
   logOut: (req, res) => {
