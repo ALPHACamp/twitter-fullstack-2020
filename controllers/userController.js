@@ -1,9 +1,45 @@
 const db = require('../models')
 const User = db.User
+const Followship = db.Followship
+const Tweet = db.Tweet
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
+const sequelize = require('sequelize')
 
 const userController = {
+
+  //getTopUsers
+  getTopUsers: (req, res) => {
+    return User.findAll({
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM followships AS followship
+              WHERE
+                followship.followingId = User.id
+                )`),
+            'followerCount',
+          ],
+        ]
+      },
+      include: { model: User, as: 'Followers' },
+      order: [
+        [sequelize.literal('followerCount'), 'DESC'],
+        ['updatedAt', 'DESC']
+      ],
+      limit: 10,
+    })
+      .then(users => {
+        users = users.map(u => ({
+          ...u.dataValues,
+          isFollowed: u.Followers.map(u => u.id).includes(helpers.getUser(req).id)
+        }))
+        res.send(users)
+      })
+      .catch(err => res.send(err))
+  },
   signUpPage: (req, res) => {
     return res.render('signup')
   },
@@ -102,33 +138,103 @@ const userController = {
       .catch(err => {
         return res.send(err)
       })
-  }
-}
-
-function definitionErrHandler(err, req, res, obj) {
-  if (err.name === 'SequelizeValidationError') {
-    req.flash('warning_msg', err.errors[0].message)
-    if (obj) {
-      return res.render('signup', obj)
-    }
-    return res.redirect('back')
-  }
-  if (err.name === 'SequelizeUniqueConstraintError') {
-    if (err.errors[0].path === 'users.account') {
-      req.flash('warning_msg', 'Sorry, account name already registered!')
-      if (obj) {
-        return res.render('signup', obj)
-      }
-      return res.redirect('back')
-    } else {
-      req.flash('warning_msg', 'Sorry, email already registered!')
-      if (obj) {
-        return res.render('signup', obj)
-      }
+  },
+  followUser: (req, res) => {
+    const followerId = Number(helpers.getUser(req).id)
+    const followingId = Number(req.params.id)
+    //不能追蹤自己
+    if (followerId === followingId) {
+      req.flash('warning_msg', 'You cannot be your own follower')
       return res.redirect('back')
     }
+    //不能重複追蹤
+    Followship.findOne({ where: { followerId, followingId } })
+      .then(followship => {
+        if (followship) {
+          req.flash('warning_msg', 'You cannot follow the same person twice')
+          return res.redirect('back')
+        }
+        return Followship.create({
+          followerId,
+          followingId
+        })
+          .then(() => res.redirect(`/users/${followingId}/tweets`))
+          .catch(err => res.send(err))
+      })
+  },
+  unfollowUser: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followeeId: req.params.userId
+      }
+    })
+      .then(followship => {
+        followship.destroy()
+          .then(() => res.redirect('back'))
+      })
+      .catch(err => res.send(err))
+  },
+  getFollowers: (req, res) => {
+    const loginUserId = helpers.getUser(req).id
+    const paramUserId = req.params.id
+    return Promise.all([
+      User.findByPk(paramUserId, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followers' }
+        ],
+        order: [['Followers', 'createdAt', 'DESC']]
+      }),
+      User.findByPk(loginUserId, {
+        include: [
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ])
+      .then(([pUser, lUser]) => {
+        pUser.Followers = pUser.Followers.map(follower => ({
+          ...follower.dataValues,
+          isFollowed: lUser.Followings.map(f => f.id).includes(follower.id)
+        }))
+        return res.render('follower', {
+          paramUser: pUser.toJSON(),
+          followers: pUser.Followers,
+          loginUserId: lUser.id
+        })
+      })
+      .catch(err => res.send(err))
+  },
+  getFollowings: (req, res) => {
+    const loginUserId = helpers.getUser(req).id
+    const paramUserId = req.params.id
+    return Promise.all([
+      User.findByPk(paramUserId, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' }
+        ],
+        order: [['Followings', 'createdAt', 'DESC']]
+      }),
+      User.findByPk(loginUserId, {
+        include: [
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ])
+      .then(([pUser, lUser]) => {
+        pUser.Followings = pUser.Followings.map(following => ({
+          ...following.dataValues,
+          isFollowed: lUser.Followings.map(f => f.id).includes(following.id)
+        }))
+        return res.render('following', {
+          paramUser: pUser.toJSON(),
+          followings: pUser.Followings,
+          loginUserId: lUser.id
+        })
+      })
+      .catch(err => res.send(err))
   }
-  return res.send(err)
 }
 
 module.exports = userController

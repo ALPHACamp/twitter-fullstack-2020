@@ -27,12 +27,14 @@ module.exports = (sequelize, DataTypes) => {
       through: models.Followship,
       foreignKey: 'followerId',
       as: 'Followings'
-    })
+    });
     User.belongsToMany(models.User, {
       through: models.Followship,
       foreignKey: 'followingId',
-      as: 'Followers'
-    })
+      as: 'Followers',
+    });
+    User.hasMany(models.Tweet);
+    User.hasMany(models.Reply);
   };
   return User;
 };
