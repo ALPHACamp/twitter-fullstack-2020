@@ -27,21 +27,27 @@
       <div class="divider" style="
       height: 10px;background: #E6ECF0;"></div>
     </div>
-    {{> tweets}}
-
-    {{!-- {{#each tweets}}
+    {{!-- {{> tweets}} --}}
+    {{#if user}}
+    <span style="margin-right: 10px;">Hi, {{user.name}}</span>
+    <a href="/users/{{user.id}}" style="margin-right: 10px;">Profile</a>
+    <a href="/logout"><button class="btn btn-outline-warning my-2 my-sm-0">LogOut</button></a>
+    {{/if}}
+    {{#each tweets}}
     <div>
       {{this.UserId}}
       {{this.description}}
     </div>
-    {{/each}} --}}
-    {{!--
+    {{/each}}
+
     {{#each users}}
     <div>
       {{this.name}}
       {{this.email}}
     </div>
-    {{/each}} --}}
+    {{/each}}
+
+
 
 
 
