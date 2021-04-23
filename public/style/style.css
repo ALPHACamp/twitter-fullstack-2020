@@ -116,3 +116,9 @@
   top: 5rem;
   left: 19rem;
 }
+
+#admin_tweets_panel{
+  max-height:900px;
+  position: relative;
+  overflow:auto;
+}

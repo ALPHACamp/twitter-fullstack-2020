@@ -60,18 +60,25 @@
       </div>
       <div class="overflow-scroll" id="admin_tweets_panel">
         <div class="row">
+          {{#each tweets}}
           <div class="col-12 d-flex mt-3">
-            <img class="user-avatar rounded-circle" src="https://i.pravatar.cc/140?img=0" width="50" height="50"
+            <img class="user-avatar rounded-circle" src="{{this.User.dataValues.avatar}}" width="50" height="50"
               alt="no pic">
             <div class="tweets_content">
               <div class="d-flex align-items-center">
-                <span class="user-name mr-3 ml-3">User1</span>
-                <span class="user-acount mr-2">@User1</span>
-                <span class="tweet-create-time"> 2021/4/18 下午11:14:46 </span>
+                <span class="user-name mr-3 ml-3">{{this.User.dataValues.name}}</span>
+                <span class="user-acount mr-2">{{this.User.dataValues.acount}}</span>
+                <span class="tweet-create-time">{{this.createdAt}} </span>
               </div>
-              <p class="ml-3">sdfsdfsdfsdf</p>
+              <p class="ml-3">{{this.description}}</p>
             </div>
+            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="col-1 mr-2">
+              <button type="submit" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </form>
           </div>
+          {{/each}}
         </div>
       </div>
     </dvi>
