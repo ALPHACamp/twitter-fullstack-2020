@@ -11,17 +11,19 @@
         </div>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-4 m-0" style="border: 1px solid rgba(0,0,0,.125);">
-
-        <div class="col p-2">
-          <div class="card h-100">
+      <div class="row row-cols-1 row-cols-md-4 m-0 p-1" style="border: 1px solid rgba(0,0,0,.125); ">
+        {{#each users}}
+        <div class="col-3 p-1">
+          <div class="card h-100" style="border-radius: 10px;">
             <img
               src="https://handler.travel/wp-content/uploads/2020/03/miaolihiongqien_%E7%83%8F%E5%98%8E%E5%BD%A5%E7%AB%B9%E6%9E%97.jpg"
-              class="card-img-top" alt="...">
+              class="card-img-top" style="border-radius: 10px 10px 0 0" alt="...">
+            <img src="https://i.stack.imgur.com/34AD2.jpg" alt=""
+              style="position: absolute;height:auto;min-height:90px;width:90px;border-radius:50%;left:25%;top:20%;border:3px solid white;">
             <div class="card-body">
-              <h5 class="card-title text-center pt-2 mb-1">John Doe</h5>
+              <h5 class="card-title text-center pt-2 mb-1">{{this.name}}</h5>
               <div class="text-muted small text-center">
-                <a href="#" style="color:#6c757d;">@heyJohn</a>
+                <a href="#" style="color:#6c757d;">{{this.account}}</a>
               </div>
               <div class="col-12 row m-0 p-0 pl-2 mt-3 justify-content-center">
                 <div class="col-6">
@@ -33,167 +35,17 @@
                   <span>20k</span>
                 </div>
               </div>
-              <div class="mt-3 ml-3" style="font-size: 0.9rem;">
-                <span style="font-weight:bold;">34個</span><a href="" style="color:#6c757d;">跟隨中</a>
-                <span style="font-weight:bold;">30位</span><a href="" style="color:#6c757d;">追隨者</a>
+              <div class="d-flex mt-3 ml-2 justify-content-around" style="font-size: 0.8rem;">
+                <div><span style="font-weight:bold;">34個</span><a href="" style="color:#6c757d;">跟隨中</a></div>
+                <div><span style="font-weight:bold;">30位</span><a href="" style="color:#6c757d;">追隨者</a></div>
+
               </div>
             </div>
-            <img src="https://i2.kknews.cc/SIG=1a83brk/22p80000208rqrs41893.jpg" alt=""
-              style="position: absolute;height:auto;min-height:120px;width:50%;border-radius:50%;left:25%;top:15%;border:3px solid white;">
+
           </div>
         </div>
 
-        <div class="col p-2">
-          <div class="card h-100">
-            <img
-              src="https://handler.travel/wp-content/uploads/2020/03/miaolihiongqien_%E7%83%8F%E5%98%8E%E5%BD%A5%E7%AB%B9%E6%9E%97.jpg"
-              class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title text-center pt-2 mb-1">John Doe</h5>
-              <div class="text-muted small text-center">
-                <a href="#" style="color:#6c757d;">@heyJohn</a>
-              </div>
-              <div class="col-12 row m-0 p-0 pl-2 mt-3 justify-content-center">
-                <div class="col-6">
-                  <i class="icon icon-reply"></i>
-                  <span>200</span>
-                </div>
-                <div class="col-6">
-                  <i class="icon icon-like"></i>
-                  <span>20k</span>
-                </div>
-              </div>
-              <div class="mt-3 ml-3" style="font-size: 0.9rem;">
-                <span style="font-weight:bold;">34個</span><a href="" style="color:#6c757d;">跟隨中</a>
-                <span style="font-weight:bold;">30位</span><a href="" style="color:#6c757d;">追隨者</a>
-              </div>
-            </div>
-            <img src="https://i2.kknews.cc/SIG=1a83brk/22p80000208rqrs41893.jpg" alt=""
-              style="position: absolute;height:auto;min-height:120px;width:50%;border-radius:50%;left:25%;top:15%;border:3px solid white;">
-          </div>
-        </div>
-
-        <div class="col p-2">
-          <div class="card h-100">
-            <img
-              src="https://handler.travel/wp-content/uploads/2020/03/miaolihiongqien_%E7%83%8F%E5%98%8E%E5%BD%A5%E7%AB%B9%E6%9E%97.jpg"
-              class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title text-center pt-2 mb-1">John Doe</h5>
-              <div class="text-muted small text-center">
-                <a href="#" style="color:#6c757d;">@heyJohn</a>
-              </div>
-              <div class="col-12 row m-0 p-0 pl-2 mt-3 justify-content-center">
-                <div class="col-6">
-                  <i class="icon icon-reply"></i>
-                  <span>200</span>
-                </div>
-                <div class="col-6">
-                  <i class="icon icon-like"></i>
-                  <span>20k</span>
-                </div>
-              </div>
-              <div class="mt-3 ml-3" style="font-size: 0.9rem;">
-                <span style="font-weight:bold;">34個</span><a href="" style="color:#6c757d;">跟隨中</a>
-                <span style="font-weight:bold;">30位</span><a href="" style="color:#6c757d;">追隨者</a>
-              </div>
-            </div>
-            <img src="https://i2.kknews.cc/SIG=1a83brk/22p80000208rqrs41893.jpg" alt=""
-              style="position: absolute;height:auto;min-height:120px;width:50%;border-radius:50%;left:25%;top:15%;border:3px solid white;">
-          </div>
-        </div>
-
-        <div class="col p-2">
-          <div class="card h-100">
-            <img
-              src="https://handler.travel/wp-content/uploads/2020/03/miaolihiongqien_%E7%83%8F%E5%98%8E%E5%BD%A5%E7%AB%B9%E6%9E%97.jpg"
-              class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title text-center pt-2 mb-1">John Doe</h5>
-              <div class="text-muted small text-center">
-                <a href="#" style="color:#6c757d;">@heyJohn</a>
-              </div>
-              <div class="col-12 row m-0 p-0 pl-2 mt-3 justify-content-center">
-                <div class="col-6">
-                  <i class="icon icon-reply"></i>
-                  <span>200</span>
-                </div>
-                <div class="col-6">
-                  <i class="icon icon-like"></i>
-                  <span>20k</span>
-                </div>
-              </div>
-              <div class="mt-3 ml-3" style="font-size: 0.9rem;">
-                <span style="font-weight:bold;">34個</span><a href="" style="color:#6c757d;">跟隨中</a>
-                <span style="font-weight:bold;">30位</span><a href="" style="color:#6c757d;">追隨者</a>
-              </div>
-            </div>
-            <img src="https://i2.kknews.cc/SIG=1a83brk/22p80000208rqrs41893.jpg" alt=""
-              style="position: absolute;height:auto;min-height:120px;width:50%;border-radius:50%;left:25%;top:15%;border:3px solid white;">
-          </div>
-        </div>
-
-        <div class="col p-2">
-          <div class="card h-100">
-            <img
-              src="https://handler.travel/wp-content/uploads/2020/03/miaolihiongqien_%E7%83%8F%E5%98%8E%E5%BD%A5%E7%AB%B9%E6%9E%97.jpg"
-              class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title text-center pt-2 mb-1">John Doe</h5>
-              <div class="text-muted small text-center">
-                <a href="#" style="color:#6c757d;">@heyJohn</a>
-              </div>
-              <div class="col-12 row m-0 p-0 pl-2 mt-3 justify-content-center">
-                <div class="col-6">
-                  <i class="icon icon-reply"></i>
-                  <span>200</span>
-                </div>
-                <div class="col-6">
-                  <i class="icon icon-like"></i>
-                  <span>20k</span>
-                </div>
-              </div>
-              <div class="mt-3 ml-3" style="font-size: 0.9rem;">
-                <span style="font-weight:bold;">34個</span><a href="" style="color:#6c757d;">跟隨中</a>
-                <span style="font-weight:bold;">30位</span><a href="" style="color:#6c757d;">追隨者</a>
-              </div>
-            </div>
-            <img src="https://i2.kknews.cc/SIG=1a83brk/22p80000208rqrs41893.jpg" alt=""
-              style="position: absolute;height:auto;min-height:120px;width:50%;border-radius:50%;left:25%;top:15%;border:3px solid white;">
-          </div>
-        </div>
-
-        <div class="col p-2">
-          <div class="card h-100">
-            <img
-              src="https://handler.travel/wp-content/uploads/2020/03/miaolihiongqien_%E7%83%8F%E5%98%8E%E5%BD%A5%E7%AB%B9%E6%9E%97.jpg"
-              class="card-img-top" alt="...">
-            <div class="card-body">
-              <h5 class="card-title text-center pt-2 mb-1">John Doe</h5>
-              <div class="text-muted small text-center">
-                <a href="#" style="color:#6c757d;">@heyJohn</a>
-              </div>
-              <div class="col-12 row m-0 p-0 pl-2 mt-3 justify-content-center">
-                <div class="col-6">
-                  <i class="icon icon-reply"></i>
-                  <span>200</span>
-                </div>
-                <div class="col-6">
-                  <i class="icon icon-like"></i>
-                  <span>20k</span>
-                </div>
-              </div>
-              <div class="mt-3 ml-3" style="font-size: 0.9rem;">
-                <span style="font-weight:bold;">34個</span><a href="" style="color:#6c757d;">跟隨中</a>
-                <span style="font-weight:bold;">30位</span><a href="" style="color:#6c757d;">追隨者</a>
-              </div>
-            </div>
-            <img src="https://i2.kknews.cc/SIG=1a83brk/22p80000208rqrs41893.jpg" alt=""
-              style="position: absolute;height:auto;min-height:120px;width:50%;border-radius:50%;left:25%;top:15%;border:3px solid white;">
-          </div>
-        </div>
-
-
+        {{/each}}
 
 
       </div>

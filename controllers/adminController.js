@@ -32,10 +32,13 @@ let adminController = {
       })
   },
 
-  getUser: (req, res) => {
-    return res.render('admin/users')
+  getUsers: (req, res) => {
+    return User.findAll({ raw: true })
+      .then(users => {
+        console.log(users)
+        return res.render('admin/users', { users })
+      })
   },
-
 
 }
 
