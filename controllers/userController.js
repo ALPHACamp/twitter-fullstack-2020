@@ -204,6 +204,36 @@ const userController = {
         })
       })
       .catch(err => res.send(err))
+  },
+  getFollowings: (req, res) => {
+    const loginUserId = helpers.getUser(req).id
+    const paramUserId = req.params.id
+    return Promise.all([
+      User.findByPk(paramUserId, {
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' }
+        ],
+        order: [['Followings', 'createdAt', 'DESC']]
+      }),
+      User.findByPk(loginUserId, {
+        include: [
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ])
+      .then(([pUser, lUser]) => {
+        pUser.Followings = pUser.Followings.map(following => ({
+          ...following.dataValues,
+          isFollowed: lUser.Followings.map(f => f.id).includes(following.id)
+        }))
+        return res.render('following', {
+          paramUser: pUser.toJSON(),
+          followings: pUser.Followings,
+          loginUserId: lUser.id
+        })
+      })
+      .catch(err => res.send(err))
   }
 }
 
