@@ -34,9 +34,8 @@ const adminController = {
   },
   deleteTweets: (req, res) => {
     const tweet_id = req.params.id
-    const user_id = getUser(req).id
 
-    Tweet.findOne({ where: { UserId: user_id, id: Number(tweet_id) } })
+    Tweet.findOne({ where: { id: Number(tweet_id) } })
       .then(tweet => {
         return tweet.destroy()
       }).then(() => {
