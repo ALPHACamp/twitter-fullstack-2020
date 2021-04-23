@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    {{#if user}}
     <main class="d-flex">
         <div class="main_sidebar" style="position: fixed;">
             <div class="nav_logo col-auto">
@@ -63,8 +64,11 @@
                 </a>
             </div>
         </div>
-        {{{body}}}
     </main>
+    {{/if}}
+    <div>
+        {{{body}}}
+    </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
