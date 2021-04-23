@@ -3,8 +3,42 @@ const User = db.User
 const Followship = db.Followship
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
+const sequelize = require('sequelize')
 
 const userController = {
+
+  //getTopUsers
+  getTopUsers: (req, res) => {
+    return User.findAll({
+      attributes: {
+        include: [
+          [
+            sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM followships AS followship
+              WHERE
+                followship.followingId = User.id
+                )`),
+            'followerCount',
+          ],
+        ]
+      },
+      include: { model: User, as: 'Followers' },
+      order: [
+        [sequelize.literal('followerCount'), 'DESC'],
+        ['updatedAt', 'DESC']
+      ],
+      limit: 10,
+    })
+      .then(users => {
+        users = users.map(u => ({
+          ...u.dataValues,
+          isFollowed: u.Followers.map(u => u.id).includes(helpers.getUser(req).id)
+        }))
+        res.send(users)
+      })
+      .catch(err => res.send(err))
+  },
   signUpPage: (req, res) => {
     return res.render('signup')
   },
