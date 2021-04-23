@@ -12,6 +12,10 @@ const authenticated = (req, res, next) => {
 
 module.exports = (app, passport) => {
 
+  // 管理者登入
+  app.get('/admin/signin', adminController.signInPage)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), adminController.signIn )
+
   app.get('/admin/tweets', adminController.getTweets)
 
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))

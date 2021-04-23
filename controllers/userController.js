@@ -31,8 +31,13 @@ const userController = {
     return res.render('signin')
   },
   signIn: (req, res) => {
-    req.flash('success_msg', '登入成功！')
-    res.redirect('/tweets')
+    if(!helpers.getUser(req).isAdmin) {
+      req.flash('success_messages', '成功登入')
+      return res.redirect('/tweets')
+    } else {
+      req.flash('warning_msg', '請使用一般權限')
+      return res.redirect('/signIn')
+    }
   },
   logout: (req, res) => {
     req.flash('success_msg', '登出成功！')

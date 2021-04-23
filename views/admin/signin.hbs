@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row justify-content-center align-item-center vh-100">
+
+    <form class="form-signin m-auto" action="/admin/signin" method="POST"
+      style="width: 50%;">
+
+      <!-- logo -->
+      <img src="/images/AC.png" alt="ac-logo" class="rounded mx-auto d-block"
+        style="width: 100px; height: 100px; margin-bottom: 40px;">
+
+      <!-- title -->
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-bold">後台登入</h1>
+      </div>
+
+      {{> message}}
+
+      <!-- form -->
+      <div class="form-label-group mt-5">
+        <input type="email" name="email" class="form-control mt-4"
+          placeholder="Email"
+          style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black;font-size: 18px"
+          value="{{email}}" required>
+      </div>
+      <div class="form-label-group mt-2">
+        <input type="password" name="password" class="form-control mt-4"
+          placeholder="Password"
+          style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black;font-size: 18px"
+          required>
+      </div>
+
+      <!-- button -->
+      <button class="btn btn-lg btn-primary btn-block mt-5" type="submit"
+        style="border-radius: 30px;background-color:#FF6600;border-color: #fff;">
+        登入
+      </button>
+
+      <!-- font signin -->
+      <div class="text-right mb-4 mt-3" style="color:#007bff;">
+        <p>
+          <a class="ml-2" href="/signin" style="text-decoration: underline;">
+            前台登入
+          </a>
+        </p>
+      </div>
+
+    </form>
+  </div>
+</div>
