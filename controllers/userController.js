@@ -10,6 +10,16 @@ let userController = {
     return res.render('login')
   },
 
+  login: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/tweets')
+  },
+
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/login')
+  },
 
 
   registerPage: (req, res) => {
@@ -35,6 +45,7 @@ let userController = {
               return res.redirect('/register')
             } else {
               User.create({
+                account: req.body.account,
                 name: req.body.name,
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),

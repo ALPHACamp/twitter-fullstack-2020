@@ -6,7 +6,7 @@ const tweetController = require('../controllers/tweetController.js')
 const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
 
-
+const passport = require('../config/passport')
 
 
 // 準備引入路由模組
@@ -19,6 +19,8 @@ router.get('/tweet', tweetController.getTweet)
 router.get('/setting', userController.settingPage)
 
 router.get('/login', userController.loginPage)
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.login)
+router.get('/logout', userController.logout)
 
 router.get('/register', userController.registerPage)
 router.post('/register', userController.userRegister)
