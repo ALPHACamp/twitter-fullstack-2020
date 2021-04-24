@@ -1,63 +1,18 @@
 <div class="row">
   {{> left-column}}
-  {{> message}}
   <div class="center-section col-9 ">
     <div class="admin-tweets-list" style="height: 100vh;">
       <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
         style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;">推文清單
       </div>
       {{#each tweets}}
-      <div class="admin-list-item">
-        <div class="admin-list-left">
-          <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
-          <div class="right-list-item">
-            <div class="list-item-info">
-              <div class="list-name">
-                <a>{{this.User.name}}</a>
-                <span>@{{this.User.account}} · {{moment this.updatedAt}}</span>
-              </div>
-              <p>{{subText this.description}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="admin-list-right">
-          <button type="button" class="delete-btn" data-toggle="modal" data-target="#e{{this.id}}">
-            &times;
-          </button>
-        </div>
+      <div>
+        {{this.UserId}}
+        {{this.description}}
       </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="e{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <div class="row align-items-center mx-0">
-              <i class="fa fa-exclamation-triangle mr-2" aria-hidden="" style="color:red;"></i>
-              <h5 class="modal-title" id="exampleModalLabel">warning!!!</h5>
-            </div>
-
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            請確認是否刪除這則推文:
-            <div>{{subText this.description}}</div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="delete-btn btn btn-danger">Delete</button>
-            </form>
-          </div>
-        </div>
+      {{/each}}
+      <div class="card-footer text-muted follow-footer">
+        顯示更多
       </div>
-    </div>
-    {{/each}} --}}
-    <div class="card-footer text-muted follow-footer">
-      顯示更多
     </div>
   </div>
-</div>

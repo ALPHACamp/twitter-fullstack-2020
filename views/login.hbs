@@ -2,18 +2,18 @@
   <div class="col-md-6 m-auto">
     <div class="text-center mt-3" style="font-weight: bold ;font-size: 23px;line-height: 33px
 ">登入 Alphitter</div>
-    {{> message}}
     <form action="/login" method="POST" class="de-flex">
       <div class="form-group">
         <label for="account" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">帳號</label>
-        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}">
+        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}"
+          required>
       </div>
 
 
       <div class="form-group">
         <label for="password" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">密碼</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼"
-          value="{{ password }}">
+          value="{{ password }}" required>
       </div>
       <button type="submit" class="btn  btn-block" style="border-radius: 50px; background:#FF6600;font-weight: bold;
 font-size: 18px;line-height: 26px;color: #FFFFFF;">登入</button>

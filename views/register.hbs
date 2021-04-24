@@ -5,20 +5,22 @@
     <form action="/register" method="POST" class="de-flex">
       <div class="form-group">
         <label for="account" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">帳號</label>
-        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}">
+        <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號" value="{{ account }}"
+          required>
       </div>
       <div class="form-group">
         <label for="name" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">名稱</label>
-        <input type="text" id="name" name="name" class="form-control" placeholder="請輸入名稱" value="{{ name }}">
+        <input type="text" id="name" name="name" class="form-control" placeholder="請輸入名稱" value="{{ name }}" required>
       </div>
       <div class="form-group">
         <label for="email" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">Email</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="請輸入Email" value="{{ email }}">
+        <input type="email" id="email" name="email" class="form-control" placeholder="請輸入Email" value="{{ email }}"
+          required>
       </div>
       <div class="form-group">
         <label for="password" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">密碼</label>
         <input type="password" id="password" name="password" class="form-control" placeholder="請輸入密碼"
-          value="{{ password }}">
+          value="{{ password }}" required>
       </div>
       <div class="form-group">
         <label for="confirmPassword"
