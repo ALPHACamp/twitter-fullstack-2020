@@ -1,5 +1,6 @@
 const db = require('../models')
 const Tweet = db.Tweet
+const User = db.User
 
 const tweetController = {
   getTweets: (req, res) => {
@@ -7,6 +8,7 @@ const tweetController = {
     return Tweet.findAll({
       raw: true,
       nest: true,
+      include: [User]
     })
       .then(tweets => {
         console.log(tweets)

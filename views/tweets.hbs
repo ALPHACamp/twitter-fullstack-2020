@@ -28,33 +28,65 @@
       height: 10px;background: #E6ECF0;"></div>
     </div>
     {{!-- {{> tweets}} --}}
-    {{#if user}}
-    <span style="margin-right: 10px;">Hi, {{user.name}}</span>
-    <a href="/users/{{user.id}}" style="margin-right: 10px;">Profile</a>
-    {{/if}}
-    {{#each tweets}}
-    <div>
-      {{this.UserId}}
-      {{this.description}}
+
+    <div class="tweets-section d-flex justify-content-start px-3 " style="border: #E6ECF0 1px solid;">
+      <a href="/users/{{this.id}}/tweet" style="text-decoration:none;">
+        <div class=" post-avatar mr-1">
+          <img class="mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+            style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+        </div>
+        <div class="post ml-1 mt-2">
+          <div class="post-info d-flex justify-content-start">
+            <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
+">Apple</div><span class="post-account mr-1" style="font-size: 15px;color: #657786;font-weight: 500;">@apple</span
+              style="font-size: 15px;color: #657786;"><span
+              style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
+            <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">3小時</span>
+          </div>
+
+          <div class="post-content my-2" style="font-weight: 500;
+font-size: 15px;color: #1C1C1C;">Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis
+            ullamco cillum dolor.
+            Voluptate exercitation incididuntaliquip deserunt reprehenderit elit laborum.</div>
+      </a>
+
+      <div class="post-feedback d-flex justify-content-start mb-2">
+        <div class="post-reply"><i class="far fa-comment mr-1" data-toggle="modal" data-target="#replyModal"
+            style="color: #657786;"></i><span class="rely-amount mr-5"
+            style="font-size: 13px;font-weight: 500;color: #657786;">54</span></div>
+        <div class="post-like"><i class="far fa-heart mr-1" style="color: #657786;"></i><span class="like-amount"
+            style="font-size: 13px;font-weight: 500;color: #657786;">98</span></div>
+      </div>
     </div>
-    {{/each}}
-
-    {{#each user}}
-    <div>
-      {{this.name}}
-      {{this.email}}
-    </div>
-    {{/each}}
-
-
-
-
-
-
-
   </div>
 
-  <div class="col-3" style="width: 350px;">
-    {{> right-column}}
+  {{#if user}}
+  <span style="margin-right: 10px;">Hi, {{user.name}}</span>
+  <a href="/users/{{user.id}}" style="margin-right: 10px;">Profile</a>
+  {{/if}}
+  {{#each tweets}}
+  <div>
+    {{this.UserId}}
+    {{this.description}}
   </div>
+  {{/each}}
+
+  {{#each user}}
+  <div>
+    {{this.name}}
+    {{this.email}}
+  </div>
+  {{/each}}
+
+
+
+
+
+
+
+</div>
+
+<div class="col-3" style="width: 350px;">
+  {{> right-column}}
+</div>
 </div>

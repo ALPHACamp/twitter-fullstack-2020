@@ -5,14 +5,37 @@
       <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
         style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;">推文清單
       </div>
+
+
       {{#each tweets}}
-      <div>
-        {{this.UserId}}
-        {{this.description}}
+      <div class="tweets-section d-flex justify-content-start px-3 " style="border: #E6ECF0 1px solid;">
+        <a href="/users/{{this.User.id}}/tweet" style="text-decoration:none;">
+          <div class=" col-1 post-avatar mr-1">
+            <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+          </div>
+          <div class="col-10 post ml-1 mt-2">
+            <div class="post-info d-flex justify-content-start">
+              <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">{{this.User.name}}
+              </div>
+              <span class="post-account mr-1"
+                style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span>
+              <span style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
+              <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
+                this.updatedAt}}</span>
+            </div>
+            <div class="post-content my-2" style="font-weight: 500; font-size: 15px;color: #1C1C1C;">
+              {{this.description}}</div>
+        </a>
       </div>
-      {{/each}}
-      <div class="card-footer text-muted follow-footer">
-        顯示更多
-      </div>
+      <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+        <button type="submit" class="col-1 btn btn-link justify-content-end"><i
+            class="far fa-trash-alt fa-lg"></i></button>
+      </form>
+    </div>
+    {{/each}}
+    <div class="card-footer text-muted follow-footer">
+      顯示更多
     </div>
   </div>
+</div>

@@ -25,10 +25,21 @@ let adminController = {
     return Tweet.findAll({
       raw: true,
       nest: true,
+      include: [User]
     })
       .then(tweets => {
         console.log(tweets)
         return res.render('admin/tweets', { tweets })
+      })
+  },
+
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id)
+      .then((tweet) => {
+        tweet.destroy()
+          .then((tweet) => {
+            res.redirect('/admin/tweets')
+          })
       })
   },
 
