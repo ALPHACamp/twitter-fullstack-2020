@@ -56,6 +56,9 @@ router.get('/admin/tweets', authenticatedAdmin, adminController.tweetsPage)
 router.get('/admin/users', authenticatedAdmin, adminController.usersPage)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
+// 使用者
+router.get('/user/:id', authenticated, userController.getUser)
+
 // 登出
 router.get('/logout', userController.logOut);
 

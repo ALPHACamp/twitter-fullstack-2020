@@ -2,7 +2,7 @@ const moment = require('moment');
 const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
-
+const tweetsSidebar = 'tweetsSidebar'
 const limitDescription = (description, limit = 120) => {
   const newRescription = [];
   if (description.length > limit) {
@@ -32,7 +32,7 @@ const tweetController = {
       const data = tweets.rows.sort((a, b) => b.createdAt - a.createdAt);
       // res.json({ status: 'success', message: 'getTweets' });
       return res.render('tweets', {
-        tweets: data,
+        tweets: data, tweetsSidebar
       });
     } catch (err) {
       console.log(err);
@@ -43,7 +43,7 @@ const tweetController = {
       const tweet = await Tweet.findByPk(req.params.id, {});
       // res.json({ status: 'success', message: 'getTweet' });
       return res.render('tweet', {
-        tweet: tweet.toJSON(),
+        tweet: tweet.toJSON(),tweetsSidebar
       });
     } catch (err) {
       console.log(err);
