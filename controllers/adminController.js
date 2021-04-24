@@ -13,7 +13,7 @@ const adminController = {
      User.findOne({where:{ account: req.body.account }})
     .then((user)=>{
       if (user.dataValues.isAdmin) {
-        return res.render('admin/tweets')
+        return res.redirect('/admin/tweets')
       } else {
         req.flash('error_msg', '此帳號不是管理者')
         res.redirect('/signin')
