@@ -66,29 +66,15 @@ let userController = {
   settingPage: (req, res) => {
     return res.render('setting')
   },
-  getUser: async (req, res) => {
+  getUser: (req, res) => {
 
-    const result = await Tweet.findAndCountAll({
-      raw: true,
-      nest: true,
-      where: {
-        userId: req.params.id
-      },
-      distinct: true,
-    })
-    const tweets = result.rows
     return User.findByPk(req.params.id)
       .then(user => {
-        console.log(user)
-        res.render('profile', {
-          user: user, tweets
+        return res.render('profile', {
+          user: user.toJSON()
         })
       })
   },
-  getProfile:(req, res) => {
-    return res.render('profile')
-  },
-
 
 }
 
