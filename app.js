@@ -2,7 +2,7 @@ const express = require('express')
 const helpers = require('./_helpers')
 const hbsHelpers = require('./config/handlebars-helper')
 const exphbs = require('express-handlebars')
-const bodyParser = require('body-parser')
+const { urlencoded, json } = require('body-parser')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('./config/passport')
@@ -15,7 +15,8 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: hbsH
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(urlencoded({ extended: true }))
+app.use(json())
 app.use(session({
   secret: 'YouWillNeverKnow',
   resave: false,
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
   res.locals.user = helpers.getUser(req)
+  res.locals.currentPath = req.path
   next()
 })
 app.use(methodOverride('_method'))
