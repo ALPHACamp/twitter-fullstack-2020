@@ -2,6 +2,8 @@ const db = require('../models')
 const User = db.User
 const Followship = db.Followship
 const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 const sequelize = require('sequelize')
@@ -36,7 +38,11 @@ const userController = {
           ...u.dataValues,
           isFollowed: u.Followers.map(u => u.id).includes(helpers.getUser(req).id)
         }))
-        res.send(users)
+        return res.render('topUser', {
+          topUsers: users,
+          loginUserId: helpers.getUser(req).id
+        }
+        )
       })
       .catch(err => res.send(err))
   },
@@ -163,21 +169,18 @@ const userController = {
           followerId,
           followingId
         })
-          .then(() => res.redirect(`/users/${followingId}/tweets`))
+          .then(() => res.redirect('back'))
           .catch(err => res.send(err))
       })
   },
   unfollowUser: (req, res) => {
-    return Followship.findOne({
+    return Followship.destroy({
       where: {
         followerId: helpers.getUser(req).id,
-        followeeId: req.params.userId
+        followingId: req.params.id
       }
     })
-      .then(followship => {
-        followship.destroy()
-          .then(() => res.redirect('back'))
-      })
+      .then(() => res.redirect('back'))
       .catch(err => res.send(err))
   },
   getFollowers: (req, res) => {
@@ -239,6 +242,25 @@ const userController = {
         })
       })
       .catch(err => res.send(err))
+  },
+  getLikes: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        {
+          model: Tweet, as: 'LikedTweets',
+          include: [User, Reply, Like]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      order: [['LikedTweets', 'Likes', 'createdAt', 'DESC']]
+    })
+      .then(user => {
+        res.render('like', {
+          paramUser: user.toJSON()
+        })
+      })
   }
 }
 

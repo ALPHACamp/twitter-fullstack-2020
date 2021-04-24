@@ -1,0 +1,9 @@
+<h1>推文數：{{paramUser.Tweets.length}}</h1>
+<h1>追蹤者數：{{paramUser.Followers.length}}</h1>
+<h1>追蹤數：{{paramUser.Followings.length}}</h1>
+{{#each paramUser.LikedTweets}}
+<h1>作者：{{this.User.name}}</h1>
+<h1>內容：{{this.description}}</h1>
+<h1>被評論數：{{this.Replies.length}}</h1>
+<h1>被喜歡數：{{this.Likes.length}}</h1>
+{{/each}}

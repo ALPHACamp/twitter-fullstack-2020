@@ -62,6 +62,43 @@ const tweetController = {
         console.warn(e)
       })
   },
+
+  likeTweet: (req, res) => {
+    const loginUser = getUser(req)
+    //不能重複喜歡
+    Like.findOne({
+      where: {
+        UserId: loginUser.id,
+        TweetId: req.params.id
+      }
+    })
+      .then(like => {
+        if (like) {
+          req.flash('warning_msg', 'You cannot like the same tweet twice')
+          return res.redirect('back')
+        }
+        return Like.create({
+          UserId: loginUser.id,
+          TweetId: req.params.id
+        })
+          .then(() => res.redirect('back'))
+          .catch(err => res.send(err))
+      })
+  },
+  unlikeTweet: (req, res) => {
+    const loginUser = getUser(req)
+    Like.destroy({
+      where: {
+        UserId: loginUser.id,
+        TweetId: req.params.id
+      }
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+      .catch(err => res.send(err))
+  },
+
   //popup
   getAddTweet: (req, res) => {
 
@@ -81,8 +118,8 @@ const tweetController = {
       .catch(e => console.warn(e))
   },
   addReply: (req, res) => {
-
   }
 }
+
 
 module.exports = tweetController
