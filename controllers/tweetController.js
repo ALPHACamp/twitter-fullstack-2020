@@ -11,7 +11,6 @@ const tweetController = {
       include: [User]
     })
       .then(tweets => {
-        console.log(tweets)
         return res.render('tweets', { tweets })
       })
   },
@@ -32,7 +31,6 @@ const tweetController = {
     const tweets = result.rows
     return User.findByPk(req.params.id)
       .then(user => {
-        console.log(user)
         res.render('profile', {
           user: user, tweets
         })
