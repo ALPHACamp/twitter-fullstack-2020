@@ -25,6 +25,7 @@ let adminController = {
     return Tweet.findAll({
       raw: true,
       nest: true,
+      include: [User]
     })
       .then(tweets => {
         console.log(tweets)
