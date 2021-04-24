@@ -169,16 +169,13 @@ const userController = {
       })
   },
   unfollowUser: (req, res) => {
-    return Followship.findOne({
+    return Followship.destroy({
       where: {
         followerId: helpers.getUser(req).id,
-        followeeId: req.params.userId
+        followingId: req.params.id
       }
     })
-      .then(followship => {
-        followship.destroy()
-          .then(() => res.redirect('back'))
-      })
+      .then(() => res.redirect('back'))
       .catch(err => res.send(err))
   },
   getFollowers: (req, res) => {

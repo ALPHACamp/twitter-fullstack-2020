@@ -22,14 +22,13 @@
         {{#if this.isFollowed}}
         <form action="/users/{{this.id}}/follow?_method=DELETE" method="POST">
           <button class="btn btn-outline-warning btn-sm mr-2 text-white font-weight-bold active"
-            style="border-radius: 50px;" aria-pressed="true" name="id" value="{{this.id}}">正在追蹤</button>
+            style="border-radius: 50px;" aria-pressed="true">正在追蹤</button>
         </form>
         {{else}}
         {{#isEqual this.id ../loginUserId}}
         {{else}}
         <form action="/users/{{this.id}}/follow" method="POST">
-          <button class="btn btn-outline-warning btn-sm mr-2 font-weight-bold" style="border-radius: 50px;" name="id"
-            value="{{this.id}}">追蹤</button>
+          <button class="btn btn-outline-warning btn-sm mr-2 font-weight-bold" style="border-radius: 50px;">追蹤</button>
         </form>
         {{/isEqual}}
         {{/if}}

@@ -32,7 +32,6 @@ app.use((req, res, next) => {
 })
 app.use(methodOverride('_method'))
 
-
 require('./routes')(app, passport)
 
 // use helpers.getUser(req) to replace req.user
