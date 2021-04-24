@@ -2,6 +2,8 @@ const db = require('../models')
 const User = db.User
 const Followship = db.Followship
 const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 const sequelize = require('sequelize')
@@ -234,6 +236,25 @@ const userController = {
         })
       })
       .catch(err => res.send(err))
+  },
+  getLikes: (req, res) => {
+    User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        {
+          model: Tweet, as: 'LikedTweets',
+          include: [User, Reply, Like]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      order: [['LikedTweets', 'Likes', 'createdAt', 'DESC']]
+    })
+      .then(user => {
+        res.render('like', {
+          paramUser: user.toJSON()
+        })
+      })
   }
 }
 
