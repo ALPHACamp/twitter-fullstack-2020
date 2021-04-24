@@ -85,6 +85,9 @@ let userController = {
         })
       })
   },
+  getProfile:(req, res) => {
+    return res.render('profile')
+  },
 
 
 }
