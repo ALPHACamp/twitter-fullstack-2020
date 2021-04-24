@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Reply.belongsTo(models.Tweet)
+      Reply.belongsTo(models.Tweet);
+      Reply.belongsTo(models.User);
     }
   };
   Reply.init({
