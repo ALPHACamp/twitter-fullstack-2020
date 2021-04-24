@@ -44,11 +44,19 @@ module.exports = {
       name: '123',
       createdAt: new Date(),
       updatedAt: new Date()
-    }], {});
+    },{
+      account: 'actwitter',
+      email: 'ac@example.com',
+      password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
+      isAdmin: false,
+      name: 'AC',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+  ], {});
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Users', null, {});
-    await queryInterface.bulkDelete('Restaurants', null, {})
   },
 
 }
