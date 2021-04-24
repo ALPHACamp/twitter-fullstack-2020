@@ -38,7 +38,11 @@ const userController = {
           ...u.dataValues,
           isFollowed: u.Followers.map(u => u.id).includes(helpers.getUser(req).id)
         }))
-        res.send(users)
+        return res.render('topUser', {
+          topUsers: users,
+          loginUserId: helpers.getUser(req).id
+        }
+        )
       })
       .catch(err => res.send(err))
   },
@@ -160,7 +164,7 @@ const userController = {
           followerId,
           followingId
         })
-          .then(() => res.redirect(`/users/${followingId}/tweets`))
+          .then(() => res.redirect('back'))
           .catch(err => res.send(err))
       })
   },
