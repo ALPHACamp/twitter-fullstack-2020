@@ -16,7 +16,9 @@ module.exports = {
     await queryInterface.bulkInsert('Tweets',
       userIdList.map(d => ({
         UserId: d,
-        description: 'default tweets'
+        description: 'default tweets',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }))
     )
 
@@ -31,7 +33,9 @@ module.exports = {
       tweets.map(d => ({
         UserId: userIdList[userIdList.length - 1],
         TweetId: d.id,
-        comment: faker.lorem.text()
+        comment: faker.lorem.text(),
+        createdAt: new Date(),
+        updatedAt: new Date()
       }))
     )
     /*
