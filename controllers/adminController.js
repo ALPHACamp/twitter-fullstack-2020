@@ -33,6 +33,16 @@ let adminController = {
       })
   },
 
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id)
+      .then((tweet) => {
+        tweet.destroy()
+          .then((tweet) => {
+            res.redirect('/admin/tweets')
+          })
+      })
+  },
+
   getUsers: (req, res) => {
     return User.findAll({ raw: true })
       .then(users => {
