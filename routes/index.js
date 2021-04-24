@@ -6,7 +6,7 @@ const { authenticated } = require('../middleware/auth')
 module.exports = (app, passport) => {
   // 管理者登入
   app.get('/admin/signin', adminController.signInPage)
-  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), adminController.signIn )
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), adminController.signIn)
 
   app.get('/admin/tweets', adminController.getTweets)
   app.delete('/admin/tweets/:id', adminController.deleteTweets)
@@ -15,6 +15,8 @@ module.exports = (app, passport) => {
   //tweet
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.get('/tweets/:id', tweetController.getTweet)
+  app.post('/tweets/:id/like', tweetController.likeTweet)
+  app.delete('/tweets/:id/like', tweetController.unlikeTweet)
   app.get('/tweets/new', tweetController.getAddTweet)
   app.post('/tweets', tweetController.addTweet)
   //replies
@@ -32,6 +34,7 @@ module.exports = (app, passport) => {
   app.get('/users/top', authenticated, userController.getTopUsers)
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
+  app.get('/users/:id/like', authenticated, userController.getLikes)
 }
 
 
