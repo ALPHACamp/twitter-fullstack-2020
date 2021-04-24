@@ -1,7 +1,11 @@
 const bcrypt = require('bcryptjs');
-const db = require('../models');
 const helpers = require('../_helpers');
+const db = require('../models');
 const User = db.User;
+const Tweet = db.Tweet;
+const Reply = db.Reply;
+const Like = db.Like;
+
 
 const userController = {
   signUpPage: (req, res) => {
@@ -24,11 +28,9 @@ const userController = {
         errors,
       });
     }
-
     try {
       const userAccount = await User.findOne({ where: { account } });
       const userEmail = await User.findOne({ where: { email } });
-
       if (userAccount) {
         req.flash('error_msg', '帳號已被註冊過了');
         return res.redirect('/signup');
@@ -37,14 +39,12 @@ const userController = {
         req.flash('error_msg', 'Email已被註冊過了');
         return res.redirect('/signup');
       }
-
       await User.create({
         account: account,
         name: name,
         email: email,
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
       });
-
       req.flash('success_msg', '帳號註冊成功');
       return res.redirect('/signin');
     } catch (error) {
@@ -66,6 +66,36 @@ const userController = {
     req.logout();
     res.redirect('/signin');
   },
+
+  getUser: async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id, {
+        attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover']
+      })
+      const tweets = await Tweet.findAll({
+        raw: true,
+        nest: true,
+        include: [
+          { model: Reply, include: [User] },
+          Like
+        ],
+        where: { UserId: req.params.id }
+      })
+      const tweetsData = await tweets.map(data => ({
+        description: data.description,
+        createdAt: data.createdAt,
+        repliesCount: data.Replies.length,
+        likesConut: data.Likes.length,
+      }))
+      return res.render('user', {
+        user: user.toJSON(),
+        tweetsData: tweetsData
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
 };
 
 module.exports = userController;
