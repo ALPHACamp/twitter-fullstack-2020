@@ -1,23 +1,32 @@
-<div class="container">
-  <div class="card">
-    <div class="border-bottom">
-      {{> nav}}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      {{> navigationBar}}
     </div>
-    <div class="card-body">
-      <div class="media">
-        <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
-        <div class="media-body">
-          {{> addNewTweet}}
+
+    <div class="col-6">
+      <div class="card">
+        <div class="border-bottom">
+          {{> nav}}
+        </div>
+        <div class="card-body">
+          <div class="media">
+            <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
+            <div class="media-body">
+              {{> addNewTweet}}
+            </div>
+          </div>
+
         </div>
       </div>
 
+      {{!-- tweets --}}
+      <div class="mt-3">
+        {{#each tweets}}
+        {{> tweetList isUserPage=../isUserPage}}
+        {{/each}}
+      </div>
     </div>
   </div>
 
-  {{!-- tweets --}}
-  <div class="mt-3">
-    {{#each tweets}}
-    {{> tweetList isUserPage=../isUserPage}}
-    {{/each}}
-  </div>
 </div>
