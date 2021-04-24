@@ -1,22 +1,38 @@
 'use strict';
 const faker = require('faker')
-const { Tweet } = require('../models')
+const { User, Tweet } = require('../models')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
+    let users = await User.findAll(
+      {
+        where: {
+          email: ['account_1@example.com', 'account_2@example.com', 'account_3@example.com']
+        }
+      }
+    )
+    let userIdList = users.map(d => d.id)
+
     await queryInterface.bulkInsert('Tweets',
-      Array.from({ length: 2 }).map((d, i) => ({
-        UserId: i + 1,
-        description: faker.lorem.text(),
+      userIdList.map(d => ({
+        UserId: d,
+        description: 'default tweets',
         createdAt: new Date(),
         updatedAt: new Date()
       }))
     )
 
+    let tweets = await Tweet.findAll(
+      {
+        where: { description: 'default tweets' },
+        limit: 2
+      }
+    )
+
     await queryInterface.bulkInsert('Replies',
-      Array.from({ length: 10 }).map((d, i) => ({
-        UserId: i + 3,
-        TweetId: 7,
+      tweets.map(d => ({
+        UserId: userIdList[userIdList.length - 1],
+        TweetId: d.id,
         comment: faker.lorem.text(),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -35,8 +51,8 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Tweets')
-    await queryInterface.bulkDelete('Replies')
+    await queryInterface.bulkDelete('Tweets', null, {})
+    await queryInterface.bulkDelete('Replies', null, {})
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.

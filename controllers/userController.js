@@ -8,43 +8,15 @@ const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 const sequelize = require('sequelize')
 
+const userService = require('../services/userService')
+
 const userController = {
 
   //getTopUsers
   getTopUsers: (req, res) => {
-    return User.findAll({
-      attributes: {
-        include: [
-          [
-            sequelize.literal(`(
-              SELECT COUNT(*)
-              FROM followships AS followship
-              WHERE
-                followship.followingId = User.id
-                )`),
-            'followerCount',
-          ],
-        ]
-      },
-      include: { model: User, as: 'Followers' },
-      order: [
-        [sequelize.literal('followerCount'), 'DESC'],
-        ['updatedAt', 'DESC']
-      ],
-      limit: 10,
+    userService.getTopUsers(req, res, (data) => {
+      return res.render('topUser', data)
     })
-      .then(users => {
-        users = users.map(u => ({
-          ...u.dataValues,
-          isFollowed: u.Followers.map(u => u.id).includes(helpers.getUser(req).id)
-        }))
-        return res.render('topUser', {
-          topUsers: users,
-          loginUserId: helpers.getUser(req).id
-        }
-        )
-      })
-      .catch(err => res.send(err))
   },
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -73,7 +45,7 @@ const userController = {
     return res.render('signin')
   },
   signIn: (req, res) => {
-    if(!helpers.getUser(req).isAdmin) {
+    if (!helpers.getUser(req).isAdmin) {
       req.flash('success_messages', '成功登入')
       return res.redirect('/tweets')
     } else {

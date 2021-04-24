@@ -1,5 +1,4 @@
 const { Tweet, User } = require('../models')
-
 const { getUser } = require('../_helpers')
 
 const showFiftyString = (str) => {
@@ -44,7 +43,6 @@ const adminController = {
       })
       .catch(e => console.warn(e))
   },
-
   // 管理者 登入頁面
   signInPage: (req, res) => {
     return res.render('admin/signin')
@@ -52,7 +50,7 @@ const adminController = {
 
   // 管理者 登入
   signIn: (req, res) => {
-    if(getUser(req).isAdmin) {
+    if (getUser(req).isAdmin) {
       req.flash('success_messages', '成功登入管理者權限')
       return res.redirect('/admin/tweets')
     } else {
