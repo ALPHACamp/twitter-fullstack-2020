@@ -21,7 +21,6 @@ passport.use(
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
           return done(null, false, req.flash('error_msg', '密碼錯誤！'));
-
         return done(null, user);
       } catch (error) {
         done(error, false);
