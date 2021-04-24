@@ -1,15 +1,15 @@
-<div class="right-content text-monospace" style="max-width: 30%;">
+<div class="right-content text-monospace">
   <div class="card follow-content">
     <div class="card-header follow-title font-weight-bold text-grey" style="background-color: rgb(250, 250, 248);">
       跟隨誰
     </div>
     <div class="top-follow-list" style="background-color: rgb(255, 255, 255);">
       {{#each topUsers}}
-      <div class="list-item my-2 follow-body d-flex flex-row align-items-center justify-content-between">
+      <div class="list-item py-2 follow-body d-flex flex-row align-items-center justify-content-between border-bottom">
 
         <div class="user-info d-flex flex-row align-items-center">
           <a href="/users/{{this.id}}/tweets" class="follow-avatar ml-2">
-            <img src="{{this.avatar}}" class=" rounded-circle" style="width: 55px;height:55px;">
+            <img src="{{this.avatar}}" class=" rounded-circle" width="55" height="55">
           </a>
 
           <div class="list-item-name ml-2 d-flex flex-column">
@@ -33,10 +33,7 @@
         {{/isEqual}}
         {{/if}}
       </div>
-      <hr>
       {{/each}}
-    </div>
-    <div class="card-footer text-muted follow-footer" style="background-color: rgb(250, 250, 248);">
     </div>
   </div>
 </div>

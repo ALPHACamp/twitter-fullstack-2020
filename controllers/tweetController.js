@@ -1,5 +1,8 @@
+const exphbs = require('express-handlebars')
+const path = require('path')
 const { Tweet, Reply, User, Followship, Like } = require('../models')
 const { getUser } = require('../_helpers')
+const userService = require('../services/userService')
 
 function formatDate(date) {
   function twoDigits(num) {
@@ -38,7 +41,10 @@ const tweetController = {
           replyAmount: d.Replies.length
         }
       })
-      res.render('tweets', { tweets, pageTitle, isUserPage })
+      //推薦跟隨
+      userService.getTopUsers(req, res, (data) => {
+        res.render('tweets', { tweets, pageTitle, isUserPage, ...data })
+      })
     })
       .catch(e => {
         console.warn(e)
@@ -101,7 +107,19 @@ const tweetController = {
 
   //popup
   getAddTweet: (req, res) => {
-
+    const src = path.parse(__dirname).dir
+    let ex = exphbs.create({
+      layoutsDir: path.join(src, "views/layouts"),
+      partialsDir: path.join(src, "views/partials"),
+      defaultLayout: 'main',
+      extname: '.hbs'
+    })
+    ex.render(path.join(src, "views/signin.hbs"))
+      .then(function (v) {
+        console.log(v)
+      })
+      .catch(e => console.log(e))
+      .finally(() => { res.redirect('/signin') })
   },
   addTweet: (req, res) => {
     const user_id = getUser(req).id

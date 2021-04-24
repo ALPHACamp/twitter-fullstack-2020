@@ -14,11 +14,11 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   //tweet
   app.get('/tweets', authenticated, tweetController.getTweets)
-  app.get('/tweets/:id', tweetController.getTweet)
   app.post('/tweets/:id/like', tweetController.likeTweet)
   app.delete('/tweets/:id/like', tweetController.unlikeTweet)
   app.get('/tweets/new', tweetController.getAddTweet)
   app.post('/tweets', tweetController.addTweet)
+  app.get('/tweets/:id', tweetController.getTweet)
   //replies
   app.post('/tweets/:id/reply', tweetController.addReply)
 

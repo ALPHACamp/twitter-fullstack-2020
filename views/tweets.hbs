@@ -1,10 +1,10 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-3">
+    <div class="col-2">
       {{> navigationBar}}
     </div>
 
-    <div class="col-6">
+    <div class="col-7">
       <div class="card">
         <div class="border-bottom">
           {{> nav}}
@@ -26,6 +26,10 @@
         {{> tweetList isUserPage=../isUserPage}}
         {{/each}}
       </div>
+    </div>
+
+    <div class="col-3">
+      {{> topUser}}
     </div>
   </div>
 
