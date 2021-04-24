@@ -14,7 +14,7 @@ passport.use(
     },
     async (req, username, password, done) => {
       try {
-        const user = await User.findOne({ account: username });
+        const user = await User.findOne({ where: { account: username } });
         if (!user)
           return done(null, false, req.flash('error_msg', '帳號尚未註冊'));
 

@@ -96,6 +96,9 @@ const userController = {
     }
   },
 
+  getUserEdit: (req, res) => {
+
+  }
 };
 
 module.exports = userController;
