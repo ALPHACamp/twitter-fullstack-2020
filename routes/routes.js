@@ -55,6 +55,9 @@ router.post('/admin/signin', authenticatedAdmin, passport.authenticate('local', 
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweetsPage)
 router.get('/admin/users', authenticatedAdmin, adminController.usersPage)
 
+// 使用者
+router.get('/user/:id', authenticated, userController.getUser)
+
 // 登出
 router.get('/logout', userController.logOut);
 
