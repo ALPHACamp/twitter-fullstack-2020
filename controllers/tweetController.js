@@ -6,13 +6,13 @@ const tweetController = {
   getTweets: (req, res) => {
 
     return Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User]
-    })
-      .then(tweets => {
+        raw: true,
+        nest: true,
+        include: [User],
+        order: [['createdAt', 'DESC']],
+    }).then((tweets) => {
         return res.render('tweets', { tweets })
-      })
+    })
   },
   getTweet: (req, res) => {
     return res.render('tweet')
