@@ -1,4 +1,5 @@
-const { Tweet } = require('../models')
+const { Tweet, User } = require('../models')
+
 const { getUser } = require('../_helpers')
 
 const showFiftyString = (str) => {
@@ -12,11 +13,14 @@ const adminController = {
   getTweets: (req, res) => {
     Tweet.findAll(
       {
+        raw: true,
+        nest: true,
+        include: [User],
         order: [['createdAt', 'DESC']]
       }
     ).then((tweets) => {
       tweets = tweets.map((d, i) => ({
-        ...d.dataValues,
+        ...d,
         description: showFiftyString(d.description)
       }))
 
@@ -28,6 +32,17 @@ const adminController = {
       .catch(e => {
         console.warn(e)
       })
+  },
+  deleteTweets: (req, res) => {
+    const tweet_id = req.params.id
+
+    Tweet.findOne({ where: { id: Number(tweet_id) } })
+      .then(tweet => {
+        return tweet.destroy()
+      }).then(() => {
+        res.redirect('back')
+      })
+      .catch(e => console.warn(e))
   },
 
   // 管理者 登入頁面

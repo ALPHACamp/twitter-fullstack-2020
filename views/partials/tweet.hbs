@@ -6,14 +6,14 @@
         <img src="https://fakeimg.pl/64/" class="rounded-circle" alt="...">
       </div>
       <div class="">
-        <h5>UserName {{tweet.UserId}}</h5>
-        <p class="text-secondary mb-0">@Account</p>
+        <h5>{{tweet.User.name}}</h5>
+        <p class="text-secondary mb-0">{{tweet.User.account}}</p>
       </div>
     </div>
     <p class="font-weight-bold">
       {{tweet.description}}
     </p>
-    <p>上午10:00 &bull; 2020年6月12日</p>
+    <p>{{time}}</p>
     <div class="px-2 py-3 border-top border-bottom">
       <span class="mr-3"><span class="font-weight-bold">34</span>回覆</span>
       <span><span class="font-weight-bold">808</span>喜歡次數</span>

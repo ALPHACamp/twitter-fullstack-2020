@@ -5,6 +5,6 @@ module.exports = {
     if (helpers.ensureAuthenticated(req)) {
       return next()
     }
-    res.redirect('/')
+    res.redirect('/signin')
   }
 }
