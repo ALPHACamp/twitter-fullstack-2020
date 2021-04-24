@@ -4,8 +4,6 @@ const adminController = require('../controllers/adminController')
 const { authenticated } = require('../middleware/auth')
 
 module.exports = (app, passport) => {
-  //admin
-
   // 管理者登入
   app.get('/admin/signin', adminController.signInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), adminController.signIn)
