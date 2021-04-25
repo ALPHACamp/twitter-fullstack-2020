@@ -58,11 +58,11 @@
               </div>
             </a>
             <div class="d-flex">
-              <form data-toggle="modal" data-target="#replyModal{{this.id}}" method="POST">
+              <div data-toggle="modal" data-target="#replyModal{{this.id}}">
                 <button type="button" class="btn p-0 " style="background-color: white;">
                   <i class="far fa-comment"></i>
                 </button>
-              </form>
+              </div>
               {{!-- add like button --}}
               {{#if this.isLiked }}
               <form action="/like/{{this.id}}?_method=DELETE" method="POST">
@@ -83,7 +83,6 @@
           </div>
 
         </div>
-  {{> modal}}
         {{/each}}
       </div>
     </div>
@@ -93,3 +92,4 @@
     {{> right-column}}
   </div>
 </div>
+{{> modal}}

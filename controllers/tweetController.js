@@ -18,14 +18,11 @@ const tweetController = {
   },
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
-      include: [
-        { model: Reply, include: [User] }
-      ]
-
-    }).then(tweet => {
-      return res.render('tweet', {
-        tweet: tweet.toJSON()
-      })
+        include: [User, { model: Reply, include: [User] }],
+    }).then((tweet) => {
+        return res.render('tweet', {
+            tweet: tweet.toJSON(),
+        })
     })
   },
   //   return res.render('tweet')
