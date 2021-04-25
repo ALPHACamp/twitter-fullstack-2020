@@ -70,7 +70,11 @@ const userController = {
   getUser: async (req, res) => {
     try {
       const user = await User.findByPk(req.params.id, {
-        attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover']
+        attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover'],
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       })
       const tweets = await Tweet.findAll({
         raw: true,
@@ -87,6 +91,7 @@ const userController = {
         repliesCount: data.Replies.length,
         likesConut: data.Likes.length,
       }))
+      console.log('user:', user)
       return res.render('user', {
         user: user.toJSON(),
         tweetsData: tweetsData
