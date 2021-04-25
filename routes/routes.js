@@ -70,7 +70,7 @@ router.get('/logout', userController.logout)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, userController.postTweet)
 router.get('/tweets/:id', authenticated, tweetController.getTweet)
-router.post('/reply', authenticated, replyController.postReply)
+router.post('/tweets/:id/replies', authenticated, replyController.postReply)
 
 
 

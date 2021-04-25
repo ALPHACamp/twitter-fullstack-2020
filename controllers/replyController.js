@@ -11,12 +11,7 @@ const replyController = {
       comment: req.body.description,
     })
       .then((reply) => {
-        console.log(req.body.tweetId)
-        console.log(req.body.description)
-        console.log(req.user.id)
-        console.log(req.params.id)
-        console.log(req.body.tweetId)
-        res.redirect(`/tweets/${req.body.tweetId}`)
+        res.redirect(`/tweets/${req.params.id}`)
       })
   },
 
