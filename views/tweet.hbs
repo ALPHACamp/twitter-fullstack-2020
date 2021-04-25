@@ -17,16 +17,15 @@
 
 
           <div class="post-user-account mt-2">
-            <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
-                    ">{{tweet.User.name}}</div><span class="post-account mr-1"
+            <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">{{userNow.name}}{{tweet.User.name}}</div>
+            <span class="post-account mr-1"
               style="font-size: 15px;color: #657786;font-weight: 500;">@{{tweet.User.account}}</span>
           </div>
         </div>
         <div class="content mt-1 mb-2" style="font-weight: 500;
 font-size: 23px;color: #1C1C1C">{{tweet.description}}</div>
         <div class="post-time" style="font-weight: 500;
-font-size: 15px;color: #657786;font-weight: 500;">{{moment
-tweet.createdAt}}</div>
+font-size: 15px;color: #657786;font-weight: 500;">{{moment tweet.updatedAt}} by {{tweet.User.name}}</div>
       </div>
       <div class="tweet-counts px-3 py-3  d-flex justify-content-start" style="border: #E6ECF0 1px solid;">
         <div class="replies"><span class="replies-count mr-1 font-weight-bold" style="font-size: 19px;">34</span><span
@@ -68,7 +67,7 @@ tweet.createdAt}}</div>
           <div class="post ml-1 mt-2">
             <div class="post-info d-flex justify-content-start">
               <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
-          ">{{this.User.name}}</div><span class="post-account mr-1"
+          ">{{tweet.User.name}}</div><span class="post-account mr-1"
                 style="font-size: 15px;color: #657786;font-weight: 500;">@{{tweet.User.account}}</span
                 style="font-size: 15px;color: #657786;"><span
                 style="font-size: 15px;color: #657786;font-weight: 500;">·</span>

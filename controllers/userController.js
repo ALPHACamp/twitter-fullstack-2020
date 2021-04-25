@@ -138,41 +138,39 @@ let userController = {
 
   getUser: async (req, res) => {
 
-    // const result = await Reply.findAndCountAll({
-    //   raw: true,
-    //   nest: true,
-    //   where: {
-    //     userId: req.params.id
-    //   },
-    //   include: Restaurant,
-    //   distinct: true,
-    // })
-    // const count = result.count
-    // const comments = result.rows
-    // console.log('result', result)
-    // console.log('result', result)
-    // return User.findByPk(req.params.id)
-    //   .then(user => {
-    //     res.render('userProfile', {
-    //       userNow: user.toJSON(), count, comments
-    //     })
-    //   })
-
-
-
-
-
-
-
-
-
-
+    const result = await Reply.findAndCountAll({
+      raw: true,
+      nest: true,
+      where: {
+        userId: req.params.id
+      },
+      include: Tweet,
+      distinct: true,
+    })
+    const count = result.count
+    const comments = result.rows
     return User.findByPk(req.params.id)
       .then(user => {
-        return res.render('profile', {
-          user: user.toJSON()
+        res.render('Profile', {
+          userNow: user.toJSON(), count, comments
         })
       })
+
+
+
+
+
+
+
+
+
+
+    // return User.findByPk(req.params.id)
+    //   .then(user => {
+    //     return res.render('profile', {
+    //       user: user.toJSON()
+    //     })
+    //   })
   },
   postTweet: (req, res) => {
     //未輸入字

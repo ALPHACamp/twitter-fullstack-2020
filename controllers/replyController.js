@@ -1,17 +1,20 @@
 const db = require('../models')
 const Reply = db.Reply
+const helpers = require('../_helpers')
+
 
 const replyController = {
   postReply: (req, res) => {
     return Reply.create({
-      comment: req.body.text,
-      TweetId: req.body.tweetId,
-      UserId: req.user.id
+      UserId: req.user.id,
+      TweetId: req.params.id,
+      comment: req.body.description,
     })
       .then((reply) => {
-        res.redirect(`/tweets/${req.body.tweetId}`)
+        res.redirect(`/tweets/${req.params.id}`)
       })
-  }
+  },
+
 }
 
 module.exports = replyController

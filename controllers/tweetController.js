@@ -16,17 +16,22 @@ const tweetController = {
       return res.render('tweets', { tweets })
     })
   },
+
   getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-        include: [User, { model: Reply, include: [User] }],
-    }).then((tweet) => {
-        return res.render('tweet', {
-            tweet: tweet.toJSON(),
-        })
+    console.log('req.params', req.params.id)
+    Tweet.findByPk(req.params.id, {
+      raw: true,
+      nest: true,
+      include: [User,
+        { model: Reply, include: [User] }
+      ]
+
+    }).then(tweet => {
+      return res.render('tweet', {
+        tweet: tweet
+      })
     })
   },
-  //   return res.render('tweet')
-  // },
 
   getUser: async (req, res) => {
 
