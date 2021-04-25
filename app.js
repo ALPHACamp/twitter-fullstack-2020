@@ -1,6 +1,7 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
 const { urlencoded } = require('body-parser');
+const methodOverride = require('method-override')
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('./config/passport');
@@ -25,6 +26,7 @@ app.set('view engine', 'handlebars');
 
 // body-parser
 app.use(urlencoded({ extended: true }));
+app.use(methodOverride('_method'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());

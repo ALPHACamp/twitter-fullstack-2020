@@ -51,9 +51,13 @@ router.delete('/tweet/:id', authenticated, tweetController.deleteTweet);
 
 //管理員控制 -- 心憲
 router.get('/admin/signin', adminController.signinPage)
-router.post('/admin/signin', authenticatedAdmin, passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
+router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweetsPage)
 router.get('/admin/users', authenticatedAdmin, adminController.usersPage)
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+
+// 使用者
+router.get('/user/:id', authenticated, userController.getUser)
 
 // 登出
 router.get('/logout', userController.logOut);

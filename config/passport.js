@@ -14,14 +14,13 @@ passport.use(
     },
     async (req, username, password, done) => {
       try {
-        const user = await User.findOne({ account: username });
+        const user = await User.findOne({ where: { account: username } });
         if (!user)
           return done(null, false, req.flash('error_msg', '帳號尚未註冊'));
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
           return done(null, false, req.flash('error_msg', '密碼錯誤！'));
-
         return done(null, user);
       } catch (error) {
         done(error, false);
