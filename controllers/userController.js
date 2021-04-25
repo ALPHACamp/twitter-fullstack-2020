@@ -195,6 +195,12 @@ let userController = {
         res.redirect('back')
       })
   },
+  getFollowers: (req, res) => {
+    res.render('follower')
+  },
+  getFollowings: (req, res) => {
+    res.render('following')
+  },
 }
 
 module.exports = userController
