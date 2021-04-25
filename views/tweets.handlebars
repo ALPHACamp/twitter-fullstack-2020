@@ -10,13 +10,14 @@
                     <i class="bi bi-person-square"></i>
                 </div>
                 <div class="col-10">
-                    <form action="/tweet" method="POST" style="width: 100%;">
+                    <form action="/tweets" method="POST" style="width: 100%;" id="newTweet">
                         <div class="form-label-group">
-                            <input type="text" id="newTweet" rows="3" placeholder="有什麼新鮮事？" class="tweet_new"
-                                name="description">
+                            <textarea form="newTweet" class="tweet_new" placeholder="有什麼新鮮事？"
+                                name="description"></textarea>
                         </div>
                         <button type="submit" class="btn new_post">推文</button>
                     </form>
+
                 </div>
             </div>
         </div>
@@ -31,10 +32,14 @@
                 </div>
                 <div class="col-10">
                     <h5 class="card-title" style="display: inline-block;">{{this.User.name}}</h5>
+                    &nbsp;
                     <a href="#" class="card-link" style="display: inline-block;">@{{this.User.account}}</a>
+                    &nbsp;
                     <p class="card-text" style="display: inline-block;"><small class="text-muted">{{this.time}}</small>
                     </p>
-                    <p class="card-text">{{this.description}}</p>
+                    <a href="/tweets/{{this.id}}" class="tweet_text">
+                        <p class="card-text">{{this.description}}</p>
+                    </a>
                 </div>
             </div>
 

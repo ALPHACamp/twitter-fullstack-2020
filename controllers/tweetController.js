@@ -40,10 +40,14 @@ const tweetController = {
   },
   getTweet: async (req, res) => {
     try {
-      const tweet = await Tweet.findByPk(req.params.id, {});
+      const tweet = await Tweet.findByPk(req.params.id, { include: [User] });
+      const time = moment(tweet.createdAt, 'YYYYMMDD').format(
+        'a h:mm, MMMM Do YYYY'
+      );
       // res.json({ status: 'success', message: 'getTweet' });
       return res.render('tweet', {
         tweet: tweet.toJSON(),
+        time,
       });
     } catch (err) {
       console.log(err);
@@ -51,12 +55,16 @@ const tweetController = {
   },
   postTweet: async (req, res) => {
     try {
-      if (req.body.description == '' || req.body.description.length > 140) {
+      console.log(req.body);
+      if (
+        req.body.description[0] == '' ||
+        req.body.description[0].length > 140
+      ) {
         req.flash('error_msg', '貼文限制140字以內，且內容不可為空！');
         return;
       }
       await Tweet.create({
-        description: req.body.description,
+        description: req.body.description[0],
       });
       // res.json({ status: 'success', message: 'description' });
       req.flash('success_msg', '貼文成功！');
