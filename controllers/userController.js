@@ -5,6 +5,8 @@ const db = require('../models')
 const e = require('express')
 const User = db.User
 const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
 
 let userController = {
   loginPage: (req, res) => {
@@ -66,15 +68,15 @@ let userController = {
     if (helpers.getUser(req).id !== Number(req.params.id)) {
       return res.redirect('back')
     } else {
-      return User.findByPk(req.params.id,{raw:true})
-      .then(user => {
-        return res.render('setting', {
-          user: user
+      return User.findByPk(req.params.id, { raw: true })
+        .then(user => {
+          return res.render('setting', {
+            user: user
+          })
         })
-      })
     }
   },
-    putSetting: async(req,res) => {
+  putSetting: async (req, res) => {
     const id = req.params.id
     const { email: currentEmail, account: currentAccount } = helpers.getUser(req)
     const { account, name, email, password, confirmPassword } = req.body
@@ -90,25 +92,25 @@ let userController = {
       error.push({ message: '密碼與確認密碼不一致！' })
     }
 
-    if ( email !== currentEmail) {
-      await User.findOne({ where: {email}}).then(user => {
+    if (email !== currentEmail) {
+      await User.findOne({ where: { email } }).then(user => {
         if (user) {
-          error.push({ message: '信箱重複！'})
+          error.push({ message: '信箱重複！' })
           return res.redirect('/users/:id/setting')
         } else {
-          newEmail = email 
+          newEmail = email
         }
       })
     }
 
-    if ( email === currentEmail) {
-      newEmail = email 
-    }  
+    if (email === currentEmail) {
+      newEmail = email
+    }
 
-    if ( account !== currentAccount) {
-      await User.findOne({ where: {account}}).then(user => {
+    if (account !== currentAccount) {
+      await User.findOne({ where: { account } }).then(user => {
         if (user) {
-          error.push({ message: '帳號重複！'})
+          error.push({ message: '帳號重複！' })
           return res.redirect('/users/:id/setting')
         } else {
           newAccount = account
@@ -116,25 +118,55 @@ let userController = {
       })
     }
 
-    if ( account === currentAccount) {
+    if (account === currentAccount) {
       newAccount = account
     }
 
-    if (error.length !== 0 ) {
+    if (error.length !== 0) {
       return res.render('setting', {
         error
       })
-    } 
-    
+    }
+
     return User.findByPk(id)
       .then(user => user.update({ name, password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)), email: newEmail, account: newAccount }))
       .then(() => {
         req.flash('success_messages', '用戶帳號資料更新成功！')
         res.redirect('/tweets')
-      })    
-    },  
+      })
+  },
 
-  getUser: (req, res) => {
+  getUser: async (req, res) => {
+
+    // const result = await Reply.findAndCountAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: {
+    //     userId: req.params.id
+    //   },
+    //   include: Restaurant,
+    //   distinct: true,
+    // })
+    // const count = result.count
+    // const comments = result.rows
+    // console.log('result', result)
+    // console.log('result', result)
+    // return User.findByPk(req.params.id)
+    //   .then(user => {
+    //     res.render('userProfile', {
+    //       userNow: user.toJSON(), count, comments
+    //     })
+    //   })
+
+
+
+
+
+
+
+
+
+
     return User.findByPk(req.params.id)
       .then(user => {
         return res.render('profile', {
@@ -142,14 +174,14 @@ let userController = {
         })
       })
   },
-  postTweet:(req, res) => {
+  postTweet: (req, res) => {
     //未輸入字
-    if (!req.body.description){
+    if (!req.body.description) {
       req.flash('error_messages', "請輸入內容")
       return res.redirect('back')
     }
     //超過字數
-    if ( Number(req.body.description.length) > 140 ) {
+    if (Number(req.body.description.length) > 140) {
       req.flash('error_messages', "推文字數超過140字，請重新輸入！")
       return res.redirect('back')
     }

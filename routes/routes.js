@@ -7,6 +7,7 @@ const helpers = require('../_helpers')
 const tweetController = require('../controllers/tweetController.js')
 const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
+const replyController = require('../controllers/replyController.js')
 
 const passport = require('../config/passport')
 
@@ -68,10 +69,14 @@ router.get('/logout', userController.logout)
 
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, userController.postTweet)
-router.get('/tweet', authenticated, tweetController.getTweet)
+router.get('/tweets/:id', authenticated, tweetController.getTweet)
+router.post('/reply', authenticated, replyController.postReply)
+
+
+
 router.get('/profile/:id', authenticated, userController.getUser)
-router.get('/users/:id/setting', authenticated,userController.settingPage)
-router.put('/users/:id', authenticated,userController.putSetting)
+router.get('/users/:id/setting', authenticated, userController.settingPage)
+router.put('/users/:id', authenticated, userController.putSetting)
 
 
 

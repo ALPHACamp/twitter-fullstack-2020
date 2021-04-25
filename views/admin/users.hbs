@@ -13,10 +13,8 @@
         {{#each users}}
         <div class="col-3 p-1">
           <div class="card h-100">
-            <img
-              src="https://handler.travel/wp-content/uploads/2020/03/miaolihiongqien_%E7%83%8F%E5%98%8E%E5%BD%A5%E7%AB%B9%E6%9E%97.jpg"
-              class="card-img-top" style="border-radius: 10px 10px 0 0" alt="...">
-            <img src="https://i.stack.imgur.com/34AD2.jpg" alt=""
+            <img src={{this.cover}} class="card-img-top" style="border-radius: 10px 10px 0 0" alt="...">
+            <img src={{this.avatar}} alt=""
               style="position: absolute;height:auto;min-height:90px;width:90px;border-radius:50%;left:25%;top:20%;border:3px solid white;">
             <div class="card-body">
               <h5 class="card-title text-center pt-2 mb-1">{{this.name}}</h5>
