@@ -27,7 +27,7 @@
   </div>
 </div>
 {{!-- reply modal --}}
-<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="replyModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -38,33 +38,33 @@
       <div class="modal-title">
         <div class="reply-target-section d-flex justify-content-start px-3 ">
           <div class="reply-target-avatar mr-1">
-            <img class="mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+            <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
               style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
             <div class="diver ml-4 mt-2" style="width: 2px;height: 80px;background: #CCD6DD;"></div>
           </div>
           <div class="post ml-1 mt-2">
             <div class="post-info d-flex justify-content-start">
               <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
-          ">{{user.name}}</div><span class="post-account mr-1"
-                style="font-size: 15px;color: #657786;font-weight: 500;">@{{user.account}}</span
+          ">{{this.User.name}}</div><span class="post-account mr-1"
+                style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span
                 style="font-size: 15px;color: #657786;"><span
                 style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
               <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
-                user.createdAt}}</span>
+                this.createdAt}}</span>
             </div>
             <div class="post-content my-2" style="font-weight: 500;
-          font-size: 15px;color: #1C1C1C;">{{user.description}}</div>
+          font-size: 15px;color: #1C1C1C;">{{this.description}}</div>
             <div class="reply-target"><span class="mr-1"
-                style="font-weight: 500; font-size: 15px;color: #657786;">回覆</span> <span class="reply-target-account"
-                style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{user.account}}</span></div>
+                style="font-weight: 500; font-size: 15px;color: #657786;">回覆</span><span class="reply-target-account"
+                style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{this.User.account}}</span></div>
           </div>
         </div>
       </div>
       <div class="modal-body" class="d-flex">
-        <form method="POST" action="/tweets/{{user.id}}/replies">
+        <form method="POST" action="/tweets/{{this.User.id}}/replies">
           <div class="reply-user-section d-flex justify-content-start px-3">
             <div class="reply-user-avatar mr-1">
-              <img class="mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+              <img class="mt-2" {{#if user.avatar}}src={{ user.avatar}}{{/if}}
                 style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
             </div>
             <div class="reply-user-content">
