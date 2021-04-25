@@ -24,7 +24,7 @@ const tweetController = {
 
     }).then(tweet => {
       return res.render('tweet', {
-        tweet: tweet.toJSON()
+        tweet: tweet
       })
     })
   },
