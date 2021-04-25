@@ -77,7 +77,8 @@ router.post('/reply', authenticated, replyController.postReply)
 router.get('/profile/:id', authenticated, userController.getUser)
 router.get('/users/:id/setting', authenticated, userController.settingPage)
 router.put('/users/:id', authenticated, userController.putSetting)
-
+router.get('/users/:id/follower', authenticated, userController.getFollowers)
+router.get('/users/:id/following', authenticated, userController.getFollowings)
 
 
 

@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-3" style="width: 350px;">
+  <div class="col-3">
     {{> left-column}}
   </div>
   <div class="center-section col-6">
@@ -16,10 +16,10 @@ font-size: 13px;color: #657786;">25 推文
     <div class="follow-feeds">
       <ul class="nav nav-tabs">
         <li class="nav-item">
-          <a class="nav-link active" href="/users/follower/:{{user.id}}" style="text-decoration: none;">跟隨者</a>
+          <a class="nav-link active" href="/users/:{{user.id}}/follower" style="text-decoration: none;">跟隨者</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/users/following/:{{user.id}}" style="text-decoration: none;">正在跟隨</a>
+          <a class="nav-link " href="/users/:{{user.id}}/following" style="text-decoration: none;">正在跟隨</a>
         </li>
       </ul>
     </div>
