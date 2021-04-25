@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
-    <div class="col-3 left-column">{{> left-column}}</div>
-    <div class="col-9 account-setting">
+    <div class="col-2 left-column">{{> left-column}}</div>
+    <div class="col-10 account-setting">
       <div class="row mt-5">
         <div class="col-md-6 m-auto">
           <div class="text-left mt-3" style="font-weight: bold ;font-size: 19px;line-height: 28px
@@ -9,7 +9,7 @@
           </div>
           <hr class="mb-3">
           {{> message}}
-          <form action="/register" method="POST" class="de-flex">
+          <form action="/users/:id" method="POST" class="de-flex">
             <div class="form-group">
               <label for="account" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">帳號</label>
               <input type="text" id="account" name="account" class="form-control" placeholder="請輸入帳號"
