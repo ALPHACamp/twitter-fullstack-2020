@@ -9,6 +9,9 @@ const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
 const replyController = require('../controllers/replyController.js')
 
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+
 const passport = require('../config/passport')
 
 
