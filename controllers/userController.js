@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+
 const helpers = require('../_helpers');
 const db = require('../models');
 const User = db.User;
@@ -86,7 +87,7 @@ const userController = {
         where: { UserId: req.params.id }
       })
       const tweetsData = await tweets.map(data => ({
-        description: data.description,
+        description: data.description.substring(0, 100),
         createdAt: data.createdAt,
         repliesCount: data.Replies.length,
         likesConut: data.Likes.length,
@@ -101,8 +102,14 @@ const userController = {
     }
   },
 
-  getUserEdit: (req, res) => {
-
+  getUserEdit: async (req, res) => {
+    const userId = helpers.getUser(req).id
+    if (userId !== Number(req.params.id)) {
+      req.flash('error_msg', '抱歉！你只能編輯自己的個人資訊')
+      return res.redirect(`/user/${req.params.id}`)
+    }
+    const user = await User.findByPk(userId, { raw: true })
+    return res.render('edit', { user: user })
   }
 };
 

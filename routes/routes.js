@@ -57,6 +57,7 @@ router.get('/admin/users', authenticatedAdmin, adminController.usersPage)
 
 // 使用者
 router.get('/user/:id', authenticated, userController.getUser)
+router.get('/user/:id/edit', authenticated, userController.getUserEdit)
 
 // 登出
 router.get('/logout', userController.logOut);
