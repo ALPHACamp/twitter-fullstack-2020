@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
-
+const imgur = require('imgur-node-api')
+//const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const helpers = require('../_helpers');
 const db = require('../models');
 const User = db.User;
@@ -110,7 +111,11 @@ const userController = {
     }
     const user = await User.findByPk(userId, { raw: true })
     return res.render('edit', { user: user })
-  }
+  },
+
+  putUserEdit: (req, res) => {
+
+  },
 };
 
 module.exports = userController;
