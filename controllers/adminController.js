@@ -33,7 +33,22 @@ const adminController = {
     })
   },
   usersPage: (req, res) => {
-    return res.render('admin/users')
+    return User.findAll({
+      include: [
+        Tweet,
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        { model: Tweet, as: 'LikeTweets' },
+      ]
+    }).then(user => {
+      console.log(user)
+      user = user.map(user => ({
+        ...user.dataValues,
+        TweetsCount: user.Tweets.length
+      }))
+      user = user.sort((a, b) => b.TweetsCount - a.TweetsCount)
+      return res.render('admin/users', { user })
+    })
   },
   deleteTweet: (req, res) => {
     return Tweet.findByPk(req.params.id)
