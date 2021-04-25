@@ -69,7 +69,7 @@ router.get('/logout', userController.logout)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.get('/tweet', authenticated, tweetController.getTweet)
 router.get('/profile/:id', authenticated, userController.getUser)
-router.get('/setting', userController.settingPage)
+router.get('/users/:id/setting/', authenticated,userController.settingPage)
 
 
 

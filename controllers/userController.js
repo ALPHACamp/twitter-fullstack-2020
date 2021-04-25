@@ -64,8 +64,14 @@ let userController = {
   },
 
   settingPage: (req, res) => {
-    return res.render('setting')
+    return User.findByPk(req.params.id)
+      .then(user => {
+        return res.render('setting', {
+          user: user.toJSON()
+        })
+      })
   },
+  
   getUser: (req, res) => {
 
     return User.findByPk(req.params.id)
