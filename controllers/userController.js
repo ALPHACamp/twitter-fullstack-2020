@@ -1,4 +1,7 @@
 const bcrypt = require('bcryptjs');
+const imgur = require('imgur-node-api');
+const fs = require('fs');
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const helpers = require('../_helpers');
 const db = require('../models');
 const User = db.User;
@@ -79,7 +82,11 @@ const userController = {
   getUser: async (req, res) => {
     try {
       const user = await User.findByPk(req.params.id, {
-        attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover']
+        attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover'],
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       })
       const tweets = await Tweet.findAll({
         raw: true,
@@ -91,7 +98,7 @@ const userController = {
         where: { UserId: req.params.id }
       })
       const tweetsData = await tweets.map(data => ({
-        description: data.description,
+        description: data.description.substring(0, 100),
         createdAt: data.createdAt,
         repliesCount: data.Replies.length,
         likesConut: data.Likes.length,
@@ -105,9 +112,29 @@ const userController = {
     }
   },
 
-  getUserEdit: (req, res) => {
+  getUserEdit: async (req, res) => {
+    const userId = helpers.getUser(req).id
+    if (userId !== Number(req.params.id)) {
+      req.flash('error_msg', '抱歉！你只能編輯自己的個人資訊')
+      return res.redirect(`/user/${req.params.id}`)
+    }
+    const user = await User.findByPk(userId, { raw: true })
+    return res.render('edit', { user: user })
+  },
 
-  }
+  putUserEdit: (req, res) => {
+
+  },
+
+  getUserSetting: async (req, res) => {
+    const userId = helpers.getUser(req).id
+    const user = await User.findByPk(userId, {
+      attributes: ['id', 'account', 'email', 'name'],
+    })
+    return res.render('setting', { user: user.toJSON() })
+  },
+
+
 };
 
 module.exports = userController;

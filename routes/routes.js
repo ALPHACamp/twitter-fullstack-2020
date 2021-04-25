@@ -5,6 +5,8 @@ const passport = require('../config/passport');
 const userController = require('../controllers/userController');
 const adminController = require('../controllers/adminController');
 const tweetController = require('../controllers/tweetController');
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 //一般使用者認證
 const authenticated = (req, res, next) => {
@@ -69,6 +71,10 @@ router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTwe
 
 // 使用者
 router.get('/user/:id', authenticated, userController.getUser)
+router.get('/user/:id/edit', authenticated, userController.getUserEdit)
+//router.put('/user/:id/edit', authenticated, upload.single('image'), userController.putUserEdit)
+router.get('/user/:id/setting', authenticated, userController.getUserSetting)
+
 
 // 登出
 router.get('/logout', userController.logOut);
