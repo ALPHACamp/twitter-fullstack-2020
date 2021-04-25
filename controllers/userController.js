@@ -142,6 +142,27 @@ let userController = {
         })
       })
   },
+  postTweet:(req, res) => {
+    //未輸入字
+    if (!req.body.description){
+      req.flash('error_messages', "請輸入內容")
+      return res.redirect('back')
+    }
+    //超過字數
+    if ( Number(req.body.description.length) > 140 ) {
+      req.flash('error_messages', "推文字數超過140字，請重新輸入！")
+      return res.redirect('back')
+    }
+
+    return Tweet.create({
+      description: req.body.description,
+      UserId: helpers.getUser(req).id
+    })
+      .then((tweet) => {
+        req.flash('success_messages', '成功新增一則推文！')
+        res.redirect('back')
+      })
+  },
 }
 
 module.exports = userController
