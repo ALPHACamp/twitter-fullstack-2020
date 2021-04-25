@@ -24,7 +24,7 @@
 </div>
 
 <div class="d-flex justify-content-center">
-  {{#if admin}}
+  {{#if adminMark}}
   <form action="/admin/signin" method="POST" style="width: 60%;">
   {{else}}
   <form action="/signin" method="POST" style="width: 60%;">
@@ -44,7 +44,7 @@
     <div class="text-right">
       <span><a href="/signup">註冊Alphitter</a></span>
       ．
-      {{#if admin}}
+      {{#if adminMark}}
       <span><a href="/signin">使用者登入</a></span>
       {{else}}
       <span><a href="/admin/signin">管理者登入</a></span>

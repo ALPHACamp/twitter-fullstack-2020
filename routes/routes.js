@@ -8,18 +8,14 @@ const tweetController = require('../controllers/tweetController');
 
 //一般使用者認證
 const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    return next();
-  }
+  if (helpers.ensureAuthenticated(req)) { return next(); }
   res.redirect('/signin');
 };
 
 // 管理員認證
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) {
-      return next();
-    }
+    if (helpers.getUser(req).isAdmin) { return next(); }
     res.redirect('/');
   }
   res.redirect('/signin');
@@ -53,6 +49,7 @@ router.post('/tweets', authenticated, tweetController.postTweet);
 router.put('/tweets/:id', authenticated, tweetController.putTweet);
 router.delete('/tweets/:id', authenticated, tweetController.deleteTweet);
 
+
 // router.get('/', (req, res) => {
 //   res.redirect('/tweets');
 // });
@@ -62,19 +59,16 @@ router.delete('/tweets/:id', authenticated, tweetController.deleteTweet);
 // router.put('/tweets/:id', tweetController.putTweet);
 // router.delete('/tweets/:id', tweetController.deleteTweet);
 
+
 //管理員控制 -- 心憲
-router.get('/admin/signin', adminController.signinPage);
-router.post(
-  '/admin/signin',
-  authenticatedAdmin,
-  passport.authenticate('local', {
-    failureRedirect: '/admin/signin',
-    failureFlash: true,
-  }),
-  adminController.signin
-);
-router.get('/admin/tweets', authenticatedAdmin, adminController.tweetsPage);
-router.get('/admin/users', authenticatedAdmin, adminController.usersPage);
+router.get('/admin/signin', adminController.signinPage)
+router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
+router.get('/admin/tweets', authenticatedAdmin, adminController.tweetsPage)
+router.get('/admin/users', authenticatedAdmin, adminController.usersPage)
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+
+// 使用者
+router.get('/user/:id', authenticated, userController.getUser)
 
 // 登出
 router.get('/logout', userController.logOut);
