@@ -1,6 +1,9 @@
 <div class="row">
-  {{> left-column}}
+  <div class="col-3" style="width: 350px;">
+    {{> left-column}}
+  </div>
   <div class="center-section col-6 ">
+    {{> message}}
     <div class="homepage">
       <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
         style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;">首頁
@@ -24,7 +27,7 @@
         </form>
       </div>
     </div>
-    {{> message}}
+
     <div class="col" style="padding: 0px;">
       <div class="tweet-list mt-3">
         {{#each tweets}}
