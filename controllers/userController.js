@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
-const imgur = require('imgur-node-api')
-//const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const imgur = require('imgur-node-api');
+const fs = require('fs');
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const helpers = require('../_helpers');
 const db = require('../models');
 const User = db.User;
@@ -93,7 +94,6 @@ const userController = {
         repliesCount: data.Replies.length,
         likesConut: data.Likes.length,
       }))
-      console.log('user:', user)
       return res.render('user', {
         user: user.toJSON(),
         tweetsData: tweetsData
@@ -116,6 +116,16 @@ const userController = {
   putUserEdit: (req, res) => {
 
   },
+
+  getUserSetting: async (req, res) => {
+    const userId = helpers.getUser(req).id
+    const user = await User.findByPk(userId, {
+      attributes: ['id', 'account', 'email', 'name'],
+    })
+    return res.render('setting', { user: user.toJSON() })
+  },
+
+
 };
 
 module.exports = userController;
