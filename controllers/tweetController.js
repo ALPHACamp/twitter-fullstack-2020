@@ -20,15 +20,13 @@ const tweetController = {
   getTweet: (req, res) => {
     console.log('req.params', req.params.id)
     Tweet.findByPk(req.params.id, {
-      raw: true,
-      nest: true,
       include: [User,
         { model: Reply, include: [User] }
       ]
 
     }).then(tweet => {
       return res.render('tweet', {
-        tweet: tweet
+        tweet: tweet.toJSON()
       })
     })
   },

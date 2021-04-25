@@ -41,7 +41,40 @@ font-size: 15px;color: #657786;font-weight: 500;">{{moment tweet.updatedAt}} by 
         <i class="btn far fa-heart ml-5" style="color: #657786;font-size:25px;"></i>
       </div>
     </div>
-    {{> replies}}
+
+    {{#each tweet.Replies}}
+    <div class="replies-section d-flex justify-content-start px-3 " style="border: #E6ECF0 1px solid;">
+      <a href="/users/{{this.id}}" style="text-decoration:none;">
+        <div class=" post-avatar mr-1">
+          <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+            style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+        </div>
+      </a>
+      <div class="reply ml-1 mt-2">
+        <div class="reply-info d-flex justify-content-start">
+          <div class="reply-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
+">{{this.User.name}}</div><span class="reply-account mr-1"
+            style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span
+            style="font-size: 15px;color: #657786;"><span
+            style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
+          <span class="reply-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
+            this.updatedAt}}</span>
+        </div>
+        <div class="reply-target"><span class="mr-1" style="font-weight: 500;
+font-size: 15px;color: #657786;">回覆</span> <span class="reply-target-account" style="font-weight: 500;
+font-size: 15px;color: #FF6600;">@{{../tweet.User.account}}</span></div>
+
+        <div class="reply-content my-2" style="font-weight: 500;
+font-size: 15px;color: #1C1C1C;">{{this.comment}}</div>
+      </div>
+    </div>
+
+
+
+
+    {{!--
+    <h1>{{this.comment}}</h1> --}}
+    {{/each}}
   </div>
 
   <div class="col-3" style="width: 350px;">
