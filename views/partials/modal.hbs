@@ -55,14 +55,14 @@
             <div class="post-content my-2" style="font-weight: 500;
           font-size: 15px;color: #1C1C1C;">{{this.description}}</div>
             <div class="reply-target"><span class="mr-1"
-                style="font-weight: 500; font-size: 15px;color: #657786;">回覆</span><span class="reply-target-account"
+                style="font-weight: 500; font-size: 15px;color: #657786;">回覆給</span><span class="reply-target-account"
                 style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{this.User.account}}</span></div>
           </div>
         </div>
       </div>
-      <div class="modal-body" class="d-flex">
+      <div class="modal-body pt-0" class="d-flex">
         <form method="POST" action="/tweets/{{this.User.id}}/replies">
-          <div class="reply-user-section d-flex justify-content-start px-3">
+          <div class="reply-user-section d-flex justify-content-start">
             <div class="reply-user-avatar mr-1">
               <img class="mt-2" {{#if @root.user.avatar}}src={{ @root.user.avatar}}{{/if}}
                 style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
