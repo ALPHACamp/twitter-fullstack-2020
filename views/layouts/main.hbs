@@ -45,6 +45,17 @@
       }, false);
     })();
   </script>
+  <script>
+    //fetch popup modal
+    $('#addTweetModal').on('shown.bs.modal', function () {
+      //$('#myInput').trigger('focus')
+      fetch('/tweets/new').then(res => res.json())
+        .then(data => {
+          $('#tweets-popup').html(data.template)
+        })
+        .catch(e => console.log(e))
+    })
+  </script>
 </body>
 
 </html>

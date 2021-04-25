@@ -114,12 +114,12 @@ const tweetController = {
       defaultLayout: 'main',
       extname: '.hbs'
     })
-    ex.render(path.join(src, "views/signin.hbs"))
-      .then(function (v) {
-        console.log(v)
+    ex.render(path.join(src, "views/partials/addNewTweet.hbs"))
+      .then(function (template) {
+        console.log(template)
+        return res.json({ template })
       })
       .catch(e => console.log(e))
-      .finally(() => { res.redirect('/signin') })
   },
   addTweet: (req, res) => {
     const user_id = getUser(req).id
