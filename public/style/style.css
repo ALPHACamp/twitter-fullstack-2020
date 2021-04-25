@@ -116,6 +116,18 @@
   top: 5rem;
   left: 19rem;
 }
+.tweet_text {
+  color: black;
+  text-decoration: none;
+}
+.tweet_text:hover {
+  color: black;
+  text-decoration: none;
+}
+.tweet_text:focus {
+  color: black;
+  text-decoration: none;
+}
 
 #admin_tweets_panel{
   max-height:900px;

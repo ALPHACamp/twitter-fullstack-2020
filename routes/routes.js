@@ -44,10 +44,21 @@ router.get('/', authenticated, (req, res) => {
   res.redirect('/tweets');
 });
 router.get('/tweets', authenticated, tweetController.getTweets);
-router.get('/tweet/:id', authenticated, tweetController.getTweet);
-router.post('/tweet', authenticated, tweetController.postTweet);
-router.put('/tweet/:id', authenticated, tweetController.putTweet);
-router.delete('/tweet/:id', authenticated, tweetController.deleteTweet);
+router.get('/tweets/:id', authenticated, tweetController.getTweet);
+router.post('/tweets', authenticated, tweetController.postTweet);
+router.put('/tweets/:id', authenticated, tweetController.putTweet);
+router.delete('/tweets/:id', authenticated, tweetController.deleteTweet);
+
+
+// router.get('/', (req, res) => {
+//   res.redirect('/tweets');
+// });
+// router.get('/tweets', tweetController.getTweets);
+// router.get('/tweets/:id', tweetController.getTweet);
+// router.post('/tweets', tweetController.postTweet);
+// router.put('/tweets/:id', tweetController.putTweet);
+// router.delete('/tweets/:id', tweetController.deleteTweet);
+
 
 //管理員控制 -- 心憲
 router.get('/admin/signin', adminController.signinPage)
