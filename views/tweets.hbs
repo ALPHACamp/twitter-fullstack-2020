@@ -1,5 +1,6 @@
 <div class="row">
   {{> left-column}}
+
   <div class="center-section col-6 ">
     {{> message}}
     <div class="homepage">
@@ -72,33 +73,26 @@
     </div>
   </div>
 
-  {{#if user}}
+  {{!-- {{#if user}}
   <span style="margin-right: 10px;">Hi, {{user.name}}</span>
   <a href="/users/{{user.id}}" style="margin-right: 10px;">Profile</a>
-  {{/if}}
-  {{#each tweets}}
+  {{/if}} --}}
+  {{!-- {{#each tweets}}
   <div>
     {{this.UserId}}
     {{this.description}}
   </div>
-  {{/each}}
+  {{/each}} --}}
 
-  {{#each user}}
+  {{!-- {{#each user}}
   <div>
     {{this.name}}
     {{this.email}}
+  </div> --}}
+  {{!-- {{/each}} --}}
+  <div class="col-3" style="width: 350px;">
+    {{> right-column}}
   </div>
-  {{/each}}
-
-
-
-
-
-
-
 </div>
 
-<div class="col-3" style="width: 350px;">
-  {{> right-column}}
-</div>
-</div>
+{{> addTweetModal}}

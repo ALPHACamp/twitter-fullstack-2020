@@ -1,56 +1,54 @@
-<div class="col-3">
-  <div class="navigation mt-4 mb-auto" style="width:235px">
-    <div class="nav-item logo" style="font-size: 18px;
+<div class="navigation mt-4 mb-auto" style="width:235px">
+  <div class="nav-item logo" style="font-size: 18px;
   line-height: 26px;color: #FF6600;font-weight: bold;margin-top: 26px"><i class="fab fa-twitter fa-2x"></i>
-    </div>
-    {{#if user.isAdmin}}
-    <div class="nav-item ">
-      <a href="/admin/tweets/" style="text-decoration:none;">
-        <div class="tweets-title" style="font-size: 18px;
+  </div>
+  {{#if user.isAdmin}}
+  <div class="nav-item ">
+    <a href="/admin/tweets/" style="text-decoration:none;">
+      <div class="tweets-title" style="font-size: 18px;
       line-height: 26px;color: #FF6600;font-weight: bold; margin-top: 20px;"><i class="fas fa-home pr-2"></i>推文清單</div>
-      </a>
-    </div>
-    <div class="nav-item users">
-      <a href="/admin/users/" style="text-decoration:none;">
-        <div class="users-title"
-          style="font-weight: bold;font-size: 18px;line-height: 26px;color: #1C1C1C; margin-top: 20px;">
-          <i class="far fa-user pr-2"></i>使用者列表
-        </div>
-      </a>
-    </div>
-    {{else}}
-    <div class="nav-item home">
-      <a href="/tweets/" style="text-decoration:none;">
-        <div class="home-title" style="font-size: 18px;
+    </a>
+  </div>
+  <div class="nav-item users">
+    <a href="/admin/users/" style="text-decoration:none;">
+      <div class="users-title"
+        style="font-weight: bold;font-size: 18px;line-height: 26px;color: #1C1C1C; margin-top: 20px;">
+        <i class="far fa-user pr-2"></i>使用者列表
+      </div>
+    </a>
+  </div>
+  {{else}}
+  <div class="nav-item home">
+    <a href="/tweets/" style="text-decoration:none;">
+      <div class="home-title" style="font-size: 18px;
   line-height: 26px;color: #FF6600;font-weight: bold; margin-top: 20px;"><i class="fas fa-home pr-2"></i>首頁</div>
-      </a>
-    </div>
-    <div class="nav-item profile">
-      <a href="/profile/{{user.id}}" style="text-decoration:none;">
-        <div class="profile-title"
-          style="font-weight: bold;font-size: 18px;line-height: 26px;color: #1C1C1C; margin-top: 20px;">
-          <i class="far fa-user pr-2"></i>個人資料
-        </div>
-      </a>
-    </div>
-    <div class="nav-item setting" style="margin-top: 20px;">
-      <a href="/users/{{user.id}}/setting" style="text-decoration:none;">
-        <div class="setting-title" style="font-weight: bold;font-size: 18px;line-height: 26px;color: #1C1C1C;">
-          <i class="fas fa-cog pr-2"></i>設定
-        </div>
-      </a>
-    </div>
-    <div class="nav-item tweet">
-      <button type="button" class="nav-item btn  btn-block" data-toggle="modal" data-target="#tweetModal"
-        style="border-radius: 100px; background:#FF6600;font-weight: bold;font-size: 18px;line-height: 26px;color: #FFFFFF;width: 210px; height: 45px;margin-top: 26px">推文</button>
-    </div>
-    {{/if}}
-    <div class="nav-item logout">
-      <a href="/logout" style="text-decoration:none;">
-        <div class="icon-div" style="font-weight: bold;font-size: 18px;color: #1C1C1C;margin-top: 20em;">
-          <i class="fas fa-sign-out-alt pr-2"></i>登出
-        </div>
-      </a>
-    </div>
+    </a>
+  </div>
+  <div class="nav-item profile">
+    <a href="/profile/{{user.id}}" style="text-decoration:none;">
+      <div class="profile-title"
+        style="font-weight: bold;font-size: 18px;line-height: 26px;color: #1C1C1C; margin-top: 20px;">
+        <i class="far fa-user pr-2"></i>個人資料
+      </div>
+    </a>
+  </div>
+  <div class="nav-item setting" style="margin-top: 20px;">
+    <a href="/users/{{user.id}}/setting" style="text-decoration:none;">
+      <div class="setting-title" style="font-weight: bold;font-size: 18px;line-height: 26px;color: #1C1C1C;">
+        <i class="fas fa-cog pr-2"></i>設定
+      </div>
+    </a>
+  </div>
+  <div class="nav-item tweet">
+    <button type="button" class="nav-item btn  btn-block" data-toggle="modal" data-target="#tweetModal"
+      style="border-radius: 100px; background:#FF6600;font-weight: bold;font-size: 18px;line-height: 26px;color: #FFFFFF;width: 210px; height: 45px;margin-top: 26px">推文</button>
+  </div>
+  {{/if}}
+  <div class="nav-item logout">
+    <a href="/logout" style="text-decoration:none;">
+      <div class="icon-div" style="font-weight: bold;font-size: 18px;color: #1C1C1C;margin-top: 20em;">
+        <i class="fas fa-sign-out-alt pr-2"></i>登出
+      </div>
+    </a>
   </div>
 </div>
