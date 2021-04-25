@@ -1,7 +1,7 @@
 <div class="row">
   {{> left-column}}
 
-  <div class="center-section col-6 ">
+  <div class="center-section col-6 mt-2">
     {{> message}}
     <div class="homepage">
       <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
@@ -42,8 +42,10 @@
 
           <div class="col-10 post ml-0 mt-2">
             <div class="post-info d-flex justify-content-start">
+              <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
               <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">{{this.User.name}}
               </div>
+              </a>
               <span class="post-account mr-1"
                 style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span>
               <span style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
