@@ -1,0 +1,52 @@
+<div class="mx-auto mt-5" style="max-width: 560px; padding:0px 10px;">
+  {{!-- svg-container --}}
+  <div class="d-flex flex-nowrap justify-content-center">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M25.6998 18.4711C25.6998 18.4711 18.2329 30.5783 12.1111 30.5783C1.40326 30.5783 11.3822 7.51343 19.1918 7.51343C24.6411 7.51343 25.6998 18.4711 25.6998 18.4711Z"
+        fill="#FF6600" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M34.5723 33.6973C32.4451 35.9608 29.8198 37.6977 26.9044 38.7702C23.989 39.8427 20.8639 40.2214 17.7767 39.8762C14.6895 39.531 11.7252 38.4714 9.11881 36.7814C6.51245 35.0915 4.33573 32.8176 2.76123 30.1402C4.5314 32.5478 7.53375 34.1528 11.803 34.1528C22.3199 34.1528 28.2899 25.9801 28.2899 25.9801C28.2899 25.9801 28.8062 32.4393 34.5593 33.6973H34.5723Z"
+        fill="#FF6600" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M37.7223 10.7452C39.2963 13.7528 40.0781 17.1117 39.9939 20.5051C39.9096 23.8985 38.9621 27.2145 37.2407 30.1402C35.8792 29.3766 34.8725 28.1083 34.4379 26.6091L32.1558 19.7725L37.7223 10.7452Z"
+        fill="#FF6600" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M20.0031 0.0173688C25.0185 0.0140335 29.8513 1.89881 33.5398 5.29665L29.7521 11.4088C28.3811 7.84302 25.5957 4.2729 20.1767 4.2729C9.07841 4.2729 0.852307 16.3888 0.852307 23.9846C0.849861 24.9669 0.975283 25.9454 1.22543 26.8953C0.115582 23.8725 -0.247948 20.6265 0.165719 17.4331C0.579385 14.2398 1.75802 11.1934 3.60147 8.55306C5.44491 5.91269 7.89866 3.75634 10.7542 2.26726C13.6097 0.778179 16.7826 0.000388507 20.0031 0V0.0173688Z"
+        fill="#FF6600" />
+    </svg>
+  </div>
+  {{!-- title --}}
+  <h3 class="text-center mt-3 mb-1 font-weight-bold">建立你的帳號</h3>
+  {{!-- form --}}
+  <form action="/signup" method="POST">
+    <div class="form-group">
+      <label for="account">帳號<span class="text-danger">(必填)</span></label>
+      <input type="text" name="account" class="form-control" id="account" placeholder="Account" value="{{account}}"
+        autofocus>
+    </div>
+    <div class="form-group">
+      <label for="name">名稱<span class="text-danger">(必填)</span></label>
+      <input type="text" name="name" class="form-control" id="name" placeholder="Name" value="{{name}}">
+    </div>
+    <div class="form-group">
+      <label for="email">Email<span class="text-danger">(必填)</span></label>
+      <input type="email" name="email" class="form-control" id="email" placeholder="Email" value="{{email}}">
+    </div>
+    <div class="form-group">
+      <label for="password">密碼<span class="text-danger">(必填)</span></label>
+      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+      <label for="checkPassword">確認密碼<span class="text-danger">(必填)</span></label>
+      <input type="password" name="checkPassword" class="form-control" id="checkPassword" placeholder="Password">
+    </div>
+    <br />
+    <button class="btn btn-light btn-lg btn-block rounded-pill" style="background-color:#FF6600 ;" type="submit"><span
+        class="font-weight-bold text-white">註冊</span></button>
+  </form>
+  {{!-- link --}}
+  <div class="mt-2 d-flex justify-content-center flex-nowrap">
+    <a href="/signin"><span class="font-weight-bold">取消</span></a>
+  </div>
+</div>

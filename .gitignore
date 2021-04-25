@@ -85,3 +85,8 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+#for image upload
+temp/
+upload/
+twitter-fullstack-2020/

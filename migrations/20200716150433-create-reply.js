@@ -1,7 +1,8 @@
-'use strict';
+'use strict'
+const { getUser } = require('../_helpers')
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Likes', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Replies', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,6 +15,9 @@ module.exports = {
       TweetId: {
         type: Sequelize.INTEGER
       },
+      comment: {
+        type: Sequelize.TEXT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -22,9 +26,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    });
+    })
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Likes');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('Replies')
   }
-};
+}
