@@ -9,7 +9,7 @@ const replyController = {
       UserId: req.user.id
     })
       .then((reply) => {
-        res.redirect(`/tweet/${req.body.tweetId}`)
+        res.redirect(`/tweets/${req.body.tweetId}`)
       })
   }
 }

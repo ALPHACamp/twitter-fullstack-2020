@@ -30,44 +30,60 @@
     <div class="col" style="padding: 0px;">
       <div class="tweet-list mt-3">
         {{#each tweets}}
-        <div class="tweet" style="border: #E6ECF0 1px solid;">
-          <div class="d-flex align-items-stretch">
-            <div class="tweet-item-left">
-              <a href="/user/{{ this.User.id }}/tweets">
-                <img src="{{this.User.avatar}}" class="rounded-circle" style="max-width: 50px; background-color: gray;">
-              </a>
+        <div class="tweets-section d-flex justify-content-start px-3 " style="border: #E6ECF0 1px solid; ">
+
+
+          <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+            <div class=" col-1 post-avatar mr-1">
+              <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+                style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
             </div>
-            <div class="tweet-item-right ml-3">
-              <div class="tweet-item-title">
-                <span class="user-name mt-1"><a href="/user/{{ this.User.id }}/tweets">{{this.User.name}}</a></span>
-                <span class="user-account">
-                  @{{this.User.account}}．{{moment this.createdAt}}
-                </span>
+          </a>
+
+          <div class="col-10 post ml-0 mt-2">
+            <div class="post-info d-flex justify-content-start">
+              <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">{{this.User.name}}
               </div>
-              <div class="tweet-text">
-                {{this.description}}
-              </div>
-              <div class="tweet-footer d-flex">
-                <a href="/tweets/{{this.id}}" class="mr-5">
-                  <i class="far fa-comment"></i> {{this.replyNum}}
-                </a>
-                {{!-- add like button --}}
-                {{#if this.isLiked }}
-                <form action="/like/{{this.id}}?_method=DELETE" method="POST">
-                  <button type="submit">
-                    <i class="fas fa-heart like"></i>
-                    {{else}}
-                    <form action="/like/{{this.id}}" method="POST">
-                      <button type="submit">
-                        <i class="far fa-heart"></i>
-                        {{/if}}
-                        {{this.LikeUsers.length}}
-                      </button>
-                    </form>
-              </div>
+              <span class="post-account mr-1"
+                style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span>
+              <span style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
+              <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
+                this.updatedAt}}</span>
             </div>
+            <a href="/tweets/{{this.id}}" style="text-decoration:none; ">
+              <div class="post-content my-2" style="font-weight: 500; font-size: 15px;color: #1C1C1C;  height: 30px">
+                {{this.description}}{{this.id}}
+              </div>
+            </a>
+            <div class="d-flex">
+              <form data-toggle="modal" data-target="#replyModal" method="POST">
+                <button type="button" class="btn p-0 " style="background-color: white;">
+                  <i class="far fa-comment"></i>
+                </button>
+              </form>
+              {{!-- add like button --}}
+              {{#if this.isLiked }}
+              <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
+                  <i class="far fa-heart"></i>
+                </button>
+              </form>
+              {{else}}
+              <form action="/like/{{this.id}}" method="POST">
+                <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
+                  <i class="far fa-heart"></i>
+                </button>
+              </form>
+              {{/if}}
+              {{this.LikeUsers.length}}
+            </div>
+
           </div>
+
         </div>
+
+
+
         {{/each}}
       </div>
     </div>
@@ -78,4 +94,5 @@
   </div>
 </div>
 
+{{> replyModal}}
 {{> addTweetModal}}
