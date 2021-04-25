@@ -1,6 +1,6 @@
 const exphbs = require('express-handlebars')
 const path = require('path')
-const { Tweet, Reply, User, Followship, Like } = require('../models')
+const { Tweet, Reply, User, Like } = require('../models')
 const { getUser } = require('../_helpers')
 const userService = require('../services/userService')
 
@@ -26,7 +26,7 @@ const tweetController = {
         include: [
           User,
           Reply,
-          // Like
+          Like
         ],
         order: [['createdAt', 'DESC']]
       }
@@ -38,9 +38,12 @@ const tweetController = {
           ...d.dataValues,
           name: d.User.name,
           account: d.User.account,
-          replyAmount: d.Replies.length
+          replyAmount: d.Replies.length,
+          isLike: d.Likes.map(l => l.UserId).includes(d.UserId),
+          likeNumber: d.Likes.length
         }
       })
+      console.log('AAAAAA: ', tweets)
       //推薦跟隨
       userService.getTopUsers(req, res, (data) => {
         res.render('tweets', { tweets, pageTitle, isUserPage, ...data })

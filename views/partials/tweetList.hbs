@@ -27,13 +27,22 @@
               <i class="far fa-comment"></i>
               <span>{{ this.replyAmount }}</span>
             </a>
-            <a class="btn btn-link text-decoration-none">
-              {{!-- 未按讚 --}}
-              <i class="far fa-heart"></i>
-              {{!-- 已按讚 --}}
-              {{!-- <i class="fas fa-heart"></i> --}}
-              <span>12</span>
-            </a>
+            {{#if this.isLike}}
+            {{!-- 已按讚 --}}
+            <form action="/tweets/{{ this.id }}/like?_method=DELETE" method="post">
+              <button class="btn btn-link text-decoration-none">
+                <i class="fas fa-heart"></i>
+                <span>{{ this.likeNumber }}</span>
+            </form>
+            {{else}}
+            {{!-- 未按讚 --}}
+            <form action="/tweets/{{ this.id }}/like" method="post">
+              <button class="btn btn-link text-decoration-none">
+                <i class="far fa-heart"></i>
+                <span>{{ this.likeNumber }}</span>
+              </button>
+            </form>
+            {{/if}}
           </div>
           {{/if}}
         </div>
