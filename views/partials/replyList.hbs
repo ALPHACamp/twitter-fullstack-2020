@@ -1,11 +1,11 @@
 <div class="media p-3 border border-top-0">
-  <img src="https://fakeimg.pl/64/" class="rounded-circle mr-3" alt="...">
+  <img src="{{ this.User.avatar }}" class="rounded-circle mr-3" alt="..." width="50" height="50">
   <div class="media-body">
     <div class="d-flex">
-      <p class="font-weight-bold mt-0 mr-2">UserName {{this.UserId}}</p>
-      <p class="text-secondary mb-0">@Account &bull; {{moment this.createdAt}}</p>
+      <p class="font-weight-bold mt-0 mr-2">{{this.User.name}}</p>
+      <p class="text-secondary mb-0">{{ this.User.account }} &bull; {{moment this.createdAt}}</p>
     </div>
-    <p>回覆<span class="text-success">@apply</span></p>
+    <p>回覆<span class="text-main ml-2">{{ this.User.account }}</span></p>
     <p>{{ this.comment }}</p>
   </div>
 </div>

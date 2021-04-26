@@ -11,7 +11,7 @@
       </div>
       {{/if}}
       <div class="media">
-        <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
+        <img src="{{ this.avatar }}" class="mr-3 rounded-circle" alt="..." width="50" height="50">
         <div class="media-body">
           <div class="d-flex">
             <h5>{{ this.name }}</h5>
@@ -23,17 +23,27 @@
           {{!-- like and reply --}}
           {{#if isUserPage}}
           <div class="d-flex">
-            <a class="btn btn-link text-decoration-none mr-5">
-              <i class="far fa-comment"></i>
-              <span>{{ this.replyAmount }}</span>
+            <a class="reply btn btn-link text-decoration-none mr-5" data-toggle="modal" data-target="#addReplyModal"
+              data-tweetId="{{ this.id }}">
+              <i class="far fa-comment" style="pointer-events: none;"></i>
+              {{ this.replyAmount }}
             </a>
-            <a class="btn btn-link text-decoration-none">
-              {{!-- 未按讚 --}}
-              <i class="far fa-heart"></i>
-              {{!-- 已按讚 --}}
-              {{!-- <i class="fas fa-heart"></i> --}}
-              <span>12</span>
-            </a>
+            {{#if this.isLike}}
+            {{!-- 已按讚 --}}
+            <form action="/tweets/{{ this.id }}/like?_method=DELETE" method="post">
+              <button class="btn btn-link text-decoration-none">
+                <i class="fas fa-heart"></i>
+                <span>{{ this.likeNumber }}</span>
+            </form>
+            {{else}}
+            {{!-- 未按讚 --}}
+            <form action="/tweets/{{ this.id }}/like" method="post">
+              <button class="btn btn-link text-decoration-none">
+                <i class="far fa-heart"></i>
+                <span>{{ this.likeNumber }}</span>
+              </button>
+            </form>
+            {{/if}}
           </div>
           {{/if}}
         </div>

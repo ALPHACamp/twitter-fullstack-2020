@@ -11,7 +11,7 @@
         </div>
         <div class="card-body">
           <div class="media">
-            <img src="https://fakeimg.pl/64/" class="mr-3 rounded-circle" alt="...">
+            <img src="{{ user.avatar }}" class="mr-3 rounded-circle" alt="..." width="50" height="50">
             <div class="media-body">
               {{> addNewTweet}}
             </div>
@@ -32,5 +32,4 @@
       {{> topUser}}
     </div>
   </div>
-
 </div>
