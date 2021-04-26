@@ -6,7 +6,13 @@ const userController = require('../controllers/userController');
 const adminController = require('../controllers/adminController');
 const tweetController = require('../controllers/tweetController');
 const multer = require('multer')
-const upload = multer({ dest: 'temp/' })
+const upload = multer({
+  dest: 'temp/', fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      cb(new Error('請上傳 jpg / jpeg / png 格式的圖片'))
+    } cb(null, true)
+  }
+})
 
 //一般使用者認證
 const authenticated = (req, res, next) => {
@@ -17,7 +23,7 @@ const authenticated = (req, res, next) => {
 // 管理員認證
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role.match('admin')) { return next();}
+    if (helpers.getUser(req).role.match('admin')) { return next(); }
     res.redirect('/signin');
   }
 };
@@ -49,8 +55,8 @@ router.post(
 router.get('/', authenticated, blockAdmin, (req, res) => {
   res.redirect('/tweets');
 });
-router.get('/tweets', authenticated,blockAdmin,tweetController.getTweets);
-router.get('/tweets/:id', authenticated, blockAdmin,tweetController.getTweet);
+router.get('/tweets', authenticated, blockAdmin, tweetController.getTweets);
+router.get('/tweets/:id', authenticated, blockAdmin, tweetController.getTweet);
 router.post('/tweets', authenticated, blockAdmin, tweetController.postTweet);
 router.put('/tweets/:id', authenticated, blockAdmin, tweetController.putTweet);
 router.delete('/tweets/:id', authenticated, blockAdmin, tweetController.deleteTweet);
@@ -76,9 +82,13 @@ router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTwe
 // 使用者
 router.get('/user/:id', authenticated, blockAdmin, userController.getUser)
 router.get('/user/:id/edit', authenticated, blockAdmin, userController.getUserEdit)
-//router.put('/user/:id/edit', authenticated, upload.single('image'), userController.putUserEdit)
-router.get('/user/:id/followers', authenticated, blockAdmin,userController.getfollowers)
-router.get('/user/:id/setting', authenticated, blockAdmin,userController.getUserSetting)
+router.put('/user/:id/edit', authenticated, blockAdmin, upload.fields([
+  { name: 'cover', maxCount: 1 },
+  { name: 'avatar', maxCount: 1 }
+]), userController.putUserEdit)
+router.get('/user/:id/followers', authenticated, blockAdmin, userController.getfollowers)
+router.get('/user/:id/setting', authenticated, blockAdmin, userController.getUserSetting)
+
 
 
 // 登出
