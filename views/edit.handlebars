@@ -29,15 +29,15 @@
       </div>
       -->
     </div>
-
+    {{> message}}
     <form action="/user/{{user.id}}/edit?_method=PUT" method="POST" enctype="multipart/form-data">
       <div>
         <div class="form-group mt-3">
-          <input type="email" class="form-control" id="updateName" placeholder="暱稱/名稱" value="{{user.name}}">
+          <input type="text" class="form-control" id="updateName" name="name" placeholder="暱稱/名稱" value="{{user.name}}">
           <small>0/50</small>
         </div>
         <div class="form-group">
-          <textarea class="form-control" id="updateIntroduction" placeholder="自我介紹"
+          <textarea class="form-control" id="updateIntroduction" name="introduction" placeholder="自我介紹"
             rows="3">{{user.introduction}}</textarea>
           <small>0/160</small>
         </div>

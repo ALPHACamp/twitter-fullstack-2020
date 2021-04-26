@@ -11,13 +11,11 @@ const routes = require('./routes');
 const app = express();
 const port = process.env.PORT || 3000;
 
-//if (process.env.NODE_ENV !== 'production') {
-//  require('dotenv').config()
-//}
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 app.use(express.static(__dirname + '/public'));
-app.use('/upload', express.static(__dirname + '/upload'))
-
 app.engine(
   'handlebars',
   handlebars({
@@ -32,6 +30,7 @@ app.set('view engine', 'handlebars');
 // body-parser
 app.use(urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
+app.use('/upload', express.static(__dirname + '/upload'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
