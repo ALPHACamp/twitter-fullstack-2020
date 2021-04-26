@@ -1,12 +1,11 @@
 <div class="container">
   <div class="row justify-content-center align-item-center vh-100">
 
-    <form class="form-signin m-auto" action="/admin/signin" method="POST"
-      style="width: 50%;">
+    <form class="form-signin" action="/admin/signin" method="POST">
 
       <!-- logo -->
       <img src="/images/AC.png" alt="ac-logo" class="rounded mx-auto d-block"
-        style="width: 100px; height: 100px; margin-bottom: 40px;">
+        style="width: 50px; height: 50px; margin-bottom: 40px;">
 
       <!-- title -->
       <div class="text-center mb-4">
@@ -16,17 +15,16 @@
       {{> message}}
 
       <!-- form -->
-      <div class="form-label-group mt-5">
-        <input type="email" name="email" class="form-control mt-4"
-          placeholder="Email"
-          style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black;font-size: 18px"
-          value="{{email}}" required>
-      </div>
-      <div class="form-label-group mt-2">
-        <input type="password" name="password" class="form-control mt-4"
-          placeholder="Password"
-          style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black;font-size: 18px"
+      <div class="form-label-group">
+        <label for="account">帳號</label>
+        <input type="text" name="account" id="account" class="form-control"
           required>
+      </div>
+
+      <div class="form-label-group">
+        <label for="password">密碼</label>
+        <input type="password" name="password" id="password"
+          class="form-control" required>
       </div>
 
       <!-- button -->
@@ -36,9 +34,9 @@
       </button>
 
       <!-- font signin -->
-      <div class="text-right mb-4 mt-3" style="color:#007bff;">
+      <div class="text-right mb-4 mt-3">
         <p>
-          <a class="ml-2" href="/signin" style="text-decoration: underline;">
+          <a class="sign-link" href="/signin">
             前台登入
           </a>
         </p>

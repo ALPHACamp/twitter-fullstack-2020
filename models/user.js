@@ -1,4 +1,5 @@
-'use strict';
+'use strict'
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     account: {
@@ -21,26 +22,26 @@ module.exports = (sequelize, DataTypes) => {
     cover: DataTypes.STRING,
     introduction: DataTypes.TEXT,
     role: DataTypes.STRING,
-  }, {});
+  }, {})
   User.associate = function (models) {
+    User.hasMany(models.Tweet)
+    User.hasMany(models.Reply)
+    User.hasMany(models.Like)
     User.belongsToMany(models.User, {
       through: models.Followship,
       foreignKey: 'followerId',
       as: 'Followings'
-    });
+    })
     User.belongsToMany(models.User, {
       through: models.Followship,
       foreignKey: 'followingId',
       as: 'Followers',
-    });
-    User.hasMany(models.Tweet);
-    User.hasMany(models.Reply);
-    User.hasMany(models.Like);
+    })
     User.belongsToMany(models.Tweet, {
       through: models.Like,
       foreignKey: 'UserId',
       as: 'LikedTweets'
-    });
-  };
-  return User;
-};
+    })
+  }
+  return User
+}

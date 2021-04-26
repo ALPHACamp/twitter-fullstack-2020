@@ -177,10 +177,13 @@ const userController = {
           ...follower.dataValues,
           isFollowed: lUser.Followings.map(f => f.id).includes(follower.id)
         }))
-        return res.render('follower', {
-          paramUser: pUser.toJSON(),
-          followers: pUser.Followers,
-          loginUserId: lUser.id
+        userService.getTopUsers(req, res, (data) => {
+          res.render('follower', {
+            paramUser: pUser.toJSON(),
+            followers: pUser.Followers,
+            loginUserId: lUser.id,
+            ...data
+          })
         })
       })
       .catch(err => res.send(err))
@@ -207,10 +210,13 @@ const userController = {
           ...following.dataValues,
           isFollowed: lUser.Followings.map(f => f.id).includes(following.id)
         }))
-        return res.render('following', {
-          paramUser: pUser.toJSON(),
-          followings: pUser.Followings,
-          loginUserId: lUser.id
+        userService.getTopUsers(req, res, (data) => {
+          res.render('following', {
+            paramUser: pUser.toJSON(),
+            followings: pUser.Followings,
+            loginUserId: lUser.id,
+            ...data
+          })
         })
       })
       .catch(err => res.send(err))
@@ -233,7 +239,25 @@ const userController = {
           paramUser: user.toJSON()
         })
       })
-  }
+  },
+  //getTweets: (req, res) => {
+  //User.findByPk(
+  // req.params.id, {
+  //include: [
+  // {
+  // model: Tweet,
+  //include: [Reply, Like]
+  //},
+  //{ model: User, as: 'Followers' },
+  //{ model: User, as: 'Followings' },
+  //],
+  //order: [['Tweets', 'createdAt', 'DESC']]
+  //})
+  //.then(user => {
+  //res.render('myTweets', { paramUser: user.toJSON() })
+  //})
+  //.catch(err => res.send(err))
+  //}
 }
 
 module.exports = userController
