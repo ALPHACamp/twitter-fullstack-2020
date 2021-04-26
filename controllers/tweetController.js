@@ -33,13 +33,13 @@ const tweetController = {
         { model: User, as: 'LikedUsers' },
       ]
     })
-    .then(tweet => {
-      const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
-      return res.render('tweet', {
-        tweet: tweet.toJSON(),
-        isLiked: isLiked
+      .then(tweet => {
+        const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
+        return res.render('tweet', {
+          tweet: tweet.toJSON(),
+          isLiked: isLiked
+        })
       })
-    })
   },
 
   getUser: async (req, res) => {

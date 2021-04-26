@@ -43,7 +43,7 @@ font-size: 15px;color: #657786;font-weight: 500;">{{moment tweet.updatedAt}} by 
               <i class="far fa-comment" style="color: #657786;"></i>
             </button>
           </div>
-          {{#if tweet.isLiked }}
+          {{#if this.isLiked }}
           <form action="/tweet/like/{{tweet.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
               <i class="fas fa-heart" style="color: #657786;"></i>
