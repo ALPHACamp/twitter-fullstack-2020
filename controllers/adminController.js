@@ -12,7 +12,7 @@ const adminController = {
   signin:(req, res) => {
      User.findOne({where:{ account: req.body.account }})
     .then((user)=>{
-      if (user.dataValues.isAdmin) {
+      if (user.dataValues.role.match('admin')) {
         return res.redirect('/admin/tweets')
       } else {
         req.flash('error_msg', '此帳號不是管理者')
@@ -41,7 +41,6 @@ const adminController = {
         { model: Tweet, as: 'LikeTweets' },
       ]
     }).then(user => {
-      console.log(user)
       user = user.map(user => ({
         ...user.dataValues,
         TweetsCount: user.Tweets.length
