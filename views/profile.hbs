@@ -36,15 +36,16 @@ height: 40px;border-radius:100%"><i class="far fa-envelope" style="color:#FF6600
             <div class="subscription mt-2 mr-3" style="border: 1px solid #FF6600;
 box-sizing: border-box;width: 40px;
 height: 40px;border-radius:100%"><i class="far fa-bell " style="color:#FF6600;font-size: 23px; margin: 8px;"></i></div>
-            {{#if this.isFollowed }}
-            <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+            {{#if isFollowing }}
+            <form action="/following/{{userNow.id}}?_method=DELETE" method="POST" style="display: contents;">
               <button type="submit" class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 122px;
         height: 40px;font-size: 15px;color: white ;background: #FF6600;font-weight:bold;">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+            <form action="/following/{{userNow.id}}" method="POST" style="display: contents;"><button type="submit"
                 class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 80px;
-            height: 40px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button></form>
+            height: 40px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button>
+            </form>
             {{/if}}
           </div>
           {{/ifCond}}

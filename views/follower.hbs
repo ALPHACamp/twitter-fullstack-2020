@@ -24,7 +24,44 @@ font-size: 13px;color: #657786;">25 推文
           </li>
         </ul>
       </div>
-      <div class="followers">{{> followship}}</div>
+      <div class="followers">
+
+        {{#each followships}}
+        <div class="followship d-flex justify-content-end" style="border: #E6ECF0 1px solid;">
+          <div class="user-info d-flex align-items-start">
+            <div class="user-avatar mx-3">
+              <a href="/users/{{this.id}}/tweets" style="text-decoration: none;">
+                <img class="mt-2" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+                  style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+              </a>
+            </div>
+            <div class="user-name-account-introduction my-2 ">
+              <div class="user-name ;" style="font-size: 15px;color: #1C1C1C;font-weight:bold;">{{this.name}}</div>
+              <div class="user-account" style="font-weight: 500;
+  font-size: 15px;color: #657786;">@{{this.account}}</div>
+              <div class="user-introduction" style="font-weight: 500;
+        font-size: 15px;color: #1C1C1C;">{{this.introduction}}</div>
+            </div>
+          </div>
+          <div class="follower-following mt-2 mr-3">
+            {{#if this.isFollowed }}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="following btn" style="border: 1px solid #FF6600;border-radius: 100px;width: 92px;
+          height: 35px;font-size: 15px;color: white ;background: #FF6600;font-weight:bold;">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn follower" style="border: 1px solid #FF6600;border-radius: 100px;width: 62px;
+              height: 35px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button></form>
+            {{/if}}
+          </div>
+        </div>
+        {{/each}}
+
+
+
+
+      </div>
     </div>
     <div class="col-3">
       {{> right-column}}

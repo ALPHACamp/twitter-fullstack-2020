@@ -150,10 +150,17 @@ let userController = {
     })
     const count = result.count
     const comments = result.rows
-    return User.findByPk(req.params.id)
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ]
+    })
       .then(user => {
+        const isFollowing = user.Followers.map(d => d.id).includes(req.user.id)
         res.render('Profile', {
-          userNow: user.toJSON(), count, comments
+          userNow: user.toJSON(), count, comments,
+          isFollowing: isFollowing,
         })
       })
 
@@ -186,14 +193,29 @@ let userController = {
       })
   },
   getFollowers: (req, res) => {
-    res.render('follower')
+    return User.findAll({
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    }).then(users => {
+      // 整理 users 資料
+      users = users.map(user => ({
+        ...user.dataValues,
+        // 計算追蹤者人數
+        FollowerCount: user.Followers.length,
+        // 判斷目前登入使用者是否已追蹤該 User 物件
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+      }))
+      // 依追蹤者人數排序清單
+      return res.render('follower', { users: users })
+    })
   },
   getFollowings: (req, res) => {
     res.render('following')
   },
   addFollowing: (req, res) => {
     return Followship.create({
-      followerId: helpers.getUser(req).id,
+      followerId: req.user.id,
       followingId: req.params.userId
     })
       .then((followship) => {
@@ -203,7 +225,7 @@ let userController = {
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
-        followerId: helpers.getUser(req).id,
+        followerId: req.user.id,
         followingId: req.params.userId
       }
     })
