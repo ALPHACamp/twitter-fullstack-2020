@@ -38,13 +38,13 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      account: 'USER3',
-      email: 'user3@example.com',
+      account: 'teemo',
+      email: 'teemo@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: false,
-      name: 'user3',
-      avatar: 'https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png',
-      cover: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Bundesstra%C3%9Fe_3_number.svg/1200px-Bundesstra%C3%9Fe_3_number.svg.png',
+      name: 'Teemo',
+      avatar: 'https://ddragon.leagueoflegends.com/cdn/10.15.1/img/profileicon/1630.png',
+      cover: 'http://3.bp.blogspot.com/-F20IEMAG9tQ/U1uMBwlDvSI/AAAAAAAATHQ/RTh-ZJkTClg/s1600/Teemo-League-of-Legends-Facebook-Cover-Photos-27.jpg',
       introduction: faker.lorem.text().substring(0, 30),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -60,13 +60,13 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      account: 'actwitter',
-      email: 'ac@example.com',
+      account: 'poro',
+      email: 'poro@example.com',
       password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
       isAdmin: false,
-      name: 'AC',
-      avatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9BI-IY4yLd_G6qba1o24WXjJQAAaugud7qQ&usqp=CAU',
-      cover: 'https://yt3.ggpht.com/ytc/AAUvwni6ipOpW1ZorU_G9M_UiPq_68LoWoCJ334TXbfCaQ=s900-c-k-c0x00ffffff-no-rj',
+      name: 'Poro',
+      avatar: 'https://i.pinimg.com/236x/ea/a6/68/eaa668ece7e463e23e42db4c9bab09b2.jpg',
+      cover: 'https://timelinecovers.pro/facebook-cover/download/league-of-legends-Fat_Poro-facebook-cover.jpg',
       introduction: faker.lorem.text().substring(0, 30),
       createdAt: new Date(),
       updatedAt: new Date()
