@@ -1,12 +1,7 @@
 const db = require('../models')
-const User = db.User
-const Followship = db.Followship
-const Tweet = db.Tweet
-const Reply = db.Reply
-const Like = db.Like
+const { User, Tweet, Reply, Like, Followship } = db
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
-const sequelize = require('sequelize')
 
 const userService = require('../services/userService')
 
@@ -18,32 +13,67 @@ const userController = {
       return res.render('topUser', data)
     })
   },
+
+  // 一般使用者 註冊頁面
   signUpPage: (req, res) => {
     return res.render('signup')
   },
-  signUp: (req, res) => {
-    console.log(req.body)
+
+  // 一般使用者 註冊
+  signUp: async (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
-    if (password !== checkPassword) {
-      req.flash('warning_msg', '兩次密碼輸入不同！')
-      return res.render('signup', { account, name, email, password })
+    const errors = []
+    if (!account || !name || !email || !password || !checkPassword) {
+      errors.push({ message: '所有資訊都要輸入！' })
     }
-    User.create({
-      account,
-      name,
-      email,
-      password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-    })
-      .then(user => {
-        req.flash('success_msg', '註冊成功，請登入！')
-        return res.redirect('/signin')
+    if (!email.match(/.+@.+\..+/)) {
+      errors.push({ message: '請填入正確的信箱格式' })
+    }
+    if (!password.match(/.{8,}/)) {
+      errors.push({ message: '密碼需要為8位' })
+    }
+    if (password !== checkPassword) {
+      errors.push({ message: '兩次密碼輸入不同！' })
+    }
+    if (errors.length) {
+      return res.render('signup', {
+        errors,
+        account,
+        name,
+        email,
       })
-      .catch(err => definitionErrHandler(err, req, res, { account, name, email, password })
-      )
+    }
+    try {
+      const userAccount = await User.findOne({ where: { account }})
+      if (userAccount) {
+        errors.push({ message: '帳號重複!' })
+        return res.render('signup', { errors, name, email })
+      }
+      const userEmail = await User.findOne({ where: { email }})
+      if (userEmail) {
+        errors.push({ message: 'Email重複!' })
+        return res.render('signup', { errors, account, name })
+      }
+      await User.create({
+        account,
+        name,
+        email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+      })
+      req.flash('success_msg', '註冊成功，請登入！')
+      return res.redirect('/signin')
+    } catch (err) {
+      console.log(err)
+      definitionErrHandler(err, req, res, { account, name, email, password })
+    }
   },
+
+  // 一般使用者 登入頁面
   signInPage: (req, res) => {
     return res.render('signin')
   },
+
+  // 一般使用者 登入
   signIn: (req, res) => {
     if (!helpers.getUser(req).isAdmin) {
       req.flash('success_messages', '成功登入')
@@ -53,10 +83,12 @@ const userController = {
       return res.redirect('/signIn')
     }
   },
+
+  // 登出
   logout: (req, res) => {
-    req.flash('success_msg', '登出成功！')
+    req.flash('success_msg', '成功登出')
     req.logout()
-    res.redirect('/signin')
+    return res.redirect('/signin')
   },
   settingPage: (req, res) => {
     const loginUser = helpers.getUser(req)
