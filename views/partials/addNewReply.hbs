@@ -14,7 +14,21 @@
     </p>
   </div>
 </div>
-{{!-- Reply --}}
+{{!-- Reply list --}}
+{{#each Replies}}
+<div class="media">
+  <img src="{{ this.User.avatar }}" class="rounded-circle mr-3" alt="..." width="50" height="50">
+  <div class="media-body">
+    <div class="d-flex">
+      <p class="font-weight-bold mt-0 mr-2">{{this.User.name}}</p>
+      <p class="text-secondary mb-0">{{ this.User.account }} &bull; {{moment this.createdAt}}</p>
+    </div>
+    <p>回覆<span class="text-main ml-2">{{ this.User.account }}</span></p>
+    <p>{{ this.comment }}</p>
+  </div>
+</div>
+{{/each}}
+{{!-- Reply form --}}
 <div class="media">
   <img src="{{ user.avatar }}" class="mr-3 rounded-circle" alt="..." width="50" height="50">
   <div class="media-body">
