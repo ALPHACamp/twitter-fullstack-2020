@@ -8,6 +8,8 @@ const User = db.User;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
 const Like = db.Like;
+const tweetsSidebar = 'tweetsSidebar'
+
 
 const userController = {
   signUpPage: (req, res) => {
@@ -46,6 +48,7 @@ const userController = {
         name: name,
         email: email,
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
+        role: 'user'
       });
       req.flash('success_msg', '帳號註冊成功');
       return res.redirect('/signin');
@@ -59,9 +62,10 @@ const userController = {
   },
 
   signIn: (req, res) => {
+
     User.findOne({ where: { account: req.body.account } })
       .then((user) => {
-        if (!user.dataValues.isAdmin) {
+        if (!user.dataValues.role.match('admin')) {
           req.flash('success_msg', '登入成功');
           res.redirect('/tweets');
         } else {
@@ -175,7 +179,9 @@ const userController = {
     })
     return res.render('setting', { user: user.toJSON() })
   },
-
+  getfollowers: (req, res) => {
+    res.render('follower', { tweetsSidebar })
+  }
 
 };
 

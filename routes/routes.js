@@ -23,12 +23,16 @@ const authenticated = (req, res, next) => {
 // 管理員認證
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) { return next(); }
-    res.redirect('/');
+    if (helpers.getUser(req).role.match('admin')) { return next(); }
+    res.redirect('/signin');
   }
-  res.redirect('/signin');
 };
-
+const blockAdmin = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    if (!helpers.getUser(req).role.match('admin')) { return next(); }
+    res.redirect('/admin/tweets');
+  }
+}
 // router.get('/', authenticated, (req, res) => {
 //   res.redirect('/tweets');
 // });
@@ -48,14 +52,14 @@ router.post(
 );
 
 // 推文 -- Liv 新增
-router.get('/', authenticated, (req, res) => {
+router.get('/', authenticated, blockAdmin, (req, res) => {
   res.redirect('/tweets');
 });
-router.get('/tweets', authenticated, tweetController.getTweets);
-router.get('/tweets/:id', authenticated, tweetController.getTweet);
-router.post('/tweets', authenticated, tweetController.postTweet);
-router.put('/tweets/:id', authenticated, tweetController.putTweet);
-router.delete('/tweets/:id', authenticated, tweetController.deleteTweet);
+router.get('/tweets', authenticated, blockAdmin, tweetController.getTweets);
+router.get('/tweets/:id', authenticated, blockAdmin, tweetController.getTweet);
+router.post('/tweets', authenticated, blockAdmin, tweetController.postTweet);
+router.put('/tweets/:id', authenticated, blockAdmin, tweetController.putTweet);
+router.delete('/tweets/:id', authenticated, blockAdmin, tweetController.deleteTweet);
 
 
 // router.get('/', (req, res) => {
@@ -76,13 +80,15 @@ router.get('/admin/users', authenticatedAdmin, adminController.usersPage)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
 // 使用者
-router.get('/user/:id', authenticated, userController.getUser)
-router.get('/user/:id/edit', authenticated, userController.getUserEdit)
-router.put('/user/:id/edit', authenticated, upload.fields([
+router.get('/user/:id', authenticated, blockAdmin, userController.getUser)
+router.get('/user/:id/edit', authenticated, blockAdmin, userController.getUserEdit)
+router.put('/user/:id/edit', authenticated, blockAdmin, upload.fields([
   { name: 'cover', maxCount: 1 },
   { name: 'avatar', maxCount: 1 }
 ]), userController.putUserEdit)
-router.get('/user/:id/setting', authenticated, userController.getUserSetting)
+router.get('/user/:id/followers', authenticated, blockAdmin, userController.getfollowers)
+router.get('/user/:id/setting', authenticated, blockAdmin, userController.getUserSetting)
+
 
 
 // 登出
