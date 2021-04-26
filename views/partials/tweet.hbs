@@ -15,13 +15,30 @@
     </p>
     <p>{{time}}</p>
     <div class="px-2 py-3 border-top border-bottom">
-      <span class="mr-3"><span class="font-weight-bold">34</span>回覆</span>
-      <span><span class="font-weight-bold">808</span>喜歡次數</span>
+      <span class="mr-3"><span class="font-weight-bold">{{replyAmount}}</span>回覆</span>
+      <span><span class="font-weight-bold">{{likeNumber}}</span>喜歡次數</span>
     </div>
-    <div class="p-2 border-bottom">
+    <div class="p-2 border-bottom d-flex">
       <button class="btn btn-link text-decoration-none mr-4" style="font-size: 24px;"><i
           class="far fa-comment"></i></button>
-      <button class="btn btn-link text-decoration-none" style="font-size: 24px;"><i class="far fa-heart"></i></button>
+      {{!-- <button class="btn btn-link text-decoration-none" style="font-size: 24px;"><i
+          class="far fa-heart"></i></button> --}}
+      {{#if isLike}}
+      {{!-- 已按讚 --}}
+      <form action="/tweets/{{ this.id }}/like?_method=DELETE" method="post">
+        <button class="btn btn-link text-decoration-none" style="font-size: 24px;">
+          <i class="fas fa-heart"></i>
+          <span>{{ this.likeNumber }}</span>
+      </form>
+      {{else}}
+      {{!-- 未按讚 --}}
+      <form action="/tweets/{{ this.id }}/like" method="post">
+        <button class="btn btn-link text-decoration-none" style="font-size: 24px;">
+          <i class="far fa-heart"></i>
+          <span>{{ this.likeNumber }}</span>
+        </button>
+      </form>
+      {{/if}}
     </div>
   </div>
 </div>

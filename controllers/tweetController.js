@@ -58,7 +58,7 @@ const tweetController = {
     Tweet.findOne(
       {
         where: { id: tweet_id },
-        include: [User, Reply]
+        include: [User, Reply, Like]
       }
     ).then((tweet) => {
       const pageTitle = '推文'
@@ -66,7 +66,15 @@ const tweetController = {
       //推薦跟隨
       userService.getTopUsers(req, res, (data) => {
         // console.log(data)
-        res.render('tweet', { tweet: tweet.toJSON(), pageTitle, time, ...data })
+        res.render('tweet', {
+          tweet: tweet.toJSON(),
+          pageTitle,
+          time,
+          replyAmount: tweet.Replies.length,
+          isLike: tweet.Likes.map(l => l.UserId).includes(tweet.UserId),
+          likeNumber: tweet.Likes.length,
+          ...data
+        })
       })
     })
       .catch(e => {
