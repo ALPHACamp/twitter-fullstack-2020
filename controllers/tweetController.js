@@ -49,8 +49,9 @@ const tweetController = {
           ...d.dataValues,
           name: d.User.name,
           account: d.User.account,
+          avatar: d.User.avatar,
           replyAmount: d.Replies.length,
-          isLike: d.Likes.map(l => l.UserId).includes(d.UserId),
+          isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
           likeNumber: d.Likes.length
         }
       })
@@ -86,7 +87,7 @@ const tweetController = {
           pageTitle,
           time,
           replyAmount: tweet.Replies.length,
-          isLike: tweet.Likes.map(l => l.UserId).includes(tweet.UserId),
+          isLike: tweet.Likes.map(l => l.UserId).includes(getUser(req).id),
           likeNumber: tweet.Likes.length,
           ...data
         })
@@ -161,7 +162,10 @@ const tweetController = {
     Tweet.findOne(
       {
         where: { id: tweet_id },
-        include: [User]
+        include: [
+          User,
+          { model: Reply, include: User }
+        ]
       }
     ).then(tweet => {
       tweet = tweet.toJSON()
@@ -169,8 +173,9 @@ const tweetController = {
       let account = tweet.User.account
       let avatar = tweet.User.avatar
       let description = tweet.description
+      let Replies = tweet.Replies
       let createdAt = tweet.User.createdAt
-      ex.render(path.join(src, "views/partials/addNewReply.hbs"), { user: getUser(req), id: tweet_id, name, account, avatar, description, createdAt })
+      ex.render(path.join(src, "views/partials/addNewReply.hbs"), { user: getUser(req), id: tweet_id, name, account, avatar, description, createdAt, Replies })
         .then(function (template) {
           return res.json({ template })
         })

@@ -61,26 +61,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
     crossorigin="anonymous"></script>
-  <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function () {
-      'use strict';
-      window.addEventListener('load', function () {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function (form) {
-          form.addEventListener('submit', function (event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-          }, false);
-        });
-      }, false);
-    })();
-  </script>
+  <script src="/javascripts/formValidation.js"></script>
   <script>
     let tweet_id;
     $('.reply').on('click', function (e) {
@@ -89,7 +70,6 @@
     //fetch popup modal
     $('#addTweetModal').on('shown.bs.modal', function () {
       //$('#myInput').trigger('focus')
-      console.log('AAAAAAAAAAAAAA')
       fetch('/tweets/new').then(res => res.json())
         .then(data => {
           $('#tweets-popup').html(data.template)
@@ -98,7 +78,6 @@
     })
     $('#addReplyModal').on('shown.bs.modal', function () {
       //$('#myInput').trigger('focus')
-      console.log('AAAAAAAAAAAAAA')
       fetch(`/tweets/${tweet_id}/reply`).then(res => res.json())
         .then(data => {
           $('#reply-popup').html(data.template)
