@@ -2,36 +2,36 @@ const { Tweet, User } = require('../models')
 const { getUser } = require('../_helpers')
 
 const showFiftyString = (str) => {
-  if (str.length < 50) {
+  const splitStr = str.split(' ')
+  if (splitStr.length < 50) {
     return str
   }
-  return str.substring(0, 50) + '.....'
+  const newStr = splitStr.slice(0, 50)
+  return newStr.join(' ') + '.....'
 }
 
 const adminController = {
-  getTweets: (req, res) => {
-    Tweet.findAll(
-      {
+
+  // 管理員 推文清單
+  getTweets: async (req, res) => {
+    try {
+      const tweets = await Tweet.findAll({
         raw: true,
         nest: true,
         include: [User],
         order: [['createdAt', 'DESC']]
-      }
-    ).then((tweets) => {
-      tweets = tweets.map((d, i) => ({
-        ...d,
-        description: showFiftyString(d.description)
-      }))
-
-      const pageTitle = '推文清單'
-      const isAdminPage = true
-
-      res.render('admin/tweets', { tweets, pageTitle, isAdminPage })
-    })
-      .catch(e => {
-        console.warn(e)
       })
+      const tweet = tweets.map((data, i) => ({
+        ...data,
+        description: showFiftyString(data.description)
+      })) 
+      return res.render('admin/tweets', { tweet })
+    } catch (e) {
+      console.log(e)
+    }
   },
+
+  // 管理員 刪除推文
   deleteTweets: (req, res) => {
     const tweet_id = req.params.id
 
@@ -43,6 +43,7 @@ const adminController = {
       })
       .catch(e => console.warn(e))
   },
+  
   // 管理者 登入頁面
   signInPage: (req, res) => {
     return res.render('admin/signin')

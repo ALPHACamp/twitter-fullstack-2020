@@ -2,18 +2,22 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
 const db = require('../models')
-const User = db.User
+const { User } = db
 
 passport.use(new LocalStrategy(
   {
     usernameField: 'account',
     passReqToCallback: true
   },
-  (req, email, password, cb) => {
-    User.findOne({ where: { email } })
+  (req, account, password, cb) => {
+    return User.findOne({ where: { account } })
       .then(user => {
-        if (!user) return cb(null, false, req.flash('warning_msg', 'Wrong Email!'))
-        if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('warning_msg', 'Wrong Password!'))
+        if (!user) {
+          return cb(null, false, req.flash('warning_msg', '帳號尚未註冊!'))
+        }
+        if (!bcrypt.compareSync(password, user.password)) {
+          return cb(null, false, req.flash('warning_msg', '帳號密碼輸入錯誤!'))
+        }
         return cb(null, user)
       })
       .catch(err => console.log(err))
