@@ -71,11 +71,11 @@ router.get('/logout', userController.logout)
 
 
 router.get('/tweets', authenticated, tweetController.getTweets)
-router.post('/tweets', authenticated, userController.postTweet)
+router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/tweets/:id', authenticated, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, replyController.postReply)
-router.post('/like/:tweetId', authenticated, userController.addLike)
-router.delete('/like/:tweetId', authenticated, userController.removeLike)
+router.post('/tweets/like/:tweetId', authenticated, userController.addLike)
+router.delete('/tweets/like/:tweetId', authenticated, userController.removeLike)
 
 
 

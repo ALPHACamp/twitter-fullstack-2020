@@ -8,11 +8,11 @@ const replyController = {
     const comment = req.body.description
     if (!comment.length) {
       req.flash('error_messages', '回覆不可為空白!')
-      res.redirect('back')
+      return res.redirect('back')
     }
     if (comment.length > 140) {
       req.flash('error_messages', '回覆不可超過140字!')
-      res.redirect('back')
+      return res.redirect('back')
     }
     return Reply.create({
       UserId: req.user.id,
@@ -20,6 +20,7 @@ const replyController = {
       comment: req.body.description,
     })
       .then((reply) => {
+        req.flash('success_messages', '回覆成功！')
         res.redirect(`/tweets/${req.params.id}`)
       })
 

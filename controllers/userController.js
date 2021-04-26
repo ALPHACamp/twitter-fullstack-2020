@@ -159,6 +159,7 @@ let userController = {
   },
 
   postTweet: (req, res) => {
+    console.log("now tweetXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     //未輸入字
     if (!req.body.description) {
       req.flash('error_messages', "請輸入內容")
@@ -181,34 +182,30 @@ let userController = {
   },
   addLike: (req, res) => {
     return Like.create({
-      UserId: helpers.getUser(req).id,
-      TweetId: req.params.TweetId
+      UserId: req.user.id,
+      TweetId: req.params.tweetId
     })
-    .then((like) => {
-      Tweet.findByPk(req.params.TweetId, {
-        raw    : true,
-        nest   : true,
-        include: [User],
-      }
-    )})
       .then((tweet) => {
+        console.log("tweetID =======", req.params.tweetId)
         return res.redirect('back')
       })
   },
   removeLike: (req, res) => {
+
     return Like.findOne({
       where: {
-        UserId: helpers.getUser(req).id,
-        TweetId: req.params.TweetId
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
       }
     })
       .then((like) => {
         like.destroy()
           .then((tweet) => {
+            console.log("dettweetID =======", req.params.tweetId)
             return res.redirect('back')
           })
       })
-  },  
+  },
   getFollowers: (req, res) => {
     res.render('follower')
   },

@@ -1,20 +1,28 @@
 const db = require('../models')
+const tweet = require('../models/tweet')
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
+const Like = db.Like
+const helpers = require('../_helpers')
 
 
 const tweetController = {
   getTweets: (req, res) => {
-
-    return Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User],
+    Tweet.findAll({
+      include: [User, Reply, Like],
       order: [['createdAt', 'DESC']],
-    }).then((tweets) => {
-      return res.render('tweets', { tweets })
     })
+      .then((tweets) => {
+        const data = tweets.map(r => ({
+          ...r.dataValues,
+          isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
+        }))
+        return res.render('tweets', {
+          tweets: data,
+        })
+
+      })
   },
 
   getTweet: (req, res) => {
@@ -47,6 +55,28 @@ const tweetController = {
         res.render('profile', {
           user: user, tweets
         })
+      })
+  },
+  postTweet: (req, res) => {
+    console.log("now tweetXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    //未輸入字
+    if (!req.body.description) {
+      req.flash('error_messages', "請輸入內容")
+      return res.redirect('back')
+    }
+    //超過字數
+    if (Number(req.body.description.length) > 140) {
+      req.flash('error_messages', "推文字數超過140字，請重新輸入！")
+      return res.redirect('back')
+    }
+
+    return Tweet.create({
+      description: req.body.description,
+      UserId: helpers.getUser(req).id
+    })
+      .then((tweet) => {
+        req.flash('success_messages', '成功新增一則推文！')
+        res.redirect('back')
       })
   },
 

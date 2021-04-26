@@ -27,6 +27,7 @@
   </div>
 </div>
 {{!-- tweets reply modal --}}
+
 <div class="modal fade" id="replyModal{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <form action="/tweets/{{this.id}}/replies" method="post">
     <div class="modal-dialog">
@@ -39,7 +40,7 @@
         <div class="modal-title">
           <div class="reply-target-section d-flex justify-content-start px-3 ">
             <div class="reply-target-avatar mr-1">
-              <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+              <img class="mt-2" {{#if this.User.dataValues.avatar}}src={{this.User.dataValues.avatar}}{{/if}}
                 style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
               <div class="diver ml-4 mt-2" style="width: 2px;height: 80px;background: #CCD6DD;"></div>
             </div>
@@ -47,7 +48,7 @@
               <div class="post-info d-flex justify-content-start">
                 <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
                   ">{{this.User.name}}</div><span class="post-account mr-1"
-                  style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span
+                  style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.dataValues.account}}</span
                   style="font-size: 15px;color: #657786;"><span
                   style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
                 <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
@@ -57,7 +58,8 @@
                   font-size: 15px;color: #1C1C1C;">{{this.description}}</div>
               <div class="reply-target"><span class="mr-1"
                   style="font-weight: 500; font-size: 15px;color: #657786;">回覆給</span><span class="reply-target-account"
-                  style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{this.User.account}}</span></div>
+                  style="font-weight: 500; font-size: 15px;color: #FF6600;">@{{this.User.dataValues.account}}</span>
+              </div>
             </div>
           </div>
         </div>
@@ -187,9 +189,9 @@
         </div>
 
         <div class="form-group">
-          <label for="name" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">名稱</label>
-          <input type="text" id="name" name="name" class="form-control" placeholder="請輸入名稱" value="{{usr.name }}"
-            required>
+          <label for="profilename" style="font-weight: 500;font-size: 15px;line-height: 15px;color: #657786;">名稱</label>
+          <input type="text" id="profilename" name="profilename" class="form-control" placeholder="請輸入名稱"
+            value="{{usr.name }}">
           <small class=" d-flex flex-row-reverse">/50</small>
         </div>
         <div class="form-group">
