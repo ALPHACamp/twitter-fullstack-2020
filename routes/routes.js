@@ -74,6 +74,8 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, userController.postTweet)
 router.get('/tweets/:id', authenticated, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, replyController.postReply)
+router.post('/like/:tweetId', authenticated, userController.addLike)
+router.delete('/like/:tweetId', authenticated, userController.removeLike)
 
 
 

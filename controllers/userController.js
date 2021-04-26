@@ -179,6 +179,36 @@ let userController = {
         res.redirect('back')
       })
   },
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.TweetId
+    })
+    .then((like) => {
+      Tweet.findByPk(req.params.TweetId, {
+        raw    : true,
+        nest   : true,
+        include: [User],
+      }
+    )})
+      .then((tweet) => {
+        return res.redirect('back')
+      })
+  },
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.TweetId
+      }
+    })
+      .then((like) => {
+        like.destroy()
+          .then((tweet) => {
+            return res.redirect('back')
+          })
+      })
+  },  
   getFollowers: (req, res) => {
     res.render('follower')
   },

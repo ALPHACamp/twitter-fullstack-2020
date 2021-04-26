@@ -29,16 +29,34 @@ font-size: 23px;color: #1C1C1C">{{tweet.description}}</div>
 font-size: 15px;color: #657786;font-weight: 500;">{{moment tweet.updatedAt}} by {{tweet.User.name}}</div>
         </div>
         <div class="tweet-counts px-3 py-3  d-flex justify-content-start" style="border: #E6ECF0 1px solid;">
-          <div class="replies"><span class="replies-count mr-1 font-weight-bold" style="font-size: 19px;">34</span><span
-              class="reply mr-3 font-weight-bold" style="font-size: 19px;color: #657786">回覆</span></div>
-          <div class="likes"><span class="likes-count mr-1 font-weight-bold" style="font-size: 19px;">808</span><span
-              class="like font-weight-bold" style="font-size: 19px;color: #657786">喜歡次數</span>
+          <div class="replies"><span class="replies-count mr-1 font-weight-bold"
+              style="font-size: 19px;">{{tweet.replyCount}}</span><span class="reply mr-3 font-weight-bold"
+              style="font-size: 19px;color: #657786">回覆</span></div>
+          <div class="likes"><span class="likes-count mr-1 font-weight-bold"
+              style="font-size: 19px;">{{tweet.likeCount}}</span><span class="like font-weight-bold"
+              style="font-size: 19px;color: #657786">喜歡次數</span>
           </div>
         </div>
         <div class="tweet-feedback px-3 py-3 d-flex justify-content-start" style="border: #E6ECF0 1px solid;">
-          <i class="btn far fa-comment  mr-5" data-toggle="modal" data-target="#replyModal{{tweet.id}}"
-            style="color: #657786;font-size: 24px; "></i>
-          <i class="btn far fa-heart ml-5" style="color: #657786;font-size:25px;"></i>
+          <div data-toggle="modal" data-target="#replyModal{{tweet.id}}">
+            <button type="button " class="btn p-0 " style="background-color: white;">
+              <i class="far fa-comment" style="color: #657786;"></i>
+            </button>
+          </div>
+          {{#if tweet.isLiked }}
+          <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
+              <i class="fas fa-heart" style="color: #657786;"></i>
+            </button>
+          </form>
+          {{else}}
+          <form action="/like/{{tweet.id}}" method="POST">
+            <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
+              <i class="far fa-heart" style="color: #657786;"></i>
+              <span class="rely-amount ml-2"
+                style="font-size: 13px;font-weight: 500;color: #657786;">{{tweet.likeCount}}</span></button>
+          </form>
+          {{/if}}
         </div>
       </div>
 
@@ -76,7 +94,7 @@ font-size: 15px;color: #1C1C1C;">{{this.comment}}</div>
             {{#if this.isLiked }}
             <form action="/like/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
-                <i class="far fa-heart" style="color: #657786;"></i>
+                <i class="fas fa-heart" style="color: #657786;"></i>
                 <span class="rely-amount ml-2"
                   style="font-size: 13px;font-weight: 500;color: #657786;">{{this.likeCount}}</span>
               </button>

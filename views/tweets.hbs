@@ -33,7 +33,8 @@
       <div class="col" style="padding: 0px;">
         <div class="tweet-list ">
           {{#each tweets}}
-          <div class="tweets-section d-flex justify-content-start px-2 " style="border: #E6ECF0 1px solid; ">
+          <div class="tweets-section d-flex justify-content-start px-2 " style="border: #E6ECF0 1px solid;"
+            id="{{this.id}}">
             <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
               <div class=" col-1 post-avatar mr-1">
                 <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
@@ -69,7 +70,7 @@
                 {{#if this.isLiked }}
                 <form action="/like/{{this.id}}?_method=DELETE" method="POST">
                   <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
-                    <i class="far fa-heart" style="color: #657786;"></i>
+                    <i class="fas fa-heart" style="color: #657786;"></i>
                     <span class="rely-amount ml-2"
                       style="font-size: 13px;font-weight: 500;color: #657786;">{{this.likeCount}}</span>
                   </button>
