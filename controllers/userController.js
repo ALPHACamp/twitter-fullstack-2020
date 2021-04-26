@@ -2,7 +2,7 @@ const db = require('../models')
 const { User, Tweet, Reply, Like, Followship } = db
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
-
+const sequelize = require('sequelize')
 const userService = require('../services/userService')
 
 const userController = {
@@ -44,12 +44,12 @@ const userController = {
       })
     }
     try {
-      const userAccount = await User.findOne({ where: { account }})
+      const userAccount = await User.findOne({ where: { account } })
       if (userAccount) {
         errors.push({ message: '帳號重複!' })
         return res.render('signup', { errors, name, email })
       }
-      const userEmail = await User.findOne({ where: { email }})
+      const userEmail = await User.findOne({ where: { email } })
       if (userEmail) {
         errors.push({ message: 'Email重複!' })
         return res.render('signup', { errors, account, name })
@@ -272,36 +272,78 @@ const userController = {
         })
       })
   },
-  getTweets: (req, res) => {
+  getProfile: async (req, res) => {
+    let pathName = req.path.split('/')
+    pathName = pathName[pathName.length - 1]
     //被選取的使用者 id
-    const user_id = req.params.id
-    userService.getTopUsers(req, res, (data) => {
-      return res.render('myTweets', data)
-    })
-    // Tweet.findAll(
-    //   { 
-    //     where: { UserId: user_id },
-    //     include: [
-    //       User,
-    //       Reply,
-    //       Like
-    //     ],
-    //     order: [['createdAt', 'DESC']]
-    //   }
-    // ).then(tweets => {
-    //   tweets = tweets.map(d => {
-    //     return {
-    //       ...d.dataValues,
-    //       name: d.User.name,
-    //       account: d.User.account,
-    //       avatar: d.User.avatar,
-    //       replyAmount: d.Replies.length,
-    //       isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
-    //       likeNumber: d.Likes.length
-    //     }
-    //   })
-    // })
-    // .catch(e => console.warn(e))
+    const profile_id = req.params.id
+    const isSelf = profile_id == helpers.getUser(req).id
+    const isUserPage = true
+
+    switch (pathName) {
+      case 'tweets':
+        try {
+          let tweets = await Tweet.findAll(
+            {
+              where: { UserId: profile_id },
+              include: [
+                User,
+                Reply,
+                Like
+              ],
+              order: [['createdAt', 'DESC']]
+            }
+          )
+          tweets = tweets.map(d => {
+            return {
+              ...d.dataValues,
+              name: d.User.name,
+              account: d.User.account,
+              avatar: d.User.avatar,
+              replyAmount: d.Replies.length,
+              isLike: d.Likes.map(l => l.UserId).includes(helpers.getUser(req).id),
+              likeNumber: d.Likes.length
+            }
+          })
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets, isUserPage, pathName, userId: profile_id, ...data })
+          })
+        }
+        catch (e) {
+          console.warn(e)
+        }
+        finally { break }
+      case 'likes':
+        try {
+          let likeTweets = await Like.findAll(
+            {
+              where: { UserId: profile_id },
+              include: [
+                { model: Tweet, include: [User, Reply, Like] }
+              ]
+            }
+          )
+          likesTweets = likeTweets.map(d => ({
+            ...d.Tweet.dataValues,
+            id: d.Tweet.id,
+            name: d.Tweet.User.name,
+            account: d.Tweet.User.account,
+            avatar: d.Tweet.User.avatar,
+            replyAmount: d.Tweet.Replies.length,
+            isLike: d.Tweet.Likes.map(l => l.UserId).includes(helpers.getUser(req).id),
+            likeNumber: d.Tweet.Likes.length
+          }))
+          console.log('aaaaa: ', likesTweets[0])
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets: likesTweets, isUserPage, pathName, userId: profile_id, ...data })
+          })
+        } catch (e) {
+          console.warn(e)
+        } finally {
+          break
+        }
+    }
+
   }
 }
 
