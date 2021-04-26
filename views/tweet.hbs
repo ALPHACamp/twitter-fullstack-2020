@@ -83,32 +83,6 @@ font-size: 15px;color: #657786;">回覆</span> <span class="reply-target-account
 font-size: 15px;color: #FF6600;">@{{../tweet.User.account}}</span></div>
           <div class="reply-content my-2" style="font-weight: 500;
 font-size: 15px;color: #1C1C1C;">{{this.comment}}</div>
-          <div class="d-flex justify-content-start mb-2">
-            <div data-toggle="modal" data-target="#replyModal{{this.reply.id}}">
-              <button type="button " class="btn p-0 " style="background-color: white;">
-                <i class="far fa-comment" style="color: #657786;"></i><span class="rely-amount ml-2"
-                  style="font-size: 13px;font-weight: 500;color: #657786;">{{this.replyCount}}</span>
-              </button>
-            </div>
-            {{!-- add like button --}}
-            {{#if this.isLiked }}
-            <form action="/like/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
-                <i class="fas fa-heart" style="color: #657786;"></i>
-                <span class="rely-amount ml-2"
-                  style="font-size: 13px;font-weight: 500;color: #657786;">{{this.likeCount}}</span>
-              </button>
-            </form>
-            {{else}}
-            <form action="/like/{{this.id}}" method="POST">
-              <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
-                <i class="far fa-heart" style="color: #657786;"></i>
-                <span class="rely-amount ml-2"
-                  style="font-size: 13px;font-weight: 500;color: #657786;">{{this.likeCount}}</span></button>
-            </form>
-            {{/if}}
-            {{this.LikeUsers.length}}
-          </div>
         </div>
       </div>
       {{/each}}
