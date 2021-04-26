@@ -51,6 +51,7 @@ module.exports = (app, passport) => {
   //個人頁面
   app.get('/users/:id/tweets', authenticated, userController.getProfile)
   app.get('/users/:id/likes', authenticated, userController.getProfile)
+  app.get('/users/:id/replies', authenticated, userController.getProfile)
 }
 
 

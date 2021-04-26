@@ -313,6 +313,13 @@ const userController = {
           console.warn(e)
         }
         finally { break }
+
+      case 'replies':
+        userService.getTopUsers(req, res, (data) => {
+          return res.render('myTweets', { isUserPage, pathName, userId: profile_id, ...data })
+        })
+        break
+
       case 'likes':
         try {
           let likeTweets = await Like.findAll(
@@ -333,7 +340,6 @@ const userController = {
             isLike: d.Tweet.Likes.map(l => l.UserId).includes(helpers.getUser(req).id),
             likeNumber: d.Tweet.Likes.length
           }))
-          console.log('aaaaa: ', likesTweets[0])
           userService.getTopUsers(req, res, (data) => {
             return res.render('myTweets', { tweets: likesTweets, isUserPage, pathName, userId: profile_id, ...data })
           })
