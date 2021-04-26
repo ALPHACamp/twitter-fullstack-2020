@@ -39,22 +39,21 @@ font-size: 15px;color: #657786;font-weight: 500;">{{moment tweet.updatedAt}} by 
         </div>
         <div class="tweet-feedback px-3 py-3 d-flex justify-content-start" style="border: #E6ECF0 1px solid;">
           <div data-toggle="modal" data-target="#replyModal{{tweet.id}}">
-            <button type="button " class="btn p-0 " style="background-color: white;">
+            <button type="button" class="btn p-0 " style="background-color: white;">
               <i class="far fa-comment" style="color: #657786;"></i>
             </button>
           </div>
           {{#if tweet.isLiked }}
-          <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
+          <form action="/tweet/like/{{tweet.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
               <i class="fas fa-heart" style="color: #657786;"></i>
             </button>
           </form>
           {{else}}
-          <form action="/like/{{tweet.id}}" method="POST">
+          <form action="/tweet/like/{{tweet.id}}" method="POST">
             <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
               <i class="far fa-heart" style="color: #657786;"></i>
-              <span class="rely-amount ml-2"
-                style="font-size: 13px;font-weight: 500;color: #657786;">{{tweet.likeCount}}</span></button>
+            </button>
           </form>
           {{/if}}
         </div>

@@ -29,12 +29,15 @@ const tweetController = {
     console.log('req.params', req.params.id)
     Tweet.findByPk(req.params.id, {
       include: [User,
-        { model: Reply, include: [User] }
+        { model: Reply, include: [User] },
+        { model: User, as: 'LikedUsers' },
       ]
-
-    }).then(tweet => {
+    })
+    .then(tweet => {
+      const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
       return res.render('tweet', {
-        tweet: tweet.toJSON()
+        tweet: tweet.toJSON(),
+        isLiked: isLiked
       })
     })
   },

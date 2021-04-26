@@ -7,14 +7,14 @@ module.exports = (sequelize, DataTypes) => {
 
       Like.belongsTo(models.User)
       Like.belongsTo(models.Tweet)
-      Like.belongsTo(models.Reply)
+      // Like.belongsTo(models.Reply)
     }
   };
 
   Like.init({
     UserId: DataTypes.INTEGER,
     TweetId: DataTypes.INTEGER,
-    ReplyId: DataTypes.INTEGER
+    // ReplyId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Like',

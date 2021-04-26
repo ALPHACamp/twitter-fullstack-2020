@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
 
       Reply.belongsTo(models.User)
       Reply.belongsTo(models.Tweet)
-      Reply.hasMany(models.Like)
+      // Reply.hasMany(models.Like)
     }
   };
 
