@@ -1,7 +1,7 @@
 const db = require('../models')
 const { User, Tweet, Reply, Like, Followship } = db
 const bcrypt = require('bcryptjs')
-const helpers = require('../_helpers')
+const { getUser } = require('../_helpers')
 
 const userService = require('../services/userService')
 
@@ -75,7 +75,7 @@ const userController = {
 
   // 一般使用者 登入
   signIn: (req, res) => {
-    if (!helpers.getUser(req).isAdmin) {
+    if (!getUser(req).isAdmin) {
       req.flash('success_messages', '成功登入')
       return res.redirect('/tweets')
     } else {
@@ -91,7 +91,7 @@ const userController = {
     return res.redirect('/signin')
   },
   settingPage: (req, res) => {
-    const loginUser = helpers.getUser(req)
+    const loginUser = getUser(req)
     console.log(`id:${loginUser.id}`)
     User.findByPk(loginUser.id)
       .then(result => {
@@ -103,7 +103,7 @@ const userController = {
     //trim input
     Object.keys(req.body).map(k => req.body[`${k}`] = req.body[`${k}`].trim())
     const { account, name, email, oldPassword, newPassword, checkNewPassword } = req.body
-    const loginUser = helpers.getUser(req)
+    const loginUser = getUser(req)
     //check no empty input
     if (!account || !name || !email) {
       req.flash('warning_msg', '請填入account、name、email');
@@ -155,7 +155,7 @@ const userController = {
       })
   },
   followUser: (req, res) => {
-    const followerId = Number(helpers.getUser(req).id)
+    const followerId = Number(getUser(req).id)
     const followingId = Number(req.params.id)
     //不能追蹤自己
     if (followerId === followingId) {
@@ -180,7 +180,7 @@ const userController = {
   unfollowUser: (req, res) => {
     return Followship.destroy({
       where: {
-        followerId: helpers.getUser(req).id,
+        followerId: getUser(req).id,
         followingId: req.params.id
       }
     })
@@ -188,7 +188,7 @@ const userController = {
       .catch(err => res.send(err))
   },
   getFollowers: (req, res) => {
-    const loginUserId = helpers.getUser(req).id
+    const loginUserId = getUser(req).id
     const paramUserId = req.params.id
     return Promise.all([
       User.findByPk(paramUserId, {
@@ -221,7 +221,7 @@ const userController = {
       .catch(err => res.send(err))
   },
   getFollowings: (req, res) => {
-    const loginUserId = helpers.getUser(req).id
+    const loginUserId = getUser(req).id
     const paramUserId = req.params.id
     return Promise.all([
       User.findByPk(paramUserId, {
@@ -272,24 +272,33 @@ const userController = {
         })
       })
   },
-  //getTweets: (req, res) => {
-  //User.findByPk(
-  // req.params.id, {
-  //include: [
-  // {
-  // model: Tweet,
-  //include: [Reply, Like]
-  //},
-  //{ model: User, as: 'Followers' },
-  //{ model: User, as: 'Followings' },
-  //],
-  //order: [['Tweets', 'createdAt', 'DESC']]
-  //})
-  //.then(user => {
-  //res.render('myTweets', { paramUser: user.toJSON() })
-  //})
-  //.catch(err => res.send(err))
-  //}
+  getTweets: (req, res) => {
+    User.findByPk(
+      req.params.id, {
+      include: [
+        {
+          model: Tweet,
+          include: [Reply, Like]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ],
+      order: [['Tweets', 'createdAt', 'DESC']]
+    })
+      .then(user => {
+        const isSelf = (Number(req.params.id) === getUser(req).id)
+        const isFollowed = user.Followers.map(f => f.id).includes(getUser(req).id)
+        userService.getTopUsers(req, res, (data) => {
+          res.render('myTweets', {
+            paramUser: user.toJSON(),
+            isSelf,
+            isFollowed,
+            ...data
+          })
+        })
+      })
+      .catch(err => res.send(err))
+  }
 }
 
 function definitionErrHandler(err, req, res, obj) {
