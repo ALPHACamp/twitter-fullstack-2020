@@ -1,11 +1,24 @@
-<h1>推文數：{{paramUser.Tweets.length}}</h1>
-<h1>追蹤者數：{{paramUser.Followers.length}}</h1>
-<h1>追蹤數：{{paramUser.Followings.length}}</h1>
-{{#each paramUser.Tweets}}
-<h1>作者：{{../paramUser.name}}</h1>
-<h1>＠：{{../paramUser.account}}</h1>
-<h1>時間：{{this.createdAt}}</h1>
-<h1>內容：{{this.description}}</h1>
-<h1>被評論數：{{this.Replies.length}}</h1>
-<h1>被喜歡數：{{this.Likes.length}}</h1>
-{{/each}}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      {{> navigationBar}}
+    </div>
+    <div class="col-7">
+      {{!-- 分頁列 --}}
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link custom-tab custom-tab-active" href="/users/{{ userId }}/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab" href="/users/{{ userId }}/replies">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab" href="/users/{{ userId }}/likes">喜歡的內容</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-3">
+      {{> topUser}}
+    </div>
+  </div>
+</div>

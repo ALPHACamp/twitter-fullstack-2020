@@ -272,24 +272,37 @@ const userController = {
         })
       })
   },
-  //getTweets: (req, res) => {
-  //User.findByPk(
-  // req.params.id, {
-  //include: [
-  // {
-  // model: Tweet,
-  //include: [Reply, Like]
-  //},
-  //{ model: User, as: 'Followers' },
-  //{ model: User, as: 'Followings' },
-  //],
-  //order: [['Tweets', 'createdAt', 'DESC']]
-  //})
-  //.then(user => {
-  //res.render('myTweets', { paramUser: user.toJSON() })
-  //})
-  //.catch(err => res.send(err))
-  //}
+  getTweets: (req, res) => {
+    //被選取的使用者 id
+    const user_id = req.params.id
+    userService.getTopUsers(req, res, (data) => {
+      return res.render('myTweets', data)
+    })
+    // Tweet.findAll(
+    //   { 
+    //     where: { UserId: user_id },
+    //     include: [
+    //       User,
+    //       Reply,
+    //       Like
+    //     ],
+    //     order: [['createdAt', 'DESC']]
+    //   }
+    // ).then(tweets => {
+    //   tweets = tweets.map(d => {
+    //     return {
+    //       ...d.dataValues,
+    //       name: d.User.name,
+    //       account: d.User.account,
+    //       avatar: d.User.avatar,
+    //       replyAmount: d.Replies.length,
+    //       isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
+    //       likeNumber: d.Likes.length
+    //     }
+    //   })
+    // })
+    // .catch(e => console.warn(e))
+  }
 }
 
 module.exports = userController
