@@ -2,7 +2,8 @@ const moment = require('moment');
 const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
-const tweetsSidebar = 'tweetsSidebar'
+const Reply = db.Reply;
+const tweetsSidebar = 'tweetsSidebar';
 const limitDescription = (description, limit = 120) => {
   const newRescription = [];
   if (description.length > limit) {
@@ -26,13 +27,14 @@ const tweetController = {
         include: [User],
       });
       tweets.rows.forEach((e) => {
-        e.description = limitDescription(e.description);
+        e.description = limitDescription(e.description, 120);
         e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
       });
       const data = tweets.rows.sort((a, b) => b.createdAt - a.createdAt);
       // res.json({ status: 'success', message: 'getTweets' });
       return res.render('tweets', {
-        tweets: data, tweetsSidebar
+        tweets: data,
+        tweetsSidebar,
       });
     } catch (err) {
       console.log(err);
@@ -40,14 +42,26 @@ const tweetController = {
   },
   getTweet: async (req, res) => {
     try {
-      const tweet = await Tweet.findByPk(req.params.id, { include: [User] });
+      const tweet = await Tweet.findByPk(req.params.id, {
+        include: [User],
+      });
+      const replies = await Reply.findAll({
+        raw: true,
+        nest: true,
+        where: { TweetId: tweet.toJSON().id },
+        include: [User],
+      });
       const time = moment(tweet.createdAt, 'YYYYMMDD').format(
         'a h:mm, MMMM Do YYYY'
       );
+      replies.forEach((e) => {
+        e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
+      });
       // res.json({ status: 'success', message: 'getTweet' });
       return res.render('tweet', {
         tweet: tweet.toJSON(),
         time,
+        replies,
       });
     } catch (err) {
       console.log(err);
@@ -56,15 +70,12 @@ const tweetController = {
   postTweet: async (req, res) => {
     try {
       console.log(req.body);
-      if (
-        req.body.description[0] == '' ||
-        req.body.description[0].length > 140
-      ) {
+      if (req.body.description == '' || req.body.description.length > 140) {
         req.flash('error_msg', '貼文限制140字以內，且內容不可為空！');
         return;
       }
       await Tweet.create({
-        description: req.body.description[0],
+        description: req.body.description,
       });
       // res.json({ status: 'success', message: 'description' });
       req.flash('success_msg', '貼文成功！');
