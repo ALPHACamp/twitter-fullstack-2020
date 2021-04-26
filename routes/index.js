@@ -1,7 +1,7 @@
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
-const { authenticated } = require('../middleware/auth')
+const { authenticated, adminAuthenticated } = require('../middleware/auth')
 
 module.exports = (app, passport) => {
   // 管理者登入
@@ -15,8 +15,12 @@ module.exports = (app, passport) => {
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
 
-  app.get('/admin/tweets', adminController.getTweets)
-  app.delete('/admin/tweets/:id', adminController.deleteTweets)
+  // 管理者 tweets
+  app.get('/admin/tweets', adminAuthenticated, adminController.getTweets)
+  app.delete('/admin/tweets/:id', adminAuthenticated, adminController.deleteTweets)
+
+  // 管理者 users
+  app.get('/admin/users', adminAuthenticated, adminController.getUsers)
 
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   //tweet
