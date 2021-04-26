@@ -43,6 +43,7 @@ const adminController = {
       })
       .catch(e => console.warn(e))
   },
+  
   // 管理者 登入頁面
   signInPage: (req, res) => {
     return res.render('admin/signin')
