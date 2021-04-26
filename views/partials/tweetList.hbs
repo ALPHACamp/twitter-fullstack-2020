@@ -23,9 +23,10 @@
           {{!-- like and reply --}}
           {{#if isUserPage}}
           <div class="d-flex">
-            <a class="btn btn-link text-decoration-none mr-5">
-              <i class="far fa-comment"></i>
-              <span>{{ this.replyAmount }}</span>
+            <a class="reply btn btn-link text-decoration-none mr-5" data-toggle="modal" data-target="#addReplyModal"
+              data-tweetId="{{ this.id }}">
+              <i class="far fa-comment" style="pointer-events: none;"></i>
+              {{ this.replyAmount }}
             </a>
             {{#if this.isLike}}
             {{!-- 已按讚 --}}

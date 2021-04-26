@@ -14,13 +14,16 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   //tweet
   app.get('/tweets', authenticated, tweetController.getTweets)
+  //replies
+  app.get('/tweets/:id/reply', authenticated, tweetController.getAddReply)
+  app.post('/tweets/:id/reply', authenticated, tweetController.addReply)
+  //like
   app.post('/tweets/:id/like', authenticated, tweetController.likeTweet)
   app.delete('/tweets/:id/like', authenticated, tweetController.unlikeTweet)
   app.get('/tweets/new', authenticated, tweetController.getAddTweet)
   app.post('/tweets', authenticated, tweetController.addTweet)
   app.get('/tweets/:id', authenticated, tweetController.getTweet)
-  //replies
-  app.post('/tweets/:id/reply', authenticated, tweetController.addReply)
+
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
