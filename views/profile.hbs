@@ -1,92 +1,94 @@
-<div class="row">
-  <div class="col-3" style="width: 350px;">
-    {{> left-column}}
-  </div>
-  <div class="center-section col-6 mt-2">
-    {{> message}}
-    <div class="profile-header">
-      <div class="title-user-name text-left font-weight-bold mt-1 py-3 pl-2"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;"> <a
-          onclick="history.back()"><i class="btn fas fa-arrow-left ml-1 mr-4 p-0"></i>{{userNow.name}}</a>
-        <div class="title-user-tweets ml-5 " style="font-weight: 500;
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      {{> left-column}}
+    </div>
+    <div class="center-section col-6 mt-2">
+      {{> message}}
+      <div class="profile-header">
+        <div class="title-user-name text-left font-weight-bold mt-1 py-3 pl-2"
+          style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;"> <a
+            onclick="history.back()"><i class="btn fas fa-arrow-left ml-1 mr-4 p-0"></i>{{userNow.name}}</a>
+          <div class="title-user-tweets ml-5 " style="font-weight: 500;
 font-size: 13px;color: #657786;">25 推文
+          </div>
         </div>
       </div>
-    </div>
-    <div class="profile-info" style="border: #E6ECF0 1px solid;">
-      <div class=" profile-cover" style="
+      <div class="profile-info" style="border: #E6ECF0 1px solid;">
+        <div class=" profile-cover" style="
 height: 180px;border: #E6ECF0 1px solid;"><img class="profile-cover-img" {{#if
-          userNow.cover}}src={{userNow.cover}}{{/if}} style="background: #C4C4C4;height: 100%;;width:100%;"></div>
-      <div class="profile-avatar-button d-flex justify-content-between">
-        <div class="profile-avatar" style=";"><img class="profile-avatar-img" {{#if
-            userNow.avatar}}src={{userNow.avatar}}{{/if}}
-            style=" background: #C4C4C4; border-radius: 100%;width: 140px; height: 140px;border: 4px solid #FFFFFF;margin-left: 14px;;margin-top:-75px;">
-        </div>
-        {{#ifCond userNow.id user.id}}
-        <button type="button" class="btn profile-edit font-weight-bold mt-2 mr-3" data-toggle="modal"
-          data-target="#profileEditModal" style="border: 1px solid #FF6600;border-radius: 100px;width: 122px;
+            userNow.cover}}src={{userNow.cover}}{{/if}} style="background: #C4C4C4;height: 100%;;width:100%;"></div>
+        <div class="profile-avatar-button d-flex justify-content-between">
+          <div class="profile-avatar" style=";"><img class="profile-avatar-img" {{#if
+              userNow.avatar}}src={{userNow.avatar}}{{/if}}
+              style=" background: #C4C4C4; border-radius: 100%;width: 140px; height: 140px;border: 4px solid #FFFFFF;margin-left: 14px;;margin-top:-75px;">
+          </div>
+          {{#ifCond userNow.id user.id}}
+          <button type="button" class="btn profile-edit font-weight-bold mt-2 mr-3" data-toggle="modal"
+            data-target="#profileEditModal" style="border: 1px solid #FF6600;border-radius: 100px;width: 122px;
 height: 40px;font-size: 15px;color: #FF6600;background: none;">編輯個人資料</button>
-        {{else}}
-        <div class="profile-buttons d-flex justify-content-end">
-          <div class="mail mt-2 mr-3" style="border: 1px solid #FF6600;
+          {{else}}
+          <div class="profile-buttons d-flex justify-content-end">
+            <div class="mail mt-2 mr-3" style="border: 1px solid #FF6600;
 box-sizing: border-box;width: 40px;
 height: 40px;border-radius:100%"><i class="far fa-envelope" style="color:#FF6600;font-size: 20px; margin:9.5px;"></i>
-          </div>
-          <div class="subscription mt-2 mr-3" style="border: 1px solid #FF6600;
+            </div>
+            <div class="subscription mt-2 mr-3" style="border: 1px solid #FF6600;
 box-sizing: border-box;width: 40px;
 height: 40px;border-radius:100%"><i class="far fa-bell " style="color:#FF6600;font-size: 23px; margin: 8px;"></i></div>
-          {{#if this.isFollowed }}
-          <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-            <button type="submit" class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 122px;
+            {{#if this.isFollowed }}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 122px;
         height: 40px;font-size: 15px;color: white ;background: #FF6600;font-weight:bold;">正在跟隨</button>
-          </form>
-          {{else}}
-          <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
-              class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 80px;
+            </form>
+            {{else}}
+            <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 80px;
             height: 40px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button></form>
-          {{/if}}
+            {{/if}}
+          </div>
+          {{/ifCond}}
         </div>
-        {{/ifCond}}
-      </div>
 
-      <div class="profile-name ml-3" style="font-weight: 900;
+        <div class="profile-name ml-3" style="font-weight: 900;
 font-size: 19px;">{{userNow.name}}</div>
-      <div class="profile-account ml-3" style="font-weight: 500;
+        <div class="profile-account ml-3" style="font-weight: 500;
 font-size: 15px;color: #657786;">@{{userNow.account}}</div>
-      <div class="profile-introduction mx-3 my-2" style="font-size: 14px;
+        <div class="profile-introduction mx-3 my-2" style="font-size: 14px;
 line-height: 20px;
 color: #000000;">{{userNow.introduction}}</div>
-      <div class="profile-fellowship d-flex justify-content-start ml-3 mb-3" style="font-weight: 500;
+        <div class="profile-fellowship d-flex justify-content-start ml-3 mb-3" style="font-weight: 500;
 font-size: 14px;">
-        <a href="/users/:{{user.id}}/following" style="text-decoration: none;">
-          <div class="profile-following mr-3 mb-3"><span style="color: #000000">34個</span><span
-              style="color: #657786;">追隨中</span>
-          </div>
-        </a>
-        <a href="/users/:{{user.id}}/follower" style="text-decoration: none;">
-          <div class="profile-follower"><span style="color: #000000">59位</span><span style="color: #657786;">追隨者</span>
-          </div>
-        </a>
+          <a href="/users/:{{user.id}}/following" style="text-decoration: none;">
+            <div class="profile-following mr-3 mb-3"><span style="color: #000000">34個</span><span
+                style="color: #657786;">追隨中</span>
+            </div>
+          </a>
+          <a href="/users/:{{user.id}}/follower" style="text-decoration: none;">
+            <div class="profile-follower"><span style="color: #000000">59位</span><span
+                style="color: #657786;">追隨者</span>
+            </div>
+          </a>
+        </div>
+        <div class="profile-feeds ">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" href="">推文</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="">推文與回覆</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="">喜歡的內容</a>
+            </li>
+          </ul>
+        </div>
+        {{> tweets}}
       </div>
-
-      <div class="profile-feeds ">
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link active" href="">推文</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " href="">推文與回覆</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="">喜歡的內容</a>
-          </li>
-        </ul>
-      </div>
-      {{> tweets}}
     </div>
-  </div>
-  <div class="col-2" style="width: 350px;">
-    {{> right-column}}
+    <div class="col-3">
+      {{> right-column}}
+    </div>
   </div>
 </div>
 

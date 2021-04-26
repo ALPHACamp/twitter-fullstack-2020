@@ -1,93 +1,93 @@
-<div class="row">
-  {{> left-column}}
-
-  <div class="center-section col-6 mt-2">
-    {{> message}}
-    <div class="homepage">
-      <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;">首頁
-      </div>
-      <div class="post-tweet px-3 py-2" style="border: #E6ECF0 1px solid;">
-        <form method="POST" action="/tweets">
-          <div class="row">
-            <div class="col-2 ">
-              <img {{#if user.avatar}}src={{user.avatar}}{{/if}}
-                style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-            </div>
-            <div class="col-10">
-              <textarea class="form-control mb-2" name="description" id="description" cols="25" rows="3"
-                placeholder="有什麼新鮮事？"></textarea>
-            </div>
-          </div>
-          <div class="d-flex flex-row-reverse">
-            <button type="submit" class="btn  btn-block "
-              style="border-radius: 100px; background:#FF6600;font-size: 18px;color: #FFFFFF;width: 64px;">推文</button>
-          </div>
-        </form>
-      </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      {{> left-column}}
     </div>
-
-    <div class="col" style="padding: 0px;">
-      <div class="tweet-list mt-3">
-        {{#each tweets}}
-        <div class="tweets-section d-flex justify-content-start px-3 " style="border: #E6ECF0 1px solid; ">
-
-
-          <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
-            <div class=" col-1 post-avatar mr-1">
-              <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
-                style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+    <div class="center-section col-6 mt-2">
+      {{> message}}
+      <div class="homepage">
+        <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
+          style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;">首頁
+        </div>
+        <div class="post-tweet px-3 py-2" style="border: #E6ECF0 1px solid;">
+          <form method="POST" action="/tweets">
+            <div class="row">
+              <div class="col-2 ">
+                <img {{#if user.avatar}}src={{user.avatar}}{{/if}}
+                  style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+              </div>
+              <div class="col-10">
+                <textarea class="form-control mb-2" name="description" id="description" cols="25" rows="3"
+                  placeholder="有什麼新鮮事？"></textarea>
+              </div>
             </div>
-          </a>
-
-          <div class="col-10 post ml-0 mt-2">
-            <div class="post-info d-flex justify-content-start">
-              <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
-                <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">{{this.User.name}}
-                </div>
-              </a>
-              <span class="post-account mr-1"
-                style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span>
-              <span style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
-              <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
-                this.updatedAt}}</span>
+            <div class="d-flex flex-row-reverse">
+              <button type="submit" class="btn  btn-block "
+                style="border-radius: 100px; background:#FF6600;font-size: 18px;color: #FFFFFF;width: 64px;">推文</button>
             </div>
-            <a href="/tweets/{{this.id}}" style="text-decoration:none; ">
-              <div class="post-content my-2" style="font-weight: 500; font-size: 15px;color: #1C1C1C;  height: 30px">
-                {{this.description}}
+          </form>
+        </div>
+      </div>
+
+      <div class="col" style="padding: 0px;">
+        <div class="tweet-list mt-3">
+          {{#each tweets}}
+          <div class="tweets-section d-flex justify-content-start px-3 " style="border: #E6ECF0 1px solid; ">
+            <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+              <div class=" col-1 post-avatar mr-1">
+                <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+                  style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
               </div>
             </a>
-            <div class="d-flex">
-              <div data-toggle="modal" data-target="#replyModal{{this.id}}">
-                <button type="button" class="btn p-0 " style="background-color: white;">
-                  <i class="far fa-comment"></i>
-                </button>
+            <div class="col-10 post ml-0 mt-2">
+              <div class="post-info d-flex justify-content-start">
+                <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+                  <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">
+                    {{this.User.name}}
+                  </div>
+                </a>
+                <span class="post-account mr-1"
+                  style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span>
+                <span style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
+                <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
+                  this.updatedAt}}</span>
               </div>
-              {{!-- add like button --}}
-              {{#if this.isLiked }}
-              <form action="/like/{{this.id}}?_method=DELETE" method="POST">
-                <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
-                  <i class="far fa-heart"></i>
-                </button>
-              </form>
-              {{else}}
-              <form action="/like/{{this.id}}" method="POST">
-                <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
-                  <i class="far fa-heart"></i>
-                </button>
-              </form>
-              {{/if}}
-              {{this.LikeUsers.length}}
+              <a href="/tweets/{{this.id}}" style="text-decoration:none; ">
+                <div class="post-content my-2" style="font-weight: 500; font-size: 15px;color: #1C1C1C;  height: 30px">
+                  {{this.description}}
+                </div>
+              </a>
+              <div class="d-flex">
+                <div data-toggle="modal" data-target="#replyModal{{this.id}}">
+                  <button type="button" class="btn p-0 " style="background-color: white;">
+                    <i class="far fa-comment"></i>
+                  </button>
+                </div>
+                {{!-- add like button --}}
+                {{#if this.isLiked }}
+                <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                  <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
+                    <i class="far fa-heart"></i>
+                  </button>
+                </form>
+                {{else}}
+                <form action="/like/{{this.id}}" method="POST">
+                  <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
+                    <i class="far fa-heart"></i>
+                  </button>
+                </form>
+                {{/if}}
+                {{this.LikeUsers.length}}
+              </div>
             </div>
           </div>
+          {{> modal}}
+          {{/each}}
         </div>
-        {{> modal}}
-        {{/each}}
       </div>
     </div>
-  </div>
-
-  <div class="col-3" style="width: 350px;">
-    {{> right-column}}
+    <div class="col-3" style="width: 350px;">
+      {{> right-column}}
+    </div>
   </div>
 </div>

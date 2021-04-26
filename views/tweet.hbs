@@ -1,84 +1,80 @@
-<div class="row">
-  {{> left-column}}
-  <div class="center-section col-6 ">
-    {{> message}}
-    <div class="tweetPage">
-      <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
-        style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;"> <a
-          onclick="history.back()"><i class="btn fas fa-arrow-left ml-1 mr-4"></i></a>推文
-      </div>
-
-      <div class="tweet px-3 py-2" style="border: #E6ECF0 1px solid;">
-        <div class="post-user-info d-flex justify-content-start">
-          <div class="post-user-avatar mr-2">
-            <img class="mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
-              style=" background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-          </div>
-
-
-          <div class="post-user-account mt-2">
-            <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">
-              {{userNow.name}}{{tweet.User.name}}</div>
-            <span class="post-account mr-1"
-              style="font-size: 15px;color: #657786;font-weight: 500;">@{{tweet.User.account}}</span>
-          </div>
-        </div>
-        <div class="content mt-1 mb-2" style="font-weight: 500;
-font-size: 23px;color: #1C1C1C">{{tweet.description}}</div>
-        <div class="post-time" style="font-weight: 500;
-font-size: 15px;color: #657786;font-weight: 500;">{{moment tweet.updatedAt}} by {{tweet.User.name}}</div>
-      </div>
-      <div class="tweet-counts px-3 py-3  d-flex justify-content-start" style="border: #E6ECF0 1px solid;">
-        <div class="replies"><span class="replies-count mr-1 font-weight-bold" style="font-size: 19px;">34</span><span
-            class="reply mr-3 font-weight-bold" style="font-size: 19px;color: #657786">回覆</span></div>
-        <div class="likes"><span class="likes-count mr-1 font-weight-bold" style="font-size: 19px;">808</span><span
-            class="like font-weight-bold" style="font-size: 19px;color: #657786">喜歡次數</span>
-        </div>
-      </div>
-      <div class="tweet-feedback px-3 py-3 d-flex justify-content-start" style="border: #E6ECF0 1px solid;">
-        <i class="btn far fa-comment  mr-5" data-toggle="modal" data-target="#replyModal{{tweet.id}}"
-          style="color: #657786;font-size: 24px; "></i>
-        <i class="btn far fa-heart ml-5" style="color: #657786;font-size:25px;"></i>
-      </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3">
+      {{> left-column}}
     </div>
+    <div class="center-section col-6 ">
+      {{> message}}
+      <div class="tweetPage">
+        <div class="title text-left font-weight-bold mt-1 py-3 pl-2"
+          style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;"> <a
+            onclick="history.back()"><i class="btn fas fa-arrow-left ml-1 mr-4"></i></a>推文
+        </div>
+        <div class="tweet px-3 py-2" style="border: #E6ECF0 1px solid;">
+          <div class="post-user-info d-flex justify-content-start">
+            <div class="post-user-avatar mr-2">
+              <img class="mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
+                style=" background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+            </div>
+            <div class="post-user-account mt-2">
+              <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">
+                {{userNow.name}}{{tweet.User.name}}</div>
+              <span class="post-account mr-1"
+                style="font-size: 15px;color: #657786;font-weight: 500;">@{{tweet.User.account}}</span>
+            </div>
+          </div>
+          <div class="content mt-1 mb-2" style="font-weight: 500;
+font-size: 23px;color: #1C1C1C">{{tweet.description}}</div>
+          <div class="post-time" style="font-weight: 500;
+font-size: 15px;color: #657786;font-weight: 500;">{{moment tweet.updatedAt}} by {{tweet.User.name}}</div>
+        </div>
+        <div class="tweet-counts px-3 py-3  d-flex justify-content-start" style="border: #E6ECF0 1px solid;">
+          <div class="replies"><span class="replies-count mr-1 font-weight-bold" style="font-size: 19px;">34</span><span
+              class="reply mr-3 font-weight-bold" style="font-size: 19px;color: #657786">回覆</span></div>
+          <div class="likes"><span class="likes-count mr-1 font-weight-bold" style="font-size: 19px;">808</span><span
+              class="like font-weight-bold" style="font-size: 19px;color: #657786">喜歡次數</span>
+          </div>
+        </div>
+        <div class="tweet-feedback px-3 py-3 d-flex justify-content-start" style="border: #E6ECF0 1px solid;">
+          <i class="btn far fa-comment  mr-5" data-toggle="modal" data-target="#replyModal{{tweet.id}}"
+            style="color: #657786;font-size: 24px; "></i>
+          <i class="btn far fa-heart ml-5" style="color: #657786;font-size:25px;"></i>
+        </div>
+      </div>
 
-    {{#each tweet.Replies}}
-    <div class="replies-section d-flex justify-content-start px-3 " style="border: #E6ECF0 1px solid;">
-      <a href="/users/{{this.id}}" style="text-decoration:none;">
-        <div class=" post-avatar mr-1">
-          <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
-            style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-        </div>
-      </a>
-      <div class="reply ml-1 mt-2">
-        <div class="reply-info d-flex justify-content-start">
-          <div class="reply-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
+      {{#each tweet.Replies}}
+      <div class="replies-section d-flex justify-content-start px-3 " style="border: #E6ECF0 1px solid;">
+        <a href="/users/{{this.id}}" style="text-decoration:none;">
+          <div class=" post-avatar mr-1">
+            <img class="mt-2" {{#if this.User.avatar}}src={{this.User.avatar}}{{/if}}
+              style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+          </div>
+        </a>
+        <div class="reply ml-1 mt-2">
+          <div class="reply-info d-flex justify-content-start">
+            <div class="reply-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
 ">{{this.User.name}}</div><span class="reply-account mr-1"
-            style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span
-            style="font-size: 15px;color: #657786;"><span
-            style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
-          <span class="reply-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
-            this.updatedAt}}</span>
-        </div>
-        <div class="reply-target"><span class="mr-1" style="font-weight: 500;
+              style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span
+              style="font-size: 15px;color: #657786;"><span
+              style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
+            <span class="reply-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
+              this.updatedAt}}</span>
+          </div>
+          <div class="reply-target"><span class="mr-1" style="font-weight: 500;
 font-size: 15px;color: #657786;">回覆</span> <span class="reply-target-account" style="font-weight: 500;
 font-size: 15px;color: #FF6600;">@{{../tweet.User.account}}</span></div>
 
-        <div class="reply-content my-2" style="font-weight: 500;
+          <div class="reply-content my-2" style="font-weight: 500;
 font-size: 15px;color: #1C1C1C;">{{this.comment}}</div>
+        </div>
       </div>
+      {{!--
+      <h1>{{this.comment}}</h1> --}}
+      {{/each}}
     </div>
 
-
-
-
-    {{!--
-    <h1>{{this.comment}}</h1> --}}
-    {{/each}}
+    <div class="col-3" style="width: 350px;">
+      {{> right-column}}
+    </div>
   </div>
-
-  <div class="col-3" style="width: 350px;">
-    {{> right-column}}
-  </div>
-</div>
-{{> modal}}
+  {{> modal}}
