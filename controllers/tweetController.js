@@ -43,7 +43,6 @@ const tweetController = {
           likeNumber: d.Likes.length
         }
       })
-      console.log('AAAAAA: ', tweets)
       //推薦跟隨
       userService.getTopUsers(req, res, (data) => {
         res.render('tweets', { tweets, pageTitle, isUserPage, ...data })
@@ -62,10 +61,13 @@ const tweetController = {
         include: [User, Reply]
       }
     ).then((tweet) => {
-      // console.log(tweet.Replies)
       const pageTitle = '推文'
       const time = formatDate(tweet.createdAt)
-      res.render('tweet', { tweet: tweet.toJSON(), pageTitle, time })
+      //推薦跟隨
+      userService.getTopUsers(req, res, (data) => {
+        // console.log(data)
+        res.render('tweet', { tweet: tweet.toJSON(), pageTitle, time, ...data })
+      })
     })
       .catch(e => {
         console.warn(e)
