@@ -44,12 +44,12 @@ const userController = {
       })
     }
     try {
-      const userAccount = await User.findOne({ where: { account }})
+      const userAccount = await User.findOne({ where: { account } })
       if (userAccount) {
         errors.push({ message: '帳號重複!' })
         return res.render('signup', { errors, name, email })
       }
-      const userEmail = await User.findOne({ where: { email }})
+      const userEmail = await User.findOne({ where: { email } })
       if (userEmail) {
         errors.push({ message: 'Email重複!' })
         return res.render('signup', { errors, account, name })
@@ -290,6 +290,32 @@ const userController = {
   //})
   //.catch(err => res.send(err))
   //}
+}
+
+function definitionErrHandler(err, req, res, obj) {
+  if (err.name === 'SequelizeValidationError') {
+    req.flash('warning_msg', err.errors[0].message)
+    if (obj) {
+      return res.render('signup', obj)
+    }
+    return res.redirect('back')
+  }
+  if (err.name === 'SequelizeUniqueConstraintError') {
+    if (err.errors[0].path === 'users.account') {
+      req.flash('warning_msg', 'Sorry, account name already registered!')
+      if (obj) {
+        return res.render('signup', obj)
+      }
+      return res.redirect('back')
+    } else {
+      req.flash('warning_msg', 'Sorry, email already registered!')
+      if (obj) {
+        return res.render('signup', obj)
+      }
+      return res.redirect('back')
+    }
+  }
+  return res.send(err)
 }
 
 module.exports = userController
