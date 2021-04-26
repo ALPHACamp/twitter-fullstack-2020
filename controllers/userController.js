@@ -7,6 +7,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
 
 let userController = {
   loginPage: (req, res) => {
@@ -158,28 +159,6 @@ let userController = {
 
   },
 
-  postTweet: (req, res) => {
-    console.log("now tweetXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-    //未輸入字
-    if (!req.body.description) {
-      req.flash('error_messages', "請輸入內容")
-      return res.redirect('back')
-    }
-    //超過字數
-    if (Number(req.body.description.length) > 140) {
-      req.flash('error_messages', "推文字數超過140字，請重新輸入！")
-      return res.redirect('back')
-    }
-
-    return Tweet.create({
-      description: req.body.description,
-      UserId: helpers.getUser(req).id
-    })
-      .then((tweet) => {
-        req.flash('success_messages', '成功新增一則推文！')
-        res.redirect('back')
-      })
-  },
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
@@ -212,6 +191,29 @@ let userController = {
   getFollowings: (req, res) => {
     res.render('following')
   },
+  addFollowing: (req, res) => {
+    return Followship.create({
+      followerId: helpers.getUser(req).id,
+      followingId: req.params.userId
+    })
+      .then((followship) => {
+        return res.redirect('back')
+      })
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.userId
+      }
+    })
+      .then((followship) => {
+        followship.destroy()
+          .then((followship) => {
+            return res.redirect('back')
+          })
+      })
+  }
 }
 
 module.exports = userController

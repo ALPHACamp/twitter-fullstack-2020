@@ -58,7 +58,6 @@ const tweetController = {
       })
   },
   postTweet: (req, res) => {
-    console.log("now tweetXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     //未輸入字
     if (!req.body.description) {
       req.flash('error_messages', "請輸入內容")

@@ -84,6 +84,8 @@ router.get('/users/:id/setting', authenticated, userController.settingPage)
 router.put('/users/:id', authenticated, userController.putSetting)
 router.get('/users/:id/follower', authenticated, userController.getFollowers)
 router.get('/users/:id/following', authenticated, userController.getFollowings)
+router.post('/following/:userId', authenticated, userController.addFollowing)
+router.delete('/following/:userId', authenticated, userController.removeFollowing)
 
 
 
