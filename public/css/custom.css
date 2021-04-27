@@ -1,6 +1,41 @@
 .text-main, .custom-link-active{
   color: #FF6600;
 }
+.custom-button {
+  width: 40px;
+  height: 40px;
+  color: #FF6600 !important;
+  border-color: #FF6600 !important;
+}
+
+.custom-button :hover {
+  color:#FF6600 !important;
+}
+
+.custom-tab {
+  font-weight: bold;
+  color: #657786;
+  border: 0;
+  padding: .5rem .75rem;
+}
+.custom-tab-active {
+  color: #FF6600 !important;
+  border-bottom: 2px solid #FF6600 !important;
+}
+
+.custom-tab-active :hover {
+  color: #FF6600 !important;
+}
+
+.resize {
+  max-width: 100%;
+  height: auto;
+  resize: both;
+}
+.userinfo-avatar {
+  transform: translateY(-50%);
+  margin-bottom: -60px;
+}
 
 .form-signin {
   max-width: 480px;

@@ -272,33 +272,111 @@ const userController = {
         })
       })
   },
-  getTweets: (req, res) => {
-    User.findByPk(
-      req.params.id, {
-      include: [
-        {
-          model: Tweet,
-          include: [Reply, Like]
-        },
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
-      ],
-      order: [['Tweets', 'createdAt', 'DESC']]
-    })
-      .then(user => {
-        const isSelf = (Number(req.params.id) === getUser(req).id)
-        const isFollowed = user.Followers.map(f => f.id).includes(getUser(req).id)
-        userService.getTopUsers(req, res, (data) => {
-          res.render('myTweets', {
-            paramUser: user.toJSON(),
-            isSelf,
-            isFollowed,
-            ...data
+  getProfile: async (req, res) => {
+    //路徑名稱
+    let pathName = req.path.split('/')
+    pathName = pathName[pathName.length - 1]
+    const profile_id = req.params.id //被選取的使用者 id
+
+    let getUserData = User.findOne(
+      {
+        where: { id: profile_id },
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ]
+      }
+    )
+    let getTweetAmount = Tweet.count({ where: { UserId: profile_id } })
+    let [user, tweetAmount] = await Promise.all([getUserData, getTweetAmount])
+
+    //頁面基礎資料
+    const baseData = {
+      userId: profile_id,
+      isSelf: profile_id == getUser(req).id,
+      isUserPage: true,
+      pathName,
+      profileUser: user.toJSON(),
+      followerNumber: user.Followers.length,
+      followingNumber: user.Followings.length,
+      isFollowed: user.Followers.map(d => d.id).includes(getUser(req).id),
+      pageTitle: user.name,
+      tweetAmount
+    }
+
+
+    switch (pathName) {
+      case 'tweets':
+        try {
+          let tweets = await Tweet.findAll(
+            {
+              where: { UserId: profile_id },
+              include: [
+                User,
+                Reply,
+                Like
+              ],
+              order: [['createdAt', 'DESC']]
+            }
+          )
+          tweets = tweets.map(d => {
+            return {
+              ...d.dataValues,
+              name: d.User.name,
+              account: d.User.account,
+              avatar: d.User.avatar,
+              replyAmount: d.Replies.length,
+              isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
+              likeNumber: d.Likes.length
+            }
           })
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets, ...baseData, ...data })
+          })
+        }
+        catch (e) {
+          console.warn(e)
+        }
+        finally { break }
+
+      case 'replies':
+        userService.getTopUsers(req, res, (data) => {
+          return res.render('myTweets', { ...baseData, ...data })
         })
-      })
-      .catch(err => res.send(err))
+        break
+
+      case 'likes':
+        try {
+          let likeTweets = await Like.findAll(
+            {
+              where: { UserId: profile_id },
+              include: [
+                { model: Tweet, include: [User, Reply, Like] }
+              ]
+            }
+          )
+          likesTweets = likeTweets.map(d => ({
+            ...d.Tweet.dataValues,
+            id: d.Tweet.id,
+            name: d.Tweet.User.name,
+            account: d.Tweet.User.account,
+            avatar: d.Tweet.User.avatar,
+            replyAmount: d.Tweet.Replies.length,
+            isLike: d.Tweet.Likes.map(l => l.UserId).includes(getUser(req).id),
+            likeNumber: d.Tweet.Likes.length
+          }))
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets: likesTweets, ...baseData, ...data })
+          })
+        } catch (e) {
+          console.warn(e)
+        } finally {
+          break
+        }
+    }
+
   }
+
 }
 
 function definitionErrHandler(err, req, res, obj) {

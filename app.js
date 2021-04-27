@@ -31,6 +31,7 @@ app.use((req, res, next) => {
   res.locals.warning_msg = req.flash('warning_msg')
   res.locals.user = helpers.getUser(req)
   res.locals.currentPath = req.path
+  res.locals.userProfilePath = helpers.getUser(req) ? `/users/${helpers.getUser(req).id}/tweets` : ''
   next()
 })
 app.use(methodOverride('_method'))

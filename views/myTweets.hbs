@@ -1,14 +1,54 @@
-<h2>是自己嗎：{{isSelf}}</h2>
-<h1>推文數：{{paramUser.Tweets.length}}</h1>
-<h1>追蹤者數：{{paramUser.Followers.length}}</h1>
-<h1>追蹤數：{{paramUser.Followings.length}}</h1>
-<h1>是否追蹤｀：{{isFollowed}}</h1>
-{{#each paramUser.Tweets}}
-<h1>作者：{{../paramUser.name}}</h1>
-<h1>＠：{{../paramUser.account}}</h1>
-<h1>時間：{{moment this.createdAt}}</h1>
-<h1>內容：{{this.description}}</h1>
-<h1>被評論數：{{this.Replies.length}}</h1>
-<h1>被喜歡數：{{this.Likes.length}}</h1>
-<hr>
-{{/each}}
+<div class="container-fluid">
+  <div class="row justify-content-between">
+    <div class="col-2">
+      {{> navigationBar}}
+    </div>
+    <div class="col-6">
+      {{!-- 使用者資訊 --}}
+      <div class="">
+        {{> userInfo}}
+      </div>
+      {{!-- 分頁列 --}}
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'tweets'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'replies'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/replies">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'likes'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/likes">喜歡的內容</a>
+        </li>
+      </ul>
+      {{!-- tweets --}}
+      {{#isEqual pathName 'tweets'}}
+      <div class="mt-3">
+        {{#each tweets}}
+        {{> tweetList isUserPage=../isUserPage}}
+        {{/each}}
+      </div>
+      {{/isEqual}}
+
+      {{!-- replies --}}
+      {{#isEqual pathName 'replies'}}
+      <h3>未設計畫面</h3>
+      {{/isEqual}}
+
+      {{!-- likesTweets --}}
+      {{#isEqual pathName 'likes'}}
+      <div class="mt-3">
+        {{#each tweets}}
+        {{> tweetList isUserPage=../isUserPage}}
+        {{/each}}
+      </div>
+      {{/isEqual}}
+
+    </div>
+    <div class="col-3">
+      {{> topUser}}
+    </div>
+  </div>
+</div>
