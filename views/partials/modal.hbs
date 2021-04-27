@@ -1,0 +1,118 @@
+{{!-- 編輯modal --}}
+<div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form action="/users/{{user.id}}/edit" enctype="multipart/form-data" method="post">
+      <div class="modal-content edit-modal-content">
+        <div class="edit-modal-header">
+          <div class="edit-left-top">
+            <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">&times;
+            </button>
+            <span>編輯個人資料</span>
+          </div>
+
+          <div class="edit-right-top">
+            <button type="submit" class="btn btn-post-modal">儲存</button>
+          </div>
+        </div>
+
+        <div class="edit-modal-body">
+          <div class="edit-item-cover" id="coverImg" style="background: url({{user.cover}}); background-position:center;
+  background-size:cover;">
+            <label for="cover"><i class="icon-photo cover"></i></label>
+            <input type="file" onchange="readURL(this)" name="cover" class="custom-file-input" id="cover">
+            <button type="button" class="btn cover-remove"><i class="icon-delete remove" id="removeCover"></i></button>
+          </div>
+
+          <div class="edit-item-avatar" id="avatarImg"
+            style="background: url({{user.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
+            <label for="avatar"><i class="icon-photo avatar"></i></label>
+            <input type="file" onchange="readURL(this)" name="avatar" class="custom-file-input" id="avatar">
+          </div>
+
+          <div class=" edit-item-name">
+            <div class="item-name-top">
+              <span class="item-name-top-mark">Name</span>
+            </div>
+            <input type="text" id="name" name="name" placeholder="name" maxlength="50" value="{{user.name}}">
+            <div class="item-name-bottom">
+              <span>{{user.name.length}}/50</span>
+            </div>
+          </div>
+          <div class="edit-item-text">
+            <div class="item-text-top">
+              <span class="item-text-top-mark">自我介紹</span>
+            </div>
+            <textarea name="introduction" id="introduction" placeholder="introduction" maxlength="160"
+              class="item-text-center" cols="30" rows="10">{{user.introduction}}</textarea>
+            <div class="item-text-bottom">
+              <span>{{user.introduction.length}}/160</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="edit-modal-footer">
+      </div>
+    </form>
+  </div>
+</div>
+
+{{!-- 推文modal --}}
+<div class="modal fade" id="tweetModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content tweet-modal-content">
+      <div class="tweet-modal">
+        <div class="tweet-modal-header">
+          <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">&times;
+          </button>
+        </div>
+        <div class="tweet-modal-body">
+          <div class="tweet-modal-avatar">
+            <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+          </div>
+          <form action="/tweets" method="POST">
+            <textarea class="tweet-modal-text" id="mainTweetText" name="tweetText" placeholder="有什麼新鮮事？"></textarea>
+            <div class="tweet-post-btn row mx-0 align-items-center justify-content-end">
+              <div class="" style="display:inline;" id="mainTweetTip">0</div>/140&emsp;
+              <button type="submit" class="btn btn-post-modal" id="mainTweetTextBtn">推文</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- 回覆modal --}}
+<div class="modal fade" id="replyModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content reply-modal-content">
+      <div class="reply-modal-header">
+        <button type="button" class="close-button" data-dismiss="modal" aria-label="Close">
+          &times;
+        </button>
+      </div>
+      <div class="reply-modal-body">
+        <div class="reply-modal-tweet">
+          {{!-- dom --}}
+        </div>
+      </div>
+
+      <div class="reply-modal-post">
+        <div class="reply-modal-userPic">
+          <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+        </div>
+        <div class="reply-modal-text">
+          <form id="reply-form" method="POST">
+            <textarea class="reply-modal-textarea" id="mainReplyText" name="comment" placeholder="推你的回覆"></textarea>
+            <div class="tweet-post-btn">
+              <button type="submit" id="mainReplyBtn" class="btn btn-post-modal">回覆</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

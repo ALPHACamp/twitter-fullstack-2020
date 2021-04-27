@@ -1,0 +1,179 @@
+<div class="container-fluid">
+  {{!-- left-column --}}
+  {{> left-column}}
+
+  <div class="tweets-center">
+    <div class="tweets-title">
+      <a href="/tweets">
+        <i class="icon-arrow"></i>推文
+      </a>
+    </div>
+    <div class="card tweet-content">
+      <div class="tweet-content-top">
+        <img src="{{tweet.User.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+        <div class="tweet-content-name">
+          <span class="user-name"><a href="">{{tweet.User.name}}</a></span>
+          <span class="user-account">@{{tweet.User.account}}</span>
+        </div>
+      </div>
+
+      <div class="card-body tweet-content-main">
+        <p> {{tweet.description}} </p>
+        <span class="tweet-time">{{LocaleTime}} · {{LocaleDate}}</span>
+      </div>
+
+      <div class="tweet-content-footer">
+        <div class="tweet-info">
+          <span>{{tweet.Replies.length}} </span>回覆
+          <span>{{tweet.Likes.length}} </span>喜歡
+        </div>
+        <div class="tweet-reply-like">
+          <button type="button" class="btn btn-reply" data-toggle="modal">
+            <ul class="reply-text" style="display:none">
+              <li>{{tweet.User.id}}</li>
+              <li>{{tweet.User.name}}</li>
+              <li>{{tweet.User.account}}</li>
+              <li>{{moment tweet.createdAt}}</li>
+              <li>{{tweet.description}}</li>
+              <li>{{tweet.User.avatar}}</li>
+              <li>{{tweet.id}}</li>
+            </ul>
+            <i class="icon-reply reply-on" style="font-size: 22px"></i>
+          </button>
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="post" class="form-like" style="display: inline-block;">
+            <button type="submit" class="btn">
+              <i class="like icon-like-fill" style="font-size: 22px; margin-left:100px;"></i>
+            </button>
+            <div class="like-item-count item-count"></div>
+            {{else}}
+            <form action="/tweets/{{tweet.id}}/like" method="post" class="form-like" style="display: inline-block;">
+              <button type="submit" class="btn">
+                <i class="icon-like" style="font-size: 24px;"></i>
+              </button>
+              <div class="item-count unlike-item-count"></div>
+              {{/if}}
+            </form>
+        </div>
+      </div>
+    </div>
+    <div class="tweets-list">
+      {{#each reply}}
+      <div class="card tweets-content">
+        <div class="card-body tweets-body">
+          <div class="left-item">
+            <a href="/users/{{this.UserId}}">
+              <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+            </a>
+          </div>
+          <div class="right-item">
+            <div class="title">
+              <span class="name">
+                <a href="/users/{{this.UserId}}">
+                  {{this.User.name}}
+                </a>
+              </span>
+              <span class="time">
+                @{{this.User.account}}·{{moment this.updatedAt}}
+              </span>
+            </div>
+            <div class="body-reply">
+              <span class="reply-mark">回覆</span>
+              <a class="reply-user" href="/users/{{../tweet.User.id}}">@{{../tweet.User.account}}</a>
+            </div>
+            <div class="body">
+              {{subText this.comment 140}}
+            </div>
+            <div class="footer">
+              <div class="footer-item reply-item">
+                <button type="button" class="btn btn-reply" data-toggle="modal">
+                  <ul class="reply-text" style="display:none">
+                    <li>{{this.UserId}}</li>
+                    <li>{{this.User.name}}</li>
+                    <li>{{this.User.account}}</li>
+                    <li>{{moment this.updatedAt}}</li>
+                    <li>{{this.comment}}</li>
+                    <li>{{this.User.avatar}}</li>
+                    <li>{{../tweet.id}}</li>
+                    <li>{{this.id}}</li>
+                  </ul>
+                  <i class="icon-reply replies-on" style="font-size: 22px"></i>
+                  {{this.followingByReply.length}}
+                </button>
+              </div>
+              <div class="footer-item like-item">
+                {{#if this.isLiked}}
+                <form action="/replies/{{this.id}}/unlike" method="post" class="form-like">
+                  <button type="submit" class="btn">
+                    <i class="like icon-like-fill" style="font-size: 22px;"></i>
+                  </button>
+                  <div class="like-item-count item-count">{{this.Likes.length}}</div>
+                  {{else}}
+                  <form action="/replies/{{this.id}}/like" method="post" class="form-like">
+                    <button type="submit" class="btn">
+                      <i class="icon-like" style="font-size: 22px;"></i>
+                    </button>
+                    <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+                    {{/if}}
+                  </form>
+
+              </div>
+            </div>
+            {{#each this.followingByReply}}
+            <div class="reply-content">
+              <div class="left-item">
+                <a href="/users/{{this.UserId}}">
+                  <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+                </a>
+              </div>
+              <div class="right-item">
+                <div class="title">
+                  <span class="name">
+                    <a href="/users/{{this.UserId}}">
+                      {{this.User.name}}
+                    </a>
+                  </span>
+                  <span class="time">
+                    @{{this.User.account}}·{{moment this.updatedAt}}
+                  </span>
+                </div>
+                <div class="body-reply">
+                  <span class="reply-mark">回覆</span>
+                  <a class="reply-user" href="/users/{{../this.User.id}}">@{{../this.User.account}}</a>
+                </div>
+                <div class="reply-text">
+                  {{subText this.comment 140}}
+                </div>
+                <div class="footer">
+                  <div class="footer-item like-item">
+
+                    {{#if this.isLiked}}
+                    <form action="/replies/{{this.id}}/unlike" method="post" class="form-like">
+                      <button type="submit" class="btn">
+                        <i class="like icon-like-fill" style="font-size: 22px;"></i>
+                      </button>
+                      <div class="like-item-count item-count">{{this.Likes.length}}</div>
+                      {{else}}
+                      <form action="/replies/{{this.id}}/like" method="post" class="form-like">
+                        <button type="submit" class="btn">
+                          <i class="icon-like" style="font-size: 22px;"></i>
+                        </button>
+                        <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+                        {{/if}}
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{!-- right-column --}}
+  {{> right-column}}
+  {{> modal}}
+</div>

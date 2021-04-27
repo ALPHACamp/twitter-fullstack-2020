@@ -1,0 +1,93 @@
+<div class="container-fluid">
+  {{!-- left-column --}}
+  {{> left-column}}
+  <div class="tweets-center" style="position: relative;">
+    <div style="position: absolute; width: 100%">
+      {{> message}}
+    </div>
+
+    <div class="tweets-title">
+      首頁
+    </div>
+    <div class="tweets-input">
+      <div class="main-left">
+        <img src="{{user.avatar}}" class="rounded-circle" style="width: 50px;height:50px;">
+      </div>
+      <div class="main-right">
+        <form action="/tweets" method="POST">
+          <textarea class="form-control tweetText" id="tweetText" name="tweetText" placeholder="有什麼新鮮事？"></textarea>
+          
+          <div class="text-right row mx-0 align-items-center justify-content-end">
+            <div class="" style="display:inline;" id="tweetTip">0</div>/140&emsp;
+            <button type="submit" class="btn btn-tweet-2" id="tweetTextBtn">推文</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="tweets-list">
+      {{#each tweets}}
+      <div class="card tweets-content">
+        <div class="card-body tweets-body">
+          <div class="left-item">
+            <a href="/users/{{this.UserId}}">
+              <img src="{{this.User.dataValues.avatar}}" class="rounded-circle"
+                style="width: 50px;height:50px;background-color:#C4C4C4;">
+            </a>
+          </div>
+          <div class="right-item">
+            <div class="title">
+              <span class="name">
+                <a href="/users/{{this.UserId}}">
+                  {{this.User.dataValues.name}}
+                </a>
+              </span>
+              <span class="time">
+                @{{this.User.dataValues.account}}・{{moment this.createdAt}}
+              </span>
+            </div>
+            <a href="/tweets/{{this.id}}" class="body">
+              {{this.description}}
+            </a>
+            <div class="footer">
+              <div class="footer-item reply-item">
+                <button type="button" class="btn" data-toggle="modal">
+                  <ul class="reply-text" style="display:none">
+                    <li>{{this.UserId}}</li>
+                    <li>{{this.User.dataValues.name}}</li>
+                    <li>{{this.User.dataValues.account}}</li>
+                    <li>{{moment this.createdAt}}</li>
+                    <li>{{this.description}}</li>
+                    <li>{{this.User.dataValues.avatar}}</li>
+                    <li>{{this.id}}</li>
+                  </ul>
+                  <i class="icon-reply reply-on"></i>
+                </button>
+                <div class="item-count reply-count">{{this.Replies.length}}</div>
+              </div>
+              <div class="footer-item like-item">
+                {{#if this.isLiked}}
+                <form action="/tweets/{{this.id}}/unlike" method="post" class="form-like">
+                  <button type="submit" class="btn">
+                    <i class="like icon-like-fill"></i>
+                  </button>
+                  <div class="like-item-count item-count">{{this.Likes.length}}</div>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="post" class="form-like">
+                    <button type="submit" class="btn">
+                      <i class="icon-like"></i>
+                    </button>
+                    <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+                    {{/if}}
+                  </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  {{!-- right-column --}}
+  {{> right-column}}
+  {{> modal}}
+</div>
