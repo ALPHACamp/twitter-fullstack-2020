@@ -151,9 +151,7 @@ const userController = {
         })
       })
     }
-
     const userId = helpers.getUser(req).id
-
     if (files) {
       const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID.toString()
       imgur.setClientID(IMGUR_CLIENT_ID)
@@ -168,7 +166,7 @@ const userController = {
       cover: images.cover ? images.cover.data.link : user.cover,
       avatar: images.avatar ? images.avatar.data.link : user.avatar
     })
-    req.flash('success_msg', '更新成功')
+    req.flash('success_msg', '您的個人資訊已更新')
     return res.redirect(`/user/${user.id}`)
   },
 
@@ -179,6 +177,57 @@ const userController = {
     })
     return res.render('setting', { user: user.toJSON() })
   },
+
+  putUserSetting: async (req, res) => {
+    const { account, name, email, password, passwordCheck } = req.body
+    const errors = []
+    // Make sure all columns are correct
+    if (!account || !name || !email || !password || !passwordCheck) {
+      errors.push({ message: '所有欄位皆為必填' })
+    }
+    if (password !== passwordCheck) {
+      errors.push({ message: '密碼與確認密碼必須相同' })
+    }
+    if (name.length > 50) {
+      errors.push({ message: '名稱必須在50字元以內' })
+    }
+    if (account.length > 50) {
+      errors.push({ message: '帳號必須在50字元以內' })
+    }
+    if (errors.length > 0) {
+      return res.render('setting', {
+        account, name, email, password, errors
+      })
+    }
+    const userId = helpers.getUser(req).id
+    const user = await User.findByPk(userId)
+    const userAccount = await User.findOne({ where: { account } })
+    const userEmail = await User.findOne({ where: { email } })
+    // Make sure the email & account have not been used by others
+    if (userAccount && userAccount.dataValues.account !== user.account) {
+      console.log('user.dataValues', user.dataValues.account)
+      req.flash('error_msg', '帳號已有人使用了')
+      return res.redirect('back')
+    }
+    if (userEmail && userEmail.dataValues.email !== user.email) {
+      req.flash('error_msg', 'Email已有人使用了')
+      return res.redirect('back')
+    }
+    // Update user account information
+    await user.update({
+      account: account,
+      name: name,
+      email: email,
+      password: bcrypt.hashSync(
+        password,
+        bcrypt.genSaltSync(10),
+        null
+      )
+    })
+    req.flash('success_msg', '您的帳號資訊更新成功')
+    return res.redirect(`/user/${user.id}/setting`)
+  },
+
   getfollowers: (req, res) => {
     res.render('follower', { tweetsSidebar })
   }
