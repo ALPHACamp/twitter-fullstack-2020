@@ -30,6 +30,7 @@ const tweetController = {
     Tweet.findByPk(req.params.id, {
       include: [User,
         { model: Reply, include: [User] },
+        { model: Like, include: [User] },
         { model: User, as: 'LikedUsers' },
       ]
     })
