@@ -60,10 +60,17 @@
             <span class="user-name mr-3 ml-3">{{this.name}}</span>
             <span class="user-acount mr-2">{{this.acount}}</span>
           </div>
-          <form action="/admin/tweets/{{this.id}}/follw" method="POST" class="col-1 mr-2">
+          {{#if this.isFollowed}}
+          <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
+            <button type="submit" class="btn btn-outline"
+              style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/user/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
             <button type="submit" class="btn btn-outline"
               style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">跟隨</button>
           </form>
+          {{/if}}
         </div>
         <div class="text_content">
           <p class="ml-3">{{this.introduction}}</p>

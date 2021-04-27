@@ -78,6 +78,9 @@ router.get('/user/:id', authenticated, blockAdmin, userController.getUser)
 router.get('/user/:id/edit', authenticated, blockAdmin, userController.getUserEdit)
 //router.put('/user/:id/edit', authenticated, upload.single('image'), userController.putUserEdit)
 router.get('/user/:id/followers', authenticated, blockAdmin, userController.getSuggestFollower,userController.getfollowers)
+router.post('/user/:id/addFollow', authenticated, blockAdmin, userController.addFollowing)
+router.delete('/user/:id/removeFollow', authenticated, blockAdmin, userController.removeFollowing)
+
 router.get('/user/:id/setting', authenticated, blockAdmin,userController.getUserSetting)
 
 

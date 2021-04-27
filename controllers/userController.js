@@ -8,6 +8,7 @@ const User = db.User;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
 const Like = db.Like;
+const Followship = db.Followship
 const tweetsSidebar = 'tweetsSidebar'
 
 const userController = {
@@ -154,6 +155,33 @@ const userController = {
     })
     .catch(err => console.log(err))
 },
+  addFollowing: (req, res) => {
+    if (req.user.id === parseInt(req.params.id)) {
+      req.flash('error_messages', '無法追蹤自己')
+      return res.redirect('back')
+    };
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.id
+    })
+      .then((followship) => {
+        return res.redirect('back')
+      })
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.id
+      }
+    })
+      .then((followship) => {
+        followship.destroy()
+          .then((followship) => {
+            return res.redirect('back')
+          })
+      })
+  },
 };
 
 module.exports = userController;
