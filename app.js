@@ -10,7 +10,9 @@ const helpers = require('./_helpers');
 
 const app = express()
 const port = process.env.PORT || 3000
-
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 const passport = require('./config/passport')
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/handlebars-helpers') })) // Handlebars 註冊樣板引擎

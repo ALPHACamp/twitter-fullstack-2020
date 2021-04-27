@@ -85,3 +85,9 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+node_modules/
+temp/
+upload/
+.DS_Store
+.env

@@ -70,9 +70,9 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
 router.get('/logout', userController.logout)
 
 
-router.get('/tweets', authenticated,userController.getTopUsers, tweetController.getTweets)
+router.get('/tweets', authenticated, userController.getTopUsers, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
-router.get('/tweets/:id', authenticated,userController.getTopUsers, tweetController.getTweet)
+router.get('/tweets/:id', authenticated, userController.getTopUsers, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, replyController.postReply)
 router.post('/tweets/like/:tweetId', authenticated, userController.addLike)
 router.delete('/tweets/like/:tweetId', authenticated, userController.removeLike)
@@ -81,11 +81,12 @@ router.delete('/tweet/like/:tweetId', authenticated, userController.removeLike)
 
 
 
-router.get('/profile/:id', authenticated,userController.getTopUsers, userController.getUser)
+router.get('/profile/:id', authenticated, userController.getTopUsers, userController.getUser)
+router.post('/profile/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postProfile)
 router.get('/users/:id/setting', authenticated, userController.settingPage)
 router.put('/users/:id', authenticated, userController.putSetting)
-router.get('/users/:id/follower', authenticated,userController.getTopUsers, userController.getFollowers)
-router.get('/users/:id/following', authenticated,userController.getTopUsers,userController.getFollowings)
+router.get('/users/:id/follower', authenticated, userController.getTopUsers, userController.getFollowers)
+router.get('/users/:id/following', authenticated, userController.getTopUsers, userController.getFollowings)
 router.post('/following/:userId', authenticated, userController.addFollowing)
 router.delete('/following/:userId', authenticated, userController.removeFollowing)
 

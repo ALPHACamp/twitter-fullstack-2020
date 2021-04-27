@@ -9,6 +9,9 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const defaultProfilePic = 'https://i.stack.imgur.com/34AD2.jpg'
 
 let userController = {
   getTopUsers: (req, res, next) => {
@@ -20,15 +23,15 @@ let userController = {
         FollowerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
-      users = users.filter((user) => (user.name !== helpers.getUser(req).name ))
-        users = users
-          .sort((a, b) => b.followerCount - a.followerCount)
-          .slice(0, 10)
-        res.locals.recommendedUsers = users
-        return next()
+      users = users.filter((user) => (user.name !== helpers.getUser(req).name))
+      users = users
+        .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
+      res.locals.recommendedUsers = users
+      return next()
     })
   },
-  
+
   loginPage: (req, res) => {
     return res.render('login')
   },
@@ -283,7 +286,99 @@ let userController = {
     return res.redirect('back')
 
   },
-  
+
+  postProfile: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_messages', "請輸入名稱")
+      return res.redirect('back')
+    }
+    if (!req.body.introduction) {
+      req.flash('error_messages', "請輸入自我介紹")
+      return res.redirect('back')
+    }
+
+    const { files } = req
+    if (files.avatar !== undefined & files.cover === undefined) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files.avatar[0].path, (err, img) => {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              avatar: files ? img.data.link : user.avatar,
+            }).then((user) => {
+              req.flash('success_messages', '更新成功!')
+              res.redirect(`/profile/${user.id}`)
+            })
+          })
+      })
+    }
+
+    if (files.avatar === undefined & files.cover !== undefined) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files.cover[0].path, (err, img) => {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              cover: files ? img.data.link : user.cover,
+            }).then((user) => {
+              req.flash('success_messages', '更新成功!')
+              res.redirect(`/profile/${user.id}`)
+            })
+          })
+      })
+    }
+
+    if (files.avatar !== undefined & files.cover !== undefined) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(files.avatar[0].path, (err, img) => {
+        return User.findByPk(req.params.id)
+          .then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              avatar: files ? img.data.link : user.avatar,
+            })
+              .then(() => {
+                imgur.setClientID(IMGUR_CLIENT_ID);
+                imgur.upload(files.cover[0].path, (err, img) => {
+                  return User.findByPk(req.params.id)
+                    .then((user) => {
+                      user.update({
+                        name: req.body.name,
+                        introduction: req.body.introduction,
+                        cover: files ? img.data.link : user.cover,
+                      }).then((user) => {
+                        req.flash('success_messages', '更新成功!')
+                        res.redirect(`/profile/${user.id}`)
+                      })
+                    })
+                })
+              })
+          })
+      })
+    }
+
+    else {
+      return User.findByPk(req.params.id)
+        .then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: user.avatar,
+            cover: user.cover,
+          })
+            .then((user) => {
+              req.flash('success_messages', '更新成功!')
+              res.redirect(`/profile/${user.id}`)
+            })
+        })
+    }
+  },
+
 }
 
 module.exports = userController
