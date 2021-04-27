@@ -12,13 +12,17 @@
         </div>
         <div class="tweet px-3 py-2" style="border: #E6ECF0 1px solid;">
           <div class="post-user-info d-flex justify-content-start">
-            <div class="post-user-avatar mr-2">
-              <img class="mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
-                style=" background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
-            </div>
+            <a href="/profile/{{tweet.User.id}}" style="text-decoration:none;">
+              <div class="post-user-avatar mr-2">
+                <img class="mt-2" {{#if tweet.User.avatar}}src={{tweet.User.avatar}}{{/if}}
+                  style=" background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+              </div>
+            </a>
             <div class="post-user-account mt-2">
-              <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">
-                {{userNow.name}}{{tweet.User.name}}</div>
+              <a href="/profile/{{tweet.User.id}}" style="text-decoration:none;">
+                <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">
+                  {{tweet.User.name}}</div>
+              </a>
               <span class="post-account mr-1"
                 style="font-size: 15px;color: #657786;font-weight: 500;">@{{tweet.User.account}}</span>
             </div>
