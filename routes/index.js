@@ -58,7 +58,5 @@ module.exports = (app, passport) => {
   app.get('/users/:id/replies', authenticated, userController.getProfile)
 }
 
-}
-
 
 

@@ -278,7 +278,7 @@ const userController = {
     pathName = pathName[pathName.length - 1]
     const profile_id = req.params.id //被選取的使用者 id
 
-    let getUser = User.findOne(
+    let getUserData = User.findOne(
       {
         where: { id: profile_id },
         include: [
@@ -288,7 +288,7 @@ const userController = {
       }
     )
     let getTweetAmount = Tweet.count({ where: { UserId: profile_id } })
-    let [user, tweetAmount] = await Promise.all([getUser, getTweetAmount])
+    let [user, tweetAmount] = await Promise.all([getUserData, getTweetAmount])
 
     //頁面基礎資料
     const baseData = {
