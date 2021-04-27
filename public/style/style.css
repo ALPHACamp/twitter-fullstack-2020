@@ -160,6 +160,28 @@
 #follower_main {
   margin-left: 264px;
 }
+.reply_box {
+  display: block;
+  line-height: 0;
+}
+.reply_line {
+  display: inline-block;
+}
+.reply_contener {
+  width: 30rem;
+  height: auto;
+  border: thin solid #e6ecf0;
+  border-left: 0;
+  border-bottom: 0;
+}
+.reply_btn {
+  margin: 1rem;
+  border: none;
+  background-color: white;
+}
+.reply_btn:focus {
+  outline: none;
+}
 .followship_sidebar {
   position: fixed;
   right: 0;

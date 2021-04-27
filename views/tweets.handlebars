@@ -43,8 +43,75 @@
                         <p class="card-text">{{this.description}}</p>
                     </a>
                 </div>
+
+                <div style="position: absolute; margin-top: 5.5rem;">
+                    <button type="button" data-toggle="modal" data-target="#postReply" class="reply_line reply_btn"><i
+                            class="bi bi-chat"></i></button>
+                    <a href="#" style="margin:1rem; margin-left:5rem;" class="reply_line"><i
+                            class="bi bi-heart"></i></a>
+                </div>
             </div>
         </div>
     </div>
     {{/each}}
+</div>
+
+<div class="modal fade" id="postReply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="contener">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2">
+                            <i class="bi bi-person-square"></i>
+                        </div>
+                        <div class="col-10">
+                            <div>
+                                <h5 class="card-title reply_line" style="margin-bottom: 0;">{{tweet.User.name}}</h5>
+                                &nbsp;
+                                <a href="/users/{{tweet.User.id}}" class="reply_line">@{{tweet.User.account}}</a>
+                                &nbsp;
+                                <p class="card-text reply_line"><small class="text-muted">{{time}}</small>
+                                </p>
+                            </div>
+                            <div>
+                                <p class="card-text" style="margin-top: .5rem; ">{{tweet.description}}</p>
+                            </div>
+                            <div>
+                                <p class="text-muted reply_line" style="margin-top: 1rem;">回覆給</p>
+                                &nbsp;
+                                <a href="/users/{{this.Tweet.User.id}}" class="card-link reply_line"
+                                    style="color:coral">@{{this.Tweet.User.account}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contener" style="width: 30rem; height:10rem;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-2">
+                            <i class="bi bi-person-square"></i>
+                        </div>
+                        <div class="col-10">
+                            <form action="/tweets/{{tweet.id}}/replies" method="POST" style="width: 100%;"
+                                id="newReply">
+                                <div class="form-label-group">
+                                    <textarea form="newReply" class="tweet_new" placeholder="推你的回覆"
+                                        name="comment"></textarea>
+                                </div>
+                                <button type="submit" class="btn new_post">回覆</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
