@@ -3,6 +3,7 @@ const helpers = require('../_helpers')
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const e = require('express')
+const user = require('../models/user')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -193,25 +194,41 @@ let userController = {
       })
   },
   getFollowers: (req, res) => {
-    return User.findAll({
-      include: [
-        { model: User, as: 'Followers' }
-      ]
-    }).then(users => {
-      // 整理 users 資料
-      users = users.map(user => ({
-        ...user.dataValues,
-        // 計算追蹤者人數
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+    }).then((user) => {
+      user.update({ followerCount: user.Followers.length })
+      const results = user.toJSON()
+      results.Followers = user.Followers.map((follower) => ({
+        ...follower.dataValues,
+        isFollowed: req.user.Followings.map((er) => er.id).includes(follower.id)
       }))
-      // 依追蹤者人數排序清單
-      return res.render('follower', { users: users })
+      results.tweetCount = user.Tweets.length
+      results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+      res.render('follower', { results: results })
     })
+      .catch((err) => res.send(err))
   },
+
+
+
+
   getFollowings: (req, res) => {
-    res.render('following')
+    return User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'Followings' }, { model: Tweet }]
+    }).then((user) => {
+      user.update({ followerCount: user.Followings.length })
+      const results = user.toJSON()
+      results.Followings = user.Followings.map((Followings) => ({
+        ...Followings.dataValues,
+        isFollowed: req.user.Followings.map((er) => er.id).includes(Followings.id)
+      }))
+      results.tweetCount = user.Tweets.length
+      results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
+
+      res.render('following', { results: results })
+    })
+      .catch((err) => res.send(err))
   },
   addFollowing: (req, res) => {
     return Followship.create({

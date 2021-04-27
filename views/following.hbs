@@ -8,7 +8,7 @@
       <div class="follower-header">
         <div class="title-user-name text-left font-weight-bold mt-1 py-3 pl-2"
           style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;"> <a
-            onclick="history.back()"><i class="fas fa-arrow-left ml-1 mr-4"></i>{{user.name}}</a>
+            onclick="history.back()"><i class="fas fa-arrow-left ml-1 mr-4"></i>{{results.name}}</a>
           <div class="title-user-tweets ml-5 " style="font-weight: 500;
 font-size: 13px;color: #657786;">25 推文
           </div>
@@ -17,14 +17,56 @@ font-size: 13px;color: #657786;">25 推文
       <div class="follow-feeds">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link " href="/users/:{{user.id}}/follower" style="text-decoration: none;">跟隨者</a>
+            <a class="nav-link " href="/users/{{results.id}}/follower" style="text-decoration: none;">跟隨者</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="/users/:{{user.id}}/following" style="text-decoration: none;">正在跟隨</a>
+            <a class="nav-link active" href="/users/{{results.id}}/following" style="text-decoration: none;">正在跟隨</a>
           </li>
         </ul>
       </div>
-      <div class="followers">{{> followship}}</div>
+      <div class="followers">
+        {{#each results.Followings}}
+        <div class="followship py-2" style="border: #E6ECF0 1px solid; display: flex; align-items: center;">
+          <div class="user-info d-flex col-2 align-items-start" style=" display: flex; align-items: center; ">
+            <a href="/profile/{{this.id}}" style="text-decoration: none;">
+              <img class="" {{#if this.avatar}}src={{this.avatar}}{{/if}}
+                style="background: #C4C4C4; border-radius: 100%; width: 60px; height: 60px;border: 1px solid #C4C4C4;">
+            </a>
+          </div>
+          <div class="col-10 d-flex">
+            <div class="user-name-account-introduction col-9 p-0">
+              <div class="user-name ;" style="font-size: 15px;color: #1C1C1C;font-weight:bold;">
+                {{this.name}}
+              </div>
+              <div class="user-account" style="font-weight: 500; font-size: 15px;color: #657786;">@{{this.account}}
+              </div>
+              <div class="user-introduction" style="font-weight: 500;
+                font-size: 15px;color: #1C1C1C;">{{this.introduction}}
+              </div>
+            </div>
+
+            {{#ifCond ../results.id @root.user.id}}
+            <div class="follower-following " style="display: flex; align-items: center;">
+
+              {{#if this.isFollowed }}
+              <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents; ">
+                <button type="submit" class="following btn" style="border: 1px solid #FF6600;border-radius: 100px;width: 92px;
+                  height: 35px;font-size: 15px;color: white ;background: #FF6600;font-weight:bold;">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/following/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                  class="btn follower" style="border: 1px solid #FF6600;border-radius: 100px;width: 62px;
+                      height: 35px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button>
+              </form>
+              {{/if}}
+
+            </div>
+            {{/ifCond}}
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
     </div>
     <div class="col-3">
       {{> right-column}}
