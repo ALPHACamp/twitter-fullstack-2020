@@ -10,7 +10,7 @@
           style="font-size: 18px;line-height: 26px;color: #1C1C1C;border: #E6ECF0 1px solid;"> <a
             onclick="history.back()"><i class="btn fas fa-arrow-left ml-1 mr-4 p-0"></i>{{userNow.name}}</a>
           <div class="title-user-tweets ml-5 " style="font-weight: 500;
-font-size: 13px;color: #657786;">25 推文
+font-size: 13px;color: #657786;">{{userNow.Tweets.length}} 推文
           </div>
         </div>
       </div>
@@ -61,12 +61,12 @@ color: #000000;">{{userNow.introduction}}</div>
         <div class="profile-fellowship d-flex justify-content-start ml-3 mb-3" style="font-weight: 500;
 font-size: 14px;">
           <a href="/users/{{userNow.id}}/following" style="text-decoration: none;">
-            <div class="profile-following mr-3 mb-3"><span style="color: #000000">34個</span><span
-                style="color: #657786;">追隨中</span>
+            <div class="profile-following mr-3 mb-3"><span
+                style="color: #000000">{{userNow.Followings.length}}位</span><span style="color: #657786;">追隨中</span>
             </div>
           </a>
           <a href="/users/{{userNow.id}}/follower" style="text-decoration: none;">
-            <div class="profile-follower"><span style="color: #000000">59位</span><span
+            <div class="profile-follower"><span style="color: #000000">{{userNow.Followers.length}}位</span><span
                 style="color: #657786;">追隨者</span>
             </div>
           </a>

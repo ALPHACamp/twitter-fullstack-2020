@@ -155,6 +155,7 @@ let userController = {
       include: [
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
+        { model: Tweet, include: [User] }
       ]
     })
       .then(user => {
@@ -195,7 +196,7 @@ let userController = {
   },
   getFollowers: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'Followers' }, { model: Tweet }]
+      include: [{ model: User, as: 'Followers' }, { model: Tweet, include: [User] }]
     }).then((user) => {
       user.update({ followerCount: user.Followers.length })
       const results = user.toJSON()
