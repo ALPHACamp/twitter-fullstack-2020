@@ -44,8 +44,8 @@ font-size: 13px;color: #657786;">{{results.Tweets.length}} 推文
                 font-size: 15px;color: #1C1C1C;">{{this.introduction}}
               </div>
             </div>
-
-            {{#ifCond ../results.id @root.user.id}}
+            {{!--
+            {{#ifCond ../results.id @root.user.id}} --}}
             <div class="follower-following " style="display: flex; align-items: center;">
 
               {{#if this.isFollowed }}
@@ -61,7 +61,7 @@ font-size: 13px;color: #657786;">{{results.Tweets.length}} 推文
               {{/if}}
 
             </div>
-            {{/ifCond}}
+            {{!-- {{/ifCond}} --}}
           </div>
         </div>
         {{/each}}

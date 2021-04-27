@@ -235,28 +235,27 @@ let userController = {
     if (helpers.getUser(req).id === Number(req.params.id)) {
       req.flash('error_messages', '使用者不能追隨自己！')
       return res.redirect('back')
-    }  
+    }
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId
     })
       .then((followship) => {
+        console.log("add req.user.id====", req.user.id)
+        console.log("req.params.userId====", req.params.userId)
         return res.redirect('back')
       })
   },
   removeFollowing: (req, res) => {
-    return Followship.findOne({
-      where: {
-        followerId: req.user.id,
-        followingId: req.params.userId
-      }
-    })
-      .then((followship) => {
-        followship.destroy()
-          .then((followship) => {
-            return res.redirect('back')
-          })
-      })
+    const followerId = req.user.id
+    const followingId = req.params.userId
+
+    Followship.destroy({ where: { followerId, followingId } })
+
+    console.log("remove req.user.id====", req.user.id)
+    console.log("req.params.userId====", req.params.userId)
+    return res.redirect('back')
+
   }
 }
 
