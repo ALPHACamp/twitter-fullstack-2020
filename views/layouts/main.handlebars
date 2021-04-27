@@ -13,7 +13,13 @@
 </head>
 
 <body>
-    {{#if user}}
+    <!--
+    {{#ifRole user.role "admin"}}
+        管理者 共用樣板放此
+    {{/ifRole}}
+    -->
+
+    {{#ifRole user.role "user"}}
     <main class="d-flex">
         <div class="main_sidebar" style="position: fixed;">
             <div class="nav_logo col-auto">
@@ -64,10 +70,43 @@
                 </a>
             </div>
         </div>
+        <!-- followship -->
+        <div class="flex-column followship_sidebar">
+            <div class="d-none d-block">
+                <div class="card follow_card" style="width: 18rem;">
+                    <div class="card-header">
+                        跟隨誰
+                    </div>
+                    <ul class="list-group list-group-flush">
+
+                        <li class="list-group-item">
+                            <div class="contener" style="width: 28rem; height:10rem; border-right: thin solid #e6ecf0;">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <i class="bi bi-person-square"></i>
+                                        </div>
+                                        <div class="col-auto">
+                                            <p class="card-title m-0" style="display: inline-block;">{{user.name}}
+                                            </p>
+                                            <p class="m-0"><small>@{{user.account}}</small></p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <button type="button" class="btn follow_btn">跟隨</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </main>
-    {{/if}}
+    {{/ifRole}}
     <div>
         {{{body}}}
+        <!--推文 彈窗-->
         <div class="modal fade" id="postTweet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -99,6 +138,7 @@
             </div>
         </div>
     </div>
+
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

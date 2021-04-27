@@ -20,7 +20,7 @@ app.engine(
   'handlebars',
   handlebars({
     defaultLayout: 'main.handlebars',
-    //helpers: require('./config/handlebars-helpers'),
+    helpers: require('./config/handlebars-helpers'),
   })
 );
 app.set('view engine', 'handlebars');
@@ -42,7 +42,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// get('/', (req, res) => res.send('Hello World!'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 require('./routes')(app);
