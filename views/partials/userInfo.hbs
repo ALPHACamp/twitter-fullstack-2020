@@ -3,11 +3,9 @@
     {{> nav}}
   </div>
   <div class="card w-100">
-    <img src="https://picsum.photos/seed/picsum/500/300" class="resize card-img-top" alt="..."
-      style="max-height: 30vh;">
+    <img src="{{ profileUser.cover }}" class="resize card-img-top" alt="..." style="max-height: 30vh;">
     <div class="d-flex justify-content-between">
-      <img class="rounded-circle ml-3 userinfo-avatar" src="https://picsum.photos/150?grayscale" alt="" width="150"
-        height="150">
+      <img class="rounded-circle ml-3 userinfo-avatar" src="{{ profileUser.avatar }}" alt="" width="120" height="120">
       <div class="d-flex mt-2 mr-3 h-50 align-items-center">
         {{#if isSelf}}
         <button class="btn btn-outline-primary rounded-pill">編輯個人資料</button>
