@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 const imgur = require('imgur-node-api');
 const fs = require('fs');
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+//const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const helpers = require('../_helpers');
 const db = require('../models');
 const User = db.User;
@@ -10,6 +10,7 @@ const Reply = db.Reply;
 const Like = db.Like;
 const Followship = db.Followship
 const tweetsSidebar = 'tweetsSidebar'
+
 
 const userController = {
   signUpPage: (req, res) => {
@@ -48,7 +49,7 @@ const userController = {
         name: name,
         email: email,
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null),
-        role:'user'
+        role: 'user'
       });
       req.flash('success_msg', '帳號註冊成功');
       return res.redirect('/signin');
@@ -62,16 +63,17 @@ const userController = {
   },
 
   signIn: (req, res) => {
+
     User.findOne({ where:{ account:req.body.account}})
       .then((user)=>{
         if (!user.dataValues.role.match('admin')){
           req.flash('success_msg', '登入成功');
           res.redirect('/tweets');
-        }else{
+        } else {
           req.flash('error_msg', '此帳號不是普通用戶')
           res.redirect('/signin')
         }
-    })
+      })
   },
 
   logOut: (req, res) => {
@@ -123,8 +125,52 @@ const userController = {
     return res.render('edit', { user: user })
   },
 
-  putUserEdit: (req, res) => {
+  putUserEdit: async (req, res) => {
+    const { name, introduction, avatar, cover } = req.body
+    const errors = []
+    if (!name || !introduction) {
+      errors.push({ message: '名稱或自我介紹欄位，不可空白' })
+    }
+    if (name.length > 50) {
+      errors.push({ message: '名稱必須在50字符以內' })
+    }
+    if (introduction.length > 160) {
+      errors.push({ message: '自我介紹，必須在160字符以內' })
+    }
+    if (errors.length > 0) {
+      return res.render('edit', { name, introduction, avatar, cover, errors })
+    }
+    const images = {}
+    const { files } = req
+    const uploadImg = path => {
+      return new Promise((resolve, reject) => {
+        imgur.upload(path, (err, img) => {
+          if (err) {
+            return reject(err)
+          }
+          resolve(img)
+        })
+      })
+    }
 
+    const userId = helpers.getUser(req).id
+
+    if (files) {
+      const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID.toString()
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      for (const key in files) {
+        images[key] = await uploadImg(files[key][0].path)
+      }
+    }
+    const user = await User.findByPk(userId)
+    await user.update({
+      name: name,
+      introduction: introduction,
+      cover: images.cover ? images.cover.data.link : user.cover,
+      avatar: images.avatar ? images.avatar.data.link : user.avatar
+    })
+    req.flash('success_msg', '更新成功')
+    return res.redirect(`/user/${user.id}`)
   },
 
   getUserSetting: async (req, res) => {
@@ -134,6 +180,7 @@ const userController = {
     })
     return res.render('setting', { user: user.toJSON() })
   },
+
   getfollowers:(req,res)=>{
     res.render('follower',{tweetsSidebar})
   },
@@ -182,6 +229,7 @@ const userController = {
           })
       })
   },
+
 };
 
 module.exports = userController;

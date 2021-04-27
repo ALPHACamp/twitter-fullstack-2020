@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    {{#if tweetsSidebar}}
+    {{#if user}}
     <main class="d-flex">
         <div class="main_sidebar" style="position: fixed;">
             <div class="nav_logo col-auto">
@@ -51,7 +51,7 @@
                 </a>
             </div>
 
-            <button type="button" class="btn nav_post">推文</button>
+            <button type="button" class="btn nav_post" data-toggle="modal" data-target="#postTweet">推文</button>
 
             <div class="logout col-auto">
                 <a href="/logout">
@@ -84,9 +84,9 @@
                                     <i class="bi bi-person-square"></i>
                                 </div>
                                 <div class="col-10">
-                                    <form action="/tweets" method="POST" style="width: 100%;" id="newTweet">
+                                    <form action="/tweets" method="POST" style="width: 100%;" id="newTweet_sidebar">
                                         <div class="form-label-group">
-                                            <textarea form="newTweet" class="tweet_new" placeholder="有什麼新鮮事？"
+                                            <textarea form="newTweet_sidebar" class="tweet_new" placeholder="有什麼新鮮事？"
                                                 name="description"></textarea>
                                         </div>
                                         <button type="submit" class="btn new_post">推文</button>
