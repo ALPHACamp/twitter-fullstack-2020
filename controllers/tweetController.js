@@ -18,7 +18,7 @@ const limitDescription = (description, limit = 120) => {
   return description;
 };
 
-const tweetController = {
+const tweetController = { 
   getTweets: async (req, res) => {
     try {
       const tweets = await Tweet.findAndCountAll({
@@ -45,23 +45,24 @@ const tweetController = {
       const tweet = await Tweet.findByPk(req.params.id, {
         include: [User],
       });
-      const replies = await Reply.findAll({
+      const replies = await Reply.findAndCountAll({
         raw: true,
         nest: true,
         where: { TweetId: tweet.toJSON().id },
-        include: [User],
+        include: [User, { model: Tweet, include: [User] }],
       });
       const time = moment(tweet.createdAt, 'YYYYMMDD').format(
         'a h:mm, MMMM Do YYYY'
       );
-      replies.forEach((e) => {
+      replies.rows.forEach((e) => {
         e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
       });
       // res.json({ status: 'success', message: 'getTweet' });
       return res.render('tweet', {
         tweet: tweet.toJSON(),
         time,
-        replies,
+        replies: replies.rows,
+        count: replies.count,
       });
     } catch (err) {
       console.log(err);
@@ -69,7 +70,6 @@ const tweetController = {
   },
   postTweet: async (req, res) => {
     try {
-      console.log(req.body);
       if (req.body.description == '' || req.body.description.length > 140) {
         req.flash('error_msg', '貼文限制140字以內，且內容不可為空！');
         return;
