@@ -63,7 +63,7 @@
                 <div data-toggle="modal" data-target="#replyModal{{this.id}}">
                   <button type="button " class="btn p-0 " style="background-color: white;">
                     <i class="far fa-comment" style="color: #657786;"></i><span class="rely-amount ml-2"
-                      style="font-size: 13px;font-weight: 500;color: #657786;">{{this.replyCount}}</span>
+                      style="font-size: 13px;font-weight: 500;color: #657786;">{{this.Replies.length}}</span>
                   </button>
                 </div>
                 {{!-- add like button --}}
@@ -72,7 +72,7 @@
                   <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
                     <i class="fas fa-heart" style="color: #657786;"></i>
                     <span class="rely-amount ml-2"
-                      style="font-size: 13px;font-weight: 500;color: #657786;">{{this.likeCount}}</span>
+                      style="font-size: 13px;font-weight: 500;color: #657786;">{{this.Likes.length}}</span>
                   </button>
                 </form>
                 {{else}}
