@@ -273,12 +273,37 @@ const userController = {
       })
   },
   getProfile: async (req, res) => {
+    //路徑名稱
     let pathName = req.path.split('/')
     pathName = pathName[pathName.length - 1]
-    //被選取的使用者 id
-    const profile_id = req.params.id
-    const isSelf = profile_id == helpers.getUser(req).id
-    const isUserPage = true
+    const profile_id = req.params.id //被選取的使用者 id
+
+    let getUser = User.findOne(
+      {
+        where: { id: profile_id },
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ]
+      }
+    )
+    let getTweetAmount = Tweet.count({ where: { UserId: profile_id } })
+    let [user, tweetAmount] = await Promise.all([getUser, getTweetAmount])
+
+    //頁面基礎資料
+    const baseData = {
+      userId: profile_id,
+      isSelf: profile_id == helpers.getUser(req).id,
+      isUserPage: true,
+      pathName,
+      profileUser: user.toJSON(),
+      followerNumber: user.Followers.length,
+      followingNumber: user.Followings.length,
+      isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id),
+      pageTitle: user.name,
+      tweetAmount
+    }
+
 
     switch (pathName) {
       case 'tweets':
@@ -306,7 +331,7 @@ const userController = {
             }
           })
           userService.getTopUsers(req, res, (data) => {
-            return res.render('myTweets', { tweets, isUserPage, pathName, userId: profile_id, ...data })
+            return res.render('myTweets', { tweets, ...baseData, ...data })
           })
         }
         catch (e) {
@@ -316,7 +341,7 @@ const userController = {
 
       case 'replies':
         userService.getTopUsers(req, res, (data) => {
-          return res.render('myTweets', { isUserPage, pathName, userId: profile_id, ...data })
+          return res.render('myTweets', { ...baseData, ...data })
         })
         break
 
@@ -341,7 +366,7 @@ const userController = {
             likeNumber: d.Tweet.Likes.length
           }))
           userService.getTopUsers(req, res, (data) => {
-            return res.render('myTweets', { tweets: likesTweets, isUserPage, pathName, userId: profile_id, ...data })
+            return res.render('myTweets', { tweets: likesTweets, ...baseData, ...data })
           })
         } catch (e) {
           console.warn(e)

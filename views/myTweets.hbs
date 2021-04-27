@@ -1,9 +1,13 @@
 <div class="container-fluid">
-  <div class="row">
+  <div class="row justify-content-between">
     <div class="col-2">
       {{> navigationBar}}
     </div>
-    <div class="col-7">
+    <div class="col-6">
+      {{!-- 使用者資訊 --}}
+      <div class="">
+        {{> userInfo}}
+      </div>
       {{!-- 分頁列 --}}
       <ul class="nav nav-tabs">
         <li class="nav-item">
