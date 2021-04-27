@@ -137,3 +137,26 @@
   position: relative;
   overflow: auto;
 }
+#follower_Column {
+  width: 1000px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e6ecf0;
+}
+.control-area {
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: #e6ecf0;
+  margin: -10px;
+  height: 106px;
+  margin-top: 6px;
+  padding: 12px;
+}
+#follower_panel {
+  max-height: 900px;
+  position: relative;
+  overflow: auto;
+}
+#follower_main {
+  margin-left: 264px;
+}

@@ -83,18 +83,20 @@ router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTwe
 router.get('/user/:id', authenticated, blockAdmin, userController.getUser)
 // 使用者 profile
 router.get('/user/:id/edit', authenticated, blockAdmin, userController.getUserEdit)
+router.get('/user/:id/setting', authenticated, blockAdmin,userController.getUserSetting)
 router.put('/user/:id/edit', authenticated, blockAdmin, upload.fields([
   { name: 'cover', maxCount: 1 },
   { name: 'avatar', maxCount: 1 }
 ]), userController.putUserEdit)
+
 // 使用者 information
 router.get('/user/:id/setting', authenticated, blockAdmin, userController.getUserSetting)
 router.put('/user/:id/setting', authenticated, blockAdmin, userController.putUserSetting)
+
 // 使用者 followShip
-router.get('/user/:id/followers', authenticated, blockAdmin, userController.getfollowers)
-
-
-
+router.get('/user/:id/followers', authenticated, blockAdmin, userController.getSuggestFollower, userController.getfollowers)
+router.post('/user/:id/addFollow', authenticated, blockAdmin, userController.addFollowing)
+router.delete('/user/:id/removeFollow', authenticated, blockAdmin, userController.removeFollowing)
 
 // 登出
 router.get('/logout', userController.logOut);
