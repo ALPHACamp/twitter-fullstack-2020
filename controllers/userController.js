@@ -63,10 +63,9 @@ const userController = {
   },
 
   signIn: (req, res) => {
-
-    User.findOne({ where:{ account:req.body.account}})
-      .then((user)=>{
-        if (!user.dataValues.role.match('admin')){
+    User.findOne({ where: { account: req.body.account } })
+      .then((user) => {
+        if (!user.dataValues.role.match('admin')) {
           req.flash('success_msg', '登入成功');
           res.redirect('/tweets');
         } else {
@@ -179,7 +178,7 @@ const userController = {
     return res.render('setting', { user: user.toJSON() })
   },
 
-   putUserSetting: async (req, res) => {
+  putUserSetting: async (req, res) => {
     const { account, name, email, password, passwordCheck } = req.body
     const errors = []
     // Make sure all columns are correct
@@ -229,29 +228,29 @@ const userController = {
     return res.redirect(`/user/${user.id}/setting`)
   },
 
-  getfollowers:(req,res)=>{
-    res.render('follower',{tweetsSidebar})
+  getfollowers: (req, res) => {
+    res.render('follower', { tweetsSidebar })
   },
-  
-  getSuggestFollower:(req, res, next) => {
-  return User.findAll({
-    where: { role: 'user' },
-    include: [{ model: User, as: 'Followers' }]
-  })
-    .then(users => {
-      users = users.map((user)=> (
-        {
-        ...user.dataValues,
-        isFollowed: user.Followers.some(d => d.id === req.user.id),
-        FollowersCount: user.Followers.length
-        }))   
-      users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
-      res.locals.users = users;
-      return next()
+
+  getSuggestFollower: (req, res, next) => {
+    return User.findAll({
+      where: { role: 'user' },
+      include: [{ model: User, as: 'Followers' }]
     })
-    .catch(err => console.log(err))
-},
-  
+      .then(users => {
+        users = users.map((user) => (
+          {
+            ...user.dataValues,
+            isFollowed: user.Followers.some(d => d.id === req.user.id),
+            FollowersCount: user.Followers.length
+          }))
+        users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
+        res.locals.users = users;
+        return next()
+      })
+      .catch(err => console.log(err))
+  },
+
   addFollowing: (req, res) => {
     if (req.user.id === parseInt(req.params.id)) {
       req.flash('error_messages', '無法追蹤自己')
@@ -265,7 +264,7 @@ const userController = {
         return res.redirect('back')
       })
   },
-  
+
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {

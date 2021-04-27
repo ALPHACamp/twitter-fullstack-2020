@@ -182,3 +182,19 @@
 .reply_btn:focus {
   outline: none;
 }
+.followship_sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 18rem;
+  border-right: thin solid #e6ecf0;
+}
+.follow_card {
+  margin: 1rem 3rem 0 0;
+}
+.follow_btn {
+  background-color: orangered;
+  color: white;
+  border-radius: 100px;
+  position: absolute;
+}
