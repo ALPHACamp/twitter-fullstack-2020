@@ -11,6 +11,24 @@ const Like = db.Like
 const Followship = db.Followship
 
 let userController = {
+  getTopUsers: (req, res, next) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    }).then(users => {
+      users = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      }))
+      users = users.filter((user) => (user.name !== helpers.getUser(req).name ))
+        users = users
+          .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, 10)
+        res.locals.recommendedUsers = users
+        return next()
+    })
+  },
+  
   loginPage: (req, res) => {
     return res.render('login')
   },
@@ -264,7 +282,8 @@ let userController = {
     console.log("req.params.userId====", req.params.userId)
     return res.redirect('back')
 
-  }
+  },
+  
 }
 
 module.exports = userController
