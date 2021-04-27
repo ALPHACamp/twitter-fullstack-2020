@@ -84,7 +84,7 @@ const userController = {
   getUser: async (req, res) => {
     try {
       const user = await User.findByPk(req.params.id, {
-        attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover'],
+        attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover', 'role'],
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
@@ -173,7 +173,7 @@ const userController = {
   getUserSetting: async (req, res) => {
     const userId = helpers.getUser(req).id
     const user = await User.findByPk(userId, {
-      attributes: ['id', 'account', 'email', 'name'],
+      attributes: ['id', 'account', 'email', 'name', 'role'],
     })
     return res.render('setting', { user: user.toJSON() })
   },
