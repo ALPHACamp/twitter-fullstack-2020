@@ -138,35 +138,43 @@ let userController = {
       })
   },
 
-  getUser: async (req, res) => {
+  getUser: (req, res) => {
 
-    const result = await Reply.findAndCountAll({
-      raw: true,
-      nest: true,
-      where: {
-        userId: req.params.id
-      },
-      include: Tweet,
-      distinct: true,
-    })
-    const count = result.count
-    const comments = result.rows
     return User.findByPk(req.params.id, {
       include: [
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
-        { model: Tweet, include: [User] }
-      ]
+        { model: Tweet, include: [Like, Reply] }
+      ], order: [[Tweet, 'createdAt', 'DESC']]
     })
       .then(user => {
-        const isFollowing = user.Followers.map(d => d.id).includes(req.user.id)
-        res.render('Profile', {
-          userNow: user.toJSON(), count, comments,
-          isFollowing: isFollowing,
-        })
+
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
+          .then((likes) => {
+            const results = user.toJSON()
+            likes = likes.map(like => like.TweetId)
+            results.Tweets.forEach(tweet => {
+              tweet.isLiked = likes.includes(tweet.id)
+            })
+            results.tweetCount = results.Tweets.length
+            results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+            return res.render('profile', {
+              results: results,
+              currentId: helpers.getUser(req).id
+            })
+          })
       })
 
   },
+
+  //   const isFollowing = user.Followers.map(d => d.id).includes(req.user.id)
+  //   const isLiked = user.LikedUsers.map(d => d.id).includes(req.user.id)
+  //   res.render('Profile', {
+  //     userNow: user.toJSON(),
+  //     isFollowing: isFollowing,
+  //     isLiked: isLiked
+  //   })
+  // })
 
   addLike: (req, res) => {
     return Like.create({
