@@ -77,7 +77,7 @@ router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTwe
 router.get('/user/:id', authenticated, blockAdmin, userController.getUser)
 router.get('/user/:id/edit', authenticated, blockAdmin, userController.getUserEdit)
 //router.put('/user/:id/edit', authenticated, upload.single('image'), userController.putUserEdit)
-router.get('/user/:id/followers', authenticated, blockAdmin,userController.getfollowers)
+router.get('/user/:id/followers', authenticated, blockAdmin, userController.getSuggestFollower,userController.getfollowers)
 router.get('/user/:id/setting', authenticated, blockAdmin,userController.getUserSetting)
 
 

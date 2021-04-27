@@ -135,8 +135,25 @@ const userController = {
   },
   getfollowers:(req,res)=>{
     res.render('follower',{tweetsSidebar})
-  }
-
+  },
+  getSuggestFollower:(req, res, next) => {
+  return User.findAll({
+    where: { role: 'user' },
+    include: [{ model: User, as: 'Followers' }]
+  })
+    .then(users => {
+      users = users.map((user)=> (
+        {
+        ...user.dataValues,
+        isFollowed: user.Followers.some(d => d.id === req.user.id),
+        FollowersCount: user.Followers.length
+        }))   
+      users = users.sort((a, b) => b.FollowersCount - a.FollowersCount).slice(0, 10)
+      res.locals.users = users;
+      return next()
+    })
+    .catch(err => console.log(err))
+},
 };
 
 module.exports = userController;
