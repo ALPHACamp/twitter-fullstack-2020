@@ -43,6 +43,32 @@ const adminController = {
       })
       .catch(e => console.warn(e))
   },
+
+  // 管理者 使用者列表
+  getUsers: async (req, res) => {
+    try {
+      const users = await User.findAll({
+        include:[
+          Tweet,
+          { model: Tweet, as: 'LikedTweets' },
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' },
+        ]
+      })
+      const data = users.map(item => ({
+        ...item.dataValues,
+        LikesCount: item.dataValues.LikedTweets.length,
+        TweetsCount: item.dataValues.Tweets.length,
+        followersCount: item.dataValues.Followers.length,
+        followingsCount: item.dataValues.Followings.length,
+      }))
+      const newData = data.filter(a => a.account !== 'root')
+      const user = newData.sort((a, b) => b.TweetsCount - a.TweetsCount)
+      return res.render('admin/users', { user })
+    } catch (e) {
+      console.log(e)
+    }
+  },
   
   // 管理者 登入頁面
   signInPage: (req, res) => {

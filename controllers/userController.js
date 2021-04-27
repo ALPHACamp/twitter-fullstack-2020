@@ -1,8 +1,8 @@
 const db = require('../models')
 const { User, Tweet, Reply, Like, Followship } = db
 const bcrypt = require('bcryptjs')
-const helpers = require('../_helpers')
-const sequelize = require('sequelize')
+const { getUser } = require('../_helpers')
+
 const userService = require('../services/userService')
 
 const userController = {
@@ -75,7 +75,7 @@ const userController = {
 
   // 一般使用者 登入
   signIn: (req, res) => {
-    if (!helpers.getUser(req).isAdmin) {
+    if (!getUser(req).isAdmin) {
       req.flash('success_messages', '成功登入')
       return res.redirect('/tweets')
     } else {
@@ -91,7 +91,7 @@ const userController = {
     return res.redirect('/signin')
   },
   settingPage: (req, res) => {
-    const loginUser = helpers.getUser(req)
+    const loginUser = getUser(req)
     console.log(`id:${loginUser.id}`)
     User.findByPk(loginUser.id)
       .then(result => {
@@ -103,7 +103,7 @@ const userController = {
     //trim input
     Object.keys(req.body).map(k => req.body[`${k}`] = req.body[`${k}`].trim())
     const { account, name, email, oldPassword, newPassword, checkNewPassword } = req.body
-    const loginUser = helpers.getUser(req)
+    const loginUser = getUser(req)
     //check no empty input
     if (!account || !name || !email) {
       req.flash('warning_msg', '請填入account、name、email');
@@ -155,7 +155,7 @@ const userController = {
       })
   },
   followUser: (req, res) => {
-    const followerId = Number(helpers.getUser(req).id)
+    const followerId = Number(getUser(req).id)
     const followingId = Number(req.params.id)
     //不能追蹤自己
     if (followerId === followingId) {
@@ -180,7 +180,7 @@ const userController = {
   unfollowUser: (req, res) => {
     return Followship.destroy({
       where: {
-        followerId: helpers.getUser(req).id,
+        followerId: getUser(req).id,
         followingId: req.params.id
       }
     })
@@ -188,7 +188,7 @@ const userController = {
       .catch(err => res.send(err))
   },
   getFollowers: (req, res) => {
-    const loginUserId = helpers.getUser(req).id
+    const loginUserId = getUser(req).id
     const paramUserId = req.params.id
     return Promise.all([
       User.findByPk(paramUserId, {
@@ -221,7 +221,7 @@ const userController = {
       .catch(err => res.send(err))
   },
   getFollowings: (req, res) => {
-    const loginUserId = helpers.getUser(req).id
+    const loginUserId = getUser(req).id
     const paramUserId = req.params.id
     return Promise.all([
       User.findByPk(paramUserId, {
@@ -293,13 +293,13 @@ const userController = {
     //頁面基礎資料
     const baseData = {
       userId: profile_id,
-      isSelf: profile_id == helpers.getUser(req).id,
+      isSelf: profile_id == getUser(req).id,
       isUserPage: true,
       pathName,
       profileUser: user.toJSON(),
       followerNumber: user.Followers.length,
       followingNumber: user.Followings.length,
-      isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id),
+      isFollowed: user.Followers.map(d => d.id).includes(getUser(req).id),
       pageTitle: user.name,
       tweetAmount
     }
@@ -326,7 +326,7 @@ const userController = {
               account: d.User.account,
               avatar: d.User.avatar,
               replyAmount: d.Replies.length,
-              isLike: d.Likes.map(l => l.UserId).includes(helpers.getUser(req).id),
+              isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
               likeNumber: d.Likes.length
             }
           })
@@ -362,7 +362,7 @@ const userController = {
             account: d.Tweet.User.account,
             avatar: d.Tweet.User.avatar,
             replyAmount: d.Tweet.Replies.length,
-            isLike: d.Tweet.Likes.map(l => l.UserId).includes(helpers.getUser(req).id),
+            isLike: d.Tweet.Likes.map(l => l.UserId).includes(getUser(req).id),
             likeNumber: d.Tweet.Likes.length
           }))
           userService.getTopUsers(req, res, (data) => {
@@ -376,6 +376,33 @@ const userController = {
     }
 
   }
+
+}
+
+function definitionErrHandler(err, req, res, obj) {
+  if (err.name === 'SequelizeValidationError') {
+    req.flash('warning_msg', err.errors[0].message)
+    if (obj) {
+      return res.render('signup', obj)
+    }
+    return res.redirect('back')
+  }
+  if (err.name === 'SequelizeUniqueConstraintError') {
+    if (err.errors[0].path === 'users.account') {
+      req.flash('warning_msg', 'Sorry, account name already registered!')
+      if (obj) {
+        return res.render('signup', obj)
+      }
+      return res.redirect('back')
+    } else {
+      req.flash('warning_msg', 'Sorry, email already registered!')
+      if (obj) {
+        return res.render('signup', obj)
+      }
+      return res.redirect('back')
+    }
+  }
+  return res.send(err)
 }
 
 module.exports = userController
