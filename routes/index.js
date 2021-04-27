@@ -42,7 +42,7 @@ module.exports = (app, passport) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
-  
+
   app.get('/users/setting', authenticated, userController.settingPage)
   app.put('/users/setting', authenticated, userController.putSetting)
   app.post('/users/:id/follow', authenticated, userController.followUser)
@@ -51,10 +51,9 @@ module.exports = (app, passport) => {
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
   app.get('/users/:id/like', authenticated, userController.getLikes)
-  //app.get('/users/:id/tweets', authenticated, userController.getTweets)
-  
-}
+  app.get('/users/:id/tweets', authenticated, userController.getTweets)
 
+}
 
 
 
