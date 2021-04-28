@@ -60,7 +60,8 @@
         <div class="col-10">
           <h5 class="card-title" style="display: inline-block;">{{../user.name}}</h5>
           <a href="{{this.UserId}}" class="card-link" style="display: inline-block;">@{{../user.account}}</a>
-          <p class="card-text" style="display: inline-block;">·<small class="text-muted">3 mins ago</small></p>
+          <p class="card-text" style="display: inline-block;">·<small class="text-muted">{{this.elapsedTime}}</small>
+          </p>
           <p class="card-text">{{this.description}}</p>
         </div>
       </div>

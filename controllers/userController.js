@@ -1,3 +1,4 @@
+const moment = require('moment');
 const bcrypt = require('bcryptjs');
 const imgur = require('imgur-node-api');
 const fs = require('fs');
@@ -102,7 +103,7 @@ const userController = {
       const tweetsData = await tweets.map(data => ({
         userId: data.UserId,
         description: data.description.substring(0, 100),
-        createdAt: data.createdAt,
+        elapsedTime: moment(data.createdAt, 'YYYYMMDD').fromNow(),
         repliesCount: data.Replies.length,
         likesConut: data.Likes.length,
       }))
