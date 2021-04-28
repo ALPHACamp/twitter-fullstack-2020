@@ -87,29 +87,31 @@ const userController = {
       const user = await User.findByPk(req.params.id, {
         attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover', 'role'],
         include: [
+          Tweet,
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
       })
-      const tweets = await Tweet.findAll({
-        raw: true,
-        nest: true,
-        include: [
-          { model: Reply, include: [User] },
-          Like
-        ],
-        where: { UserId: req.params.id }
-      })
-      const tweetsData = await tweets.map(data => ({
+      const userData = {
+        id: user.id,
+        account: user.account,
+        name: user.name,
+        avatar: user.avatar,
+        introduction: user.introduction,
+        cover: user.cover,
+        role: user.role,
+        tweetsCount: user.Tweets.length,
+        FollowersCount: user.Followers.length,
+        FollowingsCount: user.Followings.length
+      }
+      const tweetsData = await user.Tweets.map((data) => ({
         userId: data.UserId,
         description: data.description.substring(0, 100),
         elapsedTime: moment(data.createdAt, 'YYYYMMDD').fromNow(),
-        repliesCount: data.Replies.length,
-        likesConut: data.Likes.length,
       }))
       return res.render('user', {
-        user: user.toJSON(),
-        tweetsData: tweetsData
+        user: userData,
+        tweets: tweetsData
       })
     } catch (err) {
       console.log(err)
@@ -207,7 +209,6 @@ const userController = {
     const userEmail = await User.findOne({ where: { email } })
     // Make sure the email & account have not been used by others
     if (userAccount && userAccount.dataValues.account !== user.account) {
-      console.log('user.dataValues', user.dataValues.account)
       req.flash('error_msg', '帳號已有人使用了')
       return res.redirect('back')
     }
