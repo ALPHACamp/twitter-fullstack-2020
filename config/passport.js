@@ -53,6 +53,7 @@ passport.deserializeUser((id, done) => {
     const topUser = await User.findAll({
       include: [{ model: User, as: 'Followers' }],
       limit: 10,
+      where: { role: 'user' },
     }).then((users) => {
       // 整理 users 資料
       users = users.map((user1) => ({
