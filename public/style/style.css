@@ -182,6 +182,10 @@
 .reply_btn:focus {
   outline: none;
 }
+.like_btn {
+  background-color: white;
+  border: none;
+}
 .followship_sidebar {
   position: fixed;
   right: 0;

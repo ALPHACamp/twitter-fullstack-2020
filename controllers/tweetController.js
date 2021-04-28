@@ -3,7 +3,7 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
-const Like = db.Like
+const Like = db.Like;
 const tweetsSidebar = 'tweetsSidebar';
 const limitDescription = (description, limit = 120) => {
   const newRescription = [];
@@ -19,7 +19,7 @@ const limitDescription = (description, limit = 120) => {
   return description;
 };
 
-const tweetController = { 
+const tweetController = {
   getTweets: async (req, res) => {
     try {
       const tweets = await Tweet.findAndCountAll({
@@ -28,9 +28,9 @@ const tweetController = {
         include: [User, Like],
       });
       tweets.rows.forEach((e) => {
-        e.description = limitDescription(e.description, 120);
+        e.description = limitDescription(e.description, 80);
         e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
-        e.isLike = req.user.Likes.some(d => d.UserId === e.Likes.UserId)
+        e.isLike = req.user.Likes.some((d) => d.UserId === e.Likes.UserId);
       });
       const data = tweets.rows.sort((a, b) => b.createdAt - a.createdAt);
       // res.json({ status: 'success', message: 'getTweets' });
@@ -44,25 +44,29 @@ const tweetController = {
   },
   getTweet: async (req, res) => {
     try {
-      const tweet = await Tweet.findByPk(req.params.id, {
-        include: [User],
+      let tweet = await Tweet.findByPk(req.params.id, {
+        include: [User, Like],
       });
+      tweet = tweet.toJSON();
       const replies = await Reply.findAndCountAll({
         raw: true,
         nest: true,
-        where: { TweetId: tweet.toJSON().id },
+        where: { TweetId: tweet.id },
         include: [User, { model: Tweet, include: [User] }],
       });
       const time = moment(tweet.createdAt, 'YYYYMMDD').format(
         'a h:mm, MMMM Do YYYY'
       );
+      const isLike = req.user.Likes.some((d) => d.TweetId === tweet.id);
+
       replies.rows.forEach((e) => {
         e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
       });
       // res.json({ status: 'success', message: 'getTweet' });
       return res.render('tweet', {
-        tweet: tweet.toJSON(),
+        tweet: tweet,
         time,
+        isLike,
         replies: replies.rows,
         count: replies.count,
       });
