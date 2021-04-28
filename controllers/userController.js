@@ -64,7 +64,7 @@ const userController = {
   },
 
   signIn: (req, res) => {
-    User.findOne({ where: { account: req.body.account } })
+    User.findOne({ where: { email: req.body.email } })
       .then((user) => {
         if (!user.dataValues.role.match('admin')) {
           req.flash('success_msg', '登入成功');
@@ -107,8 +107,6 @@ const userController = {
         repliesCount: data.Replies.length,
         likesConut: data.Likes.length,
       }))
-      console.log('tweetsData：', tweetsData)
-      console.log('tweets：', tweets)
       return res.render('user', {
         user: user.toJSON(),
         tweetsData: tweetsData
