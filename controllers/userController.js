@@ -23,7 +23,7 @@ let userController = {
         FollowerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
-      users = users.filter((user) => (user.name !== helpers.getUser(req).name))
+      users = users.filter((user) => ((user.name !== helpers.getUser(req).name) && (user.isAdmin == 0)) )
       users = users
         .sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
