@@ -3,7 +3,7 @@ var request = require('supertest')
 var sinon = require('sinon')
 var should = chai.should();
 var expect = chai.expect;
-var bcrypt = require('bcrypt-nodejs')
+var bcrypt = require('bcryptjs')
 
 var app = require('../../../app')
 var helpers = require('../../../_helpers');
