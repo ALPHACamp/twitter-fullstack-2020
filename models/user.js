@@ -2,31 +2,8 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-      User.hasMany(models.Tweet)
-      User.hasMany(models.Reply)
-      User.hasMany(models.Like)
-      User.belongsToMany(User, {
-        through: models.Followship,
-        foreignKey: 'followingId',
-        as: 'Followers'
-      })
-      User.belongsToMany(User, {
-        through: models.Followship,
-        foreignKey: 'followerId',
-        as: 'Followings'
-      })
-      User.belongsToMany(models.Tweet, {
-        through: models.Like,
-        foreignKey: 'UserId',
-        as: 'LikedTweets'
-      })
-    }
-  };
-
-  User.init({
-    account: DataTypes.STRING,
+  const User = sequelize.define('User', {
+    ccount: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     isAdmin: DataTypes.BOOLEAN,
@@ -35,10 +12,26 @@ module.exports = (sequelize, DataTypes) => {
     cover: DataTypes.STRING,
     introduction: DataTypes.TEXT,
     role: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
-
-  return User;
-};
+  }, {})
+  User.associate = function (models) {
+    User.hasMany(models.Tweet)
+    User.hasMany(models.Reply)
+    User.hasMany(models.Like)
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followingId',
+      as: 'Followers'
+    })
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'Followings'
+    })
+    User.belongsToMany(models.Tweet, {
+      through: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikedTweets'
+    })
+  }
+  return User
+}
