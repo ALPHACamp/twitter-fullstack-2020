@@ -74,7 +74,8 @@ router.delete(
   blockAdmin,
   tweetController.deleteTweet
 );
-
+router.post('/tweets/:id/addLike', authenticated, blockAdmin, userController.addlike)
+router.delete('/tweets/:id/removeLike', authenticated, blockAdmin, userController.removelike)
 // router.get('/', (req, res) => {
 //   res.redirect('/tweets');
 // });

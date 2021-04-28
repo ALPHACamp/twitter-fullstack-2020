@@ -47,8 +47,17 @@
                 <div style="position: absolute; margin-top: 5.5rem;">
                     <button type="button" data-toggle="modal" data-target="#postReply" class="reply_line reply_btn"><i
                             class="bi bi-chat"></i></button>
-                    <a href="#" style="margin:1rem; margin-left:5rem;" class="reply_line"><i
-                            class="bi bi-heart"></i></a>
+                            {{#if this.isLike}}
+                            <form action="/tweets/{{this.id}}/removeLike?_method=DELETE" method="POST" class="col-1 mr-2">
+                                <button type="submit" class="bi bi-heart"
+                                    style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: orangered;"></button>
+                            </form>
+                            {{else}}
+                            <form action="/tweets/{{this.id}}/addLike" method="POST" class="col-1 mr-2">
+                                <button type="submit" class="bi bi-heart"
+                                    style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;"></button>
+                            </form>
+                            {{/if}}
                 </div>
             </div>
         </div>
