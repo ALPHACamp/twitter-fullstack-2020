@@ -1,6 +1,7 @@
 'use strict'
 const bcrypt = require('bcrypt-nodejs')
 const faker = require('faker')
+const helpers = require('../_helpers')
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
@@ -98,21 +99,40 @@ module.exports = {
             Array.from({ length: 50 }).map((item, index) => ({
                 id: index + 1,
                 UserId: (index % 5) + 2,
-                description: faker.lorem.text(),
+                description: faker.lorem.text().substring(0, 130),
                 createdAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 600000000))),
-                updatedAt: new Date(),
+                updatedAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
+            })),
+            {}
+        )
+        queryInterface.bulkInsert(
+            'Likes',
+            Array.from({ length: 180 }).map((item, index) => ({
+                UserId: (index % 5) + 2,
+                TweetId: (index % 49) + 2,
+                createdAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
+                updatedAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
             })),
             {}
         )
         // 每篇 post 有隨機 3 個留言者，每個人有 1 則留言
-        return queryInterface.bulkInsert(
+        queryInterface.bulkInsert(
             'Replies',
             Array.from({ length: 150 }).map((item, index) => ({
-                TweetId: (index % 50) + 1,
-                UserId: Math.floor(Math.random() * 5) + 2,
-                comment: faker.lorem.text(),
-                createdAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 600000000))),
-                updatedAt: new Date(),
+                TweetId: helpers.randomPost(index),
+                UserId: (index % 5) + 2,
+                createdAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
+                updatedAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
+            })),
+            {}
+        )
+        return queryInterface.bulkInsert(
+            'Followships',
+            Array.from({ length: 11 }).map((item, index) => ({
+                followerId: (index % 5) + 2,
+                followingId: helpers.randomFollower(),
+                createdAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
+                updatedAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
             })),
             {}
         )
