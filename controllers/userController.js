@@ -95,7 +95,6 @@ const userController = {
           { model: User, as: 'Followings' },
         ]
       })
-
       const userData = {
         id: user.id,
         account: user.account,
@@ -107,8 +106,6 @@ const userController = {
         tweetsCount: user.Tweets.length,
         followersCount: user.Followers.length,
         followingsCount: user.Followings.length,
-        //likesCount: user.Likes.length,
-        //repliesCount: user.Replies.length,
       }
       const tweetsData = await user.Tweets.map((data) => ({
         userId: data.UserId,
@@ -117,7 +114,6 @@ const userController = {
         likesCount: data.Likes.length,
         repliesCount: data.Replies.length
       }))
-
       return res.render('user', {
         user: userData,
         tweets: tweetsData
@@ -181,6 +177,53 @@ const userController = {
     })
     req.flash('success_msg', '您的個人資訊已更新')
     return res.redirect(`/users/${user.id}`)
+  },
+
+  getUserLikes: async (req, res) => {
+    const user = await User.findByPk(req.params.id, {
+      include: [
+        {
+          model: Like,
+          order: [['createdAt', 'DESC']],
+          include: [{
+            model: Tweet,
+            include: [Like, Reply, User]
+          }]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+      ]
+    })
+    const userData = {
+      id: user.id,
+      account: user.account,
+      name: user.name,
+      avatar: user.avatar,
+      introduction: user.introduction,
+      cover: user.cover,
+      role: user.role,
+      likeTweetsCount: user.Likes.length,
+      followersCount: user.Followers.length,
+      followingsCount: user.Followings.length,
+    }
+    const likeTweetsData = await user.Likes.map((data) => ({
+      id: data.Tweet.User.id,
+      avatar: data.Tweet.User.avatar,
+      name: data.Tweet.User.name,
+      account: data.Tweet.User.account,
+      description: data.Tweet.description.substring(0, 100),
+      elapsedTime: moment(data.Tweet.createdAt, 'YYYYMMDD').fromNow(),
+      likesCount: data.Tweet.Likes.length,
+      repliesCount: data.Tweet.Replies.length
+    }))
+    //console.log('user.Likes', user.Likes)
+    console.log('user.Likes.Tweet', user.Likes.Tweet)
+    console.log('user.Likes.Tweet', user.Likes[0].Tweet)
+    console.log('user.Likes.Tweet.User', user.Likes[0].Tweet.User)
+    return res.render('likes', {
+      user: userData,
+      likeTweets: likeTweetsData
+    })
   },
 
   getUserSetting: async (req, res) => {
@@ -254,6 +297,7 @@ const userController = {
     })
     res.render('follower', { followersUser, tweetsSidebar })
   },
+
   getfollowing: (req, res) => {
     const following = 'following'
     const followingUser = []
@@ -269,6 +313,7 @@ const userController = {
     })
     res.render('follower', { followingUser, tweetsSidebar, following })
   },
+
   getSuggestFollower: (req, res, next) => {
     return User.findAll({
       where: { role: 'user' },

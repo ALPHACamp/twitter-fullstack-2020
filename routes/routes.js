@@ -121,12 +121,6 @@ router.get(
   blockAdmin,
   userController.getUserEdit
 );
-router.get(
-  '/users/:id/setting',
-  authenticated,
-  blockAdmin,
-  userController.getUserSetting
-);
 router.put(
   '/users/:id/edit',
   authenticated,
@@ -136,6 +130,12 @@ router.put(
     { name: 'avatar', maxCount: 1 },
   ]),
   userController.putUserEdit
+);
+router.get(
+  '/users/:id/likes',
+  authenticated,
+  blockAdmin,
+  userController.getUserLikes
 );
 
 // 使用者 information
