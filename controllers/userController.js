@@ -2,6 +2,8 @@ const db = require('../models')
 const { User, Tweet, Reply, Like, Followship } = db
 const bcrypt = require('bcryptjs')
 const { getUser } = require('../_helpers')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userService = require('../services/userService')
 
@@ -90,6 +92,7 @@ const userController = {
     req.logout()
     return res.redirect('/signin')
   },
+
   settingPage: (req, res) => {
     const loginUser = getUser(req)
     console.log(`id:${loginUser.id}`)
@@ -154,6 +157,7 @@ const userController = {
         return res.send(err)
       })
   },
+
   followUser: (req, res) => {
     const followerId = Number(getUser(req).id)
     const followingId = Number(req.params.id)
@@ -375,7 +379,55 @@ const userController = {
         }
     }
 
-  }
+  },
+
+  // 更新個人資訊
+  putEdit: async (req, res) => {
+    const id = req.params.id
+    const { name, introduction } = req.body
+    const { files } = req
+    try {
+      if (files) {
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      const { cover, avatar } = files
+        if (cover || avatar) {
+          await imgur.upload(cover[0].path, (err, img) => {
+              return User.findByPk(id)
+                .then(user => {
+                  user.update({
+                    name,
+                    introduction,
+                    cover: img.data.link,
+                  })
+                  return res.redirect('back')
+                })
+                .catch(e => console.log(e))
+          })
+          await imgur.upload(avatar[0].path, (err, img) => {
+              return User.findByPk(id)
+                .then(user => {
+                  user.update({
+                    name,
+                    introduction,
+                    avatar: img.data.link,
+                  })
+                  return res.redirect('back')
+                })
+                .catch(e => console.log(e))
+          })
+        } else {
+          const user = await User.findByPk(id)
+          user.update({ 
+            name,
+            introduction
+          })
+          return res.redirect('back')
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  },
 
 }
 

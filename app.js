@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const helpers = require('./_helpers')
 const hbsHelpers = require('./config/handlebars-helper')
@@ -10,6 +13,8 @@ const methodOverride = require('method-override')
 
 const app = express()
 const port = process.env.PORT || 3000
+
+app.use('/upload', express.static(__dirname + '/upload'))
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', helpers: hbsHelpers }))
 app.set('view engine', 'hbs')
