@@ -282,9 +282,9 @@ const userController = {
     pathName = pathName[pathName.length - 1]
     const profile_id = req.params.id //被選取的使用者 id
 
-    let getUserData = User.findOne(
+    let getUserData = User.findByPk(
+      profile_id,
       {
-        where: { id: profile_id },
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
@@ -344,10 +344,41 @@ const userController = {
         finally { break }
 
       case 'replies':
-        userService.getTopUsers(req, res, (data) => {
-          return res.render('myTweets', { ...baseData, ...data })
-        })
-        break
+        try {
+          let tweets = await Tweet.findAll(
+            {
+              include: [
+                User,
+                Like,
+                { model: Reply, where: { UserId: profile_id }, include: [User] }
+              ]
+            }
+          )
+          tweets = tweets.map(d => {
+            return {
+              ...d.dataValues,
+              name: d.User.name,
+              account: d.User.account,
+              avatar: d.User.avatar,
+              replyAmount: d.Replies.length,
+              isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
+              likeNumber: d.Likes.length,
+              Replies: d.Replies.map(r => ({
+                ...r.dataValues,
+                User: r.User.dataValues,
+                tweetUser: d.User.account
+              }))
+            }
+          })
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets, ...baseData, withReply: true, ...data })
+          })
+        } catch (e) {
+          console.warn(e)
+        }
+        finally {
+          break
+        }
 
       case 'likes':
         try {
@@ -388,36 +419,36 @@ const userController = {
     const { files } = req
     try {
       if (files) {
-      imgur.setClientID(IMGUR_CLIENT_ID)
-      const { cover, avatar } = files
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        const { cover, avatar } = files
         if (cover || avatar) {
           await imgur.upload(cover[0].path, (err, img) => {
-              return User.findByPk(id)
-                .then(user => {
-                  user.update({
-                    name,
-                    introduction,
-                    cover: img.data.link,
-                  })
-                  return res.redirect('back')
+            return User.findByPk(id)
+              .then(user => {
+                user.update({
+                  name,
+                  introduction,
+                  cover: img.data.link,
                 })
-                .catch(e => console.log(e))
+                return res.redirect('back')
+              })
+              .catch(e => console.log(e))
           })
           await imgur.upload(avatar[0].path, (err, img) => {
-              return User.findByPk(id)
-                .then(user => {
-                  user.update({
-                    name,
-                    introduction,
-                    avatar: img.data.link,
-                  })
-                  return res.redirect('back')
+            return User.findByPk(id)
+              .then(user => {
+                user.update({
+                  name,
+                  introduction,
+                  avatar: img.data.link,
                 })
-                .catch(e => console.log(e))
+                return res.redirect('back')
+              })
+              .catch(e => console.log(e))
           })
         } else {
           const user = await User.findByPk(id)
-          user.update({ 
+          user.update({
             name,
             introduction
           })
