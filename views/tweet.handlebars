@@ -25,7 +25,18 @@
     <div class="contener reply_contener">
         <button type="button" data-toggle="modal" data-target="#postReply" class="reply_line reply_btn"><i
                 class="bi bi-chat"></i></button>
-        <a href="#" style="margin:1rem; margin-left:5rem;" class="reply_line"><i class="bi bi-heart"></i></a>
+
+        {{#if isLike}}
+        <form action="/tweets/{{tweet.id}}/removeLike?_method=DELETE" method="POST"
+            class="col-1 mr-2 reply_line reply_btn">
+            <button type="submit" class="bi bi-heart-fill like_btn" style="color: rgb(255, 94, 0);"></button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/addLike" method="POST" class="col-1 mr-2 reply_line reply_btn">
+            <button type="submit" class="bi bi-heart like_btn"></button>
+        </form>
+        {{/if}}
+
     </div>
     {{#each replies}}
     <div class="contener reply_contener">
@@ -88,8 +99,8 @@
                             <div>
                                 <p class="text-muted reply_line" style="margin-top: 1rem;">回覆給</p>
                                 &nbsp;
-                                <a href="/users/{{this.Tweet.User.id}}" class="card-link reply_line"
-                                    style="color:coral">@{{this.Tweet.User.account}}</a>
+                                <a href="/users/{{tweet.User.id}}" class="card-link reply_line"
+                                    style="color:coral">@{{tweet.User.account}}</a>
                             </div>
                         </div>
                     </div>
