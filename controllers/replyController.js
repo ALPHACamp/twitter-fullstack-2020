@@ -4,7 +4,6 @@ const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
 
-
 const limitDescription = (description, limit = 120) => {
   const newRescription = [];
   if (description.length > limit) {
@@ -72,7 +71,12 @@ const replyController = {
   //   },
   postReply: async (req, res) => {
     try {
-      if (req.body.description == '') {
+      console.log('hello');
+      console.log('hello');
+      console.log('hello');
+      console.log('hello');
+      console.log('req.body: ', req.body);
+      if (req.body.comment == '') {
         req.flash('error_msg', '回覆內容不可為空！');
         return;
       }
@@ -81,7 +85,7 @@ const replyController = {
         UserId: req.user.id,
         TweetId: req.params.id,
       });
-      req.flash('success_msg', '貼文成功！');
+      req.flash('success_msg', '回覆成功！');
       return res.redirect('back');
     } catch (err) {
       console.log(err);

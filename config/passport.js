@@ -43,7 +43,6 @@ passport.deserializeUser((id, done) => {
     ]
   }).then((user) => {
     user = user.toJSON();
-    console.log(user)
     return done(null, user);
   });
 });

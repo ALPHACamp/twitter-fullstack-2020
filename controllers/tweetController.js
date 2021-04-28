@@ -82,6 +82,7 @@ const tweetController = {
       }
       await Tweet.create({
         description: req.body.description,
+        UserId: req.user.id,
       });
       // res.json({ status: 'success', message: 'description' });
       req.flash('success_msg', '貼文成功！');

@@ -70,43 +70,83 @@
                 </a>
             </div>
         </div>
-        <!-- followship -->
-        <div class="flex-column followship_sidebar">
-            <div class="d-none d-block">
-                <div class="card follow_card" style="width: 18rem;">
-                    <div class="card-header">
-                        跟隨誰
-                    </div>
-                    <ul class="list-group list-group-flush">
+    </main>
 
-                        <li class="list-group-item">
-                            <div class="contener" style="width: 28rem; height:10rem; border-right: thin solid #e6ecf0;">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-auto">
-                                            <i class="bi bi-person-square"></i>
-                                        </div>
-                                        <div class="col-auto">
-                                            <p class="card-title m-0" style="display: inline-block;">{{user.name}}
-                                            </p>
-                                            <p class="m-0"><small>@{{user.account}}</small></p>
-                                        </div>
-                                        <div class="col-auto">
-                                            <button type="button" class="btn follow_btn">跟隨</button>
-                                        </div>
-                                    </div>
+    <div class="contener">
+        <div class="row no-gutters">
+            <div class="col-8">
+                {{{body}}}
+            </div>
+            <div class="col-3" style="margin-top: 2rem;">
+                <div class="d-block justify-content-center">
+                    <div class="card" style="width: 100%;">
+                        <h6 style="padding: 1rem;" class="card-header">跟隨誰</h6>
+                    </div>
+                    <div class="contener" style="width: 100%; height:auto; border: thin solid #e6ecf0; ">
+                        <div class="card-body">
+                            <i class="bi bi-person-square reply_line"></i>
+                            <p class="reply_line">name</p>
+                            <p class="reply_line">account</p>
+
+                            {{#if this.isFollowed}}
+                            <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST"
+                                class="reply_line float-right">
+                                <button type="submit" class="btn btn-outline"
+                                    style="color:white;border-color:orangered;border-radius: 100px;font-size: 12px;width:80px;background-color: orangered;">正在跟隨</button>
+                            </form>
+                            {{else}}
+                            <form action="/user/{{this.id}}/addFollow" method="POST" class="reply_line float-right">
+                                <button type="submit" class="btn btn-outline"
+                                    style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 12px;width:80px;background-color: white;">跟隨</button>
+                            </form>
+                            {{/if}}
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- followship -->
+                <div class="d-flex flex-column" id="suggest-follower">
+                    {{#each users}}
+                    <div class="col-12 d-flex mt-3">
+                        <img class="user-avatar rounded-circle" src="{{this.avatar}}" width="50" height="50"
+                            alt="no pic">
+                        <div class="tweets_content">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex flex-column align-items-center">
+                                    <span class="user-name mr-3 ml-3">{{this.name}}</span>
+                                    <span class="user-acount mr-2">{{this.acount}}</span>
                                 </div>
+                                {{#if this.isFollowed}}
+                                <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST"
+                                    class="col-1 mr-2">
+                                    <button type="submit" class="btn btn-outline"
+                                        style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">正在跟隨</button>
+                                </form>
+                                {{else}}
+                                <form action="/user/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
+                                    <button type="submit" class="btn btn-outline"
+                                        style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">跟隨</button>
+                                </form>
+                                {{/if}}
                             </div>
-                        </li>
-                    </ul>
+                            <div class="text_content">
+                                <p class="ml-3">{{this.introduction}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+    {{else}}
+    {{{body}}}
     {{/ifRole}}
+    <!--推文 彈窗-->
     <div>
-        {{{body}}}
-        <!--推文 彈窗-->
         <div class="modal fade" id="postTweet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog" role="document">
