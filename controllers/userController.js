@@ -239,8 +239,8 @@ let userController = {
           .then((likes) => {
             const results = user.toJSON()
             likes = likes.map(like => like.TweetId)
-            results.Tweets.forEach(tweet => {
-              tweet.isLiked = likes.includes(tweet.id)
+            results.Likes.forEach(reply => {
+              reply.Tweet.isLiked = likes.includes(reply.Tweet.id)
             })
             results.tweetCount = results.Tweets.length
             results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
@@ -309,7 +309,6 @@ let userController = {
       }))
       results.tweetCount = user.Tweets.length
       results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-
       res.render('following', { results: results })
     })
       .catch((err) => res.send(err))

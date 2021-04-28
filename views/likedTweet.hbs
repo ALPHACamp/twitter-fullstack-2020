@@ -106,9 +106,9 @@ font-size: 14px;">
               <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
                 this.createdAt}}</span>
             </div>
-            <a href="/tweets/{{this.id}}" style="text-decoration:none; ">
+            <a href="/tweets/{{this.Tweet.id}}" style="text-decoration:none; ">
               <div class="post-content my-2" style="font-weight: 500; font-size: 15px;color: #1C1C1C;">
-                {{this.Tweet.description}}{{this.Tweet.Replies.comment}}
+                {{this.Tweet.description}}
               </div>
             </a>
             <div class="d-flex justify-content-start mb-2">
@@ -119,8 +119,8 @@ font-size: 14px;">
                 </button>
               </div>
               {{!-- add like button --}}
-              {{#if isLiked }}
-              <form action="/tweets/like/{{this.id}}?_method=DELETE" method="POST">
+              {{#if this.Tweet.isLiked }}
+              <form action="/tweets/like/{{this.Tweet.id}}?_method=DELETE" method="POST">
                 <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
                   <i class="fas fa-heart" style="color: #657786;"></i>
                   <span class="rely-amount ml-2"
@@ -128,7 +128,7 @@ font-size: 14px;">
                 </button>
               </form>
               {{else}}
-              <form action="/tweets/like/{{this.id}}" method="POST">
+              <form action="/tweets/like/{{this.Tweet.id}}" method="POST">
                 <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
                   <i class="far fa-heart" style="color: #657786;"></i>
                   <span class="rely-amount ml-2"
