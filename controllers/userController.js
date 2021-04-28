@@ -182,8 +182,8 @@ let userController = {
             })
             results.tweetCount = results.Tweets.length
             results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-            console.log("resultsXXXXXXXXXXXXXXXX", results)
-            console.log("resultTweetssXXXXXXXXXXXXXXXX", results.Tweets)
+            // console.log("resultsXXXXXXXXXXXXXXXX", results)
+            // console.log("resultTweetssXXXXXXXXXXXXXXXX", results.Tweets)
             return res.render('profile', {
               results: results,
               currentId: helpers.getUser(req).id
@@ -212,8 +212,8 @@ let userController = {
               reply.Tweet.isLiked = likes.includes(reply.Tweet.id)
             })
             results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-            console.log("resultsXXXXXXXXXXXXXXXX", results)
-            console.log("resultTweetssXXXXXXXXXXXXXXXX", results.Replies)
+            // console.log("resultsXXXXXXXXXXXXXXXX", results)
+            // console.log("resultTweetssXXXXXXXXXXXXXXXX", results.Replies)
             return res.render('repliedTweet', {
               results: results,
               currentId: helpers.getUser(req).id
@@ -274,7 +274,7 @@ let userController = {
       .then((like) => {
         like.destroy()
           .then((tweet) => {
-            console.log("dettweetID =======", req.params.tweetId)
+            // console.log("dettweetID =======", req.params.tweetId)
             return res.redirect('back')
           })
       })
@@ -311,7 +311,6 @@ let userController = {
       }))
       results.tweetCount = user.Tweets.length
       results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
-
       res.render('following', { results: results })
     })
       .catch((err) => res.send(err))
