@@ -51,3 +51,10 @@
     </div>
   </div>
 </a>
+{{#if withReply}}
+<div class="mb-3">
+  {{#each this.Replies}}
+  {{> replyList}}
+  {{/each}}
+</div>
+{{/if}}
