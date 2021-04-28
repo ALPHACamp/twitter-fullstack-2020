@@ -2,6 +2,8 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const { authenticated, adminAuthenticated } = require('../middleware/auth')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
   // 管理者登入
@@ -42,6 +44,9 @@ module.exports = (app, passport) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
+
+  // 更新個人資訊
+  app.put('/users/:id/edit', authenticated, upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), userController.putEdit)
 
   app.get('/users/setting', authenticated, userController.settingPage)
   app.put('/users/setting', authenticated, userController.putSetting)
