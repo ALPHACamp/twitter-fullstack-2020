@@ -89,10 +89,13 @@ const userController = {
         attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover', 'role'],
         include: [
           Tweet,
+          { model: Tweet, include: [Like] },
+          { model: Tweet, include: [Reply] },
           { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
+          { model: User, as: 'Followings' },
         ]
       })
+
       const userData = {
         id: user.id,
         account: user.account,
@@ -102,14 +105,19 @@ const userController = {
         cover: user.cover,
         role: user.role,
         tweetsCount: user.Tweets.length,
-        FollowersCount: user.Followers.length,
-        FollowingsCount: user.Followings.length
+        followersCount: user.Followers.length,
+        followingsCount: user.Followings.length,
+        //likesCount: user.Likes.length,
+        //repliesCount: user.Replies.length,
       }
       const tweetsData = await user.Tweets.map((data) => ({
         userId: data.UserId,
         description: data.description.substring(0, 100),
         elapsedTime: moment(data.createdAt, 'YYYYMMDD').fromNow(),
+        likesCount: data.Likes.length,
+        repliesCount: data.Replies.length
       }))
+
       return res.render('user', {
         user: userData,
         tweets: tweetsData
@@ -123,7 +131,7 @@ const userController = {
     const userId = helpers.getUser(req).id
     if (userId !== Number(req.params.id)) {
       req.flash('error_msg', '抱歉！你只能編輯自己的個人資訊')
-      return res.redirect(`/user/${req.params.id}`)
+      return res.redirect(`/users/${req.params.id}`)
     }
     const user = await User.findByPk(userId, { raw: true })
     return res.render('edit', { user: user })
@@ -172,7 +180,7 @@ const userController = {
       avatar: images.avatar ? images.avatar.data.link : user.avatar
     })
     req.flash('success_msg', '您的個人資訊已更新')
-    return res.redirect(`/user/${user.id}`)
+    return res.redirect(`/users/${user.id}`)
   },
 
   getUserSetting: async (req, res) => {
@@ -229,7 +237,7 @@ const userController = {
       )
     })
     req.flash('success_msg', '您的帳號資訊更新成功')
-    return res.redirect(`/user/${user.id}/setting`)
+    return res.redirect(`/users/${user.id}/setting`)
   },
 
   getfollowers: (req, res) => {
@@ -244,22 +252,22 @@ const userController = {
       }
       followersUser.push(item)
     })
-    res.render('follower', { followersUser,tweetsSidebar })
+    res.render('follower', { followersUser, tweetsSidebar })
   },
   getfollowing: (req, res) => {
     const following = 'following'
     const followingUser = []
-    req.user.Followings.forEach((user)=>{
-       const item = {
-         name:user.name,
-         account:user.account,
-         avatar:user.avatar,
-         introduction: user.introduction,
-         isFollowed: req.user.Followings.some(d => d.Followship.followerId === user.Followship.followerId)
-       }
+    req.user.Followings.forEach((user) => {
+      const item = {
+        name: user.name,
+        account: user.account,
+        avatar: user.avatar,
+        introduction: user.introduction,
+        isFollowed: req.user.Followings.some(d => d.Followship.followerId === user.Followship.followerId)
+      }
       followingUser.push(item)
     })
-    res.render('follower', { followingUser,tweetsSidebar, following})
+    res.render('follower', { followingUser, tweetsSidebar, following })
   },
   getSuggestFollower: (req, res, next) => {
     return User.findAll({
