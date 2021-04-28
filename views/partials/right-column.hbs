@@ -25,14 +25,14 @@ font-size: 15px;color: #657786;">@{{this.account}}</div>
       </div>
       <div class="button mt-2 ">
         {{#if this.isFollowed}}
-        <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
           <div class="btn ">
             <button class="btn font-weight-bold"
               style="background: #FF6600;border: 1px solid #FF6600;box-sizing: border-box;border-radius: 100px;width: 92px;color: #FFFFFF ;line-height: 15px;font-size: 15px;">正在跟隨</button>
           </div>
         </form>
         {{else}}
-        <form action="/following/{{this.id}}" method="POST">
+        <form action="/followships/{{this.id}}" method="POST">
           <div class="btn ml-4">
             <button class="btn font-weight-bold " name="id" value="{{this.id}}"
               style="border: 1px solid #FF6600;

@@ -6,19 +6,26 @@ const User = db.User
 const Tweet = db.Tweet
 
 let adminController = {
-    loginPage: (req, res) => {
-        return res.render('admin/login')
+    signinPage: (req, res) => {
+        return res.render('admin/signin')
     },
 
-    login: (req, res) => {
-        req.flash('success_messages', '成功登入！')
-        res.redirect('/admin/tweets')
+    signin: (req, res) => {
+        User.findOne({ where: { account: req.body.account } }).then(user => {
+            if (user.isAdmin == 0) {
+                req.flash('error_messages', '登入失敗！')
+                return res.redirect('/admin/signin')
+            } else {
+                req.flash('success_messages', '成功登入！')
+                res.redirect('/admin/tweets')
+            }
+        })
     },
 
     logout: (req, res) => {
         req.flash('success_messages', '登出成功！')
         req.logout()
-        res.redirect('/admin/login')
+        res.redirect('/admin/signin')
     },
 
     getTweets: async (req, res) => {
@@ -30,13 +37,13 @@ let adminController = {
         }).then((tweets) => {
             const data = tweets.map(t => ({
                 ...t.dataValues,
-                description : t.description.substring(0, 50),
+                description: t.description.substring(0, 50),
                 name: t.User.name,
                 account: t.User.account,
                 avatar: t.User.avatar,
                 id: t.User.id,
             }))
-            return res.render('admin/tweets', { tweets:data })
+            return res.render('admin/tweets', { tweets: data })
         })
     },
 

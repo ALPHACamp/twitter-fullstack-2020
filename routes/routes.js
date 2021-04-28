@@ -33,11 +33,11 @@ const authenticatedAdmin = (req, res, next) => {
         }
         else {
             req.flash('error_messages', '登入錯誤！')
-            return res.redirect('/admin/login')
+            return res.redirect('/admin/signin')
         }
 
     }
-    res.redirect('/admin/login')
+    res.redirect('/admin/signin')
 }
 
 
@@ -53,8 +53,8 @@ router.post('/register', userController.userRegister)
 
 
 //Admin
-router.get('/admin/login', adminController.loginPage)
-router.post('/admin/login', passport.authenticate('local', { failureRedirect: '/admin/login', failureFlash: true }), adminController.login)
+router.get('/admin/signin', adminController.signinPage)
+router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
 router.get('/admin/logout', adminController.logout)
 
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
@@ -82,16 +82,16 @@ router.delete('/tweet/like/:tweetId', authenticated, userController.removeLike)
 
 
 router.get('/profile/:id', authenticated, userController.getTopUsers, userController.getUser)
-router.post('/profile/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postProfile)
-router.get('/profile/:id/replied', authenticated, userController.getTopUsers, userController.getReplied)
-router.get('/profile/:id/liked', authenticated, userController.getTopUsers, userController.getLiked)
+router.post('/api/user/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postProfile)
+router.get('/users/:id/replied', authenticated, userController.getTopUsers, userController.getReplied)
+router.get('/users/:id/likes', authenticated, userController.getTopUsers, userController.getLiked)
 
 router.get('/users/:id/setting', authenticated, userController.settingPage)
 router.put('/users/:id', authenticated, userController.putSetting)
 router.get('/users/:id/follower', authenticated, userController.getTopUsers, userController.getFollowers)
 router.get('/users/:id/following', authenticated, userController.getTopUsers, userController.getFollowings)
-router.post('/following/:userId', authenticated, userController.addFollowing)
-router.delete('/following/:userId', authenticated, userController.removeFollowing)
+router.post('/followships/:userId', authenticated, userController.addFollowing)
+router.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
 
 

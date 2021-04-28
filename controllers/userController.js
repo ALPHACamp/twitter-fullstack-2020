@@ -37,8 +37,15 @@ let userController = {
   },
 
   login: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/tweets')
+    User.findOne({ where: { account: req.body.account } }).then(user => {
+      if (user.isAdmin == 1) {
+        req.flash('error_messages', '登入失敗！')
+        return res.redirect('/login')
+      } else {
+        req.flash('success_messages', '成功登入！')
+        res.redirect('/tweets')
+      }
+    })
   },
 
   logout: (req, res) => {

@@ -36,12 +36,12 @@ height: 40px;border-radius:100%"><i class="far fa-envelope" style="color:#FF6600
 box-sizing: border-box;width: 40px;
 height: 40px;border-radius:100%"><i class="far fa-bell " style="color:#FF6600;font-size: 23px; margin: 8px;"></i></div>
             {{#if results.isFollowed }}
-            <form action="/following/{{results.id}}?_method=DELETE" method="POST" style="display: contents;">
+            <form action="/followships/{{results.id}}?_method=DELETE" method="POST" style="display: contents;">
               <button type="submit" class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 122px;
         height: 40px;font-size: 15px;color: white ;background: #FF6600;font-weight:bold;">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/following/{{results.id}}" method="POST" style="display: contents;"><button type="submit"
+            <form action="/followships/{{results.id}}" method="POST" style="display: contents;"><button type="submit"
                 class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 80px;
             height: 40px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button>
             </form>
@@ -76,10 +76,10 @@ font-size: 14px;">
               <a class="nav-link" href="/profile/{{results.id}}">推文</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="/profile/{{results.id}}/replied">推文與回覆</a>
+              <a class="nav-link active" href="/users/{{results.id}}/replied">推文與回覆</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/profile/{{results.id}}/liked">喜歡的內容</a>
+              <a class="nav-link" href="/users/{{results.id}}/likes">喜歡的內容</a>
             </li>
           </ul>
         </div>
