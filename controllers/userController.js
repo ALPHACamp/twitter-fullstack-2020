@@ -61,7 +61,10 @@ const userController = {
   },
 
   signInPage: (req, res) => {
-    return res.render('signin');
+    if (req.isAuthenticated()) {
+      return res.redirect('/tweets')
+    }
+    res.render('signin')
   },
 
   signIn: (req, res) => {
