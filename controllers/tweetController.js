@@ -25,12 +25,12 @@ const tweetController = {
       const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
-        include: [User, Like],
+        include: [User],
       });
       tweets.rows.forEach((e) => {
         e.description = limitDescription(e.description, 80);
         e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
-        e.isLike = req.user.Likes.some((d) => d.UserId === e.Likes.UserId);
+        //e.isLike = req.user.Likes.some((d) => d.UserId === e.Likes.UserId);
       });
       const data = tweets.rows.sort((a, b) => b.createdAt - a.createdAt);
       // res.json({ status: 'success', message: 'getTweets' });
@@ -48,6 +48,7 @@ const tweetController = {
         include: [User, Like],
       });
       tweet = tweet.toJSON();
+      console.log(tweet);
       const replies = await Reply.findAndCountAll({
         raw: true,
         nest: true,
@@ -58,7 +59,7 @@ const tweetController = {
         'a h:mm, MMMM Do YYYY'
       );
       const isLike = req.user.Likes.some((d) => d.TweetId === tweet.id);
-
+      const likeCount = tweet.Likes.length;
       replies.rows.forEach((e) => {
         e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
       });
@@ -67,6 +68,7 @@ const tweetController = {
         tweet: tweet,
         time,
         isLike,
+        likeCount,
         replies: replies.rows,
         count: replies.count,
       });
