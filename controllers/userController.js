@@ -92,8 +92,10 @@ const userController = {
         attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover', 'role'],
         include: [
           Tweet,
+          { model: Tweet, include: [Like] },
+          { model: Tweet, include: [Reply] },
           { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
+          { model: User, as: 'Followings' },
         ]
       })
       const userData = {
@@ -105,13 +107,15 @@ const userController = {
         cover: user.cover,
         role: user.role,
         tweetsCount: user.Tweets.length,
-        FollowersCount: user.Followers.length,
-        FollowingsCount: user.Followings.length
+        followersCount: user.Followers.length,
+        followingsCount: user.Followings.length,
       }
       const tweetsData = await user.Tweets.map((data) => ({
         userId: data.UserId,
         description: data.description.substring(0, 100),
         elapsedTime: moment(data.createdAt, 'YYYYMMDD').fromNow(),
+        likesCount: data.Likes.length,
+        repliesCount: data.Replies.length
       }))
       return res.render('user', {
         user: userData,
@@ -126,7 +130,7 @@ const userController = {
     const userId = helpers.getUser(req).id
     if (userId !== Number(req.params.id)) {
       req.flash('error_msg', '抱歉！你只能編輯自己的個人資訊')
-      return res.redirect(`/user/${req.params.id}`)
+      return res.redirect(`/users/${req.params.id}`)
     }
     const user = await User.findByPk(userId, { raw: true })
     return res.render('edit', { user: user })
@@ -175,7 +179,99 @@ const userController = {
       avatar: images.avatar ? images.avatar.data.link : user.avatar
     })
     req.flash('success_msg', '您的個人資訊已更新')
-    return res.redirect(`/user/${user.id}`)
+    return res.redirect(`/users/${user.id}`)
+  },
+
+  getUserLikes: async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id, {
+        include: [
+          {
+            model: Like,
+            order: [['createdAt', 'DESC']],
+            include: [{
+              model: Tweet,
+              include: [Like, Reply, User]
+            }]
+          },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ]
+      })
+      const userData = {
+        id: user.id,
+        account: user.account,
+        name: user.name,
+        avatar: user.avatar,
+        introduction: user.introduction,
+        cover: user.cover,
+        role: user.role,
+        likeTweetsCount: user.Likes.length,
+        followersCount: user.Followers.length,
+        followingsCount: user.Followings.length,
+      }
+      const likeTweetsData = await user.Likes.map((data) => ({
+        id: data.Tweet.User.id,
+        avatar: data.Tweet.User.avatar,
+        name: data.Tweet.User.name,
+        account: data.Tweet.User.account,
+        description: data.Tweet.description.substring(0, 100),
+        elapsedTime: moment(data.Tweet.createdAt, 'YYYYMMDD').fromNow(),
+        likesCount: data.Tweet.Likes.length,
+        repliesCount: data.Tweet.Replies.length
+      }))
+      return res.render('likes', {
+        user: userData,
+        likeTweets: likeTweetsData
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  getRepliesAndTweets: async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id, {
+        include: [{
+          model: Reply,
+          order: [['createdAt'], ['DESC']],
+          include: [{
+            model: Tweet,
+            include: [Like, Reply, User]
+          }],
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },]
+      })
+      const userData = {
+        id: user.id,
+        account: user.account,
+        name: user.name,
+        avatar: user.avatar,
+        introduction: user.introduction,
+        cover: user.cover,
+        role: user.role,
+        RepliesTweetsCount: user.Replies.length,
+        followersCount: user.Followers.length,
+        followingsCount: user.Followings.length,
+      }
+      const repliesTweetsData = await user.Replies.map((data) => ({
+        id: data.Tweet.User.id,
+        avatar: data.Tweet.User.avatar,
+        name: data.Tweet.User.name,
+        account: data.Tweet.User.account,
+        description: data.Tweet.description.substring(0, 100),
+        elapsedTime: moment(data.Tweet.createdAt, 'YYYYMMDD').fromNow(),
+        likesCount: data.Tweet.Likes.length,
+        repliesCount: data.Tweet.Replies.length
+      }))
+      return res.render('repliesList', {
+        user: userData,
+        repliesTweets: repliesTweetsData
+      })
+    } catch (err) {
+
+    }
   },
 
   getUserSetting: async (req, res) => {
@@ -232,7 +328,7 @@ const userController = {
       )
     })
     req.flash('success_msg', '您的帳號資訊更新成功')
-    return res.redirect(`/user/${user.id}/setting`)
+    return res.redirect(`/users/${user.id}/setting`)
   },
 
   getfollowers: (req, res) => {
@@ -247,23 +343,25 @@ const userController = {
       }
       followersUser.push(item)
     })
-    res.render('follower', { followersUser,tweetsSidebar })
+    res.render('follower', { followersUser, tweetsSidebar })
   },
+
   getfollowing: (req, res) => {
     const following = 'following'
     const followingUser = []
-    req.user.Followings.forEach((user)=>{
-       const item = {
-         name:user.name,
-         account:user.account,
-         avatar:user.avatar,
-         introduction: user.introduction,
-         isFollowed: req.user.Followings.some(d => d.Followship.followerId === user.Followship.followerId)
-       }
+    req.user.Followings.forEach((user) => {
+      const item = {
+        name: user.name,
+        account: user.account,
+        avatar: user.avatar,
+        introduction: user.introduction,
+        isFollowed: req.user.Followings.some(d => d.Followship.followerId === user.Followship.followerId)
+      }
       followingUser.push(item)
     })
-    res.render('follower', { followingUser,tweetsSidebar, following})
+    res.render('follower', { followingUser, tweetsSidebar, following })
   },
+
   getSuggestFollower: (req, res, next) => {
     return User.findAll({
       where: { role: 'user' },

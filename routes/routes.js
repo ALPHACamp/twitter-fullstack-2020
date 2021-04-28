@@ -113,22 +113,16 @@ router.delete(
 );
 
 // 使用者
-router.get('/user/:id', authenticated, blockAdmin, userController.getUser);
+router.get('/users/:id', authenticated, blockAdmin, userController.getUser);
 // 使用者 profile
 router.get(
-  '/user/:id/edit',
+  '/users/:id/edit',
   authenticated,
   blockAdmin,
   userController.getUserEdit
 );
-router.get(
-  '/user/:id/setting',
-  authenticated,
-  blockAdmin,
-  userController.getUserSetting
-);
 router.put(
-  '/user/:id/edit',
+  '/users/:id/edit',
   authenticated,
   blockAdmin,
   upload.fields([
@@ -137,16 +131,28 @@ router.put(
   ]),
   userController.putUserEdit
 );
+router.get(
+  '/users/:id/likes',
+  authenticated,
+  blockAdmin,
+  userController.getUserLikes
+);
+router.get(
+  '/users/:id/repliesList',
+  authenticated,
+  blockAdmin,
+  userController.getRepliesAndTweets
+);
 
 // 使用者 information
 router.get(
-  '/user/:id/setting',
+  '/users/:id/setting',
   authenticated,
   blockAdmin,
   userController.getUserSetting
 );
 router.put(
-  '/user/:id/setting',
+  '/users/:id/setting',
   authenticated,
   blockAdmin,
   userController.putUserSetting
@@ -154,27 +160,27 @@ router.put(
 
 // 使用者 followShip
 router.get(
-  '/user/:id/followers',
+  '/users/:id/followers',
   authenticated,
   blockAdmin,
   userController.getSuggestFollower,
   userController.getfollowers
 );
 router.get(
-  '/user/:id/following',
+  '/users/:id/following',
   authenticated,
   blockAdmin,
   userController.getSuggestFollower,
   userController.getfollowing
 )
 router.post(
-  '/user/:id/addFollow',
+  '/users/:id/addFollow',
   authenticated,
   blockAdmin,
   userController.addFollowing
 );
 router.delete(
-  '/user/:id/removeFollow',
+  '/users/:id/removeFollow',
   authenticated,
   blockAdmin,
   userController.removeFollowing

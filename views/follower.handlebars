@@ -19,11 +19,11 @@
         {{#if following}}
         <ul class="nav justify-content">
           <li class="nav-item">
-            <a href="/user/{{user.id}}/followers" class="nav-link active router-link-active" aria-current="page"
+            <a href="/users/{{user.id}}/followers" class="nav-link active router-link-active" aria-current="page"
               style="color:black;">跟隨者</a>
           </li>
           <li class="nav-item">
-            <a href="/user/{{user.id}}/following" class="nav-link" style="color:orangered;border-bottom-style: solid;
+            <a href="/users/{{user.id}}/following" class="nav-link" style="color:orangered;border-bottom-style: solid;
           border-width: 1px;
           border-color:orangered;">正在跟隨</a>
           </li>
@@ -31,12 +31,12 @@
         {{else}}
         <ul class="nav justify-content">
           <li class="nav-item">
-            <a href="/user/{{user.id}}/followers" class="nav-link" style="color:orangered;border-bottom-style: solid;
+            <a href="/users/{{user.id}}/followers" class="nav-link" style="color:orangered;border-bottom-style: solid;
   border-width: 1px;
   border-color:orangered;">跟隨者</a>
           </li>
           <li class="nav-item">
-            <a href="/user/{{user.id}}/following" class="nav-link active router-link-active" aria-current="page"
+            <a href="/users/{{user.id}}/following" class="nav-link active router-link-active" aria-current="page"
               style="color:black;">正在跟隨</a>
           </li>
         </ul>
@@ -54,12 +54,12 @@
                 <span class="user-account mr-2">@{{this.account}}</span>
               </div>
               {{#if this.isFollowed}}
-              <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
+              <form action="/users/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
                 <button type="submit" class="btn btn-outline"
                   style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">正在跟隨</button>
               </form>
               {{else}}
-              <form action="/user/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
+              <form action="/users/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
                 <button type="submit" class="btn btn-outline"
                   style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">跟隨</button>
               </form>
@@ -84,12 +84,12 @@
                 <span class="user-account mr-2">@{{this.account}}</span>
               </div>
               {{#if this.isFollowed}}
-              <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
+              <form action="/users/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
                 <button type="submit" class="btn btn-outline"
                   style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">正在跟隨</button>
               </form>
               {{else}}
-              <form action="/user/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
+              <form action="/users/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
                 <button type="submit" class="btn btn-outline"
                   style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">跟隨</button>
               </form>
@@ -115,12 +115,12 @@
             <span class="user-acount mr-2">{{this.acount}}</span>
           </div>
           {{#if this.isFollowed}}
-          <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
+          <form action="/users/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
             <button type="submit" class="btn btn-outline"
               style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/user/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
+          <form action="/users/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
             <button type="submit" class="btn btn-outline"
               style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">跟隨</button>
           </form>
