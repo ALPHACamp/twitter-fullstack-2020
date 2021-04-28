@@ -44,18 +44,16 @@
     <ul class="nav justify-content">
 
       <li class="nav-item">
-        <a href="/users/{{user.id}}" class="nav-link active router-link-active" style="color:black;">推文</a>
+        <a href="/users/{{user.id}}" class="nav-link active router-link-active" aria-current="page" style="color:orangered;border-bottom-style: solid;
+          border-width: 1px;
+          border-color:orangered;">推文</a>
       </li>
 
       <li class="nav-item">
-        <a href="/users/{{user.id}}/replies" class="nav-link" aria-current="page" style="color:orangered;border-bottom-style: solid;
-              border-width: 1px;
-              border-color:orangered;">推文與回覆</a>
+        <a href="/users/{{user.id}}/replies" class="nav-link" style="color:black;">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a href="/users/{{user.id}}/likes" class="nav-link" aria-current="page" style="color:orangered;border-bottom-style: solid;
-                    border-width: 1px;
-                    border-color:orangered;">喜歡的內容</a>
+        <a href="/users/{{user.id}}/likes" class="nav-link" style="color:black;">喜歡的內容</a>
       </li>
     </ul>
   </div>
