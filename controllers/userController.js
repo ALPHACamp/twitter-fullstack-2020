@@ -74,6 +74,7 @@ let userController = {
                 account: req.body.account,
                 name: req.body.name,
                 email: req.body.email,
+                avatar: defaultProfilePic,
                 password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
                 image: null
               }).then(user => {

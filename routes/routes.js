@@ -83,8 +83,8 @@ router.delete('/tweet/like/:tweetId', authenticated, userController.removeLike)
 
 router.get('/profile/:id', authenticated, userController.getTopUsers, userController.getUser)
 router.post('/profile/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postProfile)
-router.get('/profile/:id/replied', authenticated, userController.getTopUsers,userController.getReplied)
-router.get('/profile/:id/liked', authenticated, userController.getTopUsers,userController.getLiked)
+router.get('/profile/:id/replied', authenticated, userController.getTopUsers, userController.getReplied)
+router.get('/profile/:id/liked', authenticated, userController.getTopUsers, userController.getLiked)
 
 router.get('/users/:id/setting', authenticated, userController.settingPage)
 router.put('/users/:id', authenticated, userController.putSetting)
