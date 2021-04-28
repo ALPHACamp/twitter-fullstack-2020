@@ -100,11 +100,14 @@ const userController = {
         where: { UserId: req.params.id }
       })
       const tweetsData = await tweets.map(data => ({
+        userId: data.UserId,
         description: data.description.substring(0, 100),
         createdAt: data.createdAt,
         repliesCount: data.Replies.length,
         likesConut: data.Likes.length,
       }))
+      console.log('tweetsData：', tweetsData)
+      console.log('tweets：', tweets)
       return res.render('user', {
         user: user.toJSON(),
         tweetsData: tweetsData
