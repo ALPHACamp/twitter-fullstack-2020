@@ -21,15 +21,22 @@ let adminController = {
         res.redirect('/admin/login')
     },
 
-    getTweets: (req, res) => {
-        return Tweet.findAll({
+    getTweets: async (req, res) => {
+        await Tweet.findAll({
             raw: true,
             nest: true,
             include: [User],
             order: [['createdAt', 'DESC']],
         }).then((tweets) => {
-            console.log(tweets)
-            return res.render('admin/tweets', { tweets })
+            const data = tweets.map(t => ({
+                ...t.dataValues,
+                description : t.description.substring(0, 50),
+                name: t.User.name,
+                account: t.User.account,
+                avatar: t.User.avatar,
+                id: t.User.id,
+            }))
+            return res.render('admin/tweets', { tweets:data })
         })
     },
 

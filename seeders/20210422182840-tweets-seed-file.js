@@ -15,7 +15,7 @@ module.exports = {
       Array.from({ length: 30 }).map((d, i) =>
       ({
         UserId: users[Math.floor(Math.random() * users.length)].id,
-        description: faker.lorem.text().substring(0, 30),
+        description: faker.lorem.text().substring(0, 130),
         createdAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 600000000))),
         updatedAt: new Date()
       })
