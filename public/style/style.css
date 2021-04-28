@@ -127,14 +127,14 @@
   right: 50%;
   transform: translate(-130%, -50%);
 }
-.user-profile-btn{
+.user-profile-btn {
   background-color: #fff;
   border: 2px solid orangered;
   color: orangered;
   border-radius: 20px;
   padding: 6px 5px;
 }
-.user-profile-tweets-avatar{
+.user-profile-tweets-avatar {
   width: 60px;
   height: 60px;
   object-fit: cover;
@@ -159,7 +159,7 @@
   border-radius: 100px;
   position: absolute;
   top: 5rem;
-  left: 19rem;
+  left: 80%;
 }
 .tweet_text {
   color: black;
@@ -210,7 +210,7 @@
   display: inline-block;
 }
 .reply_contener {
-  width: 30rem;
+  width: 90%;
   height: auto;
   border: thin solid #e6ecf0;
   border-left: 0;
