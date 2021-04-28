@@ -11,29 +11,43 @@
         </div>
         <div class="row row-cols-1 row-cols-md-4 m-0" style="border: 1px solid rgba(0,0,0,.125);">
           {{#each users}}
-          <div class="col-3 p-1">
-            <div class="card h-100">
-              <img src={{this.cover}} class="card-img-top" style="border-radius: 10px 10px 0 0" alt="...">
-              <img src={{this.avatar}} alt=""
-                style="position: absolute;height:auto;min-height:90px;width:90px;border-radius:50%;left:25%;top:20%;border:3px solid white;">
-              <div class="card-body px-0">
-                <h5 class="card-title text-center pt-2 mb-1">{{this.name}}</h5>
+          <div class="col-3 p-2">
+            <div class="user-card " style="border-radius: 10px 10px 0 0;height: 314px;">
+              <div class="cover" style="height: 133px;background: #C4C4C4;border-radius: 10px 10px 0 0;">
+                <img {{#if this.cover}}src={{this.cover}}{{/if}} class="card-img-top"
+                  style="border-radius: 10px 10px 0 0 ;background: #C4C4C4;;">
+              </div>
+              <img {{#if this.avatar}}src={{this.avatar}}{{/if}}
+                style="position: absolute;height:auto;height:90px;width:90px;border-radius:50%;left:25%;top:25%;border:3px solid white;background: #C4C4C4;">
+              <div class="card-body px-0" style="background: #F6F7F8;;border-radius: 0 0 10px 10px ;">
+                <div class="card-title text-center pt-3 my-1" style="font-weight: 900;
+font-size: 15px;color: #1C1C1C;">{{this.name}}</div>
                 <div class="text-muted small text-center">
-                  <span>@{{this.account}}</span>
+                  <span style="font-weight: 500;
+font-size: 15px;color: #657786;">@{{this.account}}</span>
                 </div>
-                <div class="col-12 row m-0 p-0 pl-2 mt-3 justify-content-center">
-                  <div class="col-6 pl-3">
-                    <i class="far fa-comment"></i>
-                    <span>&ensp;{{this.Tweets.length}}</span>
+                <div class="col-12 row m-0 p-0 pl-3 mt-3 justify-content-center">
+                  <div class="col-6 pr-2">
+                    <i class="far fa-comment" style=" color: #657786;"></i>
+                    <span style="font-weight: 500;
+font-size: 15px;color: #1C1C1C;">&ensp;{{this.Tweets.length}}</span>
                   </div>
-                  <div class="col-6 pr-0">
-                    <i class="far fa-heart"></i>
-                    <span>&ensp;{{this.LikedTweets.length}}</span>
+                  <div class="col-6 pr-2 ">
+                    <i class="far fa-heart" style=" color: #657786;"></i>
+                    <span style="font-weight: 500;
+font-size: 15px;color: #1C1C1C;">&ensp;{{this.LikedTweets.length}}</span>
                   </div>
                 </div>
-                <div class="d-flex mt-3 ml-2 justify-content-around" style="font-size: 0.8rem;">
-                  <div><span style="font-weight:bold;">{{this.Followings.length}}個</span>跟隨中</div>
-                  <div><span style="font-weight:bold;">{{this.Followers.length}}位</span>追隨者</div>
+                <div class="d-flex mt-3 ml-2 justify-content-center" style="font-size: 0.8rem;">
+                  <div class="mr-2"><span
+                      style="font-weight: 500; color: #000000;font-size: 14px;">{{this.Followings.length}} 個</span>
+                    <span style="font-weight: 500;
+font-size: 14px;color: #657786;">跟隨中</span>
+                  </div>
+                  <div><span style="font-weight: 500; color: #000000; font-size: 14px;">{{this.Followers.length}}
+                      位</span>
+                    <span style="font-weight: 500; font-size: 14px;color: #657786;">追隨者</span>
+                  </div>
                 </div>
               </div>
             </div>
