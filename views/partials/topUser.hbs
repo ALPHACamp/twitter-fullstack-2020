@@ -1,7 +1,7 @@
 <div class="right-content text-monospace">
   <div class="card follow-content">
     <div class="card-header follow-title font-weight-bold text-grey" style="background-color: rgb(250, 250, 248);">
-      跟隨誰
+      Popular Account
     </div>
     <div class="top-follow-list" style="background-color: rgb(255, 255, 255);">
       {{#each topUsers}}
@@ -12,23 +12,26 @@
             <img src="{{this.avatar}}" class=" rounded-circle" width="55" height="55">
           </a>
 
-          <div class="list-item-name ml-2 d-flex flex-column">
-            <a class=" text-decoration-none" href="/users/{{this.id}}/tweets" style="color: black;">{{this.name}}
+          <div class="list-item-name ml-2 d-flex flex-column" style="font-size: 0.9em;">
+            <a class=" text-decoration-none" href="/users/{{this.id}}/tweets" style="color: black;">{{subStr this.name
+              6}}
             </a>
-            <div class="list-item-account" style="font-size: smaller;color:rgb(163, 186, 230);">@{{this.account}}
+            <div class="list-item-account" style="font-size: smaller;color:rgb(163, 186, 230);">@{{subStr this.account
+              6}}
             </div>
           </div>
         </div>
         {{#if this.isFollowed}}
         <form action="/users/{{this.id}}/follow?_method=DELETE" method="POST">
           <button class="btn btn-outline-warning btn-sm mr-2 text-white font-weight-bold active"
-            style="border-radius: 50px;" aria-pressed="true">正在追蹤</button>
+            style="border-radius: 50px; font-size: 0.7em;" aria-pressed="true">正在追蹤</button>
         </form>
         {{else}}
         {{#isEqual this.id ../loginUserId}}
         {{else}}
         <form action="/users/{{this.id}}/follow" method="POST">
-          <button class="btn btn-outline-warning btn-sm mr-2 font-weight-bold" style="border-radius: 50px;">追蹤</button>
+          <button class="btn btn-outline-warning btn-sm mr-2 font-weight-bold"
+            style="border-radius: 50px;font-size: 0.7em;">追蹤</button>
         </form>
         {{/isEqual}}
         {{/if}}
