@@ -18,40 +18,9 @@
 
 
   {{!-- addTweet modal --}}
-  <div class="modal fade" id="addTweetModal" tabindex="-1" role="dialog" aria-labelledby="addTweetModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close ml-0 pl-0" style="outline: none;" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="media">
-            <img src="{{ user.avatar }}" class="mr-3 rounded-circle" alt="..." width="50" height="50">
-            <div class="media-body" id="tweets-popup"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  {{> addTweetModal}}
   {{!-- addReply modal --}}
-  <div class="modal fade" id="addReplyModal" tabindex="-1" role="dialog" aria-labelledby="addReplyModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close ml-0 pl-0" style="outline: none;" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="reply-popup">
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
+  {{> addReplyModal}}
 
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -86,15 +55,6 @@
         .catch(e => console.log(e))
     })
   </script>
-</body>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-  integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-  integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<script src="/js/customs.js"></script>
-<script src="/javascripts/formValidation.js"></script>
 </body>
 
 
