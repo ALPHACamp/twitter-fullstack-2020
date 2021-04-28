@@ -305,7 +305,29 @@ const userController = {
           })
       })
   },
-
+  addlike: (req, res) => {
+    return Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.id
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+  },
+  removelike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.id
+      }
+    })
+      .then((like) => {
+        like.destroy()
+          .then(() => {
+            return res.redirect('back')
+          })
+      })
+  }
 };
 
 module.exports = userController;
