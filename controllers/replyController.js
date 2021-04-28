@@ -3,7 +3,7 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
-const tweetsSidebar = 'tweetsSidebar';
+
 
 const limitDescription = (description, limit = 120) => {
   const newRescription = [];

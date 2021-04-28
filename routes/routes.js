@@ -159,6 +159,13 @@ router.get(
   userController.getSuggestFollower,
   userController.getfollowers
 );
+router.get(
+  '/user/:id/following',
+  authenticated,
+  blockAdmin,
+  userController.getSuggestFollower,
+  userController.getfollowing
+)
 router.post(
   '/user/:id/addFollow',
   authenticated,
