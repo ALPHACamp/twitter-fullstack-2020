@@ -137,6 +137,12 @@ router.get(
   blockAdmin,
   userController.getUserLikes
 );
+router.get(
+  '/users/:id/repliesList',
+  authenticated,
+  blockAdmin,
+  userController.getRepliesAndTweets
+);
 
 // 使用者 information
 router.get(

@@ -180,50 +180,95 @@ const userController = {
   },
 
   getUserLikes: async (req, res) => {
-    const user = await User.findByPk(req.params.id, {
-      include: [
-        {
-          model: Like,
-          order: [['createdAt', 'DESC']],
+    try {
+      const user = await User.findByPk(req.params.id, {
+        include: [
+          {
+            model: Like,
+            order: [['createdAt', 'DESC']],
+            include: [{
+              model: Tweet,
+              include: [Like, Reply, User]
+            }]
+          },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ]
+      })
+      const userData = {
+        id: user.id,
+        account: user.account,
+        name: user.name,
+        avatar: user.avatar,
+        introduction: user.introduction,
+        cover: user.cover,
+        role: user.role,
+        likeTweetsCount: user.Likes.length,
+        followersCount: user.Followers.length,
+        followingsCount: user.Followings.length,
+      }
+      const likeTweetsData = await user.Likes.map((data) => ({
+        id: data.Tweet.User.id,
+        avatar: data.Tweet.User.avatar,
+        name: data.Tweet.User.name,
+        account: data.Tweet.User.account,
+        description: data.Tweet.description.substring(0, 100),
+        elapsedTime: moment(data.Tweet.createdAt, 'YYYYMMDD').fromNow(),
+        likesCount: data.Tweet.Likes.length,
+        repliesCount: data.Tweet.Replies.length
+      }))
+      return res.render('likes', {
+        user: userData,
+        likeTweets: likeTweetsData
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+
+  getRepliesAndTweets: async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id, {
+        include: [{
+          model: Reply,
+          order: [['createdAt'], ['DESC']],
           include: [{
             model: Tweet,
             include: [Like, Reply, User]
-          }]
+          }],
         },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
-      ]
-    })
-    const userData = {
-      id: user.id,
-      account: user.account,
-      name: user.name,
-      avatar: user.avatar,
-      introduction: user.introduction,
-      cover: user.cover,
-      role: user.role,
-      likeTweetsCount: user.Likes.length,
-      followersCount: user.Followers.length,
-      followingsCount: user.Followings.length,
+        { model: User, as: 'Followings' },]
+      })
+      const userData = {
+        id: user.id,
+        account: user.account,
+        name: user.name,
+        avatar: user.avatar,
+        introduction: user.introduction,
+        cover: user.cover,
+        role: user.role,
+        RepliesTweetsCount: user.Replies.length,
+        followersCount: user.Followers.length,
+        followingsCount: user.Followings.length,
+      }
+      const repliesTweetsData = await user.Replies.map((data) => ({
+        id: data.Tweet.User.id,
+        avatar: data.Tweet.User.avatar,
+        name: data.Tweet.User.name,
+        account: data.Tweet.User.account,
+        description: data.Tweet.description.substring(0, 100),
+        elapsedTime: moment(data.Tweet.createdAt, 'YYYYMMDD').fromNow(),
+        likesCount: data.Tweet.Likes.length,
+        repliesCount: data.Tweet.Replies.length
+      }))
+      return res.render('repliesList', {
+        user: userData,
+        repliesTweets: repliesTweetsData
+      })
+    } catch (err) {
+
     }
-    const likeTweetsData = await user.Likes.map((data) => ({
-      id: data.Tweet.User.id,
-      avatar: data.Tweet.User.avatar,
-      name: data.Tweet.User.name,
-      account: data.Tweet.User.account,
-      description: data.Tweet.description.substring(0, 100),
-      elapsedTime: moment(data.Tweet.createdAt, 'YYYYMMDD').fromNow(),
-      likesCount: data.Tweet.Likes.length,
-      repliesCount: data.Tweet.Replies.length
-    }))
-    //console.log('user.Likes', user.Likes)
-    console.log('user.Likes.Tweet', user.Likes.Tweet)
-    console.log('user.Likes.Tweet', user.Likes[0].Tweet)
-    console.log('user.Likes.Tweet.User', user.Likes[0].Tweet.User)
-    return res.render('likes', {
-      user: userData,
-      likeTweets: likeTweetsData
-    })
   },
 
   getUserSetting: async (req, res) => {
