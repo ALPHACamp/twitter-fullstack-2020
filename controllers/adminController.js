@@ -9,16 +9,16 @@ const adminController = {
     const adminMark = "admin"
     return res.render('signin', { adminMark })
   },
-  signin:(req, res) => {
-     User.findOne({where:{ account: req.body.account }})
-    .then((user)=>{
-      if (user.dataValues.role.match('admin')) {
-        return res.redirect('/admin/tweets')
-      } else {
-        req.flash('error_msg', '此帳號不是管理者')
-        res.redirect('/signin')
-      }
-    })
+  signin: (req, res) => {
+    User.findOne({ where: { email: req.body.email } })
+      .then((user) => {
+        if (user.dataValues.role.match('admin')) {
+          return res.redirect('/admin/tweets')
+        } else {
+          req.flash('error_msg', '此帳號不是管理者')
+          res.redirect('/signin')
+        }
+      })
   },
   tweetsPage: (req, res) => {
     return Tweet.findAll({

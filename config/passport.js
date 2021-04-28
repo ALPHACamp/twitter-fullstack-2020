@@ -9,13 +9,13 @@ const Like = db.Like
 passport.use(
   new LocalStrategy(
     {
-      usernameField: 'account',
+      usernameField: 'email',
       passwordField: 'password',
       passReqToCallback: true,
     },
     async (req, username, password, done) => {
       try {
-        const user = await User.findOne({ where: { account: username } });
+        const user = await User.findOne({ where: { email: username } });
         if (!user)
           return done(null, false, req.flash('error_msg', '帳號尚未註冊'));
 
