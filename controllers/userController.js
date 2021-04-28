@@ -108,18 +108,20 @@ let userController = {
     let newAccount = ''
 
     if (!account || !name || !email || !password || !confirmPassword) {
-      error.push({ message: '所有欄位都是必填。' })
+      req.flash('error_messages', '所有欄位都是必填。')
+      return res.redirect('back')
     }
 
     if (password !== confirmPassword) {
-      error.push({ message: '密碼與確認密碼不一致！' })
+      req.flash('error_messages', '密碼與確認密碼不一致！')
+      return res.redirect('back')
     }
 
     if (email !== currentEmail) {
       await User.findOne({ where: { email } }).then(user => {
         if (user) {
-          error.push({ message: '信箱重複！' })
-          return res.redirect('/users/:id/setting')
+          req.flash('error_messages', '信箱重複！')
+          return res.redirect('back')
         } else {
           newEmail = email
         }
@@ -133,8 +135,8 @@ let userController = {
     if (account !== currentAccount) {
       await User.findOne({ where: { account } }).then(user => {
         if (user) {
-          error.push({ message: '帳號重複！' })
-          return res.redirect('/users/:id/setting')
+          req.flash('error_messages', '帳號重複！')
+          return res.redirect('back')
         } else {
           newAccount = account
         }
@@ -179,6 +181,8 @@ let userController = {
             })
             results.tweetCount = results.Tweets.length
             results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+            console.log("resultsXXXXXXXXXXXXXXXX", results)
+            console.log("resultTweetssXXXXXXXXXXXXXXXX", results.Tweets)
             return res.render('profile', {
               results: results,
               currentId: helpers.getUser(req).id
@@ -187,15 +191,66 @@ let userController = {
       })
 
   },
+  getReplied: (req, res) => {
 
-  //   const isFollowing = user.Followers.map(d => d.id).includes(req.user.id)
-  //   const isLiked = user.LikedUsers.map(d => d.id).includes(req.user.id)
-  //   res.render('Profile', {
-  //     userNow: user.toJSON(),
-  //     isFollowing: isFollowing,
-  //     isLiked: isLiked
-  //   })
-  // })
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Reply, include: { model: Tweet, include: User } },
+        { model: Tweet, include: [Like, Reply] }
+      ], order: [[Reply, 'createdAt', 'DESC']]
+    })
+      .then(user => {
+
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
+          .then((likes) => {
+            const results = user.toJSON()
+            likes = likes.map(like => like.TweetId)
+            results.Replies.forEach(reply => {
+              reply.Tweet.isLiked = likes.includes(reply.Tweet.id)
+            })
+            results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+            console.log("resultsXXXXXXXXXXXXXXXX", results)
+            console.log("resultTweetssXXXXXXXXXXXXXXXX", results.Replies)
+            return res.render('repliedTweet', {
+              results: results,
+              currentId: helpers.getUser(req).id
+            })
+
+          })
+      })
+
+  },
+
+  getLiked: (req, res) => {
+
+    return User.findByPk(req.params.id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Tweet, include: [Like, Reply] }
+      ], order: [[Tweet, 'createdAt', 'DESC']]
+    })
+      .then(user => {
+
+        return Like.findAll({ where: { UserId: helpers.getUser(req).id }, raw: true, nest: true })
+          .then((likes) => {
+            const results = user.toJSON()
+            likes = likes.map(like => like.TweetId)
+            results.Tweets.forEach(tweet => {
+              tweet.isLiked = likes.includes(tweet.id)
+            })
+            results.tweetCount = results.Tweets.length
+            results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
+            return res.render('likedTweet', {
+              results: results,
+              currentId: helpers.getUser(req).id
+            })
+          })
+      })
+
+  },
 
   addLike: (req, res) => {
     return Like.create({

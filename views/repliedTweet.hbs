@@ -73,10 +73,10 @@ font-size: 14px;">
         <div class="profile-feeds ">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active" href="/profile/{{results.id}}">推文</a>
+              <a class="nav-link" href="/profile/{{results.id}}">推文</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="/profile/{{results.id}}/replied">推文與回覆</a>
+              <a class="nav-link active" href="/profile/{{results.id}}/replied">推文與回覆</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/profile/{{results.id}}/liked">喜歡的內容</a>
@@ -84,55 +84,60 @@ font-size: 14px;">
           </ul>
         </div>
         {{!-- {{> tweets}} --}}
-        {{#each results.Tweets}}
+        {{#each results.Replies}}
         <div class="tweets-section d-flex justify-content-start px-2 " style="border: #E6ECF0 1px solid;"
           id="{{this.id}}">
-          <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+          <a href="/profile/{{this.Tweet.UserId}}" style="text-decoration:none; ">
             <div class=" col-1 post-avatar mr-1">
-              <img class="mt-2" {{#if ../results.avatar}}src={{../results.avatar}}{{/if}}
+              <img class="mt-2" {{#if this.Tweet.User.avatar}}src={{this.Tweet.User.avatar}}{{/if}}
                 style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
             </div>
           </a>
           <div class="col-10 post ml-0 mt-2">
             <div class="post-info d-flex justify-content-start">
-              <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+              <a href="/profile/{{this.Tweet.UserId}}" style="text-decoration:none; ">
                 <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">
-                  {{../results.name}}
+                  {{this.Tweet.User.name}}
                 </div>
               </a>
               <span class="post-account mr-1"
-                style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.User.account}}</span>
+                style="font-size: 15px;color: #657786;font-weight: 500;">@{{this.Tweet.User.account}}</span>
               <span style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
               <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
-                this.createdAt}}</span>
+                this.Tweet.createdAt}}</span>
             </div>
-            <a href="/tweets/{{this.id}}" style="text-decoration:none; ">
+            <a href="/tweets/{{this.Tweet.id}}" style="text-decoration:none; ">
               <div class="post-content my-2" style="font-weight: 500; font-size: 15px;color: #1C1C1C;">
-                {{this.description}}
+                {{this.Tweet.description}}
+                <hr class="m-1">
+                <span class="ml-3" style="font-size: 15px;color: #657786;font-weight: 500;">Replied · {{moment
+                  this.createdAt}}</span>
+                <br>
+                <span class="ml-3">{{this.comment}}</span>
               </div>
             </a>
             <div class="d-flex justify-content-start mb-2">
               <div data-toggle="modal" data-target="#replyModal{{this.id}}">
                 <button type="button " class="btn p-0 " style="background-color: white;">
                   <i class="far fa-comment" style="color: #657786;"></i><span class="rely-amount ml-2"
-                    style="font-size: 13px;font-weight: 500;color: #657786;">{{this.Replies.length}}</span>
+                    style="font-size: 13px;font-weight: 500;color: #657786;">{{../results.Replies.length}}{{../results.Tweets.length}}{{../Tweets.Likes.length}}</span>
                 </button>
               </div>
               {{!-- add like button --}}
-              {{#if this.isLiked }}
-              <form action="/tweets/like/{{this.id}}?_method=DELETE" method="POST">
+              {{#if this.Tweet.isLiked }}
+              <form action="/tweets/like/{{this.Tweet.id}}?_method=DELETE" method="POST">
                 <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
                   <i class="fas fa-heart" style="color: #657786;"></i>
                   <span class="rely-amount ml-2"
-                    style="font-size: 13px;font-weight: 500;color: #657786;">{{this.Likes.length}}</span>
+                    style="font-size: 13px;font-weight: 500;color: #657786;">{{../results.Likes.length}}</span>
                 </button>
               </form>
               {{else}}
-              <form action="/tweets/like/{{this.id}}" method="POST">
+              <form action="/tweets/like/{{this.Tweet.id}}" method="POST">
                 <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
                   <i class="far fa-heart" style="color: #657786;"></i>
                   <span class="rely-amount ml-2"
-                    style="font-size: 13px;font-weight: 500;color: #657786;">{{this.Likes.length}}</span></button>
+                    style="font-size: 13px;font-weight: 500;color: #657786;">{{../Tweet.Likes.length}}</span></button>
               </form>
               {{/if}}
               {{!-- {{this.LikeUsers.length}} --}}
@@ -154,14 +159,14 @@ font-size: 14px;">
                 <div class="modal-title">
                   <div class="reply-target-section d-flex justify-content-start px-3 ">
                     <div class="reply-target-avatar mr-1">
-                      <img class="mt-2" {{#if ../results.avatar}}src={{../results.avatar}}{{/if}}
+                      <img class="mt-2" {{#if results.avatar}}src={{results.avatar}}{{/if}}
                         style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
                       <div class="diver ml-4 mt-2" style="width: 2px;height: 80px;background: #CCD6DD;"></div>
                     </div>
                     <div class="post ml-1 mt-2">
                       <div class="post-info d-flex justify-content-start">
                         <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;
-                                    ">{{../results.name}}</div><span class="post-account mr-1"
+                                    ">{{../results.User.name}}</div><span class="post-account mr-1"
                           style="font-size: 15px;color: #657786;font-weight: 500;">@{{../results.account}}</span
                           style="font-size: 15px;color: #657786;"><span
                           style="font-size: 15px;color: #657786;font-weight: 500;">·</span>
