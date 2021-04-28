@@ -5,6 +5,7 @@ const fs = require('fs');
 //const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const helpers = require('../_helpers');
 const db = require('../models');
+const user = require('../models/user');
 const User = db.User;
 const Tweet = db.Tweet;
 const Reply = db.Reply;
@@ -232,9 +233,34 @@ const userController = {
   },
 
   getfollowers: (req, res) => {
-    res.render('follower', { tweetsSidebar })
+    const followersUser = []
+    req.user.Followers.forEach((user) => {
+      const item = {
+        name: user.name,
+        account: user.account,
+        avatar: user.avatar,
+        introduction: user.introduction,
+        isFollowed: req.user.Followings.some(d => d.Followship.followerId === user.Followship.followingId)
+      }
+      followersUser.push(item)
+    })
+    res.render('follower', { followersUser,tweetsSidebar })
   },
-
+  getfollowing: (req, res) => {
+    const following = 'following'
+    const followingUser = []
+    req.user.Followings.forEach((user)=>{
+       const item = {
+         name:user.name,
+         account:user.account,
+         avatar:user.avatar,
+         introduction: user.introduction,
+         isFollowed: req.user.Followings.some(d => d.Followship.followerId === user.Followship.followerId)
+       }
+      followingUser.push(item)
+    })
+    res.render('follower', { followingUser,tweetsSidebar, following})
+  },
   getSuggestFollower: (req, res, next) => {
     return User.findAll({
       where: { role: 'user' },
@@ -282,7 +308,29 @@ const userController = {
           })
       })
   },
-
+  addlike: (req, res) => {
+    return Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.id
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+  },
+  removelike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.id
+      }
+    })
+      .then((like) => {
+        like.destroy()
+          .then(() => {
+            return res.redirect('back')
+          })
+      })
+  }
 };
 
 module.exports = userController;

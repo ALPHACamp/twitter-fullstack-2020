@@ -3,6 +3,7 @@ const db = require('../models');
 const Tweet = db.Tweet;
 const User = db.User;
 const Reply = db.Reply;
+const Like = db.Like
 const tweetsSidebar = 'tweetsSidebar';
 const limitDescription = (description, limit = 120) => {
   const newRescription = [];
@@ -24,11 +25,12 @@ const tweetController = {
       const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
-        include: [User],
+        include: [User, Like],
       });
       tweets.rows.forEach((e) => {
         e.description = limitDescription(e.description, 120);
         e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
+        e.isLike = req.user.Likes.some(d => d.UserId === e.Likes.UserId)
       });
       const data = tweets.rows.sort((a, b) => b.createdAt - a.createdAt);
       // res.json({ status: 'success', message: 'getTweets' });

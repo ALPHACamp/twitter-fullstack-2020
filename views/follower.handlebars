@@ -12,43 +12,97 @@
 
           </div>
           <div class="user-detail ml-5">
-            <div class="user-name">User1</div>
-            <div class="tweet-count">1 推文</div>
+            <div class="user-name">{{user.name}}</div>
+            <div class="tweet-count">{{user.Tweets.length}}推文</div>
           </div>
         </div>
+        {{#if following}}
         <ul class="nav justify-content">
           <li class="nav-item">
-            <a href="#/users/2/followers" class="nav-link" style="color:orangered;border-bottom-style: solid;
+            <a href="/user/{{user.id}}/followers" class="nav-link active router-link-active" aria-current="page"
+              style="color:black;">跟隨者</a>
+          </li>
+          <li class="nav-item">
+            <a href="/user/{{user.id}}/following" class="nav-link" style="color:orangered;border-bottom-style: solid;
+          border-width: 1px;
+          border-color:orangered;">正在跟隨</a>
+          </li>
+        </ul>
+        {{else}}
+        <ul class="nav justify-content">
+          <li class="nav-item">
+            <a href="/user/{{user.id}}/followers" class="nav-link" style="color:orangered;border-bottom-style: solid;
   border-width: 1px;
   border-color:orangered;">跟隨者</a>
           </li>
           <li class="nav-item">
-            <a href="#/users/2/followings" class="nav-link active router-link-active" aria-current="page"
+            <a href="/user/{{user.id}}/following" class="nav-link active router-link-active" aria-current="page"
               style="color:black;">正在跟隨</a>
           </li>
         </ul>
+        {{/if}}
       </div>
+      {{#if following}}
       <div class="overflow-scroll" id="follower_panel">
+        {{#each followingUser}}
         <div class="col-12 d-flex mt-3">
-          <img class="user-avatar rounded-circle" src="https://via.placeholder.com/300" width="50" height="50"
-            alt="no pic">
+          <img class="user-avatar rounded-circle" src="{{this.avatar}}" width="50" height="50" alt="no pic">
           <div class="tweets_content">
             <div class="d-flex justify-content-between">
               <div class="d-flex flex-column align-items-center">
-                <span class="user-name mr-3 ml-3">user2</span>
-                <span class="user-acount mr-2">@user2</span>
+                <span class="user-name mr-3 ml-3">{{this.name}}</span>
+                <span class="user-account mr-2">@{{this.account}}</span>
               </div>
-              <form action="/admin/tweets/25?_method=DELETE" method="POST" class="col-1 mr-2">
+              {{#if this.isFollowed}}
+              <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
+                <button type="submit" class="btn btn-outline"
+                  style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/user/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
                 <button type="submit" class="btn btn-outline"
                   style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">跟隨</button>
               </form>
+              {{/if}}
             </div>
             <div class="text_content">
-              <p class="ml-3">ullamsadgasgasfdgasdgasdg</p>
+              <p class="ml-3">{{this.introduction}}</p>
             </div>
           </div>
         </div>
+        {{/each}}
       </div>
+      {{else}}
+      <div class="overflow-scroll" id="follower_panel">
+        {{#each followersUser}}
+        <div class="col-12 d-flex mt-3">
+          <img class="user-avatar rounded-circle" src="{{this.avatar}}" width="50" height="50" alt="no pic">
+          <div class="tweets_content">
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-column align-items-center">
+                <span class="user-name mr-3 ml-3">{{this.name}}</span>
+                <span class="user-account mr-2">@{{this.account}}</span>
+              </div>
+              {{#if this.isFollowed}}
+              <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST" class="col-1 mr-2">
+                <button type="submit" class="btn btn-outline"
+                  style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/user/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
+                <button type="submit" class="btn btn-outline"
+                  style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">跟隨</button>
+              </form>
+              {{/if}}
+            </div>
+            <div class="text_content">
+              <p class="ml-3">{{this.introduction}}</p>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+      {{/if}}
   </div>
   <div class="d-flex flex-column" id="suggest-follower">
     {{#each users}}

@@ -58,16 +58,17 @@
       <div class="text-sm-start" id="header">
         <h4>使用者清單</h4>
       </div>
-      <div class="overflow-scroll" id="users_panel">
-        <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-2">
+      <div class="container">
+        <div class="row align-items-start"id="admin_users_panel">
           {{#each user}}
-          <div class="col my-3">
+          <div class="col-6 col-sm-4 p-4">
             <div class="user-card d-flex flex-column justify-content-between text-center">
               <img class="user-cover" src="{{this.cover}}" alt="no pic">
               <img class="user-card-avatar" src="{{this.avatar}}" alt="no pic">
-              <div class="user-content d-flex flex-column pb-3"><span data-v-4e48143f=""
-                  class="user-name">{{this.name}}</span><span data-v-4e48143f=""
-                  class="user-acount">@{{this.acount}}</span>
+              <div class="user-content d-flex flex-column pb-3"><span 
+                  class="user-name">{{this.name}}</span>
+                  <span
+                  class="user-acount">@{{this.account}}</span>
                 <div class="d-flex justify-content-center align-items-center mt-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                     <path
