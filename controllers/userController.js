@@ -23,7 +23,7 @@ let userController = {
         FollowerCount: user.Followers.length,
         isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
-      users = users.filter((user) => ((user.name !== helpers.getUser(req).name) && (user.isAdmin == 0)) )
+      users = users.filter((user) => ((user.name !== helpers.getUser(req).name) && (user.isAdmin == 0)))
       users = users
         .sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
@@ -182,8 +182,6 @@ let userController = {
             })
             results.tweetCount = results.Tweets.length
             results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-            console.log("resultsXXXXXXXXXXXXXXXX", results)
-            console.log("resultTweetssXXXXXXXXXXXXXXXX", results.Tweets)
             return res.render('profile', {
               results: results,
               currentId: helpers.getUser(req).id
@@ -196,11 +194,14 @@ let userController = {
 
     return User.findByPk(req.params.id, {
       include: [
+        Tweet,
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
-        { model: Reply, include: { model: Tweet, include: User } },
-        { model: Tweet, include: [Like, Reply] }
-      ], order: [[Reply, 'createdAt', 'DESC']]
+        //   { model: Reply, include: { model: Tweet, include: User } },
+        //   { model: Tweet, include: [Like, Reply] }
+        // ]
+        { model: Reply, include: [{ model: Tweet, include: [Reply, Like, User] }] }]
+      , order: [[Reply, 'createdAt', 'DESC']]
     })
       .then(user => {
 
@@ -212,8 +213,6 @@ let userController = {
               reply.Tweet.isLiked = likes.includes(reply.Tweet.id)
             })
             results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-            console.log("resultsXXXXXXXXXXXXXXXX", results)
-            console.log("resultTweetssXXXXXXXXXXXXXXXX", results.Replies)
             return res.render('repliedTweet', {
               results: results,
               currentId: helpers.getUser(req).id
@@ -225,13 +224,14 @@ let userController = {
   },
 
   getLiked: (req, res) => {
-
     return User.findByPk(req.params.id, {
-      include: [
+      include: [Tweet,
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
-        { model: Tweet, include: [Like, Reply] }
-      ], order: [[Tweet, 'createdAt', 'DESC']]
+        { model: Like, include: [{ model: Tweet, include: [Reply, Like, User] }] },
+      ]
+      ,
+      order: [[Like, 'createdAt', 'DESC']]
     })
       .then(user => {
 
@@ -259,7 +259,6 @@ let userController = {
       TweetId: req.params.tweetId
     })
       .then((tweet) => {
-        console.log("tweetID =======", req.params.tweetId)
         return res.redirect('back')
       })
   },
@@ -274,7 +273,6 @@ let userController = {
       .then((like) => {
         like.destroy()
           .then((tweet) => {
-            console.log("dettweetID =======", req.params.tweetId)
             return res.redirect('back')
           })
       })
@@ -326,8 +324,6 @@ let userController = {
       followingId: req.params.userId
     })
       .then((followship) => {
-        console.log("add req.user.id====", req.user.id)
-        console.log("req.params.userId====", req.params.userId)
         return res.redirect('back')
       })
   },
@@ -337,8 +333,6 @@ let userController = {
 
     Followship.destroy({ where: { followerId, followingId } })
 
-    console.log("remove req.user.id====", req.user.id)
-    console.log("req.params.userId====", req.params.userId)
     return res.redirect('back')
 
   },

@@ -109,39 +109,42 @@ font-size: 14px;">
             <a href="/tweets/{{this.Tweet.id}}" style="text-decoration:none; ">
               <div class="post-content my-2" style="font-weight: 500; font-size: 15px;color: #1C1C1C;">
                 {{this.Tweet.description}}
-                <hr class="m-1">
-                <span class="ml-3" style="font-size: 15px;color: #657786;font-weight: 500;">Replied · {{moment
-                  this.createdAt}}</span>
-                <br>
-                <span class="ml-3">{{this.comment}}</span>
+                <div class="d-flex justify-content-start mb-2">
+                  <div data-toggle="modal" data-target="#replyModal{{this.id}}">
+                    <button type="button " class="btn p-0 " style="background-color: white;">
+                      <i class="far fa-comment" style="color: #657786;"></i><span class="rely-amount ml-2"
+                        style="font-size: 13px;font-weight: 500;color: #657786;">{{this.Tweet.Replies.length}}</span>
+                    </button>
+                  </div>
+                  {{!-- add like button --}}
+                  {{#if this.Tweet.isLiked }}
+                  <form action="/tweets/like/{{this.Tweet.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
+                      <i class="fas fa-heart" style="color: #657786;"></i>
+                      <span class="rely-amount ml-2"
+                        style="font-size: 13px;font-weight: 500;color: #657786;">{{this.Tweet.Likes.length}}</span>
+                    </button>
+                  </form>
+                  {{else}}
+                  <form action="/tweets/like/{{this.Tweet.id}}" method="POST">
+                    <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
+                      <i class="far fa-heart" style="color: #657786;"></i>
+                      <span class="rely-amount ml-2"
+                        style="font-size: 13px;font-weight: 500;color: #657786;">{{this.Tweet.Likes.length}}</span></button>
+                  </form>
+                  {{/if}}
+
+                </div>
+                <hr class="m-0">
+                <div style="border-left: #E6ECF0 1px solid;">
+                  <span class="ml-3" style="font-size: 15px;color: #657786;font-weight: 500;">You Replied · {{moment
+                    this.createdAt}}</span>
+                  <br>
+                  <span class="ml-3">{{this.comment}}</span>
+                </div>
               </div>
             </a>
-            <div class="d-flex justify-content-start mb-2">
-              <div data-toggle="modal" data-target="#replyModal{{this.id}}">
-                <button type="button " class="btn p-0 " style="background-color: white;">
-                  <i class="far fa-comment" style="color: #657786;"></i><span class="rely-amount ml-2"
-                    style="font-size: 13px;font-weight: 500;color: #657786;">{{../results.Replies.length}}{{../results.Tweets.length}}{{../Tweets.Likes.length}}</span>
-                </button>
-              </div>
-              {{!-- add like button --}}
-              {{#if this.Tweet.isLiked }}
-              <form action="/tweets/like/{{this.Tweet.id}}?_method=DELETE" method="POST">
-                <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
-                  <i class="fas fa-heart" style="color: #657786;"></i>
-                  <span class="rely-amount ml-2"
-                    style="font-size: 13px;font-weight: 500;color: #657786;">{{../results.Likes.length}}</span>
-                </button>
-              </form>
-              {{else}}
-              <form action="/tweets/like/{{this.Tweet.id}}" method="POST">
-                <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
-                  <i class="far fa-heart" style="color: #657786;"></i>
-                  <span class="rely-amount ml-2"
-                    style="font-size: 13px;font-weight: 500;color: #657786;">{{../Tweet.Likes.length}}</span></button>
-              </form>
-              {{/if}}
-              {{!-- {{this.LikeUsers.length}} --}}
-            </div>
+
           </div>
         </div>
 
