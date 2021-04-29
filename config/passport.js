@@ -49,7 +49,6 @@ passport.deserializeUser((id, done) => {
     ],
   }).then(async (user) => {
     user = user.toJSON();
-
     const topUser = await User.findAll({
       include: [{ model: User, as: 'Followers' }],
       limit: 10,
