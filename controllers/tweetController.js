@@ -58,7 +58,7 @@ const tweetController = {
         'a h:mm, MMMM Do YYYY'
       );
       const isLike = req.user.Likes.some((d) => d.TweetId === tweet.id);
-
+      const likeCount = tweet.Likes.length
       replies.rows.forEach((e) => {
         e.time = moment(e.createdAt, 'YYYYMMDD').fromNow();
       });
@@ -67,6 +67,7 @@ const tweetController = {
         tweet: tweet,
         time,
         isLike,
+        likeCount,
         replies: replies.rows,
         count: replies.count,
       });
