@@ -3,6 +3,7 @@ const db = require('../models')
 const helpers = require('../_helpers');
 const User = db.User
 const Tweet = db.Tweet;
+const Like = db.Like;
 
 const adminController = {
   signinPage: (req, res) => {
@@ -33,16 +34,18 @@ const adminController = {
     })
   },
   usersPage: (req, res) => {
-    return User.findAll({
+   User.findAll({
       include: [
         Tweet,
+        Like,
         { model: User, as: 'Followings' },
         { model: User, as: 'Followers' },
       ]
     }).then(user => {
       user = user.map(user => ({
         ...user.dataValues,
-        TweetsCount: user.Tweets.length
+        TweetsCount: user.Tweets.length,
+        LikesCount: user.Likes.length
       }))
       user = user.sort((a, b) => b.TweetsCount - a.TweetsCount)
       return res.render('admin/users', { user })
