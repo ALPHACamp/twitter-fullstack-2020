@@ -40,7 +40,6 @@ let adminController = {
                 const data = tweets.map(r => ({
                     ...r.dataValues,
                     description: r.description.substring(0, 50),
-                    isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.id)
                 }))
                 return res.render('admin/tweets', {
                     tweets: data,
