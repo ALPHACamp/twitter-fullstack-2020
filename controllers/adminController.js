@@ -25,7 +25,7 @@ let adminController = {
         })
     },
 
-    logout: (req, res) => {
+    signout: (req, res) => {
         req.flash('success_messages', '登出成功！')
         req.logout()
         res.redirect('/admin/signin')
@@ -88,7 +88,9 @@ let adminController = {
                 ...user.dataValues,
                 TweetsCount: user.Tweets.length,
             }))
+            users = users.filter((user) => (user.name !== helpers.getUser(req).name))
             users = users.sort((a, b) => b.TweetsCount - a.TweetsCount)
+            
             return res.render('admin/users', { users })
         })
     },

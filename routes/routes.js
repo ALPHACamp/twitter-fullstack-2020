@@ -47,15 +47,15 @@ const authenticatedAdmin = (req, res, next) => {
 
 router.get('/', (req, res) => res.redirect('/tweets'))
 
-router.get('/register', userController.registerPage)
-router.post('/register', userController.userRegister)
+router.get('/signup', userController.signupPage)
+router.post('/signup', userController.userSignup)
 
 
 
 //Admin
 router.get('/admin/signin', adminController.signinPage)
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
-router.get('/admin/logout', adminController.logout)
+router.get('/admin/signout', adminController.signout)
 
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
@@ -65,9 +65,9 @@ router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 
 // User
-router.get('/login', userController.loginPage)
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.login)
-router.get('/logout', userController.logout)
+router.get('/signin', userController.signinPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signin)
+router.get('/signout', userController.signout)
 
 
 router.get('/tweets', authenticated, userController.getTopUsers, tweetController.getTweets)
