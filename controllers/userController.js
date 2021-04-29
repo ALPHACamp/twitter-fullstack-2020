@@ -323,7 +323,7 @@ let userController = {
   addFollowing: (req, res) => {
     if (helpers.getUser(req).id == req.params.userId) {
       req.flash('error_messages', '使用者不能追隨自己！')
-      return res.redirect(`back`)
+      return res.redirect(`/users/${req.params.userId}/tweets`)
     } else {
       return Followship.create({
         followerId: helpers.getUser(req).id,

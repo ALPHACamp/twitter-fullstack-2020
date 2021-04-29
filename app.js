@@ -10,6 +10,8 @@ const helpers = require('./_helpers');
 
 const app = express()
 const port = process.env.PORT || 3000
+require('./config/mongoose')
+
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
