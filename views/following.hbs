@@ -28,7 +28,7 @@ font-size: 13px;color: #657786;">{{results.Tweets.length}} 推文
         {{#each results.Followings}}
         <div class="followship py-2" style="border: #E6ECF0 1px solid; display: flex; align-items: center;">
           <div class="user-info d-flex col-2 align-items-start" style=" display: flex; align-items: center; ">
-            <a href="/profile/{{this.id}}" style="text-decoration: none;">
+            <a href="/users/{{this.id}}/tweets" style="text-decoration: none;">
               <img class="" {{#if this.avatar}}src={{this.avatar}}{{/if}}
                 style="background: #C4C4C4; border-radius: 100%; width: 60px; height: 60px;border: 1px solid #C4C4C4;">
             </a>
@@ -47,8 +47,8 @@ font-size: 13px;color: #657786;">{{results.Tweets.length}} 推文
 
 
             <div class="follower-following " style="display: flex; align-items: center;">
-              {{#ifCond ../user.id this.id}}
-              {{else}}
+              {{!-- {{#ifCond ../user.id this.id}}
+              {{!-- {{else}} --}}
               {{#if this.isFollowed }}
               <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents; ">
                 <button type="submit" class="following btn" style="border: 1px solid #FF6600;border-radius: 100px;width: 92px;
@@ -60,7 +60,7 @@ font-size: 13px;color: #657786;">{{results.Tweets.length}} 推文
                       height: 35px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button>
               </form>
               {{/if}}
-              {{/ifCond}}
+              {{!-- {{/ifCond}} --}}
             </div>
 
 
