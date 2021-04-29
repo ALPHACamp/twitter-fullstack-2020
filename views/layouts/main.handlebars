@@ -82,11 +82,15 @@
                     <div class="card" style="width: 100%;">
                         <h6 style="padding: 1rem;" class="card-header">跟隨誰</h6>
                     </div>
-                    <div class="contener" style="width: 100%; height:auto; border: thin solid #e6ecf0; ">
+                    {{#each user.topUser}}
+                    <div class="contener"
+                        style="width: 100%; height:auto; border: thin solid #e6ecf0; background-color:#f5f5f5">
                         <div class="card-body">
                             <i class="bi bi-person-square reply_line"></i>
-                            <p class="reply_line">name</p>
-                            <p class="reply_line">account</p>
+                            &nbsp;
+                            <h5 class="reply_line">{{this.name}}</h5>
+                            &nbsp;
+                            <a href="/users/{{this.id}}" class="card-link">@{{this.account}}</a>
 
                             {{#if this.isFollowed}}
                             <form action="/user/{{this.id}}/removeFollow?_method=DELETE" method="POST"
@@ -103,6 +107,7 @@
 
                         </div>
                     </div>
+                    {{/each}}
                 </div>
 
 
