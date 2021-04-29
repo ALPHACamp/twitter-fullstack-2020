@@ -55,7 +55,7 @@ router.post('/register', userController.userRegister)
 //Admin
 router.get('/admin/signin', adminController.signinPage)
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
-router.get('/admin/logout', adminController.logout)
+router.get('/admin/signout', adminController.signout)
 
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
