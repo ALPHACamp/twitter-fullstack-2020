@@ -16,7 +16,7 @@ const tweetController = {
       .then((tweets) => {
         const data = tweets.map(r => ({
           ...r.dataValues,
-          isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
+          isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.id)
         }))
         return res.render('tweets', {
           tweets: data,
@@ -34,7 +34,7 @@ const tweetController = {
       ]
     })
       .then(tweet => {
-        const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
+        const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           isLiked: isLiked

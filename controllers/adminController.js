@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
 
 let adminController = {
     signinPage: (req, res) => {
@@ -11,15 +13,8 @@ let adminController = {
     },
 
     signin: (req, res) => {
-        User.findOne({ where: { account: req.body.account } }).then(user => {
-            if (user.isAdmin == 0) {
-                req.flash('error_messages', '登入失敗！')
-                return res.redirect('/admin/signin')
-            } else {
-                req.flash('success_messages', '成功登入！')
-                res.redirect('/admin/tweets')
-            }
-        })
+        req.flash('success_messages', '成功登入！')
+        return res.redirect('/admin/tweets')
     },
 
     logout: (req, res) => {
@@ -30,27 +25,46 @@ let adminController = {
 
     getTweets: async (req, res) => {
         await Tweet.findAll({
-            raw: true,
-            nest: true,
-            include: [User],
+            include: [User, Reply, Like],
             order: [['createdAt', 'DESC']],
-        }).then((tweets) => {
-            const data = tweets.map(t => ({
-                ...t.dataValues,
-                description: t.description.substring(0, 50),
-                name: t.User.name,
-                account: t.User.account,
-                avatar: t.User.avatar,
-                id: t.User.id,
-            }))
-            return res.render('admin/tweets', { tweets: data })
         })
-    },
+            .then((tweets) => {
+                const data = tweets.map(r => ({
+                    ...r.dataValues,
+                    description: r.description.substring(0, 50),
+                    isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.id)
+                }))
+                return res.render('admin/tweets', {
+                    tweets: data,
+                })
 
-    deleteTweet: (req, res) => {
-        return Tweet.findByPk(req.params.id).then((tweet) => {
+            })
+    },
+    // getTweets: async (req, res) => {
+    //     await Tweet.findAll({
+    //         raw: true,
+    //         nest: true,
+    //         include: [User],
+    //         order: [['createdAt', 'DESC']],
+    //     }).then((tweets) => {
+    //         const data = tweets.map(t => ({
+    //             ...t.dataValues,
+    //             description: t.description.substring(0, 50),
+    //             name: t.User.name,
+    //             account: t.User.account,
+    //             avatar: t.User.avatar,
+    //             id: t.User.id,
+    //         }))
+    //         return res.render('admin/tweets', { tweets: data })
+    //     })
+    // },
+
+    deleteTweet: async (req, res) => {
+        await Tweet.findByPk(req.params.id).then((tweet) => {
             tweet.destroy().then((tweet) => {
+                req.flash('success_messages', '成功刪除文章！')
                 res.redirect('/admin/tweets')
+                done();
             })
         })
     },

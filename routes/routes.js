@@ -19,7 +19,7 @@ const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
         if (helpers.getUser(req).isAdmin) {
             req.flash('error_messages', '登入錯誤！')
-            return res.redirect('/login')
+            return res.redirect('back')
         } else {
             return next()
         }
@@ -72,7 +72,7 @@ router.get('/logout', userController.logout)
 
 router.get('/tweets', authenticated, userController.getTopUsers, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
-router.get('/tweets/:id', authenticated, userController.getTopUsers, tweetController.getTweet)
+router.get('/tweets/:id/replies', authenticated, userController.getTopUsers, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, replyController.postReply)
 router.post('/tweets/like/:tweetId', authenticated, userController.addLike)
 router.delete('/tweets/like/:tweetId', authenticated, userController.removeLike)

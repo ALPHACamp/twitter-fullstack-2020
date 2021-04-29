@@ -121,6 +121,7 @@ module.exports = {
             Array.from({ length: 150 }).map((item, index) => ({
                 TweetId: helpers.randomPost(index),
                 UserId: (index % 5) + 2,
+                comment: faker.lorem.text().substring(0, 70),
                 createdAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
                 updatedAt: new Date(new Date().getTime() - Math.floor(Math.floor(Math.random() * 864000))),
             })),

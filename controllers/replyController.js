@@ -15,14 +15,16 @@ const replyController = {
       return res.redirect('back')
     }
     return Reply.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.id,
       comment: req.body.description,
     })
       .then((reply) => {
         req.flash('success_messages', '回覆成功！')
-        res.redirect(`/tweets/${req.params.id}`)
+        res.redirect(`/tweets/${req.params.id}/replies`)
       })
+      .catch(error => console.log(error)).
+      done();
 
   },
 

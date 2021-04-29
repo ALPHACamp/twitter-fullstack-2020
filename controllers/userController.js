@@ -262,7 +262,7 @@ let userController = {
 
   addLike: (req, res) => {
     return Like.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
       .then((tweet) => {
@@ -273,7 +273,7 @@ let userController = {
 
     return Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId
       }
     })
@@ -292,7 +292,7 @@ let userController = {
       const results = user.toJSON()
       results.Followers = user.Followers.map((follower) => ({
         ...follower.dataValues,
-        isFollowed: req.user.Followings.map((er) => er.id).includes(follower.id)
+        isFollowed: helpers.getUser(req).Followings.map((er) => er.id).includes(follower.id)
       }))
       results.tweetCount = user.Tweets.length
       results.Followers.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
@@ -312,7 +312,7 @@ let userController = {
       const results = user.toJSON()
       results.Followings = user.Followings.map((Followings) => ({
         ...Followings.dataValues,
-        isFollowed: req.user.Followings.map((er) => er.id).includes(Followings.id)
+        isFollowed: helpers.getUser(req).Followings.map((er) => er.id).includes(Followings.id)
       }))
       results.tweetCount = user.Tweets.length
       results.Followings.sort((a, b) => b.Followship.createdAt - a.Followship.createdAt)
@@ -326,7 +326,7 @@ let userController = {
       return res.redirect('back')
     }
     return Followship.create({
-      followerId: req.user.id,
+      followerId: helpers.getUser(req).id,
       followingId: req.params.userId
     })
       .then((followship) => {
@@ -334,7 +334,7 @@ let userController = {
       })
   },
   removeFollowing: (req, res) => {
-    const followerId = req.user.id
+    const followerId = helpers.getUser(req).id
     const followingId = req.params.userId
 
     Followship.destroy({ where: { followerId, followingId } })
