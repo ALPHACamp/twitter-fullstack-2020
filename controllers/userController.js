@@ -5,6 +5,7 @@ const { getUser } = require('../_helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const sequelize = require('sequelize')
+const { Op } = require('sequelize')
 
 const userService = require('../services/userService')
 
@@ -551,7 +552,41 @@ const userController = {
       console.log(e)
     }
   },
-
+  search: (req, res) => {
+    const loginUser = getUser(req)
+    const keyword = req.query.name
+    return User.findAll({
+      where: {
+        [Op.or]: [
+          {
+            account: {
+              [Op.like]: `%${keyword}%`
+            }
+          },
+          {
+            name: {
+              [Op.like]: `%${keyword}%`
+            }
+          }
+        ]
+      },
+      include: { model: User, as: 'Followers' },
+    }).then(users => {
+      users = users.map(u => ({
+        ...u.dataValues,
+        isFollowed: u.Followers.map(u => u.id).includes(loginUser.id)
+      }))
+      userService.getTopUsers(req, res, (data) => {
+        return res.render('search', {
+          keyword,
+          resultUsers: users,
+          loginUser,
+          ...data
+        })
+      })
+    })
+      .catch(e => res.send(e))
+  }
 }
 
 function definitionErrHandler(err, req, res, obj) {

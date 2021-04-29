@@ -123,6 +123,9 @@ module.exports = {
   },
   subStr: function (str, int) {
     let limit = int ? int : 50
+    if (!str) {
+      return ''
+    }
     if (str.length < limit) {
       return str
     }
