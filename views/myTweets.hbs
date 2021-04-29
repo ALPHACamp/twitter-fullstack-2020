@@ -22,6 +22,10 @@
           <a class="nav-link custom-tab {{#isEqual pathName 'likes'}}custom-tab-active{{/isEqual}}"
             href="/users/{{ userId }}/likes">喜歡的內容</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'tweets'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/likemost">最受喜愛的推文</a>
+        </li>
       </ul>
       <div class="mt-3">
         {{#each tweets}}

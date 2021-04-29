@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const { getUser } = require('../_helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const sequelize = require('sequelize')
 
 const userService = require('../services/userService')
 
@@ -408,6 +409,52 @@ const userController = {
         } finally {
           break
         }
+
+      case 'likemost':
+        try {
+          let tweets = await Tweet.findAll(
+            {
+              where: { UserId: profile_id },
+              attributes: {
+                include: [
+                  [
+                    sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM likes
+              WHERE
+                likes.TweetId = Tweet.id
+                )`),
+                    'likeCount',
+                  ],
+                ]
+              },
+              include: [
+                User,
+                Reply,
+                Like
+              ],
+              order: [[sequelize.literal('likeCount'), 'DESC']]
+            }
+          )
+          tweets = tweets.map(d => {
+            return {
+              ...d.dataValues,
+              name: d.User.name,
+              account: d.User.account,
+              avatar: d.User.avatar,
+              replyAmount: d.Replies.length,
+              isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
+              likeNumber: d.Likes.length
+            }
+          })
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets, ...baseData, ...data })
+          })
+        }
+        catch (e) {
+          console.warn(e)
+        }
+        finally { break }
     }
 
   },

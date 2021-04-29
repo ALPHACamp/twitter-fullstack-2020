@@ -61,6 +61,7 @@ module.exports = (app, passport) => {
   app.get('/users/:id/tweets', authenticated, userController.getProfile)
   app.get('/users/:id/likes', authenticated, userController.getProfile)
   app.get('/users/:id/replies', authenticated, userController.getProfile)
+  app.get('/users/:id/likemost', authenticated, userController.getProfile)
 }
 
 
