@@ -73,7 +73,7 @@ font-size: 14px;">
         <div class="profile-feeds ">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" href="/profile/{{results.id}}">推文</a>
+              <a class="nav-link" href="/users/{{results.id}}/tweets">推文</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/users/{{results.id}}/replied">推文與回覆</a>
@@ -87,7 +87,7 @@ font-size: 14px;">
         {{#each results.Likes}}
         <div class="tweets-section d-flex justify-content-start px-2 " style="border: #E6ECF0 1px solid;"
           id="{{this.id}}">
-          <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+          <a href="/users/{{this.UserId}}/tweets" style="text-decoration:none; ">
             <div class=" col-1 post-avatar mr-1">
               <img class="mt-2" {{#if this.Tweet.User.avatar}}src={{this.Tweet.User.avatar}}{{/if}}
                 style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
@@ -95,7 +95,7 @@ font-size: 14px;">
           </a>
           <div class="col-10 post ml-0 mt-2">
             <div class="post-info d-flex justify-content-start">
-              <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+              <a href="/users/{{this.UserId}}/tweets" style="text-decoration:none; ">
                 <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">
                   {{this.Tweet.User.name}}
                 </div>

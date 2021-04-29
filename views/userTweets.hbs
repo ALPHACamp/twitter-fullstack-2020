@@ -73,7 +73,7 @@ font-size: 14px;">
         <div class="profile-feeds ">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link active" href="/profile/{{results.id}}">推文</a>
+              <a class="nav-link active" href="/users/{{results.id}}/tweets">推文</a>
             </li>
             <li class="nav-item">
               <a class="nav-link " href="/users/{{results.id}}/replied">推文與回覆</a>
@@ -86,7 +86,7 @@ font-size: 14px;">
         {{#each results.Tweets}}
         <div class="tweets-section d-flex justify-content-start px-2 " style="border: #E6ECF0 1px solid;"
           id="{{this.id}}">
-          <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+          <a href="/users/{{ ../results.id}}/tweets" style="text-decoration:none; ">
             <div class=" col-1 post-avatar mr-1">
               <img class="mt-2" {{#if ../results.avatar}}src={{../results.avatar}}{{/if}}
                 style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
@@ -94,7 +94,7 @@ font-size: 14px;">
           </a>
           <div class="col-10 post ml-0 mt-2">
             <div class="post-info d-flex justify-content-start">
-              <a href="/profile/{{this.UserId}}" style="text-decoration:none; ">
+              <a href="/users/{{ ../results.id}}/tweets" style="text-decoration:none; ">
                 <div class="post-user font-weight-bold mr-1" style="color: #1C1C1C;font-size: 15px;">
                   {{../results.name}}
                 </div>
@@ -105,7 +105,7 @@ font-size: 14px;">
               <span class="post-time ml-1" style="font-size: 15px;color: #657786;font-weight: 500;">{{moment
                 this.createdAt}}</span>
             </div>
-            <a href="/tweets/{{this.id}}/replies" style="text-decoration:none; ">
+            <a href="/tweets/{{ this.id}}/replies" style="text-decoration:none; ">
               <div class="post-content my-2" style="font-weight: 500; font-size: 15px;color: #1C1C1C;">
                 {{this.description}}
               </div>
