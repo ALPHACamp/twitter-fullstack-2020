@@ -89,7 +89,9 @@ let adminController = {
                 ...user.dataValues,
                 TweetsCount: user.Tweets.length,
             }))
+            users = users.filter((user) => (user.name !== helpers.getUser(req).name))
             users = users.sort((a, b) => b.TweetsCount - a.TweetsCount)
+            
             return res.render('admin/users', { users })
         })
     },
