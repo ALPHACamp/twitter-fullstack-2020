@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs')
 const { getUser } = require('../_helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const sequelize = require('sequelize')
+const { Op } = require('sequelize')
 
 const userService = require('../services/userService')
 
@@ -408,8 +410,99 @@ const userController = {
         } finally {
           break
         }
-    }
 
+      case 'likemost':
+        try {
+          let tweets = await Tweet.findAll(
+            {
+              where: { UserId: profile_id },
+              attributes: {
+                include: [
+                  [
+                    sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM likes
+              WHERE
+                likes.TweetId = Tweet.id
+                )`),
+                    'likeCount',
+                  ],
+                ]
+              },
+              include: [
+                User,
+                Reply,
+                Like
+              ],
+              order: [[sequelize.literal('likeCount'), 'DESC']]
+            }
+          )
+          tweets = tweets.map(d => {
+            return {
+              ...d.dataValues,
+              name: d.User.name,
+              account: d.User.account,
+              avatar: d.User.avatar,
+              replyAmount: d.Replies.length,
+              isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
+              likeNumber: d.Likes.length
+            }
+          })
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets, ...baseData, ...data })
+          })
+        }
+        catch (e) {
+          console.warn(e)
+        }
+        finally { break }
+
+      case 'replymost':
+        try {
+          let tweets = await Tweet.findAll(
+            {
+              where: { UserId: profile_id },
+              attributes: {
+                include: [
+                  [
+                    sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM replies
+              WHERE
+                replies.TweetId = Tweet.id
+                )`),
+                    'replyCount',
+                  ],
+                ]
+              },
+              include: [
+                User,
+                Reply,
+                Like
+              ],
+              order: [[sequelize.literal('replyCount'), 'DESC']]
+            }
+          )
+          tweets = tweets.map(d => {
+            return {
+              ...d.dataValues,
+              name: d.User.name,
+              account: d.User.account,
+              avatar: d.User.avatar,
+              replyAmount: d.Replies.length,
+              isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
+              likeNumber: d.Likes.length
+            }
+          })
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets, ...baseData, ...data })
+          })
+        }
+        catch (e) {
+          console.warn(e)
+        }
+        finally { break }
+    }
   },
 
   // 更新個人資訊
@@ -421,7 +514,7 @@ const userController = {
       if (files) {
         imgur.setClientID(IMGUR_CLIENT_ID)
         const { cover, avatar } = files
-        if (cover || avatar) {
+        if (cover) {
           await imgur.upload(cover[0].path, (err, img) => {
             return User.findByPk(id)
               .then(user => {
@@ -434,6 +527,8 @@ const userController = {
               })
               .catch(e => console.log(e))
           })
+        }
+        if (avatar) {
           await imgur.upload(avatar[0].path, (err, img) => {
             return User.findByPk(id)
               .then(user => {
@@ -442,24 +537,62 @@ const userController = {
                   introduction,
                   avatar: img.data.link,
                 })
-                return res.redirect('back')
+                  .then(() => {
+                    return res.redirect('back')
+                  })
+                  .catch(e => console.log(e))
               })
               .catch(e => console.log(e))
           })
-        } else {
-          const user = await User.findByPk(id)
-          user.update({
-            name,
-            introduction
-          })
-          return res.redirect('back')
         }
+      } else {
+        const user = await User.findByPk(id)
+        user.update({
+          name,
+          introduction
+        })
+        return res.redirect('back')
       }
-    } catch (e) {
+    }
+    catch (e) {
       console.log(e)
     }
   },
-
+  search: (req, res) => {
+    const loginUser = getUser(req)
+    const keyword = req.query.name
+    return User.findAll({
+      where: {
+        [Op.or]: [
+          {
+            account: {
+              [Op.like]: `%${keyword}%`
+            }
+          },
+          {
+            name: {
+              [Op.like]: `%${keyword}%`
+            }
+          }
+        ]
+      },
+      include: { model: User, as: 'Followers' },
+    }).then(users => {
+      users = users.map(u => ({
+        ...u.dataValues,
+        isFollowed: u.Followers.map(u => u.id).includes(loginUser.id)
+      }))
+      userService.getTopUsers(req, res, (data) => {
+        return res.render('search', {
+          keyword,
+          resultUsers: users,
+          loginUser,
+          ...data
+        })
+      })
+    })
+      .catch(e => res.send(e))
+  }
 }
 
 function definitionErrHandler(err, req, res, obj) {

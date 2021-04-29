@@ -6,7 +6,7 @@
 
     <div class="col-7">
       <div class="d-flex flex-row align-items-center">
-        <a href="/users/{{users.id}}/tweets">
+        <a href="/users/{{paramUser.id}}/tweets">
           <i class="fas fa-arrow-left mr-3" style="color: black;"></i>
         </a>
         <div class="d-flex flex-column">
@@ -18,7 +18,7 @@
       <nav class="navbar navbar-expand-lg navbar-light pt-3 pb-0">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="follow-nav navbar-nav ">
-            <a class="nav-link active" href="/users/{{paramUser.id}}/followers">追蹤者</a>
+            <a class="nav-link custom-tab custom-tab-active" href="/users/{{paramUser.id}}/followers">追蹤者</a>
             <a class="nav-link " href="/users/{{paramUser.id}}/followings">正在追蹤</a>
         </div>
       </nav>
@@ -39,7 +39,7 @@
               </a>
               <div class="list-item-account" style="font-size: smaller;color:rgb(163, 186, 230);">@{{this.account}}
               </div>
-              <p class="list-item-introduction" style="font-size: smaller;">{{this.introduction}}
+              <p class="list-item-introduction" style="font-size: smaller;">{{subStr this.introduction 50}}
               </p>
             </div>
           </div>

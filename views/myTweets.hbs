@@ -15,6 +15,14 @@
             href="/users/{{ userId }}/tweets">推文</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'likemost'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/likemost">最受喜愛</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link custom-tab {{#isEqual pathName 'replymost'}}custom-tab-active{{/isEqual}}"
+            href="/users/{{ userId }}/replymost">最多討論</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link custom-tab {{#isEqual pathName 'replies'}}custom-tab-active{{/isEqual}}"
             href="/users/{{ userId }}/replies">推文與回覆</a>
         </li>
