@@ -65,16 +65,21 @@ let adminController = {
     //         return res.render('admin/tweets', { tweets: data })
     //     })
     // },
-
     deleteTweet: async (req, res) => {
-        await Tweet.findByPk(req.params.id).then((tweet) => {
-            tweet.destroy().then((tweet) => {
-                req.flash('success_messages', '成功刪除文章！')
-                res.redirect('/admin/tweets')
-            })
-        })
+        const id = Number(req.params.id)
+        await Tweet.findByPk(id).then(tweet => {
+            if (tweet !== null) {
+                tweet.destroy()
+        }}).catch(err => console.log(err))
+        await Reply.destroy({ where: { TweetId: id } }).then(reply => {
+            console.log('reply destroy success')
+        }).catch(err => console.log(err))
+        await Like.destroy({ where: { TweetId: id } }).then(like => {
+            console.log('like destroy success')
+        }).catch(err => console.log(err))
+        req.flash('success_messages', '成功刪除文章！')
+        return res.redirect('/admin/tweets')
     },
-
     getUsers: (req, res) => {
         return User.findAll({
             include: [
