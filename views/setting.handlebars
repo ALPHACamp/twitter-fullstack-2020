@@ -1,0 +1,46 @@
+<div class="d-block justify-content-center" style="margin-left: 17rem;">
+  <div>
+    <h3>帳戶設定</h3>
+  </div>
+  <div class="d-flex justify-content-start ml-3">
+    <form action="/user/{{user.id}}/setting?_method=PUT" method="POST" style="width: 50%;">
+      {{> message}}
+      <div class="form-group">
+        <label for="enterAccount">帳號</label>
+        <input type="text" class="form-control" name="account" id="enterAccount" placeholder="請填寫您的帳號"
+          value="{{user.account}}" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label for="enterName">名稱</label>
+        <input type="text" class="form-control" name="name" id="enterName" placeholder="請填寫您的暱稱/名稱"
+          value="{{user.name}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="enterEmail">信箱</label>
+        <input type="email" class="form-control" name="email" id="enterEmail" placeholder="請填寫您的Email地址"
+          value="{{user.email}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="enterPassword">密碼</label>
+        <input type="password" class="form-control" name="password" id="enterPassword" placeholder="填寫您的新密碼"
+          value="{{user.password}}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="checkPassword">確認密碼</label>
+        <input type="password" class="form-control" name="passwordCheck" id="checkPassword" placeholder="再次填寫您的新密碼"
+          value="{{user.password}}" required>
+      </div>
+
+      <button class="btn btn-primary my-3" type="submit">儲存</button>
+
+      <p><a href="/user/{{user.id}}">回我的個人頁面</a></p>
+
+    </form>
+
+  </div>
+
+</div>
