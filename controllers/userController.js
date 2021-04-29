@@ -323,7 +323,7 @@ let userController = {
   addFollowing: (req, res) => {
     if (helpers.getUser(req).id == req.params.userId) {
       req.flash('error_messages', '使用者不能追隨自己！')
-      return res.redirect(`/profile/${req.params.userId}`)
+      return res.redirect(`/users/${req.params.userId}/tweets`)
     } else {
       return Followship.create({
         followerId: helpers.getUser(req).id,
@@ -366,7 +366,7 @@ let userController = {
               avatar: files ? img.data.link : user.avatar,
             }).then((user) => {
               req.flash('success_messages', '更新成功!')
-              res.redirect(`/profile/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
           })
       })
@@ -383,7 +383,7 @@ let userController = {
               cover: files ? img.data.link : user.cover,
             }).then((user) => {
               req.flash('success_messages', '更新成功!')
-              res.redirect(`/profile/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
           })
       })
@@ -410,7 +410,7 @@ let userController = {
                         cover: files ? img.data.link : user.cover,
                       }).then((user) => {
                         req.flash('success_messages', '更新成功!')
-                        res.redirect(`/profile/${user.id}`)
+                        res.redirect(`/users/${user.id}/tweets`)
                       })
                     })
                 })
@@ -430,7 +430,7 @@ let userController = {
           })
             .then((user) => {
               req.flash('success_messages', '更新成功!')
-              res.redirect(`/profile/${user.id}`)
+              res.redirect(`/users/${user.id}/tweets`)
             })
         })
     }

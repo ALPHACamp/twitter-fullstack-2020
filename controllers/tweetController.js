@@ -25,7 +25,7 @@ const tweetController = {
       })
   },
 
-  getTweet: (req, res) => {
+  getTweet: (req, res ,done) => {
     Tweet.findByPk(req.params.id, {
       include: [User,
         { model: Reply, include: [User] },
@@ -38,8 +38,10 @@ const tweetController = {
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           isLiked: isLiked
-        })
+        }),
+        done()
       })
+      
   },
 
   getUser: async (req, res) => {
