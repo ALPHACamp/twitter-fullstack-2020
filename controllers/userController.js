@@ -189,7 +189,7 @@ let userController = {
             })
             results.tweetCount = results.Tweets.length
             results.isFollowed = user.Followers.map((er) => er.id).includes(helpers.getUser(req).id)
-            return res.render('profile', {
+            return res.render('userTweets', {
               results: results,
               currentId: helpers.getUser(req).id
             })
