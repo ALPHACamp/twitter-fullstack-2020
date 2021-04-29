@@ -1,0 +1,46 @@
+{{!-- tweet --}}
+<div class="media">
+  <img src="{{ avatar }}" class="mr-3 rounded-circle" alt="..." width="50" height="50">
+  <div class="media-body">
+    <div class="d-flex">
+      <h5>{{ name }}</h5>
+      <p class="ml-2 text-secondary">{{account}} &bull; {{moment createdAt}}</p>
+    </div>
+    <p>
+      {{description}}
+    </p>
+    <p class="mt-2 text-secondary">
+      回覆給 <span class="text-main">{{account}}</span>
+    </p>
+  </div>
+</div>
+{{!-- Reply list --}}
+{{#each Replies}}
+<div class="media">
+  <img src="{{ this.User.avatar }}" class="rounded-circle mr-3" alt="..." width="50" height="50">
+  <div class="media-body">
+    <div class="d-flex">
+      <p class="font-weight-bold mt-0 mr-2">{{this.User.name}}</p>
+      <p class="text-secondary mb-0">{{ this.User.account }} &bull; {{moment this.createdAt}}</p>
+    </div>
+    <p>回覆<span class="text-main ml-2">{{ this.User.account }}</span></p>
+    <p>{{ this.comment }}</p>
+  </div>
+</div>
+{{/each}}
+{{!-- Reply form --}}
+<div class="media">
+  <img src="{{ user.avatar }}" class="mr-3 rounded-circle" alt="..." width="50" height="50">
+  <div class="media-body">
+    <form action="/tweets/{{ id }}/reply" method="post" class="needs-validation" novalidate>
+      <textarea class="w-100 form-control" name="comment" id="comment" rows="3" cols="10" style="resize: none"
+        placeholder="推你的回覆" required></textarea>
+      <div class="invalid-feedback">
+        回覆不得為空
+      </div>
+      <div class="text-right mt-5">
+        <button type="submit" class="btn btn-primary rounded">回覆</button>
+      </div>
+    </form>
+  </div>
+</div>

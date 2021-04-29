@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="row justify-content-center align-item-center vh-100">
+
+    <form class="form-signin" action="/signup" method="POST">
+
+      <!-- logo -->
+      <img src="/images/AC.png" alt="ac-logo" class="rounded mx-auto d-block"
+        style="width: 50px; height: 50px; margin-bottom: 40px;">
+
+      <!-- title -->
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-bold">建立您的帳號</h1>
+      </div>
+
+      {{> message}}
+
+      <!-- form -->
+      <div class="form-label-group">
+        <label for="account">帳號</label>
+        <input type="text" name="account" id="account" class="form-control"
+          value="{{ account }}" required>
+      </div>
+
+      <div class="form-label-group">
+        <label for="name">名稱</label>
+        <input type="text" name="name" id="name" class="form-control"
+          value="{{ name }}" required>
+      </div>
+
+      <div class="form-label-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" class="form-control"
+          value="{{ email }}" required>
+      </div>
+
+      <div class="form-label-group">
+        <label for="password">密碼</label>
+        <input type="password" name="password" id="password"
+          class="form-control" required>
+      </div>
+
+      <div class="form-label-group">
+        <label for="checkPassword">密碼確認</label>
+        <input type="password" name="checkPassword" id="checkPassword"
+          class="form-control" required>
+      </div>
+
+
+      <!-- button -->
+      <button class="btn btn-lg btn-primary btn-block mt-5" type="submit"
+        style="border-radius: 30px;background-color:#FF6600;border-color: #fff;">
+        註冊
+      </button>
+
+      <p class="text-center mt-4" style="color: #007bff;">
+        <a class=" sign-link" href="/signin">
+          取消
+        </a>
+      </p>
+
+    </form>
+  </div>
+</div>

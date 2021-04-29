@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2">
+      {{> navigationBar}}
+    </div>
+
+    <div class="col-7">
+      <div class="d-flex flex-row align-items-center">
+        <a href="/users/{{paramUser.id}}/tweets">
+          <i class="fas fa-arrow-left mr-3" style="color: black;"></i>
+        </a>
+        <div class="d-flex flex-column">
+          <h5 class="">{{paramUser.name}}</h5>
+          <div class="text-muted">{{paramUser.Tweets.length}}推文</div>
+        </div>
+      </div>
+
+      <nav class="navbar navbar-expand-lg navbar-light pt-3 pb-0">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="follow-nav navbar-nav ">
+            <a class="nav-link" href="/users/{{paramUser.id}}/followers">追蹤者</a>
+            <a class="nav-link custom-tab custom-tab-active" href="/users/{{paramUser.id}}/followings">正在追蹤</a>
+        </div>
+      </nav>
+      <hr class="mt-2">
+
+      <div class="followship-lists">
+        {{#each followings}}
+        <div
+          class="list-item follow-body d-flex flex-row mt-2 align-items-center justify-content-between border-bottom">
+
+          <div class="user-info d-flex flex-row align-items-center">
+            <a href="/users/{{this.id}}/tweets" class="follow-avatar ml-2">
+              <img src="{{this.avatar}}" class=" rounded-circle" width="55" height="55">
+            </a>
+
+            <div class="list-item-name ml-2 d-flex flex-column">
+              <a class=" text-decoration-none" href="/users/{{this.id}}/tweets" style="color: black;">{{this.name}}
+              </a>
+              <div class="list-item-account" style="font-size: smaller;color:rgb(163, 186, 230);">@{{this.account}}
+              </div>
+              <p class="list-item-introduction" style="font-size: smaller;">{{subStr this.introduction 50}}
+              </p>
+            </div>
+          </div>
+          {{#if this.isFollowed}}
+          <form action="/users/{{this.id}}/follow?_method=DELETE" method="POST">
+            <button class="btn btn-outline-warning btn-sm mr-2 text-white font-weight-bold active"
+              style="border-radius: 50px;" aria-pressed="true">正在追蹤</button>
+          </form>
+          {{else}}
+          {{#isEqual this.id ../loginUserId}}
+          {{else}}
+          <form action="/users/{{this.id}}/follow" method="POST">
+            <button class="btn btn-outline-warning btn-sm mr-2 font-weight-bold"
+              style="border-radius: 50px;">追蹤</button>
+          </form>
+          {{/isEqual}}
+          {{/if}}
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+
+    <div class="col-3">
+      {{> topUser}}
+    </div>
+  </div>
+
+</div>

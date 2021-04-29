@@ -1,0 +1,75 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- left side bar -->
+    <div class="col-2 m-0 p-0">
+      <div class="list-group rounded-0 sticky-top vh-100 border-right">
+        <div class="list-group-item mb-4 border-0">
+          <img src="/images/AC.png" alt="AC" width="35" height="35">
+        </div>
+        <a href="/admin/tweets"
+          class="list-group-item list-group-item-action border-0 {{#isEqual currentPath '/admin/tweets'}}custom-link-active{{/isEqual}}">
+          <i class="fas fa-home"></i>
+          <span class="ml-2">推文清單</span>
+        </a>
+        <a href="/admin/users"
+          class="list-group-item list-group-item-action border-0 {{#isEqual currentPath '/admin/users'}}custom-link-active{{/isEqual}}">
+          <i class="far fa-user"></i>
+          <span class="ml-2">使用者列表</span>
+        </a>
+        <a href="/logout"
+          class="list-group-item list-group-item-action border-0 mt-auto">
+          <i class="fas fa-sign-out-alt"></i>
+          <span class="ml-2">登出</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- right side bar -->
+    <div class="col-10 m-0 p-0">
+
+      <!-- title -->
+      <div class="border-bottom">
+        <h5 class="p-3 font-weight-bold mb-0">推文清單</h5>
+      </div>
+
+      <!-- tweets -->
+      {{#each tweet}}
+        <div class="card" style="border-radius: 0px;">
+          <div class="card-body">
+
+            <!-- delete button -->
+            <div class="position-absolute" style="top:10px; right:10px">
+              <form action="/admin/tweets/{{ this.id }}?_method=DELETE"
+                method="post">
+                <button type="submit"
+                  class="btn btn-sm btn-link text-decoration-none text-secondary">
+                  <i class="fas fa-times fa-2x"></i>
+                </button>
+              </form>
+            </div>
+
+            <!-- media info -->
+            <div class="media">
+              <img src="{{ this.User.avatar }}" class="mr-3 rounded-circle"
+                alt="{{ this.User.name }}" style="width: 64px;height: 64px;">
+              <div class="media-body">
+                <div class="d-flex">
+                  <h5>{{ this.User.name }}</h5>
+                  <p class="ml-2 text-secondary">@{{this.User.account}} &bull;
+                    {{moment this.createdAt}}
+                  </p>
+                </div>
+                <p>
+                  {{this.description}}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+
+    </div>
+  </div>
+
+</div>
