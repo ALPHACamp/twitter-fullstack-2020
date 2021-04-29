@@ -30,7 +30,7 @@ describe('# Admin::Tweet request', () => {
           .expect(302)
           .end(function (err, res) {
             if (err) return done(err);
-            done(); Tweet1
+            done();
           });
       })
 
