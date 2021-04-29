@@ -4,7 +4,7 @@ const helpers = require('../_helpers')
 
 
 const replyController = {
-  postReply: (req, res, done) => {
+  postReply: (req, res) => {
     const comment = req.body.description
     if (!comment.length) {
       req.flash('error_messages', '回覆不可為空白!')
@@ -24,7 +24,7 @@ const replyController = {
         res.redirect('back')//(`/tweets/${req.params.id}/replies`)
       })
       .catch(error => console.log(error))
-      .done()
+      
 
   },
 
