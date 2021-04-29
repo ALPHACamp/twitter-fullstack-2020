@@ -65,9 +65,9 @@ router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 
 // User
-router.get('/login', userController.loginPage)
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), userController.login)
-router.get('/logout', userController.logout)
+router.get('/signin', userController.signinPage)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signin)
+router.get('/signout', userController.signout)
 
 
 router.get('/tweets', authenticated, userController.getTopUsers, tweetController.getTweets)
