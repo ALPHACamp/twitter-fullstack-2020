@@ -55,27 +55,27 @@ let userController = {
   },
 
 
-  registerPage: (req, res) => {
-    return res.render('register')
+  signupPage: (req, res) => {
+    return res.render('signup')
   },
-  userRegister: (req, res) => {
+  userSignup: (req, res) => {
     if (req.body.confirmPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/register')
+      return res.redirect('/signup')
     }
     else {
       // confirm unique account
       User.findOne({ where: { account: req.body.account } }).then(user => {
         if (user) {
           req.flash('error_messages', '帳號重複！')
-          return res.redirect('/register')
+          return res.redirect('/signup')
         }
         else {
           // confirm unique user
           User.findOne({ where: { email: req.body.email } }).then(user => {
             if (user) {
               req.flash('error_messages', '信箱重複！')
-              return res.redirect('/register')
+              return res.redirect('/signup')
             } else {
               User.create({
                 account: req.body.account,
@@ -86,7 +86,7 @@ let userController = {
                 image: null
               }).then(user => {
                 req.flash('success_messages', '成功註冊帳號！')
-                return res.redirect('/login')
+                return res.redirect('/signin')
               })
             }
           })

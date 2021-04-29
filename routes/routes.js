@@ -47,8 +47,8 @@ const authenticatedAdmin = (req, res, next) => {
 
 router.get('/', (req, res) => res.redirect('/tweets'))
 
-router.get('/register', userController.registerPage)
-router.post('/register', userController.userRegister)
+router.get('/signup', userController.signupPage)
+router.post('/signup', userController.userSignup)
 
 
 
