@@ -19,7 +19,7 @@ const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
         if (helpers.getUser(req).isAdmin == 1 || helpers.getUser(req).role == 'admin') {
             req.flash('error_messages', '登入錯誤！')
-            return res.redirect('back')
+            return res.redirect('/admin/tweets')
         } else {
             return next()
         }
@@ -28,7 +28,7 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-        if (helpers.getUser(req).isAdmin==1 || helpers.getUser(req).role == 'admin') {
+        if (helpers.getUser(req).isAdmin == 1 || helpers.getUser(req).role == 'admin') {
             return next()
         }
         else {
