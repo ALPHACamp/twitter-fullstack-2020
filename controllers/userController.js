@@ -92,7 +92,7 @@ const userController = {
         attributes: ['id', 'account', 'name', 'avatar', 'introduction', 'cover', 'role'],
         include: [
           Tweet,
-          { model: Tweet, include: [Like] },
+          { model: Tweet, include: [{ model: Like, attributes: ['id'] }] },
           { model: Tweet, include: [Reply] },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
@@ -112,14 +112,17 @@ const userController = {
       }
       const tweetsData = await user.Tweets.map((data) => ({
         userId: data.UserId,
+        tweetId: data.id,
         description: data.description.substring(0, 100),
         elapsedTime: moment(data.createdAt, 'YYYYMMDD').fromNow(),
         likesCount: data.Likes.length,
-        repliesCount: data.Replies.length
+        repliesCount: data.Replies.length,
+        isLike: req.user.Likes.map(d => d.id).includes(data.id)
       }))
       return res.render('user', {
         user: userData,
-        tweets: tweetsData
+        tweets: tweetsData,
+        tweetsSidebar
       })
     } catch (err) {
       console.log(err)
@@ -222,7 +225,8 @@ const userController = {
       }))
       return res.render('likes', {
         user: userData,
-        likeTweets: likeTweetsData
+        likeTweets: likeTweetsData,
+        tweetsSidebar
       })
     } catch (err) {
       console.log(err)
@@ -267,7 +271,8 @@ const userController = {
       }))
       return res.render('repliesList', {
         user: userData,
-        repliesTweets: repliesTweetsData
+        repliesTweets: repliesTweetsData,
+        tweetsSidebar
       })
     } catch (err) {
 

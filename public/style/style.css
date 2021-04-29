@@ -1,5 +1,5 @@
 .main_sidebar {
-  width: 14rem;
+  width: 20%;
   height: 100vh;
   border-right: thin solid #e6ecf0;
   margin-left: 3rem;
@@ -102,6 +102,15 @@
   right: 50%;
   transform: translate(50%, -50%);
 }
+.user-tweet-avatar {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  position: absolute;
+  top: 0px;
+  left: 15%;
+}
 
 /*user profile*/
 .user-profile-card {
@@ -123,9 +132,8 @@
   border-radius: 50%;
   border: 3px solid #fff;
   position: absolute;
-  top: 140px;
-  right: 50%;
-  transform: translate(-130%, -50%);
+  top: 90px;
+  left: 2%;
 }
 .user-profile-btn {
   background-color: #fff;
@@ -140,9 +148,8 @@
   object-fit: cover;
   border-radius: 50%;
   position: absolute;
-  top: 30px;
-  right: 50%;
-  transform: translate(50%, -50%);
+  top: 5px;
+  left: 20%;
 }
 
 .tweet_new {

@@ -1,4 +1,4 @@
-<div class="d-block justify-content-center" style="margin-left: 17rem;">
+<div class="d-block justify-content-start">
     <div>
         {{> message}}
         <h4 style="padding: 1rem;">首頁</h4>
@@ -8,7 +8,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-2">
-                    <i class="bi bi-person-square"></i>
+                    <img class="user-tweet-avatar" src="{{user.avatar}}" alt="no pic">
                 </div>
                 <div class="col-10">
                     <form action="/tweets" method="POST" style="width: 100%;" id="newTweet">
@@ -29,7 +29,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-2">
-                    <i class="bi bi-person-square"></i>
+                    <img class="user-profile-tweets-avatar" src="{{this.User.avatar}}" alt="no pic">
                 </div>
                 <div class="col-10">
                     <h5 class="card-title" style="display: inline-block;">{{this.User.name}}</h5>
@@ -43,7 +43,6 @@
                         <p class="card-text">{{this.description}}</p>
                     </a>
                 </div>
-
                 <div style="position: absolute; margin-top: 5.5rem;">
                     <button type="button" data-toggle="modal" data-target="#postReply_{{this.id}}"
                         class="reply_line reply_btn"><i class="bi bi-chat"></i></button>

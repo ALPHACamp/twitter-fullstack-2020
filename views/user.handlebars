@@ -1,19 +1,16 @@
-<div class="d-block justify-content-center" style="margin-left: 17rem;">
+<div class="d-block justify-content-center">
   <div class="contener" style="width: 30rem; height:3rem; border-top: thin solid #e6ecf0;">
-    <div class="d-flex justify-content-start">
-      <div class="fs-2 mx-2 pt-2">
-        <i class="bi bi-arrow-left-short"></i>
-      </div>
-      <div class="">
+    <div class="d-flex justify-content-start mx-2">
+      <h4 style="padding: 4px;"><a href="/tweets" style="color: black;">&#8592; </a></h4>
+      <div class="my-0 ml-2">
         <p class="my-0" style="font-weight: bold;">{{user.name}}</p>
-        <small>{{user.tweetsCount}} 推文</small>
+        <p class="small">{{user.tweetsCount}} 推文</p>
       </div>
-
     </div>
   </div>
 
   <!--User 頭像&背景-->
-  <div class="contener" style="width: 30rem; height:12rem; border-top: thin solid #e6ecf0;">
+  <div class="contener" style="border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
     <div class="user-profile-card d-flex flex-column justify-content-start text-center">
       {{> message}}
       <img class="user-profile-cover" src="{{user.cover}}" alt="no pic">
@@ -25,7 +22,7 @@
   </div>
 
   <!--User 基本資料-->
-  <div class="contener" style="width: 30rem; height:10rem; border-top: thin solid #e6ecf0;">
+  <div class="contener" style="border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
     <div class="mx-2 pt-2">
       <p class="m-0" style="font-weight: bold;">{{user.name}}</p>
       <small>@{{user.account}}</small>
@@ -40,15 +37,13 @@
   </div>
 
   <!--Navs-->
-  <div class="contener" style="width: 30rem; height:3rem; border-top: thin solid #e6ecf0;">
+  <div class="contener" style="border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
     <ul class="nav justify-content">
-
       <li class="nav-item">
         <a href="/users/{{user.id}}" class="nav-link active router-link-active" aria-current="page" style="color:orangered;border-bottom-style: solid;
           border-width: 1px;
           border-color:orangered;">推文</a>
       </li>
-
       <li class="nav-item">
         <a href="/users/{{user.id}}/repliesList" class="nav-link" style="color:black;">推文與回覆</a>
       </li>
@@ -60,27 +55,32 @@
 
   <!--Tweets-->
   {{#each tweets}}
-  <div class="contener"
-    style="width: 30rem; height:11rem; border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
-    <div class="card-body">
+  <div class="contener" style="border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
+    <div class="card-body p-2">
       <div class="row">
-
         <div class="col-2">
           <img class="user-profile-tweets-avatar" src="{{../user.avatar}}" alt="no pic">
         </div>
         <div class="col-10">
           <h5 class="card-title" style="display: inline-block;">{{../user.name}}</h5>
-          <a href="{{this.Userid}}" class="card-link" style="display: inline-block;">@{{../user.account}}</a>
+          <a href="{{this.userId}}" class="card-link" style="display: inline-block;">@{{../user.account}}</a>
           <p class="card-text" style="display: inline-block;"><small class="text-muted">{{this.elapsedTime}}</small>
           </p>
           <p class="card-text">{{this.description}}</p>
+          <button type="button" class="bi bi-chat reply_btn ml-0"><span
+              class="ml-2">{{this.repliesCount}}</span></button>
+          {{#if this.isLike}}
+          <form action="/tweets/{{this.tweetId}}/removeLike?_method=DELETE" method="POST"
+            class="col-2 mr-2 reply_line reply_btn">
+            <button type="submit" class="bi bi-heart-fill like_btn ml-0"
+              style="color: rgb(255, 94, 0);">{{this.likesCount}}</button><span>{{this.likesCount}}</span>
+          </form>
+          {{else}}
+          <form action="/tweets/{{this.tweetId}}/addLike" method="POST" class="col-2 mr-2 reply_line reply_btn">
+            <button type="submit" class="bi bi-heart like_btn ml-0"></button><span>{{this.likesCount}}</span>
+          </form>
+          {{/if}}
         </div>
-
-        <div style="position: absolute; margin-top: 6.5rem; margin-left: 4.5rem;">
-          <button type="button" class="bi bi-chat reply_btn"><span class="ml-2">{{this.repliesCount}}</span></button>
-          <button type="button" class="bi bi-heart like_btn"><span class="ml-2">{{this.likesCount}}</span></button>
-        </div>
-
       </div>
     </div>
   </div>
