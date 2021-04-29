@@ -514,7 +514,7 @@ const userController = {
       if (files) {
         imgur.setClientID(IMGUR_CLIENT_ID)
         const { cover, avatar } = files
-        if (cover || avatar) {
+        if (cover) {
           await imgur.upload(cover[0].path, (err, img) => {
             return User.findByPk(id)
               .then(user => {
@@ -527,6 +527,8 @@ const userController = {
               })
               .catch(e => console.log(e))
           })
+        }
+        if (avatar) {
           await imgur.upload(avatar[0].path, (err, img) => {
             return User.findByPk(id)
               .then(user => {
@@ -535,20 +537,24 @@ const userController = {
                   introduction,
                   avatar: img.data.link,
                 })
-                return res.redirect('back')
+                  .then(() => {
+                    return res.redirect('back')
+                  })
+                  .catch(e => console.log(e))
               })
               .catch(e => console.log(e))
           })
-        } else {
-          const user = await User.findByPk(id)
-          user.update({
-            name,
-            introduction
-          })
-          return res.redirect('back')
         }
+      } else {
+        const user = await User.findByPk(id)
+        user.update({
+          name,
+          introduction
+        })
+        return res.redirect('back')
       }
-    } catch (e) {
+    }
+    catch (e) {
       console.log(e)
     }
   },
