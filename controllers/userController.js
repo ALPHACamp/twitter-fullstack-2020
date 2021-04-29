@@ -455,8 +455,53 @@ const userController = {
           console.warn(e)
         }
         finally { break }
-    }
 
+      case 'replymost':
+        try {
+          let tweets = await Tweet.findAll(
+            {
+              where: { UserId: profile_id },
+              attributes: {
+                include: [
+                  [
+                    sequelize.literal(`(
+              SELECT COUNT(*)
+              FROM replies
+              WHERE
+                replies.TweetId = Tweet.id
+                )`),
+                    'replyCount',
+                  ],
+                ]
+              },
+              include: [
+                User,
+                Reply,
+                Like
+              ],
+              order: [[sequelize.literal('replyCount'), 'DESC']]
+            }
+          )
+          tweets = tweets.map(d => {
+            return {
+              ...d.dataValues,
+              name: d.User.name,
+              account: d.User.account,
+              avatar: d.User.avatar,
+              replyAmount: d.Replies.length,
+              isLike: d.Likes.map(l => l.UserId).includes(getUser(req).id),
+              likeNumber: d.Likes.length
+            }
+          })
+          userService.getTopUsers(req, res, (data) => {
+            return res.render('myTweets', { tweets, ...baseData, ...data })
+          })
+        }
+        catch (e) {
+          console.warn(e)
+        }
+        finally { break }
+    }
   },
 
   // 更新個人資訊
