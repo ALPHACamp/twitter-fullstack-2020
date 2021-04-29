@@ -30,7 +30,7 @@ describe('# Admin::Tweet request', () => {
           .expect(302)
           .end(function (err, res) {
             if (err) return done(err);
-            done();
+            done(); Tweet1
           });
       })
 
@@ -84,7 +84,7 @@ describe('# Admin::Tweet request', () => {
       it('cant go to /tweets page', (done) => {
         request(app)
           .get('/tweets')
-          .expect(303)
+          .expect(302)
           .expect('Location', '/admin/tweets')
           .end(function (err, res) {
             if (err) return done(err);

@@ -17,7 +17,7 @@ const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-        if (helpers.getUser(req).isAdmin) {
+        if (helpers.getUser(req).isAdmin == 1 || helpers.getUser(req).role == 'admin') {
             req.flash('error_messages', '登入錯誤！')
             return res.redirect('back')
         } else {
@@ -28,12 +28,12 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-        if (helpers.getUser(req).isAdmin) {
+        if (helpers.getUser(req).isAdmin==1 || helpers.getUser(req).role == 'admin') {
             return next()
         }
         else {
             req.flash('error_messages', '登入錯誤！')
-            return res.redirect('/admin/signin')
+            return res.redirect('back')
         }
 
     }

@@ -13,8 +13,16 @@ let adminController = {
     },
 
     signin: (req, res) => {
-        req.flash('success_messages', '成功登入！')
-        return res.redirect('/admin/tweets')
+        User.findOne({ where: { account: req.body.account } }).then(user => {
+            if (user.role == 'admin') {
+                req.flash('success_messages', '成功登入！')
+                res.redirect('/admin/tweets')
+
+            } else {
+                req.flash('error_messages', '登入失敗！')
+                return res.redirect('/admin/signin')
+            }
+        })
     },
 
     logout: (req, res) => {
@@ -64,7 +72,6 @@ let adminController = {
             tweet.destroy().then((tweet) => {
                 req.flash('success_messages', '成功刪除文章！')
                 res.redirect('/admin/tweets')
-                done();
             })
         })
     },

@@ -19,6 +19,7 @@ module.exports = {
                     cover:
                         'https://cff2.earth.com/uploads/2019/08/01224933/How-plant-roots-know-to-follow-gravity-730x410.jpg',
                     introduction: faker.lorem.text().substring(0, 30),
+                    role: 'admin',
                     createdAt: new Date(),
                     updatedAt: new Date(),
                 },
