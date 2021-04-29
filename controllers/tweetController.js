@@ -48,7 +48,6 @@ const tweetController = {
         include: [User, Like],
       });
       tweet = tweet.toJSON();
-      console.log(tweet);
       const replies = await Reply.findAndCountAll({
         raw: true,
         nest: true,

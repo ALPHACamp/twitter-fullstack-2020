@@ -1,4 +1,4 @@
-<div class="d-block justify-content-center" style="margin-left: 17rem;">
+<div class="d-block justify-content-center">
     <div>
         <h4 style="padding: 1rem;"><a href="/tweets" style="color: black;">&#8592; </a>推文</h4>
     </div>
@@ -6,14 +6,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-2">
-                    <i class="bi bi-person-square"></i>
+                    <img class="user-tweet-avatar" src="{{tweet.User.avatar}}" alt="no pic">
                 </div>
                 <div class="col-10">
                     <h5 class="card-title" style="margin-bottom: 0;">{{tweet.User.name}}</h5>
                     <a href="/users/{{tweet.User.id}}" class="text-muted">@{{tweet.User.account}}</a>
                 </div>
             </div>
-            <p class="card-text" style="margin-top: .5rem; ">{{tweet.description}}</p>
+            <p class="card-text my-5" style="margin-top: .5rem; ">{{tweet.description}}</p>
             <p class="card-text"><small class="text-muted">{{time}}</small>
             </p>
         </div>
@@ -44,6 +44,7 @@
             <div class="row">
                 <div class="col-2">
                     <i class="bi bi-person-square"></i>
+                    <img class="user-tweet-avatar" src="{{this.User.avatar}}" alt="no pic">
                 </div>
                 <div class="col-10">
                     <div class="reply_box">
@@ -82,7 +83,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-2">
-                            <i class="bi bi-person-square"></i>
+                            <img class="user-tweet-avatar" src="{{tweet.User.avatar}}" alt="no pic">
                         </div>
                         <div class="col-10">
                             <div>
