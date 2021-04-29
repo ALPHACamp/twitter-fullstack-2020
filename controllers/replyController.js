@@ -24,7 +24,7 @@ const replyController = {
         res.redirect('back')//(`/tweets/${req.params.id}/replies`)
       })
       .catch(error => console.log(error))
-      .done()
+      
 
   },
 

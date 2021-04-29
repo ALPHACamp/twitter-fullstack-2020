@@ -26,7 +26,11 @@ const tweetController = {
       })
   },
 
+<<<<<<< HEAD
   getTweet: (req, res) => {
+=======
+  getTweet: (req, res ) => {
+>>>>>>> ac8007b939d72d9bfcc524de182880f2d427f63c
     Tweet.findByPk(req.params.id, {
       include: [User,
         { model: Reply, include: [User] },
@@ -39,8 +43,12 @@ const tweetController = {
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           isLiked: isLiked
+<<<<<<< HEAD
         }),
           done()
+=======
+        })
+>>>>>>> ac8007b939d72d9bfcc524de182880f2d427f63c
       })
 
   },
