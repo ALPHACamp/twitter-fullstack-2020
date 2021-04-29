@@ -41,7 +41,6 @@ const tweetController = {
           isLiked: isLiked
         })
       })
-
   },
 
   getUser: async (req, res) => {
