@@ -343,7 +343,16 @@ let userController = {
     return res.redirect('back')
 
   },
-
+  editProfile:(req,res) => {
+    const userId = Number(req.params.id)
+    if (helpers.getUser(req).id !== userId) {
+      return res.redirect('back')
+    } else {
+      User.findByPk(userId).then(user => {
+        return res.json({ ...user.toJSON() })
+      })
+    }
+  },
   postProfile: (req, res) => {
     if (!req.body.name) {
       req.flash('error_messages', "請輸入名稱")
