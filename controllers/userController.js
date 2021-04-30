@@ -346,12 +346,30 @@ let userController = {
   editProfile:(req,res) => {
     const userId = Number(req.params.id)
     if (helpers.getUser(req).id !== userId) {
-      return res.redirect('back')
+      return res.json({ status: 'error', message: '您無權限更改用戶簡介' })
     } else {
       User.findByPk(userId).then(user => {
         return res.json({ ...user.toJSON() })
       })
     }
+  },
+  apiPostUserInfo: (req, res) => {
+    const id = req.params.userId
+    const loginId = helpers.getUser(req).id
+    const { name, introduction } = req.body
+    // check user auth
+    if (loginId !== Number(id)) {
+      return res.json({ status: 'error', message: 'permission denied' })
+    }
+    return User.findByPk(id).then(user => {
+      user.update({
+        name: name,
+        introduction: introduction
+      })
+    }).then(() => {
+    res.json({ status: 'success', message: 'Updated successfully' })
+      return res.redirect('back')
+    }).catch(err => console.log(err))
   },
   postProfile: (req, res) => {
     if (!req.body.name) {

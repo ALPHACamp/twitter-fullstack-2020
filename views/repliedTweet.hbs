@@ -117,7 +117,7 @@ font-size: 14px;">
                   </div>
                   {{!-- add like button --}}
                   {{#if this.Tweet.isLiked }}
-                  <form action="/tweet/{{this.Tweet.id}}/unlike'" method="POST">
+                  <form action="/tweets/{{this.Tweet.id}}/unlike'" method="POST">
                     <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
                       <i class="fas fa-heart" style="color: #657786;"></i>
                       <span class="rely-amount ml-2"
@@ -125,7 +125,7 @@ font-size: 14px;">
                     </button>
                   </form>
                   {{else}}
-                  <form action="/tweet/{{this.Tweet.id}}/like" method="POST">
+                  <form action="/tweets/{{this.Tweet.id}}/like" method="POST">
                     <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
                       <i class="far fa-heart" style="color: #657786;"></i>
                       <span class="rely-amount ml-2"
