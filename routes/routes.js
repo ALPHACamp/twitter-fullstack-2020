@@ -76,7 +76,7 @@ router.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
 router.get('/users/:id/tweets', authenticated, userController.getTopUsers, userController.getUser)
 
 router.get('/api/users/:id', authenticated,userController.editProfile)
-router.post('/api/users/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postProfile,userController.apiPostUserInfo)
+router.post('/api/users/:id', authenticated, upload.fields([{ name: 'avatar' }, { name: 'cover' }]), userController.postProfile)
 
 router.get('/users/:id/replied', authenticated, userController.getTopUsers, userController.getReplied)
 router.get('/users/:id/likes', authenticated, userController.getTopUsers, userController.getLiked)
