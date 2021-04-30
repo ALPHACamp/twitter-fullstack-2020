@@ -47,13 +47,13 @@ font-size: 15px;color: #657786;font-weight: 500;">{{moment tweet.updatedAt}} by 
             </button>
           </div>
           {{#if this.isLiked }}
-          <form action="/tweet/{{tweet.id}}/unlike" method="POST">
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
             <button type="submit" class="btn ml-3 p-0" style="background-color: white;">
               <i class="fas fa-heart" style="color: #657786;"></i>
             </button>
           </form>
           {{else}}
-          <form action="/tweet/{{tweet.id}}/like" method="POST">
+          <form action="/tweets/{{tweet.id}}/like" method="POST">
             <button type="submit" class="btn ml-3 p-0" style="background-color: white; ">
               <i class="far fa-heart" style="color: #657786;"></i>
             </button>

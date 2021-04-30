@@ -68,10 +68,8 @@ router.get('/tweets', authenticated, userController.getTopUsers, tweetController
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/tweets/:id/replies', authenticated, userController.getTopUsers, tweetController.getTweet)
 router.post('/tweets/:id/replies', authenticated, replyController.postReply)
-router.post('/tweets/like/:tweetId', authenticated, userController.addLike)
-router.delete('/tweets/like/:tweetId', authenticated, userController.removeLike)
-router.post('/tweet/:tweetId/like', authenticated, userController.addLike)
-router.post('/tweet/:tweetId/unlike', authenticated, userController.removeLike)
+router.post('/tweets/:tweetId/like', authenticated, userController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
 
 
 
