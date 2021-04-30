@@ -16,10 +16,10 @@ font-size: 13px;color: #657786;">{{results.Tweets.length}} 推文
       <div class="follow-feeds">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link active" href="/users/{{results.id}}/following" style="text-decoration: none;">正在跟隨</a>
+            <a class="nav-link active" href="/users/{{results.id}}/followings" style="text-decoration: none;">正在跟隨</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " href="/users/{{results.id}}/follower" style="text-decoration: none;">跟隨者</a>
+            <a class="nav-link " href="/users/{{results.id}}/followers" style="text-decoration: none;">跟隨者</a>
           </li>
 
         </ul>
@@ -46,7 +46,7 @@ font-size: 13px;color: #657786;">{{results.Tweets.length}} 推文
             </div>
 
 
-            <div class="follower-following " style="display: flex; align-items: center;">
+            <div class="follower-following" style="display: flex; align-items: center;">
               {{#ifCond ../user.id this.id}}
               {{else}}
               {{#if this.isFollowed }}

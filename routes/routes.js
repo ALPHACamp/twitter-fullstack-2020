@@ -43,23 +43,15 @@ const authenticatedAdmin = (req, res, next) => {
 
 
 // 準備引入路由模組
-
-
 router.get('/', (req, res) => res.redirect('/tweets'))
-
-router.get('/signup', userController.signupPage)
-router.post('/signup', userController.userSignup)
-
 
 
 //Admin
 router.get('/admin/signin', adminController.signinPage)
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signin)
 router.get('/admin/signout', adminController.signout)
-
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
-
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 
@@ -68,6 +60,8 @@ router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 router.get('/signin', userController.signinPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signin)
 router.get('/signout', userController.signout)
+router.get('/signup', userController.signupPage)
+router.post('/signup', userController.userSignup)
 
 
 router.get('/tweets', authenticated, userController.getTopUsers, tweetController.getTweets)
@@ -91,8 +85,8 @@ router.get('/users/:id/likes', authenticated, userController.getTopUsers, userCo
 
 router.get('/users/:id/setting', authenticated, userController.settingPage)
 router.put('/users/:id', authenticated, userController.putSetting)
-router.get('/users/:id/follower', authenticated, userController.getTopUsers, userController.getFollowers)
-router.get('/users/:id/following', authenticated, userController.getTopUsers, userController.getFollowings)
+router.get('/users/:id/followers', authenticated, userController.getTopUsers, userController.getFollowers)
+router.get('/users/:id/followings', authenticated, userController.getTopUsers, userController.getFollowings)
 router.post('/followships/:userId', authenticated, userController.addFollowing)
 router.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
