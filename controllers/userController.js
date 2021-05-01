@@ -59,7 +59,7 @@ let userController = {
     return res.render('signup')
   },
   userSignup: (req, res) => {
-    if (req.body.confirmPassword !== req.body.password) {
+    if (req.body.checkPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     }
