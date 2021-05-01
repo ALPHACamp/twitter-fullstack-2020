@@ -55,8 +55,8 @@ font-size: 13px;color: #657786;">{{results.Tweets.length}} 推文
                   height: 35px;font-size: 15px;color: white ;background: #FF6600;font-weight:bold;">正在跟隨</button>
               </form>
               {{else}}
-              <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
-                  class="btn follower" style="border: 1px solid #FF6600;border-radius: 100px;width: 62px;
+              <form action="/followships" method="POST" style="display: contents;"><button type="submit"
+                  class="btn follower" name="id" value="{{this.id}}" style="border: 1px solid #FF6600;border-radius: 100px;width: 62px;
                       height: 35px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button>
               </form>
               {{/if}}

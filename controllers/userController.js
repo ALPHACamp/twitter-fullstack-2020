@@ -321,15 +321,17 @@ let userController = {
       .catch((err) => res.send(err))
   },
   addFollowing: (req, res) => {
-    if (helpers.getUser(req).id == req.params.userId) {
+    if (helpers.getUser(req).id == req.body.id) {
       req.flash('error_messages', '使用者不能追隨自己！')
-      return res.redirect(`/users/${req.params.userId}/tweets`)
+      return res.render('error')
     } else {
       return Followship.create({
         followerId: helpers.getUser(req).id,
-        followingId: req.params.userId
+        followingId: req.body.id
       })
         .then((followship) => {
+          console.log("followerId ==== ", helpers.getUser(req).id)
+          console.log("followingId ==== ", req.body.id)
           return res.redirect('back')
         })
     }
@@ -343,7 +345,7 @@ let userController = {
     return res.redirect('back')
 
   },
-  editProfile:(req,res) => {
+  editProfile: (req, res) => {
     const userId = Number(req.params.id)
     if (helpers.getUser(req).id !== userId) {
       return res.json({ status: 'error', message: '您無權限更改用戶簡介' })

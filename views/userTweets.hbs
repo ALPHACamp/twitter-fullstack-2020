@@ -41,8 +41,8 @@ height: 40px;border-radius:100%"><i class="far fa-bell " style="color:#FF6600;fo
         height: 40px;font-size: 15px;color: white ;background: #FF6600;font-weight:bold;">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/{{results.id}}" method="POST" style="display: contents;"><button type="submit"
-                class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 80px;
+            <form action="/followships" method="POST" style="display: contents;"><button type="submit"
+                class="btn profile-edit  mt-2 mr-3" name="id" value="{{this.id}}" style="border: 1px solid #FF6600;border-radius: 100px;width: 80px;
             height: 40px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button>
             </form>
             {{/if}}

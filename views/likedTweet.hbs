@@ -41,8 +41,8 @@ height: 40px;border-radius:100%"><i class="far fa-bell " style="color:#FF6600;fo
         height: 40px;font-size: 15px;color: white ;background: #FF6600;font-weight:bold;">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/{{results.id}}" method="POST" style="display: contents;"><button type="submit"
-                class="btn profile-edit  mt-2 mr-3" style="border: 1px solid #FF6600;border-radius: 100px;width: 80px;
+            <form action="/followships" method="POST" style="display: contents;"><button type="submit"
+                class="btn profile-edit  mt-2 mr-3" name="id" value="{{this.id}}" style="border: 1px solid #FF6600;border-radius: 100px;width: 80px;
             height: 40px;font-size: 15px;color: #FF6600;background: none;font-weight:bold;">跟隨</button>
             </form>
             {{/if}}
@@ -59,12 +59,12 @@ line-height: 20px;
 color: #000000;">{{results.introduction}}</div>
         <div class="profile-fellowship d-flex justify-content-start ml-3 mb-3" style="font-weight: 500;
 font-size: 14px;">
-          <a href="/users/{{results.id}}/following" style="text-decoration: none;">
+          <a href="/users/{{results.id}}/followings" style="text-decoration: none;">
             <div class="profile-following mr-3 mb-3"><span
                 style="color: #000000">{{results.Followings.length}}位</span><span style="color: #657786;">追隨中</span>
             </div>
           </a>
-          <a href="/users/{{results.id}}/follower" style="text-decoration: none;">
+          <a href="/users/{{results.id}}/followers" style="text-decoration: none;">
             <div class="profile-follower"><span style="color: #000000">{{results.Followers.length}}位</span><span
                 style="color: #657786;">追隨者</span>
             </div>
