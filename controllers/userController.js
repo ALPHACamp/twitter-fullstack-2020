@@ -337,12 +337,18 @@ let userController = {
     }
   },
   removeFollowing: (req, res) => {
-    const followerId = helpers.getUser(req).id
-    const followingId = req.params.userId
-
-    Followship.destroy({ where: { followerId, followingId } })
-
-    return res.redirect('back')
+    return Followship.findOne({
+      where: {
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.userId
+      }
+    })
+      .then(favorite => {
+        favorite.destroy()
+          .then(() => {
+            return res.redirect('back')
+          })
+      })
 
   },
   editProfile: (req, res) => {
@@ -358,92 +364,94 @@ let userController = {
   postProfile: (req, res) => {
     if (!req.body.name) {
       req.flash('error_messages', "請輸入名稱")
-      return res.redirect('back')
-    }
-    if (!req.body.introduction) {
-      req.flash('error_messages', "請輸入自我介紹")
-      return res.redirect('back')
-    }
+      return res.render(`userTweets`)
+    } else {
+      if (!req.body.introduction) {
+        req.flash('error_messages', "請輸入自我介紹")
+        return res.render(`userTweets`)
+      } else {
 
-    const { files } = req
-    if (files.avatar !== undefined & files.cover === undefined) {
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(files.avatar[0].path, (err, img) => {
-        return User.findByPk(req.params.id)
-          .then((user) => {
-            user.update({
-              name: req.body.name,
-              introduction: req.body.introduction,
-              avatar: files ? img.data.link : user.avatar,
-            }).then((user) => {
-              req.flash('success_messages', '更新成功!')
-              res.redirect(`/users/${user.id}/tweets`)
-            })
-          })
-      })
-    }
-
-    if (files.avatar === undefined & files.cover !== undefined) {
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(files.cover[0].path, (err, img) => {
-        return User.findByPk(req.params.id)
-          .then((user) => {
-            user.update({
-              name: req.body.name,
-              introduction: req.body.introduction,
-              cover: files ? img.data.link : user.cover,
-            }).then((user) => {
-              req.flash('success_messages', '更新成功!')
-              res.redirect(`/users/${user.id}/tweets`)
-            })
-          })
-      })
-    }
-
-    if (files.avatar !== undefined & files.cover !== undefined) {
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(files.avatar[0].path, (err, img) => {
-        return User.findByPk(req.params.id)
-          .then((user) => {
-            user.update({
-              name: req.body.name,
-              introduction: req.body.introduction,
-              avatar: files ? img.data.link : user.avatar,
-            })
-              .then(() => {
-                imgur.setClientID(IMGUR_CLIENT_ID);
-                imgur.upload(files.cover[0].path, (err, img) => {
-                  return User.findByPk(req.params.id)
-                    .then((user) => {
-                      user.update({
-                        name: req.body.name,
-                        introduction: req.body.introduction,
-                        cover: files ? img.data.link : user.cover,
-                      }).then((user) => {
-                        req.flash('success_messages', '更新成功!')
-                        res.redirect(`/users/${user.id}/tweets`)
-                      })
-                    })
+        const { files } = req
+        if (files.avatar !== undefined & files.cover === undefined) {
+          imgur.setClientID(IMGUR_CLIENT_ID);
+          imgur.upload(files.avatar[0].path, (err, img) => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  avatar: files ? img.data.link : user.avatar,
+                }).then((user) => {
+                  req.flash('success_messages', '更新成功!')
+                  res.render(`userTweets`)
                 })
               })
           })
-      })
-    }
+        }
 
-    else {
-      return User.findByPk(req.params.id)
-        .then((user) => {
-          user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            avatar: user.avatar,
-            cover: user.cover,
+        if (files.avatar === undefined & files.cover !== undefined) {
+          imgur.setClientID(IMGUR_CLIENT_ID);
+          imgur.upload(files.cover[0].path, (err, img) => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  cover: files ? img.data.link : user.cover,
+                }).then((user) => {
+                  req.flash('success_messages', '更新成功!')
+                  res.render(`userTweets`)
+                })
+              })
           })
+        }
+
+        if (files.avatar !== undefined & files.cover !== undefined) {
+          imgur.setClientID(IMGUR_CLIENT_ID);
+          imgur.upload(files.avatar[0].path, (err, img) => {
+            return User.findByPk(req.params.id)
+              .then((user) => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  avatar: files ? img.data.link : user.avatar,
+                })
+                  .then(() => {
+                    imgur.setClientID(IMGUR_CLIENT_ID);
+                    imgur.upload(files.cover[0].path, (err, img) => {
+                      return User.findByPk(req.params.id)
+                        .then((user) => {
+                          user.update({
+                            name: req.body.name,
+                            introduction: req.body.introduction,
+                            cover: files ? img.data.link : user.cover,
+                          }).then((user) => {
+                            req.flash('success_messages', '更新成功!')
+                            res.render(`userTweets`)
+                          })
+                        })
+                    })
+                  })
+              })
+          })
+        }
+
+        else {
+          return User.findByPk(req.params.id)
             .then((user) => {
-              req.flash('success_messages', '更新成功!')
-              res.redirect(`/users/${user.id}/tweets`)
+              user.update({
+                name: req.body.name,
+                introduction: req.body.introduction,
+                avatar: user.avatar,
+                cover: user.cover,
+              })
+                .then((user) => {
+                  req.flash('success_messages', '更新成功!')
+                  res.render(`userTweets`)
+                })
             })
-        })
+        }
+      }
     }
   },
 
