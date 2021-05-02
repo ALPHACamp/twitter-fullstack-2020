@@ -1,0 +1,33 @@
+<div class="d-flex flex-column align-items-center">
+
+
+<form class="mt-4 col-5" action="/signup" method="POST" style="width: 100%;">
+  <br>
+  <br>
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">建立你的帳號</h1>
+  </div>
+  <div class="form-label-group">
+    <input type="text" name="name" class="form-control" placeholder="名稱" value="{{name}}" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <input type="text" name="account" class="form-control my-4" placeholder="帳號" value="{{account}}" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <input type="text" name="email" class="form-control my-4" placeholder="Email" value="{{email}}" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <input type="password" name="password" class="form-control my-4" placeholder="Password" value="{{password}}" required>
+  </div>
+  <div class="form-label-group">
+    <input type="password" name="checkPassword" class="form-control my-4" placeholder="Confirm Password"
+      value="{{checkPassword}}" required>
+  </div>
+  <br />
+  <button class="btn btn-lg btn-danger btn-block rounded-pill" type="submit">註冊</button>
+  <div class="d-flex justify-content-end mt-2">
+    <a class="mt-2 h5" href="/signin">使用者登入</a>
+  </div>
+  
+</form>
+</div>

@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-center justify-content-lg-start">
+  <form action="/users/{{user.id}}/edit?_method=PUT" method="post" class="col-8 d-flex flex-column">
+    <br>
+    <br>
+    <div class="form-label-group">
+      <label for="name">Name</label>
+      <input type="text" name="name" class="form-control" placeholder="Name" value="{{user.name}}"  autofocus>
+    </div>
+    <div class="form-label-group mt-3">
+      <label for="account">Account</label>
+      <input type="text" name="account" class="form-control" placeholder="Account" value="{{user.account}}" >
+    </div>
+    <div class="form-label-group mt-3">
+      <label for="email">Email</label>
+      <input type="text" name="email" class="form-control" placeholder="Email" value="{{user.email}}" >
+    </div>
+    <div class="form-label-group mt-3">
+      <label for="password">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password">
+    </div>
+    <div class="align-self-end mt-3">
+      <button type="submit" class="btn btn-danger rounded-pill">儲存</button>
+
+    </div>
+  </form>
+
+</div>
+

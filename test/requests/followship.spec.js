@@ -17,19 +17,19 @@ describe('# followship request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role:'user'});
         await db.User.destroy({where: {},truncate: true})
         await db.Followship.destroy({where: {},truncate: true})
         await db.User.create({})
         await db.User.create({})
       })
-
+      
       it('can not follow self', (done) => {
         request(app)
           .post('/followships')
           .send('id=1')
           .set('Accept', 'application/json')
-          .expect(200)
+          .expect(302)
           .end(function(err, res) {
             if (err) return done(err);
             db.User.findByPk(1,{include: [
@@ -79,7 +79,7 @@ describe('# followship request', () => {
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
-        ).returns({id: 1, Followings: []});
+        ).returns({id: 1, Followings: [], role: 'user'});
         await db.User.destroy({where: {},truncate: true})
         await db.Followship.destroy({where: {},truncate: true})
         await db.User.create({})
@@ -103,6 +103,7 @@ describe('# followship request', () => {
             })
           });
       })
+      
 
       after(async () => {
         
