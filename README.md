@@ -40,4 +40,4 @@ npx sequelize db:seed:all
 ```
 npm run dev
 ```
-在本機端 ![http://localhost:3000](http://localhost:3000) 開啟網址
+在本機端 [http://localhost:3000](http://localhost:3000) 開啟網址
