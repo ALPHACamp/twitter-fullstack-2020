@@ -1,0 +1,73 @@
+<div class="left-zone">
+  <div class="AC-icon">
+    <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+      style="width:75px">
+  </div>
+
+  </br>
+  </br>
+
+  <div class="home" name="home">
+    <a class="left-zone-items" href="/tweets" style="text-decoration: none; color:black"><i
+        class="fas fa-home"></i>&ensp;首頁</a>
+  </div>
+
+  </br>
+  </br>
+
+  <div class="profile" name="profile">
+    <a class="left-zone-items" href="/user/{{ user.id }}/tweets" style="text-decoration: none; color:black"><i
+        class="far fa-user"></i>&ensp;個人資料</a>
+  </div>
+
+  </br>
+  </br>
+
+  <div class="profile" name="chat">
+    <a class="left-zone-items" href="/chat" style="text-decoration: none; color:black">
+    <i class="far fa-comments"></i>&ensp;公開聊天室</a>
+  </div>
+
+  
+  </br>
+  </br>
+
+  <div class="profile" name="chat">
+    <a class="left-zone-items" href="/mailbox" style="text-decoration: none; color:black">
+    <i class="far fa-envelope"></i>&ensp;私人訊息</a>
+  </div>
+
+  </br>
+  </br>
+
+  <div class="setting" name="setting">
+    <a class="left-zone-items" href="/setting" style="text-decoration: none; color:black"><i
+        class="fas fa-cog"></i>&ensp;設定</a>
+  </div>
+
+  </br>
+  </br>
+
+  <form action="/user/tweets">
+    <button type="button" data-toggle="modal" data-target="#tweetModal" class="left-tweet">
+      Tweet
+      {{!-- style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;"> --}}
+      {{!-- <span style="color: #FFFFFF;"></span></button> --}}
+    </button>
+  </form>
+
+
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+
+
+  <a href="/logout" class="logout" style="text-decoration: none; color:black"><i
+      class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+
+
+
+</div>

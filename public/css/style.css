@@ -1,0 +1,378 @@
+button:focus { outline:0 !important; }
+.left-tweet{
+    border: none;
+    outline: none;
+    width: 120px;
+    height: 40px;
+    background: #FF6600;
+    border-radius: 100px;
+    color: white;
+    cursor: pointer;
+}
+.top-following{
+    background: #F5F8FA;
+    border-radius: 14px;
+    list-style: none;
+    padding: 0;
+}
+.top-following li{
+    padding: 12px;
+    border-bottom: 1px solid #E6ECF0;;
+}
+.top-following li img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+.top-following li .name-account{
+    font-size: 15px;
+    line-height: 18px;
+}
+.top-following li .name-account .name a{
+    color: black;
+    text-decoration: none;
+}
+.top-following li .name-account .account{
+    color: #657786;
+}
+.top-following li .user-avatar {
+    position: relative;
+}
+.top-following li .user-avatar .no1{
+    position: absolute;
+    color: #DAA520;
+    top: -8px;
+    left: -5px;
+    transform: rotate(-45deg);
+}
+.top-following li .follow-btn{
+    width: 100%;
+    text-align: right;
+    margin-top: 10px;
+}
+.top-following li .follow-btn form .follow{
+    background: #FFFFFF;
+    color: #FF6600;
+    border: 1px solid #FF6600;
+    box-sizing: border-box;
+    border-radius: 100px; 
+    padding: 4px 10px;
+    cursor: pointer;
+}
+.top-following li .follow-btn form .following{
+    background: #FF6600;
+    color: #FFFFFF;
+    border: 1px solid #FF6600;
+    box-sizing: border-box;
+    border-radius: 100px; 
+    padding: 4px 10px;
+    cursor: pointer;
+}
+.tweet-block{
+    position: relative;
+    height: 120px;
+    border-bottom: 10px solid #E6ECF0;
+}
+.tweet-block .text{
+    position: absolute;
+    left: 80px;
+    top: 10px;
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+    user-select: none;
+}
+.tweet-block .btn{
+    position: absolute;
+    width: 64px;
+    height: 40px;
+    right: 16px;
+    top: 64px;
+    color: white;
+    background: #FF6600;
+    border-radius: 100px;
+}
+/* tweetModal */
+#tweetModal .new-tweet-close,
+#replyModal .new-tweet-close,
+#editModal .tweet-modal-close-button{
+    cursor: pointer;
+    font-size: 32px;
+    color: #FF6600;
+    border: none;
+    background-color: transparent;
+}
+#editModal .header .edit-btn{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+#editModal .header .edit-btn input{
+    border: none;
+    outline: none;
+    color: white;
+    width: 64px;
+    height: 30px;
+    background: #FF6600;
+    border-radius: 100px;
+    cursor: pointer;
+}
+#editModal .button-block{
+    position: relative;
+}
+#editModal .edit-text{
+    position: absolute;
+    top: 17px;
+    left: 48px;
+}
+#editModal .edit-body{
+    position: relative;
+}
+#editModal .edit-body .edit-background{
+    height: 200px;
+}
+#editModal .edit-body .edit-background img{
+    height: 200px;
+    width: 100%;
+}
+#editModal .edit-body .edit-background i{
+    transform: translate(215px, -110px);
+    color: #FFD700;
+    opacity: .5;
+    cursor: pointer;
+}
+#editModal .edit-body .edit-background i:hover{
+    opacity: 1;
+}
+#editModal .edit-body .edit-avatar{
+    position: absolute;
+    width: 136px;
+    height: 136px;
+    top: 120px;
+    left: 25px;
+}
+#editModal .edit-body .edit-avatar img{
+    border-radius: 50%;
+    width: 136px;
+    height: 136px;
+    border: 4px solid #FFFFFF;
+}
+#editModal .edit-body .edit-avatar i{
+    transform: translate(50px, -80px);
+    opacity: .5;
+    color: #FFD700;
+    cursor: pointer;
+}
+#editModal .edit-body .edit-avatar i:hover{
+    opacity: 1;
+}
+#editModal .edit-body .edit-background input,
+#editModal .edit-body .edit-avatar input{
+    display: none;
+}
+#editModal .edit-body .edit-name{    
+    margin-top: 72px;
+    border-bottom: 2px solid #657786;
+    background-color: #F5F8FA;
+    color: #657786;
+}
+#editModal .edit-body .edit-introduction{
+    border-bottom: 2px solid #657786;
+    background-color: #F5F8FA;
+    color: #657786;
+}
+#editModal .edit-body .edit-name .label,
+#editModal .edit-body .edit-introduction .label{
+    font-size: 10px;
+}
+#editModal .edit-body .edit-name input,
+#editModal .edit-body .edit-introduction textarea{
+    border: none;
+    outline: none;
+    padding: 0;
+    width: 100%;
+    background-color: transparent;
+}
+.name-count{
+    text-align: right;
+}
+#tweetModal .avatar,
+#replyModal .avatar{
+    background: #C4C4C4; 
+    border-radius: 100%; 
+    width: 50px; 
+    height: 50px
+}
+#replyModal .avatar-block{
+    position: relative;
+}
+#replyModal .avatar-block .line{
+    position: absolute;
+    border: 2px solid #CCD6DD;
+    background-color: #CCD6DD;
+    top: 55px;
+    left: 37px;
+    bottom: 5px;
+}
+#tweetModal #description,
+#replyModal #description{
+    border-style: none;
+    border: none;
+    outline: none;
+}
+#tweetModal #description::placeholder,
+#replyModal #description::placeholder{
+    color: #9197A3;
+    font-size: 1.2em;
+}
+#tweetModal .btn,
+#replyModal .btn{
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    width: 64px;
+    height: 40px;
+    color: white;
+    background: #FF6600;
+    border-radius: 100px;
+    outline: none;
+}
+/* tweets style */
+.tweet .tweet-item-left img{
+    background-size:cover; 
+    width: 50px;
+    height: 50px;
+}
+.tweet .tweet-item-right .user-account{
+    color: #657786;
+}
+.tweet .tweet-item-right .tweet-buttom a{
+    text-decoration: none;
+    color: black;
+}
+.tweet .tweet-item-right .tweet-buttom .reply-link{
+    cursor: pointer;
+}
+.tweet .tweet-footer{
+    margin:10px 0 10px 64px;
+}
+.tweet .tweet-footer a{
+    color: black;
+    text-decoration: none;
+}
+.tweet .tweet-footer button{
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+}
+.tweet .tweet-footer .like{
+    color: red;
+}
+.tweet-content-footer .footer i{
+    cursor: pointer;
+}
+.tweet-content-footer .footer form{
+    display: inline;
+}
+.tweet-content-footer .footer form button{
+    border: none;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+}
+.tweet-content-footer .footer .like{
+    color: red;
+}
+.reply-list .reply-item .account{
+    color: #657786;
+}
+/* personal-page */
+.personal-page .header .background img{
+    width: 100%;
+    height: 200px; 
+    object-fit: cover;
+}
+.personal-page .header{
+    position: relative;
+}
+.personal-page .header .avatar img{
+    border-radius: 50%; 
+    position: absolute;
+    width: 138px;
+    height: 138px;
+    top: 130px; 
+    left: 5%; 
+    border: 5px solid #FFFFFF;
+}
+.personal-page .header .button-block .edit button{
+    border-radius: 50px;
+    width: 120px; 
+    height: 45px; 
+    background-color: #FFFFFF; 
+    color: #FF6600; 
+    border: 2px solid#FF6600; 
+    font-weight: bold; 
+    cursor: pointer;
+}
+.personal-page .header .button-block .follow a i{
+    border: 1px solid #FF6600;
+    color: #FF6600;
+    border-radius: 50%;
+    box-sizing: border-box;
+    padding: 14px;
+    margin-right: 10px;
+}
+.personal-page .header .button-block .follow .following{
+    border-radius: 50px;
+    width: 120px; 
+    height: 45px; 
+    background-color: #FF6600; 
+    color: #FFFFFF; 
+    border: 2px solid#FF6600; 
+    font-weight: bold; 
+    cursor: pointer;
+}
+.personal-page .header .button-block .follow .isFollow{
+    border-radius: 50px;
+    width: 120px; 
+    height: 45px; 
+    background-color: #FFFFFF; 
+    color:#FF6600; 
+    border: 2px solid#FF6600; 
+    font-weight: bold; 
+    cursor: pointer;
+}
+.personal-page nav #nav-tab a{
+    font-family: Noto Sans TC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+    color: #657786;
+    padding: 12px 45px;
+}
+.personal-page nav #nav-tab a.select{
+    border-bottom: 3px solid #FF6600;
+    color: #FF6600;
+}
+.followship-following-btn{
+    background: #FF6600;
+    color: #FFFFFF;
+    border: 1px solid #FF6600;
+    box-sizing: border-box;
+    border-radius: 100px;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+.followship-follower-btn{
+    background:#FFFFFF;
+    color: #FF6600;
+    border: 1px solid #FF6600;
+    box-sizing: border-box;
+    border-radius: 100px;
+    padding: 4px 10px;
+    cursor: pointer;
+}

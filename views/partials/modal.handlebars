@@ -1,0 +1,148 @@
+{{!-- create modal  --}}
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header py-0">
+        <button type="button" class="new-tweet-close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-title"></div>
+      <div class="modal-body">
+        <form class="row" action="/tweets" method="POST">
+          <div class="col-md-2 pr-0">
+            <img class="avatar" {{#if user.avatar}}src={{user.avatar}}{{/if}} >
+          </div>
+          <div class="col-md-8 p-0">
+            <textarea name="description" id="description" cols="42" rows="10" placeholder="有什麼新鮮事兒嗎 ?"></textarea>
+          </div>
+          <div class="col-md-2">
+            <button class="btn">推文</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- reply modal --}}
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+
+      </div>
+      <div class="modal-title">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="{{user.avatar}}" class="rounded-circle" style="background-size:cover; width: 50px;height: 50px;">
+        <span class="mt-1"><a href="#">{{user.name}}</a></span>
+        <span class="user-account">
+          {{user.account}}．{{moment user.createdAt}}
+        </span>
+      </div>
+      <div class="modal-body" class="d-flex">
+        <div class="tweet-text d-flex align-items-stretch">
+          {{user.description}}
+        </div>
+        <form method="POST" action="/tweets/{{user.id}}/replies">
+          <textarea name="comment" cols="55" rows="5"
+            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+            placeholder="say something"></textarea>
+          <button type="submit"
+            style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+            <span style="color: #FFFFFF;">回覆</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- user Edit modal --}}
+<div class="modal fade" id="editModal" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="row ">
+    <div class="modal-dialog ">
+      <form class="" action="/users/{{user.id}}/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+        <div class="modal-content edit-modal-content ">
+          <div class="header d-flex">
+            <div class="button-block">
+              <button type="button" data-dismiss="modal" aria-label="Close"
+                class="tweet-modal-close-button">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="edit-text">
+              <span class="font-weight-bold">編輯個人資料</span>
+            </div>
+            <div class="edit-btn">
+              <input type="submit" value="儲存">
+            </div>
+          </div>
+          <div class="edit-body">
+            <div class="edit-background">
+              <img id="edit-background-img" src="{{user.background}}" alt="">
+              <i class="far fa-images fa-2x" id="edit-background"></i>
+              <input type="file" name="background" id="edit-background-input">
+            </div>
+            <div class="edit-avatar"> 
+              <img id="edit-avatar-img" src="{{user.avatar}}" alt="">
+              <i class="far fa-images fa-2x" id="edit-avatar"></i>
+              <input type="file" name="avatar" id="edit-avatar-input">
+            </div>
+            <div class="px-3">
+              <div class="edit-name">
+                <div class="label">名稱</div>
+                <input type="text" id="name" name="name" placeholder="名稱" maxlength="50" value="{{user.name}}">
+              </div>
+              <div class="name-count">{{user.name.length}}/50</div>
+              <div class="edit-introduction">
+                <div class="label">自我介紹</div>
+                <textarea name="introduction" id="introduction" placeholder="介紹" maxlength="160"
+                  class="" cols="60" rows="10">{{user.introduction}}</textarea>
+              </div>
+              <div class="item-text-bottom row justify-content-end mr-3">
+                <span>{{user.introduction.length}}/160</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="edit-modal-footer">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{!-- other user --}}
+<div class="modal fade" id="user-tweet-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        {{ ../pageUser.avatar }}
+      </div>
+      <div class="modal-title">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <img src="{{../pageUser.avatar}}" class="rounded-circle"
+          style="background-size:cover; width: 50px;height: 50px;">
+        <span class="mt-1"><a href="#">{{user.name}}</a></span>
+        <span class="user-account">
+          {{user.account}}．{{moment user.createdAt}}
+        </span>
+      </div>
+      <div class="modal-body" class="d-flex">
+        <div class="tweet-text d-flex align-items-stretch">
+          {{ this.description }}
+        </div>
+        <form method="POST" action="/tweets/{{user.id}}/replies">
+          <textarea name="comment" cols="55" rows="5"
+            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+            placeholder="say something"></textarea>
+          <button type="submit"
+            style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+            <span style="color: #FFFFFF;">回覆</span></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
