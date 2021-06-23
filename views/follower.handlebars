@@ -1,0 +1,58 @@
+<div class="row mt-3">
+  <div class="col-md-3 pl-0">
+
+    {{> left}}
+
+  </div>
+  <div class="col-md-6 px-3 border-left border-right">
+    <div class="row ml-1 align-items-center">
+      <a href="/users/{{user.id}}" style="text-decoration: none; color:black">
+        <i class="fas fa-arrow-left fa-lg"></i>
+      </a>
+      <div class="ml-5">
+        <h4 class="m-0 font-weight-bold">{{name}}</h4>
+        <p class="followship-tweetsCount m-0">{{tweetsLength}}推文</p>
+      </div>
+    </div>
+    <br>
+    <div class="row border-bottom">
+      <a href="/users/{{user.id}}/follower" style="text-decoration: none">
+        <h5 class="follower-follower m-0 px-4 py-3 font-weight-bold"
+          style="color:#FF6600;border-bottom:2px solid #FF6600;">跟隨者</h5>
+      </a>
+      <a href="/users/{{user.id}}/following" style="text-decoration: none">
+        <h5 class="follower-following m-0 px-4 py-3 font-weight-bold">正在跟隨</h5>
+      </a>
+    </div>
+
+    {{#each users}}
+    <div class="row border-bottom">
+      <div class="avatar col-2 mt-3">
+        <a href="/users/{{../user.id}}">
+          <img src="{{this.avatar}}" alt="avatar" class="border rounded-circle" style="max-width: 90%">
+        </a>
+      </div>
+      <div class="col mt-3">
+        <div class="font-weight-bold">{{this.name}}</div>
+        <div style="color:gray">{{this.account}}</div>
+        <p style="word-break:break-all; word-wrap:break-all;">{{this.introduction}}</p>
+      </div>
+      {{#if this.isFollowed}}
+      <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+        <button type="submit" class="followship-following-btn mt-2 mr-2">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="/following/{{this.id}}" method="POST">
+        <button type="submit" class="followship-follower-btn mt-2 mr-2">跟隨</button>
+      </form>
+      {{/if}}
+    </div>
+    {{/each}}
+
+  </div>
+  <div class="col-md-3">
+
+    {{> right}}
+
+  </div>
+</div>
