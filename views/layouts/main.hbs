@@ -11,20 +11,35 @@
 </head>
 
 <body>
-  <div class="d-flex">
-    <div>
-      <ul class="list-group">
-        <li class="list-group-item active" aria-current="true">An active item</li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-        <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li>
-      </ul>
-    </div>
-    <div>
-      <main>
-        {{{body}}}
-      </main>
+  <div class="container">
+
+    <div class="d-flex mt-5">
+      {{!-- 左側欄位 --}}
+      <div class="row" style="height: 500px;">
+        {{!-- 上 --}}
+        <div class="col-12">
+          <p>Twitter</p>
+        </div>
+        {{!-- 中 --}}
+        <div class="col-12 pt-0">
+          <a href="/admin/tweets" style=" text-decoration:none;color:rgb(179, 123, 50)">
+            <p>推文清單</p>
+          </a>
+          <a href="/admin/tweets" style=" text-decoration:none;color:rgb(0, 0, 0)">
+            <p>使用者列表</p>
+          </a>
+        </div>
+        {{!-- 下 --}}
+        <div class="col-12">
+          <p>登出</p>
+        </div>
+      </div>
+
+      <div>
+        <main>
+          {{{body}}}
+        </main>
+      </div>
     </div>
   </div>
 
