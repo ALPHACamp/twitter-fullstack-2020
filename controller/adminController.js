@@ -1,6 +1,6 @@
 const adminController = {
   getAdminTweets: (req, res) => {
-    res.send('Tweets!')
+    res.render('admin/tweets')
   }
 }
 module.exports = adminController
