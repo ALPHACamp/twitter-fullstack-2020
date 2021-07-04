@@ -12,7 +12,7 @@ module.exports = {
           password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
           name: index === 0 ? 'root' : faker.name.firstName() + ' ' + faker.name.lastName(),
           avatar: (index % 2) === 0 ? `https://randomuser.me/api/portraits/men/${index}.jpg` : `https://randomuser.me/api/portraits/women/${index}.jpg`,
-          introduction: faker.lorem.text(10),
+          introduction: faker.lorem.text(),
           role: index === 0 ? 'admin' : 'user',
           account: '@' + item,
           cover: `https://loremflickr.com/320/240/scenic,view/?lock=${index}`,
