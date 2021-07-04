@@ -7,7 +7,7 @@ module.exports = {
         .map((item, index) =>
         ({
           id: index * 10 + 1,
-          description: faker.lorem.text(10),
+          description: faker.lorem.text(),
           UserId: ((index % 5) + 1) * 10 + 1,
           createdAt: new Date(),
           updatedAt: new Date()
