@@ -7,9 +7,9 @@ const adminController = {
     return Tweet.findAll({
       raw: true,
       nest: true,
-      include: [User]
+      include: [User],
+      order: [['createdAt', 'DESC']]
     }).then(tweets => {
-      console.log(tweets)
       return res.render('admin/tweets', { tweets })
     })
   }
