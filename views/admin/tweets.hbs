@@ -12,7 +12,7 @@
     {{!-- 發文者 --}}
     <div class="d-flex align-items-center mb-0">
       <p class="fs-5 me-2 mb-0">{{ this.User.name }}</p>
-      <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・3小時</p>
+      <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・{{moment this.createdAt}}</p>
     </div>
     {{!-- 推文內容 --}}
     <p class="mt-0" style="font-size: small;">
