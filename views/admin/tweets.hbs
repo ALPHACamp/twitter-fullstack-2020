@@ -4,20 +4,26 @@
 {{#each tweets }}
 <div class="d-flex align-items-center">
   {{!-- 大頭貼 --}}
-  <div>
-    <img src="{{ this.User.avatar }}" style="border-radius: 100%;width: 60px">
-  </div>
+  <a href="/users/{{ this.UserId }}/tweets" style="text-decoration:none;color:black">
+    <div>
+      <img src="{{ this.User.avatar }}" style="border-radius: 100%;width: 60px">
+    </div>
+  </a>
   {{!-- 右側文字 --}}
   <div class="ms-3" style="height: 80px;">
     {{!-- 發文者 --}}
-    <div class="d-flex align-items-center mb-0">
-      <p class="fs-5 me-2 mb-0">{{ this.User.name }}</p>
-      <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・{{moment this.createdAt}}</p>
-    </div>
+    <a href="/users/{{ this.UserId }}/tweets" style="text-decoration:none;color:black">
+      <div class="d-flex align-items-center mb-0">
+        <p class="fs-5 me-2 mb-0">{{ this.User.name }}</p>
+        <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・{{moment this.createdAt}}</p>
+      </div>
+    </a>
     {{!-- 推文內容 --}}
-    <p class="mt-0" style="font-size: small;">
-      {{ this.description }}
-    </p>
+    <a href="/tweets/{{ this.id }}" style="text-decoration:none;color:black">
+      <p class="mt-0" style="font-size: small;">
+        {{ this.description }}
+      </p>
+    </a>
   </div>
 </div>
 
