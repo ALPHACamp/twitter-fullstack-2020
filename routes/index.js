@@ -4,7 +4,7 @@ const userController = require('../controllers/userController.js')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
-    if (helpers.ensureAuthenticated(req)) {
+    if (helpers.ensureAuthenticated(req)) {// = req.isAuthenticated()
       return next()
     }
     res.redirect('/signin')
@@ -16,6 +16,9 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
+
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+
 
   //登入、註冊、登出
   ////註冊
