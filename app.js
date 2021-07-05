@@ -10,6 +10,7 @@ const port = 3000
 app.get('/', (req, res) => {
   console.log('1234')
   res.send('Hello World!')
+  console.log('hdkauwdu')
 }
 
 )
