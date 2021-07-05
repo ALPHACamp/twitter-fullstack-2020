@@ -11,7 +11,6 @@ const adminController = {
     if (req.query.page) {
       offset = (Number(req.query.page) - 1) * pageLimit
     }
-    console.log(offset)
     return Tweet.findAndCountAll({
       raw: true,
       nest: true,
