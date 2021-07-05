@@ -1,4 +1,5 @@
 const express = require('express')
+const app = express()
 const handlebars = require('express-handlebars')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
@@ -6,7 +7,7 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const helpers = require('./_helpers');
 const db = require('./models') // 引入資料庫
-const app = express()
+
 const port = 3000
 
 // use helpers.getUser(req) to replace req.user
@@ -16,7 +17,11 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
+app.engine('hbs', handlebars({
+  defaultLayout: 'main',
+  extname: '.hbs',
+  helpers: require('./config/hbs-helpers')
+}))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
