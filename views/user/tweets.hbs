@@ -1,6 +1,6 @@
 <div class="d-flex mt-5">
   {{!-- 左側欄位 --}}
-  <div class="row" style="height: 500px;width: 300px;">
+  <div class="row" style="height: 500px;width: 250px;">
     {{!-- 上 --}}
     <div class="col-12">
       <p>Twitter</p>
@@ -26,11 +26,80 @@
     </div>
   </div>
 
-  <div style="width: 800px;">
+  <div style="width: 780px;" class="me-5">
     {{!-- 標題 --}}
-    <div>推文清單</div>
+    <div class="d-flex flex-column">
+      <img src="{{ user.cover }}" alt="" srcset="" style="height: 300px;object-fit: cover;">
+      <div class="d-flex flex-column ms-4">
+        <img src="{{ user.avatar }}" alt="" srcset=""
+          style="height: 200px;width:200px;object-fit: cover;margin-top:-100px;border-radius:50%;border: solid 10px white">
+        <p class="fs-3 fw-bold mb-0">{{ user.name }}</p>
+        <p style="color: darkseagreen;">{{ user.account }}</p>
+        <p>{{ user.introduction }}</p>
 
-    <div class="d-flex flex-column align-items-center">
+        <div class="d-flex">
+          <p class="me-3">20 個追蹤中</p>
+          <p>20 位跟隨者</p>
+        </div>
+
+        {{!-- select bar --}}
+        <ul class="nav nav-tabs mb-4">
+          <li class="nav-item">
+            <a class="nav-link active" href="/users/{{ user.id }}/tweets">推文</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/{{ user.id }}/replies" style="color: darkseagreen;">推文與回覆</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/{{ user.id }}/likes" style="color: darkseagreen;">喜歡的內容</a>
+          </li>
+        </ul>
+
+        {{!-- 推文 --}}
+        <div class="d-flex align-items-center mb-2">
+          {{!-- 大頭貼 --}}
+          <div>
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/d1c64938267389.575aefd5063e6.png"
+              style="border-radius: 100%;width: 60px">
+          </div>
+          {{!-- 右側文字 --}}
+          <div class="ms-3" style="height: 80px;">
+            {{!-- 發文者 --}}
+            <div class="d-flex align-items-center mb-0">
+              <p class="fs-5 me-2 mb-0">Nina</p>
+              <p class="mb-0" style="color: darkseagreen;">@nina・3小時</p>
+            </div>
+            {{!-- 推文內容 --}}
+            <p class="mt-0" style="font-size: small;">
+              成功來自於堅持！但是一般人認為的堅持，只是被迫重覆做同一件事，忽略真正的堅持是養成習慣。本書作者福格博士藉由20年研究，發明出一套B=MAP行為模型，帶領讀者透過了解自己的動機，設計簡單易執行的小習慣來打造自發性運作的流程，輕鬆又有計畫的達成預設的目標。
+            </p>
+          </div>
+        </div>
+        <hr>
+
+        {{!-- 推文 --}}
+        <div class="d-flex align-items-center mb-2">
+          {{!-- 大頭貼 --}}
+          <div>
+            <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/d1c64938267389.575aefd5063e6.png"
+              style="border-radius: 100%;width: 60px">
+          </div>
+          {{!-- 右側文字 --}}
+          <div class="ms-3" style="height: 80px;">
+            {{!-- 發文者 --}}
+            <div class="d-flex align-items-center mb-0">
+              <p class="fs-5 me-2 mb-0">Nina</p>
+              <p class="mb-0" style="color: darkseagreen;">@nina・3小時</p>
+            </div>
+            {{!-- 推文內容 --}}
+            <p class="mt-0" style="font-size: small;">
+              成功來自於堅持！但是一般人認為的堅持，只是被迫重覆做同一件事，忽略真正的堅持是養成習慣。本書作者福格博士藉由20年研究，發明出一套B=MAP行為模型，帶領讀者透過了解自己的動機，設計簡單易執行的小習慣來打造自發性運作的流程，輕鬆又有計畫的達成預設的目標。
+            </p>
+          </div>
+        </div>
+        <hr>
+
+      </div>
     </div>
   </div>
 
