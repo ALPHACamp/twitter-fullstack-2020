@@ -1,10 +1,7 @@
+const passport = require('../config/passport')
 const helpers = require('../_helpers')
-
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
-
-
-
 
 
 module.exports = (app, passport) => {
@@ -18,13 +15,10 @@ module.exports = (app, passport) => {
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).is_admin) { return next() }
-      res.redirect('/signin')
+      res.redirect('/admin/signin')
     }
   }
 
-
-
-  app.get('/', (req, res) => res.send('Hello!'))
 
 
 }
