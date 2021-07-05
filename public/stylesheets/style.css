@@ -1,0 +1,9 @@
+.btn-regular {
+  color: white;
+  background-color: tomato;
+}
+
+.btn-regular:hover {
+  color: white;
+  background-color: coral;
+}

@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="d-flex flex-column align-items-center col pt-5">
+    <img src="https://i.imgur.com/sp3j1pc.png" class="" width="50px" height="50px">
+    <h3 class="my-3">建立你的帳號</h3>
+    <form class="d-flex flex-column align-items-center col-6" action="/signup" method="POST">
+      <div class="form-floating mb-3 w-100">
+        <input type="text" class="form-control" id="floatingInput" placeholder="userAccount" name="account">
+        <label for="floatingInput">帳號</label>
+      </div>
+      <div class="form-floating mb-3 w-100">
+        <input type="text" class="form-control" id="floatingInput" placeholder="username" name="name">
+        <label for="floatingInput">名稱</label>
+      </div>
+      <div class="form-floating mb-3 w-100">
+        <input type="email" class="form-control" id="floatingInput" placeholder="user@example.com" name="email">
+        <label for="floatingInput">Email</label>
+      </div>
+      <div class="form-floating mb-3 w-100">
+        <input type="email" class="form-control" id="floatingInput" placeholder="password" name="password">
+        <label for="floatingInput">密碼</label>
+      </div>
+      <div class="form-floating mb-3 w-100">
+        <input type="email" class="form-control" id="floatingInput" placeholder="password" name="confirmedPassword">
+        <label for="floatingInput">密碼確認</label>
+      </div>
+      <button type="submit" class="btn btn-regular p-3 w-100 rounded-pill">註冊</button>
+    </form>
+    <a href="/signin" class="mt-3">取消</a>
+  </div>
+</div>
