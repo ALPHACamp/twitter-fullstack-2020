@@ -13,7 +13,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
-app.use('view engine', 'hbs')
+app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use('/upload', express.static(__dirname + '/upload'))
 app.use(session({
@@ -34,6 +34,6 @@ app.use((req, res, next) => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes')(app)
+require('./routes')(app, passport)
 
 module.exports = app
