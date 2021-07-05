@@ -30,7 +30,7 @@
   </div>
 
   {{!-- 右側刪除 --}}
-  <form action="/admin/tweets/{{ this.id }}_method=DELETE" method="post">
+  <form action="/admin/tweets/{{ this.id }}?_method=DELETE" method="post">
     <button type="submit" class="btn btn-outline-secondary">delete</button>
   </form>
 
