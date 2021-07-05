@@ -8,11 +8,36 @@ const port = 3000
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine('hbs', handlebars({ defaultLayout: 'main' }))
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
+app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
+app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
+app.use('/upload', express.static(__dirname + '/upload'))
+
+app.use(session({ secret: 'Minesecret', resave: false, saveUninitialized: false }))
+
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = helpers.getUser(req)   //取代req.user
+  next()
+})
+
+
+
 
 app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
 
-require('./routes')(app)
+require('./routes')(app, passport)
 
 module.exports = app
