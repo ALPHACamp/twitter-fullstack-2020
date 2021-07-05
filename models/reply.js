@@ -1,8 +1,35 @@
-'use strict';
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  const Reply = sequelize.define('Reply', {
-  }, {});
-  Reply.associate = function(models) {
-  };
-  return Reply;
-};
+  class Reply extends Model {
+    /**
+     * Helper method for defining associations.
+     * This method is not a part of Sequelize lifecycle.
+     * The `models/index` file will call this method automatically.
+     */
+    static associate (models) {
+      // define association here
+      Reply.belongsTo(models.Tweet)
+      Reply.belongsTo(models.User)
+      Reply.hasMany(models.Secondreply)
+      Reply.belongsToMany(models.User, {
+        through: models.Like,
+        foreignKey: 'ReplyId',
+        as: 'LikedUsers'
+      })
+    }
+  }
+  Reply.init(
+    {
+      UserId: DataTypes.INTEGER,
+      TweetId: DataTypes.INTEGER,
+      comment: DataTypes.TEXT,
+      likeCount: DataTypes.INTEGER
+    },
+    {
+      sequelize,
+      modelName: 'Reply'
+    }
+  )
+  return Reply
+}

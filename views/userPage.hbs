@@ -1,0 +1,123 @@
+<div class="container-fluid m-0">
+  <div class="row">
+    {{>leftColumnUser}}
+    {{!-- 中間 --}}
+    <div class="col-5 p-0">
+      <div class="d-flex flex-column align-items-center"
+        style="background: #FFFFFF; border: 1px solid #E6ECF0; box-sizing: border-box;">
+
+        {{!-- 上方返回區塊 --}}
+        <div class="d-flex flex-nowrap" style="width: 100%;">
+          <a href="/" class="m-3">
+            <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M16 5.99988H3.41399L7.70699 1.70687C8.09699 1.31687 8.09699 0.683875 7.70699 0.292875C7.31699 -0.0981249 6.68399 -0.0971249 6.29299 0.292875L0.292988 6.29288C-0.0970117 6.68288 -0.0970117 7.31588 0.292988 7.70687L6.29299 13.7069C6.48799 13.9019 6.74299 13.9999 6.99999 13.9999C7.25699 13.9999 7.51199 13.9019 7.70699 13.7069C8.09699 13.3169 8.09699 12.6839 7.70699 12.2929L3.41399 7.99988H16C16.553 7.99988 17 7.55288 17 6.99988C17 6.44688 16.553 5.99988 16 5.99988Z"
+                fill="black" />
+            </svg>
+          </a>
+          <div class="header ml-4">
+            <h3 class="m-0 p-0">{{results.name}}</h3>
+            <span class="h6 text-muted">{{results.tweetCount}} 推文</span>
+          </div>
+        </div>
+        {{!-- cover&avatar --}}
+        <div class="img-wrapper d-flex flex-column flex-nowrap" style="position:relative;">
+          <img src="{{results.cover}}" class="card-img-top" alt="background" width="100%" height="200px"
+            style="object-fit: cover;">
+          <img src="{{results.avatar}}" class="rounded-circle" alt="avatar" width="140" height="140"
+            style="border: 4px solid #FFFFFF; position:absolute; top:60%; left:14px;">
+        </div>
+        <div class="justify-content-end align-items-end d-flex flex-nowrap">
+          {{#ifEqual results.id currentId}}
+          <div class="d-flex flex-column flex-nowrap border-bottom" style="width: 100%;">
+            <div class="p-2 text-right">
+              <div class="btn rounded-pill" style="color:#FF6600; border: 1px solid #FF6600">編輯個人資料</div>
+            </div>
+            {{else}}
+            <div class="p-2 text-right">
+              <a class="float-right mr-2" style="border:1px solid #FF6600;border-radius: 100px; padding:5px" href="#">
+                <svg width="24" height="22" viewBox="0 0 20 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M17.25 0.0180664H2.75C1.233 0.0180664 0 1.25207 0 2.77007V15.2651C0 16.7831 1.233 18.0181 2.75 18.0181H17.25C18.767 18.0181 20 16.7831 20 15.2651V2.77007C20 1.25207 18.767 0.0180664 17.25 0.0180664ZM2.75 1.51807H17.25C17.94 1.51807 18.5 2.07807 18.5 2.76807V3.48207L10.45 8.84907C10.177 9.02907 9.824 9.03107 9.55 8.84707L1.5 3.48207V2.76807C1.5 2.07807 2.06 1.51807 2.75 1.51807ZM17.25 16.5161H2.75C2.06 16.5161 1.5 15.9561 1.5 15.2661V5.24007L8.74 10.0701C9.123 10.3261 9.562 10.4541 10 10.4541C10.44 10.4541 10.877 10.3261 11.26 10.0711L18.5 5.24107V15.2631C18.5 15.9531 17.94 16.5131 17.25 16.5131V16.5161Z"
+                    fill="#FF6600" />
+                </svg>
+              </a>
+            </div>
+            <div class="p-2 text-right">
+              <a class="float-right mr-2" style="border:1px solid #FF6600;border-radius: 100px; padding:5px" href="#">
+                <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M23.24 3.26003H20.815V0.832031C20.815 0.418031 20.479 0.0820312 20.065 0.0820312C19.651 0.0820312 19.315 0.418031 19.315 0.832031V3.26003H16.89C16.476 3.26003 16.14 3.59503 16.14 4.01003C16.14 4.42503 16.476 4.76003 16.89 4.76003H19.316V7.18403C19.316 7.59803 19.652 7.93403 20.066 7.93403C20.48 7.93403 20.816 7.59803 20.816 7.18403V4.76003H23.241C23.656 4.76003 23.991 4.42303 23.991 4.01003C23.991 3.59703 23.655 3.26003 23.241 3.26003H23.24ZM17.01 10.866C17.03 8.43203 16.228 6.26903 14.752 4.77603C13.428 3.43403 11.636 2.69203 9.70604 2.68303H9.69304C7.76304 2.69303 5.97104 3.43303 4.64704 4.77503C3.17204 6.27003 2.37004 8.43303 2.39004 10.867C2.42604 15 0.467036 16.56 0.390036 16.62C0.130036 16.813 0.0230359 17.15 0.124036 17.458C0.226036 17.766 0.514036 17.973 0.836036 17.973H5.55204C5.66204 20.199 7.49204 21.98 9.74604 21.98C12 21.98 13.829 20.2 13.94 17.973H18.565C18.885 17.973 19.169 17.767 19.272 17.463C19.375 17.159 19.272 16.82 19.017 16.625C18.935 16.561 16.974 15 17.009 10.865L17.01 10.866ZM9.74504 20.48C8.31904 20.48 7.15904 19.37 7.05104 17.972H12.439C12.331 19.372 11.171 20.479 9.74504 20.479V20.48ZM2.45504 16.473C3.15704 15.378 3.91204 13.569 3.88904 10.855C3.87204 8.79303 4.50304 7.05503 5.71404 5.83003C6.75704 4.77403 8.17204 4.19003 9.70004 4.18403C11.227 4.19103 12.643 4.77403 13.685 5.83003C14.895 7.05603 15.525 8.79303 15.508 10.855C15.486 13.569 16.24 15.378 16.945 16.473H2.45504Z"
+                    fill="#FF6600" />
+                </svg>
+              </a>
+            </div>
+            {{#if results.isFollowed}}
+            <div class="p-2 text-right">
+              <form action="/following/{{results.id}}?_method=DELETE" method="post">
+                <div type="submit" class="btn rounded-pill"
+                  style="color:white ;background-color:#FF6600; border: 1px solid #FF6600">正在跟隨</div>
+              </form>
+            </div>
+            {{else}}
+            <form action="/following/{{results.id}}" method="post">
+              <button type="submit" class="float-right px-4 py-2 float-right btn rounded-pill"
+                style="color:#FF6600; border: 1px solid #FF6600">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+
+
+          {{/ifEqual}}
+          <div class="user-info container mt-3">
+            <h3 class="m-0 p-0">{{results.name}}</h3>
+            <span class="text-muted m-0 p-0">{{results.account}}</span>
+            <p class="my-2">{{results.introduction}}</p>
+            <div class="user-relation d-flex flex-nowrap">
+              <div class="mr-3">{{results.followingCount}} 個<span class="text-muted">追隨中</span></div>
+              <div>{{results.followerCount}} 位<span class="text-muted">追隨者</span></div>
+            </div>
+          </div>
+          <div class="d-flex flex-nowrap justify-content-start mt-4">
+            <div class="text-center py-3" style="width: 130px;">
+              <a class="font-weight-bold text-decoration-none" style="color:#FF6600" href="/users/{{results.id}}">推文</a>
+            </div>
+            <div class="text-center py-3" style="width: 130px;">
+              <a class="font-weight-bold text-decoration-none" href="#">推文與回覆</a>
+            </div>
+            <div class="text-center py-3" style="width: 130px;">
+              <a class="font-weight-bold text-decoration-none" href="#">喜歡的內容</a>
+            </div>
+          </div>
+
+          {{!-- card --}}
+          {{#each results.Tweets}}
+          <div class="row border-bottom py-3" style="width: 100%;">
+            {{!-- avatar --}}
+            <div class="col-2 text-center">
+              <a href="/users/{{this.UserId}}">
+                <img class="rounded-circle mt-2" src="{{../results.avatar}}" alt="img" width="50px" height="50px">
+              </a>
+            </div>
+            {{!-- content --}}
+            <div class="col-10 d-flex flex-column flex-nowrap">
+              <div class="user">
+                <span class="h5">{{../results.name}}</span><span
+                  class="text-muted ml-2">{{../results.account}}．{{moment this.createdAt}}</span>
+              </div>
+              <p class="content">{{this.description}}</p>
+              <div class="d-flex flex-nowrap align-items-center">
+                <a class="text-decoration-none m-0 p-0" href="/tweets/{{this.id}}" style="color:black">
+                  <i class="far fa-comment mr-3"><span class="mx-2">{{this.replyCount}}</span></i>
+                </a>
+                <i class="far fa-heart"><span class="mx-2">{{this.likeCount}}</span></i>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+    {{>rightColumn}}
+  </div>
+</div>

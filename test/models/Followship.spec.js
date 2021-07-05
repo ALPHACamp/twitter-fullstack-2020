@@ -1,6 +1,6 @@
-var chai = require('chai');
-var sinon = require('sinon');
-chai.use(require('sinon-chai'));
+var chai = require('chai')
+var sinon = require('sinon')
+chai.use(require('sinon-chai'))
 
 const { expect } = require('chai')
 const {
@@ -15,7 +15,6 @@ const db = require('../../models')
 const FollowshipModel = require('../../models/followship')
 
 describe('# Followship Model', () => {
-  
   before(done => {
     done()
   })
@@ -25,9 +24,8 @@ describe('# Followship Model', () => {
   checkModelName(Followship)('Followship')
 
   context('properties', () => {
-    ;[
+    [
       'followerId', 'followingId'
     ].forEach(checkPropertyExists(followship))
   })
-
 })
