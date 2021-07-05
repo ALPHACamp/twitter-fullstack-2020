@@ -14,7 +14,7 @@
 
 <body>
   {{!-- Navbar --}}
-  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+  {{!-- <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
     <a class="navbar-brand" href="/">Simple Tweets</a>
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav mr-auto">
@@ -30,11 +30,14 @@
         {{/if}}
       </div>
     </div>
-  </nav>
+  </nav> --}}
   <br />
   {{!-- skip --}}
-  <main role="main">
-    <div class="album py-5 bg-light">
+  <main role="main" style="display: flex;flex-wrap:nowrap;max-height:100vh">
+    {{!-- 左邊欄 --}}
+    <div class="navbar" style="width:30vh"></div>
+    {{!-- 主面板 --}}
+    <div class="album py-5 " style="flex-grow: 1;">
       <div class="container">
 
         {{#if success_messages}}
@@ -52,6 +55,9 @@
         {{{body}}}
       </div>
     </div>
+    {{!-- 右邊欄 --}}
+    <div class="navbar-right" style="width:30vh"></div>
+
   </main>
 </body>
 
