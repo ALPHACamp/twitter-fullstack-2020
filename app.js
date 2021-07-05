@@ -8,7 +8,7 @@ const port = 3000
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.get('/', (req, res) => {
-  console.log('1234')
+  console.log('Hello,Hello,Hello')
   res.send('Hello World!')
 }
 
