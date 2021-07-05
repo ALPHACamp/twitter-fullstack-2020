@@ -1,0 +1,46 @@
+{{#if user}}
+<!-- 頁面右側區塊 -->
+<div class="right-content">
+  <div class="right-column">
+    <div class="right-column-title">
+      跟隨誰
+    </div>
+    <div class="top-user-list" height="800px">
+      <!-- 10個推薦使用者清單迴圈 -->
+      {{#each user.TopUsers}}
+      <div class="user-list-item">
+        <a href="/users/{{this.id}}/tweets">
+          <div class="avatar"
+            style="background: url({{this.avatar}}),#C4C4C4;background-position:center;background-size:cover;">
+          </div>
+        </a>
+        <div class="user-list-item-name">
+          <a href="" class="user-name">
+            {{this.name}}
+          </a>
+          <div class="user-account">{{this.account}}</div>
+        </div>
+        {{#ifEqual this.id ../user.id}}
+        {{else}}
+        {{#if isFollowed}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+          <button class="unfollow-button">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/{{this.id}}" method="POST">
+          <button class="follow-button">跟隨</button>
+        </form>
+        {{/if}}
+        {{/ifEqual}}
+      </div>
+      {{/each}}
+      <!-- 迴圈結束 -->
+    </div>
+    <button class=" button more-users">
+      顯示更多
+    </button>
+
+  </div>
+</div>
+
+{{/if}}

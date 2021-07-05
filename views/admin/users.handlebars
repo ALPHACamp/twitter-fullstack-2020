@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="left-content">
+    <div class="left-column">
+      <img class="logo" src="/images/icon.svg" alt="">
+      <div class="nav">
+        <div class="nav-item">
+          <a href="/admin/tweets">
+            <img class="home-icon" src="/images/icon-home.svg" alt="">推文清單
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="/admin/users">
+            <img class="pr-1" src="/images/icon-user.svg" alt="">
+            使用者列表
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="logout">
+      <a href="/logout">
+        <img class="logout-icon" src="/images/icon-logout.svg" alt="">登出
+      </a>
+    </div>
+  </div>
+
+  <div class="admin-main-content">
+    <div class="admin-main-title">
+      使用者列表
+    </div>
+
+    <div class="admin-users-list pl-3">
+
+      {{#each users}}
+      <div class="admin-users-list-item">
+        <div class="user-cover"
+          style="background: url({{this.cover}}), #C4C4C4;background-size: cover; background-repeat:no-repeat; background-position: center;">
+        </div>
+        <div class="user-avtar" style="background: url('{{this.avatar}}'), #C4C4C4;
+          background-size: cover; background-repeat:no-repeat; background-position: center;">
+        </div>
+        <div class="user-data">
+          <a class="user-name">{{this.name}}</a>
+          <div class="user-account pr-2 mb-2 pt-1">@{{this.account}}</div>
+          <div class="reply-data mb-4">
+            <img src="/images/icon-reply.svg" alt="" class="icon-s mr-1"><span>{{repliesCount}}</span>
+            <img src="/images/icon-like.svg" alt="" class="icon-s">
+            <span>{{likesCount}}</span>
+          </div>
+          <div class="follow-data">
+            {{followingsCount}} 個<span>跟隨中</span> {{followersCount}} 位<span>追隨者</span>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+
+    </div>
+  </div>
+</div>

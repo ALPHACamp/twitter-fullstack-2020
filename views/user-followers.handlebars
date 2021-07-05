@@ -1,0 +1,56 @@
+<div class="container-fluid">
+  {{> left-content}}
+  {{> modal}}
+
+  <div class="main-content">
+    <div class="main-title follow-title row">
+      <a href="/users/{{results.user.id}}/tweets"><img src="/images/icon-back.png" alt=""></a>
+      <div class="column">
+        <div>{{results.user.name}}</div>
+        <span>{{results.tweetCounts}} 推文</span>
+      </div>
+    </div>
+
+    <nav class="follow-page-nav navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav user-navbar">
+          <a class="nav-link active" href="#">跟隨者</a>
+          <a class="nav-link" href="/users/{{results.user.id}}/followings">正在跟隨</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="follow-list">
+      {{#each results.Followers}}
+      <div class="follow-item">
+        <div class="left">
+          <div class="avatar"
+            style="background: url({{this.avatar}}); background-position:center;background-size:cover;">
+          </div>
+        </div>
+        <div class="right">
+          <div class="top">
+            <div class="column">
+              <span class="user-name">{{this.name}}</span><span class="user-account">{{this.account}}</span>
+            </div>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="unfollow-button">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/followships/{{this.id}}" method="POST">
+              <button type="submit" class="follow-button">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+          <div class="folloe-item-introduction">
+            {{this.introduction}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{> right-content}}
+</div>

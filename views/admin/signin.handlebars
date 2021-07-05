@@ -1,0 +1,19 @@
+<div class="sign-container">
+  <div class="sign-message">
+    {{> message}}
+  </div>
+  <img class="sign-icon" src="/images/icon.svg" alt="">
+  <div class="sign-title ">後台登入</div>
+  <form action="/admin/signin" method="POST">
+    <div class="sign-form">
+      <label for="account">帳號</label>
+      <input type="text" id="account" name="account" placeholder="請輸入帳號或電子信箱">
+      <label for="password">密碼</label>
+      <input type="password" id="password" name="password" placeholder="請輸入6-12位英數字密碼" minlength="" maxlength="12">
+      <button class="sign-button" type="submit">登入</button>
+    </div>
+  </form>
+  <div class="signin-link">
+    <a href="/signin">前台登入</a>
+  </div>
+</div>

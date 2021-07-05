@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  {{> left-content}}
+  <div class="setting-main-content">
+    <div class="setting-main-title">
+      帳戶設定 {{> message}}
+    </div>
+    <form method="POST" class="setting-form sign-form" action="/api/users/:id?_method=PUT">
+      <label for="account">帳號</label>
+      <input type="text" id="account" name="account" value="{{user.account}}">
+
+      <label for="name">名稱</label>
+      <input type="text" id="name" name="name" value="{{user.name}}">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="{{user.email}}">
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password">
+
+      <label for="passwordCheck">確認密碼</label>
+      <input type="password" id="passwordCheck" name="passwordCheck">
+      <div>
+        <button type="submit" class="sign-button">儲存</button>
+      </div>
+    </form>
+  </div>
+</div>

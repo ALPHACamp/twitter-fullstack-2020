@@ -1,0 +1,129 @@
+<div class="container-fluid">
+  {{> left-content}}
+  {{> modal}}
+
+  <div class="main-content">
+    <div class="main-title row">
+      <a href="/tweets"><img src="/images/icon-back.png" alt=""></a>
+      <div class="column">
+        <div>{{pageUser.name}}</div>
+        <span>{{pageUser.Tweets.length}} 推文</span>
+      </div>
+    </div>
+
+    <div class="user-page-cover"
+      style="background: url({{pageUser.cover}}); background-position:center;background-size:cover;">
+    </div>
+
+    <div class="user-page-top">
+      <div class="avatar"
+        style="background: url({{pageUser.avatar}}); background-position:center;background-size:cover;"></div>
+      <div class="feature-link">
+        {{#ifEqual user.id pageUser.id}}
+        <button type="button" class="button profile-button" data-toggle="modal"
+          data-target="#editProfileModal">編輯個人資訊</button>
+        {{else}}
+        <div class="icon-circle">
+          <i class="fac fa-cus-email"></i>
+        </div>
+        <div class="icon-circle">
+          <i class="fac fa-cus-bells"></i>
+        </div>
+        {{!-- <div class="icon-circle-fill">
+          <i class="fac fa-cus-bells-check"></i>
+        </div> --}}
+        {{#if isFollowed}}
+        <form action="/followships/?_method=DELETE" method="POST">
+          <button class="ml-1 mr-2 unfollow-button">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/" method="POST">
+          <button class="ml-4 mr-2 follow-button">跟隨</button>
+        </form>
+        {{/if}}
+        {{/ifEqual}}
+      </div>
+    </div>
+
+    <div class="user-page-imformation">
+      <div class="user-name">
+        {{pageUser.name}}
+      </div>
+      <div class="user-account">
+        {{pageUser.account}}
+      </div>
+      <div class="user-introduction">
+        <p>{{pageUser.introduction}}</p>
+      </div>
+      <div class="user-follow-link">
+        <div>
+          <a href="/users/{{pageUser.id}}/followers">{{pageUser.Followers.length}}個<span>跟隨中</span></a>
+        </div>
+        <div>
+          <a href="/users/{{pageUser.id}}/followings"> {{pageUser.Followings.length}}位<span>跟隨中</span></a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="user-page-nav navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav user-navbar">
+          <a class="nav-link active" href="#">推文</a>
+          <a class="nav-link" href="/users/{{pageUser.id}}/replies">推文與回覆</a>
+          <a class="nav-link" href="/users/{{pageUser.id}}/likes">喜歡的內容</a>
+        </div>
+      </div>
+    </nav>
+
+    <!--列表-->
+    <div class="user-page-tweets-list">
+      {{#each pageUser.Tweets }}
+      <div class="user-page-list-item">
+        <div class="left">
+          <div class="avatar"
+            style="background: url({{../pageUser.avatar}}); background-position:center;background-size:cover;">
+          </div>
+        </div>
+        <div class="right">
+          <div class="user-name-account">
+            <span class="user-name">{{../pageUser.name}}</span><span
+              class="user-account">{{../pageUser.account}}．{{moment this.createdAt}}</span>
+          </div>
+          <div class="tweet-item-text">
+            {{this.description}}
+          </div>
+
+          <div class="tweet-item-footer">
+            <button type="button" class="button reply-link pt-1  reply-modal-open">
+              <i class="fac fa-cus-reply"></i> {{this.Replies.length}}
+            </button>
+            <div class="hidden-info" style="display:none;">
+              <p class="tweet-user-name">{{this.User.name}}</p>
+              <p class="tweet-user-account">{{this.User.account}}</p>
+              <p class="tweet-description">{{this.description}}</p>
+              <p class="tweet-id">{{this.id}}</p>
+              <p class="tweet-createdAt">{{moment this.createdAt}} </p>
+              <p class="tweet-user-avatar">{{this.User.avatar}}</p>
+            </div>
+            {{#if isLiked}}
+            <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+              <button type="submit" class="like-link button">
+                <i class="fac fa-cus-solid-like"></i>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                  <button type="submit" class="like-link button">
+                    <i class="fac fa-cus-like"></i>
+                    {{/if}}
+                    {{this.likedUsers.length}}
+                  </button>
+                </form>
+          </div>
+
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+  </div>
+  {{> right-content}}
+</div>
