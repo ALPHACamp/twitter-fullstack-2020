@@ -15,7 +15,9 @@ module.exports = {
         type: Sequelize.TEXT
       },
       likes: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        unsigned: true,
+        default: 0
       },
       createdAt: {
         allowNull: false,
