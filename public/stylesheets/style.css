@@ -13,3 +13,11 @@
   text-decoration: none;
   font-weight: bolder;
 }
+
+.inThesePages > p {
+  color: #FF6600;
+}
+
+.inThesePages > svg > path  {
+  fill: #FF6600;
+}
