@@ -19,6 +19,11 @@ module.exports = (app, passport) => {
 
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
+  //後台
+  app.get('/admin/signin', userController.adminSignInPage)
+  // app.post('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
+
+
 
   //登入、註冊、登出
   ////註冊
