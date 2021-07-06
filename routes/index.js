@@ -3,6 +3,7 @@ const helpers = require('../_helpers')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 const adminController = require('../controllers/adminController')
+const userController = require('../controllers/userController')
 
 
 module.exports = (app, passport) => {
@@ -23,5 +24,8 @@ module.exports = (app, passport) => {
 
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', adminController.getTweets)
+
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
 
 }
