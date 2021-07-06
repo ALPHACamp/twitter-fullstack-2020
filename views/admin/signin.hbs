@@ -11,11 +11,11 @@
     </div>
 
     <form action="/admin/{{#if signup}}signup{{else}}signin{{/if}}" method="post">
-      <div class="mb-2">
-        <label for="account" class="form-label">帳號</label>
+      <div class="mb-3">
+        <label for="account" style="margin-bottom: -30px; margin-left: 8px;">帳號</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control pt-4"
           id="account"
           name="account"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
@@ -23,22 +23,22 @@
         />
       </div>
       {{#if signup}}
-      <div class="mb-2">
-        <label for="name" class="form-label">名稱</label>
+      <div class="mb-3">
+        <label for="name" style="margin-bottom: -30px; margin-left: 8px;">名稱</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control pt-4"
           id="name"
           name="name"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
           aria-describedby="nameHelp"
         />
       </div>
-      <div class="mb-2">
-        <label for="email" class="form-label">Email</label>
+      <div class="mb-3">
+        <label for="email" style="margin-bottom: -30px; margin-left: 8px;">Email</label>
         <input
           type="email"
-          class="form-control"
+          class="form-control pt-4"
           id="email"
           name="email"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
@@ -47,10 +47,10 @@
       </div>
       {{/if}}
       <div class="mb-2">
-        <label for="password" class="form-label">密碼</label>
+        <label for="password" style="margin-bottom: -30px; margin-left: 8px;">密碼</label>
         <input
           type="password"
-          class="form-control"
+          class="form-control pt-4"
           id="password"
           name="password"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
@@ -59,10 +59,10 @@
       </div>
       {{#if signup}}
       <div class="mb-2">
-        <label for="passwordConfirm" class="form-label">密碼確認</label>
+        <label for="passwordConfirm" style="margin-bottom: -30px; margin-left: 8px;">密碼確認</label>
         <input
           type="passwordConfirm"
-          class="form-control"
+          class="form-control pt-4"
           id="passwordConfirm"
           name="passwordConfirm"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
