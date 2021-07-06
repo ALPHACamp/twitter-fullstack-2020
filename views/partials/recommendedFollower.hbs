@@ -1,37 +1,25 @@
-<div class="mb-3 fs-5">跟隨誰</div>
+<div class="mb-5 fs-5">跟隨誰</div>
 
-<div class="d-flex flex-column align-items-center">
+<div class="d-flex flex-column align-items-start">
 
-  <div class="d-flex align-items-start">
+  {{#each topFollowing }}
+  <div class="d-flex align-items-start mb-3">
     {{!-- 大頭貼 --}}
     <div>
-      <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/d1c64938267389.575aefd5063e6.png"
-        style="border-radius: 100%;width: 60px">
+      <img src="{{ this.avatar }}" style="border-radius: 100%;width: 60px">
     </div>
-    {{!-- 右側文字 --}}
-    <div class="ms-3" style="height: 80px;">
-      {{!-- 發文者 --}}
+    {{!-- 帳號 --}}
+    <div class="ms-3 d-flex align-items-end" style="height: 80px;margin-top:-10px;">
       <div>
-        <p class="fs-5 me-2 mb-0">Nina</p>
-        <p class="m-0" style="color: darkseagreen;">@nina・3小時</p>
+        <p class="fs-5 mb-0">{{ this.name }}</p>
+        <div class="d-flex">
+          <p class="m-0" style="color: darkseagreen;">{{ this.account }}</p>
+          <p class="ms-3" style="color: rgb(113, 113, 113);">{{ this.followerCount }} 人追蹤中</p>
+        </div>
       </div>
+      {{!-- 數量 --}}
     </div>
   </div>
-
-  <div class="d-flex align-items-start">
-    {{!-- 大頭貼 --}}
-    <div>
-      <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/d1c64938267389.575aefd5063e6.png"
-        style="border-radius: 100%;width: 60px">
-    </div>
-    {{!-- 右側文字 --}}
-    <div class="ms-3" style="height: 80px;">
-      {{!-- 發文者 --}}
-      <div>
-        <p class="fs-5 me-2 mb-0">Nina</p>
-        <p class="m-0" style="color: darkseagreen;">@nina・3小時</p>
-      </div>
-    </div>
-  </div>
+  {{/each}}
 
 </div>

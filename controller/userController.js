@@ -17,6 +17,8 @@ const userController = {
   // },
 
   getUserTweets: (req, res) => {
+    const topFollowing = res.locals.data
+    console.log(topFollowing)
     return User.findOne({
       where: {
         id: req.params.userId
@@ -41,7 +43,8 @@ const userController = {
               user,
               followingCount: following.count,
               followerCount: follower.count,
-              tweets
+              tweets,
+              topFollowing
             })
           })
         })
