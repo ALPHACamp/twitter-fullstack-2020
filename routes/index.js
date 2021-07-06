@@ -1,6 +1,7 @@
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController')
+const tweetController = require('../controllers/tweetcontroller')
 
 
 module.exports = (app, passport) => {
@@ -38,4 +39,6 @@ module.exports = (app, passport) => {
 
 
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
+
 }
