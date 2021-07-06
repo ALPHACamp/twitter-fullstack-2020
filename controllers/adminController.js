@@ -5,7 +5,7 @@ const Tweet = db.Tweet
 const adminController = {
   //登入頁面
   adminSignInPage: (req, res) => {
-    return res.render('adminsignin')
+    return res.render('admin/adminsignin')
   },
 
   //登入
