@@ -6,6 +6,14 @@ const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const session = require('express-session')
 const flash = require('connect-flash')
+<<<<<<< HEAD
+=======
+const helpers = require('./_helpers');
+const db = require('./models')
+
+const port = 3000
+
+>>>>>>> KOU
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
