@@ -22,9 +22,9 @@ module.exports = (app, passport) => {
     }
   }
 
+  app.get('/', (req, res) => res.render('followership'))
 
-
-  app.get('/', (req, res) => res.send('hello!'))
-
-
+  // app.get('/users/followership', (req, res) => {
+  //   res.render('followership')
+  // })
 }
