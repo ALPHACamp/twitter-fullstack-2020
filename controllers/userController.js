@@ -38,9 +38,6 @@ const userController = {
   signInPage: (req, res) => {
     return res.render('signin')
   },
-  adminSignInPage: (req, res) => {
-    return res.render('adminsignin')
-  },
 
   //登入
   signIn: (req, res) => {

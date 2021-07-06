@@ -1,5 +1,6 @@
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController.js')
+const adminController = require('../controllers/adminController')
 
 
 module.exports = (app, passport) => {
@@ -20,8 +21,11 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
   //後台
-  app.get('/admin/signin', userController.adminSignInPage)
-  // app.post('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
+  app.get('/admin/signin', adminController.adminSignInPage)
+  app.post('/admin/tweets', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+
+  // 正在處理管理者後台首頁登入的路由問題
 
 
 
