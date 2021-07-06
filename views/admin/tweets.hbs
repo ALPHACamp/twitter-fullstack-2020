@@ -1,3 +1,4 @@
+
 <div class="d-flex mt-5">
   {{!-- 左側欄位 --}}
   <div class="row" style="height: 500px;width: 300px;">
@@ -46,7 +47,10 @@
             </p>
           </div>
         </div>
-
+        {{!-- 右側刪除 --}}
+        <form action="/admin/tweets/{{ this.id }}?_method=DELETE" method="post">
+          <button type="submit" class="btn btn-outline-secondary">delete</button>
+        </form>
         <hr>
         {{/each}}
       </div>
@@ -80,6 +84,7 @@
           </ul>
         </nav>
       </div>
+
 
     </div>
   </div>
