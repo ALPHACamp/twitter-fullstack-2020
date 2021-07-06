@@ -2,13 +2,15 @@ const passport = require('../config/passport')
 const helpers = require('../_helpers')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+const adminController = require('../controllers/adminController')
 
 
 module.exports = (app, passport) => {
 
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      return next()
+      if (!helpers.getUser(req).is_admin)
+        return next()
     }
     res.redirect('/signin')
   }
@@ -19,6 +21,7 @@ module.exports = (app, passport) => {
     }
   }
 
-
+  app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
+  app.get('/admin/tweets', adminController.getTweets)
 
 }
