@@ -1,9 +1,15 @@
 .btn-regular {
   color: white;
-  background-color: tomato;
+  background-color: #FF6600;
 }
 
 .btn-regular:hover {
   color: white;
   background-color: coral;
+}
+
+#navbar > div > a {
+  color: black;
+  text-decoration: none;
+  font-weight: bolder;
 }
