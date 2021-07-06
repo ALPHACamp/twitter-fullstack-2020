@@ -9,14 +9,15 @@ app.use(express.static('public'))
 // set handlebars
 app.engine('hbs', hbs({
   defaultLayout: 'main',
-  extname: 'hbs'
+  extname: 'hbs',
+  helpers: require('./config/handlebars-helpers')
 }))
 app.set('view engine', 'hbs')
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.get('/', (req, res) => res.render('admin/signin', {isAuthenticated: true}))
+app.get('/', (req, res) => res.render('admin/signin', {isAdminAuthenticated: true}))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app
