@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const session = require('express-session')
 const flash = require('connect-flash')
+const bodyParser = require('body-parser')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -15,6 +16,7 @@ const port = process.env.PORT || 3000
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/upload', express.static(__dirname + '/upload'))
 app.use(session({
   secret: process.env.SESSION_SECRET || 'ssseeecccrrreett',
@@ -32,7 +34,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
 
 require('./routes')(app, passport)
 
