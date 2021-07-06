@@ -1,5 +1,5 @@
 const passport = require('passport')
-const LocalStrategy = require('passport-local')
+const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
@@ -30,8 +30,4 @@ passport.deserializeUser((id, cb) => {
   })
 })
 
-<<<<<<< HEAD
 module.exports = passport
-=======
-module.exports = passport 
->>>>>>> ed3eae32703707bdc00b6c6bc9c28b81c23acf6b

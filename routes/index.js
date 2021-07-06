@@ -1,7 +1,8 @@
 const helpers = require('../_helpers')
-
+const bcrypt = require('bcryptjs')
 const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
+const tweetController = require('../controllers/tweetController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -18,11 +19,7 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
   app.get('/', authenticated, (req, res) => res.redirect('/users'))
-<<<<<<< HEAD
-  app.get('/users', authenticated, userController.getUsers)
-=======
-  // app.get('/users', authenticated, userController.getUsers)
->>>>>>> ed3eae32703707bdc00b6c6bc9c28b81c23acf6b
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/users'))
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
@@ -31,10 +28,5 @@ module.exports = (app, passport) => {
   app.post('/signup', userController.signUp)
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-<<<<<<< HEAD
-  app.get('/signout', userController.signout)
-}
-=======
   app.get('/signout', userController.signOut)
-} 
->>>>>>> ed3eae32703707bdc00b6c6bc9c28b81c23acf6b
+}
