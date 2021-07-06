@@ -29,4 +29,11 @@ module.exports = (app, passport) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/signout', userController.signOut)
+<<<<<<< HEAD
 }
+=======
+
+  app.get('/tweets', tweetController.getTweets)
+
+} 
+>>>>>>> 93b3d49a85013a532470942ad0f9bc3fdcb453ec
