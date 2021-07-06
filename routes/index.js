@@ -2,6 +2,7 @@ const helpers = require('../_helpers')
 
 const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
+const tweetController = require('../controllers/tweetController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -28,4 +29,7 @@ module.exports = (app, passport) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/signout', userController.signOut)
+
+  app.get('/tweets', tweetController.getTweets)
+
 } 
