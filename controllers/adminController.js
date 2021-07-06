@@ -8,6 +8,11 @@ const adminController = {
     return res.render('admin/adminsignin')
   },
 
+  adminSignIn: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/admin/tweets')
+  },
+
   //登入
   getTweets: (req, res) => {
     return Tweet.findAll({
@@ -15,8 +20,6 @@ const adminController = {
       nest: true,
       include: [User]
     }).then(tweets => {
-      console.log('列印出')
-      console.log(tweets)
       return res.render('admin/tweets', { tweets: tweets })
     })
   }

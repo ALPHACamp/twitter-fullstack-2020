@@ -12,21 +12,18 @@ module.exports = (app, passport) => {
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).isAdmin) { return next() }
-      return res.redirect('/')
+      if (helpers.getUser(req).role) {
+        return next()
+      }
+      return res.redirect('/')//似乎都會跑這裡
     }
     res.redirect('/signin')
   }
 
-  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-
   //後台
   app.get('/admin/signin', adminController.adminSignInPage)
-  app.post('/admin/tweets', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-
-  // 正在處理管理者後台首頁登入的路由問題
-
 
 
   //登入、註冊、登出
@@ -38,4 +35,7 @@ module.exports = (app, passport) => {
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   ////登出
   app.get('/logout', userController.logout)
+
+
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 }
