@@ -12,6 +12,12 @@ const userController = {
       name, account, email,
       password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
     }).then(() => res.redirect('/signin'))
+  },
+  signInPage: (req, res) => {
+    return res.render('signin')
+  },
+  signIn: (req, res) => {
+    return res.render('tweets')
   }
 }
 
