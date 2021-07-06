@@ -38,4 +38,8 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes')(app, passport)
 
+<<<<<<< HEAD
 module.exports = app
+=======
+module.exports = app 
+>>>>>>> ed3eae32703707bdc00b6c6bc9c28b81c23acf6b
