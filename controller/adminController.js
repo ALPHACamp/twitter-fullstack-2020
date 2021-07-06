@@ -17,57 +17,61 @@ const adminController = {
     })
   },
 
-  getAdminUsers: (req, res) => {
-    return User.findAndCountAll({
-      raw: true,
-      nest: true,
-    }).then(users => {
+  getAdminUsers: async (req, res) => {
+    try {
+      const users = await User.findAndCountAll({
+        raw: true,
+        nest: true,
+      })
+
       let Data = []
+      Data = users.rows.map(async (user, index) => {
+        const [like, following, follower, reply] = await Promise.all([
+          Like.findAndCountAll({
+            raw: true,
+            nest: true,
+            where: { userId: user.id },
+          }),
+          Followship.findAndCountAll({
+            raw: true,
+            nest: true,
+            where: { followerId: user.id },
+          }),
+          Followship.findAndCountAll({
+            raw: true,
+            nest: true,
+            where: { followingId: user.id },
+          }),
+          Reply.findAndCountAll({
+            raw: true,
+            nest: true,
+            where: { UserId: user.id },
+          })
+        ])
+        return {
+          id: user.id,
+          name: user.name,
+          avatar: user.avatar,
+          account: user.account,
+          cover: user.cover,
+          like: like,
+          following: following,
+          follower: follower,
+          reply: reply
+        }
+      })
+      Promise.all(Data).then(data => {
+        console.log(data)
+        return res.render('admin/users', { data })
+      })
 
-      // users.rows.forEach((user, i) => {
-      //   let data = {
-      //     likeCount: 0,
-      //     followingCount: 0,
-      //     followerCount: 0,
-      //     replyCount: 0
-      //   }
-      //   Like.findAndCountAll({
-      //     raw: true,
-      //     nest: true,
-      //     where: { userId: user.id },
-      //   }).then(likes => {
-      //     data.likeCount = likes.count
-      //   })
+    }
 
-      //   Followship.findAndCountAll({
-      //     raw: true,
-      //     nest: true,
-      //     where: { followerId: user.id },
-      //   }).then(followships => {
-      //     data.followingCount = followships.count
-      //   })
-
-      //   Followship.findAndCountAll({
-      //     raw: true,
-      //     nest: true,
-      //     where: { followingId: user.id },
-      //   }).then(followships => {
-      //     data.followerCount = followships.count
-      //   })
-
-      //   Reply.findAndCountAll({
-      //     raw: true,
-      //     nest: true,
-      //     where: { UserId: user.id },
-      //   }).then(replies => {
-      //     data.replyCount = replies.count
-      //     Data.push(data)
-      //   })
-
-      // })
-      return res.render('admin/users', { users: users.rows })
-
-    })
+    catch (err) {
+      req.flash('error_message', err)
+      return res.redirect('/') // 假定回到首頁
+    }
   }
+
 }
 module.exports = adminController

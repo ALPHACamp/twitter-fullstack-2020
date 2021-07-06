@@ -3,7 +3,7 @@
 
 <div class="row row-cols-1 row-cols-md-4 g-4" style="width: 1000px;">
 
-  {{#each users }}
+  {{#each data }}
   <div class="col">
     <div class="card d-flex flex-column align-items-center">
       {{!-- 首頁照片跟大頭貼 --}}
@@ -17,18 +17,18 @@
         {{!-- 喜歡跟追蹤 --}}
         <div class="d-flex">
           <p class="card-text me-3">
-            <i class="far fa-comment"></i> 1.5K
+            <i class="far fa-comment"></i> {{ this.reply.count }}
           </p>
           <p class="card-text">
-            <i class="far fa-heart"></i> 20K
+            <i class="far fa-heart"></i> {{ this.like.count }}
           </p>
         </div>
         <div class="d-flex">
           <p class="card-text me-3">
-            35 個追蹤中
+            {{ this.following.count }} 個追蹤中
           </p>
           <p class="card-text">
-            49 位追蹤者
+            {{ this.follower.count }} 位追蹤者
           </p>
         </div>
       </div>
