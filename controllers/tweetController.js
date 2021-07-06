@@ -7,7 +7,7 @@ const tweetController = {
       nest: true,
     })
 
-    return res.render('tweets', { tweets })
+    return res.render('tweets', { tweets, isAuthenticated: true })
   }
 }
 
