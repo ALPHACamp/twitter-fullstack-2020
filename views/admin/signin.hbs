@@ -7,10 +7,10 @@
       style="display: block; margin: auto; width: 50px;"
     />
     <div class="text-center my-4">
-      <h3><strong>後台登入</strong></h3>
+      <h3><strong>{{#if signup}}新增管理員{{else}}後台登入{{/if}}</strong></h3>
     </div>
 
-    <form action="/admin/signin" method="post">
+    <form action="/admin/{{#if signup}}signup{{else}}signin{{/if}}" method="post">
       <div class="mb-2">
         <label for="account" class="form-label">帳號</label>
         <input
@@ -22,6 +22,30 @@
           aria-describedby="accountHelp"
         />
       </div>
+      {{#if signup}}
+      <div class="mb-2">
+        <label for="name" class="form-label">名稱</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
+          aria-describedby="nameHelp"
+        />
+      </div>
+      <div class="mb-2">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      {{/if}}
       <div class="mb-2">
         <label for="password" class="form-label">密碼</label>
         <input
@@ -33,15 +57,32 @@
           aria-describedby="passwordHelp"
         />
       </div>
+      {{#if signup}}
+      <div class="mb-2">
+        <label for="passwordConfirm" class="form-label">密碼確認</label>
+        <input
+          type="passwordConfirm"
+          class="form-control"
+          id="passwordConfirm"
+          name="passwordConfirm"
+          style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
+          aria-describedby="passwordConfirmHelp"
+        />
+      </div>
+      {{/if}}
       <br />
       <button
         class="col-12 btn btn-primary btn-block"
         style="border-radius: 30px;"
         type="submit"
-      >登入</button>
-      <div class="text-end my-4">
+      >{{#if signup}}註冊{{else}}登入{{/if}}</button>
+      <div class="{{#if signup}}text-center{{else}}text-end{{/if}} my-4">
         <p>
+          {{#if signup}}
+          <a href="javascript:history.back()">取消</a>
+          {{else}}
           <a href="/signin">前台登入</a>
+          {{/if}}
         </p>
       </div>
     </form>
