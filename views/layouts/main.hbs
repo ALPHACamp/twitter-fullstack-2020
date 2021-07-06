@@ -13,7 +13,7 @@
 
 <body>
   <div class="container">
-    <div class="col d-flex flex-nowrap">
+    <div class="d-flex flex-nowrap justify-content-center">
       {{#isAuth isAuthenticated isAdminAuthenticated}}
       <div class="col-3 px-5 d-flex flex-column justify-content-between vh-100 border-end" id="navbar">
         <div>
@@ -63,6 +63,18 @@
           </a>
           <button class="btn btn-regular w-100 rounded-pill">推文</button>
         </div>
+        <div>
+          <a href="/signout" class="d-flex ms-1">
+            <svg width="24" height="22" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M9 13L5 9M5 9L9 5M5 9H19M14 13V14C14 14.7956 13.6839 15.5587 13.1213 16.1213C12.5587 16.6839 11.7956 17 11 17H4C3.20435 17 2.44129 16.6839 1.87868 16.1213C1.31607 15.5587 1 14.7956 1 14V4C1 3.20435 1.31607 2.44129 1.87868 1.87868C2.44129 1.31607 3.20435 1 4 1H11C11.7956 1 12.5587 1.31607 13.1213 1.87868C13.6839 2.44129 14 3.20435 14 4V5"
+                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <p class="ms-4">登出</p>
+          </a>
+        </div>
+        </div>
+        <div class="col-6" id="body">
         {{/if}}
         {{#if isAdminAuthenticated}}
         <a href="/admin/tweets" class="d-flex ms-1 my-2 inThesePages">
@@ -82,26 +94,31 @@
           <p class="ms-4">使用者列表</p>
         </a>
       </div>
-        {{/if}}
-        <div>
-          <a href="/signout" class="d-flex ms-1">
-            <svg width="24" height="22" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M9 13L5 9M5 9L9 5M5 9H19M14 13V14C14 14.7956 13.6839 15.5587 13.1213 16.1213C12.5587 16.6839 11.7956 17 11 17H4C3.20435 17 2.44129 16.6839 1.87868 16.1213C1.31607 15.5587 1 14.7956 1 14V4C1 3.20435 1.31607 2.44129 1.87868 1.87868C2.44129 1.31607 3.20435 1 4 1H11C11.7956 1 12.5587 1.31607 13.1213 1.87868C13.6839 2.44129 14 3.20435 14 4V5"
-                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <p class="ms-4">登出</p>
-          </a>
-        </div>
-
+      <div>
+        <a href="/signout" class="d-flex ms-1">
+          <svg width="24" height="22" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M9 13L5 9M5 9L9 5M5 9H19M14 13V14C14 14.7956 13.6839 15.5587 13.1213 16.1213C12.5587 16.6839 11.7956 17 11 17H4C3.20435 17 2.44129 16.6839 1.87868 16.1213C1.31607 15.5587 1 14.7956 1 14V4C1 3.20435 1.31607 2.44129 1.87868 1.87868C2.44129 1.31607 3.20435 1 4 1H11C11.7956 1 12.5587 1.31607 13.1213 1.87868C13.6839 2.44129 14 3.20435 14 4V5"
+              stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <p class="ms-4">登出</p>
+        </a>
       </div>
-      {{/isAuth}}
-      <div class="col-5" id="body">
+      </div>
+      <div class="col-9" id="body">
+      {{/if}}
+      
+      {{else}}
+      <div class="col-12 d-flex justify-content-center" id="body">
+        {{/isAuth}}
         {{{body}}}
       </div>
-      <div class="col-4" id="topUser">
+      {{#if isAuthenticated}}
+      <div class="col-3" id="topUser">
 
       </div>
+      {{/if}}
+
 
 
     </div>
