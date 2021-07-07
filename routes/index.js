@@ -1,7 +1,5 @@
-const { use } = require('chai')
-const express = require('express')
-const { helpers } = require('faker')
-const router = express.Router()
+// const express = require('express')
+// const router = express.Router()
 const helpers = require('../_helpers')
 const userController = require('../controller/userController')
 const adminController = require('../controller/adminController')
@@ -85,5 +83,5 @@ module.exports = (app, passport) => {
 
   app.get('/', authenticated, adminController.getAdminTweets)
   app.get('/tweets', authenticated, tweetController.getTweets)
-  app.get('/users/:userId/tweets',authenticated, getTopFollowing, userController.getUserTweets)
+  app.get('/users/:userId/tweets', authenticated, getTopFollowing, userController.getUserTweets)
 }
