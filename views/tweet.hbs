@@ -1,6 +1,3 @@
-
-<div>index tweets page</div>
-
 <div class="row">
   <div class="col-md-3">
     <div class="card">
@@ -26,31 +23,21 @@
     </div>
   </div>
   <div class="col-md-9">
-    <div class="card">
-      <div class="card-header">
-        推文清單
-      </div>
-      <div class="card-body">
-        <tbody>
-          {{#each tweets}}
-          <tr>
-            <td>
-              <h4>
-                <a href="/tweets/{{this.id}}">{{this.User.name}}</a>
-              </h4>
-            </td>
-            <td>
-              <p>{{this.content}}</p>
-            </td>
-            <td>
-              {{moment this.createdAt}}
-            </td>
-            <hr>
-          </tr>
-          {{/each}}
-        </tbody>
-      </div>
+    <h1>User Name: {{tweet.User.name}}</h1>
+    <br>
+    <div class="well">
+      <ul class="list-unstyled">
+        <li><strong>Content:</strong> {{tweet.content}}</li>
+        <li><strong>Likes:</strong> {{tweet.Likes}}</li>
+        <footer class="blockquote-footer"> {{moment this.createdAt}}</footer>
+      </ul>
     </div>
   </div>
+  <hr>
 </div>
 
+<hr>
+
+<br />
+<br />
+<a href="javascript:history.back()">回上一頁</a>
