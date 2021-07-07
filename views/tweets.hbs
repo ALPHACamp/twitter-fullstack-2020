@@ -1,11 +1,12 @@
 <div>
-  <h1>this is Tweets Page</h1>
+  <h1>this is Tweets Page ( views / tweets.hbs )</h1>
 
   {{#each tweets}}
   <hr>
-  <p>第 {{this.id}} 個 tweet: </p>
-  <p>作者: {{this.UserId}}</p>
+  <a href="/tweets/{{this.id}}">第 {{this.id}} 個 tweet:</a>
+  <p>作者名稱: {{this.User.name}}</p>
+  <p>作者照片:{{this.User.avatar}}</p>
   <p>內容:{{this.description}}</p>
-  <p>時間: {{this.createdAt}}</p>
+  <p>時間: {{moment this.createdAt}}</p>
   {{/each}}
 </div>
