@@ -24,8 +24,13 @@ module.exports = (app, passport) => {
   //後台
   app.get('/admin/signin', adminController.adminSignInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
-  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getAdminTweets)
+  app.get('/admin/users', authenticatedAdmin, adminController.getAdminUsers)
+  app.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteAdminTweet)
 
+  //前台
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   //登入、註冊、登出
   ////註冊
@@ -38,7 +43,9 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
 
-  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetController.getTweets)
+
+  // module.exports = (app) => {
+  // app.get('/', adminController.getAdminTweets)
+  // >>>>>>> development
 
 }

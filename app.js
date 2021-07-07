@@ -1,5 +1,5 @@
 const express = require('express')
-const handlebars = require('express-handlebars')
+const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
@@ -15,7 +15,8 @@ const port = process.env.PORT || 3000
 
 app.engine('handlebars', handlebars({
   defaultLayout: 'main',
-  helpers: require('./config/handlebars-helpers')
+  extname: '.hbs',
+  helpers: require('./config/handlebars-helper')
 }))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -32,6 +33,16 @@ app.use((req, res, next) => {
   next()
 })
 
+app.engine('hbs', exphbs({
+  defaultLayout: 'main',
+  extname: '.hbs',
+  helpers: require('./config/handlebars-helper')
+}))
+app.set('view engine', 'hbs')
+
+
+app.use(methodOverride('_method'))
+
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
@@ -40,5 +51,7 @@ app.listen(port, () => {
 })
 
 require('./routes')(app, passport)
+
+
 
 module.exports = app
