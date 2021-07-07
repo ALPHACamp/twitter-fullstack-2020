@@ -25,6 +25,9 @@ app.get('/', (req, res) => {
 app.get('/user/self', (req, res) => {
   res.render('user')
 })
+app.get('/tweets/replies', (req, res) => {
+  res.render('replyUser')
+})
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
