@@ -25,8 +25,12 @@ module.exports = (app, passport) => {
   app.get('/admin/signin', adminController.adminSignInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
   app.get('/admin/tweets', authenticatedAdmin, adminController.getAdminTweets)
-  app.get('/admin/users', adminController.getAdminUsers)
-  app.delete('/admin/tweets/:tweetId', adminController.deleteAdminTweet)
+  app.get('/admin/users', authenticatedAdmin, adminController.getAdminUsers)
+  app.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteAdminTweet)
+
+  //前台
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   //登入、註冊、登出
   app.get('/signup', userController.signUpPage)

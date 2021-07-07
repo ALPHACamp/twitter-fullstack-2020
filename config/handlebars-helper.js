@@ -113,6 +113,10 @@ module.exports = {
     })
     return moment(createdAt).fromNow()
   },
+  //人性化時間顯示
+  moment: function (a) {
+    return moment(a).fromNow()
+  },
 
   ifCond: function (a, b, options) {
     if (a === b) {
