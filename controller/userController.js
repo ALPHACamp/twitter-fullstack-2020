@@ -51,5 +51,9 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
+  getUserReplies: (req, res) => {
+    return res.render('replies')
+  }
 }
 module.exports = userController
