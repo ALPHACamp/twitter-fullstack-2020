@@ -1,0 +1,15 @@
+<div>
+  <h1>This is Single Tweet Page ( view / tweet.hbs )</h1>
+  <hr>
+  <h3>Tweet編號: {{tweet.id}}</h3>
+  <h3>發佈者id: {{tweet.User.name}}</h3>
+  <h3>發佈內容: {{tweet.description}}</h3>
+  <h3>發佈時間: {{moment tweet.createdAt}}</h3>
+  <hr>
+  {{#each tweet.Replies}}
+  <hr>
+  <p>回覆者: {{this.User.name}}</p>
+  <p>回覆內容: {{this.comment}}</p>
+  <p>回覆時間: {{moment this.createdAt}}</p>
+  {{/each}}
+</div>
