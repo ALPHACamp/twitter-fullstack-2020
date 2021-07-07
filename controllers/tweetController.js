@@ -12,6 +12,16 @@ const tweetController = {
     tweetService.getTweet(req, res, (data) => {
       return res.render('tweet', data)
     })
+  },
+  postTweet: (req, res) => {
+    tweetService.postTweet(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      }
+      req.flash('success_messages', data['message'])
+      res.redirect('/tweets')
+    })
   }
 }
 
