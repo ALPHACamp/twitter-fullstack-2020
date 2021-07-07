@@ -1,41 +1,55 @@
-<h1>推文後台</h1>
-
-<a href='/admin/tweets/create'>
-  <button type="button" class="btn btn-primary">New Tweet</button>
-</a>
-
-<br />
-<br />
-
-<table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">UserId</th>
-      <th scope="col">#</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each tweets}}
-    <tr>
-      <th scope="row">{{this.id}}</th>
-      <td>{{this.UserId}}</td>
-      <td>
-        <button type="button" class="btn btn-link">
-          <a href="/admin/tweets/{{this.id}}">
-            Show
-          </a>
-        </button>
-        <button type="button" class="btn btn-link">
-          <a href="/admin/tweets/{{this.id}}/edit">
-            Edit
-          </a>
-        </button>
-        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link">Delete</button>
-        </form>
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+<div class="row">
+  <div class="col-md-3">
+  <div class="card">
+    <div class="card-body">
+      <div>
+        <div>
+          <h4>
+            <a class="nav-link" href="/admin">後台首頁</a>
+          </h4>
+        </div>
+        <div>
+          <h4>
+            <a class="nav-link" href="/admin/tweets">推文清單</a>
+          </h4>
+        </div>
+          <div>
+            <h4>
+              <a class="nav-link" href="/admin/users">使用者列表</a>
+            </h4>
+          </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="col-md-9">
+    <div class="card">
+      <div class="card-header">
+        推文清單
+      </div>
+      <div class="card-body">
+        <tbody>
+        {{#each tweets}}
+        <tr>
+          <td>
+              <h4>
+                <a href="/admin/tweets/{{this.id}}">{{this.User.name}}</a>
+              </h4>
+              <form action="/admin/tweets/{{this.id }}?_method=DELETE" method="POST" style="display: contents;">
+                <button type="submit" class="btn btn-secondary"><i class="fas fa-times"></i></button>
+              </form>
+          </td>
+          <td>
+            <p>{{this.content}}</p>
+          </td>
+          <td>
+            {{moment this.createdAt}}
+          </td>
+          <hr>
+        </tr>
+        {{/each}}
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
