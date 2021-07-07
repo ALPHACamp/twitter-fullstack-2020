@@ -8,9 +8,7 @@ const tweetController = {
       order: [['createdAt', 'DESC']],
       include: [User]
     })
-    // console.log('into controllers/tweetControllers...line11,tweets', tweets)
-
-    return res.render('tweets', { tweets, isAuthenticated: true, })
+    return res.render('tweets', { tweets, isAuthenticated: true })
   },
   getTweet: async (req, res) => {
     const tweet = await Tweet.findByPk(req.params.id, {
