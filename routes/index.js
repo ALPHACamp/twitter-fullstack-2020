@@ -24,7 +24,6 @@ module.exports = (app, passport) => {
 
   const isAdmin = (req, res, next) => {
     res.locals.isAdmin = req.user.role === 'admin'
-    console.log(res.locals.isAdmin)
     return next()
   }
 
