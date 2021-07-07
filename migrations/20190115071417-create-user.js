@@ -26,7 +26,7 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      image: {
+      img: {
         type: Sequelize.STRING
       },
       bg_img: {
