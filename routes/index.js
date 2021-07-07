@@ -33,6 +33,7 @@ const getTopFollowing = async (req, res, next) => {
         avatar: user.avatar,
         account: user.account,
         followerCount: following.count
+        //isFollow 等有使用者登入認證之後才做
       }
     })
     Promise.all(Data).then(data => {

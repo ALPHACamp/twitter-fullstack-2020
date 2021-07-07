@@ -6,16 +6,6 @@ const Followship = db.Followship
 const Reply = db.Reply
 
 const userController = {
-  // getUserTweets: (req, res) => {
-  //   return User.findOne({
-  //     where: {
-  //       id: req.params.userId
-  //     }
-  //   }).then(user => {
-  //     return res.render('user/tweets', { user: user.toJSON() })
-  //   })
-  // },
-
   getUserTweets: (req, res) => {
     const topFollowing = res.locals.data
     console.log(topFollowing)
