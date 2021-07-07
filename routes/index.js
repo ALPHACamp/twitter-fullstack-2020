@@ -82,7 +82,8 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
 
+
   app.get('/', authenticated, adminController.getAdminTweets)
   app.get('/tweets', authenticated, tweetController.getTweets)
-   app.get('/users/:userId/tweets',authenticated, getTopFollowing, userController.getUserTweets)
+  app.get('/users/:userId/tweets',authenticated, getTopFollowing, userController.getUserTweets)
 }
