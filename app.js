@@ -39,6 +39,6 @@ let Appear = { navbar: false, top10: false }
 app.get('/', (req, res) => res.render('admin/signin', { Appear, isAuthenticated: true }))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
-module.exports = app 
+module.exports = app
