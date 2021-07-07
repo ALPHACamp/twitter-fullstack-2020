@@ -1,0 +1,12 @@
+<h1>推文清單</h1>
+<br />
+<br />
+
+{{#each tweets}}
+<div class="row">
+  <div class="col-md-12">
+    <h3>{{this.User.name}}</h3>
+    <div>{{this.description}}</div>
+  </div>
+</div>
+{{/each}}

@@ -9,6 +9,26 @@ const Reply = db.Reply
 const pageLimit = 10
 
 const adminController = {
+  //登入頁面
+  adminSignInPage: (req, res) => {
+    return res.render('admin/signin')
+  },
+
+  adminSignIn: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/admin/tweets')
+  },
+
+  // //登入
+  // getTweets: (req, res) => {
+  //   return Tweet.findAll({
+  //     raw: true,
+  //     nest: true,
+  //     include: [User]
+  //   }).then(tweets => {
+  //     return res.render('admin/tweets', { tweets: tweets })
+  //   })
+  // },
   getAdminTweets: (req, res) => {
     let offset = 0
     if (req.query.page) {
