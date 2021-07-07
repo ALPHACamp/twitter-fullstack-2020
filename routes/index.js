@@ -22,9 +22,15 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  const isAdmin = (req, res, next) => {
+    res.locals.isAdmin = req.user.role === 'admin'
+    console.log(res.locals.isAdmin)
+    return next()
+  }
+
   app.get('/admin/signin', adminController.adminSignInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
-  app.get('/admin/tweets', authenticatedAdmin, adminController.getAdminTweets)
+  app.get('/admin/tweets', authenticatedAdmin, isAdmin, adminController.getAdminTweets)
   app.get('/admin/users', authenticatedAdmin, adminController.getAdminUsers)
   app.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteAdminTweet)
 

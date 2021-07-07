@@ -4,6 +4,7 @@ const Tweet = db.Tweet
 
 const tweetController = {
   getTweets: (req, res) => {
+    console.log(req.user.role)
     res.render('tweets')
   }
 }

@@ -23,6 +23,7 @@
           <p>Twitter</p>
         </div>
         {{!-- 中 --}}
+        {{#if isAdmin}}
         <div class="col-12 pt-0">
           <a href="/admin/tweets" style=" text-decoration:none;color:black">
             <p>推文清單</p>
@@ -31,6 +32,19 @@
             <p>使用者列表</p>
           </a>
         </div>
+        {{else}}
+        <div class="col-12 pt-0">
+          <a href="/admin/tweets" style=" text-decoration:none;color:black">
+            <p>首頁</p>
+          </a>
+          <a href="/admin/users" style=" text-decoration:none;color:black">
+            <p>個人資料</p>
+          </a>
+          <a href="/admin/users" style=" text-decoration:none;color:black">
+            <p>設定</p>
+          </a>
+        </div>
+        {{/if}}
         {{!-- 下 --}}
         <div class="col-12">
           <p>登出</p>
