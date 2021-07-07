@@ -6,8 +6,8 @@ const tweetController = {
       raw: true,
       nest: true,
     })
-
-    return res.render('tweets', { tweets, isAuthenticated: true })
+    let Appear = { navbar: false, top10: false }
+    return res.render('tweets', {Appear, tweets, isAuthenticated: true })
   }
 }
 
