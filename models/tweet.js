@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'TweetId',
       as: 'LikedUsers'
     })
-    Tweet.hasMany(model.Reply)
+    Tweet.hasMany(models.Reply)
   };
   return Tweet;
 };
