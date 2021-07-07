@@ -83,5 +83,6 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   app.get('/users/:userId/replies', authenticated, getTopFollowing, userController.getUserReplies)
+  app.get('/users/:userId/likes', authenticated, getTopFollowing, userController.getUserLikes)
 
 }
