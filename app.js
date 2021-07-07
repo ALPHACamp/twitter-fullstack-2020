@@ -1,5 +1,5 @@
 const express = require('express')
-const handlebars = require('express-handlebars')
+const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
@@ -13,11 +13,12 @@ const db = require('./models') // 引入資料庫
 const app = express()
 const port = process.env.PORT || 3000
 
-app.engine('handlebars', handlebars({
+app.engine('hbs', exphbs({
   defaultLayout: 'main',
-  helpers: require('./config/handlebars-helpers')
+  extname: '.hbs',
+  helpers: require('./config/handlebars-helper')
 }))
-app.set('view engine', 'handlebars')
+app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(methodOverride('_method'))
@@ -31,10 +32,6 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

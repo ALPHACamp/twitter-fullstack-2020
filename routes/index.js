@@ -1,8 +1,9 @@
+const express = require('express')
+const router = express.Router()
 const helpers = require('../_helpers')
-const userController = require('../controllers/userController.js')
-const adminController = require('../controllers/adminController')
-const tweetController = require('../controllers/tweetcontroller')
-
+const userController = require('../controller/userController')
+const adminController = require('../controller/adminController')
+const tweetController = require('../controller/tweetController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -21,20 +22,17 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  //後台
   app.get('/admin/signin', adminController.adminSignInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
-  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getAdminTweets)
+  app.get('/admin/users', adminController.getAdminUsers)
+  app.delete('/admin/tweets/:tweetId', adminController.deleteAdminTweet)
 
   //登入、註冊、登出
-  ////註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
-  ////登入
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-  ////登出
   app.get('/logout', userController.logout)
 
 
