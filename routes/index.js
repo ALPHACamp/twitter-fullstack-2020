@@ -8,9 +8,9 @@ const userController = require('../controllers/userController')
 module.exports = (app, passport) => {
   const authenticatedUser = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (!helpers.getUser(req).is_admin) return next()
+      if (!helpers.getUser(req).is_admin) { return next() }
+      req.flash('error_messages', '管理員請由後台登入')
     }
-    req.flash('error_messages', '管理員請由後台登入')
     res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
@@ -38,4 +38,5 @@ module.exports = (app, passport) => {
   app.get('/signout', userController.signOut)
 
   app.get('/tweets', authenticatedUser, userController.getTweets)
+  app.get('/', (req, res) => res.redirect('/tweets'))
 }
