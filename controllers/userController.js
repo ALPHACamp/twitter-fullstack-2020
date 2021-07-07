@@ -1,17 +1,45 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User } = db
+const { Op } = require('sequelize')
 
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
   },
   signUp: (req, res) => {
-    const { name, account, email } = req.body
-    User.create({
-      name, account, email,
-      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-    }).then(() => res.redirect('/signin'))
+    const { name, account, email, password, passwordConfirm } = req.body
+    const errors = []
+    if (!name || !account || !email || !password || !passwordConfirm) {
+      errors.push({ msg: '所有欄位都是必填。' })
+    }
+    if (password !== passwordConfirm) {
+      errors.push({ msg: '密碼及確認密碼不一致！' })
+    }
+    if (errors.length) {
+      return res.render('signup', {
+        errors, name, account, email, password, passwordConfirm
+      })
+    }
+    User.findOne({
+      where: {
+        [Op.or]: [{ account }, { email }]
+      }
+    }).then(user => {
+      if (user) {
+        errors.push({ msg: '帳號或Email已註冊！' })
+        return res.render('signup', {
+          errors, name, account, email, password, passwordConfirm
+        })
+      }
+      return User.create({
+        name, account, email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+      }).then(() => {
+        req.flash('success_messages', '註冊成功！')
+        return res.redirect('/signin')
+      })
+    })
   },
   signInPage: (req, res) => {
     return res.render('signin')

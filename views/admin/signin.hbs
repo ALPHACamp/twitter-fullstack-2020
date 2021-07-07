@@ -9,7 +9,7 @@
     <div class="text-center my-4">
       <h3><strong>{{#if signup}}新增管理員{{else}}後台登入{{/if}}</strong></h3>
     </div>
-
+    {{> message}}
     <form action="/admin/{{#if signup}}signup{{else}}signin{{/if}}" method="post">
       <div class="mb-3">
         <label for="account" style="margin-bottom: -30px; margin-left: 8px;">帳號</label>
@@ -20,6 +20,7 @@
           name="account"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
           aria-describedby="accountHelp"
+          value="{{account}}"
         />
       </div>
       {{#if signup}}
@@ -32,6 +33,7 @@
           name="name"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
           aria-describedby="nameHelp"
+          value="{{name}}"
         />
       </div>
       <div class="mb-3">
@@ -43,6 +45,7 @@
           name="email"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
           aria-describedby="emailHelp"
+          value="{{email}}"
         />
       </div>
       {{/if}}
@@ -55,18 +58,20 @@
           name="password"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
           aria-describedby="passwordHelp"
+          value="{{password}}"
         />
       </div>
       {{#if signup}}
       <div class="mb-2">
         <label for="passwordConfirm" style="margin-bottom: -30px; margin-left: 8px;">密碼確認</label>
         <input
-          type="passwordConfirm"
+          type="password"
           class="form-control pt-4"
           id="passwordConfirm"
           name="passwordConfirm"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
           aria-describedby="passwordConfirmHelp"
+          value="{{passwordConfirm}}"
         />
       </div>
       {{/if}}

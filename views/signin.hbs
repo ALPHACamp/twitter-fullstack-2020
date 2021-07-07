@@ -9,7 +9,7 @@
     <div class="text-center my-4">
       <h3><strong>登入 TwitterMimicry</strong></h3>
     </div>
-
+    {{> message}}
     <form action="/signin" method="post">
       <div class="mb-3">
         <label
@@ -23,6 +23,7 @@
           name="account"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
           aria-describedby="accountHelp"
+          value="{{account}}"
         />
       </div>
       <div class="mb-2">
@@ -37,6 +38,7 @@
           name="password"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
           aria-describedby="passwordHelp"
+          value="{{password}}"
         />
       </div>
       <br />
