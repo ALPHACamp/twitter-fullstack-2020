@@ -1,85 +1,118 @@
-{{!-- 標題 --}}
-
-<div class="p-2 mb-0" style="width: 100%; outline: 1px solid gray;height:55px">
-  <h3><strong>首頁</strong></h3>
-</div>
-
-<div class="d-flex flex-column align-items-center">
-  <div style="width: 100%; outline: 1px solid gray; position:relative" class="d-flex flex-row p-3">
-    {{!-- 大頭貼 --}}
-    <div>
-      <a href="/users/{{user.id}}/tweets">
-        <img src="{{ user.avatar }}" style="border-radius: 100%;width: 60px">
+<div class="d-flex mt-5">
+  {{!-- 左側欄位 --}}
+  <div class="row" style="height: 500px;width: 250px;">
+    {{!-- 上 --}}
+    <div class="col-12">
+      <p>Twitter</p>
+    </div>
+    {{!-- 中 --}}
+    <div class="col-12 pt-0">
+      <a href="/" style=" text-decoration:none;color:rgb(179, 123, 50)">
+        <p>首頁</p>
+      </a>
+      <a href="/users/{{user.id}}" style=" text-decoration:none;color:rgb(0, 0, 0)">
+        <p>個人資料</p>
+      </a>
+      <a href="/users/{{user.id}}/edit" style=" text-decoration:none;color:rgb(0, 0, 0)">
+        <p>設定</p>
+      </a>
+      <a href="/users/{{user.id}}/tweets" style=" text-decoration:none;color:rgb(0, 0, 0)">
+        <p>推文</p>
       </a>
     </div>
-    {{!-- 右側區塊 --}}
-    <div class="ms-3 mt-2" style="height: 120px;color:#9197A3">
-      <h4><strong>有什麼新鮮事?</strong></h4>
-    </div>
-    <div style="position:absolute; right:10px; bottom:10px;">
-      <a href="#" type="button" class="btn"
-        style="background-color: #FF6600;color: white; border-radius: 45%;font-size:20px">推文</a>
+    {{!-- 下 --}}
+    <div class="col-12">
+      <p>登出</p>
     </div>
   </div>
-</div>
 
-<div class="border border-3 p-1" style="background-color: #E6ECF0;"></div>
+  <div style="width: 780px;" class="me-5">
+    {{!-- 標題 --}}
+    <div class="p-2 mb-0" style="width: 100%; outline: 1px solid gray;height:55px">
+      <h3><strong>首頁</strong></h3>
+    </div>
 
-<div class="d-flex flex-column align-items-center">
-
-  <div>
-    {{#each data }}
-    <div class="d-flex align-items-center">
-      {{!-- 大頭貼 --}}
-      <div>
-        <img src="{{ this.User.avatar }}" style="border-radius: 100%;width: 60px">
-      </div>
-      {{!-- 右側文字 --}}
-      <div class="ms-3" style="height: 80px;">
-        {{!-- 發文者 --}}
-        <div class="d-flex align-items-center mb-0">
-          <p class="fs-5 me-2 mb-0">{{ this.User.name }}</p>
-          <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・{{momentCH this.createdAt}}</p>
+    <div class="d-flex flex-column align-items-center">
+      <div style="width: 100%; outline: 1px solid gray; position:relative" class="d-flex flex-row p-3">
+        {{!-- 大頭貼 --}}
+        <div>
+          <a href="/users/{{user.id}}/tweets">
+            <img src="{{ user.avatar }}" style="border-radius: 100%;width: 60px">
+          </a>
         </div>
-        {{!-- 推文內容 --}}
-        <p class="mt-0" style="font-size: small;">
-          {{ this.description }}
-        </p>
+        {{!-- 右側區塊 --}}
+        <div class="ms-3 mt-2" style="height: 120px;color:#9197A3">
+          <h4><strong>有什麼新鮮事?</strong></h4>
+        </div>
+        <div style="position:absolute; right:10px; bottom:10px;">
+          <a href="#" type="button" class="btn"
+            style="background-color: #FF6600;color: white; border-radius: 45%;font-size:20px">推文</a>
+        </div>
       </div>
     </div>
-    {{!-- Reply and Like --}}
-    <div>
-      <span>Reply: {{this.replyCount}}</span>
-      <span>Like: {{this.likeCount}}</span>
-    </div>
-    <hr>
-    {{/each}}
-  </div>
-  <div>
-    {{!-- 分頁 --}}
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="/admin/tweets?page={{ prev }}" aria-label="Previous" style="color: darkseagreen;">
-            <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
-          </a>
-        </li>
-        {{#each totalPage }}
-        {{!-- {{ifCont this ../page}}
-        <li class="page-item active"><a class="page-link" href="#" style="color: darkseagreen;">{{
-            this }}</a></li>
-        {{else}} --}}
-        <li class="page-item"><a class="page-link" href="/admin/tweets?page={{ this }}" style="color: darkseagreen;">{{
-            this }}</a></li>
-        {{!-- {{ifCont}} --}}
+
+    <div class="border border-3 p-1" style="background-color: #E6ECF0;"></div>
+
+    <div class="d-flex flex-column align-items-center">
+
+      <div>
+        {{#each data }}
+        <div class="d-flex align-items-center">
+          {{!-- 大頭貼 --}}
+          <div>
+            <img src="{{ this.User.avatar }}" style="border-radius: 100%;width: 60px">
+          </div>
+          {{!-- 右側文字 --}}
+          <div class="ms-3" style="height: 80px;">
+            {{!-- 發文者 --}}
+            <div class="d-flex align-items-center mb-0">
+              <p class="fs-5 me-2 mb-0">{{ this.User.name }}</p>
+              <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・{{momentCH this.createdAt}}</p>
+            </div>
+            {{!-- 推文內容 --}}
+            <p class="mt-0" style="font-size: small;">
+              {{ this.description }}
+            </p>
+          </div>
+        </div>
+        {{!-- Reply and Like --}}
+        <div>
+          <span>Reply: {{this.replyCount}}</span>
+          <span>Like: {{this.likeCount}}</span>
+        </div>
+        <hr>
         {{/each}}
-        <li class="page-item">
-          <a class="page-link" href="/admin/tweets?page={{ next }}" aria-label="Next" style="color: darkseagreen;">
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+      </div>
+      <div>
+        {{!-- 分頁 --}}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="/admin/tweets?page={{ prev }}" aria-label="Previous"
+                style="color: darkseagreen;">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            {{#each totalPage }}
+            {{!-- {{ifCont this ../page}}
+            <li class="page-item active"><a class="page-link" href="#" style="color: darkseagreen;">{{
+                this }}</a></li>
+            {{else}} --}}
+            <li class="page-item"><a class="page-link" href="/admin/tweets?page={{ this }}"
+                style="color: darkseagreen;">{{
+                this }}</a></li>
+            {{!-- {{ifCont}} --}}
+            {{/each}}
+            <li class="page-item">
+              <a class="page-link" href="/admin/tweets?page={{ next }}" aria-label="Next" style="color: darkseagreen;">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    {{!-- <div>{{> recommendedFollower }}</div> --}}
   </div>
