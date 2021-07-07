@@ -1,0 +1,40 @@
+<form class="form-signin" action="/signin" method="POST" style="width: 100%; background-color:white ;">
+
+  <div class="container" style="display: flex; flex-direction:column; align-items:center ">
+
+    <div class="text-center mb-4">
+      <img src="https://yt3.ggpht.com/ytc/AKedOLSMq3y4-2mILcS9X7GTvNYswkMqpjyE6y1c0U3A6w=s900-c-k-c0x00ffffff-no-rj"
+        alt="" style="width: 80px;border-radius:50%">
+    </div>
+
+    <div class="text-center">
+      <h1 class="h3 mb-3 font-weight-normal">登入 Alphitter</h1>
+    </div>
+
+    <div class="form-label-group" style="width: 400px;">
+      <label for="inputEmail">帳號</label>
+      <input type="text" name="email" class="form-control"
+        style="border: none; border-bottom:2px solid rgb(173, 172, 172); background-color:rgb(245, 240, 240)"
+        placeholder="請輸入註冊的Email" required autofocus>
+    </div>
+
+    <div class="form-label-group" style="width: 400px;">
+      <label for="inputPassword">密碼</label>
+      <input type="password" name="password" class="form-control"
+        style="border: none; border-bottom:2px solid rgb(173, 172, 172); background-color:rgb(245, 240, 240)"
+        placeholder="請輸入註冊的密碼" required>
+    </div>
+
+    <br />
+
+    <button class="btn btn-lg btn-block" style="width: 400px;background:rgb(253, 89, 24);color:white;border-radius:30px"
+      type="submit">登入</button>
+
+    <div class="text-right my-4" style="width:400px">
+      {{!-- why display here useless --}}
+      <div><a href="/signup">註冊Alphitter</a> ・ <a href="/admin/signin">後台登入</a></div>
+    </div>
+
+
+  </div>
+</form>
