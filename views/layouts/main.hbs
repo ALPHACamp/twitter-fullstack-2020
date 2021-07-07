@@ -17,7 +17,7 @@
 
     <div class="d-flex mt-5">
       {{!-- 左側欄位 --}}
-      <div class="row" style="height: 500px;width: 300px;">
+      <div class="row" style="height: 500px;width: 30vh;">
         {{!-- 上 --}}
         <div class="col-12">
           <p>Twitter</p>
@@ -36,12 +36,15 @@
           <p>登出</p>
         </div>
       </div>
-
-      <div style="width: 800px;">
+      {{!-- 中間主頁 --}}
+      <div style="flex-grow: 1;">
         <main>
           {{{body}}}
         </main>
       </div>
+      {{!-- 右側欄位 --}}
+      <div style="width:30vh"></div>
+
     </div>
 
   </div>

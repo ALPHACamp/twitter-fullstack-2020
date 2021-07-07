@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const helpers = require('../_helpers')
-const userController = require('../controller/userController')
-const adminController = require('../controller/adminController')
-const tweetController = require('../controller/tweetController')
+const userController = require('../controllers/userController')
+const adminController = require('../controllers/adminController')
+const tweetController = require('../controllers/tweetController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -17,7 +17,7 @@ module.exports = (app, passport) => {
       if (helpers.getUser(req).role) {
         return next()
       }
-      return res.redirect('/')//似乎都會跑這裡
+      return res.redirect('/')
     }
     res.redirect('/signin')
   }
