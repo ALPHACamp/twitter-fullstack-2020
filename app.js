@@ -8,8 +8,8 @@ const exhbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 
 
-app.engine('handlebars', exhbs({ defaultLayout: 'main', extname: 'hbs' }))
-app.set('view engine', 'handlebars')
+app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs' }))
+app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
