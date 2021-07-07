@@ -3,4 +3,4 @@ const adminController = {
     return res.render('admin/users')
   }
 }
-module.exports = adminController 
+module.exports = adminController

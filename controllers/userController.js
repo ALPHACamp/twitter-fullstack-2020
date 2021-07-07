@@ -8,7 +8,7 @@ const userController = {
   },
 
   signUp: (req, res) => {
-    if (req.body.passwordCheck !== req.body.password) {
+    if (req.body.confirmedPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     } else {
@@ -37,7 +37,7 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/users')
+    res.redirect('/tweets')
   },
 
   signOut: (req, res) => {
@@ -47,4 +47,4 @@ const userController = {
   }
 }
 
-module.exports = userController 
+module.exports = userController

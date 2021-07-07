@@ -13,6 +13,16 @@
 
 <body>
   <div class="container">
+    {{#if success_messages}}
+    <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+      {{success_messages}}
+    </div>
+    {{/if}}
+    {{#if error_messages}}
+    <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
+      {{error_messages}}
+    </div>
+    {{/if}}
     <div class="d-flex flex-nowrap justify-content-center">
       {{#isAuth isAuthenticated isAdminAuthenticated}}
       <div class="col-3 px-5 d-flex flex-column justify-content-between vh-100 border-end" id="navbar">

@@ -1,12 +1,12 @@
 const passport = require('passport')
-const LocalStrategy = require('passport-local')
+const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 
 passport.use(new LocalStrategy(
   {
-    usernameField: 'email',
+    usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true
   },
@@ -30,4 +30,4 @@ passport.deserializeUser((id, cb) => {
   })
 })
 
-module.exports = passport 
+module.exports = passport
