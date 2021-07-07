@@ -11,7 +11,13 @@ const pageLimit = 10
 const tweetController = {
   getTweets: async (req, res) => {
     try {
+      const topFollowing = res.locals.data
       const user = await User.findByPk(11, { attributes: ['id', 'avatar'] })
+      let offset = 0
+      if (req.query.page) {
+        offset = (Number(req.query.page) - 1) * pageLimit
+      }
+
       const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
@@ -19,6 +25,8 @@ const tweetController = {
         include: [
           { model: User, attributes: ['id', 'avatar', 'name', 'account'] }
         ],
+        offset,
+        limit: pageLimit,
         order: [['updatedAt', 'DESC']]
       })
 
@@ -56,7 +64,8 @@ const tweetController = {
           page,
           totalPage,
           prev,
-          next
+          next,
+          topFollowing
         })
       })
     } catch (err) {

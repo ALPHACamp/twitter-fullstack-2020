@@ -99,13 +99,12 @@
             <li class="page-item active"><a class="page-link" href="#" style="color: darkseagreen;">{{
                 this }}</a></li>
             {{else}} --}}
-            <li class="page-item"><a class="page-link" href="/admin/tweets?page={{ this }}"
-                style="color: darkseagreen;">{{
+            <li class="page-item"><a class="page-link" href="/?page={{ this }}" style="color: darkseagreen;">{{
                 this }}</a></li>
             {{!-- {{ifCont}} --}}
             {{/each}}
             <li class="page-item">
-              <a class="page-link" href="/admin/tweets?page={{ next }}" aria-label="Next" style="color: darkseagreen;">
+              <a class="page-link" href="/?page={{ next }}" aria-label="Next" style="color: darkseagreen;">
                 <span aria-hidden="true">&raquo;</span>
                 <span class="sr-only">Next</span>
               </a>
@@ -114,5 +113,6 @@
         </nav>
       </div>
     </div>
-    {{!-- <div>{{> recommendedFollower }}</div> --}}
   </div>
+  <div>{{> recommendedFollower }}</div>
+</div>
