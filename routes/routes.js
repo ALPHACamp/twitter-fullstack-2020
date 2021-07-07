@@ -23,7 +23,7 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/signin')
 }
 
-router.get('/', authenticated, (req, res) => res.redirect('/users'))
+router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/users'))
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)

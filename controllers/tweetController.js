@@ -8,7 +8,8 @@ const tweetController = {
       order: [['createdAt', 'DESC']],
       include: [User]
     })
-    return res.render('tweets', { tweets, isAuthenticated: true })
+    const Appear = { navbar: true, top10: true }
+    return res.render('tweets', { tweets, Appear })
   },
   getTweet: async (req, res) => {
     const tweet = await Tweet.findByPk(req.params.id, {

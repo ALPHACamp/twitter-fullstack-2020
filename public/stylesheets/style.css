@@ -8,18 +8,32 @@
   background-color: coral;
 }
 
-#navbar > div > a {
+#navbarUpper > a {
   color: black;
   text-decoration: none;
   font-weight: bolder;
 }
 
-#navbar > div > a:hover {
+#navbarUpper > a:hover {
     color: #FF6600;
 }
 
-#navbar > div > a:hover > svg > path {
+#navbarUpper > a:hover > svg > path {
   fill: #FF6600;
+}
+
+#signout {
+color: black;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+#signout:hover{
+  color: #FF6600;
+}
+
+#signout:hover > svg > path {
+  stroke: #FF6600;
 }
 
 .inThesePages > p {

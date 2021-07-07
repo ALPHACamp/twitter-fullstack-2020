@@ -34,9 +34,7 @@ app.use((req, res, next) => {
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-let Appear = { navbar: false, top10: false }
 
-app.get('/', (req, res) => res.render('admin/signin', { Appear, isAuthenticated: true }))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes')(app)
