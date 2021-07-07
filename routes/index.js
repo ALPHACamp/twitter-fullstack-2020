@@ -7,26 +7,30 @@ const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
 
 module.exports = (app, passport) => {
-  // const authenticated = (req, res, next) => {
-  //   if (helpers.ensureAuthenticated(req)) {
-  //     return next()
-  //   }
-  //   res.redirect('/signin')
-  // }
-  // const authenticatedAdmin = (req, res, next) => {
-  //   if (helpers.ensureAuthenticated(req)) {
-  //     if (helpers.getUser(req).is_admin) { return next() }
-  //     res.redirect('/admin/signin')
-  //   }
-  // },
+  const authenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return next()
+    }
+    res.redirect('/signin')
+  }
+  const authenticatedAdmin = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      if (req.user.is_admin) { return next() }
+      return res.redirect('/')
+    }
+    res.redirect('/signin')
+  }
 
   // tweets
-  app.get('/', (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', tweetController.getTweets)
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   // admin
-  app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
-  app.get('/admin/tweets', adminController.getTweets)
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.get('/admin/tweets/create', authenticatedAdmin, adminController.createTweet)
+  app.post('/admin/tweets', authenticatedAdmin, adminController.postTweet)
+  app.get('/admin/tweets/:id', authenticatedAdmin, adminController.getTweet)
 
   // signin & signup
   app.get('/signup', userController.signUpPage)

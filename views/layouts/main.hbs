@@ -18,14 +18,14 @@
       <ul class="navbar-nav mr-auto">
       </ul>
       <div>
-        {{#if user.isAdmin}}
+        {{#if user.is_admin}}
         <a href="/admin" style="color: white;margin-right: 10px;">Admin 後台</a>
         {{/if}}
-        {{#ifCond null user.isAdmin}}
+        {{#if user}}
         <span style="color: white;margin-right: 10px;">Hi, {{user.email}}</span>
         <a href="/users/{{user.id}}" style="color: white;margin-right: 10px;">Profile</a>
         <a href="/logout"><button class="btn btn-outline-success my-2 my-sm-0">LogOut</button></a>
-        {{/ifCond}}
+        {{/if}}
       </div>
     </div>
   </nav>
