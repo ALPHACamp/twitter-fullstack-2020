@@ -41,8 +41,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     img: DataTypes.STRING,
     bg_img: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN,
-    image: DataTypes.STRING
+    is_admin: DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'User',

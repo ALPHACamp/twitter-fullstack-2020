@@ -4,8 +4,10 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 
+const userController = require('../controllers/userController')
+const followController = require('../controllers/followController')
 
-
+const { authenticate } = require('passport')
 
 module.exports = (app, passport) => {
 
@@ -22,9 +24,17 @@ module.exports = (app, passport) => {
     }
   }
 
-  app.get('/', (req, res) => res.render('followership'))
+  app.get('/', (req, res) => res.redirect('/users/followership'))
 
-  // app.get('/users/followership', (req, res) => {
-  //   res.render('followership')
-  // })
+  app.get('/users/followership', authenticated, followController.getfollower)
+
+  //follow function
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+
+
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+  app.get('/logout', userController.logout)
+
 }
