@@ -7,16 +7,16 @@
     </div>
     {{!-- 中 --}}
     <div class="col-12 pt-0">
-      <a href="/admin/tweets" style=" text-decoration:none;color:rgb(179, 123, 50)">
+      <a href="/" style=" text-decoration:none;color:rgb(179, 123, 50)">
         <p>首頁</p>
       </a>
-      <a href="/admin/users" style=" text-decoration:none;color:rgb(0, 0, 0)">
+      <a href="/users/{{user.id}}" style=" text-decoration:none;color:rgb(0, 0, 0)">
         <p>個人資料</p>
       </a>
-      <a href="/admin/users" style=" text-decoration:none;color:rgb(0, 0, 0)">
+      <a href="/users/{{user.id}}/edit" style=" text-decoration:none;color:rgb(0, 0, 0)">
         <p>設定</p>
       </a>
-      <a href="/admin/users" style=" text-decoration:none;color:rgb(0, 0, 0)">
+      <a href="/users/{{user.id}}/tweets" style=" text-decoration:none;color:rgb(0, 0, 0)">
         <p>推文</p>
       </a>
     </div>
