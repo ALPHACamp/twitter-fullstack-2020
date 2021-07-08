@@ -60,11 +60,9 @@
 
     <br>
     <div class="tab-content">
-
-
-      <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <ul class="list-group list-group-flush">
-
+      <div class="tab-pane active" id="follower" role="tabpanel" aria-labelledby="home-tab">
+        <ul class="list-group list-group-flush border-bottom">
+          {{#each users}}
           <li class="list-group-item">
             <div class="row g-0">
               <div class="col-md-2">
@@ -82,17 +80,15 @@
                       </h6>
                     </div>
                     <div class="col-3">
-
+                      {{#if this.isFollowed}}
                       <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                        <a href="#profile"><button type="submit" class="btn btn-success"
-                            name="{{this.id}}">正在跟隨</button></a>
+                        <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
                       </form>
-
+                      {{else}}
                       <form action="/following/{{this.id}}" method="POST" style="display: contents;">
-                        <a href="#profile"><button type="submit" class="btn btn-outline-success"
-                            name="{{this.id}}">跟隨</button></a>
+                        <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
                       </form>
-
+                      {{/if}}
                     </div>
                   </div>
                   <h6 class="card-text">{{this.description}}</h6>
@@ -100,9 +96,11 @@
               </div>
             </div>
           </li>
-
+          {{/each}}
         </ul>
       </div>
+
+
     </div>
   </div>
 
