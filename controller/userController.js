@@ -73,12 +73,26 @@ const userController = {
       let Data = []
       Data = replies.map(async (reply, index) => {
         if (reply.Tweet.UserId) {
-          const [tweetUser] = await Promise.all([
+          const [tweetUser, likes, replies] = await Promise.all([
             User.findOne({
               raw: true,
               nest: true,
               where: {
                 id: Number(reply.Tweet.UserId)
+              }
+            }),
+            Like.findAndCountAll({
+              raw: true,
+              nest: true,
+              where: {
+                TweetId: reply.TweetId
+              }
+            }),
+            Reply.findAndCountAll({
+              raw: true,
+              nest: true,
+              where: {
+                TweetId: reply.TweetId
               }
             })
           ])
@@ -92,12 +106,15 @@ const userController = {
             tweetUserId: tweetUser.id,
             tweetUserName: tweetUser.name,
             tweetUserAvatar: tweetUser.avatar,
-            tweetUserAccount: tweetUser.account
+            tweetUserAccount: tweetUser.account,
+            likeCount: likes.count,
+            replyCount: replies.count,
           }
         }
       })
       Promise.all(Data).then(data => {
         // console.log(data)
+        data = data.sort((a, b) => a.tweetCreatedAt - b.tweetCreatedAt)
         return res.render('replies', {
           user: userInfo.user,
           followingCount: userInfo.followingCount,

@@ -78,8 +78,14 @@
                   {{ this.tweetDescription }}
                 </p>
               </div>
-              <div>
-                <i class="fas fa-comment me-1"></i>33<i class="fas fa-heart ms-3 me-1"></i>33
+              <div class="d-flex">
+                <div style="color: rgb(80, 80, 80);">
+                  <i class="fas fa-comment me-1"></i>{{ this.replyCount }}
+                </div>
+                <div style="color: rgb(215, 102, 67);">
+                  <i class="fas fa-heart ms-3 me-1"></i>{{
+                  this.likeCount }}
+                </div>
               </div>
             </div>
           </div>

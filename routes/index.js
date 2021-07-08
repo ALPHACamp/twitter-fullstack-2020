@@ -82,7 +82,7 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
 
-  app.get('/users/:userId/replies', getTopFollowing, userController.getUserInfo, userController.getUserReplies)
-  app.get('/users/:userId/likes', authenticated, getTopFollowing, userController.getUserLikes)
+  app.get('/users/:userId/replies', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserReplies)
+  app.get('/users/:userId/likes', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserLikes)
 
 }
