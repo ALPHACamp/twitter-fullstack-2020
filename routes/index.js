@@ -10,4 +10,7 @@ module.exports = app => {
   //admin
   app.get('/admin', (req, res) => res.redirect('/admin/twitters'))
   app.get('/admin/twitters', adminController.getTwitters)
+  app.get('/admin/signin', adminController.adminsignin)
+
 }
+
