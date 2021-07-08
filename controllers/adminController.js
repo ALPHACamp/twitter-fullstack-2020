@@ -1,11 +1,17 @@
 const bcrypt = require('bcryptjs')
-const db = require('../models')
-const { User } = db
+const { User, Tweet } = require('../models')
 const { Op } = require('sequelize')
 
 const adminController = {
   getTweets: (req, res) => {
-    return res.render('admin/tweets')
+    return Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: [User],
+      order: [['createdAt', 'desc']]
+    }).then((tweets) => {
+      return res.render('admin/tweets', { tweets })
+    })
   },
   getUsers: (req, res) => {
     return res.render('admin/users')
