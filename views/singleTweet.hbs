@@ -29,24 +29,39 @@
   <div style="width: 780px;" class="me-5">
     {{!-- 標題 --}}
     <div class="p-2 mb-0" style="width: 100%; outline: 1px solid gray;height:55px">
-      <h3><strong>首頁</strong></h3>
+      <h3><strong>推文</strong></h3>
     </div>
 
     <div class="d-flex flex-column align-items-center">
-      <div style="width: 100%; outline: 1px solid gray; position:relative" class="d-flex flex-row p-3">
-        {{!-- 大頭貼 --}}
+      <div style="width: 100%; outline: 1px solid gray;" class="p-3">
+        <div class="d-flex align-items-center">
+          {{!-- 大頭貼 --}}
+          <div>
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <img src="{{ tweet.User.avatar }}" style="border-radius: 100%;width: 60px">
+            </a>
+          </div>
+          {{!-- 右側文字 --}}
+          <div class="ms-3" style="height: 80px;">
+            {{!-- 發文者 --}}
+            <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration: none;">
+              <div class="mb-0">
+                <p class="fs-5 me-2 mb-0" style="line-height: 40px;color: black;">{{ tweet.User.name }}</p>
+                <p class="mb-0" style="color: darkseagreen;" style="line-height: 40px;">{{ tweet.User.account
+                  }}</p>
+              </div>
+            </a>
+          </div>
+        </div>
+        {{!-- 推文內容 --}}
+        <p class="mt-0" style="font-size: large;height: 80px;">
+          {{ tweet.description }}
+        </p>
+        <small>{{momentCH tweet.createdAt}}</small>
+        {{!-- Reply and Like --}}
         <div>
-          <a href="/users/{{user.id}}/tweets">
-            <img src="{{ user.avatar }}" style="border-radius: 100%;width: 60px">
-          </a>
-        </div>
-        {{!-- 右側區塊 --}}
-        <div class="ms-3 mt-2" style="height: 120px;color:#9197A3">
-          <h4><strong>有什麼新鮮事?</strong></h4>
-        </div>
-        <div style="position:absolute; right:10px; bottom:10px;">
-          <a href="#" type="button" class="btn"
-            style="background-color: #FF6600;color: white; border-radius: 45%;font-size:20px">推文</a>
+          <span>{{replyCount}} 回復</span>
+          <span>{{likeCount}} 喜歡次數</span>
         </div>
       </div>
     </div>
@@ -55,35 +70,31 @@
 
     <div class="d-flex flex-column align-items-center">
 
-      <div>
-        {{#each data }}
+      <div style="width: 100%;">
+        {{#each reply }}
         <div class="d-flex">
           {{!-- 大頭貼 --}}
-          <div class="pt-2">
+          <div class="mt-2" style="line-height:40px;">
             <a href="/users/{{this.User.id}}/tweets">
-              <img src="{{ this.User.avatar }}" style="border-radius: 100%;width: 60px">
-            </a>
+              <img src="{{ this.User.avatar }}" style="border-radius: 100%;width: 60px"></a>
           </div>
           {{!-- 右側文字 --}}
           <div class="ms-3" style="height: 150px;">
             {{!-- 發文者 --}}
-            <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;">
-              <div class="d-flex align-items-center mb-0">
-                <p class="fs-5 me-2 mb-0" style="color: black;"><strong>{{ this.User.name }}</strong></p>
-                <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・{{momentCH this.createdAt}}</p>
-              </div>
-            </a>
+            <div style="line-height: 40px;">
+              <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;">
+                <div class="d-flex align-items-center mb-0">
+                  <p class="fs-5 me-2 mb-0" style="color: black;">{{ this.User.name }}</p>
+                  <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・{{momentCH this.createdAt}}</p>
+                </div>
+              </a>
+              {{!-- 回復區 --}}
+              <span style="color:darkgrey;">回復 </span><span style="color: #FF6600;">{{../tweet.User.account}}</span>
+            </div>
             {{!-- 推文內容 --}}
-            <a href="/tweets/{{this.id}}" style="text-decoration: none;">
-              <p class="mt-4" style="font-size: small;color: black;">
-                {{ this.description }}
-              </p>
-              {{!-- Reply and Like --}}
-              <div style="color: black;">
-                <span>Reply: {{this.replyCount}}</span>
-                <span>Like: {{this.likeCount}}</span>
-              </div>
-            </a>
+            <p class="mt-0" style="font-size: small;">
+              {{ this.comment }}
+            </p>
           </div>
         </div>
 
