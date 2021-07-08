@@ -9,7 +9,11 @@ const adminController = {
       nest: true,
       include: [User],
       order: [['createdAt', 'desc']]
-    }).then((tweets) => {
+    }).then(tweets => {
+      tweets = tweets.map(t => ({
+        ...t,
+        content: t.content.substring(0, 50)
+      }))
       return res.render('admin/tweets', { tweets })
     })
   },

@@ -120,13 +120,13 @@
               </div>
               <div class="col-11 align-self-center px-md-2 px-4">
                 <a
-                  href="/admin/users/{{this.User.id}}"
+                  href="/admin/users/{{this.UserId}}"
                   class="h5 text-dark text-decoration-none"
                 >{{this.User.name}}</a>
                 <span
                   style="color: #6c757d; font-size: 0.875em"
                 >@{{this.User.account}}．{{moment this.createdAt}}</span>
-                <p class="mt-2">{{this.content}}</p>
+                <p class="mt-2">{{this.content}} <a href="/admin/tweets/{{this.id}}">...more</a></p>
               </div>
             </div>
             <div class="col-1 d-flex align-items-center justify-content-center">
