@@ -1,44 +1,17 @@
-
 const bcrypt = require('bcryptjs')
 const { User, Tweet } = require('../models')
-
 const { Op } = require('sequelize')
 
 const adminController = {
   getTweets: (req, res) => {
-    return Promise.all([
-      Tweet.findAll({
-        limit: 10,
-        raw: true,
-        nest: true,
-        order: [['createdAt', 'DESC']],
-        include: [User]
-      })
-    ]).then(([tweets]) => {
-      return res.render('admin/tweets', {
-        tweets: tweets
-      })
+    return Tweet.findAll({
+      raw: true,
+      nest: true,
+      include: [User],
+      order: [['createdAt', 'desc']]
+    }).then((tweets) => {
+      return res.render('admin/tweets', { tweets })
     })
-  },
-  getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [User]
-    })
-      .then((tweet) => {
-        console.log(`tweet:${tweet}`)
-        return res.render('admin/tweet', {
-          tweet: tweet.toJSON()
-        })
-      })
-  },
-  deleteTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id)
-      .then((tweet) => {
-        tweet.destroy()
-          .then((tweet) => {
-            res.redirect('/admin/tweets')
-          })
-      })
   },
   getUsers: (req, res) => {
     return res.render('admin/users')
@@ -80,9 +53,7 @@ const adminController = {
         })
       }
       return User.create({
-        name,
-        account,
-        email,
+        name, account, email,
         is_admin: true,
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
       }).then(() => {
