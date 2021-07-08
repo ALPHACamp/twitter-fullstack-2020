@@ -27,7 +27,15 @@
       <div class="card-header">
         推文清單
       </div>
-
+      <div class="card-body">
+        <form action="/tweets" method="POST" class="mt-5">
+          <div class="form-group">
+            <label for="text">留下評論：</label>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="tweet一下你的心情" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary mb-4">Submit</button>
+        </form>
+      </div>
       <div class="card-body">
         <tbody>
           {{#each tweets}}

@@ -23,6 +23,8 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  app.post('/tweets', authenticatedUser, tweetController.postTweet)
+
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
@@ -43,5 +45,9 @@ module.exports = (app, passport) => {
   // tweets
   app.get('/tweets', authenticatedUser, tweetController.getTweets)
   app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
+  app.get('/tweets/:id/edit', authenticatedUser, tweetController.editTweet)
+  app.put('/tweets/:id', authenticatedUser, tweetController.putTweet)
+  app.delete('/tweets/:id', authenticatedUser, tweetController.deleteTweet)
+  
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 }

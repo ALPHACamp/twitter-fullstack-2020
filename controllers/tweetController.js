@@ -17,19 +17,21 @@ const tweetController = {
     })
   },
   postTweet: (req, res) => {
-    if (!req.body.content) {
-      req.flash('error_messages', "Content didn't exist")
-      return res.redirect('back')
-    }
+    // if (!req.body.content) {
+    //   req.flash('error_messages', "Content didn't exist")
+    //   return res.redirect('back')
+    // }
     return Tweet.create({
       UserId: req.user.id,
       content: req.body.content,
-      likes: req.body.likes
+      likes: 0
     })
       .then((tweet) => {
         req.flash('success_messages', 'Tweet was successfully created')
+        console.log(`tweet:${tweet}`)
         res.redirect('/tweets')
       })
+      .catch(err => console.log(err))
   },
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
