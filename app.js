@@ -21,13 +21,26 @@ app.use(express.static('public'))
 app.get('/', (req, res) => {
   console.log('Hello,Hello,Hello')
   res.send('Hello World!')
+
 })
 
 app.get('/user/self', (req, res) => {
   res.render('user')
 })
 
+
+app.get('/tweets/replies', (req, res) => {
+  res.render('replyUser')
+})
+app.get('/admin/users', (req, res) => {
+  res.render('userAdmin')
+})
+app.get('/admin/tweets', (req, res) => {
+  res.render('admin/tweetsAdmin')
+})
+
 require('./routes')(app, passport)
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
