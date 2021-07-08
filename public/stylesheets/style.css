@@ -8,6 +8,22 @@
   background-color: coral;
 }
 
+.btn-outline-regular {
+  color: #FF6600;
+  background:none;
+  border: 1px solid #FF6600;
+}
+
+.btn-outline-regular:hover {
+  color: white;
+  background-color: #FF6600;
+}
+
+.list-group-item {
+  border: none;
+  background-color:#F5F8FA;
+}
+
 #navbarUpper > a {
   color: black;
   text-decoration: none;
@@ -42,4 +58,13 @@ color: black;
 
 .inThesePages > svg > path  {
   fill: #FF6600;
+}
+
+.user-link {
+  color: #657786;
+  text-decoration: none;
+}
+
+.user-link:hover {
+  color:black;
 }

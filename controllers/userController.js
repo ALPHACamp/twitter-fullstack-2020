@@ -44,6 +44,17 @@ const userController = {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
+  },
+
+  userPage: (req, res) => {
+    const User = [{
+      id:1,
+      avatar:'https://loremflickr.com/320/320/headshot',
+      name:'userName',
+      account:'userName'
+    }]
+    Appear = { navbar: true, top10: true }
+    res.render('users', {Appear})
   }
 }
 

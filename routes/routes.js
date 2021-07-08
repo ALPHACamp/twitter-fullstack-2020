@@ -37,4 +37,6 @@ router.get('/signout', userController.signOut)
 router.get('/tweets', tweetController.getTweets)
 router.get('/tweets/:id', tweetController.getTweet)
 
+router.get('/users/:id',authenticated, userController.userPage)
+
 module.exports = router
