@@ -65,7 +65,6 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
-
   app.get('/admin/signin', adminController.adminSignInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
   app.get('/admin/tweets', authenticatedAdmin, adminController.getAdminTweets)
@@ -80,8 +79,7 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
 
-
-  app.get('/', authenticated, adminController.getAdminTweets)
+  app.get('/', getTopFollowing, tweetController.getTweets)
   app.get('/tweets', authenticated, tweetController.getTweets)
   app.get('/users/:userId/tweets', authenticated, getTopFollowing, userController.getUserTweets)
 }
