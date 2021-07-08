@@ -1,5 +1,8 @@
 const moment = require('moment')
 module.exports = {
+  moment: function (a) {
+    return moment(a).fromNow()
+  },
   momentCH: (createdAt) => {
     moment.locale('zh-tw', {
       months: '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),

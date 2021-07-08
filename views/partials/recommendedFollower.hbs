@@ -1,0 +1,30 @@
+<div class="mb-5 fs-5">跟隨誰</div>
+
+<div class="d-flex flex-column align-items-start">
+
+  {{#each topFollowing }}
+  <div class="d-flex mb-4 align-items-center justify-content-between" style="width: 300px;">
+
+    <div class="d-flex align-items-center">
+      {{!-- 大頭貼 --}}
+      <div>
+        <img src="{{ this.avatar }}" style="border-radius: 100%;width: 70px">
+      </div>
+      {{!-- 帳號 --}}
+      <div class="ms-4">
+        <p class="fs-5 mb-0">{{ this.name }}</p>
+        <div class="d-flex align-items-center" style="width: 150px;">
+          <p class="mb-0" style="color: darkseagreen;">{{ this.account }}</p>
+          <p class="mb-0" style="color: rgb(113, 113, 113);font-size:smaller;">・{{ this.followerCount }}
+            人追蹤中</p>
+        </div>
+      </div>
+      {{!-- 數量 --}}
+    </div>
+    <form action="/users/{{ this.id }}/follow" method="post" class="mt-2">
+      <button class="btn btn-sm btn-outline-secondary">追蹤</button>
+    </form>
+  </div>
+  {{/each}}
+
+</div>
