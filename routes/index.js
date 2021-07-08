@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 const helpers = require('../_helpers')
-const userController = require('../controllers/userController')
-const adminController = require('../controllers/adminController')
-const tweetController = require('../controllers/tweetController')
+const userController = require('../controller/userController')
+const adminController = require('../controller/adminController')
+const tweetController = require('../controller/tweetController')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -21,7 +21,7 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
-
+  //如果登入的人是管理者，並且只用在管理者登入的路由
   const isAdmin = (req, res, next) => {
     res.locals.isAdmin = req.user.role === 'admin'
     return next()
