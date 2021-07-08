@@ -80,15 +80,12 @@
                       </h6>
                     </div>
                     <div class="col-3">
-                      {{#if this.isFollowed}}
+
                       <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
                         <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
                       </form>
-                      {{else}}
-                      <form action="/following/{{this.id}}" method="POST" style="display: contents;">
-                        <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
-                      </form>
-                      {{/if}}
+
+
                     </div>
                   </div>
                   <h6 class="card-text">{{this.description}}</h6>

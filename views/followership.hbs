@@ -80,7 +80,7 @@
                       </h6>
                     </div>
                     <div class="col-3">
-                      {{#if this.isFollowed}}
+                      {{#if this.isFollowing}}
                       <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
                         <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
                       </form>
