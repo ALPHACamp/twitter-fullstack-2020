@@ -1,21 +1,38 @@
 <div>
-  <h1>this is Tweets Page ( views / tweets.hbs )</h1>
-  {{#if user.avatar}}
-  <img src="{{user.avatar}}" alt="" style="max-width: 100px; border-radius: 50%">
-  {{else}}
-  <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 100px;border-radius: 50%">
-  {{/if}}
+  <form action="/tweets" method="POST" class="border">
+    <h5 class="m-0 py-2 border-bottom">首頁</h5>
+    <div class="container">
+      <div class="row">
 
-  {{!-- <button class="btn btn-primary" data-toggle="modal" data-target="#post-tweet-modal" data-id="1"
-    id="post-button">推文</button> --}}
+        <div class="col-auto px-1">
+          {{#if user.avatar}}
+          <img src="{{user.avatar}}">
+          {{else}}
+          <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" style="max-width: 50px;max-height: 50px;">
+          {{/if}}
+        </div>
+
+        <div class="col px-1" style="min-height: 100px;">
+          <textarea class="border-0 w-100" name="description" rows="5" style="resize: none;"></textarea>
+        </div>
+        {{!-- cols="30" rows="10" --}}
+
+        <div class="col-auto px-1 d-flex align-items-end">
+          <button class="btn btn-regular rounded-pill float-right" type="submit">推文</button>
+        </div>
+
+      </div>
+    </div>
+  </form>
 
   {{#each tweets}}
-  <hr>
-  <a href="/tweets/{{this.id}}">第 {{this.id}} 個 tweet:</a>
-  <p>作者名稱: {{this.User.name}}</p>
-  <p>作者照片:{{this.User.avatar}}</p>
-  <p>內容:{{this.description}}</p>
-  <p>時間: {{moment this.createdAt}}</p>
+  <div class="border">
+    <a href="/tweets/{{this.id}}">第 {{this.id}} 個 tweet:</a>
+    <p>作者名稱: {{this.User.name}}</p>
+    <p>作者照片:{{this.User.avatar}}</p>
+    <p>內容:{{this.description}}</p>
+    <p>時間: {{moment this.createdAt}}</p>
+  </div>
   {{/each}}
 </div>
 
@@ -43,7 +60,7 @@
                 placeholder="有什麼新鮮事？"></textarea>
             </div>
             <div class="col-12">
-              <button class="btn btn-primary btn-sm float-right mt-2" type="submit">推文</button>
+              <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
             </div>
           </div>
         </form>
