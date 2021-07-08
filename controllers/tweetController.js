@@ -1,7 +1,4 @@
-const db = require('../models')
-const Tweet = db.Tweet
-const User = db.User
-const Reply = db.Reply
+const { User, Tweet } = require('../models')
 
 const tweetController = {
   getTweets: (req, res) => {
