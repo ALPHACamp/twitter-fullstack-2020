@@ -65,7 +65,7 @@ const userController = {
         raw: true,
         nest: true,
         where: {
-          userId: userInfo.user.id
+          UserId: userInfo.user.id
         },
         include: [Tweet]
       })
@@ -112,39 +112,68 @@ const userController = {
       return res.render('/')
     }
   },
-  getUserLikes: (req, res) => {
+  getUserLikes: async (req, res) => {
     const topFollowing = res.locals.data
-    return User.findOne({
-      where: {
-        id: req.params.userId
-      }
-    }).then(user => {
-      Followship.findAndCountAll({
+    const top5Following = topFollowing.slice(0, 5)
+    const userInfo = res.locals.userInfo
+    try {
+      const likes = await Like.findAll({
         raw: true,
         nest: true,
-        where: { followerId: user.id },
-      }).then(following => {
-        Followship.findAndCountAll({
-          raw: true,
-          nest: true,
-          where: { followingId: user.id },
-        }).then(follower => {
-          Tweet.findAll({
+        where: {
+          UserId: userInfo.user.id
+        },
+        include: [Tweet]
+      })
+
+      let Data = []
+      Data = likes.map(async (like, index) => {
+        const [tweetUser, likes, replies] = await Promise.all([
+          User.findOne({
             raw: true,
             nest: true,
-            where: { userId: user.id },
-          }).then(tweets => {
-            return res.render('likes', {
-              user,
-              followingCount: following.count,
-              followerCount: follower.count,
-              tweets,
-              topFollowing
-            })
+            where: {
+              id: like.Tweet.UserId
+            }
+          }),
+          Like.findAndCountAll({
+            raw: true,
+            nest: true,
+            where: {
+              TweetId: like.TweetId
+            }
+          }),
+          Reply.findAndCountAll({
+            raw: true,
+            nest: true,
+            where: {
+              TweetId: like.TweetId
+            }
           })
+        ])
+        return {
+          id: like.id,
+          tweetUser: tweetUser,
+          likeCount: likes.count,
+          replyCount: replies.count,
+          tweet: like.Tweet
+        }
+      })
+      Promise.all(Data).then(data => {
+        console.log(data)
+        return res.render('likes', {
+          user: userInfo.user,
+          followingCount: userInfo.followingCount,
+          followerCount: userInfo.followerCount,
+          likes: data,
+          topFollowing: top5Following
         })
       })
-    })
+    }
+    catch (err) {
+      console.log('getUserLikes err')
+      return res.render('/')
+    }
   },
 
   //MiddleWare
