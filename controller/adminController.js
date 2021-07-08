@@ -9,6 +9,16 @@ const Reply = db.Reply
 const pageLimit = 10
 
 const adminController = {
+  //登入頁面
+  adminSignInPage: (req, res) => {
+    return res.render('admin/signin')
+  },
+
+  adminSignIn: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/admin/tweets')
+  },
+
   getAdminTweets: (req, res) => {
     let offset = 0
     if (req.query.page) {
@@ -104,16 +114,7 @@ const adminController = {
       req.flash('error_message', err)
       return res.redirect('/') // 假定回到首頁
     }
-  },
-
-  adminSignInPage: (req, res) => {
-    return res.render('admin/adminsignin')
-  },
-
-  adminSignIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/admin/tweets')
-  },
+  }
 
 }
 module.exports = adminController
