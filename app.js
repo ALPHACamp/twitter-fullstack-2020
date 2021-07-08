@@ -1,11 +1,13 @@
 const express = require('express')
-const helpers = require('./_helpers');
-
+const handlebars = require('express-handlebars')
+const helpers = require('./_helpers')
+const exphbs = require('express-handlebars')
 const app = express()
 const port = 3000
 
 const exhbs = require('express-handlebars')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs' }))
@@ -25,16 +27,10 @@ app.get('/', (req, res) => {
 app.get('/user/self', (req, res) => {
   res.render('user')
 })
-app.get('/tweets/replies', (req, res) => {
-  res.render('replyUser')
-})
-app.get('/admin/users', (req, res) => {
-  res.render('userAdmin')
-})
-app.get('/admin/tweets', (req, res) => {
-  res.render('admin/tweetsAdmin')
-})
+
+require('./routes')(app, passport)
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-// module.exports = app
+module.exports = app
