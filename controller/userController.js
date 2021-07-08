@@ -64,7 +64,7 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-
+  //首頁
   getUserTweets: (req, res) => {
     const topFollowing = res.locals.data
     console.log(topFollowing)
@@ -99,6 +99,14 @@ const userController = {
         })
       })
     })
+  },
+
+  //進入帳號設定頁面
+  getUserEdit: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        res.render('userEdit', { user: user.toJSON() })
+      })
   }
 }
 module.exports = userController

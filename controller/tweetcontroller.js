@@ -12,7 +12,7 @@ const tweetController = {
   getTweets: async (req, res) => {
     try {
       const topFollowing = res.locals.data
-      const user = await User.findByPk(11, { attributes: ['id', 'avatar'] })
+      const user = await User.findByPk(11, { attributes: ['id', 'avatar'] })//指定user id 11，只撈id跟avatar資料
       let offset = 0
       if (req.query.page) {
         offset = (Number(req.query.page) - 1) * pageLimit
