@@ -26,7 +26,24 @@ const adminController = {
     })
   },
   getUsers: (req, res) => {
-    return res.render('admin/users')
+    return User.findAll({
+      raw: true,
+      nest: true,
+      where: { is_admin: false }
+    }).then(users => {
+
+      return res.render('admin/users', { users })
+    })
+  },
+  getAdmins: (req, res) => {
+    return User.findAll({
+      raw: true,
+      nest: true,
+      where: { is_admin: true }
+    }).then(admin => {
+
+      return res.render('admin/users', { admin })
+    })
   },
   signInPage: (req, res) => {
     return res.render('admin/signin')
