@@ -1,5 +1,5 @@
-const express = require('express')
-const router = express.Router()
+// const express = require('express')
+// const router = express.Router()
 const helpers = require('../_helpers')
 const userController = require('../controller/userController')
 const adminController = require('../controller/adminController')
@@ -8,6 +8,7 @@ const tweetController = require('../controller/tweetController')
 const db = require('../models')
 const Followship = db.Followship
 const User = db.User
+
 const getTopFollowing = async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -64,7 +65,6 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
-
   app.get('/admin/signin', adminController.adminSignInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
   app.get('/admin/tweets', authenticatedAdmin, adminController.getAdminTweets)
@@ -79,10 +79,11 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
 
-  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/', getTopFollowing, tweetController.getTweets)
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   app.get('/users/:userId/replies', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserReplies)
   app.get('/users/:userId/likes', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserLikes)
+  app.get('/users/:userId/tweets', authenticated, getTopFollowing, userController.getUserTweets)
 
 }

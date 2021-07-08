@@ -19,16 +19,6 @@ const adminController = {
     res.redirect('/admin/tweets')
   },
 
-  // //登入
-  // getTweets: (req, res) => {
-  //   return Tweet.findAll({
-  //     raw: true,
-  //     nest: true,
-  //     include: [User]
-  //   }).then(tweets => {
-  //     return res.render('admin/tweets', { tweets: tweets })
-  //   })
-  // },
   getAdminTweets: (req, res) => {
     let offset = 0
     if (req.query.page) {
