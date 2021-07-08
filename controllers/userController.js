@@ -1,5 +1,4 @@
 const db = require('../models')
-const User = db.User
 const Followship = db.Followship
 
 

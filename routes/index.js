@@ -2,17 +2,12 @@ const helpers = require('../_helpers')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
-<<<<<<< HEAD
-
-const userController = require('../controllers/userController')
 const followController = require('../controllers/followController')
 
 const { authenticate } = require('passport')
-=======
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
->>>>>>> feature
 
 module.exports = (app, passport) => {
   const authenticatedUser = (req, res, next) => {
@@ -31,21 +26,14 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-<<<<<<< HEAD
   app.get('/', (req, res) => res.redirect('/users/followership'))
 
-  app.get('/users/followership', authenticated, followController.getfollower)
-
   //follow function
-  app.post('/following/:userId', authenticated, userController.addFollowing)
-  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.get('/users/followership', authenticatedUser, followController.getfollower)
+  app.post('/following/:userId', authenticatedUser, userController.addFollowing)
+  app.delete('/following/:userId', authenticatedUser, userController.removeFollowing)
 
 
-  app.get('/signin', userController.signInPage)
-  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-  app.get('/logout', userController.logout)
-
-=======
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
@@ -55,6 +43,7 @@ module.exports = (app, passport) => {
   app.get('/admin/signin', adminController.signInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), adminController.signIn)
   app.get('/signout', adminController.signOut)
+
 
   // signin & signup
   app.get('/signup', userController.signUpPage)
@@ -67,5 +56,4 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticatedUser, tweetController.getTweets)
   app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
->>>>>>> feature
 }

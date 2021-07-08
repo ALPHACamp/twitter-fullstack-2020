@@ -1,33 +1,18 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
-<<<<<<< HEAD
 
-=======
 const helpers = require('./_helpers')
 const db = require('./models')
->>>>>>> feature
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const session = require('express-session')
 const flash = require('connect-flash')
-<<<<<<< HEAD
-const helpers = require('./_helpers');
-const db = require('./models')
-
-
-
-=======
->>>>>>> feature
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const app = express()
 const port = process.env.PORT || 3000
-<<<<<<< HEAD
 
-
-=======
->>>>>>> feature
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
 app.set('view engine', 'hbs')
@@ -48,12 +33,7 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-<<<<<<< HEAD
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-=======
 app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
->>>>>>> feature
 
 require('./routes')(app, passport)
 
