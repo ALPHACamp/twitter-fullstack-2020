@@ -3,6 +3,12 @@ const User = db.User
 const Followship = db.Followship
 
 
+const bcrypt = require('bcryptjs')
+const { User } = require('../models')
+const { Op } = require('sequelize')
+// const imgur = require('imgur-node-api')
+// const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -29,6 +35,38 @@ const userController = {
         }
       })
     }
+    const { name, account, email, password, passwordConfirm } = req.body
+    const errors = []
+    if (!name || !account || !email || !password || !passwordConfirm) {
+      errors.push({ msg: '所有欄位都是必填。' })
+    }
+    if (password !== passwordConfirm) {
+      errors.push({ msg: '密碼及確認密碼不一致！' })
+    }
+    if (errors.length) {
+      return res.render('signup', {
+        errors, name, account, email, password, passwordConfirm
+      })
+    }
+    User.findOne({
+      where: {
+        [Op.or]: [{ account }, { email }]
+      }
+    }).then(user => {
+      if (user) {
+        errors.push({ msg: '帳號或Email已註冊！' })
+        return res.render('signup', {
+          errors, name, account, email, password, passwordConfirm
+        })
+      }
+      return User.create({
+        name, account, email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+      }).then(() => {
+        req.flash('success_messages', '註冊成功！')
+        return res.redirect('/signin')
+      })
+    })
   },
   signInPage: (req, res) => {
     return res.render('signin')
@@ -36,15 +74,17 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/users/followership')
+    res.redirect('/tweets')
   },
 
-  logout: (req, res) => {
-    req.flash('success_messages', '登出成功！')
+  signOut: (req, res) => {
+    req.flash('success_messages', '成功登出！')
     req.logout()
     res.redirect('/signin')
   },
-
+  getTweets: (req, res) => {
+    return res.render('tweets')
+  },
   addFollowing: (req, res) => {
     console.log(req.body)
     return Followship.create({
@@ -73,3 +113,6 @@ const userController = {
 }
 
 module.exports = userController
+
+
+

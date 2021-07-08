@@ -1,29 +1,37 @@
 const helpers = require('../_helpers')
-
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
+<<<<<<< HEAD
 
 const userController = require('../controllers/userController')
 const followController = require('../controllers/followController')
 
 const { authenticate } = require('passport')
+=======
+const adminController = require('../controllers/adminController')
+const userController = require('../controllers/userController')
+const tweetController = require('../controllers/tweetController')
+>>>>>>> feature
 
 module.exports = (app, passport) => {
-
-  const authenticated = (req, res, next) => {
+  const authenticatedUser = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      return next()
+      if (!helpers.getUser(req).is_admin) { return next() }
+      req.flash('error_messages', '管理員請由後台登入')
     }
     res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).is_admin) { return next() }
-      res.redirect('/signin')
+      req.flash('error_messages', '沒有權限')
+      return res.redirect('/admin/signin')
     }
+    res.redirect('/signin')
   }
 
+<<<<<<< HEAD
   app.get('/', (req, res) => res.redirect('/users/followership'))
 
   app.get('/users/followership', authenticated, followController.getfollower)
@@ -37,4 +45,27 @@ module.exports = (app, passport) => {
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   app.get('/logout', userController.logout)
 
+=======
+  // admin
+  app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.get('/admin/signup', authenticatedAdmin, adminController.signUpPage)
+  app.post('/admin/signup', authenticatedAdmin, adminController.signUp)
+  app.get('/admin/signin', adminController.signInPage)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), adminController.signIn)
+  app.get('/signout', adminController.signOut)
+
+  // signin & signup
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), authenticatedUser, userController.signIn)
+  app.get('/signout', userController.signOut)
+
+  // tweets
+  app.get('/tweets', authenticatedUser, tweetController.getTweets)
+  app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
+  app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
+>>>>>>> feature
 }
