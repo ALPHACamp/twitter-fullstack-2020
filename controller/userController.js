@@ -59,7 +59,7 @@ const userController = {
   },
 
   //登出
-  logout: (req, res) => {
+  signOut: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
@@ -107,6 +107,31 @@ const userController = {
       .then(user => {
         res.render('user/userEdit', { user: user.toJSON() })
       })
-  }
+  },
+
+  putUserEdit: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_messages', "name didn't exist")
+      return res.redirect('back')
+    }
+    if (req.body.passwordCheck !== req.body.password) {
+      req.flash('error_messages', '兩次密碼輸入不同！')
+      return res.redirect('/signup')
+    } else {
+      User.findByPk(req.params.userId)
+        .then((user) => {
+          user.update({
+            account: req.body.account,
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+          })
+            .then((user) => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect(`/users/${user.id}/edit`)
+            })
+        })
+    }
+  },
 }
 module.exports = userController

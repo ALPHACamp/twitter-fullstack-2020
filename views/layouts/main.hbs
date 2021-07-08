@@ -60,15 +60,29 @@
 
 
         {{!-- 下 --}}
-        <div class="col-12">
+        <a href="/signout" style=" text-decoration:none;color:rgb(0, 0, 0)">
           <p>登出</p>
-        </div>
+        </a>
         {{/if}}
 
       </div>
 
       {{!-- 中間主頁 --}}
       <div style="flex-grow: 1;">
+
+        {{!-- flash --}}
+        {{#if success_messages}}
+        <div class="alert alert-success" role="alert" style="margin: 5px 0 ;width:fit-content">
+          {{success_messages}}
+        </div>
+        {{/if}}
+
+        {{#if error_messages}}
+        <div class="alert alert-danger" role="alert" style="margin: 5px 0 ;">
+          {{error_messages}}
+
+        </div>
+        {{/if}}
         <main>
           {{{body}}}
         </main>
