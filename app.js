@@ -7,7 +7,7 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const app = express()
-const port = 3000
+const port = 8000
 
 // set public file
 app.use(express.static('public'))

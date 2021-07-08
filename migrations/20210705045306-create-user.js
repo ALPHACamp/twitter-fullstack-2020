@@ -30,7 +30,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       isAdmin: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
