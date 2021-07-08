@@ -34,7 +34,8 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/signout', userController.signOut)
 
-router.get('/tweets', tweetController.getTweets)
-router.get('/tweets/:id', tweetController.getTweet)
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.postTweet)
+router.get('/tweets/:id', authenticated, tweetController.getTweet)
 
 module.exports = router

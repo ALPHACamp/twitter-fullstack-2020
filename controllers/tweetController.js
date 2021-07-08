@@ -19,6 +19,7 @@ const tweetController = {
         req.flash('error_messages', data['message'])
         return res.redirect('back')
       }
+      console.log('into controller/tweetController/postTweet/line22/postTweet...data', data)
       req.flash('success_messages', data['message'])
       res.redirect('/tweets')
     })
