@@ -56,45 +56,64 @@ const userController = {
     res.redirect('/signin')
   },
 
-  getUserReplies: (req, res) => {
+  getUserReplies: async (req, res) => {
     const topFollowing = res.locals.data
-    console.log(topFollowing)
-    return User.findOne({
-      where: {
-        id: req.params.userId
-      }
-    }).then(user => {
-      Followship.findAndCountAll({
+    const top5Following = topFollowing.slice(0, 5)
+    const userInfo = res.locals.userInfo
+    try {
+      const replies = await Reply.findAll({
         raw: true,
         nest: true,
-        where: { followerId: user.id },
-      }).then(following => {
-        Followship.findAndCountAll({
-          raw: true,
-          nest: true,
-          where: { followingId: user.id },
-        }).then(follower => {
-          Tweet.findAll({
-            raw: true,
-            nest: true,
-            where: { userId: user.id },
-          }).then(tweets => {
-            return res.render('replies', {
-              user,
-              followingCount: following.count,
-              followerCount: follower.count,
-              tweets,
-              topFollowing
+        where: {
+          userId: userInfo.user.id
+        },
+        include: [Tweet]
+      })
+
+      let Data = []
+      Data = replies.map(async (reply, index) => {
+        if (reply.Tweet.UserId) {
+          const [tweetUser] = await Promise.all([
+            User.findOne({
+              raw: true,
+              nest: true,
+              where: {
+                id: Number(reply.Tweet.UserId)
+              }
             })
-          })
+          ])
+          return {
+            id: reply.id,
+            createdAt: reply.createdAt,
+            comment: reply.comment,
+            TweetId: reply.TweetId,
+            tweetDescription: reply.Tweet.description,
+            tweetCreatedAt: reply.Tweet.createdAt,
+            tweetUserId: tweetUser.id,
+            tweetUserName: tweetUser.name,
+            tweetUserAvatar: tweetUser.avatar,
+            tweetUserAccount: tweetUser.account
+          }
+        }
+      })
+      Promise.all(Data).then(data => {
+        // console.log(data)
+        return res.render('replies', {
+          user: userInfo.user,
+          followingCount: userInfo.followingCount,
+          followerCount: userInfo.followerCount,
+          replies: data,
+          topFollowing: top5Following
         })
       })
-    })
+    }
+    catch (err) {
+      console.log('getUserReplies err')
+      return res.render('/')
+    }
   },
-
   getUserLikes: (req, res) => {
     const topFollowing = res.locals.data
-    console.log(topFollowing)
     return User.findOne({
       where: {
         id: req.params.userId
@@ -126,6 +145,34 @@ const userController = {
         })
       })
     })
-  }
+  },
+
+  //MiddleWare
+  getUserInfo: (req, res, next) => {
+    return User.findOne({
+      where: {
+        id: req.params.userId
+      }
+    }).then(user => {
+      Followship.findAndCountAll({
+        raw: true,
+        nest: true,
+        where: { followerId: user.id },
+      }).then(following => {
+        Followship.findAndCountAll({
+          raw: true,
+          nest: true,
+          where: { followingId: user.id },
+        }).then(follower => {
+          res.locals.userInfo = {
+            user: user.dataValues,
+            followingCount: following.count,
+            followerCount: follower.count
+          }
+          return next()
+        })
+      })
+    })
+  },
 }
 module.exports = userController
