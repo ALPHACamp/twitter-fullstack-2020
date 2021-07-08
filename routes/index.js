@@ -69,7 +69,7 @@ module.exports = (app, passport) => {
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
   app.get('/admin/tweets', authenticatedAdmin, adminController.getAdminTweets)
   app.get('/admin/users', adminController.getAdminUsers)
-  app.delete('/admin/tweets/:tweetId', adminController.deleteAdminTweet)
+  app.delete('/admin/tweets/:tweetId', getTopFollowing, adminController.deleteAdminTweet)
 
   //登入、註冊、登出
   app.get('/signup', userController.signUpPage)
@@ -79,8 +79,9 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
 
-  app.get('/', getTopFollowing, tweetController.getTweets)
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, getTopFollowing, tweetController.getTweets)
+  app.get('/tweets/:tweetId', authenticated, getTopFollowing, tweetController.getTweet)
 
   app.get('/users/:userId/replies', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserReplies)
   app.get('/users/:userId/likes', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserLikes)
