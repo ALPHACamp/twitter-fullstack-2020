@@ -4,8 +4,12 @@
 
 
 const adminController = {
-  getTwitters:(req,res) => {
+  getTwitters: (req, res) => {
     return res.render('admin/twitters')
+  },
+
+  adminSignin: (req, res) => {
+    return res.render('admin/signin')
   }
 }
 
