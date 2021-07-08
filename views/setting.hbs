@@ -41,19 +41,31 @@
     </div>
     {{!-- 輸入框 --}}
     <form class="form-signin" action="/signup" method="POST" style="width: 35%; position:fixed;">
-      <div class="form-label-group py-3" style="background-color: darkgray; border-style:none">
-        <input type="text" name="name" class="form-control" placeholder="名稱" required autofocus>
+      <div class="mb-3 pl-2" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">帳號：</label>
+        <input type="email" class="form-control" style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"="exampleInputEmail1" placeholder="名稱" aria-describedby="emailHelp">
       </div>
-      <div class="form-label-group py-3">
-        <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
+      <div class="mb-3 pl-2" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">名稱：</label>
+        <input type="email" class="form-control"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"="exampleInputEmail1"
+          placeholder="輸入您的名稱" aria-describedby="emailHelp">
+      </div><div class="mb-3 pl-2" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">email：</label>
+        <input type="email" class="form-control"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"="exampleInputEmail1"
+          placeholder="輸入您的email" aria-describedby="emailHelp">
+      </div><div class="mb-3 pl-2" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">密碼：</label>
+        <input type="email" class="form-control"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"="exampleInputEmail1"
+          placeholder="輸入您的密碼" aria-describedby="emailHelp">
+      </div><div class="mb-3 pl-2" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">確認密碼：</label>
+        <input type="email" class="form-control"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"="exampleInputEmail1"
+          placeholder="確認您的密碼" aria-describedby="emailHelp">
       </div>
-      <div class="form-label-group py-3">
-        <input type="password" name="password" class="form-control" placeholder="密碼" required>
-      </div>
-      <div class="form-label-group py-3">
-        <input type="password" name="passwordCheck" class="form-control" placeholder="密碼確認" required>
-      </div>
-      <br />
       <button class="btn text-light" style="border-radius: 40px; background-color:#FF6600; float:right"
         type="submit">儲存</button>
     </form>
