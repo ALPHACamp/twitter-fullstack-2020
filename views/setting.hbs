@@ -1,23 +1,27 @@
-<div class="row mt-5">
+<div class="row mt-1">
 
   {{!-- 左邊區域 --}}
-  <div class="col-md-2 ">
+  <div class="col-md-3" style="width:auto; height:auto; text-align:center;">
 
-    <img class="style-f7df5c62-org-avatar-img" width="50px" height="auto"
+    <img class="style-f7df5c62-org-avatar-img py-3" width="50px" height="auto"
       src="https://static.accupass.com/org/2008250550226683301600.jpg">
+    <div style="">
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active text-dark font-weight-bold py-3" href="#"><i class="fas fa-home"></i> 首頁</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark font-weight-bold py-3" href="#"><i class="fas fa-user"></i> 個人資料</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark font-weight-bold py-3" href="#"><i class="far fa-sun"></i> 設定</a>
+        </li>
+      </ul>
+    </div>
+    <a class="btn text-light" style="border-radius: 40px; text-align:center; width:40%; background-color:#FF6600"
+      href="#">推文</a>
 
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link active text-dark font-weight-bold" href="#"><i class="fas fa-home"></i> 首頁</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" href="#"><i class="fas fa-user"></i> 個人資料</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" href="#"><i class="far fa-sun"></i> 設定</a>
-      </li>
-    </ul>
-    <a class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#">推文</a>
+
   </div>
 
 
@@ -30,11 +34,13 @@
 
 
   {{!-- 右邊區域 --}}
-  <div class="col-md-4" style="position: relative;">
+  <div class="col-md-9" style="position: relative;">
+    {{!-- 標題 --}}
     <div>
-      <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
+      <h1 class="h5 mb-3 font-weight-bold">帳戶設定</h1>
     </div>
-    <form class="form-signin" action="/signup" method="POST" style="width: 100%;">
+    {{!-- 輸入框 --}}
+    <form class="form-signin" action="/signup" method="POST" style="width: 35%; position:fixed;">
       <div class="form-label-group py-3" style="background-color: darkgray; border-style:none">
         <input type="text" name="name" class="form-control" placeholder="名稱" required autofocus>
       </div>
