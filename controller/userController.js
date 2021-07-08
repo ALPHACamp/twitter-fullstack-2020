@@ -64,7 +64,7 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  
+
   getUserTweets: (req, res) => {
     const topFollowing = res.locals.data
     console.log(topFollowing)

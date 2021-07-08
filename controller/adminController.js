@@ -11,6 +11,9 @@ const pageLimit = 10
 const adminController = {
   //登入頁面
   adminSignInPage: (req, res) => {
+    if (res.locals.user) {
+      delete res.locals.user
+    }
     return res.render('admin/signin')
   },
 
