@@ -31,7 +31,6 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-
 app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
 
 require('./routes')(app, passport)

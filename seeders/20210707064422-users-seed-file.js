@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Users', [{
-      account: '@root',
+      account: 'root',
       email: 'root@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       description: 'admin account',
@@ -14,7 +14,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      account: '@user1',
+      account: 'user1',
       email: 'user1@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       description: 'user account',
@@ -25,7 +25,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      account: '@user2',
+      account: 'user2',
       email: 'user2@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       description: 'user account',
@@ -36,7 +36,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      account: '@user3',
+      account: 'user3',
       email: 'user3@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       description: 'user account',
@@ -47,7 +47,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      account: '@user4',
+      account: 'user4',
       email: 'user4@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       description: 'user account',
@@ -58,7 +58,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      account: '@user5',
+      account: 'user5',
       email: 'user5@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       description: 'user account',

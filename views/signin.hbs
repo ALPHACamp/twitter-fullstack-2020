@@ -1,53 +1,26 @@
-
 <div class="row my-5 justify-content-center">
   <div class="col-9 col-md-5 col-lg-4 my-2">
-    <img
-      src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png"
-      alt=""
-      class="img-fluid my-3"
-      style="display: block; margin: auto; width: 50px;"
-    />
+    <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png"
+      alt="" class="img-fluid my-3" style="display: block; margin: auto; width: 50px;" />
     <div class="text-center my-4">
       <h3><strong>登入 TwitterMimicry</strong></h3>
     </div>
     {{> message}}
     <form action="/signin" method="post">
       <div class="mb-3">
-        <label
-          for="account"
-          style="margin-bottom: -30px; margin-left: 8px;"
-        >帳號</label>
-        <input
-          type="text"
-          class="form-control pt-4"
-          id="account"
-          name="account"
+        <label for="account" style="margin-bottom: -30px; margin-left: 8px;">帳號</label>
+        <input type="text" class="form-control pt-4" id="account" name="account"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
-          aria-describedby="accountHelp"
-          value="{{account}}"
-        />
+          aria-describedby="accountHelp" value="{{account}}" />
       </div>
       <div class="mb-2">
-        <label
-          for="password"
-          style="margin-bottom: -30px; margin-left: 8px;"
-        >密碼</label>
-        <input
-          type="password"
-          class="form-control pt-4"
-          id="password"
-          name="password"
+        <label for="password" style="margin-bottom: -30px; margin-left: 8px;">密碼</label>
+        <input type="password" class="form-control pt-4" id="password" name="password"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
-          aria-describedby="passwordHelp"
-          value="{{password}}"
-        />
+          aria-describedby="passwordHelp" value="{{password}}" />
       </div>
       <br />
-      <button
-        class="col-12 btn btn-primary btn-block"
-        style="border-radius: 30px;"
-        type="submit"
-      >登入</button>
+      <button class="col-12 btn btn-primary btn-block" style="border-radius: 30px;" type="submit">登入</button>
       <div class="text-end my-4">
         <p>
           <a href="/signup">註冊TwitterMimicry</a>
@@ -58,24 +31,3 @@
     </form>
   </div>
 </div>
-
-<form class="form-signin" action="/signin" method="POST" style="width: 100%;">
-  <div class="text-center mb-4">
-    <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
-  </div>
-  <div class="form-label-group">
-    <label for="inputEmail">Email</label>
-    <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
-  </div>
-  <div class="form-label-group">
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
-  </div>
-  <br />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
-  <div class="text-center mb-4">
-    <p><a href="/signup">Sign Up</a></p>
-  </div>
-  <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
-</form>
-
