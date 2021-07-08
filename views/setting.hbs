@@ -1,46 +1,57 @@
-<div class="container" style="width:100%">
-  <div class="container" style="width:20%; height:auto; float:left; display:inline">
+<div class="row mt-5">
 
-    <div class="text-center mb-4">
-      <img class="style-f7df5c62-org-avatar-img" width="50px" height="auto"
-        src="https://static.accupass.com/org/2008250550226683301600.jpg">
-    </div>
-    <div class="form-label-group">
-      <i class="fas fa-house"></i>
-      <a href="/">首頁</a>
-    </div>
-    <div class="form-label-group">
-      <a href="/">個人資料</a>
-    </div>
-    <div class="form-label-group">
-      <a href="">設定</a>
-    </div>
-    <br />
-    <button class="btn btn-lg btn-warning btn-block" type="submit">推文</button>
+  {{!-- 左邊區域 --}}
+  <div class="col-md-2 ">
+
+    <img class="style-f7df5c62-org-avatar-img" width="50px" height="auto"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active text-dark font-weight-bold" href="#"><i class="fas fa-home"></i> 首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="#"><i class="fas fa-user"></i> 個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="#"><i class="far fa-sun"></i> 設定</a>
+      </li>
+    </ul>
+    <a class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#">推文</a>
   </div>
-  <div class="container" style="width:70%; height:auto; float:left; display:inline">
-    <div class="float:left">
+
+
+
+  {{!-- 登出鈕 --}}
+  <div class="ml-3" style="position:fixed; bottom:0px; left: 20px;">
+    <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="#"><i class="fas
+          fa-sign-out-alt"></i> 登出</a>
+  </div>
+
+
+  {{!-- 右邊區域 --}}
+  <div class="col-md-4" style="position: relative;">
+    <div>
       <h1 class="h3 mb-3 font-weight-normal">帳戶設定</h1>
     </div>
     <form class="form-signin" action="/signup" method="POST" style="width: 100%;">
-      <div class="form-label-group">
-        <label for="inputName"></label>
+      <div class="form-label-group py-3" style="background-color: darkgray; border-style:none">
         <input type="text" name="name" class="form-control" placeholder="名稱" required autofocus>
       </div>
-      <div class="form-label-group">
-        <label for="inputEmail"></label>
+      <div class="form-label-group py-3">
         <input type="text" name="email" class="form-control" placeholder="Email" required autofocus>
       </div>
-      <div class="form-label-group">
-        <label for="inputPassword"></label>
+      <div class="form-label-group py-3">
         <input type="password" name="password" class="form-control" placeholder="密碼" required>
       </div>
-      <div class="form-label-group">
-        <label for="inputPasswordCheck"></label>
+      <div class="form-label-group py-3">
         <input type="password" name="passwordCheck" class="form-control" placeholder="密碼確認" required>
       </div>
       <br />
-      <button class="btn btn-lg btn-warning btn-block" type="submit">儲存</button>
+      <button class="btn text-light" style="border-radius: 40px; background-color:#FF6600; float:right"
+        type="submit">儲存</button>
     </form>
   </div>
+
+
 </div>

@@ -13,7 +13,7 @@ module.exports = app => {
   app.get('/admin/twitters', adminController.getTwitters)
 
   app.get('/admin/signin', adminController.adminSignin)
-
+  app.get('/admin/users', adminController.adminUsers)
 
   app.get('/user/self', (req, res) => {
     res.render('user')
