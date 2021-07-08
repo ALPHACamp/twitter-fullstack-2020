@@ -57,6 +57,7 @@ const adminController = {
     return res.render('admin/signin', { signup })
   },
   signUp: (req, res) => {
+    const signup = true
     const { name, account, email, password, passwordConfirm } = req.body
     const errors = []
     if (!name || !account || !email || !password || !passwordConfirm) {
@@ -66,8 +67,8 @@ const adminController = {
       errors.push({ msg: '密碼及確認密碼不一致！' })
     }
     if (errors.length) {
-      return res.render('signup', {
-        errors, name, account, email, password, passwordConfirm
+      return res.render('admin/signin', {
+        errors, name, account, email, password, passwordConfirm, signup
       })
     }
     User.findOne({
@@ -77,8 +78,8 @@ const adminController = {
     }).then(user => {
       if (user) {
         errors.push({ msg: '帳號或Email已註冊！' })
-        return res.render('signup', {
-          errors, name, account, email, password, passwordConfirm
+        return res.render('admin/signin', {
+          errors, name, account, email, password, passwordConfirm, signup
         })
       }
       return User.create({
@@ -87,7 +88,7 @@ const adminController = {
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
       }).then(() => {
         req.flash('success_messages', '成功新增管理員！')
-        return res.redirect('/admin/users')
+        return res.redirect('/admin/admins')
       })
     })
   },
