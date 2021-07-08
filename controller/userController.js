@@ -160,7 +160,7 @@ const userController = {
         }
       })
       Promise.all(Data).then(data => {
-        console.log(data)
+        data = data.sort((a, b) => a.tweet.createdAt - b.tweet.createdAt)
         return res.render('likes', {
           user: userInfo.user,
           followingCount: userInfo.followingCount,
