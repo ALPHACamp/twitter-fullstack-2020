@@ -103,9 +103,9 @@ const userController = {
 
   //進入帳號設定頁面
   getUserEdit: (req, res) => {
-    return User.findByPk(req.params.id)
+    return User.findByPk(req.params.userId)
       .then(user => {
-        res.render('userEdit', { user: user.toJSON() })
+        res.render('user/userEdit', { user: user.toJSON() })
       })
   }
 }
