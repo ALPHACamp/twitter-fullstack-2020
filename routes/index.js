@@ -26,10 +26,10 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  app.get('/', (req, res) => res.redirect('/users/followership'))
 
   //follow function
-  app.get('/users/followership', authenticatedUser, followController.getfollower)
+  app.get('/followership', authenticatedUser, followController.getfollower)
+  app.get('/followingship', authenticatedUser, followController.getfollowing)
   app.post('/following/:userId', authenticatedUser, userController.addFollowing)
   app.delete('/following/:userId', authenticatedUser, userController.removeFollowing)
 

@@ -44,6 +44,9 @@ const followController = {
 
     })
   },
+  getfollowing: (req, res) => {
+    res.render('followingship')
+  }
 }
 
 module.exports = followController

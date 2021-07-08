@@ -11,11 +11,11 @@
 
     <ul class="nav nav-tabs flex-column" id="myTab" role="tablist">
       <li class="nav-item mt-2">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#" role="tab" aria-controls="home"
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="/" role="tab" aria-controls="home"
           aria-selected="true">首頁</a>
       </li>
       <li class="nav-item mt-2">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#" role="tab" aria-controls="profile"
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="/followings" role="tab" aria-controls="profile"
           aria-selected="false">個人資料</a>
       </li>
       <li class="nav-item mt-2">
@@ -48,21 +48,23 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link active" id="message-tab" data-toggle="tab" href="/followership" role="tab"
-          aria-controls="home" aria-selected="true">跟隨者</a>
+        <a class="nav-link" id="message-tab" data-toggle="tab" href="/followership" role="tab" aria-controls="home"
+          aria-selected="true">跟隨者</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="/followingship" role="tab" aria-controls="profile"
-          aria-selected="false">正在跟隨</a>
+        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="/followingship" role="tab"
+          aria-controls="profile" aria-selected="false">正在跟隨</a>
       </li>
     </ul>
 
 
     <br>
     <div class="tab-content">
-      <div class="tab-pane active" id="follower" role="tabpanel" aria-labelledby="home-tab">
-        <ul class="list-group list-group-flush border-bottom">
-          {{#each users}}
+
+
+      <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <ul class="list-group list-group-flush">
+
           <li class="list-group-item">
             <div class="row g-0">
               <div class="col-md-2">
@@ -80,15 +82,17 @@
                       </h6>
                     </div>
                     <div class="col-3">
-                      {{#if this.isFollowed}}
+
                       <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                        <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+                        <a href="#profile"><button type="submit" class="btn btn-success"
+                            name="{{this.id}}">正在跟隨</button></a>
                       </form>
-                      {{else}}
+
                       <form action="/following/{{this.id}}" method="POST" style="display: contents;">
-                        <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
+                        <a href="#profile"><button type="submit" class="btn btn-outline-success"
+                            name="{{this.id}}">跟隨</button></a>
                       </form>
-                      {{/if}}
+
                     </div>
                   </div>
                   <h6 class="card-text">{{this.description}}</h6>
@@ -96,11 +100,9 @@
               </div>
             </div>
           </li>
-          {{/each}}
+
         </ul>
       </div>
-
-
     </div>
   </div>
 
