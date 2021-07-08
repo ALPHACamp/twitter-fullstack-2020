@@ -8,14 +8,16 @@ const adminController = require('../controllers/adminController.js')
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
+    // if(req.isAuthenticated)
+    if (helpers.ensureAuthenticated(req)) {
       return next()
     }
     res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
-    if (req.isAuthenticated()) {
-      if (req.user.is_admin) { return next() }
+    // if(req.isAuthenticated)
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).is_admin) { return next() }
       return res.redirect('/')
     }
     res.redirect('/signin')
