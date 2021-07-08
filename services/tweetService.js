@@ -7,14 +7,9 @@ const tweetService = {
       nest: true,
       order: [['createdAt', 'DESC']],
       include: [User]
-    }).then(tweets => {
-      const data = tweets.map(r => ({
-        ...r.dataValues,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
-      }))
     })
     return callback({
-      tweets: data,
+      tweets,
       Appear: { navbar: true, top10: true },
       isAuthenticated: true
     })
@@ -23,16 +18,10 @@ const tweetService = {
     const tweet = await Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: Reply, include: [User] },
-        { model: User, as: 'LikedUsers' },
+        { model: Reply, include: [User] }
       ]
-    }).then(tweet => {
-      const isLiked = tweets.LikedUsers.map(d => d.id).includes(req.user.id)
-      return callback({
-        tweet: tweet,
-        isLiked: isLiked,
-      })
     })
+    return callback({ tweet: tweet.toJSON() })
   },
   postTweet: async (req, res, callback) => {
     if (!req.body.description) {
