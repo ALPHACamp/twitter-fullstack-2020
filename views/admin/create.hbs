@@ -1,0 +1,11 @@
+{{#if tweet}}
+<form action="/admin/tweets/{{tweet.id}}?_method=PUT" method="POST"></form>
+{{else}}
+ <form action="/admin/tweets" method="POST">
+{{/if}}
+      <div class="form-group">
+        <label for="content">content</label>
+        <input type="text" class="form-control" name="content" id="content" placeholder="Type content">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+</form>
