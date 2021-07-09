@@ -15,6 +15,14 @@ module.exports = app => {
   app.get('/admin/signin', adminController.adminSignin)
   app.get('/admin/users', adminController.adminUsers)
 
+  app.get('/admin/tweets', adminController.tweetsAdmin)
+
+
+
+
+  app.get('/tweets/replies', twitController.getReplies)
+
+
   app.get('/user/self', twitController.getUser)
   // /user/self/like
   app.get('/user/self/like', twitController.getUserLike)

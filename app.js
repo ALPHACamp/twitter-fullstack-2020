@@ -25,15 +25,6 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/tweets/replies', (req, res) => {
-  res.render('replyUser')
-})
-app.get('/admin/users', (req, res) => {
-  res.render('userAdmin')
-})
-app.get('/admin/tweets', (req, res) => {
-  res.render('admin/tweetsAdmin')
-})
 
 require('./routes')(app, passport)
 

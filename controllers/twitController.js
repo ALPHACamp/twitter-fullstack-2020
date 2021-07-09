@@ -18,8 +18,11 @@ const twitController = {
 
   getUserLike: (req, res) => {
     return res.render('userLike')
-  }
+  },
 
+  getReplies: (req, res) => {
+    return res.render('replyUser')
+  }
 
 
 }

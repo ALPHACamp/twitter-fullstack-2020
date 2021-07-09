@@ -15,6 +15,9 @@ const adminController = {
   adminUsers: (req, res) => {
     return res.render('admin/users')
   },
+  tweetsAdmin: (req, res) => {
+    res.render('admin/tweetsAdmin')
+  }
 }
 
 module.exports = adminController
