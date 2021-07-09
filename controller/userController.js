@@ -194,35 +194,7 @@ const userController = {
     }
   },
 
-  //MiddleWare
-  getUserInfo: (req, res, next) => {
-    return User.findOne({
-      where: {
-        id: req.params.userId
-      }
-    }).then(user => {
-      Followship.findAndCountAll({
-        raw: true,
-        nest: true,
-        where: { followerId: user.id },
-      }).then(following => {
-        Followship.findAndCountAll({
-          raw: true,
-          nest: true,
-          where: { followingId: user.id },
-        }).then(follower => {
-          res.locals.userInfo = {
-            user: user.dataValues,
-            followingCount: following.count,
-            followerCount: follower.count
-          }
-          return next()
-        })
-      })
-    })
-  },
-  
-   getUserTweets: (req, res) => {
+  getUserTweets: (req, res) => {
     const topFollowing = res.locals.data
     console.log(topFollowing)
     return User.findOne({
@@ -256,6 +228,44 @@ const userController = {
         })
       })
     })
-  }
+  },
+
+  getUserFollowings: (req, res) => {
+    const topFollowing = res.locals.data
+    const top5Following = topFollowing.slice(0, 5)
+    const userInfo = res.locals.userInfo
+    return res.render('followings', {
+      user: userInfo.user,
+      topFollowing: top5Following
+    })
+  },
+
+  //MiddleWare
+  getUserInfo: (req, res, next) => {
+    return User.findOne({
+      where: {
+        id: req.params.userId
+      }
+    }).then(user => {
+      Followship.findAndCountAll({
+        raw: true,
+        nest: true,
+        where: { followerId: user.id },
+      }).then(following => {
+        Followship.findAndCountAll({
+          raw: true,
+          nest: true,
+          where: { followingId: user.id },
+        }).then(follower => {
+          res.locals.userInfo = {
+            user: user.dataValues,
+            followingCount: following.count,
+            followerCount: follower.count
+          }
+          return next()
+        })
+      })
+    })
+  },
 }
 module.exports = userController
