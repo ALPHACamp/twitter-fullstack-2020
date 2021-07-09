@@ -1,1 +1,94 @@
-<div>this is tweets</div>
+<div class="d-flex mt-5">
+  {{!-- 左側欄位 --}}
+  <div class="row" style="height: 500px;width: 250px;">
+    {{!-- 上 --}}
+    <div class="col-12">
+      <p>Twitter</p>
+    </div>
+    {{!-- 中 --}}
+    <div class="col-12 pt-0">
+      <a href="/" style=" text-decoration:none;color:rgb(179, 123, 50)">
+        <p>首頁</p>
+      </a>
+      <a href="/users/{{user.id}}" style=" text-decoration:none;color:rgb(0, 0, 0)">
+        <p>個人資料</p>
+      </a>
+      <a href="/users/{{user.id}}/edit" style=" text-decoration:none;color:rgb(0, 0, 0)">
+        <p>設定</p>
+      </a>
+      <a href="/users/{{user.id}}/tweets" style=" text-decoration:none;color:rgb(0, 0, 0)">
+        <p>推文</p>
+      </a>
+    </div>
+    {{!-- 下 --}}
+    <div class="col-12">
+      <p>登出</p>
+    </div>
+  </div>
+
+  <div style="width: 780px;" class="me-5">
+    {{!-- 標題 --}}
+    <div class="d-flex flex-column">
+      <img src="{{ user.cover }}" alt="" srcset="" style="height: 300px;object-fit: cover;">
+      <div class="d-flex flex-column ms-4">
+        <img src="{{ user.avatar }}" alt="" srcset=""
+          style="height: 200px;width:200px;object-fit: cover;margin-top:-100px;border-radius:50%;border: solid 10px white">
+        <p class="fs-3 fw-bold mb-0">{{ user.name }}</p>
+        <p style="color: darkseagreen;">{{ user.account }}</p>
+        <p>{{ user.introduction }}</p>
+
+        <div class="d-flex">
+          <a href="/users/{{ user.id }}/followers" class="me-3 d-flex" style="color: black;text-decoration:none;">
+            <p>{{ followerCount }} 位</p>
+            <p style="color: rgb(82, 82, 82);" class="ms-1">跟隨者</p>
+          </a>
+          <a href="/users/{{ user.id }}/followings" class="me-3 d-flex" style="color: black;text-decoration:none;">
+            <p>{{ followingCount }} 個</p>
+            <p style="color: rgb(82, 82, 82);" class="ms-1">追蹤中</p>
+          </a>
+        </div>
+
+        {{!-- select bar --}}
+        <ul class="nav nav-tabs mb-4 mt-4">
+          <li class="nav-item">
+            <a class="nav-link fw-bolder" href="/users/{{ user.id }}/tweets"
+              style="color: rgb(94, 94, 94);border-bottom: solid 3px darkseagreen">推文</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/{{ user.id }}/replies" style="color: darkseagreen;">推文與回覆</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/{{ user.id }}/likes" style="color: darkseagreen;">喜歡的內容</a>
+          </li>
+        </ul>
+
+        {{#each tweets }}
+        {{!-- 推文 --}}
+        <a href="/tweets/{{ this.id }}" class="d-flex align-items-center mb-2"
+          style="color: black;text-decoration:none;">
+          {{!-- 大頭貼 --}}
+          <div>
+            <img src="{{ ...user.avatar }}" style="border-radius: 100%;width: 60px">
+          </div>
+          {{!-- 右側文字 --}}
+          <div class="ms-3" style="height: 80px;">
+            {{!-- 發文者 --}}
+            <div class="d-flex align-items-center mb-0">
+              <p class="fs-5 me-2 mb-0">{{ ...user.name }}</p>
+              <p class="mb-0" style="color: darkseagreen;">{{ ...user.account }}・{{ momentCH this.createdAt }}</p>
+            </div>
+            {{!-- 推文內容 --}}
+            <p class="mt-0" style="font-size: small;">
+              {{ this.description }}
+            </p>
+          </div>
+        </a>
+        <hr>
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+
+  <div>{{> recommendedFollower }}</div>
+</div>
