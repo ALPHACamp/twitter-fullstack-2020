@@ -24,10 +24,6 @@ app.get('/', (req, res) => {
 
 })
 
-app.get('/user/self', (req, res) => {
-  res.render('user')
-})
-
 
 app.get('/tweets/replies', (req, res) => {
   res.render('replyUser')

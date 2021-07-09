@@ -10,7 +10,16 @@ const twitController = {
 
   getFollowing: (req, res) => {
     return res.render('following')
+  },
+
+  getUser: (req, res) => {
+    return res.render('user')
+  },
+
+  getUserLike: (req, res) => {
+    return res.render('userLike')
   }
+
 
 
 }

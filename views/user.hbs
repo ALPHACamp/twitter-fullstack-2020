@@ -16,7 +16,42 @@
     </ul>
 
 
-    <a class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#">推文</a>
+    <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
+      data-toggle="modal" data-target="#exampleModal">推文</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="color:#FF6600;">&times;</span>
+            </button>
+          </div>
+          <form action="#" method="post">
+            <div class="modal-body" style="height: 250px;">
+              <div class="row" style="height: 100%;">
+                <div class="col-md-2">
+                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
+                    class="rounded-circle" style="width: 60px; height:60px;">
+                </div>
+                <div class="col-md-10">
+                  <textarea name="" id="" style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
 
 
 
@@ -80,13 +115,14 @@
     <div class="row mt-3 border">
       <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link active font-weight-bold" style="color:#FF6600;" href="#">推文</a>
+          <a class="nav-link active font-weight-bold" style="color:#FF6600; border-bottom:3px solid #FF6600;" href="
+            #">推文</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-secondary font-weight-bold" href="#">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary font-weight-bold" href="#">喜歡的內容</a>
+          <a class="nav-link text-secondary font-weight-bold" href="/user/self/like">喜歡的內容</a>
         </li>
       </ul>
     </div>

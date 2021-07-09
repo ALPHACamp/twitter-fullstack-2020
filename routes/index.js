@@ -15,9 +15,10 @@ module.exports = app => {
   app.get('/admin/signin', adminController.adminSignin)
   app.get('/admin/users', adminController.adminUsers)
 
-  app.get('/user/self', (req, res) => {
-    res.render('user')
-  })
+  app.get('/user/self', twitController.getUser)
+  // /user/self/like
+  app.get('/user/self/like', twitController.getUserLike)
+
 
   app.get('/signin', (req, res) => {
     res.render('signin')
