@@ -27,23 +27,53 @@
   </div>
 
   <div style="width: 780px;" class="me-5">
-    {{!-- 標題 --}}
-    <div class="d-flex flex-column">
-      <img src="{{ user.cover }}" alt="" srcset="" style="height: 300px;object-fit: cover;">
+    <div class="d-flex align-items-start mb-4">
+      {{!-- 返回箭頭 --}}
+      <a href="/users/{{ user.id }}/tweets" class="me-4 fs-4 mt-1" style="color: black;">
+        <i class="fas fa-arrow-left"></i>
+      </a>
       <div class="d-flex flex-column ms-4">
-        <img src="{{ user.avatar }}" alt="" srcset=""
-          style="height: 200px;width:200px;object-fit: cover;margin-top:-100px;border-radius:50%;border: solid 10px white">
-        <p class="fs-3 fw-bold mb-0">{{ user.name }}</p>
-        <p style="color: darkseagreen;">{{ user.account }}</p>
-        <p>{{ user.introduction }}</p>
-
-        <div class="d-flex">
-          <p class="me-3">{{ followingCount }} 個追蹤中</p>
-          <p>{{ followerCount }} 位跟隨者</p>
-        </div>
-
+        {{!-- userName --}}
+        <p class="mb-0 fs-3" style="line-height: 0.9em;">{{ user.name }}</p>
+        {{!-- tweetCount --}}
+        <p style="color: rgb(130, 130, 130);">{{ tweetCount }} 則推文</p>
       </div>
     </div>
+
+    {{!-- select bar --}}
+    <ul class="nav nav-tabs mb-4">
+      <li class="nav-item">
+        <a class="nav-link" href="/users/{{ user.id }}/tweets" style="color:darkseagreen">跟隨者</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fw-bolder" href="/users/{{ user.id }}/replies"
+          style="color: rgb(94, 94, 94);border-bottom: solid 3px darkseagreen">正在追蹤</a>
+      </li>
+    </ul>
+
+    {{#each data }}
+    {{!-- following users --}}
+    <div class="d-flex mt-4 mb-3 align-items-start justify-content-between">
+
+      <div class="d-flex align-items-start">
+        {{!-- 大頭貼 --}}
+        <a href="/users/{{ this.followingUser.id }}/tweets">
+          <img src="{{ this.followingUser.avatar }}" style="border-radius: 100%;width: 70px">
+        </a>
+        {{!-- 帳號 --}}
+        <div class="ms-4">
+          <p class="fs-4 mb-0" style="line-height: 0.8em;">{{ this.followingUser.name }}</p>
+          <p class="mb-0" style="color: darkseagreen;">{{ this.followingUser.account }}</p>
+          <p>{{ this.followingUser.introduction }}</p>
+        </div>
+        {{!-- 數量 --}}
+      </div>
+      <form action="/users/{{ this.followingUser.id }}/follow" method="post" class="ms-4">
+        <button class="btn btn-sm btn-outline-secondary" style="width: 60px;">追蹤</button>
+      </form>
+    </div>
+    <hr>
+    {{/each}}
   </div>
 
   <div>{{> recommendedFollower }}</div>
