@@ -37,19 +37,24 @@
           {{/if}}
         </div>
         <div class="col d-flex flex-column p-1">
+
           <div class="py-1">
             <strong>{{this.User.name}}</strong> <sub><i>@{{this.User.account}} · </i>{{moment this.createdAt}}</sub>
           </div>
+
           <div class="py-1">
             {{this.description}}
           </div>
+
           <div class="d-flex py-1">
+
             <div class="mr-2">
               <form action="">
                 <button type="submit" class="btn">R</button>
               </form>
             </div>
-            <div>
+
+            <div class="mr-2">
               {{#if this.isLiked }}
               <form action="/like/{{this.id}}?_method=DELETE" method="POST">
                 <button type="submit" class="btn" style="color:red">♥</button>
@@ -60,7 +65,13 @@
               </form>
               {{/if}}
             </div>
+
+            <div class="d-flex align-items-center">
+              {{this.LikedCount}}
+            </div>
+
           </div>
+
         </div>
       </div>
     </div>

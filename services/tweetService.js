@@ -2,18 +2,21 @@ const { Tweet, User, Reply, Like } = require('../models')
 
 const tweetService = {
   getTweets: async (req, res, callback) => {
-    const tweets = await Tweet.findAll({
-      raw: true,
-      nest: true,
+    let tweets = await Tweet.findAll({
       order: [['createdAt', 'DESC']],
-      include: [User]
+      include: [
+        User,
+        { model: User, as: 'LikedUsers' }
+      ]
     })
-    const tweetData = tweets.map(tweet => ({
-      ...tweet,
-      isLiked: req.user.LikedTweets.map(t => t.id).includes(tweet.id)
+    tweets = tweets.map(t => ({
+      ...t.dataValues,
+      User: t.User.dataValues,
+      LikedCount: t.LikedUsers.length,
+      isLiked: req.user.LikedTweets.map(t => t.id).includes(t.dataValues.id)
     }))
     return callback({
-      tweets: tweetData,
+      tweets,
       Appear: { navbar: true, top10: true },
     })
   },
