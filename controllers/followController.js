@@ -1,4 +1,5 @@
 const { User } = require('../models')
+const { Followship } = require('../models')
 const Sequelize = require('Sequelize')
 
 
