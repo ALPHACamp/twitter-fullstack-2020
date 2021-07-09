@@ -257,8 +257,11 @@ const userController = {
           nest: true,
           where: { followingId: user.id },
         }).then(follower => {
+          console.log('follower', follower)
           res.locals.userInfo = {
             user: user.dataValues,
+            following: following.rows,
+            follower: follower.rows,
             followingCount: following.count,
             followerCount: follower.count
           }
