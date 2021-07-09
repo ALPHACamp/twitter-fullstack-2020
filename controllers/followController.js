@@ -18,6 +18,7 @@ const followController = {
       ],
     }).then((users) => {
 
+      const id = req.user.id
       users = users.map(user => ({
         ...user.dataValues,
         isFollowing: req.user.Followings.map(d => d.id).includes(user.id), //我跟隨的人
@@ -28,7 +29,8 @@ const followController = {
       console.log(users)
 
       return res.render('followership', {
-        users: users
+        users: users,
+        id: id
       })
 
     })
@@ -43,6 +45,8 @@ const followController = {
       ],
     }).then((users) => {
 
+
+      const id = req.user.id
       users = users.map(user => ({
         ...user.dataValues,
 
@@ -52,7 +56,8 @@ const followController = {
       console.log('isfollowing', users)
 
       return res.render('followingship', {
-        users: users
+        users: users,
+        id: id
       })
 
     })

@@ -11,8 +11,10 @@ const tweetController = {
         include: [User]
       })
     ]).then(([tweets]) => {
+      const id = req.user.id
       return res.render('tweets', {
-        tweets: tweets
+        tweets: tweets,
+        id: id
       })
     })
   },

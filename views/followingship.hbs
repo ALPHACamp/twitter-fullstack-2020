@@ -8,21 +8,21 @@
     <br>
     <br>
 
-
-    <ul class="nav nav-tabs flex-column" id="myTab" role="tablist">
-      <li class="nav-item mt-2">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="/" role="tab" aria-controls="home"
-          aria-selected="true">首頁</a>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" href="/tweets">首頁</a>
       </li>
-      <li class="nav-item mt-2">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="/followings" role="tab" aria-controls="profile"
-          aria-selected="false">個人資料</a>
+      <li class="nav-item">
+        <a class="nav-link" href="#">個人資料</a>
       </li>
-      <li class="nav-item mt-2">
-        <a class="nav-link" id="settings-tab" data-toggle="tab" href="#" role="tab" aria-controls="settings"
-          aria-selected="false" style="text-decoration-line: none;">設定</a>
+      <li class="nav-item">
+        <a class="nav-link" href="#">設定</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
       </li>
     </ul>
+
 
     <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3">推文</button>
     <div class="d-flex mt-5">
@@ -48,15 +48,14 @@
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link" id="message-tab" data-toggle="tab" href="/followership" role="tab" aria-controls="home"
-          aria-selected="true">跟隨者</a>
+        <a class="nav-link active" id="message-tab" data-toggle="tab" href="/users/{{id}}/follower" role="tab"
+          aria-controls="home" aria-selected="true">跟隨者</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="/followingship" role="tab"
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="/users/{{id}}/followering" role="tab"
           aria-controls="profile" aria-selected="false">正在跟隨</a>
       </li>
     </ul>
-
 
     <br>
     <div class="tab-content">
