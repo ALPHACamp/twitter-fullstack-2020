@@ -1,25 +1,28 @@
 const { Tweet, User, Reply } = require('../models')
 
+const tweetService = require('../services/tweetService')
+
 const tweetController = {
-  getTweets: async (req, res) => {
-    const tweets = await Tweet.findAll({
-      raw: true,
-      nest: true,
-      order: [['createdAt', 'DESC']],
-      include: [User]
+  getTweets: (req, res) => {
+    tweetService.getTweets(req, res, (data) => {
+      return res.render('tweets', data)
     })
-    const Appear = { navbar: true, top10: true }
-    return res.render('tweets', { tweets, Appear })
   },
   getTweet: async (req, res) => {
-    const tweet = await Tweet.findByPk(req.params.id, {
-      include: [
-        User,
-        { model: Reply, include: [User] }
-      ]
+    tweetService.getTweet(req, res, (data) => {
+      return res.render('tweet', data)
     })
-    // console.log('into controllers/tweetControllers/line22...tweet', tweet.toJSON())
-    return res.render('tweet', { tweet: tweet.toJSON() })
+  },
+  postTweet: (req, res) => {
+    tweetService.postTweet(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      }
+      console.log('into controller/tweetController/postTweet/line22/postTweet...data', data)
+      req.flash('success_messages', data['message'])
+      res.redirect('/tweets')
+    })
   }
 }
 

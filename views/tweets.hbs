@@ -1,12 +1,115 @@
 <div>
-  <h1>this is Tweets Page ( views / tweets.hbs )</h1>
+  <form action="/tweets" method="POST" class="border border-top-0 border-bottom-0">
+    <h5 class="my-0 p-2 border-bottom">首頁</h5>
+    <div class="container py-2">
+      <div class="row">
+
+        <div class="col-auto px-1">
+          {{#if user.avatar}}
+          <img class="rounded-circle" src="{{user.avatar}}" style="max-width: 50px;max-height: 50px;">
+          {{else}}
+          <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" style="max-width: 50px;max-height: 50px;">
+          {{/if}}
+        </div>
+
+        <div class="col px-1" style="min-height: 100px;">
+          <textarea class="border-0 w-100" name="description" rows="5" style="resize: none;"
+            placeholder="有什麼新鮮事？"></textarea>
+        </div>
+
+        <div class="col-auto px-1 d-flex align-items-end">
+          <button class="btn btn-regular rounded-pill float-right" type="submit">推文</button>
+        </div>
+
+      </div>
+    </div>
+  </form>
 
   {{#each tweets}}
-  <hr>
-  <a href="/tweets/{{this.id}}">第 {{this.id}} 個 tweet:</a>
-  <p>作者名稱: {{this.User.name}}</p>
-  <p>作者照片:{{this.User.avatar}}</p>
-  <p>內容:{{this.description}}</p>
-  <p>時間: {{moment this.createdAt}}</p>
+  <div class="border border-bottom-0">
+    <div class="container">
+      <div class="row">
+        <div class="col-auto p-1">
+          {{#if this.User.avatar}}
+          <img class="rounded-circle" src="{{this.User.avatar}}" style="width: 50px;max-height: 50px;">
+          {{else}}
+          <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" style="max-width: 50px;max-height: 50px;">
+          {{/if}}
+        </div>
+        <div class="col d-flex flex-column p-1">
+
+          <div class="py-1">
+            <strong>{{this.User.name}}</strong> <sub><i>@{{this.User.account}} · </i>{{moment this.createdAt}}</sub>
+          </div>
+
+          <div class="py-1">
+            <a class="btn text-left" href="/tweets/{{this.id}}">{{this.description}}</a>
+          </div>
+
+          <div class="d-flex py-1">
+
+            <div class="mr-2">
+              <form action="">
+                <button type="submit" class="btn">R</button>
+              </form>
+            </div>
+
+            <div class="mr-2">
+              {{#if this.isLiked }}
+              <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn" style="color:red">♥</button>
+              </form>
+              {{else}}
+              <form action="/like/{{this.id}}" method="POST">
+                <button type="submit" class="btn" style="color:#808080">♥</button>
+              </form>
+              {{/if}}
+            </div>
+
+            <div class="d-flex align-items-center">
+              {{this.LikedCount}}
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
   {{/each}}
+</div>
+
+<!-- Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="post-tweet-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header py-1">
+        <button type="button" class="btn btn-sm" data-dismiss="modal" style="color:#FF6600">X</button>
+      </div>
+
+      <div class="modal-body pt-1">
+        <form action="/tweets" method="POST">
+          <div class="row">
+            <div class="col-auto py-0 px-1">
+              {{#if user.avatar}}
+              <img src="{{user.avatar}}" class="img-flid" style="max-width: 50px; border-radius: 50%">
+              {{else}}
+              <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
+              {{/if}}
+            </div>
+            <div class="col py-0 px-1">
+              <textarea name="description" class="form-control border-0 w-100" rows="5" aria-label="With textarea"
+                placeholder="有什麼新鮮事" style="resize: none;"></textarea>
+            </div>
+            <div class="col-auto d-flex align-items-end py-0 px-1">
+              <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
+            </div>
+          </div>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
 </div>
