@@ -51,7 +51,7 @@ const userController = {
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
-      TweetID: req.params.tweetId
+      TweetId: req.params.tweetId
     })
       .then((tweet) => {
         return res.redirect('back')
