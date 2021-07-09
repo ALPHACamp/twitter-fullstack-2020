@@ -85,14 +85,12 @@ const userController = {
     return res.render('tweets')
   },
   addFollowing: (req, res) => {
-    console.log(req.body)
+
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId
     })
-      .then((followship) => {
-        return res.redirect('back')
-      })
+      .then(() => res.redirect('back'))
   },
   removeFollowing: (req, res) => {
 
@@ -102,12 +100,9 @@ const userController = {
         followingId: req.params.userId
       }
     })
-      .then((followship) => {
-        followship.destroy()
-          .then((followship) => {
-            return res.redirect('back')
-          })
-      })
+      .then((followship) => followship.destroy())
+      .then(() => res.redirect('back'))
+
   }
 }
 

@@ -1,14 +1,12 @@
-const db = require('../models')
-const user = require('../models/user')
-const User = db.User
-const Tweet = db.Tweet
-const Followship = db.Followship
+const { User } = require('../models')
 const Sequelize = require('Sequelize')
+
+
 const followController = {
 
-  getfollowing: (req, res) => {
-
+  getFollowing: (req, res) => {
     User.findAll({
+
       include: [
         {
           model: User,
@@ -17,17 +15,16 @@ const followController = {
         }
       ],
     }).then((users) => {
-
+      console.log(users)
       const id = req.user.id
+
       users = users.map(user => ({
         ...user.dataValues,
         isFollowing: req.user.Followings.map(d => d.id).includes(user.id), //我跟隨的人
         isFollowed: req.user.Followers.map(d => d.id).includes(user.id) //跟隨的我的人
       }))
-      console.log(users)
-      users = users.filter(user => user.isFollowed === true)
-      console.log(users)
 
+      users = users.filter(user => user.isFollowed === true)
       return res.render('followership', {
         users: users,
         id: id
@@ -35,26 +32,20 @@ const followController = {
 
     })
   },
-  getfollower: (req, res) => {
+  getFollower: (req, res) => {
     User.findAll({
       include: [
-        {
-          model: User,
-          as: 'Followings',
-        }
+        { model: User, as: 'Followings', }
       ],
     }).then((users) => {
-
 
       const id = req.user.id
       users = users.map(user => ({
         ...user.dataValues,
-
         isFollowing: req.user.Followings.map(d => d.id).includes(user.id)
       }))
-      users = users.filter(user => user.isFollowing === true)
-      console.log('isfollowing', users)
 
+      users = users.filter(user => user.isFollowing === true)
       return res.render('followingship', {
         users: users,
         id: id
