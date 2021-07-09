@@ -88,7 +88,7 @@ const userController = {
             nest: true,
             where: { userId: user.id },
           }).then(tweets => {
-            return res.render('user/tweets', {
+            return res.render('tweets', {
               user,
               followingCount: following.count,
               followerCount: follower.count,
@@ -105,7 +105,7 @@ const userController = {
   getUserEdit: (req, res) => {
     return User.findByPk(req.params.userId)
       .then(user => {
-        res.render('user/userEdit', { user: user.toJSON() })
+        res.render('userEdit', { user: user.toJSON() })
       })
   },
 
