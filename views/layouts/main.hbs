@@ -26,7 +26,7 @@
     <div class="d-flex flex-nowrap justify-content-end">
 
       {{#if Appear.navbar}}
-      <div class="col-3 px-5 d-flex flex-column justify-content-between vh-100 border-end" id="navbar">
+      <div class="col-3 px-5 d-flex flex-column justify-content-between vh-100" id="navbar">
         <div id="navbarUpper">
           <a href="/tweets" class="d-flex m-3 ms-1 mb-5" id="logo">
             <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -106,26 +106,26 @@
       {{/if}}
       {{#if Appear.navbar}}
       {{#if Appear.top10}}
-      <div class="col-5 d-flex justify-content-center" id="body">
+      <div class="col-5 d-flex justify-content-center  border-start  border-end min-vh-100" id="body">
         {{else}}
-        <div class="col-9 d-flex justify-content-center" id="body">
+        <div class="col-9 d-flex justify-content-center   border-start min-vh-100" id="body">
           {{/if}}
           {{else}}
-          <div class="col-12 d-flex justify-content-center" id="body">
+          <div class="col-12 d-flex justify-content-center min-vh-100" id="body">
             {{/if}}
             {{{body}}}
           </div>
           {{#if Appear.top10}}
-          <div class="col-4 border-start" id="top10">
+          <div class="col-4" id="top10">
             <ul class="list-group mt-3 ms-4 me-5 pe-4 col-11">
               <li class="list-group-item">跟隨誰</li>
               <li class="list-group-item p-0 border-top">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex">
-                    <div><img src="https://loremflickr.com/320/320/headshot" height="50px" width="50px" class="rounded-circle m-2 col-auto"
-                        alt=""></div>
-                    <div class="col-auto">
-                      <p class="m-1">name</p>
+                    <div><img src="https://loremflickr.com/320/320/headshot" height="50px" width="50px"
+                        class="rounded-circle m-2 col-auto" alt=""></div>
+                    <div class="d-flex flex-column justify-content-center" style="line-height: 1;">
+                      <p class="m-0">name</p>
                       <a href="" class="user-link">@account</a>
                     </div>
                   </div>
@@ -141,8 +141,8 @@
                   <div class="d-flex">
                     <div><img src="https://loremflickr.com/320/320/headshot" height="50px" width="50px"
                         class="rounded-circle m-2 col-auto" alt=""></div>
-                    <div class="col-auto">
-                      <p class="m-1">name</p>
+                    <div class="d-flex flex-column justify-content-center" style="line-height: 1;">
+                      <p class="m-0">name</p>
                       <a href="" class="user-link">@account</a>
                     </div>
                   </div>
@@ -158,8 +158,8 @@
                   <div class="d-flex">
                     <div><img src="https://loremflickr.com/320/320/headshot" height="50px" width="50px"
                         class="rounded-circle m-2 col-auto" alt=""></div>
-                    <div class="col-auto">
-                      <p class="m-1">name</p>
+                    <div class="d-flex flex-column justify-content-center" style="line-height: 1;">
+                      <p class="m-0">name</p>
                       <a href="" class="user-link">@account</a>
                     </div>
                   </div>
@@ -169,7 +169,7 @@
                     </form>
                   </div>
                 </div>
-              </li>              
+              </li>
             </ul>
           </div>
           {{/if}}

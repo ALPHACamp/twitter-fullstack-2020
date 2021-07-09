@@ -68,3 +68,7 @@ color: black;
 .user-link:hover {
   color:black;
 }
+
+#titleText > p {
+  line-height: 1.1;
+}
