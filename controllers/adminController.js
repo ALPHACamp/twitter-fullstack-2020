@@ -1,5 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { User, Tweet } = require('../models')
+const { User, Tweet, sequelize } = require('../models')
 const { Op } = require('sequelize')
 
 const adminController = {
@@ -37,10 +37,27 @@ const adminController = {
     return User.findAll({
       raw: true,
       nest: true,
-      where: { is_admin: false }
+      where: { is_admin: false },
+      group: 'id',
+      attributes: [
+        'id', 'account', 'name', 'email', 'description', 'img', 'bg_img', 'createdAt', 'updatedAt',
+        [sequelize.fn('count', sequelize.col('Tweets.id')), 'tweetCount']
+      ],
+      include: [{ model: Tweet, attributes: ['id'] }]
     }).then(users => {
-
       return res.render('admin/users', { users })
+    })
+  },
+  getUser: (req, res) => {
+    return User.findByPk(req.params.id, {
+      attributes: [
+        'id', 'account', 'name', 'email', 'description', 'img', 'createdAt', 'updatedAt',
+        [sequelize.fn('count', sequelize.col('Tweets.id')), 'tweetCount']
+      ],
+      include: [{ model: Tweet, attributes: ['id'] }]
+    }).then(user => {
+      theuser = user.toJSON()
+      return res.render('admin/user', { theuser })
     })
   },
   getAdmins: (req, res) => {
