@@ -11,6 +11,18 @@
 <body>
 
   <div class="container-fluid">
+
+    {{#if success_messages}}
+    <div class="alert alert-success text-center" role="alert" style="margin: 30px 0 ;">
+      {{success_messages}}
+    </div>
+    {{/if}}
+    {{#if error_messages}}
+    <div class="alert alert-danger  text-center" role="alert" style="margin: 30px 0 ;">
+      {{error_messages}}
+    </div>
+    {{/if}}
+
     {{{ body }}}
   </div>
 

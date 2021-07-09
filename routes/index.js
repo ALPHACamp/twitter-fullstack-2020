@@ -1,7 +1,8 @@
 const twitController = require('../controllers/twitController.js')
 const adminController = require('../controllers/adminController.js')
+const passport = require('passport')
 
-module.exports = app => {
+module.exports = (app, passport) => {
 
   //首頁路由 ???
   app.get('/', (req, res) => res.redirect('/twitters'))
@@ -44,7 +45,7 @@ module.exports = app => {
   app.get('/signin', twitController.signin)
 
   // 登入畫面動作
-  app.post('/signin', twitController.toSignin)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), twitController.toSignin)
 
 
   // 查看tweets的訊息回覆
