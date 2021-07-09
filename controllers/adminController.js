@@ -17,6 +17,15 @@ const adminController = {
       return res.render('admin/tweets', { tweets })
     })
   },
+  getTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id, {
+      include: [User]
+    }).then(tweet => {
+      tweet = tweet.toJSON()
+      console.log(tweet)
+      return res.render('admin/tweets', { tweet })
+    })
+  },
   deleteTweet: (req, res) => {
     return Tweet.findByPk(req.params.id).then(tweet => {
       req.flash('success_messages', '成功刪除推文')
