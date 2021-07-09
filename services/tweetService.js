@@ -27,7 +27,10 @@ const tweetService = {
         { model: Reply, include: [User] }
       ]
     })
-    return callback({ tweet: tweet.toJSON() })
+    return callback({
+      tweet: tweet.toJSON(),
+      Appear: { navbar: true, top10: true },
+    })
   },
   postTweet: async (req, res, callback) => {
     if (!req.body.description) {
