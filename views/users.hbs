@@ -12,9 +12,37 @@
       <p class="m-0" style="font-size: xx-small;color:#657786">xx 推文</p>
     </div>
   </div>
-  <div id="user-profile">
-
+  <div id="cover-and-avatar"
+    style="background-image: url(https://loremflickr.com/600/200/river);height:200px; background-repeat: no-repeat; background-size:cover;">
+    <img src="https://loremflickr.com/320/320/headshot" width="140px" height="140px"
+      class="border border-4 border-white rounded-circle ms-2" style="margin-top: 124px;">
   </div>
+  <div class="d-flex m-2 justify-content-end">
+    <button type="submit" class="btn btn-outline-regular rounded-pill">編輯個人資料</button>
+  </div>
+  <div class="mt-4 mx-2" style="line-height: 1;">
+    <p class="m-0 fw-bolder">Name</p>
+    <a href="" class="user-link">@account</a>
+    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris varius tempor est, nec pulvinar
+      risus volutpat et.
+      Vestibulum est quam, egestas quis augue eu, sodales efficitur felis. Etiam vitae ligula sed sem consequat pulvinar
+      commodo eu arcu.</p>
+    <div class="d-flex">
+      <div class="d-flex" >
+        <p>34個</p>
+        <a href="" style="color:#657786;">跟隨中</a>
+      </div>
+      <div class="d-flex ms-2">
+        <p>34個</p>
+        <a href="" style="color:#657786;">跟隨者</a>
+      </div>
+    </div>
+  </div>
+  <nav class="nav border-bottom">
+    <a class="nav-link active" href="/users/:id">推文</a>
+    <a class="nav-link" href="/users/:id/replies">推文與回覆</a>
+    <a class="nav-link" href="/users/:id/likes">喜歡的內容</a>
+  </nav>
   <div id="tweets">
 
   </div>

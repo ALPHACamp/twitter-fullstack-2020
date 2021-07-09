@@ -26,7 +26,6 @@
 
 #navbarUpper > a {
   color: black;
-  text-decoration: none;
   font-weight: bolder;
 }
 
@@ -40,7 +39,6 @@
 
 #signout {
 color: black;
-  text-decoration: none;
   font-weight: bolder;
 }
 
@@ -62,7 +60,6 @@ color: black;
 
 .user-link {
   color: #657786;
-  text-decoration: none;
 }
 
 .user-link:hover {
@@ -71,4 +68,23 @@ color: black;
 
 #titleText > p {
   line-height: 1.1;
+}
+
+a {
+    text-decoration: none;
+}
+
+.nav > a {
+  width: 130px;
+  text-align: center;
+  color: black;
+}
+
+.nav > a:hover {
+  color: #FF6600;
+}
+
+.nav > a.active{
+  color:#FF6600;
+  border-bottom: 2px solid #FF6600;
 }
