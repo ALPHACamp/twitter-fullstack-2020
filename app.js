@@ -18,11 +18,6 @@ app.use(express.static('public'))
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.get('/', (req, res) => {
-  console.log('Hello,Hello,Hello')
-  res.send('Hello World!')
-
-})
 
 
 
