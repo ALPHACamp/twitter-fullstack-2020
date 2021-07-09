@@ -16,6 +16,7 @@ const port = process.env.PORT || 3000
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
 app.set('view engine', 'hbs')
+app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use('/upload', express.static(__dirname + '/upload'))
 app.use(session({
