@@ -5,6 +5,7 @@ const upload = multer({ dest: 'temp/' })
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
+const replyController = require('../controllers/replyController')
 
 module.exports = (app, passport) => {
   const authenticatedUser = (req, res, next) => {
@@ -22,8 +23,6 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
-
-  app.post('/tweets', authenticatedUser, tweetController.postTweet)
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
@@ -44,10 +43,17 @@ module.exports = (app, passport) => {
 
   // tweets
   app.get('/tweets', authenticatedUser, tweetController.getTweets)
+  app.get('/tweets/feeds', authenticatedUser, tweetController.getFeeds)
   app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
   app.get('/tweets/:id/edit', authenticatedUser, tweetController.editTweet)
   app.put('/tweets/:id', authenticatedUser, tweetController.putTweet)
+  app.post('/tweets', authenticatedUser, tweetController.postTweet)
   app.delete('/tweets/:id', authenticatedUser, tweetController.deleteTweet)
-  
+
+  // reply
+  app.post('/replies', authenticatedUser, replyController.postReply)
+  app.delete('/replies/:id', authenticatedUser, replyController.deleteReply)
+
+  // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 }
