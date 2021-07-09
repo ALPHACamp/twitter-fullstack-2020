@@ -230,14 +230,50 @@ const userController = {
     })
   },
 
-  getUserFollowings: (req, res) => {
+  getUserFollowings: async (req, res) => {
     const topFollowing = res.locals.data
     const top5Following = topFollowing.slice(0, 5)
     const userInfo = res.locals.userInfo
-    return res.render('followings', {
-      user: userInfo.user,
-      topFollowing: top5Following
-    })
+    try {
+      const tweets = await Tweet.findAndCountAll({
+        raw: true,
+        nest: true,
+        where: {
+          UserId: req.params.userId
+        }
+      })
+
+      let Data = []
+      const tweetCount = tweets.count
+      Data = userInfo.followings.map(async (following, index) => {
+        const [followingUser] = await Promise.all([
+          User.findOne({
+            raw: true,
+            nest: true,
+            where: {
+              id: following.followingId
+            }
+          })
+        ])
+        return {
+          followingUser: followingUser
+        }
+      })
+      Promise.all(Data).then(data => {
+        console.log(data)
+        if (data.length === 0) { }
+        return res.render('followings', {
+          user: userInfo.user,
+          data,
+          tweetCount,
+          topFollowing: top5Following
+        })
+      })
+    }
+    catch (err) {
+      console.log('getUserFollowings err')
+      return res.render('/')
+    }
   },
 
   //MiddleWare
@@ -250,18 +286,17 @@ const userController = {
       Followship.findAndCountAll({
         raw: true,
         nest: true,
-        where: { followerId: user.id },
+        where: { followerId: user.id }
       }).then(following => {
         Followship.findAndCountAll({
           raw: true,
           nest: true,
           where: { followingId: user.id },
         }).then(follower => {
-          console.log('follower', follower)
           res.locals.userInfo = {
             user: user.dataValues,
-            following: following.rows,
-            follower: follower.rows,
+            followings: following.rows,
+            followers: follower.rows,
             followingCount: following.count,
             followerCount: follower.count
           }
