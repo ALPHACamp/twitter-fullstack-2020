@@ -22,7 +22,6 @@ const adminController = {
       include: [User]
     }).then(tweet => {
       tweet = tweet.toJSON()
-      console.log(tweet)
       return res.render('admin/tweets', { tweet })
     })
   },
