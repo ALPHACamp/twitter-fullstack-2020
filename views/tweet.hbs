@@ -101,6 +101,7 @@
               <p class="mt-2">{{this.content}} </p>
             </div>
           </div>
+          {{#ifCond this.User.id ../user.id}}
           <div class="col-1 d-flex align-items-center justify-content-center">
             <form action="/replies/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
               <button type="submit" class="btn">
@@ -108,6 +109,7 @@
               </button>
             </form>
           </div>
+          {{/ifCond}}
         </div>
         <hr />
         {{/each}}
