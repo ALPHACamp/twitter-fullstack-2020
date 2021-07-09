@@ -1,8 +1,6 @@
 const bcrypt = require('bcryptjs')
-const db = require('../models')
-const User = db.User
-const Like = db.Like
-const Tweet = db.Tweet
+const { isDate } = require('moment')
+const { Tweet, User } = require('../models')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -23,7 +21,8 @@ const userController = {
             account: req.body.account,
             name: req.body.name,
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+            isAdmin: false,
           }).then(user => {
             req.flash('success_messages', '成功註冊帳號！')
             return res.redirect('/signin')
@@ -51,7 +50,7 @@ const userController = {
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
-      TweetID: req.params.tweetId
+      TweetId: req.params.tweetId
     })
       .then((tweet) => {
         return res.redirect('back')
@@ -62,7 +61,7 @@ const userController = {
     return Like.findOne({
       where: {
         UserId: req.user.id,
-        TweetId: req.params.tweetId
+        TweetId: req.params.tweetId,
       }
     })
       .then((like) => {
