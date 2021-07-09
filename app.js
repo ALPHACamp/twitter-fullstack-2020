@@ -1,9 +1,9 @@
 const express = require('express')
-const handlebars = require('express-handlebars')
 const helpers = require('./_helpers')
-const exphbs = require('express-handlebars')
 const app = express()
 const port = 3000
+const db = require('./models') // 引入資料庫
+
 
 const exhbs = require('express-handlebars')
 const bodyParser = require('body-parser')
