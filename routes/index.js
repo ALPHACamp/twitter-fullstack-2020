@@ -26,12 +26,14 @@ module.exports = (app, passport) => {
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.get('/admin/admins', authenticatedAdmin, adminController.getAdmins)
   app.get('/admin/signup', authenticatedAdmin, adminController.signUpPage)
   app.post('/admin/signup', authenticatedAdmin, adminController.signUp)
   app.get('/admin/signin', adminController.signInPage)
-  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), adminController.signIn)
-  app.get('/signout', adminController.signOut)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
+  app.get('/admin/signout', adminController.signOut)
 
   // signin & signup
   app.get('/signup', userController.signUpPage)
