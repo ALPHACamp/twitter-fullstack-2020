@@ -8,10 +8,13 @@ const tweetService = {
       order: [['createdAt', 'DESC']],
       include: [User]
     })
+    const tweetData = tweets.map(tweet => ({
+      ...tweet,
+      isLiked: req.user.LikedTweets.map(t => t.id).includes(tweet.id)
+    }))
     return callback({
-      tweets,
+      tweets: tweetData,
       Appear: { navbar: true, top10: true },
-      isAuthenticated: true
     })
   },
   getTweet: async (req, res, callback) => {

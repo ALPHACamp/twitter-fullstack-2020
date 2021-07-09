@@ -62,7 +62,7 @@ const userController = {
     return Like.findOne({
       where: {
         UserId: req.user.id,
-        TweetId: req.params.tweetId
+        TweetId: req.params.tweetId,
       }
     })
       .then((like) => {
