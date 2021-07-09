@@ -31,5 +31,14 @@ module.exports = app => {
     res.render('setting')
   })
 
+
+  // 跟隨者
+  app.get('/user/self/follower', twitController.getFollower)
+
+  // 正在跟隨
+  app.get('/user/self/following', twitController.getFollowing)
+
+
+
 }
 
