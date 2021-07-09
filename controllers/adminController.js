@@ -43,7 +43,8 @@ const adminController = {
         'id', 'account', 'name', 'email', 'description', 'img', 'bg_img', 'createdAt', 'updatedAt',
         [sequelize.fn('count', sequelize.col('Tweets.id')), 'tweetCount']
       ],
-      include: [{ model: Tweet, attributes: ['id'] }]
+      include: [{ model: Tweet, attributes: ['id'] }],
+      order: [[sequelize.literal('tweetCount'), 'desc']]
     }).then(users => {
       return res.render('admin/users', { users })
     })
