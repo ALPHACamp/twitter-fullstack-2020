@@ -45,8 +45,14 @@ const twitController = {
   },
 
   toSignin: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/user/self')
+    if (req.user.role) {
+      req.flash('error_messages', '帳號或密碼錯誤')
+      res.redirect('/signin')
+    } else {
+      req.flash('success_messages', '成功登入！')
+      res.redirect('/user/self')
+    }
+
   },
 
   getSignup: (req, res) => {
@@ -85,6 +91,12 @@ const twitController = {
 
   putSetting: (req, res) => {
     res.send('putSetting')
+  },
+
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   }
 
 

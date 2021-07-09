@@ -4,22 +4,36 @@ const passport = require('passport')
 
 module.exports = (app, passport) => {
 
+  const authenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return next()
+    }
+    res.redirect('/signin')
+  }
+  const authenticatedAdmin = (req, res, next) => {
+    if (req.isAuthenticated()) {
+      if (req.user.role) { return next() }
+      return res.redirect('/user/self')
+    }
+    res.redirect('/signin')
+  }
+
   //首頁路由 ???
   app.get('/', (req, res) => res.redirect('/twitters'))
   app.get('/twitters', twitController.getTwitters)
 
   //admin ???
-  app.get('/admin', (req, res) => res.redirect('/admin/twitters'))
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/twitters'))
 
   // == [ 後台相關路由 ]==
 
   // 後台登入頁面
   app.get('/admin/signin', adminController.adminSignin)
   // 後台登入頁面動作 ???
-  app.post('/admin/signin', adminController.toAdminSignin)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.toAdminSignin)
 
   // 後台展示所有推特訊息 ???
-  app.get('/admin/tweets', adminController.tweetsAdmin)
+  app.get('/admin/tweets', authenticatedAdmin, adminController.tweetsAdmin)
 
   // 後台展示特定推特訊息 ???
   app.get('/admin/twitters', adminController.getTwitter)
@@ -56,7 +70,7 @@ module.exports = (app, passport) => {
 
 
   // 個人推文頁面
-  app.get('/user/self', twitController.getUser)
+  app.get('/user/self', authenticated, twitController.getUser)
 
   // 個人推文喜歡頁面
   app.get('/user/self/like', twitController.getUserLike)
@@ -86,9 +100,10 @@ module.exports = (app, passport) => {
   app.get('/setting', twitController.getSetting)
 
   // 前台帳戶設定更改
-  app.put('setting', twitController.putSetting)
+  app.put('/setting', twitController.putSetting)
 
-
+  // 前台登出
+  app.get('/logout', twitController.logout)
 
 
 
