@@ -100,7 +100,7 @@
                   <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="color:#FF6600">X</button>
                 </div>
 
-                <div class="modal-body pt-1">
+                <div class="modal-body py-1">
                   <form action="/tweets" method="POST">
                     <div class="row">
                       <div class="col-auto py-0 px-1">
@@ -114,15 +114,20 @@
                         <textarea name="description" class="form-control border-0 w-100" rows="5"
                           aria-label="With textarea" placeholder="有什麼新鮮事" style="resize: none;"></textarea>
                       </div>
-                      <div class="col-auto d-flex align-items-end py-0 px-1">
+                    </div>
+                    <div class="row">
+                      <div class="col p-0">
                         <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
                       </div>
                     </div>
+
                   </form>
                 </div>
+
               </div>
             </div>
           </div>
+
           {{/if}}
         </div>
         <div>
