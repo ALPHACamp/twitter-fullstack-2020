@@ -52,7 +52,6 @@ const userController = {
 
   userPage: (req, res) => {
     userService.getUserTweets(req, res, (data) => {
-      console.log(data)
       return res.render('users', data)
     })
   },
