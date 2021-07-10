@@ -19,9 +19,9 @@ module.exports = (app, passport) => {
   }
 
   //首頁路由 ???
-  app.get('/', (req, res) => res.redirect('/twitters'))
-  app.get('/twitters', twitController.getTwitters)
-
+  app.get('/', authenticated, twitController.getTwitters)
+  // app.get('/twitters', twitController.getTwitters)
+  app.post('/', authenticated, twitController.toTwitters)
   //admin ???
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/twitters'))
 
@@ -97,10 +97,10 @@ module.exports = (app, passport) => {
   app.delete('/user/self/following/:id', twitController.deleteFollowing)
 
   // 前台帳戶設定
-  app.get('/setting', twitController.getSetting)
+  app.get('/setting', authenticated, twitController.getSetting)
 
   // 前台帳戶設定更改
-  app.put('/setting', twitController.putSetting)
+  app.put('/setting', authenticated, twitController.putSetting)
 
   // 前台登出
   app.get('/logout', twitController.logout)

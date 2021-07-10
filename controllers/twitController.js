@@ -1,12 +1,27 @@
 const bcrypt = require('bcryptjs')
+const { text } = require('body-parser')
 const db = require('../models')
 const User = db.User
-
+const Tweet = db.Tweet
 
 const twitController = {
   getTwitters: (req, res) => {
-    return res.render('twitters')
+    Tweet.find
+    return res.render('userAdmin')
   },
+  toTwitters: (req, res) => {
+    console.log(req.user.id)
+    console.log(req.body)
+    return Tweet.create({
+      UserId: Number(req.user.id),
+      description: req.body.description,
+    })
+      .then((tweet) => {
+        req.flash('success_messages', 'tweet was successfully created')
+        res.redirect('/')
+      })
+  },
+
 
   getFollower: (req, res) => {
     return res.render('follower')
@@ -50,7 +65,7 @@ const twitController = {
       res.redirect('/signin')
     } else {
       req.flash('success_messages', '成功登入！')
-      res.redirect('/user/self')
+      res.redirect('/')
     }
 
   },
