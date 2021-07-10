@@ -15,6 +15,7 @@ const adminController = {
   adminUsers: (req, res) => {
     return res.render('admin/users')
   },
+
   tweetsAdmin: (req, res) => {
     res.render('admin/tweetsAdmin')
   },
@@ -42,9 +43,6 @@ const adminController = {
   deleteTwitter: (req, res) => {
     res.send('1234')
   },
-
-
-
 }
 
 module.exports = adminController

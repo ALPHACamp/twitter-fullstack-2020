@@ -5,6 +5,7 @@ const User = db.User
 const Tweet = db.Tweet
 
 const twitController = {
+
   getTwitters: (req, res) => {
     Tweet.find
     return res.render('userAdmin')
