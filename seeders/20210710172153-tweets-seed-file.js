@@ -6,6 +6,7 @@ module.exports = {
     await queryInterface.bulkInsert('Tweets',
       Array.from({ length: 20 }).map((d, i) =>
       ({
+        userId: Math.floor(Math.random() * 10) + 1,
         description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
