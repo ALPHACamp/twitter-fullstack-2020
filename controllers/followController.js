@@ -35,8 +35,7 @@ const followController = {
   },
   getFollower: (req, res) => {
     User.findAll({
-      where: { id: req.user.id },
-      attributes: ["id", "name"],
+
       include: [
         {
           model: User,
@@ -44,11 +43,10 @@ const followController = {
         }
       ],
     }).then((users) => {
-      console.log(users)
+
       const id = req.user.id
       users = users.map(user => ({
         ...user.dataValues,
-
         isFollowing: req.user.Followings.map(d => d.id).includes(user.id)
       }))
 

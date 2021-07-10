@@ -127,7 +127,6 @@ const userController = {
 
   },
   getOtherprofile: (req, res) => {
-
     User.findByPk(req.params.id,
       {
         include: [
@@ -145,6 +144,10 @@ const userController = {
   toggleNotice: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
+        if (req.user.id === req.params.id) {
+          res.redirect('back')
+        }
+
         const isNoticed = !user.isNoticed
         user.update({ isNoticed })
       })
