@@ -23,13 +23,13 @@ const tweetService = {
     })
   },
   getTweet: async (req, res, callback) => {
-    const tweet = await Tweet.findByPk(req.params.id, {
+    let tweet = await Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: Reply, include: [User] }
+        { model: Reply, include: [User] },
+        { model: User, as: 'LikedUsers' }
       ]
     })
-    console.log('into services/tweetService/line32...tweet', tweet)
     return callback({
       tweet: tweet.toJSON(),
       Appear: { navbar: true, top10: true },
