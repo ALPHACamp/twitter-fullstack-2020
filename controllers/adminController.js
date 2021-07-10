@@ -90,13 +90,12 @@ const adminController = {
     const edit = true
     const errors = []
     try {
-      console.log(req.body, '------', req.file)
       if (!name || !account || !email) {
         req.flash('error_messages', '皆必填，不可以空白')
         return res.redirect('back')
       }
 
-      const [a, e] = await Promise.all([User.findOne({ raw: true, nest: true, where: { account } }), User.findOne({ raw: true, nest: true, where: { email } })])
+      const [a, e] = await Promise.all([User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ account: account }, { account: { [Op.notLike]: req.user.account } }] } }), User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ email }, { email: { [Op.notLike]: req.user.email } }] } })])
       if (a) {
         errors.push({ msg: '此帳號已有人使用。' })
       }
@@ -112,7 +111,7 @@ const adminController = {
         const admin = await User.findByPk(req.user.id)
         await admin.update({
           name, account, email,
-          img: file ? img.date.link : user.img
+          img: file ? img.data.link : user.img
         })
         req.flash('success_messages', '成功更新個人資料！')
         return res.redirect('/admin/profile')
@@ -121,9 +120,7 @@ const adminController = {
       console.warn(error)
     }
   },
-  // check: (req, res) => {
-  //   return res.json({ status: 200 })
-  // }
+
   signInPage: (req, res) => {
     return res.render('admin/signin')
   },

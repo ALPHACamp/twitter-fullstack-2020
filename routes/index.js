@@ -33,8 +33,8 @@ module.exports = (app, passport) => {
   app.get('/admin/admins', authenticatedAdmin, adminController.getAdmins)
   app.get('/admin/profile', authenticatedAdmin, adminController.getProfile)
   app.get('/admin/profile/edit', authenticatedAdmin, adminController.getEditProfile)
-  app.put('/admin/profile/edit', authenticatedAdmin, adminController.putProfile)
-  // app.get('/check', adminController.check)
+  app.put('/admin/profile/edit', authenticatedAdmin, upload.single('image'), adminController.putProfile)
+
   app.get('/admin/signup', authenticatedAdmin, adminController.signUpPage)
   app.post('/admin/signup', authenticatedAdmin, adminController.signUp)
   app.get('/admin/signin', adminController.signInPage)
