@@ -1,18 +1,13 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Tweet = sequelize.define('Tweet', {
+    description: DataTypes.STRING,
+    UserId: DataTypes.INTEGER,
   }, {});
   Tweet.associate = function (models) {
     Tweet.belongsTo(models.User)
-    Tweet.hasMany(models.like)
-    Tweet.hasMany(models.reply)
+    Tweet.hasMany(models.Like)
+    Tweet.hasMany(models.Reply)
   };
-  Tweet.init({
-    description: DataTypes.STRING,
-    UserId: DataTypes.INTEGER,
-  }, {
-    sequelize,
-    modelName: 'Tweet'
-  })
   return Tweet;
 };
