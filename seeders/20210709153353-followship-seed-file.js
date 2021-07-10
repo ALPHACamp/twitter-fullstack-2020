@@ -14,7 +14,7 @@ module.exports = {
       updatedAt: new Date()
     }, {
       followerId: 2,
-      followingId: 3,
+      followingId: 4,
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
