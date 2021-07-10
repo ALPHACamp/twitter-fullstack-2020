@@ -22,6 +22,9 @@
           aria-describedby="accountHelp"
           value="{{account}}"
         />
+        {{#if signup}}
+        <div id="status"></div>
+        {{/if}}
       </div>
       {{#if signup}}
       <div class="mb-3">
