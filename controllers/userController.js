@@ -47,6 +47,17 @@ const userController = {
     res.redirect('/signin')
   },
 
+  userPage: (req, res) => {
+    const User = [{
+      id: 1,
+      avatar: 'https://loremflickr.com/320/320/headshot',
+      name: 'userName',
+      account: 'userName'
+    }]
+    Appear = { navbar: true, top10: true }
+    res.render('users', { Appear })
+
+  },
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,

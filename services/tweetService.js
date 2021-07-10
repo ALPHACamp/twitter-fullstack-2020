@@ -34,6 +34,10 @@ const tweetService = {
         isLiked: isLiked,
       })
     })
+    return callback({
+      tweet: tweet.toJSON(),
+      Appear: { navbar: true, top10: true },
+    })
   },
   postTweet: async (req, res, callback) => {
     if (!req.body.description) {

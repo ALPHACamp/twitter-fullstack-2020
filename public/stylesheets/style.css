@@ -8,18 +8,46 @@
   background-color: coral;
 }
 
-#navbar > div > a {
+.btn-outline-regular {
+  color: #FF6600;
+  background:none;
+  border: 1px solid #FF6600;
+}
+
+.btn-outline-regular:hover {
+  color: white;
+  background-color: coral;
+}
+
+.list-group-item {
+  border: none;
+  background-color:#F5F8FA;
+}
+
+#navbarUpper > a {
   color: black;
-  text-decoration: none;
   font-weight: bolder;
 }
 
-#navbar > div > a:hover {
+#navbarUpper > a:hover {
     color: #FF6600;
 }
 
-#navbar > div > a:hover > svg > path {
+#navbarUpper > a:hover > svg > path {
   fill: #FF6600;
+}
+
+#signout {
+color: black;
+  font-weight: bolder;
+}
+
+#signout:hover{
+  color: #FF6600;
+}
+
+#signout:hover > svg > path {
+  stroke: #FF6600;
 }
 
 .inThesePages > p {
@@ -28,4 +56,35 @@
 
 .inThesePages > svg > path  {
   fill: #FF6600;
+}
+
+.user-link {
+  color: #657786;
+}
+
+.user-link:hover {
+  color:black;
+}
+
+#titleText > p {
+  line-height: 1.1;
+}
+
+a {
+    text-decoration: none;
+}
+
+.nav > a {
+  width: 130px;
+  text-align: center;
+  color: black;
+}
+
+.nav > a:hover {
+  color: #FF6600;
+}
+
+.nav > a.active{
+  color:#FF6600;
+  border-bottom: 2px solid #FF6600;
 }

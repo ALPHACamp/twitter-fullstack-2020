@@ -36,7 +36,6 @@ app.use((req, res, next) => {
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-let Appear = { navbar: false, top10: false }
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

@@ -1,4 +1,49 @@
-<div>
-  welcome user1
+<div class="w-100">
+  <div id="title" class="d-flex w-100 align-items-center border-bottom">
+    <a href="/tweets" class="">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-3">
+        <path
+          d="M16 5.99988H3.41399L7.70699 1.70687C8.09699 1.31687 8.09699 0.683875 7.70699 0.292875C7.31699 -0.0981249 6.68399 -0.0971249 6.29299 0.292875L0.292988 6.29288C-0.0970117 6.68288 -0.0970117 7.31588 0.292988 7.70687L6.29299 13.7069C6.48799 13.9019 6.74299 13.9999 6.99999 13.9999C7.25699 13.9999 7.51199 13.9019 7.70699 13.7069C8.09699 13.3169 8.09699 12.6839 7.70699 12.2929L3.41399 7.99988H16C16.553 7.99988 17 7.55288 17 6.99988C17 6.44688 16.553 5.99988 16 5.99988Z"
+          fill="black" />
+      </svg>
+    </a>
+    <div id="titleText" class="ms-3 my-2">
+      <p class="m-0 fw-bolder">Name</p>
+      <p class="m-0" style="font-size: xx-small;color:#657786">xx 推文</p>
+    </div>
+  </div>
+  <div id="cover-and-avatar"
+    style="background-image: url(https://loremflickr.com/600/200/river);height:200px; background-repeat: no-repeat; background-size:cover;">
+    <img src="https://loremflickr.com/320/320/headshot" width="140px" height="140px"
+      class="border border-4 border-white rounded-circle ms-2" style="margin-top: 124px;">
+  </div>
+  <div class="d-flex m-2 justify-content-end">
+    <button type="submit" class="btn btn-outline-regular rounded-pill">編輯個人資料</button>
+  </div>
+  <div class="mt-4 mx-2" style="line-height: 1;">
+    <p class="m-0 fw-bolder">Name</p>
+    <a href="" class="user-link">@account</a>
+    <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris varius tempor est, nec pulvinar
+      risus volutpat et.
+      Vestibulum est quam, egestas quis augue eu, sodales efficitur felis. Etiam vitae ligula sed sem consequat pulvinar
+      commodo eu arcu.</p>
+    <div class="d-flex">
+      <div class="d-flex" >
+        <p>34個</p>
+        <a href="" style="color:#657786;">跟隨中</a>
+      </div>
+      <div class="d-flex ms-2">
+        <p>34個</p>
+        <a href="" style="color:#657786;">跟隨者</a>
+      </div>
+    </div>
+  </div>
+  <nav class="nav border-bottom">
+    <a class="nav-link active" href="/users/:id">推文</a>
+    <a class="nav-link" href="/users/:id/replies">推文與回覆</a>
+    <a class="nav-link" href="/users/:id/likes">喜歡的內容</a>
+  </nav>
+  <div id="tweets">
+
+  </div>
 </div>
-<a href="/logout">登出</a>
