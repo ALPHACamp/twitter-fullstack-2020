@@ -1,0 +1,164 @@
+<div class="d-flex flex-row p-auto m-auto">
+
+  {{!-- home bar --}}
+  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+    <a class="navbar-brand" href="#"></a>
+    <br>
+    <br>
+
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" href="/tweets">首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">設定</a>
+      </li>
+    </ul>
+
+
+    <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3">推文</button>
+    <div class="d-flex mt-5">
+      <a href="/signout" class="btn">
+        <h5 class="m-2">登出<i class="fas fa-sign-out-alt fa-1x"></i>
+        </h5>
+      </a>
+    </div>
+
+  </div>
+
+  {{!-- middle bar --}}
+
+  <div class="card" style="width: 800px;">
+
+    <div class="bg-holder" style="height: 250px;">
+      <img src="https://i.insider.com/5484d9d1eab8ea3017b17e29?width=600&format=jpeg&auto=webp" class="card-img-top"
+        alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
+    </div>
+
+    <div class="col" style="position: absolute;"></div>
+    <div class="avatar-holder">
+      <div class="avator">
+        <img src="https://randomuser.me/api/portraits/women/72.jpg" class="rounded-circle" alt="user_Aavtor"
+          height="150px" width="150px" style="border:1rem">
+      </div>
+    </div>
+
+    <div class=" card-body">
+
+      <div class="icon d-flex justify-content-end">
+        <a href="" class="border rounded-circle m-1">
+          <i class="far fa-envelope fa-2x m-2"></i>
+        </a>
+        <a href="" class="border rounded-circle m-1">
+          <i class="far fa-bell fa-2x m-2"></i>
+        </a>
+        <form action="" method="get">
+          <botton type="submit" class="btn btn-outline-success rounded-pill m-2">跟隨</botton>
+          <botton type="submit" class="btn btn-success rounded-pill m-2">正在跟隨</botton>
+        </form>
+      </div>
+
+      <div class="card-text">
+        <h4><strong>NAME</strong></h4>
+        <small class="text-muted">@users</small>
+        <p class="m-2">This may sound odd, but I've done it by mostly describing how a character looks, rather than his
+          or her
+          personality.
+        </p>
+      </div>
+      <div class="card-text">
+        <span class="small">120個 <small class="text-muted">跟隨中</small></span>
+        <span class="small">120個 <small class="text-muted">跟隨者</small></span>
+      </div>
+
+    </div>
+
+    <div class="profile-head">
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+
+          <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
+            aria-controls="nav-home" aria-selected="true"> 推文 </a>
+          <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
+            aria-controls="nav-profile" aria-selected="false">推文與回覆</a>
+          <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
+            aria-controls="nav-contact" aria-selected="false">喜歡的內容</a>
+        </div>
+      </nav>
+    </div>
+
+
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <div class="row g-0">
+
+              <div class="col-md-1">
+                <a href="/users/other/{{this.id}}" class="text-center">
+                  <img src="{{this.img}}" alt="" width="75" height="75"
+                    class="rounded-circle me-2 rounded mt-2 d-block"> </a>
+              </div>
+              <div class="col-md-10">
+                <div class="card-body" style="margin-left:1vw">
+                  <div class="card-title">
+                    <span class="card-title h6" style="margin-right:2px">name </span>
+                    <span class="text-muted"> @name</span>
+                    <span class="small text-muted">・2小時前</span>
+                  </div>
+                  <div class="card-text" style="margin-top:1vw">
+                    <p class="h6">This may sound odd, but I've done it by mostly describing how a
+                      character
+                      looks, rather than his</p>
+                  </div>
+                  <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
+                    <i class="far fa-comment text-muted small"> 13</i>
+                    <i class="far fa-heart text-muted small"> 15</i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+    </div>
+
+  </div>
+
+  {{!-- follower bar --}}
+
+  <div class="col-3">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+
+      <div class="list-group list-group-flush border-bottom scrollarea rounded">
+
+        <div class="card" style="width: 18rem;">
+          <div class="d-flex justify-content-center align-items-center" style="height: 50px;font-size:large">
+            跟隨誰</div>
+          <ul class="list-group list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Subheading</div>
+                Cras justo odio
+              </div>
+              <button type="submit" class="btn btn-success">跟隨</button>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <a href="/followership" style="text-decoration: none;color:chocolate">顯示更多</a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

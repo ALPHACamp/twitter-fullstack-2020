@@ -33,6 +33,11 @@ module.exports = (app, passport) => {
   app.post('/following/:userId', authenticatedUser, userController.addFollowing)
   app.delete('/following/:userId', authenticatedUser, userController.removeFollowing)
 
+  //other user
+  app.get('/users/other/:id', authenticatedUser, userController.getOtherprofile)
+  app.get('/users/other/noti/:id', authenticatedUser, userController.getOthernotice)
+
+
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))

@@ -103,7 +103,14 @@ const userController = {
       .then((followship) => followship.destroy())
       .then(() => res.redirect('back'))
 
+  },
+  getOtherprofile: (req, res) => {
+    res.render('otherprofile')
+  },
+  getOthernotice: (req, res) => {
+    res.render('otherprofile')
   }
+
 }
 
 module.exports = userController

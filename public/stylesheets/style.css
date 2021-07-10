@@ -1,4 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+html, body {
+  width: 100%;
+  height: 100%;
+}
 
 /* followingship.hbs followership.hbs */
 
@@ -16,3 +25,43 @@
 }
 
 /* followingship.hbs followership.hbs */
+
+
+
+/* otherprofile.hbs */
+
+.avatar-holder {
+
+   border: 4px solid white;
+    position: absolute;
+    margin: 50px;
+    top: 100px;
+    right: 0;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: white;
+    overflow: hidden;
+}
+
+
+
+.profile-head .nav-tabs .nav-link{
+
+  margin:auto 20px ;
+  color:lightgray;
+  font-weight:600;
+  border: none;
+   
+}
+.profile-head .nav-tabs .nav-link.active{
+
+  margin:auto 20px ;
+  color: #ff6600;
+  border: none;
+  border-bottom:1px solid #ff6600;
+}
+
+
+/* otherprofile.hbs */
