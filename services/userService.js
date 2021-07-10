@@ -22,20 +22,18 @@ const userService = {
     let tweets = await Tweet.findAll({
       where: { UserId: thisPageUser.id },
       include: [
+        User,
         Reply,
         { model: User, as: 'LikedUsers' }
       ]
     })
     tweets = tweets.map(tweet => ({
       ...tweet.dataValues,
+      User: tweet.User.dataValues,
       RepliesCount: tweet.Replies.length,
       LikedUsersCount: tweet.LikedUsers.length,
       isLiked: tweet.LikedUsers.map(User=> User.id).includes(req.user.id)
     }))
-    console.log(tweets)
-
-
-
     return callback({
       thisPageUser,
       tweets,
