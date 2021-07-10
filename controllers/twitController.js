@@ -4,7 +4,12 @@ const User = db.User
 
 
 const twitController = {
+
   getTwitters: (req, res) => {
+    return res.render('twitters')
+  },
+
+  putTwitters: (req, res) => {
     return res.render('twitters')
   },
 
