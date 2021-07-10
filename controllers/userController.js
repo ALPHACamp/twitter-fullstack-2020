@@ -89,6 +89,10 @@ const userController = {
   },
   addFollowing: (req, res) => {
 
+    if (req.user.id === req.params.id) {
+      return res.redirect("back");
+    }
+
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId
@@ -107,6 +111,21 @@ const userController = {
       .then(() => res.redirect('back'))
 
   },
+  getProfile: (req, res) => {
+    User.findByPk(req.user.id, {
+      include: [
+        Tweet,
+        { model: Tweet, include: [Reply] },
+      ]
+    })
+      .then((users) => {
+
+        res.render('userprofile', {
+          users: users.toJSON()
+        })
+      })
+
+  },
   getOtherprofile: (req, res) => {
 
     User.findByPk(req.params.id,
@@ -117,7 +136,6 @@ const userController = {
         ]
       })
       .then((users) => {
-        console.log(users.toJSON())
 
         res.render('otherprofile', {
           users: users.toJSON()
@@ -131,7 +149,7 @@ const userController = {
         user.update({ isNoticed })
       })
       .then((user) => {
-        req.flash('success_messages', '開啟訂閱！')
+        req.flash('success_messages', '已開啟訂閱！')
         res.redirect('back')
       })
   }

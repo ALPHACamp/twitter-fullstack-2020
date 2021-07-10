@@ -1,22 +1,22 @@
-const { User } = require('../models')
+const { User, sequelize } = require('../models')
 const { Followship } = require('../models')
-const Sequelize = require('Sequelize')
+const { models } = require('Sequelize')
+const { Sequelize } = require('Sequelize')
 
 
 const followController = {
 
   getFollowing: (req, res) => {
     User.findAll({
-
       include: [
         {
           model: User,
           as: 'Followers',
           as: 'Followings',
-        }
+        },
       ],
     }).then((users) => {
-      console.log(users)
+
       const id = req.user.id
 
       users = users.map(user => ({
@@ -35,18 +35,25 @@ const followController = {
   },
   getFollower: (req, res) => {
     User.findAll({
+      where: { id: req.user.id },
+      attributes: ["id", "name"],
       include: [
-        { model: User, as: 'Followings', }
+        {
+          model: User,
+          as: 'Followings',
+        }
       ],
     }).then((users) => {
-
+      console.log(users)
       const id = req.user.id
       users = users.map(user => ({
         ...user.dataValues,
+
         isFollowing: req.user.Followings.map(d => d.id).includes(user.id)
       }))
 
       users = users.filter(user => user.isFollowing === true)
+
       return res.render('followingship', {
         users: users,
         id: id

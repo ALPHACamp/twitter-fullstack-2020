@@ -26,6 +26,10 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  //user
+  app.get('/users/self/:id', authenticatedUser, userController.getProfile)
+  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike)
+
 
   //follow function
   app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)

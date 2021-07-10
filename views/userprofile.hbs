@@ -33,21 +33,21 @@
 
   <div class="card" style="width: 800px;">
 
-    <div class="row mt-2" style="width: 10%;">
-      <a href="" style="color:black" class="col-1 mx-auto" style="margin: auto;">
+    <div class="row mt-2" style="width: 20%;">
+      <a href="" style="color:black" class="col-1 m-2" style="margin: auto;">
         <i class="fas fa-arrow-left fa-2x"></i>
       </a>
-      <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none col-3">
+      <a href="/" class="d-flex align-items-center pb-3 m-2 link-dark text-decoration-none col-2 mx-auto">
         <span class="fs-5 fw-semibold">{{user.name}}</span>
       </a>
     </div>
+
 
     <div class="bg-holder" style="height: 250px;">
       <img src="{{users.bg_img}}" class="card-img-top" alt="..." class="img-fluid" id="bgImage"
         style="height:100%;width:100%;object-fit:cover">
     </div>
 
-    <div class="col" style="position: absolute;"></div>
     <div class="avatar-holder">
       <div class="avator">
         <img src="{{users.img}}" class="rounded-circle" alt="user_Aavtor" height="150px" width="150px"
@@ -55,24 +55,10 @@
       </div>
     </div>
 
+
     <div class=" card-body">
       <div class="icon d-flex justify-content-end">
-        <a href="mailto:{{users.email}}" class="border rounded-circle m-1" style="color:tomato;">
-          <i class="far fa-envelope fa-2x m-2"></i>
-          {{#if users.isNoticed}}
-        </a>
-        <a href="/users/other/noti/{{users.id}}" class="border rounded-circle m-1" style="color:tomato;">
-          <i class="fas fa-bell fa-2x m-2"></i>
-        </a>
-        {{else}}
-        <a href="/users/other/noti/{{users.id}}" class="border rounded-circle m-1" style="color:tomato;">
-          <i class="far fa-bell fa-2x m-2"></i>
-        </a>
-        {{/if}}
-        <form action="" method="get">
-          <botton type="submit" class="btn btn-outline-success rounded-pill m-2">跟隨</botton>
-          <botton type="submit" class="btn btn-success rounded-pill m-2">正在跟隨</botton>
-        </form>
+        <button type="submit" class="btn btn-outline-secondary rounded-pill">編輯個人資料</button>
       </div>
 
       <div class="card-text">
