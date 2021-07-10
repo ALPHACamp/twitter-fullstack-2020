@@ -1,10 +1,13 @@
-const db = require('../models')
-const Followship = db.Followship
-
-
 const bcrypt = require('bcryptjs')
+
 const { User } = require('../models')
+const { Tweet } = require('../models')
+const { Reply } = require('../models')
+const { Followship } = require('../models')
+
 const { Op } = require('sequelize')
+
+
 // const imgur = require('imgur-node-api')
 // const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -105,10 +108,32 @@ const userController = {
 
   },
   getOtherprofile: (req, res) => {
-    res.render('otherprofile')
+
+    User.findByPk(req.params.id,
+      {
+        include: [
+          Tweet,
+          { model: Tweet, include: [Reply] },
+        ]
+      })
+      .then((users) => {
+        console.log(users.toJSON())
+
+        res.render('otherprofile', {
+          users: users.toJSON()
+        })
+      })
   },
-  getOthernotice: (req, res) => {
-    res.render('otherprofile')
+  toggleNotice: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        const isNoticed = !user.isNoticed
+        user.update({ isNoticed })
+      })
+      .then((user) => {
+        req.flash('success_messages', '開啟訂閱！')
+        res.redirect('back')
+      })
   }
 
 }

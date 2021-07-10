@@ -34,27 +34,32 @@
   <div class="card" style="width: 800px;">
 
     <div class="bg-holder" style="height: 250px;">
-      <img src="https://i.insider.com/5484d9d1eab8ea3017b17e29?width=600&format=jpeg&auto=webp" class="card-img-top"
-        alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
+      <img src="{{users.bg_img}}" class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+        style="height:100%;width:100%;object-fit:cover">
     </div>
 
     <div class="col" style="position: absolute;"></div>
     <div class="avatar-holder">
       <div class="avator">
-        <img src="https://randomuser.me/api/portraits/women/72.jpg" class="rounded-circle" alt="user_Aavtor"
-          height="150px" width="150px" style="border:1rem">
+        <img src="{{users.img}}" class="rounded-circle" alt="user_Aavtor" height="150px" width="150px"
+          style="border:1rem">
       </div>
     </div>
 
     <div class=" card-body">
-
       <div class="icon d-flex justify-content-end">
-        <a href="" class="border rounded-circle m-1">
+        <a href="mailto:{{users.email}}" class="border rounded-circle m-1" style="color:tomato;">
           <i class="far fa-envelope fa-2x m-2"></i>
+          {{#if users.isNoticed}}
         </a>
-        <a href="" class="border rounded-circle m-1">
+        <a href="/users/other/noti/{{users.id}}" class="border rounded-circle m-1" style="color:tomato;">
+          <i class="fas fa-bell fa-2x m-2"></i>
+        </a>
+        {{else}}
+        <a href="/users/other/noti/{{users.id}}" class="border rounded-circle m-1" style="color:tomato;">
           <i class="far fa-bell fa-2x m-2"></i>
         </a>
+        {{/if}}
         <form action="" method="get">
           <botton type="submit" class="btn btn-outline-success rounded-pill m-2">跟隨</botton>
           <botton type="submit" class="btn btn-success rounded-pill m-2">正在跟隨</botton>
@@ -62,11 +67,9 @@
       </div>
 
       <div class="card-text">
-        <h4><strong>NAME</strong></h4>
+        <h4><strong>{{users.name}}</strong></h4>
         <small class="text-muted">@users</small>
-        <p class="m-2">This may sound odd, but I've done it by mostly describing how a character looks, rather than his
-          or her
-          personality.
+        <p class="m-2">{{users.description}}
         </p>
       </div>
       <div class="card-text">
@@ -94,35 +97,35 @@
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
         <ul class="list-group list-group-flush">
+          {{#each users.Tweets}}
           <li class="list-group-item">
             <div class="row g-0">
 
               <div class="col-md-1">
-                <a href="/users/other/{{this.id}}" class="text-center">
-                  <img src="{{this.img}}" alt="" width="75" height="75"
+                <a href="/users/other/{{../users.id}}" class="text-center">
+                  <img src="{{../users.img}}" alt="" width="75" height="75"
                     class="rounded-circle me-2 rounded mt-2 d-block"> </a>
               </div>
               <div class="col-md-10">
                 <div class="card-body" style="margin-left:1vw">
                   <div class="card-title">
-                    <span class="card-title h6" style="margin-right:2px">name </span>
-                    <span class="text-muted"> @name</span>
-                    <span class="small text-muted">・2小時前</span>
+                    <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
+                    <span class="text-muted"> @{{../users.account}}</span>
+                    <span class="small text-muted">・{{moment this.createdAt}}</span>
                   </div>
                   <div class="card-text" style="margin-top:1vw">
-                    <p class="h6">This may sound odd, but I've done it by mostly describing how a
-                      character
-                      looks, rather than his</p>
+                    <p class="h6">{{this.content}}</p>
                   </div>
                   <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                    <i class="far fa-comment text-muted small"> 13</i>
-                    <i class="far fa-heart text-muted small"> 15</i>
+                    <i class="far fa-comment text-muted small"> {{this.Replies}}</i>
+                    <i class="far fa-heart text-muted small"> {{this.likes}}</i>
                   </div>
                 </div>
               </div>
 
             </div>
           </li>
+          {{/each}}
         </ul>
       </div>
       <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>

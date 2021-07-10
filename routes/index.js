@@ -35,7 +35,7 @@ module.exports = (app, passport) => {
 
   //other user
   app.get('/users/other/:id', authenticatedUser, userController.getOtherprofile)
-  app.get('/users/other/noti/:id', authenticatedUser, userController.getOthernotice)
+  app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
 
 
 
