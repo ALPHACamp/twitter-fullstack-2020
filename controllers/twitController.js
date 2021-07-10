@@ -95,11 +95,36 @@ const twitController = {
   },
 
   getSetting: (req, res) => {
-    res.render('setting')
+    console.log(req.user.id)
+    const userId = req.user.id
+    User.findByPk(userId, { raw: true }).then(user => {
+      res.render('setting', { userdata: user })
+
+    })
   },
 
   putSetting: (req, res) => {
-    res.send('putSetting')
+    console.log(req.user.id)
+    const userId = req.user.id
+
+    // confirm password()
+    if (req.body.passwordCheck !== req.body.password) {
+      req.flash('error_messages', '兩次密碼輸入不同！')
+      return res.redirect('/setting')
+    } else {
+      User.findByPk(userId)
+        .then((user) => {
+          user.update({
+            name: req.body.name,
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+
+          })
+            .then(() => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect('/setting')
+            })
+        })
+    }
   },
 
   logout: (req, res) => {
