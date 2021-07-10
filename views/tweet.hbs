@@ -1,43 +1,59 @@
 <div class="container">
-  <div class="row border">
-    <h5>1</h5>
+  <div class="row">
+    <h5 class="border-bottom px-0 py-2 m-0">← 推文</h5>
   </div>
-  <div class="row border d-flex">
-    <div class="border">2-1</div>
-    <div class="border d-flex flex-column">
-      <div class="border">2-2-1</div>
-      <div class="border">2-2-2</div>
+  <div class="row d-flex">
+    <div class="col-auto px-1">
+      {{#if tweet.User.avatar}}
+      <img src="{{tweet.User.avatar}}" class="img-flid rounded-circle" style="width: 50px;max-height: 50px;">
+      {{else}}
+      <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="width: 50px;max-height: 50px;">
+      {{/if}}
+    </div>
+    <div class="col d-flex flex-column px-1">
+      <div>{{tweet.User.name}}</div>
+      <div class="user-link">@{{tweet.User.account}}</div>
     </div>
   </div>
-  <div class="row border">
-    <p>3</p>
+  <div class="row">
+    <p class="my-2">{{tweet.description}}</p>
   </div>
-  <div class="row border">
-    <p>4</p>
+  <div class="row border-bottom py-0">
+    <p class="my-0">{{momentTimeStamp tweet.createdAt}}</p>
   </div>
-  <div class="row border d-flex">
-    <div class="border">5-1</div>
-    <div class="border">5-2</div>
+  <div class="row border-bottom">
+    <div class="col-3">34 回覆</div>
+    <div class="col-3">808 喜歡次數</div>
   </div>
-  <div class="row border d-flex">
-    <div class="border">6-1</div>
-    <div class="border">6-2</div>
+  <div class="row border-bottom">
+    <div class="col-3">R</div>
+    <div class="col-3">♡</div>
   </div>
   {{!-- 重複的項目 --}}
-  <div class="row border">
-    <div class="col border">11</div>
-    <div class="col border d-flex flex-column">
-      <div class="border d-flex">
-        <div class="border">12-1-1</div>
-        <div class="border">12-1-2</div>
-        <div class="border">12-1-3</div>
-      </div>
-      <div class="border d-flex">
-        <div class="border">12-2-1</div>
-        <div class="border">12-2-2</div>
-      </div>
-      <div class="border">12-3</div>
-    </div>
-  </div>
+  {{#each tweet.Replies}}
+  <div class="row border-bottom">
 
+    <div class="col-auto py-0 px-1">
+      {{#if this.User.avatar}}
+      <img src="{{this.User.avatar}}" class="img-flid rounded-circle" height="50px" width="50px">
+      {{!-- style="width: 50px;max-height: 50px;" --}}
+      {{else}}
+      <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="width: 50px;max-height: 50px;">
+      {{/if}}
+    </div>
+
+    <div class="col py-0 px-1 d-flex flex-column">
+      <div class="d-flex">
+        <div class="me-2">{{this.User.name}}</div>
+        <div class="user-link">@{{this.User.account}} · {{moment this.createdAt}}</div>
+      </div>
+      <div class="d-flex">
+        <div class="me-2">回覆</div>
+        <div class="user-link">@{{../tweet.User.account}}</div>
+      </div>
+      <div class="my-2">{{this.comment}}</div>
+    </div>
+
+  </div>
+  {{/each}}
 </div>

@@ -7,5 +7,9 @@ module.exports = {
     }
     return options.inverse(this)
   },
-  moment: a => moment(a).fromNow()
+  moment: time => moment(time).fromNow(),
+  momentTimeStamp: time => {
+    moment.locale('zh-tw')
+    return moment(time).format('a hh:mm · LL')
+  }
 }
