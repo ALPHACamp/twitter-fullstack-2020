@@ -6,6 +6,7 @@ const tweetService = {
       order: [['createdAt', 'DESC']],
       include: [
         User,
+        Reply,
         { model: User, as: 'LikedUsers' }
       ]
     })
@@ -13,6 +14,7 @@ const tweetService = {
       ...t.dataValues,
       User: t.User.dataValues,
       LikedCount: t.LikedUsers.length,
+      ReplyCount: t.Replies.length,
       isLiked: req.user.LikedTweets.map(t => t.id).includes(t.dataValues.id)
     }))
     return callback({
@@ -27,6 +29,7 @@ const tweetService = {
         { model: Reply, include: [User] }
       ]
     })
+    console.log('into services/tweetService/line32...tweet', tweet)
     return callback({
       tweet: tweet.toJSON(),
       Appear: { navbar: true, top10: true },
