@@ -6,6 +6,8 @@ const flash = require('connect-flash')
 const session = require('express-session')
 const db = require('./models') // 引入資料庫
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
+
 
 const exhbs = require('express-handlebars')
 const bodyParser = require('body-parser')
@@ -19,6 +21,7 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.user = req.user
   next()
 })
 
@@ -31,6 +34,7 @@ app.use(express.static('public'))
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+app.use(methodOverride('_method'))
 
 
 
