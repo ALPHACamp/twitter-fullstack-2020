@@ -4,23 +4,23 @@ const { Tweet, User } = require('../models')
 const adminController = {
   // // 管理者可從專門的後台登入頁面進入網站後台
   signInPage: (req, res) => {
-    return res.render('signin')
+    return res.render('admin/signin')
   },
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('admin/tweets')
+    res.redirect('/admin/tweets')
   },
 
   signOut: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
-    res.redirect('admin/signin')
+    res.redirect('/admin/signin')
   },
 
   getTweets: (req, res) => {
-    return Tweet.findall({ raw: true }).then(tweets => {
-      return res.render('admin/tweets', { tweets })
+    return Tweet.findAll({ raw: true, nest:true, }).then(tweets => {
+      return res.render('admin/tweets', { tweets: tweets })
     })
   },
 

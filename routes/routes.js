@@ -31,8 +31,9 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 
 router.get('/admin/signin', adminController.signInPage);
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: 'admin/signin', failureFlash: true }), adminController.signIn);
-router.delete('/admin/tweet/:id', authenticatedAdmin, adminController.deleteTweet)
+router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 
+router.delete('/admin/tweet/:id', authenticatedAdmin, adminController.deleteTweet);
 router.get('/signout', userController.signOut);
 router.get('/admin/signout', adminController.signOut);
 
