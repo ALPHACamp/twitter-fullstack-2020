@@ -10,7 +10,7 @@
           </div>
           <div>
             <h4>
-              <a class="nav-link" href="/users/{{user.id}}">個人介面</a>
+              <a class="nav-link" href="/users/self/{{user.id}}">個人介面</a>
             </h4>
           </div>
           <div>
@@ -22,7 +22,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-9">
+  <div class="col-md-6">
     <div class="card">
       <div class="card-header">
         推文清單
@@ -50,4 +50,47 @@
       </div>
     </div>
   </div>
+
+
+  {{!-- add by kou sidebar of followering--}}
+  <div class="col-3">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+
+      <div class="list-group list-group-flush border-bottom scrollarea rounded">
+
+        <div class="card" style="width: 18rem;">
+          <div class="d-flex justify-content-center align-items-center" style="height: 50px;font-size:large">
+            跟隨誰</div>
+          <ul class="list-group list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Subheading</div>
+                Cras justo odio
+              </div>
+              <button type="submit" class="btn btn-success">跟隨</button>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Subheading</div>
+                Cras justo odio
+              </div>
+              <button type="submit" class="btn btn-success">跟隨</button>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Subheading</div>
+                Cras justo odio
+              </div>
+              <button type="submit" class="btn btn-success">跟隨</button>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <a href="/users/{{id}}/follower" style="text-decoration: none;color:chocolate">顯示更多</a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {{!-- add by kou --}}
 </div>
