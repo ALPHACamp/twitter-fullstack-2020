@@ -1,0 +1,63 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link" href="/tweets">首頁</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="/tweets/feeds">最新動態</a>
+  </li>
+</ul>
+<br /><br />
+<h1>最新動態</h1>
+<hr />
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        最新推文
+      </div>
+      <div class="card-body">
+        {{#each tweets}}
+        <div class="row justify-content-around mb-1">
+          <div class="row col-11">
+            <div class="card-image col-1 d-flex justify-content-center align-items-center">
+              <img src="{{this.User.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px" alt="A user" />
+            </div>
+            <div class="col-11 align-self-center px-md-2 px-4">
+              <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none">{{this.User.name}}</a>
+              <span style="color: #6c757d; font-size: 0.875em">@{{this.User.account}}．{{moment this.createdAt}}</span>
+              <p class="mt-2">{{this.content}} <a href="/tweets/{{this.id}}">...more</a></p>
+            </div>
+          </div>
+          <div class="col-1 d-flex align-items-center justify-content-center">
+            <form action="/tweets/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
+              <button type="submit" class="btn">
+                <i class="fas fa-times"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        最新評論
+      </div>
+      <div class="card-body">
+        {{#each replies}}
+        <div>
+          <h4>
+            <a href="/tweets/{{this.Tweet.id}}">{{Tweet.UserId}}</a>
+          </h4>
+          <p>{{this.content}}</p>
+          by <a href="/users/{{this.User.id}}">{{this.User.name}}</a>
+          at {{moment this.createdAt}}
+          <hr>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

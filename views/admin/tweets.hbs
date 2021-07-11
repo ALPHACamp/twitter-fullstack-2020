@@ -20,7 +20,7 @@
           id="menu"
         >
           <li class="nav-item p-2">
-            <a class="nav-link align-middle active" href="/admin/tweets">
+            <a class="nav-link align-middle {{#if tweets}}active{{/if}}" href="/admin/tweets">
               <i class="fas fa-home fa-lg"></i>
               　<span class="d-none d-sm-inline h4"><strong
                 >推文清單</strong></span>
@@ -99,6 +99,7 @@
       </div>
     </div>
     <div class="col py-3">
+      {{#if tweets}}
       <div class="card">
         <div class="card-header">
           <span class="h5" style="font-weight: bold;">推文清單</span>
@@ -134,7 +135,7 @@
               <form
                 action="/admin/tweets/{{this.id}}?_method=DELETE"
                 method="post"
-                onsubmit="return deleteConfirm()"
+                onsubmit="return deleteConfirm();"
               >
                 <button type="submit" class="btn">
                   <i class="fas fa-times"></i>
@@ -144,6 +145,52 @@
           </div>
         {{/each}}
       </div>
+      {{/if}}
+      {{#if tweet}}
+      <div class="card my-5 mx-auto">
+        <div class="row justify-content-around mb-1 pt-3 ps-3">
+          <div class="row col-11">
+            <div class="card-image col-1 d-flex justify-content-center align-items-center">
+              <img
+                  src="{{tweet.User.img}}"
+                  class="rounded-circle p-md-0 p-1"
+                  style="width: 50px; height: 50px"
+                  alt="A user"
+                />
+            </div>
+            <div class="col-11 align-self-center px-md-2 px-4">
+              <a
+                  href="/admin/users/{{tweet.UserId}}"
+                  class="h5 text-dark text-decoration-none"
+                >{{tweet.User.name}}</a>
+              <span
+                  style="color: #6c757d; font-size: 0.875em"
+                >@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
+              <p class="mt-2">{{tweet.content}}</p>
+            </div>
+          </div>
+          <div class="col-1 d-flex align-items-center justify-content-center">
+            <form
+                action="/admin/tweets/{{tweet.id}}?_method=DELETE"
+                method="post"
+                onsubmit="return deleteConfirm();"
+              >
+              <button type="submit" class="btn">
+                <i class="fas fa-times"></i>
+              </button>
+            </form>
+          </div>
+          <div class="col-12 ps-4 mt-3 my-2">
+            <div class="mt-2 mb-3 ps-1" style="font-size: 1.2em;">
+              <i class="far fa-heart"></i> {{tweet.likes}}
+            </div>
+            <h6>推文建立於 {{momentA tweet.createdAt}}</h6>
+            <h6>推文更新於 {{momentA tweet.updatedAt}}</h6>
+          </div>
+        </div>
+      </div>
+      <a class="my-3" href="javascript:history.back()">回上一頁</a>
+      {{/if}}
     </div>
   </div>
 </div>

@@ -2,12 +2,11 @@ const helpers = require('../_helpers')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
-const followController = require('../controllers/followController')
-
-const { authenticate } = require('passport')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
+const replyController = require('../controllers/replyController')
+const followController = require('../controllers/followController')
 
 module.exports = (app, passport) => {
   const authenticatedUser = (req, res, next) => {
@@ -28,19 +27,39 @@ module.exports = (app, passport) => {
 
   //user
   app.get('/users/self/:id', authenticatedUser, userController.getProfile)
+  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike)
+
+  //follow function
+  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)
+  app.get('/users/:userId/followering', authenticatedUser, followController.getFollower)
+  app.post('/following/:userId', authenticatedUser, userController.addFollowing)
+  app.delete('/following/:userId', authenticatedUser, userController.removeFollowing)
+
+  // like
+  app.post('/like/:TweetId', authenticatedUser, userController.addLike)
+  app.delete('/like/:TweetId', authenticatedUser, userController.removeLike)
+
+  //other user
+  app.get('/users/other/:id', authenticatedUser, userController.getOtherProfile)
+  app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+  app.get('/admin/tweets/:id', authenticatedAdmin, adminController.getTweet)
   app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.get('/admin/users/:id', authenticatedAdmin, adminController.getUser)
   app.get('/admin/admins', authenticatedAdmin, adminController.getAdmins)
+  app.get('/admin/profile', authenticatedAdmin, adminController.getProfile)
+  app.get('/admin/profile/edit', authenticatedAdmin, adminController.getEditProfile)
+  app.put('/admin/profile/edit', authenticatedAdmin, upload.single('image'), adminController.putProfile)
+
   app.get('/admin/signup', authenticatedAdmin, adminController.signUpPage)
   app.post('/admin/signup', authenticatedAdmin, adminController.signUp)
   app.get('/admin/signin', adminController.signInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
   app.get('/admin/signout', adminController.signOut)
-
 
   // signin & signup
   app.get('/signup', userController.signUpPage)
@@ -51,7 +70,18 @@ module.exports = (app, passport) => {
 
   // tweets
   app.get('/tweets', authenticatedUser, tweetController.getTweets)
+  app.get('/tweets/feeds', authenticatedUser, tweetController.getFeeds)
   app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
+  app.get('/tweets/:id/edit', authenticatedUser, tweetController.editTweet)
+  app.put('/tweets/:id', authenticatedUser, tweetController.putTweet)
+  app.post('/tweets', authenticatedUser, tweetController.postTweet)
+  app.delete('/tweets/:id', authenticatedUser, tweetController.deleteTweet)
+
+  // reply
+  app.post('/replies', authenticatedUser, replyController.postReply)
+  app.delete('/replies/:id', authenticatedUser, replyController.deleteReply)
+
+  // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 
 

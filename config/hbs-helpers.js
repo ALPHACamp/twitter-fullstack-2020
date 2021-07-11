@@ -7,6 +7,7 @@ module.exports = {
     } return options.inverse(this)
   },
   moment: function (a) {
+    moment.locale('zh-cn')
     return moment(a).fromNow()
   },
   momentA: function (a) {
