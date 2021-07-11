@@ -11,15 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-
+      Like.belongsTo(models.User)
+      Like.belongsTo(models.Tweet)
     }
   };
   Like.init({
     UserId: DataTypes.INTEGER,
     TweetId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Like',
-  });
+  },
+    {
+      sequelize,
+      modelName: 'Like',
+    });
   return Like;
 };

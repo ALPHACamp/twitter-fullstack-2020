@@ -1,20 +1,51 @@
-const { User, Tweet } = require('../models')
+const { User, Tweet, Reply } = require('../models')
+const pageLimit = 10
+const helpers = require('../_helpers')
 
 const tweetController = {
-  getTweets: (req, res) => {
-    return Promise.all([
-      Tweet.findAll({
-        limit: 10,
-        raw: true,
-        nest: true,
-        order: [['createdAt', 'DESC']],
-        include: [User]
-      })
-    ]).then(([tweets]) => {
+  getTweets: async (req, res, next) => {
+    let offset = 0
+    const whereQuery = {}
+    if (req.query.page) {
+      offset = (req.query.page - 1) * pageLimit
+    }
+
+    try {
+      const [result] = await Promise.all([
+        Tweet.findAndCountAll({
+          raw: true,
+          nest: true,
+          limit: pageLimit,
+          where: whereQuery,
+          offset: offset,
+          order: [['createdAt', 'DESC']],
+          include: [User]
+        })
+      ])
+
+      const page = Number(req.query.page) || 1
+      const pages = Math.ceil(result.count / pageLimit)
+      const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
+      const prev = page - 1 < 1 ? 1 : page - 1
+      const next = page + 1 > pages ? pages : page + 1
+
+      const data = result.rows.map(t => ({
+        ...t,
+        content: t.content.substring(0, 50),
+        isLiked: req.user.LikedTweet.map(d => d.id)
+          .includes(t.id)
+      }))
       return res.render('tweets', {
-        tweets: tweets
+        tweets: data,
+        page,
+        pages: pages <= 1 ? 'invisible' : '',
+        totalPage,
+        prev,
+        next
       })
-    })
+    } catch (error) {
+      next(error)
+    }
   },
   postTweet: (req, res) => {
     if (!req.body.content) {
@@ -24,23 +55,33 @@ const tweetController = {
     return Tweet.create({
       UserId: req.user.id,
       content: req.body.content,
-      likes: req.body.likes
+      likes: 0
     })
       .then((tweet) => {
         req.flash('success_messages', 'Tweet was successfully created')
         res.redirect('/tweets')
       })
+      .catch(err => console.log(err))
   },
-  getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [User]
-    })
-      .then((tweet) => {
-        console.log(`tweet:${tweet}`)
-        return res.render('tweet', {
-          tweet: tweet.toJSON()
-        })
+  getTweet: async (req, res, next) => {
+    try {
+      const tweet = await Tweet.findByPk(req.params.id, {
+        include: [User,
+          { model: Reply, include: User },
+          { model: User, as: 'LikedbyUser' }
+        ],
+        order: [[Reply, 'createdAt', 'DESC']]
       })
+      if (!tweet) throw new Error('Tweet is not found!')
+
+      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(req.user.id)
+      res.render('tweet', {
+        tweet: tweet.toJSON(),
+        isLiked
+      })
+    } catch (error) {
+      next(error)
+    }
   },
   editTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, { raw: true }).then(tweet => {
@@ -74,6 +115,28 @@ const tweetController = {
             res.redirect('/tweets')
           })
       })
+  },
+  getFeeds: (req, res) => {
+    return Tweet.findAll({
+      limit: 10,
+      raw: true,
+      nest: true,
+      order: [['createdAt', 'DESC']],
+      include: [User]
+    }).then(tweets => {
+      Reply.findAll({
+        limit: 10,
+        raw: true,
+        nest: true,
+        order: [['createdAt', 'DESC']],
+        include: [User, Tweet]
+      }).then(replies => {
+        return res.render('feeds', {
+          tweets,
+          replies
+        })
+      })
+    })
   }
 }
 module.exports = tweetController
