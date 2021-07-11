@@ -68,12 +68,12 @@ const userController = {
             attributes: ['id'],
             include:
             [
-              { model: Tweet, attributes: ['id', 'comment'] }
+              { model: Tweet, attributes: ['id', 'reply'] }
             ]
           },
           { model: User, as: 'Followers', attributes: ['img', 'id'] },
-          { model: User, as: 'Followings', attributes: ['img', 'id'] }
-          // { model: Restaurant, include: Category, as: 'FavoritedRestaurants', attributes: ['image', 'id'] }
+          { model: User, as: 'Followings', attributes: ['img', 'id'] },
+          { model: Tweet, as: 'LikedbyUser', attributes: ['likes', 'id'] }
         ]
       })
       if (!user) throw new Error("user isn't exist !!")
@@ -84,11 +84,11 @@ const userController = {
         if (tweetInfo.has(id)) {
           tweetInfo.get(id).count++
         } else {
-          tweetInfo.set(id, { TweetId: id, name: t.Tweet.content, img: t.Restaurant.image, count: 1 })
+          tweetInfo.set(id, { TweetId: id, content: t.Tweet.content, count: 1 })
         }
       })
-      console.log(restaurantInfo)
-      res.render('/admin/users', { user: user.toJSON(), restaurants: [...restaurantInfo.values()] })
+      console.log(tweetInfo)
+      res.render('/admin/users', { user: user.toJSON(), tweets: [...tweetInfo.values()] })
     } catch (err) {
       console.log(err)
       next(err)
@@ -125,28 +125,31 @@ const userController = {
       .then((followship) => followship.destroy())
       .then(() => res.redirect('back'))
   },
-  addLike: async (req, res, next) => {
-    try {
-      const { id: userId } = helpers.getUser(req)
-      await Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
-      res.redirect('back')
-    } catch (error) {
-      next(error)
-    }
+  addLike: (req, res) => {
+    return Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
+      .then(() => {
+        return Tweet.findByPk(req.params.TweetId)
+          .then((tweet) => {
+            return tweet.increment('likes')
+          })
+      })
+      .then(() => res.redirect('back'))
   },
 
-  removeLike: async (req, res, next) => {
-    try {
-      const like = await Like.findOne({
-        where: { UserId: req.user.id, TweetId: req.params.TweetId }
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: { UserId: req.user.id, TweetId: req.params.TweetId }
+    })
+      .then((like) => {
+        like.destroy()
+          .then(() => {
+            return Tweet.findByPk(req.params.TweetId)
+              .then((tweet) => {
+                res.redirect('back')
+                return Promise.all(tweet.decrement('likes'))
+              })
+          })
       })
-      if (!like) throw new Error('like not found.')
-
-      await like.destroy()
-      res.redirect('back')
-    } catch (error) {
-      next(error) 
-    }
   }
 }
 

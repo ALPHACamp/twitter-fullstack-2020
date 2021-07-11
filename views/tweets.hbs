@@ -64,6 +64,18 @@
       </div>
       {{> message}}
       <div class="card-body">
+        <form action="/tweets" method="POST" class="mt-5">
+          <div class="form-group">
+            <label for="text">留下評論：</label>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="tweet一下你的心情" required></textarea>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary mb-4">Submit</button>
+        </form>
+      </div>
+
+
+      <div class="card-body">
         {{#each tweets}}
         <div class="row justify-content-around mb-1">
           <div class="row col-11">
@@ -79,13 +91,13 @@
               {{#if this.isLiked }}
               <form action="/like/{{this.id}}?_method=DELETE" method="POST">
                 <button type="submit" class="btn btn-danger">
-                  <i class="fas fa-heart w-100 like"> {{ this.likess }}</i>
+                  <i class="fas fa-heart w-100 like"> {{ this.likes }}</i>
                 </button>
               </form>
               {{else}}
               <form action="/like/{{this.id}}" method="POST">
                 <button type="submit" class="btn btn-primary">
-                  <i class="far fa-heart">{{ this.likes}}</i>
+                  <i class="far fa-heart"> {{ this.likes}}</i>
                 </button>
               </form>
               {{/if}}
@@ -93,12 +105,11 @@
               
               {{#if this.replyCount}}
               <button class="btn btn-danger ">
-                <i class="far fa-comment">{{ this.replyCount }}</i>
+                <i class="far fa-comment"> {{ this.replyCount }}</i>
               </button>
               {{else}}
               <button class="btn btn-secondary">
-                <i class="far fa-comment">
-                  {{ this.replyCount }}
+                <i class="far fa-comment"> {{ this.replyCount }}
                 </i>
               </button>
               {{/if}}

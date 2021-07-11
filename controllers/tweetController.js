@@ -42,7 +42,7 @@ const tweetController = {
         totalPage,
         prev,
         next
-      }, console.log(`data:${data[0]}`))
+      })
     } catch (error) {
       next(error)
     }
