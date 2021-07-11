@@ -1,12 +1,28 @@
 const bcrypt = require('bcryptjs')
+const { text } = require('body-parser')
 const db = require('../models')
 const User = db.User
-
+const Tweet = db.Tweet
 
 const twitController = {
+
   getTwitters: (req, res) => {
-    return res.render('twitters')
+    Tweet.find
+    return res.render('userAdmin')
   },
+  toTwitters: (req, res) => {
+    console.log(req.user.id)
+    console.log(req.body)
+    return Tweet.create({
+      UserId: Number(req.user.id),
+      description: req.body.description,
+    })
+      .then((tweet) => {
+        req.flash('success_messages', 'tweet was successfully created')
+        res.redirect('/')
+      })
+  },
+
 
   getFollower: (req, res) => {
     return res.render('follower')
@@ -50,7 +66,7 @@ const twitController = {
       res.redirect('/signin')
     } else {
       req.flash('success_messages', '成功登入！')
-      res.redirect('/user/self')
+      res.redirect('/')
     }
 
   },
@@ -72,13 +88,22 @@ const twitController = {
           req.flash('error_messages', '信箱重複！')
           return res.redirect('/signup')
         } else {
-          User.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-          }).then(user => {
-            req.flash('success_messages', '成功註冊帳號！')
-            return res.redirect('/signin')
+          User.findOne({ where: { account: req.body.account } }).then(user => {
+            if (user) {
+              req.flash('error_messages', '帳號重複！')
+              return res.redirect('/signup')
+            } else {
+              User.create({
+                account: req.body.account,
+                name: req.body.name,
+                email: req.body.email,
+                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+              }).then(user => {
+                req.flash('success_messages', '成功註冊帳號！')
+                return res.redirect('/signin')
+              })
+            }
+
           })
         }
       })
@@ -86,11 +111,36 @@ const twitController = {
   },
 
   getSetting: (req, res) => {
-    res.render('setting')
+    console.log(req.user.id)
+    const userId = req.user.id
+    User.findByPk(userId, { raw: true }).then(user => {
+      res.render('setting', { userdata: user })
+
+    })
   },
 
   putSetting: (req, res) => {
-    res.send('putSetting')
+    console.log(req.user.id)
+    const userId = req.user.id
+
+    // confirm password()
+    if (req.body.passwordCheck !== req.body.password) {
+      req.flash('error_messages', '兩次密碼輸入不同！')
+      return res.redirect('/setting')
+    } else {
+      User.findByPk(userId)
+        .then((user) => {
+          user.update({
+            name: req.body.name,
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+
+          })
+            .then(() => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect('/setting')
+            })
+        })
+    }
   },
 
   logout: (req, res) => {

@@ -18,10 +18,12 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  //首頁路由 ???
-  app.get('/', (req, res) => res.redirect('/twitters'))
-  app.get('/twitters', twitController.getTwitters)
 
+  //首頁路由 ???
+  app.get('/', authenticated, twitController.getTwitters)
+  // app.get('/twitters', twitController.getTwitters)
+  app.post('/', authenticated, twitController.toTwitters)
+  
   //admin ???
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/twitters'))
 
@@ -29,19 +31,19 @@ module.exports = (app, passport) => {
 
   // 後台登入頁面
   app.get('/admin/signin', adminController.adminSignin)
-  // 後台登入頁面動作 ???
+  // 後台登入頁面動作
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.toAdminSignin)
 
-  // 後台展示所有推特訊息 ???
+  // 後台展示所有推特訊息
   app.get('/admin/tweets', authenticatedAdmin, adminController.tweetsAdmin)
 
-  // 後台展示特定推特訊息 ???
-  app.get('/admin/twitters', adminController.getTwitter)
+  // 後台展示特定推特訊息
+  app.get('/admin/twitters:id', adminController.getTwitter)
 
-  // 後台修改特定推特訊息 ???
+  // 後台修改特定推特訊息
   // app.get('/admin/twitters/:id', adminController.putTwitter)
 
-  // 後台刪除特定推特訊息 ???
+  // 後台刪除特定推特訊息
   app.delete('/admin/twitters/:id', adminController.deleteTwitter)
 
 
@@ -61,6 +63,11 @@ module.exports = (app, passport) => {
   // 登入畫面動作
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), twitController.toSignin)
 
+  //前台展示推特信息
+  app.get('/tweets', twitController.getTwitters)
+
+  //前台發送推特信息
+  app.post('/tweets', twitController.putTwitters)
 
   // 查看tweets的訊息回覆
   app.get('/tweets/replies', twitController.getReplies)
@@ -68,6 +75,9 @@ module.exports = (app, passport) => {
   // 提交tweets的訊息回覆
   app.post('/tweets/replies', twitController.toReplies)
 
+  //前台針對特定推文 like/unlike
+  app.post('/tweets/:id/like', twitController.getReplies)
+  app.post('/tweets/:id/unlike', twitController.getReplies)
 
   // 個人推文頁面
   app.get('/user/self', authenticated, twitController.getUser)
@@ -75,7 +85,8 @@ module.exports = (app, passport) => {
   // 個人推文喜歡頁面
   app.get('/user/self/like', twitController.getUserLike)
 
-
+  //特定使用者的所有 tweets
+  app.get('/user/:id/tweets', twitController.getUserLike)
 
   // 註冊畫面
   app.get('/signup', twitController.getSignup)
@@ -97,10 +108,10 @@ module.exports = (app, passport) => {
   app.delete('/user/self/following/:id', twitController.deleteFollowing)
 
   // 前台帳戶設定
-  app.get('/setting', twitController.getSetting)
+  app.get('/setting', authenticated, twitController.getSetting)
 
   // 前台帳戶設定更改
-  app.put('/setting', twitController.putSetting)
+  app.put('/setting', authenticated, twitController.putSetting)
 
   // 前台登出
   app.get('/logout', twitController.logout)
