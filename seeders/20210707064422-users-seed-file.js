@@ -6,6 +6,7 @@ const users = Array.from({ length: 5 }).map((d, i) => ({
   email: `user${i + 1}@example.com`,
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   is_admin: false,
+  isNoticed: false,
   img: `https://loremflickr.com/250/250/avator/?random=${i}`,
   createdAt: new Date(),
   updatedAt: new Date()
@@ -16,6 +17,7 @@ users.unshift({
   email: 'root@example.com',
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   is_admin: true,
+  isNoticed: false,
   img: 'https://loremflickr.com/250/250/avator/?random=50',
   createdAt: new Date(),
   updatedAt: new Date()
@@ -27,6 +29,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Users', null, {})
+    await queryInterface.bulkDelete('Users', null, { truncate: true, restartIdentity: true })
   }
 };

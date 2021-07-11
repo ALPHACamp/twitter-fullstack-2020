@@ -1,10 +1,6 @@
 const bcrypt = require('bcryptjs')
 
-const { User } = require('../models')
-const { Tweet } = require('../models')
-const { Reply } = require('../models')
-const { Followship } = require('../models')
-
+const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
 
 
@@ -155,11 +151,33 @@ const userController = {
         req.flash('success_messages', '已開啟訂閱！')
         res.redirect('back')
       })
-  }
+  },
+  addLike: (req, res) => {
+    return Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
+      .then(() => {
+        return Tweet.findByPk(req.params.TweetId)
+          .then((tweet) => {
+            return tweet.increment('likes')
+          })
+      })
+      .then(() => res.redirect('back'))
+  },
 
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: { UserId: req.user.id, TweetId: req.params.TweetId }
+    })
+      .then((like) => {
+        like.destroy()
+          .then(() => {
+            return Tweet.findByPk(req.params.TweetId)
+              .then((tweet) => {
+                res.redirect('back')
+                return Promise.all(tweet.decrement('likes'))
+              })
+          })
+      })
+  }
 }
 
 module.exports = userController
-
-
-

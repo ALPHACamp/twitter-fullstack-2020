@@ -19,6 +19,11 @@ module.exports = {
         unsigned: true,
         default: 0
       },
+      replyCount: {
+        type: Sequelize.INTEGER,
+        unsigned: true,
+        default: 0
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

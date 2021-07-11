@@ -1,13 +1,12 @@
 const helpers = require('../_helpers')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
-
-const followController = require('../controllers/followController')
-
 const { authenticate } = require('passport')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
+const replyController = require('../controllers/replyController')
+const followController = require('../controllers/followController')
 
 module.exports = (app, passport) => {
   const authenticatedUser = (req, res, next) => {
@@ -37,6 +36,11 @@ module.exports = (app, passport) => {
   app.post('/following/:userId', authenticatedUser, userController.addFollowing)
   app.delete('/following/:userId', authenticatedUser, userController.removeFollowing)
 
+// like
+  app.post('/like/:TweetId', authenticatedUser, userController.addLike)
+  app.delete('/like/:TweetId', authenticatedUser, userController.removeLike)
+
+
   //other user
   app.get('/users/other/:id', authenticatedUser, userController.getOtherprofile)
   app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
@@ -65,6 +69,17 @@ module.exports = (app, passport) => {
 
   // tweets
   app.get('/tweets', authenticatedUser, tweetController.getTweets)
+  app.get('/tweets/feeds', authenticatedUser, tweetController.getFeeds)
   app.get('/tweets/:id', authenticatedUser, tweetController.getTweet)
+  app.get('/tweets/:id/edit', authenticatedUser, tweetController.editTweet)
+  app.put('/tweets/:id', authenticatedUser, tweetController.putTweet)
+  app.post('/tweets', authenticatedUser, tweetController.postTweet)
+  app.delete('/tweets/:id', authenticatedUser, tweetController.deleteTweet)
+
+  // reply
+  app.post('/replies', authenticatedUser, replyController.postReply)
+  app.delete('/replies/:id', authenticatedUser, replyController.deleteReply)
+
+  // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 }
