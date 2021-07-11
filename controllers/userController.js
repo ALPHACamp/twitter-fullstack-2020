@@ -1,8 +1,13 @@
-
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply, Followship, Like} = require('../models')
-const helpers = require('../_helpers')
+
+const { User } = require('../models')
+const { Tweet } = require('../models')
+const { Reply } = require('../models')
+const { Followship } = require('../models')
+
 const { Op } = require('sequelize')
+
+
 // const imgur = require('imgur-node-api')
 // const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -11,6 +16,27 @@ const userController = {
     return res.render('signup')
   },
   signUp: (req, res) => {
+    if (req.body.passwordCheck !== req.body.password) {
+      req.flash('error_messages', '兩次密碼輸入不同！')
+      return (res.redirect('/signup'))
+    } else {
+      User.findOne({ where: { email: req.body.email } }).then(user => {
+        if (user) {
+          req.flash('error_messages', '信箱重複！')
+          return res.redirect('/signup')
+        } else {
+          User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password,
+              bcrypt.genSaltSync(10), null)
+          }).then(user => {
+            req.flash('success_messages', '成功註冊帳號！')
+            return res.redirect('/signin')
+          })
+        }
+      })
+    }
     const { name, account, email, password, passwordConfirm } = req.body
     const errors = []
     if (!name || !account || !email || !password || !passwordConfirm) {
@@ -47,10 +73,12 @@ const userController = {
   signInPage: (req, res) => {
     return res.render('signin')
   },
+
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
+
   signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
     req.logout()
@@ -59,56 +87,12 @@ const userController = {
   getTweets: (req, res) => {
     return res.render('tweets')
   },
-  getUser: async (req, res, next) => {
-    try {
-      const user = await User.findByPk(req.params.id, {
-        include: [
-          {
-            model: Reply,
-            attributes: ['id'],
-            include:
-            [
-              { model: Tweet, attributes: ['id', 'reply'] }
-            ]
-          },
-          { model: User, as: 'Followers', attributes: ['img', 'id'] },
-          { model: User, as: 'Followings', attributes: ['img', 'id'] },
-          { model: Tweet, as: 'LikedbyUser', attributes: ['likes', 'id'] }
-        ]
-      })
-      if (!user) throw new Error("user isn't exist !!")
-
-      const tweetInfo = new Map()
-      user.toJSON().Replies.forEach(t => {
-        const id = t.TweetId
-        if (tweetInfo.has(id)) {
-          tweetInfo.get(id).count++
-        } else {
-          tweetInfo.set(id, { TweetId: id, content: t.Tweet.content, count: 1 })
-        }
-      })
-      console.log(tweetInfo)
-      res.render('/admin/users', { user: user.toJSON(), tweets: [...tweetInfo.values()] })
-    } catch (err) {
-      console.log(err)
-      next(err)
-    }
-  },
-  editUser: async (req, res, next) => {
-    if (Number(req.params.id) !== helpers.getUser(req).id) {
-      req.flash('warning_msg', '你只能修改自己的 profile!!')
-      return res.redirect(`/users/${req.user.id}`)
-    }
-    try {
-      const user = await User.findByPk(req.params.id)
-      if (!user) throw new Error("user isn't exist !!")
-      res.render('editProfile', { user: user.toJSON() })
-    } catch (err) {
-      console.log(err)
-      next(err)
-    }
-  },
   addFollowing: (req, res) => {
+
+    if (req.user.id === req.params.id) {
+      return res.redirect("back");
+    }
+
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId
@@ -116,6 +100,7 @@ const userController = {
       .then(() => res.redirect('back'))
   },
   removeFollowing: (req, res) => {
+
     return Followship.findOne({
       where: {
         followerId: req.user.id,
@@ -124,33 +109,57 @@ const userController = {
     })
       .then((followship) => followship.destroy())
       .then(() => res.redirect('back'))
-  },
-  addLike: (req, res) => {
-    return Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
-      .then(() => {
-        return Tweet.findByPk(req.params.TweetId)
-          .then((tweet) => {
-            return tweet.increment('likes')
-          })
-      })
-      .then(() => res.redirect('back'))
-  },
 
-  removeLike: (req, res) => {
-    return Like.findOne({
-      where: { UserId: req.user.id, TweetId: req.params.TweetId }
+  },
+  getProfile: (req, res) => {
+    User.findByPk(req.user.id, {
+      include: [
+        Tweet,
+        { model: Tweet, include: [Reply] },
+      ]
     })
-      .then((like) => {
-        like.destroy()
-          .then(() => {
-            return Tweet.findByPk(req.params.TweetId)
-              .then((tweet) => {
-                res.redirect('back')
-                return Promise.all(tweet.decrement('likes'))
-              })
-          })
+      .then((users) => {
+
+        res.render('userprofile', {
+          users: users.toJSON()
+        })
+      })
+
+  },
+  getOtherprofile: (req, res) => {
+    User.findByPk(req.params.id,
+      {
+        include: [
+          Tweet,
+          { model: Tweet, include: [Reply] },
+        ]
+      })
+      .then((users) => {
+
+        res.render('otherprofile', {
+          users: users.toJSON()
+        })
+      })
+  },
+  toggleNotice: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        if (req.user.id === req.params.id) {
+          res.redirect('back')
+        }
+
+        const isNoticed = !user.isNoticed
+        user.update({ isNoticed })
+      })
+      .then((user) => {
+        req.flash('success_messages', '已開啟訂閱！')
+        res.redirect('back')
       })
   }
+
 }
 
 module.exports = userController
+
+
+
