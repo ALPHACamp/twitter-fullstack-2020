@@ -118,7 +118,7 @@ const userController = {
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
         ],
-        order: ['created']
+        order: [['createdAt', 'DESC']],
       }),
       User.findAll({
         where: { is_admin: false },
