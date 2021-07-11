@@ -1,9 +1,6 @@
 const helpers = require('../_helpers')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
-
-const followController = require('../controllers/followController')
-
 const { authenticate } = require('passport')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')

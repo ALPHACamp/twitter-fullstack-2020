@@ -21,7 +21,6 @@ const replyController = {
     return Reply.findByPk(req.params.id)
       .then((reply) => {
         reply.destroy().then(() => {
-          console.log(`TweetId is : ${reply.TweetId}`)
           return Tweet.findByPk(reply.TweetId)
             .then((tweet) => {
               res.redirect(`/tweets/${tweet.id}`)
