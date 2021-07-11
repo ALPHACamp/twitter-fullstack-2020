@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const { isDate } = require('moment')
-const { Tweet, User } = require('../models')
+const { Tweet, User, Like } = require('../models')
+const userService = require('../services/userService')
+
 
 const userController = {
   signUpPage: (req, res) => {
@@ -48,16 +50,23 @@ const userController = {
   },
 
   userPage: (req, res) => {
-    const User = [{
-      id: 1,
-      avatar: 'https://loremflickr.com/320/320/headshot',
-      name: 'userName',
-      account: 'userName'
-    }]
-    Appear = { navbar: true, top10: true }
-    res.render('users', { Appear })
-
+    userService.getUserTweets(req, res, (data) => {
+      return res.render('users', data)
+    })
   },
+
+  userPageReplies: (req, res) => {
+    userService.getUserReplies(req, res, (data) => {
+      return res.render('users-replies',data)
+    })
+  },
+
+  userPageLikes: (req, res) => {
+    userService.getUserLikes(req, res, (data) => {
+      return res.render('users-liked', data)
+    })
+  },
+
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
@@ -81,7 +90,7 @@ const userController = {
             return res.redirect('back')
           })
       })
-  }
+  },
 }
 
 module.exports = userController

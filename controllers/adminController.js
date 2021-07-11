@@ -24,21 +24,31 @@ const adminController = {
     })
   },
 
-  deleteTweet: async (req, res, callback) => {
-    let tweet = await Tweet.findByPk(req.params.id, {
-      include: [
-        User,
-        { model: User }
-      ]
-    })
-    tweet.destroy()
-    callback({
-      status: 'success', message: 'tweet deleted'})
-    },
+  deleteTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id)
+      .then((tweet) => {
+        tweet.destroy()
+          .then((tweet) => {
+            res.redirect('/admin/tweets')
+          })
+      })
+  },
+
+  // deleteTweet: async (req, res, callback) => {
+  //   let tweet = await Tweet.findByPk(req.params.id, {
+  //     include: [
+  //       User,
+  //       { model: User }
+  //     ]
+  //   })
+  //   tweet.destroy()
+  //   callback({
+  //     status: 'success', message: 'tweet deleted'})
+  //   },
 
   getUsers: (req, res) => {
-    adminService.getUsers(req, res, (data) => {
-      return res.render('admin/users', data)
+    return User.findAll({ raw: true }).then(users => {
+      return res.render('admin/users', { users })
     })
   },
 }
