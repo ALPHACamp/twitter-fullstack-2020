@@ -17,9 +17,10 @@ module.exports = (sequelize, DataTypes) => {
   Like.init({
     UserId: DataTypes.INTEGER,
     TweetId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Like',
-  });
+  },
+    {
+      sequelize,
+      modelName: 'Like',
+    });
   return Like;
 };
