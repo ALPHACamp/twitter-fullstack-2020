@@ -147,30 +147,31 @@
                         <div id="modal-reply-user-avatar">
                           <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
                         </div>
-                        <div class="border-0 flex-grow-1 my-1" style="width: 2px; background-color: #DCDCDC;">
+                        <div class="border-0 flex-grow-1 my-0" style="width: 2px; background-color: #DCDCDC;">
                         </div>
                       </div>
-                      <div class="border col py-0 px-1">
-                        <div class="border d-flex">
-                          <div class="border" id="modal-reply-user-name">1-1</div>
-                          <div class="border" id="modal-reply-user-accountAndTime">1-2</div>
+                      <div class="col py-0 px-1">
+                        <div id="nameAndTimeAndDescription">
+                          1
                         </div>
-                        <div class="border" id="modal-reply-description">2</div>
-                        <div class=" border d-flex">
-                          <div class="border">3-1</div>
-                          <div class="border" id="modal-reply-to">3-2</div>
+                        <div class="d-flex">
+                          <div class="mb-2" id="modal-reply-to">3-2</div>
                         </div>
                       </div>
                     </div>
 
                     <div class="row">
-                      <div class="border col-auto py-0 px-1">
-                        <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%"
-                          id="modal-replier-avatar">
+                      <div class="col-auto py-0 px-1">
+                        {{#if user.avatar}}
+                        <img class="rounded-circle" src="{{user.avatar}}" style="max-width: 50px;max-height: 50px;">
+                        {{else}}
+                        <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg"
+                          style="max-width: 50px;max-height: 50px;">
+                        {{/if}}
                       </div>
-                      <div class="border col py-0 px-1">
+                      <div class="col py-0 px-1">
                         <textarea name="comment" class="form-control border-0 w-100" rows="5" aria-label="With textarea"
-                          placeholder="4" style="resize: none;"></textarea>
+                          placeholder="推你的回覆" style="resize: none;"></textarea>
                       </div>
                     </div>
 
