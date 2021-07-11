@@ -29,19 +29,14 @@ module.exports = (app, passport) => {
   app.get('/users/self/:id', authenticatedUser, userController.getProfile)
   // app.get('/users/self/like/:id', authenticatedUser, userController.getLike)
 
-  //follow function
-  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)
-  app.get('/users/:userId/followering', authenticatedUser, followController.getFollower)
-  app.post('/following/:userId', authenticatedUser, userController.addFollowing)
-  app.delete('/following/:userId', authenticatedUser, userController.removeFollowing)
+  //other user
+  app.get('/users/other/:id', authenticatedUser, userController.getOtherprofile)
+  app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
 
   // like
   app.post('/like/:TweetId', authenticatedUser, userController.addLike)
   app.delete('/like/:TweetId', authenticatedUser, userController.removeLike)
 
-  //other user
-  app.get('/users/other/:id', authenticatedUser, userController.getOtherProfile)
-  app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
@@ -84,15 +79,10 @@ module.exports = (app, passport) => {
   // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 
-
   //follow function
   app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)
   app.get('/users/:userId/followering', authenticatedUser, followController.getFollower)
   app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
   app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
-
-  //other user
-  app.get('/users/other/:id', authenticatedUser, userController.getOtherprofile)
-  app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
 
 }

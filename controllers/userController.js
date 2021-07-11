@@ -106,7 +106,7 @@ const userController = {
         }
         return result
       }
-      console.log(users)
+
       const followerscount = users.Followers.length
       const followingscount = users.Followings.length
 
@@ -116,7 +116,7 @@ const userController = {
         isFollowed: req.user.Followings.some(d => d.id === followships.id)
       }))
       followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
+      followship = followship.filter(user => user.id !== req.user.id)
 
       res.render('userprofile', {
         users: users.toJSON(),
@@ -131,12 +131,14 @@ const userController = {
     Promise.all([
       User.findByPk(req.params.id, {
         include: [
+
           Tweet,
           { model: Tweet, as: 'LikedTweet' },
           { model: Tweet, include: [Reply] },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
-        ]
+        ],
+        order: [['createdAt', 'DESC']],
       }),
       User.findAll({
         where: { is_admin: false },
@@ -161,6 +163,8 @@ const userController = {
       const likeTweets = users.LikedTweet
       const followerscount = users.Followers.length
       const followingscount = users.Followings.length
+      console.log(likeTweets)
+
 
       // 計算追蹤者人數
       followship = followship.map(followships => ({
@@ -168,7 +172,9 @@ const userController = {
         FollowerCount: followships.Followers.length,
         isFollowed: req.user.Followings.some(d => d.id === followships.id)
       }))
+
       followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      followship = followship.filter(user => user.id !== req.user.id)
 
       res.render('otherprofile', {
         userId: userId,
@@ -176,7 +182,7 @@ const userController = {
         followerscount: thousandComma(followerscount),     //幾個跟隨我
         followingscount: thousandComma(followingscount),   //我跟隨幾個
         likeTweets: likeTweets,
-        followship: followship
+        followship: followship,
       })
     })
   },

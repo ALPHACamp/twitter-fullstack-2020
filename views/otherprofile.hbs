@@ -130,8 +130,48 @@
                   <div class="card-text" style="margin-top:1vw">
                     <p class="h6">{{this.content}}</p>
                   </div>
-                  <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                    <i class="far fa-comment text-muted small"> {{this.Replies}}</i>
+                  <div class="icon d-flex justify-content-between" style="width: 50%;margin-top:1vw">
+                    <i class="far fa-comment text-muted small"> {{../Replies}}</i>
+                    <i class="far fa-heart text-muted small"> {{../likes}}</i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <h2>推文與回覆</h2>
+      </div>
+
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+        <ul class="list-group list-group-flush">
+          {{#each likeTweets}}
+          <li class="list-group-item">
+            <div class="row g-0">
+
+              <div class="col-md-1">
+                <a href="/users/other/{{this.id}}" class="text-center">
+                  <img src="{{this.img}}" alt="" width="75" height="75"
+                    class="rounded-circle me-2 rounded mt-2 d-block">
+                </a>
+              </div>
+              <div class="col-md-10">
+                <div class="card-body" style="margin-left:1vw">
+                  <div class="card-title">
+                    <span class="card-title h6" style="margin-right:2px">{{this.name}}</span>
+                    <span class="text-muted"> @{{this.account}}</span>
+                    <span class="small text-muted">・{{moment this.createdAt}}</span>
+                  </div>
+                  <div class="card-text" style="margin-top:1vw">
+                    <p class="h6">{{this.content}}</p>
+                  </div>
+                  <div class="icon d-flex justify-content-between" style="width: 50%;margin-top:1vw">
+                    <i class="far fa-comment text-muted small"> {{../replyCount}}</i>
                     <i class="far fa-heart text-muted small"> {{this.likes}}</i>
                   </div>
                 </div>
@@ -142,8 +182,6 @@
           {{/each}}
         </ul>
       </div>
-      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
     </div>
 
   </div>
@@ -173,9 +211,13 @@
 
             <div class="col-4" style="margin:auto">
               {{#if this.isFollowed}}
-              <button type=" submit" class="btn btn-success btn-sm rounded-pill">正在跟隨</button>
+              <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+              </form>
               {{else}}
-              <button type="submit" class="btn btn-outline-success btn-sm rounded-pill">跟隨</button>
+              <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
+              </form>
               {{/if}}
             </div>
           </div>
