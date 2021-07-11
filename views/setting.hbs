@@ -1,31 +1,59 @@
-<div class="row mt-1">
+<div class="row  mt-5">
 
   {{!-- 左邊區域 --}}
   <div class="col-md-3" style="width:auto; height:auto;">
-
-    <img class="" style="position: relative; top: 8px; margin-left: 130px;" width="40px"
+    <img class="" style="margin-left:15px" width="40px"
       src="https://static.accupass.com/org/2008250550226683301600.jpg">
-
-    <ul class="nav flex-column py-5" style="margin-left: 120px;">
+    <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link active text-dark font-weight-bold py-3"
-          style="font-family: Noto Sans TC; font-size: 18px; font-style: normal; font-weight: 700; line-height:26px; letter-spacing: 0px; "
-          href="#"><i class="fas fa-home"></i> 首頁</a>
+        <a class="nav-link active text-dark font-weight-bold" href="/"><i class="fas fa-home"></i> 首頁</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active text-dark font-weight-bold py-3"
-          style="font-family: Noto Sans TC; font-size: 18px; font-style: normal; font-weight: 700; line-height:26px; letter-spacing: 0px; "
-          href="/user/self"><i class="fas fa-user"></i> 個人資料</a>
+        <a class="nav-link text-dark  font-weight-bold" href="/user/self"><i class="fas fa-user"></i>
+          個人資料</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active font-weight-bold py-3"
-          style="font-family: Noto Sans TC; font-size: 18px; font-style: normal; font-weight: 700; line-height:26px; letter-spacing: 0px; color: #FF6600;"
-          href="/setting"><i class="fas fa-sun" style=""> </i> 設定</a>
+        <a class="nav-link font-weight-bold" style="color: #FF6600;" href="/setting"><i class="far fa-sun"></i> 設定</a>
       </li>
     </ul>
-    <a class="btn text-light"
-      style="border-radius: 40px; text-align:center; width:50%; background-color:#FF6600; margin-left: 120px; margin-top: -70px;"
-      href="#">推文</a>
+
+    <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
+      data-toggle="modal" data-target="#exampleModal">推文</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="color:#FF6600;">&times;</span>
+            </button>
+          </div>
+          <form action="/" method="post">
+            <div class="modal-body" style="height: 250px;">
+              <div class="row" style="height: 100%;">
+                <div class="col-md-2">
+                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
+                    class="rounded-circle" style="width: 60px; height:60px;">
+                </div>
+                <div class="col-md-10">
+                  <textarea name="description" id=""
+                    style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
   </div>
 
 

@@ -49,7 +49,16 @@ const twitController = {
   },
 
   getUser: (req, res) => {
-    return res.render('user')
+    Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+      include: [User]
+    }).then(tweet => {
+      console.log(tweet) // 加入 console 觀察資料的變化
+      return res.render('user', { tweet })
+    })
+
   },
 
   getUserLike: (req, res) => {
