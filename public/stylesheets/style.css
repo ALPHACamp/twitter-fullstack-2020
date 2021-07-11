@@ -101,3 +101,26 @@ a {
 .btn-close > svg > path {
   fill:#FF6600;
 }
+
+#edit-image{
+background-repeat: no-repeat;
+background-size: cover;
+opacity: 0.8;
+height: 200px;
+}
+
+#edit-image > div > div > label{
+  padding: 0;
+}
+
+#edit-image > div > div > label > svg:hover > path {
+  fill: #FF6600;
+}
+
+#avatar-label {
+  height: 120px;
+  width: 120px;
+  background-size: cover;
+  margin-top: 140px;
+  margin-left: 15px;
+}
