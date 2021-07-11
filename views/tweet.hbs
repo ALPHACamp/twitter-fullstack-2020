@@ -22,12 +22,12 @@
     <p class="my-2">{{momentTimeStamp tweet.createdAt}}</p>
   </div>
   <div class="row my-2">
-    <div class="col-3">{{tweet.Replies.length}} 回覆</div>
-    <div class="col-3">{{tweet.LikedUsers.length}} 喜歡次數</div>
+    <div class="col-3 btn p-0">{{tweet.Replies.length}} 回覆</div>
+    <div class="col-3 btn p-0">{{tweet.LikedUsers.length}} 喜歡次數</div>
   </div>
   <div class="row py-2 border-bottom border-top">
-    <div class="col-3">R</div>
-    <div class="col-3">♡</div>
+    <div class="col-3 btn p-0" data-bs-toggle="modal" data-bs-target="#post-reply-modal">RR</div>
+    <div class="col-3 btn p-0">♡</div>
   </div>
   {{!-- 重複的項目 --}}
   {{#each tweet.Replies}}

@@ -91,7 +91,8 @@
           </a>
           <button class="btn btn-regular w-100 rounded-pill" data-bs-toggle="modal"
             data-bs-target="#post-tweet-modal">推文</button>
-          <!-- Modal -->
+
+          <!-- Tweet Modal -->
           <div class="modal" tabindex="-1" role="dialog" id="post-tweet-modal">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -115,6 +116,62 @@
                           aria-label="With textarea" placeholder="有什麼新鮮事" style="resize: none;"></textarea>
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col p-0">
+                        <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Reply Modal -->
+          <div class="modal" tabindex="-1" role="dialog" id="post-reply-modal">
+            <div class="modal-dialog">x
+              <div class="modal-content">
+
+                <div class="modal-header py-1">
+                  <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="color:#FF6600">X</button>
+                </div>
+
+                <div class="modal-body py-1">
+                  <form action="/tweets/id/replies" method="POST">
+
+                    <div class="row">
+                      <div class="col-auto py-0 px-1 d-flex flex-column align-items-center">
+                        <div class="">
+                          <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
+                        </div>
+                        <div class="border-0 flex-grow-1 my-1" style="width: 2px; background-color: #DCDCDC;">
+                        </div>
+                      </div>
+                      <div class="border col py-0 px-1">
+                        <div class="border d-flex">
+                          <div class="border">1-1</div>
+                          <div class="border">1-2</div>
+                        </div>
+                        <div class="border">2</div>
+                        <div class=" border d-flex">
+                          <div class="border">3-1</div>
+                          <div class="border">3-2</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="border col-auto py-0 px-1">
+                        <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
+                      </div>
+                      <div class="border col py-0 px-1">
+                        <textarea name="description" class="form-control border-0 w-100" rows="5"
+                          aria-label="With textarea" placeholder="4" style="resize: none;"></textarea>
+                      </div>
+                    </div>
+
                     <div class="row">
                       <div class="col p-0">
                         <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
