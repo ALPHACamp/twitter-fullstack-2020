@@ -18,6 +18,7 @@ app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: 
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
 app.use('/upload', express.static(__dirname + '/upload'))
 app.use(session({
   secret: process.env.SESSION_SECRET || 'ssseeecccrrreett',

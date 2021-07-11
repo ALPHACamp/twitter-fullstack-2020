@@ -1,9 +1,6 @@
 const bcrypt = require('bcryptjs')
-
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
-
-
 // const imgur = require('imgur-node-api')
 // const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -12,27 +9,6 @@ const userController = {
     return res.render('signup')
   },
   signUp: (req, res) => {
-    if (req.body.passwordCheck !== req.body.password) {
-      req.flash('error_messages', '兩次密碼輸入不同！')
-      return (res.redirect('/signup'))
-    } else {
-      User.findOne({ where: { email: req.body.email } }).then(user => {
-        if (user) {
-          req.flash('error_messages', '信箱重複！')
-          return res.redirect('/signup')
-        } else {
-          User.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password,
-              bcrypt.genSaltSync(10), null)
-          }).then(user => {
-            req.flash('success_messages', '成功註冊帳號！')
-            return res.redirect('/signin')
-          })
-        }
-      })
-    }
     const { name, account, email, password, passwordConfirm } = req.body
     const errors = []
     if (!name || !account || !email || !password || !passwordConfirm) {
@@ -69,12 +45,10 @@ const userController = {
   signInPage: (req, res) => {
     return res.render('signin')
   },
-
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
-
   signOut: (req, res) => {
     req.flash('success_messages', '成功登出！')
     req.logout()
@@ -122,7 +96,7 @@ const userController = {
       })
 
   },
-  getOtherprofile: (req, res) => {
+  getOtherProfile: (req, res) => {
     User.findByPk(req.params.id,
       {
         include: [
@@ -162,7 +136,6 @@ const userController = {
       })
       .then(() => res.redirect('back'))
   },
-
   removeLike: (req, res) => {
     return Like.findOne({
       where: { UserId: req.user.id, TweetId: req.params.TweetId }
