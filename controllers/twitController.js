@@ -49,15 +49,25 @@ const twitController = {
   },
 
   getUser: (req, res) => {
-    Tweet.findAll({
-      order: [['createdAt', 'DESC']],
-      raw: true,
-      nest: true,
-      include: [User]
-    }).then(tweet => {
-      console.log(tweet) // 加入 console 觀察資料的變化
-      return res.render('user', { tweet })
-    })
+    const userId = req.user.id
+    User.findByPk(userId, { raw: true })
+
+      .then((user) => {
+        console.log(user)
+        Tweet.findAll({
+          order: [['createdAt', 'DESC']],
+          raw: true,
+          nest: true,
+          include: [User]
+        }).then(tweet => {
+
+          console.log(tweet) // 加入 console 觀察資料的變化
+          console.log(user.introduction)
+          return res.render('user', { tweet, user })
+        })
+      })
+
+
 
   },
 
