@@ -126,5 +126,13 @@ module.exports = {
       return options.fn(this)
     }
     return options.inverse(this)
+  },
+
+  limitText: function (str) {
+    let strList = str.split(' ')
+    if (strList.length > 50) {
+      strList = strList.slice(0, 50)
+    }
+    return strList.join(' ')
   }
 }
