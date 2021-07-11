@@ -2,14 +2,6 @@
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
-  }, {});
-  User.associate = function (models) {
-    User.hasMany(models.followship)
-    User.hasMany(models.like)
-    User.hasMany(models.reply)
-    User.hasMany(models.tweet)
-  };
-  User.init({
     name: DataTypes.STRING,
     account: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -17,9 +9,12 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     introduction: DataTypes.STRING,
     role: DataTypes.BOOLEAN,
-  }, {
-    sequelize,
-    modelName: 'User'
-  })
+  }, {});
+  User.associate = function (models) {
+    User.hasMany(models.Followship)
+    User.hasMany(models.Like)
+    User.hasMany(models.Reply)
+    User.hasMany(models.Tweet)
+  };
   return User;
 };

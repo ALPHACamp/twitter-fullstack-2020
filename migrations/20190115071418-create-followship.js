@@ -10,7 +10,6 @@ module.exports = {
       },
       followerId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'User',
           key: 'id'
@@ -18,7 +17,6 @@ module.exports = {
       },
       followingId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'User',
           key: 'id'
