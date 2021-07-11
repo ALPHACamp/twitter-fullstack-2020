@@ -44,6 +44,17 @@ const tweetService = {
       description: req.body.description
     })
     return callback({ status: 'success', message: 'tweet has been created successfully!' })
+  },
+  postReply: async (req, res, callback) => {
+    if (!req.body.comment) {
+      return callback({ status: 'error', message: 'comment empty!' })
+    }
+    await Reply.create({
+      UserId: req.user.id,
+      TweetId: req.params.id,
+      comment: req.body.comment
+    })
+    return callback({ status: 'success', message: 'reply has been created successfully!' })
   }
 }
 
