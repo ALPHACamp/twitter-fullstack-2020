@@ -36,12 +36,9 @@ app.use((req, res, next) => {
 })
 
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
 require('./routes')(app, passport)
-
 
 module.exports = app

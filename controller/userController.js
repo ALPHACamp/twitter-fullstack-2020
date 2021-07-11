@@ -41,6 +41,9 @@ const userController = {
 
   //登入頁面
   signInPage: (req, res) => {
+    if (res.locals.user) {
+      delete res.locals.user
+    }
     return res.render('signin')
   },
 
@@ -51,7 +54,7 @@ const userController = {
   },
 
   //登出
-  logout: (req, res) => {
+  signOut: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
@@ -217,7 +220,7 @@ const userController = {
             nest: true,
             where: { userId: user.id },
           }).then(tweets => {
-            return res.render('tweets', {
+            return res.render('user/tweets', {
               user,
               followingCount: following.count,
               followerCount: follower.count,
@@ -229,92 +232,36 @@ const userController = {
       })
     })
   },
-
-  getUserFollowings: async (req, res) => {
-    const topFollowing = res.locals.data
-    const top5Following = topFollowing.slice(0, 5)
-    const userInfo = res.locals.userInfo
-    try {
-      const tweets = await Tweet.findAndCountAll({
-        raw: true,
-        nest: true,
-        where: {
-          UserId: req.params.userId
-        }
+  //進入帳號設定頁面
+  getUserEdit: (req, res) => {
+    return User.findByPk(req.params.userId)
+      .then(user => {
+        res.render('userEdit', { user: user.toJSON() })
       })
-
-      let Data = []
-      const tweetCount = tweets.count
-      Data = userInfo.followings.map(async (following, index) => {
-        const [followingUser] = await Promise.all([
-          User.findOne({
-            raw: true,
-            nest: true,
-            where: {
-              id: following.followingId
-            }
-          })
-        ])
-        return {
-          followingUser: followingUser
-        }
-      })
-      Promise.all(Data).then(data => {
-        return res.render('followings', {
-          user: userInfo.user,
-          data,
-          tweetCount,
-          topFollowing: top5Following
-        })
-      })
-    }
-    catch (err) {
-      console.log('getUserFollowings err')
-      return res.render('/')
-    }
   },
 
-  getUserFollowers: async (req, res) => {
-    const topFollowing = res.locals.data
-    const top5Following = topFollowing.slice(0, 5)
-    const userInfo = res.locals.userInfo
-    try {
-      const tweets = await Tweet.findAndCountAll({
-        raw: true,
-        nest: true,
-        where: {
-          UserId: req.params.userId
-        }
-      })
-
-      let Data = []
-      const tweetCount = tweets.count
-      Data = userInfo.followers.map(async (follower, index) => {
-        const [followerUser] = await Promise.all([
-          User.findOne({
-            raw: true,
-            nest: true,
-            where: {
-              id: follower.followerId
-            }
-          })
-        ])
-        return {
-          followerUser: followerUser
-        }
-      })
-      Promise.all(Data).then(data => {
-        return res.render('followers', {
-          user: userInfo.user,
-          data,
-          tweetCount,
-          topFollowing: top5Following
-        })
-      })
+  putUserEdit: (req, res) => {
+    if (!req.body.name) {
+      req.flash('error_messages', "name didn't exist")
+      return res.redirect('back')
     }
-    catch (err) {
-      console.log('getUserFollowers err')
-      return res.render('/')
+    if (req.body.passwordCheck !== req.body.password) {
+      req.flash('error_messages', '兩次密碼輸入不同！')
+      return res.redirect('/signup')
+    } else {
+      User.findByPk(req.params.userId)
+        .then((user) => {
+          user.update({
+            account: req.body.account,
+            name: req.body.name,
+            email: req.body.email,
+            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+          })
+            .then((user) => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect(`/users/${user.id}/edit`)
+            })
+        })
     }
   },
 
@@ -328,7 +275,7 @@ const userController = {
       Followship.findAndCountAll({
         raw: true,
         nest: true,
-        where: { followerId: user.id }
+        where: { followerId: user.id },
       }).then(following => {
         Followship.findAndCountAll({
           raw: true,
@@ -337,8 +284,6 @@ const userController = {
         }).then(follower => {
           res.locals.userInfo = {
             user: user.dataValues,
-            followings: following.rows,
-            followers: follower.rows,
             followingCount: following.count,
             followerCount: follower.count
           }

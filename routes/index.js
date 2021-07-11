@@ -61,33 +61,42 @@ module.exports = (app, passport) => {
       if (helpers.getUser(req).role) {
         return next()
       }
-      return res.redirect('/')//似乎都會跑這裡
+      return res.redirect('/')
     }
     res.redirect('/signin')
   }
+  //如果登入的人是管理者，並且只用在管理者登入的路由
+  const isAdmin = (req, res, next) => {
+    res.locals.isAdmin = req.user.role === 'admin'
+    return next()
+  }
+
   app.get('/admin/signin', adminController.adminSignInPage)
-  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.adminSignIn)
-  app.get('/admin/tweets', authenticatedAdmin, adminController.getAdminTweets)
-  app.get('/admin/users', adminController.getAdminUsers)
-  app.delete('/admin/tweets/:tweetId', getTopFollowing, adminController.deleteAdminTweet)
+  app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), isAdmin, adminController.adminSignIn)
+  app.get('/admin/tweets', authenticatedAdmin, isAdmin, adminController.getAdminTweets)
+  app.get('/admin/users', authenticatedAdmin, isAdmin, adminController.getAdminUsers)
+  app.delete('/admin/tweets/:tweetId', authenticatedAdmin, isAdmin, adminController.deleteAdminTweet)
+
+  //前台
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   //登入、註冊、登出
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-  app.get('/logout', userController.logout)
+  app.get('/signout', userController.signOut)
 
 
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, getTopFollowing, tweetController.getTweets)
-  app.post('/tweets', authenticated, getTopFollowing, tweetController.postTweet)
   app.get('/tweets/:tweetId', authenticated, getTopFollowing, tweetController.getTweet)
 
   app.get('/users/:userId/replies', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserReplies)
   app.get('/users/:userId/likes', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserLikes)
   app.get('/users/:userId/tweets', authenticated, getTopFollowing, userController.getUserTweets)
-  app.get('/users/:userId/followings', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserFollowings)
-  app.get('/users/:userId/followers', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserFollowers)
+  app.get('/users/:userId/edit', authenticated, userController.getUserEdit)
+  app.put('/users/:userId', authenticated, userController.putUserEdit)
 
 }
