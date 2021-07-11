@@ -91,7 +91,6 @@ const userController = {
     if (req.user.id === req.params.id) {
       return res.redirect("back");
     }
-
     return Followship.create({
       followerId: req.user.id,
       followingId: req.params.userId
@@ -118,7 +117,8 @@ const userController = {
           { model: Tweet, include: [Reply] },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
-        ]
+        ],
+        order: ['created']
       }),
       User.findAll({
         where: { is_admin: false },

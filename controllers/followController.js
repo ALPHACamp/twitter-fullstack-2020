@@ -35,22 +35,35 @@ const followController = {
   },
   getFollower: (req, res) => {
     User.findAll({
-
+      where: { id: req.user.id },
       include: [
         {
           model: User,
           as: 'Followings',
         }
       ],
+      raw: true,
+      nest: true,
     }).then((users) => {
 
       const id = req.user.id
       users = users.map(user => ({
-        ...user.dataValues,
-        isFollowing: req.user.Followings.map(d => d.id).includes(user.id)
+        ...user.Followings.Followship,
+        createdAt: user.createdAt
       }))
+      // users = users.map(user => ({
+      //   ...user.dataValues,
+      //   isFollowing: req.user.Followings.map(d => d.id).includes(user.id)
+      // }))
 
-      users = users.filter(user => user.isFollowing === true)
+
+      users = users.sort((a, b) => {
+        return bgetTime() - a.getTime()
+      })
+      console.log(users)
+
+
+      // users = users.filter(user => user.isFollowing === true)
 
       return res.render('followingship', {
         users: users,
