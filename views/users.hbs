@@ -20,7 +20,7 @@
   <div class="d-flex m-2 justify-content-end">
     {{#isEqual thisPageUser.id user.id}}
     <button type="submit" class="btn btn-outline-regular rounded-pill" data-bs-toggle="modal"
-      data-bs-target="#editProfile">
+      data-bs-target="#editProfile" id="edit-profile-modal-button">
       編輯個人資料
     </button>
     <!-- Modal -->
@@ -45,7 +45,7 @@
               style="background-image: url({{user.cover}});">
               <div class="d-flex w-100 h-100">
                 <div class="col-4" id="avatar-input-group">
-                  <input name="coverImage" id="avatar-input" type="file" accept="image/gif, image/jpeg, image/png"
+                  <input name="avatarImage" id="avatar-input" type="file" accept="image/gif, image/jpeg, image/png"
                     style="display: none;">
                   <label
                     class="btn rounded-circle border border-3 border-white d-flex justify-content-center align-items-center"
@@ -82,8 +82,11 @@
                   </label>
                 </div>
               </div>
-
-
+            </div>
+            <div class="form-floating m-3 mt-5" id="name-input-group">
+              <input type="text" class="form-control" id="floatingInput" placeholder="" name="name" value="{{user.name}}" maxlength="50">
+              <label for="floatingInput">名稱</label>
+              <p class="text-end" style="color: #657786;"></p>
             </div>
 
 

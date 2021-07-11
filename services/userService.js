@@ -1,6 +1,12 @@
 const { Tweet, User, Reply, Like } = require('../models')
+const helpers = require('../_helpers')
 
 const userService = {
+  getUser: async (req, res, callback) => {
+      const user = helpers.getUser(req)
+      return callback(user)
+  },
+
   getUserTweets: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
     const tweets = await getTweets(req, { UserId: thisPageUser.id })
