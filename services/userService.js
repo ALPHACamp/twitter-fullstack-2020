@@ -20,7 +20,17 @@ const userService = {
       tweets,
       Appear: { navbar: true, top10: true }
     })
-  }
+  },
+
+  getUserLikes: async (req, res, callback) => {
+    const thisPageUser = await getThisPageUser(req)
+    const tweets = await getTweets(req, { '$LikedUsers.id$': thisPageUser.id })
+    return callback({
+      thisPageUser,
+      tweets,
+      Appear: { navbar: true, top10: true }
+    })
+  },
 
 
 }

@@ -62,6 +62,12 @@ const userController = {
     })
   },
 
+  userPageLikes: (req, res) => {
+    userService.getUserLikes(req, res, (data) => {
+      return res.render('users-liked', data)
+    })
+  },
+
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
