@@ -7,8 +7,16 @@ const Tweet = db.Tweet
 const twitController = {
 
   getTwitters: (req, res) => {
-    Tweet.find
-    return res.render('userAdmin')
+    Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+      include: [User]
+    }).then(tweet => {
+      console.log(tweet) // 加入 console 觀察資料的變化
+      return res.render('userAdmin', { tweet })
+    })
+
   },
   toTwitters: (req, res) => {
     console.log(req.user.id)

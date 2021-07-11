@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 
 
-app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs' }))
+app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs', helpers: require('./config/handlebars-helpers') }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))

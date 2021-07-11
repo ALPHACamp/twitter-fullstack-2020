@@ -23,7 +23,7 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, twitController.getTwitters)
   // app.get('/twitters', twitController.getTwitters)
   app.post('/', authenticated, twitController.toTwitters)
-  
+
   //admin ???
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/twitters'))
 
@@ -67,7 +67,7 @@ module.exports = (app, passport) => {
   app.get('/tweets', twitController.getTwitters)
 
   //前台發送推特信息
-  app.post('/tweets', twitController.putTwitters)
+  // app.post('/tweets', twitController.putTwitters)
 
   // 查看tweets的訊息回覆
   app.get('/tweets/replies', twitController.getReplies)
