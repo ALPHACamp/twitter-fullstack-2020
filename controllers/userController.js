@@ -56,6 +56,12 @@ const userController = {
     })
   },
 
+  userPageReplies: (req, res) => {
+    userService.getUserReplies(req, res, (data) => {
+      return res.render('users-replies',data)
+    })
+  },
+
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
