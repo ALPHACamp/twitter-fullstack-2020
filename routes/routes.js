@@ -37,6 +37,7 @@ router.get('/signout', userController.signOut)
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.postTweet)
 router.get('/tweets/:id', authenticated, tweetController.getTweet)
+router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 
 router.post('/like/:tweetId', authenticated, userController.addLike)
 router.delete('/like/:tweetId', authenticated, userController.removeLike)

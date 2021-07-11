@@ -6,6 +6,7 @@ const tweetService = {
       order: [['createdAt', 'DESC']],
       include: [
         User,
+        Reply,
         { model: User, as: 'LikedUsers' }
       ]
     })
@@ -13,6 +14,7 @@ const tweetService = {
       ...t.dataValues,
       User: t.User.dataValues,
       LikedCount: t.LikedUsers.length,
+      ReplyCount: t.Replies.length,
       isLiked: req.user.LikedTweets.map(t => t.id).includes(t.dataValues.id)
     }))
     return callback({
@@ -21,10 +23,11 @@ const tweetService = {
     })
   },
   getTweet: async (req, res, callback) => {
-    const tweet = await Tweet.findByPk(req.params.id, {
+    let tweet = await Tweet.findByPk(req.params.id, {
       include: [
         User,
-        { model: Reply, include: [User] }
+        { model: Reply, include: [User] },
+        { model: User, as: 'LikedUsers' }
       ]
     })
     return callback({
@@ -41,6 +44,17 @@ const tweetService = {
       description: req.body.description
     })
     return callback({ status: 'success', message: 'tweet has been created successfully!' })
+  },
+  postReply: async (req, res, callback) => {
+    if (!req.body.comment) {
+      return callback({ status: 'error', message: 'comment empty!' })
+    }
+    await Reply.create({
+      UserId: req.user.id,
+      TweetId: req.params.id,
+      comment: req.body.comment
+    })
+    return callback({ status: 'success', message: 'reply has been created successfully!' })
   }
 }
 
