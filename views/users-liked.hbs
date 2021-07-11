@@ -19,27 +19,28 @@
   </div>
   <div class="d-flex m-2 justify-content-end">
     {{#isEqual thisPageUser.id user.id}}
-    <button type="submit" class="btn btn-outline-regular rounded-pill"  data-bs-toggle="modal" data-bs-target="#editProfile">
+    <button type="submit" class="btn btn-outline-regular rounded-pill" data-bs-toggle="modal"
+      data-bs-target="#editProfile">
       編輯個人資料
-      </button>
-      <!-- Modal -->
-      <div class="modal fade" id="editProfile" tabindex="-1">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="editProfile" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
+    </div>
     {{else}}
     {{#if thisPageUser.isFollowing}}
     <button type="submit" class="btn btn-outline-regular rounded-pill">追隨</button>
@@ -64,9 +65,9 @@
     </div>
   </div>
   <nav class="nav border-bottom">
-    <a class="nav-link active" href="/users/{{thisPageUser.id}}">推文</a>
+    <a class="nav-link" href="/users/{{thisPageUser.id}}">推文</a>
     <a class="nav-link" href="/users/{{thisPageUser.id}}/replies">推文與回覆</a>
-    <a class="nav-link" href="/users/{{thisPageUser.id}}/likes">喜歡的內容</a>
+    <a class="nav-link active" href="/users/{{thisPageUser.id}}/likes">喜歡的內容</a>
   </nav>
   <div id="tweets">
     {{#each tweets}}
