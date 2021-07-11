@@ -82,8 +82,8 @@
         </p>
       </div>
       <div class="card-text">
-        <span class="small">120個 <small class="text-muted">跟隨中</small></span>
-        <span class="small">120個 <small class="text-muted">跟隨者</small></span>
+        <span class="small">{{followingscount}}個 <small class="text-muted">跟隨中</small></span>
+        <span class="small">{{followerscount}}個 <small class="text-muted">跟隨者</small></span>
       </div>
 
     </div>
@@ -144,33 +144,45 @@
   </div>
 
   {{!-- follower bar --}}
-
   <div class="col-3">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+    <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 300px;">
 
-      <div class="list-group list-group-flush border-bottom scrollarea rounded">
-
-        <div class="card" style="width: 18rem;">
-          <div class="d-flex justify-content-center align-items-center" style="height: 50px;font-size:large">
-            跟隨誰</div>
-          <ul class="list-group list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Subheading</div>
-                Cras justo odio
+      <div class="card" style="width: 20rem;border:none">
+        <ul class="list-group list-group">
+          <li class="list-group-item bg-light"
+            style="height: 50px;font-size:large;border-left: none;border-right: none;border-top: none">
+            跟隨誰
+          </li>
+          {{#each followship}}
+          <li class="list-group-item bg-light" style="border-left: none;border-right: none">
+            <div class="row">
+              <div class="col-2">
+                <a href="/users/other/{{this.id}}" class="text-center">
+                  <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
               </div>
-              <button type="submit" class="btn btn-success">跟隨</button>
-            </li>
 
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <a href="/followership" style="text-decoration: none;color:chocolate">顯示更多</a>
-            </li>
-          </ul>
+              <div class="col-5" style="margin-top:auto;margin-botton:auto;margin-left:1vw">
+                <p>{{this.name}} <br>
+                  <small class="text-muted"> @{{this.account}}</small>
+                </p>
+              </div>
 
-        </div>
+              <div class="col-4" style="margin:auto">
+                {{#if this.isFollowed}}
+                <button type=" submit" class="btn btn-success btn-sm rounded-pill">跟隨中</button>
+                {{else}}
+                <button type="submit" class="btn btn-outline-success btn-sm rounded-pill">跟隨</button>
+                {{/if}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
+            <a href=" /users/{{userId}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
+          </li>
+        </ul>
       </div>
     </div>
+
   </div>
-
-
 </div>

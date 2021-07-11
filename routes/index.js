@@ -28,7 +28,7 @@ module.exports = (app, passport) => {
 
   //user
   app.get('/users/self/:id', authenticatedUser, userController.getProfile)
-  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike)
+  // app.get('/user/profile/edit', authenticatedUser, )
 
 
   //follow function
