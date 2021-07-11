@@ -89,9 +89,9 @@
                 {{/if}}
               
           
-                {{#if tweet.Replies.length}}
+                {{#if tweet.replyCount}}
                   <button class="btn btn-danger ">
-                    <i class="far fa-comment">{{ tweet.Replies.length }}</i>
+                    <i class="far fa-comment">{{ tweet.replyCount }}</i>
                   </button>
                 {{else}}
                 <button class="btn btn-secondary">

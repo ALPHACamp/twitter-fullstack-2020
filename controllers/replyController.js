@@ -7,6 +7,12 @@ const replyController = {
       TweetId: req.body.TweetId,
       content: req.body.content
     })
+      .then(() => {
+        return Tweet.findByPk(req.body.TweetId)
+          .then((tweet) => {
+            return tweet.increment('replyCount')
+          })
+      })
       .then((reply) => {
         res.redirect(`/tweets/${req.body.TweetId}`)
       })
@@ -14,10 +20,14 @@ const replyController = {
   deleteReply: (req, res) => {
     return Reply.findByPk(req.params.id)
       .then((reply) => {
-        reply.destroy()
-          .then((reply) => {
-            res.redirect(`/tweets/${reply.TweetId}`)
-          })
+        reply.destroy().then(() => {
+          console.log(`TweetId is : ${reply.TweetId}`)
+          return Tweet.findByPk(reply.TweetId)
+            .then((tweet) => {
+              res.redirect(`/tweets/${tweet.id}`)
+              return Promise.all(tweet.decrement('replyCount'))
+            })
+        })
       })
   }
 }
