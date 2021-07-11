@@ -111,18 +111,50 @@ const userController = {
 
   },
   getProfile: (req, res) => {
-    User.findByPk(req.user.id, {
-      include: [
-        Tweet,
-        { model: Tweet, include: [Reply] },
-      ]
-    })
-      .then((users) => {
-
-        res.render('userprofile', {
-          users: users.toJSON()
-        })
+    Promise.all([
+      User.findByPk(req.user.id, {
+        include: [
+          Tweet,
+          { model: Tweet, include: [Reply] },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ]
+      }),
+      User.findAll({
+        where: { is_admin: false },
+        include: [{ model: User, as: 'Followers' }]
       })
+    ]).then(([users, followship]) => {
+      //超過千位，加逗點
+      const thousandComma = function (num) {
+        let result = '', counter = 0
+        num = (num || 0).toString()
+        for (let i = num.length - 1; i >= 0; i--) {
+          counter++
+          result = num.charAt(i) + result
+          if (!(counter % 3) && i !== 0) { result = ',' + result }
+        }
+        return result
+      }
+      console.log(users)
+      const followerscount = users.Followers.length
+      const followingscount = users.Followings.length
+
+      followship = followship.map(followships => ({
+        ...followships.dataValues,
+        FollowerCount: followships.Followers.length,
+        isFollowed: req.user.Followings.some(d => d.id === followships.id)
+      }))
+      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+
+      res.render('userprofile', {
+        users: users.toJSON(),
+        followerscount: thousandComma(followerscount),     //幾個跟隨我
+        followingscount: thousandComma(followingscount),   //我跟隨幾個
+        followship: followship
+      })
+    })
 
   },
   getOtherprofile: (req, res) => {

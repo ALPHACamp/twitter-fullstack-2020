@@ -30,7 +30,6 @@ module.exports = (app, passport) => {
   app.get('/users/self/:id', authenticatedUser, userController.getProfile)
   // app.get('/user/profile/edit', authenticatedUser, )
 
-
   //follow function
   app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)
   app.get('/users/:userId/followering', authenticatedUser, followController.getFollower)

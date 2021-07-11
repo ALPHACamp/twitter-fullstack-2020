@@ -34,16 +34,16 @@
 
   {{!-- middle bar --}}
 
-  <div class="card " style="width: 800px;">
-
-    <div class="row m-2">
-      <a href="" style="color:black" class="col-1"><i class="fas fa-arrow-left fa-2x"></i></a>
+  <div class="card" style="width: 800px;">
+    <div class="row">
+      <a href="" style="color:black" class="col-1">
+        <i class="fas fa-arrow-left fa-2x"></i>
+      </a>
 
       <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none col-3">
         <span class="fs-5 fw-semibold">{{user.name}}</span>
       </a>
     </div>
-
 
     <div class="follower-head">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -58,51 +58,50 @@
       </ul>
     </div>
 
+    <div class="tab-pane active" id="follower" role="tabpanel" aria-labelledby="home-tab">
+      <ul class="list-group list-group-flush border-bottom">
+        {{#each users}}
+        <li class="list-group-item">
+          <div class="row g-0">
 
-    <br>
-    <div class="tab-content">
-      <div class="tab-pane active" id="follower" role="tabpanel" aria-labelledby="home-tab">
-        <ul class="list-group list-group-flush border-bottom">
-          {{#each users}}
-          <li class="list-group-item">
-            <div class="row g-0">
-              <div class="col-md-2">
-                <a href="/users/other/{{this.id}}" class="text-center">
-                  <img src="{{this.img}}" alt="" width="75" height="75"
-                    class="rounded-circle me-2 rounded mt-2 d-block">
-                </a>
-              </div>
-              <div class="col-md-10">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-9">
-                      <h6 class="card-title w-50">{{this.name}}
-                        <p class="text-muted">@{{this.account}}</p>
-                      </h6>
-                    </div>
-                    <div class="col-3">
-                      {{#if this.isFollowing}}
-                      <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                        <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
-                      </form>
-                      {{else}}
-                      <form action="/following/{{this.id}}" method="POST" style="display: contents;">
-                        <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
-                      </form>
-                      {{/if}}
-                    </div>
+            <div class="col-md-1">
+              <a href="/users/other/{{this.id}}" class="text-center">
+                <img src="{{this.img}}" alt="" width="75" height="75" class="rounded-circle me-2 rounded mt-2 d-block">
+              </a>
+            </div>
+
+            <div class="col-md-10">
+              <div class="card-body" style="margin-left:1vw">
+                <div class="row">
+                  <div class="col-9 d-flex justify-content-start">
+                    <h6 class="card-title">{{this.name}}
+                      <p class="text-muted">@{{this.account}}</p>
+                    </h6>
                   </div>
-                  <h6 class="card-text">{{this.description}}</h6>
+
+                  <div class="col-3">
+                    {{#if this.isFollowing}}
+                    <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                      <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+                    </form>
+                    {{else}}
+                    <form action="/following/{{this.id}}" method="POST" style="display: contents;">
+                      <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
+                    </form>
+                    {{/if}}
+                  </div>
+
                 </div>
+
+                <h6 class="card-text">{{this.description}}</h6>
               </div>
             </div>
-          </li>
-          {{/each}}
-        </ul>
-      </div>
-
-
+          </div>
+        </li>
+        {{/each}}
+      </ul>
     </div>
+
   </div>
 
 

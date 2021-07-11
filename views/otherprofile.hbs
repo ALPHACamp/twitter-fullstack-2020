@@ -1,32 +1,37 @@
 <div class="d-flex flex-row p-auto m-auto">
 
   {{!-- home bar --}}
-  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+  <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 300px;margin:2vw">
     <a class="navbar-brand" href="#"></a>
     <br>
     <br>
 
-    <ul class="nav flex-column">
+    <ul class="nav flex-column p-2" style="position: fixed;">
       <li class="nav-item">
-        <a class="nav-link active" href="/tweets">首頁</a>
+        <a class="nav-link active" href="/tweets" style="color: black;font-weight:800">
+          <i class="fas fa-home" style="font-size: x-large;margin-right:15px"></i>
+          首頁</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">個人資料</a>
+      <li class="nav-item" style="font-size:large">
+        <a class="nav-link" href="/users/self/{{user.id}}" style="color: black;font-weight:800">
+          <i class="far fa-user" style="font-size: x-large;margin-right:15px"></i>
+          個人資料</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">設定</a>
+      <li class="nav-item" style="font-size:large">
+        <a class="nav-link" href="#" style="color: black;font-weight:800">
+          <i class="fas fa-cog " style="font-size: x-large;margin-right:15px"></i>
+          設定</a>
+      </li>
+      <li class="nav-item" style="font-size:large">
+        <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3" style="width:220px;">推文</button>
+      </li>
+      <li class="nav-item" style="font-size:large">
+        <a href="/signout" class="btn d-flex" style="margin-top:10px;">
+          <h5 class="m-2">登出<i class="fas fa-sign-out-alt fa-1x" style="margin:1vw"></i>
+          </h5>
+        </a>
       </li>
     </ul>
-
-
-    <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3">推文</button>
-    <div class="d-flex mt-5">
-      <a href="/signout" class="btn">
-        <h5 class="m-2">登出<i class="fas fa-sign-out-alt fa-1x"></i>
-        </h5>
-      </a>
-    </div>
-
   </div>
 
   {{!-- middle bar --}}
@@ -146,7 +151,7 @@
   {{!-- follower bar --}}
 
   <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 350px;">
-    <div class="card" style="width: 22rem;border:none">
+    <div class="card" style="width: 22rem;border:none;position:fixed">
       <ul class="list-group list-group">
         <li class="list-group-item bg-light"
           style="height: 50px;font-size:large;border-left: none;border-right: none;border-top: none">

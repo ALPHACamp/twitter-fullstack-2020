@@ -56,20 +56,19 @@
       </ul>
     </div>
 
-    <br>
     <div class="tab-content">
       <div class="tab-pane active" id="follower" role="tabpanel" aria-labelledby="home-tab">
         <ul class="list-group list-group-flush border-bottom">
           {{#each users}}
           <li class="list-group-item">
             <div class="row g-0">
-              <div class="col-md-2">
+              <div class="col-md-1">
                 <a href="/users/other/{{this.id}}" class="text-center">
                   <img src="{{this.img}}" alt="" width="75" height="75"
                     class="rounded-circle me-2 rounded mt-2 d-block">
                 </a>
               </div>
-              <div class="col-md-10">
+              <div class="col-md-10" style="margin-left:1vw">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-9">
