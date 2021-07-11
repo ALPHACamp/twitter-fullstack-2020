@@ -1,3 +1,7 @@
+.btn {
+  padding:3px 12px 3px 12px;
+}
+
 .btn-regular {
   color: white;
   background-color: #FF6600;
@@ -87,4 +91,13 @@ a {
 .nav > a.active{
   color:#FF6600;
   border-bottom: 2px solid #FF6600;
+}
+
+.btn-close {
+  background: none;
+  opacity: 1;
+}
+
+.btn-close > svg > path {
+  fill:#FF6600;
 }
