@@ -1,7 +1,6 @@
 const helpers = require('../_helpers')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
-const { authenticate } = require('passport')
 const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
@@ -25,27 +24,23 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  //user
+  // user
   app.get('/users/self/:id', authenticatedUser, userController.getProfile)
   // app.get('/users/self/like/:id', authenticatedUser, userController.getLike)
 
-
-  //follow function
+  // follow function
   app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)
   app.get('/users/:userId/followering', authenticatedUser, followController.getFollower)
   app.post('/following/:userId', authenticatedUser, userController.addFollowing)
   app.delete('/following/:userId', authenticatedUser, userController.removeFollowing)
 
-// like
+  // like
   app.post('/like/:TweetId', authenticatedUser, userController.addLike)
   app.delete('/like/:TweetId', authenticatedUser, userController.removeLike)
 
-
-  //other user
+  // other user
   app.get('/users/other/:id', authenticatedUser, userController.getOtherprofile)
   app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
-
-
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
@@ -58,7 +53,6 @@ module.exports = (app, passport) => {
   app.get('/admin/signin', adminController.signInPage)
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
   app.get('/admin/signout', adminController.signOut)
-
 
   // signin & signup
   app.get('/signup', userController.signUpPage)
