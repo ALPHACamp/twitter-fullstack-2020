@@ -28,7 +28,6 @@ const adminController = {
       req.flash('error_messages', '帳號或密碼錯誤')
       res.redirect('/admin/signin')
     }
-
   },
 
   getTwitter: (req, res) => {
