@@ -1,6 +1,5 @@
-
 const bcrypt = require('bcryptjs')
-const { User } = require('../models')
+const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
 // const imgur = require('imgur-node-api')
 // const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -57,6 +56,100 @@ const userController = {
   },
   getTweets: (req, res) => {
     return res.render('tweets')
+  },
+  addFollowing: (req, res) => {
+
+    if (req.user.id === req.params.id) {
+      return res.redirect("back");
+    }
+
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.userId
+    })
+      .then(() => res.redirect('back'))
+  },
+  removeFollowing: (req, res) => {
+
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then((followship) => followship.destroy())
+      .then(() => res.redirect('back'))
+
+  },
+  getProfile: (req, res) => {
+    User.findByPk(req.user.id, {
+      include: [
+        Tweet,
+        { model: Tweet, include: [Reply] },
+      ]
+    })
+      .then((users) => {
+
+        res.render('userprofile', {
+          users: users.toJSON()
+        })
+      })
+
+  },
+  getOtherProfile: (req, res) => {
+    User.findByPk(req.params.id,
+      {
+        include: [
+          Tweet,
+          { model: Tweet, include: [Reply] },
+        ]
+      })
+      .then((users) => {
+
+        res.render('otherprofile', {
+          users: users.toJSON()
+        })
+      })
+  },
+  toggleNotice: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        if (req.user.id === req.params.id) {
+          res.redirect('back')
+        }
+
+        const isNoticed = !user.isNoticed
+        user.update({ isNoticed })
+      })
+      .then((user) => {
+        req.flash('success_messages', '已開啟訂閱！')
+        res.redirect('back')
+      })
+  },
+  addLike: (req, res) => {
+    return Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
+      .then(() => {
+        return Tweet.findByPk(req.params.TweetId)
+          .then((tweet) => {
+            return tweet.increment('likes')
+          })
+      })
+      .then(() => res.redirect('back'))
+  },
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: { UserId: req.user.id, TweetId: req.params.TweetId }
+    })
+      .then((like) => {
+        like.destroy()
+          .then(() => {
+            return Tweet.findByPk(req.params.TweetId)
+              .then((tweet) => {
+                res.redirect('back')
+                return Promise.all(tweet.decrement('likes'))
+              })
+          })
+      })
   }
 }
 
