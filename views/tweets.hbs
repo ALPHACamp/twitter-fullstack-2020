@@ -44,7 +44,10 @@
           </div>
 
           <div class="py-1">
-            <a class="btn text-start text-wrap" href="/tweets/{{this.id}}">{{this.description}}</a>
+            {{!-- <a class="btn text-start text-wrap" href="/tweets/{{this.id}}">{{this.description}}</a> --}}
+            <a class="btn" href="/tweets/{{this.id}}">
+              <p class="text-start" style="word-break: break-all;">{{this.description}}</p>
+            </a>
           </div>
 
           <div class="d-flex py-1">

@@ -1,11 +1,7 @@
-// const BASE_URL = 'https://movie-list.alphacamp.io'
-// const INDEX_URL = BASE_URL + '/api/v1/movies/'
-
-console.log('into pulic/replyModal/line4...')
 const BASE_URL = 'http://localhost:8000'
 const INDEX_URL = BASE_URL + '/api/tweets/'
 
-
+const switchModal = document.querySelectorAll('.switch-modal')
 
 function showReplyModal(id) {
   const replyUserName = document.querySelector('#modal-reply-user-name')
@@ -29,7 +25,7 @@ function showReplyModal(id) {
     })
 }
 
-const switchModal = document.querySelectorAll('.switch-modal')
+
 
 switchModal.forEach(tweet => {
   tweet.addEventListener('click', function onSwitchModalClicked(event) {
