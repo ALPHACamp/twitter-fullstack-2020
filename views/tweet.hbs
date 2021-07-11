@@ -73,6 +73,32 @@
               <a href="/users/{{tweet.UserId}}" class="h5 text-dark text-decoration-none">{{tweet.User.name}}</a>
               <span style="color: #6c757d; font-size: 0.875em">@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
               <p class="mt-2">{{tweet.content}} </p>
+              <div class="col-2 d-flex align-items-center justify-content-center ">
+                {{#if this.isLiked }}
+                <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
+                  <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-heart w-100 like"> {{ tweet.LikedbyUser.length }}</i>
+                  </button>
+                </form>
+                {{else}}
+                <form action="/like/{{tweet.id}}" method="POST">
+                  <button type="submit" class="btn btn-primary">
+                    <i class="far fa-heart">{{ tweet.LikedbyUser.length }}</i>
+                  </button>
+                </form>
+                {{/if}}
+              
+          
+                {{#if tweet.Replies.length}}
+                  <button class="btn btn-danger ">
+                    <i class="far fa-comment">{{ tweet.Replies.length }}</i>
+                  </button>
+                {{else}}
+                <button class="btn btn-secondary">
+                  <i class="far fa-comment"></i>
+                </button>
+                {{/if}}
+              </div>
             </div>
           </div>
           {{#ifCond user.id tweet.UserId}}

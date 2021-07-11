@@ -1,0 +1,138 @@
+<div class="d-flex flex-row p-auto m-auto">
+
+  {{!-- home bar --}}
+  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+    <a class="navbar-brand" href="#">
+      <img src="/docs/4.2/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+    </a>
+    <br>
+    <br>
+
+
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active" href="/tweets">首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">設定</a>
+      </li>
+
+    </ul>
+
+    <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3">推文</button>
+    <div class="d-flex mt-5">
+      <a href="/signout" class="btn">
+        <h5 class="m-2">登出<i class="fas fa-sign-out-alt fa-1x"></i>
+        </h5>
+      </a>
+    </div>
+
+  </div>
+
+  {{!-- middle bar --}}
+  <div class="list-group list-group-flush scrollarea bg-white flex-shrink- p-3" style="width: 800px;">
+
+    <div class="row m-2">
+      <a href="/back" style="color:black" class="col-1"><i class="fas fa-arrow-left fa-2x"></i></a>
+
+      <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none col-3">
+        <span class="fs-5 fw-semibold">{{user.name}}</span>
+      </a>
+    </div>
+
+
+    <div class="follower-head">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="message-tab" data-toggle="tab" href="/users/{{id}}/follower" role="tab"
+            aria-controls="home" aria-selected="true">跟隨者</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="/users/{{id}}/followering" role="tab"
+            aria-controls="profile" aria-selected="false">正在跟隨</a>
+        </li>
+      </ul>
+    </div>
+
+
+    <br>
+    <div class="tab-content">
+      <div class="tab-pane active" id="follower" role="tabpanel" aria-labelledby="home-tab">
+        <ul class="list-group list-group-flush border-bottom">
+          {{#each users}}
+          <li class="list-group-item">
+            <div class="row g-0">
+              <div class="col-md-2">
+                <a href="#" class="text-center">
+                  <img src="{{this.img}}" alt="" width="75" height="75"
+                    class="rounded-circle me-2 rounded mt-2 d-block">
+                </a>
+              </div>
+              <div class="col-md-10">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-9">
+                      <h6 class="card-title w-50">{{this.name}}
+                        <p class="text-muted">@{{this.account}}</p>
+                      </h6>
+                    </div>
+                    <div class="col-3">
+                      {{#if this.isFollowing}}
+                      <form action="/following/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                        <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+                      </form>
+                      {{else}}
+                      <form action="/following/{{this.id}}" method="POST" style="display: contents;">
+                        <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
+                      </form>
+                      {{/if}}
+                    </div>
+                  </div>
+                  <h6 class="card-text">{{this.description}}</h6>
+                </div>
+              </div>
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+
+
+  {{!-- follower bar --}}
+
+  <div class="col-3">
+    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+
+      <div class="list-group list-group-flush border-bottom scrollarea rounded">
+
+        <div class="card" style="width: 18rem;">
+          <div class="d-flex justify-content-center align-items-center" style="height: 50px;font-size:large">
+            跟隨誰</div>
+          <ul class="list-group list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <div class="ms-2 me-auto">
+                <div class="fw-bold">Subheading</div>
+                Cras justo odio
+              </div>
+              <button type="submit" class="btn btn-success">跟隨</button>
+            </li>
+
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+              <a href="/followership" style="text-decoration: none;color:chocolate">顯示更多</a>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

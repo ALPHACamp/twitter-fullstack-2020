@@ -6,6 +6,7 @@ const adminController = require('../controllers/adminController')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
+const followController = require('../controllers/followController')
 
 module.exports = (app, passport) => {
   const authenticatedUser = (req, res, next) => {
@@ -23,6 +24,17 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
+
+  // follow function
+  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)
+  app.get('/users/:userId/followering', authenticatedUser, followController.getFollower)
+  app.get('/users/:id', authenticatedUser, userController.getUser)
+  app.post('/following/:userId', authenticatedUser, userController.addFollowing)
+  app.delete('/following/:userId', authenticatedUser, userController.removeFollowing)
+
+  // like
+  app.post('/like/:TweetId', authenticatedUser, userController.addLike)
+  app.delete('/like/:TweetId', authenticatedUser, userController.removeLike)
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))

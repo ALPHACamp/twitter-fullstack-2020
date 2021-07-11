@@ -75,6 +75,32 @@
               <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none">{{this.User.name}}</a>
               <span style="color: #6c757d; font-size: 0.875em">@{{this.User.account}}．{{moment this.createdAt}}</span>
               <p class="mt-2">{{this.content}} <a href="/tweets/{{this.id}}">...more</a></p>
+              <div class="col-2 d-flex align-items-center justify-content-center">
+              {{#if this.isLiked }}
+              <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">
+                  <i class="fas fa-heart w-100 like"> {{ this.likess }}</i>
+                </button>
+              </form>
+              {{else}}
+              <form action="/like/{{this.id}}" method="POST">
+                <button type="submit" class="btn btn-primary">
+                  <i class="far fa-heart">{{ this.likes}}</i>
+                </button>
+              </form>
+              {{/if}}
+              
+              
+              {{#if this.Replies}}
+              <button class="btn btn-danger ">
+                <i class="far fa-comment">{{ this.Replies }}</i>
+              </button>
+              {{else}}
+              <button class="btn btn-secondary">
+                <i class="far fa-comment"></i>
+              </button>
+              {{/if}}
+              </div>
             </div>
           </div>
           {{#ifCond this.User.id ../user.id}}
@@ -87,6 +113,7 @@
           </div>
           {{/ifCond}}
         </div>
+        <hr/>
         {{/each}}
       </div>
     </div>

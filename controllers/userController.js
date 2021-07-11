@@ -1,6 +1,6 @@
 
 const bcrypt = require('bcryptjs')
-const { User, Tweet, Reply } = require('../models')
+const { User, Tweet, Reply, Followship, Like} = require('../models')
 const helpers = require('../_helpers')
 const { Op } = require('sequelize')
 // const imgur = require('imgur-node-api')
@@ -58,6 +58,95 @@ const userController = {
   },
   getTweets: (req, res) => {
     return res.render('tweets')
+  },
+  getUser: async (req, res, next) => {
+    try {
+      const user = await User.findByPk(req.params.id, {
+        include: [
+          {
+            model: Reply,
+            attributes: ['id'],
+            include:
+            [
+              { model: Tweet, attributes: ['id', 'comment'] }
+            ]
+          },
+          { model: User, as: 'Followers', attributes: ['img', 'id'] },
+          { model: User, as: 'Followings', attributes: ['img', 'id'] }
+          // { model: Restaurant, include: Category, as: 'FavoritedRestaurants', attributes: ['image', 'id'] }
+        ]
+      })
+      if (!user) throw new Error("user isn't exist !!")
+
+      const tweetInfo = new Map()
+      user.toJSON().Replies.forEach(t => {
+        const id = t.TweetId
+        if (tweetInfo.has(id)) {
+          tweetInfo.get(id).count++
+        } else {
+          tweetInfo.set(id, { TweetId: id, name: t.Tweet.content, img: t.Restaurant.image, count: 1 })
+        }
+      })
+      console.log(restaurantInfo)
+      res.render('/admin/users', { user: user.toJSON(), restaurants: [...restaurantInfo.values()] })
+    } catch (err) {
+      console.log(err)
+      next(err)
+    }
+  },
+  editUser: async (req, res, next) => {
+    if (Number(req.params.id) !== helpers.getUser(req).id) {
+      req.flash('warning_msg', '你只能修改自己的 profile!!')
+      return res.redirect(`/users/${req.user.id}`)
+    }
+    try {
+      const user = await User.findByPk(req.params.id)
+      if (!user) throw new Error("user isn't exist !!")
+      res.render('editProfile', { user: user.toJSON() })
+    } catch (err) {
+      console.log(err)
+      next(err)
+    }
+  },
+  addFollowing: (req, res) => {
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.userId
+    })
+      .then(() => res.redirect('back'))
+  },
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }
+    })
+      .then((followship) => followship.destroy())
+      .then(() => res.redirect('back'))
+  },
+  addLike: async (req, res, next) => {
+    try {
+      const { id: userId } = helpers.getUser(req)
+      await Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
+      res.redirect('back')
+    } catch (error) {
+      next(error)
+    }
+  },
+
+  removeLike: async (req, res, next) => {
+    try {
+      const like = await Like.findOne({
+        where: { UserId: req.user.id, TweetId: req.params.TweetId }
+      })
+      if (!like) throw new Error('like not found.')
+
+      await like.destroy()
+      res.redirect('back')
+    } catch (error) {
+      next(error) 
+    }
   }
 }
 

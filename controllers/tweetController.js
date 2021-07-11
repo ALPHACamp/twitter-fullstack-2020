@@ -1,5 +1,7 @@
 const { User, Tweet, Reply } = require('../models')
 const pageLimit = 10
+const helpers = require('../_helpers')
+
 const tweetController = {
   getTweets: async (req, res, next) => {
     let offset = 0
@@ -7,7 +9,6 @@ const tweetController = {
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit
     }
-    // if(req.query)
 
     try {
       const [result] = await Promise.all([
@@ -30,9 +31,10 @@ const tweetController = {
 
       const data = result.rows.map(t => ({
         ...t,
-        content: t.content.substring(0, 50)
+        content: t.content.substring(0, 50),
+        isLiked: req.user.LikedTweet.map(d => d.id)
+          .includes(t.id)
       }))
-      console.log(`data:${data}`)
       return res.render('tweets', {
         tweets: data,
         page,
@@ -40,7 +42,7 @@ const tweetController = {
         totalPage,
         prev,
         next
-      })
+      }, console.log(`data:${data[0]}`))
     } catch (error) {
       next(error)
     }
@@ -61,18 +63,25 @@ const tweetController = {
       })
       .catch(err => console.log(err))
   },
-  getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [
-        User,
-        { model: Reply, include: [User] }
-      ]
-    })
-      .then((tweet) => {
-        return res.render('tweet', {
-          tweet: tweet.toJSON()
-        })
+  getTweet: async (req, res, next) => {
+    try {
+      const tweet = await Tweet.findByPk(req.params.id, {
+        include: [User,
+          { model: Reply, include: User },
+          { model: User, as: 'LikedbyUser' }
+        ],
+        order: [[Reply, 'createdAt', 'DESC']]
       })
+      if (!tweet) throw new Error('Tweet is not found!')
+
+      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(req.user.id)
+      res.render('tweet', {
+        tweet: tweet.toJSON(),
+        isLiked
+      })
+    } catch (error) {
+      next(error)
+    }
   },
   editTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, { raw: true }).then(tweet => {
