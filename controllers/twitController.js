@@ -3,6 +3,7 @@ const { text } = require('body-parser')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const fs = require('fs')
 
 const twitController = {
 
@@ -68,7 +69,52 @@ const twitController = {
       })
 
 
+  },
+  toUser: (req, res) => {
+    console.log('+++++++++++'
+    )
+    console.log('7788')
+    console.log(req.body)
+    console.log('+++++++++++'
+    )
+    const userId = req.user.id
+    const { file } = req // equal to const file = req.file
+    console.log('//////////////')
+    console.log(file)
+    console.log('//////////////')
 
+    if (file) {
+      fs.readFile(file.path, (err, data) => {
+        if (err) console.log('Error: ', err)
+        fs.writeFile(`upload/${file.originalname}`, data, () => {
+          User.findByPk(userId)
+            .then((user) => {
+              user.update({
+                name: req.body.name,
+                introduction: req.body.introduction,
+                avatar: file ? `/upload/${file.originalname}` : null
+              })
+                .then(() => {
+                  req.flash('success_messages', 'user was successfully to update')
+                  res.redirect('/user/self')
+                })
+            })
+        })
+      })
+    } else {
+      User.findByPk(userId)
+        .then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: null
+          })
+            .then(() => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect('/user/self')
+            })
+        })
+    }
   },
 
   getUserLike: (req, res) => {

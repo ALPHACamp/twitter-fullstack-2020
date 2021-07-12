@@ -1,6 +1,8 @@
 const twitController = require('../controllers/twitController.js')
 const adminController = require('../controllers/adminController.js')
 const passport = require('passport')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
 
@@ -80,7 +82,7 @@ module.exports = (app, passport) => {
 
   // 個人推文頁面
   app.get('/user/self', authenticated, twitController.getUser)
-
+  app.put('/user/self', authenticated, upload.single('avatar'), twitController.toUser)
   // 個人推文喜歡頁面
   app.get('/user/self/like', twitController.getUserLike)
 
