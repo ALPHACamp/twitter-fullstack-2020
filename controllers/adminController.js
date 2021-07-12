@@ -26,9 +26,10 @@ const adminController = {
       // nest: true,
       include: User
     }).then(tweet => {
+      console.log(tweet)
       const data = tweet.map(r => ({
         ...r.dataValues,
-        description: r.dataValues.description.substring(0, 50),
+        description: r.dataValues.description.substring(0, 47) + '...',
         userName: r.User.name
 
       }))

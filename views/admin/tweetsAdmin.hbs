@@ -2,31 +2,27 @@
 
   {{!-- 左邊區域 --}}
 
-  <div class="col-md-3">
-    <img class="" style="margin-left:15px" width="40px"
+  <div class="col-md-3" style="width:auto; height:auto;">
+    <img class="" style="position: relative; top: 8px; margin-left: 130px;" width="40px"
       src="https://static.accupass.com/org/2008250550226683301600.jpg">
-    <ul class="nav flex-column">
+
+    <ul class="nav flex-column py-5" style="margin-left: 120px;">
       <li class="nav-item">
-        <a class="nav-link active font-weight-bold" style="color: #FF6600;" href="/admin/tweets"><i
-            class="fas fa-home"></i>
-          推文清單</a>
+        <a class="nav-link"
+          style="font-family: Noto Sans TC; font-size: 18px; font-style: normal; font-weight: 700; line-height:26px; letter-spacing: 0px; color:#FF6600; "
+          href="/admin/tweets"><i class="fas fa-home"></i> 推文清單</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" href=""><i class="fas fa-user"></i>
-          使用者列表</a>
+        <a class="nav-link text-dark"
+          style="font-family: Noto Sans TC; font-size: 18px; font-style: normal; font-weight: 700; line-height: 26px; letter-spacing: 0px;"
+          href="/admin/users"><i class="fas fa-user"></i> 使用者列表</a>
       </li>
     </ul>
-
-
-
-
-
-
   </div>
-
-  <div class="ml-3" style="position:fixed; bottom:0px; left: 20px;">
+  {{!-- 登出鈕 --}}
+  <div class="ml-3" style=" position:fixed; bottom:0px; left: 120px;">
     <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
-          fa-sign-out-alt"></i> 登出</a>
+            fa-sign-out-alt"></i> 登出</a>
   </div>
   {{!-- 中間區域 --}}
   <div class="col-md-9" style="position: relative; border:1px #DEE2E6  solid; ">
