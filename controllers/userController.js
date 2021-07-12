@@ -16,7 +16,6 @@ const userController = {
       req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     }
-
     User.findOne({ where: { email: req.body.email } }).then(user => {
       if (user) {
         req.flash('error_messages', '信箱重複！')
@@ -57,18 +56,6 @@ const userController = {
     })
   },
 
-  userPageReplies: (req, res) => {
-    userService.getUserReplies(req, res, (data) => {
-      return res.render('users-replies',data)
-    })
-  },
-
-  userPageLikes: (req, res) => {
-    userService.getUserLikes(req, res, (data) => {
-      return res.render('users-liked', data)
-    })
-  },
-
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
@@ -92,6 +79,15 @@ const userController = {
             return res.redirect('back')
           })
       })
+  },
+
+  getUserSetting: async (req, res) => {
+    const isMySelf = req.user.id.toString() === req.params.id.toString()
+    if (!isMySelf) {
+      req.flash('error_messages', 'you can only edit your own profile!')
+    }
+    const user = await User.findByPk(req.params.id)
+    return res.render('userSetting', { user: user.toJSON() })
   }
 }
 
