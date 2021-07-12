@@ -5,11 +5,13 @@
       <div class="row">
 
         <div class="col-auto px-1">
-          {{#if user.avatar}}
-          <img class="rounded-circle" src="{{user.avatar}}" style="max-width: 50px;max-height: 50px;">
-          {{else}}
-          <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" style="max-width: 50px;max-height: 50px;">
-          {{/if}}
+          <a href="/users/{{user.id}}">
+            {{#if user.avatar}}
+            <img class="rounded-circle" src="{{user.avatar}}" style="max-width: 50px;max-height: 50px;">
+            {{else}}
+            <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" style="max-width: 50px;max-height: 50px;">
+            {{/if}}
+          </a>
         </div>
 
         <div class="col px-1" style="min-height: 100px;">
@@ -31,11 +33,13 @@
     <div class="container">
       <div class="row">
         <div class="col-auto p-1">
-          {{#if this.User.avatar}}
-          <img class="rounded-circle" src="{{this.User.avatar}}" style="width: 50px;max-height: 50px;">
-          {{else}}
-          <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" style="max-width: 50px;max-height: 50px;">
-          {{/if}}
+          <a href="/users/{{this.User.id}}">
+            {{#if this.User.avatar}}
+            <img class="rounded-circle" src="{{this.User.avatar}}" style="width: 50px;max-height: 50px;">
+            {{else}}
+            <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" style="max-width: 50px;max-height: 50px;">
+            {{/if}}
+          </a>
         </div>
         <div class="col d-flex flex-column p-1">
 

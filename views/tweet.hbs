@@ -17,11 +17,13 @@
   </div>
   <div class="row d-flex">
     <div class="col-auto px-1">
-      {{#if tweet.User.avatar}}
-      <img src="{{tweet.User.avatar}}" class="img-flid rounded-circle" style="width: 50px;max-height: 50px;">
-      {{else}}
-      <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="width: 50px;max-height: 50px;">
-      {{/if}}
+      <a href="/users/{{tweet.User.id}}">
+        {{#if tweet.User.avatar}}
+        <img src="{{tweet.User.avatar}}" class="img-flid rounded-circle" style="width: 50px;max-height: 50px;">
+        {{else}}
+        <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="width: 50px;max-height: 50px;">
+        {{/if}}
+      </a>
     </div>
     <div class="col d-flex flex-column px-1">
       <div>{{tweet.User.name}}</div>
@@ -77,12 +79,14 @@
   <div class="row border-bottom py-2">
 
     <div class="col-auto py-0 px-1">
-      {{#if this.User.avatar}}
-      <img src="{{this.User.avatar}}" class="img-flid rounded-circle" height="50px" width="50px">
-      {{!-- style="width: 50px;max-height: 50px;" --}}
-      {{else}}
-      <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="width: 50px;max-height: 50px;">
-      {{/if}}
+      <a href="/users/{{this.User.id}}">
+        {{#if this.User.avatar}}
+        <img src="{{this.User.avatar}}" class="img-flid rounded-circle" height="50px" width="50px">
+        {{!-- style="width: 50px;max-height: 50px;" --}}
+        {{else}}
+        <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="width: 50px;max-height: 50px;">
+        {{/if}}
+      </a>
     </div>
 
     <div class="col py-0 px-1 d-flex flex-column">
@@ -116,7 +120,15 @@
           <div class="row">
             <div class="col-auto py-0 px-1 d-flex flex-column align-items-center">
               <div id="modal-reply-user-avatar">
-                <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
+                <a href="/users/{{tweet.User.id}}">
+                  {{#if tweet.User.avatar}}
+                  <img src="{{tweet.User.avatar}}" class="img-flid rounded-circle"
+                    style="width: 50px;max-height: 50px;">
+                  {{else}}
+                  <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg" alt=""
+                    style="width: 50px;max-height: 50px;">
+                  {{/if}}
+                </a>
               </div>
               <div class="border-0 flex-grow-1 my-0" style="width: 2px; background-color: #DCDCDC;">
               </div>
