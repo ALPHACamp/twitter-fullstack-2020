@@ -21,7 +21,7 @@
             </a>
           </li>
           <li class="nav-item p-2">
-            <a class="nav-link align-middle text-dark h-tomato" href="#">
+            <a class="nav-link align-middle text-dark h-tomato" href="/setting">
               <i class="fas fa-cog" style="font-size: 1.2em;"></i>
                 <span class="d-none d-sm-inline h5 ps-3 fw-bold">設定</span>
             </a>
@@ -157,24 +157,6 @@
   </div>
 </div>
 
-{{!-- Modal --}}
-<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="btn-close" style="left: 0;" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="/tweets" method="post">
-      <div class="modal-body">
-        <textarea class="form-control" id="content" name="content" rows="3" placeholder="有什麼新鮮事？" required></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-tomato">推文</button>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 <nav aria-label="Page navigation" class="{{pages}}">
   <ul class="pagination justify-content-center">

@@ -220,6 +220,16 @@ const userController = {
               })
           })
       })
+  },
+  getSetting: (req, res) => {
+    return User.findByPk(req.user.id).then(theuser => {
+      theuser = theuser.toJSON()
+      const { name, account, email } = theuser
+      return res.render('setting', { name, account, email })
+    })
+  },
+  putSetting: (req, res) => {
+    res.redirect(`users/self/${req.user.id}`)
   }
 }
 
