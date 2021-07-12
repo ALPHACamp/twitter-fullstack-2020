@@ -57,7 +57,6 @@ const userController = {
     return res.render('tweets')
   },
   addFollowing: (req, res) => {
-
     if (req.user.id === req.params.id) {
       return res.redirect("back");
     }
@@ -68,7 +67,6 @@ const userController = {
       .then(() => res.redirect('back'))
   },
   removeFollowing: (req, res) => {
-
     return Followship.findOne({
       where: {
         followerId: req.user.id,
@@ -77,7 +75,6 @@ const userController = {
     })
       .then((followship) => followship.destroy())
       .then(() => res.redirect('back'))
-
   },
   getProfile: (req, res) => {
     Promise.all([
@@ -125,7 +122,6 @@ const userController = {
         followship: followship
       })
     })
-
   },
   getOtherprofile: (req, res) => {
     Promise.all([
@@ -147,7 +143,6 @@ const userController = {
         ]
       })
     ]).then(([users, followship]) => {
-
       //超過千位，加逗點
       const thousandComma = function (num) {
         let result = '', counter = 0
