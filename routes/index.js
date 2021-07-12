@@ -25,7 +25,7 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  //user
+  // user
   app.get('/users/self/:id', authenticatedUser, userController.getProfile)
   app.get('/setting', authenticatedUser, userController.getSetting)
   app.put('/setting', authenticatedUser, userController.putSetting)
