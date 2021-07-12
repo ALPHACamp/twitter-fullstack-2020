@@ -23,7 +23,7 @@ function drawFromArray(arr, num) {
 
 //一個配對關係array的產生器，決定哪個user喜歡哪些tweets，回傳一個
 function likeRelationGenerator() {
-  const userList = [1, 2, 3, 4]  //假設所有 user 只有這些
+  const userList = [2, 3, 4, 5, 6]  //假設所有 user 只有這些
   const tweetList = Array.from(Array(50).keys()).slice(10) //[10,11,...49]
 
   let output = []
