@@ -16,6 +16,7 @@ const userController = {
       req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     }
+
     User.findOne({ where: { email: req.body.email } }).then(user => {
       if (user) {
         req.flash('error_messages', '信箱重複！')
@@ -56,6 +57,18 @@ const userController = {
     })
   },
 
+  userPageReplies: (req, res) => {
+    userService.getUserReplies(req, res, (data) => {
+      return res.render('users-replies', data)
+    })
+  },
+
+  userPageLikes: (req, res) => {
+    userService.getUserLikes(req, res, (data) => {
+      return res.render('users-liked', data)
+    })
+  },
+
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
@@ -90,5 +103,6 @@ const userController = {
     return res.render('userSetting', { user: user.toJSON() })
   }
 }
+
 
 module.exports = userController
