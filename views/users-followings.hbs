@@ -1,5 +1,5 @@
 <div class="w-100">
-  <div id="title" class="d-flex w-100 align-items-center border-bottom">
+  <div id="title" class="d-flex w-100 align-items-center">
     <a href="/tweets" class="">
       <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-3">
         <path
@@ -12,5 +12,31 @@
       <p class="m-0" style="font-size: xx-small;color:#657786">{{thisPageUser.TweetsCount}} 推文</p>
     </div>
   </div>
-
+  <nav class="nav border-bottom">
+    <a class="nav-link active" href="/users/{{thisPageUser.id}}/followers">跟隨者</a>
+    <a class="nav-link" href="/users/{{thisPageUser.id}}/followings">正在跟隨</a>
+  </nav>
+  {{#each Followings}}
+  <div class="d-flex w-100 border-bottom">
+    {{#if this.avatar}}
+    <img src="{{this.avatar}}" class="rounded-circle m-2" height="50px" width="50px">
+    {{else}}
+    <img src="https://i.imgur.com/3P9xRqb.jpg" class="rounded-circle m-2" height="50px" width="50px">
+    {{/if}}
+    <div class="d-flex flex-column flex-fill">
+      <div class="d-flex justify-content-between p-2">
+        <div class="d-flex flex-column justify-content-center" style="line-height: 1;">
+          <p class="m-0">{{this.name}}</p>
+          <a href="/users/{{this.id}}" class="user-link mt-1">@{{this.account}}</a>
+        </div>
+        {{#if isFollowing}}
+        <button type="submit" class="btn btn-regular rounded-pill">正在跟隨</button>
+        {{else}}
+        <button type="submit" class="btn btn-outline-regular rounded-pill">跟隨</button>
+        {{/if}}
+      </div>
+      <p class="text-start p-2" style="word-break: break-all;">{{this.introduction}}</p>
+    </div>
+  </div>
+  {{/each}}
 </div>
