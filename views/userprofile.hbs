@@ -13,7 +13,7 @@
           首頁</a>
       </li>
       <li class="nav-item" style="font-size:large">
-        <a class="nav-link" href="/users/self/{{user.id}}" style="color: black;font-weight:800">
+        <a class="nav-link" href="/users/{{user.id}}" style="color: black;font-weight:800">
           <i class="far fa-user" style="font-size: x-large;margin-right:15px"></i>
           個人資料</a>
       </li>
@@ -39,11 +39,12 @@
   <div class="card" style="width: 700px;">
 
     <div class="row mt-2" style="width: 20%;">
-      <a href="" style="color:black" class="col-1 m-2" style="margin: auto;">
+      <a href="javascript:history.back()" style="color:black" class="col-1 m-2" style="margin: auto;">
         <i class="fas fa-arrow-left fa-2x"></i>
       </a>
       <a href="/" class="d-flex align-items-center pb-3 m-2 link-dark text-decoration-none col-2 mx-auto">
-        <span class="fs-5 fw-semibold">{{user.name}}</span>
+        <span class="fs-5 fw-bold">{{user.name}}</span>
+        <span style="color: #6c757d; font-size: 0.95em;">{{tweetCount}} 推文</span>
       </a>
     </div>
 
@@ -126,7 +127,7 @@
             <div class="row g-0">
 
               <div class="col-md-1">
-                <a href="/users/self/{{../users.id}}" class="text-center">
+                <a href="/users/{{../users.id}}" class="text-center">
                   <img src="{{../users.img}}" alt="" width="75" height="75"
                     class="rounded-circle me-2 rounded mt-2 d-block"> </a>
               </div>
@@ -171,7 +172,7 @@
         <li class="list-group-item bg-light" style="border-left: none;border-right: none">
           <div class="row">
             <div class="col-2">
-              <a href="/users/other/{{this.id}}" class="text-center">
+              <a href="/users/{{this.id}}" class="text-center">
                 <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
             </div>
 
