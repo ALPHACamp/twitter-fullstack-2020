@@ -21,19 +21,28 @@ const userController = {
       return res.redirect('/signup')
     } else {
       User.findOne({ where: { email: req.body.email } })
-        .then(user => {
-          if (user) {
-            req.flash('error_messages', '信箱重複！')
+        .then(userEmail => {
+          if (userEmail) {
+            req.flash('error_messages', '此信箱已被註冊！')
             return res.redirect('/signup')
           } else {
-            User.create({
-              name: req.body.name,
-              email: req.body.email,
-              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-            }).then(user => {
-              req.flash('success_messages', '成功註冊帳號！')
-              return res.redirect('/signin')
-            })
+            User.findOne({ where: { account: req.body.account } })
+              .then(userAccount => {
+                if (userAccount) {
+                  req.flash('error_messages', '此帳號已被使用！')
+                  return res.redirect('/signup')
+                } else {
+                  User.create({
+                    name: req.body.name,
+                    account: req.body.account,
+                    email: req.body.email,
+                    password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+                  }).then(user => {
+                    req.flash('success_messages', '成功註冊帳號！')
+                    return res.redirect('/signin')
+                  })
+                }
+              })
           }
         })
     }
