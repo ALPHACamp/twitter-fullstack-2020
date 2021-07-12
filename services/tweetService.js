@@ -29,6 +29,12 @@ const tweetService = {
         { model: Reply, include: [User] },
         { model: User, as: 'LikedUsers' }
       ]
+    }).then(tweet => {
+      const isLiked = tweets.LikedUsers.map(d => d.id).includes(req.user.id)
+      return callback({
+        tweet: tweet,
+        isLiked: isLiked,
+      })
     })
     tweet = {
       ...tweet.toJSON(),
