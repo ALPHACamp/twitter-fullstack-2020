@@ -100,7 +100,10 @@ const userController = {
       req.flash('error_messages', 'you can only edit your own profile!')
     }
     const user = await User.findByPk(req.params.id)
-    return res.render('userSetting', { user: user.toJSON() })
+    return res.render('userSetting', {
+      user: user.toJSON(),
+      Appear: { navbar: true }
+    })
   }
 }
 
