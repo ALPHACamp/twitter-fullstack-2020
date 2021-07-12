@@ -20,7 +20,7 @@ const userService = {
   },
 
   putProfile: async (req, res, callback) => {
-    if (req.params.id !== helpers.getUser(req).id.toString()){
+    if (req.params.id !== helpers.getUser(req).id.toString()) {
       console.log(req.params.id)
 
       req.flash('error_messages', '您無權限修改內容')
@@ -101,6 +101,49 @@ const userService = {
     })
   },
 
+  getUserFollowers: async (req, res, callback) => {
+    const thisPageUser = await getThisPageUser(req)
+    let Followers = await User.findAll({
+      where: {
+        '$Followings.id$': thisPageUser.id
+      },
+      include: [
+        { model: User, as: 'Followings' }
+      ]
+    })
+    Followers = Followers.map(follower => ({
+      ...follower.dataValues,
+      isFollowing: helpers.getUser(req).Followings.map(following => following.id).includes(follower.id)
+    }))
+    console.log(Followers)
+    return callback({
+      thisPageUser,
+      Followers,
+      Appear: { navbar: true, top10: true }
+    })
+  },
+
+  getUserFollowings: async (req, res, callback) => {
+    const thisPageUser = await getThisPageUser(req)
+    let Followings = await User.findAll({
+      where: {
+        '$Followers.id$': thisPageUser.id
+      },
+      include: [
+        { model: User, as: 'Followers' }
+      ]
+    })
+    Followings = Followings.map(following => ({
+      ...following.dataValues,
+      isFollowing: helpers.getUser(req).Followings.map(following => following.id).includes(following.id)
+    }))
+    console.log(Followings)
+    return callback({
+      thisPageUser,
+      Followings,
+      Appear: { navbar: true, top10: true }
+    })
+  },
 
 }
 

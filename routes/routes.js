@@ -52,5 +52,7 @@ router.put('/users/:id', authenticated, upload.fields([
   { name: 'avatarImage', maxCount: 1 },
   { name: 'coverImage', maxCount: 1 }
 ]), userController.putProfile)
+router.get('/users/:id/followers', authenticated, userController.userFollowersPage)
+router.get('/users/:id/followings', authenticated, userController.userFollowingsPage)
 
 module.exports = router

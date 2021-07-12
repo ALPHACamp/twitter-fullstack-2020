@@ -75,6 +75,18 @@ const userController = {
     })
   },
 
+  userFollowersPage: (req, res) => {
+    userService.getUserFollowers(req,res, (data) =>{
+      return res.render('users-followers', data)
+    })
+  },
+
+  userFollowingsPage: (req, res) => {
+    userService.getUserFollowings(req, res, (data) => {
+      return res.render('users-Followings', data)
+    })
+  },
+
   addLike: (req, res) => {
     return Like.create({
       UserId: req.user.id,
