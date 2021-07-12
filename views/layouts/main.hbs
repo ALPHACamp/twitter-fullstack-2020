@@ -12,12 +12,12 @@
   <title>Twitter</title>
 </head>
 
-<body style="background-color: #ffd5721e">
+<body style="background-color: #ffd5721e;overflow-y: scroll; overflow-x: hidden;width: 80%">
   <div class="container">
 
     <div class="d-flex mt-5">
       {{!-- 左側欄位 --}}
-      <div class="row" style="height: 500px;width: 250px;">
+      <div class="row" style="height: 500px;width: 250px;position: fixed;">
 
 
         {{!-- 如果有登入才顯示 --}}
@@ -68,29 +68,13 @@
       </div>
 
       {{!-- 中間主頁 --}}
-      <div style="flex-grow: 1;">
-
-        {{!-- flash --}}
-        {{!-- {{#if success_messages}}
-        <div class="alert alert-success text-center" role="alert">
-          {{success_messages}}
-        </div>
-        {{/if}}
-
-        {{#if error_messages}}
-        <div class="alert alert-danger" role="alert">
-          {{error_messages}}
-        </div>
-        {{/if}} --}}
-
-        <main>
-          {{{body}}}
-        </main>
+      <div>
+        {{{ body }}}
       </div>
 
       {{#if user }}
       {{!-- 右側欄位 --}}
-      <div>{{> recommendedFollower }}</div>
+      <div style="position: fixed;">{{> recommendedFollower }}</div>
       {{/if}}
 
     </div>

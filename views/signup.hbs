@@ -1,4 +1,4 @@
-<div style="width: 70%;margin-left:50px">
+<div class="d-flex justify-content-center" style="width: 100vw;">
   {{#if success_messages}}
   <div class="alert alert-success text-center" role="alert">
     {{success_messages}}
@@ -12,7 +12,7 @@
 
   {{/if}}
   <form class="form-signin" action="/signup" method="POST">
-    <div class="card text-center mb-5 mt-4" style="border-radius: 10px;">
+    <div class="card text-center mb-5 mt-4" style="border-radius: 10px;width: 50vw">
       <div>
         <img src="https://i.pinimg.com/564x/d3/c6/67/d3c6675cfa80704b24f154c61cd83dc1.jpg" alt="logo"
           style="width: 200px;border-radius:50%" class="mt-5">
@@ -20,7 +20,7 @@
           <p class="h4 mb-3 font-weight-normal mt-1" style="color: #313c4b;">建立你的帳號</p>
         </div>
       </div>
-      <div class="card-body" style="padding: 0 150px 50px">
+      <div class="card-body" style="padding: 0 10vw 50px">
 
         <div class="form-label-group mb-4">
           <input type="text" name="account" class="form-control" placeholder="帳號" value="{{ account }}" autofocus
