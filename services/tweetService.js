@@ -61,11 +61,12 @@ const tweetService = {
     if (req.body.comment.length > 140) {
       return callback({ status: 'error', message: 'comment size should be smaller than 140!' })
     }
-    await Reply.create({
+    const reply = await Reply.create({
       UserId: req.user.id,
       TweetId: req.params.id,
       comment: req.body.comment
     })
+    console.log('controller/userController/line96...reply', reply)
     return callback({ status: 'success', message: 'reply has been created successfully!' })
   }
 }

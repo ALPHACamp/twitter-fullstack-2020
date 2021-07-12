@@ -76,7 +76,7 @@ const userController = {
   },
 
   userFollowersPage: (req, res) => {
-    userService.getUserFollowers(req,res, (data) =>{
+    userService.getUserFollowers(req, res, (data) => {
       return res.render('users-followers', data)
     })
   },
@@ -92,7 +92,8 @@ const userController = {
       UserId: req.user.id,
       TweetId: req.params.tweetId
     })
-      .then((tweet) => {
+      .then((like) => {
+        console.log('controller/userController/line96...like.id', like.id)
         return res.redirect('back')
       })
   },
