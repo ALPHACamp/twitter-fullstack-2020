@@ -228,8 +228,49 @@ const userController = {
       return res.render('setting', { name, account, email })
     })
   },
-  putSetting: (req, res) => {
-    res.redirect(`users/self/${req.user.id}`)
+  putSetting: async (req, res) => {
+    const { name, account, email, password, passwordConfirm } = req.body
+    let errors = []
+    if (!name || !account || !email) {
+      errors.push({ msg: '帳號/名稱/Email 不可空白。' })
+    }
+    if (password !== passwordConfirm) {
+      errors.push({ msg: '密碼及確認密碼不一致！' })
+    }
+    if (errors.length) {
+      return res.render('setting', {
+        errors, name, account, email, password, passwordConfirm
+      })
+    }
+    try {
+      const [a, e] = await Promise.all([User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ account: account }, { account: { [Op.notLike]: req.user.account } }] } }), User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ email }, { email: { [Op.notLike]: req.user.email } }] } })])
+      errors = []
+      if (a) {
+        errors.push({ msg: '此帳號已有人使用。' })
+      }
+      if (e) {
+        errors.push({ msg: '此Email已有人使用。' })
+      }
+      if (a || e) {
+        return res.render('setting', { errors, name, account, email, password, passwordConfirm })
+      }
+      const user = await User.findByPk(req.user.id)
+      if (password === "") {
+        await user.update({
+          name, account, email,
+        })
+        req.flash('success_messages', '成功更新個人資料！')
+        return res.redirect(`users/self/${req.user.id}`)
+      } else {
+        await user.update({
+          name, account, email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+        })
+        return res.redirect(`users/self/${req.user.id}`)
+      }
+    } catch (error) {
+      console.warn(error)
+    }
   }
 }
 
