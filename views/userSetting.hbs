@@ -1,0 +1,31 @@
+<div class="d-flex flex-column align-items-start col pt-2 ps-5">
+
+  <h3 class="my-3">帳戶設定</h3>
+
+  {{!-- action要改 --}}
+  <form class="d-flex flex-column align-items-center col-6" action="/edit/{{user.id}}" method="POST">
+    <div class="form-floating mb-3 w-100">
+      <input type="text" class="form-control" id="floatingInput" placeholder="userAccount" name="account">
+      <label for="floatingInput">{{user.account}}</label>
+    </div>
+    <div class="form-floating mb-3 w-100">
+      <input type="text" class="form-control" id="floatingInput" placeholder="username" name="name">
+      <label for="floatingInput">{{user.name}}</label>
+    </div>
+    <div class="form-floating mb-3 w-100">
+      <input type="email" class="form-control" id="floatingInput" placeholder="user@example.com" name="email">
+      <label for="floatingInput">{{user.email}}</label>
+    </div>
+    <div class="form-floating mb-3 w-100">
+      <input type="password" class="form-control" id="floatingInput" placeholder="password" name="password">
+      <label for="floatingInput">密碼</label>
+    </div>
+    <div class="form-floating mb-3 w-100">
+      <input type="password" class="form-control" id="floatingInput" placeholder="password" name="confirmedPassword">
+      <label for="floatingInput">密碼確認</label>
+    </div>
+    <div class="w-100 d-flex justify-content-end">
+      <button type="submit" class="btn btn-regular rounded-pill">儲存</button>
+    </div>
+  </form>
+</div>

@@ -30,14 +30,23 @@ const tweetService = {
         { model: User, as: 'LikedUsers' }
       ]
     })
+    tweet = {
+      ...tweet.toJSON(),
+      LikedCount: tweet.LikedUsers.length,
+      ReplyCount: tweet.Replies.length,
+      isLiked: req.user.LikedTweets.map(t => t.id).includes(tweet.id)
+    }
     return callback({
-      tweet: tweet.toJSON(),
+      tweet,
       Appear: { navbar: true, top10: true },
     })
   },
   postTweet: async (req, res, callback) => {
     if (!req.body.description) {
       return callback({ status: 'error', message: 'description empty!' })
+    }
+    if (req.body.description.length > 140) {
+      return callback({ status: 'error', message: 'description size should be smaller than 140!' })
     }
     await Tweet.create({
       UserId: req.user.id,
@@ -48,6 +57,9 @@ const tweetService = {
   postReply: async (req, res, callback) => {
     if (!req.body.comment) {
       return callback({ status: 'error', message: 'comment empty!' })
+    }
+    if (req.body.comment.length > 140) {
+      return callback({ status: 'error', message: 'comment size should be smaller than 140!' })
     }
     await Reply.create({
       UserId: req.user.id,
