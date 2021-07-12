@@ -1,32 +1,37 @@
 <div class="d-flex flex-row p-auto m-auto">
 
   {{!-- home bar --}}
-  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+  <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 300px;margin:2vw">
     <a class="navbar-brand" href="#"></a>
     <br>
     <br>
 
-    <ul class="nav flex-column">
+    <ul class="nav flex-column p-2" style="position: fixed;">
       <li class="nav-item">
-        <a class="nav-link active" href="/tweets">首頁</a>
+        <a class="nav-link active" href="/tweets" style="color: black;font-weight:800">
+          <i class="fas fa-home" style="font-size: x-large;margin-right:15px"></i>
+          首頁</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">個人資料</a>
+      <li class="nav-item" style="font-size:large">
+        <a class="nav-link" href="/users/self/{{user.id}}" style="color: black;font-weight:800">
+          <i class="far fa-user" style="font-size: x-large;margin-right:15px"></i>
+          個人資料</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">設定</a>
+      <li class="nav-item" style="font-size:large">
+        <a class="nav-link" href="#" style="color: black;font-weight:800">
+          <i class="fas fa-cog " style="font-size: x-large;margin-right:15px"></i>
+          設定</a>
+      </li>
+      <li class="nav-item" style="font-size:large">
+        <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3" style="width:220px;">推文</button>
+      </li>
+      <li class="nav-item" style="font-size:large">
+        <a href="/signout" class="btn d-flex" style="margin-top:10px;">
+          <h5 class="m-2">登出<i class="fas fa-sign-out-alt fa-1x" style="margin:1vw"></i>
+          </h5>
+        </a>
       </li>
     </ul>
-
-
-    <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3">推文</button>
-    <div class="d-flex mt-5">
-      <a href="/signout" class="btn">
-        <h5 class="m-2">登出<i class="fas fa-sign-out-alt fa-1x"></i>
-        </h5>
-      </a>
-    </div>
-
   </div>
 
   {{!-- middle bar --}}
@@ -82,8 +87,8 @@
         </p>
       </div>
       <div class="card-text">
-        <span class="small">120個 <small class="text-muted">跟隨中</small></span>
-        <span class="small">120個 <small class="text-muted">跟隨者</small></span>
+        <span class="small">{{followingscount}}個 <small class="text-muted">跟隨中</small></span>
+        <span class="small">{{followerscount}}個 <small class="text-muted">跟隨者</small></span>
       </div>
 
     </div>
@@ -125,8 +130,48 @@
                   <div class="card-text" style="margin-top:1vw">
                     <p class="h6">{{this.content}}</p>
                   </div>
-                  <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                    <i class="far fa-comment text-muted small"> {{this.Replies}}</i>
+                  <div class="icon d-flex justify-content-between" style="width: 50%;margin-top:1vw">
+                    <i class="far fa-comment text-muted small"> {{../Replies}}</i>
+                    <i class="far fa-heart text-muted small"> {{../likes}}</i>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <h2>推文與回覆</h2>
+      </div>
+
+      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+
+        <ul class="list-group list-group-flush">
+          {{#each likeTweets}}
+          <li class="list-group-item">
+            <div class="row g-0">
+
+              <div class="col-md-1">
+                <a href="/users/other/{{this.id}}" class="text-center">
+                  <img src="{{this.img}}" alt="" width="75" height="75"
+                    class="rounded-circle me-2 rounded mt-2 d-block">
+                </a>
+              </div>
+              <div class="col-md-10">
+                <div class="card-body" style="margin-left:1vw">
+                  <div class="card-title">
+                    <span class="card-title h6" style="margin-right:2px">{{this.name}}</span>
+                    <span class="text-muted"> @{{this.account}}</span>
+                    <span class="small text-muted">・{{moment this.createdAt}}</span>
+                  </div>
+                  <div class="card-text" style="margin-top:1vw">
+                    <p class="h6">{{this.content}}</p>
+                  </div>
+                  <div class="icon d-flex justify-content-between" style="width: 50%;margin-top:1vw">
+                    <i class="far fa-comment text-muted small"> {{../replyCount}}</i>
                     <i class="far fa-heart text-muted small"> {{this.likes}}</i>
                   </div>
                 </div>
@@ -137,38 +182,51 @@
           {{/each}}
         </ul>
       </div>
-      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
     </div>
 
   </div>
 
   {{!-- follower bar --}}
 
-  <div class="col-3">
-    <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
+  <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 350px;">
+    <div class="card" style="width: 22rem;border:none;position:fixed">
+      <ul class="list-group list-group">
+        <li class="list-group-item bg-light"
+          style="height: 50px;font-size:large;border-left: none;border-right: none;border-top: none">
+          跟隨誰
+        </li>
+        {{#each followship}}
+        <li class="list-group-item bg-light" style="border-left: none;border-right: none">
+          <div class="row">
+            <div class="col-2">
+              <a href="/users/other/{{this.id}}" class="text-center">
+                <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
+            </div>
 
-      <div class="list-group list-group-flush border-bottom scrollarea rounded">
+            <div class="col-5" style="margin-top:auto;margin-botton:auto;margin-left:1vw">
+              <p>{{this.name}} <br>
+                <small class="text-muted"> @{{this.account}}</small>
+              </p>
+            </div>
 
-        <div class="card" style="width: 18rem;">
-          <div class="d-flex justify-content-center align-items-center" style="height: 50px;font-size:large">
-            跟隨誰</div>
-          <ul class="list-group list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <div class="ms-2 me-auto">
-                <div class="fw-bold">Subheading</div>
-                Cras justo odio
-              </div>
-              <button type="submit" class="btn btn-success">跟隨</button>
-            </li>
-
-            <li class="list-group-item d-flex justify-content-between align-items-start">
-              <a href="/followership" style="text-decoration: none;color:chocolate">顯示更多</a>
-            </li>
-          </ul>
-
-        </div>
-      </div>
+            <div class="col-4" style="margin:auto">
+              {{#if this.isFollowed}}
+              <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+              </form>
+              {{else}}
+              <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
+              </form>
+              {{/if}}
+            </div>
+          </div>
+        </li>
+        {{/each}}
+        <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
+          <a href=" /users/{{userId}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
+        </li>
+      </ul>
     </div>
   </div>
 

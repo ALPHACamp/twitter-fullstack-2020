@@ -1,7 +1,4 @@
-const { User, sequelize } = require('../models')
-const { Followship } = require('../models')
-const { models } = require('Sequelize')
-const { Sequelize } = require('Sequelize')
+const { User } = require('../models')
 
 
 const followController = {
@@ -35,7 +32,7 @@ const followController = {
   },
   getFollower: (req, res) => {
     User.findAll({
-
+      where: { is_admin: false },
       include: [
         {
           model: User,
