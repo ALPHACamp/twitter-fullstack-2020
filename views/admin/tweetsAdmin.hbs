@@ -47,9 +47,11 @@
           alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <form action="/admin/twitters/{{this.id}}?_method=DELETE" method="POST" style="float: right;">
+          <button type="submit" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </form>
         <div class="h6">{{this.userName}} <span class="text-secondary">{{this.User.account}} ．{{moment
             this.createdAt}}</span>
         </div>

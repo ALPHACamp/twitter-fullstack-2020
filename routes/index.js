@@ -38,20 +38,19 @@ module.exports = (app, passport) => {
   app.get('/admin/tweets', authenticatedAdmin, adminController.tweetsAdmin)
 
   // 後台展示特定推特訊息
-  app.get('/admin/twitters:id', adminController.getTwitter)
+  app.get('/admin/twitters:id', authenticatedAdmin, adminController.getTwitter)
 
   // 後台修改特定推特訊息
   // app.get('/admin/twitters/:id', adminController.putTwitter)
 
   // 後台刪除特定推特訊息
-  app.delete('/admin/twitters/:id', adminController.deleteTwitter)
-
+  app.delete('/admin/twitters/:id', authenticatedAdmin, adminController.deleteTwitter)
 
   // 後台展示所有使用者
-  app.get('/admin/users', adminController.adminUsers)
+  app.get('/admin/users', authenticatedAdmin, adminController.adminUsers)
 
   // 後台刪除特定使用者
-  app.delete('/admin/users/:id', adminController.deleteUser)
+  app.delete('/admin/users/:id', authenticatedAdmin, adminController.deleteUser)
 
 
 

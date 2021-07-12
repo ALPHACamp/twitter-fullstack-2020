@@ -58,8 +58,18 @@ const adminController = {
   },
 
   deleteTwitter: (req, res) => {
-    res.send('1234')
-  },
+
+    Tweet.findByPk(req.params.id)
+      .then((tweet) => {
+        tweet.destroy()
+          .then(() => {
+            res.redirect(`/admin/tweets`)
+          })
+      })
+
+
+  }
+
 }
 
 module.exports = adminController
