@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
@@ -42,8 +44,12 @@ router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 router.post('/like/:tweetId', authenticated, userController.addLike)
 router.delete('/like/:tweetId', authenticated, userController.removeLike)
 
-router.get('/users/:id',authenticated, userController.userPage)
+router.get('/users/:id', authenticated, userController.userPage)
 router.get('/users/:id/replies', authenticated, userController.userPageReplies)
 router.get('/users/:id/likes', authenticated, userController.userPageLikes)
+router.put('/users/:id', authenticated, upload.fields([
+  { name: 'avatarImage', maxCount: 1 },
+  { name: 'coverImage', maxCount: 1 }
+]), userController.putProfile)
 
 module.exports = router

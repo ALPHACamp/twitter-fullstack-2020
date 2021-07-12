@@ -59,13 +59,19 @@ const userController = {
 
   userPageReplies: (req, res) => {
     userService.getUserReplies(req, res, (data) => {
-      return res.render('users-replies',data)
+      return res.render('users-replies', data)
     })
   },
 
   userPageLikes: (req, res) => {
     userService.getUserLikes(req, res, (data) => {
       return res.render('users-liked', data)
+    })
+  },
+
+  putProfile: (req, res) => {
+    userService.putProfile(req, res, () => {
+      return res.redirect('back')
     })
   },
 

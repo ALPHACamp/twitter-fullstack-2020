@@ -10,6 +10,10 @@ const session = require('express-session')
 const app = express()
 const port = 8000
 
+//set .env
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 // set public file
 app.use(express.static('public'))
 // set handlebars
@@ -20,7 +24,7 @@ app.engine('hbs', hbs({
 }))
 app.set('view engine', 'hbs')
 
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
