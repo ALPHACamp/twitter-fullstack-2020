@@ -37,29 +37,46 @@ const adminController = {
   },
   getUsers: (req, res) => {
     return User.findAll({
-      raw: true,
-      nest: true,
       where: { is_admin: false },
-      group: 'id',
       attributes: [
-        'id', 'account', 'name', 'email', 'description', 'img', 'bg_img', 'createdAt', 'updatedAt',
-        [sequelize.fn('count', sequelize.col('Tweets.id')), 'tweetCount']
+        'id', 'account', 'name', 'email', 'img', 'bg_img'
       ],
-      include: [{ model: Tweet, attributes: ['id'] }],
-      order: [[sequelize.literal('tweetCount'), 'desc']]
+      include: [
+        { model: Tweet, attributes: ['id'] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Tweet, as: 'LikedTweet' }
+      ],
     }).then(users => {
+      users = users.map(user => ({
+        ...user.dataValues,
+        tweetCount: user.Tweets.length,
+        likeCount: user.LikedTweet.length,
+        followingCount: user.Followings.length,
+        followerCount: user.Followers.length
+      })).sort((a, b) => b.tweetCount - a.tweetCount)
+
       return res.render('admin/users', { users })
     })
   },
   getUser: (req, res) => {
-    return User.findByPk(req.params.id, {
-      attributes: [
-        'id', 'account', 'name', 'email', 'description', 'img', 'createdAt', 'updatedAt',
-        [sequelize.fn('count', sequelize.col('Tweets.id')), 'tweetCount']
-      ],
-      include: [{ model: Tweet, attributes: ['id'] }]
+    return User.findAll({
+      where: { id: req.params.id },
+      include: [
+        { model: Tweet, attributes: ['id'] },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
+        { model: Tweet, as: 'LikedTweet' }
+      ]
     }).then(user => {
-      theuser = user.toJSON()
+      theuser = user.map(ur => ({
+        ...ur.dataValues,
+        tweetCount: ur.Tweets.length,
+        likeCount: ur.LikedTweet.length,
+        followingCount: ur.Followings.length,
+        followerCount: ur.Followers.length
+      }))[0]
+
       return res.render('admin/user', { theuser })
     })
   },
