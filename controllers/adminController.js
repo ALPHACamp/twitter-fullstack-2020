@@ -16,7 +16,17 @@ const adminController = {
   },
 
   adminUsers: (req, res) => {
-    return res.render('admin/users')
+    User.findAll({
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+
+    }).then(users => {
+      console.log(users)
+
+      return res.render('admin/users', { userData: users })
+    })
+
   },
 
   tweetsAdmin: (req, res) => {

@@ -93,8 +93,7 @@
     {{!-- 大頭貼區塊 --}}
     <div class="row mt-1 mb-2" style="position: relative; top:-50px;">
       <div class="col-md-8">
-        <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg" alt="..."
-          class="rounded-circle" style="width: 100px; height:100px;">
+        <img src="{{user.avatar}}" alt="..." class="rounded-circle" style="width: 100px; height:100px;">
 
       </div>
       <div class="col-md-4" style=" text-align:center; margin-top:60px;">
@@ -106,38 +105,43 @@
     <div class="modal fade" id="userData" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
+          <form action="/user/self?_method=PUT" method="post" enctype="multipart/form-data">
 
-          <div style="display: flex; justify-content:space-between;" class="p-3">
-            <div style="display: flex; justify-content:flex-start">
-              <span data-dismiss="modal" style="color:#FF6600; margin-right: 30px;">X</span>
-              <div class="font-weight-bold">編輯個人資料</div>
+            <div style="display: flex; justify-content:space-between;" class="p-3">
+              <div style="display: flex; justify-content:flex-start">
+                <span data-dismiss="modal" style="color:#FF6600; margin-right: 30px;">X</span>
+                <div class="font-weight-bold">編輯個人資料</div>
+              </div>
+
+
+              <button type="submit" class="btn btn-secondary"
+                style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">儲存
+              </button>
             </div>
 
-            <button type="submit" class="btn btn-secondary"
-              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">儲存
-            </button>
-          </div>
+            {{!-- 編輯個人資料圖片 --}}
 
-          {{!-- 編輯個人資料圖片 --}}
+            <img class="image-fluid"
+              src="https://content.skyscnr.com/m/59807c662e7952e2/original/GettyImages-478367609.jpg?resize=800px:600px&quality=100"
+              style="width:100%; height:160px;">
+            {{!-- <input type="file" name="image">
+            <i class="fas fa-camera-retro" style="position:relative; left:-62.5px; top: 10px"></i> --}}
+            {{!-- 編輯個人資料大頭貼圖片 --}}
+            <div class="row mt-1 mb-2">
+              <div class=" col-md-8">
+                <img src="{{user.avatar}}" alt="..." id="avatarImage" class="rounded-circle"
+                  style="position:relative; width: 100px; height:100px;">
 
-          <img class="image-fluid"
-            src="https://content.skyscnr.com/m/59807c662e7952e2/original/GettyImages-478367609.jpg?resize=800px:600px&quality=100"
-            style="width:100%; height:160px;">
+                <input type="file" id="avatar" name="avatar">
+                <i class="fas fa-camera-retro" style="position:relative; left:-62.5px; top: 10px"></i>
 
-          <i class="fas fa-camera"></i>
 
-          {{!-- 編輯個人資料大頭貼圖片 --}}
-          <form action="/" method="post">
-            <div class="row mt-1 mb-2" style="">
-              <div class="col-md-8">
-                <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg" alt="..."
-                  class="rounded-circle" style="width: 100px; height:100px;">
               </div>
             </div>
             <div class="p-3">
               <div style="background-color: #F5F8FA;">
                 <small for="exampleInputEmail1" style="color:#657786">名稱1</small>
-                <input type="email" id="exampleInputEmail1" name="name"
+                <input type="text" id="exampleInputEmail1" name="name"
                   style="border:0px; width:100%; border-bottom:2px solid grey; background-color:#F5F8FA;"
                   value="{{user.name}}">
 
@@ -153,6 +157,7 @@
               </div>
 
             </div>
+
           </form>
         </div>
       </div>
@@ -328,3 +333,25 @@
   </div>
 </div>
 </div>
+
+<script>
+  const avatar = document.querySelector('#avatar')
+  console.log(avatar)
+  const avatarImage = document.querySelector('#avatarImage')
+  console.log(avatarImage)
+
+  avatar.addEventListener("change", handleFiles, false);
+
+  function handleFiles() {
+    const file = this.files[0];//將上傳檔案轉換為base64字串
+
+    const fr = new FileReader();//建立FileReader物件
+    fr.onload = function (e) {
+      console.log(e.target.result)
+      avatarImage.src = e.target.result
+    };
+
+    // 使用 readAsDataURL 將圖片轉成 Base64
+    fr.readAsDataURL(file);    /* now you can work with the file list */
+  }
+</script>
