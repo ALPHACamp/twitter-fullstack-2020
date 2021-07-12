@@ -1,70 +1,55 @@
 <div class="container-fluid">
   <div class="row flex-nowrap ps-xl-4 ps-md-3">
-    <div class="col-auto col-md-4 col-xl-3 px-sm-2 px-0">
+    <div class="col-3 col-lg-3 col-md-2 px-sm-2 px-0">
       <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100"
         style="position: fixed;">
         <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ps-3" href="/">
           <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png"
             alt="" class="img-fluid my-3" style="display: block; width: 50px;" />
         </a>
-        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu" style="width: 100%;">
           <li class="nav-item p-2">
-            <a class="nav-link align-middle" href="/tweets">
-              <i class="fas fa-home fa-lg"></i>
-              　<span class="d-none d-sm-inline h4"><strong>推文清單</strong></span>
+            <a class="nav-link align-middle text-dark h-tomato" href="/tweets">
+              <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
+                <span class="d-none d-sm-inline h5 ps-3 a-tomato fw-bold">首頁</span>
             </a>
           </li>
           <li class="nav-item p-2">
-            <a href="#usermenu" data-bs-toggle="collapse" class="nav-link align-middle">
-              <i class="fas fa-list-ul fa-lg"></i>
-              <span class="ps-1 d-none d-sm-inline h4"><strong>使用者列表</strong></span>
+            <a class="nav-link align-middle text-dark h-tomato" href="/users/self/{{user.id}}">
+              <i class="far fa-user" style="font-size: 1.2em;"></i>
+                <span class="d-none d-sm-inline h5 ps-3 fw-bold">個人資料</span>
             </a>
-            <ul class="collapse show nav flex-column ms-4" id="usermenu" data-bs-parent="#menu">
-              <li class="w-100">
-                <a href="/users" class="nav-link px-0">
-                  <span class="d-none d-sm-inline">所有使用者</span>
-                  <i class="fas fa-users"></i>
-                </a>
-              </li>
-            </ul>
+          </li>
+          <li class="nav-item p-2">
+            <a class="nav-link align-middle text-dark h-tomato" href="/setting">
+              <i class="fas fa-cog" style="font-size: 1.2em;"></i>
+                <span class="d-none d-sm-inline h5 ps-3 fw-bold">設定</span>
+            </a>
+          </li>
+          <li class="nav-item p-2" style="width: inherit;">
+            
+              <button type="submit" class="btn btn-tomato rounded-pill mt-3" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#tweetModal">
+                <span class='h5 fw-bold d-none d-sm-inline'>推文</span>
+                <i class="fas fa-feather-alt d-sm-none"></i>
+              </button>            
           </li>
         </ul>
         <hr />
-        <div class="dropdown pb-4">
-          <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownA"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="{{user.img}}" alt="Admin" width="40" height="40" class="rounded-circle" />
-            <span class="d-none d-sm-inline mx-1 ps-1">{{user.name}}</span>
+        <div class="dropdown p-2 pb-4">
+          <a href="/signout" class="d-flex align-middle text-decoration-none text-dark">
+            <i class="fas fa-sign-out-alt" style="font-size: 1.2em;"></i>
+            <span class="d-none d-sm-inline h5 ps-2 fw-bold">登出</span>
           </a>
-          <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownA">
-            <li><a class="dropdown-item my-2" href="/profile">
-                <i class="fas fa-user-circle"></i>
-                　個人資料
-              </a></li>
-            <li>
-            <li><a class="dropdown-item mb-2" href="/signup">
-                <i class="fas fa-user-plus"></i>
-                　新增管理員
-              </a></li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-            <li><a class="dropdown-item" href="/signout">
-                <i class="fas fa-sign-out-alt"></i>
-                　<strong>登出</strong>
-              </a></li>
-          </ul>
         </div>
       </div>
     </div>
-    <div class="col py-3">
-      <div class="card">
-        <div class="card-header">
-          <span class="h5" style="font-weight: bold;">推文清單</span>
-        </div>
+    <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
+      <div class="card-header col-12">
+        <span class="h5" style="font-weight: bold;">首頁</span>
       </div>
+      
       {{> message}}
-      <div class="card-body">
+      <div class="card-body col-12">
         <form action="/tweets" method="POST" class="mt-5">
           <div class="form-group">
             <label for="text">留下評論：</label>
@@ -75,9 +60,7 @@
           <button type="submit" class="btn btn-primary mb-4">Submit</button>
         </form>
       </div>
-
-
-      <div class="card-body">
+      <div class="card-body col-12">
         {{#each tweets}}
         <div class="row justify-content-around mb-1">
           <div class="row col-11">
@@ -133,8 +116,8 @@
       </div>
     </div>
 
-    <div class="col-3">
-      <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 350px;">
+    <div class="col-auto col-lg-3 col-md-2">
+      <div class="d-none d-sm-flex flex-column flex-shrink-0 p-3" style="width: 350px;">
         <div class="card" style="width: 22rem;border:none;position:fixed">
           <ul class="list-group list-group">
             <li class="list-group-item bg-light"
@@ -172,9 +155,9 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
+
 
 <nav aria-label="Page navigation" class="{{pages}}">
   <ul class="pagination justify-content-center">
