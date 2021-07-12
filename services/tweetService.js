@@ -30,8 +30,14 @@ const tweetService = {
         { model: User, as: 'LikedUsers' }
       ]
     })
+    tweet = {
+      ...tweet.toJSON(),
+      LikedCount: tweet.LikedUsers.length,
+      ReplyCount: tweet.Replies.length,
+      isLiked: req.user.LikedTweets.map(t => t.id).includes(tweet.id)
+    }
     return callback({
-      tweet: tweet.toJSON(),
+      tweet,
       Appear: { navbar: true, top10: true },
     })
   },

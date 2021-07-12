@@ -70,8 +70,8 @@
               {{this.ReplyCount}}
             </div>
 
+            {{!-- Heart --}}
             <div class="mr-2">
-              {{!-- Heart --}}
               {{#if this.isLiked }}
               <form action="/like/{{this.id}}?_method=DELETE" method="POST">
                 <button type="submit" class="btn" style="color:#E0245E" id="likeHeart">
