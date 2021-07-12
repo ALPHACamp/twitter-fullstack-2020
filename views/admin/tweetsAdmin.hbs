@@ -1,14 +1,19 @@
 <div class="row mt-5">
 
   {{!-- 左邊區域 --}}
-  <div class="col-md-3">
 
-    <ul class="nav flex-column" style="margin-left: 160px; font-size: 18px;">
+  <div class="col-md-3">
+    <img class="" style="margin-left:15px" width="40px"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+    <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link active text-dark font-weight-bold" href="#"><i class="fas fa-home"></i> 推文清單</a>
+        <a class="nav-link active font-weight-bold" style="color: #FF6600;" href="/admin/tweets"><i
+            class="fas fa-home"></i>
+          推文清單</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" href="#"><i class="fas fa-user"></i> 使用者列表</a>
+        <a class="nav-link text-dark font-weight-bold" href=""><i class="fas fa-user"></i>
+          使用者列表</a>
       </li>
     </ul>
 
@@ -17,12 +22,11 @@
 
 
 
-
   </div>
 
-  <div class="ml-3" style="position:fixed; bottom:0px; left: 160px;">
+  <div class="ml-3" style="position:fixed; bottom:0px; left: 20px;">
     <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
-        fa-sign-out-alt"></i> 登出</a>
+          fa-sign-out-alt"></i> 登出</a>
   </div>
   {{!-- 中間區域 --}}
   <div class="col-md-9" style="position: relative; border:1px #DEE2E6  solid; ">
@@ -34,195 +38,25 @@
 
 
     {{!-- 留言區域 --}}
-    <div class="list-group">
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
+
+    {{#each tweet}}
+    <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
+      <div class="col-md-2" style="padding-right: 0px; ">
+        <img
+          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
+          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+      <div class="col-md-10" style="padding-left: 0px;">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="h6">{{this.userName}} <span class="text-secondary">{{this.User.account}} ．{{moment
+            this.createdAt}}</span>
         </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
-      </div>
-      <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-        <div class="col-md-2 mt-2" style="padding-right: 0px; ">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-        </div>
-        <div class="col-md-10" style="padding-left: 0px;">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-          <div>
-            <span>回覆 @apple</span>
-          </div>
-          <div>這是晚間最新的新聞報導...</div>
-        </div>
+        <div>{{this.description}}</div>
       </div>
     </div>
+    {{/each}}
 
 
   </div>
