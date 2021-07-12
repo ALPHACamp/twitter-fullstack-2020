@@ -2,12 +2,6 @@
 
 const faker = require('faker')
 
-// const getSmallSize = (text) => {
-//   console.log('into getSmallSize...text', text)
-//   console.log('into getSmallSize...typeof(text)', typeof (text))
-//   return text.slice(0, 130)
-// }
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Tweets',

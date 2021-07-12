@@ -29,12 +29,6 @@ const tweetService = {
         { model: Reply, include: [User] },
         { model: User, as: 'LikedUsers' }
       ]
-    }).then(tweet => {
-      const isLiked = tweets.LikedUsers.map(d => d.id).includes(req.user.id)
-      return callback({
-        tweet: tweet,
-        isLiked: isLiked,
-      })
     })
     tweet = {
       ...tweet.toJSON(),
@@ -67,12 +61,11 @@ const tweetService = {
     if (req.body.comment.length > 140) {
       return callback({ status: 'error', message: 'comment size should be smaller than 140!' })
     }
-    const reply = await Reply.create({
+    await Reply.create({
       UserId: req.user.id,
       TweetId: req.params.id,
       comment: req.body.comment
     })
-    console.log('controller/userController/line96...reply', reply)
     return callback({ status: 'success', message: 'reply has been created successfully!' })
   }
 }
