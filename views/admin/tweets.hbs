@@ -17,9 +17,9 @@
           <div class="py-1">
             <strong>{{this.User.name}}</strong> <sub><i>@{{this.User.account}} · </i>{{moment this.createdAt}}</sub>
           </div>
-
           <div class="py-1">
-            <a class="btn text-start" href="/tweets/{{this.id}}">{{this.description}}</a>
+            <p>{{this.description}}</p>
+            {{!-- 可以直接在清單上快覽 Tweet 的前 50 個字 --}}
           </div>
 
           <div style="col-auto px-1 d-flex align-items-center">

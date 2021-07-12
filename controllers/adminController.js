@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User } = require('../models')
+const adminService = require('../services/adminService')
 
 const adminController = {
   // // 管理者可從專門的後台登入頁面進入網站後台
@@ -19,10 +20,11 @@ const adminController = {
   },
 
   getTweets: (req, res) => {
-    return Tweet.findAll({ raw: true, nest:true, }).then(tweets => {
-      return res.render('admin/tweets', { tweets: tweets })
+    adminService.getTweets(req, res, (data) => {
+      return res.render('admin/tweets', data)
     })
   },
+
 
   deleteTweet: (req, res) => {
     return Tweet.findByPk(req.params.id)
