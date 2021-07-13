@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { isDate } = require('moment')
-const { Tweet, User, Like } = require('../models')
+const { User, Like } = require('../models')
 const userService = require('../services/userService')
 
 
@@ -121,6 +120,23 @@ const userController = {
       user: user.toJSON(),
       Appear: { navbar: true }
     })
+  },
+
+  putUserSetting: async (req, res) => {
+    const { errors, userSetting } = res.locals
+    if (errors.length) {
+      return res.render('userSetting', {
+        errors,
+        user: userSetting,
+        Appear: { navbar: true }
+      })
+    }
+    let user = await User.findByPk(req.params.id)
+    await user.update({
+      ...userSetting,
+      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+    })
+    return res.redirect('/tweets')
   },
 
   getFollowing: async (req, res) => {

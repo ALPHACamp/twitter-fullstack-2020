@@ -1,20 +1,31 @@
 <div class="d-flex flex-column align-items-start col pt-2 ps-5">
-
+  {{#if errors}}
+  {{#each errors}}
+  <div class="col-6 alert alert-danger alert-dismissible fade show m-0" role="alert" style="border-radius: 0;">
+    {{this.message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {{/each}}
+  {{/if}}
   <h3 class="my-3">帳戶設定</h3>
 
   {{!-- action要改 --}}
-  <form class="d-flex flex-column align-items-center col-6" action="/edit/{{user.id}}" method="POST">
+  <form class="d-flex flex-column align-items-center col-6" action="/users/{{user.id}}/setting?_method=PUT"
+    method="POST">
     <div class="form-floating mb-3 w-100">
-      <input type="text" class="form-control" id="floatingInput" placeholder="userAccount" name="account">
-      <label for="floatingInput">{{user.account}}</label>
+      <input type="text" class="form-control" id="floatingInput" placeholder="userAccount" name="account"
+        value="{{user.account}}">
+      <label for="floatingInput">帳號</label>
     </div>
     <div class="form-floating mb-3 w-100">
-      <input type="text" class="form-control" id="floatingInput" placeholder="username" name="name">
-      <label for="floatingInput">{{user.name}}</label>
+      <input type="text" class="form-control" id="floatingInput" placeholder="username" name="name"
+        value="{{user.name}}">
+      <label for="floatingInput">名稱</label>
     </div>
     <div class="form-floating mb-3 w-100">
-      <input type="email" class="form-control" id="floatingInput" placeholder="user@example.com" name="email">
-      <label for="floatingInput">{{user.email}}</label>
+      <input type="email" class="form-control" id="floatingInput" placeholder="user@example.com" name="email"
+        value="{{user.email}}">
+      <label for="floatingInput">email</label>
     </div>
     <div class="form-floating mb-3 w-100">
       <input type="password" class="form-control" id="floatingInput" placeholder="password" name="password">
