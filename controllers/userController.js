@@ -83,7 +83,11 @@ const userController = {
       User.findByPk(req.params.id, {
         where: { is_admin: false },
         include: [
-          { model: Tweet, as: 'LikedTweet' },
+          {
+            model: Tweet, as: 'LikedTweet', attributes: [
+              'UserId', 'content', 'likes', 'replyCount'
+            ],
+          },
           { model: Tweet, include: [Reply] },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
@@ -117,6 +121,9 @@ const userController = {
       }))
       followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
+      const LikedTweet = users.LikedTweet
+
+
       res.render('userprofile', {
         users: users.toJSON(),
         followerscount: thousandComma(followerscount),     //幾個跟隨我
@@ -124,6 +131,7 @@ const userController = {
         followship,
         isFollowed,
         UserId,
+        LikedTweet,
       })
     })
 
