@@ -1,30 +1,25 @@
-<div class="mb-5 fs-5">跟隨誰</div>
+<div class="h4 mb-3" style="color: #313c4b;">Popular</div>
 
-<div class="d-flex flex-column align-items-start">
-
-  {{#each topFollowing }}
-  <div class="d-flex mb-4 align-items-center justify-content-between" style="width: 300px;">
-
-    <div class="d-flex align-items-center">
-      {{!-- 大頭貼 --}}
-      <div>
-        <img src="{{ this.avatar }}" style="border-radius: 100%;width: 70px">
-      </div>
-      {{!-- 帳號 --}}
-      <div class="ms-4">
-        <p class="fs-5 mb-0">{{ this.name }}</p>
-        <div class="d-flex align-items-center" style="width: 150px;">
-          <p class="mb-0" style="color: darkseagreen;">{{ this.account }}</p>
-          <p class="mb-0" style="color: rgb(113, 113, 113);font-size:smaller;">・{{ this.followerCount }}
-            人追蹤中</p>
-        </div>
-      </div>
-      {{!-- 數量 --}}
+{{#each topFollowing }}
+<div class="d-flex align-items-center p-1 pt-2 ps-2"
+  style="margin-bottom:1.3em;background-color:white;text-decoration:none;border-radius: 1em;width:18vw;height:15vh;box-shadow:0 0 8px 3px #ccccccb3;">
+  {{!-- avatar --}}
+  <a href="/users/{{ this.id }}/tweets">
+    <img src="{{ this.avatar }}" style="border-radius: 0.7em;height: 9vh;margin-left:0.1em">
+  </a>
+  {{!-- account --}}
+  <div style="color:#313c4b;width:9vw" class="d-flex align-items-center ms-3">
+    <div class="d-flex flex-column" style="height: 10vh;">
+      <p class="m-0 fw-bolder">{{ this.name }}</p>
+      <p class="m-0" style="color: #313c4b84;">{{ this.account }}</p>
+      <p class="m-0" style="color: #313c4bbf;">{{ this.followerCount }} 人追蹤中</p>
     </div>
-    <form action="/users/{{ this.id }}/follow" method="post" class="mt-2">
-      <button class="btn btn-sm btn-outline-secondary">追蹤</button>
-    </form>
   </div>
-  {{/each}}
 
+  {{!-- 追蹤 btn --}}
+  <form action="/users/{{ this.id }}/follow" method="post" class="">
+    <button class="btn p-2"
+      style="background-color: #ffd5728a;color: #313c4bc2;border-radius:0.5em;width:2.3em;height:5em;font-size:smaller">追蹤</button>
+  </form>
 </div>
+{{/each}}

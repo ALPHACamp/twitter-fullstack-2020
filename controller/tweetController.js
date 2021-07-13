@@ -10,6 +10,7 @@ const Reply = db.Reply
 const tweetController = {
   getTweets: async (req, res) => {
     try {
+      console.log(res.locals.data)
       const topFollowing = res.locals.data
       const user = {
         id: helpers.getUser(req).id,

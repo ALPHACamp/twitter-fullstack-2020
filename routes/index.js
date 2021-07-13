@@ -38,6 +38,7 @@ const getTopFollowing = async (req, res, next) => {
     })
     Promise.all(Data).then(data => {
       data = data.sort((a, b) => b.followerCount - a.followerCount)
+      data = data.slice(0, 5)
       res.locals.data = data
       return next()
     })
@@ -79,7 +80,7 @@ module.exports = (app, passport) => {
 
   //前台
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/tweets', getTopFollowing, authenticated, tweetController.getTweets)
 
   //登入、註冊、登出
   app.get('/signup', userController.signUpPage)
