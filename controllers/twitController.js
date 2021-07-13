@@ -12,14 +12,16 @@ const twitController = {
 
   getTwitters: (req, res) => {
     // 撈出所有 User 與 followers 資料
-
+    console.log('=========================')
+    console.log(req.user)
+    console.log('=========================')
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       raw: true,
       nest: true,
       include: [User]
     }).then(tweet => {
-      console.log(tweet) // 加入 console 觀察資料的變化
+      // console.log(tweet) // 加入 console 觀察資料的變化
       User.findAll({
         include: [
           { model: User, as: 'Followers' }
@@ -33,9 +35,11 @@ const twitController = {
           // 判斷目前登入使用者是否已追蹤該 User 物件
           isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
         }))
+        // console.log(users)
         // 依追蹤者人數排序清單
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-        return res.render('userAdmin', { userData: users, tweet })
+        // console.log(users)
+        return res.render('userAdmin', { userData: users, tweet, reqAvatar: req.user.avatar })
       })
     })
 
@@ -133,7 +137,7 @@ const twitController = {
     User.findByPk(userId, { raw: true })
 
       .then((user) => {
-        console.log(user)
+        // console.log(user)
         Tweet.findAll({
           order: [['createdAt', 'DESC']],
           raw: true,
@@ -141,8 +145,8 @@ const twitController = {
           include: [User]
         }).then(tweet => {
 
-          console.log(tweet) // 加入 console 觀察資料的變化
-          console.log(user.introduction)
+          // console.log(tweet) // 加入 console 觀察資料的變化
+          // console.log(user.introduction)
           // 撈出所有 User 與 followers 資料
           User.findAll({
             include: [
@@ -159,6 +163,7 @@ const twitController = {
             }))
             // 依追蹤者人數排序清單
             users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+            console.log(users)
             return res.render('user', { users, tweet, user })
           })
         })

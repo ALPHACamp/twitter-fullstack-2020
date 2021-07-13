@@ -74,7 +74,7 @@
       </div>
       <div class="col-md-10">
         <div class="row">
-          <div class="h5">John Does</div>
+          <div class="h5">{{user.name}}</div>
         </div>
         <div class="row">
           <small>25則貼文</small>
@@ -171,11 +171,11 @@
     {{!-- 個人介紹區域 --}}
 
     <div class="row d-block p-2">
-      <div class="h4" style="margin-bottom:0">John Doe</div>
-      <div><small>@heyjohn</small></div>
-      <div class="mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
+      <div class="h4" style="margin-bottom:0">{{user.name}}</div>
+      <div><small>{{user.account}}</small></div>
+      <div class="mt-2">{{user.introduction}}</div>
       <div class="mt-2">
-        <div class="font-weight-bold">34 個<span class="text-secondary mr-3">跟隨中</span>59 位<span
+        <div class="font-weight-bold">{{users.FollowerCount}} 個<span class="text-secondary mr-3">跟隨中</span>59 位<span
             class="text-secondary">跟隨者</span></div>
       </div>
     </div>
@@ -198,11 +198,9 @@
 
     {{!-- 留言區域 --}}
     {{#each tweet}}
-    <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
+    <div class="row  border" style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+        <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
         <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
@@ -220,7 +218,7 @@
   {{!-- 右邊區域 --}}
   <div class="col-md-3">
     <div class='rounded' style="background-color: #F5F8FA ;">
-  
+
       <div class="p-2">
         跟隨誰
       </div>
@@ -229,23 +227,21 @@
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
         <div style="display: flex;">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            style="width: 50px; height:50px; border-radius:50%;">
+          <img src={{this.avatar}} style="width: 50px; height:50px; border-radius:50%;">
           <div>
             <div>{{this.name}}</div>
-            <div>@heyjohn</div>
+            <div>{{this.account}}</div>
           </div>
         </div>
-  
+
         <div>
           {{#if this.isFollowed }}
           <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
               class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit"
-              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">跟隨</button>
+          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+              style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
           </form>
           {{/if}}
         </div>
