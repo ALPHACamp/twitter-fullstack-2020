@@ -124,10 +124,9 @@ const userController = {
   },
 
   putUserSetting: async (req, res) => {
-    const { errors, userSetting } = res.locals
-    if (errors.length) {
+    const { error_messages, userSetting } = res.locals
+    if (error_messages.length) {
       return res.render('userSetting', {
-        errors,
         user: userSetting,
         Appear: { navbar: true }
       })
