@@ -1,17 +1,9 @@
 <div class='d-flex flex-row p-auto m-auto'>
 
   {{! home bar }}
-  <div
-    class='d-flex flex-column flex-shrink-0 p-3 bg-light'
-    style='width: 280px;'
-  >
+  <div class='d-flex flex-column flex-shrink-0 p-3 bg-light' style='width: 280px;'>
     <a class='navbar-brand' href='#'>
-      <img
-        src='/docs/4.2/assets/brand/bootstrap-solid.svg'
-        width='30'
-        height='30'
-        alt=''
-      />
+      <img src='/docs/4.2/assets/brand/bootstrap-solid.svg' width='30' height='30' alt='' />
     </a>
     <br />
     <br />
@@ -28,10 +20,7 @@
       </li>
     </ul>
 
-    <button
-      type='submit'
-      class='btn btn-primary btn-lg rounded-pill mt-3'
-    >推文</button>
+    <button type='submit' class='btn btn-primary btn-lg rounded-pill mt-3'>推文</button>
     <div class='d-flex mt-5'>
       <a href='/signout' class='btn'>
         <h5 class='m-2'>登出<i class='fas fa-sign-out-alt fa-1x'></i>
@@ -41,241 +30,121 @@
 
   </div>
 
-<<<<<<< HEAD
-  {{!-- middle bar --}}
-  <div class="card" style="width: 800px;">
+  <<<<<<< HEAD {{!-- middle bar --}} <div class="card" style="width: 800px;">
 
     <div class="row mt-2" style="width: 10%;">
       <a href="javascript:history.back()" style="color:black" class="col-1 mx-auto">
         <i class="fas fa-arrow-left fa-2x"></i>
-=======
-  {{! middle bar }}
-  <div class='card' style='width: 800px;'>
+        =======
+        {{! middle bar }}
+        <div class='card' style='width: 800px;'>
 
-    <div class='row mt-2' style='width: 10%;'>
-      <a
-        href=''
-        style='color:black'
-        class='col-1 mx-auto'
-        style='margin: auto;'
-      >
-        <i class='fas fa-arrow-left fa-2x'></i>
->>>>>>> e914b6329acc864e15ba3cdb47e23c1a13f51dc3
-      </a>
-      <a
-        href='/'
-        class='d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none col-3'
-      >
-        <span class='fs-5 fw-semibold'>{{user.name}}</span>
-      </a>
-    </div>
+          <div class='row mt-2' style='width: 10%;'>
+            <a href='' style='color:black' class='col-1 mx-auto' style='margin: auto;'>
+              <i class='fas fa-arrow-left fa-2x'></i>
+              >>>>>>> e914b6329acc864e15ba3cdb47e23c1a13f51dc3
+            </a>
+            <a href='/' class='d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none col-3'>
+              <span class='fs-5 fw-semibold'>{{user.name}}</span>
+            </a>
+          </div>
 
-    <div class='follower-head'>
-      <ul class='nav nav-tabs' id='myTab' role='tablist'>
-        <li class='nav-item'>
-          <a
-            class='nav-link'
-            id='message-tab'
-            data-toggle='tab'
-            href='/users/{{id}}/follower'
-            role='tab'
-            aria-controls='home'
-            aria-selected='true'
-          >跟隨者</a>
-        </li>
-        <li class='nav-item'>
-          <a
-            class='nav-link active'
-            id='profile-tab'
-            data-toggle='tab'
-            href='/users/{{id}}/followering'
-            role='tab'
-            aria-controls='profile'
-            aria-selected='false'
-          >正在跟隨</a>
-        </li>
-      </ul>
-    </div>
+          <div class='follower-head'>
+            <ul class='nav nav-tabs' id='myTab' role='tablist'>
+              <li class='nav-item'>
+                <a class='nav-link' id='message-tab' data-toggle='tab' href='/users/{{id}}/follower' role='tab'
+                  aria-controls='home' aria-selected='true'>跟隨者</a>
+              </li>
+              <li class='nav-item'>
+                <a class='nav-link active' id='profile-tab' data-toggle='tab' href='/users/{{id}}/followering'
+                  role='tab' aria-controls='profile' aria-selected='false'>正在跟隨</a>
+              </li>
+            </ul>
+          </div>
 
-    <div class='tab-content'>
-      <div
-        class='tab-pane active'
-        id='follower'
-        role='tabpanel'
-        aria-labelledby='home-tab'
-      >
-        <ul class='list-group list-group-flush border-bottom'>
-          {{#each users}}
-<<<<<<< HEAD
-          <li class="list-group-item">
-            <div class="row g-0">
-              <div class="col-md-1">
-                <a href="/users/profile/{{this.id}}" class="text-center">
-                  <img src="{{this.img}}" alt="" width="75" height="75"
-                    class="rounded-circle me-2 rounded mt-2 d-block">
-                </a>
-              </div>
-              <div class="col-md-10" style="margin-left:1vw">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-9">
-                      <h6 class="card-title w-50">{{this.name}}
-                        <p class="text-muted">@{{this.account}}</p>
-                      </h6>
+          <div class='tab-content'>
+            <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
+              <ul class='list-group list-group-flush border-bottom'>
+                {{#each users}}
+                <li class="list-group-item">
+                  <div class="row g-0">
+                    <div class="col-md-1">
+                      <a href="/users/profile/{{this.id}}" class="text-center">
+                        <img src="{{this.img}}" alt="" width="75" height="75"
+                          class="rounded-circle me-2 rounded mt-2 d-block">
+                      </a>
                     </div>
-                    <div class="col-3">
+                    <div class="col-md-10" style="margin-left:1vw">
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col-9">
+                            <h6 class="card-title w-50">{{this.name}}
+                              <p class="text-muted">@{{this.account}}</p>
+                            </h6>
+                          </div>
+                          <div class="col-3">
 
-                      <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                        <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
-                      </form>
+                            <form action="/followships/{{this.id}}?_method=DELETE" method="POST"
+                              style="display: contents;">
+                              <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+                            </form>
 
 
-=======
-            <li class='list-group-item'>
-              <div class='row g-0'>
-                <div class='col-md-1'>
-                  <a href='/users/{{this.id}}' class='text-center'>
-                    <img
-                      src='{{this.img}}'
-                      alt=''
-                      width='75'
-                      height='75'
-                      class='rounded-circle me-2 rounded mt-2 d-block'
-                    />
-                  </a>
-                </div>
-                <div class='col-md-10' style='margin-left:1vw'>
-                  <div class='card-body'>
-                    <div class='row'>
-                      <div class='col-9'>
-                        <h6 class='card-title w-50'>{{this.name}}
-                          <p class='text-muted'>@{{this.account}}</p>
-                        </h6>
+                          </div>
+                          <h6 class='card-text'>{{this.description}}</h6>
+                        </div>
                       </div>
-                      <div class='col-3'>
-
-                        <form
-                          action='/followships/{{this.id}}?_method=DELETE'
-                          method='POST'
-                          style='display: contents;'
-                        >
-                          <button
-                            type='submit'
-                            class='btn btn-success'
-                            name='{{user.id}}'
-                          >正在跟隨</button>
-                        </form>
-
-                      </div>
->>>>>>> e914b6329acc864e15ba3cdb47e23c1a13f51dc3
                     </div>
-                    <h6 class='card-text'>{{this.description}}</h6>
+                </li>
+                {{/each}}
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        {{! follower bar }}
+
+        <div class='d-flex flex-column flex-shrink-0 p-3' style='width: 350px;'>
+          <div class='card' style='width: 22rem;border:none'>
+            <ul class='list-group list-group'>
+              <li class='list-group-item bg-light'
+                style='height: 50px;font-size:large;border-left: none;border-right: none;border-top: none'>
+                跟隨誰
+              </li>
+              {{#each followeringbar}}
+              <li class="list-group-item bg-light" style="border-left: none;border-right: none">
+                <div class="row">
+                  <div class="col-2">
+                    <a href="/users/profile/{{this.id}}" class="text-center">
+                      <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
                   </div>
-                </div>
-              </div>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
+
+                  <div class='col-5' style='margin-top:auto;margin-botton:auto;margin-left:1vw'>
+                    <p>{{this.name}}
+                      <br />
+                      <small class='text-muted'> @{{this.account}}</small>
+                    </p>
+                  </div>
+
+                  <div class="col-4" style="margin:auto">
+                    {{#if this.isFollowed}}
+                    <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                      <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+                    </form>
+                    {{else}}
+                    <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                      <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
+                    </form>
+                    {{/if}}
+                  </div>
+              </li>
+              {{/each}}
+              <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
+                <a href=" /users/{{id}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
+              </li>
+            </ul>
+          </div>
+        </div>
 
     </div>
-  </div>
-
-  {{! follower bar }}
-
-  <div class='d-flex flex-column flex-shrink-0 p-3' style='width: 350px;'>
-    <div class='card' style='width: 22rem;border:none'>
-      <ul class='list-group list-group'>
-        <li
-          class='list-group-item bg-light'
-          style='height: 50px;font-size:large;border-left: none;border-right: none;border-top: none'
-        >
-          跟隨誰
-        </li>
-<<<<<<< HEAD
-        {{#each followeringbar}}
-        <li class="list-group-item bg-light" style="border-left: none;border-right: none">
-          <div class="row">
-            <div class="col-2">
-              <a href="/users/profile/{{this.id}}" class="text-center">
-                <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
-            </div>
-=======
-        {{#each followship}}
-          <li
-            class='list-group-item bg-light'
-            style='border-left: none;border-right: none'
-          >
-            <div class='row'>
-              <div class='col-2'>
-                <a href='/users/{{this.id}}' class='text-center'>
-                  <img
-                    src='{{this.img}}'
-                    alt=''
-                    width='65'
-                    height='65'
-                    class='rounded-circle rounded'
-                  />
-                </a>
-              </div>
->>>>>>> e914b6329acc864e15ba3cdb47e23c1a13f51dc3
-
-              <div
-                class='col-5'
-                style='margin-top:auto;margin-botton:auto;margin-left:1vw'
-              >
-                <p>{{this.name}}
-                  <br />
-                  <small class='text-muted'> @{{this.account}}</small>
-                </p>
-              </div>
-
-<<<<<<< HEAD
-            <div class="col-4" style="margin:auto">
-              {{#if this.isFollowed}}
-              <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
-              </form>
-              {{else}}
-              <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
-                <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
-              </form>
-              {{/if}}
-=======
-              <div class='col-4' style='margin:auto'>
-                {{#if this.isFollowed}}
-                  <button
-                    type=' submit'
-                    class='btn btn-success btn-sm rounded-pill'
-                  >正在跟隨</button>
-                {{else}}
-                  <button
-                    type='submit'
-                    class='btn btn-outline-success btn-sm rounded-pill'
-                  >跟隨</button>
-                {{/if}}
-              </div>
->>>>>>> e914b6329acc864e15ba3cdb47e23c1a13f51dc3
-            </div>
-          </li>
-        {{/each}}
-<<<<<<< HEAD
-        <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
-          <a href=" /users/{{id}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
-=======
-        <li
-          class='list-group-item bg-light'
-          style='border-left: none;border-right: none;border-bottom: none'
-        >
-          <a
-            href=' /users/{{userId}}/follower'
-            class='bg-light'
-            style='text-decoration: none;color:tomato'
-          >顯示更多</a>
->>>>>>> e914b6329acc864e15ba3cdb47e23c1a13f51dc3
-        </li>
-      </ul>
-    </div>
-  </div>
-
-</div>
