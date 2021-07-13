@@ -1,5 +1,8 @@
 
 
+const db = require('../models')
+const User = db.User
+const Tweet = db.Tweet
 
 
 
@@ -13,11 +16,37 @@ const adminController = {
   },
 
   adminUsers: (req, res) => {
-    return res.render('admin/users')
+    User.findAll({
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+
+    }).then(users => {
+      console.log(users)
+
+      return res.render('admin/users', { userData: users })
+    })
+
   },
 
   tweetsAdmin: (req, res) => {
-    res.render('admin/tweetsAdmin')
+    Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      // raw: true,
+      // nest: true,
+      include: User
+    }).then(tweet => {
+      console.log(tweet)
+      const data = tweet.map(r => ({
+        ...r.dataValues,
+        description: r.dataValues.description.substring(0, 47) + '...',
+        userName: r.User.name
+
+      }))
+      console.log(tweet)
+      console.log(data) // 加入 console 觀察資料的變化
+      return res.render('admin/tweetsAdmin', { tweet: data })
+    })
   },
 
   toAdminSignin: (req, res) => {
@@ -40,8 +69,18 @@ const adminController = {
   },
 
   deleteTwitter: (req, res) => {
-    res.send('1234')
-  },
+
+    Tweet.findByPk(req.params.id)
+      .then((tweet) => {
+        tweet.destroy()
+          .then(() => {
+            res.redirect(`/admin/tweets`)
+          })
+      })
+
+
+  }
+
 }
 
 module.exports = adminController

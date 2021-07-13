@@ -5,31 +5,40 @@ const Followship = db.Followship
 const User = db.User
 const Tweet = db.Tweet
 const helper = require('../_helpers')
-
-
+const fs = require('fs')
 
 
 const twitController = {
 
   getTwitters: (req, res) => {
     // 撈出所有 User 與 followers 資料
-    return User.findAll({
-      include: [
-        { model: User, as: 'Followers' }
-      ]
-    }).then(users => {
-      // 整理 users 資料
-      users = users.map(user => ({
-        ...user.dataValues,
-        // 計算追蹤者人數
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-      }))
-      // 依追蹤者人數排序清單
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('user', { users: users })
+
+    Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+      include: [User]
+    }).then(tweet => {
+      console.log(tweet) // 加入 console 觀察資料的變化
+      User.findAll({
+        include: [
+          { model: User, as: 'Followers' }
+        ]
+      }).then(users => {
+        // 整理 users 資料
+        users = users.map(user => ({
+          ...user.dataValues,
+          // 計算追蹤者人數
+          FollowerCount: user.Followers.length,
+          // 判斷目前登入使用者是否已追蹤該 User 物件
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        }))
+        // 依追蹤者人數排序清單
+        users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+        return res.render('userAdmin', { users, tweet })
+      })
     })
+
   },
 
   toTwitters: (req, res) => {
@@ -120,45 +129,89 @@ const twitController = {
   },
 
   getUser: (req, res) => {
-    // 撈出所有 User 與 followers 資料
-    return User.findAll({
-      include: [
-        { model: User, as: 'Followers' }
-      ]
-    }).then(users => {
-      // 整理 users 資料
-      users = users.map(user => ({
-        ...user.dataValues,
-        // 計算追蹤者人數
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-      }))
-      // 依追蹤者人數排序清單
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('userAdmin', { users: users })
-    })
+    const userId = req.user.id
+    User.findByPk(userId, { raw: true })
+
+      .then((user) => {
+        console.log(user)
+        Tweet.findAll({
+          order: [['createdAt', 'DESC']],
+          raw: true,
+          nest: true,
+          include: [User]
+        }).then(tweet => {
+
+          console.log(tweet) // 加入 console 觀察資料的變化
+          console.log(user.introduction)
+          // 撈出所有 User 與 followers 資料
+          User.findAll({
+            include: [
+              { model: User, as: 'Followers' }
+            ]
+          }).then(users => {
+            // 整理 users 資料
+            users = users.map(user => ({
+              ...user.dataValues,
+              // 計算追蹤者人數
+              FollowerCount: user.Followers.length,
+              // 判斷目前登入使用者是否已追蹤該 User 物件
+              isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+            }))
+            // 依追蹤者人數排序清單
+            users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+            return res.render('user', { users, tweet, user })
+          })
+        })
+      })
+
   },
 
-  getTopUser: (req, res) => {
-    // 撈出所有 User 與 followers 資料
-    return User.findAll({
-      include: [
-        { model: User, as: 'Followers' }
-      ]
-    }).then(users => {
-      // 整理 users 資料
-      users = users.map(user => ({
-        ...user.dataValues,
-        // 計算追蹤者人數
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-      }))
-      // 依追蹤者人數排序清單
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('userAdmin', { users: users })
-    })
+
+  toUser: (req, res) => {
+    console.log('+++++++++++'
+    )
+    console.log('7788')
+    console.log(req.body)
+    console.log('+++++++++++'
+    )
+    const userId = req.user.id
+    const { file } = req // equal to const file = req.file
+    console.log('//////////////')
+    console.log(file)
+    console.log('//////////////')
+
+    if (file) {
+      fs.readFile(file.path, (err, data) => {
+        if (err) console.log('Error: ', err)
+        fs.writeFile(`upload/${file.originalname}`, data, () => {
+          User.findByPk(userId)
+            .then((user) => {
+              user.update({
+                name: req.body.name,
+                introduction: req.body.introduction,
+                avatar: file ? `/upload/${file.originalname}` : null
+              })
+                .then(() => {
+                  req.flash('success_messages', 'user was successfully to update')
+                  res.redirect('/user/self')
+                })
+            })
+        })
+      })
+    } else {
+      User.findByPk(userId)
+        .then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: null
+          })
+            .then(() => {
+              req.flash('success_messages', 'user was successfully to update')
+              res.redirect('/user/self')
+            })
+        })
+    }
   },
 
   getUserLike: (req, res) => {

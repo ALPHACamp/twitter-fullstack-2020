@@ -1,6 +1,8 @@
 const twitController = require('../controllers/twitController.js')
 const adminController = require('../controllers/adminController.js')
 const passport = require('passport')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
 
@@ -38,20 +40,19 @@ module.exports = (app, passport) => {
   app.get('/admin/tweets', authenticatedAdmin, adminController.tweetsAdmin)
 
   // 後台展示特定推特訊息
-  app.get('/admin/twitters:id', adminController.getTwitter)
+  app.get('/admin/twitters:id', authenticatedAdmin, adminController.getTwitter)
 
   // 後台修改特定推特訊息
   // app.get('/admin/twitters/:id', adminController.putTwitter)
 
   // 後台刪除特定推特訊息
-  app.delete('/admin/twitters/:id', adminController.deleteTwitter)
-
+  app.delete('/admin/twitters/:id', authenticatedAdmin, adminController.deleteTwitter)
 
   // 後台展示所有使用者
-  app.get('/admin/users', adminController.adminUsers)
+  app.get('/admin/users', authenticatedAdmin, adminController.adminUsers)
 
   // 後台刪除特定使用者
-  app.delete('/admin/users/:id', adminController.deleteUser)
+  app.delete('/admin/users/:id', authenticatedAdmin, adminController.deleteUser)
 
 
 
@@ -67,7 +68,7 @@ module.exports = (app, passport) => {
   app.get('/tweets', twitController.getTwitters)
 
   //前台發送推特信息
-  app.post('/tweets', twitController.putTwitters)
+  // app.post('/tweets', twitController.putTwitters)
 
   // 查看tweets的訊息回覆
   app.get('/tweets/replies', authenticated, twitController.getReplies)
@@ -86,7 +87,7 @@ module.exports = (app, passport) => {
 
   // 個人推文頁面
   app.get('/user/self', authenticated, twitController.getUser)
-
+  app.put('/user/self', authenticated, upload.single('avatar'), twitController.toUser)
   // 個人推文喜歡頁面
   app.get('/user/self/like', authenticated, twitController.getUserLike)
 
