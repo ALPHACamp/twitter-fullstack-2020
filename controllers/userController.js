@@ -114,6 +114,7 @@ const userController = {
     const isMySelf = req.user.id.toString() === req.params.id.toString()
     if (!isMySelf) {
       req.flash('error_messages', 'you can only edit your own profile!')
+      return res.redirect(`/users/${req.user.id}/setting`)
     }
     const user = await User.findByPk(req.params.id)
     return res.render('userSetting', {
