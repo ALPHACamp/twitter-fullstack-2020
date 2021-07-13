@@ -121,13 +121,6 @@ module.exports = {
     return moment(a).fromNow()
   },
 
-  ifCond: function (a, b, options) {
-    if (a === b) {
-      return options.fn(this)
-    }
-    return options.inverse(this)
-  },
-
   limitText: function (str) {
     let strList = str.split(' ')
     if (strList.length > 50) {

@@ -7,8 +7,6 @@ const Like = db.Like
 const Followship = db.Followship
 const Reply = db.Reply
 
-const pageLimit = 10
-
 const tweetController = {
   getTweets: async (req, res) => {
     try {
@@ -16,10 +14,6 @@ const tweetController = {
       const user = {
         id: helpers.getUser(req).id,
         avatar: helpers.getUser(req).avatar
-      }
-      let offset = 0
-      if (req.query.page) {
-        offset = (Number(req.query.page) - 1) * pageLimit
       }
 
       const tweets = await Tweet.findAndCountAll({
@@ -29,8 +23,6 @@ const tweetController = {
         include: [
           { model: User, attributes: ['id', 'avatar', 'name', 'account'] }
         ],
-        offset,
-        limit: pageLimit,
         order: [['updatedAt', 'DESC']]
       })
 
@@ -55,20 +47,10 @@ const tweetController = {
         }
       })
 
-      const page = Number(req.query.page) || 1
-      const pages = Math.ceil(tweets.count / pageLimit)
-      const totalPage = Array.from({ length: pages }, (item, index) => index + 1)
-      const prev = page - 1 < 1 ? 1 : page - 1
-      const next = page + 1 > pages ? pages : page + 1
-
       Promise.all(Data).then(data => {
         return res.render('index', {
           data,
           user,
-          page,
-          totalPage,
-          prev,
-          next,
           topFollowing
         })
       })
