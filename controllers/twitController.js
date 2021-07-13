@@ -12,9 +12,7 @@ const twitController = {
 
   getTwitters: (req, res) => {
     // 撈出所有 User 與 followers 資料
-    console.log('=========================')
-    console.log(req.user)
-    console.log('=========================')
+
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       raw: true,
@@ -46,8 +44,8 @@ const twitController = {
   },
 
   toTwitters: (req, res) => {
-    console.log(req.user.id)
-    console.log(req.body)
+    // console.log(req.user.id)
+    // console.log(req.body)
     return Tweet.create({
       UserId: Number(req.user.id),
       description: req.body.description,
@@ -59,7 +57,7 @@ const twitController = {
   },
 
   putTwitters: (req, res) => {
-    Tweet.find
+    // Tweet.find
     return res.render('userAdmin')
   },
 
@@ -163,7 +161,7 @@ const twitController = {
             }))
             // 依追蹤者人數排序清單
             users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-            console.log(users)
+            // console.log(users)
             return res.render('user', { users, tweet, user })
           })
         })
@@ -173,17 +171,9 @@ const twitController = {
 
 
   toUser: (req, res) => {
-    console.log('+++++++++++'
-    )
-    console.log('7788')
-    console.log(req.body)
-    console.log('+++++++++++'
-    )
+
     const userId = req.user.id
     const { file } = req // equal to const file = req.file
-    console.log('//////////////')
-    console.log(file)
-    console.log('//////////////')
 
     if (file) {
       fs.readFile(file.path, (err, data) => {
@@ -265,6 +255,11 @@ const twitController = {
     return res.render('toReplies')
   },
 
+  // 個人資料頁面推文與回覆
+  getUserReplies: (req, res) => {
+    return res.render('userReplies')
+  },
+
   signin: (req, res) => {
     return res.render('signin')
   },
@@ -320,7 +315,7 @@ const twitController = {
   },
 
   getSetting: (req, res) => {
-    console.log(req.user.id)
+    // console.log(req.user.id)
     const userId = req.user.id
     User.findByPk(userId, { raw: true }).then(user => {
       res.render('setting', { userdata: user })
@@ -329,7 +324,7 @@ const twitController = {
   },
 
   putSetting: (req, res) => {
-    console.log(req.user.id)
+    // console.log(req.user.id)
     const userId = req.user.id
 
     // confirm password()

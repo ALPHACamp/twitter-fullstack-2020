@@ -88,8 +88,12 @@ module.exports = (app, passport) => {
   // 個人推文頁面
   app.get('/user/self', authenticated, twitController.getUser)
   app.put('/user/self', authenticated, upload.single('avatar'), twitController.toUser)
+
+  //  個人推文回覆頁面
+  app.get('/user/self/replies', authenticated, twitController.getUserReplies)
   // 個人推文喜歡頁面
   app.get('/user/self/like', authenticated, twitController.getUserLike)
+
 
   //特定使用者的所有 tweets
   app.get('/user/:id/tweets', twitController.getUserLike)
