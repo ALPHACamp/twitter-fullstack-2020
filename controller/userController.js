@@ -243,10 +243,17 @@ const userController = {
   },
   //進入帳號設定頁面
   getUserEdit: (req, res) => {
-    return User.findByPk(req.params.userId)
-      .then(user => {
-        res.render('userEdit', { user: user.toJSON() })
-      })
+    const topFollowing = res.locals.data
+    const user = {
+      id: helpers.getUser(req).id,
+      name: helpers.getUser(req).name,
+      account: helpers.getUser(req).account,
+      email: helpers.getUser(req).email,
+    }
+    return res.render('userEdit', {
+      user,
+      topFollowing
+    })
   },
 
   putUserEdit: (req, res) => {
