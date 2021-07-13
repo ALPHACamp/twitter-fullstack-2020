@@ -10,6 +10,42 @@ const adminService = {
       Appear: { navbar: true },
     })
   },
+
+  getAllUsers: async (req, res, callback) => {
+    let users = await User.findAll({
+      include: [
+        Tweet,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    })
+    users = users.map(user => ({
+      ...user.dataValues,
+      TweetsCount: user.Tweets.length,
+      FollowersCount: user.Followers.length,
+      FollowingsCount: user.Followings.length,
+    }))
+    let tweets = await Tweet.findAll({
+      include: [
+        User,
+        Reply,
+        { model: User, as: 'LikedUsers' }
+      ],
+    })
+    tweets = tweets.map(tweet => ({
+      ...tweet.dataValues,
+      User: tweet.User.dataValues,
+      RepliesCount: tweet.Replies.length,
+      LikedUsersCount: tweet.LikedUsers.length,
+    }))
+    users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+    return callback({
+      users,
+      tweets,
+      isAdmin: true,
+      Appear: { navbar: true },
+    })
+  }
 }
 
 module.exports = adminService
