@@ -53,8 +53,9 @@
         <form action="/tweets" method="POST" class="mt-5">
           <div class="form-group">
             <label for="text">留下評論：</label>
-            <textarea class="form-control" id="content" name="content" rows="3" placeholder="tweet一下你的心情"
-              required></textarea>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="tweet一下你的心情" 
+            maxlength="140"
+            required></textarea>
           </div>
           <br>
           <button type="submit" class="btn btn-primary mb-4">Submit</button>

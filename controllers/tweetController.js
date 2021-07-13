@@ -50,6 +50,12 @@ const tweetController = {
     if (!req.body.content) {
       req.flash('error_messages', "Content didn't exist")
       return res.redirect('back')
+    } else if (req.body.content.length = 0) {
+      req.flash('error_messages', "Please enter some content !")
+      return res.redirect('back')
+    } else if (req.body.content.length > 140) {
+      req.flash('error_messages', "Content is over limit!")
+      return res.redirect('back')
     }
     return Tweet.create({
       UserId: req.user.id,
