@@ -2,10 +2,15 @@
 
 {{#each topFollowing }}
 <div class="d-flex align-items-center p-1 pt-2 ps-2"
-  style="margin-bottom:1.3em;background-color:white;text-decoration:none;border-radius: 1em;width:18vw;height:15vh;box-shadow:0 0 8px 3px #ccccccb3;">
+  style="margin-bottom:1.3em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:15vh;box-shadow:0 0 8px 3px #ccccccb3;">
   {{!-- avatar --}}
   <a href="/users/{{ this.id }}/tweets">
-    <img src="{{ this.avatar }}" style="border-radius: 0.7em;height: 9vh;margin-left:0.1em">
+    {{#if this.avatar }}
+    <img src="{{ this.avatar }}" style="border-radius: 0.7em;height: 9vh;margin-left:0.4em">
+    {{else}}
+    <img src="https://i.pinimg.com/564x/84/9b/50/849b50b189859a59ba38eed018cbfc1d.jpg"
+      style="border-radius: 0.7em;height: 9vh;margin-left:0.1em">
+    {{/if}}
   </a>
   {{!-- account --}}
   <div style="color:#313c4b;width:9vw" class="d-flex align-items-center ms-3">
@@ -19,7 +24,7 @@
   {{!-- 追蹤 btn --}}
   <form action="/users/{{ this.id }}/follow" method="post" class="">
     <button class="btn p-2"
-      style="background-color: #ffd5728a;color: #313c4bc2;border-radius:0.5em;width:2.3em;height:5em;font-size:smaller">追蹤</button>
+      style="background-color: #ffd5728a;color: #313c4bc2;border-radius:50%;width:4em;height:4em;font-size:smaller">追蹤</button>
   </form>
 </div>
 {{/each}}

@@ -16,13 +16,13 @@
 <body>
   {{!-- 登入後背景 --}}
   <div
-    style="background-color: rgba(227, 227, 227, 0.468);width:79vw;height:200vh;position: fixed;margin-left: 21vw;border-radius: 3em 0 0 0;box-shadow:inset 3px 0 6px 7px #ccccccb3;z-index: -1;">
+    style="background-color: rgba(227, 227, 227, 0.468);width:82vw;height:200vh;position: fixed;margin-left: 18vw;border-radius: 3em 0 0 0;box-shadow:inset 3px 0 6px 7px #ccccccb3;z-index: -1;">
   </div>
   {{else}}
 
   <body style="background-color: #ffd5721e;overflow-y: scroll; overflow-x: hidden;width: 80%">
     {{/if}}
-    <div class="p-2 px-4">
+    <div class="p-2">
 
       <div class="d-flex mt-4">
 
@@ -32,10 +32,10 @@
         <div class="d-flex flex-column" style="position: fixed;">
 
           {{!-- 上 --}}
-          <div class="d-flex align-items-center">
+          <div class="d-flex flex-column align-items-center" style="">
             <img src="https://i.pinimg.com/564x/d3/c6/67/d3c6675cfa80704b24f154c61cd83dc1.jpg" alt="logo"
-              style="width:4em;">
-            <p class="h5 mt-2 ms-4">Share Your Life</p>
+              style="width:5em;">
+            <p class="h5 mt-2">Share Your Life</p>
           </div>
 
           {{!-- 中 --}}
@@ -53,11 +53,11 @@
           {{else}}
           {{!-- 如果是使用者登入 --}}
           <div class="d-flex">
-            <div class="mt-5 ms-2" style="width: 18.5vw;">
+            <div class="mt-5 ms-4" style="width: 15.5vw;">
 
               {{!-- 首頁 --}}
               <a href="/" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="background-color:#ffd57237;text-decoration:none;border-radius: 8px;width:17vw">
+                style="background-color:#ffd57237;text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   <i class="fas fa-igloo p-2 h3 me-3"
                     style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
@@ -68,7 +68,7 @@
               {{!-- 個人資料 --}}
               <a href="/users/{{user.id}}/tweets"
                 class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="text-decoration:none;border-radius: 8px;width:17vw">
+                style="text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   <i class="far fa-laugh p-2 h3 me-3" style="color:#313c4b6f;"></i>
                 </div>
@@ -78,7 +78,7 @@
               {{!-- 設定 --}}
               <a href="/users/{{user.id}}/edit"
                 class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="text-decoration:none;border-radius: 8px;width:17vw">
+                style="text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   <i class="fas fa-paw p-2 h3 me-3" style="color:#313c4b6f;"></i>
                 </div>
@@ -87,7 +87,7 @@
 
               {{!-- 推文 --}}
               <button class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="text-decoration:none;border-radius: 8px;width:17vw;border:none; background-color: white"
+                style="text-decoration:none;border-radius: 8px;width:14vw;border:none; background-color: white"
                 data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{user.id}}">
                 <div>
                   <i class="fas fa-umbrella-beach p-2 h4 me-3" style="color:#313c4b6f;"></i>
@@ -97,7 +97,7 @@
 
               {{!-- 登出 --}}
               <a href="/signout" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="text-decoration:none;border-radius: 8px;width:17vw">
+                style="text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   <i class="fas fa-shoe-prints p-2 h4 me-3" style="color:#313c4b6f;"></i>
                 </div>
@@ -106,7 +106,7 @@
             </div>
 
             {{!-- 選擇直線 --}}
-            <div style="border-left:0.3em solid #ffd472;height:4vh;margin-top:9vh"></div>
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
           </div>
           {{/if}}
 
@@ -120,7 +120,7 @@
 
         {{#if user }}
         {{!-- 右側欄位 --}}
-        <div style="">{{> recommendedFollower }}</div>
+        <div style="margin-left:2.2em">{{> recommendedFollower }}</div>
         {{/if}}
 
       </div>
