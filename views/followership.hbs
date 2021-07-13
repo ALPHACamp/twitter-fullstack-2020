@@ -1,145 +1,227 @@
-<div class="d-flex flex-row p-auto m-auto">
+<div class='d-flex flex-row p-auto m-auto'>
 
-  {{!-- home bar --}}
-  <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">
-    <a class="navbar-brand" href="#">
-      <img src="/docs/4.2/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
+  {{! home bar }}
+  <div
+    class='d-flex flex-column flex-shrink-0 p-3 bg-light'
+    style='width: 280px;'
+  >
+    <a class='navbar-brand' href='#'>
+      <img
+        src='/docs/4.2/assets/brand/bootstrap-solid.svg'
+        width='30'
+        height='30'
+        alt=''
+      />
     </a>
-    <br>
-    <br>
+    <br />
+    <br />
 
-
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a class="nav-link active" href="/tweets">首頁</a>
+    <ul class='nav flex-column'>
+      <li class='nav-item'>
+        <a class='nav-link active' href='/tweets'>首頁</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/users/self/{{id}}">個人資料</a>
+      <li class='nav-item'>
+        <a class='nav-link' href='/users/{{id}}'>個人資料</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">設定</a>
+      <li class='nav-item'>
+        <a class='nav-link' href='#'>設定</a>
       </li>
 
     </ul>
 
-    <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3">推文</button>
-    <div class="d-flex mt-5">
-      <a href="/signout" class="btn">
-        <h5 class="m-2">登出<i class="fas fa-sign-out-alt fa-1x"></i>
+    <button
+      type='submit'
+      class='btn btn-primary btn-lg rounded-pill mt-3'
+    >推文</button>
+    <div class='d-flex mt-5'>
+      <a href='/signout' class='btn'>
+        <h5 class='m-2'>登出<i class='fas fa-sign-out-alt fa-1x'></i>
         </h5>
       </a>
     </div>
 
   </div>
 
-  {{!-- middle bar --}}
+  {{! middle bar }}
 
-  <div class="card" style="width: 800px;">
-    <div class="row">
-      <a href="" style="color:black" class="col-1">
-        <i class="fas fa-arrow-left fa-2x"></i>
+  <div class='card' style='width: 800px;'>
+    <div class='row'>
+      <a href='' style='color:black' class='col-1'>
+        <i class='fas fa-arrow-left fa-2x'></i>
       </a>
 
-      <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none col-3">
-        <span class="fs-5 fw-semibold">{{user.name}}</span>
+      <a
+        href='/'
+        class='d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none col-3'
+      >
+        <span class='fs-5 fw-semibold'>{{user.name}}</span>
       </a>
     </div>
 
-    <div class="follower-head">
-      <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" id="message-tab" data-toggle="tab" href="/users/{{id}}/follower" role="tab"
-            aria-controls="home" aria-selected="true">跟隨者</a>
+    <div class='follower-head'>
+      <ul class='nav nav-tabs' id='myTab' role='tablist'>
+        <li class='nav-item'>
+          <a
+            class='nav-link active'
+            id='message-tab'
+            data-toggle='tab'
+            href='/users/{{id}}/follower'
+            role='tab'
+            aria-controls='home'
+            aria-selected='true'
+          >跟隨者</a>
         </li>
-        <li class="nav-item ">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="/users/{{id}}/followering" role="tab"
-            aria-controls="profile" aria-selected="false">正在跟隨</a>
+        <li class='nav-item'>
+          <a
+            class='nav-link'
+            id='profile-tab'
+            data-toggle='tab'
+            href='/users/{{id}}/followering'
+            role='tab'
+            aria-controls='profile'
+            aria-selected='false'
+          >正在跟隨</a>
         </li>
       </ul>
     </div>
 
-    <div class="tab-pane active" id="follower" role="tabpanel" aria-labelledby="home-tab">
-      <ul class="list-group list-group-flush border-bottom">
+    <div
+      class='tab-pane active'
+      id='follower'
+      role='tabpanel'
+      aria-labelledby='home-tab'
+    >
+      <ul class='list-group list-group-flush border-bottom'>
         {{#each users}}
-        <li class="list-group-item">
-          <div class="row g-0">
+          <li class='list-group-item'>
+            <div class='row g-0'>
 
-            <div class="col-md-1">
-              <a href="/users/other/{{this.id}}" class="text-center">
-                <img src="{{this.img}}" alt="" width="75" height="75" class="rounded-circle me-2 rounded mt-2 d-block">
-              </a>
-            </div>
+              <div class='col-md-1'>
+                <a href='/users/{{this.id}}' class='text-center'>
+                  <img
+                    src='{{this.img}}'
+                    alt=''
+                    width='75'
+                    height='75'
+                    class='rounded-circle me-2 rounded mt-2 d-block'
+                  />
+                </a>
+              </div>
 
-            <div class="col-md-10">
-              <div class="card-body" style="margin-left:1vw">
-                <div class="row">
-                  <div class="col-9 d-flex justify-content-start">
-                    <h6 class="card-title">{{this.name}}
-                      <p class="text-muted">@{{this.account}}</p>
-                    </h6>
+              <div class='col-md-10'>
+                <div class='card-body' style='margin-left:1vw'>
+                  <div class='row'>
+                    <div class='col-9 d-flex justify-content-start'>
+                      <h6 class='card-title'>{{this.name}}
+                        <p class='text-muted'>@{{this.account}}</p>
+                      </h6>
+                    </div>
+
+                    <div class='col-3'>
+                      {{#if this.isFollowing}}
+                        <form
+                          action='/followships/{{this.id}}?_method=DELETE'
+                          method='POST'
+                          style='display: contents;'
+                        >
+                          <button
+                            type='submit'
+                            class='btn btn-success'
+                            name='{{user.id}}'
+                          >正在跟隨</button>
+                        </form>
+                      {{else}}
+                        <form
+                          action='/followships/{{this.id}}'
+                          method='POST'
+                          style='display: contents;'
+                        >
+                          <button
+                            type='submit'
+                            class='btn btn-outline-success'
+                            name='{{user.id}}'
+                          >跟隨</button>
+                        </form>
+                      {{/if}}
+                    </div>
+
                   </div>
 
-                  <div class="col-3">
-                    {{#if this.isFollowing}}
-                    <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                      <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
-                    </form>
-                    {{else}}
-                    <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
-                      <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
-                    </form>
-                    {{/if}}
-                  </div>
-
+                  <h6 class='card-text'>{{this.description}}</h6>
                 </div>
-
-                <h6 class="card-text">{{this.description}}</h6>
               </div>
             </div>
-          </div>
-        </li>
+          </li>
         {{/each}}
       </ul>
     </div>
 
   </div>
 
+  {{! follower bar }}
 
-  {{!-- follower bar --}}
-
-  <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 350px;">
-    <div class="card" style="width: 22rem;border:none">
-      <ul class="list-group list-group">
-        <li class="list-group-item bg-light"
-          style="height: 50px;font-size:large;border-left: none;border-right: none;border-top: none">
+  <div class='d-flex flex-column flex-shrink-0 p-3' style='width: 350px;'>
+    <div class='card' style='width: 22rem;border:none'>
+      <ul class='list-group list-group'>
+        <li
+          class='list-group-item bg-light'
+          style='height: 50px;font-size:large;border-left: none;border-right: none;border-top: none'
+        >
           跟隨誰
         </li>
         {{#each followship}}
-        <li class="list-group-item bg-light" style="border-left: none;border-right: none">
-          <div class="row">
-            <div class="col-2">
-              <a href="/users/other/{{this.id}}" class="text-center">
-                <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
-            </div>
+          <li
+            class='list-group-item bg-light'
+            style='border-left: none;border-right: none'
+          >
+            <div class='row'>
+              <div class='col-2'>
+                <a href='/users/{{this.id}}' class='text-center'>
+                  <img
+                    src='{{this.img}}'
+                    alt=''
+                    width='65'
+                    height='65'
+                    class='rounded-circle rounded'
+                  />
+                </a>
+              </div>
 
-            <div class="col-5" style="margin-top:auto;margin-botton:auto;margin-left:1vw">
-              <p>{{this.name}} <br>
-                <small class="text-muted"> @{{this.account}}</small>
-              </p>
-            </div>
+              <div
+                class='col-5'
+                style='margin-top:auto;margin-botton:auto;margin-left:1vw'
+              >
+                <p>{{this.name}}
+                  <br />
+                  <small class='text-muted'> @{{this.account}}</small>
+                </p>
+              </div>
 
-            <div class="col-4" style="margin:auto">
-              {{#if this.isFollowed}}
-              <button type=" submit" class="btn btn-success btn-sm rounded-pill">正在跟隨</button>
-              {{else}}
-              <button type="submit" class="btn btn-outline-success btn-sm rounded-pill">跟隨</button>
-              {{/if}}
+              <div class='col-4' style='margin:auto'>
+                {{#if this.isFollowed}}
+                  <button
+                    type=' submit'
+                    class='btn btn-success btn-sm rounded-pill'
+                  >正在跟隨</button>
+                {{else}}
+                  <button
+                    type='submit'
+                    class='btn btn-outline-success btn-sm rounded-pill'
+                  >跟隨</button>
+                {{/if}}
+              </div>
             </div>
-          </div>
-        </li>
+          </li>
         {{/each}}
-        <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
-          <a href="/users/{{id}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
+        <li
+          class='list-group-item bg-light'
+          style='border-left: none;border-right: none;border-bottom: none'
+        >
+          <a
+            href='/users/{{id}}/follower'
+            class='bg-light'
+            style='text-decoration: none;color:tomato'
+          >顯示更多</a>
         </li>
       </ul>
     </div>

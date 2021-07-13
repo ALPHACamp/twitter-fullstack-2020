@@ -26,19 +26,15 @@ module.exports = (app, passport) => {
   }
 
   //user
-  app.get('/users/self/:id', authenticatedUser, userController.getProfile)
+  app.get('/users/:id', authenticatedUser, userController.getProfile)
   app.get('/setting', authenticatedUser, userController.getSetting)
   app.put('/setting', authenticatedUser, userController.putSetting)
-  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike)
-
-  //other user
-  app.get('/users/other/:id', authenticatedUser, userController.getOtherprofile)
-  app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
+  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike) 
+  app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
 
   // like
   app.post('/like/:TweetId', authenticatedUser, userController.addLike)
   app.delete('/like/:TweetId', authenticatedUser, userController.removeLike)
-
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))

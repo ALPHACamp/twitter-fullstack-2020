@@ -1,7 +1,17 @@
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
-
+//超過千位，加逗點
+const thousandComma = function (num) {
+  let result = '', counter = 0
+  num = (num || 0).toString()
+  for (let i = num.length - 1; i >= 0; i--) {
+    counter++
+    result = num.charAt(i) + result
+    if (!(counter % 3) && i !== 0) { result = ',' + result }
+  }
+  return result
+}
 
 const userController = {
   signUpPage: (req, res) => {
@@ -77,109 +87,84 @@ const userController = {
       .then(() => res.redirect('back'))
   },
   getProfile: (req, res) => {
-    Promise.all([
-      User.findByPk(req.user.id, {
-        include: [
-          Tweet,
-          { model: Tweet, include: [Reply] },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-        ],
-        order: [['createdAt', 'DESC']],
-      }),
-      User.findAll({
-        where: { is_admin: false },
-        include: [{ model: User, as: 'Followers' }]
+    if (req.user.id === Number(req.params.id)) {
+      Promise.all([
+        User.findByPk(req.user.id, {
+          include: [
+            Tweet,
+            { model: Tweet, include: [Reply] },
+            { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' },
+          ],
+          order: [['createdAt', 'DESC']],
+        }),
+        User.findAll({
+          where: { is_admin: false },
+          include: [{ model: User, as: 'Followers' }]
+        })
+      ]).then(([users, followship]) => {
+        const followerscount = users.Followers.length
+        const followingscount = users.Followings.length
+
+        followship = followship.map(followships => ({
+          ...followships.dataValues,
+          FollowerCount: followships.Followers.length,
+          isFollowed: req.user.Followings.some(d => d.id === followships.id)
+        }))
+        followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
+        followship = followship.filter(user => user.id !== req.user.id)
+
+        res.render('userprofile', {
+          users: users.toJSON(),
+          followerscount: thousandComma(followerscount),     //幾個跟隨我
+          followingscount: thousandComma(followingscount),   //我跟隨幾個
+          followship: followship
+        })
       })
-    ]).then(([users, followship]) => {
-      //超過千位，加逗點
-      const thousandComma = function (num) {
-        let result = '', counter = 0
-        num = (num || 0).toString()
-        for (let i = num.length - 1; i >= 0; i--) {
-          counter++
-          result = num.charAt(i) + result
-          if (!(counter % 3) && i !== 0) { result = ',' + result }
-        }
-        return result
-      }
+    } else {
+      Promise.all([
+        User.findByPk(req.params.id, {
+          include: [
 
-      const followerscount = users.Followers.length
-      const followingscount = users.Followings.length
+            Tweet,
+            { model: Tweet, as: 'LikedTweet' },
+            { model: Tweet, include: [Reply] },
+            { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' },
+          ],
+          order: [['createdAt', 'DESC']],
+        }), User.findAll({
+          where: { is_admin: false },
+          include: [
+            { model: User, as: 'Followers' }
+          ]
+        })
+      ]).then(([users, followship]) => {
+        const userId = req.user.id
+        const likeTweets = users.LikedTweet
+        const followerscount = users.Followers.length
+        const followingscount = users.Followings.length
 
-      followship = followship.map(followships => ({
-        ...followships.dataValues,
-        FollowerCount: followships.Followers.length,
-        isFollowed: req.user.Followings.some(d => d.id === followships.id)
-      }))
-      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      followship = followship.filter(user => user.id !== req.user.id)
+        // 計算追蹤者人數
+        followship = followship.map(followships => ({
+          ...followships.dataValues,
+          FollowerCount: followships.Followers.length,
+          isFollowed: req.user.Followings.some(d => d.id === followships.id)
+        }))
 
-      res.render('userprofile', {
-        users: users.toJSON(),
-        followerscount: thousandComma(followerscount),     //幾個跟隨我
-        followingscount: thousandComma(followingscount),   //我跟隨幾個
-        followship: followship
+        followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
+        followship = followship.filter(user => user.id !== req.user.id)
+
+        res.render('otherprofile', {
+          userId: userId,
+          users: users.toJSON(),
+          followerscount: thousandComma(followerscount),     //幾個跟隨我
+          followingscount: thousandComma(followingscount),   //我跟隨幾個
+          likeTweets: likeTweets,
+          followship: followship,
+        })
       })
-    })
-  },
-  getOtherprofile: (req, res) => {
-    Promise.all([
-      User.findByPk(req.params.id, {
-        include: [
-
-          Tweet,
-          { model: Tweet, as: 'LikedTweet' },
-          { model: Tweet, include: [Reply] },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-        ],
-        order: [['createdAt', 'DESC']],
-      }),
-      User.findAll({
-        where: { is_admin: false },
-        include: [
-          { model: User, as: 'Followers' }
-        ]
-      })
-    ]).then(([users, followship]) => {
-      //超過千位，加逗點
-      const thousandComma = function (num) {
-        let result = '', counter = 0
-        num = (num || 0).toString()
-        for (let i = num.length - 1; i >= 0; i--) {
-          counter++
-          result = num.charAt(i) + result
-          if (!(counter % 3) && i !== 0) { result = ',' + result }
-        }
-        return result
-      }
-      const userId = req.user.id
-      const likeTweets = users.LikedTweet
-      const followerscount = users.Followers.length
-      const followingscount = users.Followings.length
-      console.log(likeTweets)
-
-
-      // 計算追蹤者人數
-      followship = followship.map(followships => ({
-        ...followships.dataValues,
-        FollowerCount: followships.Followers.length,
-        isFollowed: req.user.Followings.some(d => d.id === followships.id)
-      }))
-
-      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      followship = followship.filter(user => user.id !== req.user.id)
-
-      res.render('otherprofile', {
-        userId: userId,
-        users: users.toJSON(),
-        followerscount: thousandComma(followerscount),     //幾個跟隨我
-        followingscount: thousandComma(followingscount),   //我跟隨幾個
-        likeTweets: likeTweets,
-        followship: followship,
-      })
-    })
+    }
   },
   toggleNotice: (req, res) => {
     return User.findByPk(req.params.id)
