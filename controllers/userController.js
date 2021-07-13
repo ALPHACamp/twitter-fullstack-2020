@@ -91,7 +91,6 @@ const userController = {
       TweetId: req.params.tweetId
     })
       .then((like) => {
-        console.log('controller/userController/line96...like.id', like.id)
         return res.redirect('back')
       })
   },

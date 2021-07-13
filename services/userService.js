@@ -9,7 +9,7 @@ const userService = {
     return callback(user)
   },
 
-  getUserTweets: async (req, res, callback) => {
+  getUserTweets: async (req, res, callback) => {    
     const thisPageUser = await getThisPageUser(req)
     const tweets = await getTweets(req, { UserId: thisPageUser.id }, ['createdAt', 'DESC'])
     return callback({
@@ -77,7 +77,6 @@ const userService = {
   getUserReplies: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
     let tweets = await getTweets(req, { '$Replies.UserId$': thisPageUser.id }, ['Replies', 'createdAt', 'DESC'])
-    console.log(tweets)
     return callback({
       thisPageUser,
       tweets,
