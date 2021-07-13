@@ -70,6 +70,51 @@ body {
   background: white;
   overflow: hidden;
 }
+.cover-uploader {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  width: inherit;
+  height: 170px;
+  z-index: 1099;
+  top: 0;
+}
+.cover-uploader:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.15);
+  z-index: 1099;
+}
+.cover-uploader i {
+  visibility: hidden;
+}
+.cover-uploader:hover i {
+  visibility: visible;
+}
+.avator-uploader {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  width: 88px;
+  height: 88px;
+  top: 75%;
+  left: 4%;
+  border-radius: 50%;
+  z-index: 1100;
+}
+.avator-uploader:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 1rem rgba(255, 255, 255, 0.15);
+}
+.avator-uploader i {
+  visibility: hidden;
+}
+.avator-uploader:hover i {
+  visibility: visible;
+}
 .profile-head .nav-tabs .nav-link {
   margin: auto 20px;
   color: lightgray;

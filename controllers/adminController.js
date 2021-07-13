@@ -128,7 +128,7 @@ const adminController = {
         const admin = await User.findByPk(req.user.id)
         await admin.update({
           name, account, email,
-          img: file ? img.data.link : user.img
+          img: file ? img.data.link : admin.img
         })
         req.flash('success_messages', '成功更新個人資料！')
         return res.redirect('/admin/profile')

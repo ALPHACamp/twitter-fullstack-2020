@@ -2,7 +2,6 @@ const express = require('express')
 const handlebars = require('express-handlebars')
 
 const helpers = require('./_helpers')
-const db = require('./models')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const session = require('express-session')
@@ -16,10 +15,8 @@ const port = process.env.PORT || 3000
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
 app.set('view engine', 'hbs')
-app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-app.use('/upload', express.static(__dirname + '/upload'))
 app.use(session({
   secret: process.env.SESSION_SECRET || 'ssseeecccrrreett',
   resave: false,

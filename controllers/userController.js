@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 //超過千位，加逗點
 const thousandComma = function (num) {
   let result = '', counter = 0
@@ -164,6 +166,40 @@ const userController = {
           followship: followship,
         })
       })
+    }
+  },
+  putProfile: async (req, res) => {
+    const { name, description } = req.body
+    const { img, bg_img } = req.files
+    if (!name) {
+      req.flash('error_messages', '名稱不可以空白')
+      return res.redirect('back')
+    }
+    if (description.length > 160) {
+      req.flash('error_messages', '自我介紹至多輸入160字，不能更多')
+      return res.redirect('back')
+    }
+    try {
+      let { avator, cover } = ''
+      const user = await User.findByPk(req.user.id)
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      imgur.upload(bg_img[0].path, async (error, image) => {
+        cover = image.data.link
+        await user.update({
+          name, description,
+          bg_img: cover ? cover : user.bg_img
+        })
+      })
+      imgur.upload(img[0].path, async (error, image) => {
+        avator = image.data.link
+        await user.update({
+          img: avator ? avator : user.img
+        })
+      })
+      req.flash('success_messages', '成功更新個人資料！')
+      return res.redirect(`/users/${req.user.id}`)
+    } catch (error) {
+      console.warn(error)
     }
   },
   toggleNotice: (req, res) => {
