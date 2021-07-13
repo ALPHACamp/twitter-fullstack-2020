@@ -1,208 +1,190 @@
-<div class="d-flex flex-row p-auto m-auto">
-
-  {{!-- home bar --}}
-  <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 300px;margin:2vw">
-    <a class="navbar-brand" href="#"></a>
-    <br>
-    <br>
-
-    <ul class="nav flex-column p-2" style="position: fixed;">
-      <li class="nav-item">
-        <a class="nav-link active" href="/tweets" style="color: black;font-weight:800">
-          <i class="fas fa-home" style="font-size: x-large;margin-right:15px"></i>
-          首頁</a>
-      </li>
-      <li class="nav-item" style="font-size:large">
-        <a class="nav-link" href="/users/{{user.id}}" style="color: black;font-weight:800">
-          <i class="far fa-user" style="font-size: x-large;margin-right:15px"></i>
-          個人資料</a>
-      </li>
-      <li class="nav-item" style="font-size:large">
-        <a class="nav-link" href="#" style="color: black;font-weight:800">
-          <i class="fas fa-cog " style="font-size: x-large;margin-right:15px"></i>
-          設定</a>
-      </li>
-      <li class="nav-item" style="font-size:large">
-        <button type="submit" class="btn btn-primary btn-lg rounded-pill mt-3" style="width:220px;">推文</button>
-      </li>
-      <li class="nav-item" style="font-size:large">
-        <a href="/signout" class="btn d-flex" style="margin-top:10px;">
-          <h5 class="m-2">登出<i class="fas fa-sign-out-alt fa-1x" style="margin:1vw"></i>
-          </h5>
+<div class="container-fluid">
+  <div class="row flex-nowrap ps-xl-2 justify-content-around">
+    {{!-- Home bar --}}
+    <div class="col-3 col-lg-2 col-md-2 px-sm-2 px-0">
+      <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100"
+        style="position: fixed;">
+        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ps-3" href="/">
+          <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png"
+            alt="" class="img-fluid my-3" style="display: block; width: 50px;" />
         </a>
-      </li>
-    </ul>
-  </div>
-
-  {{!-- middle bar --}}
-
-  <div class="card" style="width: 700px;">
-
-    <div class="row mt-2" style="width: 20%;">
-      <a href="javascript:history.back()" style="color:black" class="col-1 m-2" style="margin: auto;">
-        <i class="fas fa-arrow-left fa-2x"></i>
-      </a>
-      <a href="/" class="d-flex align-items-center pb-3 m-2 link-dark text-decoration-none col-2 mx-auto">
-        <span class="fs-5 fw-bold">{{user.name}}</span>
-        <span style="color: #6c757d; font-size: 0.95em;">{{tweetCount}} 推文</span>
-      </a>
-    </div>
-
-
-    <div class="bg-holder" style="height: 250px;">
-      <img src="{{users.bg_img}}" class="card-img-top" alt="..." class="img-fluid" id="bgImage"
-        style="height:100%;width:100%;object-fit:cover">
-    </div>
-
-    <div class="avatar-holder">
-      <div class="avator">
-        <img src="{{users.img}}" class="rounded-circle" alt="user_Aavtor" height="150px" width="150px"
-          style="border:1rem">
+        <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu" style="width: 100%;">
+          <li class="nav-item p-2">
+            <a class="nav-link align-middle text-dark h-tomato" href="/tweets">
+              <i class="fas fa-home" style="font-size: 1.2em;"></i>
+                <span class="d-none d-sm-inline h5 ps-3 fw-bold">首頁</span>
+            </a>
+          </li>
+          <li class="nav-item p-2">
+            <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}">
+              <i class="far fa-user a-tomato" style="font-size: 1.2em;"></i>
+                <span class="d-none d-sm-inline h5 ps-3 a-tomato fw-bold">個人資料</span>
+            </a>
+          </li>
+          <li class="nav-item p-2">
+            <a class="nav-link align-middle text-dark h-tomato" href="/setting">
+              <i class="fas fa-cog" style="font-size: 1.2em;"></i>
+                <span class="d-none d-sm-inline h5 ps-3 fw-bold">設定</span>
+            </a>
+          </li>
+          <li class="nav-item p-2" style="width: inherit;">
+            
+              <button type="submit" class="btn btn-tomato rounded-pill mt-3" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#tweetModal">
+                <span class='h5 fw-bold d-none d-sm-inline'>推文</span>
+                <i class="fas fa-feather-alt d-sm-none"></i>
+              </button>            
+          </li>
+        </ul>
+        <hr />
+        <div class="dropdown p-2 pb-4">
+          <a href="/signout" class="d-flex align-middle text-decoration-none text-dark">
+            <i class="fas fa-sign-out-alt" style="font-size: 1.2em;"></i>
+            <span class="d-none d-sm-inline h5 ps-2 fw-bold">登出</span>
+          </a>
+        </div>
       </div>
     </div>
-
-
-    <div class=" card-body">
-      <div class="icon d-flex justify-content-end">
+    {{!-- Middle Main bar --}}
+    <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
+      <div class="card-header col-12 row m-0">
+        <a href="javascript:history.back()" style="color:black" class="col-auto d-flex align-items-center text-decoration-none">
+          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+        </a>
+        <a href="/" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark text-decoration-none">
+          <span class="h5 fw-bold" style="line-height: 15px;">{{user.name}}</span>
+          <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">25 推文</span>
+        </a>
+      </div>
+      <div class="card-body col-12 m-0 p-0 position-relative">
+        <div class="bg-holder" style="height: 280px;">
+          <img src="{{#if users.bg_img}}{{users.bg_img}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="card-img-top" alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
+        </div>
+        <div class="avatar-holder">
+          <img src="{{users.img}}" class="rounded-circle" alt="user_Aavtor" height="130px" width="130px">
+        </div>
+      </div>
+      <div class="card-body col-12 d-flex justify-content-end">
         <!-- Button trigger modal -->
-        <button type="submit" class="btn btn-outline-secondary rounded-pill" data-bs-toggle="modal"
-          data-bs-target="#exampleModal">
+        <button type="submit" class="btn btn-outline-tomato rounded-pill fw-bold" data-bs-toggle="modal"
+          data-bs-target="#profileModal">
           編輯個人資料
         </button>
       </div>
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
+      <div class="card-body col-12">   
+        <div class="card-text ps-2">
+          <h4 style="font-weight: 900; line-height: 18px">{{users.name}}</h4>
+          <span class="text-muted" style="font-size: 0.93em; line-height: 18px;">@{{users.account}}</span>
+          <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if users.description}}{{users.description}}{{else}}Lorem example text example text for AC simple twitter project practice{{/if}}</p>       
+          <span class="fw-bold">{{followingscount}} 個</span><span class="text-muted">跟隨中</span>
+          　<span class="fw-bold">{{followerscount}} 個</span><span class="text-muted">跟隨者</span>
         </div>
-      </div>
-
-
-      <div class="card-text">
-        <h4><strong>{{users.name}}</strong></h4>
-        <small class="text-muted">@users</small>
-        <p class="m-2">{{users.description}}
-        </p>
-      </div>
-      <div class="card-text">
-        <span class="small">{{followingscount}} <small class="text-muted">個跟隨中</small></span>
-        <span class="small">{{followerscount}} <small class="text-muted">個跟隨者</small></span>
-      </div>
-
-    </div>
-
-    <div class="profile-head">
-      <nav>
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-
-          <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
+      </div>   
+      <div class="profile-head col-12">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
             aria-controls="nav-home" aria-selected="true"> 推文 </a>
-          <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
+            <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
             aria-controls="nav-profile" aria-selected="false">推文與回覆</a>
-          <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
+            <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
             aria-controls="nav-contact" aria-selected="false">喜歡的內容</a>
-        </div>
-      </nav>
-    </div>
-
-
-    <div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-        <ul class="list-group list-group-flush">
-          {{#each users.Tweets}}
-          <li class="list-group-item">
-            <div class="row g-0">
-
-              <div class="col-md-1">
-                <a href="/users/{{../users.id}}" class="text-center">
-                  <img src="{{../users.img}}" alt="" width="75" height="75"
-                    class="rounded-circle me-2 rounded mt-2 d-block"> </a>
-              </div>
-              <div class="col-md-10">
-                <div class="card-body" style="margin-left:1vw">
-                  <div class="card-title">
-                    <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
-                    <span class="text-muted"> @{{../users.account}}</span>
-                    <span class="small text-muted">・{{moment this.createdAt}}</span>
-                  </div>
-                  <div class="card-text" style="margin-top:1vw">
-                    <p class="h6">{{this.content}}</p>
-                  </div>
-                  <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                    <i class="far fa-comment text-muted small"> {{this.Replies}}</i>
-                    <i class="far fa-heart text-muted small"> {{this.likes}}</i>
+          </div>
+        </nav>
+      </div>
+      <div class="tab-content col-12" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+          <ul class="list-group list-group-flush">
+            {{#each users.Tweets}}
+            <li class="list-group-item">
+              <div class="row g-0">
+                <div class="col-md-1">
+                  <a href="/users/{{../users.id}}" class="text-center">
+                    <img src="{{../users.img}}" alt="" width="75" height="75"
+                    class="rounded-circle me-2 rounded mt-2 d-block"/>
+                  </a>
+                </div>
+                <div class="col-md-10">
+                  <div class="card-body" style="margin-left:1vw">
+                    <div class="card-title">
+                      <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
+                      <span class="text-muted"> @{{../users.account}}</span>
+                      <span class="small text-muted">・{{moment this.createdAt}}</span>
+                    </div>
+                    <div class="card-text" style="margin-top:1vw">
+                      <p class="h6">{{this.content}}</p>
+                    </div>
+                    <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
+                      <i class="far fa-comment text-muted small"> {{this.Replies}}</i>
+                      <i class="far fa-heart text-muted small"> {{this.likes}}</i>
+                    </div>
                   </div>
                 </div>
               </div>
-
-            </div>
-          </li>
-          {{/each}}
-        </ul>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
       </div>
-      <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-      <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
     </div>
+    {{!-- Left Followship recommend bar --}}
+    <div class="col-auto col-lg-3 col-md-3">
+      <div class="card d-none d-sm-flex flex-column flex-shrink-0 mt-3 position-fixed" width="100%">
+        <ul class="list-group list-group">
+          <li class="list-group-item bg-light fw-bold" style="font-size: 1.2em;">跟隨誰</li>
+          {{#each followship}}
+          <li class="list-group-item bg-light" style="border-left: none;border-right: none">
+            <div class="row justify-content-around align-items-center">
+              <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
+                <a href="/users/{{this.id}}">
+                  <img src="{{this.img}}" alt="" width="50" height="50" class="rounded-circle">
+                </a>
+              </div>
 
-  </div>
+              <div class="col-5 ps-3 pt-3 d-flex flex-column align-items-start">
+                <h5 style="line-height: 16px;">{{this.name}}</h5>
+                <p class="text-muted" style="line-height: 16px;">@{{this.account}}</p>
+              </div>
 
-  {{!-- follower bar --}}
-
-  <div class="d-flex flex-column flex-shrink-0 p-3" style="width: 350px;">
-    <div class="card" style="width: 22rem;border:none;position:fixed">
-      <ul class="list-group list-group">
-        <li class="list-group-item bg-light"
-          style="height: 50px;font-size:large;border-left: none;border-right: none;border-top: none">
-          跟隨誰
-        </li>
-        {{#each followship}}
-        <li class="list-group-item bg-light" style="border-left: none;border-right: none">
-          <div class="row">
-            <div class="col-2">
-              <a href="/users/{{this.id}}" class="text-center">
-                <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
-            </div>
-
-            <div class="col-5" style="margin-top:auto;margin-botton:auto;margin-left:1vw">
-              <p>{{this.name}} <br>
-                <small class="text-muted"> @{{this.account}}</small>
-              </p>
-            </div>
-
-            <div class="col-4" style="margin:auto">
+              <div class="col-5 ps-3 d-flex justify-content-center">
               {{#if this.isFollowed}}
               <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+                <button type="submit" class="btn btn-tomato rounded-pill fw-bold" name="{{user.id}}" style="font-size: 0.95em;">正在跟隨</button>
               </form>
               {{else}}
               <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
-                <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
+                <button type="submit" class="btn btn-outline-tomato rounded-pill fw-bold" name="{{user.id}}" style="font-size: 0.95em;">跟隨</button>
               </form>
               {{/if}}
+              </div>
             </div>
-          </div>
-        </li>
-        {{/each}}
-        <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
-          <a href=" /users/{{userId}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
-        </li>
-      </ul>
+          </li>
+          {{/each}}
+          <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
+            <a href="/users/{{user.id}}/follower" class="bg-light fw-bold" style="text-decoration: none;color:tomato">顯示更多</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>  
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
   </div>
-
-
-
 </div>

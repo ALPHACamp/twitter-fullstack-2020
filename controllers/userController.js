@@ -87,7 +87,7 @@ const userController = {
       .then(() => res.redirect('back'))
   },
   getProfile: (req, res) => {
-    if (req.user.id === req.params.id) {
+    if (req.user.id === Number(req.params.id)) {
       Promise.all([
         User.findByPk(req.user.id, {
           include: [
@@ -165,7 +165,6 @@ const userController = {
         })
       })
     }
-
   },
   toggleNotice: (req, res) => {
     return User.findByPk(req.params.id)

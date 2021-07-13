@@ -32,7 +32,18 @@ body {
 }
 
 .bd {
-  border: 2px solid red;
+  outline: 2px solid red;
+}
+
+/* userprofile */
+.btn-outline-tomato {
+  color: tomato;
+  border-color: tomato;
+}
+.btn-outline-tomato:hover {
+  color: #fff;
+  background-color: tomato;
+  border-color: tomato;
 }
 
 /* followingship.hbs followership.hbs */
@@ -53,12 +64,8 @@ body {
   border: 4px solid white;
   position: absolute;
   object-fit: cover;
-  margin: 50px;
-  top: 175px;
-  right: 0;
-  left: 0;
-  width: 150px;
-  height: 150px;
+  top: 75%;
+  left: 4%;
   border-radius: 50%;
   background: white;
   overflow: hidden;
