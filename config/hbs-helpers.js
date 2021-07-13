@@ -14,7 +14,9 @@ module.exports = {
     return moment(a).format("YYYY-MM-DD LT")
   },
   thousandComma: function (num) {
+
     let result = '', counter = 0
+
     num = (num || 0).toString()
     for (let i = num.length - 1; i >= 0; i--) {
       counter++
@@ -22,5 +24,7 @@ module.exports = {
       if (!(counter % 3) && i !== 0) { result = ',' + result }
     }
     return result
-  }
+  },
+
+
 }

@@ -83,12 +83,14 @@ const userController = {
       User.findByPk(req.params.id, {
         where: { is_admin: false },
         include: [
+          Tweet,
+          Reply,
           {
-            model: Tweet, as: 'LikedTweet', attributes: [
-              'UserId', 'content', 'likes', 'replyCount'
-            ],
+            model: Tweet,
+            as: 'LikedTweet',
+            attributes: [
+              'UserId', 'content', 'likes', 'replyCount'],
           },
-          { model: Tweet, include: [Reply] },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
         ],
@@ -107,10 +109,11 @@ const userController = {
         req.flash('error_messages', '沒有權限')
         return res.redirect('back')
       }
-      console.log(users.toJSON())
+
       const UserId = req.user.id
       const followerscount = users.Followers.length
       const followingscount = users.Followings.length
+      const tweetCount = users.Tweets.length
       const isFollowed = req.user.Followings.some(d => d.id === users.id)
 
       followship = followship.map(followships => ({
@@ -121,17 +124,17 @@ const userController = {
       }))
       followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-      const LikedTweet = users.LikedTweet
+      console.log(tweetCount)
 
 
       res.render('userprofile', {
         users: users.toJSON(),
         followerscount: thousandComma(followerscount),     //幾個跟隨我
         followingscount: thousandComma(followingscount),   //我跟隨幾個
+        tweetCount: thousandComma(tweetCount),
         followship,
         isFollowed,
         UserId,
-        LikedTweet,
       })
     })
 
