@@ -30,7 +30,7 @@ router.get('/signin', userController.signInPage);
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn);
 
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'));
-router.get('/admin/users', authenticatedAdmin, adminController.getUsers);
+router.get('/admin/users', authenticatedAdmin, adminController.getAllUsers);
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
 
 router.get('/admin/signin', adminController.signInPage);

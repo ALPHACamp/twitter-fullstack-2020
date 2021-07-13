@@ -48,9 +48,9 @@ const adminController = {
   //     status: 'success', message: 'tweet deleted'})
   //   },
 
-  getUsers: (req, res) => {
-    return User.findAll({ raw: true }).then(users => {
-      return res.render('admin/users', { users })
+  getAllUsers: (req, res) => {
+    adminService.getAllUsers(req, res, (data) => {
+      return res.render('admin/users', data)
     })
   },
 }
@@ -59,7 +59,7 @@ module.exports = adminController
 
 
 
-// 管理者可以瀏覽全站的 Tweet 清單
+// 管理者可以瀏覽全站的 Tweet 清單 
 // 可以直接在清單上快覽 Tweet 的前 50 個字
 // 可以在清單上直接刪除任何人的推文
 // 管理者可以瀏覽站內所有的使用者清單，清單的資訊包括
