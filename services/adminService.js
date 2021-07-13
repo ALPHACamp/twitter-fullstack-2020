@@ -2,11 +2,19 @@ const { Tweet, User, Reply, Like } = require('../models')
 
 const adminService = {
   getTweets: async (req, res, callback) => {
-    let tweets = await Tweet.findAll(
-      { raw: true, nest: true, })
+    let tweets = await Tweet.findAll({
+      order: [['createdAt', 'DESC']],
+      include: [
+        User,
+      ]
+    })
+    tweets = tweets.map(t => ({
+      ...t.dataValues,
+      User: t.User.dataValues,
+    }))
     return callback({
       tweets,
-      isAdmin: true, 
+      isAdmin: true,
       Appear: { navbar: true },
     })
   },
