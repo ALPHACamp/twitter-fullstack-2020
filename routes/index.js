@@ -99,7 +99,7 @@ module.exports = (app, passport) => {
   app.get('/users/:userId/replies', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserReplies)
   app.get('/users/:userId/likes', authenticated, getTopFollowing, userController.getUserInfo, userController.getUserLikes)
   app.get('/users/:userId/tweets', authenticated, getTopFollowing, userController.getUserTweets)
-  app.get('/users/:userId/edit', authenticated, userController.getUserEdit)
+  app.get('/users/:userId/edit', authenticated, getTopFollowing, userController.getUserEdit)
   app.put('/users/:userId', authenticated, userController.putUserEdit)
 
 }
