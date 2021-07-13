@@ -25,16 +25,23 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
+  //follow function
+  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowers)
+  app.get('/users/:userId/followering', authenticatedUser, followController.getFollowings)
+  app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
+  app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
+
+
   //user
-  app.get('/users/profile/:id', authenticatedUser, userController.getProfile)
-  app.get('/users/profile/noti/:id', authenticatedUser, userController.toggleNotice)
-  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike)
+  app.get('/setting', authenticatedUser, userController.getSetting)
+  app.put('/setting', authenticatedUser, userController.putSetting)
+  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike) 
+  app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
 
 
   // like
   app.post('/like/:TweetId', authenticatedUser, userController.addLike)
   app.delete('/like/:TweetId', authenticatedUser, userController.removeLike)
-
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
@@ -77,11 +84,5 @@ module.exports = (app, passport) => {
   // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 
-
-  //follow function
-  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowers)
-  app.get('/users/:userId/followering', authenticatedUser, followController.getFollowings)
-  app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
-  app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
 
 }
