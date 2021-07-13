@@ -35,7 +35,7 @@ const twitController = {
         }))
         // 依追蹤者人數排序清單
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-        return res.render('userAdmin', { users, tweet })
+        return res.render('userAdmin', { userData: users, tweet })
       })
     })
 
