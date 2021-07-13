@@ -25,18 +25,19 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  //follow function
-  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowers)
-  app.get('/users/:userId/followering', authenticatedUser, followController.getFollowings)
-  app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
-  app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
-
-
   //user
   app.get('/setting', authenticatedUser, userController.getSetting)
   app.put('/setting', authenticatedUser, userController.putSetting)
   // app.get('/users/self/like/:id', authenticatedUser, userController.getLike) 
   app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
+  app.get('/users/:id', authenticatedUser, userController.getProfile)
+
+
+  //follow function
+  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowers)
+  app.get('/users/:userId/followering', authenticatedUser, followController.getFollowings)
+  app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
+  app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
 
 
   // like
