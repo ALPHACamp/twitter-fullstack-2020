@@ -10,15 +10,15 @@ module.exports = {
       },
       UserId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        // allowNull: false
       },
       TweetId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        // allowNull: false
       },
       comment: {
         type: Sequelize.TEXT,
-        allowNull: false
+        // allowNull: false
       },
       createdAt: {
         allowNull: false,

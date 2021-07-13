@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'LikedUsers'
     })
     Tweet.hasMany(models.Reply)
+    Tweet.hasMany(models.Like)
   };
   return Tweet;
 };

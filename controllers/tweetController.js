@@ -30,7 +30,7 @@ const tweetController = {
         return res.redirect('back')
       }
       req.flash('success_messages', data['message'])
-      res.redirect('/tweets')
+      res.redirect('back')
     })
   }
 }

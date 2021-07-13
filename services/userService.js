@@ -21,8 +21,6 @@ const userService = {
 
   putProfile: async (req, res, callback) => {
     if (req.params.id !== helpers.getUser(req).id.toString()) {
-      console.log(req.params.id)
-
       req.flash('error_messages', '您無權限修改內容')
       return callback()
     }
@@ -34,8 +32,6 @@ const userService = {
       req.flash('error_messages', '兩次密碼不相同')
       return callback()
     }
-    console.log(req.body)
-    console.log(req.files)
     const files = req.files
 
     imgur.setClientID(IMGUR_CLIENT_ID)
@@ -64,8 +60,6 @@ const userService = {
     if (req.body.cancelBackground) {
       cover = "https://i.imgur.com/gJ4dfOZ.jpeg"
     }
-    console.log('avatar:' + avatar)
-    console.log('cover:' + cover)
     user = await User.findByPk(helpers.getUser(req).id)
     await user.update({
       name: req.body.name,
@@ -115,7 +109,6 @@ const userService = {
       ...follower.dataValues,
       isFollowing: helpers.getUser(req).Followings.map(following => following.id).includes(follower.id)
     }))
-    console.log(Followers)
     return callback({
       thisPageUser,
       Followers,
@@ -137,7 +130,6 @@ const userService = {
       ...following.dataValues,
       isFollowing: helpers.getUser(req).Followings.map(following => following.id).includes(following.id)
     }))
-    console.log(Followings)
     return callback({
       thisPageUser,
       Followings,
