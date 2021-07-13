@@ -13,7 +13,9 @@ const tweetController = {
       const topFollowing = res.locals.data
       const user = {
         id: helpers.getUser(req).id,
-        avatar: helpers.getUser(req).avatar
+        avatar: helpers.getUser(req).avatar,
+        name: helpers.getUser(req).name,
+        account: helpers.getUser(req).account,
       }
 
       const tweets = await Tweet.findAndCountAll({
