@@ -244,6 +244,7 @@ const userController = {
   //進入帳號設定頁面
   getUserEdit: (req, res) => {
     const topFollowing = res.locals.data
+    const userEditPage = true
     const user = {
       id: helpers.getUser(req).id,
       name: helpers.getUser(req).name,
@@ -252,7 +253,8 @@ const userController = {
     }
     return res.render('userEdit', {
       user,
-      topFollowing
+      topFollowing,
+      userEditPage
     })
   },
 

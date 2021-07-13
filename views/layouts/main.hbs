@@ -87,11 +87,20 @@
               {{!-- 設定 --}}
               <a href="/users/{{user.id}}/edit"
                 class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="text-decoration:none;border-radius: 8px;width:14vw">
+                style="{{#if userEditPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
-                  <i class="fas fa-paw p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                  {{#if userEditPage }}
+                  <i class="fas fa-igloo p-2 h3 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="fas fa-igloo p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
                 </div>
+                {{#if userEditPage }}
+                <p style="color:#313c4b;" class="mt-2">設定</p>
+                {{else}}
                 <p style="color:#313c4b6f;" class="mt-2">設定</p>
+                {{/if}}
               </a>
 
               {{!-- 推文 --}}
@@ -117,6 +126,10 @@
             {{!-- 選擇直線 --}}
             {{#if tweetsPage}}
             <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
+            {{/if}}
+
+            {{#if userEditPage }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:34vh;border-radius:13em;"></div>
             {{/if}}
           </div>
           {{/if}}
