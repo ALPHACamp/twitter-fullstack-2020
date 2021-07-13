@@ -93,12 +93,12 @@ a {
   border-bottom: 2px solid #FF6600;
 }
 
-.btn-close {
+.orange-close {
   background: none;
   opacity: 1;
 }
 
-.btn-close > svg > path {
+.orange-close > svg > path {
   fill:#FF6600;
 }
 
