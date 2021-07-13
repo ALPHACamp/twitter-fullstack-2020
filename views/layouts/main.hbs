@@ -11,89 +11,135 @@
     integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <title>Twitter</title>
 </head>
+{{#if user }}
 
-<body style="background-color: #ffd5721e;overflow-y: scroll; overflow-x: hidden;width: 80%">
-  <div class="container">
+<body>
+  {{!-- 登入後背景 --}}
+  <div
+    style="background-color: rgba(227, 227, 227, 0.468);width:79vw;height:200vh;position: fixed;margin-left: 21vw;border-radius: 3em 0 0 0;box-shadow:inset 3px 0 6px 7px #ccccccb3;z-index: -1;">
+  </div>
+  {{else}}
 
-    <div class="d-flex mt-5">
-      {{!-- 左側欄位 --}}
-      <div class="row" style="height: 500px;width: 250px;position: fixed;">
+  <body style="background-color: #ffd5721e;overflow-y: scroll; overflow-x: hidden;width: 80%">
+    {{/if}}
+    <div class="p-2 px-4">
 
+      <div class="d-flex mt-4">
 
         {{!-- 如果有登入才顯示 --}}
         {{#if user}}
-        {{!-- 上 --}}
-        <div class="col-12">
-          <p>Twitter</p>
-        </div>
+        {{!-- 左側欄位 --}}
+        <div class="d-flex flex-column" style="position: fixed;">
 
+          {{!-- 上 --}}
+          <div class="d-flex align-items-center">
+            <img src="https://i.pinimg.com/564x/d3/c6/67/d3c6675cfa80704b24f154c61cd83dc1.jpg" alt="logo"
+              style="width:4em;">
+            <p class="h5 mt-2 ms-4">Share Your Life</p>
+          </div>
 
-        {{!-- 中 --}}
-        {{!-- 如果是管理者登入 --}}
-        {{#if isAdmin}}
-        <div class="col-12 pt-0">
-          <a href="/admin/tweets" style=" text-decoration:none;color:rgb(179, 123, 50)">
-            <p>推文清單</p>
-          </a>
-          <a href="/admin/users" style=" text-decoration:none;color:black">
-            <p>使用者列表</p>
-          </a>
-        </div>
+          {{!-- 中 --}}
+          {{!-- 如果是管理者登入 --}}
+          {{#if isAdmin}}
+          <div class="col-12 pt-0">
+            <a href="/admin/tweets" style=" text-decoration:none;color:rgb(179, 123, 50)">
+              <p>推文清單</p>
+            </a>
+            <a href="/admin/users" style=" text-decoration:none;color:black">
+              <p>使用者列表</p>
+            </a>
+          </div>
 
-        {{else}}
-        {{!-- 如果是使用者登入 --}}
-        <div class="col-12 pt-0">
-          <a href="/" style=" text-decoration:none;color:rgb(179, 123, 50)">
-            <p>首頁</p>
-          </a>
-          <a href="/users/{{user.id}}" style=" text-decoration:none;color:rgb(0, 0, 0)">
-            <p>個人資料</p>
-          </a>
-          <a href="/users/{{user.id}}/edit" style=" text-decoration:none;color:rgb(0, 0, 0)">
-            <p>設定</p>
-          </a>
-          <a href="/users/{{user.id}}/tweets" style=" text-decoration:none;color:rgb(0, 0, 0)">
-            <p>推文</p>
-          </a>
+          {{else}}
+          {{!-- 如果是使用者登入 --}}
+          <div class="d-flex">
+            <div class="mt-5 ms-2" style="width: 18.5vw;">
+
+              {{!-- 首頁 --}}
+              <a href="/" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="background-color:#ffd57237;text-decoration:none;border-radius: 8px;width:17vw">
+                <div>
+                  <i class="fas fa-igloo p-2 h3 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                </div>
+                <p style="color:#313c4b;" class="mt-2">首頁</p>
+              </a>
+
+              {{!-- 個人資料 --}}
+              <a href="/users/{{user.id}}/tweets"
+                class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="text-decoration:none;border-radius: 8px;width:17vw">
+                <div>
+                  <i class="far fa-laugh p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                </div>
+                <p style="color:#313c4b6f;" class="mt-2">我的主頁</p>
+              </a>
+
+              {{!-- 設定 --}}
+              <a href="/users/{{user.id}}/edit"
+                class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="text-decoration:none;border-radius: 8px;width:17vw">
+                <div>
+                  <i class="fas fa-paw p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                </div>
+                <p style="color:#313c4b6f;" class="mt-2">設定</p>
+              </a>
+
+              {{!-- 推文 --}}
+              <button class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="text-decoration:none;border-radius: 8px;width:17vw;border:none; background-color: white"
+                data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{user.id}}">
+                <div>
+                  <i class="fas fa-umbrella-beach p-2 h4 me-3" style="color:#313c4b6f;"></i>
+                </div>
+                <p style="color:#313c4b6f;" class="mt-2">分享心情</p>
+              </button>
+
+              {{!-- 登出 --}}
+              <a href="/signout" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="text-decoration:none;border-radius: 8px;width:17vw">
+                <div>
+                  <i class="fas fa-shoe-prints p-2 h4 me-3" style="color:#313c4b6f;"></i>
+                </div>
+                <p style="color:#313c4b6f;" class="mt-2">登出</p>
+              </a>
+            </div>
+
+            {{!-- 選擇直線 --}}
+            <div style="border-left:0.3em solid #ffd472;height:4vh;margin-top:9vh"></div>
+          </div>
+          {{/if}}
+
         </div>
         {{/if}}
 
+        {{!-- 中間主頁 --}}
+        <div>
+          {{{ body }}}
+        </div>
 
-        {{!-- 下 --}}
-        <a href="/signout" style=" text-decoration:none;color:rgb(0, 0, 0)">
-          <p>登出</p>
-        </a>
+        {{#if user }}
+        {{!-- 右側欄位 --}}
+        <div style="position: fixed;margin-left:80vw">{{> recommendedFollower }}</div>
         {{/if}}
 
       </div>
-
-      {{!-- 中間主頁 --}}
-      <div>
-        {{{ body }}}
-      </div>
-
-      {{#if user }}
-      {{!-- 右側欄位 --}}
-      <div style="position: fixed;">{{> recommendedFollower }}</div>
-      {{/if}}
 
     </div>
-
-  </div>
-  {{!-- jquery --}}
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  {{!-- popper --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  {{!-- bootstrapcdn --}}
+    {{!-- jquery --}}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    {{!-- popper --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"></script>
+    {{!-- bootstrapcdn --}}
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+  </body>
 
 </html>
