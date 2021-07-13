@@ -49,12 +49,13 @@ const tweetController = {
           likeCount: likeCount.count
         }
       })
-
+      const tweetsPage = true
       Promise.all(Data).then(data => {
         return res.render('index', {
           data,
           user,
-          topFollowing
+          topFollowing,
+          tweetsPage
         })
       })
     } catch (err) {

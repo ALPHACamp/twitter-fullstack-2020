@@ -56,13 +56,22 @@
             <div class="mt-5 ms-4" style="width: 15.5vw;">
 
               {{!-- 首頁 --}}
+
               <a href="/" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="background-color:#ffd57237;text-decoration:none;border-radius: 8px;width:14vw">
+                style="{{#if tweetsPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
+                  {{#if tweetsPage }}
                   <i class="fas fa-igloo p-2 h3 me-3"
                     style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="fas fa-igloo p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
                 </div>
+                {{#if tweetsPage }}
                 <p style="color:#313c4b;" class="mt-2">首頁</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">首頁</p>
+                {{/if}}
               </a>
 
               {{!-- 個人資料 --}}
@@ -106,7 +115,9 @@
             </div>
 
             {{!-- 選擇直線 --}}
+            {{#if tweetsPage}}
             <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
+            {{/if}}
           </div>
           {{/if}}
 
