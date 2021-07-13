@@ -50,5 +50,7 @@ router.put('/users/:id', authenticated, upload.fields([
 ]), userController.putProfile)
 router.get('/users/:id/followers', authenticated, userController.userFollowersPage)
 router.get('/users/:id/followings', authenticated, userController.userFollowingsPage)
+router.post('/following/:id', authenticated, userController.getFollowing)
+router.delete('/following/:id', authenticated, userController.deleteFollowing)
 
 module.exports = router

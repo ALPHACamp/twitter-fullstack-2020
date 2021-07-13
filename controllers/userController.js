@@ -121,6 +121,14 @@ const userController = {
       user: user.toJSON(),
       Appear: { navbar: true }
     })
+  },
+
+  getFollowing: async (req, res) => {
+    userService.getFollowing(req, res, () => res.redirect('back'))
+  },
+
+  deleteFollowing: async (req, res) => {
+    userService.deleteFollowing(req, res, () => res.redirect('back'))
   }
 }
 

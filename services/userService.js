@@ -1,4 +1,4 @@
-const { Tweet, User, Reply, Like } = require('../models')
+const { Tweet, User, Reply, Like, Followship } = require('../models')
 const helpers = require('../_helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -136,6 +136,29 @@ const userService = {
       Appear: { navbar: true, top10: true }
     })
   },
+
+  getFollowing: async (req, res, callback) => {
+    if (req.params.id === helpers.getUser(req).id) {
+      req.flash('warning_messages', '無法追蹤自己')
+      callback()
+    } else {
+      await Followship.create({
+        followerId: helpers.getUser(req).id,
+        followingId: req.params.id
+      })
+      return callback()
+    }
+  },
+
+  deleteFollowing: async (req, res, callback) => {
+    await Followship.destroy({
+      where: {
+        followingId: req.params.id,
+        followerId: helpers.getUser(req).id
+      }
+    })
+    return callback()
+  }
 
 }
 
