@@ -11,10 +11,20 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.BOOLEAN,
   }, {});
   User.associate = function (models) {
-    User.hasMany(models.Followship)
+    //User.hasMany(models.Followship)
     User.hasMany(models.Like)
     User.hasMany(models.Reply)
     User.hasMany(models.Tweet)
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followerId',
+      as: 'Followings'
+    })
+    User.belongsToMany(User, {
+      through: models.Followship,
+      foreignKey: 'followingId',
+      as: 'Followers'
+    })
   };
   return User;
 };
