@@ -11,7 +11,7 @@ const userService = {
 
   getUserTweets: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
-    const tweets = await getTweets(req, { UserId: thisPageUser.id })
+    const tweets = await getTweets(req, { UserId: thisPageUser.id }, ['createdAt', 'DESC'])
     return callback({
       thisPageUser,
       tweets,
@@ -82,7 +82,7 @@ const userService = {
 
   getUserReplies: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
-    let tweets = await getTweets(req, { '$Replies.UserId$': thisPageUser.id })
+    let tweets = await getTweets(req, { '$Replies.UserId$': thisPageUser.id }, ['Replies', 'createdAt', 'DESC'])
     console.log(tweets)
     return callback({
       thisPageUser,
@@ -93,7 +93,7 @@ const userService = {
 
   getUserLikes: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
-    const tweets = await getTweets(req, { '$LikedUsers.id$': thisPageUser.id })
+    const tweets = await getTweets(req, { '$LikedUsers.id$': thisPageUser.id }, ['LikedUsers', 'createdAt', 'DESC'])
     return callback({
       thisPageUser,
       tweets,
@@ -167,14 +167,15 @@ async function getThisPageUser(req) {
   return thisPageUser
 }
 
-async function getTweets(req, whereCondition) {
+async function getTweets(req, whereCondition, orderCondition) {
   let tweets = await Tweet.findAll({
     include: [
       User,
-      Reply,
-      { model: User, as: 'LikedUsers' }
+      { model: Reply, order: [['createdAt', 'DESC']] },
+      { model: User, as: 'LikedUsers', order: [['createdAt', 'DESC']] }
     ],
-    where: whereCondition
+    where: whereCondition,
+    order: [orderCondition]
   })
   tweets = tweets.map(tweet => ({
     ...tweet.dataValues,
