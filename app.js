@@ -36,7 +36,7 @@ app.use(express.static('public'))
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 app.use(methodOverride('_method'))
 
-
+app.use('/upload', express.static(__dirname + '/upload'))
 
 
 require('./routes')(app, passport)

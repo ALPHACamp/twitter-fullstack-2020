@@ -1,6 +1,8 @@
 const twitController = require('../controllers/twitController.js')
 const adminController = require('../controllers/adminController.js')
 const passport = require('passport')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 module.exports = (app, passport) => {
 
@@ -20,7 +22,7 @@ module.exports = (app, passport) => {
 
 
   //首頁路由 ???
-  app.get('/', authenticated, twitController.getTwitters)
+  app.get('/', authenticated, twitController.getTwitters) //
   // app.get('/twitters', twitController.getTwitters)
   app.post('/', authenticated, twitController.toTwitters)
 
@@ -69,7 +71,7 @@ module.exports = (app, passport) => {
   // app.post('/tweets', twitController.putTwitters)
 
   // 查看tweets的訊息回覆
-  app.get('/tweets/replies', twitController.getReplies)
+  app.get('/tweets/replies', authenticated, twitController.getReplies)
 
   // 提交tweets的訊息回覆
   app.post('/tweets/replies', twitController.toReplies)
@@ -78,11 +80,16 @@ module.exports = (app, passport) => {
   app.post('/tweets/:id/like', twitController.getReplies)
   app.post('/tweets/:id/unlike', twitController.getReplies)
 
+  //routes for follow
+  app.get('/user/self/following', authenticated, twitController.getFollowing)
+  app.post('/user/self/following/:userId', authenticated, twitController.toFollowing)
+  app.delete('/user/self/following/:userId', authenticated, twitController.deleteFollowing)
+
   // 個人推文頁面
   app.get('/user/self', authenticated, twitController.getUser)
-
+  app.put('/user/self', authenticated, upload.single('avatar'), twitController.toUser)
   // 個人推文喜歡頁面
-  app.get('/user/self/like', twitController.getUserLike)
+  app.get('/user/self/like', authenticated, twitController.getUserLike)
 
   //特定使用者的所有 tweets
   app.get('/user/:id/tweets', twitController.getUserLike)
@@ -95,16 +102,13 @@ module.exports = (app, passport) => {
 
 
   // 查看跟隨者
-  app.get('/user/self/follower', twitController.getFollower)
+  app.get('/user/self/follower', authenticated, twitController.getFollower)
 
-  // 查看正在跟隨
-  app.get('/user/self/following', twitController.getFollowing)
 
-  // 跟隨特定使用者
-  app.post('/user/self/following/:id', twitController.toFollowing)
 
-  // 取消跟隨特定使用者
-  app.delete('/user/self/following/:id', twitController.deleteFollowing)
+
+
+
 
   // 前台帳戶設定
   app.get('/setting', authenticated, twitController.getSetting)

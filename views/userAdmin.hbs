@@ -136,9 +136,11 @@
   {{!-- 右邊區域 --}}
   <div class="col-md-3">
     <div class='rounded' style="background-color: #F5F8FA ;">
+
       <div class="p-2">
         跟隨誰
       </div>
+      {{#each users}}
       <div
         style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
         class="p-2">
@@ -147,105 +149,25 @@
             src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
             style="width: 50px; height:50px; border-radius:50%;">
           <div>
-            <div>John Doe</div>
+            <div>{{this.name}}</div>
             <div>@heyjohn</div>
           </div>
         </div>
 
         <div>
-          <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-            href="#">正在跟隨</a>
+          {{#if this.isFollowed }}
+          <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit"
+              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">跟隨</button>
+          </form>
+          {{/if}}
         </div>
       </div>
-
-      <div style="display: flex; justify-content:space-between; border-bottom:#E6ECF0 1px solid; " class="p-2">
-        <div style="display: flex;">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            style="width: 50px; height:50px; border-radius:50%;">
-          <div>
-            <div>John Doe</div>
-            <div>@heyjohn</div>
-          </div>
-        </div>
-
-        <div>
-          <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-            href="#">正在跟隨</a>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content:space-between; border-bottom:#E6ECF0 1px solid; " class="p-2">
-        <div style="display: flex;">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            style="width: 50px; height:50px; border-radius:50%;">
-          <div>
-            <div>John Doe</div>
-            <div>@heyjohn</div>
-          </div>
-        </div>
-
-        <div>
-          <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-            href="#">正在跟隨</a>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content:space-between; border-bottom:#E6ECF0 1px solid; " class="p-2">
-        <div style="display: flex;">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            style="width: 50px; height:50px; border-radius:50%;">
-          <div>
-            <div>John Doe</div>
-            <div>@heyjohn</div>
-          </div>
-        </div>
-
-        <div>
-          <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-            href="#">正在跟隨</a>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content:space-between; border-bottom:#E6ECF0 1px solid; " class="p-2">
-        <div style="display: flex;">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            style="width: 50px; height:50px; border-radius:50%;">
-          <div>
-            <div>John Doe</div>
-            <div>@heyjohn</div>
-          </div>
-        </div>
-
-        <div>
-          <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-            href="#">正在跟隨</a>
-        </div>
-      </div>
-
-      <div style="display: flex; justify-content:space-between; border-bottom:#E6ECF0 1px solid; " class="p-2">
-        <div style="display: flex;">
-          <img
-            src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-            style="width: 50px; height:50px; border-radius:50%;">
-          <div>
-            <div>John Doe</div>
-            <div>@heyjohn</div>
-          </div>
-        </div>
-
-        <div>
-          <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-            href="#">正在跟隨</a>
-        </div>
-      </div>
-
-
+      {{/each}}
     </div>
-
   </div>
 </div>
 </div>

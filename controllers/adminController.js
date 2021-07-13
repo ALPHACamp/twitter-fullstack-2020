@@ -16,9 +16,16 @@ const adminController = {
   },
 
   adminUsers: (req, res) => {
-    User.findAll({ raw: true, nest: true }).then(user => {
-      console.log(user)
-      return res.render('admin/users', { userData: user })
+
+    User.findAll({
+      order: [['createdAt', 'DESC']],
+      raw: true,
+      nest: true,
+
+    }).then(users => {
+      console.log(users)
+
+      return res.render('admin/users', { userData: users })
     })
 
   },
