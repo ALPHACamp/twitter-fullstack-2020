@@ -35,11 +35,10 @@
   </div>
 
   {{!-- middle bar --}}
-
+  {{> message}}
   <div class="card" style="width: 700px;">
-
     <div class="row mt-2" style="width: 20%;">
-      <a href="" style="color:black" class="col-1 m-2" style="margin: auto;">
+      <a href="javascript:history.back()" style="color:black" class="col-1 m-2" style="margin: auto;">
         <i class="fas fa-arrow-left fa-2x"></i>
       </a>
       <a href="/" class="d-flex align-items-center pb-3 m-2 link-dark text-decoration-none col-2 mx-auto">
@@ -62,12 +61,45 @@
 
 
     <div class=" card-body">
+
       <div class="icon d-flex justify-content-end">
         <!-- Button trigger modal -->
+        {{#ifCond users.id UserId}}
+
         <button type="submit" class="btn btn-outline-secondary rounded-pill" data-bs-toggle="modal"
           data-bs-target="#exampleModal">
           編輯個人資料
         </button>
+
+        {{else}}
+
+        <a href="mailto:{{users.email}}" class="border rounded-circle m-1" style="color:tomato;">
+          <i class="far fa-envelope fa-2x m-1"></i>
+
+          {{#if users.isNoticed}}
+        </a>
+        <a href="/users/profile/noti/{{users.id}}" class="border rounded-circle m-1" style="color:tomato;">
+          <i class="fas fa-bell fa-2x m-2"></i>
+        </a>
+        {{else}}
+        <a href="/users/profile/noti/{{users.id}}" class="border rounded-circle m-1" style="color:tomato;">
+          <i class="far fa-bell fa-2x m-1"></i>
+        </a>
+        {{/if}}
+
+        {{#if isFollowed}}
+        <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center
+                    ">
+          <button type="submit" class="btn btn-success rounded-pill" name="{{users.id}}">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/{{users.id}}" method="POST">
+          <button type="submit" class="btn btn-outline-success rounded-pill" name="{{users.id}}"
+            style="margin-left: 10px;">跟隨</button>
+        </form>
+        {{/if}}
+
+        {{/ifCond}}
       </div>
 
       <!-- Modal -->
@@ -141,7 +173,7 @@
                     <p class="h6">{{this.content}}</p>
                   </div>
                   <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                    <i class="far fa-comment text-muted small"> {{this.Replies}}</i>
+                    <i class="far fa-comment text-muted small"> {{this.replyCount}}</i>
                     <i class="far fa-heart text-muted small"> {{this.likes}}</i>
                   </div>
                 </div>
@@ -171,7 +203,7 @@
         <li class="list-group-item bg-light" style="border-left: none;border-right: none">
           <div class="row">
             <div class="col-2">
-              <a href="/users/other/{{this.id}}" class="text-center">
+              <a href="/users/profile/{{this.id}}" class="text-center">
                 <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
             </div>
 
@@ -196,7 +228,7 @@
         </li>
         {{/each}}
         <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
-          <a href=" /users/{{userId}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
+          <a href=" /users/{{users.id}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
         </li>
       </ul>
     </div>

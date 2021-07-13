@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
+const { thousandComma } = require('../config/hbs-helpers')
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
+
 
 
 const userController = {
@@ -81,58 +83,9 @@ const userController = {
   },
   getProfile: (req, res) => {
     Promise.all([
-      User.findByPk(req.user.id, {
-        include: [
-          Tweet,
-          { model: Tweet, include: [Reply] },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-        ],
-        order: [['createdAt', 'DESC']],
-      }),
-      User.findAll({
-        where: { is_admin: false },
-        include: [{ model: User, as: 'Followers' }]
-      })
-    ]).then(([users, followship]) => {
-      //超過千位，加逗點
-      const thousandComma = function (num) {
-        let result = '', counter = 0
-        num = (num || 0).toString()
-        for (let i = num.length - 1; i >= 0; i--) {
-          counter++
-          result = num.charAt(i) + result
-          if (!(counter % 3) && i !== 0) { result = ',' + result }
-        }
-        return result
-      }
-
-      const followerscount = users.Followers.length
-      const followingscount = users.Followings.length
-
-      followship = followship.map(followships => ({
-        ...followships.dataValues,
-        FollowerCount: followships.Followers.length,
-        isFollowed: req.user.Followings.some(d => d.id === followships.id)
-      }))
-      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      followship = followship.filter(user => user.id !== req.user.id)
-
-      res.render('userprofile', {
-        users: users.toJSON(),
-        followerscount: thousandComma(followerscount),     //幾個跟隨我
-        followingscount: thousandComma(followingscount),   //我跟隨幾個
-        followship: followship
-      })
-    })
-
-  },
-  getOtherprofile: (req, res) => {
-    Promise.all([
       User.findByPk(req.params.id, {
+        where: { is_admin: false },
         include: [
-
-          Tweet,
           { model: Tweet, as: 'LikedTweet' },
           { model: Tweet, include: [Reply] },
           { model: User, as: 'Followers' },
@@ -141,54 +94,51 @@ const userController = {
         order: [['createdAt', 'DESC']],
       }),
       User.findAll({
-        where: { is_admin: false },
-        include: [
-          { model: User, as: 'Followers' }
-        ]
+        where: {
+          is_admin: false,
+          id: { [Op.ne]: req.user.id }
+        },
+        include: [{ model: User, as: 'Followers' }]
       })
     ]).then(([users, followship]) => {
 
-      //超過千位，加逗點
-      const thousandComma = function (num) {
-        let result = '', counter = 0
-        num = (num || 0).toString()
-        for (let i = num.length - 1; i >= 0; i--) {
-          counter++
-          result = num.charAt(i) + result
-          if (!(counter % 3) && i !== 0) { result = ',' + result }
-        }
-        return result
+      if (req.params.id === '1') {
+        req.flash('error_messages', '沒有權限')
+        return res.redirect('back')
       }
-      const userId = req.user.id
-      const likeTweets = users.LikedTweet
+      console.log(users.toJSON())
+      const UserId = req.user.id
       const followerscount = users.Followers.length
       const followingscount = users.Followings.length
-      console.log(likeTweets)
+      const isFollowed = req.user.Followings.some(d => d.id === users.id)
 
-
-      // 計算追蹤者人數
       followship = followship.map(followships => ({
         ...followships.dataValues,
         FollowerCount: followships.Followers.length,
-        isFollowed: req.user.Followings.some(d => d.id === followships.id)
+        isFollowed: req.user.Followings.some(d => d.id === followships.id),
+        isMainuser: req.user.id === req.params.id
       }))
-
       followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      followship = followship.filter(user => user.id !== req.user.id)
 
-      res.render('otherprofile', {
-        userId: userId,
+
+
+
+
+      res.render('userprofile', {
         users: users.toJSON(),
         followerscount: thousandComma(followerscount),     //幾個跟隨我
         followingscount: thousandComma(followingscount),   //我跟隨幾個
-        likeTweets: likeTweets,
-        followship: followship,
+        followship,
+        isFollowed,
+        UserId,
       })
     })
+
   },
   toggleNotice: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
+
         if (req.user.id === req.params.id) {
           res.redirect('back')
         }

@@ -26,12 +26,10 @@ module.exports = (app, passport) => {
   }
 
   //user
-  app.get('/users/self/:id', authenticatedUser, userController.getProfile)
+  app.get('/users/profile/:id', authenticatedUser, userController.getProfile)
+  app.get('/users/profile/noti/:id', authenticatedUser, userController.toggleNotice)
   // app.get('/users/self/like/:id', authenticatedUser, userController.getLike)
 
-  //other user
-  app.get('/users/other/:id', authenticatedUser, userController.getOtherprofile)
-  app.get('/users/other/noti/:id', authenticatedUser, userController.toggleNotice)
 
   // like
   app.post('/like/:TweetId', authenticatedUser, userController.addLike)
@@ -79,9 +77,10 @@ module.exports = (app, passport) => {
   // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 
+
   //follow function
-  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)
-  app.get('/users/:userId/followering', authenticatedUser, followController.getFollower)
+  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowers)
+  app.get('/users/:userId/followering', authenticatedUser, followController.getFollowings)
   app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
   app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
 

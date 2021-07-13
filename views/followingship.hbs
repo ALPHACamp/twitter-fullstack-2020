@@ -35,7 +35,7 @@
   <div class="card" style="width: 800px;">
 
     <div class="row mt-2" style="width: 10%;">
-      <a href="" style="color:black" class="col-1 mx-auto" style="margin: auto;">
+      <a href="javascript:history.back()" style="color:black" class="col-1 mx-auto">
         <i class="fas fa-arrow-left fa-2x"></i>
       </a>
       <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none col-3">
@@ -63,7 +63,7 @@
           <li class="list-group-item">
             <div class="row g-0">
               <div class="col-md-1">
-                <a href="/users/other/{{this.id}}" class="text-center">
+                <a href="/users/profile/{{this.id}}" class="text-center">
                   <img src="{{this.img}}" alt="" width="75" height="75"
                     class="rounded-circle me-2 rounded mt-2 d-block">
                 </a>
@@ -108,11 +108,11 @@
           style="height: 50px;font-size:large;border-left: none;border-right: none;border-top: none">
           跟隨誰
         </li>
-        {{#each followship}}
+        {{#each followeringbar}}
         <li class="list-group-item bg-light" style="border-left: none;border-right: none">
           <div class="row">
             <div class="col-2">
-              <a href="/users/other/{{this.id}}" class="text-center">
+              <a href="/users/profile/{{this.id}}" class="text-center">
                 <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
             </div>
 
@@ -124,16 +124,20 @@
 
             <div class="col-4" style="margin:auto">
               {{#if this.isFollowed}}
-              <button type=" submit" class="btn btn-success btn-sm rounded-pill">正在跟隨</button>
+              <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                <button type="submit" class="btn btn-success" name="{{user.id}}">正在跟隨</button>
+              </form>
               {{else}}
-              <button type="submit" class="btn btn-outline-success btn-sm rounded-pill">跟隨</button>
+              <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                <button type="submit" class="btn btn-outline-success" name="{{user.id}}">跟隨</button>
+              </form>
               {{/if}}
             </div>
           </div>
         </li>
         {{/each}}
         <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
-          <a href=" /users/{{userId}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
+          <a href=" /users/{{id}}/follower" class="bg-light" style="text-decoration: none;color:tomato">顯示更多</a>
         </li>
       </ul>
     </div>
