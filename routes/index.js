@@ -26,11 +26,19 @@ module.exports = (app, passport) => {
   }
 
   //user
-  app.get('/users/:id', authenticatedUser, userController.getProfile)
   app.get('/setting', authenticatedUser, userController.getSetting)
   app.put('/setting', authenticatedUser, userController.putSetting)
   // app.get('/users/self/like/:id', authenticatedUser, userController.getLike) 
   app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
+  app.get('/users/:id', authenticatedUser, userController.getProfile)
+
+
+  //follow function
+  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowers)
+  app.get('/users/:userId/followering', authenticatedUser, followController.getFollowings)
+  app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
+  app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
+
 
   // like
   app.post('/like/:TweetId', authenticatedUser, userController.addLike)
@@ -77,10 +85,5 @@ module.exports = (app, passport) => {
   // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 
-  //follow function
-  app.get('/users/:userId/follower', authenticatedUser, followController.getFollowing)
-  app.get('/users/:userId/followering', authenticatedUser, followController.getFollower)
-  app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
-  app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
 
 }
