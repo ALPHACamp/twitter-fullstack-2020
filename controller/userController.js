@@ -266,15 +266,16 @@ const userController = {
         myPage = false
       }
 
-      const tweets = await Tweet.findAll({
+      const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
         where: { UserId: req.params.userId },
         order: [['createdAt', 'DESC']]
       })
 
+      const tweetCount = tweets.count
       let Data = []
-      Data = tweets.map(async (tweet, index) => {
+      Data = tweets.rows.map(async (tweet, index) => {
         const [replyCount, likeCount] = await Promise.all([
           Reply.findAndCountAll({
             raw: true,
@@ -302,6 +303,7 @@ const userController = {
           followingCount: userInfo.followingCount,
           followerCount: userInfo.followerCount,
           data,
+          tweetCount,
           topFollowing,
           myPage
         })
