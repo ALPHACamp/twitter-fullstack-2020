@@ -205,15 +205,15 @@
          
           <div class="col-12 mb-3 mt-2">
             <label for="name" class="fw-bold" style="margin-bottom: -30px; margin-left: 8px; font-size: 1.1em">名稱</label>
-            <input type="text" class="form-control pt-4"
+            <input type="text" class="form-control pt-4 nowcount1"
               id="name" name="name" maxlength="50" style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em" aria-describedby="nameHelp" value="{{users.name}}"/>
+            <p class="text-end text-muted now1" style="font-size: 0.98em;"></p>
           </div> 
           <div class="col-12 mb-3 mt-2">
             <label for="description" class="fw-bold" style="margin-left: 8px; font-size: 1.1em;">自我介紹</label>
-            <textarea class="form-control"
-              id="description" name="description" style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em;" maxlength="160" aria-describedby="descriptionHelp">
-              {{users.description}}
-            </textarea>
+            <textarea class="form-control nowcount2"
+              id="description" name="description" style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em;" maxlength="160" aria-describedby="descriptionHelp">{{users.description}}</textarea>
+            <p class="text-end text-muted now2" style="font-size: 0.98em;"></p>
           </div>
         </div>
       </form>
