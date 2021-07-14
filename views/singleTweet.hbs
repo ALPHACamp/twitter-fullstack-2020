@@ -1,110 +1,71 @@
-<div class="d-flex mt-5">
-  {{!-- 左側欄位 --}}
-  <div class="row" style="height: 500px;width: 250px;">
-    {{!-- 上 --}}
-    <div class="col-12">
-      <p>Twitter</p>
+<div class="d-flex flex-column mt-2" style="margin-left: 20vw;">
+  <p class="h4 mb-4" style="color: #313c4b;">{{ tweet.User.name }}'s Post</p>
+
+  <div class="d-flex align-items-center p-1 pt-2 ps-2 mb-4"
+    style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
+    {{!-- avatar --}}
+    <a href="/users/{{tweet.User.id}}/tweets" style="padding:1em 0">
+      {{#if tweet.User.avatar }}
+      <img src="{{ tweet.User.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
+      {{else}}
+      <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
+        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+      {{/if}}
+    </a>
+    {{!-- account --}}
+    <div style="color:#313c4b;width:35vw;" class="d-flex flex-column ms-4">
+      <div class="d-flex mb-2">
+        <p class="mb-0 me-2" style="color: #313c4b98;margin-top:0.2em;">{{ tweet.User.account }} · </p>
+        <p class="mb-0 me-2" style="color: #313c4b;margin-top:0.2em;">{{momentCH reply.createdAt}}</p>
+      </div>
+      <div style="height:10vh;width:34vw;border:none;resize:none;outline:none;color: #313c4b;">{{
+        tweet.description }}</div>
     </div>
-    {{!-- 中 --}}
-    <div class="col-12 pt-0">
-      <a href="/" style=" text-decoration:none;color:rgb(179, 123, 50)">
-        <p>首頁</p>
-      </a>
-      <a href="/users/{{user.id}}" style=" text-decoration:none;color:rgb(0, 0, 0)">
-        <p>個人資料</p>
-      </a>
-      <a href="/users/{{user.id}}/edit" style=" text-decoration:none;color:rgb(0, 0, 0)">
-        <p>設定</p>
-      </a>
-      <a href="/users/{{user.id}}/tweets" style=" text-decoration:none;color:rgb(0, 0, 0)">
-        <p>推文</p>
-      </a>
+
+    {{!-- Reply and Like --}}
+    <div class="d-flex flex-column ms-3 mt-3">
+      <div class="d-flex">
+        <i class="fas fa-comment-dots h4" style="color: #ffd472;"></i>
+        <p class="ms-3" style="color: #313c4bc2;">{{replyCount}}</p>
+      </div>
+      <div class="d-flex">
+        <i class="fab fa-gratipay h4" style="color: #ffd472;margin-right:0.1em"></i>
+        <p class="ms-3" style="color: #313c4bc2;">{{likeCount}}</p>
+      </div>
     </div>
-    {{!-- 下 --}}
-    <div class="col-12">
-      <p>登出</p>
-    </div>
+
   </div>
 
-  <div style="width: 780px;" class="me-5">
-    {{!-- 標題 --}}
-    <div class="p-2 mb-0" style="width: 100%; outline: 1px solid gray;height:55px">
-      <h3><strong>推文</strong></h3>
+  {{!-- reply --}}
+  {{#if reply }}
+  <p class="h4 mb-4" style="color: #313c4b;">Reply</p>
+  {{#each reply }}
+
+  <div class="d-flex align-items-center p-1 pt-2 ps-2 mb-4"
+    style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
+    {{!-- avatar --}}
+    <a href="/users/{{this.User.id}}/tweets" style="padding:1em 0">
+      {{#if this.User.avatar }}
+      <img src="{{ this.User.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
+      {{else}}
+      <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
+        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+      {{/if}}
+    </a>
+    {{!-- account --}}
+    <div style="color:#313c4b;width:37vw;" class="d-flex flex-column ms-4">
+      <div class="d-flex">
+        <p class="fs-5 me-3 mb-0"><strong>{{ this.User.name }}</strong></p>
+        <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ this.User.account }}・{{momentCH
+          this.createdAt}}</p>
+      </div>
+      <div style="height:10vh;width:40vw;border:none;resize:none;outline:none;color: #313c4b;">{{
+        this.comment }}</div>
     </div>
 
-    <div class="d-flex flex-column align-items-center">
-      <div style="width: 100%; outline: 1px solid gray;" class="p-3">
-        <div class="d-flex align-items-center">
-          {{!-- 大頭貼 --}}
-          <div>
-            <a href="/users/{{tweet.User.id}}/tweets">
-              <img src="{{ tweet.User.avatar }}" style="border-radius: 100%;width: 60px">
-            </a>
-          </div>
-          {{!-- 右側文字 --}}
-          <div class="ms-3" style="height: 80px;">
-            {{!-- 發文者 --}}
-            <a href="/users/{{tweet.User.id}}/tweets" style="text-decoration: none;">
-              <div class="mb-0">
-                <p class="fs-5 me-2 mb-0" style="line-height: 40px;color: black;">{{ tweet.User.name }}</p>
-                <p class="mb-0" style="color: darkseagreen;" style="line-height: 40px;">{{ tweet.User.account
-                  }}</p>
-              </div>
-            </a>
-          </div>
-        </div>
-        {{!-- 推文內容 --}}
-        <p class="mt-0" style="font-size: large;height: 80px;">
-          {{ tweet.description }}
-        </p>
-        <small>{{momentCH tweet.createdAt}}</small>
-        {{!-- Reply and Like --}}
-        <div>
-          <span>{{replyCount}} 回復</span>
-          <span>{{likeCount}} 喜歡次數</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="border border-3 p-1" style="background-color: #E6ECF0;"></div>
-
-    <div class="d-flex flex-column align-items-center">
-
-      <div style="width: 100%;">
-        {{#each reply }}
-        <div class="d-flex">
-          {{!-- 大頭貼 --}}
-          <div class="mt-2" style="line-height:40px;">
-            <a href="/users/{{this.User.id}}/tweets">
-              <img src="{{ this.User.avatar }}" style="border-radius: 100%;width: 60px"></a>
-          </div>
-          {{!-- 右側文字 --}}
-          <div class="ms-3" style="height: 150px;">
-            {{!-- 發文者 --}}
-            <div style="line-height: 40px;">
-              <a href="/users/{{this.User.id}}/tweets" style="text-decoration: none;">
-                <div class="d-flex align-items-center mb-0">
-                  <p class="fs-5 me-2 mb-0" style="color: black;">{{ this.User.name }}</p>
-                  <p class="mb-0" style="color: darkseagreen;">{{ this.User.account }}・{{momentCH this.createdAt}}</p>
-                </div>
-              </a>
-              {{!-- 回復區 --}}
-              <span style="color:darkgrey;">回復 </span><span style="color: #FF6600;">{{../tweet.User.account}}</span>
-            </div>
-            {{!-- 推文內容 --}}
-            <p class="mt-0" style="font-size: small;">
-              {{ this.comment }}
-            </p>
-          </div>
-        </div>
-
-        <hr>
-        {{/each}}
-      </div>
-      <div>
-
-      </div>
-    </div>
   </div>
-  <div>{{> recommendedFollower }}</div>
+  {{/each}}
+  {{else}}
+  <p class="h4 mb-4" style="color: #313c4b;">No Reply</p>
+  {{/if}}
 </div>
