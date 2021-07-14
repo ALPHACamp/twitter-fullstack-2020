@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     followingId: DataTypes.INTEGER,
   }, {});
   Followship.associate = function (models) {
-    //Followship.belongsToMany(models.User, { through: models.Followship,})
+    //Followship.hasMany(models.User)
   };
   return Followship;
 };

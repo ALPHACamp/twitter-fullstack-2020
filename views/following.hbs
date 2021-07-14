@@ -95,12 +95,11 @@
     </div>
 
     {{!-- 留言區域 --}}
-    {{#each followtime}}
+    {{#each users}}
+    {{#if this.isFollowed }}
     <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src={{this.avatar}}
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+        <img src={{this.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
         <div style="display: flex; justify-content:space-between">
@@ -108,23 +107,18 @@
             <div class="font-weight-bold">{{this.name}}</div>
             <div class="text-secondary">{{this.account}}</div>
           </div>
-
           <div>
-            {{#if this.isFollowed }}
             <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
-                class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+                class="btn btn-block text-light mt-1"
+                style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
             </form>
-            {{else}}
-            <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
-                style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
-            </form>
-            {{/if}}
           </div>
         </div>
         <div>{{this.introduction}}</div>
 
       </div>
     </div>
+    {{/if}}
     {{/each}}
   </div>
 

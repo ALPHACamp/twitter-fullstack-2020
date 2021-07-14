@@ -80,28 +80,24 @@ const twitController = {
   },
 
   getFollowing: (req, res) => {
-    return User.findAll({// 撈出所有 User 與 followers 資料
-      //order: [['createdAt', 'DESC']],
-      include: [
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
-      ]
-    }).then(users => {
-      const userself = req.user.id
-      users = users.map(user => ({ // 整理 users 資料
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,// 計算追蹤者人數
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
-      }))
-      helper.removeUser(users, userself)//移除使用者自身資訊
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
-
-      Followship.findAll({
-        order: [['createdAt', 'DESC']]
-      }).then(followtime => {
-        return res.render('following', { users, followtime })
+      return User.findAll({// 撈出所有 User 與 followers 資料
+        //order: [['createdAt', 'DESC']],
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ]
+      }).then(users => {
+        const userself = req.user.id
+        users = users.map(user => ({ // 整理 users 資料
+          ...user.dataValues,
+          FollowerCount: user.Followers.length,// 計算追蹤者人數
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
+        }))
+        helper.removeUser(users, userself)//移除使用者自身資訊
+        users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+        return res.render('following', { users })
       })
-    })
+    
   },
 
   toFollowing: (req, res) => {
