@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { User, Like } = require('../models')
 const userService = require('../services/userService')
-
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -86,7 +86,7 @@ const userController = {
 
   addLike: (req, res) => {
     return Like.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
       .then((like) => {
@@ -97,7 +97,7 @@ const userController = {
   removeLike: (req, res) => {
     return Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId,
       }
     })
@@ -110,10 +110,10 @@ const userController = {
   },
 
   getUserSetting: async (req, res) => {
-    const isMySelf = req.user.id.toString() === req.params.id.toString()
+    const isMySelf = helpers.getUser(req).id.toString() === req.params.id.toString()
     if (!isMySelf) {
       req.flash('error_messages', 'you can only edit your own profile!')
-      return res.redirect(`/users/${req.user.id}/setting`)
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
     }
     const user = await User.findByPk(req.params.id)
     return res.render('userSetting', {

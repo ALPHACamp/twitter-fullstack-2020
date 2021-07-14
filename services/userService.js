@@ -22,7 +22,7 @@ const userService = {
     return callback(tops)
   },
 
-  getUserTweets: async (req, res, callback) => {    
+  getUserTweets: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
     const tweets = await getTweets(req, { UserId: thisPageUser.id }, ['createdAt', 'DESC'])
     return callback({
@@ -188,8 +188,8 @@ async function getThisPageUser(req) {
     FollowersCount: thisPageUser.Followers.length,
     FollowingsCount: thisPageUser.Followings.length,
   }
-  if (req.user.id !== req.params.id) {
-    thisPageUser.isFollowing = thisPageUser.Followers.map(Follower => Follower.id).includes(req.user.id)
+  if (helpers.getUser(req).id !== req.params.id) {
+    thisPageUser.isFollowing = thisPageUser.Followers.map(Follower => Follower.id).includes(helpers.getUser(req).id)
   }
   return thisPageUser
 }
@@ -210,7 +210,7 @@ async function getTweets(req, whereCondition, orderCondition) {
     User: tweet.User.dataValues,
     RepliesCount: tweet.Replies.length,
     LikedUsersCount: tweet.LikedUsers.length,
-    isLiked: tweet.LikedUsers.map(User => User.id).includes(req.user.id)
+    isLiked: tweet.LikedUsers.map(User => User.id).includes(helpers.getUser(req).id)
   }))
   return tweets
 }

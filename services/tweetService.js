@@ -1,5 +1,5 @@
 const { Tweet, User, Reply, Like } = require('../models')
-
+const helpers = require('../_helpers')
 const tweetService = {
   getTweets: async (req, res, callback) => {
     let tweets = await Tweet.findAll({
@@ -15,7 +15,7 @@ const tweetService = {
       User: t.User.dataValues,
       LikedCount: t.LikedUsers.length,
       ReplyCount: t.Replies.length,
-      isLiked: req.user.LikedTweets.map(t => t.id).includes(t.dataValues.id)
+      isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(t.dataValues.id)
     }))
     return callback({
       tweets,
@@ -34,7 +34,7 @@ const tweetService = {
       ...tweet.toJSON(),
       LikedCount: tweet.LikedUsers.length,
       ReplyCount: tweet.Replies.length,
-      isLiked: req.user.LikedTweets.map(t => t.id).includes(tweet.id)
+      isLiked: helpers.getUser(req).LikedTweets.map(t => t.id).includes(tweet.id)
     }
     return callback({
       tweet,
@@ -49,7 +49,7 @@ const tweetService = {
       return callback({ status: 'error', message: 'description size should be smaller than 140!' })
     }
     await Tweet.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       description: req.body.description
     })
     return callback({ status: 'success', message: 'tweet has been created successfully!' })
@@ -62,7 +62,7 @@ const tweetService = {
       return callback({ status: 'error', message: 'comment size should be smaller than 140!' })
     }
     await Reply.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.id,
       comment: req.body.comment
     })
