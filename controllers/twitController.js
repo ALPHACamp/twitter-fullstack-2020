@@ -19,6 +19,7 @@ const twitController = {
       include: [User]
     }).then(tweet => {
       //console.log(tweet)加入 console 觀察資料的變化
+      // console.log(tweet) // 加入 console 觀察資料的變化
       User.findAll({
         include: [
           { model: User, as: 'Followers' },
@@ -34,7 +35,7 @@ const twitController = {
         }))
         helper.removeUser(users, userself)//移除使用者自身資訊
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
-        return res.render('userAdmin', { users, tweet })
+        return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avata })
       })
     })
 
@@ -54,7 +55,7 @@ const twitController = {
   },
 
   putTwitters: (req, res) => {
-    Tweet.find
+    // Tweet.find
     return res.render('userAdmin')
   },
 
@@ -165,17 +166,9 @@ const twitController = {
 
 
   toUser: (req, res) => {
-    console.log('+++++++++++'
-    )
-    console.log('7788')
-    console.log(req.body)
-    console.log('+++++++++++'
-    )
+
     const userId = req.user.id
     const { file } = req // equal to const file = req.file
-    console.log('//////////////')
-    console.log(file)
-    console.log('//////////////')
 
     if (file) {
       fs.readFile(file.path, (err, data) => {
@@ -249,6 +242,11 @@ const twitController = {
 
   toReplies: (req, res) => {
     return res.render('toReplies')
+  },
+
+  // 個人資料頁面推文與回覆
+  getUserReplies: (req, res) => {
+    return res.render('userReplies')
   },
 
   signin: (req, res) => {

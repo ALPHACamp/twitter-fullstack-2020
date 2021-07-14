@@ -16,6 +16,7 @@ const adminController = {
   },
 
   adminUsers: (req, res) => {
+
     User.findAll({
       order: [['createdAt', 'DESC']],
       raw: true,
