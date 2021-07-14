@@ -41,7 +41,7 @@ router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 router.get('/signout', userController.signOut);
 router.get('/admin/signout', adminController.signOut);
 
-router.get('/users/:id', authenticated, userController.userPage)
+router.get('/users/:id/tweets', authenticated, userController.userPage)
 router.get('/users/:id/setting', authenticated, userController.getUserSetting)
 router.put('/users/:id/setting', authenticated, settingValidator, userController.putUserSetting)
 router.get('/users/:id/replies', authenticated, userController.userPageReplies)
