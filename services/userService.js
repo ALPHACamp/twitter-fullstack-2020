@@ -99,7 +99,7 @@ const userService = {
 
   getUserLikes: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
-    const tweets = await getTweets(req, { '$LikedUsers.id$': thisPageUser.id }, ['LikedUsers', 'createdAt', 'DESC'])
+    const tweets = await getTweets(req, { '$LikedUsers.id$': thisPageUser.id }, ['Likes', 'createdAt', 'DESC'])
     return callback({
       thisPageUser,
       tweets,
@@ -198,6 +198,7 @@ async function getTweets(req, whereCondition, orderCondition) {
   let tweets = await Tweet.findAll({
     include: [
       User,
+      Like,
       { model: Reply, order: [['createdAt', 'DESC']] },
       { model: User, as: 'LikedUsers', order: [['createdAt', 'DESC']] }
     ],
