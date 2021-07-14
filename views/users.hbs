@@ -30,7 +30,7 @@
     <div class="d-flex m-2 justify-content-end">
       {{#isEqual thisPageUser.id user.id}}
       <button type="submit" class="btn btn-outline-regular rounded-pill" data-bs-toggle="modal"
-        data-bs-target="#editProfile" id="edit-profile-modal-button">
+        data-bs-target="#editProfile" id="edit-profile-modal-button" data-user-id="{{user.id}}">
         編輯個人資料
       </button>
 

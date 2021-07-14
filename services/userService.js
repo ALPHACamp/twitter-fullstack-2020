@@ -5,7 +5,7 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userService = {
   getUser: async (req, res, callback) => {
-    const user = helpers.getUser(req)
+    const user = await User.findByPk(req.params.id)
     return callback(user)
   },
 
