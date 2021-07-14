@@ -58,7 +58,7 @@ const userController = {
     return res.render('tweets')
   },
   addFollowing: (req, res) => {
-    if (req.user.id === req.params.id) {
+    if (req.user.id === Number(req.params.id)) {
       return res.redirect("back");
     }
     return Followship.create({
@@ -78,18 +78,15 @@ const userController = {
       .then(() => res.redirect('back'))
   },
   getProfile: async (req, res) => {
-
     try {
-      await Promise.all([
+      const [users, user, followship] = await Promise.all([
+        User.findAll({ where: { is_admin: false }, raw: true, nest: true, attributes: ['id'] }),
         User.findByPk(req.params.id, {
           where: { is_admin: false },
           include: [
             Tweet,
-            { model: Reply, include: [Tweet], },
-            {
-              model: Tweet,
-              as: 'LikedTweet',
-            },
+            { model: Reply, include: [Tweet] },
+            { model: Tweet, as: 'LikedTweet' },
             { model: User, as: 'Followers' },
             { model: User, as: 'Followings' },
           ],
@@ -106,59 +103,52 @@ const userController = {
           },
           include: [{ model: User, as: 'Followers' }]
         })
-      ]).then(([users, followship]) => {
+      ])
+      const isUser = users.some(i => i.id === Number(req.params.id))
+      if (!isUser) return res.redirect('back')
 
-        if (req.params.id === '1') {
-          res.redirect('back')
-        }
+      const UserId = req.user.id
+      const followerscount = user.Followers.length
+      const followingscount = user.Followings.length
+      const tweetCount = user.Tweets.length
+      const isFollowed = req.user.Followings.some(d => d.id === user.id)
 
-        const UserId = req.user.id
-        const followerscount = users.Followers.length
-        const followingscount = users.Followings.length
-        const tweetCount = users.Tweets.length
-        const isFollowed = req.user.Followings.some(d => d.id === users.id)
+      followship = followship.map(followships => ({
+        ...followships.dataValues,
+        FollowerCount: followships.Followers.length,
+        isFollowed: req.user.Followings.some(d => d.id === followships.id),
+        isMainuser: req.user.id === Number(req.params.id)
+      }))
+      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-
-        followship = followship.map(followships => ({
-          ...followships.dataValues,
-          FollowerCount: followships.Followers.length,
-          isFollowed: req.user.Followings.some(d => d.id === followships.id),
-          isMainuser: req.user.id === req.params.id
-        }))
-        followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-        return res.render('userprofile', {
-          users: users.toJSON(),
-          followerscount: thousandComma(followerscount),
-          followingscount: thousandComma(followingscount),
-          tweetCount: thousandComma(tweetCount),
-          followship,
-          isFollowed,
-          UserId,
-        })
-      })
+      return res.render('userprofile', {
+        users: user.toJSON(),
+        followerscount: thousandComma(followerscount),
+        followingscount: thousandComma(followingscount),
+        tweetCount: thousandComma(tweetCount),
+        followship,
+        isFollowed,
+        UserId,
+      })  
     } catch (error) {
-      console.log('error!')
+      console.log(error)
     }
-
   },
   toggleNotice: (req, res) => {
+    if (req.user.id === Number(req.params.id)) return res.redirect('back')
     return User.findByPk(req.params.id, {
       where: { is_admin: false }
     })
       .then(user => {
-        if (req.user.id === req.params.id) {
-          res.redirect('back')
-        }
-        const isNoticed = !user.isNoticed
-        return user.update({ isNoticed })
-      })
-      .then((user) => {
-
-        if (user.isNoticed) {
-          req.flash('success_messages', `你已成功訂閱${user.name}！`)
-        }
-        res.redirect('back')
+        user.update({ isNoticed: !user.isNoticed })
+          .then(user => {
+          if (user.isNoticed) {
+            req.flash('success_messages', `你已成功訂閱${user.name}！`)
+          } else {
+            req.flash('success_messages', `已取消訂閱${user.name}！`)
+          }
+          return res.redirect('back')
+        })
       })
   },
   addLike: (req, res) => {
@@ -181,7 +171,7 @@ const userController = {
             return Tweet.findByPk(req.params.TweetId)
               .then((tweet) => {
                 res.redirect('back')
-                return Promise.all(tweet.decrement('likes'))
+                return tweet.decrement('likes')
               })
           })
       })
@@ -225,13 +215,13 @@ const userController = {
           name, account, email,
         })
         req.flash('success_messages', '成功更新個人資料！')
-        return res.redirect(`users/self/${req.user.id}`)
+        return res.redirect(`users/${req.user.id}`)
       } else {
         await user.update({
           name, account, email,
           password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         })
-        return res.redirect(`users/self/${req.user.id}`)
+        return res.redirect(`users/${req.user.id}`)
       }
     } catch (error) {
       console.warn(error)
