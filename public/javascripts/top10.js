@@ -45,7 +45,7 @@ const getTop10 = async (showNumber, showButton) => {
 }
 
 
-getTop10(2, true)
+getTop10(5, true)
 
 
 
