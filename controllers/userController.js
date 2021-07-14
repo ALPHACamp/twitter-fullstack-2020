@@ -122,7 +122,6 @@ const userController = {
       const isFollowed = req.user.Followings.some(d => d.id === users.id)
 
 
-
       followship = followship.map(followships => ({
         ...followships.dataValues,
         FollowerCount: followships.Followers.length,
