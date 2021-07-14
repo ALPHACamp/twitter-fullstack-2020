@@ -10,5 +10,6 @@ router.get('/tweets/:id', tweetController.getTweet)
 router.post('tweets/:id/replies', tweetController.postReply)
 //user api
 router.get('/user', userController.getUser )
+router.get('/top10', userController.getTop10)
 
 module.exports = router

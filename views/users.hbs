@@ -1,4 +1,5 @@
 <div class="w-100">
+  123{{tops}}
   <div id="title" class="d-flex w-100 align-items-center border-bottom">
     <a href="/tweets" class="">
       <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-3">
@@ -73,7 +74,7 @@
           <div class="row">
             <div class="col-auto p-1">
               {{#if this.User.avatar}}
-              <img class="rounded-circle" src="{{this.User.avatar}}" style="width: 50px;height: 50px;">
+              <img class="rounded-circle" src="{{this.User.avatar}}" >
               {{else}}
               <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg"
                 style="max-width: 50px;max-height: 50px;">

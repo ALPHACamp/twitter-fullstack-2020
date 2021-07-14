@@ -9,6 +9,19 @@ const userService = {
     return callback(user)
   },
 
+  getTop10: async (callback) => {
+    let tops = await User.findAll({
+      where: { isAdmin: false },
+      include: [{ model: User, as: 'Followers' }]
+    })
+    tops = tops.map(top => ({
+      ...top.dataValues,
+      followerCount: top.Followers.length
+    }))
+    tops.sort((a, b) => b.followerCount - a.followerCount).slice(0, 9)
+    return callback(tops)
+  },
+
   getUserTweets: async (req, res, callback) => {    
     const thisPageUser = await getThisPageUser(req)
     const tweets = await getTweets(req, { UserId: thisPageUser.id }, ['createdAt', 'DESC'])
