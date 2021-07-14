@@ -129,8 +129,8 @@ const userController = {
 
         return res.render('userprofile', {
           users: users.toJSON(),
-          followerscount: thousandComma(followerscount),     //幾個跟隨我
-          followingscount: thousandComma(followingscount),   //我跟隨幾個
+          followerscount: thousandComma(followerscount),
+          followingscount: thousandComma(followingscount),
           tweetCount: thousandComma(tweetCount),
           followship,
           isFollowed,
