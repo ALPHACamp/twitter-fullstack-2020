@@ -81,8 +81,10 @@ const twitController = {
 
   getFollowing: (req, res) => {
     return User.findAll({// 撈出所有 User 與 followers 資料
+      //order: [['createdAt', 'DESC']],
       include: [
-        { model: User, as: 'Followers' }
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' },
       ]
     }).then(users => {
       const userself = req.user.id
@@ -93,7 +95,12 @@ const twitController = {
       }))
       helper.removeUser(users, userself)//移除使用者自身資訊
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
-      return res.render('following', { users })
+
+      Followship.findAll({
+        order: [['createdAt', 'DESC']]
+      }).then(followtime => {
+        return res.render('following', { users, followtime })
+      })
     })
   },
 
@@ -141,7 +148,7 @@ const twitController = {
         }))
         helper.removeUser(users, userself)//移除使用者自身資訊
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
-        
+
         const userId = req.user.id //撈出所有Tweet及單筆使用者的資料
         Tweet.findAll({
           order: [['createdAt', 'DESC']],
@@ -223,7 +230,7 @@ const twitController = {
   },
 
   getReplies: (req, res) => {
-    
+
     return User.findAll({// 撈出所有 User 與 followers 資料
       include: [
         { model: User, as: 'Followers' }

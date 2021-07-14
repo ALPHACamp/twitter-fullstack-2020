@@ -95,119 +95,43 @@
     </div>
 
     {{!-- 留言區域 --}}
+    {{#each followtime}}
     <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
         <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
+          src={{this.avatar}}
           alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
         <div style="display: flex; justify-content:space-between">
           <div>
-            <div class="font-weight-bold">John Doe </div>
-            <div class="text-secondary">@heyjohn</div>
+            <div class="font-weight-bold">{{this.name}}</div>
+            <div class="text-secondary">{{this.account}}</div>
           </div>
 
           <div>
-            <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-              href="#">正在跟隨</a>
+            {{#if this.isFollowed }}
+            <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+                class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+                style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
+            </form>
+            {{/if}}
           </div>
         </div>
-
-        <div>這是晚間最新的新聞報導...</div>
-        <div>這是小韋的自我簡介....</div>
+        <div>{{this.introduction}}</div>
 
       </div>
     </div>
-
-    <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
-      <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-      </div>
-      <div class="col-md-10" style="padding-left: 0px;">
-        <div style="display: flex; justify-content:space-between">
-          <div>
-            <div class="font-weight-bold">John Doe </div>
-            <div class="text-secondary">@heyjohn</div>
-          </div>
-
-          <div>
-            <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-              href="#">正在跟隨</a>
-          </div>
-        </div>
-
-        <div>這是晚間最新的新聞報導...</div>
-        <div>這是小韋的自我簡介....</div>
-
-      </div>
-    </div>
-
-    <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
-      <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-      </div>
-      <div class="col-md-10" style="padding-left: 0px;">
-        <div style="display: flex; justify-content:space-between">
-          <div>
-            <div class="font-weight-bold">John Doe </div>
-            <div class="text-secondary">@heyjohn</div>
-          </div>
-
-          <div>
-            <a class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 "
-              href="#">正在跟隨</a>
-          </div>
-        </div>
-
-        <div>這是晚間最新的新聞報導...</div>
-        <div>這是小韋的自我簡介....</div>
-
-      </div>
-    </div>
-
-    <div class="row  border " style="padding-top:8px; padding-bottom:10px;">
-      <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-      </div>
-      <div class="col-md-10" style="padding-left: 0px;">
-        <div style="display: flex; justify-content:space-between">
-          <div>
-            <div class="font-weight-bold">John Doe </div>
-            <div class="text-secondary">@heyjohn</div>
-          </div>
-
-          <div>
-            <a class="btn btn-block mt-1"
-              style="border-radius: 40px; color:#FF6600;background-color:#FFFFFF; border:1px solid #FF6600; "
-              href="#">跟隨</a>
-          </div>
-        </div>
-
-        <div>這是晚間最新的新聞報導...</div>
-        <div>這是小韋的自我簡介....</div>
-
-      </div>
-    </div>
-
-
-
-
-
-
-
+    {{/each}}
   </div>
 
   {{!-- 右邊區域 --}}
   <div class="col-md-3">
     <div class='rounded' style="background-color: #F5F8FA ;">
-  
+
       <div class="p-2">
         跟隨誰
       </div>
@@ -224,7 +148,7 @@
             <div>@heyjohn</div>
           </div>
         </div>
-  
+
         <div>
           {{#if this.isFollowed }}
           <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
