@@ -150,8 +150,10 @@ const userService = {
   },
 
   getFollowing: async (req, res, callback) => {
-    if (req.params.id === helpers.getUser(req).id) {
-      req.flash('warning_messages', '無法追蹤自己')
+    console.log(helpers.getUser(req).id.toString())
+    console.log(req.params.id)
+    if (req.params.id === helpers.getUser(req).id.toString()) {
+      req.flash('error_messages', '無法追蹤自己')
       callback()
     } else {
       await Followship.create({

@@ -36,11 +36,11 @@
 
       {{else}}
       {{#if thisPageUser.isFollowing}}
-      <form action="/following/{{thisPageUser.id}}?_method=DELETE" method="post">
+      <form action="/followships/{{thisPageUser.id}}?_method=DELETE" method="post">
         <button type="submit" class="btn btn-regular rounded-pill" style="height: 32px;">正在跟隨</button>
       </form>
       {{else}}
-      <form action="/following/{{thisPageUser.id}}" method="post">
+      <form action="/followships/{{thisPageUser.id}}" method="post">
         <button type="submit" class="btn btn-outline-regular rounded-pill" style="height: 32px;">跟隨</button>
       </form>
       {{/if}}

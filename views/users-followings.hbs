@@ -32,11 +32,11 @@
         {{#isEqual this.id ../user.id}}
         {{else}}
         {{#if isFollowing}}
-        <form action="/following/{{this.id}}?_method=DELETE" method="post">
+        <form action="/followships/{{this.id}}?_method=DELETE" method="post">
           <button type="submit" class="btn btn-regular rounded-pill" style="height: 32px;">正在跟隨</button>
         </form>
         {{else}}
-        <form action="/following/{{this.id}}" method="post">
+        <form action="/followships/{{this.id}}" method="post">
           <button type="submit" class="btn btn-outline-regular rounded-pill" style="height: 32px;">跟隨</button>
         </form>
         {{/if}}

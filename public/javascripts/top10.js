@@ -2,17 +2,19 @@ const top10List = document.querySelector('#top10').children[0]
 const getTop10 = async (showNumber, showButton) => {
   let top10 = await axios.get('http://localhost:8000/api/top10')
   top10 = top10.data
+  console.log(top10)
   let user = await axios.get(`http://localhost:8000/api/users/${top10List.parentElement.dataset.userId}`)
+  console.log(user)
   user = user.data
   top10.map((top, i) => {
     if (i + 1 > showNumber) return
     if (!top.avatar) top.avatar = "https://i.imgur.com/3P9xRqb.jpeg"
     if (top.Followers.map(follower => follower.id).includes(user.id)) {
-      top.action = `/following/${top.id}?_method=DELETE`
+      top.action = `/followships/${top.id}?_method=DELETE`
       top.class = "btn btn-regular rounded-pill"
       top.text = '正在跟隨'
     } else {
-      top.action = `/following/${top.id}`
+      top.action = `/followships/${top.id}`
       top.class = "btn btn-outline-regular rounded-pill"
       top.text = '跟隨'
     }
