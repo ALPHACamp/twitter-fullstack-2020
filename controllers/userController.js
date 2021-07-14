@@ -4,7 +4,6 @@ const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
 
 
-
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -84,17 +83,19 @@ const userController = {
         where: { is_admin: false },
         include: [
           Tweet,
-          Reply,
+          { model: Reply, include: [Tweet], },
           {
             model: Tweet,
             as: 'LikedTweet',
-            attributes: [
-              'UserId', 'content', 'likes', 'replyCount'],
           },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
         ],
-        order: [['createdAt', 'DESC']],
+        order: [
+          ['Tweets', 'createdAt', 'DESC'],
+          [Reply, 'updatedAt', 'DESC'],
+          ['LikedTweet', 'updatedAt', 'DESC']
+        ],
       }),
       User.findAll({
         where: {
@@ -106,8 +107,7 @@ const userController = {
     ]).then(([users, followship]) => {
 
       if (req.params.id === '1') {
-        req.flash('error_messages', '沒有權限')
-        return res.redirect('back')
+        res.redirect('back')
       }
 
       const UserId = req.user.id
@@ -116,6 +116,7 @@ const userController = {
       const tweetCount = users.Tweets.length
       const isFollowed = req.user.Followings.some(d => d.id === users.id)
 
+
       followship = followship.map(followships => ({
         ...followships.dataValues,
         FollowerCount: followships.Followers.length,
@@ -123,9 +124,6 @@ const userController = {
         isMainuser: req.user.id === req.params.id
       }))
       followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-      console.log(tweetCount)
-
 
       res.render('userprofile', {
         users: users.toJSON(),
@@ -142,16 +140,13 @@ const userController = {
   toggleNotice: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
-
         if (req.user.id === req.params.id) {
           res.redirect('back')
         }
-
         const isNoticed = !user.isNoticed
         user.update({ isNoticed })
       })
       .then((user) => {
-        req.flash('success_messages', '已開啟訂閱！')
         res.redirect('back')
       })
   },
