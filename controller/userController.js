@@ -250,6 +250,7 @@ const userController = {
       name: helpers.getUser(req).name,
       account: helpers.getUser(req).account,
       email: helpers.getUser(req).email,
+      avatar: helpers.getUser(req).avatar,
     }
     return res.render('userEdit', {
       user,
