@@ -7,13 +7,9 @@
       {{!-- 大頭貼 --}}
       <div class="d-flex flex-column align-items-center"
         style="margin-right: 2vw;background-color:white;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
-        {{#if thisUser.avatar}}
-        <img style="width: 16.7vw;height: 16.5vw;border-radius:1em;object-fit: cover;" src="{{ thisUser.avatar }}"
+        <img onerror="javascript:this.src='https://i.pinimg.com/564x/90/2b/84/902b841f3567ff8282b5db97c257aef1.jpg';"
+          style="width: 16.7vw;height: 16.5vw;border-radius:1em;object-fit: cover;" src="{{ thisUser.avatar }}"
           alt="user avatar">
-        {{else}}
-        <img class="p-3" style="width: 16.7vw;height: 16.5vw;border-radius:1em;object-fit: cover;"
-          src="https://i.pinimg.com/564x/90/2b/84/902b841f3567ff8282b5db97c257aef1.jpg" alt="user avatar">
-        {{/if}}
         <p class="h4 pt-4" style="color: #313c4b;">{{ thisUser.name }}</p>
         <p class="" style="color: #313c4b;">{{ thisUser.account }}</p>
       </div>
@@ -21,13 +17,9 @@
       {{!-- 簡介 --}}
       <div class="d-flex flex-column align-items-center"
         style="margin-right: 2vw;background-color:white;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
-        {{#if thisUser.cover}}
-        <img style="width: 35.4vw;height: 16.5vw;border-radius:1em;object-fit: cover;" src="{{ thisUser.cover }}"
+        <img onerror="javascript:this.src='https://i.pinimg.com/564x/c2/79/71/c27971221b721283988c3be1975a4901.jpg';"
+          style="width: 35.4vw;height: 16.5vw;border-radius:1em;object-fit: cover;" src="{{ thisUser.cover }}"
           alt="user cover">
-        {{else}}
-        <img style="width: 35.4vw;height: 16.5vw;border-radius:1em;object-fit: cover;"
-          src="https://i.pinimg.com/564x/58/ca/43/58ca4325c0f44787e3944624b371b03e.jpg" alt="user cover">
-        {{/if}}
         {{#if thisUser.introduction}}
         <p class="px-5 py-4" style="color: #313c4b;">{{ thisUser.introduction }}</p>
         {{else}}
@@ -75,11 +67,11 @@
   </div>
 
   {{#if data }}
+  <p class="h4 ms-1 mt-2 mb-4" style="color: #313c4b;">{{ tweetCount }} Post</p>
   {{else}}
   <p class="h4 mt-2 mb-4" style="color: #313c4b;">No Post</p>
   {{/if}}
 
-  <p class="h4 ms-1 mt-2 mb-4" style="color: #313c4b;">{{ tweetCount }} Post</p>
 
   {{!-- 推文區 --}}
   {{#each data }}
