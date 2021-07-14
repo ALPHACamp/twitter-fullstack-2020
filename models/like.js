@@ -1,4 +1,7 @@
 'use strict';
+
+const { datatype } = require("faker");
+
 module.exports = (sequelize, DataTypes) => {
   const Like = sequelize.define('Like', {
     UserId: DataTypes.INTEGER,
@@ -6,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: datatype.INTEGER
+      type: DataTypes.INTEGER
     }
   }, {});
   Like.associate = function (models) {
