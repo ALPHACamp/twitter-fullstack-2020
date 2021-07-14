@@ -6,6 +6,7 @@ const User = db.User
 const Tweet = db.Tweet
 const helper = require('../_helpers')
 const fs = require('fs')
+const Reply = db.Reply
 
 
 const twitController = {
@@ -179,7 +180,7 @@ const twitController = {
               user.update({
                 name: req.body.name,
                 introduction: req.body.introduction,
-                avatar: file ? `/upload/${file.originalname}` : null
+                avatar: file ? `/upload/${file.originalname}` : 'https://i.pinimg.com/474x/ff/4f/c3/ff4fc37f314916957e1103a2035a11fa.jpg'
               })
                 .then(() => {
                   req.flash('success_messages', 'user was successfully to update')
@@ -194,7 +195,6 @@ const twitController = {
           user.update({
             name: req.body.name,
             introduction: req.body.introduction,
-            avatar: null
           })
             .then(() => {
               req.flash('success_messages', 'user was successfully to update')
@@ -289,6 +289,7 @@ const twitController = {
               User.create({
                 account: req.body.account,
                 name: req.body.name,
+                avatar: 'https://i.pinimg.com/474x/ff/4f/c3/ff4fc37f314916957e1103a2035a11fa.jpg',
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
               }).then(user => {
@@ -335,6 +336,44 @@ const twitController = {
         })
     }
   },
+
+  getIdTwitters: (req, res) => {
+    Tweet.findByPk(req.params.id, {
+      raw: true, include: [User]
+    }).then(tweet => {
+      return res.json({
+        tweetData: tweet
+      })
+    })
+  },
+
+  twitterReplies: (req, res) => {
+    Reply.create({
+      UserId: req.body.userId,
+      TweetId: req.body.tweetId,
+      comment: req.body.comment,
+    }).then(reply => {
+      req.flash('success_messages', '成功回覆訊息！')
+      return res.redirect(`/tweets/${req.body.tweetId}/replies`)
+    })
+  },
+  getIdReplies: (req, res) => {
+
+    Reply.findAll({
+      raw: true,
+      // nets: true,
+      include: [User, Tweet],
+      TweetId: req.params.id
+      // include: { User }
+    }).then(replys => {
+      console.log(replys)
+      return res.render('replyUser', { replys: replys })
+    })
+
+  },
+
+
+
 
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')

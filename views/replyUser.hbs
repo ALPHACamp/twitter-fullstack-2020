@@ -117,79 +117,20 @@
     {{!-- 導航欄 --}}
 
     {{!-- 留言區域 --}}
+    {{#each replys}}
     <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+        <img src={{this}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
         <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
         <div>
-          <span>回覆 @apple</span>
+          <span>回覆 @{{this.User.account}}</span>
         </div>
-        <div>這是晚間最新的新聞報導...</div>
+        <div>{{this.comment}}</div>
       </div>
     </div>
-
-    <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-      <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-      </div>
-      <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-        <div>
-          <span>回覆 @apple</span>
-        </div>
-        <div>這是晚間最新的新聞報導...</div>
-      </div>
-    </div>
-    <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-      <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-      </div>
-      <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-        <div>
-          <span>回覆 @apple</span>
-        </div>
-        <div>這是晚間最新的新聞報導...</div>
-      </div>
-    </div>
-    <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-      <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-      </div>
-      <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-        <div>
-          <span>回覆 @apple</span>
-        </div>
-        <div>這是晚間最新的新聞報導...</div>
-      </div>
-    </div>
-    <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
-      <div class="col-md-2" style="padding-right: 0px; ">
-        <img
-          src="https://lh3.googleusercontent.com/proxy/A1Kc0NrFTeQX7W48-uh6jLCFizxnAlXc4TaLdsmRQRGQMKc5trZjS71z8IUXFNWQCapfi_FE0om2E_6KmwUTw10fS7UeyY4sjEBLKwdTEc5mVGl4XCS7"
-          alt="..." class="rounded-circle" style="width: 50px; height:50px;">
-      </div>
-      <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
-        <div>
-          <span>回覆 @apple</span>
-        </div>
-        <div>這是晚間最新的新聞報導...</div>
-      </div>
-    </div>
-
-
+    {{/each}}
 
 
 
@@ -198,7 +139,7 @@
   {{!-- 右邊區域 --}}
   <div class="col-md-3">
     <div class='rounded' style="background-color: #F5F8FA ;">
-  
+
       <div class="p-2">
         跟隨誰
       </div>
@@ -212,10 +153,10 @@
             style="width: 50px; height:50px; border-radius:50%;">
           <div>
             <div>{{this.name}}</div>
-            <div>@heyjohn</div>
+            <div>{{this.User.account}}</div>
           </div>
         </div>
-  
+
         <div>
           {{#if this.isFollowed }}
           <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"

@@ -19,6 +19,8 @@
     <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
       data-toggle="modal" data-target="#exampleModal">推文</button>
 
+
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -68,7 +70,7 @@
         fa-sign-out-alt"></i> 登出</a>
   </div>
   {{!-- 中間區域 --}}
-  <div class="col-md-6" style="position: relative; border:1px #DEE2E6  solid; ">
+  <div class="col-md-6" id="middleSection" style="position: relative; border:1px #DEE2E6  solid; ">
     <div class="row align-items-center mb-3 mt-3" style="border-bottom:#dee2e6 1px solid;">
       <div class="h5 ml-3">首頁</div>
     </div>
@@ -112,7 +114,8 @@
 
     {{!-- 留言區域 --}}
     {{#each tweet}}
-    <div class="row border" style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
+    <div class="row border userTweet"
+      style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
         <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
@@ -121,12 +124,63 @@
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
-        <span class="mr-4 "><i class="far fa-comment"></i> 55</span>
+        <span class="mr-4 "><button type="submit" data-toggle="modal" data-target="#tweetModel"
+            style="border: 0; background-color: #ffffff; ">
+            <i class="far fa-comment" data-id={{this.id}}></i>
+          </button> 55 </span>
         <span><i class="far fa-heart"> 479</i>
         </span>
       </div>
     </div>
 
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="tweetModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true" style="word-break:break-all;">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body" name="description">
+            <div class="row">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding-left: 0px;">
+                <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+                    this.createdAt}}</span>
+                </div>
+                <div>
+                  {{this.description}}
+
+                </div>
+              </div>
+            </div>
+            {{!-- 當前使用者回覆區 --}}
+            <div class="row mt-3">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding:0 15px 0 0;">
+                <textarea name="description" id="" style="min-height:225px; max-height:225px; width:100%; border:none; "
+                  placeholder="推你的回覆" maxlength="140"></textarea>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer" style="border-top: #E6ECF0;">
+            <button type="submit" class="btn btn-secondary"
+              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">回覆
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     {{/each}}
   </div>
 
@@ -167,3 +221,80 @@
   </div>
 </div>
 </div>
+
+<script>
+  const middleSection = document.querySelector('#middleSection')
+  middleSection.addEventListener('click', e => {
+    if (e.target.className === 'far fa-comment') {
+
+      const tweetId = e.target.dataset.id
+      axios
+        .get(`/tweets/${tweetId}`)
+        .then((response) => {
+          const tweetData = response.data.tweetData
+          const tweetModel = document.querySelector('#tweetModel')
+          const userName = tweetData['User.name']
+          const userAvatar = tweetData['User.avatar']
+          const userAccount = tweetData['User.account']
+          console.log(tweetData)
+
+
+          tweetModel.innerHTML = `
+         
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <form action='/twitter/replies' method='POST'>
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body" name="description">
+            <div class="row">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src="${userAvatar}" alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding-left: 0px;">
+                <div class="h6">${userName} <span class="text-secondary">
+                  ${userAccount}．{{moment tweetData.createdAt}}</span>
+                </div>
+                <div>
+                  ${tweetData.description}
+
+
+                </div>
+                <input type='hidden' name='userId' value={{user.id}}>
+                <input type='hidden' name='tweetId' value=${tweetData.id}>
+
+              </div>
+            </div>
+            {{!-- 當前使用者回覆區 --}}
+            
+            <div class="row mt-3">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{reqAvatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding:0 15px 0 0;">
+                <textarea name="comment" id="" style="min-height:225px; max-height:225px; width:100%; border:none; "
+                  placeholder="推你的回覆" maxlength="140"></textarea>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer" style="border-top: #E6ECF0;">
+            <button type="submit" class="btn btn-secondary"
+              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">回覆
+            </button>
+          </div>
+        </div>
+        </form>
+      </div>
+          `
+          console.log(tweetModel)
+        })
+        .catch((err) => console.log(err))
+    }
+  }
+  )
+</script>
