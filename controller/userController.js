@@ -208,38 +208,52 @@ const userController = {
 
   getUserTweets: (req, res) => {
     const topFollowing = res.locals.data
-    console.log(topFollowing)
+    const myPage = true
     return User.findOne({
+      raw: true,
+      nest: true,
       where: {
-        id: req.params.userId
+        id: helpers.getUser(req).id
       }
     }).then(user => {
-      Followship.findAndCountAll({
+      User.findOne({
         raw: true,
         nest: true,
-        where: { followerId: user.id },
-      }).then(following => {
+        where: {
+          id: req.params.userId
+        }
+      }).then(thisUser => {
         Followship.findAndCountAll({
           raw: true,
           nest: true,
-          where: { followingId: user.id },
-        }).then(follower => {
-          Tweet.findAll({
+          where: { followerId: thisUser.id },
+        }).then(following => {
+          Followship.findAndCountAll({
             raw: true,
             nest: true,
-            where: { userId: user.id },
-          }).then(tweets => {
-            return res.render('tweets', {
-              user,
-              followingCount: following.count,
-              followerCount: follower.count,
-              tweets,
-              topFollowing
+            where: { followingId: thisUser.id },
+          }).then(follower => {
+            Tweet.findAll({
+              raw: true,
+              nest: true,
+              where: { userId: thisUser.id },
+            }).then(tweets => {
+              return res.render('tweets', {
+                user,
+                thisUser,
+                followingCount: following.count,
+                followerCount: follower.count,
+                tweets,
+                topFollowing,
+                myPage
+              })
             })
           })
         })
       })
     })
+
+
   },
   //進入帳號設定頁面
   getUserEdit: (req, res) => {
