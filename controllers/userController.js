@@ -84,17 +84,20 @@ const userController = {
         where: { is_admin: false },
         include: [
           Tweet,
-          Reply,
+          {
+            model: Reply, include: [Tweet],
+          },
           {
             model: Tweet,
             as: 'LikedTweet',
-            attributes: [
-              'UserId', 'content', 'likes', 'replyCount'],
           },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
         ],
-        order: [['createdAt', 'DESC']],
+        order: [
+          ['Tweets', 'createdAt', 'DESC'],
+          [Reply, 'updatedAt', 'DESC'],
+          ['LikedTweet', 'updatedAt', 'DESC']],
       }),
       User.findAll({
         where: {
@@ -104,6 +107,8 @@ const userController = {
         include: [{ model: User, as: 'Followers' }]
       })
     ]).then(([users, followship]) => {
+
+      console.log('here', users.toJSON())
 
       if (req.params.id === '1') {
         req.flash('error_messages', '沒有權限')
@@ -116,6 +121,8 @@ const userController = {
       const tweetCount = users.Tweets.length
       const isFollowed = req.user.Followings.some(d => d.id === users.id)
 
+
+
       followship = followship.map(followships => ({
         ...followships.dataValues,
         FollowerCount: followships.Followers.length,
@@ -123,9 +130,6 @@ const userController = {
         isMainuser: req.user.id === req.params.id
       }))
       followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-      console.log(tweetCount)
-
 
       res.render('userprofile', {
         users: users.toJSON(),
