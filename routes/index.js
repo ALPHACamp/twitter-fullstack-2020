@@ -42,6 +42,9 @@ module.exports = (app, passport) => {
   // 後台展示特定推特訊息
   app.get('/admin/twitters:id', authenticatedAdmin, adminController.getTwitter)
 
+
+
+
   // 後台修改特定推特訊息
   // app.get('/admin/twitters/:id', adminController.putTwitter)
 
@@ -67,8 +70,16 @@ module.exports = (app, passport) => {
   //前台展示推特信息
   app.get('/tweets', twitController.getTwitters)
 
+  // 前台查詢特定推特信息
+  app.get('/tweets/:id', twitController.getIdTwitters)
+
   //前台發送推特信息
   // app.post('/tweets', twitController.putTwitters)
+
+  // 前台推文回覆
+
+  app.post('/twitter/replies', twitController.twitterReplies)
+
 
   // 查看tweets的訊息回覆
   app.get('/tweets/replies', authenticated, twitController.getReplies)
@@ -107,6 +118,9 @@ module.exports = (app, passport) => {
 
   // 查看跟隨者
   app.get('/user/self/follower', authenticated, twitController.getFollower)
+  // 訪問特定留言頁面
+  app.get('/tweets/:id/replies', twitController.getIdReplies)
+  app.post('/tweets/:id/replies', twitController.getIdReplies)
 
 
 
