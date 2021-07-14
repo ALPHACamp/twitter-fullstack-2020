@@ -50,15 +50,18 @@
       
       {{> message}}
       <div class="card-body col-12">
-        <form action="/tweets" method="POST" class="mt-5">
+        <form action="/tweets" method="POST" class="mt-1">
           <div class="form-group">
-            <label for="text">留下評論：</label>
+            <img src="{{user.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px"
+              alt="A user" />
             <textarea class="form-control" id="content" name="content" rows="3" placeholder="tweet一下你的心情" 
             maxlength="140"
-            required></textarea>
+            required
+            ></textarea>
           </div>
-          <br>
-          <button type="submit" class="btn btn-primary mb-4">Submit</button>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end" style= "margin-top: 10px;">
+            <button type="submit" class="btn btn-tomato">推文</button>
+          </div>
         </form>
       </div>
       <div class="card-body col-12">
@@ -66,39 +69,47 @@
         <div class="row justify-content-around mb-1">
           <div class="row col-11">
             <div class="card-image col-1 d-flex justify-content-center align-items-center">
+              <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none">
               <img src="{{this.User.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px"
                 alt="A user" />
+                </a>
             </div>
             <div class="col-11 align-self-center px-md-2 px-4">
               <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none">{{this.User.name}}</a>
               <span style="color: #6c757d; font-size: 0.875em">@{{this.User.account}}．{{moment this.createdAt}}</span>
-              <p class="mt-2">{{this.content}} <a href="/tweets/{{this.id}}">...more</a></p>
+              <a href="/tweets/{{this.id}}" style="color:black; text-decoration:none;">
+              <div>
+              
+              <p class="mt-2">{{this.content}}</p>
+              </div>
+              </a>
               <div class="col-2 d-flex align-items-center justify-content-center">
                 {{#if this.isLiked }}
                 <form action="/like/{{this.id}}?_method=DELETE" method="POST">
-                  <button type="submit" class="btn btn-danger">
-                    <i class="fas fa-heart w-100 like"> {{ this.likes }}</i>
+                  <button type="submit" class="btn" style="width: 60px; height: 30px">
+                    <i class="fas fa-heart"> {{ this.likes }}</i>
                   </button>
                 </form>
                 {{else}}
                 <form action="/like/{{this.id}}" method="POST">
-                  <button type="submit" class="btn btn-primary">
-                    <i class="far fa-heart"> {{ this.likes}}</i>
+                  <button type="submit" class="btn" style="width: 60px; height: 30px">
+                    <i class="far fa-heart"> </i>
                   </button>
                 </form>
                 {{/if}}
 
-
+                <form action="/tweets/{{this.id}}" method="GET">
                 {{#if this.replyCount}}
-                <button class="btn btn-danger ">
-                  <i class="far fa-comment"> {{ this.replyCount }}</i>
+                <button class="btn" style="width: 60px; height: 30px">
+                  <i class="fas fa-comment"> {{ this.replyCount }}</i>
                 </button>
                 {{else}}
-                <button class="btn btn-secondary">
-                  <i class="far fa-comment"> {{ this.replyCount }}
-                  </i>
-                </button>
+                  <button class="btn" style="width: 60px; height: 30px">
+                    <i class="far fa-comment"> {{ this.replyCount }}
+                    </i>
+                  </button>
                 {{/if}}
+                </form>
               </div>
             </div>
           </div>
