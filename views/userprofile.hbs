@@ -1,4 +1,5 @@
 <div class="container-fluid">
+  {{> message}}
   <div class="row flex-nowrap ps-xl-2 justify-content-around">
     {{!-- Home bar --}}
     <div class="col-3 col-lg-2 col-md-2 px-sm-2 px-0">
@@ -77,9 +78,8 @@
           data-bs-target="#profileModal"> 編輯個人資料</button>
         {{else}}
         <a href="mailto:{{users.email}}" class="border rounded-circle m-1" style="color:tomato;">
-          <i class="far fa-envelope fa-2x m-1"></i>
-          {{#if users.isNoticed}}
-        </a>
+          <i class="far fa-envelope fa-2x m-1"></i> </a>
+        {{#if users.isNoticed}}
         <a href="/users/noti/{{users.id}}" class="border rounded-circle m-1" style="color:tomato;">
           <i class="fas fa-bell fa-2x m-2"></i>
         </a>
@@ -102,7 +102,6 @@
         {{/if}}
         {{/ifCond}}
       </div>
-
 
       <div class="card-body col-12">
         <div class="card-text ps-2">
@@ -279,7 +278,7 @@
     </div>
   </div>
 </div>
-
+</div>
 <!-- Modal -->
 <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog">
