@@ -121,12 +121,63 @@
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
-        <span class="mr-4 "><i class="far fa-comment"></i> 55</span>
+        <span class="mr-4 "><button type="submit" data-toggle="modal" data-target="#exampleModalCenter"
+            style="border: 0; background-color: #ffffff; ">
+            <i class="far fa-comment"></i>
+          </button> 55</span>
         <span><i class="far fa-heart"> 479</i>
         </span>
       </div>
     </div>
 
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="word-break:break-all;">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body" name="description">
+            <div class="row">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding-left: 0px;">
+                <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+                    this.createdAt}}</span>
+                </div>
+                <div>
+                  {{this.description}}
+
+                </div>
+              </div>
+            </div>
+            {{!-- 當前使用者回覆區 --}}
+            <div class="row mt-3">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding:0 15px 0 0;">
+                <textarea name="description" id="" style="min-height:225px; max-height:225px; width:100%; border:none; "
+                  placeholder="推你的回覆" maxlength="140"></textarea>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer" style="border-top: #E6ECF0;">
+            <button type="submit" class="btn btn-secondary"
+              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">回覆
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
     {{/each}}
   </div>
 

@@ -40,8 +40,9 @@
                 </div>
                 <div class="col-md-10">
                   <textarea name="description" id=""
-                    style="min-height:225px; max-height:225px; width:100%; border:none;"
-                    placeholder="有甚麼新鮮事?"></textarea>
+                    style="min-height:225px; max-height:225px; width:100%; border:none;" placeholder="有甚麼新鮮事?"
+                    maxlength="140">
+</textarea>
                 </div>
               </div>
 
@@ -207,13 +208,20 @@
             this.createdAt}}</span>
         </div>
         <div>{{this.description}}</div>
-        <span class="mr-4 "><i class="far fa-comment"></i> 55</span>
+        <span class="mr-4 "><button type="submit" data-toggle="modal" data-target="#exampleModalCenter"
+            style="border: 0; background-color: #ffffff; ">
+            <i class="far fa-comment"></i>
+          </button> 55</span>
         <span><i class="far fa-heart"> 479</i>
         </span>
       </div>
     </div>
     {{/each}}
   </div>
+
+
+
+
 
   {{!-- 右邊區域 --}}
   <div class="col-md-3">
@@ -252,6 +260,7 @@
 </div>
 </div>
 
+
 <script>
   const avatar = document.querySelector('#avatar')
   console.log(avatar)
@@ -272,4 +281,5 @@
     // 使用 readAsDataURL 將圖片轉成 Base64
     fr.readAsDataURL(file);    /* now you can work with the file list */
   }
+
 </script>
