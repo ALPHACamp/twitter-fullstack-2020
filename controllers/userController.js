@@ -1,6 +1,5 @@
 const bcrypt = require('bcryptjs')
-const { isDate } = require('moment')
-const { Tweet, User, Like } = require('../models')
+const { User, Like } = require('../models')
 const userService = require('../services/userService')
 
 
@@ -114,12 +113,29 @@ const userController = {
     const isMySelf = req.user.id.toString() === req.params.id.toString()
     if (!isMySelf) {
       req.flash('error_messages', 'you can only edit your own profile!')
+      return res.redirect(`/users/${req.user.id}/setting`)
     }
     const user = await User.findByPk(req.params.id)
     return res.render('userSetting', {
       user: user.toJSON(),
       Appear: { navbar: true }
     })
+  },
+
+  putUserSetting: async (req, res) => {
+    const { error_messages, userSetting } = res.locals
+    if (error_messages.length) {
+      return res.render('userSetting', {
+        user: userSetting,
+        Appear: { navbar: true }
+      })
+    }
+    let user = await User.findByPk(req.params.id)
+    await user.update({
+      ...userSetting,
+      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+    })
+    return res.redirect('/tweets')
   },
 
   getFollowing: async (req, res) => {

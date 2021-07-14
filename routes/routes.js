@@ -6,6 +6,7 @@ const upload = multer({ dest: 'temp/' })
 const userController = require('../controllers/userController');
 const adminController = require('../controllers/adminController');
 const tweetController = require('../controllers/tweetController');
+const settingValidator = require('../middleware/validator').settingValidator
 
 const authenticated = require('./authMiddleware').authenticated;
 const authenticatedAdmin = require('./authMiddleware').authenticatedAdmin;
@@ -42,6 +43,7 @@ router.get('/admin/signout', adminController.signOut);
 
 router.get('/users/:id', authenticated, userController.userPage)
 router.get('/users/:id/setting', authenticated, userController.getUserSetting)
+router.put('/users/:id/setting', authenticated, settingValidator, userController.putUserSetting)
 router.get('/users/:id/replies', authenticated, userController.userPageReplies)
 router.get('/users/:id/likes', authenticated, userController.userPageLikes)
 router.put('/users/:id', authenticated, upload.fields([

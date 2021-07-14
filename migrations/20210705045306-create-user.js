@@ -10,19 +10,19 @@ module.exports = {
       },
       account: {
         type: Sequelize.STRING,
-        allowNull: false
+        // allowNull: false
       },
       email: {
         type: Sequelize.STRING,
-        allowNull: false
+        // allowNull: false
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false
+        // allowNull: false
       },
       name: {
         type: Sequelize.STRING,
-        allowNull: false
+        // allowNull: false
       },
       avatar: {
         type: Sequelize.STRING
@@ -35,7 +35,7 @@ module.exports = {
       },
       isAdmin: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        // allowNull: false
       },
       createdAt: {
         allowNull: false,
