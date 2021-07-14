@@ -182,20 +182,24 @@ const userController = {
     try {
       let { avator, cover } = ''
       const user = await User.findByPk(req.user.id)
+      await user.update({ name, description })
       imgur.setClientID(IMGUR_CLIENT_ID)
-      imgur.upload(bg_img[0].path, async (error, image) => {
-        cover = image.data.link
-        await user.update({
-          name, description,
-          bg_img: cover ? cover : user.bg_img
+      if (bg_img) {
+        imgur.upload(bg_img[0].path, async (error, image) => {
+          cover = image.data.link
+          await user.update({
+            bg_img: cover ? cover : user.bg_img
+          })
         })
-      })
-      imgur.upload(img[0].path, async (error, image) => {
-        avator = image.data.link
-        await user.update({
-          img: avator ? avator : user.img
+      }
+      if (img) {
+        imgur.upload(img[0].path, async (error, image) => {
+          avator = image.data.link
+          await user.update({
+            img: avator ? avator : user.img
+          })
         })
-      })
+      }
       req.flash('success_messages', '成功更新個人資料！')
       return res.redirect(`/users/${req.user.id}`)
     } catch (error) {
@@ -212,7 +216,7 @@ const userController = {
         const isNoticed = !user.isNoticed
         user.update({ isNoticed })
       })
-      .then((user) => {
+      .then(() => {
         req.flash('success_messages', '已開啟訂閱！')
         res.redirect('back')
       })
