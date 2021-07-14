@@ -12,40 +12,38 @@ const twitController = {
 
   getTwitters: (req, res) => {
     // 撈出所有 User 與 followers 資料
-
     Tweet.findAll({
       order: [['createdAt', 'DESC']],
       raw: true,
       nest: true,
       include: [User]
     }).then(tweet => {
+      //console.log(tweet)加入 console 觀察資料的變化
       // console.log(tweet) // 加入 console 觀察資料的變化
       User.findAll({
         include: [
-          { model: User, as: 'Followers' }
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
         ]
       }).then(users => {
-        // 整理 users 資料
-        users = users.map(user => ({
+        const userself = req.user.id
+        users = users.map(user => ({// 整理 users 資料
           ...user.dataValues,
-          // 計算追蹤者人數
-          FollowerCount: user.Followers.length,
-          // 判斷目前登入使用者是否已追蹤該 User 物件
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+          FollowerCount: user.Followers.length,// 計算跟隨者/跟隨中人數
+          FollowingCount: user.Followings.length,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
         }))
-        // console.log(users)
-        // 依追蹤者人數排序清單
-        users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-        // console.log(users)
-        return res.render('userAdmin', { userData: users, tweet, reqAvatar: req.user.avatar })
+        helper.removeUser(users, userself)//移除使用者自身資訊
+        users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+        return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avata })
       })
     })
 
   },
 
   toTwitters: (req, res) => {
-    // console.log(req.user.id)
-    // console.log(req.body)
+    //console.log(req.user.id)
+    //console.log(req.body)
     return Tweet.create({
       UserId: Number(req.user.id),
       description: req.body.description,
@@ -62,46 +60,40 @@ const twitController = {
   },
 
 
-  //follow
+  //follow function
   getFollower: (req, res) => {
-    // 撈出所有 User 與 followers 資料
-    return User.findAll({
+    return User.findAll({// 撈出所有 User 與 followers 資料
       include: [
         { model: User, as: 'Followers' }
       ]
     }).then(users => {
-      // 整理 users 資料
-      users = users.map(user => ({
+      const userself = req.user.id
+      users = users.map(user => ({// 整理 users 資料
         ...user.dataValues,
-        // 計算追蹤者人數
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        FollowerCount: user.Followers.length,// 計算追蹤者人數
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
       }))
-      // 依追蹤者人數排序清單
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('follower', { users: users })
+      helper.removeUser(users, userself)//移除使用者自身資訊
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      return res.render('follower', { users })
     })
   },
 
   getFollowing: (req, res) => {
-    // 撈出所有 User 與 followers 資料
-    return User.findAll({
+    return User.findAll({// 撈出所有 User 與 followers 資料
       include: [
         { model: User, as: 'Followers' }
       ]
     }).then(users => {
-      // 整理 users 資料
-      users = users.map(user => ({
+      const userself = req.user.id
+      users = users.map(user => ({ // 整理 users 資料
         ...user.dataValues,
-        // 計算追蹤者人數
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        FollowerCount: user.Followers.length,// 計算追蹤者人數
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
       }))
-      // 依追蹤者人數排序清單
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('following', { users: users })
+      helper.removeUser(users, userself)//移除使用者自身資訊
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      return res.render('following', { users })
     })
   },
 
@@ -130,44 +122,47 @@ const twitController = {
       })
   },
 
-  getUser: (req, res) => {
-    const userId = req.user.id
-    User.findByPk(userId, { raw: true })
 
-      .then((user) => {
-        // console.log(user)
+
+
+  getUser: (req, res) => {
+    return User.findAll({
+      include: [
+        { model: User, as: 'Followers', attributes: ['avatar', 'id'] },
+        { model: User, as: 'Followings', attributes: ['avatar', 'id'] },
+      ]
+    })
+      .then(users => {
+        const userself = req.user.id
+        users = users.map(user => ({// 整理 users 資料
+          ...user.dataValues,
+          FollowerCount: user.Followers.length,// 計算追蹤者人數
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id),// 判斷目前登入使用者是否已追蹤該 User 物件
+        }))
+        helper.removeUser(users, userself)//移除使用者自身資訊
+        users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+        
+        const userId = req.user.id //撈出所有Tweet及單筆使用者的資料
         Tweet.findAll({
           order: [['createdAt', 'DESC']],
           raw: true,
           nest: true,
           include: [User]
-        }).then(tweet => {
-
-          // console.log(tweet) // 加入 console 觀察資料的變化
-          // console.log(user.introduction)
-          // 撈出所有 User 與 followers 資料
-          User.findAll({
-            include: [
-              { model: User, as: 'Followers' }
-            ]
-          }).then(users => {
-            // 整理 users 資料
-            users = users.map(user => ({
-              ...user.dataValues,
-              // 計算追蹤者人數
-              FollowerCount: user.Followers.length,
-              // 判斷目前登入使用者是否已追蹤該 User 物件
-              isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-            }))
-            // 依追蹤者人數排序清單
-            users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-            // console.log(users)
-            return res.render('user', { users, tweet, user })
-          })
         })
+          .then(tweet => {
+            User.findByPk(userId, {
+              raw: true,
+              include: [
+                { model: User, as: 'Followers', attributes: ['avatar', 'id'] },
+                { model: User, as: 'Followings', attributes: ['avatar', 'id'] },
+              ]
+            })
+            return res.render('user', { users, tweet })
+          })
       })
 
   },
+
 
 
   toUser: (req, res) => {
@@ -210,44 +205,38 @@ const twitController = {
   },
 
   getUserLike: (req, res) => {
-    // 撈出所有 User 與 followers 資料
-    return User.findAll({
+    return User.findAll({ // 撈出所有 User 與 followers 資料
       include: [
         { model: User, as: 'Followers' }
       ]
     }).then(users => {
-      // 整理 users 資料
-      users = users.map(user => ({
+      const userself = req.user.id
+      users = users.map(user => ({// 整理 users 資料
         ...user.dataValues,
-        // 計算追蹤者人數
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        FollowerCount: user.Followers.length,// 計算追蹤者人數
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
       }))
-      // 依追蹤者人數排序清單
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('userLike', { users: users })
+      helper.removeUser(users, userself)//移除使用者自身資訊
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      return res.render('userLike', { users })
     })
   },
 
   getReplies: (req, res) => {
-    // 撈出所有 User 與 followers 資料
-    return User.findAll({
+    
+    return User.findAll({// 撈出所有 User 與 followers 資料
       include: [
         { model: User, as: 'Followers' }
       ]
     }).then(users => {
-      // 整理 users 資料
-      users = users.map(user => ({
+      const userself = req.user.id
+      users = users.map(user => ({ // 整理 users 資料
         ...user.dataValues,
-        // 計算追蹤者人數
-        FollowerCount: user.Followers.length,
-        // 判斷目前登入使用者是否已追蹤該 User 物件
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        FollowerCount: user.Followers.length,// 計算追蹤者人數
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
       }))
-      // 依追蹤者人數排序清單
-      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      return res.render('replyUser', { users: users })
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      return res.render('replyUser', { users })
     })
   },
 
@@ -280,7 +269,7 @@ const twitController = {
   },
 
   toSignup: (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     // confirm password
     if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
@@ -315,7 +304,7 @@ const twitController = {
   },
 
   getSetting: (req, res) => {
-    // console.log(req.user.id)
+    //console.log(req.user.id)
     const userId = req.user.id
     User.findByPk(userId, { raw: true }).then(user => {
       res.render('setting', { userdata: user })
@@ -324,7 +313,7 @@ const twitController = {
   },
 
   putSetting: (req, res) => {
-    // console.log(req.user.id)
+    //console.log(req.user.id)
     const userId = req.user.id
 
     // confirm password()

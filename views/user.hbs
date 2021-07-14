@@ -171,12 +171,14 @@
     {{!-- 個人介紹區域 --}}
 
     <div class="row d-block p-2">
-      <div class="h4" style="margin-bottom:0">{{user.name}}</div>
-      <div><small>{{user.account}}</small></div>
-      <div class="mt-2">{{user.introduction}}</div>
-      <div class="mt-2">
-        <div class="font-weight-bold">{{users.FollowerCount}} 個<span class="text-secondary mr-3">跟隨中</span>59 位<span
-            class="text-secondary">跟隨者</span></div>
+      <div class="h4" style="margin-bottom:0">John Doe</div>
+      <div><small>@heyjohn</small></div>
+      <div class="mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
+      <div style="display: inline-block">
+        <p><strong>{{user.Followings.length}}</strong> followings</p>
+      </div>
+      <div style="display: inline-block">
+        <p><strong>{{user.Followers.length}}</strong> followers</p>
       </div>
     </div>
 
