@@ -77,11 +77,20 @@
               {{!-- 個人資料 --}}
               <a href="/users/{{user.id}}/tweets"
                 class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="text-decoration:none;border-radius: 8px;width:14vw">
+                style="{{#if myPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
-                  <i class="far fa-laugh p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                  {{#if myPage }}
+                  <i class="far fa-laugh p-2 h2 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="far fa-laugh p-2 h2 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
                 </div>
+                {{#if myPage }}
+                <p style="color:#313c4b;" class="mt-2">我的主頁</p>
+                {{else}}
                 <p style="color:#313c4b6f;" class="mt-2">我的主頁</p>
+                {{/if}}
               </a>
 
               {{!-- 設定 --}}
@@ -90,10 +99,10 @@
                 style="{{#if userEditPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   {{#if userEditPage }}
-                  <i class="fas fa-igloo p-2 h3 me-3"
+                  <i class="fas fa-dog p-2 h2 me-3"
                     style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
                   {{else}}
-                  <i class="fas fa-igloo p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                  <i class="fas fa-dog p-2 h2 me-3" style="color:#313c4b6f;"></i>
                   {{/if}}
                 </div>
                 {{#if userEditPage }}
@@ -128,9 +137,15 @@
             <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
             {{/if}}
 
+            {{#if myPage }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:21.5vh;border-radius:13em;"></div>
+            {{/if}}
+
             {{#if userEditPage }}
             <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:34vh;border-radius:13em;"></div>
             {{/if}}
+
+
           </div>
           {{/if}}
 
