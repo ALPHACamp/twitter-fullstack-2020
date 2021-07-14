@@ -28,11 +28,10 @@
             </a>
           </li>
           <li class="nav-item p-2" style="width: inherit;">
-            
-              <button type="submit" class="btn btn-tomato rounded-pill mt-3" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#tweetModal">
-                <span class='h5 fw-bold d-none d-sm-inline'>推文</span>
-                <i class="fas fa-feather-alt d-sm-none"></i>
-              </button>            
+            <button type="submit" class="btn btn-tomato rounded-pill mt-3" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#tweetModal">
+              <span class='h5 fw-bold d-none d-sm-inline'>推文</span>
+              <i class="fas fa-feather-alt d-sm-none"></i>
+            </button>            
           </li>
         </ul>
         <hr />
@@ -51,11 +50,11 @@
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
         <a href="/" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark text-decoration-none">
-          <span class="h5 fw-bold" style="line-height: 15px;">{{user.name}}</span>
-          <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">25 推文</span>
+          <span class="h5 fw-bold" style="line-height: 15px;">{{users.name}}</span>
+          <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">{{tweetCount}} 推文</span>
         </a>
+        <span style="width: 50%;">{{> message}}</span>
       </div>
-      {{> message}}
       <div class="card-body col-12 m-0 p-0 position-relative">
         <div class="bg-holder" style="height: 280px;">
           <img src="{{#if users.bg_img}}{{users.bg_img}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="card-img-top" alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
@@ -65,11 +64,35 @@
         </div>
       </div>
       <div class="card-body col-12 d-flex justify-content-end">
+        {{#ifCond users.id UserId}}
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-tomato rounded-pill fw-bold" data-bs-toggle="modal"
           data-bs-target="#profileModal">
           編輯個人資料
         </button>
+        {{else}}
+        <a href="mailto:{{users.email}}" class="m-1" style="color:tomato;">
+          <i class="far fa-envelope fa-2x m-1"></i> </a>
+        {{#if users.isNoticed}}
+        <a href="/users/noti/{{users.id}}" class="m-1" style="color:tomato;">
+          <i class="fas fa-bell fa-2x m-1"></i>
+        </a>
+        {{else}}
+        <a href="/users/noti/{{users.id}}" class="m-1" style="color:tomato;">
+          <i class="far fa-bell fa-2x m-1"></i>
+        </a>
+        {{/if}}
+        {{#if isFollowed}}
+        <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">
+          <button type="submit" class="btn btn-tomato rounded-pill" name="{{users.id}}">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships/{{users.id}}" method="POST">
+          <button type="submit" class="btn btn-outline-tomato rounded-pill" name="{{users.id}}"
+            style="margin-left: 10px;">跟隨</button>
+        </form>
+        {{/if}}
+        {{/ifCond}}
       </div>
       <div class="card-body col-12">   
         <div class="card-text ps-2">
@@ -115,8 +138,16 @@
                       <p class="h6">{{this.content}}</p>
                     </div>
                     <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                      <i class="far fa-comment text-muted small"> {{this.Replies}}</i>
+                      {{#if this.replyCount}}
+                      <i class="far fa-comment text-muted small"> {{this.replyCount}}</i>
+                      {{else}}
+                      <i class="far fa-comment text-muted small"></i>
+                      {{/if}}
+                      {{# this.likes}}
                       <i class="far fa-heart text-muted small"> {{this.likes}}</i>
+                      {{else}}
+                      <i class="far fa-heart text-muted small"></i>
+                      {{/if}}
                     </div>
                   </div>
                 </div>
@@ -125,11 +156,84 @@
             {{/each}}
           </ul>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+        {{!-- repliedTweet --}}
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+          <ul class="list-group list-group-flush">
+            {{#each users.Replies}}
+            <li class="list-group-item">
+              <div class="row g-0">
+                <div class="col-md-1">
+                  <a href="/users/{{../users.id}}" class="text-center">
+                    <img src="{{../users.img}}" alt="" width="75" height="75"
+                      class="rounded-circle me-2 rounded mt-2 d-block" />
+                  </a>
+                </div>
+                <div class="col-md-10">
+                  <div class="card-body" style="margin-left:1vw">
+                    <div class="card-title">
+                      <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
+                      <span class="text-muted"> @{{../users.account}}</span>
+                      <span class="small text-muted">‧{{moment this.updatedAt}}</span>
+                    </div>
+                    <div class="card-text" style="margin-top:1vw">
+                      <p class="h6">{{this.content}}</p>
+                    </div>
+                    <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
+                      <i class="far fa-comment text-muted small"> {{this.Tweet.replyCount}}</i>
+                      <i class="far fa-heart text-muted small"> {{this.Tweet.likes}}</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{!-- likedTweets --}}
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+          <ul class="list-group list-group-flush">
+            {{#each users.LikedTweet}}
+            <li class="list-group-item">
+              <div class="row g-0">
+                <div class="col-md-1">
+                  <a href="/users/{{../users.id}}" class="text-center">
+                    <img src="{{../users.img}}" alt="" width="75" height="75"
+                      class="rounded-circle me-2 rounded mt-2 d-block" />
+                  </a>
+                </div>
+                <div class="col-md-10">
+                  <div class="card-body" style="margin-left:1vw">
+                    <div class="card-title">
+                      <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
+                      <span class="text-muted"> @{{../users.account}}</span>
+                      <span class="small text-muted">‧{{moment this.updatedAt}}</span>
+                    </div>
+                    <div class="card-text" style="margin-top:1vw">
+                      <p class="h6">{{this.content}}</p>
+                    </div>
+                    <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
+                      {{#if this.replyCount}}
+                      <i class="fas fa-comment text-muted small">
+                        {{this.replyCount}}</i>
+                      {{else}}
+                      <i class="far fa-comment text-muted small"></i>
+                      {{/if}}
+                      {{#if this.likes}}
+                      <i class="fas fa-heart text-muted small"> {{this.likes}}</i>
+                      {{else}}
+                      <i class="far fa-heart text-muted small"></i>
+                      {{/if}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
       </div>
     </div>
-    {{!-- Left Followship recommend bar --}}
+    {{!-- Followship recommend bar --}}
     <div class="col-auto col-lg-3 col-md-3">
       <div class="card d-none d-sm-flex flex-column flex-shrink-0 mt-3 position-fixed" width="100%">
         <ul class="list-group list-group">
