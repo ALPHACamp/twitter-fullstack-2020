@@ -25,10 +25,9 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  //user
+  // user
   app.get('/setting', authenticatedUser, userController.getSetting)
   app.put('/setting', authenticatedUser, userController.putSetting)
-  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike) 
   app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
   app.get('/users/:id', authenticatedUser, userController.getProfile)
 
