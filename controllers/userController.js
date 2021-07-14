@@ -77,76 +77,87 @@ const userController = {
       .then((followship) => followship.destroy())
       .then(() => res.redirect('back'))
   },
-  getProfile: (req, res) => {
-    Promise.all([
-      User.findByPk(req.params.id, {
-        where: { is_admin: false },
-        include: [
-          Tweet,
-          { model: Reply, include: [Tweet], },
-          {
-            model: Tweet,
-            as: 'LikedTweet',
+  getProfile: async (req, res) => {
+
+    try {
+      await Promise.all([
+        User.findByPk(req.params.id, {
+          where: { is_admin: false },
+          include: [
+            Tweet,
+            { model: Reply, include: [Tweet], },
+            {
+              model: Tweet,
+              as: 'LikedTweet',
+            },
+            { model: User, as: 'Followers' },
+            { model: User, as: 'Followings' },
+          ],
+          order: [
+            ['Tweets', 'createdAt', 'DESC'],
+            [Reply, 'updatedAt', 'DESC'],
+            ['LikedTweet', 'updatedAt', 'DESC']
+          ],
+        }),
+        User.findAll({
+          where: {
+            is_admin: false,
+            id: { [Op.ne]: req.user.id }
           },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-        ],
-        order: [
-          ['Tweets', 'createdAt', 'DESC'],
-          [Reply, 'updatedAt', 'DESC'],
-          ['LikedTweet', 'updatedAt', 'DESC']
-        ],
-      }),
-      User.findAll({
-        where: {
-          is_admin: false,
-          id: { [Op.ne]: req.user.id }
-        },
-        include: [{ model: User, as: 'Followers' }]
+          include: [{ model: User, as: 'Followers' }]
+        })
+      ]).then(([users, followship]) => {
+
+        if (req.params.id === '1') {
+          res.redirect('back')
+        }
+
+        const UserId = req.user.id
+        const followerscount = users.Followers.length
+        const followingscount = users.Followings.length
+        const tweetCount = users.Tweets.length
+        const isFollowed = req.user.Followings.some(d => d.id === users.id)
+
+
+        followship = followship.map(followships => ({
+          ...followships.dataValues,
+          FollowerCount: followships.Followers.length,
+          isFollowed: req.user.Followings.some(d => d.id === followships.id),
+          isMainuser: req.user.id === req.params.id
+        }))
+        followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+        return res.render('userprofile', {
+          users: users.toJSON(),
+          followerscount: thousandComma(followerscount),     //幾個跟隨我
+          followingscount: thousandComma(followingscount),   //我跟隨幾個
+          tweetCount: thousandComma(tweetCount),
+          followship,
+          isFollowed,
+          UserId,
+        })
       })
-    ]).then(([users, followship]) => {
-
-      if (req.params.id === '1') {
-        res.redirect('back')
-      }
-
-      const UserId = req.user.id
-      const followerscount = users.Followers.length
-      const followingscount = users.Followings.length
-      const tweetCount = users.Tweets.length
-      const isFollowed = req.user.Followings.some(d => d.id === users.id)
-
-
-      followship = followship.map(followships => ({
-        ...followships.dataValues,
-        FollowerCount: followships.Followers.length,
-        isFollowed: req.user.Followings.some(d => d.id === followships.id),
-        isMainuser: req.user.id === req.params.id
-      }))
-      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-      res.render('userprofile', {
-        users: users.toJSON(),
-        followerscount: thousandComma(followerscount),     //幾個跟隨我
-        followingscount: thousandComma(followingscount),   //我跟隨幾個
-        tweetCount: thousandComma(tweetCount),
-        followship,
-        isFollowed,
-        UserId,
-      })
-    })
+    } catch (error) {
+      console.log('error!')
+    }
 
   },
   toggleNotice: (req, res) => {
-    return User.findByPk(req.params.id)
+    return User.findByPk(req.params.id, {
+      where: { is_admin: false }
+    })
       .then(user => {
         if (req.user.id === req.params.id) {
           res.redirect('back')
         }
         const isNoticed = !user.isNoticed
-        user.update({ isNoticed })
+        return user.update({ isNoticed })
       })
       .then((user) => {
+
+        if (user.isNoticed) {
+          req.flash('success_messages', `你已成功訂閱${user.name}！`)
+        }
         res.redirect('back')
       })
   },
