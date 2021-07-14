@@ -21,7 +21,7 @@ const tweetController = {
       const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
-        attributes: ['id', 'description', 'updatedAt'],
+        attributes: ['id', 'description', 'createdAt'],
         include: [
           { model: User, attributes: ['id', 'avatar', 'name', 'account'] }
         ],
@@ -88,7 +88,6 @@ const tweetController = {
           [sequelize.fn('count', sequelize.col('id')), 'likeCounts']
         ]
       })
-
       return res.render('singleTweet', {
         tweet,
         replyCount: replies.count,
