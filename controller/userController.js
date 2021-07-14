@@ -208,7 +208,10 @@ const userController = {
 
   getUserTweets: (req, res) => {
     const topFollowing = res.locals.data
-    const myPage = true
+    let myPage = true
+    if (Number(req.params.userId) !== helpers.getUser(req).id) {
+      myPage = false
+    }
     return User.findOne({
       raw: true,
       nest: true,
