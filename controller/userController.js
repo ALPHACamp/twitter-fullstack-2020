@@ -147,8 +147,9 @@ const userController = {
   getUserLikes: async (req, res) => {
     const topFollowing = res.locals.data
     const userInfo = res.locals.userInfo
+    const user = helpers.getUser(req)
     try {
-      const likes = await Like.findAll({
+      const likes = await Like.findAndCountAll({
         raw: true,
         nest: true,
         where: {
@@ -157,9 +158,11 @@ const userController = {
         include: [Tweet]
       })
 
+      const likeCount = likes.count
+
       let Data = []
-      Data = likes.map(async (like, index) => {
-        const [tweetUser, likes, replies] = await Promise.all([
+      Data = likes.rows.map(async (like, index) => {
+        const [tweetUser, tweetLikes, replies] = await Promise.all([
           User.findOne({
             raw: true,
             nest: true,
@@ -185,7 +188,7 @@ const userController = {
         return {
           id: like.id,
           tweetUser: tweetUser,
-          likeCount: likes.count,
+          tweetLikesCount: tweetLikes.count,
           replyCount: replies.count,
           tweet: like.Tweet
         }
@@ -193,11 +196,13 @@ const userController = {
       Promise.all(Data).then(data => {
         data = data.sort((a, b) => a.tweet.createdAt - b.tweet.createdAt)
         return res.render('likes', {
-          user: userInfo.user,
+          thisUser: userInfo.user,
+          user,
           followingCount: userInfo.followingCount,
           followerCount: userInfo.followerCount,
-          likes: data,
-          topFollowing
+          data,
+          topFollowing,
+          likeCount
         })
       })
     }
