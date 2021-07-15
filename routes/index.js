@@ -43,8 +43,8 @@ module.exports = (app, passport) => {
   app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
 
   // like
-  app.post('/like/:TweetId', authenticatedUser, userController.addLike)
-  app.delete('/like/:TweetId', authenticatedUser, userController.removeLike)
+  app.post('/tweets/:TweetId/like', authenticatedUser, userController.addLike)
+  app.post('/tweets/:TweetId/unlike', authenticatedUser, userController.removeLike)
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))

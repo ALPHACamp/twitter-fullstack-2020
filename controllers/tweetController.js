@@ -10,7 +10,6 @@ const tweetController = {
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit
     }
-
     try {
       let [tweets, followship] = await Promise.all([
         Tweet.findAndCountAll({
@@ -25,7 +24,7 @@ const tweetController = {
         User.findAll({
           where: {
             is_admin: false,
-            id: { [Op.ne]: req.user.id }
+            id: { [Op.ne]: helpers.getUser(req).id }
           },
           include: [{ model: User, as: 'Followers' }]
         })
@@ -40,7 +39,7 @@ const tweetController = {
       tweets = tweets.rows.map(t => ({
         ...t,
         description: t.description.substring(0, 50),
-        isLiked: req.user.LikedTweet.some(d => d.id === t.id)
+        isLiked: helpers.getUser(req).LikedTweet.some(d => d.id === t.id)
       }))
 
       followship = followship.map(followships => ({
@@ -60,33 +59,35 @@ const tweetController = {
         next
       })
     } catch (error) {
-      next(error)
+      console.error(error)
     }
   },
-  postTweet: (req, res) => {
+  postTweet: async (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '推文內容不存在')
-      return res.redirect('back')
+      return res.redirect('/')
     } else if (req.body.description.length === 0) {
       req.flash('error_messages', '請輸入推文內容!')
-      return res.redirect('back')
+      return res.redirect('/')
     } else if (req.body.description.length > 140) {
       req.flash('error_messages', '推文超過字數限制')
-      return res.redirect('back')
+      return res.redirect('/')
     }
-    return Tweet.create({
-      UserId: req.user.id,
-      description: req.body.description,
-      replyCount: 0,
-      likes: 0
-    })
-      .then((tweet) => {
-        req.flash('success_messages', '推文成功發布！')
-        res.redirect('/tweets')
+    try {
+      await Tweet.create({
+        UserId: helpers.getUser(req).id,
+        description: req.body.description,
+        replyCount: 0,
+        likes: 0
       })
-      .catch(err => console.log(err))
+      
+      req.flash('success_messages', '推文成功發布！')
+      res.redirect('/')
+    } catch (error) {
+      console.error(error)
+    }
   },
-  getTweet: async (req, res, next) => {
+  getTweet: async (req, res) => {
     try {
       const tweet = await Tweet.findByPk(req.params.id, {
         include: [User,
@@ -97,13 +98,13 @@ const tweetController = {
       })
       if (!tweet) throw new Error('Tweet is not found!')
 
-      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(req.user.id)
+      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(helpers.getUser(req).id)
       res.render('tweet', {
         tweet: tweet.toJSON(),
         isLiked
       })
     } catch (error) {
-      next(error)
+      console.error(error)
     }
   },
   editTweet: (req, res) => {
@@ -114,13 +115,13 @@ const tweetController = {
   putTweet: (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '推文不存在!')
-      return res.redirect('back')
+      return res.redirect('/')
     }
 
     return Tweet.findByPk(req.params.id)
       .then((tweet) => {
         Tweet.update({
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           description: req.body.description,
           likes: req.body.likes
         })
