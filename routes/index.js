@@ -31,9 +31,9 @@ module.exports = (app, passport) => {
   app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
   app.get('/users/:id', authenticatedUser, userController.getProfile)
   app.put('/users/:id/edit', authenticatedUser, upload.fields([{
-    name: 'bg_img', maxCount: 1
+    name: 'cover', maxCount: 1
   }, {
-    name: 'img', maxCount: 1
+    name: 'avatar', maxCount: 1
   }]), userController.putProfile)
 
   //follow function

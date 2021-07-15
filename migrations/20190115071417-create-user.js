@@ -9,27 +9,26 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       account: {
-        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       name: {
         type: Sequelize.STRING
       },
       email: {
-        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       password: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       description: {
         type: Sequelize.STRING
       },
-      img: {
+      avatar: {
         type: Sequelize.STRING
       },
-      bg_img: {
+      cover: {
         type: Sequelize.STRING
       },
       is_admin: {

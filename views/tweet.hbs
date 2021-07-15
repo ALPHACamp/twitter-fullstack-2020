@@ -58,13 +58,13 @@
           <div class="row col-11">
             <div class="card-image col-1 d-flex justify-content-center align-items-center">
               <a href="/users/{{tweet.UserId}}" class="h5 text-dark text-decoration-none">
-              <img src="{{tweet.User.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px" alt="A user" /></a>
+              <img src="{{tweet.User.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px" alt="A user" /></a>
             </div>
             <div class="col-11 align-self-center px-md-2 px-4">
               <a href="/users/{{tweet.UserId}}" class="h5 text-dark text-decoration-none">{{tweet.User.name}}</a>
               <span style="color: #6c757d; font-size: 0.875em">@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
-              <p class="mt-2">{{tweet.content}} </p>
-              <div class="col-2 d-flex align-items-center justify-content-center ">
+              <p class="mt-2">{{tweet.description}} </p>
+              <div class="col-3 d-flex align-items-center justify-content-center ">
                 {{#if this.isLiked }}
                 <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
@@ -79,17 +79,16 @@
                 </form>
                 {{/if}}
 
-
                 {{#if tweet.replyCount}}
                   <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
                     data-bs-target="#replyModal">
                     <span class='h5 fw-bold d-none d-sm-inline'></span>
-                    <i class="fas fa-comment">{{ tweet.replyCount }}</i>
+                    <i class="fas fa-comment"> {{ tweet.replyCount }}</i>
                   </button>
                 {{else}}
                 <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
                   <span class='h5 fw-bold d-none d-sm-inline'></span>
-                  <i class="far fa-comment"></i>
+                  <i class="far fa-comment"> {{ tweet.replyCount }}</i>
                 </button>               
                 {{/if}}
 
@@ -113,12 +112,12 @@
         <div class="row justify-content-around mb-1">
           <div class="row col-11">
             <div class="card-image col-1 d-flex justify-content-center align-items-center">
-              <img src="{{this.User.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px" alt="A user" />
+              <img src="{{this.User.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px" alt="A user" />
             </div>
             <div class="col-11 align-self-center px-md-2 px-4">
               <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none">{{this.User.name}}</a>
               <span style="color: #6c757d; font-size: 0.875em">@{{this.User.account}}．{{moment this.createdAt}}</span>
-              <p class="mt-2">{{this.content}} </p>
+              <p class="mt-2 text-break">{{this.content}} </p>
             </div>
           </div>
             {{#ifCond this.User.id ../user.id}}

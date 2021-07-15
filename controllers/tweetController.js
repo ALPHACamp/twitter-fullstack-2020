@@ -39,7 +39,7 @@ const tweetController = {
 
       tweets = tweets.rows.map(t => ({
         ...t,
-        content: t.content.substring(0, 50),
+        description: t.description.substring(0, 50),
         isLiked: req.user.LikedTweet.some(d => d.id === t.id)
       }))
 
@@ -48,7 +48,7 @@ const tweetController = {
         FollowerCount: followships.Followers.length,
         isFollowed: req.user.Followings.some(d => d.id === followships.id),
       }))
-      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
 
       return res.render('tweets', {
         tweets,
@@ -64,23 +64,24 @@ const tweetController = {
     }
   },
   postTweet: (req, res) => {
-    if (!req.body.content) {
-      req.flash('error_messages', "Content didn't exist")
+    if (!req.body.description) {
+      req.flash('error_messages', '推文內容不存在')
       return res.redirect('back')
-    } else if (req.body.content.length == 0) {
-      req.flash('error_messages', "Please enter some content !")
+    } else if (req.body.description.length === 0) {
+      req.flash('error_messages', '請輸入推文內容!')
       return res.redirect('back')
-    } else if (req.body.content.length > 140) {
-      req.flash('error_messages', "Content is over limit!")
+    } else if (req.body.description.length > 140) {
+      req.flash('error_messages', '推文超過字數限制')
       return res.redirect('back')
     }
     return Tweet.create({
       UserId: req.user.id,
-      content: req.body.content,
+      description: req.body.description,
+      replyCount: 0,
       likes: 0
     })
       .then((tweet) => {
-        req.flash('success_messages', 'Tweet was successfully created')
+        req.flash('success_messages', '推文成功發布！')
         res.redirect('/tweets')
       })
       .catch(err => console.log(err))
@@ -111,16 +112,16 @@ const tweetController = {
     })
   },
   putTweet: (req, res) => {
-    if (!req.body.content) {
-      req.flash('error_messages', "Content didn't exist")
+    if (!req.body.description) {
+      req.flash('error_messages', '推文不存在!')
       return res.redirect('back')
     }
 
     return Tweet.findByPk(req.params.id)
       .then((tweet) => {
-        tweet.update({
+        Tweet.update({
           UserId: req.user.id,
-          content: req.body.content,
+          description: req.body.description,
           likes: req.body.likes
         })
           .then(() => {
