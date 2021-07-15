@@ -41,35 +41,36 @@ const twitController = {
       helper.removeUser(users, userself)//移除使用者自身資訊
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
-      tweet = tweet.map(async tweet => {
-        const tweetId = tweet.id
+      // 異步問題? 為了要渲染前端 回覆留言數目 Like數目
+      // tweet = tweet.map(async tweet => {
+      //   const tweetId = tweet.id
 
-        let tt = await Like.findAll({
-          where: { TweetId: tweetId },
-          raw: true,
-          nest: true,
-        })
-          .then((like) => {
-            return Reply.findAll({
-              where: { TweetId: tweetId },
-              raw: true,
-              nest: true,
-            })
-              .then(reply => {
-                tweet.likeCount = like.length
-                tweet.replyCount = reply.length
-                return tweet
-              })
-          })
-        console.log('===============')
+      //   let tt = await Like.findAll({
+      //     where: { TweetId: tweetId },
+      //     raw: true,
+      //     nest: true,
+      //   })
+      //     .then((like) => {
+      //       return Reply.findAll({
+      //         where: { TweetId: tweetId },
+      //         raw: true,
+      //         nest: true,
+      //       })
+      //         .then(reply => {
+      //           tweet.likeCount = like.length
+      //           tweet.replyCount = reply.length
+      //           return tweet
+      //         })
+      //     })
+      //   console.log('===============')
 
-        console.log(tt)
+      //   console.log(tt)
 
-        console.log('===============')
-        return tt
-      })
+      //   console.log('===============')
+      //   return tt
+      // })
 
-      console.log(tweet)
+      // console.log(tweet)
       return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
     })
   },
