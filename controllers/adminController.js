@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs')
 const imgur = require('imgur-node-api')
+const helpers = require('../_helpers')
 const { User, Tweet, sequelize } = require('../models')
 const { Op } = require('sequelize')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -95,7 +96,7 @@ const adminController = {
   },
   getEditProfile: (req, res) => {
     const edit = true
-    return User.findByPk(req.user.id).then(theuser => {
+    return User.findByPk(helpers.getUser(req).id).then(theuser => {
       theuser = theuser.toJSON()
       const { name, account, email } = theuser
       return res.render('admin/profile', { edit, name, account, email })
@@ -112,7 +113,7 @@ const adminController = {
         return res.redirect('back')
       }
 
-      const [a, e] = await Promise.all([User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ account: account }, { account: { [Op.notLike]: req.user.account } }] } }), User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ email }, { email: { [Op.notLike]: req.user.email } }] } })])
+      const [a, e] = await Promise.all([User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ account: account }, { account: { [Op.notLike]: helpers.getUser(req).account } }] } }), User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ email }, { email: { [Op.notLike]: helpers.getUser(req).email } }] } })])
       if (a) {
         errors.push({ msg: '此帳號已有人使用。' })
       }
@@ -125,7 +126,7 @@ const adminController = {
 
       imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, async (err, img) => {
-        const admin = await User.findByPk(req.user.id)
+        const admin = await User.findByPk(helpers.getUser(req).id)
         await admin.update({
           name, account, email,
           img: file ? img.data.link : admin.img
