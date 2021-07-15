@@ -11,6 +11,7 @@ const adminService = {
     tweets = tweets.map(t => ({
       ...t.dataValues,
       User: t.User.dataValues,
+      description: t.dataValues.description.substring(0, 50),
     }))
     return callback({
       tweets,
