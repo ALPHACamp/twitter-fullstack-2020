@@ -4,21 +4,45 @@ const helpers = require('../_helpers')
 const { User, Tweet, sequelize } = require('../models')
 const { Op } = require('sequelize')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const pageLimit = 20
 
 const adminController = {
-  getTweets: (req, res) => {
-    return Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User],
-      order: [['createdAt', 'desc']]
-    }).then(tweets => {
-      tweets = tweets.map(t => ({
+  getTweets: async (req, res) => {
+    let offset = 0
+    const whereQuery = {}
+    if (req.query.page) {
+      offset = (Number(req.query.page) - 1) * pageLimit
+    }
+    try {
+      let tweets = await Tweet.findAndCountAll({
+        offset,
+        raw: true,
+        nest: true,
+        limit: pageLimit,
+        where: whereQuery,
+        include: [User],
+        order: [['createdAt', 'desc']]
+      })
+
+      const page = Number(req.query.page) || 1
+      const pages = Math.ceil(tweets.count / pageLimit)
+      const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
+      const prev = page - 1 < 1 ? 1 : page - 1
+      const next = page + 1 > pages ? pages : page + 1
+
+      tweets = tweets.rows.map(t => ({
         ...t,
-        description: t.description.substring(0, 50)
+        description: t.description.substring(0, 50),
       }))
-      return res.render('admin/tweets', { tweets })
-    })
+
+      return res.render('admin/tweets', {
+        tweets, page, totalPage,
+        pages: pages <= 1 ? 'invisible' : '',
+        prev, next
+      })
+    } catch (error) {
+      console.warn(error)
+    }
   },
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
