@@ -6,12 +6,12 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "test": "mocha test --exit --recursive --timeout 5000"
+    "test": "set \"NODE_ENV=test\" && mocha test/*/*.js --exit --recursive --timeout 5000"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt-nodejs": "^0.0.3",
+    "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
     "chai": "^4.3.4",
     "connect-flash": "^0.1.1",

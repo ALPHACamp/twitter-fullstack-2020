@@ -2,7 +2,7 @@
   <div class="row flex-nowrap ps-xl-4 ps-md-3">
     <div class="col-auto col-md-4 col-xl-3 px-sm-2 px-0">
       <div
-        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100"
+        class="d-flex flex-column align-items-center align-items-sm-start position-fixed px-3 pt-2 min-vh-100"
       >
         <a
           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ps-3"
@@ -194,3 +194,27 @@
     </div>
   </div>
 </div>
+
+<nav aria-label="Page navigation" class="{{pages}}">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="/admin/tweets?page={{prev}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {{#each totalPage}}
+    {{#ifCond this ../page}}
+    <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+    {{else}}
+    <li class="page-item">
+      <a class="page-link" href="/admin/tweets?page={{this}}">{{this}}</a>
+    </li>
+    {{/ifCond}}
+    {{/each}}
+    <li class="page-item">
+      <a class="page-link" href="/admin/tweets?page={{next}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
