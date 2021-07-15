@@ -71,11 +71,10 @@
         </div>
       </div>
       <div class="card-body col-12 d-flex justify-content-end">
-
         {{#ifCond users.id UserId}}
         <!-- Button trigger modal -->
         <button type="submit" class="btn btn-outline-tomato rounded-pill fw-bold" data-bs-toggle="modal"
-          data-bs-target="#profileModal"> 編輯個人資料</button>
+          data-bs-target="#profileModal">編輯個人資料</button>
         {{else}}
         <a href="mailto:{{users.email}}" class="m-1" style="color:tomato;">
           <i class="far fa-envelope fa-2x m-1"></i> </a>
@@ -206,8 +205,6 @@
             </li>
             {{/each}}
           </ul>
-
-
         </div>
         {{!-- likedTweets --}}
         <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
@@ -250,13 +247,10 @@
             </li>
             {{/each}}
           </ul>
-
-
         </div>
       </div>
     </div>
-
-    {{!-- Left Followship recommend bar --}}
+    {{!-- Followship recommend bar --}}
     <div class="col-auto col-lg-3 col-md-3">
       <div class="card d-none d-sm-flex flex-column flex-shrink-0 mt-3 position-fixed" width="100%">
         <ul class="list-group list-group">
@@ -302,20 +296,57 @@
 </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+<div class="modal fade bd" id="profileModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="ModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+      <form action="/users/{{user.id}}/edit?_method=PUT" method="post" enctype="multipart/form-data">
+        <div class="modal-header">
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn a-tomato" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+            <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
+          </div>
+          <button type="submit" class="badge btn btn-tomato  rounded-pill fw-bold" style="font-size: 1.1em;">儲存</button>
+        </div>
+        <div class="modal-body row">
+          <div class="col-12 m-0 p-0 position-relative mb-5">
+            <div class="bg-holder" style="height: 170px;">
+              <img src="{{#if users.bg_img}}{{users.bg_img}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+                style="height:100%;width:100%;object-fit:cover">
+            </div>
+            <label for="bg_img" class="btn cover-uploader">
+              <input class="d-none" type="file" id="bg_img" name="bg_img" accept="image/*">
+              <i class="fas fa-camera" style="font-size: 1.5em; color: white"></i>
+            </label>
+            <div class="avatar-holder">
+              <img src="{{#if users.img}}{{users.img}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+                class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
+            </div>
+            <label for="img" class="btn avator-uploader">
+              <input class="d-none" type="file" id="img" name="img" accept="image/*">
+              <i class="fas fa-camera" style="color: white;"></i>
+            </label>
+          </div>
+
+          <div class="col-12 mb-3 mt-2">
+            <label for="name" class="fw-bold"
+              style="margin-bottom: -30px; margin-left: 8px; font-size: 1.1em">名稱</label>
+            <input type="text" class="form-control pt-4 nowcount1" id="name" name="name" maxlength="50"
+              style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em"
+              aria-describedby="nameHelp" value="{{users.name}}" />
+            <p class="text-end text-muted now1" style="font-size: 0.98em;"></p>
+          </div>
+          <div class="col-12 mb-3 mt-2">
+            <label for="description" class="fw-bold" style="margin-left: 8px; font-size: 1.1em;">自我介紹</label>
+            <textarea class="form-control nowcount2" id="description" name="description"
+              style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em;"
+              maxlength="160" aria-describedby="descriptionHelp">{{users.description}}</textarea>
+            <p class="text-end text-muted now2" style="font-size: 0.98em;"></p>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>
