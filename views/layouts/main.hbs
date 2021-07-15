@@ -66,16 +66,16 @@
 
               {{!-- user --}}
               <a href="/admin/users" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
-                style="{{#if myPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                style="{{#if adminUser }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
-                  {{#if myPage }}
+                  {{#if adminUser }}
                   <i class="far fa-laugh p-2 h2 me-3"
                     style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
                   {{else}}
                   <i class="far fa-laugh p-2 h2 me-3" style="color:#313c4b6f;"></i>
                   {{/if}}
                 </div>
-                {{#if myPage }}
+                {{#if adminUser }}
                 <p style="color:#313c4b;" class="mt-2">使用者列表</p>
                 {{else}}
                 <p style="color:#313c4b6f;" class="mt-2">使用者列表</p>
@@ -97,7 +97,7 @@
             <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
             {{/if}}
 
-            {{#if myPage }}
+            {{#if adminUser }}
             <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:21.5vh;border-radius:13em;"></div>
             {{/if}}
 
