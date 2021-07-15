@@ -49,8 +49,6 @@ const getTopFollowing = async (req, res, next) => {
 
       data = data.sort((a, b) => b.followerCount - a.followerCount)
       data = data.slice(0, 10)
-      console.log('-------------data')
-      console.log(data)
       res.locals.data = data
       return next()
     })
@@ -98,7 +96,6 @@ module.exports = (app, passport) => {
   app.get('/tweets/:tweetId', authenticated, getTopFollowing, tweetController.getTweet)
   app.get('/tweets/:tweetId/replies', authenticated, getTopFollowing, tweetController.getTweet)
   app.post('/tweets/:tweetId/replies', authenticated, getTopFollowing, replyController.postReply)
-  app.get('/tweets/:tweetId', authenticated, getTopFollowing, tweetController.getTweet)
   app.post('/tweets/:tweetId/like', authenticated, userController.addLike)
   app.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike)
 
