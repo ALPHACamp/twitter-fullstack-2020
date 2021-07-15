@@ -1,4 +1,4 @@
-# Restaurant List
+# Simple Twitter
 
 ![page_1](./screenshots/page_1.jpg)
 
