@@ -5,6 +5,9 @@ const Like = db.Like
 const Followship = db.Followship
 const Reply = db.Reply
 
+const helpers = require('../_helpers')
+
+
 const adminController = {
   //登入頁面
   adminSignInPage: (req, res) => {
@@ -20,6 +23,8 @@ const adminController = {
   },
 
   getAdminTweets: (req, res) => {
+    const user = helpers.getUser(req)
+    const adminTweets = true
     return Tweet.findAndCountAll({
       raw: true,
       nest: true,
@@ -27,7 +32,9 @@ const adminController = {
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
       return res.render('admin/tweets', {
+        user,
         tweets: tweets.rows,
+        adminTweets
       })
     })
   },
@@ -99,7 +106,9 @@ const adminController = {
       req.flash('error_message', err)
       return res.redirect('/') // 假定回到首頁
     }
-  }
+  },
+
+
 
 }
 module.exports = adminController

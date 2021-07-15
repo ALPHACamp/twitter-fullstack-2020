@@ -122,10 +122,10 @@ module.exports = {
   },
 
   limitText: function (str) {
-    let strList = str.split(' ')
-    if (strList.length > 50) {
-      strList = strList.slice(0, 50)
+    if (str.length > 50) {
+      str = str.slice(0, 50)
+      str += '...'
     }
-    return strList.join(' ')
+    return str
   }
 }

@@ -41,13 +41,66 @@
           {{!-- 中 --}}
           {{!-- 如果是管理者登入 --}}
           {{#if isAdmin}}
-          <div class="col-12 pt-0">
-            <a href="/admin/tweets" style=" text-decoration:none;color:rgb(179, 123, 50)">
-              <p>推文清單</p>
-            </a>
-            <a href="/admin/users" style=" text-decoration:none;color:black">
-              <p>使用者列表</p>
-            </a>
+
+          <div class="d-flex">
+            <div class="mt-5 ms-4" style="width: 15.5vw;">
+
+              {{!-- post --}}
+
+              <a href="/admin/tweets" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="{{#if adminTweets }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  {{#if adminTweets }}
+                  <i class="fas fa-igloo p-2 h3 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="fas fa-igloo p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
+                </div>
+                {{#if adminTweets }}
+                <p style="color:#313c4b;" class="mt-2">推文清單</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">推文清單</p>
+                {{/if}}
+              </a>
+
+              {{!-- user --}}
+              <a href="/admin/users" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="{{#if myPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  {{#if myPage }}
+                  <i class="far fa-laugh p-2 h2 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="far fa-laugh p-2 h2 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
+                </div>
+                {{#if myPage }}
+                <p style="color:#313c4b;" class="mt-2">使用者列表</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">使用者列表</p>
+                {{/if}}
+              </a>
+
+              {{!-- 登出 --}}
+              <a href="/signout" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  <i class="fas fa-shoe-prints p-2 h4 me-3" style="color:#313c4b6f;"></i>
+                </div>
+                <p style="color:#313c4b6f;" class="mt-2">登出</p>
+              </a>
+            </div>
+
+            {{!-- 選擇直線 --}}
+            {{#if adminTweets }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
+            {{/if}}
+
+            {{#if myPage }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:21.5vh;border-radius:13em;"></div>
+            {{/if}}
+
           </div>
 
           {{else}}
@@ -157,9 +210,15 @@
           {{{ body }}}
         </div>
 
-        {{#if user }}
         {{!-- 右側欄位 --}}
+        {{!-- 管理者登入 --}}
+        {{#if isAdmin}}
+        {{> adminInfo }}
+        {{else}}
+        {{#if user }}
+        {{!-- 使用者登入 --}}
         <div style="margin-left:2.2em" class="mt-2">{{> recommendedFollower }}</div>
+        {{/if}}
         {{/if}}
 
       </div>
