@@ -90,7 +90,6 @@ const userService = {
         password: req.body.password
       })
     }
-    console.log('here1')
     req.flash('success_messages', '修改成功')
     const thisPageUser = await getThisPageUser(req)
     const tweets = await getTweets(req, { UserId: thisPageUser.id }, ['createdAt', 'DESC'])
@@ -167,8 +166,7 @@ const userService = {
   },
 
   getFollowing: async (req, res, callback) => {
-    console.log(req.body)
-    console.log(helpers.getUser(req).id.toString())
+
     if (req.body.id === helpers.getUser(req).id.toString()) {
       req.flash('error_messages', '無法追蹤自己')
       callback()

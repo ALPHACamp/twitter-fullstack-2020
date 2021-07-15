@@ -2,8 +2,6 @@ const userService = require('../../services/userService')
 const helpers = require('../../_helpers')
 const userController = {
   getUser: (req, res) => {
-    console.log(helpers.getUser(req).id.toString())
-    console.log()
     if (helpers.getUser(req).id.toString() === req.params.id){
       userService.getUser(req, res, (data) => res.json(data))
     }else{
