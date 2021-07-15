@@ -11,17 +11,17 @@ const userController = {
     return res.render('signup')
   },
   signUp: (req, res) => {
-    const { name, account, email, password, passwordConfirm } = req.body
+    const { name, account, email, password, checkPassword } = req.body
     const errors = []
-    if (!name || !account || !email || !password || !passwordConfirm) {
+    if (!name || !account || !email || !password || checkPassword) {
       errors.push({ msg: '所有欄位都是必填。' })
     }
-    if (password !== passwordConfirm) {
+    if (password !== checkPassword) {
       errors.push({ msg: '密碼及確認密碼不一致！' })
     }
     if (errors.length) {
       return res.render('signup', {
-        errors, name, account, email, password, passwordConfirm
+        errors, name, account, email, password, checkPassword
       })
     }
     User.findOne({
@@ -32,7 +32,7 @@ const userController = {
       if (user) {
         errors.push({ msg: '帳號或Email已註冊！' })
         return res.render('signup', {
-          errors, name, account, email, password, passwordConfirm
+          errors, name, account, email, password, checkPassword
         })
       }
       return User.create({
@@ -42,7 +42,7 @@ const userController = {
         req.flash('success_messages', '註冊成功！')
         return res.redirect('/signin')
       })
-    })
+    }).catch(err => console.log(err))
   },
   signInPage: (req, res) => {
     return res.render('signin')
@@ -220,17 +220,17 @@ const userController = {
     })
   },
   putSetting: async (req, res) => {
-    const { name, account, email, password, passwordConfirm } = req.body
+    const { name, account, email, password, checkPassword } = req.body
     let errors = []
     if (!name || !account || !email) {
       errors.push({ msg: '帳號/名稱/Email 不可空白。' })
     }
-    if (password !== passwordConfirm) {
+    if (password !== checkPassword) {
       errors.push({ msg: '密碼及確認密碼不一致！' })
     }
     if (errors.length) {
       return res.render('setting', {
-        errors, name, account, email, password, passwordConfirm
+        errors, name, account, email, password, checkPassword
       })
     }
     try {
@@ -243,7 +243,7 @@ const userController = {
         errors.push({ msg: '此Email已有人使用。' })
       }
       if (a || e) {
-        return res.render('setting', { errors, name, account, email, password, passwordConfirm })
+        return res.render('setting', { errors, name, account, email, password, checkPassword })
       }
       const user = await User.findByPk(req.user.id)
       if (password === "") {

@@ -151,17 +151,17 @@ const adminController = {
   },
   signUp: (req, res) => {
     const signup = true
-    const { name, account, email, password, passwordConfirm } = req.body
+    const { name, account, email, password, checkPassword } = req.body
     const errors = []
-    if (!name || !account || !email || !password || !passwordConfirm) {
+    if (!name || !account || !email || !password || !checkPassword) {
       errors.push({ msg: '所有欄位都是必填。' })
     }
-    if (password !== passwordConfirm) {
+    if (password !== checkPassword) {
       errors.push({ msg: '密碼及確認密碼不一致！' })
     }
     if (errors.length) {
       return res.render('admin/signin', {
-        errors, name, account, email, password, passwordConfirm, signup
+        errors, name, account, email, password, checkPassword, signup
       })
     }
     User.findOne({
@@ -172,7 +172,7 @@ const adminController = {
       if (user) {
         errors.push({ msg: '帳號或Email已註冊！' })
         return res.render('admin/signin', {
-          errors, name, account, email, password, passwordConfirm, signup
+          errors, name, account, email, password, checkPassword, signup
         })
       }
       return User.create({
