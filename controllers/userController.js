@@ -9,7 +9,7 @@ const userController = {
   },
 
   signUp: async (req, res) => {
-    if (req.body.confirmedPassword !== req.body.password) {
+    if (req.body.checkPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     } else {
