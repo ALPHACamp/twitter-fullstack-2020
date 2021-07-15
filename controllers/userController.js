@@ -78,7 +78,7 @@ const userController = {
   },
   getProfile: async (req, res) => {
     try {
-      const [users, user, followship] = await Promise.all([
+      let [users, user, followship] = await Promise.all([
         User.findAll({ where: { is_admin: false }, raw: true, nest: true, attributes: ['id'] }),
         User.findByPk(req.params.id, {
           where: { is_admin: false },
@@ -128,7 +128,7 @@ const userController = {
         followship,
         isFollowed,
         UserId,
-      })  
+      })
     } catch (error) {
       console.log(error)
     }
@@ -179,13 +179,13 @@ const userController = {
       .then(user => {
         user.update({ isNoticed: !user.isNoticed })
           .then(user => {
-          if (user.isNoticed) {
-            req.flash('success_messages', `你已成功訂閱${user.name}！`)
-          } else {
-            req.flash('success_messages', `已取消訂閱${user.name}！`)
-          }
-          return res.redirect('back')
-        })
+            if (user.isNoticed) {
+              req.flash('success_messages', `你已成功訂閱${user.name}！`)
+            } else {
+              req.flash('success_messages', `已取消訂閱${user.name}！`)
+            }
+            return res.redirect('back')
+          })
       })
   },
   addLike: (req, res) => {
