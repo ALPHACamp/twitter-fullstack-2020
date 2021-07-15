@@ -225,6 +225,68 @@
 
     </div>
 
+    {{#if myPage }}
+    <!--Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"
+          style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
+          <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"><button type="button" class="btn-close"
+                  data-bs-dismiss="modal" aria-label="Close"></button>
+                編輯個人資料
+              </h5>
+              <div class="d-flex flex-column align-items-end p-2"><button type="submit" class="btn post-a-tweet"
+                  style="background-color: #FF6600;color: white; border-radius: 45%;font-size:20px;">儲存</button>
+              </div>
+            </div>
+
+            <div class="modal-body d-flex flex-column justify-content-around pb-0">
+              {{!-- input 包在 label 中可以觸發點擊事件, input 為隱藏狀態 --}}
+              <label id="coverFile" style="background-image:url({{user.cover}});height: 200px;object-fit:
+                        cover;width:100%;opacity: .5;line-height:200px;color:white;" class="text-center">
+                {{!-- camera icon --}}
+                <i class="fas fa-camera fa-2x" style="cursor: pointer;"></i>
+                {{!-- 檔案接收元件, 含 --}}
+                <input id="uploadCover" name="cover" style="display:none;" type="file">
+              </label>
+              <div class="d-flex flex-column ms-4">
+                <div class="d-flex" style="position: relative;">
+                  {{!-- input 包在 label 中可以觸發點擊事件, input 為隱藏狀態 --}}
+                  <label id="avatarFile"
+                    style="background-image:url({{user.avatar}});height: 150px;width:150px;object-fit:cover;margin-top:-70px;border-radius:50%;border: solid 10px white;opacity: .8;line-height:150px;color:white;"
+                    class="text-center">
+                    {{!-- camera icon --}}
+                    <i class="fas fa-camera fa-2x" style="cursor: pointer;"></i>
+                    <input id="uploadAvatar" name="avatar" style="display:none;" type="file">
+                  </label>
+                </div>
+                <div class="form-group">
+                  {{!-- DOM有綁定元件id, 包含字數統計, POST 回傳--}}
+                  <label for="profileName" style="display:block;background-color: #F5F8FA;">名稱</label>
+                  <input type="text" class="form-control" id="profileName" name="name" aria-describedby="name"
+                    value="{{user.name}}" maxlength="50" placeholder="Enter Name"
+                    style="background-color: #F5F8FA;border:none;" required>
+                  <small id="nameLength" class="">0/50</small>
+                </div>
+                <div class="form-group">
+                  {{!-- DOM有綁定元件id, 包含字數統計, POST 回傳--}}
+                  <label for="profileIntro" style="display:block;background-color: #F5F8FA;">自我介紹</label>
+                  <textarea class="form-control" id="profileIntro" rows="3" maxlength="140" name="introduction"
+                    style="background-color: #F5F8FA;border:none;white-space:pre-wrap;">{{user.introduction}}</textarea>
+                  <small id="introLength" class="">0/140</small>
+                </div>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    {{else}}
+
     <!--Post Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -255,21 +317,6 @@
 
             </form>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
-      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-          <img src="https://yt3.ggpht.com/ytc/AKedOLSMq3y4-2mILcS9X7GTvNYswkMqpjyE6y1c0U3A6w=s900-c-k-c0x00ffffff-no-rj"
-            class="rounded me-2" alt="..." style="width: 30px;height:30px;">
-          <strong class="me-auto">AC Tweet</strong>
-          <small>1 mins ago</small>
-          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-        <div class="toast-body">
-          Hello, world! This is a toast message.
         </div>
       </div>
     </div>
@@ -325,7 +372,9 @@
           </div>
         </div>
       </div>
+      {{/if}}
 
+      {{!-- toast --}}
       <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
         <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="toast-header">
