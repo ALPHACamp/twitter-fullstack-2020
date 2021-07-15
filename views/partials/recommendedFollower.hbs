@@ -22,9 +22,19 @@
   </div>
 
   {{!-- 追蹤 btn --}}
-  <form action="/users/{{ this.id }}/follow" method="post" class="">
-    <button class="btn p-2"
-      style="background-color: #ffd5728a;color: #313c4bc2;border-radius:50%;width:4em;height:4em;font-size:smaller">追蹤</button>
+  {{#if this.isFollowed}}
+  <form action="/followships/{{ this.id }}?_method=DELETE" method="post">
+    <button type="submit" class="btn"
+      style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">unFollow</button>
   </form>
+  {{else}}
+  <form action="/followships" method="post">
+    <label>
+      <input type="text" id="id" name="id" value="{{ this.id }}" style="display:none">
+    </label>
+    <button type="submit" class="btn"
+      style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">Follow</button>
+  </form>
+  {{/if}}
 </div>
 {{/each}}

@@ -333,7 +333,7 @@ const userController = {
         raw: true,
         nest: true,
         where: {
-          followerId: user.id
+          followerId: userInfo.user.id
         },
         order: [
           ['createdAt', 'DESC']
@@ -377,10 +377,12 @@ const userController = {
   },
 
   getUserFollowers: async (req, res) => {
-    const topFollowing = res.locals.data
-    const user = helpers.getUser(req)
-    const userInfo = res.locals.userInfo
     try {
+      const topFollowing = res.locals.data
+      const user = helpers.getUser(req)
+      const userInfo = res.locals.userInfo
+      const { userId } = req.params
+
       const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
@@ -388,24 +390,38 @@ const userController = {
           UserId: req.params.userId
         }
       })
+      const tweetCount = tweets.count
+
+      const follower = await Followship.findAll({
+        raw: true,
+        nest: true,
+        where: {
+          followingId: userInfo.user.id
+        },
+        order: [
+          ['createdAt', 'DESC']
+        ]
+      })
 
       let Data = []
-      const tweetCount = tweets.count
-      Data = userInfo.followers.map(async (follower, index) => {
-        const [followerUser] = await Promise.all([
-          User.findOne({
-            raw: true,
-            nest: true,
-            where: {
-              id: follower.followerId
-            }
-          })
-        ])
+
+      Data = follower.map(async (f, i) => {
+        const user = await User.findByPk(f.followerId)
+        const isFollowed = await Followship.findOne({
+          where: {
+            followerId: helpers.getUser(req).id,
+            followingId: f.followerId,
+          }
+        })
         return {
-          followerUser: followerUser
+          ...f,
+          isFollowed: isFollowed ? true : false,
+          user
         }
       })
+
       Promise.all(Data).then(data => {
+        console.log(data)
         return res.render('followers', {
           thisUser: userInfo.user,
           user,
