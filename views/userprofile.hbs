@@ -76,12 +76,13 @@
         <button type="submit" class="btn btn-outline-tomato rounded-pill fw-bold" data-bs-toggle="modal"
           data-bs-target="#profileModal">編輯個人資料</button>
         {{else}}
-        <a href="mailto:{{users.email}}" class="m-1" style="color:tomato;">
-          <i class="far fa-envelope fa-2x m-1"></i> </a>
-
+        <div class="NoticeAni">
+          <a href="mailto:{{users.email}}" class="m-1" style="color:tomato;">
+            <i class="far fa-envelope fa-2x m-1"></i> </a>
+        </div>
         {{#if users.isNoticed}}
         <div class="Noticed">
-          <a href="/users/noti/{{users.id}}" class="" style="color:tomato;">
+          <a href="/users/noti/{{users.id}}" style="color:tomato;">
             <i class="fas fa-bell fa-2x m-1"></i>
           </a>
         </div>
