@@ -9,7 +9,6 @@ const tweetController = {
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit
     }
-
     try {
       const result = await Tweet.findAndCountAll({
         raw: true,
@@ -29,9 +28,7 @@ const tweetController = {
 
       const data = result.rows.map(t => ({
         ...t,
-        description: t.description.substring(0, 50),
-        isLiked: req.user.LikedTweet.map(d => d.id)
-          .includes(t.id)
+        description: t.description.substring(0, 50)
       }))
       return res.render('tweets', {
         tweets: data,
@@ -39,34 +36,39 @@ const tweetController = {
         pages: pages <= 1 ? 'invisible' : '',
         totalPage,
         prev,
-        next,
+        next
       })
     } catch (error) {
       next(error)
+      // console.error(error)
     }
   },
-  postTweet: (req, res) => {
+  postTweet: async (req, res, next) => {
     if (!req.body.description) {
       req.flash('error_messages', '推文內容不存在')
-      return res.redirect('back')
+      return res.redirect('/')
     } else if (req.body.description.length === 0) {
       req.flash('error_messages', '請輸入推文內容!')
-      return res.redirect('back')
+      return res.redirect('/')
     } else if (req.body.description.length > 140) {
       req.flash('error_messages', '推文超過字數限制')
-      return res.redirect('back')
+      return res.redirect('/')
     }
-    return Tweet.create({
-      UserId: req.user.id,
-      description: req.body.description,
-      replyCount: 0,
-      likes: 0
-    })
-      .then((tweet) => {
-        req.flash('success_messages', '推文成功發布！')
-        res.redirect('/tweets')
+    try {
+      return Tweet.create({
+        UserId: helpers.getUser(req).id,
+        description: req.body.description,
+        replyCount: 0,
+        likes: 0
       })
-      .catch(err => console.log(err))
+        .then(() => {
+          req.flash('success_messages', '推文成功發布！')
+          res.redirect('/')
+        })
+    } catch (error) {
+      next(error)
+      console.error(error)
+    }
   },
   getTweet: async (req, res, next) => {
     try {
@@ -79,13 +81,14 @@ const tweetController = {
       })
       if (!tweet) throw new Error('Tweet is not found!')
 
-      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(req.user.id)
+      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(helpers.getUser(req).id)
       res.render('tweet', {
         tweet: tweet.toJSON(),
         isLiked
       })
     } catch (error) {
       next(error)
+      // console.error(error)
     }
   },
   editTweet: (req, res) => {
@@ -96,13 +99,13 @@ const tweetController = {
   putTweet: (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '推文不存在!')
-      return res.redirect('back')
+      return res.redirect('/')
     }
 
     return Tweet.findByPk(req.params.id)
       .then((tweet) => {
         Tweet.update({
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           description: req.body.description,
           likes: req.body.likes
         })

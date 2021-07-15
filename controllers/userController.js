@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs')
 const { thousandComma } = require('../config/hbs-helpers')
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -188,30 +189,47 @@ const userController = {
         })
       })
   },
-  addLike: (req, res) => {
-    return Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
-      .then(() => {
-        return Tweet.findByPk(req.params.TweetId)
-          .then((tweet) => {
-            return tweet.increment('likes')
-          })
-      })
-      .then(() => res.redirect('back'))
+  addLike: async (req, res, next) => {
+    try {
+      return Like.create({ UserId: helpers.getUser(req).id, TweetId: req.params.TweetId })
+        .then(() => {
+          return Tweet.findByPk(req.params.TweetId)
+            .then((tweet) => {
+              return tweet.increment('likes')
+            })
+        })
+        .then(() => res.redirect('/tweets'))
+    } catch (error) {
+      // next(error)
+      console.error(error)
+    }
   },
-  removeLike: (req, res) => {
-    return Like.findOne({
-      where: { UserId: req.user.id, TweetId: req.params.TweetId }
-    })
-      .then((like) => {
-        like.destroy()
-          .then(() => {
-            return Tweet.findByPk(req.params.TweetId)
-              .then((tweet) => {
-                res.redirect('back')
-                return tweet.decrement('likes')
-              })
-          })
+  removeLike: async (req, res, next) => {
+    try {
+      const like = await Like.findOne({
+        where: { UserId: helpers.getUser(req).id, TweetId: req.params.TweetId }
       })
+      const tweet = await Tweet.findByPk(req.params.TweetId)
+
+      if (!like) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'like is not exist!!'
+        })
+      } else {
+        like.destroy()
+        tweet.decrement('likes')
+        res.redirect('/tweets')
+        return res.status(302).json({
+          status: 'success',
+          message: 'Unlike successfully',
+          tweetId: tweet.id
+        })
+      }
+    } catch (error) {
+      // next(error)
+      console.error(error)
+    }
   },
   getSetting: (req, res) => {
     return User.findByPk(req.user.id).then(theuser => {
