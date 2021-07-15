@@ -76,7 +76,7 @@ const userController = {
 
   userFollowingsPage: (req, res) => {
     userService.getUserFollowings(req, res, (data) => {
-      return res.render('users-Followings', data)
+      return res.render('users-followings', data)
     })
   },
 
