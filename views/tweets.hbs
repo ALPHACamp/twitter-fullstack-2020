@@ -47,23 +47,23 @@
       <div class="card-header col-12">
         <span class="h5" style="font-weight: bold;">首頁</span>
       </div>
-
       {{> message}}
-      <div class="card-body col-12">
-        <form action="/tweets" method="POST" class="mt-1">
-          <div class="form-group">
-            <img src="{{user.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px"
-              alt="A user" />
-            <textarea class="form-control" id="content" name="content" rows="3" placeholder="tweet一下你的心情" 
-            maxlength="140"
-            required
-            ></textarea>
-          </div>
-          <div class="d-grid gap-2 d-md-flex justify-content-md-end" style= "margin-top: 10px;">
-            <button type="submit" class="btn btn-tomato">推文</button>
-          </div>
-        </form>
+      <form action="/tweets" method="POST" class="col-12">
+      <div class="col-12 position-relative" style="margin-bottom: 50px; padding: 70px 0;">
+        <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
+          <img src="{{user.img}}" class="rounded-circle p-1 mt-1 " style="width: 60px; height: 60px;" alt="A user"/>
+        </div>
+        <div class="position-absolute" style="z-index: 0; width:inherit; top:0px;">
+          <textarea class="nowcount3 mt-1" id="content" name="content" rows="3" placeholder="tweet一下你的心情" 
+          maxlength="140" style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
+          required></textarea>
+        </div> 
+        <div class="position-absolute" style= "z-index: 5; right: 6px; bottom: 0;">
+          <span class="text-muted px-2 now3" style="font-size: 0.98em;"></span>
+          <button type="submit" class="btn btn-tomato fw-bold rounded-pill">推文</button>
+        </div>
       </div>
+      </form>
       <div class="card-body col-12">
         {{#each tweets}}
         <div class="row justify-content-around mb-1">
@@ -127,45 +127,46 @@
         {{/each}}
       </div>
     </div>
-
-    <div class="col-auto col-lg-3 col-md-2">
-      <div class="d-none d-sm-flex flex-column flex-shrink-0 p-3" style="width: 350px;">
-        <div class="card" style="width: 22rem;border:none;position:fixed">
-          <ul class="list-group list-group">
-            <li class="list-group-item bg-light"
-              style="height: 50px;font-size:large;border-left: none;border-right: none;border-top: none">
-              跟隨誰
-            </li>
-            {{#each followship}}
-            <li class="list-group-item bg-light" style="border-left: none;border-right: none">
-              <div class="row">
-                <div class="col-2">
-                  <a href="/users/{{this.id}}" class="text-center">
-                    <img src="{{this.img}}" alt="" width="65" height="65" class="rounded-circle rounded"> </a>
-                </div>
-
-                <div class="col-5" style="margin-top:auto;margin-botton:auto;margin-left:1vw">
-                  <p>{{this.name}} <br>
-                    <small class="text-muted"> @{{this.account}}</small>
-                  </p>
-                </div>
-
-                <div class="col-4" style="margin:auto">
-                  {{#if this.isFollowed}}
-                  <button type=" submit" class="btn btn-success btn-sm rounded-pill">正在跟隨</button>
-                  {{else}}
-                  <button type="submit" class="btn btn-outline-success btn-sm rounded-pill">跟隨</button>
-                  {{/if}}
-                </div>
+    
+    <div class="col-auto col-lg-3 col-md-3">
+      <div class="card d-none d-sm-flex flex-column flex-shrink-0 mt-3 position-fixed" width="100%">
+        <ul class="list-group list-group">
+          <li class="list-group-item bg-light fw-bold" style="font-size: 1.2em;">跟隨誰</li>
+          {{#each followship}}
+          <li class="list-group-item bg-light" style="border-left: none;border-right: none">
+            <div class="row justify-content-around align-items-center">
+              <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
+                <a href="/users/{{this.id}}">
+                  <img src="{{this.img}}" alt="" width="50" height="50" class="rounded-circle">
+                </a>
               </div>
-            </li>
-            {{/each}}
-            <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
-              <a href="/users/{{user.id}}/followers" class="bg-light"
-                style="text-decoration: none;color:tomato">顯示更多</a>
-            </li>
-          </ul>
-        </div>
+
+              <div class="col-5 ps-3 pt-3 d-flex flex-column align-items-start">
+                <h5 style="line-height: 16px;">{{this.name}}</h5>
+                <p class="text-muted" style="line-height: 16px;">@{{this.account}}</p>
+              </div>
+
+              <div class="col-5 ps-3 d-flex justify-content-center">
+                {{#if this.isFollowed}}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn btn-tomato rounded-pill fw-bold" name="{{user.id}}"
+                    style="font-size: 0.95em;">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                  <button type="submit" class="btn btn-outline-tomato rounded-pill fw-bold" name="{{user.id}}"
+                    style="font-size: 0.95em;">跟隨</button>
+                </form>
+                {{/if}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          <li class="list-group-item bg-light" style="border-left: none;border-right: none;border-bottom: none">
+            <a href="/users/{{user.id}}/followers" class="bg-light fw-bold"
+              style="text-decoration: none;color:tomato">顯示更多</a>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
