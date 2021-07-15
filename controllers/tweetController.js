@@ -10,6 +10,9 @@ const tweetController = {
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit
     }
+    if (helpers.getUser(req).role === 'admin') {
+      return res.redirect('/admin/tweets')
+    }
     try {
       let [tweets, followship] = await Promise.all([
         Tweet.findAndCountAll({

@@ -18,7 +18,7 @@ module.exports = (app, passport) => {
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).is_admin) { return next() }
+      if (helpers.getUser(req).role === 'admin' || helpers.getUser(req).is_admin) { return next() }
       req.flash('error_messages', '沒有權限')
       return res.redirect('/admin/signin')
     }
