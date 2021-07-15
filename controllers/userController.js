@@ -13,7 +13,7 @@ const userController = {
   signUp: (req, res) => {
     const { name, account, email, password, checkPassword } = req.body
     const errors = []
-    if (!name || !account || !email || !password || checkPassword) {
+    if (!name || !account || !email || !password || !checkPassword) {
       errors.push({ msg: '所有欄位都是必填。' })
     }
     if (password !== checkPassword) {
@@ -158,15 +158,15 @@ const userController = {
       return res.redirect('back')
     }
     try {
-      let { avator, cover } = ''
+      let { avator, cover1 } = ''
       const user = await User.findByPk(req.user.id)
       await user.update({ name, description })
       imgur.setClientID(IMGUR_CLIENT_ID)
       if (cover) {
         imgur.upload(cover[0].path, async (error, image) => {
-          cover = image.data.link
+          cover1 = image.data.link
           await user.update({
-            cover: cover ? cover : user.cover
+            cover: cover ? cover1 : user.cover
           })
         })
       }
@@ -201,29 +201,30 @@ const userController = {
           })
       })
   },
-  addLike: async (req, res) => {
-    try {
-      await Like.create({ UserId: helpers.getUser(req) })
-      const tweet = await Tweet.findByPk(req.params.TweetId)
-      await tweet.increment('likes')
-      return res.redirect('/tweets')
-    } catch (error) {
-      console.error(error)
-    }
-  },
-  removeLike: async (req, res) => {
-    try {
-      const like = await Like.findOne({
-        where: { UserId: helpers.getUser(req).id, TweetId: req.params.TweetId }
+  addLike: (req, res) => {
+    return Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
+      .then(() => {
+        return Tweet.findByPk(req.params.TweetId)
+          .then((tweet) => {
+            return tweet.increment('likes')
+          })
       })
-      const tweet = await Tweet.findByPk(req.params.TweetId)
-
-      await like.destroy()
-      await tweet.decrement('likes')
-      return res.redirect('/tweets')
-    } catch (error) {
-      console.error(error)
-    }
+      .then(() => res.redirect('back'))
+  },
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: { UserId: req.user.id, TweetId: req.params.TweetId }
+    })
+      .then((like) => {
+        like.destroy()
+          .then(() => {
+            return Tweet.findByPk(req.params.TweetId)
+              .then((tweet) => {
+                res.redirect('back')
+                return Promise.all(tweet.decrement('likes'))
+              })
+          })
+      })
   },
   getSetting: (req, res) => {
     return User.findByPk(req.user.id).then(theuser => {
