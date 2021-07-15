@@ -85,7 +85,7 @@
               </a>
               <div class="col-2 d-flex align-items-center justify-content-center">
                 {{#if this.isLiked }}
-                <form action="/tweets/{{this.id}}/unlike?_method=DELETE" method="POST">
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
                     <i class="fas fa-heart"> {{ this.likes }}</i>
                   </button>

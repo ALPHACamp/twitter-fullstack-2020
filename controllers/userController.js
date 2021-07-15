@@ -191,7 +191,7 @@ const userController = {
   },
   addLike: async (req, res, next) => {
     try {
-      return Like.create({ UserId: helpers.getUser(req).id, TweetId: req.params.TweetId })
+      await Like.create({ UserId: helpers.getUser(req).id, TweetId: req.params.TweetId })
         .then(() => {
           return Tweet.findByPk(req.params.TweetId)
             .then((tweet) => {
@@ -200,8 +200,8 @@ const userController = {
         })
         .then(() => res.redirect('/tweets'))
     } catch (error) {
-      // next(error)
-      console.error(error)
+      next(error)
+      // console.error(error)
     }
   },
   removeLike: async (req, res, next) => {

@@ -44,7 +44,7 @@ module.exports = (app, passport) => {
 
   // like
   app.post('/tweets/:TweetId/like', authenticatedUser, userController.addLike)
-  app.delete('/tweets/:TweetId/unlike', authenticatedUser, userController.removeLike)
+  app.post('/tweets/:TweetId/unlike', authenticatedUser, userController.removeLike)
 
   // admin
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))

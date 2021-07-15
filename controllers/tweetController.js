@@ -28,7 +28,8 @@ const tweetController = {
 
       const data = result.rows.map(t => ({
         ...t,
-        description: t.description.substring(0, 50)
+        description: t.description.substring(0, 50),
+        isLiked: helpers.getUser(req).LikedTweet.map(d => d.id)
       }))
       return res.render('tweets', {
         tweets: data,
@@ -39,8 +40,7 @@ const tweetController = {
         next
       })
     } catch (error) {
-      next(error)
-      // console.error(error)
+      console.error(error)
     }
   },
   postTweet: async (req, res, next) => {
