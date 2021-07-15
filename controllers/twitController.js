@@ -36,7 +36,7 @@ const twitController = {
         }))
         helper.removeUser(users, userself)//移除使用者自身資訊
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
-        return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avata })
+        return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
       })
     })
 
@@ -66,7 +66,7 @@ const twitController = {
     return User.findAll({// 撈出所有 User 與 followers 資料
       include: [
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings'}
+        { model: User, as: 'Followings' }
       ]
     }).then(users => {
       const userself = req.user.id
@@ -80,7 +80,7 @@ const twitController = {
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       //userFollower = users.sort((a, b) => b.followerId - a.followerId)
-      return res.render('follower', { users})
+      return res.render('follower', { users })
     })
   },
 
@@ -367,14 +367,25 @@ const twitController = {
   getIdReplies: (req, res) => {
 
     Reply.findAll({
+      order: [['createdAt', 'ASC']],
+      nest: true,
       raw: true,
-      // nets: true,
-      include: [User, Tweet],
-      TweetId: req.params.id
-      // include: { User }
+      include: [
+        User,
+        { model: Tweet, include: [User] }
+      ]
     }).then(replys => {
-      console.log(replys)
-      return res.render('replyUser', { replys: replys })
+      Tweet.findByPk(req.params.id, {
+        nest: true,
+        raw: true,
+        include: [User]
+      }).then(tweet => {
+
+        console.log(replys)
+
+        return res.render('replyUser', { replys: replys, tweet: tweet, replysLength: replys.length })
+      })
+
     })
 
   },
