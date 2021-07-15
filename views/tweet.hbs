@@ -66,13 +66,13 @@
               <p class="mt-2">{{tweet.description}} </p>
               <div class="col-3 d-flex align-items-center justify-content-center ">
                 {{#if this.isLiked }}
-                <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
+                <form action="/tweets/{{tweet.id}}/unlike" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
                     <i class="fas fa-heart"> {{ tweet.likes }}</i>
                   </button>
                 </form>
                 {{else}}
-                <form action="/like/{{tweet.id}}" method="POST">
+                <form action="/tweets/{{tweet.id}}/like" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
                     <i class="far fa-heart"> {{ tweet.likes }}</i>
                   </button>

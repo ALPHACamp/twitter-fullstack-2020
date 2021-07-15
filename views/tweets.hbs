@@ -94,13 +94,13 @@
               </div>
               <div class="col-12 d-flex align-items-center justify-content-start ">              
                 {{#if this.isLiked }}
-                <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
                     <i class="fas fa-heart" style="color: red;"> {{ this.likes }}</i>
                   </button>
                 </form>
                 {{else}}
-                <form action="/like/{{this.id}}" method="POST">
+                <form action="/tweets/{{this.id}}/like" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
                     <i class="far fa-heart" style="color: red;"></i>
                   </button>

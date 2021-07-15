@@ -4,6 +4,7 @@ const { thousandComma } = require('../config/hbs-helpers')
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -187,30 +188,28 @@ const userController = {
           })
       })
   },
-  addLike: (req, res) => {
-    return Like.create({ UserId: req.user.id, TweetId: req.params.TweetId })
-      .then(() => {
-        return Tweet.findByPk(req.params.TweetId)
-          .then((tweet) => {
-            return tweet.increment('likes')
-          })
-      })
-      .then(() => res.redirect('back'))
+  addLike: async (req, res) => {
+    try {
+      await Like.create({ UserId: helpers.getUser(req).id, TweetId: req.params.TweetId })
+      const tweet = await Tweet.findByPk(req.params.TweetId)
+      await tweet.increment('likes')
+      return res.redirect('/tweets')
+    } catch (error) {
+      console.error(error)
+    }
   },
-  removeLike: (req, res) => {
-    return Like.findOne({
-      where: { UserId: req.user.id, TweetId: req.params.TweetId }
-    })
-      .then((like) => {
-        like.destroy()
-          .then(() => {
-            return Tweet.findByPk(req.params.TweetId)
-              .then((tweet) => {
-                res.redirect('back')
-                return tweet.decrement('likes')
-              })
-          })
+  removeLike: async (req, res) => {
+    try {
+      const like = await Like.findOne({
+        where: { UserId: helpers.getUser(req).id, TweetId: req.params.TweetId }
       })
+      const tweet = await Tweet.findByPk(req.params.TweetId)
+      await like.destroy()
+      await tweet.decrement('likes')
+      return res.redirect('/tweets')
+    } catch (error) {
+      console.error(error)
+    }
   },
   getSetting: (req, res) => {
     return User.findByPk(req.user.id).then(theuser => {
