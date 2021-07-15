@@ -17,7 +17,7 @@ module.exports = {
           userIdRandom += 2
         }
         replies.push({
-          UserId: userIdRandom,
+          UserId: users[userIdRandom].id,
           content: faker.lorem.word(),
           TweetId: tweet.id,
           createdAt: new Date(),
