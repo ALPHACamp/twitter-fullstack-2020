@@ -74,6 +74,8 @@ const userController = {
     const topFollowing = res.locals.data
     const userInfo = res.locals.userInfo
     const user = helpers.getUser(req)
+    const allowEdit = Number(req.params.userId) !== user.id
+    //isFollowed
     try {
       const replies = await Reply.findAndCountAll({
         raw: true,
@@ -135,7 +137,8 @@ const userController = {
           followerCount: userInfo.followerCount,
           data,
           topFollowing,
-          replyCount: replies.count
+          replyCount: replies.count,
+          allowEdit
         })
       })
     }
@@ -203,6 +206,8 @@ const userController = {
     const topFollowing = res.locals.data
     const userInfo = res.locals.userInfo
     const user = helpers.getUser(req)
+    const allowEdit = Number(req.params.userId) !== user.id
+    //isFollowed
     try {
       //所有的like清單裡面屬於userInfo.user.id的
       const likes = await Like.findAndCountAll({
@@ -261,7 +266,8 @@ const userController = {
           followerCount: userInfo.followerCount,
           data,
           topFollowing,
-          likeCount
+          likeCount,
+          allowEdit
         })
       })
     }

@@ -12,6 +12,22 @@
           alt="user avatar">
         <p class="h4 pt-4" style="color: #313c4b;">{{ thisUser.name }}</p>
         <p class="" style="color: #313c4b;">{{ thisUser.account }}</p>
+        {{#if allowEdit}}
+        {{#if isFollowed}}
+        <form action="/followships/{{ thisUser.id }}?_method=DELETE" method="post">
+          <button type="submit" class="btn px-5 mb-4"
+            style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">unFollow</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="post">
+          <label>
+            <input type="text" id="id" name="id" value="{{ thisUser.id }}" style="display:none">
+          </label>
+          <button type="submit" class="btn px-5 mb-4"
+            style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">Follow</button>
+        </form>
+        {{/if}}
+        {{/if}}
       </div>
 
       {{!-- 簡介 --}}
