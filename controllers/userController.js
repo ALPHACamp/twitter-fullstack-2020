@@ -13,7 +13,7 @@ const userController = {
   signUp: (req, res) => {
     const { name, account, email, password, checkPassword } = req.body
     const errors = []
-    if (!name || !account || !email || !password || checkPassword) {
+    if (!name || !account || !email || !password || !checkPassword) {
       errors.push({ msg: '所有欄位都是必填。' })
     }
     if (password !== checkPassword) {
