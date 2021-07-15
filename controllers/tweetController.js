@@ -10,7 +10,7 @@ const tweetController = {
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit
     }
-    if (helpers.getUser(req).role === 'admin') {
+    if (helpers.getUser(req).role === "admin") {
       return res.redirect('/admin/tweets')
     }
     try {
@@ -83,6 +83,7 @@ const tweetController = {
         replyCount: 0,
         likes: 0
       })
+
       req.flash('success_messages', '推文成功發布！')
       res.redirect('/')
     } catch (error) {

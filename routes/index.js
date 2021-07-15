@@ -11,14 +11,14 @@ const followController = require('../controllers/followController')
 module.exports = (app, passport) => {
   const authenticatedUser = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (!helpers.getUser(req).is_admin) { return next() }
+      if (helpers.getUser(req).role !== "admin" || !helpers.getUser(req).is_admin) { return next() }
       req.flash('error_messages', '管理員請由後台登入')
     }
     res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'admin' || helpers.getUser(req).is_admin) { return next() }
+      if (helpers.getUser(req).role === "admin" || helpers.getUser(req).is_admin) { return next() }
       req.flash('error_messages', '沒有權限')
       return res.redirect('/admin/signin')
     }
