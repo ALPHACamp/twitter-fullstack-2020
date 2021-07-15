@@ -7,7 +7,7 @@ const users = Array.from({ length: 5 }).map((d, i) => ({
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   is_admin: false,
   isNoticed: false,
-  avatar: `https://loremflickr.com/250/250/avator/?random=${i}`,
+  img: `https://loremflickr.com/250/250/avator/?random=${i}`,
   createdAt: new Date(),
   updatedAt: new Date()
 }))
@@ -18,7 +18,7 @@ users.unshift({
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   is_admin: true,
   isNoticed: false,
-  avatar: 'https://loremflickr.com/250/250/avator/?random=50',
+  img: 'https://loremflickr.com/250/250/avator/?random=50',
   createdAt: new Date(),
   updatedAt: new Date()
 })

@@ -19,10 +19,26 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING(189)
+        unique: true,
+        type: Sequelize.STRING
       },
       password: {
+        unique: true,
         type: Sequelize.STRING
+      },
+      description: {
+        type: Sequelize.STRING
+      },
+      avatar: {
+        type: Sequelize.STRING
+      },
+      cover: {
+        type: Sequelize.STRING
+      },
+      is_admin: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,
