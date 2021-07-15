@@ -52,7 +52,7 @@
       <div class="card-body col-12">
         <form action="/tweets" method="POST" class="mt-1">
           <div class="form-group">
-            <img src="{{user.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px"
+            <img src="{{user.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px"
               alt="A user" />
             <textarea class="form-control" id="content" name="content" rows="3" placeholder="tweet一下你的心情" 
             maxlength="140"
@@ -70,7 +70,7 @@
           <div class="row col-11">
             <div class="card-image col-1 d-flex justify-content-center align-items-center">
               <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none">
-              <img src="{{this.User.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px"
+              <img src="{{this.User.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px"
                 alt="A user" />
                 </a>
             </div>
@@ -138,7 +138,7 @@
             <div class="row justify-content-around align-items-center">
               <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
                 <a href="/users/{{this.id}}">
-                  <img src="{{this.img}}" alt="" width="50" height="50" class="rounded-circle">
+                  <img src="{{this.avatar}}" alt="" width="50" height="50" class="rounded-circle">
                 </a>
               </div>
 

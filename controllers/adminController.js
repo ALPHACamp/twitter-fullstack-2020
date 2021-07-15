@@ -39,7 +39,7 @@ const adminController = {
     return User.findAll({
       where: { is_admin: false },
       attributes: [
-        'id', 'account', 'name', 'email', 'img', 'bg_img'
+        'id', 'account', 'name', 'email', 'avatar', 'cover'
       ],
       include: [
         { model: Tweet, attributes: ['id'] },

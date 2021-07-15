@@ -45,7 +45,7 @@
       </div>
       <form action="/tweets" method="post">
       <div class="modal-body">
-        <img src="{{user.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px" alt="A user" />
+        <img src="{{user.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px" alt="A user" />
         <textarea class="form-control" id="content" name="content" rows="3" placeholder="有什麼新鮮事？" maxlength="140" required></textarea>
       </div>
       <div class="modal-footer">
@@ -66,7 +66,7 @@
       <div class="modal-body">
         <div class="row col-11">
           <div class="card-image col-1 d-flex justify-content-center align-items-center" style="margin-left: 25px;">
-              <img src="{{tweet.User.img}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin-right: 15px"
+              <img src="{{tweet.User.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin-right: 15px"
                 alt="A user" />
           </div>
           <div class="col-7 align-self-center px-md-2 px-4">
@@ -81,7 +81,7 @@
         
           <form action="/replies" method="POST" class="mt-2 ">
             
-              <img src="{{user.img}}" class="rounded-circle p-md-0 p-1"
+              <img src="{{user.avatar}}" class="rounded-circle p-md-0 p-1"
                 style="width: 50px; height: 50px; margin:0px 0px 15px 0px" alt="A user" />
               <textarea class="form-control" id="content" name="content" rows="3" cols="11" placeholder="推你的回覆" maxlength="140"
                 required></textarea>

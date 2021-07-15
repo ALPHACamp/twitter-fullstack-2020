@@ -135,7 +135,7 @@ const userController = {
   },
   putProfile: async (req, res) => {
     const { name, description } = req.body
-    const { img, bg_img } = req.files
+    const { avatar, cover } = req.files
     if (!name) {
       req.flash('error_messages', '名稱不可以空白')
       return res.redirect('back')
@@ -149,19 +149,19 @@ const userController = {
       const user = await User.findByPk(req.user.id)
       await user.update({ name, description })
       imgur.setClientID(IMGUR_CLIENT_ID)
-      if (bg_img) {
-        imgur.upload(bg_img[0].path, async (error, image) => {
+      if (cover) {
+        imgur.upload(cover[0].path, async (error, image) => {
           cover = image.data.link
           await user.update({
-            bg_img: cover ? cover : user.bg_img
+            cover: cover ? cover : user.cover
           })
         })
       }
-      if (img) {
-        imgur.upload(img[0].path, async (error, image) => {
+      if (avatar) {
+        imgur.upload(avatar[0].path, async (error, image) => {
           avator = image.data.link
           await user.update({
-            img: avator ? avator : user.img
+            avatar: avator ? avator : user.avatar
           })
         })
       }
