@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node app.js",
     "dev": "cross-env nodemon app.js",
-    "test": "NODE_ENV=test mocha test --exit --recursive --timeout 5000"
+    "test": "set \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000"
   },
   "author": "",
   "license": "ISC",

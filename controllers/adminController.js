@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { Tweet, User } = require('../models')
 const adminService = require('../services/adminService')
+const { getUser } = require('../_helpers')
 
 const adminController = {
   // // 管理者可從專門的後台登入頁面進入網站後台
@@ -9,8 +10,13 @@ const adminController = {
   },
 
   signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
-    res.redirect('/admin/tweets')
+    if (!getUser(req).isAdmin) {
+      req.flash('success_messages', '成功登入')
+      return res.redirect('/admin/tweets')
+    } else {
+      req.flash('error_messages', '請使用一般權限')
+      return res.redirect('/admin/signin')
+    }
   },
 
   signOut: (req, res) => {

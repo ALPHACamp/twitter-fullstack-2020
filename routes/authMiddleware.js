@@ -18,11 +18,9 @@ module.exports.authenticated = (req, res, next) => {
 }
 
 module.exports.authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req) && !helpers.getUser(req).isAdmin) {
-    req.flash('error_messages', '請到前台登入！')
-  }
-  if (helpers.ensureAuthenticated(req) && helpers.getUser(req).isAdmin) {
+  if (helpers.ensureAuthenticated(req)) {
     return next()
   }
   res.redirect('/admin/signin')
 }
+
