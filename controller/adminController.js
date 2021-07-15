@@ -4,10 +4,7 @@ const Tweet = db.Tweet
 const Like = db.Like
 const Followship = db.Followship
 const Reply = db.Reply
-
 const helpers = require('../_helpers')
-
-
 const adminController = {
   //登入頁面
   adminSignInPage: (req, res) => {
@@ -108,8 +105,6 @@ const adminController = {
       return res.redirect('/') // 假定回到首頁
     }
   },
-
-
 
 }
 module.exports = adminController

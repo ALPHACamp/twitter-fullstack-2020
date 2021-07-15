@@ -1,8 +1,8 @@
 <div class="h4 mb-4" style="color: #313c4b;">Popular</div>
 
 {{#each topFollowing }}
-<div class="d-flex align-items-center p-1 pt-2 ps-2"
-  style="margin-bottom:1.3em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:15vh;box-shadow:0 0 8px 3px #ccccccb3;">
+<div class="d-flex align-items-center  p-1 pt-2 ps-2"
+  style="margin-bottom:1.3em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:20vh;box-shadow:0 0 8px 3px #ccccccb3;">
   {{!-- avatar --}}
   <a href="/users/{{ this.id }}/tweets">
     {{#if this.avatar }}
@@ -13,7 +13,7 @@
     {{/if}}
   </a>
   {{!-- account --}}
-  <div style="color:#313c4b;width:9vw" class="d-flex align-items-center ms-3">
+  <div style="color:#313c4b;width:9vw;margin-top: -4em" class="d-flex align-items-center ms-3 mt-0">
     <div class="d-flex flex-column" style="height: 10vh;">
       <p class="m-0 fw-bolder">{{ this.name }}</p>
       <p class="m-0" style="color: #313c4b84;">{{ this.account }}</p>

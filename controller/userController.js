@@ -7,6 +7,7 @@ const Followship = db.Followship
 const Reply = db.Reply
 
 const helpers = require('../_helpers')
+const apiController = require('./apiController')
 
 const userController = {
   //註冊頁面
@@ -16,7 +17,7 @@ const userController = {
 
   //註冊
   signUp: (req, res) => {
-    if (req.body.passwordCheck !== req.body.password) {
+    if (req.body.checkPassword !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
       return res.redirect('/signup')
     } else {
@@ -126,7 +127,6 @@ const userController = {
         }
       })
       Promise.all(Data).then(data => {
-        // console.log(data)
         data = data.sort((a, b) => a.tweetCreatedAt - b.tweetCreatedAt)
         return res.render('replies', {
           thisUser: userInfo.user,
@@ -144,29 +144,87 @@ const userController = {
       return res.render('/')
     }
   },
+
+  getUserTweets: (req, res) => {
+    const topFollowing = res.locals.data
+    const user = helpers.getUser(req)
+    let myPage = true
+    if (Number(req.params.userId) !== helpers.getUser(req).id) {
+      myPage = false
+    }
+
+    return User.findOne({
+      where: {
+        id: req.params.userId
+      }
+    }).then(thisUser => {
+      const allowEdit = Number(req.params.userId) === helpers.getUser(req).id
+
+      Followship.findAndCountAll({
+        raw: true,
+        nest: true,
+        //使用者追蹤的所有人
+        where: { followerId: thisUser.id },
+      }).then(following => {
+        Followship.findAndCountAll({
+          raw: true,
+          nest: true,
+          //追蹤使用者的所有人
+          where: { followingId: thisUser.id },
+        }).then(follower => {
+          Tweet.findAndCountAll({
+            raw: true,
+            nest: true,
+            //使用者發的所有推文
+            where: { userId: thisUser.id },
+          }).then(tweets => {
+            const isFollowed = follower.rows.map(f => f.followerId).includes(helpers.getUser(req).id)
+
+            return res.render('tweets', {
+              thisUser,
+              user,
+              followingCount: following.count,
+              followerCount: follower.count,
+              data: tweets.rows,
+              tweetCount: tweets.count,
+              topFollowing,
+              isFollowed,
+              allowEdit,
+              myPage
+            })
+          })
+        })
+      })
+    })
+  },
+
+
   getUserLikes: async (req, res) => {
     const topFollowing = res.locals.data
     const userInfo = res.locals.userInfo
     const user = helpers.getUser(req)
     try {
+      //所有的like清單裡面屬於userInfo.user.id的
       const likes = await Like.findAndCountAll({
         raw: true,
         nest: true,
         where: {
           UserId: userInfo.user.id
         },
+        //撈出userInfo.user.id關聯的推文
         include: [Tweet]
       })
-
       const likeCount = likes.count
-
       let Data = []
+      //userInfo.user.id的like做資料陣列處理（已經撈到關聯推文）
       Data = likes.rows.map(async (like, index) => {
+        //從資料庫裡面查找userInfo.user.id的like, 其user, tweet, reply關聯資料
         const [tweetUser, tweetLikes, replies] = await Promise.all([
           User.findOne({
             raw: true,
             nest: true,
             where: {
+              //關聯推文資料的UserId
               id: like.Tweet.UserId
             }
           }),
@@ -174,6 +232,7 @@ const userController = {
             raw: true,
             nest: true,
             where: {
+              //Like資料有關聯TweetId，而與user.id有關的TweetId，可以用來對應Like資料庫裡，有多少相同的TweetId，表示有多少人喜歡的數字
               TweetId: like.TweetId
             }
           }),
@@ -208,77 +267,107 @@ const userController = {
     }
     catch (err) {
       console.log('getUserLikes err')
-      return res.render('/')
+      return res.redirect('/')
     }
   },
 
-  getUserTweets: async (req, res) => {
+  getUserFollowings: async (req, res) => {
+    const topFollowing = res.locals.data
+    const user = helpers.getUser(req)
+    const userInfo = res.locals.userInfo
     try {
-      const topFollowing = res.locals.data
-      const user = helpers.getUser(req)
-      const userInfo = res.locals.userInfo
-      let myPage = true
-      if (Number(req.params.userId) !== helpers.getUser(req).id) {
-        myPage = false
-      }
-
       const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
-        where: { UserId: req.params.userId },
-        order: [['createdAt', 'DESC']]
-      })
-
-      const tweetCount = tweets.count
-      let Data = []
-      Data = tweets.rows.map(async (tweet, index) => {
-        const [replyCount, likeCount] = await Promise.all([
-          Reply.findAndCountAll({
-            raw: true,
-            nest: true,
-            where: { TweetId: tweet.id },
-          }),
-          Like.findAndCountAll({
-            raw: true,
-            nest: true,
-            where: { TweetId: tweet.id },
-          }),
-        ])
-        return {
-          ...tweet,
-          replyCount: replyCount.count,
-          likeCount: likeCount.count
+        where: {
+          UserId: req.params.userId
         }
       })
-      console.log(userInfo.user.cover)
-      console.log('-------')
+
+      let Data = []
+      const tweetCount = tweets.count
+      Data = userInfo.followings.map(async (following, index) => {
+        const [followingUser] = await Promise.all([
+          User.findOne({
+            raw: true,
+            nest: true,
+            where: {
+              id: following.followingId
+            }
+          })
+        ])
+        return {
+          followingUser: followingUser
+        }
+      })
       Promise.all(Data).then(data => {
-        return res.render('tweets', {
-          user,
+        return res.render('followings', {
           thisUser: userInfo.user,
-          followingCount: userInfo.followingCount,
-          followerCount: userInfo.followerCount,
+          user,
           data,
           tweetCount,
-          topFollowing,
-          myPage
+          topFollowing
         })
       })
-    } catch (err) {
-      console.warn(err)
+    }
+    catch (err) {
+      console.log(err)
+      console.log('getUserFollowings err')
+      return res.redirect('/')
     }
   },
+
+  getUserFollowers: async (req, res) => {
+    const topFollowing = res.locals.data
+    const user = helpers.getUser(req)
+    const userInfo = res.locals.userInfo
+    try {
+      const tweets = await Tweet.findAndCountAll({
+        raw: true,
+        nest: true,
+        where: {
+          UserId: req.params.userId
+        }
+      })
+
+      let Data = []
+      const tweetCount = tweets.count
+      Data = userInfo.followers.map(async (follower, index) => {
+        const [followerUser] = await Promise.all([
+          User.findOne({
+            raw: true,
+            nest: true,
+            where: {
+              id: follower.followerId
+            }
+          })
+        ])
+        return {
+          followerUser: followerUser
+        }
+      })
+      Promise.all(Data).then(data => {
+        return res.render('followers', {
+          thisUser: userInfo.user,
+          user,
+          data,
+          tweetCount,
+          topFollowing
+        })
+      })
+    }
+    catch (err) {
+      console.log(err)
+      console.log('getUserFollowers err')
+      return res.redirect('/')
+    }
+  },
+
   //進入帳號設定頁面
   getUserEdit: (req, res) => {
     const topFollowing = res.locals.data
     const userEditPage = true
-    const user = {
-      id: helpers.getUser(req).id,
-      name: helpers.getUser(req).name,
-      account: helpers.getUser(req).account,
-      email: helpers.getUser(req).email,
-      avatar: helpers.getUser(req).avatar,
-    }
+    const user = helpers.getUser(req)
     return res.render('userEdit', {
       user,
       topFollowing,
@@ -311,6 +400,83 @@ const userController = {
     }
   },
 
+  //按讚
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: helpers.getUser(req).id,
+      TweetId: req.params.tweetId
+    })
+      .then((like) => {
+        return res.redirect('back')
+      })
+  },
+
+  //取消按讚
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: helpers.getUser(req).id,
+        TweetId: req.params.tweetId
+      }
+    })
+      .then((like) => {
+        // return console.log(like)
+        like.destroy()
+          .then((tweet) => {
+            return res.redirect('back')
+          })
+      })
+  },
+
+  //追蹤使用者
+  follow: async (req, res) => {
+    try {
+      const { id } = req.body
+      if (Number(id) === helpers.getUser(req).id) {
+        return res.json({ status: 'error' })
+      }
+      await Followship.create({
+        followerId: helpers.getUser(req).id,
+        followingId: id
+      })
+      return res.redirect('back')
+    } catch (err) {
+      return res.redirect('back')
+    }
+  },
+
+  //取消追蹤使用者
+  unFollow: async (req, res) => {
+    try {
+      const { userId } = req.params
+      if (Number(userId) === helpers.getUser(req).id) {
+        return res.redirect('back')
+      }
+      await Followship.destroy({
+        where: {
+          followerId: helpers.getUser(req).id,
+          followingId: userId
+        }
+      })
+
+      return res.redirect('back')
+    } catch (err) {
+      return res.redirect('back')
+    }
+  },
+
+  // 接收 /api/users callback 路由
+  updateProfile: (req, res, next) => {
+    apiController.postUser(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        next()
+      }
+      req.flash('success_messages', data['message'])
+      next()
+    })
+  },
+
   //MiddleWare
   getUserInfo: (req, res, next) => {
     return User.findOne({
@@ -331,7 +497,8 @@ const userController = {
           res.locals.userInfo = {
             user: user.dataValues,
             followingCount: following.count,
-            followerCount: follower.count
+            followerCount: follower.count,
+            follower: follower.rows
           }
           return next()
         })
@@ -339,4 +506,5 @@ const userController = {
     })
   },
 }
+
 module.exports = userController
