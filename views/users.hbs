@@ -69,7 +69,8 @@
     </nav>
     <div id="tweets">
       {{#each tweets}}
-      <div class="border-bottom">
+      {{> tweet}}
+      {{!-- <div class="border-bottom">
         <div class="container">
           <div class="row">
             <div class="col-auto p-1">
@@ -152,7 +153,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       {{/each}}
     </div>
   </div>

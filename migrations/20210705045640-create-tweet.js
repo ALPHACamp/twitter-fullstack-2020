@@ -10,11 +10,11 @@ module.exports = {
       },
       UserId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        // allowNull: false
       },
       description: {
         type: Sequelize.STRING,
-        allowNull: false
+        // allowNull: false
       },
       createdAt: {
         allowNull: false,
