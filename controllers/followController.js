@@ -21,8 +21,8 @@ const followController = {
       users = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowing: req.user.Followings.map(d => d.id).includes(user.id), //我跟隨的人
-        isFollowed: req.user.Followers.map(d => d.id).includes(user.id) //跟隨的我的人
+        isFollowing: req.user.Followings.some(d => d.id === user.id),
+        isFollowed: req.user.Followers.some(d => d.id === user.id)
       }))
 
       let followeringbar = users.slice(0, 10)
@@ -31,8 +31,8 @@ const followController = {
       users = users.filter(user => user.isFollowed === true)
 
       return res.render('followership', {
-        users,
         userId,
+        users,
         followeringbar
       })
 
@@ -50,23 +50,25 @@ const followController = {
       ],
       order: [['Followers', Followship, 'updatedAt', 'DESC']]
     }).then((users) => {
-      console.log(users)
+
+      const userId = req.user.id
+
       users = users.map(following => ({
         ...following.dataValues,
         FollowerCount: following.Followers.length,
-        isFollowing: req.user.Followings.map(d => d.id).includes(following.id)
+        isFollowing: req.user.Followings.some(d => d.id === following.id)
       }))
 
-      const userId = req.user.id
+
       let followeringbar = users.slice(0, 10)
       followeringbar = followeringbar.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
       users = users.filter(user => user.isFollowing === true)
 
       return res.render('followingship', {
+        userId,
         users,
         followeringbar,
-        userId
       })
 
     })

@@ -11,17 +11,16 @@ const tweetController = {
     }
 
     try {
-      const [result] = await Promise.all([
-        Tweet.findAndCountAll({
-          raw: true,
-          nest: true,
-          limit: pageLimit,
-          where: whereQuery,
-          offset: offset,
-          order: [['createdAt', 'DESC']],
-          include: [User]
-        })
-      ])
+      const result = await Tweet.findAndCountAll({
+        raw: true,
+        nest: true,
+        limit: pageLimit,
+        where: whereQuery,
+        offset: offset,
+        order: [['createdAt', 'DESC']],
+        include: [User]
+      })
+  
       const page = Number(req.query.page) || 1
       const pages = Math.ceil(result.count / pageLimit)
       const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
@@ -90,8 +89,8 @@ const tweetController = {
     }
   },
   editTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, { raw: true }).then(tweet => {
-      return res.render('tweet', { tweet: tweet })
+    return Tweet.findByPk(req.params.id).then(tweet => {
+      return res.render('tweet', { tweet: tweet.toJSON() })
     })
   },
   putTweet: (req, res) => {
@@ -107,7 +106,7 @@ const tweetController = {
           content: req.body.content,
           likes: req.body.likes
         })
-          .then((tweet) => {
+          .then(() => {
             req.flash('success_messages', 'restaurant was successfully to update')
             res.redirect('/tweets')
           })
@@ -117,7 +116,7 @@ const tweetController = {
     return Tweet.findByPk(req.params.id)
       .then((tweet) => {
         tweet.destroy()
-          .then((tweet) => {
+          .then(() => {
             res.redirect('/tweets')
           })
       })

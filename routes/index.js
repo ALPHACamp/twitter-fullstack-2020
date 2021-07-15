@@ -25,21 +25,22 @@ module.exports = (app, passport) => {
     res.redirect('/signin')
   }
 
-  // user
-  app.get('/users/self/:id', authenticatedUser, userController.getProfile)
+  //user
   app.get('/setting', authenticatedUser, userController.getSetting)
   app.put('/setting', authenticatedUser, userController.putSetting)
-  // app.get('/users/self/like/:id', authenticatedUser, userController.getLike) 
   app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
   app.get('/users/:id', authenticatedUser, userController.getProfile)
-
+  app.put('/users/:id/edit', authenticatedUser, upload.fields([{
+    name: 'bg_img', maxCount: 1
+  }, {
+    name: 'img', maxCount: 1
+  }]), userController.putProfile)
 
   //follow function
   app.get('/users/:userId/followers', authenticatedUser, followController.getFollowers)
   app.get('/users/:userId/followings', authenticatedUser, followController.getFollowings)
   app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
   app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
-
 
   // like
   app.post('/like/:TweetId', authenticatedUser, userController.addLike)
@@ -55,7 +56,7 @@ module.exports = (app, passport) => {
   app.get('/admin/admins', authenticatedAdmin, adminController.getAdmins)
   app.get('/admin/profile', authenticatedAdmin, adminController.getProfile)
   app.get('/admin/profile/edit', authenticatedAdmin, adminController.getEditProfile)
-  app.put('/admin/profile/edit', authenticatedAdmin, upload.single('image'), adminController.putProfile)
+  app.put('/admin/profile/edit', authenticatedAdmin, upload.single('img'), adminController.putProfile)
 
   app.get('/admin/signup', authenticatedAdmin, adminController.signUpPage)
   app.post('/admin/signup', authenticatedAdmin, adminController.signUp)
