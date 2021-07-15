@@ -3,13 +3,13 @@ const { User, Tweet, Reply } = require('../models')
 const replyController = {
   postReply: (req, res) => {
     if (!req.body.content) {
-      req.flash('error_messages', "Content didn't exist")
+      req.flash('error_messages', '推文內容不存在')
       return res.redirect('back')
-    } else if (req.body.content.length == 0) {
-      req.flash('error_messages', "Please enter some content !")
+    } else if (req.body.content.length === 0) {
+      req.flash('error_messages', '請輸入推文內容!')
       return res.redirect('back')
     } else if (req.body.content.length > 140) {
-      req.flash('error_messages', "Content is over limit!")
+      req.flash('error_messages', '推文超過字數限制')
       return res.redirect('back')
     }
     return Reply.create({

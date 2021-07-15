@@ -66,7 +66,7 @@
             aria-expanded="false"
           >
             <img
-              src="{{user.img}}"
+              src="{{user.avatar}}"
               alt="Admin"
               width="40"
               height="40"
@@ -141,17 +141,17 @@
               </div>
               <div class="row g-2 my-2 align-items-center justify-content-start">
                 <div class="col-auto">
-                  <label for="img" class="col-form-label">個人頭像</label>
+                  <label for="avatar" class="col-form-label">個人頭像</label>
                 </div>
                 <div class="col-auto">
-                  <input type="file" id="img" name="img" class="form-control-file">
+                  <input type="file" id="avatar" name="avatar" class="form-control-file">
                 </div>
               </div>
               <button type="submit" class="btn btn-outline-light mt-3">更新</button>
               </form>
             </div>
             {{else}}
-            <img src="{{#if user.img}}{{user.img}}{{else}}https://loremflickr.com/250/250/selfie?random=10{{/if}}" class="card-img-top mx-auto rounded-circle mt-4" style="width: 100px; border: white 5px solid" alt="...">
+            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/250/250/selfie?random=10{{/if}}" class="card-img-top mx-auto rounded-circle mt-4" style="width: 100px; border: white 5px solid" alt="...">
             <div class="card-body text-center">
               <h3 class="card-title text-white" style="font-weight: 900;">{{user.name}}</h3>
               <h3 class="card-title" style="color: #6c757d; font-size: 0.95em; font-weight: 500">@{{user.account}}</h3>
