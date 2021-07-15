@@ -13,14 +13,14 @@ module.exports.authenticated = (req, res, next) => {
   // if (req.isAuthenticated() && !req.user.isAdmin) {
   //   return next()
   // }
-  res.redirect('/signin')
+  return res.redirect('/signin')
 
 }
 
 module.exports.authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
+  if (helpers.ensureAuthenticated(req) && helpers.getUser(req).isAdmin) {
     return next()
   }
-  res.redirect('/admin/signin')
+  return res.redirect('/admin/signin')
 }
 

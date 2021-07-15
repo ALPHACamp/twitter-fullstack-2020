@@ -14,7 +14,6 @@ const additionalUsers = additionalIds.map(id => ({
   name: faker.name.findName(),
   avatar: faker.internet.avatar(),
   introduction: faker.lorem.text(),
-  isAdmin: false,
   createdAt: new Date(),
   updatedAt: new Date()
 }))
@@ -31,7 +30,7 @@ module.exports = {
         avatar: 'https://i.imgur.com/YKBbHOh.jpg',
         cover: 'https://i.imgur.com/VOJrAEv.jpg',
         introduction: '我是 Mr. Garrison',
-        isAdmin: true,
+        role: 'admin',
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -44,7 +43,6 @@ module.exports = {
         avatar: 'https://i.imgur.com/wTrRC9V.jpg',
         cover: 'https://i.imgur.com/yBsheRl.jpg',
         introduction: 'Hi~ my name is Wendy',
-        isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -57,7 +55,6 @@ module.exports = {
         avatar: 'https://i.imgur.com/cEZW2Xs.jpg',
         cover: 'https://i.imgur.com/n2oDqJ5.jpg',
         introduction: 'Hey, thi...this is Butters...',
-        isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -70,7 +67,6 @@ module.exports = {
         avatar: '',
         cover: 'https://i.imgur.com/n2oDqJ5.jpg',
         introduction: 'Hi~ This is Cartman',
-        isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -83,7 +79,6 @@ module.exports = {
         avatar: 'https://i.imgur.com/rUP5zLA.png',
         cover: '',
         introduction: 'Hi~ This is Randy Marsh',
-        isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -96,7 +91,6 @@ module.exports = {
         avatar: '',
         cover: '',
         introduction: 'Hi~ This is Elliot\'s introduction',
-        isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
