@@ -53,9 +53,6 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  getTweets: (req, res) => {
-    return res.render('tweets')
-  },
   addFollowing: (req, res) => {
     if (req.user.id === Number(req.params.id)) {
       return res.redirect("back");
