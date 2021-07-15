@@ -1,80 +1,75 @@
-<div class="d-flex mt-5">
-  {{!-- 左側欄位 --}}
-  <div class="row" style="height: 500px;width: 250px;">
-    {{!-- 上 --}}
-    <div class="col-12">
-      <p>Twitter</p>
-    </div>
-    {{!-- 中 --}}
-    <div class="col-12 pt-0">
-      <a href="/" style=" text-decoration:none;color:rgb(179, 123, 50)">
-        <p>首頁</p>
-      </a>
-      <a href="/users/{{user.id}}" style=" text-decoration:none;color:rgb(0, 0, 0)">
-        <p>個人資料</p>
-      </a>
-      <a href="/users/{{user.id}}/edit" style=" text-decoration:none;color:rgb(0, 0, 0)">
-        <p>設定</p>
-      </a>
-      <a href="/users/{{user.id}}/tweets" style=" text-decoration:none;color:rgb(0, 0, 0)">
-        <p>推文</p>
-      </a>
-    </div>
-    {{!-- 下 --}}
-    <div class="col-12">
-      <p>登出</p>
-    </div>
-  </div>
+<div class="d-flex mt-2" style="margin-left: 20vw;">
+  <div style="width: 54vw;">
 
-  <div style="width: 780px;" class="me-5">
-    <div class="d-flex align-items-start mb-4">
-      {{!-- 返回箭頭 --}}
-      <a href="/users/{{ user.id }}/tweets" class="me-4 fs-4 mt-1" style="color: black;">
-        <i class="fas fa-arrow-left"></i>
-      </a>
-      <div class="d-flex flex-column ms-4">
-        {{!-- userName --}}
-        <p class="mb-0 fs-3" style="line-height: 0.9em;">{{ user.name }}</p>
-        {{!-- tweetCount --}}
-        <p style="color: rgb(130, 130, 130);">{{ tweetCount }} 則推文</p>
-      </div>
+    <div class="d-flex mb-2">
+      {{!-- userName --}}
+      <p class="mb-0 fs-3 h4 me-3" style="color: #313c4b;">{{ user.name }}</p>
+      {{!-- tweetCount --}}
+      <p class="mt-2 p-0" style="color: rgb(130, 130, 130);">{{ tweetCount }} 則推文</p>
     </div>
 
-    {{!-- select bar --}}
-    <ul class="nav nav-tabs mb-4">
-      <li class="nav-item">
-        <a class="nav-link fw-bolder" href="/users/{{ user.id }}/followers"
-          style="color: rgb(94, 94, 94);border-bottom: solid 3px darkseagreen">跟隨者</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/users/{{ user.id }}/followings" style="color: darkseagreen">正在追蹤</a>
-      </li>
-    </ul>
+    <div class="d-flex align-items-center justify-content-between mb-4"
+      style="background-color:white;border-radius: 1em;width:54.1vw;box-shadow:0 0 8px 3px #ccccccb3;">
+      <a href="/users/{{ thisUser.id }}/followings" class="d-flex"
+        style="border-radius:1em 0 0 1em;padding-top:1.3em;padding-left:7em;color: #313c4b38;text-decoration:none;width: 27vw;height:11.6vh;">
+        <i class="fas fa-rocket h3 me-2 mt-1"></i>
+        <p class="h3">Following</p>
+      </a>
+      <a href="/users/{{ thisUser.id }}/followers" class="d-flex"
+        style="background-color:#ffd572b5;padding-top:1.3em;padding-left:7em;color: #313c4b;text-decoration:none;width: 27vw;height:11.6vh;">
+        <i class="fas fa-pizza-slice h3 me-2 mt-1"></i>
+        <p class="h3">Follower</p>
+      </a>
+    </div>
 
+    {{!-- 推文區 --}}
     {{#each data }}
-    {{!-- following users --}}
-    <div class="d-flex mt-4 mb-3 align-items-start justify-content-between">
-
-      <div class="d-flex align-items-start">
-        {{!-- 大頭貼 --}}
-        <a href="/users/{{ this.followerUser.id }}/tweets">
-          <img src="{{ this.followerUser.avatar }}" style="border-radius: 100%;width: 70px">
-        </a>
-        {{!-- 帳號 --}}
-        <div class="ms-4">
-          <p class="fs-4 mb-0" style="line-height: 0.8em;">{{ this.followerUser.name }}</p>
-          <p class="mb-0" style="color: darkseagreen;">{{ this.followerUser.account }}</p>
-          <p>{{ this.followerUser.introduction }}</p>
+    <div class="d-flex align-items-center p-1 pt-2 ps-2 mb-4"
+      style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:20vh;box-shadow:0 0 8px 3px #ccccccb3;">
+      {{!-- avatar --}}
+      <a href="/users/{{ this.followingUser.id }}/tweets" style="margin-top: -0.2em;">
+        {{#if this.followingUser.avatar }}
+        <img src="{{ this.followingUser.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+        {{else}}
+        <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
+          style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+        {{/if}}
+      </a>
+      {{!-- account --}}
+      <div style="color:#313c4b;width:30vw" class="m-4">
+        <div class="d-flex">
+          <p class="fs-5 me-3 mb-0"><strong>{{ this.followingUser.name }}</strong></p>
+          <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ this.followingUser.account }}</p>
         </div>
-        {{!-- 數量 --}}
+        <p class="mt-1" style="font-size: small;">
+          {{ this.followingUser.introduction }}
+        </p>
       </div>
-      <form action="/users/{{ this.followerUser.id }}/follow" method="post" class="ms-4">
-        <button class="btn btn-sm btn-outline-secondary" style="width: 60px;">追蹤</button>
+      {{!-- view tweet btn --}}
+      <form action="/followships" method="post">
+        <label>
+          <input type="text" id="id" name="id" value="{{ thisUser.id }}" style="display:none">
+        </label>
+        <button type="submit" class="btn"
+          style="background-color: #ffd472;color: #313c4bc2;width: 8.5vw;height:7vh;border-radius:0.5em">Follow</button>
       </form>
+      {{#if allowEdit}}
+      {{#if isFollowed}}
+      <form action="/followships/{{ thisUser.id }}?_method=DELETE" method="post">
+        <button type="submit" class="btn"
+          style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">unFollow</button>
+      </form>
+      {{else}}
+      <form action="/followships" method="post">
+        <label>
+          <input type="text" id="id" name="id" value="{{ thisUser.id }}" style="display:none">
+        </label>
+        <button type="submit" class="btn"
+          style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">Follow</button>
+      </form>
+      {{/if}}
+      {{/if}}
     </div>
-    <hr>
     {{/each}}
   </div>
-
-  <div>{{> recommendedFollower }}</div>
 </div>
