@@ -8,7 +8,7 @@ const helpers = require('./_helpers')
 const flash = require('connect-flash')
 const session = require('express-session')
 const app = express()
-const port = 8000
+const PORT = process.env.PORT || 8000
 
 //set .env
 if (process.env.NODE_ENV !== 'production') {
@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
 require('./routes')(app)
 
