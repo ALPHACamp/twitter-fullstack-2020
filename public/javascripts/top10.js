@@ -18,6 +18,9 @@ const getTop10 = async (showNumber, showButton) => {
       top.class = "btn btn-outline-regular rounded-pill"
       top.text = '跟隨'
     }
+    if (top.id===user.id){
+      top.class += " invisible"
+    }
     top10List.innerHTML += `<li class="list-group-item p-0 border-top">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex" >
