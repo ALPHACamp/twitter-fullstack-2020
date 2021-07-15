@@ -14,18 +14,17 @@ module.exports = {
       account: {
         allowNull: false,
         type: Sequelize.STRING,
-        defaultValue: Sequelize.NOW
       },
       name: {
         type: Sequelize.STRING
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       password: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       description: {
         type: Sequelize.STRING
