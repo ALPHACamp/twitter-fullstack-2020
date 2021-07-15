@@ -1,4 +1,5 @@
 const express = require('express')
+const roleCheck = require('../middleware/roleCheck')
 const router = express.Router()
 
 
@@ -27,14 +28,14 @@ router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signUp);
 
 router.get('/signin', userController.signInPage);
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn);
+router.post('/signin',roleCheck.isUser, passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn);
 
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'));
 router.get('/admin/users', authenticatedAdmin, adminController.getAllUsers);
 router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet);
 
 router.get('/admin/signin', adminController.signInPage);
-router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn);
+router.post('/admin/signin',roleCheck.isAdmin, passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn);
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets);
 
 router.get('/signout', userController.signOut);
