@@ -225,8 +225,8 @@ async function getTweets(req, whereCondition, orderCondition) {
   tweets = tweets.map(tweet => ({
     ...tweet.dataValues,
     User: tweet.User.dataValues,
-    RepliesCount: tweet.Replies.length,
-    LikedUsersCount: tweet.LikedUsers.length,
+    ReplyCount: tweet.Replies.length,
+    LikedCount: tweet.LikedUsers.length,
     isLiked: tweet.LikedUsers.map(User => User.id).includes(helpers.getUser(req).id)
   }))
   return tweets

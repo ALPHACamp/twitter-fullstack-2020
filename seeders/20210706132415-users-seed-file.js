@@ -12,7 +12,7 @@ const additionalUsers = additionalIds.map(id => ({
   email: faker.internet.email(),
   password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
   name: faker.name.findName(),
-  avatar: `https://loremflickr.com/320/240/headshot?random=30`,
+  avatar: `https://loremflickr.com/320/240/headshot?lock=${id}`,
   introduction: faker.lorem.text(),
   createdAt: new Date(),
   updatedAt: new Date()
