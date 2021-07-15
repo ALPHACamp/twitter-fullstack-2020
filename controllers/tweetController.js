@@ -24,7 +24,7 @@ const tweetController = {
         User.findAll({
           where: {
             is_admin: false,
-            id: { [Op.ne]: req.user.id }
+            id: { [Op.ne]: helpers.getUser(req).id }
           },
           include: [{ model: User, as: 'Followers' }]
         })
@@ -39,7 +39,7 @@ const tweetController = {
       tweets = tweets.rows.map(t => ({
         ...t,
         description: t.description.substring(0, 50),
-        isLiked: req.user.LikedTweet.some(d => d.id === t.id)
+        isLiked: helpers.getUser(req).LikedTweet.some(d => d.id === t.id)
       }))
 
       followship = followship.map(followships => ({

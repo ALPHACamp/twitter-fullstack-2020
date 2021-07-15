@@ -210,21 +210,9 @@ const userController = {
       })
       const tweet = await Tweet.findByPk(req.params.TweetId)
 
-      if (!like) {
-        return res.status(400).json({
-          status: 'error',
-          message: 'like is not exist!!'
-        })
-      } else {
-        like.destroy()
-        tweet.decrement('likes')
-        res.redirect('/tweets')
-        return res.status(302).json({
-          status: 'success',
-          message: 'Unlike successfully',
-          tweetId: tweet.id
-        })
-      }
+      like.destroy()
+      tweet.decrement('likes')
+      res.redirect('/tweets')
     } catch (error) {
       // next(error)
       console.error(error)
