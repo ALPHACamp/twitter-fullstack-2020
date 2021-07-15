@@ -9,7 +9,7 @@ module.exports = {
         id: i + 1,
         UserId: (i % 5) + 2,
         // UserId: Math.floor(Math.random() * 4) + 1,
-        description: faker.lorem.text().slice(0, 130),
+        description: faker.lorem.text().slice(0, 50),
         createdAt: new Date(),
         updatedAt: new Date
       })))
