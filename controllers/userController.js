@@ -166,7 +166,7 @@ const userController = {
         imgur.upload(cover[0].path, async (error, image) => {
           cover1 = image.data.link
           await user.update({
-            cover: cover ? cover1 : user.cover
+            cover: cover1 ? cover1 : user.cover
           })
         })
       }

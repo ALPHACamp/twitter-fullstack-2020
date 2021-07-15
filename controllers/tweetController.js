@@ -94,7 +94,8 @@ const tweetController = {
   getTweet: async (req, res) => {
     try {
       const tweet = await Tweet.findByPk(req.params.id, {
-        include: [User,
+        include: [
+          User,
           { model: Reply, include: User },
           { model: User, as: 'LikedbyUser' }
         ],

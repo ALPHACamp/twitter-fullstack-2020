@@ -1,12 +1,14 @@
 'use strict';
 const faker = require('faker')
+const { User, Tweet } = require('../models')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const replies = []
-    const tweets = Array.from({ length: 50 }).map((d, i) => ({
-      id: i + 1
-    }))
-    const users = Array.from({ length: 5 }).map((d, i) => i + 2)
+    const tweets = await Tweet.findAll({ attributes: ['id'] })
+    const users = await User.findAll({
+      where: { is_admin: false },
+      attributes: ['id']
+    })
 
     tweets.forEach((tweet) => {
       [0, 1, 2].forEach((i) => {
