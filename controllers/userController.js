@@ -77,68 +77,68 @@ const userController = {
       .then((followship) => followship.destroy())
       .then(() => res.redirect('back'))
   },
-  getProfile: async (req, res) => {
-    try {
-      await Promise.all([
-        User.findByPk(req.params.id, {
-          where: { is_admin: false },
-          include: [
-            Tweet,
-            { model: Reply, include: [Tweet], },
-            {
-              model: Tweet,
-              as: 'LikedTweet',
-            },
-            { model: User, as: 'Followers' },
-            { model: User, as: 'Followings' },
-          ],
-          order: [
-            ['Tweets', 'createdAt', 'DESC'],
-            [Reply, 'updatedAt', 'DESC'],
-            ['LikedTweet', 'updatedAt', 'DESC']
-          ],
-        }),
-        User.findAll({
-          where: {
-            is_admin: false,
-            id: { [Op.ne]: req.user.id }
+
+  getProfile: (req, res) => {
+    Promise.all([
+      User.findByPk(req.params.id, {
+        where: { is_admin: false },
+        include: [
+          Tweet,
+          { model: Reply, include: [Tweet], },
+          {
+            model: Tweet,
+            as: 'LikedTweet',
           },
-          include: [{ model: User, as: 'Followers' }]
-        })
-      ]).then(([users, followship]) => {
-
-        if (req.params.id === '1') {
-          res.redirect('back')
-        }
-
-        const UserId = req.user.id
-        const followerscount = users.Followers.length
-        const followingscount = users.Followings.length
-        const tweetCount = users.Tweets.length
-        const isFollowed = req.user.Followings.some(d => d.id === users.id)
-
-
-        followship = followship.map(followships => ({
-          ...followships.dataValues,
-          FollowerCount: followships.Followers.length,
-          isFollowed: req.user.Followings.some(d => d.id === followships.id),
-          isMainuser: req.user.id === req.params.id
-        }))
-        followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-        return res.render('userprofile', {
-          users: users.toJSON(),
-          followerscount: thousandComma(followerscount),
-          followingscount: thousandComma(followingscount),
-          tweetCount: thousandComma(tweetCount),
-          followship,
-          isFollowed,
-          UserId,
-        })
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ],
+        order: [
+          ['Tweets', 'createdAt', 'DESC'],
+          [Reply, 'updatedAt', 'DESC'],
+          ['LikedTweet', 'updatedAt', 'DESC']
+        ],
+      }),
+      User.findAll({
+        where: {
+          is_admin: false,
+          id: { [Op.ne]: req.user.id }
+        },
+        include: [{ model: User, as: 'Followers' }]
       })
-    } catch (error) {
-      console.log('error!')
-    }
+    ]).then(([users, followship]) => {
+
+      errors = []
+      if (req.params.id === '1') {
+        errors.push({ msg: '沒有權限閱覽！' })
+        res.redirect('back')
+      }
+
+      const UserId = req.user.id
+      const followerscount = users.Followers.length
+      const followingscount = users.Followings.length
+      const tweetCount = users.Tweets.length
+      const isFollowed = req.user.Followings.some(d => d.id === users.id)
+
+
+      followship = followship.map(followships => ({
+        ...followships.dataValues,
+        FollowerCount: followships.Followers.length,
+        isFollowed: req.user.Followings.some(d => d.id === followships.id),
+        isMainuser: req.user.id === req.params.id
+      }))
+      followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+      return res.render('userprofile', {
+        users: users.toJSON(),
+        followerscount: thousandComma(followerscount),
+        followingscount: thousandComma(followingscount),
+        tweetCount: thousandComma(tweetCount),
+        followship,
+        isFollowed,
+        UserId,
+      })
+    })
+      .then((error) => { console.log('error!') })
 
   },
   toggleNotice: (req, res) => {
