@@ -23,6 +23,7 @@
     </script>
     <script src='/javascripts/nowcount.js'></script>
     <script src='/javascripts/nowcount2.js'></script>
+    <script src='/javascripts/nowcount3.js'></script>
   </head>
 
   <body>
@@ -33,15 +34,26 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="btn-close" style="left: 0;" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn a-tomato" data-bs-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>       
       </div>
       <form action="/tweets" method="post">
       <div class="modal-body">
-        <img src="{{user.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px" alt="A user" />
-        <textarea class="form-control" id="description" name="description" rows="3" placeholder="有什麼新鮮事？" maxlength="140" required></textarea>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-tomato">推文</button>
+        <div class="position-relative" style="padding: 85px 0;">
+          <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
+            <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 60px; height: 60px;" alt="A user"/>
+          </div>
+          <div class="position-absolute" style="z-index: 0; width:465px; top:0px;">
+            <textarea class="nowcount4 mt-1 bd" id="content" name="content" rows="3" placeholder="有什麼新鮮事？" maxlength="140" style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;" required></textarea>
+          </div> 
+          <div class="position-absolute" style= "z-index: 5; right: 6px; bottom: -5px;">
+            <span class="text-muted px-2 now4" style="font-size: 0.98em;"></span>
+            <button type="submit" class="btn btn-tomato fw-bold rounded-pill">推文</button>
+          </div>
+        </div>
       </div>
       </form>
     </div>
