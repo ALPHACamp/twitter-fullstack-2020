@@ -1,6 +1,23 @@
 'use strict';
 
 const bcrypt = require('bcryptjs')
+const faker = require('faker')
+
+let additionalIds = Array.from(Array(31).keys()).filter(num => num >= 7) //[7,8,...,30]
+
+//僅產出第 7~30 個user，前 6 個依舊寫死
+const additionalUsers = additionalIds.map(id => ({
+  id: id,
+  account: faker.lorem.word(),
+  email: faker.internet.email(),
+  password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+  name: faker.name.findName(),
+  avatar: faker.internet.avatar(),
+  introduction: faker.lorem.text(),
+  isAdmin: false,
+  createdAt: new Date(),
+  updatedAt: new Date()
+}))
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -82,7 +99,8 @@ module.exports = {
         isAdmin: false,
         createdAt: new Date(),
         updatedAt: new Date()
-      }
+      },
+      ...additionalUsers
     ], {})
   },
 

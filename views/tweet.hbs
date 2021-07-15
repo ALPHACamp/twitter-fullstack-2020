@@ -17,7 +17,7 @@
   </div>
   <div class="row d-flex">
     <div class="col-auto px-1">
-      <a href="/users/{{tweet.User.id}}">
+      <a href="/users/{{tweet.User.id}}/tweets">
         {{#if tweet.User.avatar}}
         <img src="{{tweet.User.avatar}}" class="img-flid rounded-circle" style="width: 50px;max-height: 50px;">
         {{else}}
@@ -79,7 +79,7 @@
   <div class="row border-bottom py-2">
 
     <div class="col-auto py-0 px-1">
-      <a href="/users/{{this.User.id}}">
+      <a href="/users/{{this.User.id}}/tweets">
         {{#if this.User.avatar}}
         <img src="{{this.User.avatar}}" class="img-flid rounded-circle" height="50px" width="50px">
         {{!-- style="width: 50px;max-height: 50px;" --}}
@@ -120,7 +120,7 @@
           <div class="row">
             <div class="col-auto py-0 px-1 d-flex flex-column align-items-center">
               <div id="modal-reply-user-avatar">
-                <a href="/users/{{tweet.User.id}}">
+                <a href="/users/{{tweet.User.id}}/tweets">
                   {{#if tweet.User.avatar}}
                   <img src="{{tweet.User.avatar}}" class="img-flid rounded-circle"
                     style="width: 50px;max-height: 50px;">

@@ -5,8 +5,21 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userService = {
   getUser: async (req, res, callback) => {
-    const user = helpers.getUser(req)
+    const user = await User.findByPk(req.params.id)
     return callback(user)
+  },
+
+  getTop10: async (callback) => {
+    let tops = await User.findAll({
+      where: { isAdmin: false },
+      include: [{ model: User, as: 'Followers' }]
+    })
+    tops = tops.map(top => ({
+      ...top.dataValues,
+      followerCount: top.Followers.length
+    }))
+    tops.sort((a, b) => b.followerCount - a.followerCount).slice(0, 9)
+    return callback(tops)
   },
 
   getUserTweets: async (req, res, callback) => {
@@ -32,44 +45,61 @@ const userService = {
       req.flash('error_messages', '兩次密碼不相同')
       return callback()
     }
-    const files = req.files
+    if (req.files) {
+      const files = req.files
 
-    imgur.setClientID(IMGUR_CLIENT_ID)
-    const getAvatarLink = new Promise((resolve, reject) => {
-      if (files.avatarImage) {
-        imgur.upload(files.avatarImage[0].path, (err, img) => {
-          if (err) return reject(err)
-          resolve(img.data.link)
-        })
-      } else {
-        resolve()
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      const getAvatarLink = new Promise((resolve, reject) => {
+        if (files.avatarImage) {
+          imgur.upload(files.avatarImage[0].path, (err, img) => {
+            if (err) return reject(err)
+            resolve(img.data.link)
+          })
+        } else {
+          resolve()
+        }
+      })
+      const getCoverLink = new Promise((resolve, reject) => {
+        if (files.coverImage) {
+          imgur.upload(files.coverImage[0].path, (err, img) => {
+            if (err) return reject(err)
+            resolve(img.data.link)
+          })
+        } else {
+          resolve()
+        }
+      })
+      let avatar = await getAvatarLink
+      let cover = await getCoverLink
+      if (req.body.cancelBackground) {
+        cover = "https://i.imgur.com/gJ4dfOZ.jpeg"
       }
-    })
-    const getCoverLink = new Promise((resolve, reject) => {
-      if (files.coverImage) {
-        imgur.upload(files.coverImage[0].path, (err, img) => {
-          if (err) return reject(err)
-          resolve(img.data.link)
-        })
-      } else {
-        resolve()
-      }
-    })
-    let avatar = await getAvatarLink
-    let cover = await getCoverLink
-    if (req.body.cancelBackground) {
-      cover = "https://i.imgur.com/gJ4dfOZ.jpeg"
+      user = await User.findByPk(helpers.getUser(req).id)
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+        avatar: avatar,
+        cover: cover,
+        password: req.body.password,
+      })
+    } else {
+      user = await User.findByPk(helpers.getUser(req).id)
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+        password: req.body.password
+      })
     }
-    user = await User.findByPk(helpers.getUser(req).id)
-    await user.update({
-      name: req.body.name,
-      introduction: req.body.introduction,
-      avatar: avatar,
-      cover: cover,
-      password: req.body.password,
-    })
+    console.log('here1')
     req.flash('success_messages', '修改成功')
-    return callback()
+    const thisPageUser = await getThisPageUser(req)
+    const tweets = await getTweets(req, { UserId: thisPageUser.id }, ['createdAt', 'DESC'])
+    return callback({
+      thisPageUser,
+      tweets,
+      Appear: { navbar: true, top10: true }
+    })
+
 
 
   },
@@ -77,7 +107,6 @@ const userService = {
   getUserReplies: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
     let tweets = await getTweets(req, { '$Replies.UserId$': thisPageUser.id }, ['Replies', 'createdAt', 'DESC'])
-    console.log(tweets)
     return callback({
       thisPageUser,
       tweets,
@@ -87,7 +116,7 @@ const userService = {
 
   getUserLikes: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
-    const tweets = await getTweets(req, { '$LikedUsers.id$': thisPageUser.id }, ['LikedUsers', 'createdAt', 'DESC'])
+    const tweets = await getTweets(req, { '$LikedUsers.id$': thisPageUser.id }, ['Likes', 'createdAt', 'DESC'])
     return callback({
       thisPageUser,
       tweets,
@@ -138,13 +167,15 @@ const userService = {
   },
 
   getFollowing: async (req, res, callback) => {
-    if (req.params.id === helpers.getUser(req).id) {
-      req.flash('warning_messages', '無法追蹤自己')
+    console.log(req.body)
+    console.log(helpers.getUser(req).id.toString())
+    if (req.body.id === helpers.getUser(req).id.toString()) {
+      req.flash('error_messages', '無法追蹤自己')
       callback()
     } else {
       await Followship.create({
         followerId: helpers.getUser(req).id,
-        followingId: req.params.id
+        followingId: req.body.id
       })
       return callback()
     }
@@ -176,8 +207,8 @@ async function getThisPageUser(req) {
     FollowersCount: thisPageUser.Followers.length,
     FollowingsCount: thisPageUser.Followings.length,
   }
-  if (req.user.id !== req.params.id) {
-    thisPageUser.isFollowing = thisPageUser.Followers.map(Follower => Follower.id).includes(req.user.id)
+  if (helpers.getUser(req).id !== req.params.id) {
+    thisPageUser.isFollowing = thisPageUser.Followers.map(Follower => Follower.id).includes(helpers.getUser(req).id)
   }
   return thisPageUser
 }
@@ -186,6 +217,7 @@ async function getTweets(req, whereCondition, orderCondition) {
   let tweets = await Tweet.findAll({
     include: [
       User,
+      Like,
       { model: Reply, order: [['createdAt', 'DESC']] },
       { model: User, as: 'LikedUsers', order: [['createdAt', 'DESC']] }
     ],
@@ -197,7 +229,7 @@ async function getTweets(req, whereCondition, orderCondition) {
     User: tweet.User.dataValues,
     RepliesCount: tweet.Replies.length,
     LikedUsersCount: tweet.LikedUsers.length,
-    isLiked: tweet.LikedUsers.map(User => User.id).includes(req.user.id)
+    isLiked: tweet.LikedUsers.map(User => User.id).includes(helpers.getUser(req).id)
   }))
   return tweets
 }

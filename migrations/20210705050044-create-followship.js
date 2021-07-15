@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Followships', {
@@ -10,11 +11,11 @@ module.exports = {
       },
       followerId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        // allowNull: false
       },
       followingId: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        // allowNull: false
       },
       createdAt: {
         allowNull: false,

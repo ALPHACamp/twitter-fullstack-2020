@@ -12,6 +12,14 @@
   background-color: coral;
 }
 
+.orange-button{
+  color: #FF6600;
+}
+
+.orange-button:hover{
+  color: coral;
+}
+
 .btn-outline-regular {
   color: #FF6600;
   background:none;

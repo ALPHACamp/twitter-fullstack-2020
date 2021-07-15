@@ -27,16 +27,17 @@
       <div class="d-flex justify-content-between p-2">
         <div class="d-flex flex-column justify-content-center" style="line-height: 1;">
           <p class="m-0">{{this.name}}</p>
-          <a href="/users/{{this.id}}" class="user-link mt-1">@{{this.account}}</a>
+          <a href="/users/{{this.id}}/tweets" class="user-link mt-1">@{{this.account}}</a>
         </div>
         {{#isEqual this.id ../user.id}}
         {{else}}
         {{#if isFollowing}}
-        <form action="/following/{{this.id}}?_method=DELETE" method="post">
+        <form action="/followships/{{this.id}}?_method=DELETE" method="post">
           <button type="submit" class="btn btn-regular rounded-pill" style="height: 32px;">正在跟隨</button>
         </form>
         {{else}}
-        <form action="/following/{{this.id}}" method="post">
+        <form action="/followships" method="post">
+          <input type="text" name="id" id="id" value="{{this.id}}" hidden>
           <button type="submit" class="btn btn-outline-regular rounded-pill" style="height: 32px;">跟隨</button>
         </form>
         {{/if}}

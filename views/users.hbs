@@ -30,17 +30,18 @@
     <div class="d-flex m-2 justify-content-end">
       {{#isEqual thisPageUser.id user.id}}
       <button type="submit" class="btn btn-outline-regular rounded-pill" data-bs-toggle="modal"
-        data-bs-target="#editProfile" id="edit-profile-modal-button">
+        data-bs-target="#editProfile" id="edit-profile-modal-button" data-user-id="{{user.id}}">
         編輯個人資料
       </button>
 
       {{else}}
       {{#if thisPageUser.isFollowing}}
-      <form action="/following/{{thisPageUser.id}}?_method=DELETE" method="post">
+      <form action="/followships/{{thisPageUser.id}}?_method=DELETE" method="post">
         <button type="submit" class="btn btn-regular rounded-pill" style="height: 32px;">正在跟隨</button>
       </form>
       {{else}}
-      <form action="/following/{{thisPageUser.id}}" method="post">
+      <form action="/followships" method="post">
+        <input type="text" name="id" id="id" value="{{thisPageUser.id}}" hidden>
         <button type="submit" class="btn btn-outline-regular rounded-pill" style="height: 32px;">跟隨</button>
       </form>
       {{/if}}
@@ -48,7 +49,7 @@
     </div>
     <div class="mt-4 mx-2" style="line-height: 1;">
       <p class="m-0 fw-bolder">{{thisPageUser.name}}</p>
-      <a href="/users/{{thisPageUser.id}}" class="user-link">@{{thisPageUser.account}}</a>
+      <a href="/users/{{thisPageUser.id}}/tweets" class="user-link">@{{thisPageUser.account}}</a>
       <p class="mt-3">{{thisPageUser.introduction}}</p>
       <div class="d-flex">
         <div class="d-flex">
@@ -62,21 +63,26 @@
       </div>
     </div>
     <nav class="nav border-bottom">
-      <a class="nav-link active" href="/users/{{thisPageUser.id}}">推文</a>
+      <a class="nav-link active" href="/users/{{thisPageUser.id}}/tweets">推文</a>
       <a class="nav-link" href="/users/{{thisPageUser.id}}/replies">推文與回覆</a>
       <a class="nav-link" href="/users/{{thisPageUser.id}}/likes">喜歡的內容</a>
     </nav>
     <div id="tweets">
       {{#each tweets}}
-      <div class="border-bottom">
+      {{> tweet}}
+      {{!-- <div class="border-bottom">
         <div class="container">
           <div class="row">
             <div class="col-auto p-1">
               {{#if this.User.avatar}}
-              <img class="rounded-circle" src="{{this.User.avatar}}" style="width: 50px;height: 50px;">
+              <a href="/users/{{this.User.id}}/tweets" class="user-link">
+                <img class="rounded-circle" src="{{this.User.avatar}}" style="width: 50px;height: 50px;">
+              </a>
               {{else}}
-              <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg"
-                style="max-width: 50px;max-height: 50px;">
+              <a href="/users/{{this.User.id}}/tweets" class="user-link">
+                <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg"
+                  style="max-width: 50px;max-height: 50px;">
+              </a>
               {{/if}}
             </div>
             <div class="col d-flex flex-column p-1">
@@ -84,7 +90,7 @@
               <div class="py-1 d-flex align-items-center">
                 <strong>{{this.User.name}}</strong>
                 <div class="d-flex align-items-center ms-1" style="font-size: x-small; color:#657786">
-                  <a href="/users/{{this.User.id}}" class="user-link">@{{this.User.account}} · </a>
+                  <a href="/users/{{this.User.id}}/tweets" class="user-link">@{{this.User.account}} · </a>
                   {{moment this.createdAt}}
                 </div>
               </div>
@@ -147,7 +153,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
       {{/each}}
     </div>
   </div>

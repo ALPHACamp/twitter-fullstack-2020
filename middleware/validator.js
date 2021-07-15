@@ -1,5 +1,5 @@
 const { User } = require('../models')
-
+const helpers = require('../_helpers')
 module.exports = {
   settingValidator: async (req, res, next) => {
     const { account, name, email, password, confirmedPassword } = req.body
@@ -10,7 +10,7 @@ module.exports = {
     if (password !== confirmedPassword) {
       req.flash('error_messages', '2 passwords are different!')
     }
-    const isMySelf = req.user.id.toString() === req.params.id.toString()
+    const isMySelf = helpers.getUser(req).id.toString() === req.params.id.toString()
     if (!isMySelf) {
       req.flash('error_messages', 'you can only edit your own setting!')
     }

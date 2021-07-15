@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const { User, Like } = require('../models')
 const userService = require('../services/userService')
-
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: async (req, res) => {
@@ -69,12 +69,6 @@ const userController = {
     })
   },
 
-  putProfile: (req, res) => {
-    userService.putProfile(req, res, () => {
-      return res.redirect('back')
-    })
-  },
-
   userFollowersPage: (req, res) => {
     userService.getUserFollowers(req, res, (data) => {
       return res.render('users-followers', data)
@@ -89,11 +83,10 @@ const userController = {
 
   addLike: (req, res) => {
     return Like.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
       .then((like) => {
-        console.log('controller/userController/line96...like.id', like.id)
         return res.redirect('back')
       })
   },
@@ -101,7 +94,7 @@ const userController = {
   removeLike: (req, res) => {
     return Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId,
       }
     })
@@ -114,10 +107,10 @@ const userController = {
   },
 
   getUserSetting: async (req, res) => {
-    const isMySelf = req.user.id.toString() === req.params.id.toString()
+    const isMySelf = helpers.getUser(req).id.toString() === req.params.id.toString()
     if (!isMySelf) {
       req.flash('error_messages', 'you can only edit your own profile!')
-      return res.redirect(`/users/${req.user.id}/setting`)
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
     }
     const user = await User.findByPk(req.params.id)
     return res.render('userSetting', {
@@ -143,6 +136,9 @@ const userController = {
   },
 
   getFollowing: async (req, res) => {
+    if(req.body.id === helpers.getUser(req).id.toString()){
+      return res.redirect(200,'不要玩網站')
+    }
     userService.getFollowing(req, res, () => res.redirect('back'))
   },
 
