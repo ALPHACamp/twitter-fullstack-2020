@@ -10,13 +10,7 @@ const adminController = {
   },
 
   signIn: (req, res) => {
-    if (getUser(req).role==="admin") {
-      req.flash('success_messages', '成功登入')
       return res.redirect('/admin/tweets')
-    } else {
-      req.flash('error_messages', '請使用一般權限')
-      return res.redirect('/admin/signin')
-    }
   },
 
   signOut: (req, res) => {
