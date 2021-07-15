@@ -26,10 +26,10 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      img: {
+      avatar: {
         type: Sequelize.STRING
       },
-      bg_img: {
+      cover: {
         type: Sequelize.STRING
       },
       is_admin: {
