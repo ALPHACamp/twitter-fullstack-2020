@@ -94,7 +94,7 @@ describe('# followship request', () => {
       it('will update followings index', (done) => {
         request(app)
           .delete('/followships/2')
-          // .set('Accept', 'application/json')
+          .set('Accept', 'application/json')
           .expect(302)
           .end(function (err, res) {
             if (err) return done(err);

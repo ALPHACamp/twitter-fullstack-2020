@@ -18,6 +18,9 @@ const followController = {
         ['Followings', Followship, 'updatedAt', 'DESC']]
     }).then((users) => {
 
+      if (req.user.id === req.params.id) {
+        res.redirect('back')
+      }
       const userId = req.user.id
       users = users.map(user => ({
         ...user.dataValues,
@@ -37,7 +40,7 @@ const followController = {
         followeringbar
       })
 
-    }).catch(error => { console.error('error!') })
+    }).catch(error => console.error('error!'))
   },
   getFollowings: (req, res) => {
     User.findAll({
@@ -52,6 +55,9 @@ const followController = {
       order: [['Followers', Followship, 'updatedAt', 'DESC']]
     }).then((users) => {
 
+      if (req.user.id === req.params.id) {
+        res.redirect('back')
+      }
       const userId = req.user.id
 
       users = users.map(following => ({
@@ -70,7 +76,7 @@ const followController = {
         followeringbar,
       })
 
-    }).catch((error) => { console.error('error') })
+    }).catch(error => { console.error('error') })
   }
 }
 
