@@ -3,7 +3,6 @@ const { thousandComma } = require('../config/hbs-helpers')
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
 
-
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -132,6 +131,44 @@ const userController = {
       })  
     } catch (error) {
       console.log(error)
+    }
+  },
+  putProfile: async (req, res) => {
+    const { name, description } = req.body
+    const { img, bg_img } = req.files
+    if (!name) {
+      req.flash('error_messages', '名稱不可以空白')
+      return res.redirect('back')
+    }
+    if (description.length > 160) {
+      req.flash('error_messages', '自我介紹至多輸入160字，不能更多')
+      return res.redirect('back')
+    }
+    try {
+      let { avator, cover } = ''
+      const user = await User.findByPk(req.user.id)
+      await user.update({ name, description })
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      if (bg_img) {
+        imgur.upload(bg_img[0].path, async (error, image) => {
+          cover = image.data.link
+          await user.update({
+            bg_img: cover ? cover : user.bg_img
+          })
+        })
+      }
+      if (img) {
+        imgur.upload(img[0].path, async (error, image) => {
+          avator = image.data.link
+          await user.update({
+            img: avator ? avator : user.img
+          })
+        })
+      }
+      req.flash('success_messages', '成功更新個人資料！')
+      return res.redirect(`/users/${req.user.id}`)
+    } catch (error) {
+      console.warn(error)
     }
   },
   toggleNotice: (req, res) => {
