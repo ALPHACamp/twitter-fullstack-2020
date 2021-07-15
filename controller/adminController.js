@@ -97,6 +97,7 @@ const adminController = {
         }
       })
       Promise.all(Data).then(data => {
+        data = data.sort((a, b) => b.userTweet.count - a.userTweet.count)
         return res.render('admin/users', { data, adminUser })
       })
 
