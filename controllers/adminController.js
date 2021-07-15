@@ -10,7 +10,7 @@ const adminController = {
   },
 
   signIn: (req, res) => {
-    if (!getUser(req).isAdmin) {
+    if (getUser(req).isAdmin) {
       req.flash('success_messages', '成功登入')
       return res.redirect('/admin/tweets')
     } else {
