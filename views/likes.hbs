@@ -15,18 +15,22 @@
         {{#if allowEdit}}
         {{#if isFollowed}}
         <form action="/followships/{{ thisUser.id }}?_method=DELETE" method="post">
-          <button type="submit" class="btn px-5 mb-4"
-            style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">unFollow</button>
+          <button type="submit" class="btn mb-3"
+            style="background-color: #ffd472;color: #313c4bc2;width: 13vw;height:7vh;border-radius:0.5em">unFollow</button>
         </form>
         {{else}}
         <form action="/followships" method="post">
           <label>
             <input type="text" id="id" name="id" value="{{ thisUser.id }}" style="display:none">
           </label>
-          <button type="submit" class="btn px-5 mb-4"
-            style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">Follow</button>
+          <button type="submit" class="btn mb-3"
+            style="background-color: #ffd472;color: #313c4bc2;width: 13vw;height:7vh;border-radius:0.5em">Follow</button>
         </form>
         {{/if}}
+        {{else}}
+        <div class="d-flex flex-column align-items-end p-2"><button type="submit" class="btn post-a-tweet mb-3"
+            style="background-color: #ffd472;color: #313c4bc2;width: 13vw;height:7vh;border-radius:0.5em"
+            data-bs-toggle="modal" data-bs-target="#profileModal" data-id="{{user.id}}">編輯個人頁面</button></div>
         {{/if}}
       </div>
 

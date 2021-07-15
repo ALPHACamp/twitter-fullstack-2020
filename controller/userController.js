@@ -71,20 +71,29 @@ const userController = {
   },
 
   getUserReplies: async (req, res) => {
-    const topFollowing = res.locals.data
-    const userInfo = res.locals.userInfo
-    const user = helpers.getUser(req)
-    const allowEdit = Number(req.params.userId) !== user.id
-    //isFollowed
     try {
+      const topFollowing = res.locals.data
+      const userInfo = res.locals.userInfo
+      const user = helpers.getUser(req)
+      let myPage = true
+      if (Number(req.params.userId) !== helpers.getUser(req).id) {
+        myPage = false
+      }
+
       const replies = await Reply.findAndCountAll({
         raw: true,
         nest: true,
         where: {
           UserId: userInfo.user.id
         },
-        include: [Tweet]
+        include: [Tweet],
+        order: [
+          ['createdAt', 'DESC']
+        ]
       })
+
+      const allowEdit = Number(req.params.userId) !== helpers.getUser(req).id
+      const isFollowed = userInfo.followers.map(f => f.followerId).includes(helpers.getUser(req).id)
 
       let Data = []
       Data = replies.rows.map(async (reply, index) => {
@@ -114,22 +123,19 @@ const userController = {
           ])
           return {
             id: reply.id,
-            createdAt: reply.createdAt,
             comment: reply.comment,
             TweetId: reply.TweetId,
             tweetDescription: reply.Tweet.description,
-            tweetCreatedAt: reply.Tweet.createdAt,
             tweetUserId: tweetUser.id,
             tweetUserName: tweetUser.name,
             tweetUserAvatar: tweetUser.avatar,
             tweetUserAccount: tweetUser.account,
             likeCount: likes.count,
-            replyCount: replies.count,
+            replyCount: replies.count
           }
         }
       })
       Promise.all(Data).then(data => {
-        data = data.sort((a, b) => a.tweetCreatedAt - b.tweetCreatedAt)
         return res.render('replies', {
           thisUser: userInfo.user,
           user,
@@ -138,77 +144,96 @@ const userController = {
           data,
           topFollowing,
           replyCount: replies.count,
-          allowEdit
+          allowEdit,
+          isFollowed,
+          myPage
         })
       })
     }
     catch (err) {
-      console.log('getUserReplies err')
-      return res.render('/')
+      console.log(err)
+      return res.redirect('/')
     }
   },
 
-  getUserTweets: (req, res) => {
-    const topFollowing = res.locals.data
-    const user = helpers.getUser(req)
-    let myPage = true
-    if (Number(req.params.userId) !== helpers.getUser(req).id) {
-      myPage = false
-    }
-
-    return User.findOne({
-      where: {
-        id: req.params.userId
+  getUserTweets: async (req, res) => {
+    try {
+      const topFollowing = res.locals.data
+      const userInfo = res.locals.userInfo
+      const user = helpers.getUser(req)
+      let myPage = true
+      if (Number(req.params.userId) !== helpers.getUser(req).id) {
+        myPage = false
       }
-    }).then(thisUser => {
-      const allowEdit = Number(req.params.userId) !== helpers.getUser(req).id
 
-      Followship.findAndCountAll({
+      const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
-        //使用者追蹤的所有人
-        where: { followerId: thisUser.id },
-      }).then(following => {
-        Followship.findAndCountAll({
-          raw: true,
-          nest: true,
-          //追蹤使用者的所有人
-          where: { followingId: thisUser.id },
-        }).then(follower => {
-          Tweet.findAndCountAll({
+        //使用者發的所有推文
+        where: { userId: userInfo.user.id },
+        order: [
+          ['createdAt', 'DESC']
+        ]
+      })
+
+      const allowEdit = Number(req.params.userId) !== helpers.getUser(req).id
+      const isFollowed = userInfo.followers.map(f => f.followerId).includes(helpers.getUser(req).id)
+
+      let Data = []
+      Data = tweets.rows.map(async (tweet, index) => {
+        const [replyCount, likeCount] = await Promise.all([
+          Reply.findAndCountAll({
             raw: true,
             nest: true,
-            //使用者發的所有推文
-            where: { userId: thisUser.id },
-          }).then(tweets => {
-            const isFollowed = follower.rows.map(f => f.followerId).includes(helpers.getUser(req).id)
+            where: { TweetId: tweet.id },
+          }),
+          Like.findAndCountAll({
+            raw: true,
+            nest: true,
+            where: { TweetId: tweet.id },
+          }),
+        ])
+        return {
+          ...tweet,
+          replyCount: replyCount.count,
+          likeCount: likeCount.count
+        }
+      })
 
-            return res.render('tweets', {
-              thisUser,
-              user,
-              followingCount: following.count,
-              followerCount: follower.count,
-              data: tweets.rows,
-              tweetCount: tweets.count,
-              topFollowing,
-              isFollowed,
-              allowEdit,
-              myPage
-            })
-          })
+      Promise.all(Data).then(data => {
+        return res.render('tweets', {
+          thisUser: userInfo.user,
+          user,
+          userInfo,
+          followingCount: userInfo.followingCount,
+          followerCount: userInfo.followerCount,
+          data,
+          tweetCount: tweets.count,
+          topFollowing,
+          isFollowed,
+          allowEdit,
+          myPage
         })
       })
-    })
+    } catch (err) {
+      console.log('-----------------')
+      console.log(err)
+      return res.redirect('/')
+    }
+
   },
 
 
   getUserLikes: async (req, res) => {
-    const topFollowing = res.locals.data
-    const userInfo = res.locals.userInfo
-    const user = helpers.getUser(req)
-    const allowEdit = Number(req.params.userId) !== user.id
-    //isFollowed
     try {
+      const topFollowing = res.locals.data
+      const userInfo = res.locals.userInfo
+      const user = helpers.getUser(req)
+      let myPage = true
+      if (Number(req.params.userId) !== helpers.getUser(req).id) {
+        myPage = false
+      }
+
       //所有的like清單裡面屬於userInfo.user.id的
       const likes = await Like.findAndCountAll({
         raw: true,
@@ -217,8 +242,15 @@ const userController = {
           UserId: userInfo.user.id
         },
         //撈出userInfo.user.id關聯的推文
-        include: [Tweet]
+        include: [Tweet],
+        order: [
+          ['createdAt', 'DESC']
+        ]
       })
+
+      const allowEdit = Number(req.params.userId) !== helpers.getUser(req).id
+      const isFollowed = userInfo.followers.map(f => f.followerId).includes(helpers.getUser(req).id)
+
       const likeCount = likes.count
       let Data = []
       //userInfo.user.id的like做資料陣列處理（已經撈到關聯推文）
@@ -257,22 +289,26 @@ const userController = {
           tweet: like.Tweet
         }
       })
+
       Promise.all(Data).then(data => {
-        data = data.sort((a, b) => a.tweet.createdAt - b.tweet.createdAt)
         return res.render('likes', {
           thisUser: userInfo.user,
+          userInfo,
           user,
           followingCount: userInfo.followingCount,
           followerCount: userInfo.followerCount,
           data,
           topFollowing,
           likeCount,
-          allowEdit
+          allowEdit,
+          isFollowed,
+          myPage
         })
       })
     }
     catch (err) {
-      console.log('getUserLikes err')
+      console.log(err)
+      console.log('------------------')
       return res.redirect('/')
     }
   },
