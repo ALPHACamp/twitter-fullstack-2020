@@ -36,7 +36,7 @@ const followController = {
         followeringbar
       })
 
-    })
+    }).then(error => { console.log('error!') })
   },
   getFollowings: (req, res) => {
     User.findAll({
@@ -71,7 +71,7 @@ const followController = {
         followeringbar,
       })
 
-    })
+    }).then((error) => { console.log('error') })
   }
 }
 

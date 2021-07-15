@@ -63,7 +63,7 @@
             <div class="col-11 align-self-center px-md-2 px-4">
               <a href="/users/{{tweet.UserId}}" class="h5 text-dark text-decoration-none">{{tweet.User.name}}</a>
               <span style="color: #6c757d; font-size: 0.875em">@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
-              <p class="mt-2">{{tweet.content}} </p>
+              <p class="mt-2">{{tweet.description}} </p>
               <div class="col-3 d-flex align-items-center justify-content-center ">
                 {{#if this.isLiked }}
                 <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
