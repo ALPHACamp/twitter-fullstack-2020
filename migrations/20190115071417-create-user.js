@@ -12,19 +12,32 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       account: {
+<<<<<<< HEAD
         allowNull: false,
         type: Sequelize.STRING,
+=======
+        unique: true,
+        type: Sequelize.STRING
+>>>>>>> 8ee42d69193be08cc2a2aeb5145bdcdadb121a4c
       },
       name: {
         type: Sequelize.STRING
       },
       email: {
+<<<<<<< HEAD
         allowNull: false,
         type: Sequelize.STRING,
       },
       password: {
         allowNull: false,
         type: Sequelize.STRING,
+=======
+        unique: true,
+        type: Sequelize.STRING
+      },
+      password: {
+        type: Sequelize.STRING
+>>>>>>> 8ee42d69193be08cc2a2aeb5145bdcdadb121a4c
       },
       description: {
         type: Sequelize.STRING

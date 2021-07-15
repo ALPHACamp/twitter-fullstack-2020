@@ -10,11 +10,11 @@ module.exports = {
       },
       followerId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        unique: true,
       },
       followingId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        unique: true,
       },
       createdAt: {
         allowNull: false,
