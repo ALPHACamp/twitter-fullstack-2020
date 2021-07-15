@@ -106,13 +106,12 @@
                 </form>
                 {{/if}}
 
-                <form action="/tweets/{{this.id}}" method="GET">
                 {{#if this.replyCount}}
-                <button class="btn" style="width: 60px; height: 30px">
+                <button type="button" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
                   <i class="fas fa-comment" style="color: navy;"> {{ this.replyCount }}</i>
                 </button>
                 {{else}}
-                  <button class="btn" style="width: 60px; height: 30px">
+                  <button type="button" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
                     <i class="far fa-comment" style="color: navy;"> {{ this.replyCount }}</i>
                   </button>
                 {{/if}}

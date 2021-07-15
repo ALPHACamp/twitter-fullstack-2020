@@ -158,15 +158,15 @@ const userController = {
       return res.redirect('back')
     }
     try {
-      let { avator, cover } = ''
+      let { avator, cover1 } = ''
       const user = await User.findByPk(req.user.id)
       await user.update({ name, description })
       imgur.setClientID(IMGUR_CLIENT_ID)
       if (cover) {
         imgur.upload(cover[0].path, async (error, image) => {
-          cover = image.data.link
+          cover1 = image.data.link
           await user.update({
-            cover: cover ? cover : user.cover
+            cover: cover1 ? cover1 : user.cover
           })
         })
       }
