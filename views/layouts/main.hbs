@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+  <title>Twitter</title>
+</head>
+{{#if user }}
+
+<body>
+  {{!-- 登入後背景 --}}
+  <div
+    style="background-color: rgba(227, 227, 227, 0.468);width:82vw;height:200vh;position: fixed;margin-left: 18vw;border-radius: 3em 0 0 0;box-shadow:inset 3px 0 6px 7px #ccccccb3;z-index: -1;">
+  </div>
+  {{else}}
+
+  <body style="background-color: #ffd5721e;overflow-y: scroll; overflow-x: hidden;width: 80%">
+    {{/if}}
+    <div class="p-2">
+
+      <div class="d-flex mt-4">
+
+        {{!-- 如果有登入才顯示 --}}
+        {{#if user}}
+        {{!-- 左側欄位 --}}
+        <div class="d-flex flex-column" style="position: fixed;">
+
+          {{!-- 上 --}}
+          <div class="d-flex flex-column align-items-center" style="">
+            <img src="https://i.pinimg.com/564x/d3/c6/67/d3c6675cfa80704b24f154c61cd83dc1.jpg" alt="logo"
+              style="width:5em;">
+            <p class="h5 mt-2">Share Your Life</p>
+          </div>
+
+          {{!-- 中 --}}
+          {{!-- 如果是管理者登入 --}}
+          {{#if isAdmin}}
+
+          <div class="d-flex">
+            <div class="mt-5 ms-4" style="width: 15.5vw;">
+
+              {{!-- post --}}
+
+              <a href="/admin/tweets" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="{{#if adminTweets }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  {{#if adminTweets }}
+                  <i class="fas fa-igloo p-2 h3 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="fas fa-igloo p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
+                </div>
+                {{#if adminTweets }}
+                <p style="color:#313c4b;" class="mt-2">推文清單</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">推文清單</p>
+                {{/if}}
+              </a>
+
+              {{!-- user --}}
+              <a href="/admin/users" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="{{#if adminUser }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  {{#if adminUser }}
+                  <i class="far fa-laugh p-2 h2 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="far fa-laugh p-2 h2 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
+                </div>
+                {{#if adminUser }}
+                <p style="color:#313c4b;" class="mt-2">使用者列表</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">使用者列表</p>
+                {{/if}}
+              </a>
+
+              {{!-- 登出 --}}
+              <a href="/signout" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  <i class="fas fa-shoe-prints p-2 h4 me-3" style="color:#313c4b6f;"></i>
+                </div>
+                <p style="color:#313c4b6f;" class="mt-2">登出</p>
+              </a>
+            </div>
+
+            {{!-- 選擇直線 --}}
+            {{#if adminTweets }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
+            {{/if}}
+
+            {{#if adminUser }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:21.5vh;border-radius:13em;"></div>
+            {{/if}}
+
+          </div>
+
+          {{else}}
+          {{!-- 如果是使用者登入 --}}
+          <div class="d-flex">
+            <div class="mt-5 ms-4" style="width: 15.5vw;">
+
+              {{!-- 首頁 --}}
+
+              <a href="/" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="{{#if tweetsPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  {{#if tweetsPage }}
+                  <i class="fas fa-igloo p-2 h3 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="fas fa-igloo p-2 h3 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
+                </div>
+                {{#if tweetsPage }}
+                <p style="color:#313c4b;" class="mt-2">首頁</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">首頁</p>
+                {{/if}}
+              </a>
+
+              {{!-- 個人資料 --}}
+              <a href="/users/{{user.id}}/tweets"
+                class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="{{#if myPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  {{#if myPage }}
+                  <i class="far fa-laugh p-2 h2 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="far fa-laugh p-2 h2 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
+                </div>
+                {{#if myPage }}
+                <p style="color:#313c4b;" class="mt-2">我的主頁</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">我的主頁</p>
+                {{/if}}
+              </a>
+
+              {{!-- 設定 --}}
+              <a href="/users/{{user.id}}/edit"
+                class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="{{#if userEditPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  {{#if userEditPage }}
+                  <i class="fas fa-dog p-2 h2 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="fas fa-dog p-2 h2 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
+                </div>
+                {{#if userEditPage }}
+                <p style="color:#313c4b;" class="mt-2">設定</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">設定</p>
+                {{/if}}
+              </a>
+
+              {{!-- 推文 --}}
+              <button class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="text-decoration:none;border-radius: 8px;width:14vw;border:none; background-color: white"
+                data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{user.id}}">
+                <div>
+                  <i class="fas fa-umbrella-beach p-2 h4 me-3" style="color:#313c4b6f;"></i>
+                </div>
+                <p style="color:#313c4b6f;" class="mt-2">分享心情</p>
+              </button>
+
+              {{!-- 登出 --}}
+              <a href="/signout" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                style="text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  <i class="fas fa-shoe-prints p-2 h4 me-3" style="color:#313c4b6f;"></i>
+                </div>
+                <p style="color:#313c4b6f;" class="mt-2">登出</p>
+              </a>
+            </div>
+
+            {{!-- 選擇直線 --}}
+            {{#if tweetsPage}}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
+            {{/if}}
+
+            {{#if myPage }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:21.5vh;border-radius:13em;"></div>
+            {{/if}}
+
+            {{#if userEditPage }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:34vh;border-radius:13em;"></div>
+            {{/if}}
+
+
+          </div>
+          {{/if}}
+
+        </div>
+        {{/if}}
+
+        {{!-- 中間主頁 --}}
+        <div>
+          {{{ body }}}
+        </div>
+
+        {{!-- 右側欄位 --}}
+        {{!-- 管理者登入 --}}
+        {{#if isAdmin}}
+        {{> adminInfo }}
+        {{else}}
+        {{#if user }}
+        {{!-- 使用者登入 --}}
+        <div style="margin-left:2.2em" class="mt-2">{{> recommendedFollower }}</div>
+        {{/if}}
+        {{/if}}
+
+      </div>
+
+    </div>
+
+    {{#if myPage }}
+    <!--Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"
+          style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
+          <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel"><button type="button" class="btn-close"
+                  data-bs-dismiss="modal" aria-label="Close"></button>
+                編輯個人資料
+              </h5>
+              <div class="d-flex flex-column align-items-end p-2"><button type="submit" class="btn post-a-tweet"
+                  style="background-color: #FF6600;color: white; border-radius: 45%;font-size:20px;">儲存</button>
+              </div>
+            </div>
+
+            <div class="modal-body d-flex flex-column justify-content-around pb-0">
+              {{!-- input 包在 label 中可以觸發點擊事件, input 為隱藏狀態 --}}
+              <label id="coverFile" style="background-image:url({{user.cover}});height: 200px;object-fit:
+                        cover;width:100%;opacity: .5;line-height:200px;color:white;" class="text-center">
+                {{!-- camera icon --}}
+                <i class="fas fa-camera fa-2x" style="cursor: pointer;"></i>
+                {{!-- 檔案接收元件, 含 --}}
+                <input id="uploadCover" name="cover" style="display:none;" type="file">
+              </label>
+              <div class="d-flex flex-column ms-4">
+                <div class="d-flex" style="position: relative;">
+                  {{!-- input 包在 label 中可以觸發點擊事件, input 為隱藏狀態 --}}
+                  <label id="avatarFile"
+                    style="background-image:url({{user.avatar}});height: 150px;width:150px;object-fit:cover;margin-top:-70px;border-radius:50%;border: solid 10px white;opacity: .8;line-height:150px;color:white;"
+                    class="text-center">
+                    {{!-- camera icon --}}
+                    <i class="fas fa-camera fa-2x" style="cursor: pointer;"></i>
+                    <input id="uploadAvatar" name="avatar" style="display:none;" type="file">
+                  </label>
+                </div>
+                <div class="form-group">
+                  {{!-- DOM有綁定元件id, 包含字數統計, POST 回傳--}}
+                  <label for="profileName" style="display:block;background-color: #F5F8FA;">名稱</label>
+                  <input type="text" class="form-control" id="profileName" name="name" aria-describedby="name"
+                    value="{{user.name}}" maxlength="50" placeholder="Enter Name"
+                    style="background-color: #F5F8FA;border:none;" required>
+                  <small id="nameLength" class="">0/50</small>
+                </div>
+                <div class="form-group">
+                  {{!-- DOM有綁定元件id, 包含字數統計, POST 回傳--}}
+                  <label for="profileIntro" style="display:block;background-color: #F5F8FA;">自我介紹</label>
+                  <textarea class="form-control" id="profileIntro" rows="3" maxlength="140" name="introduction"
+                    style="background-color: #F5F8FA;border:none;white-space:pre-wrap;">{{user.introduction}}</textarea>
+                  <small id="introLength" class="">0/140</small>
+                </div>
+              </div>
+
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+    {{else}}
+
+    <!--Post Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"
+          style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
+          <img class="mb-3" src="https://cdn.dribbble.com/users/851350/screenshots/6390413/dusk.png"
+            style="width:60vw;height:30vh;object-fit: cover;border-radius: 2em;">
+          <div class="modal-body mt-4 ms-4 me-4">
+            <form action="/tweets" method="POST" id="newTweetForm">
+
+              <div class="d-flex justify-content-between">
+
+                <div class="d-flex flex-column ms-5" style="width: 10vw;">
+                  <img src="{{ user.avatar }}" style="border-radius: 0.5em;">
+                  <button type="submit" class="btn post-a-tweet mt-5 fs-bold"
+                    style="background-color: #ffd472;color: #313c4b;height:7vh;border-radius:0.5em;"
+                    onclick="submitButtonClick(event)">Share</button>
+                </div>
+
+                <div class="me-5"
+                  style="box-shadow:0 0 8px 3px #ccccccb3;border-radius: 0.5em;background-color:white;width:33vw">
+                  <textarea class="p-3" name="description" id="newTweet" cols="30" rows="8"
+                    placeholder=" Share Something..."
+                    style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px"
+                    required></textarea>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Reply Tweet Modal -->
+    <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"
+          style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><button type="button" class="btn-close"
+                data-bs-dismiss="modal" aria-label="Close"></button></h5>
+
+          </div>
+          <div class="modal-body d-flex flex-row justify-content-around pb-0">
+            <div class="d-flex flex-column">
+              <img src="{{ tweet.User.avatar }}" style="border-radius: 100%;width: 60px" id="reply-tweet-img">
+              <div class="" style="border-left: 4px solid gray;height:210px;position:absolute;left:60px;top:75px;">
+              </div>
+            </div>
+            <div class="d-flex flex-column">
+              {{!-- 發文者 --}}
+              <div class="mb-0" style="width: 550px;">
+                <p class="fs-5 me-2 mb-0" style="line-height: 40px;color: black;">{{ tweet.User.name }}</p>
+                <p class="mb-0" style="color: darkseagreen;" style="line-height: 40px;">{{ tweet.User.account
+                  }}</p>
+              </div>
+              {{!-- 推文內容 --}}
+              <div class="" style="width: 550px;">
+                <textarea id="reply-tweet-text" cols="30" rows="4"
+                  style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px"
+                  readonly>{{ tweet.description}}</textarea>
+              </div>
+              <div class=""><span style="color:darkgrey;">回復 </span><span
+                  style="color: #FF6600;">{{tweet.User.account}}</span></div>
+
+            </div>
+          </div>
+          <div class="modal-body d-flex flex-row justify-content-around pb-0">
+            <div>
+              <img src="{{ user.avatar }}" style="border-radius: 100%;width: 60px">
+            </div>
+            <form action="/tweets/{{tweet.id}}/replies" method="POST" class="mt-3" style="width: 550px;"
+              id="newTweetForm">
+              <textarea name="comment" id="newReply" cols="30" rows="5" maxlength="140" placeholder="推你的回覆"
+                style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px"
+                required></textarea>
+              <div class="d-flex flex-column align-items-end p-2"><button type="submit" class="btn post-a-tweet"
+                  style="background-color: #FF6600;color: white; border-radius: 45%;font-size:20px;"
+                  onclick="replySubmitButtonClick(event)">回復</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+
+      {{!-- toast --}}
+      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img
+              src="https://yt3.ggpht.com/ytc/AKedOLSMq3y4-2mILcS9X7GTvNYswkMqpjyE6y1c0U3A6w=s900-c-k-c0x00ffffff-no-rj"
+              class="rounded me-2" alt="..." style="width: 30px;height:30px;">
+            <strong class="me-auto">AC Tweet</strong>
+            <small>1 mins ago</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            Hello, world! This is a toast message.
+          </div>
+        </div>
+      </div>
+
+      {{!-- jquery --}}
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+      {{!-- popper --}}
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+      {{!-- bootstrapcdn --}}
+
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+  </body>
+
+</html>

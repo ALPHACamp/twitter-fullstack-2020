@@ -1,0 +1,107 @@
+<div class="d-flex mt-2" style="margin-left: 20vw;">
+
+  <div style="width: 54vw;">
+    {{!-- 標題 --}}
+    <div class="d-flex mb-4">
+
+      <div class="d-flex flex-column align-items-center"
+        style="margin-right: 2vw;background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 16.5vw;border-radius:1em;object-fit: cover;"
+          src="https://i.pinimg.com/474x/d2/50/0c/d2500cb2aaf1d533d3284d13ae0100ef.jpg" alt="shareYourPet">
+        <p class="h5 mt-4" style="color: #313c4b;">Share Your Pet</p>
+      </div>
+
+      <div class="d-flex flex-column align-items-center"
+        style="margin-right: 2vw;background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 16.5vw;border-radius:1em;"
+          src="https://i.pinimg.com/474x/88/26/38/88263856a41d3cb19dd1cb6a6dff8c73.jpg" alt="shareYourself">
+        <p class="h5 mt-4" style="color: #313c4b;">Share Yourself</p>
+      </div>
+
+      <div class="d-flex flex-column align-items-center"
+        style="background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 16.5vw;border-radius:1em;"
+          src="https://i.pinimg.com/474x/c8/97/67/c89767e4e2088f08267e0cffd2f0c171.jpg" alt="shareYourJourney">
+        <p class="h5 mt-4" style="color: #313c4b;">Share Your Journey</p>
+      </div>
+
+    </div>
+
+    {{!-- post --}}
+    <div class="d-flex align-items-center justify-content-between p-1 pt-2 ps-2 mb-4"
+      style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:20vh;box-shadow:0 0 8px 3px #ccccccb3;">
+      {{!-- avatar --}}
+      <a href="/users/{{ user.id }}/tweets" style="margin-top: -0.2em;">
+        {{#if user.avatar }}
+        <img src="{{ user.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
+        {{else}}
+        <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
+          style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+        {{/if}}
+      </a>
+      {{!-- account --}}
+      <form action="/tweets" method="post" class="d-flex align-items-center">
+        <div style="color:#313c4b;width:31vw" class="">
+          <div class="d-flex">
+            <p class="fs-5 me-3 mb-0"><strong>{{ user.name }}</strong></p>
+            <p class="mb-0" style="color: #313c4b84;margin-top:0.2em;">{{ user.account }}</p>
+          </div>
+          <textarea name="description" id="newTweet" cols="30" rows="8" placeholder="Share Something..."
+            style="height:10vh;width:30vw;border:none;resize:none;outline:none;" required></textarea>
+        </div>
+
+        {{!-- share btn --}}
+        <button type="submit" class="post-a-tweet btn me-3"
+          style="margin-left: 2.6em;background-color: #ffd472;color: #313c4bc2;width: 8.5vw;height:7vh;border-radius:0.5em">Share</button>
+      </form>
+    </div>
+
+    <p class="h4 mt-5 mb-4" style="color: #313c4b;">New Post</p>
+    {{!-- 推文區 --}}
+    {{#each data }}
+    <div class="d-flex align-items-center p-1 pt-2 ps-2 mb-4"
+      style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:20vh;box-shadow:0 0 8px 3px #ccccccb3;">
+      {{!-- avatar --}}
+      <a href="/users/{{ this.User.id }}/tweets" style="margin-top: -0.2em;">
+        {{#if this.User.avatar }}
+        <img src="{{ this.User.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+        {{else}}
+        <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
+          style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+        {{/if}}
+      </a>
+      {{!-- account --}}
+      <div style="color:#313c4b;width:25vw" class="m-4">
+        <div class="d-flex">
+          <p class="fs-5 me-3 mb-0"><strong>{{ this.User.name }}</strong></p>
+          <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ this.User.account }}・{{momentCH
+            this.createdAt}}</p>
+        </div>
+        <p class="mt-1" style="font-size: small;">
+          {{ this.description }}
+        </p>
+      </div>
+      {{!-- Reply and Like --}}
+      <div class="d-flex flex-column ms-3">
+        <div class="d-flex">
+          <i class="fas fa-comment-dots h4" style="color: #ffd472;"></i>
+          <p class="ms-3" style="color: #313c4bc2;">{{this.replyCount}}</p>
+        </div>
+        <div class="d-flex">
+          <i class="fab fa-gratipay h4" style="color: #ffd472;margin-right:0.1em"></i>
+          <p class="ms-3" style="color: #313c4bc2;">{{this.likeCount}}</p>
+        </div>
+      </div>
+      {{!-- view tweet btn --}}
+      <form action="/tweets/{{this.id}}" method="get" style="margin-left: 2.6em;">
+        <button type="submit" class="btn"
+          style="background-color: #ffd472;color: #313c4bc2;width: 8.5v;height:7vh;border-radius:0.5em">Read
+          More</button>
+      </form>
+    </div>
+    {{/each}}
+
+    <p class="h6 mt-4 mt-5 mb-4" style="color: #313c4b;">No More Post ...</p>
+
+  </div>
+</div>

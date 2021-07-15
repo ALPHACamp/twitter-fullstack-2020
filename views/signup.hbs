@@ -1,0 +1,61 @@
+<div class="d-flex flex-column justify-content-center align-items-center" style="width: 100vw;">
+
+  {{#if success_messages}}
+  <div class="alert alert-success text-center" role="alert" style="width: 50vw">
+    {{success_messages}}
+  </div>
+  {{/if}}
+
+  {{#if error_messages}}
+  <div class="alert alert-danger text-center" role="alert" style="width: 50vw">
+    {{error_messages}}
+  </div>
+
+  {{/if}}
+  <form class="form-signin" action="/signup" method="POST">
+    <div class="card text-center mb-5 mt-4" style="border-radius: 10px;width: 50vw">
+      <div>
+        <img src="https://i.pinimg.com/564x/d3/c6/67/d3c6675cfa80704b24f154c61cd83dc1.jpg" alt="logo"
+          style="width: 200px;border-radius:50%" class="mt-5">
+        <div class="text-center">
+          <p class="h4 mb-3 font-weight-normal mt-1" style="color: #313c4b;">建立你的帳號</p>
+        </div>
+      </div>
+      <div class="card-body" style="padding: 0 10vw 50px">
+
+        <div class="form-label-group mb-4">
+          <input type="text" name="account" class="form-control" placeholder="帳號" value="{{ account }}" autofocus
+            required>
+        </div>
+
+        <div class="form-label-group mb-4">
+          <input type="text" name="name" class="form-control" placeholder="名稱" value="{{ name }}" required>
+        </div>
+
+        <div class="form-label-group mb-4">
+          <input type="text" name="email" class="form-control" placeholder="email" value="{{ email }}" required>
+        </div>
+
+        <div class="form-label-group mb-4">
+          <input type="password" name="password" class="form-control" placeholder="密碼" required>
+        </div>
+
+        <div class="form-label-group mb-4">
+          <input type="password" name="checkPassword" class="form-control" placeholder="密碼確認" required>
+        </div>
+
+        <br />
+
+        <button class="btn btn-lg btn-block"
+          style="width: 100%;background:#ffd472;color:white;border-radius:5px;padding:3px" type="submit">註冊</button>
+      </div>
+      <div class="card-footer mb-5" style="background-color: white;border: none">
+        <div class="d-flex justify-content-center align-items-center">
+          <i class="fas fa-space-shuttle me-4"></i>
+          <a href="/signin" style="color: #313c4b;text-decoration:none;" class="me-1">已經有帳號？ 登入</a>
+          <i class="fas fa-space-shuttle ms-3" style="transform:scaleX(-1)"></i>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,85 @@
+<div class="d-flex flex-column mt-2" style="margin-left: 20vw;">
+  <p class="h4 mb-4" style="color: #313c4b;">{{ tweet.User.name }}'s Post</p>
+
+  <div class="d-flex align-items-center p-1 pt-2 ps-2 mb-4"
+    style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:auto;box-shadow:0 0 8px 5px #cccccce0;">
+    {{!-- avatar --}}
+    <a href="/users/{{tweet.User.id}}/tweets" style="padding:1em 0">
+      {{#if tweet.User.avatar }}
+      <img src="{{ tweet.User.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
+      {{else}}
+      <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
+        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+      {{/if}}
+    </a>
+    {{!-- account --}}
+    <div style="color:#313c4b;width:35vw;" class="d-flex flex-column ms-4">
+      <div class="d-flex mb-2">
+        <p class="mb-0 me-2" style="color: #313c4b98;margin-top:0.2em;">{{ tweet.User.account }} · </p>
+        <p class="mb-0 me-2" style="color: #313c4b;margin-top:0.2em;">{{momentCH reply.createdAt}}</p>
+      </div>
+      <div style="height:10vh;width:34vw;border:none;resize:none;outline:none;color: #313c4b;">{{
+        tweet.description }}</div>
+    </div>
+
+    {{!-- Reply and Like --}}
+    <div class="d-flex flex-column ms-3 mt-3">
+      <div class="d-flex">
+        <button data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.id}}" type="button"
+          href="/tweets/{{ tweet.id }}/replies" class="fas fa-comment-dots h3"
+          style="border:none;background-color:white;color: #ffd472;"></button>
+        <p class="ms-3 h4" style="color: #313c4bc2;">{{replyCount}}</p>
+      </div>
+      <div class="d-flex mt-2">
+        {{#if isLiked}}
+        <form action="/tweets/{{ tweet.id }}/unlike" method="post">
+          <button type="submit" href="/tweets/{{ tweet.id }}/replies" class="fab fa-gratipay h3"
+            style="border:none;background-color:white;color: #ffd472;"></button>
+        </form>
+        <p class="h4" style="margin-left:0.8em;color: #313c4bc2;">{{likeCount}}</p>
+        {{else}}
+        <form action="/tweets/{{ tweet.id }}/like" method="post">
+          <button type="submit" href="/tweets/{{ tweet.id }}/replies" class="fab fa-gratipay h3"
+            style="border:none;background-color:white;color: #313c4b;"></button>
+        </form>
+        <p class="h4" style="margin-left:0.8em;color: #313c4bc2;">{{likeCount}}</p>
+        {{/if}}
+      </div>
+    </div>
+
+  </div>
+
+  {{!-- reply --}}
+  {{#if reply }}
+  <p class="h4 mb-4" style="color: #313c4b;">Reply</p>
+  {{#each reply }}
+
+  <div class="d-flex align-items-center p-1 pt-2 ps-2 mb-4"
+    style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
+    {{!-- avatar --}}
+    <a href="/users/{{this.User.id}}/tweets" style="padding:1em 0">
+      {{#if this.User.avatar }}
+      <img src="{{ this.User.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
+      {{else}}
+      <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
+        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+      {{/if}}
+    </a>
+    {{!-- account --}}
+    <div style="color:#313c4b;width:37vw;" class="d-flex flex-column ms-4">
+      <div class="d-flex">
+        <p class="fs-5 me-3 mb-0"><strong>{{ this.User.name }}</strong></p>
+        <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ this.User.account }}・{{momentCH
+          this.createdAt}}</p>
+      </div>
+      <div style="height:10vh;width:40vw;border:none;resize:none;outline:none;color: #313c4b;">{{
+        this.comment }}</div>
+    </div>
+
+  </div>
+  {{/each}}
+  {{else}}
+  <p class="h4 mb-4" style="color: #313c4b;">No Reply</p>
+  {{/if}}
+
+</div>
