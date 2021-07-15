@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const multer = require('multer')
-const upload = multer({ dest: 'temp/' })
+
 
 const userController = require('../controllers/userController');
 const adminController = require('../controllers/adminController');
@@ -46,10 +45,6 @@ router.get('/users/:id/setting', authenticated, userController.getUserSetting)
 router.put('/users/:id/setting', authenticated, settingValidator, userController.putUserSetting)
 router.get('/users/:id/replies', authenticated, userController.userPageReplies)
 router.get('/users/:id/likes', authenticated, userController.userPageLikes)
-router.put('/users/:id', authenticated, upload.fields([
-  { name: 'avatarImage', maxCount: 1 },
-  { name: 'coverImage', maxCount: 1 }
-]), userController.putProfile)
 router.get('/users/:id/followers', authenticated, userController.userFollowersPage)
 router.get('/users/:id/followings', authenticated, userController.userFollowingsPage)
 router.post('/followships/:id', authenticated, userController.getFollowing)

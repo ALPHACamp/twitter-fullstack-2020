@@ -45,47 +45,64 @@ const userService = {
       req.flash('error_messages', '兩次密碼不相同')
       return callback()
     }
-    const files = req.files
+    if (req.files) {
+      const files = req.files
 
-    imgur.setClientID(IMGUR_CLIENT_ID)
-    const getAvatarLink = new Promise((resolve, reject) => {
-      if (files.avatarImage) {
-        imgur.upload(files.avatarImage[0].path, (err, img) => {
-          if (err) return reject(err)
-          resolve(img.data.link)
-        })
-      } else {
-        resolve()
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      const getAvatarLink = new Promise((resolve, reject) => {
+        if (files.avatarImage) {
+          imgur.upload(files.avatarImage[0].path, (err, img) => {
+            if (err) return reject(err)
+            resolve(img.data.link)
+          })
+        } else {
+          resolve()
+        }
+      })
+      const getCoverLink = new Promise((resolve, reject) => {
+        if (files.coverImage) {
+          imgur.upload(files.coverImage[0].path, (err, img) => {
+            if (err) return reject(err)
+            resolve(img.data.link)
+          })
+        } else {
+          resolve()
+        }
+      })
+      let avatar = await getAvatarLink
+      let cover = await getCoverLink
+      if (req.body.cancelBackground) {
+        cover = "https://i.imgur.com/gJ4dfOZ.jpeg"
       }
+      user = await User.findByPk(helpers.getUser(req).id)
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+        avatar: avatar,
+        cover: cover,
+        password: req.body.password,
+      })
+    }else{
+      user = await User.findByPk(helpers.getUser(req).id)
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+        password: req.body.password
     })
-    const getCoverLink = new Promise((resolve, reject) => {
-      if (files.coverImage) {
-        imgur.upload(files.coverImage[0].path, (err, img) => {
-          if (err) return reject(err)
-          resolve(img.data.link)
-        })
-      } else {
-        resolve()
-      }
-    })
-    let avatar = await getAvatarLink
-    let cover = await getCoverLink
-    if (req.body.cancelBackground) {
-      cover = "https://i.imgur.com/gJ4dfOZ.jpeg"
     }
-    user = await User.findByPk(helpers.getUser(req).id)
-    await user.update({
-      name: req.body.name,
-      introduction: req.body.introduction,
-      avatar: avatar,
-      cover: cover,
-      password: req.body.password,
-    })
+    console.log('here1')
     req.flash('success_messages', '修改成功')
-    return callback()
+    const thisPageUser = await getThisPageUser(req)
+    const tweets = await getTweets(req, { UserId: thisPageUser.id }, ['createdAt', 'DESC'])
+    return callback({
+      thisPageUser,
+      tweets,
+      Appear: { navbar: true, top10: true }
+    })
 
 
-  },
+
+},
 
   getUserReplies: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)

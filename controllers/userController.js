@@ -66,12 +66,6 @@ const userController = {
     })
   },
 
-  putProfile: (req, res) => {
-    userService.putProfile(req, res, () => {
-      return res.redirect('back')
-    })
-  },
-
   userFollowersPage: (req, res) => {
     userService.getUserFollowers(req, res, (data) => {
       return res.render('users-followers', data)

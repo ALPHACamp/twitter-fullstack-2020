@@ -14,6 +14,12 @@ const userController = {
 
   getTop10: (req, res) => {
     userService.getTop10((data) => res.json(data))
+  },
+
+  putProfile: (req, res) => {
+    userService.putProfile(req, res, (data) => {
+      return res.render('users',data)
+    })
   }
 }
 
