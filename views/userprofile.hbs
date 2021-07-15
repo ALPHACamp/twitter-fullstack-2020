@@ -29,10 +29,11 @@
             </a>
           </li>
           <li class="nav-item p-2" style="width: inherit;">
-            <button type="submit" class="btn btn-tomato rounded-pill mt-3" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#tweetModal">
+            <button type="submit" class="btn btn-tomato rounded-pill mt-3" style="width: 100%;" data-bs-toggle="modal"
+              data-bs-target="#tweetModal">
               <span class='h5 fw-bold d-none d-sm-inline'>推文</span>
               <i class="fas fa-feather-alt d-sm-none"></i>
-            </button>            
+            </button>
           </li>
         </ul>
         <hr />
@@ -52,7 +53,8 @@
           class="col-auto d-flex align-items-center text-decoration-none">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
-        <a href="/" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark text-decoration-none">
+        <a href="/"
+          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark text-decoration-none">
           <span class="h5 fw-bold" style="line-height: 15px;">{{users.name}}</span>
           <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">{{tweetCount}} 推文</span>
         </a>
@@ -74,19 +76,26 @@
         <button type="submit" class="btn btn-outline-tomato rounded-pill fw-bold" data-bs-toggle="modal"
           data-bs-target="#profileModal">編輯個人資料</button>
         {{else}}
-        <a href="mailto:{{users.email}}" class="m-1" style="color:tomato;">
-          <i class="far fa-envelope fa-2x m-1"></i> </a>
+        <div class="NoticeAni">
+          <a href="mailto:{{users.email}}" class="m-1" style="color:tomato;">
+            <i class="far fa-envelope fa-2x m-1"></i> </a>
+        </div>
         {{#if users.isNoticed}}
-        <a href="/users/noti/{{users.id}}" class="m-1" style="color:tomato;">
-          <i class="fas fa-bell fa-2x m-1"></i>
-        </a>
+        <div class="Noticed">
+          <a href="/users/noti/{{users.id}}" style="color:tomato;">
+            <i class="fas fa-bell fa-2x m-1"></i>
+          </a>
+        </div>
         {{else}}
-        <a href="/users/noti/{{users.id}}" class="m-1" style="color:tomato;">
-          <i class="far fa-bell fa-2x m-1"></i>
-        </a>
+        <div class="NoticeAni">
+          <a href="/users/noti/{{users.id}}" class="m-1" id="noticeBell" style="color:tomato;">
+            <i class="far fa-bell fa-2x m-1"></i>
+          </a>
+        </div>
         {{/if}}
         {{#if isFollowed}}
-        <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">
+        <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;"
+          class="text-center">
           <button type="submit" class="btn btn-tomato rounded-pill" name="{{users.id}}">正在跟隨</button>
         </form>
         {{else}}
@@ -168,34 +177,51 @@
         {{!-- repliedTweet --}}
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
           <ul class="list-group list-group-flush">
-            {{#each users.Replies}}
+
+            {{#each repiledTweet}}
             <li class="list-group-item">
               <div class="row g-0">
                 <div class="col-md-1">
-                  <a href="/users/{{../users.id}}" class="text-center">
-                    <img src="{{../users.avatar}}" alt="" width="75" height="75"
+                  <a href="/users/{{this.Tweet.User.id}}" class="text-center">
+                    <img src="{{this.Tweet.User.avatar}}" alt="" width="75" height="75"
                       class="rounded-circle me-2 rounded mt-2 d-block" />
                   </a>
                 </div>
                 <div class="col-md-10">
                   <div class="card-body" style="margin-left:1vw">
                     <div class="card-title">
-                      <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
-                      <span class="text-muted"> @{{../users.account}}</span>
-                      <span class="small text-muted">‧{{moment this.updatedAt}}</span>
+                      <span class="card-title h6" style="margin-right:2px">{{this.Tweet.User.name}}</span>
+                      <span class="text-muted"> @{{this.Tweet.User.account}}</span>
+                      <span class="small text-muted">‧{{moment this.createdAt}}</span>
                     </div>
                     <div class="card-text" style="margin-top:1vw">
-                      <p class="h6">{{this.content}}</p>
+                      <p class="h6">{{this.Tweet.description}}</p>
                     </div>
+
+                    <div class="card-text" style="margin-top:1vw">
+                      <a href="/tweets/{{this.Tweet.id}}" class="btn btn-tomato">你的回覆</a>
+                      <p class="h6 m-2 mx-auto">{{this.content}}</p>
+                    </div>
+
                     <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                      <i class="far fa-comment text-muted small"> {{this.Tweet.replyCount}}</i>
-                      <i class="far fa-heart text-muted small"> {{this.Tweet.likes}}</i>
+                      {{#if this.Tweet.replyCount}}
+                      <i class="fas fa-comment text-muted small">
+                        {{this.Tweet.replyCount}}</i>
+                      {{else}}
+                      <i class="far fa-comment text-muted small"></i>
+                      {{/if}}
+                      {{#if this.Tweet.likes}}
+                      <i class="fas fa-heart text-muted small"> {{this.Tweet.likes}}</i>
+                      {{else}}
+                      <i class="far fa-heart text-muted small"></i>
+                      {{/if}}
                     </div>
                   </div>
                 </div>
               </div>
             </li>
             {{/each}}
+
           </ul>
         </div>
         {{!-- likedTweets --}}
@@ -295,40 +321,46 @@
         <div class="modal-header">
           <div class="d-flex align-items-center">
             <button type="button" class="btn a-tomato" data-bs-dismiss="modal" aria-label="Close">
-            <i class="fas fa-times"></i>
+              <i class="fas fa-times"></i>
             </button>
             <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
-          </div>       
+          </div>
           <button type="submit" class="badge btn btn-tomato  rounded-pill fw-bold" style="font-size: 1.1em;">儲存</button>
         </div>
         <div class="modal-body row">
           <div class="col-12 m-0 p-0 position-relative mb-5">
             <div class="bg-holder" style="height: 170px;">
-              <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="card-img-top" alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
+              <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+                style="height:100%;width:100%;object-fit:cover">
             </div>
             <label for="cover" class="btn cover-uploader">
               <input class="d-none" type="file" id="cover" name="cover" accept="image/*">
               <i class="fas fa-camera" style="font-size: 1.5em; color: white"></i>
             </label>
             <div class="avatar-holder">
-              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}" class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
+              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+                class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
             </div>
             <label for="avatar" class="btn avator-uploader">
               <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*">
               <i class="fas fa-camera" style="color: white;"></i>
             </label>
           </div>
-         
+
           <div class="col-12 mb-3 mt-2">
-            <label for="name" class="fw-bold" style="margin-bottom: -30px; margin-left: 8px; font-size: 1.1em">名稱</label>
-            <input type="text" class="form-control pt-4 nowcount1"
-              id="name" name="name" maxlength="50" style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em" aria-describedby="nameHelp" value="{{users.name}}"/>
+            <label for="name" class="fw-bold"
+              style="margin-bottom: -30px; margin-left: 8px; font-size: 1.1em">名稱</label>
+            <input type="text" class="form-control pt-4 nowcount1" id="name" name="name" maxlength="50"
+              style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em"
+              aria-describedby="nameHelp" value="{{users.name}}" />
             <p class="text-end text-muted now1" style="font-size: 0.98em;"></p>
-          </div> 
+          </div>
           <div class="col-12 mb-3 mt-2">
             <label for="description" class="fw-bold" style="margin-left: 8px; font-size: 1.1em;">自我介紹</label>
-            <textarea class="form-control nowcount2"
-              id="description" name="description" style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em;" maxlength="160" aria-describedby="descriptionHelp">{{users.description}}</textarea>
+            <textarea class="form-control nowcount2" id="description" name="description"
+              style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em;"
+              maxlength="160" aria-describedby="descriptionHelp">{{users.description}}</textarea>
             <p class="text-end text-muted now2" style="font-size: 0.98em;"></p>
           </div>
         </div>

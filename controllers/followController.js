@@ -1,5 +1,6 @@
 const { User, Followship } = require('../models')
 const { Op } = require('sequelize')
+const helpers = require('../_helpers')
 
 const followController = {
 
@@ -17,6 +18,9 @@ const followController = {
         ['Followings', Followship, 'updatedAt', 'DESC']]
     }).then((users) => {
 
+      if (req.user.id === req.params.id) {
+        res.redirect('back')
+      }
       const userId = req.user.id
       users = users.map(user => ({
         ...user.dataValues,
@@ -25,9 +29,9 @@ const followController = {
         isFollowed: req.user.Followers.some(d => d.id === user.id)
       }))
 
-      let followeringbar = users.slice(0, 10)
-      followeringbar = followeringbar.sort((a, b) => b.FollowerCount - a.FollowerCount)
 
+      followeringbar = followeringbar.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      let followeringbar = users.slice(0, 10)
       users = users.filter(user => user.isFollowed === true)
 
       return res.render('followership', {
@@ -36,7 +40,7 @@ const followController = {
         followeringbar
       })
 
-    })
+    }).catch(error => console.error('error!'))
   },
   getFollowings: (req, res) => {
     User.findAll({
@@ -51,6 +55,9 @@ const followController = {
       order: [['Followers', Followship, 'updatedAt', 'DESC']]
     }).then((users) => {
 
+      if (req.user.id === req.params.id) {
+        res.redirect('back')
+      }
       const userId = req.user.id
 
       users = users.map(following => ({
@@ -59,10 +66,8 @@ const followController = {
         isFollowing: req.user.Followings.some(d => d.id === following.id)
       }))
 
-
-      let followeringbar = users.slice(0, 10)
       followeringbar = followeringbar.sort((a, b) => b.FollowerCount - a.FollowerCount)
-
+      let followeringbar = users.slice(0, 10)
       users = users.filter(user => user.isFollowing === true)
 
       return res.render('followingship', {
@@ -71,7 +76,7 @@ const followController = {
         followeringbar,
       })
 
-    })
+    }).catch(error => { console.error('error') })
   }
 }
 
