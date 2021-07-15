@@ -78,7 +78,6 @@ const userController = {
       .then(() => res.redirect('back'))
   },
   getProfile: async (req, res) => {
-
     try {
       await Promise.all([
         User.findByPk(req.params.id, {

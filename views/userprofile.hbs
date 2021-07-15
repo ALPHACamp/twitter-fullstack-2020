@@ -79,19 +79,23 @@
         {{else}}
         <a href="mailto:{{users.email}}" class="m-1" style="color:tomato;">
           <i class="far fa-envelope fa-2x m-1"></i> </a>
-        {{#if users.isNoticed}}
-        <a href="/users/noti/{{users.id}}" class="m-1" style="color:tomato;">
-          <i class="fas fa-bell fa-2x m-1"></i>
-        </a>
-        {{else}}
-        <a href="/users/noti/{{users.id}}" class="m-1" style="color:tomato;">
-          <i class="far fa-bell fa-2x m-1"></i>
-        </a>
-        {{/if}}
 
+        {{#if users.isNoticed}}
+        <div class="Noticed">
+          <a href="/users/noti/{{users.id}}" class="" style="color:tomato;">
+            <i class="fas fa-bell fa-2x m-1"></i>
+          </a>
+        </div>
+        {{else}}
+        <div class="NoticeAni">
+          <a href="/users/noti/{{users.id}}" class="m-1" id="noticeBell" style="color:tomato;">
+            <i class="far fa-bell fa-2x m-1"></i>
+          </a>
+        </div>
+        {{/if}}
         {{#if isFollowed}}
-        <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center
-                    ">
+        <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;"
+          class="text-center">
           <button type="submit" class="btn btn-tomato rounded-pill" name="{{users.id}}">正在跟隨</button>
         </form>
         {{else}}
