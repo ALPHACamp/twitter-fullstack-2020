@@ -7,40 +7,73 @@ const Tweet = db.Tweet
 const helper = require('../_helpers')
 const fs = require('fs')
 const Reply = db.Reply
-
+const Like = db.Like
 
 const twitController = {
 
   getTwitters: (req, res) => {
-    // 撈出所有 User 與 followers 資料
-    Tweet.findAll({
-      order: [['createdAt', 'DESC']],
-      raw: true,
-      nest: true,
-      include: [User]
-    }).then(tweet => {
-      //console.log(tweet)加入 console 觀察資料的變化
-      // console.log(tweet) // 加入 console 觀察資料的變化
+    Promise.all([
+      Tweet.findAll({
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true,
+        include: [User]
+      }),
       User.findAll({
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      }).then(users => {
-        const userself = req.user.id
-        users = users.map(user => ({// 整理 users 資料
-          ...user.dataValues,
-          FollowerCount: user.Followers.length,// 計算跟隨者/跟隨中人數
-          FollowingCount: user.Followings.length,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
-        }))
-        helper.removeUser(users, userself)//移除使用者自身資訊
-        users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
-        return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
+      }),
+      Like.findAll({
+        raw: true,
+        nest: true,
+        include: [User, Tweet]
       })
-    })
+    ]).then(async ([tweet, users, likes]) => {
+      const userself = req.user.id
+      users = users.map(user => ({// 整理 users 資料
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,// 計算跟隨者/跟隨中人數
+        FollowingCount: user.Followings.length,
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
+      }))
+      helper.removeUser(users, userself)//移除使用者自身資訊
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
+      tweet = tweet.map(async tweet => {
+        const tweetId = tweet.id
+
+        let tt = await Like.findAll({
+          where: { TweetId: tweetId },
+          raw: true,
+          nest: true,
+        })
+          .then((like) => {
+            return Reply.findAll({
+              where: { TweetId: tweetId },
+              raw: true,
+              nest: true,
+            })
+              .then(reply => {
+                tweet.likeCount = like.length
+                tweet.replyCount = reply.length
+                return tweet
+              })
+          })
+        console.log('===============')
+
+        console.log(tt)
+
+        console.log('===============')
+        return tt
+      })
+
+      console.log(tweet)
+      return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
+    })
   },
+
 
   toTwitters: (req, res) => {
     //console.log(req.user.id)
@@ -155,7 +188,8 @@ const twitController = {
           order: [['createdAt', 'DESC']],
           raw: true,
           nest: true,
-          include: [User]
+          include: [User],
+          where: { UserId: userId }
         })
           .then(tweet => {
             User.findByPk(userId, {
@@ -165,7 +199,9 @@ const twitController = {
                 { model: User, as: 'Followings', attributes: ['avatar', 'id'] },
               ]
             })
-            return res.render('user', { users, tweet })
+            console.log(tweet)
+            const tweetLength = tweet.length
+            return res.render('user', { users, tweet, tweetLength })
           })
       })
 
@@ -365,9 +401,10 @@ const twitController = {
     })
   },
   getIdReplies: (req, res) => {
-
+    console.log(req.params.id)
     Reply.findAll({
       order: [['createdAt', 'ASC']],
+      where: { TweetId: req.params.id },
       nest: true,
       raw: true,
       include: [
@@ -390,7 +427,33 @@ const twitController = {
 
   },
 
-
+  postLike: (req, res) => {
+    // console.log(req.params.userId)
+    // console.log(req.params.tweetId)
+    const userId = req.params.userId
+    const tweetId = req.params.tweetId
+    Like.findOne({
+      // raw: true,
+      where: { userId: userId, tweetId: tweetId }
+    }).then(like => {
+      if (like) {
+        // console.log('有找到一樣的, 準備刪除')
+        like.destroy()
+          .then(() => {
+            res.json({ status: 'ok', message: '刪除Like推文成功' })
+          })
+      } else {
+        // console.log('沒有有找到一樣的, 準備進行like')
+        Like.create({
+          UserId: userId,
+          TweetId: tweetId,
+        })
+          .then(() => {
+            res.json({ status: 'ok', message: 'Like推文成功' })
+          })
+      }
+    })
+  },
 
 
   logout: (req, res) => {
