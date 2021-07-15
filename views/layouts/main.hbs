@@ -46,7 +46,7 @@
       <form action="/tweets" method="post">
       <div class="modal-body">
         <img src="{{user.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px" alt="A user" />
-        <textarea class="form-control" id="content" name="content" rows="3" placeholder="有什麼新鮮事？" maxlength="140" required></textarea>
+        <textarea class="form-control" id="description" name="description" rows="3" placeholder="有什麼新鮮事？" maxlength="140" required></textarea>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-tomato">推文</button>
@@ -72,7 +72,7 @@
           <div class="col-7 align-self-center px-md-2 px-4">
             <span class='h5 fw-bold d-none d-sm-inline'>{{tweet.User.name}}
             <span style="color: #6c757d; font-size: 0.675em">@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
-            <p class="mt-2" style="color: black; font-size: 0.675em">{{tweet.content}} </p>
+            <p class="mt-2" style="color: black; font-size: 0.675em">{{tweet.description}} </p>
             <p class="mt-2" style="color: tomato; font-size: 0.675em">回覆給@{{tweet.User.account}}</p>
           </div>
           <br>

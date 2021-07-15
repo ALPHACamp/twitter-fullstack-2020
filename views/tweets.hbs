@@ -54,7 +54,7 @@
           <div class="form-group">
             <img src="{{user.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px; margin:0px 0px 15px -10px"
               alt="A user" />
-            <textarea class="form-control" id="content" name="content" rows="3" placeholder="tweet一下你的心情" 
+            <textarea class="form-control" id="description" name="description" rows="3" placeholder="tweet一下你的心情" 
             maxlength="140"
             required
             ></textarea>
@@ -80,7 +80,7 @@
               <a href="/tweets/{{this.id}}" style="color:black; text-decoration:none;">
               <div>
               
-              <p class="mt-2">{{this.content}}</p>
+              <p class="mt-2">{{this.description}}</p>
               </div>
               </a>
               <div class="col-2 d-flex align-items-center justify-content-center">
