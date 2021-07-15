@@ -27,6 +27,10 @@ const tweetService = {
     })
   },
   getTweet: async (req, res, callback) => {
+    let user = await User.findByPk(req.user.id, {
+      include: [{ model: Tweet, as: 'LikedTweets' }]
+    })
+
     let tweet = await Tweet.findByPk(req.params.id, {
       include: [
         User,
@@ -38,13 +42,14 @@ const tweetService = {
       ...tweet.toJSON(),
       LikedCount: tweet.LikedUsers.length,
       ReplyCount: tweet.Replies.length,
-      isLiked: req.user.LikedTweets.map(t => t.id).includes(tweet.id)
+      isLiked: user.LikedTweets.map(t => t.id).includes(tweet.id)
     }
     return callback({
       tweet,
       Appear: { navbar: true, top10: true },
     })
   },
+
   postTweet: async (req, res, callback) => {
     if (!req.body.description) {
       return callback({ status: 'error', message: 'description empty!' })
@@ -58,6 +63,7 @@ const tweetService = {
     })
     return callback({ status: 'success', message: 'tweet has been created successfully!' })
   },
+
   postReply: async (req, res, callback) => {
     if (!req.body.comment) {
       return callback({ status: 'error', message: 'comment empty!' })

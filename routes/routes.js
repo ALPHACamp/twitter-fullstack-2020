@@ -18,11 +18,11 @@ router.get('/', authenticated, (req, res) => res.redirect('/tweets'));
 
 router.get('/tweets', authenticated, tweetController.getTweets);
 router.post('/tweets', authenticated, tweetController.postTweet);
-router.get('/tweets/:id', authenticated, tweetController.getTweet);
+router.get('/tweets/:id/replies', authenticated, tweetController.getTweet);
 router.post('/tweets/:id/replies', authenticated, tweetController.postReply)
 
-router.post('/like/:tweetId', authenticated, userController.addLike);
-router.delete('/like/:tweetId', authenticated, userController.removeLike);
+router.post('/tweets/:tweetId/like', authenticated, userController.addLike);
+router.post('/tweets/:tweetId/unlike', authenticated, userController.removeLike);
 
 router.get('/signup', userController.signUpPage);
 router.post('/signup', userController.signUp);

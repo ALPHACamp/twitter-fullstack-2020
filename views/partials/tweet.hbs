@@ -20,7 +20,7 @@
           </div>
 
           <div class="py-1">
-            <a class="" href="/tweets/{{this.id}}">
+            <a class="" href="/tweets/{{this.id}}/replies">
               <p class="btn text-start w-100" style="word-break: break-all;">{{this.description}}</p>
             </a>
           </div>
@@ -46,7 +46,7 @@
           {{!-- Heart --}}
           <div class="mr-2">
             {{#if this.isLiked }}
-            <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+            <form action="/tweets/{{this.id}}/unlike" method="POST">
               <button type="submit" class="btn" style="color:#E0245E" id="likeHeart">
                 <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -56,7 +56,7 @@
               </button>
             </form>
             {{else}}
-            <form action="/like/{{this.id}}" method="POST">
+            <form action="/tweets/{{this.id}}/like" method="POST">
               <button type="submit" class="btn" style="color:#657786" id="likeHeart">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
