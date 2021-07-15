@@ -78,7 +78,7 @@ const userController = {
   },
   getProfile: async (req, res) => {
     try {
-      const [users, user, followship] = await Promise.all([
+      let [users, user, followship] = await Promise.all([
         User.findAll({ where: { is_admin: false }, raw: true, nest: true, attributes: ['id'] }),
         User.findByPk(req.params.id, {
           where: { is_admin: false },
