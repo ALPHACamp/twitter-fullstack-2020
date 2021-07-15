@@ -6,11 +6,6 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    description: DataTypes.STRING,
-    // img換成avatar; bg_img換成cover
-    avatar: DataTypes.STRING,
-    cover: DataTypes.STRING,
-    is_admin: DataTypes.BOOLEAN,
     isNoticed: DataTypes.BOOLEAN,
   }, {});
 
