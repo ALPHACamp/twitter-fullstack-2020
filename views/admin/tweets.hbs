@@ -1,10 +1,10 @@
-<div>
+<div class="w-100 border-end">
   <h5 class="my-0 p-2 border-bottom">推文清單</h5>
 
   {{#each tweets}}
-  <div class="border border-bottom-0">
+  <div class="border-bottom">
     <div class="container">
-      <div class="row">
+      <div class="d-flex flex-nowrap">
         <div class="col-auto p-1">
           {{#if this.User.avatar}}
           <img class="rounded-circle" src="{{this.User.avatar}}" style="width: 50px;max-height: 50px;">
@@ -14,20 +14,16 @@
         </div>
         <div class="col d-flex flex-column p-1">
 
-          <div class="py-1">
-            <strong>{{this.User.name}}</strong> <sub><i>@{{this.User.account}} · </i>{{moment this.createdAt}}</sub>
+          <div class="p-1 d-flex align-items-center">
+            <strong>{{this.User.name}}</strong> <sub class="user-link"><i>@{{this.User.account}} · </i>{{moment this.createdAt}}</sub>
           </div>
           <div class="py-1">
             <p>{{this.description}}</p>
           </div>
-
-          <div style="col-auto px-1 d-flex align-items-center">
-            <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;" style="float:right">
-              <button type="submit" class="btn" >X</button>
-            </form>
-
-          </div>
         </div>
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn">X</button>
+        </form>
       </div>
     </div>
   </div>
