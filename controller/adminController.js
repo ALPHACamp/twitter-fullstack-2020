@@ -59,7 +59,7 @@ const adminController = {
 
       let Data = []
       Data = users.rows.map(async (user, index) => {
-        const [following, follower, userTweet] = await Promise.all([
+        const [following, follower, tweet] = await Promise.all([
           Followship.findAndCountAll({
             raw: true,
             nest: true,
@@ -76,21 +76,26 @@ const adminController = {
             where: { UserId: user.id },
           })
         ])
-        const likes = await Like.findAndCountAll({
-          raw: true,
-          nest: true,
-          where: { TweetId: userTweet.rows.id },
+        let tweetLike = tweet.rows.map(async (tw, index) => {
+          const like = await Like.findAndCountAll({
+            raw: true,
+            nest: true,
+            where: { tweetId: tw.id }
+          })
+          return like.count
         })
+        tweetLike = await Promise.all(tweetLike)
+        const like = tweetLike.length > 0 ? tweetLike.reduce((a, b) => a + b) : 0
         return {
           id: user.id,
           name: user.name,
           avatar: user.avatar,
           account: user.account,
           cover: user.cover,
-          likes: likes,
           following: following,
           follower: follower,
-          userTweet: userTweet
+          userTweet: tweet,
+          like: like
         }
       })
       Promise.all(Data).then(data => {
