@@ -1,8 +1,8 @@
 const top10List = document.querySelector('#top10').children[0]
 const getTop10 = async (showNumber, showButton) => {
-  let top10 = await axios.get('http://localhost:8000/api/top10')
+  let top10 = await axios.get('/api/top10')
   top10 = top10.data
-  let user = await axios.get(`http://localhost:8000/api/users/${top10List.parentElement.dataset.userId}`)
+  let user = await axios.get(`/api/users/${top10List.parentElement.dataset.userId}`)
   user = user.data
   top10.map((top, i) => {
     if (i + 1 > showNumber) return
