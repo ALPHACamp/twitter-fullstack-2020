@@ -51,7 +51,7 @@
       <form action="/tweets" method="POST" class="col-12 rounded bg-white" style="outline: rgba(0, 0, 0, 0.2) 1px outset;">
       <div class="col-12 position-relative" style="margin-bottom: 15px; padding: 70px 0;">
         <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
-          <img src="{{user.img}}" class="rounded-circle p-1 mt-1 " style="width: 60px; height: 60px;" alt="A user"/>
+          <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 60px; height: 60px;" alt="A user"/>
         </div>
         <div class="position-absolute" style="z-index: 0; width:inherit; top:0px;">
           <textarea class="nowcount3 mt-1" id="content" name="content" rows="3" placeholder="tweet一下你的心情" 
@@ -69,7 +69,7 @@
         <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard" onclick="location.href='/tweets/{{this.id}}'">
             <div class="col-1 d-flex justify-content-center align-items-center">
               <a href="/users/{{this.UserId}}" class="p-1">
-                <img src="{{this.User.img}}" class="rounded-circle" style="width: 60px; height: 60px"
+                <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 60px; height: 60px"
                 alt="A user" />
               </a>
             </div>
