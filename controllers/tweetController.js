@@ -42,7 +42,8 @@ const tweetController = {
       tweets = tweets.rows.map(t => ({
         ...t,
         description: t.description.substring(0, 50),
-        isLiked: helpers.getUser(req).LikedTweet.some(d => d.id === t.id)
+        isLiked: req.user.LikedTweet.map(d => d.id)
+          .includes(t.id)
       }))
 
       followship = followship.map(followships => ({
@@ -102,7 +103,7 @@ const tweetController = {
       })
       if (!tweet) throw new Error('Tweet is not found!')
 
-      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(helpers.getUser(req).id)
+      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(req.user.id)
       res.render('tweet', {
         tweet: tweet.toJSON(),
         isLiked
