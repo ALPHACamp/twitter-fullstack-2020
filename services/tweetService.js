@@ -10,6 +10,7 @@ const tweetService = {
         { model: User, as: 'LikedUsers' }
       ]
     })
+    console.log('into services/tweetService/line13...tweets', tweets)
     tweets = tweets.map(t => ({
       ...t.dataValues,
       User: t.User.dataValues,
