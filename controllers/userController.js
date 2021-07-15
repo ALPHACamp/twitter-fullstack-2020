@@ -190,7 +190,7 @@ const userController = {
   },
   addLike: async (req, res) => {
     try {
-      await Like.create({ UserId: helpers.getUser(req).id, TweetId: req.params.TweetId })
+      await Like.create({ UserId: helpers.getUser(req) })
       const tweet = await Tweet.findByPk(req.params.TweetId)
       await tweet.increment('likes')
       return res.redirect('/tweets')
@@ -204,6 +204,7 @@ const userController = {
         where: { UserId: helpers.getUser(req).id, TweetId: req.params.TweetId }
       })
       const tweet = await Tweet.findByPk(req.params.TweetId)
+
       await like.destroy()
       await tweet.decrement('likes')
       return res.redirect('/tweets')

@@ -83,7 +83,6 @@ const tweetController = {
         replyCount: 0,
         likes: 0
       })
-      
       req.flash('success_messages', '推文成功發布！')
       res.redirect('/')
     } catch (error) {
