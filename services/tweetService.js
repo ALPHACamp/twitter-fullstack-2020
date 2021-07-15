@@ -2,6 +2,10 @@ const { Tweet, User, Reply, Like } = require('../models')
 
 const tweetService = {
   getTweets: async (req, res, callback) => {
+    let user = await User.findByPk(req.user.id, {
+      include: [{ model: Tweet, as: 'LikedTweets' }]
+    })
+
     let tweets = await Tweet.findAll({
       order: [['createdAt', 'DESC']],
       include: [
@@ -10,13 +14,12 @@ const tweetService = {
         { model: User, as: 'LikedUsers' }
       ]
     })
-    console.log('into services/tweetService/line13...tweets', tweets)
     tweets = tweets.map(t => ({
       ...t.dataValues,
       User: t.User.dataValues,
       LikedCount: t.LikedUsers.length,
       ReplyCount: t.Replies.length,
-      isLiked: req.user.LikedTweets.map(t => t.id).includes(t.dataValues.id)
+      isLiked: user.LikedTweets.map(t => t.id).includes(t.dataValues.id)
     }))
     return callback({
       tweets,
