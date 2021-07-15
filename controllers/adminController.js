@@ -14,7 +14,7 @@ const adminController = {
     }).then(tweets => {
       tweets = tweets.map(t => ({
         ...t,
-        content: t.content.substring(0, 50)
+        description: t.description.substring(0, 50)
       }))
       return res.render('admin/tweets', { tweets })
     })

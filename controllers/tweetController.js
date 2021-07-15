@@ -29,7 +29,7 @@ const tweetController = {
 
       const data = result.rows.map(t => ({
         ...t,
-        content: t.content.substring(0, 50),
+        description: t.description.substring(0, 50),
         isLiked: req.user.LikedTweet.map(d => d.id)
           .includes(t.id)
       }))
@@ -46,19 +46,19 @@ const tweetController = {
     }
   },
   postTweet: (req, res) => {
-    if (!req.body.content) {
+    if (!req.body.description) {
       req.flash('error_messages', '推文內容不存在')
       return res.redirect('back')
-    } else if (req.body.content.length === 0) {
+    } else if (req.body.description.length === 0) {
       req.flash('error_messages', '請輸入推文內容!')
       return res.redirect('back')
-    } else if (req.body.content.length > 140) {
+    } else if (req.body.description.length > 140) {
       req.flash('error_messages', '推文超過字數限制')
       return res.redirect('back')
     }
     return Tweet.create({
       UserId: req.user.id,
-      content: req.body.content,
+      description: req.body.description,
       replyCount: 0,
       likes: 0
     })
@@ -94,7 +94,7 @@ const tweetController = {
     })
   },
   putTweet: (req, res) => {
-    if (!req.body.content) {
+    if (!req.body.description) {
       req.flash('error_messages', '推文不存在!')
       return res.redirect('back')
     }
@@ -103,7 +103,7 @@ const tweetController = {
       .then((tweet) => {
         Tweet.update({
           UserId: req.user.id,
-          content: req.body.content,
+          description: req.body.description,
           likes: req.body.likes
         })
           .then(() => {
