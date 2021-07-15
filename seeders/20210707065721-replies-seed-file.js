@@ -5,17 +5,17 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const replies = []
     const tweets = await Tweet.findAll({ attributes: ['id'] })
-    const people = await User.findAll({ attributes: ['id'] })
-    const users = people.slice(1)
+    const users = await User.findAll({
+      raw: true,
+      nest: true,
+      where: { is_admin: false },
+      attributes: ['id']
+    })
 
     tweets.forEach((tweet) => {
       [0, 1, 2].forEach((i) => {
-        let userIdRandom = Math.floor(Math.random() * (users.length + 1))
-        if (userIdRandom < 2) {
-          userIdRandom += 1
-        }
         replies.push({
-          UserId: users[userIdRandom].id,
+          UserId: users[Math.floor(Math.random() * users.length)].id,
           content: faker.lorem.word(),
           TweetId: tweet.id,
           createdAt: new Date(),
