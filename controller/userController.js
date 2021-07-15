@@ -504,7 +504,8 @@ const userController = {
             user: user.dataValues,
             followingCount: following.count,
             followerCount: follower.count,
-            follower: follower.rows
+            followers: follower.rows,
+            followings: following.rows
           }
           return next()
         })
