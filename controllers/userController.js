@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs')
+const imgur = require('imgur-node-api')
 const { thousandComma } = require('../config/hbs-helpers')
 const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
   signUpPage: (req, res) => {
