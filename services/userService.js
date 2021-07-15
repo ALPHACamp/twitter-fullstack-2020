@@ -82,13 +82,13 @@ const userService = {
         cover: cover,
         password: req.body.password,
       })
-    }else{
+    } else {
       user = await User.findByPk(helpers.getUser(req).id)
       await user.update({
         name: req.body.name,
         introduction: req.body.introduction,
         password: req.body.password
-    })
+      })
     }
     console.log('here1')
     req.flash('success_messages', '修改成功')
@@ -102,7 +102,7 @@ const userService = {
 
 
 
-},
+  },
 
   getUserReplies: async (req, res, callback) => {
     const thisPageUser = await getThisPageUser(req)
@@ -167,15 +167,15 @@ const userService = {
   },
 
   getFollowing: async (req, res, callback) => {
+    console.log(req.body)
     console.log(helpers.getUser(req).id.toString())
-    console.log(req.params.id)
-    if (req.params.id === helpers.getUser(req).id.toString()) {
+    if (req.body.id === helpers.getUser(req).id.toString()) {
       req.flash('error_messages', '無法追蹤自己')
       callback()
     } else {
       await Followship.create({
         followerId: helpers.getUser(req).id,
-        followingId: req.params.id
+        followingId: req.body.id
       })
       return callback()
     }

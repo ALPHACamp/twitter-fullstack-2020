@@ -40,7 +40,8 @@
         <button type="submit" class="btn btn-regular rounded-pill" style="height: 32px;">正在跟隨</button>
       </form>
       {{else}}
-      <form action="/followships/{{thisPageUser.id}}" method="post">
+      <form action="/followships" method="post">
+        <input type="text" name="id" id="id" value="{{thisPageUser.id}}" hidden>
         <button type="submit" class="btn btn-outline-regular rounded-pill" style="height: 32px;">跟隨</button>
       </form>
       {{/if}}

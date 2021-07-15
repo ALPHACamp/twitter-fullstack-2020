@@ -13,12 +13,16 @@ const getTop10 = async (showNumber, showButton) => {
       top.action = `/followships/${top.id}?_method=DELETE`
       top.class = "btn btn-regular rounded-pill"
       top.text = '正在跟隨'
+      top.hiden = ""
+      top.value = ""
     } else {
-      top.action = `/followships/${top.id}`
+      top.action = `/followships`
       top.class = "btn btn-outline-regular rounded-pill"
       top.text = '跟隨'
+      top.hiden = "true"
+      top.value = top.id
     }
-    if (top.id===user.id){
+    if (top.id === user.id) {
       top.class += " invisible"
     }
     top10List.innerHTML += `<li class="list-group-item p-0 border-top">
@@ -33,6 +37,7 @@ const getTop10 = async (showNumber, showButton) => {
                   </div>
                   <div class="d-flex align-items-center me-2">
                     <form action="${top.action}" method="post">
+                            <input type="hidden" name="id" id="id" value="${top.value}">
                       <button type="submit" class="${top.class}">${top.text}</button>
                     </form>
                   </div>

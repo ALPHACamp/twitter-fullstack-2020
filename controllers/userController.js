@@ -133,6 +133,9 @@ const userController = {
   },
 
   getFollowing: async (req, res) => {
+    if(req.body.id === helpers.getUser(req).id.toString()){
+      return res.redirect(200,'不要玩網站')
+    }
     userService.getFollowing(req, res, () => res.redirect('back'))
   },
 

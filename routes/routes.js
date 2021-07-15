@@ -47,7 +47,7 @@ router.get('/users/:id/replies', authenticated, userController.userPageReplies)
 router.get('/users/:id/likes', authenticated, userController.userPageLikes)
 router.get('/users/:id/followers', authenticated, userController.userFollowersPage)
 router.get('/users/:id/followings', authenticated, userController.userFollowingsPage)
-router.post('/followships/:id', authenticated, userController.getFollowing)
+router.post('/followships', authenticated, userController.getFollowing)
 router.delete('/followships/:id', authenticated, userController.deleteFollowing)
 
 module.exports = router
