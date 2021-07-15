@@ -11,7 +11,7 @@ const userService = {
 
   getTop10: async (callback) => {
     let tops = await User.findAll({
-      where: { isAdmin: false },
+      where: { role: null },
       include: [{ model: User, as: 'Followers' }]
     })
     tops = tops.map(top => ({
