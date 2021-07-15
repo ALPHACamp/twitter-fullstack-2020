@@ -314,10 +314,12 @@ const userController = {
   },
 
   getUserFollowings: async (req, res) => {
-    const topFollowing = res.locals.data
-    const user = helpers.getUser(req)
-    const userInfo = res.locals.userInfo
     try {
+      const topFollowing = res.locals.data
+      const user = helpers.getUser(req)
+      const userInfo = res.locals.userInfo
+      const { userId } = req.params
+
       const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
@@ -325,24 +327,38 @@ const userController = {
           UserId: req.params.userId
         }
       })
+      const tweetCount = tweets.count
+
+      const following = await Followship.findAll({
+        raw: true,
+        nest: true,
+        where: {
+          followerId: user.id
+        },
+        order: [
+          ['createdAt', 'DESC']
+        ]
+      })
 
       let Data = []
-      const tweetCount = tweets.count
-      Data = userInfo.followings.map(async (following, index) => {
-        const [followingUser] = await Promise.all([
-          User.findOne({
-            raw: true,
-            nest: true,
-            where: {
-              id: following.followingId
-            }
-          })
-        ])
+
+      Data = following.map(async (f, i) => {
+        const user = await User.findByPk(f.followingId)
+        const isFollowed = await Followship.findOne({
+          where: {
+            followerId: helpers.getUser(req).id,
+            followingId: f.followingId
+          }
+        })
         return {
-          followingUser: followingUser
+          ...f,
+          isFollowed: isFollowed ? true : false,
+          user
         }
       })
+
       Promise.all(Data).then(data => {
+        console.log(data)
         return res.render('followings', {
           thisUser: userInfo.user,
           user,
@@ -353,8 +369,9 @@ const userController = {
       })
     }
     catch (err) {
+      console.log('----------------------')
       console.log(err)
-      console.log('getUserFollowings err')
+      console.log('--------------------')
       return res.redirect('/')
     }
   },
