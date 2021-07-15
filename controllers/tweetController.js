@@ -65,7 +65,7 @@ const tweetController = {
       console.error(error)
     }
   },
-  postTweet: async (req, res, next) => {
+  postTweet: async (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '推文內容不存在')
       return res.redirect('/')
@@ -77,22 +77,20 @@ const tweetController = {
       return res.redirect('/')
     }
     try {
-      return Tweet.create({
+      await Tweet.create({
         UserId: helpers.getUser(req).id,
         description: req.body.description,
         replyCount: 0,
         likes: 0
       })
-        .then(() => {
-          req.flash('success_messages', '推文成功發布！')
-          res.redirect('/')
-        })
+      
+      req.flash('success_messages', '推文成功發布！')
+      res.redirect('/')
     } catch (error) {
-      next(error)
       console.error(error)
     }
   },
-  getTweet: async (req, res, next) => {
+  getTweet: async (req, res) => {
     try {
       const tweet = await Tweet.findByPk(req.params.id, {
         include: [User,
@@ -109,8 +107,7 @@ const tweetController = {
         isLiked
       })
     } catch (error) {
-      next(error)
-      // console.error(error)
+      console.error(error)
     }
   },
   editTweet: (req, res) => {

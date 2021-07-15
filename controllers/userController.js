@@ -188,33 +188,26 @@ const userController = {
           })
       })
   },
-  addLike: async (req, res, next) => {
+  addLike: async (req, res) => {
     try {
       await Like.create({ UserId: helpers.getUser(req).id, TweetId: req.params.TweetId })
-        .then(() => {
-          return Tweet.findByPk(req.params.TweetId)
-            .then((tweet) => {
-              return tweet.increment('likes')
-            })
-        })
-        .then(() => res.redirect('/tweets'))
+      const tweet = await Tweet.findByPk(req.params.TweetId)
+      await tweet.increment('likes')
+      return res.redirect('/tweets')
     } catch (error) {
-      next(error)
-      // console.error(error)
+      console.error(error)
     }
   },
-  removeLike: async (req, res, next) => {
+  removeLike: async (req, res) => {
     try {
       const like = await Like.findOne({
         where: { UserId: helpers.getUser(req).id, TweetId: req.params.TweetId }
       })
       const tweet = await Tweet.findByPk(req.params.TweetId)
-
-      like.destroy()
-      tweet.decrement('likes')
-      res.redirect('/tweets')
+      await like.destroy()
+      await tweet.decrement('likes')
+      return res.redirect('/tweets')
     } catch (error) {
-      // next(error)
       console.error(error)
     }
   },
