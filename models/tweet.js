@@ -3,6 +3,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Tweet = sequelize.define('Tweet', {
     UserId: DataTypes.INTEGER,
+    // content換成description
     description: DataTypes.TEXT,
     likes: DataTypes.INTEGER,
     replyCount: DataTypes.INTEGER
