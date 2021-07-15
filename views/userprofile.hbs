@@ -204,8 +204,17 @@
                     </div>
 
                     <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                      <i class="far fa-comment text-muted small"> {{this.Tweet.replyCount}}</i>
-                      <i class="far fa-heart text-muted small"> {{this.Tweet.likes}}</i>
+                      {{#if this.Tweet.replyCount}}
+                      <i class="fas fa-comment text-muted small">
+                        {{this.Tweet.replyCount}}</i>
+                      {{else}}
+                      <i class="far fa-comment text-muted small"></i>
+                      {{/if}}
+                      {{#if this.Tweet.likes}}
+                      <i class="fas fa-heart text-muted small"> {{this.Tweet.likes}}</i>
+                      {{else}}
+                      <i class="far fa-heart text-muted small"></i>
+                      {{/if}}
                     </div>
                   </div>
                 </div>
