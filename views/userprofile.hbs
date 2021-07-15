@@ -177,25 +177,32 @@
         {{!-- repliedTweet --}}
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
           <ul class="list-group list-group-flush">
-            {{#each users.Replies}}
+
+            {{#each repiledTweet}}
             <li class="list-group-item">
               <div class="row g-0">
                 <div class="col-md-1">
-                  <a href="/users/{{../users.id}}" class="text-center">
-                    <img src="{{../users.avatar}}" alt="" width="75" height="75"
+                  <a href="/users/{{this.Tweet.User.id}}" class="text-center">
+                    <img src="{{this.Tweet.User.avatar}}" alt="" width="75" height="75"
                       class="rounded-circle me-2 rounded mt-2 d-block" />
                   </a>
                 </div>
                 <div class="col-md-10">
                   <div class="card-body" style="margin-left:1vw">
                     <div class="card-title">
-                      <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
-                      <span class="text-muted"> @{{../users.account}}</span>
-                      <span class="small text-muted">‧{{moment this.updatedAt}}</span>
+                      <span class="card-title h6" style="margin-right:2px">{{this.Tweet.User.name}}</span>
+                      <span class="text-muted"> @{{this.Tweet.User.account}}</span>
+                      <span class="small text-muted">‧{{moment this.createdAt}}</span>
                     </div>
                     <div class="card-text" style="margin-top:1vw">
-                      <p class="h6">{{this.content}}</p>
+                      <p class="h6">{{this.Tweet.description}}</p>
                     </div>
+
+                    <div class="card-text" style="margin-top:1vw">
+                      <a href="/tweets/{{this.Tweet.id}}" class="btn btn-tomato">你的回覆</a>
+                      <p class="h6 m-2 mx-auto">{{this.content}}</p>
+                    </div>
+
                     <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
                       <i class="far fa-comment text-muted small"> {{this.Tweet.replyCount}}</i>
                       <i class="far fa-heart text-muted small"> {{this.Tweet.likes}}</i>
@@ -205,6 +212,7 @@
               </div>
             </li>
             {{/each}}
+
           </ul>
         </div>
         {{!-- likedTweets --}}
@@ -313,25 +321,17 @@
         <div class="modal-body row">
           <div class="col-12 m-0 p-0 position-relative mb-5">
             <div class="bg-holder" style="height: 170px;">
-<<<<<<< HEAD
-              <img src="{{#if users.bg_img}}{{users.bg_img}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+              <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
                 class="card-img-top" alt="..." class="img-fluid" id="bgImage"
                 style="height:100%;width:100%;object-fit:cover">
-=======
-              <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="card-img-top" alt="..." class="img-fluid" id="bgImage" style="height:100%;width:100%;object-fit:cover">
->>>>>>> b9175ef4f45452dd76d72ad5ba22a5fbc2d53c55
             </div>
             <label for="cover" class="btn cover-uploader">
               <input class="d-none" type="file" id="cover" name="cover" accept="image/*">
               <i class="fas fa-camera" style="font-size: 1.5em; color: white"></i>
             </label>
             <div class="avatar-holder">
-<<<<<<< HEAD
-              <img src="{{#if users.img}}{{users.img}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
                 class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
-=======
-              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}" class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
->>>>>>> b9175ef4f45452dd76d72ad5ba22a5fbc2d53c55
             </div>
             <label for="avatar" class="btn avator-uploader">
               <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*">

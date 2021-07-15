@@ -57,6 +57,11 @@ const userController = {
     return res.render('tweets')
   },
   addFollowing: (req, res) => {
+
+    if (req.user.id === Number(1)) {
+
+      return res.redirect("back");
+    }
     if (req.user.id === Number(req.params.id)) {
       return res.redirect("back");
     }
@@ -65,6 +70,7 @@ const userController = {
       followingId: req.params.userId
     })
       .then(() => res.redirect('back'))
+      .catch((error) => console.error('error!'))
   },
   removeFollowing: (req, res) => {
     return Followship.findOne({
@@ -75,6 +81,7 @@ const userController = {
     })
       .then((followship) => followship.destroy())
       .then(() => res.redirect('back'))
+      .then((error) => console.error('error!'))
   },
   getProfile: async (req, res) => {
     try {
@@ -84,7 +91,7 @@ const userController = {
           where: { is_admin: false },
           include: [
             Tweet,
-            { model: Reply, include: [Tweet] },
+            { model: Reply, include: { model: Tweet, include: [User] } },
             { model: Tweet, as: 'LikedTweet' },
             { model: User, as: 'Followers' },
             { model: User, as: 'Followings' },
@@ -112,6 +119,10 @@ const userController = {
       const tweetCount = user.Tweets.length
       const isFollowed = req.user.Followings.some(d => d.id === user.id)
 
+      const repiledTweet = user.toJSON().Replies.map(result => result)
+      console.log(repiledTweet.Tweet)
+
+
       followship = followship.map(followships => ({
         ...followships.dataValues,
         FollowerCount: followships.Followers.length,
@@ -122,6 +133,7 @@ const userController = {
 
       return res.render('userprofile', {
         users: user.toJSON(),
+        repiledTweet,
         followerscount: thousandComma(followerscount),
         followingscount: thousandComma(followingscount),
         tweetCount: thousandComma(tweetCount),
@@ -129,8 +141,9 @@ const userController = {
         isFollowed,
         UserId,
       })
+
     } catch (error) {
-      console.log(error)
+      console.error('error')
     }
   },
   putProfile: async (req, res) => {

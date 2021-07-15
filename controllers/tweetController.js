@@ -20,7 +20,7 @@ const tweetController = {
         order: [['createdAt', 'DESC']],
         include: [User]
       })
-  
+
       const page = Number(req.query.page) || 1
       const pages = Math.ceil(result.count / pageLimit)
       const totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
