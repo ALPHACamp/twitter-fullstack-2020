@@ -104,7 +104,8 @@ const tweetController = {
         replyCount: replies.count,
         reply: replies.rows,
         likeCount: likes[0].likeCounts,
-        topFollowing, isLiked
+        topFollowing,
+        isLiked
       })
 
     } catch (err) {

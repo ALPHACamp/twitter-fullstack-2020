@@ -26,13 +26,24 @@
     <div class="d-flex flex-column ms-3 mt-3">
       <div class="d-flex">
         <button data-bs-toggle="modal" data-bs-target="#replyModal" data-id="{{tweet.id}}" type="button"
-          href="/tweets/{{ tweet.id }}/replies" class="fas fa-comment-dots h2"
+          href="/tweets/{{ tweet.id }}/replies" class="fas fa-comment-dots h3"
           style="border:none;background-color:white;color: #ffd472;"></button>
-        <p class="ms-3" style="color: #313c4bc2;">{{replyCount}}</p>
+        <p class="ms-3 h4" style="color: #313c4bc2;">{{replyCount}}</p>
       </div>
-      <div class="d-flex">
-        <i class="fab fa-gratipay h4" style="color: #ffd472;margin-right:0.1em"></i>
-        <p class="ms-3" style="color: #313c4bc2;">{{likeCount}}</p>
+      <div class="d-flex mt-2">
+        {{#if isLiked}}
+        <form action="/tweets/{{ tweet.id }}/unlike" method="post">
+          <button type="submit" href="/tweets/{{ tweet.id }}/replies" class="fab fa-gratipay h3"
+            style="border:none;background-color:white;color: #ffd472;"></button>
+        </form>
+        <p class="h4" style="margin-left:0.8em;color: #313c4bc2;">{{likeCount}}</p>
+        {{else}}
+        <form action="/tweets/{{ tweet.id }}/like" method="post">
+          <button type="submit" href="/tweets/{{ tweet.id }}/replies" class="fab fa-gratipay h3"
+            style="border:none;background-color:white;color: #313c4b;"></button>
+        </form>
+        <p class="h4" style="margin-left:0.8em;color: #313c4bc2;">{{likeCount}}</p>
+        {{/if}}
       </div>
     </div>
 
