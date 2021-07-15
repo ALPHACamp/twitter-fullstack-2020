@@ -158,7 +158,7 @@ const userController = {
         id: req.params.userId
       }
     }).then(thisUser => {
-      const allowEdit = Number(req.params.userId) === helpers.getUser(req).id
+      const allowEdit = Number(req.params.userId) !== helpers.getUser(req).id
 
       Followship.findAndCountAll({
         raw: true,
