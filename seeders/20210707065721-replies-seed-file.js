@@ -7,17 +7,14 @@ module.exports = {
     const tweets = await Tweet.findAll({ attributes: ['id'] })
     const users = await User.findAll({
       where: { is_admin: false },
-      attributes: ['id']
+      attributes: ['id'],
+      raw: true
     })
 
     tweets.forEach((tweet) => {
       [0, 1, 2].forEach((i) => {
-        let userIdRandom = Math.floor(Math.random() * (users.length + 2))
-        if (userIdRandom < 2) {
-          userIdRandom += 2
-        }
         replies.push({
-          UserId: userIdRandom,
+          UserId: users[Math.floor(Math.random() * users.length)].id,
           content: faker.lorem.word(),
           TweetId: tweet.id,
           createdAt: new Date(),

@@ -65,7 +65,7 @@
               <span style="color: #6c757d; font-size: 0.875em">@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
               <p class="mt-2">{{tweet.description}} </p>
               <div class="col-3 d-flex align-items-center justify-content-center ">
-                {{#if this.isLiked }}
+                {{#if tweet.isLiked }}
                 <form action="/tweets/{{tweet.id}}/unlike" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
                     <i class="fas fa-heart"> {{ tweet.likes }}</i>
@@ -82,12 +82,10 @@
                 {{#if tweet.replyCount}}
                   <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
                     data-bs-target="#replyModal">
-                    <span class='h5 fw-bold d-none d-sm-inline'></span>
                     <i class="fas fa-comment"> {{ tweet.replyCount }}</i>
                   </button>
                 {{else}}
                 <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
-                  <span class='h5 fw-bold d-none d-sm-inline'></span>
                   <i class="far fa-comment"> {{ tweet.replyCount }}</i>
                 </button>               
                 {{/if}}
