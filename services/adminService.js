@@ -25,6 +25,8 @@ const adminService = {
     let users = await User.findAll({
       include: [
         Tweet,
+        Reply,
+        Like,
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -32,6 +34,7 @@ const adminService = {
     users = users.map(user => ({
       ...user.dataValues,
       TweetsCount: user.Tweets.length,
+      LikedCount:user.Likes.length,
       FollowersCount: user.Followers.length,
       FollowingsCount: user.Followings.length,
     }))
@@ -48,6 +51,7 @@ const adminService = {
       RepliesCount: tweet.Replies.length,
       LikedUsersCount: tweet.LikedUsers.length,
     }))
+    console.log(users)
     users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
     return callback({
       users,
