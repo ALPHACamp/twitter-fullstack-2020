@@ -7,7 +7,8 @@
       {{!-- 大頭貼 --}}
       <div class="d-flex flex-column align-items-center"
         style="margin-right: 2vw;background-color:white;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
-        <img onerror="javascript:this.src='https://i.pinimg.com/564x/90/2b/84/902b841f3567ff8282b5db97c257aef1.jpg';"
+        <img
+          onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
           style="width: 16.7vw;height: 16.5vw;border-radius:1em;object-fit: cover;" src="{{ thisUser.avatar }}"
           alt="user avatar">
         <p class="h4 pt-4" style="color: #313c4b;">{{ thisUser.name }}</p>
@@ -99,13 +100,9 @@
     style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:20vh;box-shadow:0 0 8px 3px #ccccccb3;z-index: 2;">
     {{!-- avatar --}}
     <a href="/users/{{ this.tweetUserId }}/tweets" style="margin-top: -0.2em;">
-      {{#if this.tweetUserAvatar }}
       <img src="{{ this.tweetUserAvatar }}"
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
         style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
-      {{else}}
-      <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
-        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
-      {{/if}}
     </a>
     {{!-- account --}}
     <div style="color:#313c4b;width:25vw" class="m-4">
@@ -142,7 +139,8 @@
     style="background-color:rgba(225, 225, 225, 0.947);text-decoration:none;border-radius:0 0 1em 1em;width:54.1vw;height:24vh;z-index: 1;margin-top:-1em;">
     {{!-- avatar --}}
     <a href="/users/{{ ...thisUser.id }}/tweets" style="margin-top: 1em;">
-      <img onerror="javascript:this.src='https://i.pinimg.com/564x/90/2b/84/902b841f3567ff8282b5db97c257aef1.jpg';"
+      <img
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
         src="{{ ...thisUser.avatar }}"
         style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
 
