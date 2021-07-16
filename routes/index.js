@@ -48,6 +48,11 @@ const getTopFollowing = async (req, res, next) => {
     Promise.all(Data).then(data => {
 
       data = data.sort((a, b) => b.followerCount - a.followerCount)
+      data.forEach((d, i) => {
+        if (d.id === helpers.getUser(req).id) {
+          return data.splice(i, 1)
+        }
+      })
       data = data.slice(0, 10)
       res.locals.data = data
       return next()
