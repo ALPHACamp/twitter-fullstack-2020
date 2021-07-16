@@ -1,9 +1,7 @@
 const { User, Followship } = require('../models')
 const { Op } = require('sequelize')
-const helpers = require('../_helpers')
 
 const followController = {
-
   getFollowers: (req, res) => {
     User.findAll({
       where: {
@@ -15,12 +13,10 @@ const followController = {
         { model: User, as: 'Followings' },
       ],
       order: [
-        ['Followings', Followship, 'updatedAt', 'DESC']]
+        ['Followings', Followship, 'updatedAt', 'DESC']
+      ]
     }).then((users) => {
 
-      if (req.user.id === req.params.id) {
-        res.redirect('back')
-      }
       const userId = req.user.id
       users = users.map(user => ({
         ...user.dataValues,
@@ -30,8 +26,8 @@ const followController = {
       }))
 
 
-      followeringbar = followeringbar.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      let followeringbar = users.slice(0, 10)
+      const followeringbar = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+
       users = users.filter(user => user.isFollowed === true)
 
       return res.render('followership', {
@@ -39,8 +35,7 @@ const followController = {
         users,
         followeringbar
       })
-
-    }).catch(error => console.error('error!'))
+    }).catch(error => console.error(error))
   },
   getFollowings: (req, res) => {
     User.findAll({
@@ -52,12 +47,11 @@ const followController = {
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' },
       ],
-      order: [['Followers', Followship, 'updatedAt', 'DESC']]
+      order: [
+        ['Followers', Followship, 'updatedAt', 'DESC']
+      ]
     }).then((users) => {
 
-      if (req.user.id === req.params.id) {
-        res.redirect('back')
-      }
       const userId = req.user.id
 
       users = users.map(following => ({
@@ -66,17 +60,16 @@ const followController = {
         isFollowing: req.user.Followings.some(d => d.id === following.id)
       }))
 
-      followeringbar = followeringbar.sort((a, b) => b.FollowerCount - a.FollowerCount)
-      let followeringbar = users.slice(0, 10)
+      const followeringbar = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+
       users = users.filter(user => user.isFollowing === true)
 
       return res.render('followingship', {
         userId,
         users,
-        followeringbar,
+        followeringbar
       })
-
-    }).catch(error => { console.error('error') })
+    }).catch(error => console.error(error))
   }
 }
 
