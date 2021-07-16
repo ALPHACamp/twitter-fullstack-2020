@@ -33,7 +33,8 @@
       {{!-- avatar --}}
       <a href="/users/{{ user.id }}/tweets" style="margin-top: -0.2em;">
         {{#if user.avatar }}
-        <img src="{{ user.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
+        <img src="{{ user.avatar }}"
+          style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
         {{else}}
         <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
           style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
@@ -64,7 +65,8 @@
       {{!-- avatar --}}
       <a href="/users/{{ this.User.id }}/tweets" style="margin-top: -0.2em;">
         {{#if this.User.avatar }}
-        <img src="{{ this.User.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+        <img src="{{ this.User.avatar }}"
+          style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
         {{else}}
         <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
           style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">

@@ -100,7 +100,8 @@
     {{!-- avatar --}}
     <a href="/users/{{ ...thisUser.id }}/tweets" style="margin-top: -0.2em;">
       {{#if ...thisUser.avatar }}
-      <img src="{{ ...thisUser.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
+      <img src="{{ ...thisUser.avatar }}"
+        style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
       {{else}}
       <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
         style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">

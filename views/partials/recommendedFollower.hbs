@@ -6,7 +6,8 @@
   {{!-- avatar --}}
   <a href="/users/{{ this.id }}/tweets">
     {{#if this.avatar }}
-    <img src="{{ this.avatar }}" style="border-radius: 0.7em;height: 21vh;margin-left:0.4em">
+    <img src="{{ this.avatar }}"
+      style="border-radius: 0.7em;height: 21vh;width: 21vh;margin-left:0.4em;object-fit: cover;">
     {{else}}
     <img src="https://i.pinimg.com/564x/84/9b/50/849b50b189859a59ba38eed018cbfc1d.jpg"
       style="border-radius: 0.7em;height: 9vh;margin-left:0.1em">
