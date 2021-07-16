@@ -19,9 +19,13 @@
   {{#each Followers}}
   <div class="d-flex w-100 border-bottom">
     {{#if this.avatar}}
-    <img src="{{this.avatar}}" class="rounded-circle m-2" height="50px" width="50px">
+    <a href="/users/{{thisPageUser.id}}/tweets" class="d-flex m-2" style="height: 50px; width:50px">
+      <img src="{{this.avatar}}" class="rounded-circle" height="50px" width="50px">
+    </a>
     {{else}}
-    <img src="https://i.imgur.com/3P9xRqb.jpg" class="rounded-circle m-2" height="50px" width="50px">
+    <a href="/users/{{thisPageUser.id}}/tweets" class="d-flex m-2" style="height: 50px; width:50px">
+      <img src="https://i.imgur.com/3P9xRqb.jpg" class="rounded-circle" height="50px" width="50px">
+    </a>
     {{/if}}
     <div class="d-flex flex-column flex-fill">
       <div class="d-flex justify-content-between p-2">
@@ -37,7 +41,7 @@
         </form>
         {{else}}
         <form action="/followships" method="post">
-        <input type="text" name="id" id="id" value="{{this.id}}" hidden>
+          <input type="text" name="id" id="id" value="{{this.id}}" hidden>
           <button type="submit" class="btn btn-outline-regular rounded-pill" style="height: 32px;">跟隨</button>
         </form>
         {{/if}}
