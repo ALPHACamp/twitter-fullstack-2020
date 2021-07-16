@@ -5,12 +5,9 @@
     style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:auto;box-shadow:0 0 8px 5px #cccccce0;">
     {{!-- avatar --}}
     <a href="/users/{{tweet.User.id}}/tweets" style="padding:1em 0">
-      {{#if tweet.User.avatar }}
-      <img src="{{ tweet.User.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
-      {{else}}
-      <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
-        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
-      {{/if}}
+      <img src="{{ tweet.User.avatar }}"
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
     </a>
     {{!-- account --}}
     <div style="color:#313c4b;width:35vw;" class="d-flex flex-column ms-4">
@@ -58,12 +55,9 @@
     style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
     {{!-- avatar --}}
     <a href="/users/{{this.User.id}}/tweets" style="padding:1em 0">
-      {{#if this.User.avatar }}
-      <img src="{{ this.User.avatar }}" style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
-      {{else}}
-      <img src="https://i.pinimg.com/564x/11/27/98/11279881d6995a0aef4915b3906aae3f.jpg"
-        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em">
-      {{/if}}
+      <img src="{{ this.User.avatar }}"
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em;">
     </a>
     {{!-- account --}}
     <div style="color:#313c4b;width:37vw;" class="d-flex flex-column ms-4">

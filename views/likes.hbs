@@ -7,7 +7,8 @@
       {{!-- 大頭貼 --}}
       <div class="d-flex flex-column align-items-center"
         style="margin-right: 2vw;background-color:white;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
-        <img onerror="javascript:this.src='https://i.pinimg.com/564x/90/2b/84/902b841f3567ff8282b5db97c257aef1.jpg';"
+        <img
+          onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
           style="width: 16.7vw;height: 16.5vw;border-radius:1em;object-fit: cover;" src="{{ thisUser.avatar }}"
           alt="user avatar">
         <p class="h4 pt-4" style="color: #313c4b;">{{ thisUser.name }}</p>
@@ -51,14 +52,14 @@
 
     <div class="d-flex" style="height:15vh;">
       {{!-- followings --}}
-      <a href="/users/{{ thisUser.id }}/following" class="d-flex align-items-center justify-content-center mb-4 pt-1"
+      <a href="/users/{{ thisUser.id }}/followings" class="d-flex align-items-center justify-content-center mb-4 pt-1"
         style="color: #313c4b;margin-right:1.5vw;background-color:white;text-decoration:none;border-radius: 1em;width:10vw;box-shadow:0 0 8px 3px #ccccccb3;">
         <p class="h2 me-2">{{ followingCount }}</p>
         <p class="mt-2">Followings</p>
       </a>
 
       {{!-- followers --}}
-      <a href="/users/{{ thisUser.id }}/follower" class="d-flex align-items-center justify-content-center mb-4 pt-1"
+      <a href="/users/{{ thisUser.id }}/followers" class="d-flex align-items-center justify-content-center mb-4 pt-1"
         style="color: #313c4b;margin-right:1.5vw;background-color:white;text-decoration:none;border-radius: 1em;width:10vw;box-shadow:0 0 8px 3px #ccccccb3;">
         <p class="h2 me-2">{{ followerCount }}</p>
         <p class="mt-2">Followers</p>
@@ -99,8 +100,10 @@
     style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:20vh;box-shadow:0 0 8px 3px #ccccccb3;">
     {{!-- avatar --}}
     <a href="/users/{{ this.tweetUser.id }}/tweets" style="margin-top: -0.2em;">
-      <img onerror="javascript:this.src='https://i.pinimg.com/564x/90/2b/84/902b841f3567ff8282b5db97c257aef1.jpg';"
-        style="border-radius: 0.7em;height: 15vh;margin-left:0.7em" src="{{ this.tweetUser.avatar }}" alt="user avatar">
+      <img
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+        style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;"
+        src="{{ this.tweetUser.avatar }}" alt="user avatar">
     </a>
     {{!-- account --}}
     <div style="color:#313c4b;width:25vw" class="m-4">

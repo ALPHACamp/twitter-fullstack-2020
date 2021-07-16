@@ -1,18 +1,18 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
 const helpers = require('./_helpers');
 const passport = require('./config/passport')
 const db = require('./models') // 引入資料庫
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT
 
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
@@ -35,9 +35,9 @@ app.use((req, res, next) => {
   next()
 })
 
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
+console.log(port)
+app.listen(Number(port), () => {
+  console.log(`Example app listening at http://localhost:3000`)
 })
 require('./routes')(app, passport)
 
