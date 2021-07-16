@@ -45,16 +45,16 @@ const adminService = {
         { model: User, as: 'LikedUsers' }
       ],
     })
-    tweets = tweets.map(tweet => ({
-      ...tweet.dataValues,
-      User: tweet.User.dataValues,
-      RepliesCount: tweet.Replies.length,
-      LikedUsersCount: tweet.LikedUsers.length,
-    }))
+    // tweets = tweets.map(tweet => ({
+    //   ...tweet.dataValues,
+    //   User: tweet.User.dataValues,
+    //   RepliesCount: tweet.Replies.length,
+    //   LikedUsersCount: tweet.LikedUsers.length,
+    // }))
     users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
     return callback({
       users,
-      tweets,
+      // tweets,
       isAdmin: true,
       Appear: { navbar: true },
     })
