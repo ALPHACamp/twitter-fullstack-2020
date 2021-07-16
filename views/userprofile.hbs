@@ -137,36 +137,52 @@
           <ul class="list-group list-group-flush">
             {{#each users.Tweets}}
             <li class="list-group-item">
-              <div class="row g-0">
-                <div class="col-md-1">
-                  <a href="/users/{{../users.id}}" class="text-center">
-                    <img src="{{../users.avatar}}" alt="" width="75" height="75"
-                      class="rounded-circle me-2 rounded mt-2 d-block" />
+              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard" onclick="location.href='/tweets/{{this.id}}'">
+                <div class="col-1 d-flex justify-content-center align-items-center">
+                  <a href="/users/{{../users.id}}" class="p-1">
+                    <img src="{{../users.avatar}}" alt="A user" width="60" height="60"                     class="rounded-circle" />
                   </a>
                 </div>
-                <div class="col-md-10">
-                  <div class="card-body" style="margin-left:1vw">
-                    <div class="card-title">
-                      <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
-                      <span class="text-muted"> @{{../users.account}}</span>
-                      <span class="small text-muted">‧{{moment this.createdAt}}</span>
+                <div class="col-11 row px-md-2 px-4">
+                  <div class="col-12 d-inline-flex justify-content-between align-items-center">
+                    <div style="height: 22px; line-height: 22px">
+                      <span class="h5 text-dark fw-bold">{{../users.name}}</span>
+                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{../users.account}}‧{{moment this.createdAt}}</span>
                     </div>
-                    <div class="card-text" style="margin-top:1vw">
-                      <p class="h6">{{this.description}}</p>
+                    <div>
+                      <form action="/tweets/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
+                        <button type="submit" class="btn">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </form>
                     </div>
-                    <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                      {{#if this.replyCount}}
-                      <i class="fas fa-comment text-muted small">
-                        {{this.replyCount}}</i>
-                      {{else}}
-                      <i class="far fa-comment text-muted small"></i>
-                      {{/if}}
-                      {{#if this.likes}}
-                      <i class="fas fa-heart text-muted small"> {{this.likes}}</i>
-                      {{else}}
-                      <i class="far fa-heart text-muted small"></i>
-                      {{/if}}
-                    </div>
+                  </div>
+                  <div class="col-12 mt-1">  
+                    <p class="fw-bold">{{this.description}}</p>
+                  </div>
+                  <div class="col-12 d-flex align-items-center justify-content-start ">
+                    {{#if this.isLiked }}
+                    <form action="/tweets/{{this.id}}/unlike" method="POST">
+                      <button type="submit" class="btn" style="width: 60px; height: 30px">
+                        <i class="fas fa-heart" style="color: red;"> {{ this.likes }}</i>
+                      </button>
+                    </form>
+                    {{else}}
+                    <form action="/tweets/{{this.id}}/like" method="POST">
+                      <button type="submit" class="btn" style="width: 60px; height: 30px">
+                        <i class="far fa-heart" style="color: red;"></i>
+                      </button>
+                    </form>
+                    {{/if}}
+                    {{#if this.replyCount}}
+                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"                data-bs-target="#replyModal">
+                        <i class="fas fa-comment"> {{ this.replyCount }}</i>
+                      </button>
+                    {{else}}
+                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
+                        <i class="far fa-comment"> {{ this.replyCount }}</i>
+                      </button>
+                    {{/if}}                      
                   </div>
                 </div>
               </div>
@@ -177,53 +193,60 @@
         {{!-- repliedTweet --}}
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
           <ul class="list-group list-group-flush">
-
             {{#each repiledTweet}}
             <li class="list-group-item">
-              <div class="row g-0">
-                <div class="col-md-1">
-                  <a href="/users/{{this.Tweet.User.id}}" class="text-center">
-                    <img src="{{this.Tweet.User.avatar}}" alt="" width="75" height="75"
-                      class="rounded-circle me-2 rounded mt-2 d-block" />
+              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
+                <div class="col-1 d-flex justify-content-center align-items-center">
+                  <a href="/users/{{this.Tweet.User.id}}" class="p-1">
+                    <img src="{{this.Tweet.User.avatar}}" alt="" width="60" height="60"                      class="rounded-circle" />
                   </a>
                 </div>
-                <div class="col-md-10">
-                  <div class="card-body" style="margin-left:1vw">
-                    <div class="card-title">
-                      <span class="card-title h6" style="margin-right:2px">{{this.Tweet.User.name}}</span>
-                      <span class="text-muted"> @{{this.Tweet.User.account}}</span>
-                      <span class="small text-muted">‧{{moment this.createdAt}}</span>
+                <div class="col-11 row px-md-2 px-4">
+                  <div class="col-12 d-inline-flex justify-content-between align-items-center">
+                    <div style="height: 22px; line-height: 22px">
+                      <a href="/users/{{this.Tweet.User.id}}" class="h5 text-dark text-decoration-none fw-bold">{{this.Tweet.User.name}}</a>
+                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{this.Tweet.User.account}}‧{{moment this.createdAt}}</span>
                     </div>
-                    <div class="card-text" style="margin-top:1vw">
-                      <p class="h6">{{this.Tweet.description}}</p>
-                    </div>
-
-                    <div class="card-text" style="margin-top:1vw">
+                  </div>
+                  <div class="col-12 mt-1">
+                      <p class="fw-bold">{{this.Tweet.description}}</p>
+                  </div>
+                  <div class="card-text col-12" style="margin-top:1vw">
                       <a href="/tweets/{{this.Tweet.id}}" class="text-decoration-none">
-                      <p class="mt-2" style="color: tomato; font-size: 0.875em">@你的回覆</p>
+                        <p class="mt-2" style="color: tomato; font-size: 0.875em">@你的回覆</p>
                       </a>
-                      <p class="h6 m-2 mx-auto">{{this.content}}</p>
-                    </div>
-
-                    <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                      {{#if this.Tweet.replyCount}}
-                      <i class="fas fa-comment text-muted small">
-                        {{this.Tweet.replyCount}}</i>
-                      {{else}}
-                      <i class="far fa-comment text-muted small"></i>
-                      {{/if}}
-                      {{#if this.Tweet.likes}}
-                      <i class="fas fa-heart text-muted small"> {{this.Tweet.likes}}</i>
-                      {{else}}
-                      <i class="far fa-heart text-muted small"></i>
-                      {{/if}}
-                    </div>
+                  </div>
+                  <div class="col-12">
+                      <p class="fw-bold">{{this.content}}</p>
+                  </div>                   
+                  <div class="col-12 d-flex align-items-center justify-content-start ">
+                    {{#if this.Tweet.likes }}
+                    <form action="/tweets/{{this.id}}/unlike" method="POST">
+                      <button type="submit" class="btn" style="width: 60px; height: 30px">
+                        <i class="fas fa-heart" style="color: red;"> {{ this.Tweet.likes }}</i>
+                      </button>
+                    </form>
+                    {{else}}
+                    <form action="/tweets/{{this.id}}/like" method="POST">
+                      <button type="submit" class="btn" style="width: 60px; height: 30px">
+                        <i class="far fa-heart" style="color: red;"></i>
+                      </button>
+                    </form>
+                    {{/if}}
+                    {{#if this.Tweet.replyCount}}
+                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"                data-bs-target="#replyModal">
+                        <i class="fas fa-comment"> {{ this.Tweet.replyCount }}</i>
+                      </button>
+                    {{else}}
+                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
+                        <i class="far fa-comment"> {{ this.Tweet.replyCount }}</i>
+                      </button>
+                    {{/if}}                      
                   </div>
                 </div>
               </div>
             </li>
             {{/each}}
-
           </ul>
         </div>
         {{!-- likedTweets --}}
@@ -231,36 +254,39 @@
           <ul class="list-group list-group-flush">
             {{#each users.LikedTweet}}
             <li class="list-group-item">
-              <div class="row g-0">
-                <div class="col-md-1">
-                  <a href="/users/{{../users.id}}" class="text-center">
-                    <img src="{{../users.avatar}}" alt="" width="75" height="75"
-                      class="rounded-circle me-2 rounded mt-2 d-block" />
+              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard" onclick="location.href='/tweets/{{this.id}}'">
+                <div class="col-1 d-flex justify-content-center align-items-center">
+                  <a href="/users/{{this.UserId}}" class="p-1">
+                    <img src="{{this.User.avatar}}" alt="" width="60" height="60"
+                      class="rounded-circle" />
                   </a>
                 </div>
-                <div class="col-md-10">
-                  <div class="card-body" style="margin-left:1vw">
-                    <div class="card-title">
-                      <span class="card-title h6" style="margin-right:2px">{{../users.name}}</span>
-                      <span class="text-muted"> @{{../users.account}}</span>
-                      <span class="small text-muted">‧{{moment this.updatedAt}}</span>
+                <div class="col-11 row px-md-2 px-4">
+                  <div class="col-12 d-inline-flex justify-content-between align-items-center">
+                    <div style="height: 22px; line-height: 22px">
+                      <span class="h5 text-dark fw-bold">{{this.User.name}}</span>
+                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{this.User.account}}‧{{moment this.createdAt}}</span>
                     </div>
-                    <div class="card-text" style="margin-top:1vw">
-                      <p class="h6">{{this.description}}</p>
-                    </div>
-                    <div class="icon d-flex justify-content-between" style="width: 20%;margin-top:1vw">
-                      {{#if this.replyCount}}
-                      <i class="fas fa-comment text-muted small">
-                        {{this.replyCount}}</i>
-                      {{else}}
-                      <i class="far fa-comment text-muted small"></i>
-                      {{/if}}
-                      {{#if this.likes}}
-                      <i class="fas fa-heart text-muted small"> {{this.likes}}</i>
-                      {{else}}
-                      <i class="far fa-heart text-muted small"></i>
-                      {{/if}}
-                    </div>
+                  </div>
+                  <div class="col-12 mt-1">  
+                    <p class="fw-bold">{{this.description}}</p>
+                  </div>
+                  <div class="col-12 d-flex align-items-center justify-content-start ">
+                    <form action="/tweets/{{this.id}}/unlike" method="POST">
+                      <button type="submit" class="btn" style="width: 60px; height: 30px">
+                        <i class="fas fa-heart" style="color: red;"> {{ this.likes }}</i>
+                      </button>
+                    </form>
+                   
+                    {{#if this.replyCount}}
+                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"                data-bs-target="#replyModal">
+                        <i class="fas fa-comment"> {{ this.replyCount }}</i>
+                      </button>
+                    {{else}}
+                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
+                        <i class="far fa-comment"> {{ this.replyCount }}</i>
+                      </button>
+                    {{/if}}                      
                   </div>
                 </div>
               </div>
@@ -272,7 +298,7 @@
     </div>
     {{!-- Followship recommend bar --}}
     <div class="col-auto col-lg-3 col-md-3">
-      <div class="card d-none d-sm-flex flex-column flex-shrink-0 mt-3 position-fixed" width="100%">
+      <div class="card d-none d-sm-flex flex-column flex-shrink-0 mt-3" width="100%">
         <ul class="list-group list-group">
           <li class="list-group-item bg-light fw-bold" style="font-size: 1.2em;">跟隨誰</li>
           {{#each followship}}

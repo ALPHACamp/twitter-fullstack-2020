@@ -9,7 +9,8 @@ module.exports = {
       raw: true,
       nest: true,
       where: { is_admin: false },
-      attributes: ['id']
+      attributes: ['id'],
+      raw: true
     })
 
     tweets.forEach((tweet) => {

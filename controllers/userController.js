@@ -92,7 +92,7 @@ const userController = {
           include: [
             Tweet,
             { model: Reply, include: { model: Tweet, include: [User] } },
-            { model: Tweet, as: 'LikedTweet' },
+            { model: Tweet, as: 'LikedTweet', include: [User] },
             { model: User, as: 'Followers' },
             { model: User, as: 'Followings' },
           ],
@@ -120,8 +120,6 @@ const userController = {
       const isFollowed = req.user.Followings.some(d => d.id === user.id)
 
       const repiledTweet = user.toJSON().Replies.map(result => result)
-      console.log(repiledTweet.Tweet)
-
 
       followship = followship.map(followships => ({
         ...followships.dataValues,
