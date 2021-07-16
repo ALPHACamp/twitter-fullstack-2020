@@ -12,6 +12,7 @@ const Like = db.Like
 const twitController = {
 
   getTwitters: (req, res) => {
+    const userId = req.user.id
     Promise.all([
       Tweet.findAll({
         order: [['createdAt', 'DESC']],
@@ -29,8 +30,12 @@ const twitController = {
         raw: true,
         nest: true,
         include: [User, Tweet]
+      }),
+      Reply.findAll({
+        raw: true,
+        nest: true,
       })
-    ]).then(async ([tweet, users, likes]) => {
+    ]).then(([tweet, users, likes, replys]) => {
       const userself = req.user.id
       users = users.map(user => ({// 整理 users 資料
         ...user.dataValues,
@@ -41,36 +46,31 @@ const twitController = {
       helper.removeUser(users, userself)//移除使用者自身資訊
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
-      // 異步問題? 為了要渲染前端 回覆留言數目 Like數目
-      // tweet = tweet.map(async tweet => {
-      //   const tweetId = tweet.id
 
-      //   let tt = await Like.findAll({
-      //     where: { TweetId: tweetId },
-      //     raw: true,
-      //     nest: true,
-      //   })
-      //     .then((like) => {
-      //       return Reply.findAll({
-      //         where: { TweetId: tweetId },
-      //         raw: true,
-      //         nest: true,
-      //       })
-      //         .then(reply => {
-      //           tweet.likeCount = like.length
-      //           tweet.replyCount = reply.length
-      //           return tweet
-      //         })
-      //     })
-      //   console.log('===============')
+      // 異步問題 ? 為了要渲染前端 回覆留言數目 Like數目
+      tweet = tweet.map(bb => {
+        const replyCount = replys.filter(reply => {
 
-      //   console.log(tt)
+          return reply.TweetId === bb.id
+        })
 
-      //   console.log('===============')
-      //   return tt
-      // })
+        const likeCount = likes.filter(like => {
 
-      // console.log(tweet)
+          return like.TweetId === bb.id
+        })
+        likes.filter(like => {
+
+          // console.log(like.UserId === userId)
+          bb.likeBoolean = (like.UserId === userId)
+
+        })
+        bb.replyCount = replyCount.length
+        bb.likeCount = likeCount.length
+
+        // bb.likeBoolean = likeBoolean
+        return bb
+      })
+      console.log(tweet)
       return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
     })
   },
