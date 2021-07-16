@@ -170,7 +170,7 @@ const userController = {
         raw: true,
         nest: true,
         //使用者發的所有推文
-        where: { userId: userInfo.user.id },
+        where: { UserId: userInfo.user.id },
         order: [
           ['createdAt', 'DESC']
         ]
