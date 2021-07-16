@@ -75,6 +75,8 @@ const userController = {
       const topFollowing = res.locals.data
       const userInfo = res.locals.userInfo
       const user = helpers.getUser(req)
+      const shareModal = true
+      const editModal = true
       let myPage = true
       if (Number(req.params.userId) !== helpers.getUser(req).id) {
         myPage = false
@@ -132,7 +134,9 @@ const userController = {
             tweetUserAccount: tweetUser.account,
             likeCount: likes.count,
             replyCount: replies.count,
-            myPage
+            myPage,
+            shareModal,
+            editModal
           }
         }
       })
@@ -162,6 +166,8 @@ const userController = {
       const topFollowing = res.locals.data
       const userInfo = res.locals.userInfo
       const user = helpers.getUser(req)
+      const shareModal = true
+      const editModal = true
       let myPage = true
       if (Number(req.params.userId) !== helpers.getUser(req).id) {
         myPage = false
@@ -213,7 +219,9 @@ const userController = {
           topFollowing,
           isFollowed,
           allowEdit,
-          myPage
+          myPage,
+          shareModal,
+          editModal
         })
       })
     } catch (err) {
@@ -231,6 +239,7 @@ const userController = {
       const userInfo = res.locals.userInfo
       const user = helpers.getUser(req)
       const shareModal = true
+      const editModal = true
       let myPage = true
       if (Number(req.params.userId) !== helpers.getUser(req).id) {
         myPage = false
@@ -305,7 +314,8 @@ const userController = {
           allowEdit,
           isFollowed,
           myPage,
-          shareModal
+          shareModal,
+          editModal
         })
       })
     }
@@ -322,6 +332,7 @@ const userController = {
       const user = helpers.getUser(req)
       const userInfo = res.locals.userInfo
       const { userId } = req.params
+      const shareModal = true
 
       const tweets = await Tweet.findAndCountAll({
         raw: true,
@@ -367,7 +378,8 @@ const userController = {
           user,
           data,
           tweetCount,
-          topFollowing
+          topFollowing,
+          shareModal
         })
       })
     }
@@ -385,6 +397,7 @@ const userController = {
       const user = helpers.getUser(req)
       const userInfo = res.locals.userInfo
       const { userId } = req.params
+      const shareModal = true
 
       const tweets = await Tweet.findAndCountAll({
         raw: true,
@@ -430,7 +443,8 @@ const userController = {
           user,
           data,
           tweetCount,
-          topFollowing
+          topFollowing,
+          shareModal
         })
       })
     }
@@ -446,10 +460,12 @@ const userController = {
     const topFollowing = res.locals.data
     const userEditPage = true
     const user = helpers.getUser(req)
+    const shareModal = true
     return res.render('userEdit', {
       user,
       topFollowing,
-      userEditPage
+      userEditPage,
+      shareModal
     })
   },
 

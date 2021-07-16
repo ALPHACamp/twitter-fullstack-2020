@@ -15,7 +15,7 @@ const tweetController = {
       if (helpers.getUser(req).role === 'admin') {
         return res.redirect('/admin/tweets')
       }
-
+      const shareModal = true
       const topFollowing = res.locals.data
       const user = {
         id: helpers.getUser(req).id,
@@ -58,7 +58,8 @@ const tweetController = {
           data,
           user,
           topFollowing,
-          tweetsPage
+          tweetsPage,
+          shareModal
         })
       })
     } catch (err) {
@@ -69,6 +70,8 @@ const tweetController = {
   getTweet: async (req, res) => {
     try {
       const topFollowing = res.locals.data
+      const shareModal = true
+      const commentModal = true
       const { tweetId } = req.params
       const tweet = await Tweet.findByPk(tweetId, {
         include: [
@@ -105,7 +108,9 @@ const tweetController = {
         reply: replies.rows,
         likeCount: likes[0].likeCounts,
         topFollowing,
-        isLiked
+        isLiked,
+        shareModal,
+        commentModal
       })
 
     } catch (err) {
