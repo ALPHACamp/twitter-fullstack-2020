@@ -46,35 +46,52 @@
       </div>
     </div>
     <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
-      <div class="card-header col-12">
-        <a href="/tweets"  class="d-flex align-middle text-decoration-none text-dark">
-        <i class="fas fa-long-arrow-alt-left" style="font-size: 1.6em;  margin-right: 10px"></i>
-        <span class="h5" style="font-weight: bold;">推文</span>
+      <div class="card-header col-12 row m-0">
+        <a href="javascript:history.back()" style="color:black"
+          class="col-1 d-flex align-items-center text-decoration-none">
+          <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
+        </a>
+        <span class="h5 fw-bold col-auto">推文</span>
         </a>
       </div>
       {{> message}}
-      <div class="card-body">
-        <div class="row justify-content-around mb-1">
-          <div class="row col-11">
-            <div class="card-image col-1 d-flex justify-content-center align-items-center">
-              <a href="/users/{{tweet.UserId}}" class="h5 text-dark text-decoration-none">
-              <img src="{{tweet.User.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px" alt="A user" /></a>
+      <div class="card-body col-12">
+        <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
+          <div class="col-1 d-flex justify-content-center align-items-center">
+            <a href="/users/{{tweet.UserId}}">
+              <img src="{{tweet.User.avatar}}" class="rounded-circle p-1" style="width: 60px; height: 60px" alt="A user" />
+            </a>
+          </div>
+          <div class="col-11 row px-md-2 px-4">
+            <div class="col-12 d-inline-flex justify-content-between align-items-center">
+              <div style="height: 22px; line-height: 22px">
+                <a href="/users/{{tweet.UserId}}" class="h5 text-dark text-decoration-none fw-fold">{{tweet.User.name}}</a>
+                <span style="color: #6c757d; font-size: 0.875em">@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
+              </div>
+              <div>
+              {{#ifCond user.id tweet.UserId}}             
+              <form action="/tweets/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
+                <button type="submit" class="btn">
+                  <i class="fas fa-times"></i>
+                </button>
+              </form>
+              {{/ifCond}}
+              </div>
             </div>
-            <div class="col-11 align-self-center px-md-2 px-4">
-              <a href="/users/{{tweet.UserId}}" class="h5 text-dark text-decoration-none">{{tweet.User.name}}</a>
-              <span style="color: #6c757d; font-size: 0.875em">@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
-              <p class="mt-2">{{tweet.description}} </p>
-              <div class="col-3 d-flex align-items-center justify-content-center ">
+            <div class="col-12 mt-1">              
+              <p class="mt-1 fw-bold">{{tweet.description}}</p>
+            </div>
+            <div class="col-12 d-flex align-items-center justify-content-start">
                 {{#if tweet.isLiked }}
                 <form action="/tweets/{{tweet.id}}/unlike" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
-                    <i class="fas fa-heart"> {{ tweet.likes }}</i>
+                    <i class="fas fa-heart" style="color:red;"> {{ tweet.likes }}</i>
                   </button>
                 </form>
                 {{else}}
                 <form action="/tweets/{{tweet.id}}/like" method="POST">
                   <button type="submit" class="btn" style="width: 60px; height: 30px">
-                    <i class="far fa-heart"> {{ tweet.likes }}</i>
+                    <i class="far fa-heart" style="color: red;"> {{ tweet.likes }}</i>
                   </button>
                 </form>
                 {{/if}}
@@ -82,55 +99,47 @@
                 {{#if tweet.replyCount}}
                   <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
                     data-bs-target="#replyModal">
-                    <i class="fas fa-comment"> {{ tweet.replyCount }}</i>
+                    <i class="fas fa-comment" style="color: navy;"> {{ tweet.replyCount }}</i>
                   </button>
                 {{else}}
                 <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
-                  <i class="far fa-comment"> {{ tweet.replyCount }}</i>
+                  <i class="far fa-comment" style="color: navy;"> {{ tweet.replyCount }}</i>
                 </button>               
                 {{/if}}
-
-              </div>
             </div>
-          </div>
-          {{#ifCond user.id tweet.UserId}}
-          <div class="col-1 d-flex align-items-center justify-content-center">
-
-            <form action="/tweets/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
-              <button type="submit" class="btn">
-                <i class="fas fa-times"></i>
-              </button>
-            </form>
-          </div>
-          {{/ifCond}}
+          </div> 
         </div>
       <hr>
       <div class="card-body">
         {{#each tweet.Replies}}
-        <div class="row justify-content-around mb-1">
-          <div class="row col-11">
-            <div class="card-image col-1 d-flex justify-content-center align-items-center">
-              <img src="{{this.User.avatar}}" class="rounded-circle p-md-0 p-1" style="width: 50px; height: 50px" alt="A user" />
-            </div>
-            <div class="col-11 align-self-center px-md-2 px-4">
-              <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none">{{this.User.name}}</a>
-              <span style="color: #6c757d; font-size: 0.875em">@{{this.User.account}}．{{moment this.createdAt}}</span>
-              <p class="mt-2 text-break">{{this.content}} </p>
-            </div>
+        <div class="row justify-content-around align-items-start mb-1 p-2 ps-3 bg-white">
+          <div class="col-1 d-flex justify-content-center align-items-center">
+            <img src="{{this.User.avatar}}" class="rounded-circle p-1" style="width: 50px; height: 50px" alt="A user" />
           </div>
-            {{#ifCond this.User.id ../user.id}}
-            <div class="col-1 d-flex align-items-center justify-content-center">
+          <div class="col-11 row px-md-2 px-4">
+            <div class="col-12 d-inline-flex justify-content-between align-items-center">
+              <div style="height: 22px; line-height: 22px">
+                <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none fw-bold">{{this.User.name}}</a>
+                <span style="color: #6c757d; font-size: 0.875em">@{{this.User.account}}．{{moment this.createdAt}}</span>
+              </div>
+              <div>
+              {{#ifCond this.User.id ../user.id}}            
               <form action="/replies/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
                 <button type="submit" class="btn">
                   <i class="fas fa-times"></i>
                 </button>
               </form>
+              {{/ifCond}}
+              </div>
             </div>
-            {{/ifCond}}
-          </div>
-          <hr />
-          {{/each}}
+            <div class="col-12 mt-1">
+              <p class="text-break fw-bold">{{this.content}} </p>
+            </div>
+          </div>  
         </div>
+         <hr />
+        {{/each}}
       </div>  
     </div>
   </div>
+</div>
