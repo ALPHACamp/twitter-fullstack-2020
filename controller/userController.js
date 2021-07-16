@@ -131,7 +131,8 @@ const userController = {
             tweetUserAvatar: tweetUser.avatar,
             tweetUserAccount: tweetUser.account,
             likeCount: likes.count,
-            replyCount: replies.count
+            replyCount: replies.count,
+            myPage
           }
         }
       })
@@ -229,6 +230,7 @@ const userController = {
       const topFollowing = res.locals.data
       const userInfo = res.locals.userInfo
       const user = helpers.getUser(req)
+      const shareModal = true
       let myPage = true
       if (Number(req.params.userId) !== helpers.getUser(req).id) {
         myPage = false
@@ -302,7 +304,8 @@ const userController = {
           likeCount,
           allowEdit,
           isFollowed,
-          myPage
+          myPage,
+          shareModal
         })
       })
     }

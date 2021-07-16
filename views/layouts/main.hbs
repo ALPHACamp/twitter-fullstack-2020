@@ -287,39 +287,6 @@
     </div>
     {{else}}
 
-    <!--Post Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content"
-          style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
-          <img class="mb-3" src="https://cdn.dribbble.com/users/851350/screenshots/6390413/dusk.png"
-            style="width:60vw;height:30vh;object-fit: cover;border-radius: 2em;">
-          <div class="modal-body mt-4 ms-4 me-4">
-            <form action="/tweets" method="POST" id="newTweetForm">
-
-              <div class="d-flex justify-content-between">
-
-                <div class="d-flex flex-column ms-5" style="width: 10vw;">
-                  <img src="{{ user.avatar }}" style="border-radius: 0.5em;">
-                  <button type="submit" class="btn post-a-tweet mt-5 fs-bold"
-                    style="background-color: #ffd472;color: #313c4b;height:7vh;border-radius:0.5em;"
-                    onclick="submitButtonClick(event)">Share</button>
-                </div>
-
-                <div class="me-5"
-                  style="box-shadow:0 0 8px 3px #ccccccb3;border-radius: 0.5em;background-color:white;width:33vw">
-                  <textarea class="p-3" name="description" id="newTweet" cols="30" rows="8"
-                    placeholder=" Share Something..."
-                    style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px"
-                    required></textarea>
-                </div>
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
 
     <!--Reply Tweet Modal -->
     <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -373,6 +340,40 @@
         </div>
       </div>
       {{/if}}
+
+      <!--Post Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content"
+            style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
+            <img class="mb-3" src="https://cdn.dribbble.com/users/851350/screenshots/6390413/dusk.png"
+              style="width:60vw;height:30vh;object-fit: cover;border-radius: 2em;">
+            <div class="modal-body mt-4 ms-4 me-4">
+              <form action="/tweets" method="POST" id="newTweetForm">
+
+                <div class="d-flex justify-content-between">
+
+                  <div class="d-flex flex-column ms-5" style="width: 10vw;">
+                    <img src="{{ user.avatar }}" style="border-radius: 0.5em;">
+                    <button type="submit" class="btn post-a-tweet mt-5 fs-bold"
+                      style="background-color: #ffd472;color: #313c4b;height:7vh;border-radius:0.5em;"
+                      onclick="submitButtonClick(event)">Share</button>
+                  </div>
+
+                  <div class="me-5"
+                    style="box-shadow:0 0 8px 3px #ccccccb3;border-radius: 0.5em;background-color:white;width:33vw">
+                    <textarea class="p-3" name="description" id="newTweet" cols="30" rows="8"
+                      placeholder=" Share Something..."
+                      style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px"
+                      required></textarea>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {{!-- toast --}}
       <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
