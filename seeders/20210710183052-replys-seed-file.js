@@ -4,10 +4,10 @@ const faker = require('faker')
 module.exports = {
   up: async(queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Replies',
-      Array.from({ length: 20 }).map((d, i) =>
+      Array.from({ length: 180 }).map((d, i) =>
       ({
-        tweetId: Math.floor(Math.random() * 10) + 1,
-        userId: Math.floor(Math.random() * 10) + 1,
+        tweetId: Math.floor(Math.random() * 180) + 1,
+        userId: Math.floor(Math.random() * 6) + 1,
         comment: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
