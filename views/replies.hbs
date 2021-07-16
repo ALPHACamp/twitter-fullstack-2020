@@ -51,14 +51,14 @@
 
     <div class="d-flex" style="height:15vh;">
       {{!-- followings --}}
-      <a href="/users/{{ thisUser.id }}/following" class="d-flex align-items-center justify-content-center mb-4 pt-1"
+      <a href="/users/{{ thisUser.id }}/followings" class="d-flex align-items-center justify-content-center mb-4 pt-1"
         style="color: #313c4b;margin-right:1.5vw;background-color:white;text-decoration:none;border-radius: 1em;width:10vw;box-shadow:0 0 8px 3px #ccccccb3;">
         <p class="h2 me-2">{{ followingCount }}</p>
         <p class="mt-2">Followings</p>
       </a>
 
       {{!-- followers --}}
-      <a href="/users/{{ thisUser.id }}/follower" class="d-flex align-items-center justify-content-center mb-4 pt-1"
+      <a href="/users/{{ thisUser.id }}/followers" class="d-flex align-items-center justify-content-center mb-4 pt-1"
         style="color: #313c4b;margin-right:1.5vw;background-color:white;text-decoration:none;border-radius: 1em;width:10vw;box-shadow:0 0 8px 3px #ccccccb3;">
         <p class="h2 me-2">{{ followerCount }}</p>
         <p class="mt-2">Followers</p>
