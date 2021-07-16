@@ -78,7 +78,7 @@
           <div class="h5">{{user.name}}</div>
         </div>
         <div class="row">
-          <small>25則貼文</small>
+          <small>{{tweetLength}} 則貼文</small>
         </div>
       </div>
     </div>
@@ -172,9 +172,9 @@
     {{!-- 個人介紹區域 --}}
 
     <div class="row d-block p-2">
-      <div class="h4" style="margin-bottom:0">John Doe</div>
-      <div><small>@heyjohn</small></div>
-      <div class="mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.</div>
+      <div class="h4" style="margin-bottom:0">{{user.name}}</div>
+      <div><small>{{user.account}}</small></div>
+      <div class="mt-2">{{user.introduction}}</div>
       <div style="display: inline-block">
         <p><strong>{{user.Followings.length}}</strong> followings</p>
       </div>

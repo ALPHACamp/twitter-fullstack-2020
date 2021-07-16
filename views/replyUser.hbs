@@ -6,13 +6,13 @@
       src="https://static.accupass.com/org/2008250550226683301600.jpg">
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link active text-dark font-weight-bold" href="#"><i class="fas fa-home"></i> 首頁</a>
+        <a class="nav-link active text-dark font-weight-bold" href="/"><i class="fas fa-home"></i> 首頁</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" href="#"><i class="fas fa-user"></i> 個人資料</a>
+        <a class="nav-link text-dark font-weight-bold" href="/user/self"><i class="fas fa-user"></i> 個人資料</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark font-weight-bold" href="#"><i class="far fa-sun"></i> 設定</a>
+        <a class="nav-link text-dark font-weight-bold" href="/setting"><i class="far fa-sun"></i> 設定</a>
       </li>
     </ul>
 
@@ -64,10 +64,10 @@
         fa-sign-out-alt"></i> 登出</a>
   </div>
   {{!-- 中間區域 --}}
-  <div class="col-md-6" style="position: relative; border:1px #DEE2E6  solid; ">
+  <div class="col-md-6" style="position: relative; border:1px #DEE2E6  solid; word-break:break-all ">
     <div class="row align-items-center mb-3 mt-2" style="border-bottom:#dee2e6 1px solid;">
       <div class="col-md-2">
-        <i class="fas fa-arrow-left"></i>
+        <a href="/"><i class="fas fa-arrow-left"></i></a>
       </div>
       <div class="col-md-10">
         <div class="row">
@@ -80,15 +80,15 @@
 
 
     {{!-- 大頭貼區塊 --}}
+
     <div class=" mt-1 mb-2" style="display: flex; justify-content:flex-start;">
       <div class="mr-2">
-        <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg" alt="..."
-          class="rounded-circle" style="width: 50px; height:50px;">
+        <img src="{{tweet.User.avatar}}" alt="..." class="rounded-circle" style="width: 50px; height:50px;">
 
       </div>
       <div>
-        <div class="h4" style="margin-bottom:0">John Doe</div>
-        <div><small>@heyjohn</small></div>
+        <div class="h4" style="margin-bottom:0">{{tweet.User.name}}</div>
+        <div><small>@{{tweet.User.account}}</small></div>
       </div>
 
     </div>
@@ -97,13 +97,13 @@
 
     <div class="row d-block">
 
-      <div class="mt-2 ml-3">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint.dddydkdkdydkydydyd
+      <div class="mt-2 ml-3">{{tweet.description}}
       </div>
       <div class="ml-3">
-        <small>上午：10:05。2020年6月10日</small>
+        <small>{{tweet.createdAt}}</small>
       </div>
       <div class="mt-2" style="border:1px #DEE2E6  solid; padding: 5px;">
-        <div class="font-weight-bold mt-2 ml-3">34 <span class="text-secondary mr-3">回覆</span>59 <span
+        <div class="font-weight-bold mt-2 ml-3">{{replysLength}} <span class="text-secondary mr-3">回覆</span>59 <span
             class="text-secondary">喜歡次數</span></div>
       </div>
     </div>
@@ -114,18 +114,19 @@
       </span>
     </div>
 
-    {{!-- 導航欄 --}}
 
+    {{!-- 導航欄 --}}
     {{!-- 留言區域 --}}
     {{#each replys}}
     <div class="row  border" style="padding-top:8px; padding-bottom:10px;">
       <div class="col-md-2" style="padding-right: 0px; ">
-        <img src={{this}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+        <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
       </div>
       <div class="col-md-10" style="padding-left: 0px;">
-        <div class="h6">John Doe <a href="" class="text-secondary">@heyjohn </a>．3小時</div>
+        <div class="h6">{{this.User.name}}<a href="" class="text-secondary">@{{this.User.account}} </a> ・ {{moment
+          this.createdAt}}</div>
         <div>
-          <span>回覆 @{{this.User.account}}</span>
+          <span>回覆@ {{this.Tweet.User.name}}</span>
         </div>
         <div>{{this.comment}}</div>
       </div>

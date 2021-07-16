@@ -138,6 +138,8 @@ module.exports = (app, passport) => {
   app.get('/logout', twitController.logout)
 
 
+  // 前台喜歡
+  app.post('/tweets/:userId/like/:tweetId', authenticated, twitController.postLike)
 
 
 }

@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     Tweet.belongsTo(models.User)
     Tweet.hasMany(models.Like)
     Tweet.hasMany(models.Reply)
+
+
   };
   return Tweet;
 };
