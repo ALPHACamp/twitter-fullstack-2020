@@ -59,17 +59,18 @@ const twitController = {
           return like.TweetId === bb.id
         })
         likes.filter(like => {
-
-          // console.log(like.UserId === userId)
-          bb.likeBoolean = (like.UserId === userId)
-
+          if (like.TweetId === bb.id) {
+            if (like.UserId === userId) {
+              bb.likeBoolean = true
+            }
+          }
         })
         bb.replyCount = replyCount.length
         bb.likeCount = likeCount.length
-
         // bb.likeBoolean = likeBoolean
         return bb
       })
+
       console.log(tweet)
       return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
     })
