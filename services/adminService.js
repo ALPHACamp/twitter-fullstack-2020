@@ -25,7 +25,6 @@ const adminService = {
     let users = await User.findAll({
       include: [
         Tweet,
-        Reply,
         Like,
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
@@ -38,13 +37,13 @@ const adminService = {
       FollowersCount: user.Followers.length,
       FollowingsCount: user.Followings.length,
     }))
-    let tweets = await Tweet.findAll({
-      include: [
-        User,
-        Reply,
-        { model: User, as: 'LikedUsers' }
-      ],
-    })
+    // let tweets = await Tweet.findAll({
+    //   include: [
+    //     User,
+    //     Reply,
+    //     { model: User, as: 'LikedUsers' }
+    //   ],
+    // })
     // tweets = tweets.map(tweet => ({
     //   ...tweet.dataValues,
     //   User: tweet.User.dataValues,
