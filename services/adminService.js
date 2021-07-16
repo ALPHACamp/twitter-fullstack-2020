@@ -51,7 +51,6 @@ const adminService = {
       RepliesCount: tweet.Replies.length,
       LikedUsersCount: tweet.LikedUsers.length,
     }))
-    console.log(users)
     users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
     return callback({
       users,
