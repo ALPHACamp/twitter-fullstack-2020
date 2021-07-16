@@ -50,7 +50,7 @@ const adminService = {
     //   RepliesCount: tweet.Replies.length,
     //   LikedUsersCount: tweet.LikedUsers.length,
     // }))
-    users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+    users = users.sort((a, b) => b.TweetsCount - a.TweetsCount)
     return callback({
       users,
       // tweets,
