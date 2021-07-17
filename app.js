@@ -10,6 +10,11 @@ const session = require('express-session')
 const app = express()
 const PORT = process.env.PORT || 8000
 
+const http = require('http')
+const server = http.createServer(app)
+const { Server } = require('socket.io')
+const io = new Server(server)
+
 //set .env
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -44,11 +49,29 @@ app.use((req, res, next) => {
   next()
 })
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
 require('./routes')(app)
+
+// socket.io
+
+io.on('connection', (socket) => {
+  console.log('user connected')
+  socket.on('custom-event', (number, string, obj) => {
+    console.log(number, string, obj)
+  })
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+  socket.on('disconnect', (obj) => {
+    console.log('user disconnected...obj', obj);
+    io.emit('chat message', `someone left`)
+  });
+});
+
+server.listen(3000, () => {
+  console.log('socket listening on port 3000')
+})
+
 
 module.exports = app
