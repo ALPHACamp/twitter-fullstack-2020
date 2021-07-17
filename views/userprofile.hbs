@@ -22,6 +22,12 @@
               <span class="d-none d-sm-inline h5 ps-3 a-tomato fw-bold">個人資料</span>
             </a>
           </li>
+          <li class='nav-item p-2'>
+            <a class='nav-link align-middle text-dark' href='/messages/public'>
+              <i class='far fa-envelope' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 fw-bold'>公開聊天室</span>
+            </a>
+          </li>
           <li class="nav-item p-2">
             <a class="nav-link align-middle text-dark h-tomato" href="/setting">
               <i class="fas fa-cog" style="font-size: 1.2em;"></i>
@@ -77,7 +83,7 @@
           data-bs-target="#profileModal">編輯個人資料</button>
         {{else}}
         <div class="NoticeAni">
-          <a href="mailto:{{users.email}}" class="m-1" style="color:tomato;">
+          <a href="/messages/public" class="m-1" style="color:tomato;">
             <i class="far fa-envelope fa-2x m-1"></i> </a>
         </div>
         {{#if users.isNoticed}}
@@ -137,17 +143,19 @@
           <ul class="list-group list-group-flush">
             {{#each users.Tweets}}
             <li class="list-group-item">
-              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard" onclick="location.href='/tweets/{{this.id}}'">
+              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard"
+                onclick="location.href='/tweets/{{this.id}}'">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{../users.id}}" class="p-1">
-                    <img src="{{../users.avatar}}" alt="A user" width="60" height="60"                     class="rounded-circle" />
+                    <img src="{{../users.avatar}}" alt="A user" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
                 <div class="col-11 row px-md-2 px-4">
                   <div class="col-12 d-inline-flex justify-content-between align-items-center">
                     <div style="height: 22px; line-height: 22px">
                       <span class="h5 text-dark fw-bold">{{../users.name}}</span>
-                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{../users.account}}‧{{moment this.createdAt}}</span>
+                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{../users.account}}‧{{moment
+                        this.createdAt}}</span>
                     </div>
                     <div>
                       <form action="/tweets/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
@@ -157,7 +165,7 @@
                       </form>
                     </div>
                   </div>
-                  <div class="col-12 mt-1">  
+                  <div class="col-12 mt-1">
                     <p class="fw-bold">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
@@ -175,14 +183,16 @@
                     </form>
                     {{/if}}
                     {{#if this.replyCount}}
-                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"                data-bs-target="#replyModal">
-                        <i class="fas fa-comment"> {{ this.replyCount }}</i>
-                      </button>
+                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
+                      data-bs-target="#replyModal">
+                      <i class="fas fa-comment"> {{ this.replyCount }}</i>
+                    </button>
                     {{else}}
-                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
-                        <i class="far fa-comment"> {{ this.replyCount }}</i>
-                      </button>
-                    {{/if}}                      
+                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
+                      data-bs-target="#replyModal">
+                      <i class="far fa-comment"> {{ this.replyCount }}</i>
+                    </button>
+                    {{/if}}
                   </div>
                 </div>
               </div>
@@ -198,27 +208,29 @@
               <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{this.Tweet.User.id}}" class="p-1">
-                    <img src="{{this.Tweet.User.avatar}}" alt="" width="60" height="60"                      class="rounded-circle" />
+                    <img src="{{this.Tweet.User.avatar}}" alt="" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
                 <div class="col-11 row px-md-2 px-4">
                   <div class="col-12 d-inline-flex justify-content-between align-items-center">
                     <div style="height: 22px; line-height: 22px">
-                      <a href="/users/{{this.Tweet.User.id}}" class="h5 text-dark text-decoration-none fw-bold">{{this.Tweet.User.name}}</a>
-                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{this.Tweet.User.account}}‧{{moment this.createdAt}}</span>
+                      <a href="/users/{{this.Tweet.User.id}}"
+                        class="h5 text-dark text-decoration-none fw-bold">{{this.Tweet.User.name}}</a>
+                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{this.Tweet.User.account}}‧{{moment
+                        this.createdAt}}</span>
                     </div>
                   </div>
                   <div class="col-12 mt-1">
-                      <p class="fw-bold">{{this.Tweet.description}}</p>
+                    <p class="fw-bold">{{this.Tweet.description}}</p>
                   </div>
                   <div class="card-text col-12" style="margin-top:1vw">
-                      <a href="/tweets/{{this.Tweet.id}}" class="text-decoration-none">
-                        <p class="mt-2" style="color: tomato; font-size: 0.875em">@你的回覆</p>
-                      </a>
+                    <a href="/tweets/{{this.Tweet.id}}" class="text-decoration-none">
+                      <p class="mt-2" style="color: tomato; font-size: 0.875em">@你的回覆</p>
+                    </a>
                   </div>
                   <div class="col-12">
-                      <p class="fw-bold">{{this.content}}</p>
-                  </div>                   
+                    <p class="fw-bold">{{this.content}}</p>
+                  </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
                     {{#if this.Tweet.likes }}
                     <form action="/tweets/{{this.id}}/unlike" method="POST">
@@ -234,14 +246,16 @@
                     </form>
                     {{/if}}
                     {{#if this.Tweet.replyCount}}
-                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"                data-bs-target="#replyModal">
-                        <i class="fas fa-comment"> {{ this.Tweet.replyCount }}</i>
-                      </button>
+                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
+                      data-bs-target="#replyModal">
+                      <i class="fas fa-comment"> {{ this.Tweet.replyCount }}</i>
+                    </button>
                     {{else}}
-                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
-                        <i class="far fa-comment"> {{ this.Tweet.replyCount }}</i>
-                      </button>
-                    {{/if}}                      
+                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
+                      data-bs-target="#replyModal">
+                      <i class="far fa-comment"> {{ this.Tweet.replyCount }}</i>
+                    </button>
+                    {{/if}}
                   </div>
                 </div>
               </div>
@@ -254,21 +268,22 @@
           <ul class="list-group list-group-flush">
             {{#each users.LikedTweet}}
             <li class="list-group-item">
-              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard" onclick="location.href='/tweets/{{this.id}}'">
+              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard"
+                onclick="location.href='/tweets/{{this.id}}'">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{this.UserId}}" class="p-1">
-                    <img src="{{this.User.avatar}}" alt="" width="60" height="60"
-                      class="rounded-circle" />
+                    <img src="{{this.User.avatar}}" alt="" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
                 <div class="col-11 row px-md-2 px-4">
                   <div class="col-12 d-inline-flex justify-content-between align-items-center">
                     <div style="height: 22px; line-height: 22px">
                       <span class="h5 text-dark fw-bold">{{this.User.name}}</span>
-                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{this.User.account}}‧{{moment this.createdAt}}</span>
+                      <span class="text-muted ps-1" style="font-size: 0.875em;"> @{{this.User.account}}‧{{moment
+                        this.createdAt}}</span>
                     </div>
                   </div>
-                  <div class="col-12 mt-1">  
+                  <div class="col-12 mt-1">
                     <p class="fw-bold">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
@@ -277,16 +292,18 @@
                         <i class="fas fa-heart" style="color: red;"> {{ this.likes }}</i>
                       </button>
                     </form>
-                   
+
                     {{#if this.replyCount}}
-                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"                data-bs-target="#replyModal">
-                        <i class="fas fa-comment"> {{ this.replyCount }}</i>
-                      </button>
+                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
+                      data-bs-target="#replyModal">
+                      <i class="fas fa-comment"> {{ this.replyCount }}</i>
+                    </button>
                     {{else}}
-                      <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
-                        <i class="far fa-comment"> {{ this.replyCount }}</i>
-                      </button>
-                    {{/if}}                      
+                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
+                      data-bs-target="#replyModal">
+                      <i class="far fa-comment"> {{ this.replyCount }}</i>
+                    </button>
+                    {{/if}}
                   </div>
                 </div>
               </div>

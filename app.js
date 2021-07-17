@@ -19,8 +19,7 @@ const io = require('socket.io')(server)
 const port = process.env.PORT || 3000
 const { Publicmsg } = require('./models')
 
-// const socketio = require('socket.io')
-// const io = require('./socket.IO/socket_io')
+
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
 app.set('view engine', 'hbs')
