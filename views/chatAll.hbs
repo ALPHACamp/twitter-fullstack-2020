@@ -1,3 +1,6 @@
+<h5 id="chat-user-id" style="display: none;">{{user.id}}</h5>
+<h5 id="chat-user-name" style="display: none;">{{user.name}}</h5>
+
 <div class="col-4   sticky-top">
   <div id="online-user-list" class="sticky-top">
     <p class="fw-bolder border-bottom p-1 m-0">上線使用者 (5)</p>
@@ -109,8 +112,8 @@
     </div>
   </div>
   <div id="message-box" class="border-top">
-    <form action="">
-      <input type="text" autocomplete="off">
+    <form id="form" action="">
+      <input id="input" type="text" autocomplete="off">
       <button type="submit">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
           <path
