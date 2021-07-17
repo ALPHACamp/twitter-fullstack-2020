@@ -1,11 +1,33 @@
-const socketController = {
-  getPublicSocket: (req, res) => {
+const db = require('../models')
+const { Message } = db
+const helpers = require('../_helpers')
 
-    //選染畫面用的變數
+const socketController = {
+  getPublicSocket: async (req, res) => {
+    // 聊天紀錄
+    const messages = await Message.findAll({
+      raw: true,
+      nest: true,
+      order: [
+        ['createdAt', 'ASC']
+      ]
+    })
+
+    let dataMsg = []
+    // data 包含 留言訊息 message, 與 isCurrent 是否屬於登入使用者貼文,
+    dataMsg = messages.map((msg, index) => {
+      const isCurrent = msg.UserId === helpers.getUser(req).id
+      return {
+        ...msg,
+        isCurrent
+      }
+    })
+
+    // 選染畫面用的變數
     const publicSocketPage = true
 
     return res.render('publicSocket', {
-      publicSocketPage
+      publicSocketPage, dataMsg
     })
   }
 }
