@@ -4,6 +4,8 @@ const db = require('./models')
 const passport = require('./config/passport')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
+const moment = require('moment')
+
 const helpers = require('./_helpers')
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -58,8 +60,9 @@ require('./routes')(app)
 const { User, Chat } = require('./models')
 
 io.on('connection', (socket) => {
-  // console.log('server - into app.js/line63...user connect, socket.id', socket.id)
+  // console.log('server - into app.js/line61...user connect, socket.id', socket.id)
   socket.on('chat message', async (msgObj) => {
+
     //當有人上線的時候
     if (msgObj.behavior === 'inout' && msgObj.message === 'is entering') {
       // console.log(`${msgObj.senderName} is registering`)
@@ -68,17 +71,30 @@ io.on('connection', (socket) => {
       const chats = await Chat.findAll({
         raw: true,
         nest: true,
-        order: [['createdAt', 'DESC']],
-        include: [User]
+        order: [['createdAt']],
+        include: [User],
+        where: {
+          createdAt: {
+            $lt: msgObj.createdAt
+          }
+        }
       })
       io.emit(`history-${msgObj.senderId}`, chats)
-      // console.log('into app.js/line65...chats', chats)
+      // console.log('into app.js/line76...chats', chats)
     }
-    io.emit('chat message', msgObj)
-    // console.log('server line67...forward out...msgObj.message', msgObj.message)
+    if (msgObj.behavior === 'live-talk') {
+      io.emit('chat message', msgObj)
+      await Chat.create({
+        UserId: msgObj.senderId,
+        channel: 'chat message',
+        behavior: 'live-talk',
+        message: msgObj.message
+      })
+      // console.log('server line93...forward out...msgObj', msgObj)
+    }
   })
   socket.on('disconnect', () => {
-    // console.log('into app.js/line70...socket.senderName', socket.senderName)
+    // console.log('into app.js/line82...socket.senderName', socket.senderName)
     io.emit('chat message', {
       behavior: 'inout',
       message: 'has left',

@@ -1,5 +1,6 @@
 <h5 id="chat-user-id" style="display: none;">{{user.id}}</h5>
 <h5 id="chat-user-name" style="display: none;">{{user.name}}</h5>
+<h5 id="chat-user-avatar" style="display: none;">{{user.avatar}}</h5>
 
 <div class="col-4   sticky-top">
   <div id="online-user-list" class="sticky-top">
@@ -35,80 +36,10 @@
   <p class="fw-bolder border-bottom p-1 m-0 sticky-top" style="background-color:white">公開聊天室</p>
   <div id="messages">
     <div id="record" class="flex-fill d-flex flex-column justify-content-end">
-      <div id="others-message">
-        <div>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-          <p>somebody say hi~～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～</p>
-        </div>
-        <p>下午 4:21</p>
-      </div>
-      <div id="others-message">
-        <div>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-          <p>somebody say hi~～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～</p>
-        </div>
-        <p>下午 4:21</p>
-      </div>
-      <div id="others-message">
-        <div>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-          <p>somebody say hi~～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～</p>
-        </div>
-        <p>下午 4:21</p>
-      </div>
-      <div id="others-message">
-        <div>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-          <p>somebody say hi~～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～</p>
-        </div>
-        <p>下午 4:21</p>
-      </div>
-      <div id="others-message">
-        <div>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-          <p>somebody say hi~～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～</p>
-        </div>
-        <p>下午 4:21</p>
-      </div>
-      <div id="others-message">
-        <div>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-          <p>somebody say hi~～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～</p>
-        </div>
-        <p>下午 4:21</p>
-      </div>
-      <div id="others-message">
-        <div>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-          <p>somebody say hi~～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～</p>
-        </div>
-        <p>下午 4:21</p>
-      </div>
+      {{!-- 歷史對話記錄 --}}
     </div>
     <div id="broadcast">
-      <div id="access-record">
-        <p>name1 上線</p>
-      </div>
-      <div id="access-record">
-        <p>name2 上線</p>
-      </div>
-      <div id="access-record">
-        <p>name3 上線</p>
-      </div>
-      <div id="others-message">
-        <div>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-          <p>somebody say hi~</p>
-        </div>
-        <p>下午 4:21</p>
-      </div>
-      <div id="my-message">
-        <div>
-          <p>i say hi~</p>
-          <img src="https://loremflickr.com/50/50/headshot" style="width: 40px;height:40px;" class="rounded-circle m-1">
-        </div>
-        <p>下午 4:21</p>
-      </div>
+      {{!-- 即時對話紀錄 --}}
     </div>
   </div>
   <div id="message-box" class="border-top">
