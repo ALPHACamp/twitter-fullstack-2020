@@ -27,7 +27,9 @@ const getTop10 = async (showNumber, showButton) => {
                 <div class="d-flex justify-content-between">
                   <div class="d-flex" >
                     <div style="width: 50px;height: 50px;" class="col-auto m-2">
+                    <a href="/users/${top.id}/tweets">
                     <img src="${top.avatar}" class="rounded-circle"  style="width:100%; height:100%;"></div>
+                    </a>
                     <div class="d-flex flex-column justify-content-center" style="line-height: 1;">
                       <p class="m-0">${top.name}</p>
                       <a href="/users/${top.id}" class="user-link">@${top.account}</a>

@@ -25,6 +25,7 @@ const adminService = {
     let users = await User.findAll({
       include: [
         Tweet,
+        Like,
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
       ]
@@ -32,26 +33,27 @@ const adminService = {
     users = users.map(user => ({
       ...user.dataValues,
       TweetsCount: user.Tweets.length,
+      LikedCount:user.Likes.length,
       FollowersCount: user.Followers.length,
       FollowingsCount: user.Followings.length,
     }))
-    let tweets = await Tweet.findAll({
-      include: [
-        User,
-        Reply,
-        { model: User, as: 'LikedUsers' }
-      ],
-    })
-    tweets = tweets.map(tweet => ({
-      ...tweet.dataValues,
-      User: tweet.User.dataValues,
-      RepliesCount: tweet.Replies.length,
-      LikedUsersCount: tweet.LikedUsers.length,
-    }))
-    users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+    // let tweets = await Tweet.findAll({
+    //   include: [
+    //     User,
+    //     Reply,
+    //     { model: User, as: 'LikedUsers' }
+    //   ],
+    // })
+    // tweets = tweets.map(tweet => ({
+    //   ...tweet.dataValues,
+    //   User: tweet.User.dataValues,
+    //   RepliesCount: tweet.Replies.length,
+    //   LikedUsersCount: tweet.LikedUsers.length,
+    // }))
+    users = users.sort((a, b) => b.TweetsCount - a.TweetsCount)
     return callback({
       users,
-      tweets,
+      // tweets,
       isAdmin: true,
       Appear: { navbar: true },
     })
