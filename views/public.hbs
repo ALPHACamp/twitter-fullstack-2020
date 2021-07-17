@@ -57,6 +57,7 @@
         <div class='col-11 row px-md-2 px-4'>
           <div class='col-12 d-inline-flex justify-content-between align-items-center'>
             <div style='height: 25px; line-height: 25px'>
+              <p id="id" class="d-none">{{user.id}}</p>
               <h5 id='name' class='fw-bold'>{{user.name}}</h5>
               <span class='ps-1' style='color: #6c757d; font-size: 0.875em'>@{{user.account}}</span>
             </div>
@@ -68,8 +69,12 @@
         </div>
       </div>
 
-      <div id='broad'>
-
+      <div id='board' class="rounded-3">
+        {{#if msg}}
+        {{#each msg}}
+        <h2>{{this.User.name}}: {{this.chat}} {{moment this.createdAt}}</h2>
+        {{/each}}
+        {{/if}}
       </div>
     </div>
     <div class='col-auto col-lg-4 col-md-3'>

@@ -1,13 +1,19 @@
 const { User, Publicmsg } = require('../models')
 
 const messageController = {
-  getPublic: (req, res) => {
-    return Publicmsg.findAll({
-      include: [User],
-      raw: true
-    }).then(msg => {
+  getPublic: async (req, res) => {
+    try {
+      const msg = await Publicmsg.findAll({
+        include: [User],
+        order: [['createdAt']],
+        raw: true,
+        nest: true
+      })
+
       return res.render('public', { msg })
-    })
+    } catch (error) {
+      console.warn(error)
+    }
   }
 }
 

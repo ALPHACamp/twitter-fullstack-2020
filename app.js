@@ -6,6 +6,7 @@ const methodOverride = require('method-override')
 const passport = require('./config/passport')
 const session = require('express-session')
 const flash = require('connect-flash')
+const moment = require('moment')
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
@@ -13,6 +14,7 @@ const app = express()
 const server = http.createServer(app)
 const io = require('socket.io')(server)
 const port = process.env.PORT || 3000
+const { Publicmsg } = require('./models')
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
 app.set('view engine', 'hbs')
@@ -36,8 +38,18 @@ app.use((req, res, next) => {
 
 io.on("connection", (socket) => {
   console.log('A User linked: ' + socket.id)
-  socket.on('message', (data) => {
-    io.emit('message', data)
+  socket.on('message', async (data) => {
+    try {
+      await Publicmsg.create({
+        UserId: data.id,
+        chat: data.msg
+      })
+      data.time = moment().fromNow()
+      io.emit('message', data)
+    } catch (error) {
+      console.warn(error)
+    }
+
   })
 
   socket.on("disconnect", () => {
