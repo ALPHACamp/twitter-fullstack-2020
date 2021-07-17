@@ -177,7 +177,7 @@
 
               {{!-- 設定 --}}
               <a href="/socket/public" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-3"
-                style="{{#if userEditPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                style="{{#if publicSocketPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   {{#if publicSocketPage }}
                   <i class="fas fa-glass-cheers p-2 h2 me-3"
@@ -219,11 +219,49 @@
             {{/if}}
 
             {{#if publicSocketPage }}
-            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:50vh;border-radius:13em;"></div>
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:49vh;border-radius:13em;"></div>
             {{/if}}
 
 
           </div>
+
+          {{!-- 使用者登入後的公開聊天室 --}}
+          {{#if publicSocketPage}}
+          {{!-- 個人輸入訊息匡 --}}
+          <div class="d-flex" style="margin-left: 20vw;margin-top:0vh;position: fixed;">
+            <div style="width: 54vw;">
+
+              {{!-- post --}}
+              <div class="d-flex align-items-center justify-content-between p-1 pt-2 ps-2 mb-4"
+                style="background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:18vh;box-shadow:0 0 8px 3px #ccccccb3;">
+                {{!-- avatar --}}
+                <a href="/users/{{ user.id }}/tweets" style="margin-top: -0.2em;">
+                  <img src="{{ user.avatar }}"
+                    onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+                    style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
+                </a>
+                {{!-- account --}}
+                <form action="/tweets" method="post" class="d-flex align-items-center">
+                  <div style="color:#313c4b;width:31vw" class="">
+                    <div class="d-flex">
+                      <p class="fs-5 me-3 mb-0"><strong>{{ user.name }}</strong></p>
+                      <p class="mb-0" style="color: #313c4b84;margin-top:0.2em;">{{ user.account }}</p>
+                    </div>
+                    <textarea name="description" id="newTweet" cols="30" rows="8" placeholder="Share Something..."
+                      style="height:10vh;width:30vw;border:none;resize:none;outline:none;" required></textarea>
+                  </div>
+
+                  {{!-- share btn --}}
+                  <button type="submit" class="post-a-tweet btn me-3"
+                    style="margin-left: 2.6em;background-color: #ffd472;color: #313c4bc2;width: 8.5vw;height:7vh;border-radius:0.5em">Share</button>
+                </form>
+              </div>
+
+
+
+            </div>
+          </div>
+          {{/if}}
           {{/if}}
 
         </div>
@@ -234,6 +272,9 @@
           {{{ body }}}
         </div>
 
+
+        {{#if publicSocketPage}}
+        {{else}}
         {{!-- 右側欄位 --}}
         {{!-- 管理者登入 --}}
         {{#if isAdmin}}
@@ -242,6 +283,7 @@
         {{#if user }}
         {{!-- 使用者登入 --}}
         <div style="margin-left:2.2em" class="mt-2">{{> recommendedFollower }}</div>
+        {{/if}}
         {{/if}}
         {{/if}}
 
