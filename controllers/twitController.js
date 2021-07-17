@@ -107,9 +107,9 @@ const twitController = {
       const userself = req.user.id
       users = users.map(user => ({// 整理 users 資料
         ...user.dataValues,
-        //followerId:user.follower.id,
         FollowerCount: user.Followers.length,// 計算追蹤者人數
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id),// 判斷目前登入使用者是否已追蹤該 User 物件
+        //followtime: user.Follower
       }))
       helper.removeUser(users, userself)//移除使用者自身資訊
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
@@ -131,7 +131,8 @@ const twitController = {
       users = users.map(user => ({ // 整理 users 資料
         ...user.dataValues,
         FollowerCount: user.Followers.length,// 計算追蹤者人數
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)// 判斷目前登入使用者是否已追蹤該 User 物件
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id),// 判斷目前登入使用者是否已追蹤該 User 物件
+        followtime: user.Followers.createdAt
       }))
       helper.removeUser(users, userself)//移除使用者自身資訊
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
