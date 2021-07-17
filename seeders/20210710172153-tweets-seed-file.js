@@ -4,10 +4,10 @@ const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Tweets',
-    
+
       Array.from({ length: 10 }).map((d, i) =>
       ({
-        userId: 1,
+        UserId: 1,
         description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -15,7 +15,7 @@ module.exports = {
       ),
       Array.from({ length: 10 }).map((d, i) =>
       ({
-        userId: 2,
+        UserId: 2,
         description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -23,7 +23,7 @@ module.exports = {
       ),
       Array.from({ length: 10 }).map((d, i) =>
       ({
-        userId: 3,
+        UserId: 3,
         description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -31,7 +31,7 @@ module.exports = {
       ),
       Array.from({ length: 10 }).map((d, i) =>
       ({
-        userId: 4,
+        UserId: 4,
         description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -39,7 +39,7 @@ module.exports = {
       ),
       Array.from({ length: 10 }).map((d, i) =>
       ({
-        userId: 5,
+        UserId: 5,
         description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
@@ -47,16 +47,16 @@ module.exports = {
       ),
       Array.from({ length: 10 }).map((d, i) =>
       ({
-        userId: 6,
+        UserId: 6,
         description: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       })
       ),
-       {})
+      {})
   },
 
-  down: async  (queryInterface, Sequelize) => {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Tweets', null, {})
   }
 };
