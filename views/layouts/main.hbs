@@ -35,7 +35,7 @@
           <div class="d-flex flex-column align-items-center" style="">
             <img src="https://i.pinimg.com/564x/d3/c6/67/d3c6675cfa80704b24f154c61cd83dc1.jpg" alt="logo"
               style="width:5em;">
-            <p class="h5 mt-2">Share Your Life</p>
+            <p class="h5 mb-5 mt-2">Share Your Life</p>
           </div>
 
           {{!-- 中 --}}
@@ -43,7 +43,7 @@
           {{#if isAdmin}}
 
           <div class="d-flex">
-            <div class="mt-5 ms-4" style="width: 15.5vw;">
+            <div class="ms-4" style="width: 15.5vw;">
 
               {{!-- post --}}
 
@@ -106,11 +106,11 @@
           {{else}}
           {{!-- 如果是使用者登入 --}}
           <div class="d-flex">
-            <div class="mt-5 ms-4" style="width: 15.5vw;">
+            <div class="ms-4" style="width: 15.5vw;">
 
               {{!-- 首頁 --}}
 
-              <a href="/" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+              <a href="/" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-3"
                 style="{{#if tweetsPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   {{#if tweetsPage }}
@@ -129,7 +129,7 @@
 
               {{!-- 個人資料 --}}
               <a href="/users/{{user.id}}/tweets"
-                class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-3"
                 style="{{#if myPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   {{#if myPage }}
@@ -148,7 +148,7 @@
 
               {{!-- 設定 --}}
               <a href="/users/{{user.id}}/edit"
-                class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+                class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-3"
                 style="{{#if userEditPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
                 <div>
                   {{#if userEditPage }}
@@ -166,13 +166,33 @@
               </a>
 
               {{!-- 推文 --}}
-              <button class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-4"
+              <button class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-3"
                 style="text-decoration:none;border-radius: 8px;width:14vw;border:none; background-color: white"
                 data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="{{user.id}}">
                 <div>
                   <i class="fas fa-umbrella-beach p-2 h4 me-3" style="color:#313c4b6f;"></i>
                 </div>
                 <p style="color:#313c4b6f;" class="mt-2">分享心情</p>
+              </button>
+
+              {{!-- 設定 --}}
+              <a href="/socket/public" class="d-flex align-items-center justify-content-start p-1 pt-2 ps-2 mb-3"
+                style="{{#if userEditPage }}background-color:#ffd57237;{{/if}}text-decoration:none;border-radius: 8px;width:14vw">
+                <div>
+                  {{#if publicSocketPage }}
+                  <i class="fas fa-glass-cheers p-2 h2 me-3"
+                    style="color:#313c4b;background-color:#ffd472;border-radius: 8px"></i>
+                  {{else}}
+                  <i class="fas fa-glass-cheers p-2 h2 me-3" style="color:#313c4b6f;"></i>
+                  {{/if}}
+                </div>
+                {{#if publicSocketPage }}
+                <p style="color:#313c4b;" class="mt-2">公開聊天室</p>
+                {{else}}
+                <p style="color:#313c4b6f;" class="mt-2">公開聊天室</p>
+                {{/if}}
+              </a>
+
               </button>
 
               {{!-- 登出 --}}
@@ -187,15 +207,19 @@
 
             {{!-- 選擇直線 --}}
             {{#if tweetsPage}}
-            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:9vh;border-radius:13em;"></div>
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:2vh;border-radius:13em;"></div>
             {{/if}}
 
             {{#if myPage }}
-            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:21.5vh;border-radius:13em;"></div>
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:14vh;border-radius:13em;"></div>
             {{/if}}
 
             {{#if userEditPage }}
-            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:34vh;border-radius:13em;"></div>
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:26vh;border-radius:13em;"></div>
+            {{/if}}
+
+            {{#if publicSocketPage }}
+            <div style="border-left:0.3em solid #ffd472;height:5vh;margin-top:50vh;border-radius:13em;"></div>
             {{/if}}
 
 
