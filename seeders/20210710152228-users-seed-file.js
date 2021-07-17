@@ -14,12 +14,12 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
-      account: 'user11',
-      email: 'user11@example.com',
+      account: 'user1',
+      email: 'user1@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       role: false,
       id: 2,
-      name: 'user11',
+      name: 'user1',
       createdAt: new Date(),
       updatedAt: new Date()
     }, {
