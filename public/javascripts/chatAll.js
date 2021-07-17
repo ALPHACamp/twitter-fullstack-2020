@@ -1,27 +1,55 @@
-var socket = io();
-var messages = document.getElementById('messages');
-var form = document.getElementById('form');
-var input = document.getElementById('input');
+const socket = io();
+const form = document.getElementById('form');
+const input = document.getElementById('input');
+const userName = document.querySelector('#chat-user-name').innerText
+const userId = document.querySelector('#chat-user-id').innerText
+
+console.log('into public/javascripts/line7...')
 
 socket.on('connect', () => {
-  displayMessage(`You connected with id: ${socket.id}`)
+  let msgObj = {
+    senderId: userId,
+    senderName: userName,
+    channel: 'chat message',
+    behavior: 'inout',
+    message: 'is entering',
+    createdAt: new Date()
+  }
+  socket.emit('chat message', msgObj);
 
-  socket.on('chat message', displayMessage);
+  socket.on(`history-${userId}`, chats => {
+    chats.forEach(chat => {
+      console.log(`${chat.User.name}: ${chat.message}`)
+    })
+  })
 
-  // socket.emit('custom-event', 10, 'Hi', { a: 'a' })
+  socket.on('chat message', msgObj => {
+    if (msgObj.behavior === 'inout') {
+      console.log(`${msgObj.senderName} ${msgObj.message}`)
+    }
+    if (msgObj.behavior === 'live-talk') {
+      console.log(`${msgObj.senderName}: ${msgObj.message}`)
+    }
+  });
 
   form.addEventListener('submit', function (e) {
+    console.log('-- enable addEventListener...')
     e.preventDefault();
     if (input.value) {
-      socket.emit('chat message', input.value);
-      input.value = '';
+      msgObj = {
+        senderId: userId,
+        senderName: userName,
+        channel: 'chat message',
+        behavior: 'live-talk',
+        message: input.value,
+        createdAt: new Date()
+      }
+      socket.emit('chat message', msgObj);
+      console.log('-- sent message obj =', msgObj)
     }
   });
 })
 
-function displayMessage(msg) {
-  var item = document.createElement('li');
-  item.textContent = msg;
-  messages.appendChild(item);
-  window.scrollTo(0, document.body.scrollHeight);
-}
+
+
+

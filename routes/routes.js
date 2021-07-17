@@ -52,7 +52,7 @@ router.post('/followships', authenticated, userController.getFollowing)
 router.delete('/followships/:id', authenticated, userController.deleteFollowing)
 
 // 測試區開始
-router.get('/users/:id/chatAll', authenticated, userController.chatAll)
+router.get('/users/:id/chatAll', userController.chatAll)
 
 
 module.exports = router

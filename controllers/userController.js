@@ -147,11 +147,11 @@ const userController = {
 
   // 測試區開始
   chatAll: async (req, res) => {
-    const isMySelf = req.user.id.toString() === req.params.id.toString()
-    if (!isMySelf) {
-      req.flash('error_messages', 'you can only edit your own profile!')
-      return res.redirect(`/users/${req.user.id}/chatAll`)
-    }
+    // const isMySelf = req.user.id.toString() === req.params.id.toString()
+    // if (!isMySelf) {
+    //   req.flash('error_messages', 'you can only edit your own profile!')
+    //   return res.redirect(`/users/${req.user.id}/chatAll`)
+    // }
     const user = await User.findByPk(req.params.id)
     // console.log('into controllers/userController/line151...user', user)
     return res.render('chatAll', {

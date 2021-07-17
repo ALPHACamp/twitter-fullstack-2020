@@ -55,19 +55,37 @@ require('./routes')(app)
 
 // socket.io
 
+const { User, Chat } = require('./models')
+
 io.on('connection', (socket) => {
-  console.log('user connected')
-  socket.on('custom-event', (number, string, obj) => {
-    console.log(number, string, obj)
+  // console.log('server - into app.js/line63...user connect, socket.id', socket.id)
+  socket.on('chat message', async (msgObj) => {
+    //當有人上線的時候
+    if (msgObj.behavior === 'inout' && msgObj.message === 'is entering') {
+      // console.log(`${msgObj.senderName} is registering`)
+      // 綁定 socket 和 name，為了待會辨識是誰離開
+      socket.senderName = msgObj.senderName
+      const chats = await Chat.findAll({
+        raw: true,
+        nest: true,
+        order: [['createdAt', 'DESC']],
+        include: [User]
+      })
+      io.emit(`history-${msgObj.senderId}`, chats)
+      // console.log('into app.js/line65...chats', chats)
+    }
+    io.emit('chat message', msgObj)
+    // console.log('server line67...forward out...msgObj.message', msgObj.message)
   })
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
-  socket.on('disconnect', (obj) => {
-    console.log('user disconnected...obj', obj);
-    io.emit('chat message', `someone left`)
-  });
-});
+  socket.on('disconnect', () => {
+    // console.log('into app.js/line70...socket.senderName', socket.senderName)
+    io.emit('chat message', {
+      behavior: 'inout',
+      message: 'has left',
+      senderName: socket.senderName
+    })
+  })
+})
 
 server.listen(3000, () => {
   console.log('socket listening on port 3000')
