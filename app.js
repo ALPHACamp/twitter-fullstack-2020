@@ -151,9 +151,14 @@ io.on('connection', (socket) => {
 
     //當有人在講話
     if (msgObj.behavior === 'live-talk') {
-
+      const user = await User.findByPk(msgObj.senderId)
+      let newMsgObj = {
+        ...msgObj,
+        senderName: user.name,
+        senderAvatar: user.avatar
+      }
       // 進行群播，並存到資料庫     
-      io.to(room).emit('private', msgObj)
+      io.to(room).emit('private', newMsgObj)
       // console.log('app.js/line123...sequelize room,msgobj', socket.adapter.rooms)
       await Chat.create({
         UserId: msgObj.senderId,
