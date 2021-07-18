@@ -189,7 +189,6 @@ const userController = {
         ]
       }
     })
-    console.log('into controllers/userController/line187...privateUsers', privateUsers)
     return res.render('chatPrivate', {
       privateUsers,
       user: user.toJSON(),
