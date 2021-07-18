@@ -1,5 +1,4 @@
 const socket = io()
-socket.on('connection')
 const send = document.getElementById('send')
 const board = document.getElementById('board')
 
