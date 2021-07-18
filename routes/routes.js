@@ -13,6 +13,7 @@ const authenticatedAdmin = require('./authMiddleware').authenticatedAdmin;
 
 const helpers = require('../_helpers');
 const passport = require('../config/passport');
+const { allChatPrivate } = require('../controllers/userController');
 
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'));
 
@@ -52,7 +53,9 @@ router.post('/followships', authenticated, userController.getFollowing)
 router.delete('/followships/:id', authenticated, userController.deleteFollowing)
 
 // 測試區開始
-router.get('/users/:id/chatAll', userController.chatAll)
+router.get('/users/chatPrivate/:receiverId', authenticated, userController.singleChatPrivate)
+router.get('/users/chatPrivate', authenticated, userController.allChatPrivate)
+router.get('/users/:id/chatAll', authenticated, userController.chatAll)
 
 
 module.exports = router

@@ -14,6 +14,9 @@ module.exports = {
       channel: {
         type: Sequelize.STRING
       },
+      room: {
+        type: Sequelize.STRING
+      },
       behavior: {
         type: Sequelize.STRING
       },

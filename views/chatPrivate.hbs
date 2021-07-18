@@ -1,11 +1,21 @@
-<h5 id="chat-user-id" style="display: none;">{{user.id}}</h5>
 <h5 id="chat-user-name" style="display: none;">{{user.name}}</h5>
+<h5 id="chat-user-id" style="display: none;">{{user.id}}</h5>
 <h5 id="chat-user-avatar" style="display: none;">{{user.avatar}}</h5>
+<h5 id="chat-receiver-id" style="display: none;">{{receiver.id}}</h5>
+
 
 <div class="col-4   sticky-top">
-  <div id="online-user-list" class="sticky-top">
-    <p class="fw-bolder border-bottom p-1 m-0">上線使用者 (5)</p>
-    {{!-- 上線使用者區 --}}
+  <div id="private-user-list" class="sticky-top">
+    <p class="fw-bolder border-bottom p-1 m-0">使用者名單</p>
+    {{#each privateUsers}}
+    <a href="/users/chatPrivate/{{this.id}}">
+      <div class="d-flex align-items-center border-bottom p-2" id="online-user">
+        <img src="{{this.avatar}}" style="width: 50px;height:50px;" class="rounded-circle m-1">
+        <p class="m-0">{{this.name}}</p>
+        <p class="m-0 user-link">&nbsp;@{{this.account}}</p>
+      </div>
+    </a>
+    {{/each}}
   </div>
 </div>
 <div class="col-8 border-start border-end d-flex flex-column">

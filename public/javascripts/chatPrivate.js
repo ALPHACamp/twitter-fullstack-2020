@@ -1,28 +1,36 @@
 const socket = io();
 const form = document.getElementById('form');
 const input = document.getElementById('input');
-const userName = document.querySelector('#chat-user-name').innerText
+
+//從 hbs 抓到 sender 和 receiver
 const userId = document.querySelector('#chat-user-id').innerText
-const userAvatar = document.querySelector('#chat-user-avatar').innerText
+const receiverId = document.querySelector('#chat-receiver-id').innerText
+
 const record = document.querySelector('#record')
 const broadcast = document.querySelector('#broadcast')
-const onlineUsers = document.querySelector('#online-user-list')
+// const privateUsers = document.querySelector('#private-user-list')
 
-console.log('into public/javascripts/chatAll/line11...')
+console.log('into public/javascripts/chatPrivate...line11...userId', userId)
+
+function roomNameGenerator(id1, id2) {
+  const numA = Number(id1)
+  const numB = Number(id2)
+  return numA < numB ? `R-${numA}-${numB}` : `R-${numB}-${numA}`
+}
 
 socket.on('connect', () => {
   // 打包一份資料
   let msgObj = {
     senderId: userId,
-    senderName: userName,
-    channel: 'chat message',
+    channel: 'private',
     behavior: 'inout',
     message: 'is entering',
     createdAt: new Date()
   }
+  const room = roomNameGenerator(userId, receiverId)
 
   //廣播這個資料給 server 讓它知道我來了
-  socket.emit('chat message', msgObj);
+  socket.emit('private', msgObj, room);
 
   //接收 server 傳來的歷史記錄
   socket.on(`history-${userId}`, chats => {
@@ -53,37 +61,12 @@ socket.on('connect', () => {
     window.scrollTo(0, document.body.scrollHeight)
   })
 
-  //接收 server 傳來的 online users
-  socket.on('online-users', users => {
-    onlineUsers.innerHTML = `<p class="fw-bolder border-bottom p-1 m-0">上線使用者 (${users.length})</p>`
-    users.forEach(user => {
-      onlineUsers.innerHTML += `
-      <div class="d-flex align-items-center border-bottom p-2" id="online-user">
-        <img src="${user.avatar}" style="width: 50px;height:50px;" class="rounded-circle m-1">
-        <p class="m-0">${user.name}</p>
-        <p class="m-0 user-link">&nbsp;@${user.account}</p>
-      </div>
-    `
-    })
-  })
   //接收聊天室的訊息
-  socket.on('chat message', msgObj => {
-
-    //當有人上線離線的時候
-    if (msgObj.behavior === 'inout') {
-      broadcast.innerHTML += `
-        <div id="access-record">
-          <p>${msgObj.senderName} ${msgObj.message}</p>
-        </div>
-      `
-      window.scrollTo(0, document.body.scrollHeight)
-      // console.log(`${msgObj.senderName} ${msgObj.message}`)
-    }
-
+  socket.on('private', msgObj => {
     //當有人在講話的時候
-    if (msgObj.behavior === 'live-talk') {
-      if (msgObj.senderId.toString() === userId) {
-        broadcast.innerHTML += `
+    console.log('into public/javascripts/chatPrivate.js/line95....private detected')
+    if (msgObj.senderId.toString() === userId) {
+      broadcast.innerHTML += `
         <div id="my-message">
           <div>
             <p>${msgObj.message}</p>
@@ -92,8 +75,8 @@ socket.on('connect', () => {
           <p>${msgObj.createdAt}</p>
         </div>
       `
-      } else {
-        broadcast.innerHTML += `
+    } else {
+      broadcast.innerHTML += `
         <div id="others-message">
           <div>
             <img src="${msgObj.senderAvatar}" style="width: 40px;height:40px;" class="rounded-circle m-1">
@@ -103,10 +86,9 @@ socket.on('connect', () => {
         </div>
       `
 
-      }
-      window.scrollTo(0, document.body.scrollHeight)
     }
-  });
+    window.scrollTo(0, document.body.scrollHeight)
+  })
 
   form.addEventListener('submit', function (e) {
     console.log('-- enable addEventListener...')
@@ -114,14 +96,12 @@ socket.on('connect', () => {
     if (input.value) {
       msgObj = {
         senderId: userId,
-        senderName: userName,
-        senderAvatar: userAvatar,
-        channel: 'chat message',
+        channel: 'private',
         behavior: 'live-talk',
         message: input.value,
         createdAt: new Date()
       }
-      socket.emit('chat message', msgObj)
+      socket.emit('private', msgObj, room)
       input.value = ''
       // console.log('-- sent message obj =', msgObj)
     }

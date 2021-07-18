@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs')
+const { replaceSetter } = require('sinon')
 const { User, Like } = require('../models')
 const userService = require('../services/userService')
 const helpers = require('../_helpers')
+const { Op } = require('sequelize')
 
 const userController = {
   signUpPage: async (req, res) => {
@@ -145,17 +147,43 @@ const userController = {
     userService.deleteFollowing(req, res, () => res.redirect('back'))
   },
 
-  // 測試區開始
+  // chat 測試區開始
   chatAll: async (req, res) => {
-    // const isMySelf = req.user.id.toString() === req.params.id.toString()
-    // if (!isMySelf) {
-    //   req.flash('error_messages', 'you can only edit your own profile!')
-    //   return res.redirect(`/users/${req.user.id}/chatAll`)
-    // }
+    const isMySelf = req.user.id.toString() === req.params.id.toString()
+    if (!isMySelf) {
+      req.flash('error_messages', 'you can only edit your own profile!')
+      return res.redirect(`/users/${req.user.id}/chatAll`)
+    }
     const user = await User.findByPk(req.params.id)
-    // console.log('into controllers/userController/line151...user', user)
     return res.render('chatAll', {
       user: user.toJSON(),
+      Appear: { navbar: true }
+    })
+  },
+
+  allChatPrivate: async (req, res) => {
+    const privateUsers = await User.findAll({
+      raw: true,
+      where: { id: { [Op.ne]: req.user.id } }
+    })
+    return res.render('chatPrivate', {
+      privateUsers,
+      Appear: { navbar: true }
+    })
+  },
+
+  singleChatPrivate: async (req, res) => {
+    const user = await User.findByPk(req.user.id)
+    const receiver = await User.findByPk(req.params.receiverId)
+    const privateUsers = await User.findAll({
+      raw: true,
+      where: { id: { [Op.ne]: req.user.id } }
+    })
+
+    return res.render('chatPrivate', {
+      privateUsers,
+      user: user.toJSON(),
+      receiver: receiver.toJSON(),
       Appear: { navbar: true }
     })
   }
