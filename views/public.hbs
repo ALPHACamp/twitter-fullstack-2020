@@ -15,15 +15,15 @@
             </a>
           </li>
           <li class='nav-item p-2'>
-            <a class='nav-link align-middle text-dark h-tomato' href='/messages/public'>
-              <i class='far fa-envelope a-tomato' style='font-size: 1.2em;'></i>
-              <span class='d-none d-sm-inline h5 ps-3 a-tomato fw-bold'>公開聊天室</span>
-            </a>
-          </li>
-          <li class='nav-item p-2'>
             <a class='nav-link align-middle text-dark h-tomato' href='/users/{{user.id}}'>
               <i class='far fa-user' style='font-size: 1.2em;'></i>
               <span class='d-none d-sm-inline h5 ps-3 fw-bold'>個人資料</span>
+            </a>
+          </li>
+          <li class='nav-item p-2'>
+            <a class='nav-link align-middle text-dark h-tomato' href='/messages/public/{{user.id}}'>
+              <i class='far fa-envelope a-tomato' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 a-tomato fw-bold'>公開聊天室</span>
             </a>
           </li>
           <li class='nav-item p-2'>
@@ -49,38 +49,73 @@
         </div>
       </div>
     </div>
-    <div class='row col-9 col-lg-6 col-md-7 col-sm-8 py-2 bg-light'>
-      <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
-        <div class='col-1 d-flex justify-content-center align-items-center'>
-          <img src='{{user.avatar}}' class='rounded-circle p-1' style='width: 60px; height: 60px' alt='A user' />
-        </div>
-        <div class='col-11 row px-md-2 px-4'>
-          <div class='col-12 d-inline-flex justify-content-between align-items-center'>
-            <div style='height: 25px; line-height: 25px'>
-              <p id="id" class="d-none">{{user.id}}</p>
-              <h5 id='name' class='fw-bold'>{{user.name}}</h5>
-              <span class='ps-1' style='color: #6c757d; font-size: 0.875em'>@{{user.account}}</span>
-            </div>
-          </div>
-        </div>
-        <div class='col-12'>
-          <input type='text' id='message' />
-          <button type='submit' id='send'>send message</button>
-        </div>
-      </div>
 
-      <div id='board' class="rounded-3">
-        {{#if msg}}
-        {{#each msg}}
-        <h2>{{this.User.name}}: {{this.chat}} {{moment this.createdAt}}</h2>
-        {{/each}}
-        {{/if}}
+    <div class="col-auto col-lg-3 col-md-2">
+      <div class="card d-none d-md-flex flex-column vh-100  position-fixed">
+        <ul class="list-group " style="width: 24vw;">
+          <li class="list-group-item fw-bold" style="border-left: none;border-right: none">上線使用者(5)</li>
+          {{!-- each --}}
+          <li class="list-group-item hovercard" style="border-left: none;border-right: none;height:5rem">
+            <div class="row justify-content-start align-items-center">
+              <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
+                <a href="/users/{{user.id}}">
+                  <img src="{{user.avatar}}" alt="" width="50" height="50" class="rounded-circle">
+                </a>
+              </div>
+              <div class="col-6 ps-3 pt-3 d-flex">
+                <p id="id" class="d-none">{{user.id}}</p>
+                <h5 id='name' style="line-height: 18px;">{{user.name}}</h5>
+                <p class="text-muted" style="line-height:16px; margin-left: 5px;">@{{user.account}}</p>
+              </div>
+            </div>
+          </li>
+          {{!-- each --}}
+        </ul>
       </div>
     </div>
-    <div class='col-auto col-lg-4 col-md-3'>
 
+    <div class='col-8 col-lg-7 col-md-8 col-sm-6'>
+      <div class="card d-md-flex flex-column vh-100">
+        <ul class="list-group overflow-auto">
+          <li class="list-group-item fw-bold">
+            公開聊天室
+          </li>
+          <li class="list-group-item d-flex flex-column align-items-center" style="border-top:none;border-bottom:none">
+            <ul class="list-group" id="onlineList">
+              <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">user1 上線了</li>
+              <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">user1 上線了</li>
+            </ul>
+          </li>
+          <li class="list-group-item" style="border-bottom:none">
+            <div id=' board' class="rounded-3">
+              {{#if msg}}
+              {{#each msg}}
+              <h3 class="bg-light rounded-pill  d-flex flex-column align-items-start" style="width:fit-content;">other
+                user</h3>
+              <h2 class="bg-light rounded-pill d-flex flex-column align-items-end">
+                {{this.User.name}}: {{this.chat}}
+                {{moment this.createdAt}}</h2>
+              {{/each}}
+              {{/if}}
+            </div>
+          </li>
+
+          <li class="list-group-item d-flex flex-column align-items-center" style="border-bottom:none">
+            <ul class="list-group" id="outlineList">
+              <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">user1 離線了</li>
+            </ul>
+          </li>
+        </ul>
+        <li class="list-group-item" id="msgInputBtn">
+          <div class="input-group">
+            <input type="text" id='message' class="form-control rounded-pill bg-light" placeholder="請輸入訊息..."
+              aria-label="msgInput" aria-describedby="basic-addon1">
+            <button type="submit" id='send' class="btn btn-tomato rounded-pill fixed-bottom" style="margin-left:5px;">
+              <i class="fas fa-paper-plane"></i></button>
+          </div>
+        </li>
+      </div>
     </div>
   </div>
 </div>
-
 <script src='/javascripts/public.js'></script>

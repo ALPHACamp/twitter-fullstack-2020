@@ -26,6 +26,12 @@
               <span class="d-none d-sm-inline h5 ps-3 fw-bold">個人資料</span>
             </a>
           </li>
+          <li class='nav-item p-2'>
+            <a class='nav-link align-middle text-dark' href='/messages/public/{{user.id}}'>
+              <i class='far fa-envelope' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 a-tomato fw-bold'>公開聊天室</span>
+            </a>
+          </li>
           <li class="nav-item p-2">
             <a class="nav-link align-middle text-dark h-tomato" href="/setting">
               <i class="fas fa-cog" style="font-size: 1.2em;"></i>
@@ -33,10 +39,11 @@
             </a>
           </li>
           <li class="nav-item p-2" style="width: inherit;">
-            <button type="button" class="btn btn-tomato rounded-pill mt-3" style="width: 100%;" data-bs-toggle="modal" data-bs-target="#tweetModal">
+            <button type="button" class="btn btn-tomato rounded-pill mt-3" style="width: 100%;" data-bs-toggle="modal"
+              data-bs-target="#tweetModal">
               <span class='h5 fw-bold d-none d-sm-inline'>推文</span>
               <i class="fas fa-feather-alt d-sm-none"></i>
-            </button>            
+            </button>
           </li>
         </ul>
         <hr />
@@ -53,77 +60,84 @@
         <span class="h5" style="font-weight: bold;">首頁</span>
       </div>
       {{> message}}
-      <form action="/tweets" method="POST" class="col-12 rounded bg-white" style="outline: rgba(0, 0, 0, 0.2) 1px outset;">
-      <div class="col-12 position-relative" style="margin-bottom: 15px; padding: 70px 0;">
-        <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
-          <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 60px; height: 60px;" alt="A user"/>
+      <form action="/tweets" method="POST" class="col-12 rounded bg-white"
+        style="outline: rgba(0, 0, 0, 0.2) 1px outset;">
+        <div class="col-12 position-relative" style="margin-bottom: 15px; padding: 70px 0;">
+          <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
+            <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 60px; height: 60px;"
+              alt="A user" />
+          </div>
+          <div class="position-absolute" style="z-index: 0; width:inherit; top:0px;">
+            <textarea class="nowcount3 mt-1" id="description" name="description" rows="3" placeholder="tweet一下你的心情"
+              maxlength="140"
+              style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
+              required></textarea>
+          </div>
+          <div class="position-absolute" style="z-index: 5; right: 6px; bottom: 0;">
+            <span class="text-muted px-2 now3" style="font-size: 0.98em;"></span>
+            <button type="submit" class="btn btn-tomato fw-bold rounded-pill">推文</button>
+          </div>
         </div>
-        <div class="position-absolute" style="z-index: 0; width:inherit; top:0px;">
-          <textarea class="nowcount3 mt-1" id="description" name="description" rows="3" placeholder="tweet一下你的心情" 
-          maxlength="140" style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
-          required></textarea>
-        </div> 
-        <div class="position-absolute" style= "z-index: 5; right: 6px; bottom: 0;">
-          <span class="text-muted px-2 now3" style="font-size: 0.98em;"></span>
-          <button type="submit" class="btn btn-tomato fw-bold rounded-pill">推文</button>
-        </div>
-      </div>
       </form>
       <div class="card-body col-12">
         {{#each tweets}}
-        <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard" onclick="location.href='/tweets/{{this.id}}'">
-            <div class="col-1 d-flex justify-content-center align-items-center">
-              <a href="/users/{{this.UserId}}" class="p-1">
-                <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 60px; height: 60px"
-                alt="A user" />
-              </a>
-            </div>
-            <div class="col-11 row px-md-2 px-4">
-              <div class="col-12 d-inline-flex justify-content-between align-items-center">
-                <div style="height: 22px; line-height: 22px">
-                  <a href="/users/{{this.UserId}}" class="h5 text-dark text-decoration-none fw-bold">{{this.User.name}}</a>
-                  <span class="ps-1" style="color: #6c757d; font-size: 0.875em">@{{this.User.account}}．{{moment this.createdAt}}</span>
-                </div>
-                <div>
-                {{#ifCond this.User.id ../user.id}}             
+        <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard"
+          onclick="location.href='/tweets/{{this.id}}'">
+          <div class="col-1 d-flex justify-content-center align-items-center">
+            <a href="/users/{{this.UserId}}" class="p-1">
+              <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 60px; height: 60px" alt="A user" />
+            </a>
+          </div>
+          <div class="col-11 row px-md-2 px-4">
+            <div class="col-12 d-inline-flex justify-content-between align-items-center">
+              <div style="height: 22px; line-height: 22px">
+                <a href="/users/{{this.UserId}}"
+                  class="h5 text-dark text-decoration-none fw-bold">{{this.User.name}}</a>
+                <span class="ps-1" style="color: #6c757d; font-size: 0.875em">@{{this.User.account}}．{{moment
+                  this.createdAt}}</span>
+              </div>
+              <div>
+                {{#ifCond this.User.id ../user.id}}
                 <form action="/tweets/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
                   <button type="submit" class="btn">
                     <i class="fas fa-times"></i>
                   </button>
                 </form>
                 {{/ifCond}}
-                </div>
               </div>
-              <div class="col-12 mt-1">              
-                <p class="fw-bold">{{this.description}}</p>
-              </div>
-              <div class="col-12 d-flex align-items-center justify-content-start ">              
-                {{#if this.isLiked }}
-                <form action="/tweets/{{this.id}}/unlike" method="POST">
-                  <button type="submit" class="btn" style="width: 60px; height: 30px">
-                    <i class="fas fa-heart" style="color: red;"> {{ this.likes }}</i>
-                  </button>
-                </form>
-                {{else}}
-                <form action="/tweets/{{this.id}}/like" method="POST">
-                  <button type="submit" class="btn" style="width: 60px; height: 30px">
-                    <i class="far fa-heart" style="color: red;"></i>
-                  </button>
-                </form>
-                {{/if}}
-
-                {{#if this.replyCount}}
-                <button type="button" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
-                  <i class="fas fa-comment" style="color: navy;"> {{ this.replyCount }}</i>
-                </button>
-                {{else}}
-                  <button type="button" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal" data-bs-target="#replyModal">
-                    <i class="far fa-comment" style="color: navy;"> {{ this.replyCount }}</i>
-                  </button>
-                {{/if}}
-                              
-              </div>         
             </div>
+            <div class="col-12 mt-1">
+              <p class="fw-bold">{{this.description}}</p>
+            </div>
+            <div class="col-12 d-flex align-items-center justify-content-start ">
+              {{#if this.isLiked }}
+              <form action="/tweets/{{this.id}}/unlike" method="POST">
+                <button type="submit" class="btn" style="width: 60px; height: 30px">
+                  <i class="fas fa-heart" style="color: red;"> {{ this.likes }}</i>
+                </button>
+              </form>
+              {{else}}
+              <form action="/tweets/{{this.id}}/like" method="POST">
+                <button type="submit" class="btn" style="width: 60px; height: 30px">
+                  <i class="far fa-heart" style="color: red;"></i>
+                </button>
+              </form>
+              {{/if}}
+
+              {{#if this.replyCount}}
+              <button type="button" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
+                data-bs-target="#replyModal">
+                <i class="fas fa-comment" style="color: navy;"> {{ this.replyCount }}</i>
+              </button>
+              {{else}}
+              <button type="button" class="btn" style="width: 60px; height: 30px" data-bs-toggle="modal"
+                data-bs-target="#replyModal">
+                <i class="far fa-comment" style="color: navy;"> {{ this.replyCount }}</i>
+              </button>
+              {{/if}}
+
+            </div>
+          </div>
         </div>
         {{/each}}
       </div>

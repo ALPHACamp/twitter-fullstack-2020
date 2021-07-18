@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Publicmsg.init({
-    chat: DataTypes.STRING,
-    UserId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    chat: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Publicmsg',

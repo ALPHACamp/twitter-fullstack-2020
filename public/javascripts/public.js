@@ -20,4 +20,3 @@ socket.on('message', (data) => {
   board.appendChild(h2)
   board.scrollTo(0, board.scrollHeight)
 })
-

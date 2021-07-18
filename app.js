@@ -37,7 +37,6 @@ app.use((req, res, next) => {
 })
 
 io.on("connection", (socket) => {
-  console.log('A User linked: ' + socket.id)
   socket.on('message', async (data) => {
     try {
       await Publicmsg.create({
