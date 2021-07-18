@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
   console.log('==============================================') // 除錯用分隔線
   // // 使用者清單中, 抓取當前登入者
   const localUser = onlineUsers.find(user => user.id === id)
-  console.log(`localUser:${localUser}`)
+
   // 發送所有上線使用者清單
   io.emit('onlineUsers', onlineUsers)
 

@@ -2,8 +2,8 @@ const socket = io()     // 建立 socket 通道
 const socketForm = document.getElementById('socketForm')  // layouts/main.hbs 的 textarea id
 const socketMsg = document.getElementById('socketMsg')    // layouts/main.hbs 的 Form id
 let messages = document.getElementById('messages')
-const onlineUserCounter = document.getElementById('onlineUserCounter')
-const onlineUserList = document.getElementById('onlineUserList')
+const onlineUserCounter = document.getElementById('onlineUserCounter') // 更新 上線人數
+const onlineUserList = document.getElementById('onlineUserList')       // 更新 上線清單
 const onlineUsers = []  // 儲存上線使用者人數之陣列
 
 function getDateDiff(data) {
@@ -51,7 +51,7 @@ function getDateDiff(data) {
   return result;
 
 }
-
+// 更新 上線使用者清單
 function displayOnlineList(onlineUsersData) {
   onlineUserList.innerHTML = ''
   let onlineListHTML = ''
@@ -78,7 +78,6 @@ function displayOnlineList(onlineUsersData) {
 
 // 當前上線人數
 socket.on('onlineCount', onlineCount => {
-  console.log('Front get onlineCount', onlineCount)
   // DOM: 刷新頁面 上線人數
   onlineUserCounter.innerHTML = `在線使用者 ${onlineCount} 名`
 })
@@ -86,15 +85,25 @@ socket.on('onlineCount', onlineCount => {
 // 取得上線使用者清單
 socket.on('onlineUsers', onlineUsersData => {
   onlineUsers.push(onlineUsersData)
-  console.log('Online User List', onlineUsers)
   // DOM: 刷新頁面 上線使用者清單
   displayOnlineList(onlineUsersData)
 })
 
 // 廣播訊息: xxx 進入/離開 聊天室
 socket.on('broadcast', data => {
-  console.log('公告: ', data)
   // DOM: 留言區插入公告訊息
+  let item = document.createElement('div')
+  let htmlContent = `<div class="d-flex justify-content-center mb-3">
+    <div style="color:#313c4b;width:12vw;" class="ms-4 ">
+      <p class="mt-1"
+        style="font-size: large;background-color: #8f8f8f;color:white;height:3vh;border-radius: 0.7em;padding:8px;text-align:center;">
+        ${data}
+      </p>
+    </div>
+  </div>
+  `
+  item.innerHTML = htmlContent;
+  messages.appendChild(item);
 })
 
 // 監聽發送留言
@@ -111,13 +120,10 @@ socketForm.addEventListener('submit', event => {
 
 // 添加顯示留言
 socket.on('chat message', data => {
-  console.log(socketForm.dataset.id)
-  console.log('留言資訊', data)
   let item = document.createElement('div')
   if (Number(socketForm.dataset.id) === data.id) {
     // 屬於自己的留言
     // DOM: 留言右半 HTML
-    console.log('我的')
     let htmlContent = `<div class="d-flex flex-row-reverse mb-3">
         <a href="/users/${data.id}/tweets" style="">
           <img src="${data.avatar}"
@@ -142,7 +148,6 @@ socket.on('chat message', data => {
   } else {
     // 屬於別人的留言
     // DOM: 留言左半 HTML
-    console.log('別人的')
     let htmlContent = `<div class="d-flex mb-3">
         <a href="/users/${data.id}/tweets" style="">
           <img src="${data.avatar}"
