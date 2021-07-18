@@ -69,7 +69,7 @@ io.on('connection', (socket) => {
       socket.room = 'chatAll'
 
       // 打包屬於這個人需要的歷史訊息
-      console.log('app.js/line72...sequelize')
+      // console.log('app.js/line72...sequelize')
       const chats = await Chat.findAll({
         raw: true,
         nest: true,
@@ -85,12 +85,12 @@ io.on('connection', (socket) => {
       io.emit('chat message', msgObj)
 
       // 將「xxx 上線」的這個訊息，寫入資料庫 User --> status
-      console.log('app.js/line88...sequelize')
+      // console.log('app.js/line88...sequelize')
       const user = await User.findByPk(msgObj.senderId)
       await user.update({ status: 'online' })
 
       // 推播「xxx 上線」的資訊到每一個人的「誰上線中」頁面
-      console.log('app.js/line93...sequelize')
+      // console.log('app.js/line93...sequelize')
       const users = await User.findAll({
         raw: true,
         nest: true,
@@ -105,7 +105,7 @@ io.on('connection', (socket) => {
 
       // 進行廣播，並存到資料庫      
       io.emit('chat message', msgObj)
-      console.log('app.js/line108...sequelize msgObj', msgObj)
+      // console.log('app.js/line108...sequelize msgObj', msgObj)
       await Chat.create({
         UserId: msgObj.senderId,
         channel: 'chat message',
@@ -125,7 +125,7 @@ io.on('connection', (socket) => {
       socket.join(room)
 
       // 打包屬於這個人需要的歷史訊息
-      console.log('app.js/line126...sequelize')
+      // console.log('app.js/line126...sequelize')
       const chats = await Chat.findAll({
         raw: true,
         nest: true,
@@ -171,12 +171,12 @@ io.on('connection', (socket) => {
       })
 
       // 將「xxx 離線」的這個訊息，寫入資料庫 User --> status
-      console.log('app.js/line146...sequelize')
+      // console.log('app.js/line146...sequelize')
       const user = await User.findByPk(socket.senderId)
       await user.update({ status: 'offline' })
 
       // 推播更新後的「xxx 上線」的資訊到每一個人的「誰上線中」頁面
-      console.log('app.js/line151...sequelize')
+      // console.log('app.js/line151...sequelize')
       const users = await User.findAll({
         raw: true,
         nest: true,

@@ -164,7 +164,12 @@ const userController = {
   allChatPrivate: async (req, res) => {
     const privateUsers = await User.findAll({
       raw: true,
-      where: { id: { [Op.ne]: req.user.id } }
+      where: {
+        [Op.and]: [
+          { id: { [Op.ne]: req.user.id } },
+          { role: { [Op.is]: null } }
+        ]
+      }
     })
     return res.render('chatPrivate', {
       privateUsers,
@@ -177,9 +182,14 @@ const userController = {
     const receiver = await User.findByPk(req.params.receiverId)
     const privateUsers = await User.findAll({
       raw: true,
-      where: { id: { [Op.ne]: req.user.id } }
+      where: {
+        [Op.and]: [
+          { id: { [Op.ne]: req.user.id } },
+          { role: { [Op.is]: null } }
+        ]
+      }
     })
-
+    console.log('into controllers/userController/line187...privateUsers', privateUsers)
     return res.render('chatPrivate', {
       privateUsers,
       user: user.toJSON(),
