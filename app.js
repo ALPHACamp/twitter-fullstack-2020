@@ -49,7 +49,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
+server.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
 require('./routes')(app)
 
@@ -198,9 +198,6 @@ io.on('connection', (socket) => {
   })
 })
 
-server.listen(3000, () => {
-  console.log('socket listening on port 3000')
-})
 
 
 module.exports = app
