@@ -1,4 +1,7 @@
 'use strict';
+
+const { datatype } = require("faker");
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     account: DataTypes.STRING,
@@ -8,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     cover: DataTypes.STRING,
     introduction: DataTypes.TEXT,
-    role: DataTypes.STRING
+    role: DataTypes.STRING,
+    status: DataTypes.STRING
   }, {});
   User.associate = function (models) {
     // associations can be defined here
