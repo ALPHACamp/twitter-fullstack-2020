@@ -60,29 +60,46 @@ require('./routes')(app)
 const { User, Chat } = require('./models')
 
 io.on('connection', (socket) => {
-  // console.log('server - into app.js/line61...user connect, socket.id', socket.id)
   socket.on('chat message', async (msgObj) => {
-
     //當有人上線的時候
     if (msgObj.behavior === 'inout' && msgObj.message === 'is entering') {
-      // console.log(`${msgObj.senderName} is registering`)
       // 綁定 socket 和 name，為了待會辨識是誰離開
+      socket.senderId = msgObj.senderId
       socket.senderName = msgObj.senderName
+
+      // 打包屬於這個人需要的歷史訊息
       const chats = await Chat.findAll({
         raw: true,
         nest: true,
         order: [['createdAt']],
         include: [User],
-        where: {
-          createdAt: {
-            $lt: msgObj.createdAt
-          }
-        }
+        where: { createdAt: { $lt: msgObj.createdAt } }
       })
+
+      // 將歷史詢息傳送給剛上線的那個人
       io.emit(`history-${msgObj.senderId}`, chats)
-      // console.log('into app.js/line76...chats', chats)
+
+      // 將 「xxx 上線」的訊息廣播到每個人的聊天室
+      io.emit('chat message', msgObj)
+
+      // 將「xxx 上線」的這個訊息，寫入資料庫 User --> status
+      const user = await User.findByPk(msgObj.senderId)
+      await user.update({ status: 'online' })
+
+      // 推播「xxx 上線」的資訊到每一個人的「誰上線中」頁面
+      const users = await User.findAll({
+        raw: true,
+        nest: true,
+        where: { status: 'online' }
+      })
+      io.emit('online-users', users)
+      // console.log('into app.js/line89...users', users)
     }
+
+    // 當收到一般上線的人在聊天室裡講話
     if (msgObj.behavior === 'live-talk') {
+
+      // 進行廣播，並存到資料庫      
       io.emit('chat message', msgObj)
       await Chat.create({
         UserId: msgObj.senderId,
@@ -90,16 +107,27 @@ io.on('connection', (socket) => {
         behavior: 'live-talk',
         message: msgObj.message
       })
-      // console.log('server line93...forward out...msgObj', msgObj)
     }
   })
-  socket.on('disconnect', () => {
-    // console.log('into app.js/line82...socket.senderName', socket.senderName)
+  socket.on('disconnect', async () => {
+    //當有人離線的時候，廣播所有聊天室的人
     io.emit('chat message', {
       behavior: 'inout',
       message: 'has left',
       senderName: socket.senderName
     })
+
+    // 將「xxx 離線」的這個訊息，寫入資料庫 User --> status
+    const user = await User.findByPk(socket.senderId)
+    await user.update({ status: 'offline' })
+
+    // 推播更新後的「xxx 上線」的資訊到每一個人的「誰上線中」頁面
+    const users = await User.findAll({
+      raw: true,
+      nest: true,
+      where: { status: 'online' }
+    })
+    io.emit('online-users', users)
   })
 })
 
