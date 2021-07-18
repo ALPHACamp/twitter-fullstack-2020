@@ -149,6 +149,7 @@ margin-bottom: 80px;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   max-width: 60%;
+  word-break: break-all;
 }
 
 #others-message > p {
@@ -156,6 +157,7 @@ margin-bottom: 80px;
   font-size: 8px;
   margin-left: 53px;
   color: rgb(115, 126, 141);
+  word-break: break-all;
 }
 
 #access-record {
@@ -183,7 +185,7 @@ margin-bottom: 80px;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items:flex-end;
-  justify-self: end;
+  justify-content: flex-end;
 }
 
 #my-message > div > p {
@@ -195,6 +197,7 @@ margin-bottom: 80px;
   border-top-right-radius: 15px;
   border-bottom-left-radius: 15px;
   max-width: 60%;
+  word-break:break-all;
 }
 
 #my-message > p {
