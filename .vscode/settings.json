@@ -8,5 +8,8 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "prettier.singleQuote": true,
-  "prettier.bracketSpacing": true
+  "prettier.bracketSpacing": true,
+  "cSpell.words": [
+    "publicmsg"
+  ]
 }

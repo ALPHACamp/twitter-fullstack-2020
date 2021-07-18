@@ -1,6 +1,6 @@
 const express = require('express')
+const http = require('http')
 const handlebars = require('express-handlebars')
-
 const helpers = require('./_helpers')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
@@ -10,8 +10,9 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 const app = express()
+const server = http.createServer(app)
+const io = require('socket.io')(server)
 const port = process.env.PORT || 3000
-
 
 app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
 app.set('view engine', 'hbs')
@@ -32,7 +33,10 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-app.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
+
+require('./controllers/socketController')(io)
+
+server.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
 
 require('./routes')(app, passport)
 

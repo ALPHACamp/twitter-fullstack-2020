@@ -7,6 +7,7 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
 const followController = require('../controllers/followController')
+const messageController = require('../controllers/messageController')
 
 module.exports = (app, passport) => {
   const authenticatedUser = (req, res, next) => {
@@ -84,8 +85,10 @@ module.exports = (app, passport) => {
   app.post('/replies', authenticatedUser, replyController.postReply)
   app.delete('/replies/:id', authenticatedUser, replyController.deleteReply)
 
+  // messages
+  app.get('/messages/public', authenticatedUser, messageController.getPublic)
+
+
   // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
-
-
 }
