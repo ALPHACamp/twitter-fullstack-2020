@@ -242,19 +242,21 @@
                 </a>
                 {{!-- account --}}
                 <form id="socketForm" data-id="{{ user.id }}" class="d-flex align-items-center">
-                  <div style="color:#313c4b;width:31vw" class="">
+                  <div style="color:#313c4b;width:34vw" class="">
                     <div class="d-flex">
                       <p class="fs-5 me-3 mb-0"><strong>{{ user.name }}</strong></p>
                       <p class="mb-0" style="color: #313c4b84;margin-top:0.2em;">{{ user.account }}</p>
                     </div>
                     {{!-- 聊天室輸入匡 --}}
-                    <textarea name="socketMsg" id="socketMsg" cols="30" rows="8" placeholder="Share Something..."
+                    <textarea name="socketMsg" id="socketMsg" cols="30" rows="8" placeholder="Say Something..."
                       style="height:10vh;width:30vw;border:none;resize:none;outline:none;" required></textarea>
                   </div>
 
                   {{!-- share btn --}}
-                  <button type="submit" class="post-a-tweet btn me-3"
-                    style="margin-left: 2.6em;background-color: #ffd472;color: #313c4bc2;width: 8.5vw;height:7vh;border-radius:0.5em">Share</button>
+                  <button type="submit" class="post-a-tweet btn me-4"
+                    style="margin-left: 2.6em;color: #313c4bc2;width: 5vw;height:5vw;border-radius:0.5em">
+                    <i class="fas fa-paper-plane h1"></i>
+                  </button>
                 </form>
               </div>
 
@@ -276,8 +278,7 @@
 
         {{!-- 聊天上線者 --}}
         {{#if publicSocketPage}}
-        {{!-- <div style="margin-left:76vw" class="mt-2">{{> onlineUsers }}</div> --}}
-        <div style="margin-left:4vw" class="mt-2">{{> onlineUsers }}</div>
+        <div style="margin-left:76vw;position:fixed" class="mt-2">{{> onlineUsers }}</div>
         {{else}}
         {{!-- 右側欄位 --}}
         {{!-- 管理者登入 --}}

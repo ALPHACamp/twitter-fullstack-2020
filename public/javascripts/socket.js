@@ -94,7 +94,7 @@ socket.on('broadcast', data => {
   // DOM: 留言區插入公告訊息
   let item = document.createElement('div')
   let htmlContent = `<div class="d-flex justify-content-center mb-3">
-    <div style="color:#313c4b;width:12vw;" class="ms-4 ">
+    <div style="color:#313c4b;width:12vw;height:20vh" class="ms-4 ">
       <p class="mt-1"
         style="font-size: large;background-color: #8f8f8f;color:white;height:3vh;border-radius: 0.7em;padding:8px;text-align:center;">
         ${data}

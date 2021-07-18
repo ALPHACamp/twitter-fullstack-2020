@@ -1,4 +1,4 @@
-<div class="d-flex" style="margin-left: 20vw;margin-top:21vh">
+<div class="d-flex" style="margin-left: 20vw;margin-top:21vh;position: fixed;">
   <div style="width: 54vw;">
     <div id="messages" class="d-flex flex-column mb-4"
       style="overflow: scroll;padding:2em;background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:72vh;box-shadow:0 0 8px 3px #ccccccb3;">
@@ -10,7 +10,7 @@
         <a href="/users/{{ this.User.id }}/tweets" style="">
           <img src="{{ this.User.avatar }}"
             onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-            style="border:1px solid;border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
+            style="border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
         </a>
         {{!-- account --}}
         <div style="color:#313c4b;width:25vw" class="ms-4">
@@ -21,7 +21,7 @@
               this.createdAt}}</p>
           </div>
           <p class="mt-1 me-4"
-            style="font-size: small;background-color: #fad7b0;height:4vh;border-radius: 0.7em;padding:8px;">
+            style="word-wrap:break-word; font-size: small;background-color: #fad7b0;height:auto;border-radius: 0.7em;padding:8px;">
             {{ this.message }}
           </p>
         </div>
@@ -33,7 +33,7 @@
         <a href="/users/{{ this.User.id }}/tweets" style="">
           <img src="{{ this.User.avatar }}"
             onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-            style="border:1px solid;border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
+            style="border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
         </a>
         {{!-- account --}}
         <div style="color:#313c4b;width:25vw" class="ms-4">
@@ -44,7 +44,7 @@
               this.createdAt}}</p>
           </div>
           <p class="mt-1"
-            style="font-size: small;background-color: #faefb0;height:4vh;border-radius: 0.7em;padding:8px;">
+            style="word-wrap:break-word; font-size: small;background-color: #faefb0;height:auto;border-radius: 0.7em;padding:8px;">
             {{ this.message }}
           </p>
         </div>
@@ -52,6 +52,18 @@
       {{/if}}
       {{!-- /each 留言的人 --}}
       {{/each}}
+      aaa
+      <div class="d-flex justify-content-center mb-3">
+      </div>
+      <div class="d-flex justify-content-center mb-3">
+        <div style="color:#313c4b;width:12vw;height:20vh" class="ms-4 ">
+          <p class="mt-1"
+            style="font-size: large;background-color: #8f8f8f;color:white;height:3vh;border-radius: 0.7em;padding:8px;text-align:center;">
+            how are you
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
