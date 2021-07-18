@@ -40,6 +40,8 @@ body {
   outline: 2px solid red;
 }
 
+/* public.hbs */
+
 /* userprofile */
 .btn-outline-tomato {
   color: tomato;

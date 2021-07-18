@@ -87,7 +87,7 @@ module.exports = (app, passport) => {
   app.delete('/replies/:id', authenticatedUser, replyController.deleteReply)
 
   // messages
-  app.get('/messages/public', authenticatedUser, messageController.getPublic)
+  app.get('/messages/public/:id', authenticatedUser, messageController.getPublic)
 
 
   // 首頁
