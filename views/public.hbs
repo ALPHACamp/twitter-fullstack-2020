@@ -83,18 +83,55 @@
           <li class="list-group-item d-flex flex-column align-items-center" style="border-top:none;border-bottom:none">
             <ul class="list-group" id="onlineList">
               <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">user1 上線了</li>
-              <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">user1 上線了</li>
+              <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">user2 上線了</li>
             </ul>
           </li>
           <li class="list-group-item" style="border-bottom:none">
-            <div id=' board' class="rounded-3">
+            <div id='board' class="rounded-3">
               {{#if msg}}
               {{#each msg}}
-              <h3 class="bg-light rounded-pill  d-flex flex-column align-items-start" style="width:fit-content;">other
-                user</h3>
-              <h2 class="bg-light rounded-pill d-flex flex-column align-items-end">
-                {{this.User.name}}: {{this.chat}}
-                {{moment this.createdAt}}</h2>
+              {{!-- Other User Messages --}}
+              <div class="row">
+                <p id="id" class="d-none">{{this.User.id}}</p>
+                <div class="col-1 d-flex justify-content-center align-items-start">
+                  <a href="/users/{{this.User.id}}" class="p-1">
+                    <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px; height: 50px"
+                      alt="A user" />
+                  </a>
+                </div>
+                <div class="col-11">
+                  <p class="text-dark fw-bold mx-0"
+                    style="font-size: 0.8em; padding-left: 0.3rem; margin-bottom: 0.3rem;">
+                    {{this.User.name}}</p>
+                  <p class="d-inline msgblockleft">
+                    {{this.chat}}</p>
+                  <p class="text-muted mx-0" style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">
+                    {{moment
+                    this.createdAt}}</p>
+                </div>
+              </div>
+              {{!-- Self Messages --}}
+              <div class="row flex-row-reverse">
+                <p id="id" class="d-none">{{this.User.id}}</p>
+                <div class="col-1 d-flex justify-content-center align-items-start">
+                  <a href="/users/{{this.User.id}}" class="p-1">
+                    <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px; height: 50px"
+                      alt="A user" />
+                  </a>
+                </div>
+                <div class="col-11 flex-column text-end">
+                  <p class="text-dark fw-bold mx-0"
+                    style="font-size: 0.8em; padding-left: 0.3rem; margin-bottom: 0.3rem;">
+                    {{this.User.name}}</p>
+                  <div>
+                    <p class="d-inline msgblockright">
+                      {{this.chat}}</p>
+                  </div>
+                  <p class="text-muted mx-0" style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">
+                    {{moment
+                    this.createdAt}}</p>
+                </div>
+              </div>
               {{/each}}
               {{/if}}
             </div>

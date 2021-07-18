@@ -185,11 +185,16 @@ body {
   box-shadow: 0 0 14px 2px #ff6600;
 }
 
-/* public */
-#board {
-  padding: 10px;
-  height: 400px;
-  width: 580px;
-  background: #eee;
-  overflow-y: scroll;
+/* Public */
+.msgblockleft {
+  border-radius: 50rem 50rem 50rem 0;
+  background-color: #eee;
+  padding: 0.4rem 0.6rem;
+}
+
+.msgblockright {
+  border-radius: 50rem 50rem 0 50rem;
+  background-color: tomato;
+  color: white;
+  padding: 0.4rem 0.6rem;
 }
