@@ -1,0 +1,73 @@
+<div id="onlineUserCounter" class="h4 mb-4 ms-2" style="color: #313c4b;">在線使用者</div>
+
+<div id="onlineUserList" style="overflow: scroll;color: #313c4b;height:84vh;width:24vw;padding:0.5em">
+
+
+  {{!-- #each 上線使用者 --}}
+  <div class="d-flex align-items-center p-1 pt-2 ps-2"
+    style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
+    {{!-- avatar --}}
+    <a href="/users/{{ this.User.id }}/tweets" style="">
+      <img src="{{ this.User.avatar }}"
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+        style="border-radius: 0.7em;height: 9vh;width: 9vh;margin-left:0.4em;object-fit: cover;">
+    </a>
+    {{!-- account --}}
+    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
+      <div class="d-flex flex-column m-1 ms-4" style="">
+        <p class="m-0 fw-bolder">Name</p>
+        <p class="m-0" style="color: #313c4b6b;">@account</p>
+      </div>
+    </div>
+  </div>
+  {{!-- /each --}}
+
+</div>
+
+{{#each topFollowing }}
+<div class="d-flex align-items-center p-1 pt-2 ps-2"
+  style="margin-bottom:1.3em;background-color:white;text-decoration:none;border-radius: 1em;width:22vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
+  {{!-- avatar --}}
+  <a href="/users/{{ this.id }}/tweets">
+    {{#if this.avatar }}
+    <img src="{{ this.avatar }}"
+      style="border-radius: 0.7em;height: 21vh;width: 21vh;margin-left:0.4em;object-fit: cover;">
+    {{else}}
+    <img src="https://i.pinimg.com/564x/84/9b/50/849b50b189859a59ba38eed018cbfc1d.jpg"
+      style="border-radius: 0.7em;height: 9vh;margin-left:0.1em">
+    {{/if}}
+  </a>
+  {{!-- account --}}
+  <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
+    <div class="d-flex flex-column m-1 ms-4" style="">
+      <p class="m-0 fw-bolder">{{ this.name }}</p>
+      <p class="m-0" style="color: #313c4b6b;">{{ this.account }}</p>
+      <p class="m-0" style="color: #313c4bbf;">{{ this.followerCount }} 人追蹤中</p>
+
+      {{!-- 追蹤 btn --}}
+      {{#if this.isFollowed}}
+      <form action="/followships/{{ this.id }}?_method=DELETE" method="post" class="mb-2">
+        <button type="submit" class="btn"
+          style="background-color: #ffd472;color: #313c4bc2;width: 7vw;height:6vh;border-radius:0.5em;margin-top:0.5em">unFollow</button>
+      </form>
+      {{else}}
+      <form action="/followships" method="post" class="mb-2">
+        <label>
+          <input type="text" id="id" name="id" value="{{ this.id }}" style="display:none;">
+        </label>
+        <button type="submit" class="btn"
+          style="background-color: #ffd472;color: #313c4bc2;width: 7vw;height:6vh;border-radius:0.5em;margin-top:-1em">Follow</button>
+      </form>
+      {{/if}}
+    </div>
+  </div>
+
+
+
+</div>
+{{/each}}
+
+{{!-- 添加 socket io --}}
+<script src="/socket.io/socket.io.js"></script>
+{{!-- 添加 DOM 腳本 --}}
+<script src="/javascripts/socket.js"></script>

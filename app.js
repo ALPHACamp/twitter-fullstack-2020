@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
       message: data.msg
     })
     // 傳送到前端, 刷新留言
-    io.emit('chat message', { msg: data.msg, id: localUser.id, name: localUser.name, account: localUser.account, avatar: localUser.avatar })
+    io.emit('chat message', { msg: data.msg, id: localUser.id, name: localUser.name, account: localUser.account, avatar: localUser.avatar, createdAt: new Date() })
   })
 })
 
