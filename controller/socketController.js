@@ -1,5 +1,5 @@
 const db = require('../models')
-const { Message } = db
+const { Message, User } = db
 const helpers = require('../_helpers')
 
 const socketController = {
@@ -9,6 +9,9 @@ const socketController = {
       const messages = await Message.findAll({
         raw: true,
         nest: true,
+        include: [
+          { model: User, attributes: ['id', 'avatar', 'name', 'account'] }
+        ],
         order: [
           ['createdAt', 'ASC']
         ]
@@ -32,6 +35,7 @@ const socketController = {
       })
     } catch (err) {
       req.flash('error_messages', err)
+      console.log(err)
       return res.redirect('/')
     }
   }
