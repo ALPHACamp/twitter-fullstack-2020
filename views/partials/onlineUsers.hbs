@@ -1,6 +1,6 @@
-<div class="h4 mb-4 ms-2" style="color: #313c4b;">在線使用者</div>
+<div id="onlineUserCounter" class="h4 mb-4 ms-2" style="color: #313c4b;">在線使用者</div>
 
-<div style="overflow: scroll;color: #313c4b;height:84vh;width:24vw;padding:0.5em">
+<div id="onlineUserList" style="overflow: scroll;color: #313c4b;height:84vh;width:24vw;padding:0.5em">
 
 
   {{!-- #each 上線使用者 --}}
@@ -21,127 +21,6 @@
     </div>
   </div>
   {{!-- /each --}}
-
-  {{!-- each test --}}
-  <div class="d-flex align-items-center p-1 pt-2 ps-2"
-    style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
-    {{!-- avatar --}}
-    <a href="/users/{{ this.User.id }}/tweets" style="">
-      <img src="{{ this.User.avatar }}"
-        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-        style="border-radius: 0.7em;height: 9vh;width: 9vh;margin-left:0.4em;object-fit: cover;">
-    </a>
-    {{!-- account --}}
-    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
-      <div class="d-flex flex-column m-1 ms-4" style="">
-        <p class="m-0 fw-bolder">Name</p>
-        <p class="m-0" style="color: #313c4b6b;">@account</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center p-1 pt-2 ps-2"
-    style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
-    {{!-- avatar --}}
-    <a href="/users/{{ this.User.id }}/tweets" style="">
-      <img src="{{ this.User.avatar }}"
-        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-        style="border-radius: 0.7em;height: 9vh;width: 9vh;margin-left:0.4em;object-fit: cover;">
-    </a>
-    {{!-- account --}}
-    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
-      <div class="d-flex flex-column m-1 ms-4" style="">
-        <p class="m-0 fw-bolder">Name</p>
-        <p class="m-0" style="color: #313c4b6b;">@account</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center p-1 pt-2 ps-2"
-    style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
-    {{!-- avatar --}}
-    <a href="/users/{{ this.User.id }}/tweets" style="">
-      <img src="{{ this.User.avatar }}"
-        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-        style="border-radius: 0.7em;height: 9vh;width: 9vh;margin-left:0.4em;object-fit: cover;">
-    </a>
-    {{!-- account --}}
-    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
-      <div class="d-flex flex-column m-1 ms-4" style="">
-        <p class="m-0 fw-bolder">Name</p>
-        <p class="m-0" style="color: #313c4b6b;">@account</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center p-1 pt-2 ps-2"
-    style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
-    {{!-- avatar --}}
-    <a href="/users/{{ this.User.id }}/tweets" style="">
-      <img src="{{ this.User.avatar }}"
-        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-        style="border-radius: 0.7em;height: 9vh;width: 9vh;margin-left:0.4em;object-fit: cover;">
-    </a>
-    {{!-- account --}}
-    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
-      <div class="d-flex flex-column m-1 ms-4" style="">
-        <p class="m-0 fw-bolder">Name</p>
-        <p class="m-0" style="color: #313c4b6b;">@account</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center p-1 pt-2 ps-2"
-    style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
-    {{!-- avatar --}}
-    <a href="/users/{{ this.User.id }}/tweets" style="">
-      <img src="{{ this.User.avatar }}"
-        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-        style="border-radius: 0.7em;height: 9vh;width: 9vh;margin-left:0.4em;object-fit: cover;">
-    </a>
-    {{!-- account --}}
-    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
-      <div class="d-flex flex-column m-1 ms-4" style="">
-        <p class="m-0 fw-bolder">Name</p>
-        <p class="m-0" style="color: #313c4b6b;">@account</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center p-1 pt-2 ps-2"
-    style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
-    {{!-- avatar --}}
-    <a href="/users/{{ this.User.id }}/tweets" style="">
-      <img src="{{ this.User.avatar }}"
-        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-        style="border-radius: 0.7em;height: 9vh;width: 9vh;margin-left:0.4em;object-fit: cover;">
-    </a>
-    {{!-- account --}}
-    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
-      <div class="d-flex flex-column m-1 ms-4" style="">
-        <p class="m-0 fw-bolder">Name</p>
-        <p class="m-0" style="color: #313c4b6b;">@account</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="d-flex align-items-center p-1 pt-2 ps-2"
-    style="margin-bottom:1em;background-color:white;text-decoration:none;border-radius: 1em;width:20vw;height:auto;box-shadow:0 0 8px 3px #ccccccb3;">
-    {{!-- avatar --}}
-    <a href="/users/{{ this.User.id }}/tweets" style="">
-      <img src="{{ this.User.avatar }}"
-        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-        style="border-radius: 0.7em;height: 9vh;width: 9vh;margin-left:0.4em;object-fit: cover;">
-    </a>
-    {{!-- account --}}
-    <div style="color:#313c4b;width:9vw" class="d-flex align-items-center justify-content-center p-2">
-      <div class="d-flex flex-column m-1 ms-4" style="">
-        <p class="m-0 fw-bolder">Name</p>
-        <p class="m-0" style="color: #313c4b6b;">@account</p>
-      </div>
-    </div>
-  </div>
-  {{!-- /each test end --}}
 
 </div>
 
@@ -187,3 +66,8 @@
 
 </div>
 {{/each}}
+
+{{!-- 添加 socket io --}}
+<script src="/socket.io/socket.io.js"></script>
+{{!-- 添加 DOM 腳本 --}}
+<script src="/javascripts/socket.js"></script>

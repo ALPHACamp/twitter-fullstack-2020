@@ -2,7 +2,6 @@
   <div style="width: 54vw;">
     <div id="messages" class="d-flex flex-column mb-4"
       style="overflow: scroll;padding:2em;background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:72vh;box-shadow:0 0 8px 3px #ccccccb3;">
-
       {{!-- #each 留言的人 --}}
       {{#each dataMsg}}
       {{#if this.isCurrent }}
@@ -57,7 +56,3 @@
     </div>
   </div>
 </div>
-{{!-- 添加 socket io --}}
-<script src="/socket.io/socket.io.js"></script>
-{{!-- 添加 DOM 腳本 --}}
-<script src="/javascripts/socket.js"></script>
