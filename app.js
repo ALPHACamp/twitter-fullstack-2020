@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
   console.log('==============================================') // 除錯用分隔線
   // // 使用者清單中, 抓取當前登入者
   const localUser = onlineUsers.find(user => user.id === id)
-
+  console.log(`localUser:${localUser}`)
   // 發送所有上線使用者清單
   io.emit('onlineUsers', onlineUsers)
 
@@ -99,7 +99,7 @@ io.on('connection', (socket) => {
       message: data.msg
     })
     // 傳送到前端, 刷新留言
-    io.emit('chat message', { msg: data.msg, id: localUser.id, name: localUser.name, account: localUser.account, avatar: localUser.avatar })
+    io.emit('chat message', { msg: data.msg, id: localUser.id, name: localUser.name, account: localUser.account, avatar: localUser.avatar, createdAt: new Date() })
   })
 })
 
