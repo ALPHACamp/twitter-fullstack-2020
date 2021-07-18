@@ -247,6 +247,7 @@
                       <p class="fs-5 me-3 mb-0"><strong>{{ user.name }}</strong></p>
                       <p class="mb-0" style="color: #313c4b84;margin-top:0.2em;">{{ user.account }}</p>
                     </div>
+                    {{!-- 聊天室輸入匡 --}}
                     <textarea name="socketMsg" id="socketMsg" cols="30" rows="8" placeholder="Share Something..."
                       style="height:10vh;width:30vw;border:none;resize:none;outline:none;" required></textarea>
                   </div>
@@ -273,7 +274,10 @@
         </div>
 
 
+        {{!-- 聊天上線者 --}}
         {{#if publicSocketPage}}
+        {{!-- <div style="margin-left:76vw" class="mt-2">{{> onlineUsers }}</div> --}}
+        <div style="margin-left:4vw" class="mt-2">{{> onlineUsers }}</div>
         {{else}}
         {{!-- 右側欄位 --}}
         {{!-- 管理者登入 --}}
