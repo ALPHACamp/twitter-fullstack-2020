@@ -75,7 +75,13 @@ io.on('connection', (socket) => {
         nest: true,
         order: [['createdAt']],
         include: [User],
-        where: { createdAt: { $lt: msgObj.createdAt } }
+        where: { createdAt: { $lt: msgObj.createdAt } },
+        where: {
+          [Op.and]: [
+            { createdAt: { $lt: msgObj.createdAt } },
+            { channel: 'chat message' }
+          ]
+        }
       })
 
       // 將歷史詢息傳送給剛上線的那個人
