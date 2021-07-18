@@ -26,9 +26,19 @@ socket.on('connect', () => {
   socket.on(`history-${userId}`, chats => {
     record.innerHTML = ''
     chats.forEach(chat => {
-      const meOrOther = chat.User.id.toString() === userId ? 'my-message' : 'others-message'
-      record.innerHTML += `
-        <div id="${meOrOther}">
+      if (chat.User.id.toString() === userId) {
+        record.innerHTML += `
+        <div id="my-message">
+          <div>
+            <p>${chat.message}</p>
+            <img src="${chat.User.avatar}" style="width: 40px;height:40px;" class="rounded-circle m-1">
+          </div>
+          <p>${chat.createdAt}</p>
+        </div>
+      `
+      }else{
+        record.innerHTML += `
+        <div id="others-message">
           <div>
             <img src="${chat.User.avatar}" style="width: 40px;height:40px;" class="rounded-circle m-1">
             <p>${chat.message}</p>
@@ -36,8 +46,12 @@ socket.on('connect', () => {
           <p>${chat.createdAt}</p>
         </div>
       `
+      }
+
+
       // console.log(`${chat.User.name}: ${chat.message}`)
     })
+    window.scrollTo(0, document.body.scrollHeight)
   })
 
   socket.on('chat message', msgObj => {
@@ -47,20 +61,33 @@ socket.on('connect', () => {
           <p>${msgObj.senderName} ${msgObj.message}</p>
         </div>
       `
+      window.scrollTo(0, document.body.scrollHeight)
       // console.log(`${msgObj.senderName} ${msgObj.message}`)
     }
     if (msgObj.behavior === 'live-talk') {
-      const meOrOther = msgObj.senderId.toString() === userId ? 'my-message' : 'others-message'
-      broadcast.innerHTML += `
-        <div id="${meOrOther}">
+      if (msgObj.senderId.toString() === userId) {
+        broadcast.innerHTML += `
+        <div id="my-message">
+          <div>
+            <p>${msgObj.message}</p>
+            <img src="${msgObj.senderAvatar}" style="width: 40px;height:40px;" class="rounded-circle m-1">
+          </div>
+          <p>${msgObj.createdAt}</p>
+        </div>
+      `
+      } else {
+        broadcast.innerHTML += `
+        <div id="others-message">
           <div>
             <img src="${msgObj.senderAvatar}" style="width: 40px;height:40px;" class="rounded-circle m-1">
             <p>${msgObj.message}</p>
-          </div>
-          <p>下午 4:21</p>
+            </div>
+          <p>${msgObj.createdAt}</p>
         </div>
       `
-      console.log(`${msgObj.senderName}: ${msgObj.message}`)
+        
+      }
+      window.scrollTo(0, document.body.scrollHeight)
     }
   });
 

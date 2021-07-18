@@ -1,11 +1,8 @@
 const express = require('express')
 const hbs = require('express-handlebars')
-const db = require('./models')
 const passport = require('./config/passport')
-const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
-const moment = require('moment')
-
+const hbsHelper = require('./config/handlebars-helpers')
 const helpers = require('./_helpers')
 const flash = require('connect-flash')
 const session = require('express-session')
