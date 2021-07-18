@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followingId',
       as: 'Followers'
     })
+    User.hasMany(models.Message)
   };
   return User;
 };
