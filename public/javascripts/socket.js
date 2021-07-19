@@ -93,17 +93,12 @@ socket.on('onlineUsers', onlineUsersData => {
 socket.on('broadcast', data => {
   // DOM: 留言區插入公告訊息
   let item = document.createElement('div')
-  let htmlContent = `<div class="d-flex justify-content-center mb-3">
-    <div style="color:#313c4b;width:12vw;height:20vh" class="ms-4 ">
-      <p class="mt-1"
-        style="font-size: large;background-color: #8f8f8f;color:white;height:3vh;border-radius: 0.7em;padding:8px;text-align:center;">
-        ${data}
-      </p>
-    </div>
-  </div>
-  `
-  item.innerHTML = htmlContent;
-  messages.appendChild(item);
+  let htmlContent = `<div class="d-flex justify-content-center align-items-center"
+          style="background-color: #313c4b0d;color: #313c4b9a;width: auto;border-radius:0.4em">
+          <p class="m-1">${data}</p>
+        </div>`
+  item.innerHTML = htmlContent
+  messages.insertBefore(item, messages.firstChild)
 })
 
 // 監聽發送留言
@@ -124,35 +119,36 @@ socket.on('chat message', data => {
   if (Number(socketForm.dataset.id) === data.id) {
     // 屬於自己的留言
     // DOM: 留言右半 HTML
-    let htmlContent = `<div class="d-flex flex-row-reverse mb-3">
-        <a href="/users/${data.id}/tweets" style="">
-          <img src="${data.avatar}"
-            onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-            style="border:1px solid;border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
+    item.classList.add('d-flex', 'mb-3')
+    let htmlContent = `
+    <a href="/users/${data.id}/tweets" >
+      <img src="${data.avatar}"
+        onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+        style="border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
         </a>
-        <div style="color:#313c4b;width:25vw" class="ms-4">
-          <div class="d-flex ">
-            <p class="fs-5 me-3 mb-0"><strong>${data.name}</strong></p>
-            <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">${data.account}</p>
-            <p class="mb-0" style="color: #313c4b84;margin:0.42em 0 0 0.5em;font-size:smaller">${getDateDiff(data.createdAt)}</p>
-          </div>
-          <p class="mt-1 me-4"
-            style="font-size: small;background-color: #fad7b0;height:4vh;border-radius: 0.7em;padding:8px;">
-            ${data.msg}
-          </p>
+      <div style="color:#313c4b;width:25vw" class="ms-4">
+        <div class="d-flex ">
+          <p class="fs-5 me-3 mb-0"><strong>${data.name}</strong></p>
+          <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">${data.account}</p>
+          <p class="mb-0" style="color: #313c4b84;margin:0.42em 0 0 0.5em;font-size:smaller">${getDateDiff(data.createdAt)}</p>
         </div>
-      </div>
-    `
+        <p class="mt-1 me-4"
+          style="word-wrap:break-word;font-size: small;background-color: #ffd5724a;color: #313c4b;height:auto;border-radius: 0.7em;padding:1em;">
+          ${data.msg}
+        </p>
+      </div>`
+
     item.innerHTML = htmlContent;
-    messages.appendChild(item);
+    messages.insertBefore(item, messages.firstChild)
   } else {
     // 屬於別人的留言
     // DOM: 留言左半 HTML
-    let htmlContent = `<div class="d-flex mb-3">
-        <a href="/users/${data.id}/tweets" style="">
+    item.classList.add('d-flex', 'flex-row-reverse', 'mb-3')
+    let htmlContent = ` 
+    <a href="/users/${data.id}/tweets">
           <img src="${data.avatar}"
             onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-            style="border:1px solid;border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
+            style="border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
         </a>
         <div style="color:#313c4b;width:25vw" class="ms-4">
           <div class="d-flex ">
@@ -161,13 +157,11 @@ socket.on('chat message', data => {
             <p class="mb-0" style="color: #313c4b84;margin:0.42em 0 0 0.5em;font-size:smaller">${getDateDiff(data.createdAt)}</p>
           </div>
           <p class="mt-1"
-            style="font-size: small;background-color: #faefb0;height:4vh;border-radius: 0.7em;padding:8px;">
+            style="word-wrap:break-word; font-size: small;color:white;background-color: #484848c6;height:auto;border-radius: 0.7em;padding:1em;">
             ${data.msg}
           </p>
-        </div>
-      </div>
-    `
+        </div>`
     item.innerHTML = htmlContent;
-    messages.appendChild(item);
+    messages.insertBefore(item, messages.firstChild)
   }
 })
