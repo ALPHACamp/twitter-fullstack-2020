@@ -49,11 +49,13 @@ require('./routes')(app, passport)
 const httpServer = require("http").createServer(app);
 const options = { /* ... */ };
 const io = require("socket.io")(httpServer, options);
+let userArray = []
 
 io.on("connection", socket => {
   console.log(socket.id)
   console.log('客戶端成功連線服務器')
-  socket.send('您好, 這是服務器發送的訊息')
+  userArray.push(socket.id)
+  socket.emit('broadcast', userArray)
 
   // 由客戶端收到的消息在廣播出去給當前所有使用者
   socket.on('self Message', data => {
