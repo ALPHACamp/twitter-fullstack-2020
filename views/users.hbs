@@ -1,0 +1,160 @@
+<div class="w-100">
+  <div id="title" class="d-flex w-100 align-items-center border-bottom">
+    <a href="/tweets" class="">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-3">
+        <path
+          d="M16 5.99988H3.41399L7.70699 1.70687C8.09699 1.31687 8.09699 0.683875 7.70699 0.292875C7.31699 -0.0981249 6.68399 -0.0971249 6.29299 0.292875L0.292988 6.29288C-0.0970117 6.68288 -0.0970117 7.31588 0.292988 7.70687L6.29299 13.7069C6.48799 13.9019 6.74299 13.9999 6.99999 13.9999C7.25699 13.9999 7.51199 13.9019 7.70699 13.7069C8.09699 13.3169 8.09699 12.6839 7.70699 12.2929L3.41399 7.99988H16C16.553 7.99988 17 7.55288 17 6.99988C17 6.44688 16.553 5.99988 16 5.99988Z"
+          fill="black" />
+      </svg>
+    </a>
+    <div id="titleText" class="ms-3 my-2">
+      <p class="m-0 fw-bolder">{{thisPageUser.name}}</p>
+      <p class="m-0" style="font-size: xx-small;color:#657786">{{thisPageUser.TweetsCount}} 推文</p>
+    </div>
+  </div>
+  {{#if thisPageUser.cover}}
+  <div id="cover-and-avatar"
+    style="background-image: url({{thisPageUser.cover}});height:200px; background-repeat: no-repeat; background-size:cover;">
+    {{else}}
+    <div id="cover-and-avatar"
+      style="background-color:grey; height:200px; background-repeat: no-repeat; background-size:cover;">
+      {{/if}}
+      {{#if thisPageUser.avatar}}
+      <img src="{{thisPageUser.avatar}}" width="140px" height="140px"
+        class="border border-4 border-white rounded-circle ms-2" style="margin-top: 124px;">
+      {{else}}
+      <img src="https://i.imgur.com/3P9xRqb.jpg" width="140px" height="140px"
+        class="border border-4 border-white rounded-circle ms-2" style="margin-top: 124px;">
+      {{/if}}
+    </div>
+    <div class="d-flex m-2 justify-content-end">
+      {{#isEqual thisPageUser.id user.id}}
+      <button type="submit" class="btn btn-outline-regular rounded-pill" data-bs-toggle="modal"
+        data-bs-target="#editProfile" id="edit-profile-modal-button" data-user-id="{{user.id}}">
+        編輯個人資料
+      </button>
+
+      {{else}}
+      {{#if thisPageUser.isFollowing}}
+      <form action="/followships/{{thisPageUser.id}}?_method=DELETE" method="post">
+        <button type="submit" class="btn btn-regular rounded-pill" style="height: 32px;">正在跟隨</button>
+      </form>
+      {{else}}
+      <form action="/followships" method="post">
+        <input type="text" name="id" id="id" value="{{thisPageUser.id}}" hidden>
+        <button type="submit" class="btn btn-outline-regular rounded-pill" style="height: 32px;">跟隨</button>
+      </form>
+      {{/if}}
+      {{/isEqual}}
+    </div>
+    <div class="mt-4 mx-2" style="line-height: 1;">
+      <p class="m-0 fw-bolder">{{thisPageUser.name}}</p>
+      <a href="/users/{{thisPageUser.id}}/tweets" class="user-link">@{{thisPageUser.account}}</a>
+      <p class="mt-3">{{thisPageUser.introduction}}</p>
+      <div class="d-flex">
+        <div class="d-flex">
+          <p>{{thisPageUser.FollowingsCount}}個</p>
+          <a href="/users/{{thisPageUser.id}}/followings" style="color:#657786;">跟隨中</a>
+        </div>
+        <div class="d-flex ms-2">
+          <p>{{thisPageUser.FollowersCount}}</p>
+          <a href="/users/{{thisPageUser.id}}/followers" style="color:#657786;">跟隨者</a>
+        </div>
+      </div>
+    </div>
+    <nav class="nav border-bottom">
+      <a class="nav-link active" href="/users/{{thisPageUser.id}}/tweets">推文</a>
+      <a class="nav-link" href="/users/{{thisPageUser.id}}/replies">推文與回覆</a>
+      <a class="nav-link" href="/users/{{thisPageUser.id}}/likes">喜歡的內容</a>
+    </nav>
+    <div id="tweets">
+      {{#each tweets}}
+      {{> tweet}}
+      {{!-- <div class="border-bottom">
+        <div class="container">
+          <div class="row">
+            <div class="col-auto p-1">
+              {{#if this.User.avatar}}
+              <a href="/users/{{this.User.id}}/tweets" class="user-link">
+                <img class="rounded-circle" src="{{this.User.avatar}}" style="width: 50px;height: 50px;">
+              </a>
+              {{else}}
+              <a href="/users/{{this.User.id}}/tweets" class="user-link">
+                <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg"
+                  style="max-width: 50px;max-height: 50px;">
+              </a>
+              {{/if}}
+            </div>
+            <div class="col d-flex flex-column p-1">
+
+              <div class="py-1 d-flex align-items-center">
+                <strong>{{this.User.name}}</strong>
+                <div class="d-flex align-items-center ms-1" style="font-size: x-small; color:#657786">
+                  <a href="/users/{{this.User.id}}/tweets" class="user-link">@{{this.User.account}} · </a>
+                  {{moment this.createdAt}}
+                </div>
+              </div>
+
+              <div class="py-1">
+                <a class="btn" href="/tweets/{{this.id}}">
+                  <p class="text-start" style="word-break: break-all;">{{this.description}}</p>
+                </a>
+              </div>
+
+              <div class="d-flex py-1 align-items-center">
+
+                <div class="me-1">
+                  <button class="btn d-flex p-0 align-items-center" data-bs-toggle="modal"
+                    data-bs-target="#post-reply-modal" data-id="{{this.id}}">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M7.77881 0.40127L5.18631 0.39502H5.18506C2.45131 0.39502 0.310059 2.53689 0.310059 5.27127C0.310059 7.83252 2.30131 9.77502 4.97568 9.87752V12.27C4.97568 12.3375 5.00318 12.4488 5.05068 12.5219C5.13943 12.6625 5.29068 12.7388 5.44568 12.7388C5.53193 12.7388 5.61881 12.715 5.69693 12.665C5.86193 12.56 9.74256 10.0775 10.7519 9.22377C11.9407 8.21752 12.6519 6.74252 12.6538 5.27877V5.26814C12.6501 2.53877 10.5101 0.401269 7.77881 0.400644V0.40127ZM10.1457 8.50877C9.43693 9.10877 7.10693 10.6369 5.91318 11.4106V9.41877C5.91318 9.16002 5.70381 8.95002 5.44443 8.95002H5.19693C2.90943 8.95002 1.24818 7.40252 1.24818 5.27127C1.24818 3.06252 2.97818 1.33252 5.18568 1.33252L7.77756 1.33877H7.77881C9.98631 1.33877 11.7163 3.06752 11.7176 5.27377C11.7157 6.46752 11.1288 7.67627 10.1463 8.50877H10.1457Z"
+                        fill="#657786" />
+                    </svg>
+                    <p class="my-0 ms-1" style="color: #657786;">{{this.RepliesCount}}</p>
+                  </button>
+                </div>
+
+                <div class="ms-5">
+                  {{#if this.isLiked }}
+                  <form action="/like/{{this.id}}?_method=DELETE" method="POST" class=" d-flex align-items-center">
+                    <button type="submit" class="btn d-flex align-items-center" style="color:#E0245E" id="likeHeart">
+                      <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M11 19.6381H10.986C8.403 19.5901 0.949997 12.8561 0.949997 6.47812C0.949997 3.41412 3.475 0.724121 6.353 0.724121C8.643 0.724121 10.183 2.30412 10.999 3.45412C11.813 2.30612 13.353 0.724121 15.644 0.724121C18.524 0.724121 21.048 3.41412 21.048 6.47912C21.048 12.8551 13.594 19.5891 11.011 19.6361H11V19.6381Z"
+                          fill="#E0245E" />
+                      </svg>
+
+                      <p class="mb-0 ms-1">{{this.LikedUsersCount}}</p>
+                    </button>
+                  </form>
+                  {{else}}
+                  <form action="/like/{{this.id}}" method="POST" class=" d-flex align-items-center ms-1">
+                    <button type="submit" class="btn d-flex align-items-center" style="color:#657786" id="likeHeart">
+                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M6.5 12.5236H6.49125C4.87687 12.4936 0.21875 8.28489 0.21875 4.29864C0.21875 2.38364 1.79687 0.702393 3.59562 0.702393C5.02687 0.702393 5.98937 1.68989 6.49937 2.40864C7.00812 1.69114 7.97062 0.702393 9.4025 0.702393C11.2025 0.702393 12.78 2.38364 12.78 4.29927C12.78 8.28427 8.12125 12.493 6.50687 12.5224H6.5V12.5236ZM3.59625 1.64052C2.29625 1.64052 1.15687 2.88302 1.15687 4.29989C1.15687 7.88739 5.55312 11.5474 6.50062 11.5861C7.44937 11.5474 11.8444 7.88802 11.8444 4.29989C11.8444 2.88302 10.705 1.64052 9.405 1.64052C7.825 1.64052 6.9425 3.47552 6.935 3.49364C6.79125 3.84489 6.2125 3.84489 6.06812 3.49364C6.05937 3.47489 5.1775 1.64052 3.59687 1.64052H3.59625Z"
+                          fill="#657786" />
+                      </svg>
+
+
+                      <p class="mb-0 ms-1">{{this.LikedUsersCount}}</p>
+                    </button>
+                  </form>
+                  {{/if}}
+                </div>
+
+                <div class="d-flex align-items-center">
+                  {{this.LikedCount}}
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div> --}}
+      {{/each}}
+    </div>
+  </div>
+  <script src="/javascripts/userPage.js"></script>
