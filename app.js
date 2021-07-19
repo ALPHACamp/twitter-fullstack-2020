@@ -8,7 +8,7 @@ const session = require('express-session')
 const { Op } = require('sequelize')
 const app = express()
 const PORT = process.env.PORT || 8000
-
+//for test
 const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
