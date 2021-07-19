@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  <div class="container">
+    {{#if success_messages}}
+    <div class="alert alert-success alert-dismissible fade show m-0" role="alert" style="border-radius: 0;">
+      {{success_messages}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
+    {{#if error_messages}}
+    <div class="alert alert-danger alert-dismissible fade show m-0" role="alert" style="border-radius: 0;">
+      {{error_messages}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
+    <div class="d-flex flex-nowrap justify-content-end">
+
+      {{#if Appear.navbar}}
+      <div class="col-3 px-5 d-flex flex-column justify-content-between sticky-top" id="navbar" style="height:90vh;">
+        <div id="navbarUpper">
+          <a href="/tweets" class="d-flex m-3 ms-1 mb-5" id="logo">
+            <svg width="30" height="30" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M25.6996 18.4709C25.6996 18.4709 18.2328 30.5781 12.1109 30.5781C1.40314 30.5781 11.3821 7.51318 19.1916 7.51318C24.641 7.51318 25.6996 18.4709 25.6996 18.4709Z"
+                fill="#FF6600" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M34.5723 33.6972C32.4451 35.9607 29.8198 37.6976 26.9044 38.7701C23.989 39.8426 20.8639 40.2213 17.7767 39.8761C14.6895 39.5309 11.7252 38.4713 9.11881 36.7813C6.51245 35.0914 4.33573 32.8175 2.76123 30.1401C4.5314 32.5477 7.53375 34.1527 11.803 34.1527C22.3199 34.1527 28.2899 25.98 28.2899 25.98C28.2899 25.98 28.8062 32.4392 34.5593 33.6972H34.5723Z"
+                fill="#FF6600" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M37.7223 10.7451C39.2963 13.7527 40.0781 17.1116 39.9939 20.505C39.9096 23.8984 38.9621 27.2144 37.2407 30.1401C35.8792 29.3764 34.8725 28.1082 34.4379 26.609L32.1558 19.7724L37.7223 10.7451Z"
+                fill="#FF6600" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M20.0031 0.0173688C25.0185 0.0140335 29.8513 1.89881 33.5398 5.29665L29.7521 11.4088C28.3811 7.84302 25.5957 4.2729 20.1767 4.2729C9.07841 4.2729 0.852307 16.3888 0.852307 23.9846C0.849861 24.9669 0.975283 25.9454 1.22543 26.8953C0.115582 23.8725 -0.247948 20.6265 0.165719 17.4331C0.579385 14.2398 1.75802 11.1934 3.60147 8.55306C5.44491 5.91269 7.89866 3.75634 10.7542 2.26726C13.6097 0.778179 16.7826 0.000388507 20.0031 0V0.0173688Z"
+                fill="#FF6600" />
+            </svg>
+          </a>
+          {{#if isAdmin}}
+          <a href="/admin/tweets" class="d-flex ms-1 my-2" id="adminHome">
+            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M22.58 6.34986L12.475 0.896855C12.178 0.736855 11.821 0.736855 11.525 0.896855L1.42496 6.34986C0.938957 6.61386 0.757957 7.21986 1.01996 7.70586C1.19996 8.04086 1.54496 8.23086 1.89996 8.23086C2.05996 8.23086 2.22396 8.19286 2.37496 8.11086L3.10896 7.71486L4.69896 18.9649C4.91496 20.1789 6.00896 21.0269 7.35896 21.0269H16.641C17.991 21.0269 19.085 20.1789 19.303 18.9389L20.891 7.71386L21.628 8.11186C22.113 8.37486 22.72 8.19386 22.982 7.70786C23.245 7.22186 23.062 6.61486 22.578 6.35286L22.58 6.34986ZM12 14.4349C10.205 14.4349 8.74996 12.9799 8.74996 11.1849C8.74996 9.38986 10.205 7.93486 12 7.93486C13.795 7.93486 15.25 9.38986 15.25 11.1849C15.25 12.9799 13.795 14.4349 12 14.4349Z"
+                fill="black" />
+            </svg>
+            <p class="ms-4">推文清單</p>
+          </a>
+          <a href="/admin/users" class="d-flex ms-1 my-2" id="adminUser">
+            <svg width="24" height="22" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M8.99991 10.8158C10.3549 10.8158 11.8719 10.6658 12.8399 9.55976C13.6539 8.62976 13.9179 7.19176 13.6459 5.16776C13.2659 2.34276 11.5289 0.655762 8.99991 0.655762C6.47091 0.655762 4.73391 2.34276 4.35391 5.16976C4.08191 7.19176 4.3459 8.62976 5.1599 9.55976C6.1279 10.6668 7.64491 10.8158 8.99991 10.8158ZM5.83991 5.36776C6.00191 4.16776 6.62691 2.15576 8.99991 2.15576C11.3729 2.15576 11.9979 4.16876 12.1599 5.36776C12.3669 6.91776 12.2169 7.99476 11.7099 8.57276C11.2549 9.09276 10.4439 9.31576 8.99991 9.31576C7.55591 9.31576 6.7449 9.09276 6.28991 8.57276C5.78291 7.99476 5.63291 6.91676 5.83991 5.36776ZM17.2799 18.2358C16.4029 14.7098 12.9979 12.2458 8.99991 12.2458C5.00191 12.2458 1.59691 14.7098 0.719905 18.2358C0.547905 18.9278 0.691905 19.6358 1.1149 20.1758C1.5229 20.6958 2.15491 20.9958 2.84791 20.9958H15.1519C15.8449 20.9958 16.4769 20.6958 16.8849 20.1758C17.3089 19.6358 17.4519 18.9288 17.2789 18.2358H17.2799ZM15.7039 19.2518C15.5779 19.4118 15.3879 19.4978 15.1519 19.4978H2.84791C2.61291 19.4978 2.42191 19.4128 2.29591 19.2518C2.15891 19.0778 2.11591 18.8398 2.17591 18.5978C2.88591 15.7428 5.69291 13.7478 8.99991 13.7478C12.3069 13.7478 15.1139 15.7418 15.8239 18.5978C15.8839 18.8398 15.8409 19.0778 15.7039 19.2518Z"
+                fill="black" />
+            </svg>
+            <p class="ms-4">使用者列表</p>
+          </a>
+          {{else}}
+          <a href="/tweets" class="d-flex ms-1 my-2" id="home">
+            <svg width="24" height="22" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M22.58 6.34986L12.475 0.896855C12.178 0.736855 11.821 0.736855 11.525 0.896855L1.42496 6.34986C0.938957 6.61386 0.757957 7.21986 1.01996 7.70586C1.19996 8.04086 1.54496 8.23086 1.89996 8.23086C2.05996 8.23086 2.22396 8.19286 2.37496 8.11086L3.10896 7.71486L4.69896 18.9649C4.91496 20.1789 6.00896 21.0269 7.35896 21.0269H16.641C17.991 21.0269 19.085 20.1789 19.303 18.9389L20.891 7.71386L21.628 8.11186C22.113 8.37486 22.72 8.19386 22.982 7.70786C23.245 7.22186 23.062 6.61486 22.578 6.35286L22.58 6.34986ZM12 14.4349C10.205 14.4349 8.74996 12.9799 8.74996 11.1849C8.74996 9.38986 10.205 7.93486 12 7.93486C13.795 7.93486 15.25 9.38986 15.25 11.1849C15.25 12.9799 13.795 14.4349 12 14.4349Z"
+                fill="black" />
+            </svg>
+            <p class="ms-4">首頁</p>
+          </a>
+          <a href="/users/{{user.id}}/tweets" class="d-flex ms-1 my-2" id="user">
+            <svg width="24" height="22" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M8.99991 10.8158C10.3549 10.8158 11.8719 10.6658 12.8399 9.55976C13.6539 8.62976 13.9179 7.19176 13.6459 5.16776C13.2659 2.34276 11.5289 0.655762 8.99991 0.655762C6.47091 0.655762 4.73391 2.34276 4.35391 5.16976C4.08191 7.19176 4.3459 8.62976 5.1599 9.55976C6.1279 10.6668 7.64491 10.8158 8.99991 10.8158ZM5.83991 5.36776C6.00191 4.16776 6.62691 2.15576 8.99991 2.15576C11.3729 2.15576 11.9979 4.16876 12.1599 5.36776C12.3669 6.91776 12.2169 7.99476 11.7099 8.57276C11.2549 9.09276 10.4439 9.31576 8.99991 9.31576C7.55591 9.31576 6.7449 9.09276 6.28991 8.57276C5.78291 7.99476 5.63291 6.91676 5.83991 5.36776ZM17.2799 18.2358C16.4029 14.7098 12.9979 12.2458 8.99991 12.2458C5.00191 12.2458 1.59691 14.7098 0.719905 18.2358C0.547905 18.9278 0.691905 19.6358 1.1149 20.1758C1.5229 20.6958 2.15491 20.9958 2.84791 20.9958H15.1519C15.8449 20.9958 16.4769 20.6958 16.8849 20.1758C17.3089 19.6358 17.4519 18.9288 17.2789 18.2358H17.2799ZM15.7039 19.2518C15.5779 19.4118 15.3879 19.4978 15.1519 19.4978H2.84791C2.61291 19.4978 2.42191 19.4128 2.29591 19.2518C2.15891 19.0778 2.11591 18.8398 2.17591 18.5978C2.88591 15.7428 5.69291 13.7478 8.99991 13.7478C12.3069 13.7478 15.1139 15.7418 15.8239 18.5978C15.8839 18.8398 15.8409 19.0778 15.7039 19.2518Z"
+                fill="black" />
+            </svg>
+            <p class="ms-4">個人資料</p>
+          </a>
+          <a href="/users/{{user.id}}/setting" class="d-flex ms-1 my-2" id="setting">
+            <svg width="24" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M11 7.20996C8.90996 7.20996 7.20996 8.90996 7.20996 11C7.20996 13.09 8.90996 14.79 11 14.79C13.09 14.79 14.79 13.09 14.79 11C14.79 8.90996 13.09 7.20996 11 7.20996ZM11 13.29C9.73796 13.29 8.70996 12.264 8.70996 11C8.70996 9.73596 9.73996 8.70996 11 8.70996C12.26 8.70996 13.29 9.73596 13.29 11C13.29 12.264 12.262 13.29 11 13.29Z"
+                fill="black" />
+              <path
+                d="M11.36 21.375H10.638C9.45505 21.375 8.48405 20.487 8.37605 19.311L8.36205 19.164C8.33705 18.877 8.15505 18.631 7.89005 18.52C7.60405 18.4 7.30805 18.455 7.09205 18.635L6.97605 18.732C6.10805 19.457 4.72305 19.395 3.91605 18.592L3.40605 18.082C2.57005 17.242 2.51005 15.928 3.26605 15.022L3.36405 14.904C3.55005 14.682 3.59405 14.381 3.48605 14.117C3.37605 13.845 3.12805 13.663 2.84005 13.637L2.69005 13.623C1.51005 13.516 0.623047 12.543 0.623047 11.361V10.639C0.623047 9.456 1.51105 8.485 2.68705 8.377L2.84305 8.363C3.12805 8.338 3.37305 8.156 3.48505 7.89C3.59505 7.62 3.55005 7.317 3.36505 7.095L3.27105 6.979C2.51405 6.071 2.57305 4.756 3.40805 3.919L3.92005 3.407C4.72405 2.603 6.10805 2.542 6.98005 3.267L7.09605 3.365C7.31405 3.549 7.62405 3.595 7.88605 3.487C8.15605 3.375 8.33805 3.129 8.36305 2.844L8.37705 2.691C8.48405 1.511 9.45705 0.625 10.639 0.625H11.361C12.544 0.625 13.515 1.513 13.623 2.689L13.637 2.845C13.662 3.13 13.843 3.375 14.109 3.485C14.386 3.602 14.689 3.547 14.903 3.368L15.023 3.266C15.89 2.543 17.277 2.604 18.083 3.406L18.593 3.918C19.429 4.756 19.489 6.071 18.733 6.978L18.633 7.096C18.445 7.316 18.399 7.618 18.51 7.884C18.622 8.154 18.87 8.334 19.156 8.362L19.308 8.376C20.488 8.483 21.375 9.456 21.375 10.638V11.361C21.375 12.544 20.487 13.515 19.311 13.623L19.156 13.637C18.872 13.661 18.626 13.842 18.516 14.107C18.403 14.379 18.449 14.681 18.633 14.902L18.733 15.022C19.489 15.927 19.429 17.242 18.593 18.082L18.083 18.592C17.276 19.396 15.893 19.456 15.023 18.732L14.908 18.636C14.691 18.453 14.378 18.406 14.118 18.514C13.845 18.628 13.663 18.874 13.638 19.16L13.624 19.31C13.517 20.483 12.544 21.37 11.362 21.37L11.36 21.375ZM7.58705 16.955C7.88705 16.955 8.18005 17.015 8.45705 17.13C9.24705 17.458 9.78105 18.184 9.85705 19.026L9.87105 19.173C9.90805 19.573 10.238 19.873 10.641 19.873H11.363C11.763 19.873 12.093 19.573 12.131 19.173L12.145 19.025C12.221 18.183 12.755 17.458 13.537 17.133C14.33 16.803 15.233 16.951 15.87 17.483L15.983 17.577C16.161 17.725 16.349 17.757 16.476 17.757C16.682 17.757 16.876 17.677 17.022 17.53L17.532 17.02C17.816 16.736 17.837 16.29 17.58 15.982L17.48 15.862C16.938 15.212 16.803 14.322 17.128 13.539C17.454 12.749 18.18 12.219 19.022 12.142L19.177 12.128C19.574 12.091 19.877 11.761 19.877 11.358V10.636C19.877 10.236 19.574 9.906 19.175 9.868L19.023 9.854C18.177 9.776 17.453 9.244 17.128 8.461C16.802 7.673 16.938 6.783 17.481 6.134L17.581 6.016C17.838 5.706 17.817 5.26 17.533 4.976L17.023 4.466C16.877 4.319 16.683 4.239 16.477 4.239C16.35 4.239 16.162 4.271 15.985 4.419L15.865 4.519C15.231 5.047 14.315 5.189 13.543 4.873C12.755 4.546 12.223 3.821 12.146 2.977L12.132 2.822C12.097 2.425 11.767 2.122 11.365 2.122H10.642C10.242 2.122 9.91205 2.425 9.87405 2.824L9.86005 2.976C9.78405 3.819 9.25205 4.544 8.47005 4.869C7.68305 5.195 6.77705 5.052 6.14005 4.519L6.02205 4.423C5.84205 4.273 5.65405 4.243 5.52705 4.243C5.32105 4.243 5.12705 4.323 4.98105 4.469L4.46905 4.979C4.18705 5.263 4.16605 5.709 4.42305 6.017L4.52305 6.135C5.06305 6.788 5.20005 7.679 4.87505 8.46C4.54805 9.248 3.82305 9.78 2.98005 9.857L2.82405 9.871C2.42705 9.908 2.12405 10.238 2.12405 10.641V11.363C2.12405 11.763 2.42705 12.093 2.82605 12.131L2.97605 12.145C3.82405 12.223 4.54905 12.757 4.87305 13.541C5.19805 14.327 5.06305 15.216 4.52005 15.866L4.42405 15.981C4.16405 16.291 4.18605 16.737 4.47005 17.021L4.98005 17.531C5.12605 17.678 5.32005 17.758 5.52605 17.758C5.65305 17.758 5.84105 17.728 6.01805 17.578L6.13405 17.482C6.54005 17.146 7.05705 16.958 7.58705 16.958V16.955Z"
+                fill="black" />
+            </svg>
+            <p class="ms-4">設定</p>
+          </a>
+
+          {{!-- 測試區開始 --}}
+          <a href="/users/chatPrivate" class="d-flex ms-1 my-2" id="chatAll">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+              <path
+                d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z" />
+            </svg>
+            <p class="ms-4">私人聊天室</p>
+          </a>
+
+          <a href="/users/{{user.id}}/chatAll" class="d-flex ms-1 my-2" id="chatAll">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
+              <path
+                d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z" />
+            </svg>
+            <p class="ms-4">公開聊天室</p>
+          </a>
+          {{!-- 測試區結尾 --}}
+
+          <button class="btn btn-regular w-100 rounded-pill" data-bs-toggle="modal"
+            data-bs-target="#post-tweet-modal">推文</button>
+
+          <!-- Tweet Modal -->
+          <div class="modal" tabindex="-1" role="dialog" id="post-tweet-modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+
+                <div class="modal-header py-1">
+                  <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="color:#FF6600">X</button>
+                </div>
+
+                <div class="modal-body py-1">
+                  <form action="/tweets" method="POST">
+                    <div class="row">
+                      <div class="col-auto py-0 px-1">
+                        {{#if user.avatar}}
+                        <img src="{{user.avatar}}" class="img-flid" style="max-width: 50px; border-radius: 50%">
+                        {{else}}
+                        <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
+                        {{/if}}
+                      </div>
+                      <div class="col py-0 px-1">
+                        <textarea name="description" class="form-control border-0 w-100" rows="5"
+                          aria-label="With textarea" placeholder="有什麼新鮮事" style="resize: none;"></textarea>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col p-0">
+                        <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Reply Modal -->
+          <div class="modal" tabindex="-1" role="dialog" id="post-reply-modal">
+            <div class="modal-dialog">x
+              <div class="modal-content">
+
+                <div class="modal-header py-1">
+                  <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="color:#FF6600">X</button>
+                </div>
+
+                <div class="modal-body py-1">
+                  <form action="" method="POST" id="modal-reply-form">
+
+                    <div class="row">
+                      <div class="col-auto py-0 px-1 d-flex flex-column align-items-center">
+                        <div id="modal-reply-user-avatar">
+                          <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
+                        </div>
+                        <div class="border-0 flex-grow-1 my-0" style="width: 2px; background-color: #DCDCDC;">
+                        </div>
+                      </div>
+                      <div class="col py-0 px-1">
+                        <div id="nameAndTimeAndDescription">
+                          1
+                        </div>
+                        <div class="d-flex">
+                          <div class="mb-2" id="modal-reply-to">3-2</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-auto py-0 px-1">
+                        {{#if user.avatar}}
+                        <img class="rounded-circle" src="{{user.avatar}}" style="max-width: 50px;max-height: 50px;">
+                        {{else}}
+                        <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg"
+                          style="max-width: 50px;max-height: 50px;">
+                        {{/if}}
+                      </div>
+                      <div class="col py-0 px-1">
+                        <textarea name="comment" class="form-control border-0 w-100" rows="5" aria-label="With textarea"
+                          placeholder="推你的回覆" style="resize: none;"></textarea>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col p-0">
+                        <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
+                      </div>
+                    </div>
+
+                  </form>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- Edit Profile Modal -->
+          <div class="modal fade" id="editProfile" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <form class="mt-2" enctype="multipart/form-data" action="/api/users/{{user.id}}" method="POST">
+                  <div class="d-flex align-items-center justify-content-between mx-2 mb-2">
+                    <div class="d-flex  align-items-center">
+                      <button type="button" class="btn-close d-flex orange-close" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
+                          <path
+                            d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'
+                            fill="#FF6600" />
+                        </svg>
+                      </button>
+                      <p class="m-0 fw-bolder ms-5">編輯個人資料</p>
+                    </div>
+                    <button type="submit" class="btn btn-regular rounded-pill">儲存</button>
+                  </div>
+                  <div class="d-flex w-100 justify-content-center align-items-center" id="edit-image"
+                    style="background-image: url({{user.cover}});">
+                    <div class="d-flex w-100 h-100">
+                      <div class="col-4" id="avatar-input-group">
+                        <input name="avatarImage" id="avatar-input" type="file"
+                          accept="image/gif, image/jpeg, image/png" style="display: none;">
+                        <label
+                          class="btn rounded-circle border border-3 border-white d-flex justify-content-center align-items-center"
+                          id="avatar-label" type="button" for="avatar-input"
+                          style="background-image: url({{user.avatar}});">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083H6.438C7.633 3.17 9.722 2 12 2C14.277 2 16.367 3.17 17.562 5.083H19.708C20.972 5.083 22 6.11 22 7.375V19.708C22 20.972 20.972 22 19.708 22ZM4.292 6.583C3.855 6.583 3.5 6.938 3.5 7.375V19.708C3.5 20.145 3.855 20.5 4.292 20.5H19.708C20.145 20.5 20.5 20.145 20.5 19.708V7.375C20.5 6.938 20.145 6.583 19.708 6.583H17.258C16.941 6.633 16.626 6.488 16.476 6.201C15.596 4.536 13.882 3.501 12 3.501C10.117 3.501 8.402 4.536 7.524 6.203C7.364 6.505 7.022 6.663 6.691 6.583H4.293H4.292Z"
+                              fill="white" />
+                            <path
+                              d="M12 8.16699C9.32001 8.16699 7.14001 10.347 7.14001 13.027C7.14001 15.707 9.32001 17.887 12 17.887C14.68 17.887 16.86 15.707 16.86 13.027C16.86 10.347 14.68 8.16699 12 8.16699ZM14 13.75H12.75V15C12.75 15.414 12.414 15.75 12 15.75C11.586 15.75 11.25 15.414 11.25 15V13.75H10C9.58601 13.75 9.25001 13.414 9.25001 13C9.25001 12.586 9.58601 12.25 10 12.25H11.25V11C11.25 10.586 11.586 10.25 12 10.25C12.414 10.25 12.75 10.586 12.75 11V12.25H14C14.414 12.25 14.75 12.586 14.75 13C14.75 13.414 14.414 13.75 14 13.75Z"
+                              fill="white" />
+                          </svg>
+                        </label>
+                      </div>
+                      <div class="col-4 d-flex  justify-content-center align-items-center" id="cover-input-group">
+                        <input name="coverImage" id="cover-input" type="file" accept="image/gif, image/jpeg, image/png"
+                          style="display: none;">
+                        <input type="text" name="cancelBackground" id="cancelBackground" value="" hidden>
+                        <label class="btn me-3" type="button" for="cover-input">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083H6.438C7.633 3.17 9.722 2 12 2C14.277 2 16.367 3.17 17.562 5.083H19.708C20.972 5.083 22 6.11 22 7.375V19.708C22 20.972 20.972 22 19.708 22ZM4.292 6.583C3.855 6.583 3.5 6.938 3.5 7.375V19.708C3.5 20.145 3.855 20.5 4.292 20.5H19.708C20.145 20.5 20.5 20.145 20.5 19.708V7.375C20.5 6.938 20.145 6.583 19.708 6.583H17.258C16.941 6.633 16.626 6.488 16.476 6.201C15.596 4.536 13.882 3.501 12 3.501C10.117 3.501 8.402 4.536 7.524 6.203C7.364 6.505 7.022 6.663 6.691 6.583H4.293H4.292Z"
+                              fill="white" />
+                            <path
+                              d="M12 8.16699C9.32001 8.16699 7.14001 10.347 7.14001 13.027C7.14001 15.707 9.32001 17.887 12 17.887C14.68 17.887 16.86 15.707 16.86 13.027C16.86 10.347 14.68 8.16699 12 8.16699ZM14 13.75H12.75V15C12.75 15.414 12.414 15.75 12 15.75C11.586 15.75 11.25 15.414 11.25 15V13.75H10C9.58601 13.75 9.25001 13.414 9.25001 13C9.25001 12.586 9.58601 12.25 10 12.25H11.25V11C11.25 10.586 11.586 10.25 12 10.25C12.414 10.25 12.75 10.586 12.75 11V12.25H14C14.414 12.25 14.75 12.586 14.75 13C14.75 13.414 14.414 13.75 14 13.75Z"
+                              fill="white" />
+                          </svg>
+                        </label>
+                        <label class="btn ms-3">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M13.414 11.9999L19.207 6.20687C19.597 5.81687 19.597 5.18388 19.207 4.79288C18.817 4.40188 18.184 4.40288 17.793 4.79288L12 10.5859L6.207 4.79288C5.817 4.40288 5.184 4.40288 4.793 4.79288C4.402 5.18288 4.403 5.81587 4.793 6.20687L10.586 11.9999L4.793 17.7929C4.403 18.1829 4.403 18.8159 4.793 19.2069C4.988 19.4019 5.243 19.4999 5.5 19.4999C5.757 19.4999 6.012 19.4019 6.207 19.2069L12 13.4139L17.793 19.2069C17.988 19.4019 18.243 19.4999 18.5 19.4999C18.757 19.4999 19.012 19.4019 19.207 19.2069C19.597 18.8169 19.597 18.1839 19.207 17.7929L13.414 11.9999Z"
+                              fill="white" />
+                          </svg>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-floating m-3 mt-5" id="name-input-group">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="" name="name"
+                      value="{{user.name}}" maxlength="50" required>
+                    <label for="floatingInput">名稱</label>
+                    <p class="text-end" style="color: #657786; height:10px"></p>
+                  </div>
+                  <div class="form-floating m-3" id="introduction-input-group">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="descriptinArea"
+                      style="height: 150px; resize:none;" maxlength="140"
+                      name="introduction">{{user.introduction}}</textarea>
+                    <label for="descriptinArea">自我介紹</label>
+                    <p class="text-end" style="color: #657786; height:10px"></p>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          {{/if}}
+        </div>
+        <div>
+          <a href="/signout" class="d-flex ms-1" id="signout">
+            <svg width="24" height="22" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M9 13L5 9M5 9L9 5M5 9H19M14 13V14C14 14.7956 13.6839 15.5587 13.1213 16.1213C12.5587 16.6839 11.7956 17 11 17H4C3.20435 17 2.44129 16.6839 1.87868 16.1213C1.31607 15.5587 1 14.7956 1 14V4C1 3.20435 1.31607 2.44129 1.87868 1.87868C2.44129 1.31607 3.20435 1 4 1H11C11.7956 1 12.5587 1.31607 13.1213 1.87868C13.6839 2.44129 14 3.20435 14 4V5"
+                stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <p class="ms-4">登出</p>
+          </a>
+        </div>
+      </div>
+      {{/if}}
+      {{#if Appear.navbar}}
+      {{#if Appear.top10}}
+      <div class="col-6 d-flex justify-content-center  border-start  border-end min-vh-100" id="body">
+        {{else}}
+        <div class="col-9 d-flex justify-content-center   border-start min-vh-100" id="body">
+          {{/if}}
+          {{else}}
+          <div class="col-12 d-flex justify-content-center min-vh-100" id="body">
+            {{/if}}
+            {{{body}}}
+          </div>
+          {{#if Appear.top10}}
+          <div class="col-3 pe-5 sticky-top vh-100" id="top10" data-user-id="{{user.id}}">
+            <ul class="list-group mt-3 ms-4 me-5 pe-4 col-12">
+              <li class="list-group-item fw-bolder">跟隨誰</li>
+            </ul>
+          </div>
+          <script src="/javascripts/top10.js"></script>
+          {{/if}}
+        </div>
+      </div>
+      <script src="/javascripts/replyModal.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+</body>
+
+
+
+</html>
