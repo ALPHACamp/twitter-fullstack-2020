@@ -1,0 +1,252 @@
+<div class="row mt-5">
+  {{!-- 左邊區域 --}}
+
+  <div class="col-md-3">
+    <img class="" style="margin-left:15px" width="40px"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link  text-dark font-weight-bold" href="/"><i class="fas fa-home"></i> 首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/notification"><i class="far fa-bell"></i> 通知</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link  font-weight-bold" style="color: #FF6600;" href="/chatroomPublic"><i
+            class="far fa-envelope"></i> 公開聊天室</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/chatroomPrivate"><i class="far fa-envelope"></i> 私人訊息</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/user/self"><i class="fas fa-user"></i> 個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/setting"><i class="far fa-sun"></i> 設定</a>
+      </li>
+    </ul>
+
+    <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
+      data-toggle="modal" data-target="#exampleModal">推文</button>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="color:#FF6600;">&times;</span>
+            </button>
+          </div>
+          <form action="/" method="post">
+            <div class="modal-body" style="height: 250px;">
+              <div class="row" style="height: 100%;">
+                <div class="col-md-2">
+                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
+                    class="rounded-circle" style="width: 60px; height:60px;">
+                </div>
+                <div class="col-md-10">
+                  <textarea name="description" id=""
+                    style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
+  <div class="ml-3" style="position:fixed; bottom:0px; left: 20px;">
+    <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
+        fa-sign-out-alt"></i> 登出</a>
+  </div>
+  {{!-- 中間區域 --}}
+  <div class="col-md-3" id="middleSection" style="position: relative; border:1px #DEE2E6  solid; ">
+    <div class="row align-items-center  mt-3" style="border-bottom:#dee2e6 1px solid;">
+      <div class="h5 ml-3">上線使用者 (<span>5</span>)</div>
+    </div>
+    <div class="row" style="">
+      <div style="display: flex; width:100%; border-bottom:1px #DEE2E6  solid;">
+        <img
+          src='https://lh3.googleusercontent.com/proxy/n1DyU7qNvpUGW4qzZ37xkRUjYv_vUbVIZsLPqWg5wemJREnSZE60sMUOonOccIMu1l6cOrUiYNR066CUiIWqrLa1ZfFvtzXOtTU8WoHKQd3cCtYHFJiVYjY'
+          class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
+        <div style="display: flex;  align-items:center;">
+          <div class="mr-1 font-weight-bold">Apple</div>
+          <div class="text-secondary">@apple</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row" style="">
+      <div style="display: flex; width:100%; border-bottom:1px #DEE2E6  solid;">
+        <img
+          src='https://lh3.googleusercontent.com/proxy/n1DyU7qNvpUGW4qzZ37xkRUjYv_vUbVIZsLPqWg5wemJREnSZE60sMUOonOccIMu1l6cOrUiYNR066CUiIWqrLa1ZfFvtzXOtTU8WoHKQd3cCtYHFJiVYjY'
+          class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
+        <div style="display: flex;  align-items:center;">
+          <div class="mr-1 font-weight-bold">Apple</div>
+          <div class="text-secondary">@apple</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row" style="">
+      <div style="display: flex; width:100%; border-bottom:1px #DEE2E6  solid;">
+        <img
+          src='https://lh3.googleusercontent.com/proxy/n1DyU7qNvpUGW4qzZ37xkRUjYv_vUbVIZsLPqWg5wemJREnSZE60sMUOonOccIMu1l6cOrUiYNR066CUiIWqrLa1ZfFvtzXOtTU8WoHKQd3cCtYHFJiVYjY'
+          class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
+        <div style="display: flex;  align-items:center;">
+          <div class="mr-1 font-weight-bold">Apple</div>
+          <div class="text-secondary">@apple</div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+
+  {{!-- 右邊區域 --}}
+  <div class="col-md-6" style="height: 100%;">
+    <div class=''
+      style="background-color: #F5F8FA ; border-left:1px #DEE2E6  solid;border-top:1px #DEE2E6  solid;border-right:1px #DEE2E6  solid; border-bottom:0px;">
+      <h4 class="p-2" style="margin:0px;">公開聊天室</h4>
+    </div>
+    <div id="message-area" style="border:1px #DEE2E6  solid ;">
+      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Esther Howard 上線</span></div>
+      <div class="text-center  mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Jane Cooper 上線</span></div>
+      <div class="text-center  mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Wade Warren 上線 </span></div>
+      <div class="text-center  mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Apple 上線</span></div>
+      {{!-- 第一則留言區域 --}}
+      <div style="display: flex; width:100%;" class="ml-2 mb-2">
+        <img
+          src='https://lh3.googleusercontent.com/proxy/n1DyU7qNvpUGW4qzZ37xkRUjYv_vUbVIZsLPqWg5wemJREnSZE60sMUOonOccIMu1l6cOrUiYNR066CUiIWqrLa1ZfFvtzXOtTU8WoHKQd3cCtYHFJiVYjY'
+          class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
+        <div style="display: flex;  flex-direction:column;">
+          <div class="mr-1 font-weight-bold p-3" style="border-radius: 25px 25px 25px 0%; background-color:aliceblue">
+            今天天氣非常的好!
+          </div>
+          <div class="text-secondary">下午 4:21</div>
+        </div>
+      </div>
+
+      {{!-- 自己留言區域 --}}
+      <div style="display: flex; justify-content:flex-end; width:100%;" class="mr-2 mb-2">
+
+        <div style="display: flex;  flex-direction:column; justify-content:flex-end;">
+          <div class="mr-1 font-weight-bold p-3"
+            style="border-radius: 25px 25px 0px 25px; background-color: #FF6600; color:#FFFFFF;">
+            Hello 你最近好嗎?
+          </div>
+          <div class="text-secondary p-2" style="text-align:right;">下午 06:01</div>
+        </div>
+      </div>
+
+      {{!-- 第二則留言區域 --}}
+      <div style="display: flex; width:100%;" class="ml-2 mb-2">
+        <img
+          src='https://lh3.googleusercontent.com/proxy/n1DyU7qNvpUGW4qzZ37xkRUjYv_vUbVIZsLPqWg5wemJREnSZE60sMUOonOccIMu1l6cOrUiYNR066CUiIWqrLa1ZfFvtzXOtTU8WoHKQd3cCtYHFJiVYjY'
+          class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
+        <div style="display: flex;  flex-direction:column;">
+          <div class="mr-1 font-weight-bold p-3" style="border-radius: 25px 25px 25px 0%; background-color:aliceblue">
+            最近天氣變化大!
+          </div>
+          <div class="text-secondary">下午 06:02</div>
+        </div>
+      </div>
+
+
+      {{!-- 自己第二留言區域 --}}
+      <div style="display: flex; justify-content:flex-end; width:100%;" class="mr-2 mb-2">
+
+        <div style="display: flex;  flex-direction:column; justify-content:flex-end;">
+          <div class="mr-1 font-weight-bold p-3"
+            style="border-radius: 25px 25px 0px 25px; background-color: #FF6600; color:#FFFFFF;">
+            記得多穿一點囉!
+          </div>
+          <div class="text-secondary p-2 " style="text-align: right;">下午 06:08</div>
+        </div>
+      </div>
+
+      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Ralph Edwards 離線</span></div>
+
+
+      <div
+        style="width: 100%; hieght:30px;border-top:1px #DEE2E6  solid; display:flex; justify-content:space-between; align-items:center;"
+        class="p-2">
+        <input type="text"
+          style="width:95%; border:0px  none; outline:none; background-color: #E6ECF0; padding:5px 10px; border-radius:20px;"
+          placeholder="輸入訊息..." id="msg">
+        <label for="leaveMsg" style="margin:0px;" id="leaveMsg">
+          <i class="fab fa-telegram-plane fa-lg text-center" style="color: #FF6600; width:5%;"></i>
+        </label>
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+</div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io.connect('http://localhost:3000')
+
+  // 建立連接
+  socket.on("connect", () => {
+    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+  });
+
+  // 發送消息到後端
+  socket.on('message', (data) => {
+    console.log(data)
+    socket.send('already receive data...')
+  })
+
+  // 接收後端的廣播訊息
+  socket.on('broadcast', (bcdata) => {
+    console.log('收到廣播')
+    console.log(bcdata)
+  })
+
+  // 斷開socket會發送給後端的消息
+  socket.on('disconnect', () => {
+    console.log('服務器端段開連接~!!')
+  })
+
+  const leaveMsg = document.querySelector('#leaveMsg')
+  leaveMsg.addEventListener('click', () => {
+    console.log('點了傳送按鈕')
+    const msg = document.querySelector('#msg')
+    socket.emit('self Message', msg.value);
+    alert('送出消息' + msg.value);
+    // 送出消息後清空輸入框
+    msg.value = ''
+
+  })
+</script>

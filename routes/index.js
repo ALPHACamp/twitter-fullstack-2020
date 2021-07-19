@@ -141,6 +141,8 @@ module.exports = (app, passport) => {
   // 前台喜歡
   app.post('/tweets/:userId/like/:tweetId', authenticated, twitController.postLike)
 
+  // 公開聊天室
+  app.get('/chatroomPublic', authenticated, twitController.getchatroomPublic)
 
 }
 

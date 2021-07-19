@@ -10,6 +10,8 @@ const passport = require('./config/passport')
 const methodOverride = require('method-override')
 
 
+
+
 const exhbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
@@ -43,6 +45,28 @@ app.use('/upload', express.static(__dirname + '/upload'))
 require('./routes')(app, passport)
 
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// socket.io
+const httpServer = require("http").createServer(app);
+const options = { /* ... */ };
+const io = require("socket.io")(httpServer, options);
+
+io.on("connection", socket => {
+  console.log(socket.id)
+  console.log('客戶端成功連線服務器')
+  socket.send('您好, 這是服務器發送的訊息')
+
+  // 由客戶端收到的消息在廣播出去給當前所有使用者
+  socket.on('self Message', data => {
+    console.log('從客戶端接收到的資料: ' + data)
+    // 發送資料給所有使用者
+    socket.emit('broadcast', data)
+  });
+
+  // 斷開連接的操作
+  socket.on('disconnect', () => { /* … */ });
+
+});
+
+httpServer.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app
