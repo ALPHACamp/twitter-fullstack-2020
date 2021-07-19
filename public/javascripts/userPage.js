@@ -6,7 +6,7 @@ const editProfileModalButton = document.querySelector('#edit-profile-modal-butto
 
 if (editProfileModalButton){
   editProfileModalButton.addEventListener('click', async () => {
-    let user = await axios.get(`http://localhost:8000/api/users/${editProfileModalButton.dataset.userId}`)
+    let user = await axios.get(`/api/users/${editProfileModalButton.dataset.userId}`)
     user = user.data
     avatarInputGroup.children[1].style.backgroundImage = `url(\"${user.avatar}\")`
     document.querySelector('#edit-image').style.backgroundImage = `url(\"${user.cover}\")`
