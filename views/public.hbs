@@ -8,25 +8,25 @@
         </a>
         <ul class='nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start' id='menu'
           style='width: 100%;'>
-          <li class='nav-item p-2'>
+          <li class='nav-item px-2 py-1'>
             <a class='nav-link align-middle text-dark h-tomato' href='/tweets'>
               <i class='fas fa-home' style='font-size: 1.2em;'></i>
               <span class='d-none d-sm-inline h5 ps-3 fw-bold'>首頁</span>
             </a>
           </li>
-          <li class='nav-item p-2'>
+          <li class='nav-item px-2 py-1'>
             <a class='nav-link align-middle text-dark h-tomato' href='/messages/public'>
               <i class='far fa-envelope a-tomato' style='font-size: 1.2em;'></i>
               <span class='d-none d-sm-inline h5 ps-3 a-tomato fw-bold'>公開聊天室</span>
             </a>
           </li>
-          <li class='nav-item p-2'>
+          <li class='nav-item px-2 py-1'>
             <a class='nav-link align-middle text-dark h-tomato' href='/users/{{user.id}}'>
               <i class='far fa-user' style='font-size: 1.2em;'></i>
               <span class='d-none d-sm-inline h5 ps-3 fw-bold'>個人資料</span>
             </a>
           </li>
-          <li class='nav-item p-2'>
+          <li class='nav-item px-2 py-1'>
             <a class='nav-link align-middle text-dark h-tomato' href='/setting'>
               <i class='fas fa-cog' style='font-size: 1.2em;'></i>
               <span class='d-none d-sm-inline h5 ps-3 fw-bold'>設定</span>
@@ -49,38 +49,108 @@
         </div>
       </div>
     </div>
-    <div class='row col-9 col-lg-6 col-md-7 col-sm-8 py-2 bg-light'>
-      <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
-        <div class='col-1 d-flex justify-content-center align-items-center'>
-          <img src='{{user.avatar}}' class='rounded-circle p-1' style='width: 60px; height: 60px' alt='A user' />
-        </div>
-        <div class='col-11 row px-md-2 px-4'>
-          <div class='col-12 d-inline-flex justify-content-between align-items-center'>
-            <div style='height: 25px; line-height: 25px'>
-              <p id="id" class="d-none">{{user.id}}</p>
-              <h5 id='name' class='fw-bold'>{{user.name}}</h5>
-              <span class='ps-1' style='color: #6c757d; font-size: 0.875em'>@{{user.account}}</span>
-            </div>
-          </div>
-        </div>
-        <div class='col-12'>
-          <input type='text' id='message' />
-          <button type='submit' id='send'>send message</button>
-        </div>
-      </div>
 
-      <div id='board' class="rounded-3">
-        {{#if msg}}
-        {{#each msg}}
-        <h2>{{this.User.name}}: {{this.chat}} {{moment this.createdAt}}</h2>
-        {{/each}}
-        {{/if}}
+    <div class="col-auto col-lg-3 col-md-2">
+      <div class="card d-none d-md-flex flex-column vh-100  position-fixed">
+        <ul class="list-group " style="width: 24vw;">
+          <li class="list-group-item fw-bold" style="border-left: none;border-right: none">上線使用者(5)</li>
+          {{!-- each --}}
+          <li class="list-group-item hovercard" style="border-left: none;border-right: none;height:5rem">
+            <div class="row justify-content-start align-items-center">
+              <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
+                <a href="/users/{{user.id}}">
+                  <img src="{{user.avatar}}" alt="" width="50" height="50" class="rounded-circle">
+                </a>
+              </div>
+              <div class="col-6 ps-3 pt-3 d-flex">
+                <p id="id" class="d-none">{{user.id}}</p>
+                <p id="avatar" class="d-none">{{user.avatar}}</p>
+                <h5 id='name' style="line-height: 18px;">{{user.name}}</h5>
+                <p class="text-muted" style="line-height:16px; margin-left: 5px;">@{{user.account}}</p>
+              </div>
+            </div>
+          </li>
+          {{!-- each --}}
+        </ul>
       </div>
     </div>
-    <div class='col-auto col-lg-4 col-md-3'>
 
+    <div class='col-8 col-lg-7 col-md-8 col-sm-6'>
+      <div class="card d-md-flex flex-column vh-100">
+        <li class="list-group-item fw-bold">
+          公開聊天室
+        </li>
+        <ul id="publicboard" class="list-group overflow-auto">
+          <li class="list-group-item" style="border-bottom:none">
+            <ul class="list-group d-flex flex-column align-items-center" id="onlineList">
+              <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">user1 上線了</li>
+            </ul>
+            <div id='board' class="rounded-3">
+              {{#if msg}}
+              {{#each msg}}
+              {{#ifCond this.User.id ../user.id}}
+              {{!-- Self Messages --}}
+              <div class="row flex-row-reverse">
+                <p id="id" class="d-none">{{this.User.id}}</p>
+                <div class="col-1 d-flex justify-content-center align-items-start">
+                  <a href="/users/{{this.User.id}}" class="p-1">
+                    <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px; height: 50px"
+                      alt="A user" />
+                  </a>
+                </div>
+                <div class="col-11 flex-column text-end">
+                  <p class="text-dark fw-bold mx-0"
+                    style="font-size: 0.8em; padding-left: 0.3rem; margin-bottom: 0.3rem;">
+                    {{this.User.name}}</p>
+                  <div>
+                    <p class="d-inline msgblockright">
+                      {{this.chat}}</p>
+                  </div>
+                  <p class="text-muted mx-0" style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">
+                    {{moment
+                    this.createdAt}}</p>
+                </div>
+              </div>
+              {{else}}
+              {{!-- Other User Messages --}}
+              <div class="row">
+                <p id="id" class="d-none">{{this.User.id}}</p>
+                <div class="col-1 d-flex justify-content-center align-items-start">
+                  <a href="/users/{{this.User.id}}" class="p-1">
+                    <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px; height: 50px"
+                      alt="A user" />
+                  </a>
+                </div>
+                <div class="col-11">
+                  <p class="text-dark fw-bold mx-0"
+                    style="font-size: 0.8em; padding-left: 0.3rem; margin-bottom: 0.3rem;">
+                    {{this.User.name}}</p>
+                  <p class="d-inline msgblockleft">
+                    {{this.chat}}</p>
+                  <p class="text-muted mx-0" style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">
+                    {{moment
+                    this.createdAt}}</p>
+                </div>
+              </div>
+              {{/ifCond}}
+              {{/each}}
+              {{/if}}
+            </div>
+            <ul class="list-group flex-column align-items-center" id="outlineList">
+              <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">user1 離線了</li>
+            </ul>
+          </li>
+        </ul>
+        <li class="list-group-item" id="msgInputBtn">
+          <div class="input-group">
+            <input type="text" id='message' class="form-control rounded-pill bg-light" placeholder="請輸入訊息..."
+              aria-label="msgInput" aria-describedby="basic-addon1">
+            <button type="submit" id='send' class="btn btn-tomato rounded-pill fixed-bottom" style="margin-left:5px;">
+              <i class="fas fa-paper-plane"></i></button>
+          </div>
+        </li>
+      </div>
     </div>
   </div>
 </div>
-
 <script src='/javascripts/public.js'></script>

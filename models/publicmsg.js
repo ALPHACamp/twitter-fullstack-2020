@@ -10,13 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
       Publicmsg.belongsTo(models.User)
     }
   };
   Publicmsg.init({
-    chat: DataTypes.STRING,
-    UserId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    chat: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Publicmsg',

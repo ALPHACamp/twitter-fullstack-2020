@@ -9,7 +9,6 @@ const messageController = {
         raw: true,
         nest: true
       })
-
       return res.render('public', { msg })
     } catch (error) {
       console.warn(error)

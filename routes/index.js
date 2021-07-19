@@ -88,7 +88,6 @@ module.exports = (app, passport) => {
   // messages
   app.get('/messages/public', authenticatedUser, messageController.getPublic)
 
-
   // 首頁
   app.get('/', authenticatedUser, (req, res) => res.redirect('/tweets'))
 }

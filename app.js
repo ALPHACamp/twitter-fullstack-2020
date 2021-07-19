@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 
 require('./controllers/socketController')(io)
 
-server.listen(port, () => console.log(`Example app listening on port http://localhost:${port}`))
+server.listen(port, () => console.log(`Simple Twitter web app is listening on port ${port}`))
 
 require('./routes')(app, passport)
 
