@@ -106,183 +106,7 @@
           <button class="btn btn-regular w-100 rounded-pill" data-bs-toggle="modal"
             data-bs-target="#post-tweet-modal">推文</button>
 
-          <!-- Tweet Modal -->
-          <div class="modal" tabindex="-1" role="dialog" id="post-tweet-modal">
-            <div class="modal-dialog">
-              <div class="modal-content">
 
-                <div class="modal-header py-1">
-                  <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="color:#FF6600">X</button>
-                </div>
-
-                <div class="modal-body py-1">
-                  <form action="/tweets" method="POST">
-                    <div class="row">
-                      <div class="col-auto py-0 px-1">
-                        {{#if user.avatar}}
-                        <img src="{{user.avatar}}" class="img-flid" style="max-width: 50px; border-radius: 50%">
-                        {{else}}
-                        <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
-                        {{/if}}
-                      </div>
-                      <div class="col py-0 px-1">
-                        <textarea name="description" class="form-control border-0 w-100" rows="5"
-                          aria-label="With textarea" placeholder="有什麼新鮮事" style="resize: none;"></textarea>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col p-0">
-                        <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
-                      </div>
-                    </div>
-
-                  </form>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <!-- Reply Modal -->
-          <div class="modal" tabindex="-1" role="dialog" id="post-reply-modal">
-            <div class="modal-dialog">x
-              <div class="modal-content">
-
-                <div class="modal-header py-1">
-                  <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="color:#FF6600">X</button>
-                </div>
-
-                <div class="modal-body py-1">
-                  <form action="" method="POST" id="modal-reply-form">
-
-                    <div class="row">
-                      <div class="col-auto py-0 px-1 d-flex flex-column align-items-center">
-                        <div id="modal-reply-user-avatar">
-                          <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
-                        </div>
-                        <div class="border-0 flex-grow-1 my-0" style="width: 2px; background-color: #DCDCDC;">
-                        </div>
-                      </div>
-                      <div class="col py-0 px-1">
-                        <div id="nameAndTimeAndDescription">
-                          1
-                        </div>
-                        <div class="d-flex">
-                          <div class="mb-2" id="modal-reply-to">3-2</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col-auto py-0 px-1">
-                        {{#if user.avatar}}
-                        <img class="rounded-circle" src="{{user.avatar}}" style="max-width: 50px;max-height: 50px;">
-                        {{else}}
-                        <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg"
-                          style="max-width: 50px;max-height: 50px;">
-                        {{/if}}
-                      </div>
-                      <div class="col py-0 px-1">
-                        <textarea name="comment" class="form-control border-0 w-100" rows="5" aria-label="With textarea"
-                          placeholder="推你的回覆" style="resize: none;"></textarea>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col p-0">
-                        <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
-                      </div>
-                    </div>
-
-                  </form>
-                </div>
-
-              </div>
-            </div>
-          </div>
-          <!-- Edit Profile Modal -->
-          <div class="modal fade" id="editProfile" tabindex="-1">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <form class="mt-2" enctype="multipart/form-data" action="/api/users/{{user.id}}" method="POST">
-                  <div class="d-flex align-items-center justify-content-between mx-2 mb-2">
-                    <div class="d-flex  align-items-center">
-                      <button type="button" class="btn-close d-flex orange-close" data-bs-dismiss="modal"
-                        aria-label="Close">
-                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
-                          <path
-                            d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'
-                            fill="#FF6600" />
-                        </svg>
-                      </button>
-                      <p class="m-0 fw-bolder ms-5">編輯個人資料</p>
-                    </div>
-                    <button type="submit" class="btn btn-regular rounded-pill">儲存</button>
-                  </div>
-                  <div class="d-flex w-100 justify-content-center align-items-center" id="edit-image"
-                    style="background-image: url({{user.cover}});">
-                    <div class="d-flex w-100 h-100">
-                      <div class="col-4" id="avatar-input-group">
-                        <input name="avatarImage" id="avatar-input" type="file"
-                          accept="image/gif, image/jpeg, image/png" style="display: none;">
-                        <label
-                          class="btn rounded-circle border border-3 border-white d-flex justify-content-center align-items-center"
-                          id="avatar-label" type="button" for="avatar-input"
-                          style="background-image: url({{user.avatar}});">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083H6.438C7.633 3.17 9.722 2 12 2C14.277 2 16.367 3.17 17.562 5.083H19.708C20.972 5.083 22 6.11 22 7.375V19.708C22 20.972 20.972 22 19.708 22ZM4.292 6.583C3.855 6.583 3.5 6.938 3.5 7.375V19.708C3.5 20.145 3.855 20.5 4.292 20.5H19.708C20.145 20.5 20.5 20.145 20.5 19.708V7.375C20.5 6.938 20.145 6.583 19.708 6.583H17.258C16.941 6.633 16.626 6.488 16.476 6.201C15.596 4.536 13.882 3.501 12 3.501C10.117 3.501 8.402 4.536 7.524 6.203C7.364 6.505 7.022 6.663 6.691 6.583H4.293H4.292Z"
-                              fill="white" />
-                            <path
-                              d="M12 8.16699C9.32001 8.16699 7.14001 10.347 7.14001 13.027C7.14001 15.707 9.32001 17.887 12 17.887C14.68 17.887 16.86 15.707 16.86 13.027C16.86 10.347 14.68 8.16699 12 8.16699ZM14 13.75H12.75V15C12.75 15.414 12.414 15.75 12 15.75C11.586 15.75 11.25 15.414 11.25 15V13.75H10C9.58601 13.75 9.25001 13.414 9.25001 13C9.25001 12.586 9.58601 12.25 10 12.25H11.25V11C11.25 10.586 11.586 10.25 12 10.25C12.414 10.25 12.75 10.586 12.75 11V12.25H14C14.414 12.25 14.75 12.586 14.75 13C14.75 13.414 14.414 13.75 14 13.75Z"
-                              fill="white" />
-                          </svg>
-                        </label>
-                      </div>
-                      <div class="col-4 d-flex  justify-content-center align-items-center" id="cover-input-group">
-                        <input name="coverImage" id="cover-input" type="file" accept="image/gif, image/jpeg, image/png"
-                          style="display: none;">
-                        <input type="text" name="cancelBackground" id="cancelBackground" value="" hidden>
-                        <label class="btn me-3" type="button" for="cover-input">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083H6.438C7.633 3.17 9.722 2 12 2C14.277 2 16.367 3.17 17.562 5.083H19.708C20.972 5.083 22 6.11 22 7.375V19.708C22 20.972 20.972 22 19.708 22ZM4.292 6.583C3.855 6.583 3.5 6.938 3.5 7.375V19.708C3.5 20.145 3.855 20.5 4.292 20.5H19.708C20.145 20.5 20.5 20.145 20.5 19.708V7.375C20.5 6.938 20.145 6.583 19.708 6.583H17.258C16.941 6.633 16.626 6.488 16.476 6.201C15.596 4.536 13.882 3.501 12 3.501C10.117 3.501 8.402 4.536 7.524 6.203C7.364 6.505 7.022 6.663 6.691 6.583H4.293H4.292Z"
-                              fill="white" />
-                            <path
-                              d="M12 8.16699C9.32001 8.16699 7.14001 10.347 7.14001 13.027C7.14001 15.707 9.32001 17.887 12 17.887C14.68 17.887 16.86 15.707 16.86 13.027C16.86 10.347 14.68 8.16699 12 8.16699ZM14 13.75H12.75V15C12.75 15.414 12.414 15.75 12 15.75C11.586 15.75 11.25 15.414 11.25 15V13.75H10C9.58601 13.75 9.25001 13.414 9.25001 13C9.25001 12.586 9.58601 12.25 10 12.25H11.25V11C11.25 10.586 11.586 10.25 12 10.25C12.414 10.25 12.75 10.586 12.75 11V12.25H14C14.414 12.25 14.75 12.586 14.75 13C14.75 13.414 14.414 13.75 14 13.75Z"
-                              fill="white" />
-                          </svg>
-                        </label>
-                        <label class="btn ms-3">
-                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path
-                              d="M13.414 11.9999L19.207 6.20687C19.597 5.81687 19.597 5.18388 19.207 4.79288C18.817 4.40188 18.184 4.40288 17.793 4.79288L12 10.5859L6.207 4.79288C5.817 4.40288 5.184 4.40288 4.793 4.79288C4.402 5.18288 4.403 5.81587 4.793 6.20687L10.586 11.9999L4.793 17.7929C4.403 18.1829 4.403 18.8159 4.793 19.2069C4.988 19.4019 5.243 19.4999 5.5 19.4999C5.757 19.4999 6.012 19.4019 6.207 19.2069L12 13.4139L17.793 19.2069C17.988 19.4019 18.243 19.4999 18.5 19.4999C18.757 19.4999 19.012 19.4019 19.207 19.2069C19.597 18.8169 19.597 18.1839 19.207 17.7929L13.414 11.9999Z"
-                              fill="white" />
-                          </svg>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-floating m-3 mt-5" id="name-input-group">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="" name="name"
-                      value="{{user.name}}" maxlength="50" required>
-                    <label for="floatingInput">名稱</label>
-                    <p class="text-end" style="color: #657786; height:10px"></p>
-                  </div>
-                  <div class="form-floating m-3" id="introduction-input-group">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="descriptinArea"
-                      style="height: 150px; resize:none;" maxlength="140"
-                      name="introduction">{{user.introduction}}</textarea>
-                    <label for="descriptinArea">自我介紹</label>
-                    <p class="text-end" style="color: #657786; height:10px"></p>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
 
           {{/if}}
         </div>
@@ -317,6 +141,180 @@
           </div>
           <script src="/javascripts/top10.js"></script>
           {{/if}}
+        </div>
+      </div>
+      <!-- Tweet Modal -->
+      <div class="modal" tabindex="-1" role="dialog" id="post-tweet-modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="modal-header py-1">
+              <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="color:#FF6600">X</button>
+            </div>
+
+            <div class="modal-body py-1">
+              <form action="/tweets" method="POST">
+                <div class="row">
+                  <div class="col-auto py-0 px-1">
+                    {{#if user.avatar}}
+                    <img src="{{user.avatar}}" class="img-flid" style="max-width: 50px; border-radius: 50%">
+                    {{else}}
+                    <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
+                    {{/if}}
+                  </div>
+                  <div class="col py-0 px-1">
+                    <textarea name="description" class="form-control border-0 w-100" rows="5" aria-label="With textarea"
+                      placeholder="有什麼新鮮事" style="resize: none;"></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col p-0">
+                    <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Reply Modal -->
+      <div class="modal" tabindex="-1" role="dialog" id="post-reply-modal">
+        <div class="modal-dialog">x
+          <div class="modal-content">
+
+            <div class="modal-header py-1">
+              <button type="button" class="btn btn-sm" data-bs-dismiss="modal" style="color:#FF6600">X</button>
+            </div>
+
+            <div class="modal-body py-1">
+              <form action="" method="POST" id="modal-reply-form">
+
+                <div class="row">
+                  <div class="col-auto py-0 px-1 d-flex flex-column align-items-center">
+                    <div id="modal-reply-user-avatar">
+                      <img src="https://i.imgur.com/3P9xRqb.jpg" alt="" style="max-width: 50px; border-radius: 50%">
+                    </div>
+                    <div class="border-0 flex-grow-1 my-0" style="width: 2px; background-color: #DCDCDC;">
+                    </div>
+                  </div>
+                  <div class="col py-0 px-1">
+                    <div id="nameAndTimeAndDescription">
+                      1
+                    </div>
+                    <div class="d-flex">
+                      <div class="mb-2" id="modal-reply-to">3-2</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-auto py-0 px-1">
+                    {{#if user.avatar}}
+                    <img class="rounded-circle" src="{{user.avatar}}" style="max-width: 50px;max-height: 50px;">
+                    {{else}}
+                    <img class="rounded-circle" src="https://i.imgur.com/3P9xRqb.jpg"
+                      style="max-width: 50px;max-height: 50px;">
+                    {{/if}}
+                  </div>
+                  <div class="col py-0 px-1">
+                    <textarea name="comment" class="form-control border-0 w-100" rows="5" aria-label="With textarea"
+                      placeholder="推你的回覆" style="resize: none;"></textarea>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col p-0">
+                    <button class="btn btn-regular rounded-pill float-end mt-2" type="submit">推文</button>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- Edit Profile Modal -->
+      <div class="modal fade" id="editProfile" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form class="mt-2" enctype="multipart/form-data" action="/api/users/{{user.id}}" method="POST">
+              <div class="d-flex align-items-center justify-content-between mx-2 mb-2">
+                <div class="d-flex  align-items-center">
+                  <button type="button" class="btn-close d-flex orange-close" data-bs-dismiss="modal"
+                    aria-label="Close">
+                    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#000'>
+                      <path
+                        d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'
+                        fill="#FF6600" />
+                    </svg>
+                  </button>
+                  <p class="m-0 fw-bolder ms-5">編輯個人資料</p>
+                </div>
+                <button type="submit" class="btn btn-regular rounded-pill">儲存</button>
+              </div>
+              <div class="d-flex w-100 justify-content-center align-items-center" id="edit-image"
+                style="background-image: url({{user.cover}});">
+                <div class="d-flex w-100 h-100">
+                  <div class="col-4" id="avatar-input-group">
+                    <input name="avatarImage" id="avatar-input" type="file" accept="image/gif, image/jpeg, image/png"
+                      style="display: none;">
+                    <label
+                      class="btn rounded-circle border border-3 border-white d-flex justify-content-center align-items-center"
+                      id="avatar-label" type="button" for="avatar-input"
+                      style="background-image: url({{user.avatar}});">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083H6.438C7.633 3.17 9.722 2 12 2C14.277 2 16.367 3.17 17.562 5.083H19.708C20.972 5.083 22 6.11 22 7.375V19.708C22 20.972 20.972 22 19.708 22ZM4.292 6.583C3.855 6.583 3.5 6.938 3.5 7.375V19.708C3.5 20.145 3.855 20.5 4.292 20.5H19.708C20.145 20.5 20.5 20.145 20.5 19.708V7.375C20.5 6.938 20.145 6.583 19.708 6.583H17.258C16.941 6.633 16.626 6.488 16.476 6.201C15.596 4.536 13.882 3.501 12 3.501C10.117 3.501 8.402 4.536 7.524 6.203C7.364 6.505 7.022 6.663 6.691 6.583H4.293H4.292Z"
+                          fill="white" />
+                        <path
+                          d="M12 8.16699C9.32001 8.16699 7.14001 10.347 7.14001 13.027C7.14001 15.707 9.32001 17.887 12 17.887C14.68 17.887 16.86 15.707 16.86 13.027C16.86 10.347 14.68 8.16699 12 8.16699ZM14 13.75H12.75V15C12.75 15.414 12.414 15.75 12 15.75C11.586 15.75 11.25 15.414 11.25 15V13.75H10C9.58601 13.75 9.25001 13.414 9.25001 13C9.25001 12.586 9.58601 12.25 10 12.25H11.25V11C11.25 10.586 11.586 10.25 12 10.25C12.414 10.25 12.75 10.586 12.75 11V12.25H14C14.414 12.25 14.75 12.586 14.75 13C14.75 13.414 14.414 13.75 14 13.75Z"
+                          fill="white" />
+                      </svg>
+                    </label>
+                  </div>
+                  <div class="col-4 d-flex  justify-content-center align-items-center" id="cover-input-group">
+                    <input name="coverImage" id="cover-input" type="file" accept="image/gif, image/jpeg, image/png"
+                      style="display: none;">
+                    <input type="text" name="cancelBackground" id="cancelBackground" value="" hidden>
+                    <label class="btn me-3" type="button" for="cover-input">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M19.708 22H4.292C3.028 22 2 20.972 2 19.708V7.375C2 6.11 3.028 5.083 4.292 5.083H6.438C7.633 3.17 9.722 2 12 2C14.277 2 16.367 3.17 17.562 5.083H19.708C20.972 5.083 22 6.11 22 7.375V19.708C22 20.972 20.972 22 19.708 22ZM4.292 6.583C3.855 6.583 3.5 6.938 3.5 7.375V19.708C3.5 20.145 3.855 20.5 4.292 20.5H19.708C20.145 20.5 20.5 20.145 20.5 19.708V7.375C20.5 6.938 20.145 6.583 19.708 6.583H17.258C16.941 6.633 16.626 6.488 16.476 6.201C15.596 4.536 13.882 3.501 12 3.501C10.117 3.501 8.402 4.536 7.524 6.203C7.364 6.505 7.022 6.663 6.691 6.583H4.293H4.292Z"
+                          fill="white" />
+                        <path
+                          d="M12 8.16699C9.32001 8.16699 7.14001 10.347 7.14001 13.027C7.14001 15.707 9.32001 17.887 12 17.887C14.68 17.887 16.86 15.707 16.86 13.027C16.86 10.347 14.68 8.16699 12 8.16699ZM14 13.75H12.75V15C12.75 15.414 12.414 15.75 12 15.75C11.586 15.75 11.25 15.414 11.25 15V13.75H10C9.58601 13.75 9.25001 13.414 9.25001 13C9.25001 12.586 9.58601 12.25 10 12.25H11.25V11C11.25 10.586 11.586 10.25 12 10.25C12.414 10.25 12.75 10.586 12.75 11V12.25H14C14.414 12.25 14.75 12.586 14.75 13C14.75 13.414 14.414 13.75 14 13.75Z"
+                          fill="white" />
+                      </svg>
+                    </label>
+                    <label class="btn ms-3">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M13.414 11.9999L19.207 6.20687C19.597 5.81687 19.597 5.18388 19.207 4.79288C18.817 4.40188 18.184 4.40288 17.793 4.79288L12 10.5859L6.207 4.79288C5.817 4.40288 5.184 4.40288 4.793 4.79288C4.402 5.18288 4.403 5.81587 4.793 6.20687L10.586 11.9999L4.793 17.7929C4.403 18.1829 4.403 18.8159 4.793 19.2069C4.988 19.4019 5.243 19.4999 5.5 19.4999C5.757 19.4999 6.012 19.4019 6.207 19.2069L12 13.4139L17.793 19.2069C17.988 19.4019 18.243 19.4999 18.5 19.4999C18.757 19.4999 19.012 19.4019 19.207 19.2069C19.597 18.8169 19.597 18.1839 19.207 17.7929L13.414 11.9999Z"
+                          fill="white" />
+                      </svg>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-floating m-3 mt-5" id="name-input-group">
+                <input type="text" class="form-control" id="floatingInput" placeholder="" name="name"
+                  value="{{user.name}}" maxlength="50" required>
+                <label for="floatingInput">名稱</label>
+                <p class="text-end" style="color: #657786; height:10px"></p>
+              </div>
+              <div class="form-floating m-3" id="introduction-input-group">
+                <textarea class="form-control" placeholder="Leave a comment here" id="descriptinArea"
+                  style="height: 150px; resize:none;" maxlength="140"
+                  name="introduction">{{user.introduction}}</textarea>
+                <label for="descriptinArea">自我介紹</label>
+                <p class="text-end" style="color: #657786; height:10px"></p>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
       <script src="/javascripts/replyModal.js"></script>
