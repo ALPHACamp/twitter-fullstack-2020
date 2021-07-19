@@ -2,9 +2,11 @@
   <div style="width: 54vw;">
     <div id="messages" class="d-flex flex-column mb-4"
       style="overflow: scroll;padding:2em;background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:72vh;box-shadow:0 0 8px 3px #ccccccb3;">
-      {{!-- #each 留言的人 --}}
+      {{!-- 留言的人 --}}
       {{#each dataMsg}}
       {{#if this.isCurrent }}
+
+      {{!-- 自己 --}}
       <div class="d-flex flex-row-reverse mb-3">
         {{!-- avatar --}}
         <a href="/users/{{ this.User.id }}/tweets" style="">
@@ -21,13 +23,14 @@
               this.createdAt}}</p>
           </div>
           <p class="mt-1 me-4"
-            style="word-wrap:break-word; font-size: small;background-color: #fad7b0;height:auto;border-radius: 0.7em;padding:8px;">
+            style="word-wrap:break-word;font-size: small;background-color: #ffd5724a;color: #313c4b;height:auto;border-radius: 0.7em;padding:1em;">
             {{ this.message }}
           </p>
         </div>
       </div>
       {{else}}
 
+      {{!-- 別人 --}}
       <div class="d-flex mb-3">
         {{!-- avatar --}}
         <a href="/users/{{ this.User.id }}/tweets" style="">
@@ -44,13 +47,12 @@
               this.createdAt}}</p>
           </div>
           <p class="mt-1"
-            style="word-wrap:break-word; font-size: small;background-color: #faefb0;height:auto;border-radius: 0.7em;padding:8px;">
+            style="word-wrap:break-word; font-size: small;color:white;background-color: #484848c6;height:auto;border-radius: 0.7em;padding:1em;">
             {{ this.message }}
           </p>
         </div>
       </div>
       {{/if}}
-      {{!-- /each 留言的人 --}}
       {{/each}}
       aaa
       <div class="d-flex justify-content-center mb-3">
