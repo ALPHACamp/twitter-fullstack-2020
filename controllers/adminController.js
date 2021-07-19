@@ -41,7 +41,8 @@ const adminController = {
       const data = tweet.map(r => ({
         ...r.dataValues,
         description: r.dataValues.description.substring(0, 47) + '...',
-        userName: r.User.name
+        userName: r.User.name,
+        avatar: r.User.avatar
 
       }))
       //console.log(tweet)

@@ -21,26 +21,19 @@ module.exports = (app, passport) => {
   }
 
 
-  //首頁路由 ???
-  app.get('/', authenticated, twitController.getTwitters) //
-  // app.get('/twitters', twitController.getTwitters)
+  // =========== [ 首頁路由 ] ===========
+  app.get('/', authenticated, twitController.getTwitters)
   app.post('/', authenticated, twitController.toTwitters)
 
-  //admin ???
-  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/twitters'))
+  // =========== [ 後台相關路由 ] ===========
 
-  // == [ 後台相關路由 ]==
-
-  // 後台登入頁面
+  // 後台功能
   app.get('/admin/signin', adminController.adminSignin)
-  // 後台登入頁面動作
   app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.toAdminSignin)
+    app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/twitters'))
 
-  // 後台展示所有推特訊息
-  app.get('/admin/tweets', authenticatedAdmin, adminController.tweetsAdmin)
-
-  // 後台展示特定推特訊息
-  app.get('/admin/twitters:id', authenticatedAdmin, adminController.getTwitter)
+  app.get('/admin/tweets', authenticatedAdmin, adminController.tweetsAdmin)  // 後台展示所有推特訊息
+  app.get('/admin/twitters:id', authenticatedAdmin, adminController.getTwitter)// 後台展示特定推特訊息
 
 
 

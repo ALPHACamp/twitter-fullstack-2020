@@ -70,8 +70,7 @@ const twitController = {
         // bb.likeBoolean = likeBoolean
         return bb
       })
-
-      console.log(tweet)
+      //console.log(tweet)
       return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
     })
   },
@@ -405,7 +404,7 @@ const twitController = {
     })
   },
   getIdReplies: (req, res) => {
-    console.log(req.params.id)
+    //console.log(req.params.id)
     Reply.findAll({
       order: [['createdAt', 'ASC']],
       where: { TweetId: req.params.id },
@@ -421,9 +420,7 @@ const twitController = {
         raw: true,
         include: [User]
       }).then(tweet => {
-
-        console.log(replys)
-
+        //console.log(replys)
         return res.render('replyUser', { replys: replys, tweet: tweet, replysLength: replys.length })
       })
 
