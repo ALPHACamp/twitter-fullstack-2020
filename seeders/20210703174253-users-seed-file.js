@@ -18,7 +18,7 @@ module.exports = {
         .map((item, index) =>
         ({
           id: index * 10 + 1,
-          email: item + '@example.com',
+          email: item.name + '@example.com',
           password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
           name: index === 0 ? 'root' : faker.name.firstName() + ' ' + faker.name.lastName(),
           avatar: avatarURL + item.avatar,
