@@ -18,11 +18,19 @@ app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: 
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
-app.use(session({
+
+const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET || 'ssseeecccrrreett',
   resave: false,
   saveUninitialized: false
-}))
+})
+
+app.use(sessionMiddleware)
+
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, socket.request.res, next)
+})
+
 app.use(methodOverride('_method'))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -38,6 +46,6 @@ require('./controllers/socketController')(io)
 
 server.listen(port, () => console.log(`Simple Twitter web app is listening on port ${port}`))
 
-require('./routes')(app, passport)
+require('./routes')(app, passport, io)
 
 module.exports = app

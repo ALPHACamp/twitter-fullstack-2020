@@ -1,5 +1,6 @@
 const socket = io()
 const send = document.getElementById('send')
+const login = document.getElementById('login')
 const board = document.getElementById('board')
 const publicboard = document.getElementById('publicboard')
 const input = document.getElementById('message')
@@ -43,4 +44,18 @@ socket.on('message', (data) => {
   `
   board.appendChild(newmsg)
   publicboard.scrollTo(0, publicboard.scrollHeight)
+})
+
+login.addEventListener('click', (e) => {
+  e.preventDefault()
+  let loginUserId = socket.request.session.passport
+  if (loginUserId) {
+    console.log(`User ${loginUserId} is login!`)
+    socket.emit('login', { id: Number(id.textContent), avatar: avatar.textContent, user: username.textContent, msg: input.value })
+    input.value = ''
+  }
+})
+
+socket.on('login', (data) => {
+  console.log(`login user is ${data}`)
 })
