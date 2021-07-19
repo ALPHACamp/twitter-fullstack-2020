@@ -33,10 +33,8 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
-app.use((req, res, next) => {
-  req.io = io
-  next()
-})
+
+require('./controllers/socketController')(io)
 
 server.listen(port, () => console.log(`Simple Twitter web app is listening on port ${port}`))
 
