@@ -1,16 +1,18 @@
-<div class="d-flex" style="margin-left: 20vw;margin-top:21vh">
+<div class="d-flex" style="margin-left: 20vw;margin-top:21vh;position: fixed;">
   <div style="width: 54vw;">
     <div id="messages" class="d-flex flex-column mb-4"
       style="overflow: scroll;padding:2em;background-color:white;text-decoration:none;border-radius: 1em;width:54.1vw;height:72vh;box-shadow:0 0 8px 3px #ccccccb3;">
-      {{!-- #each 留言的人 --}}
+      {{!-- 留言的人 --}}
       {{#each dataMsg}}
       {{#if this.isCurrent }}
-      <div class="d-flex flex-row-reverse mb-3">
+
+      {{!-- 自己 --}}
+      <div class="d-flex mb-3">
         {{!-- avatar --}}
         <a href="/users/{{ this.User.id }}/tweets" style="">
           <img src="{{ this.User.avatar }}"
             onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-            style="border:1px solid;border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
+            style="border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
         </a>
         {{!-- account --}}
         <div style="color:#313c4b;width:25vw" class="ms-4">
@@ -21,19 +23,20 @@
               this.createdAt}}</p>
           </div>
           <p class="mt-1 me-4"
-            style="font-size: small;background-color: #fad7b0;height:4vh;border-radius: 0.7em;padding:8px;">
+            style="word-wrap:break-word;font-size: small;background-color: #ffd5724a;color: #313c4b;height:auto;border-radius: 0.7em;padding:1em;">
             {{ this.message }}
           </p>
         </div>
       </div>
       {{else}}
 
-      <div class="d-flex mb-3">
+      {{!-- 別人 --}}
+      <div class="d-flex flex-row-reverse mb-3">
         {{!-- avatar --}}
         <a href="/users/{{ this.User.id }}/tweets" style="">
           <img src="{{ this.User.avatar }}"
             onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
-            style="border:1px solid;border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
+            style="border-radius: 0.7em;height: 10vh;width: 10vh;object-fit: cover;">
         </a>
         {{!-- account --}}
         <div style="color:#313c4b;width:25vw" class="ms-4">
@@ -44,14 +47,14 @@
               this.createdAt}}</p>
           </div>
           <p class="mt-1"
-            style="font-size: small;background-color: #faefb0;height:4vh;border-radius: 0.7em;padding:8px;">
+            style="word-wrap:break-word; font-size: small;color:white;background-color: #484848c6;height:auto;border-radius: 0.7em;padding:1em;">
             {{ this.message }}
           </p>
         </div>
       </div>
       {{/if}}
-      {{!-- /each 留言的人 --}}
       {{/each}}
+
     </div>
   </div>
 </div>

@@ -13,7 +13,7 @@ const socketController = {
           { model: User, attributes: ['id', 'avatar', 'name', 'account'] }
         ],
         order: [
-          ['createdAt', 'ASC']
+          ['createdAt', 'DESC']
         ]
       })
 

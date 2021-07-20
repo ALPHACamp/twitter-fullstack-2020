@@ -9,6 +9,7 @@ const replyController = {
       const { comment } = req.body
       const { tweetId } = req.params
 
+
       if (comment === '') {
         return res.redirect('/')
       }
@@ -21,6 +22,7 @@ const replyController = {
       return res.redirect(`/tweets/${tweetId}`)
     } catch (err) {
       console.warn(err)
+
     }
   }
 }

@@ -242,19 +242,21 @@
                 </a>
                 {{!-- account --}}
                 <form id="socketForm" data-id="{{ user.id }}" class="d-flex align-items-center">
-                  <div style="color:#313c4b;width:31vw" class="">
+                  <div style="color:#313c4b;width:34vw" class="">
                     <div class="d-flex">
                       <p class="fs-5 me-3 mb-0"><strong>{{ user.name }}</strong></p>
                       <p class="mb-0" style="color: #313c4b84;margin-top:0.2em;">{{ user.account }}</p>
                     </div>
                     {{!-- 聊天室輸入匡 --}}
-                    <textarea name="socketMsg" id="socketMsg" cols="30" rows="8" placeholder="Share Something..."
+                    <textarea name="socketMsg" id="socketMsg" cols="30" rows="8" placeholder="Say Something..."
                       style="height:10vh;width:30vw;border:none;resize:none;outline:none;" required></textarea>
                   </div>
 
                   {{!-- share btn --}}
-                  <button type="submit" class="post-a-tweet btn me-3"
-                    style="margin-left: 2.6em;background-color: #ffd472;color: #313c4bc2;width: 8.5vw;height:7vh;border-radius:0.5em">Share</button>
+                  <button type="submit" class="post-a-tweet btn me-4"
+                    style="margin-left: 2.6em;color: #313c4bc2;width: 5vw;height:5vw;border-radius:0.5em">
+                    <i class="fas fa-paper-plane h1"></i>
+                  </button>
                 </form>
               </div>
 
@@ -276,8 +278,7 @@
 
         {{!-- 聊天上線者 --}}
         {{#if publicSocketPage}}
-        {{!-- <div style="margin-left:76vw" class="mt-2">{{> onlineUsers }}</div> --}}
-        <div style="margin-left:4vw" class="mt-2">{{> onlineUsers }}</div>
+        <div style="margin-left:76vw;position:fixed" class="mt-2">{{> onlineUsers }}</div>
         {{else}}
         {{!-- 右側欄位 --}}
         {{!-- 管理者登入 --}}
@@ -302,59 +303,54 @@
         <div class="modal-content"
           style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
           <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"><button type="button" class="btn-close"
-                  data-bs-dismiss="modal" aria-label="Close"></button>
-                編輯個人資料
-              </h5>
-              <div class="d-flex flex-column align-items-end p-2"><button type="submit" class="btn post-a-tweet"
-                  style="background-color: #FF6600;color: white; border-radius: 45%;font-size:20px;">儲存</button>
-              </div>
-            </div>
+            <label id="coverFile" style="" class="text-center">
+              <img class="mb-3" src="{{ user.cover }}" onerror="javascript:this.src='https://i.imgur.com/3JEtooD.png';"
+                style="width:60vw;height:30vh;border-radius: 2em;opacity:60%">
+              <i class="fas fa-camera h1"
+                style="background-color:rgb(0, 0, 0);padding:0.3em;color:white;opacity:70%;border-radius: 50%;cursor: pointer;position:fixed;margin-left: -11.6em;margin-top:2em"></i>
+              <input id="uploadCover" name="cover" style="display:none;" type="file">
+            </label>
+            <div class="modal-body mt-4 ms-4 me-4">
 
-            <div class="modal-body d-flex flex-column justify-content-around pb-0">
-              {{!-- input 包在 label 中可以觸發點擊事件, input 為隱藏狀態 --}}
-              <label id="coverFile" style="background-image:url({{user.cover}});height: 200px;object-fit:
-                        cover;width:100%;opacity: .5;line-height:200px;color:white;" class="text-center">
-                {{!-- camera icon --}}
-                <i class="fas fa-camera fa-2x" style="cursor: pointer;"></i>
-                {{!-- 檔案接收元件, 含 --}}
-                <input id="uploadCover" name="cover" style="display:none;" type="file">
-              </label>
-              <div class="d-flex flex-column ms-4">
-                <div class="d-flex" style="position: relative;">
-                  {{!-- input 包在 label 中可以觸發點擊事件, input 為隱藏狀態 --}}
-                  <label id="avatarFile"
-                    style="background-image:url({{user.avatar}});height: 150px;width:150px;object-fit:cover;margin-top:-70px;border-radius:50%;border: solid 10px white;opacity: .8;line-height:150px;color:white;"
-                    class="text-center">
-                    {{!-- camera icon --}}
-                    <i class="fas fa-camera fa-2x" style="cursor: pointer;"></i>
+              <div class="d-flex justify-content-between">
+
+                <div class="d-flex flex-column ms-5" style="width: 10vw;">
+                  <label id="avatarFile">
+                    <img class="mb-3" src="{{ user.avatar }}"
+                      onerror="javascript:this.src='https://i.imgur.com/3JEtooD.png';"
+                      style="width: 10vw;border-radius: 0.5em;opacity:60%">
+                    {{!-- camera icon --}}<i class="fas fa-camera h1"
+                      style="background-color:rgb(0, 0, 0);padding:0.3em;color:white;opacity:70%;border-radius: 50%;cursor: pointer;position:fixed;margin-left: -2.6em;margin-top:1em"></i>
                     <input id="uploadAvatar" name="avatar" style="display:none;" type="file">
                   </label>
+                  <button type="submit" class="btn post-a-tweet mt-5 fs-bold"
+                    style="background-color: #ffd472;color: #313c4b;height:7vh;border-radius:0.5em;"
+                    onclick="submitButtonClick(event)">編輯個人資料</button>
                 </div>
-                <div class="form-group">
-                  {{!-- DOM有綁定元件id, 包含字數統計, POST 回傳--}}
-                  <label for="profileName" style="display:block;background-color: #F5F8FA;">名稱</label>
-                  <input type="text" class="form-control" id="profileName" name="name" aria-describedby="name"
-                    value="{{user.name}}" maxlength="50" placeholder="Enter Name"
-                    style="background-color: #F5F8FA;border:none;" required>
-                  <small id="nameLength" class="">0/50</small>
-                </div>
-                <div class="form-group">
-                  {{!-- DOM有綁定元件id, 包含字數統計, POST 回傳--}}
-                  <label for="profileIntro" style="display:block;background-color: #F5F8FA;">自我介紹</label>
-                  <textarea class="form-control" id="profileIntro" rows="3" maxlength="140" name="introduction"
-                    style="background-color: #F5F8FA;border:none;white-space:pre-wrap;">{{user.introduction}}</textarea>
-                  <small id="introLength" class="">0/140</small>
+
+                <div>
+
+                  <div class="me-5 mb-4"
+                    style="box-shadow:0 0 8px 3px #ccccccb3;border-radius: 0.5em;background-color:white;width:33vw;height:8vh">
+                    <textarea class="p-3" name="name" id="profileName" maxlength="50" placeholder="Enter Name"
+                      style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px"
+                      required>{{user.name}}</textarea>
+                  </div>
+                  <div class="me-5"
+                    style="box-shadow:0 0 8px 3px #ccccccb3;border-radius: 0.5em;background-color:white;width:33vw;height:30vh">
+                    <textarea class="p-3" name="introduction" id="profileIntro" rows="3" maxlength="140"
+                      placeholder="Your Introduction"
+                      style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px">{{user.introduction}}</textarea>
+                  </div>
                 </div>
               </div>
-
-            </div>
 
           </form>
         </div>
       </div>
     </div>
+
+
     {{/if}}
 
     {{#if shareModal}}
@@ -363,8 +359,7 @@
       <div class="modal-dialog">
         <div class="modal-content"
           style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
-          <img class="mb-3" src="https://cdn.dribbble.com/users/851350/screenshots/6390413/dusk.png"
-            onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+          <img class="mb-3" src="{{ user.cover }}" onerror="javascript:this.src='https://i.imgur.com/3JEtooD.png';"
             style="width:60vw;height:30vh;object-fit: cover;border-radius: 2em;">
           <div class="modal-body mt-4 ms-4 me-4">
             <form action="/tweets" method="POST" id="newTweetForm">
@@ -399,90 +394,97 @@
     <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content"
-          style="width:60vw;height:85vh;border-radius: 2em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"><button type="button" class="btn-close"
-                data-bs-dismiss="modal" aria-label="Close"></button></h5>
-
-          </div>
-          <div class="modal-body d-flex flex-row justify-content-around pb-0">
-            <div class="d-flex flex-column">
-              <img src="{{ tweet.User.avatar }}" style="border-radius: 100%;width: 60px" id="reply-tweet-img">
-              <div class="" style="border-left: 4px solid gray;height:210px;position:absolute;left:60px;top:75px;">
+          style="width:50vw;height:23vh;border-radius: 1em;border: none;background-color: rgb(255, 255, 255);margin-left:-8em">
+          <div class=" d-flex align-items-center p-1 pt-2 ps-2">
+            {{!-- avatar --}}
+            <a href="/users/{{ tweet.User.id }}/tweets" style="margin-top: -0.2em;">
+              <img src="{{ tweet.User.avatar }}"
+                onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+                style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
+            </a>
+            {{!-- account --}}
+            <div style="color:#313c4b;width:25vw" class="m-4">
+              <div class="d-flex">
+                <p class="fs-5 me-3 mb-0"><strong>{{ tweet.User.name }}</strong></p>
+                <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ tweet.User.account }}</p>
               </div>
-            </div>
-            <div class="d-flex flex-column">
-              {{!-- 發文者 --}}
-              <div class="mb-0" style="width: 550px;">
-                <p class="fs-5 me-2 mb-0" style="line-height: 40px;color: black;">{{ tweet.User.name }}</p>
-                <p class="mb-0" style="color: darkseagreen;" style="line-height: 40px;">{{ tweet.User.account
-                  }}</p>
-              </div>
-              {{!-- 推文內容 --}}
-              <div class="" style="width: 550px;">
-                <textarea id="reply-tweet-text" cols="30" rows="4"
-                  style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px"
-                  readonly>{{ tweet.description}}</textarea>
-              </div>
-              <div class=""><span style="color:darkgrey;">回復 </span><span
-                  style="color: #FF6600;">{{tweet.User.account}}</span></div>
-
+              <p class="mt-1" style="width:37vw;color:rgb(48, 48, 48)">
+                {{ tweet.description}}
+              </p>
             </div>
           </div>
-          <div class="modal-body d-flex flex-row justify-content-around pb-0">
-            <div>
-              <img src="{{ user.avatar }}" style="border-radius: 100%;width: 60px">
-            </div>
-            <form action="/tweets/{{tweet.id}}/replies" method="POST" class="mt-3" style="width: 550px;"
-              id="newTweetForm">
-              <textarea name="comment" id="newReply" cols="30" rows="5" maxlength="140" placeholder="推你的回覆"
-                style="width: 100%;border:none;background-color:transparent;resize:none;outline:none;font-size:18px"
-                required></textarea>
-              <div class="d-flex flex-column align-items-end p-2"><button type="submit" class="btn post-a-tweet"
-                  style="background-color: #FF6600;color: white; border-radius: 45%;font-size:20px;"
-                  onclick="replySubmitButtonClick(event)">回復</button>
+          {{!-- reply --}}
+          <div class="d-flex align-items-end"
+            style="background-color:rgb(218, 218, 218);text-decoration:none;border-radius:0 0 1em 1em;height:auto;z-index: -1;margin-top:-1em;padding:0.6em;padding-bottom:1.2em">
+            {{!-- avatar --}}
+            <a href="/users/{{ user.id }}/tweets" style="margin-top: 3em;">
+              <img
+                onerror="javascript:this.src='https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/37a04795636919.5ff053424df01.jpg';"
+                src="{{ user.avatar }}"
+                style="border-radius: 0.7em;height: 15vh;width: 15vh;margin-left:0.7em;object-fit: cover;">
+
+            </a>
+            {{!-- account --}}
+            <div style="color:#313c4b;width:40vw;height:auto;" class="mx-4">
+              <div class="d-flex">
+                <p class="fs-5 me-3 mb-0"><strong>{{ user.name }}</strong></p>
+                <p class="mb-0" style="color: #313c4b84;margin-top:0.1em;">{{ user.account }}</p>
               </div>
-            </form>
+
+              <form action="/tweets/{{tweet.id}}/replies" method="post" id="newTweetForm">
+                <div class="d-flex align-items-end">
+                  {{!-- textarea --}}
+                  <textarea name="comment" id="newReply" placeholder="你的回覆"
+                    style="width:31vw;height:10vh;background-color: rgb(218, 218, 218);border: none;border-radius:0.5em;outline:none;"></textarea>
+                  {{!-- submit btn --}}
+                  <button type="submit" class="btn post-a-tweet ms-3"
+                    style="background-color: #e8b641;color: #ffffff; border-radius: 0.5em;height:3em;width:5em"
+                    onclick="">回復</button>
+                </div>
+              </form>
+            </div>
+
           </div>
         </div>
       </div>
-      {{/if}}
+    </div>
+
+    {{/if}}
 
 
-      {{!-- toast --}}
-      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
-        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
-          <div class="toast-header">
-            <img
-              src="https://yt3.ggpht.com/ytc/AKedOLSMq3y4-2mILcS9X7GTvNYswkMqpjyE6y1c0U3A6w=s900-c-k-c0x00ffffff-no-rj"
-              class="rounded me-2" alt="..." style="width: 30px;height:30px;">
-            <strong class="me-auto">AC Tweet</strong>
-            <small>1 mins ago</small>
-            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-          </div>
-          <div class="toast-body">
-            Hello, world! This is a toast message.
-          </div>
+    {{!-- toast --}}
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 5">
+      <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img src="https://yt3.ggpht.com/ytc/AKedOLSMq3y4-2mILcS9X7GTvNYswkMqpjyE6y1c0U3A6w=s900-c-k-c0x00ffffff-no-rj"
+            class="rounded me-2" alt="..." style="width: 30px;height:30px;">
+          <strong class="me-auto">AC Tweet</strong>
+          <small>1 mins ago</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          Hello, world! This is a toast message.
         </div>
       </div>
+    </div>
 
-      {{!-- jquery --}}
-      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-      {{!-- popper --}}
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-      {{!-- bootstrapcdn --}}
+    {{!-- jquery --}}
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    {{!-- popper --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"></script>
+    {{!-- bootstrapcdn --}}
 
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
 
-      {{!-- script --}}
-      <script src="/javascripts/script.js"></script>
+    {{!-- script --}}
+    <script src="/javascripts/script.js"></script>
   </body>
 
 </html>

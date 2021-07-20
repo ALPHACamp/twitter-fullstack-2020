@@ -17,12 +17,7 @@ const tweetController = {
       }
       const shareModal = true
       const topFollowing = res.locals.data
-      const user = {
-        id: helpers.getUser(req).id,
-        avatar: helpers.getUser(req).avatar,
-        name: helpers.getUser(req).name,
-        account: helpers.getUser(req).account,
-      }
+      const user = helpers.getUser(req)
       const tweets = await Tweet.findAndCountAll({
         raw: true,
         nest: true,
@@ -84,7 +79,8 @@ const tweetController = {
         where: { TweetId: tweetId },
         include: [
           { model: User, attributes: ['id', 'name', 'account', 'avatar'] }
-        ]
+        ],
+        order: [['createdAt', 'DESC']]
       })
       const likes = await Like.findAll({
         raw: true,
