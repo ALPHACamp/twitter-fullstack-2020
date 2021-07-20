@@ -203,10 +203,13 @@
     socket.emit('login', { userId: userId, userName: userName, userAccount: userAccount, userAvatar: userAvatar });
     console.log('發送使用者資料給後端socket.io')
     let messageHtml = ''
+    const userArea = document.querySelector('#userArea')
+    const messageArea = document.querySelector('#message-area')
+
     socket.on('onlineUser', (online) => {
       const userLength = document.querySelector('#userLength')
       userLength.innerText = online.user.length
-      const userArea = document.querySelector('#userArea')
+
       let rawHtml = ''
 
 
@@ -228,41 +231,40 @@
       })
 
       userArea.innerHTML = rawHtml
-      const messageArea = document.querySelector('#message-area')
-      socket.on('newUserLogin', (user) => {
-
-        messageHtml = `
-      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">${user.userData.userName} 上線</span></div>
-      `
-
-        messageArea.innerHTML += messageHtml;
-      })
-
-
-      socket.on('logoutUser', (logout) => {
-        console.log(logout)
-        messageHtml = `
-      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">${logout.logout.userName} 離線</span></div>
-      `
-
-        messageArea.innerHTML += messageHtml;
-      })
-
-
-      const leaveMsg = document.querySelector('#leaveMsg')
-      leaveMsg.addEventListener('click', () => {
-        console.log('點了傳送按鈕')
-        const msg = document.querySelector('#msg')
-        socket.emit('self Message', msg.value);
-        // alert('送出消息' + msg.value);
-        // 送出消息後清空輸入框
-        msg.value = ''
-
-      })
 
 
     })
 
+    socket.on('newUserLogin', (user) => {
+
+      messageHtml = `
+      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">${user.userData.userName} 上線</span></div>
+      `
+
+      messageArea.innerHTML += messageHtml;
+    })
+
+
+    socket.on('logoutUser', (logout) => {
+      console.log(logout)
+      messageHtml = `
+      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">${logout.logout.userName} 離線</span></div>
+      `
+
+      messageArea.innerHTML += messageHtml;
+    })
+
+
+    const leaveMsg = document.querySelector('#leaveMsg')
+    leaveMsg.addEventListener('click', () => {
+      console.log('點了傳送按鈕')
+      const msg = document.querySelector('#msg')
+      socket.emit('self Message', msg.value);
+      // alert('送出消息' + msg.value);
+      // 送出消息後清空輸入框
+      msg.value = ''
+
+    })
 
 
 
