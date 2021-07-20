@@ -13,24 +13,17 @@ const app = express()
 const server = http.createServer(app)
 const io = require('socket.io')(server)
 const port = process.env.PORT || 3000
-
-app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
-app.set('view engine', 'hbs')
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
-
 const sessionMiddleware = session({
   secret: process.env.SESSION_SECRET || 'ssseeecccrrreett',
   resave: false,
   saveUninitialized: false
 })
 
+app.engine('hbs', handlebars({ defaultLayout: 'main', extname: '.hbs', helpers: require('./config/hbs-helpers') }))
+app.set('view engine', 'hbs')
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
 app.use(sessionMiddleware)
-
-io.use((socket, next) => {
-  sessionMiddleware(socket.request, socket.request.res, next)
-})
-
 app.use(methodOverride('_method'))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -42,6 +35,9 @@ app.use((req, res, next) => {
   next()
 })
 
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, socket.request.res, next)
+})
 require('./controllers/socketController')(io)
 
 server.listen(port, () => console.log(`Simple Twitter web app is listening on port ${port}`))

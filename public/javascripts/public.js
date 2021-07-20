@@ -26,9 +26,10 @@ input.addEventListener('keypress', (e) => {
 
 socket.on('message', (data) => {
   let newmsg = document.createElement('div')
-  newmsg.classList.add('row', 'flex-row-reverse')
-  newmsg.innerHTML =
-    `
+  if (data.id === Number(id.textContent)) {
+    newmsg.classList.add('row', 'flex-row-reverse')
+    newmsg.innerHTML =
+      `
     <div class="col-1 d-flex justify-content-center align-items-start">
       <a href="/users/${data.id}" class="p-1">
         <img src="${data.avatar}" class="rounded-circle" style="width: 50px; height: 50px" alt="A user" />
@@ -41,8 +42,28 @@ socket.on('message', (data) => {
       </div>
       <p class="text-muted mx-0" style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">${data.time}</p>
     </div>
-  `
-  board.appendChild(newmsg)
+    `
+    board.appendChild(newmsg)
+  } else {
+    newmsg.classList.add('row')
+    newmsg.innerHTML =
+      `
+    <div class="col-1 d-flex justify-content-center align-items-start">
+      <a href="/users/${data.id}" class="p-1">
+        <img src="${data.avatar}" class="rounded-circle" style="width: 50px; height: 50px" alt="A user" />
+      </a>
+    </div>
+    <div class="col-11">
+      <p class="text-dark fw-bold mx-0" style="font-size: 0.8em; padding-left: 0.3rem; margin-bottom: 0.3rem;">${data.user}</p>
+      <div>
+        <p class="d-inline msgblockleft">${data.msg}</p>
+      </div>
+      <p class="text-muted mx-0" style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">${data.time}</p>
+    </div>
+    `
+    board.appendChild(newmsg)
+  }
+
   publicboard.scrollTo(0, publicboard.scrollHeight)
 })
 
