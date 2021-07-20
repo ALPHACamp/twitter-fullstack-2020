@@ -206,7 +206,6 @@
     const userArea = document.querySelector('#userArea')
     const messageArea = document.querySelector('#message-area')
     const leaveMsg = document.querySelector('#leaveMsg')
-
     // 用戶登入 重新渲染上線使用者
     socket.on('onlineUser', (online) => {
       const userLength = document.querySelector('#userLength')
@@ -250,12 +249,13 @@
 
     // 用戶離線, 添加到留言區
     socket.on('logoutUser', (logout) => {
-      console.log(logout)
+
       messageHtml = `
-      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">${logout.logout.userName} 離線</span></div>
+      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">${logout.logout[0].userName} 離線</span></div>
       `
 
       messageArea.innerHTML += messageHtml;
+
     })
 
 
