@@ -70,6 +70,7 @@ socket.on('message', (data) => {
 login.addEventListener('click', (e) => {
   e.preventDefault()
   let loginUserId = socket.request.session.passport
+  console.log('loginUser is:', loginUserId)
   if (loginUserId) {
     console.log(`User ${loginUserId} is login!`)
     socket.emit('login', { id: Number(id.textContent), avatar: avatar.textContent, user: username.textContent, msg: input.value })
