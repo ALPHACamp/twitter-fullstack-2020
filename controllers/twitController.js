@@ -69,7 +69,6 @@ const twitController = {
         return bb
       })
 
-      // console.log(tweet)
       return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
     })
   },
@@ -175,16 +174,15 @@ const twitController = {
       ]
     })
       .then(users => {
-        const userself = req.user.id
+        const userId = req.user.id
         users = users.map(user => ({// 整理 users 資料
           ...user.dataValues,
           FollowerCount: user.Followers.length,// 計算追蹤者人數
           isFollowed: req.user.Followings.map(d => d.id).includes(user.id),// 判斷目前登入使用者是否已追蹤該 User 物件
         }))
-        helper.removeUser(users, userself)//移除使用者自身資訊
+        helper.removeUser(users, userId)//移除使用者自身資訊
         users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
-
-        const userId = req.user.id //撈出所有Tweet及單筆使用者的資料
+        //const userId = req.user.id //撈出所有Tweet及單筆使用者的資料
         Tweet.findAll({
           order: [['createdAt', 'DESC']],
           raw: true,
@@ -200,7 +198,7 @@ const twitController = {
                 { model: User, as: 'Followings', attributes: ['avatar', 'id'] },
               ]
             })
-            console.log(tweet)
+            //console.log(tweet)
             const tweetLength = tweet.length
             return res.render('user', { users, tweet, tweetLength })
           })
@@ -298,9 +296,11 @@ const twitController = {
   },
 
   toSignin: (req, res) => {
+
     console.log(req.user.role)
     if (req.user.role) {
       req.flash('error_messages', '帳號或密碼錯誤')
+
       res.redirect('/signin')
     } else {
       req.flash('success_messages', '成功登入！')
@@ -403,7 +403,7 @@ const twitController = {
     })
   },
   getIdReplies: (req, res) => {
-    console.log(req.params.id)
+    //console.log(req.params.id)
     Reply.findAll({
       order: [['createdAt', 'ASC']],
       where: { TweetId: req.params.id },
@@ -419,9 +419,7 @@ const twitController = {
         raw: true,
         include: [User]
       }).then(tweet => {
-
-        console.log(replys)
-
+        //console.log(replys)
         return res.render('replyUser', { replys: replys, tweet: tweet, replysLength: replys.length })
       })
 

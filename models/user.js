@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.BOOLEAN,
   }, {});
   User.associate = function (models) {
-    // User.hasMany(models.Followship.followerId)
+    //User.hasMany(models.Followship.followerId)
     //User.hasMany(models.Followship.followingId)
     User.hasMany(models.Like)
     User.hasMany(models.Reply)
