@@ -45,14 +45,14 @@ const adminController = {
         avatar: r.User.avatar
 
       }))
-      console.log(tweet)
-      console.log(data) // 加入 console 觀察資料的變化
+      //console.log(tweet)
+      //console.log(data) // 加入 console 觀察資料的變化
       return res.render('admin/tweetsAdmin', { tweet: data })
     })
   },
 
   toAdminSignin: (req, res) => {
-    if (req.user.role) {
+    if (req.user.role === '1') {
       req.flash('success_messages', '成功登入！')
       res.redirect('/admin/tweets')
 
