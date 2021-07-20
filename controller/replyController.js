@@ -8,8 +8,6 @@ const replyController = {
     try {
       const { comment } = req.body
       const { tweetId } = req.params
-      console.log(comment)
-      console.log('comment------------')
 
 
       if (comment === '') {
@@ -23,9 +21,7 @@ const replyController = {
       })
       return res.redirect(`/tweets/${tweetId}`)
     } catch (err) {
-      console.log('------------')
       console.warn(err)
-      console.log('------------')
 
     }
   }
