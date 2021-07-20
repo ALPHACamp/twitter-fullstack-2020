@@ -51,6 +51,7 @@ const options = { /* ... */ };
 const io = require("socket.io")(httpServer, options);
 let userArray = []
 let userId = ''
+let logout = ''
 io.on("connection", socket => {
   console.log('客戶端成功連線服務器: ' + socket.id)
 
@@ -69,10 +70,14 @@ io.on("connection", socket => {
   // 斷開連接的操作
   socket.on('disconnect', () => {
     // 登出人資料傳到前端
-    const logout = userArray.filter(user => {
+    logout = userArray.filter(user => {
       return user.socketId === socket.id
     })
-    io.emit('logoutUser', { logout })
+    io.emit('logoutUser', { logout: logout })
+    console.log('......................................')
+    console.log(logout)
+
+    console.log('......................................')
 
     // 登出後更新上線使用者
     userArray = userArray.filter(item => {
