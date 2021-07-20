@@ -66,6 +66,13 @@ io.on("connection", socket => {
     io.emit('newUserLogin', { userData })
   });
 
+  // 由前端接收消息
+  socket.on('send', data => {
+    console.log(data)
+
+    // io.emit('onlineUser', { user: userArray })
+    io.emit('sendToUser', { sendTodata: data })
+  });
 
   // 斷開連接的操作
   socket.on('disconnect', () => {
@@ -74,10 +81,6 @@ io.on("connection", socket => {
       return user.socketId === socket.id
     })
     io.emit('logoutUser', { logout: logout })
-    console.log('......................................')
-    console.log(logout)
-
-    console.log('......................................')
 
     // 登出後更新上線使用者
     userArray = userArray.filter(item => {

@@ -112,71 +112,11 @@
       <h4 class="p-2" style="margin:0px;">公開聊天室</h4>
     </div>
     <div id="message-area" style="border:1px #DEE2E6  solid ;">
-      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Esther Howard 上線</span></div>
-      <div class="text-center  mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Jane Cooper 上線</span></div>
-      <div class="text-center  mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Wade Warren 上線 </span></div>
-      <div class="text-center  mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Apple 上線</span></div>
-      {{!-- 第一則留言區域 --}}
-      <div style="display: flex; width:100%;" class="ml-2 mb-2">
-        <img
-          src='https://lh3.googleusercontent.com/proxy/n1DyU7qNvpUGW4qzZ37xkRUjYv_vUbVIZsLPqWg5wemJREnSZE60sMUOonOccIMu1l6cOrUiYNR066CUiIWqrLa1ZfFvtzXOtTU8WoHKQd3cCtYHFJiVYjY'
-          class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
-        <div style="display: flex;  flex-direction:column;">
-          <div class="mr-1 font-weight-bold p-3" style="border-radius: 25px 25px 25px 0%; background-color:aliceblue">
-            今天天氣非常的好!
-          </div>
-          <div class="text-secondary">下午 4:21</div>
-        </div>
-      </div>
-
-      {{!-- 自己留言區域 --}}
-      <div style="display: flex; justify-content:flex-end; width:100%;" class="mr-2 mb-2">
-
-        <div style="display: flex;  flex-direction:column; justify-content:flex-end;">
-          <div class="mr-1 font-weight-bold p-3"
-            style="border-radius: 25px 25px 0px 25px; background-color: #FF6600; color:#FFFFFF;">
-            Hello 你最近好嗎?
-          </div>
-          <div class="text-secondary p-2" style="text-align:right;">下午 06:01</div>
-        </div>
-      </div>
-
-      {{!-- 第二則留言區域 --}}
-      <div style="display: flex; width:100%;" class="ml-2 mb-2">
-        <img
-          src='https://lh3.googleusercontent.com/proxy/n1DyU7qNvpUGW4qzZ37xkRUjYv_vUbVIZsLPqWg5wemJREnSZE60sMUOonOccIMu1l6cOrUiYNR066CUiIWqrLa1ZfFvtzXOtTU8WoHKQd3cCtYHFJiVYjY'
-          class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
-        <div style="display: flex;  flex-direction:column;">
-          <div class="mr-1 font-weight-bold p-3" style="border-radius: 25px 25px 25px 0%; background-color:aliceblue">
-            最近天氣變化大!
-          </div>
-          <div class="text-secondary">下午 06:02</div>
-        </div>
-      </div>
-
-
-      {{!-- 自己第二留言區域 --}}
-      <div style="display: flex; justify-content:flex-end; width:100%;" class="mr-2 mb-2">
-
-        <div style="display: flex;  flex-direction:column; justify-content:flex-end;">
-          <div class="mr-1 font-weight-bold p-3"
-            style="border-radius: 25px 25px 0px 25px; background-color: #FF6600; color:#FFFFFF;">
-            記得多穿一點囉!
-          </div>
-          <div class="text-secondary p-2 " style="text-align: right;">下午 06:08</div>
-        </div>
-      </div>
-
-      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Ralph Edwards 離線</span></div>
-
-
-
-
-
+      {{!-- 這是公開聊天留言區域 --}}
 
     </div>
     <div
-      style="width: 100%; height:30px; border-top:1px #DEE2E6  solid; display:flex; justify-content:space-between; align-items:center;"
+      style="width: 100%; height:30px;display:flex; justify-content:space-between; align-items:center;  margin: 10px 0;"
       class="p-2">
       <input type="text"
         style="width:95%; border:0px  none; outline:none; background-color: #E6ECF0; padding:5px 10px; border-radius:20px;"
@@ -259,12 +199,53 @@
 
     })
 
+    socket.on('sendToUser', (data) => {
+      console.log('== 收到某人的消息 ==')
+
+      console.log(data)
+
+      if (data.sendTodata.userName === userName) {
+        console.log('渲染在橘色的留言')
+
+        messageHtml = `
+        <div style="display: flex; justify-content:flex-end; width:100%;" class="mr-2 mb-2">
+
+        <div style="display: flex;  flex-direction:column; justify-content:flex-end;">
+          <div class="mr-1 font-weight-bold p-3"
+            style="border-radius: 25px 25px 0px 25px; background-color: #FF6600; color:#FFFFFF;">
+            ${data.sendTodata.message}
+          </div>
+          <div class="text-secondary p-2" style="text-align:right;">${data.sendTodata.createdAt}</div>
+        </div>
+      </div>
+        `
+        messageArea.innerHTML += messageHtml;
+      } else {
+        console.log('渲染在左邊的留言, 包含大頭貼')
+        messageHtml = `
+      <div style="display: flex; width:100%;" class="ml-2 mb-2">
+        <img
+          src=${data.sendTodata.userAvatar}
+          class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
+        <div style="display: flex;  flex-direction:column;">
+          <div class="mr-1 font-weight-bold p-3" style="border-radius: 25px 25px 25px 0%; background-color:aliceblue">
+            ${data.sendTodata.message}
+          </div>
+          <div class="text-secondary">${data.sendTodata.createdAt}</div>
+        </div>
+      </div>
+      `
+        messageArea.innerHTML += messageHtml;
+        console.log('== 收到某人的消息 ==')
+      }
+
+    })
 
     // 用戶留言, 添加到留言區
     leaveMsg.addEventListener('click', () => {
       console.log('點了傳送按鈕')
       const msg = document.querySelector('#msg')
-      socket.emit('self Message', msg.value);
+      socket.emit('send', { message: msg.value, userName: userName, userAvatar: userAvatar, createdAt: new Date() });
       // alert('送出消息' + msg.value);
       // 送出消息後清空輸入框
       msg.value = ''
