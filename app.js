@@ -10,6 +10,8 @@ const passport = require('./config/passport')
 const methodOverride = require('method-override')
 
 
+
+
 const exhbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
@@ -43,6 +45,48 @@ app.use('/upload', express.static(__dirname + '/upload'))
 require('./routes')(app, passport)
 
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+// socket.io
+const httpServer = require("http").createServer(app);
+const options = { /* ... */ };
+const io = require("socket.io")(httpServer, options);
+let userArray = []
+let userId = ''
+io.on("connection", socket => {
+  console.log('客戶端成功連線服務器: ' + socket.id)
+
+  // 由前端發送到後端的事件
+  socket.on('login', userData => {
+    console.log(userData)
+    userData.socketId = socket.id
+    // 發送資料給所有使用者
+    userArray.push(userData)
+    userId = userData.userId
+    io.emit('onlineUser', { user: userArray })
+    io.emit('newUserLogin', { userData })
+  });
+
+
+  // 斷開連接的操作
+  socket.on('disconnect', () => {
+    // 登出人資料傳到前端
+    const logout = userArray.filter(user => {
+      return user.socketId === socket.id
+    })
+    io.emit('logoutUser', { logout })
+
+    // 登出後更新上線使用者
+    userArray = userArray.filter(item => {
+      console.log(item.socketId)
+      return item.socketId !== socket.id
+    })
+    io.emit('onlineUser', { user: userArray })
+
+  });
+
+
+
+});
+
+httpServer.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 module.exports = app

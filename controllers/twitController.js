@@ -46,8 +46,6 @@ const twitController = {
       helper.removeUser(users, userself)//移除使用者自身資訊
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
-
-      // 異步問題 ? 為了要渲染前端 回覆留言數目 Like數目
       tweet = tweet.map(bb => {
         const replyCount = replys.filter(reply => {
 
@@ -70,7 +68,7 @@ const twitController = {
         // bb.likeBoolean = likeBoolean
         return bb
       })
-      //console.log(tweet)
+
       return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
     })
   },
@@ -299,9 +297,10 @@ const twitController = {
 
   toSignin: (req, res) => {
 
+    console.log(req.user.role)
+    if (req.user.role) {
+      req.flash('error_messages', '帳號或密碼錯誤')
 
-    if (req.user.role === '1') {
-      req.flash('error_messages', '布林值帳號或密碼錯誤')
       res.redirect('/signin')
     } else {
       req.flash('success_messages', '成功登入！')
@@ -456,6 +455,9 @@ const twitController = {
     })
   },
 
+  getchatroomPublic: (req, res) => {
+    return res.render('chatroom')
+  },
 
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
