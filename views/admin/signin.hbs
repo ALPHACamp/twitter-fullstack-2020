@@ -1,11 +1,7 @@
 <div class="row my-5 justify-content-center">
   <div class="col-9 col-md-5 col-lg-4 my-2">
-    <img
-      src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png"
-      alt=""
-      class="img-fluid my-3"
-      style="display: block; margin: auto; width: 50px;"
-    />
+    <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png"
+      alt="" class="img-fluid my-3" style="display: block; margin: auto; width: 50px;" />
     <div class="text-center my-4">
       <h3><strong>{{#if signup}}新增管理員{{else}}後台登入{{/if}}</strong></h3>
     </div>
@@ -13,77 +9,44 @@
     <form action="/admin/{{#if signup}}signup{{else}}signin{{/if}}" method="post">
       <div class="mb-3">
         <label for="account" style="margin-bottom: -30px; margin-left: 8px;">帳號</label>
-        <input
-          type="text"
-          class="form-control pt-4"
-          id="account"
-          name="account"
+        <input type="text" class="form-control pt-4" id="account" name="account"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
-          aria-describedby="accountHelp"
-          value="{{account}}"
-        />
+          aria-describedby="accountHelp" value="{{account}}" />
         {{#if signup}}
-        <div id="status"></div>
+        <div id="accountHelp" class="form-text ps-2"></div>
         {{/if}}
       </div>
       {{#if signup}}
       <div class="mb-3">
         <label for="name" style="margin-bottom: -30px; margin-left: 8px;">名稱</label>
-        <input
-          type="text"
-          class="form-control pt-4"
-          id="name"
-          name="name"
+        <input type="text" class="form-control pt-4" id="name" name="name"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
-          aria-describedby="nameHelp"
-          value="{{name}}"
-        />
+          aria-describedby="nameHelp" value="{{name}}" />
       </div>
       <div class="mb-3">
         <label for="email" style="margin-bottom: -30px; margin-left: 8px;">Email</label>
-        <input
-          type="email"
-          class="form-control pt-4"
-          id="email"
-          name="email"
+        <input type="email" class="form-control pt-4" id="email" name="email"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
-          aria-describedby="emailHelp"
-          value="{{email}}"
-        />
+          aria-describedby="emailHelp" value="{{email}}" />
       </div>
       {{/if}}
       <div class="mb-2">
         <label for="password" style="margin-bottom: -30px; margin-left: 8px;">密碼</label>
-        <input
-          type="password"
-          class="form-control pt-4"
-          id="password"
-          name="password"
+        <input type="password" class="form-control pt-4" id="password" name="password"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
-          aria-describedby="passwordHelp"
-          value="{{password}}"
-        />
+          aria-describedby="passwordHelp" value="{{password}}" />
       </div>
       {{#if signup}}
       <div class="mb-2">
         <label for="checkPassword" style="margin-bottom: -30px; margin-left: 8px;">密碼確認</label>
-        <input
-          type="password"
-          class="form-control pt-4"
-          id="checkPassword"
-          name="checkPassword"
+        <input type="password" class="form-control pt-4" id="checkPassword" name="checkPassword"
           style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb"
-          aria-describedby="checkPasswordHelp"
-          value="{{checkPassword}}"
-        />
+          aria-describedby="checkPasswordHelp" value="{{checkPassword}}" />
       </div>
       {{/if}}
       <br />
-      <button
-        class="col-12 btn btn-primary btn-block"
-        style="border-radius: 30px;"
-        type="submit"
-      >{{#if signup}}註冊{{else}}登入{{/if}}</button>
+      <button class="col-12 btn btn-primary btn-block" style="border-radius: 30px;" type="submit">{{#if
+        signup}}註冊{{else}}登入{{/if}}</button>
       <div class="{{#if signup}}text-center{{else}}text-end{{/if}} my-4">
         <p>
           {{#if signup}}
@@ -96,3 +59,4 @@
     </form>
   </div>
 </div>
+<script src="/javascripts/check.js"></script>
