@@ -205,7 +205,9 @@
     let messageHtml = ''
     const userArea = document.querySelector('#userArea')
     const messageArea = document.querySelector('#message-area')
+    const leaveMsg = document.querySelector('#leaveMsg')
 
+    // 用戶登入 重新渲染上線使用者
     socket.on('onlineUser', (online) => {
       const userLength = document.querySelector('#userLength')
       userLength.innerText = online.user.length
@@ -235,6 +237,7 @@
 
     })
 
+    // 新用戶上線, 添加到留言區
     socket.on('newUserLogin', (user) => {
 
       messageHtml = `
@@ -245,6 +248,7 @@
     })
 
 
+    // 用戶離線, 添加到留言區
     socket.on('logoutUser', (logout) => {
       console.log(logout)
       messageHtml = `
@@ -255,7 +259,7 @@
     })
 
 
-    const leaveMsg = document.querySelector('#leaveMsg')
+    // 用戶留言, 添加到留言區
     leaveMsg.addEventListener('click', () => {
       console.log('點了傳送按鈕')
       const msg = document.querySelector('#msg')
