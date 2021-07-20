@@ -79,7 +79,8 @@ const tweetController = {
         where: { TweetId: tweetId },
         include: [
           { model: User, attributes: ['id', 'name', 'account', 'avatar'] }
-        ]
+        ],
+        order: [['createdAt', 'DESC']]
       })
       const likes = await Like.findAll({
         raw: true,
