@@ -52,33 +52,38 @@ const io = require("socket.io")(httpServer, options);
 let userArray = []
 let userId = ''
 io.on("connection", socket => {
-  console.log(socket.id)
-  console.log('客戶端成功連線服務器')
+  console.log('客戶端成功連線服務器: ' + socket.id)
 
+  // 由前端發送到後端的事件
   socket.on('login', userData => {
     console.log(userData)
+    userData.socketId = socket.id
     // 發送資料給所有使用者
     userArray.push(userData)
-    userId = userData
+    userId = userData.userId
     io.emit('onlineUser', { user: userArray })
+    io.emit('newUserLogin', { userData })
   });
 
-  // 由客戶端收到的消息在廣播出去給當前所有使用者
-  socket.on('self Message', data => {
-    console.log('從客戶端接收到的資料: ' + data)
-    // 發送資料給所有使用者
-    socket.emit('broadcast', data)
-  });
 
   // 斷開連接的操作
   socket.on('disconnect', () => {
-    console.log(userId)
-    console.log('userArray:' + userArray)
-    userArray = userArray.filter(item => {
-      return item !== userId
+    // 登出人資料傳到前端
+    const logout = userArray.filter(user => {
+      return user.socketId === socket.id
     })
-    console.log(userArray)
+    io.emit('logoutUser', { logout })
+
+    // 登出後更新上線使用者
+    userArray = userArray.filter(item => {
+      console.log(item.socketId)
+      return item.socketId !== socket.id
+    })
+    io.emit('onlineUser', { user: userArray })
+
   });
+
+
 
 });
 

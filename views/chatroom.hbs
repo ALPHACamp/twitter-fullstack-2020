@@ -82,7 +82,7 @@
   {{!-- 中間區域 --}}
   <div class="col-md-3" style="position: relative; border:1px #DEE2E6  solid; " id="middle-area">
     <div class="row align-items-center  mt-3" style="border-bottom:#dee2e6 1px solid;">
-      <div class="h5 ml-3">上線使用者 (<span id="userLength">5</span>)</div>
+      <div class="h5 ml-3">上線使用者 (<span id="userLength"></span>)</div>
     </div>
     <div id="userArea">
       <div class="row" style="">
@@ -170,21 +170,21 @@
       <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">Ralph Edwards 離線</span></div>
 
 
-      <div
-        style="width: 100%; height:30px; border-top:1px #DEE2E6  solid; display:flex; justify-content:space-between; align-items:center;"
-        class="p-2">
-        <input type="text"
-          style="width:95%; border:0px  none; outline:none; background-color: #E6ECF0; padding:5px 10px; border-radius:20px;"
-          placeholder="輸入訊息..." id="msg">
-        <label for="leaveMsg" style="margin:0px;" id="leaveMsg">
-          <i class="fab fa-telegram-plane fa-lg text-center" style="color: #FF6600; width:5%;"></i>
-        </label>
-      </div>
+
 
 
 
     </div>
-
+    <div
+      style="width: 100%; height:30px; border-top:1px #DEE2E6  solid; display:flex; justify-content:space-between; align-items:center;"
+      class="p-2">
+      <input type="text"
+        style="width:95%; border:0px  none; outline:none; background-color: #E6ECF0; padding:5px 10px; border-radius:20px;"
+        placeholder="輸入訊息..." id="msg">
+      <label for="leaveMsg" style="margin:0px;" id="leaveMsg">
+        <i class="fab fa-telegram-plane fa-lg text-center" style="color: #FF6600; width:5%;"></i>
+      </label>
+    </div>
 
   </div>
 </div>
@@ -196,59 +196,78 @@
   const userId = {{ user.id }}
   const userName = `{{ user.name }}`
   const userAccount = `{{ user.account }}`
+  const userAvatar = `{{ user.avatar }}`
   // 建立連接
   socket.on("connect", () => {
     console.log('發送使用者資料給後端socket.io')
-    console.log(socket.id); // x8WIv7-mJelg7on_ALbx
-    console.log(userId)
-    console.log(userName)
-    socket.emit('login', { userId: userId, userName: userName, userAccount: userAccount });
+    socket.emit('login', { userId: userId, userName: userName, userAccount: userAccount, userAvatar: userAvatar });
     console.log('發送使用者資料給後端socket.io')
-  });
+    let messageHtml = ''
+    socket.on('onlineUser', (online) => {
+      const userLength = document.querySelector('#userLength')
+      userLength.innerText = online.user.length
+      const userArea = document.querySelector('#userArea')
+      let rawHtml = ''
 
 
-  // 接收後端的廣播訊息
-  socket.on('broadcast', (bcdata) => {
-    console.log('收到廣播')
-    console.log(bcdata)
-    const userArea = document.querySelector('#userArea')
-    userArea.innerHTML =
-      `
+      online.user.forEach(user => {
+        rawHtml += `
       <div class="row" style="">
         <div style="display: flex; width:100%; border-bottom:1px #DEE2E6  solid;">
           <img
-            src={{user.avatar}}
+            src='${user.userAvatar}'
             class="rounded-circle mr-2  p-1" style="width: 60px; height:60px;">
           <div style="display: flex;  align-items:center;">
-            <div class="mr-1 font-weight-bold">{{user.name}}</div>
-            <div class="text-secondary">{{user.account}}</div>
+            <div class="mr-1 font-weight-bold">${user.userName}</div>
+            <div class="text-secondary">${user.userAccount}</div>
           </div>
         </div>
 
       </div>
-    `
-  })
+      `
+      })
 
-  socket.on('onlineUser', (online) => {
-    console.log(online)
-    console.log(online.user.length)
-    const userLength = document.querySelector('#userLength')
-    userLength.innerText = online.user.length
-  })
+      userArea.innerHTML = rawHtml
+      const messageArea = document.querySelector('#message-area')
+      socket.on('newUserLogin', (user) => {
 
-  // 斷開socket會發送給後端的消息
-  socket.on('disconnect', () => {
-    console.log('服務器端段開連接~!!')
-  })
+        messageHtml = `
+      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">${user.userData.userName} 上線</span></div>
+      `
 
-  const leaveMsg = document.querySelector('#leaveMsg')
-  leaveMsg.addEventListener('click', () => {
-    console.log('點了傳送按鈕')
-    const msg = document.querySelector('#msg')
-    socket.emit('self Message', msg.value);
-    // alert('送出消息' + msg.value);
-    // 送出消息後清空輸入框
-    msg.value = ''
+        messageArea.innerHTML += messageHtml;
+      })
 
-  })
+
+      socket.on('logoutUser', (logout) => {
+        console.log(logout)
+        messageHtml = `
+      <div class="text-center mt-2 mb-2"><span class="badge bg-secondary p-2 text-light">${logout.logout.userName} 離線</span></div>
+      `
+
+        messageArea.innerHTML += messageHtml;
+      })
+
+
+      const leaveMsg = document.querySelector('#leaveMsg')
+      leaveMsg.addEventListener('click', () => {
+        console.log('點了傳送按鈕')
+        const msg = document.querySelector('#msg')
+        socket.emit('self Message', msg.value);
+        // alert('送出消息' + msg.value);
+        // 送出消息後清空輸入框
+        msg.value = ''
+
+      })
+
+
+    })
+
+
+
+
+  });
+
+
+
 </script>

@@ -69,7 +69,7 @@ const twitController = {
         return bb
       })
 
-      console.log(tweet)
+      // console.log(tweet)
       return res.render('userAdmin', { users, tweet, reqAvatar: req.user.avatar })
     })
   },
