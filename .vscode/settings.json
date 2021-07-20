@@ -1,0 +1,15 @@
+{
+  "launch": {
+    "configurations": [],
+    "compounds": []
+  },
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "prettier.singleQuote": true,
+  "prettier.bracketSpacing": true,
+  "cSpell.words": [
+    "publicmsg"
+  ]
+}

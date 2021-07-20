@@ -1,0 +1,159 @@
+<div class='container-fluid'>
+  <div class='row flex-nowrap ps-xl-2 justify-content-around'>
+    {{! Home bar }}
+    <div class='col-3 col-lg-2 col-md-2 px-sm-2 px-0'>
+      <div class='d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100'
+        style='position: fixed;'>
+        <a class='d-flex align-items-center mb-3 mb-md-0 me-md-auto ps-3' href='/'>
+          <img src='https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png'
+            alt='' class='img-fluid my-3' style='display: block; width: 50px;' />
+        </a>
+        <ul class='nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start' id='menu'
+          style='width: 100%;'>
+          <li class='nav-item px-2 py-1'>
+            <a class='nav-link align-middle text-dark h-tomato' href='/tweets'>
+              <i class='fas fa-home' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 fw-bold'>首頁</span>
+            </a>
+          </li>
+          <li class="nav-item px-2 py-1">
+            <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+              <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+              <span class="d-none d-sm-inline h5 ps-3 fw-bold">公開聊天室</span>
+            </a>
+          </li>
+          <li class='nav-item px-2 py-1'>
+            <a class='nav-link align-middle text-dark h-tomato' href='/users/{{userId}}'>
+              <i class='far fa-user a-tomato' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 a-tomato fw-bold'>個人資料</span>
+            </a>
+          </li>
+          <li class='nav-item px-2 py-1'>
+            <a class='nav-link align-middle text-dark h-tomato' href='/setting'>
+              <i class='fas fa-cog' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 fw-bold'>設定</span>
+            </a>
+          </li>
+          <li class='nav-item p-2' style='width: inherit;'>
+            <button type='submit' class='btn btn-tomato rounded-pill mt-3' style='width: 100%;' data-bs-toggle='modal'
+              data-bs-target='#tweetModal'>
+              <span class='h5 fw-bold d-none d-sm-inline'>推文</span>
+              <i class='fas fa-feather-alt d-sm-none'></i>
+            </button>
+          </li>
+        </ul>
+        <hr />
+        <div class='dropdown p-2 pb-4'>
+          <a href='/signout' class='d-flex align-middle text-decoration-none text-dark'>
+            <i class='fas fa-sign-out-alt' style='font-size: 1.2em;'></i>
+            <span class='d-none d-sm-inline h5 ps-2 fw-bold'>登出</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    {{! middle bar }}
+
+    <div class='row col-9 col-lg-6 col-md-7 col-sm-8 py-2'>
+      <div class='card-header col-12 row m-0'>
+        <a href='javascript:history.back()' style='color:black'
+          class='col-auto d-flex align-items-center text-decoration-none'>
+          <i class='fas fa-arrow-left' style='font-size: 1.8em;'></i>
+        </a>
+      </div>
+
+      <div class='follower-head'>
+        <ul class='nav nav-tabs' id='myTab' role='tablist'>
+          <li class='nav-item'>
+            <a class='nav-link active' id='message-tab' data-toggle='tab' href='/users/{{userId}}/followers' role='tab'
+              aria-controls='home' aria-selected='true'>跟隨者</a>
+          </li>
+          <li class='nav-item'>
+            <a class='nav-link' id='profile-tab' data-toggle='tab' href='/users/{{userId}}/followings' role='tab'
+              aria-controls='profile' aria-selected='false'>正在跟隨</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class='tab-content'>
+        <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
+          <ul class='list-group list-group-flush border-bottom'>
+            {{#each users}}
+            <li class='list-group-item'>
+              <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
+                <div class='col-1 d-flex justify-content-center align-items-center'>
+                  <a href='/users/{{this.id}}' class='p-1'>
+                    <img src='{{this.avatar}}' alt='A user' width='75' height='75' class='rounded-circle' />
+                  </a>
+                </div>
+                <div class='col-7 pt-3 d-flex flex-column align-items-start' style='padding-left: 2em;'>
+                  <a href='/users/{{this.id}}' class='h5 fw-bold text-decoration-none text-dark'>{{this.name}}</a>
+                  <p class='text-muted'>@{{this.account}}</p>
+                  <h6 class='card-text'>{{this.description}}</h6>
+                </div>
+                <div class='col-4 ps-3 d-flex justify-content-center align-items-center'>
+                  {{#if this.isFollowing}}
+                  <form action='/followships/{{this.id}}?_method=DELETE' method='POST' style='display: contents;'>
+                    <button type='submit' class='btn btn-tomato rounded-pill fw-bold' name='{{user.id}}'
+                      style='font-size: 0.95em;'>正在跟隨</button>
+                  </form>
+                  {{else}}
+                  <form action='/followships/{{this.id}}' method='POST' style='display: contents;'>
+                    <button type='submit' class='btn btn-outline-tomato rounded-pill fw-bold' name='{{user.id}}'
+                      style='font-size: 0.95em;'>跟隨</button>
+                  </form>
+                  {{/if}}
+                </div>
+              </div>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {{! follower bar }}
+
+    <div class='col-auto col-lg-3 col-md-3'>
+      <div class='card d-none d-sm-flex flex-column flex-shrink-0 mt-3 position-fixed' width='100%'>
+        <ul class='list-group list-group'>
+          <li class='list-group-item bg-light fw-bold' style='font-size: 1.2em;'>跟隨誰</li>
+          {{#each followeringbar}}
+          <li class='list-group-item bg-light' style='border-left: none;border-right: none'>
+            <div class='row justify-content-around align-items-center'>
+              <div class='col-2 d-flex justify-content-center align-items-center' style='padding-left: 20px;'>
+                <a href='/users/{{this.id}}'>
+                  <img src='{{this.avatar}}' alt='' width='50' height='50' class='rounded-circle' />
+                </a>
+              </div>
+
+              <div class='col-5 ps-3 pt-3 d-flex flex-column align-items-start'>
+                <h5 style='line-height: 16px;'>{{this.name}}</h5>
+                <p class='text-muted' style='line-height: 16px;'>@{{this.account}}</p>
+              </div>
+
+              <div class='col-5 ps-3 d-flex justify-content-center'>
+                {{#if this.isFollowing}}
+                <form action='/followships/{{this.id}}?_method=DELETE' method='POST' style='display: contents;'>
+                  <button type='submit' class='btn btn-tomato rounded-pill fw-bold' name='{{user.id}}'
+                    style='font-size: 0.95em;'>正在跟隨</button>
+                </form>
+                {{else}}
+                <form action='/followships/{{this.id}}' method='POST' style='display: contents;'>
+                  <button type='submit' class='btn btn-outline-tomato rounded-pill fw-bold' name='{{user.id}}'
+                    style='font-size: 0.95em;'>跟隨</button>
+                </form>
+                {{/if}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          <li class='list-group-item bg-light' style='border-left: none;border-right: none;border-bottom: none'>
+            <a href='/users/{{user.id}}/followers' class='bg-light fw-bold'
+              style='text-decoration: none;color:tomato'>顯示更多</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

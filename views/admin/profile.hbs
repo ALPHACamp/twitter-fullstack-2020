@@ -1,0 +1,172 @@
+<div class="container-fluid">
+  <div class="row flex-nowrap ps-xl-4 ps-md-3">
+    <div class="col-auto col-md-4 col-xl-3 px-sm-2 px-0">
+      <div
+        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100"
+      >
+        <a
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ps-3"
+          href="/admin"
+        >
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png"
+            alt=""
+            class="img-fluid my-3"
+            style="display: block; width: 50px;"
+          />
+        </a>
+        <ul
+          class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+          id="menu"
+        >
+          <li class="nav-item p-2">
+            <a class="nav-link align-middle" href="/admin/tweets">
+              <i class="fas fa-home fa-lg"></i>
+              　<span class="d-none d-sm-inline h4"><strong
+                >推文清單</strong></span>
+            </a>
+          </li>
+          <li class="nav-item p-2">
+            <a
+              href="#usermenu"
+              data-bs-toggle="collapse"
+              class="nav-link align-middle"
+            >
+              <i class="fas fa-list-ul fa-lg"></i>
+              <span class="ps-1 d-none d-sm-inline h4"><strong
+                >使用者列表</strong></span>
+            </a>
+            <ul
+              class="collapse show nav flex-column ms-3"
+              id="usermenu"
+              data-bs-parent="#menu"
+            >
+              <li class="w-100">
+                <a href="/admin/users" class="nav-link px-0 mt-2">
+                  <span class="d-none d-sm-inline ps-3">所有使用者</span>
+                  <i class="fas fa-users"></i>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/admins" class="nav-link px-0 mt-2">
+                  <span class="d-none d-sm-inline ps-3">所有管理員</span>
+                  <i class="fas fa-user-cog"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <hr />
+        <div class="dropdown pb-4">
+          <a
+            href="#"
+            class="d-flex align-items-center text-decoration-none dropdown-toggle"
+            id="dropdownA"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="{{user.avatar}}"
+              alt="Admin"
+              width="40"
+              height="40"
+              class="rounded-circle"
+            />
+            <span class="d-none d-sm-inline mx-1 ps-1">{{user.name}}</span>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-dark text-small shadow"
+            aria-labelledby="dropdownA"
+          >
+            <li><a class="dropdown-item my-2" href="/admin/profile">
+                <i class="fas fa-user-circle"></i>
+                　個人資料
+              </a></li>
+            <li>
+            <li><a class="dropdown-item mb-2" href="/admin/signup">
+                <i class="fas fa-user-plus"></i>
+                　新增管理員
+              </a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li><a class="dropdown-item" href="/admin/signout">
+                <i class="fas fa-sign-out-alt"></i>
+                　<strong>登出</strong>
+              </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col py-3">
+      <div class="card">
+        <div class="card-header">
+          <span class="h5" style="font-weight: bold;">個人資料</span>
+        </div>
+      </div>
+      <div class="card-body row justify-content-center">
+        <div class="col-10">
+          {{> message}}
+          <div class="card my-3 bg-dark shadow">
+            {{#if edit}}
+            <div class="card-body text-white text-start" style="padding-left:10%;">
+              <form action="/admin/profile/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+              <div class="row g-2  my-2 align-items-center justify-content-start">
+                <div class="col-auto">
+                  <label for="name" class="col-form-label">名稱</label>
+                </div>
+                <div class="col-auto">
+                  <input type="text" id="name" name="name" class="form-control" aria-describedby="nameHelpInline"
+                  value="{{name}}">
+                </div>
+              </div>
+              <div class="row g-2 my-2 align-items-center justify-content-start">
+                <div class="col-auto">
+                  <label for="account" class="col-form-label">帳號</label>
+                </div>
+                <div class="col-auto">
+                  <input type="text" id="account" name="account" class="form-control" aria-describedby="accountHelpInline"
+                  value="{{account}}">
+                  <div id="status"></div>
+                </div>
+              </div>
+              <div class="row g-2 my-2 align-items-center justify-content-start">
+                <div class="col-auto">
+                  <label for="email" class="col-form-label">Email</label>
+                </div>
+                <div class="col-auto">
+                  <input type="email" id="email" name="email" class="form-control" aria-describedby="emailHelpInline"
+                  value="{{email}}">
+                </div>
+              </div>
+              <div class="row g-2 my-2 align-items-center justify-content-start">
+                <div class="col-auto">
+                  <label for="avatar" class="col-form-label">個人頭像</label>
+                </div>
+                <div class="col-auto">
+                  <input type="file" id="avatar" name="avatar" class="form-control-file">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-outline-light mt-3">更新</button>
+              </form>
+            </div>
+            {{else}}
+            <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/250/250/selfie?random=10{{/if}}" class="card-img-top mx-auto rounded-circle mt-4" style="width: 100px; border: white 5px solid" alt="...">
+            <div class="card-body text-center">
+              <h3 class="card-title text-white" style="font-weight: 900;">{{user.name}}</h3>
+              <h3 class="card-title" style="color: #6c757d; font-size: 0.95em; font-weight: 500">@{{user.account}}</h3>
+              <h3 class="card-title text-white" style="font-size: 0.97em;">{{user.email}}</h3>
+              <div class="mt-3 text-light">
+                <h4 style="font-size: 0.9em;">創建於 {{momentA user.createdAt}}</h4>
+                <h4 style="font-size: 0.9em;">更新於 {{momentA user.updatedAt}}</h4>
+              </div>
+              <a href="/admin/profile/edit" class="btn btn-outline-light mt-3">編輯</a>
+            </div>
+            {{/if}}
+          </div>
+          <a class="my-3" href="javascript:history.back()">回上一頁</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

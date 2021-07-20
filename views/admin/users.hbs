@@ -1,0 +1,150 @@
+<div class="container-fluid">
+  <div class="row flex-nowrap ps-xl-4 ps-md-3">
+    <div class="col-auto col-md-4 col-xl-3 px-sm-2 px-0">
+      <div
+        class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100"
+      >
+        <a
+          class="d-flex align-items-center mb-3 mb-md-0 me-md-auto ps-3"
+          href="/admin"
+        >
+          <img
+            src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png"
+            alt=""
+            class="img-fluid my-3"
+            style="display: block; width: 50px;"
+          />
+        </a>
+        <ul
+          class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+          id="menu"
+        >
+          <li class="nav-item p-2">
+            <a class="nav-link align-middle" href="/admin/tweets">
+              <i class="fas fa-home fa-lg"></i>
+              　<span class="d-none d-sm-inline h4"><strong
+                >推文清單</strong></span>
+            </a>
+          </li>
+          <li class="nav-item p-2">
+            <a
+              href="#usermenu"
+              data-bs-toggle="collapse"
+              class="nav-link align-middle"
+            >
+              <i class="fas fa-list-ul fa-lg"></i>
+              <span class="ps-1 d-none d-sm-inline h4"><strong
+                >使用者列表</strong></span>
+            </a>
+            <ul
+              class="collapse show nav flex-column ms-3"
+              id="usermenu"
+              data-bs-parent="#menu"
+            >
+              <li class="w-100">
+                <a href="/admin/users" class="nav-link px-0 mt-2 {{#if users}}active{{/if}}">
+                  <span class="d-none d-sm-inline ps-3">所有使用者</span>
+                  <i class="fas fa-users"></i>
+                </a>
+              </li>
+              <li>
+                <a href="/admin/admins" class="nav-link px-0 mt-2 {{#if admin}}active{{/if}}">
+                  <span class="d-none d-sm-inline ps-3">所有管理員</span>
+                  <i class="fas fa-user-cog"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <hr />
+        <div class="dropdown pb-4">
+          <a
+            href="#"
+            class="d-flex align-items-center text-decoration-none dropdown-toggle"
+            id="dropdownA"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="{{user.avatar}}"
+              alt="Admin"
+              width="40"
+              height="40"
+              class="rounded-circle"
+            />
+            <span class="d-none d-sm-inline mx-1 ps-1">{{user.name}}</span>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-dark text-small shadow"
+            aria-labelledby="dropdownA"
+          >
+            <li><a class="dropdown-item my-2" href="/admin/profile">
+                <i class="fas fa-user-circle"></i>
+                　個人資料
+              </a></li>
+            <li>
+            <li><a class="dropdown-item mb-2" href="/admin/signup">
+                <i class="fas fa-user-plus"></i>
+                　新增管理員
+              </a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li><a class="dropdown-item" href="/admin/signout">
+                <i class="fas fa-sign-out-alt"></i>
+                　<strong>登出</strong>
+              </a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col py-3">
+      <div class="card">
+        <div class="card-header">
+          <span class="h5" style="font-weight: bold;">所有{{#if users}}使用者{{else}}管理員{{/if}}列表</span>
+        </div>
+      </div>
+      {{> message}}
+      <div class="card-body row align-items-center justify-content-evenly">
+        {{#each users}}
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-7 col-8">
+          <a href="/admin/users/{{this.id}}" class="text-decoration-none">
+          <div class="card my-3 rounded-4 shadow">
+            <div class="position-relative">
+              <img src="{{#if this.cover}}{{this.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="position-absolute rounded-3" style="width: 100%; z-index:0;" alt="background">
+              <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/250/250/people{{/if}}" class="position-absolute rounded-circle mt-4" style="width: 70px; height: 70px; left: 33%; top: 60px; border: white 3px solid; z-index: 1" alt="face">
+            </div>
+            <div class="card-body bg-light" style="padding-top: 88%;">
+              <h5 class="card-title text-center text-dark" style="font-weight: 900;">{{this.name}}</h5>
+              <h5 class="card-title text-center" style="color: #6c757d; font-size: 0.95em; font-weight: 500">@{{this.account}}</h5>
+              <div class="text-center mt-3 text-dark">
+                <i class="far fa-comment"></i> {{this.tweetCount}}
+              　  <i class="far fa-heart"></i> {{this.likeCount}}
+              </div>
+              <div class="text-center mt-2 text-dark">
+                <span><strong>{{this.followingCount}}個</strong>跟隨中</span>
+                <span><strong>{{this.followerCount}}位</strong>跟隨者</span>
+              </div>
+            </div>
+          </div>
+          </a>
+        </div>
+        {{/each}}
+        {{#each admin}}
+        <div class="col-xl-3 col-md-4 col-sm-6 col-8">
+          <div class="card my-3 bg-dark shadow">
+            <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/250/250/selfie?random=10{{/if}}" class="card-img-top mx-auto rounded-circle mt-4" style="width: 90px; height: 90px; border: white 5px solid" alt="...">
+            <div class="card-body">
+              <h5 class="card-title text-center text-white" style="font-weight: 900;">{{this.name}}</h5>
+              <h5 class="card-title text-center" style="color: #6c757d; font-size: 0.95em; font-weight: 500">@{{this.account}}</h5>
+              <div class="mt-3 text-light text-center">
+                <span style="font-size: 0.85em;">創建於 {{momentA this.createdAt}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

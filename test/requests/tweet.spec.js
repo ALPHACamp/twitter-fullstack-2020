@@ -231,7 +231,7 @@ describe('# tweet request', () => {
           });
       })
       it('will delete like', (done) => {
-        db.Like.findOne({where: {userId: 1}}).then(like => {
+        db.Like.findOne({where: {UserId: 1}}).then(like => {
           expect(like).to.be.null
           done()
         })

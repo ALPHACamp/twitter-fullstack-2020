@@ -1,18 +1,18 @@
 'use strict';
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Tweets', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Publicmsgs', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      chat: {
+        type: Sequelize.STRING
+      },
       UserId: {
         type: Sequelize.INTEGER
-      },
-      description: {
-        type: Sequelize.TEXT
       },
       createdAt: {
         allowNull: false,
@@ -24,7 +24,7 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Tweets');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('Publicmsgs');
   }
 };
