@@ -50,12 +50,18 @@ const httpServer = require("http").createServer(app);
 const options = { /* ... */ };
 const io = require("socket.io")(httpServer, options);
 let userArray = []
-
+let userId = ''
 io.on("connection", socket => {
   console.log(socket.id)
   console.log('客戶端成功連線服務器')
-  userArray.push(socket.id)
-  socket.emit('broadcast', userArray)
+
+  socket.on('login', userData => {
+    console.log(userData)
+    // 發送資料給所有使用者
+    userArray.push(userData)
+    userId = userData
+    io.emit('onlineUser', { user: userArray })
+  });
 
   // 由客戶端收到的消息在廣播出去給當前所有使用者
   socket.on('self Message', data => {
@@ -65,7 +71,14 @@ io.on("connection", socket => {
   });
 
   // 斷開連接的操作
-  socket.on('disconnect', () => { /* … */ });
+  socket.on('disconnect', () => {
+    console.log(userId)
+    console.log('userArray:' + userArray)
+    userArray = userArray.filter(item => {
+      return item !== userId
+    })
+    console.log(userArray)
+  });
 
 });
 
