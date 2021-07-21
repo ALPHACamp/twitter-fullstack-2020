@@ -8,7 +8,7 @@ const session = require('express-session')
 const db = require('./models') // 引入資料庫
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
-
+const moment = require('moment')
 
 
 
@@ -68,10 +68,16 @@ io.on("connection", socket => {
 
   // 由前端接收消息
   socket.on('send', data => {
+
+
     console.log(data)
+    let time = moment().format("LT");
+    data.createdAt = time
+    console.log(data.createdAt)
+
 
     // io.emit('onlineUser', { user: userArray })
-    io.emit('sendToUser', { sendTodata: data })
+    io.emit('sendToUser', { sendTodata: data, dataCreatedAt: data.createdAt })
   });
 
   // 斷開連接的操作
