@@ -1,0 +1,120 @@
+<div class="row  mt-5">
+
+  {{!-- 左邊區域 --}}
+  <div class="col-md-3" style="width:auto; height:auto;">
+    <img class="" style="margin-left:15px" width="40px"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active text-dark font-weight-bold" href="/"><i class="fas fa-home"></i> 首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark  font-weight-bold" href="/user/self"><i class="fas fa-user"></i>
+          個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link font-weight-bold" style="color: #FF6600;" href="/setting"><i class="far fa-sun"></i> 設定</a>
+      </li>
+    </ul>
+
+    <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
+      data-toggle="modal" data-target="#exampleModal">推文</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="color:#FF6600;">&times;</span>
+            </button>
+          </div>
+          <form action="/" method="post">
+            <div class="modal-body" style="height: 250px;">
+              <div class="row" style="height: 100%;">
+                <div class="col-md-2">
+                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
+                    class="rounded-circle" style="width: 60px; height:60px;">
+                </div>
+                <div class="col-md-10">
+                  <textarea name="description" id=""
+                    style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  {{!-- 登出鈕 --}}
+  <div class="ml-3" style=" position:fixed; bottom:0px; left: 120px;">
+    <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
+            fa-sign-out-alt"></i> 登出</a>
+  </div>
+
+
+  {{!-- 右邊區域 --}}
+  <div class="col-md-9" style="position: relative;">
+    {{!-- 標題 --}}
+    <div>
+      <h1 class="h5 mb-3 font-weight-bold">帳戶設定</h1>
+    </div>
+    {{!-- 輸入框 --}}
+    <form class="form-signin" action="/setting/?_method=PUT" method="POST" style="width: 35%; position:fixed;">
+      <div class="mb-3 pl-2 mt-3" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">帳號：</label>
+        <input type="text" class="form-control" name="account"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"
+          placeholder="輸入您的帳號" value="{{userdata.account}}" readonly>
+      </div>
+
+      <div class="mb-3 pl-2 mt-4" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">名稱：</label>
+        <input type="text" class="form-control" name="name"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"
+          placeholder="輸入您的名稱" value="{{userdata.name}}">
+      </div>
+
+      <div class="mb-3 pl-2 mt-4" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">email：</label>
+        <input type="email" class="form-control" name="email"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA;"
+          placeholder="輸入您的email" aria-describedby="emailHelp" value="{{userdata.email}}" readonly>
+      </div>
+
+      <div class="mb-3 pl-2 mt-4" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">密碼：
+
+        </label>
+        <input type="password" class="form-control" name="password"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"
+          placeholder="輸入您的密碼" required="required">
+      </div>
+
+      <div class="mb-3 pl-2 mt-4" style="background-color:#F5F8FA">
+        <label for="exampleInputEmail1" class="form-label" style="margin-bottom:0px; font-size: 11px;">確認密碼：
+
+        </label>
+        <input type="password" class="form-control"
+          style="height:100%; padding:0px ; border:0px; border-bottom: 2px #657786 solid;background-color:#F5F8FA"
+          name="passwordCheck" placeholder="確認您的密碼" required="required">
+      </div>
+      <button class="btn text-light" style="border-radius: 40px; background-color:#FF6600; float:right"
+        type="submit">儲存</button>
+    </form>
+  </div>
+
+
+</div>

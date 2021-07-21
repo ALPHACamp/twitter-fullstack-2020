@@ -1,0 +1,342 @@
+<div class="row mt-5">
+  {{!-- 左邊區域 --}}
+
+  <div class="col-md-3">
+    <img class="" style="margin-left:15px" width="40px"
+      src="https://static.accupass.com/org/2008250550226683301600.jpg">
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link active font-weight-bold" style="color: #FF6600;" href="/"><i class="fas fa-home"></i> 首頁</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/notification"><i class="far fa-bell"></i> 通知</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/chatroomPublic"><i class="far fa-envelope"></i> 公開聊天室</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/chatroomPrivate"><i class="far fa-envelope"></i> 私人訊息</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/user/self"><i class="fas fa-user"></i> 個人資料</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark font-weight-bold" href="/setting"><i class="far fa-sun"></i> 設定</a>
+      </li>
+    </ul>
+
+    <button class="btn btn-block text-light" style="border-radius: 40px; background-color:#FF6600" href="#"
+      data-toggle="modal" data-target="#exampleModal">推文</button>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" style="color:#FF6600;">&times;</span>
+            </button>
+          </div>
+          <form action="/" method="post">
+            <div class="modal-body" style="height: 250px;">
+              <div class="row" style="height: 100%;">
+                <div class="col-md-2">
+                  <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/oppa1.jpg"
+                    class="rounded-circle" style="width: 60px; height:60px;">
+                </div>
+                <div class="col-md-10">
+                  <textarea name="description" id=""
+                    style="min-height:225px; max-height:225px; width:100%; border:none;"
+                    placeholder="有甚麼新鮮事?"></textarea>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+  </div>
+
+  <div class="ml-3" style="position:fixed; bottom:0px; left: 20px;">
+    <a class="text-dark font-weight-bold" style="border-radius: 40px; width:150px;" href="/logout"><i class="fas
+        fa-sign-out-alt"></i> 登出</a>
+  </div>
+  {{!-- 中間區域 --}}
+  <div class="col-md-6" id="middleSection" style="position: relative; border:1px #DEE2E6  solid; ">
+    <div class="row align-items-center mb-3 mt-3" style="border-bottom:#dee2e6 1px solid;">
+      <div class="h5 ml-3">首頁</div>
+    </div>
+
+    {{!-- 背景圖區域 --}}
+
+
+    {{!-- 大頭貼區塊 --}}
+    <div class=" mt-1 mb-2 ">
+      <form action="#" method="post">
+        <div class="modal-body" style="height: 250px;">
+          <div class="row" style="height: 100%;">
+            <div class="col-md-2">
+              <img src={{reqAvatar}} class="rounded-circle" style="width: 60px; height:60px;">
+            </div>
+            <div class="col-md-10">
+              <textarea name="description" id="" style="min-height:225px; max-height:225px; width:100%; border:none;"
+                placeholder="有甚麼新鮮事?"></textarea>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" style="border-radius: 40px; background-color:#FF6600 ">推文
+          </button>
+        </div>
+      </form>
+
+    </div>
+
+    {{!-- 個人介紹區域 --}}
+
+    <div class="row d-block">
+
+    </div>
+
+    <div class="row " style="border-top: 11px #DEE2E6 solid;">
+    </div>
+
+    {{!-- 導航欄 --}}
+
+    {{!-- 留言區域 --}}
+    {{#each tweet}}
+    <div class="row border userTweet"
+      style="padding-top:8px; padding-bottom:10px; word-break:break-all; padding-bottom:10px;">
+      <div class="col-md-2" style="padding-right: 0px; ">
+        <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+      </div>
+      <div class="col-md-10" style="padding-left: 0px;">
+        <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+            this.createdAt}}</span>
+        </div>
+        <div>{{this.description}}</div>
+        <span class="mr-4 "><button type="submit" data-toggle="modal" data-target="#tweetModel"
+            style="border: 0; background-color: #ffffff; ">
+            <i class="far fa-comment" data-id={{this.id}}></i>
+          </button> {{ this.replyCount }} </span>
+        {{#if likeBoolean}}
+        <span><span>{{ this.likeCount }}</span> <i class="fas fa-heart likeHeart" data-id={{this.id}}
+            style="color: red;"></i></span>
+        {{else}}
+        <span><span>{{ this.likeCount }}</span> <i class="far fa-heart likeHeart" data-id={{this.id}}></i></span>
+        {{/if}}
+
+
+
+      </div>
+    </div>
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="tweetModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true" style="word-break:break-all;">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body" name="description">
+            <div class="row">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding-left: 0px;">
+                <div class="h6">{{this.User.name}} <span class="text-secondary">{{this.User.account}} ．{{moment
+                    this.createdAt}}</span>
+                </div>
+                <div>
+                  {{this.description}}
+
+                </div>
+              </div>
+            </div>
+            {{!-- 當前使用者回覆區 --}}
+            <div class="row mt-3">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{this.User.avatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding:0 15px 0 0;">
+                <textarea name="description" id="" style="min-height:225px; max-height:225px; width:100%; border:none; "
+                  placeholder="推你的回覆" maxlength="140"></textarea>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer" style="border-top: #E6ECF0;">
+            <button type="submit" class="btn btn-secondary"
+              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">回覆
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{!-- 右邊區域 --}}
+  <div class="col-md-3">
+    <div class='rounded' style="background-color: #F5F8FA ;">
+
+      <div class="p-2">
+        跟隨誰
+      </div>
+      {{#each users}}
+      <div
+        style="display: flex; justify-content:space-between; border-top:#E6ECF0 1px solid; border-bottom:#E6ECF0 1px solid;"
+        class="p-2">
+
+        <div style="display: flex;">
+          <img src={{this.avatar}} style="width: 50px; height:50px; border-radius:50%;">
+          <div>
+            <div>{{this.name}}</div>
+            <div>{{this.account}}</div>
+          </div>
+        </div>
+
+        <div>
+          {{#if this.isFollowed }}
+          <form action="/user/self/following/{{this.id}}?_method=DELETE" method="POST"><button type="submit"
+              class="btn btn-block text-light mt-1" style="border-radius: 40px; background-color:#FF6600 ">正在跟隨</button>
+          </form>
+          {{else}}
+          <form action="/user/self/following/{{this.id}}" method="POST"><button type="submit" class="btn btn-block mt-1"
+              style="border-radius: 40px; border:#FF6600 1px solid; color:#FF6600;">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+</div>
+
+<script>
+  const middleSection = document.querySelector('#middleSection')
+  middleSection.addEventListener('click', e => {
+    if (e.target.classList.contains('likeHeart')) {
+      console.log('點到愛心了, 準備寫入資料庫')
+      const tweetId = e.target.dataset.id
+      const userId = `{{user.id}}`
+      axios
+        .post(`/tweets/${userId}/like/${tweetId}`)
+        .then((response) => {
+          console.log(response)
+          if (response.data.message === '刪除Like推文成功') {
+            console.log('把愛心變黑')
+
+            e.target.parentNode.firstChild.innerText = (Number(e.target.parentNode.innerText) - 1)
+            e.target.className = 'far fa-heart likeHeart'
+            e.target.style.color = 'black'
+          } else {
+            console.log('把愛心變紅')
+
+            e.target.parentNode.firstChild.innerText = Number(e.target.parentNode.innerText) + 1
+            e.target.className = 'fas fa-heart likeHeart'
+            e.target.style.color = 'red'
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    if (e.target.className === 'far fa-comment') {
+
+      const tweetId = e.target.dataset.id
+      axios
+        .get(`/tweets/${tweetId}`)
+        .then((response) => {
+          const tweetData = response.data.tweetData
+          const tweetModel = document.querySelector('#tweetModel')
+          const userName = tweetData['User.name']
+          const userAvatar = tweetData['User.avatar']
+          const userAccount = tweetData['User.account']
+          console.log(tweetData)
+
+
+          tweetModel.innerHTML = `
+         
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <form action='/twitter/replies' method='POST'>
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+          <div class="modal-body" name="description">
+            <div class="row">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src="${userAvatar}" alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding-left: 0px;">
+                <div class="h6">${userName} <span class="text-secondary">
+                  ${userAccount}．{{moment tweetData.createdAt}}</span>
+                </div>
+                <div>
+                  ${tweetData.description}
+
+
+                </div>
+                <input type='hidden' name='userId' value={{user.id}}>
+                <input type='hidden' name='tweetId' value=${tweetData.id}>
+
+              </div>
+            </div>
+            {{!-- 當前使用者回覆區 --}}
+            
+            <div class="row mt-3">
+              <div class="col-md-2 mt-2" style="padding-right: 0px; ">
+                <img src={{reqAvatar}} alt="..." class="rounded-circle" style="width: 50px; height:50px;">
+              </div>
+              <div class="col-md-10" style="padding:0 15px 0 0;">
+                <textarea name="comment" id="" style="min-height:225px; max-height:225px; width:100%; border:none; "
+                  placeholder="推你的回覆" maxlength="140"></textarea>
+              </div>
+            </div>
+
+          </div>
+          <div class="modal-footer" style="border-top: #E6ECF0;">
+            <button type="submit" class="btn btn-secondary"
+              style="border-radius: 40px; background-color:#FF6600; padding:0 6px; border:honeydew 1px solid;">回覆
+            </button>
+          </div>
+        </div>
+        </form>
+      </div>
+          `
+
+        })
+        .catch((err) => console.log(err))
+    }
+  }
+  )
+</script>
