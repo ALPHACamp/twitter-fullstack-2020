@@ -1,0 +1,82 @@
+<div class="d-flex flex-column mt-2" style="margin-left: 20vw;">
+  <p class="h4 mb-4" style="color: #313c4b;">帳戶設定</p>
+
+  <form action="/users/{{user.id}}?_method=PUT" method="POST">
+
+    <div class="d-flex mb-5">
+
+      {{!-- 帳號 --}}
+      <div class="d-flex flex-column align-items-center"
+        style="margin-right: 2vw;background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 11vw;border-radius:1em;object-fit: cover;"
+          src="https://i.pinimg.com/474x/d2/50/0c/d2500cb2aaf1d533d3284d13ae0100ef.jpg" alt="shareYourPet">
+        <p class="h5" style="color: #313c4b;margin-top:2em">Your Account</p>
+        <input type="text" name="account" class="mt-3"
+          style="height:3em;padding:1em;border: none;outline:none;background-color: #e9e9e958;color: #313c4bc2;border-radius:0.5em;"
+          value="{{user.account}}" required>
+      </div>
+
+      {{!-- 名稱 --}}
+      <div class="d-flex flex-column align-items-center"
+        style="margin-right: 2vw;background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 11vw;border-radius:1em;object-fit: cover;"
+          src="https://i.pinimg.com/474x/88/26/38/88263856a41d3cb19dd1cb6a6dff8c73.jpg" alt="shareYourself">
+        <p class="h5" style="color: #313c4b;margin-top:2em">Your Name</p>
+        <input type="text" name="name" class="mt-3"
+          style="height:3em;padding:1em;border: none;outline:none;background-color: #e9e9e958;color: #313c4bc2;border-radius:0.5em;"
+          value="{{user.name}}" required>
+      </div>
+
+      {{!-- email --}}
+      <div class="d-flex flex-column align-items-center"
+        style="background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 11vw;border-radius:1em;object-fit: cover;"
+          src="https://i.pinimg.com/474x/c8/97/67/c89767e4e2088f08267e0cffd2f0c171.jpg" alt="shareYourJourney">
+        <p class="h5" style="color: #313c4b;margin-top:2em">Your Email</p>
+        <input type="text" name="email" class="mt-3"
+          style="height:3em;padding:1em;border: none;outline:none;background-color: #e9e9e958;color: #313c4bc2;border-radius:0.5em;"
+          value="{{user.email}}" required>
+      </div>
+
+    </div>
+
+    <div class="d-flex mt-4">
+
+      {{!-- 密碼 --}}
+      <div class="d-flex flex-column align-items-center"
+        style="margin-right: 2vw;background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 11vw;border-radius:1em;object-fit: cover;"
+          src="https://i.pinimg.com/474x/d1/09/24/d109244587a84e2e6acd1e23555ac63e.jpg" alt="shareYourPet">
+        <p class="h5" style="color: #313c4b;margin-top:2em">Your Password</p>
+        <input type="password" name="password" class="mt-3"
+          style="height:3em;padding:1em;border: none;outline:none;background-color: #e9e9e958;color: #313c4bc2;border-radius:0.5em;"
+          required>
+      </div>
+
+      {{!-- 密碼確認 --}}
+      <div class="d-flex flex-column align-items-center"
+        style="margin-right: 2vw;background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 11vw;border-radius:1em;object-fit: cover;"
+          src="https://i.pinimg.com/564x/0d/de/02/0dde02ba9c81baeaf260a73a74da3fbe.jpg" alt="shareYourself">
+        <p class="h5" style="color: #313c4b;margin-top:2em">Password Confirm</p>
+        <input type="password" name="passwordCheck" class="mt-3"
+          style="height:3em;padding:1em;border: none;outline:none;background-color: #e9e9e958;color: #313c4bc2;border-radius:0.5em;"
+          required>
+      </div>
+
+      {{!-- save --}}
+      <div class="d-flex flex-column align-items-center"
+        style="background-color:white;height: 22vw;border-radius:1em;box-shadow:0 0 8px 3px #ccccccb3;">
+        <img style="width: 16.7vw;height: 11vw;border-radius:1em;object-fit: cover;"
+          src="https://i.pinimg.com/564x/3c/6c/52/3c6c520b1067d1d3a2fcd3dea7ec8ade.jpg" alt="shareYourJourney">
+        <p class="h5" style="color: #313c4b;margin-top:2em">確認修改</p>
+        <button class="mt-3"
+          style="height:3em;width:12.6em;border: none;outline:none;background-color: #e9e9e958;color: #313c4bc2;border-radius:0.5em;"
+          type="submit">儲存</button>
+      </div>
+
+    </div>
+
+  </form>
+
+</div>
