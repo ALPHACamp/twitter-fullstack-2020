@@ -7,6 +7,18 @@ module.exports = (io) => {
   io.on('connection', (socket) => {
     console.log('user is connected')
     let onlineList = {}
+    socket.on('checkaccount', async (data) => {
+      try {
+        const confirm = await User.findOne({ where: { account: data.input }, raw: true, nest: true, attributes: ['account'] })
+        if (confirm) {
+          socket.emit('checkno', { msg: '已有人使用！' })
+        } else {
+          socket.emit('checkyes', { msg: '可以使用！' })
+        }
+      } catch (error) {
+        console.warn(error)
+      }
+    })
     socket.on('login', async (data) => {
       try {
         const idFromSession = socket.request.session.passport.user
