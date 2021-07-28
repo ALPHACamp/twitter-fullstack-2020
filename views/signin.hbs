@@ -6,7 +6,7 @@
       <h3><strong>登入 TwitterMimicry</strong></h3>
     </div>
     {{> message}}
-    <form action="/signin" method="post">
+    <form action="/signin" method="post" id="form-login">
       <div class="mb-3">
         <label for="account" style="margin-bottom: -30px; margin-left: 8px;">帳號</label>
         <input type="text" class="form-control pt-4" id="account" name="account"
@@ -20,7 +20,7 @@
           aria-describedby="passwordHelp" value="{{password}}" />
       </div>
       <br />
-      <button class="col-12 btn btn-primary btn-block" style="border-radius: 30px;" type="submit">登入</button>
+      <button class="col-12 btn btn-primary btn-block" style="border-radius: 30px;" id="login" type="submit">登入</button>
       <div class="text-end my-4">
         <p>
           <a href="/signup">註冊TwitterMimicry</a>
