@@ -5,8 +5,8 @@ let onlineCount = 0
 
 module.exports = (io) => {
   io.on('connection', (socket) => {
-    console.log('user is connected')
     let onlineList = {}
+
     socket.on('checkaccount', async (data) => {
       try {
         const confirm = await User.findOne({ where: { account: data.input }, raw: true, nest: true, attributes: ['account'] })
@@ -19,6 +19,7 @@ module.exports = (io) => {
         console.warn(error)
       }
     })
+
     socket.on('login', async (data) => {
       try {
         const idFromSession = socket.request.session.passport.user
@@ -29,7 +30,7 @@ module.exports = (io) => {
               id: idFromSession
             }
           })
-          user = await user.map(u => ({
+          user = user.map(u => ({
             ...u.dataValues
           }))
           onlineUsers.push({
@@ -39,7 +40,7 @@ module.exports = (io) => {
             avatar: user[0].avatar
           })
           onlineList = user[0]
-          onlineCount = await onlineUsers.length
+          onlineCount = onlineUsers.length
         }
         io.emit('onlineUsers', onlineUsers)
         io.emit('onlineCount', onlineCount)

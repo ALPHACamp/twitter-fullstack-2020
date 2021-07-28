@@ -1,4 +1,3 @@
-
 const socket = io()
 const account = document.getElementById('account')
 const accounthelp = document.getElementById('accountHelp')
