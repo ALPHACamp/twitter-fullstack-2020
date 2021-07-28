@@ -64,7 +64,7 @@ module.exports = (io) => {
     })
 
     socket.on('disconnect', () => {
-      const idFromSession = socket.request.session.passport.user
+      const idFromSession = socket.request.session.passport ? socket.request.session.passport.user : null
       onlineUsers = onlineUsers.filter((item) => item.id !== idFromSession)
       onlineCount = onlineUsers.length
       io.emit('onlineCount', onlineCount)
