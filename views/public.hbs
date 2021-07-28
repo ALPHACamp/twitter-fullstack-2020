@@ -53,15 +53,22 @@
     <div class="col-auto col-lg-3 col-md-2">
       <div class="card d-none d-md-flex flex-column vh-100  position-fixed">
         <ul class="list-group " style="width: 24vw;">
-          <li class="list-group-item fw-bold" style="border-left: none;border-right: none">上線使用者(<span id="onlineCount">0</span>)
+          <li class="list-group-item fw-bold" style="border-left: none;border-right: none">上線使用者(<span
+              id="onlineCount">0</span>)
           </li>
+          <div class="row justify-content-start align-items-center" style="display:none">
           
-          {{!-- each --}}
+            <p id="id" class="d-none">{{user.id}}</p>
+            <p id="avatar" class="d-none">{{user.avatar}}</p>
+            <h5 id='name' style="line-height: 18px;">{{user.name}}</h5>
+            <p class="text-muted" style="line-height:16px; margin-left: 5px;">@{{user.account}}</p>
+          
+          </div>
         </ul>
         <ul id="publicPeople" class="list-group overflow-auto">
-        <div id='onlinePeople'>
-        
-        </div>
+          <div id='onlinePeople'>
+
+          </div>
         </ul>
       </div>
     </div>

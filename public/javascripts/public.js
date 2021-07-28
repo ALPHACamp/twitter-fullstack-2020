@@ -18,6 +18,7 @@ send.addEventListener('click', (e) => {
   if (input.value) {
     socket.emit('message', { id: Number(id.textContent), avatar: avatar.textContent, user: username.textContent, msg: input.value })
     input.value = ''
+    console.log('click')
   }
 })
 
@@ -25,6 +26,7 @@ input.addEventListener('keypress', (e) => {
   if (e.keyCode === 13 && input.value) {
     socket.emit('message', { id: Number(id.textContent), avatar: avatar.textContent, user: username.textContent, msg: input.value })
     input.value = ''
+    console.log('keypress')
   }
 })
 
@@ -72,12 +74,12 @@ socket.on('message', (data) => {
 
 socket.emit('login')
 
-socket.on('onlineUsers', (data) => {
+socket.on('onlineUsers', (onlineUsers) => {
   onlinePeople.innerHTML = ''
-  data.forEach(data => {
-    addUser(data)
+  onlineUsers.forEach(onlineUsers => {
+    addUser(onlineUsers)
   })
-  publicPeople.scrollTo(0, publicPeople.scrollHeight)
+  // publicPeople.scrollTo(0, publicPeople.scrollHeight)
 })
 
 function addUser (data) {
@@ -90,9 +92,9 @@ function addUser (data) {
                 </a>
               </div>
               <div class="col-6 ps-3 pt-3 d-flex">
-                <p id="id" class="d-none">${data.id}</p>
-                <p id="avatar" class="d-none">${data.avatar}</p>
-                <h5 id='name' style="line-height: 18px;">${data.name}</h5>
+                <p class="d-none">${data.id}</p>
+                <p  class="d-none">${data.avatar}</p>
+                <h5 style="line-height: 18px;">${data.name}</h5>
                 <p class="text-muted" style="line-height:16px; margin-left: 5px;">@${data.account}</p>
               </div>
               </div>
