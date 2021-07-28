@@ -23,7 +23,7 @@ module.exports = (io) => {
     socket.on('login', async (data) => {
       try {
         const idFromSession = socket.request.session.passport.user
-        const userFilter = onlineUsers.find((item) => { return item.id === idFromSession })
+        const userFilter = onlineUsers.find(item => item.id === idFromSession)
         if (!userFilter) {
           let user = await User.findAll({
             where: {

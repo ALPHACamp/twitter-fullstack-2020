@@ -51,17 +51,21 @@
     </div>
 
     <div class="col-auto col-lg-3 col-md-2">
-      <div class="card d-none d-md-flex flex-column vh-100  position-fixed">
+      <div class="card d-none d-md-flex flex-column vh-100 position-fixed">
         <ul class="list-group " style="width: 24vw;">
-          <li class="list-group-item fw-bold" style="border-left: none;border-right: none">上線使用者(<span id="onlineCount">0</span>)
+          <li class="list-group-item fw-bold" style="border-left: none;border-right: none">上線使用者(<span
+              id="onlineCount">0</span>)
           </li>
-          
-          {{!-- each --}}
+          <p id="id" class="d-none">{{user.id}}</p>
+          <p id="avatar" class="d-none">{{user.avatar}}</p>
+          <h5 id='name' class="d-none">{{user.name}}</h5>
         </ul>
         <ul id="publicPeople" class="list-group overflow-auto">
-        <div id='onlinePeople'>
-        
-        </div>
+          <li class="list-group-item" style="border: none;">
+            <div id="onlinePeople">
+              {{!-- each online user --}}
+            </div>
+          </li>
         </ul>
       </div>
     </div>
@@ -73,8 +77,7 @@
         </li>
         <ul id="publicboard" class="list-group overflow-auto">
           <li class="list-group-item" style="border-bottom:none">
-            <ul class="list-group d-flex flex-column align-items-center" id="onlineList">
-            </ul>
+
             <div id='board' class="rounded-3">
               {{#if msg}}
               {{#each msg}}
@@ -123,8 +126,10 @@
               {{/ifCond}}
               {{/each}}
               {{/if}}
+
+              <ul class="list-group flex-column align-items-center" id="outlineList">
+              </ul>
             </div>
-            <ul class="list-group flex-column align-items-center" id="outlineList">
           </li>
         </ul>
         <li class="list-group-item" id="msgInputBtn">
