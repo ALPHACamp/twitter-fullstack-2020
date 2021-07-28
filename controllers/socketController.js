@@ -63,18 +63,13 @@ module.exports = (io) => {
       }
     })
 
-    socket.on('disconnect', async () => {
-      try {
-        console.log('a user disconnected')
-        const idFromSession = socket.request.session.passport.user
-        onlineUsers = onlineUsers.filter((item) => item.id !== idFromSession)
-        onlineCount = await onlineUsers.length
-        io.emit('onlineCount', onlineCount)
-        io.emit('onlineUsers', onlineUsers)
-        io.emit('outlineList', onlineList)
-      } catch (error) {
-        console.warn(error)
-      }
+    socket.on('disconnect', () => {
+      const idFromSession = socket.request.session.passport.user
+      onlineUsers = onlineUsers.filter((item) => item.id !== idFromSession)
+      onlineCount = onlineUsers.length
+      io.emit('onlineCount', onlineCount)
+      io.emit('onlineUsers', onlineUsers)
+      io.emit('outlineList', onlineList)
     })
   })
 }
