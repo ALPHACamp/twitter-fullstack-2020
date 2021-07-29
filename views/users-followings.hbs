@@ -1,0 +1,54 @@
+<div class="w-100">
+  <div id="title" class="d-flex w-100 align-items-center">
+    <a href="/tweets" class="">
+      <svg width="17" height="14" viewBox="0 0 17 14" fill="none" xmlns="http://www.w3.org/2000/svg" class="m-3">
+        <path
+          d="M16 5.99988H3.41399L7.70699 1.70687C8.09699 1.31687 8.09699 0.683875 7.70699 0.292875C7.31699 -0.0981249 6.68399 -0.0971249 6.29299 0.292875L0.292988 6.29288C-0.0970117 6.68288 -0.0970117 7.31588 0.292988 7.70687L6.29299 13.7069C6.48799 13.9019 6.74299 13.9999 6.99999 13.9999C7.25699 13.9999 7.51199 13.9019 7.70699 13.7069C8.09699 13.3169 8.09699 12.6839 7.70699 12.2929L3.41399 7.99988H16C16.553 7.99988 17 7.55288 17 6.99988C17 6.44688 16.553 5.99988 16 5.99988Z"
+          fill="black" />
+      </svg>
+    </a>
+    <div id="titleText" class="ms-3 my-2">
+      <p class="m-0 fw-bolder">{{thisPageUser.name}}</p>
+      <p class="m-0" style="font-size: xx-small;color:#657786">{{thisPageUser.TweetsCount}} 推文</p>
+    </div>
+  </div>
+  <nav class="nav border-bottom">
+    <a class="nav-link" href="/users/{{thisPageUser.id}}/followers">跟隨者</a>
+    <a class="nav-link active" href="/users/{{thisPageUser.id}}/followings">正在跟隨</a>
+  </nav>
+  {{#each Followings}}
+  <div class="d-flex w-100 border-bottom">
+    {{#if this.avatar}}
+    <a href="/users/{{thisPageUser.id}}/tweets" class="d-flex m-2" style="height: 50px; width:50px" >
+      <img src="{{this.avatar}}" class="rounded-circle" height="50px" width="50px">
+    </a>
+    {{else}}
+    <a href="/users/{{thisPageUser.id}}/tweets" class="d-flex m-2" style="height: 50px; width:50px">
+      <img src="https://i.imgur.com/3P9xRqb.jpg" class="rounded-circle" height="50px" width="50px">
+    </a>
+    {{/if}}
+    <div class="d-flex flex-column flex-fill">
+      <div class="d-flex justify-content-between p-2">
+        <div class="d-flex flex-column justify-content-center" style="line-height: 1;">
+          <p class="m-0">{{this.name}}</p>
+          <a href="/users/{{this.id}}/tweets" class="user-link mt-1">@{{this.account}}</a>
+        </div>
+        {{#isEqual this.id ../user.id}}
+        {{else}}
+        {{#if isFollowing}}
+        <form action="/followships/{{this.id}}?_method=DELETE" method="post">
+          <button type="submit" class="btn btn-regular rounded-pill" style="height: 32px;">正在跟隨</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="post">
+          <input type="text" name="id" id="id" value="{{this.id}}" hidden>
+          <button type="submit" class="btn btn-outline-regular rounded-pill" style="height: 32px;">跟隨</button>
+        </form>
+        {{/if}}
+        {{/isEqual}}
+      </div>
+      <p class="text-start p-2" style="word-break: break-all;">{{this.introduction}}</p>
+    </div>
+  </div>
+  {{/each}}
+</div>
