@@ -77,7 +77,7 @@ socket.on('onlineUsers', (onlineUsers) => {
   onlineUsers.forEach(onlineUsers => {
     addUser(onlineUsers)
   })
-  // publicPeople.scrollTo(0, publicPeople.scrollHeight)
+  publicPeople.scrollTo(0, publicPeople.scrollHeight)
 })
 
 function addUser(data) {
