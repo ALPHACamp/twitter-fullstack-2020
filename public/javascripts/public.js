@@ -6,8 +6,6 @@ const input = document.getElementById('message')
 const username = document.getElementById('name')
 const id = document.getElementById('id')
 const avatar = document.getElementById('avatar')
-const onlineList = document.getElementById('onlineList')
-const outlineList = document.getElementById('outlineList')
 const onlinePeople = document.getElementById('onlinePeople')
 const publicPeople = document.getElementById('publicPeople')
 const onlineCount = document.getElementById('onlineCount')
@@ -82,24 +80,20 @@ socket.on('onlineUsers', (onlineUsers) => {
   // publicPeople.scrollTo(0, publicPeople.scrollHeight)
 })
 
-function addUser (data) {
+function addUser(data) {
   const htmlString = `
-  <li class="list-group-item hovercard" style="border-left: none;border-right: none;height:5rem">
-  <div class="row justify-content-start align-items-center">
-  <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;" id="onlineUsers">
-                <a href="/users/${data.id}">
-                  <img src="${data.avatar}" alt="" width="50" height="50" class="rounded-circle">
-                </a>
-              </div>
-              <div class="col-6 ps-3 pt-3 d-flex">
-                <p class="d-none">${data.id}</p>
-                <p  class="d-none">${data.avatar}</p>
-                <h5 style="line-height: 18px;">${data.name}</h5>
-                <p class="text-muted" style="line-height:16px; margin-left: 5px;">@${data.account}</p>
-              </div>
-              </div>
-              </li>
-              `
+  <div class="row justify-content-start align-items-center px-2 py-1 rounded hovercard"
+    style="border: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 3px;" onclick="location.href='/users/${data.id}'">
+    <div class="col-2 d-flex justify-content-center align-items-center" id="onlineUsers">
+      <img src="${data.avatar}" width="50" height="50" class="rounded-circle">
+    </div>
+    <div class="col-6 d-flex" style="height: 60px;">
+      <h5 style="line-height: 60px;">${data.name}</h5>
+      <p class="text-muted ps-2" style="font-size: 0.875em; line-height: 60px;">
+        @${data.account}</p>
+    </div>
+  </div>
+  `
   onlinePeople.innerHTML += htmlString
 }
 
@@ -108,11 +102,24 @@ socket.on('onlineCount', (data) => {
 })
 
 socket.on('onlineList', (data) => {
-  const htmlString = `<li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">${data.name} 上線了</li>`
-  onlineList.innerHTML += htmlString
+  let onlineList = document.createElement('ul')
+  onlineList.classList.add('list-group', 'd-flex', 'flex-column', 'align-items-center')
+  onlineList.innerHTML = `
+    <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">${data.name} 上線了</li>
+  `
+  board.appendChild(onlineList)
+  publicboard.scrollTo(0, publicboard.scrollHeight)
 })
 
 socket.on('outlineList', (data) => {
-  const htmlString = `<li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">${data.name} 離線了</li>`
-  outlineList.innerHTML += htmlString
+  if (data.name) {
+    let outlineList = document.createElement('ul')
+    outlineList.classList.add('list-group', 'd-flex', 'flex-column', 'align-items-center')
+    outlineList.innerHTML = `
+    <li class="list-group-item mt-2 rounded-pill btn-sm" style="background-color:lightgray">${data.name} 離線了</li>
+  `
+    board.appendChild(outlineList)
+    publicboard.scrollTo(0, publicboard.scrollHeight)
+  }
+
 })
