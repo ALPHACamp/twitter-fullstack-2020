@@ -1,0 +1,79 @@
+<div class="d-block justify-content-center">
+  <div class="contener" style="width: 30rem; height:3rem; border-top: thin solid #e6ecf0;">
+    <div class="d-flex justify-content-start mx-2">
+      <h4 style="padding: 4px;"><a href="/tweets" style="color: black;">&#8592; </a></h4>
+      <div class="my-0 ml-2">
+        <p class="my-0" style="font-weight: bold;">{{user.name}}</p>
+        <p class="small">{{user.RepliesTweetsCount}} 推文</p>
+      </div>
+    </div>
+  </div>
+
+  <!--User 頭像&背景-->
+  <div class="contener" style="border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
+    <div class="user-profile-card d-flex flex-column justify-content-start text-center">
+      {{> message}}
+      <img class="user-profile-cover" src="{{user.cover}}" alt="no pic">
+      <img class="user-profile-avatar" src="{{user.avatar}}" alt="no pic">
+      <div class="d-flex justify-content-end m-1">
+        <a href="/users/{{user.id}}/edit"><button class="btn user-profile-btn">編輯個人資訊</button></a>
+      </div>
+    </div>
+  </div>
+
+  <!--User 基本資料-->
+  <div class="contener" style="border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
+    <div class="mx-2 pt-2">
+      <p class="m-0" style="font-weight: bold;">{{user.name}}</p>
+      <small>@{{user.account}}</small>
+      <div class="py-2">
+        <p>{{user.introduction}}</p>
+      </div>
+      <div>
+        <span class="mr-2">{{user.followingsCount}} 個追蹤中</span>
+        <span>{{user.followersCount}} 位追蹤者</span>
+      </div>
+    </div>
+  </div>
+
+  <!--Navs-->
+  <div class="contener" style="border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
+    <ul class="nav justify-content">
+      <li class="nav-item">
+        <a href="/users/{{user.id}}" class="nav-link" style="color:black;">推文</a>
+      </li>
+      <li class="nav-item">
+        <a href="/users/{{user.id}}/repliesList" class="nav-link active router-link-active" aria-current="page"
+          style="color:orangered;border-bottom-style: solid; border-width: 1px; border-color:orangered;">推文與回覆</a>
+      </li>
+      <li class="nav-item">
+        <a href="/users/{{user.id}}/likes" class="nav-link " style="color:black;">喜歡的內容</a>
+      </li>
+    </ul>
+  </div>
+
+  <!--Tweets-->
+  {{#each repliesTweets}}
+  <div class="contener" style="border-top: thin solid #e6ecf0; border-right: thin solid #e6ecf0;">
+    <div class="card-body p-2">
+      <div class="row">
+        <div class="col-2">
+          <a href="/users/{{this.id}}">
+            <img class="user-profile-tweets-avatar" src="{{this.avatar}}" alt="no pic">
+          </a>
+        </div>
+        <div class="col-10">
+          <h5 class="card-title" style="display: inline-block;">{{this.name}}</h5>
+          <a href="{{this.id}}" class="card-link" style="display: inline-block;">@{{this.account}}</a>
+          <p class="card-text" style="display: inline-block;"><small class="text-muted">{{this.elapsedTime}}</small>
+          </p>
+          <p class="card-text">{{this.description}}</p>
+          <button type="button" class="bi bi-chat reply_btn ml-0"><span
+              class="ml-2">{{this.repliesCount}}</span></button>
+          <button type="button" class="bi bi-heart like_btn ml-0"><span class="ml-2">{{this.likesCount}}</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>

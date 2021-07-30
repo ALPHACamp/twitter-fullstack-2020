@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Twitter</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/style/style.css" type="text/css">
+
+</head>
+
+<body>
+    <!--
+    {{#ifRole user.role "admin"}}
+        管理者 共用樣板放此
+    {{/ifRole}}
+    -->
+    {{#ifRole user.role "user"}}
+    <div class="contener">
+        <div class="row no-gutters">
+            <main class="col-3">
+                <div class="main_sidebar" style="position: fixed;">
+                    <div class="nav_logo col-auto">
+                        <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M29.2746 23.8533C29.2746 23.8533 23.6745 32.9337 19.0831 32.9337C11.0523 32.9337 18.5365 15.635 24.3936 15.635C28.4807 15.635 29.2746 23.8533 29.2746 23.8533Z"
+                                fill="#FF6600" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M35.9293 35.273C34.3339 36.9706 32.3649 38.2733 30.1784 39.0777C27.9918 39.8821 25.648 40.1661 23.3326 39.9072C21.0172 39.6483 18.7939 38.8536 16.8392 37.5861C14.8844 36.3186 13.2519 34.6133 12.071 32.6052C13.3986 34.4109 15.6504 35.6146 18.8523 35.6146C26.74 35.6146 31.2175 29.4851 31.2175 29.4851C31.2175 29.4851 31.6047 34.3295 35.9195 35.273H35.9293Z"
+                                fill="#FF6600" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M38.2917 18.0588C39.4723 20.3145 40.0586 22.8337 39.9954 25.3787C39.9322 27.9238 39.2215 30.4108 37.9305 32.6051C36.9094 32.0323 36.1544 31.0811 35.8284 29.9568L34.1168 24.8293L38.2917 18.0588Z"
+                                fill="#FF6600" />
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M25.0024 10.013C28.7639 10.0105 32.3885 11.4241 35.1548 13.9725L32.3141 18.5566C31.2858 15.8823 29.1968 13.2047 25.1325 13.2047C16.8088 13.2047 10.6392 22.2916 10.6392 27.9884C10.6374 28.7252 10.7315 29.459 10.9191 30.1715C10.0867 27.9044 9.81404 25.4699 10.1243 23.0749C10.4345 20.6798 11.3185 18.3951 12.7011 16.4148C14.0837 14.4345 15.924 12.8173 18.0656 11.7004C20.2073 10.5836 22.5869 10.0003 25.0024 10V10.013Z"
+                                fill="#FF6600" />
+                        </svg>
+                    </div>
+                    <div class="nav_item col-auto">
+                        <a href="/tweets">
+                            <i class="bi bi-house"></i>
+                            <span class="item">首頁</span>
+                        </a>
+                    </div>
+                    <div class="nav_item col-auto">
+                        <a href="/users/{{user.id}}">
+                            <i class="bi bi-person"></i>
+                            <span class="item">個人資料</span>
+                        </a>
+                    </div>
+                    <div class="nav_item col-auto">
+                        <a href="/users/{{user.id}}/setting">
+                            <i class="bi bi-gear"></i>
+                            <span class="item">設定</span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn nav_post" data-toggle="modal" data-target="#postTweet">推文</button>
+
+                    <div class="logout col-auto">
+                        <a href="/logout">
+                            <svg width="20" height="18" viewBox="0 0 20 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M9 13L5 9M5 9L9 5M5 9H19M14 13V14C14 14.7956 13.6839 15.5587 13.1213 16.1213C12.5587 16.6839 11.7956 17 11 17H4C3.20435 17 2.44129 16.6839 1.87868 16.1213C1.31607 15.5587 1 14.7956 1 14V4C1 3.20435 1.31607 2.44129 1.87868 1.87868C2.44129 1.31607 3.20435 1 4 1H11C11.7956 1 12.5587 1.31607 13.1213 1.87868C13.6839 2.44129 14 3.20435 14 4V5"
+                                    stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <span>登出</span>
+                        </a>
+                    </div>
+                </div>
+            </main>
+
+            <div class="col-6">
+                {{{body}}}
+            </div>
+
+            <div class="col-3" style="margin-top: 2rem;">
+                <div class="d-block justify-content-center">
+                    <div class="card" style="width: 100%;">
+                        <h6 style="padding: 1rem;" class="card-header">跟隨誰</h6>
+                    </div>
+                    {{#each user.topUser}}
+                    <div class="contener"
+                        style="width: 100%; height:auto; border: thin solid #e6ecf0; background-color:#f5f5f5">
+                        <div class="card-body">
+                            <i class="bi bi-person-square reply_line"></i>
+                            &nbsp;
+                            <h5 class="reply_line">{{this.name}}</h5>
+                            &nbsp;
+                            <a href="/users/{{this.id}}" class="card-link">@{{this.account}}</a>
+
+                            {{#if this.isFollowed}}
+                            <form action="/users/{{this.id}}/removeFollow?_method=DELETE" method="POST"
+                                class="reply_line float-right">
+                                <button type="submit" class="btn btn-outline"
+                                    style="color:white;border-color:orangered;border-radius: 100px;font-size: 12px;width:80px;background-color: orangered;">正在跟隨</button>
+                            </form>
+                            {{else}}
+                            <form action="/users/{{this.id}}/addFollow" method="POST" class="reply_line float-right">
+                                <button type="submit" class="btn btn-outline"
+                                    style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 12px;width:80px;background-color: white;">跟隨</button>
+                            </form>
+                            {{/if}}
+
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+
+                <!-- followship -->
+                <div class="d-flex flex-column" id="suggest-follower">
+                    {{#each users}}
+                    <div class="col-12 d-flex mt-3">
+                        <img class="user-avatar rounded-circle" src="{{this.avatar}}" width="50" height="50"
+                            alt="no pic">
+                        <div class="tweets_content">
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex flex-column align-items-center">
+                                    <span class="user-name mr-3 ml-3">{{this.name}}</span>
+                                    <span class="user-acount mr-2">{{this.acount}}</span>
+                                </div>
+                                {{#if this.isFollowed}}
+                                <form action="/users/{{this.id}}/removeFollow?_method=DELETE" method="POST"
+                                    class="col-1 mr-2">
+                                    <button type="submit" class="btn btn-outline"
+                                        style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">正在跟隨</button>
+                                </form>
+                                {{else}}
+                                <form action="/users/{{this.id}}/addFollow" method="POST" class="col-1 mr-2">
+                                    <button type="submit" class="btn btn-outline"
+                                        style="color:orangered;border-color:orangered;border-radius: 100px;font-size: 15px;width:100px;background-color: white;">跟隨</button>
+                                </form>
+                                {{/if}}
+                            </div>
+                            <div class="text_content">
+                                <p class="ml-3">{{this.introduction}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    {{{body}}}
+    {{/ifRole}}
+    <!--推文 彈窗-->
+    <div>
+        <div class="modal fade" id="postTweet" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="contener" style="width: 30rem; height:10rem;">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="bi bi-person-square"></i>
+                                </div>
+                                <div class="col-10">
+                                    <form action="/tweets" method="POST" style="width: 100%;" id="newTweet_sidebar">
+                                        <div class="form-label-group">
+                                            <textarea form="newTweet_sidebar" class="tweet_new" placeholder="有什麼新鮮事？"
+                                                name="description"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn new_post">推文</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+</html>
