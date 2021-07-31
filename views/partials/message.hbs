@@ -1,0 +1,38 @@
+
+{{#if successMessage}}
+    <div class="alert alert-success text-center" role="alert">
+      {{successMessage}}
+    </div>
+{{/if}}
+
+{{#if errorMessage}}
+    <div class="alert alert-danger text-center" role="alert">
+        {{errorMessage}}
+    </div>
+{{/if}}
+
+
+{{#if successFlashMessage}}
+  <div class="alert alert-success text-center useOpacity" role="alert">
+    {{successFlashMessage}}
+  </div>
+{{/if}}
+
+{{#if errorFlashMessage}}
+  <div class="alert alert-danger text-center useOpacity" role="alert">
+    {{errorFlashMessage}}
+  </div>
+{{/if}}
+
+
+{{#if successScrollingMessage}}
+<div class="alert alert-success text-center useScrolling" role="alert">
+  {{successScrollingMessage}}
+</div>
+{{/if}}
+
+{{#if errorScrollingMessage}}
+<div class="alert alert-danger text-center useScrolling" role="alert">
+  {{errorScrollingMessage}}
+</div>
+{{/if}}

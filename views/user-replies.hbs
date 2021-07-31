@@ -1,0 +1,199 @@
+<div class="container-fluid">
+
+  {{> left-column}}
+  <div class="user-main">
+    {{> message}}
+    <div class="user-header">
+      <a href="/tweets" style="text-align: center;"><i class="user-arrow icon icon-arrow"></i></a>
+      <div class="user-header-info">
+        <div class="user-header-name">{{visitUser.name}}</div>
+        <div class="user-header-tweet-count">{{visitUser.Tweets.length}} 推文</div>
+      </div>
+    </div>
+
+    <div class="user-cover"
+      style="height: 200px;background: url({{visitUser.cover}}),#C4C4C4;background-position: center;background-size: cover;">
+    </div>
+
+    <div class="user-info">
+      <div class="user-avatar"
+        style="height:140px;width:140px;background: url({{visitUser.avatar}}),#C4C4C4; background-position:center;background-size:cover;">
+      </div>
+      <div class="user-action">
+        {{#Equal user.id visitUser.id}}
+        <button type="button" class="button btn-edit-profile" data-toggle="modal"
+          data-target="#editModal">編輯個人資訊</button>
+        {{else}}
+        <div class="action-item user-icon">
+          <i class="icon icon-messege"></i>
+        </div>
+        <div class="action-item user-icon">
+          <i class="icon icon-noti"></i>
+        </div>
+        {{#if ../isFollowing}}
+        <form action="/followships/{{../visitUser.id}}?_method=DELETE" method="POST">
+          <button class="action-item btn-user-unfollow" name="id" value="{{../visitUser.id}}">正在追蹤</button>
+        </form>
+        {{else}}
+        <form action="/followships" method="POST">
+          <button class="action-item btn-user-follow" name="id" value="{{../visitUser.id}}">追蹤 +</button>
+        </form>
+        {{/if}}
+        {{/Equal}}
+      </div>
+      <div class="user-data">
+        <div class="user-name">{{visitUser.name}}</div>
+        <div class="user-account">@{{visitUser.account}}</div>
+        <div class="user-intro">{{visitUser.introduction}}</div>
+        <div class="user-follow">
+          <a href="/users/{{visitUser.id}}/followings" class="user-following">
+            <span>{{visitUser.Followings.length}} 個</span>跟隨中
+          </a>
+          <a href="/users/{{visitUser.id}}/followers" class="user-follower">
+            <span>{{visitUser.Followers.length}} 位</span>追隨者
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="user-page-nav navbar-expand-lg navbar-light">
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav user-navbar">
+          <a class="nav-link" href="/users/{{visitUser.id}}/tweets">推文</a>
+          <a class="nav-link  active" href="/users/{{visitUser.id}}/replies">推文與回覆</a>
+          <a class="nav-link" href="/users/{{visitUser.id}}/likes">喜歡的內容</a>
+        </div>
+      </div>
+    </nav>
+
+    {{!-- tweets-replies --}}
+    <div class="user-tweets-list">
+      {{#each tweets}}
+      <div class="card tweets-content">
+        <div class="card-body tweets-body">
+          <div class="left-item">
+            <a href="/users/{{this.User.id}}">
+
+              <div class="tweet-user-avatar"
+                style="width: 50px;height:50px;background:url({{this.User.avatar}})#C4C4C4;background-repeat:no-repeat;background-position: center;background-size: cover;">
+              </div>
+            </a>
+          </div>
+          <div class="right-item">
+            <div class="title">
+              <span class="name">
+                <a href="/users/{{this.User.id}}/tweets">
+                  {{this.User.name}}
+                </a>
+              </span>
+              <span class="time">
+                @{{this.User.account}}・{{moment this.createdAt}}
+              </span>
+            </div>
+            <a href="/tweets/{{this.id}}" class="body">
+              {{subText this.description 100}}
+            </a>
+            <div class="footer">
+              <div class="footer-item reply-item">
+                <button type="button" class="btn" data-toggle="modal">
+                  <ul class="reply-text" style="display:none">
+                    <li>{{this.User.id}}</li>
+                    <li>{{this.User.name}}</li>
+                    <li>{{this.User.account}}</li>
+                    <li>{{moment this.createdAt}}</li>
+                    <li>{{this.description}}</li>
+                    <li>{{this.User.avatar}}</li>
+                    <li>{{this.id}}</li>
+                  </ul>
+                  <i class="icon-reply reply-on"></i>
+                </button>
+                <div class="item-count reply-count">{{this.Replies.length}}</div>
+              </div>
+
+              <div class="footer-item like-item">
+                {{#if this.isLikeBySelf}}
+                <form action="/tweets/{{this.id}}/unlike" method="post" class="form-like">
+                  <button type="submit" class="btn">
+                    <i class="like icon-like-fill"></i>
+                  </button>
+                  <div class="like-item-count item-count">{{this.Likes.length}}</div>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="post" class="form-like">
+                    <button type="submit" class="btn">
+                      <i class="icon-like"></i>
+                    </button>
+                    <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+                    {{/if}}
+                  </form>
+              </div>
+            </div>
+            {{#each this.replies}}
+            <div class="reply-content">
+              <div class="left-item">
+                <a href="/users/{{this.User.id}}">
+                  <img src="{{this.User.avatar}}" class="rounded-circle"
+                    style="width: 50px;height:50px;background-color:#C4C4C4;">
+                </a>
+              </div>
+              <div class="right-item">
+                <div class="title">
+                  <span class="name">
+                    <a href="/users/{{this.User.id}}/tweets">
+                      {{this.User.name}}
+                    </a>
+                  </span>
+                  <span class="time">
+                    @{{this.User.account}}・{{moment this.createdAt}}
+                  </span>
+                </div>
+                <div class="body">
+                  {{subText this.comment 100}}
+                </div>
+                <div class="footer">
+                  <div class="footer-item reply-item">
+                    <button type="button" class="btn" data-toggle="modal">
+                      <ul class="reply-text" style="display:none">
+                        <li>{{this.User.id}}</li>
+                        <li>{{this.User.name}}</li>
+                        <li>{{this.User.account}}</li>
+                        <li>{{moment this.createdAt}}</li>
+                        <li>{{this.comment}}</li>
+                        <li>{{this.User.avatar}}</li>
+                        <li>{{../this.id}}</li>
+                        <li>{{this.id}}</li>
+                      </ul>
+                      <i class="icon-reply replies-on"></i>
+                    </button>
+                    <div class="item-count reply-count">{{this.followingByReply.length}}</div>
+                  </div>
+
+                  <div class="footer-item like-item">
+                    {{#if this.isLikeBySelf}}
+                    <form action="/replies/{{this.id}}/unlike" method="post" class="form-like">
+                      <button type="submit" class="btn">
+                        <i class="like icon-like-fill"></i>
+                      </button>
+                      <div class="like-item-count item-count">{{this.Likes.length}}</div>
+                      {{else}}
+                      <form action="/replies/{{this.id}}/like" method="post" class="form-like">
+                        <button type="submit" class="btn">
+                          <i class="icon-like"></i>
+                        </button>
+                        <div class="item-count unlike-item-count">{{this.Likes.length}}</div>
+                        {{/if}}
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+
+  {{> right-column}}
+  {{> modal}}
+</div>

@@ -1,0 +1,61 @@
+<div class="container-fluid" style="height: 100vh;">
+
+  {{!-- left-column --}}
+  {{> left-column}}
+  <div class="tweets-center" style="grid-column-start: 3;grid-column-end: 5;">
+    <div class="tweets-title">
+      帳戶設定
+    </div>
+    <div class="container">
+      <form class="row w-50" action="/users/{{user.id}}/setting?_method=PUT" method="POST">
+        <div class="w-100 mt-2 ml-4">
+          {{> message}}
+        </div>
+
+        <div class="w-100 mt-2 ml-4" style="position: relative;">
+          <p style="position: absolute;color:#657786;" class="small">帳號</p>
+          <input type="text" name="account" class="form-control"
+            style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black; padding-top: 16px; height:50px;"
+            value="{{user.account}}" required autofocus>
+        </div>
+
+        <div class="w-100 mt-4 ml-4" style="position: relative;">
+          <p style="position: absolute;color:#657786;" class="small">名稱</p>
+          <input type="text" name="name" class="form-control"
+            style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black; padding-top: 16px; height:50px;"
+            value="{{user.name}}" required>
+        </div>
+
+
+        <div class="w-100 mt-4 ml-4" style="position: relative;">
+          <p style="position: absolute;color:#657786;" class="small">Email</p>
+          <input type="email" name="email" class="form-control"
+            style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black; padding-top: 16px; height:50px;"
+            value="{{user.email}}" required>
+        </div>
+
+        <div class="w-100 mt-4 ml-4" style="position: relative;">
+          <p style="position: absolute;color:#657786;" class="small">密碼</p>
+          <input type="password" name="password" class="form-control"
+            style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black; padding-top: 16px; height:50px;"
+            required>
+        </div>
+
+        <div class="w-100 mt-4 ml-4" style="position: relative;">
+          <p style="position: absolute;color:#657786;" class="small">密碼確認</p>
+          <input type="password" name="checkPassword" class="form-control"
+            style="outline: none;border: none;background-color:#F5F8FA;border-radius:0px; border-bottom: 2px solid black; padding-top: 16px; height:50px;"
+            required>
+        </div>
+
+        <div class="row justify-content-end w-100">
+          <button class="btn btn-lg btn-primary btn-block mt-4 w-25" type="submit"
+            style="border-radius: 30px;background-color:#FF6600;border-color: #fff;">儲存</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+  {{> modal}}
+</div>
