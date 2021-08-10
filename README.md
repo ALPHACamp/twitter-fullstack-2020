@@ -56,10 +56,10 @@ cd twitter-fullstack-2020
 5. 匯入種子檔案與初始設定
 
 ```
-在 Terminal 輸入 npx sequelize db:migrate 指令
+在 Terminal 輸入 
 
-在 Terminal 輸入 npx sequelize db:seed:all 指令
-
+npx sequelize db:migrate 
+npx sequelize db:seed:all 
 ```
 
 6. 啟動伺服器，執行 app.js 檔案
@@ -83,6 +83,6 @@ App is running on http://localhost:3000
 
 ## Contributor - 專案開發人員
 
-> [Nina Liu](https://github.com/Nina19980108)
-> [MOMOJ](https://github.com/MOMOJMOGG)
+> [Nina Liu](https://github.com/Nina19980108)  
+> [MOMOJ](https://github.com/MOMOJMOGG)  
 > [Erwin](https://github.com/afwyou)
