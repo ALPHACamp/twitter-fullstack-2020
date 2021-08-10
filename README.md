@@ -1,4 +1,4 @@
-# TWITTER
+# Twitter MoNiEr
 
 一個使用 Node.js + Express 打造的社群網站，並透過 MySQL 資料庫取得資料。
 可以註冊帳號，並使用帳號登入。
@@ -7,10 +7,10 @@
 ## 專案畫面
 
 首頁
-![image]()
+![image](https://miro.medium.com/max/6208/1*qVpChpRCqNaxpgpRicBNnA.png)
 
-登入頁
-![image]()
+貼文詳細頁
+![image](https://miro.medium.com/max/6208/1*Qyl0_YbrklpZi0CCbxWPRg.png)
 
 ## Features - 產品功能
 
@@ -84,3 +84,5 @@ App is running on http://localhost:3000
 ## Contributor - 專案開發人員
 
 > [Nina Liu](https://github.com/Nina19980108)
+> [MOMOJ](https://github.com/MOMOJMOGG)
+> [Erwin](https://github.com/afwyou)
