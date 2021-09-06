@@ -1,0 +1,101 @@
+<div class='container-fluid'>
+  <div class='row flex-nowrap ps-xl-4 ps-md-3'>
+    <div class='col-2 col-sm-3 px-sm-2 px-0'>
+      <div class='d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100'
+        style='position: fixed;'>
+        <a class='d-flex align-items-center mb-3 mb-md-0 me-md-auto ps-3' href='/'>
+          <img src='https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-8192.png'
+            alt='' class='img-fluid my-3' style='display: block; width: 50px;' />
+        </a>
+        <ul class='nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start' id='menu'
+          style='width: 100%;'>
+          <li class='nav-item px-2 py-1'>
+            <a class='nav-link align-middle text-dark h-tomato' href='/tweets'>
+              <i class='fas fa-home' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 fw-bold'>首頁</span>
+            </a>
+          </li>
+          <li class="nav-item px-2 py-1">
+            <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+              <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+              <span class="d-none d-sm-inline h5 ps-3 fw-bold">公開聊天室</span>
+            </a>
+          </li>
+          <li class='nav-item px-2 py-1'>
+            <a class='nav-link align-middle text-dark h-tomato' href='/users/{{user.id}}'>
+              <i class='far fa-user' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 fw-bold'>個人資料</span>
+            </a>
+          </li>
+          <li class='nav-item px-2 py-1'>
+            <a class='nav-link align-middle text-dark h-tomato' href='/setting'>
+              <i class='fas fa-cog a-tomato' style='font-size: 1.2em;'></i>
+              <span class='d-none d-sm-inline h5 ps-3 a-tomato fw-bold'>設定</span>
+            </a>
+          </li>
+          <li class='nav-item p-2' style='width: inherit;'>
+            <button type='submit' class='btn btn-tomato rounded-pill mt-3' style='width: 100%;' data-bs-toggle='modal'
+              data-bs-target='#tweetModal'>
+              <span class='h5 fw-bold d-none d-sm-inline'>推文</span>
+              <i class="fas fa-feather-alt d-sm-none"></i>
+            </button>
+          </li>
+        </ul>
+        <hr />
+        <div class='dropdown p-2 pb-4'>
+          <a href='/signout' class='d-flex align-middle text-decoration-none text-dark'>
+            <i class='fas fa-sign-out-alt' style='font-size: 1.2em;'></i>
+            <span class='d-none d-sm-inline h5 ps-2 fw-bold'>登出</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class='row col-10 col-lg-7 col-md-8 col-sm-9 py-2'>
+      <div class='card-header col-12'>
+        <span class='h5' style='font-weight: bold;'>帳戶設定</span>
+      </div>
+      {{> message}}
+      <div class='card-body col-12'>
+        <form action='/setting?_method=PUT' method='POST' class='mt-5'>
+          <div class='mb-3'>
+            <label for='account' style='margin-bottom: -30px; margin-left: 8px;'>帳號</label>
+            <input type='text' class='form-control pt-4' id='account' name='account'
+              style='border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb'
+              aria-describedby='accountHelp' value='{{account}}' />
+            <div id="accountHelp" class="form-text ps-2"></div>
+          </div>
+          <div class='mb-3'>
+            <label for='name' style='margin-bottom: -30px; margin-left: 8px;'>名稱</label>
+            <input type='text' class='form-control pt-4' id='name' name='name'
+              style='border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb'
+              aria-describedby='nameHelp' value='{{name}}' />
+          </div>
+          <div class='mb-3'>
+            <label for='email' style='margin-bottom: -30px; margin-left: 8px;'>Email</label>
+            <input type='email' class='form-control pt-4' id='email' name='email'
+              style='border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb'
+              aria-describedby='emailHelp' value='{{email}}' />
+          </div>
+          <div class='mb-3'>
+            <label for='password' style='margin-bottom: -30px; margin-left: 8px;'>密碼</label>
+            <input type='password' class='form-control pt-4' id='password' name='password'
+              style='border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb'
+              aria-describedby='passwordHelp' value='{{password}}' />
+          </div>
+          <div class='mb-2'>
+            <label for='checkPassword' style='margin-bottom: -30px; margin-left: 8px;'>密碼確認</label>
+            <input type='password' class='form-control pt-4' id='checkPassword' name='checkPassword'
+              style='border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb'
+              aria-describedby='checkPasswordHelp' value='{{checkPassword}}' />
+          </div>
+          <br />
+          <div class='col-12 d-flex justify-content-end'>
+            <button class='btn btn-tomato btn-block fw-bold' style='border-radius: 30px; width: 90px'
+              type='submit'>儲存</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/javascripts/check.js"></script>
