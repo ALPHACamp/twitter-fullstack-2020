@@ -155,3 +155,11 @@ font-style: normal;
 font-weight: bold;
 border:  #ffffff
 }
+
+.logout-button {
+  position: relative;
+  margin-top: 65vh;
+  margin-left: 10vh;
+  font-size: 25px;
+  color:black;
+}
