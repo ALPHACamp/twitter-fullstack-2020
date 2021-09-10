@@ -1,7 +1,7 @@
 const helpers = require('../_helpers')
 const express = require('express')
 const router = express.Router()
-// const passport = require('../config/passport')
+const passport = require('../config/passport')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
@@ -15,7 +15,7 @@ const authenticated = (req, res, next) => {
 
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role == "admin") {
+    if (helpers.getUser(req).role === "admin") {
       return next()
     }
     return res.redirect('/')
@@ -55,7 +55,7 @@ router.get('/', (req, res) => {
 // //取消追蹤使用者
 // router.delete('/following/:user_id', userController.removeFollowing)
 
-// //顯示所有貼文(要改api)
+TODO:// //顯示所有貼文(要改api)
 // router.get('/tweets', tweetController.getTweets)
 // //顯示特定貼文
 // router.get('/tweets/:id', tweetController.getTweet)
@@ -84,7 +84,7 @@ router.get('/', (req, res) => {
 router.get('/login', userController.loginPage)
 router.post('/login', userController.login)
 // //使用者編輯帳號頁面
-// router.get('/users/:user_id/edit', userController.editAccount)
+router.get('/users/:user_id/edit', userController.editAccount)
 // router.put('/users/:user_id', userController.putAccount)
 // //註冊
 router.get('/register', userController.registerPage)
