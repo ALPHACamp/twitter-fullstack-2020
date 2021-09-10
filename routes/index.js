@@ -36,20 +36,19 @@ router.get('/', (req, res) => {
 // //TopUsers(要改成api)
 // router.get('/users/top', userController.getTopUsers)
 // //使用者顯示特定使用者頁面
-// router.get('/users/:id', userController.getUser)
+// router.get('/users/:userId', userController.getUser)
 // //使用者編輯個人頁面(要改成api)
-// router.get('/users/:id/edit', userController.editUser)
-// router.put('/users/:id', userController.putUser)
+// router.put('/users/:userId/profile', userController.putUser)
 // //使用者所有貼文
-// router.get('/users/:id/tweets', userController.getUserTweets)
+// router.get('/users/:userId/tweets', userController.getUserTweets)
 // //使用者所有喜歡貼文
-// router.get('/users/:id/likes', userController.getUserLikeTweets)
+// router.get('/users/:userId/likes', userController.getUserLikeTweets)
 // //使用者所有回覆
-// router.get('/users/:id/replied_tweets', userController.getUserReplies)
+// router.get('/users/:userId/replied_tweets', userController.getUserReplies)
 // //使用者追蹤清單
-// router.get('/users/:id/followings', userController.getUserFollowings)
+// router.get('/users/:userId/followings', userController.getUserFollowings)
 // //使用者粉絲清單(被追蹤)
-// router.get('/users/:id/followers', userController.getUserFollowers)
+// router.get('/users/:userId/followers', userController.getUserFollowers)
 
 // //追蹤使用者
 // router.post('/following/:userId', userController.addFollowing)
@@ -84,6 +83,9 @@ router.get('/', (req, res) => {
 // //使用者登入頁面
 // router.get('/signin', userController.signInPage)
 // router.post('/signin', userController.signIn)
+// //使用者編輯帳號頁面
+// router.get('/users/:userId/edit', userController.editUser)
+// router.put('/users/:userId', userController.putUser)
 // //註冊
 // router.get('/signup', userController.signUpPage)
 // router.post('/signup', userController.signUp)
