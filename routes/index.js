@@ -6,16 +6,29 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 
-// TODO:9/10暫定
-// TODO: Kyle 畫面+followship
-// TODO: Johnson user+like
-// TODO: Vanessa tweet+reply
+const authenticated = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    return next()
+  }
+  res.redirect('/signin')
+}
 
+const authenticatedAdmin = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).isAdmin) {
+      return next()
+    }
+    return res.redirect('/')
+  }
+  res.redirect('/signin')
+}
+
+//TODO:測試用路由
 router.get('/', (req, res) => {
   res.render('register')
 })
 
-
+// //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到register測試)
 // //使用者顯示主頁面
 // router.get('/current_user', userController.getCurrentUser)
 
