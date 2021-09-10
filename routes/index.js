@@ -36,24 +36,24 @@ router.get('/', (req, res) => {
 // //TopUsers(要改成api)
 // router.get('/users/top', userController.getTopUsers)
 // //使用者顯示特定使用者頁面
-// router.get('/users/:userId', userController.getUser)
+// router.get('/users/:user_id', userController.getUser)
 // //使用者編輯個人頁面(要改成api)
-// router.put('/users/:userId/profile', userController.putUser)
+// router.put('/users/:user_id/profile', userController.putUser)
 // //使用者所有貼文
-// router.get('/users/:userId/tweets', userController.getUserTweets)
+// router.get('/users/:user_id/tweets', userController.getUserTweets)
 // //使用者所有喜歡貼文
-// router.get('/users/:userId/likes', userController.getUserLikeTweets)
+// router.get('/users/:user_id/likes', userController.getUserLikeTweets)
 // //使用者所有回覆
-// router.get('/users/:userId/replied_tweets', userController.getUserReplies)
+// router.get('/users/:user_id/replied_tweets', userController.getUserReplies)
 // //使用者追蹤清單
-// router.get('/users/:userId/followings', userController.getUserFollowings)
+// router.get('/users/:user_id/followings', userController.getUserFollowings)
 // //使用者粉絲清單(被追蹤)
-// router.get('/users/:userId/followers', userController.getUserFollowers)
+// router.get('/users/:user_id/followers', userController.getUserFollowers)
 
 // //追蹤使用者
-// router.post('/following/:userId', userController.addFollowing)
+// router.post('/following/:user_id', userController.addFollowing)
 // //取消追蹤使用者
-// router.delete('/following/:userId', userController.removeFollowing)
+// router.delete('/following/:user_id', userController.removeFollowing)
 
 // //顯示所有貼文(要改api)
 // router.get('/tweets', tweetController.getTweets)
@@ -84,8 +84,8 @@ router.get('/', (req, res) => {
 // router.get('/signin', userController.signInPage)
 // router.post('/signin', userController.signIn)
 // //使用者編輯帳號頁面
-// router.get('/users/:userId/edit', userController.editUser)
-// router.put('/users/:userId', userController.putUser)
+// router.get('/users/:user_id/edit', userController.editAccount)
+// router.put('/users/:user_id', userController.putAccount)
 // //註冊
 // router.get('/signup', userController.signUpPage)
 // router.post('/signup', userController.signUp)
