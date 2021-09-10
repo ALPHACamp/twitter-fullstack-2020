@@ -15,7 +15,7 @@ const authenticated = (req, res, next) => {
 
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).role == "admin") {
       return next()
     }
     return res.redirect('/')
@@ -87,8 +87,8 @@ router.get('/', (req, res) => {
 // router.get('/users/:user_id/edit', userController.editAccount)
 // router.put('/users/:user_id', userController.putAccount)
 // //註冊
-// router.get('/signup', userController.signUpPage)
-// router.post('/signup', userController.signUp)
+router.get('/signup', userController.signUpPage)
+router.post('/signup', userController.signUp)
 // //登出
 // router.get('/logout', userController.logout)
 
