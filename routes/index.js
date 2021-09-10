@@ -25,7 +25,7 @@ const authenticatedAdmin = (req, res, next) => {
 
 //TODO:測試用路由
 router.get('/', (req, res) => {
-  res.render('login')
+  res.render('accountSetting')
 })
 
 // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到register測試)

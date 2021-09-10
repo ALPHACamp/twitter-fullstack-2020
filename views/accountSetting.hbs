@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12">
+    <div class="col-md-3">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="width: 30px;height: 30px;">
+      </div>
+
+      <div>
+        <ul class="list-group ml-5">
+          <a href="">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-home mr-4"></i>首頁</div>
+            </li>
+          </a>
+
+          <a href="">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
+            </li>
+          </a>
+
+          <a href="">
+            <li class="list-group-item active" style="background-color: #E5E5E5; color:#FF6600">
+              <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
+            </li>
+          </a>
+        </ul>
+        <button type="submit" class="tweet-button">推文</button>
+      </div>
+    </div>
+
+    <div class="headerDivider"></div>
+
+
+    <div class="right-side col-md-8" style="padding:0; height:100%">
+      <div class="text-title ml-4 mt-3">帳戶資訊</div>
+      <hr style="width:100vw">
+
+      <div>
+        <input type="text" class="form-control ml-2" placeholder="帳號" aria-label="account">
+      </div>
+      <div>
+        <input type="text" class="form-control ml-2" placeholder="名稱" aria-label="name">
+      </div>
+      <div>
+        <input type="text" class="form-control ml-2" placeholder="Email" aria-label="email">
+      </div>
+      <div>
+        <input type="text" class="form-control ml-2" placeholder="密碼" aria-label="password">
+      </div>
+      <div>
+        <input type="text" class="form-control ml-2" placeholder="密碼確認" aria-label="checkPassword">
+      </div>
+      <div class="mt-4" style="text-align: right; width: 45vw">
+        <button type="submit" class="save-button">儲存</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 .wrap {
   margin: 0;
-  max-width: 1440px; 
-  max-height: 1200px; 
+  /* max-width: 1440px; 
+  max-height: 1200px;  */
   margin: 0 auto; 
 }
 
@@ -9,8 +9,15 @@
   max-width:40px;
   max-height:40px;
   position: relative; 
-  margin-top:5.4%;
-  margin-left: 48.6%;
+  margin-top:5.4vh;
+  margin-left: 48.6vw;
+}
+
+.setting-logo {
+  max-width: 30px;
+  max-height: 30px; 
+  margin-left: 7.1vw;
+  margin-top: 1.2vh
 }
 
 .sign-title {
@@ -34,6 +41,7 @@ text-align: center;
 
 .form-control {
   margin-bottom: 2.5%;
+  width: 45vw;
   height: 46px;
   background-color: #F5F8FA;
   border-radius: 4px;
@@ -80,4 +88,70 @@ font-size: 18px;
 line-height: 26px;
 text-decoration-line: none;
 color: #0099FF;
+}
+
+
+.list-group-item{
+  background-color: #e5e5e5;
+  color:black;
+  border: none;
+  margin-top: 25px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 26px;
+  text-align: left;
+}
+
+a:hover{
+  background-color: #e5e5e5;
+  text-decoration:none;
+}
+
+.tweet-button {
+position: relative;
+width: 14.5vh;
+margin-left: 7.1vh;
+margin-top: 25px;
+border-radius: 100px;
+align-items: center;
+background-color: #fF6600;
+color: #ffffff;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 25px;
+line-height: 40px;
+border:  #ffffff
+}
+
+.headerDivider { 
+  height:100vh;
+    border-left:1px solid rgba(0,0,0,.1); 
+    margin:0;
+} 
+
+.text-title {
+position: relative;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 26px;
+line-height: 40px;
+}
+
+.save-button {
+  position: relative;
+  width: 8vw;
+  margin-left: 31.25%;
+  height: 46px;
+  border-radius: 50px;
+  align-items: center;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+border:  #ffffff
 }
