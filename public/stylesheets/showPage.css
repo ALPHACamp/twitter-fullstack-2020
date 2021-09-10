@@ -1,5 +1,5 @@
 .wrap {
- margin: 0;
+  margin: 0;
   max-width: 1440px; 
   max-height: 1200px; 
   margin: 0 auto; 
@@ -13,7 +13,7 @@
   margin-left: 48.6%;
 }
 
-.create-account {
+.sign-title {
 position: relative;
 margin-top: 2.1%;
 font-family: Noto Sans TC;
@@ -28,7 +28,7 @@ text-align: center;
   position: relative;
   margin-left: 31.25%;
   margin-top: 3.3%;
-    width: 37.5%;
+  width: 37.5%;
   max-width: 540px;
 }
 
@@ -53,7 +53,7 @@ text-align: center;
   line-height: 15px;
 }
 
-.signup-button {
+.sign-button {
   position: relative;
   margin-left: 31.25%;
   width: 37.5%;
@@ -68,9 +68,8 @@ font-weight: bold;
 border:  #ffffff
 }
 
-.cancel {
+.text-link {
 position: relative;
-width: 36px;
 height: 26px;
 margin-left: 48.75%;
 margin-top: 1.67%;
@@ -79,7 +78,6 @@ font-style: normal;
 font-weight: bold;
 font-size: 18px;
 line-height: 26px;
-text-align: right;
-text-decoration-line: underline;
+text-decoration-line: none;
 color: #0099FF;
 }
