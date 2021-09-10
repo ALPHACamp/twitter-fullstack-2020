@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
 
+
 const app = express()
 const port = 3000
 
@@ -17,9 +18,12 @@ app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-// app.use(routes)
 
-app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(port, () => console.log(`Example app listening on http://localhost:${port}!`))
+
+app.listen(port, () => console.log(`Example app listening on http://localhost:${port}`))
+
+const routes = require('./routes')
+app.use(routes)
+// require('./routes')(app)
 
 module.exports = app
