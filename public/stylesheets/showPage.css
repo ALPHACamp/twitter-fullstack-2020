@@ -1,0 +1,85 @@
+.wrap {
+ margin: 0;
+  max-width: 1440px; 
+  max-height: 1200px; 
+  margin: 0 auto; 
+}
+
+.logo {
+  max-width:40px;
+  max-height:40px;
+  position: relative; 
+  margin-top:5.4%;
+  margin-left: 48.6%;
+}
+
+.create-account {
+position: relative;
+margin-top: 2.1%;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 23px;
+line-height: 33px;
+text-align: center;
+}
+
+.register-from {
+  position: relative;
+  margin-left: 31.25%;
+  margin-top: 3.3%;
+    width: 37.5%;
+  max-width: 540px;
+}
+
+.form-control {
+  margin-bottom: 2.5%;
+  height: 46px;
+  background-color: #F5F8FA;
+  border-radius: 4px;
+  border-bottom: solid 2px #657786
+}
+
+.register-from ::placeholder {
+  color: #657786;
+  position: absolute;
+  height: 15px;
+  left: 10px;
+  top: 5px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.signup-button {
+  position: relative;
+  margin-left: 31.25%;
+  width: 37.5%;
+  height: 46px;
+  border-radius: 50px;
+  align-items: center;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+border:  #ffffff
+}
+
+.cancel {
+position: relative;
+width: 36px;
+height: 26px;
+margin-left: 48.75%;
+margin-top: 1.67%;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 26px;
+text-align: right;
+text-decoration-line: underline;
+color: #0099FF;
+}

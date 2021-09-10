@@ -12,7 +12,7 @@ const adminController = require('../controllers/adminController')
 // TODO: Vanessa tweet+reply
 
 router.get('/', (req, res) => {
-  res.render('index')
+  res.render('register')
 })
 
 
