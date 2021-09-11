@@ -48,7 +48,7 @@ const userController = {
   },
 
   signinPage: (req, res) => {
-    return res.render('signin')
+    return res.render('signIn')
   },
 
   signin: (req, res) => {
