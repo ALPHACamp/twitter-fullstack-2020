@@ -10,7 +10,7 @@ const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     return next()
   }
-  res.redirect('/signin')
+  res.redirect('/setting')
 }
 
 const authenticatedAdmin = (req, res, next) => {
@@ -23,8 +23,15 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/signin')
 }
 
+module.exports = app => {
+
+
 //TODO:測試用路由
-router.get('/', (req, res) => {
+app.get('/', authenticated, (req, res) => {
+  res.render('index')
+})
+
+app.get('/setting', (req, res) => {
   res.render('accountSetting')
 })
 
@@ -92,4 +99,5 @@ router.get('/', (req, res) => {
 // //登出
 // router.get('/logout', userController.logout)
 
-module.exports = router
+}
+// module.exports = router

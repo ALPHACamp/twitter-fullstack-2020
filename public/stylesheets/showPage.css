@@ -1,7 +1,7 @@
 .wrap {
   margin: 0;
-  /* max-width: 1440px; 
-  max-height: 1200px;  */
+  max-width: 1440px; 
+  max-height: 1200px; 
   margin: 0 auto; 
 }
 
@@ -41,7 +41,7 @@ text-align: center;
 
 .form-control {
   margin-bottom: 2.5%;
-  width: 45vw;
+  width: 45vmin;
   height: 46px;
   background-color: #F5F8FA;
   border-radius: 4px;
@@ -71,9 +71,9 @@ text-align: center;
   background-color: #fF6600;
   color: #ffffff;
   font-family: Noto Sans TC;
-font-style: normal;
-font-weight: bold;
-border:  #ffffff
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
 }
 
 .text-link {
@@ -92,7 +92,7 @@ color: #0099FF;
 
 
 .list-group-item{
-  background-color: #e5e5e5;
+  background-color: WHITE;
   color:black;
   border: none;
   margin-top: 25px;
@@ -105,14 +105,14 @@ color: #0099FF;
 }
 
 a:hover{
-  background-color: #e5e5e5;
+  background-color: WHITE;
   text-decoration:none;
 }
 
 .tweet-button {
 position: relative;
-width: 14.5vh;
-margin-left: 7.1vh;
+margin:auto;
+width: 12vw;
 margin-top: 25px;
 border-radius: 100px;
 align-items: center;
@@ -128,8 +128,8 @@ border:  #ffffff
 
 .headerDivider { 
   height:100vh;
-    border-left:1px solid rgba(0,0,0,.1); 
-    margin:0;
+  border-left:1px solid rgba(0,0,0,.1); 
+  margin:0;
 } 
 
 .text-title {
@@ -143,17 +143,17 @@ line-height: 40px;
 
 .save-button {
   position: relative;
-  width: 8vw;
-  margin-left: 31.25%;
+  width: 8vmin;
+  margin-left: 31.25vmin;
   height: 46px;
   border-radius: 50px;
   align-items: center;
   background-color: #fF6600;
   color: #ffffff;
   font-family: Noto Sans TC;
-font-style: normal;
-font-weight: bold;
-border:  #ffffff
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
 }
 
 .logout-button {
@@ -162,4 +162,66 @@ border:  #ffffff
   margin-left: 10vh;
   font-size: 25px;
   color:black;
+}
+
+.left-side {
+  position: relative;
+  text-align: center;
+}
+
+.add-post {
+  background-color: white;
+}
+
+.user-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.type-location { 
+  flex-grow: 1;  
+}
+
+.post-content {
+  border: none;
+  background-color: white;
+}
+
+input { 
+  width: 100%; 
+  height: 100%; 
+  resize:none;
+  border: solid white;
+}
+
+.post-content::placeholder {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+
+.send-area {
+  background-color: white;
+  text-align: right;
+  height: 5vmin;
+}
+
+.send-button {
+  position: relative;
+  right: 5px;
+  width: 7vmin;
+  height: 46px;
+  border-radius: 50px;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-size: 20px;
+  font-weight: bold;
+  border:  #ffffff
 }

@@ -2,8 +2,8 @@
 
 {{!-- 包一層div讓內部有依據照比例縮 --}}
 <div class="wrap d-flex">
-  <div class="row col-md-12">
-    <div class="col-md-3">
+  <div class="row col-md-12 justify-content-center" style="margin:0">
+    <div class="left-side  col-md-3">
       <div class="setting-logo">
         <img
           src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
@@ -11,8 +11,8 @@
       </div>
 
       <div>
-        <ul class="list-group ml-5">
-          <a href="">
+        <ul class="list-group">
+          <a href="/">
             <li class="list-group-item">
               <div class="d-flex"><i class="fas fa-home mr-4"></i>首頁</div>
             </li>
@@ -25,7 +25,7 @@
           </a>
 
           <a href="">
-            <li class="list-group-item active" style="background-color: #E5E5E5; color:#FF6600">
+            <li class="list-group-item active" style="background-color: white; color:#FF6600">
               <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
             </li>
           </a>
@@ -45,7 +45,7 @@
 
     <div class="right-side col-md-8" style="padding:0; height:100%">
       <div class="text-title ml-4 mt-3">帳戶資訊</div>
-      <hr style="width:100vw">
+      <hr>
 
       <div>
         <input type="text" class="form-control ml-2" placeholder="帳號" aria-label="account">
@@ -62,7 +62,7 @@
       <div>
         <input type="text" class="form-control ml-2" placeholder="密碼確認" aria-label="checkPassword">
       </div>
-      <div class="mt-4" style="text-align: right; width: 45vw">
+      <div class="" style="text-align: right;width: 45vmin;">
         <button type="submit" class="save-button">儲存</button>
       </div>
     </div>
