@@ -30,22 +30,70 @@ const userController = {
     })
   },
 
-  editAccount: (req, res) => {
-    console.log('hi')
-    console.log(req.params.user_id)
-    // console.log(String(helpers.getUser(req).id))
-    // if (req.params.user_id !== String(helpers.getUser(req).id)) {
-    //   req.flash('error_messages', '無法編輯其他使用者的資料')
-    //   return res.redirect(`/users/${helpers.getUser(req).id}`)
-    // }
-
-    User.findByPk(req.params.id)
+  accountSetting: (req, res) => {
+    //檢查使用者是否在編輯自己的資料
+    if (req.params.user_id !== String(helpers.getUser(req).id)) {
+      req.flash('error_messages', '無法編輯其他使用者的資料')
+      return res.redirect(`/setting/${helpers.getUser(req).id}`)
+    }
+    User.findByPk(req.params.user_id)
       .then(user => {
-        // console.log(req.user)
-        return res.render('accountSetting', { user: user })
+        return res.render('accountSetting', { user: user.toJSON() })
       })
       .catch(err => console.log(err))
   },
+
+  profileSetting: (req, res) => {
+    //檢查使用者是否在編輯自己的資料
+    if (req.params.user_id !== String(helpers.getUser(req).id)) {
+      req.flash('error_messages', '無法編輯其他使用者的資料')
+      return res.redirect(`/setting/${helpers.getUser(req).id}`)
+    }
+    User.findByPk(req.params.user_id)
+      .then(user => {
+        return res.render('profileSetting', { user: user.toJSON() })
+      })
+      .catch(err => console.log(err))
+  },
+
+  // editProfile: (req, res) => {
+  //   if (!req.body.name) {
+  //     req.flash('error_message', '請輸入使用者名稱')
+  //     return res.redirect('back')
+  //   }
+  //   const { file } = req
+  //   if (file) {
+  //     imgur.setClientID(IMGUR_CLIENT_ID);
+  //     imgur.upload(file.path, (err, img) => {
+  //       return User.findByPk(req.params.id)
+  //         .then((user) => {
+  //           user.update({
+  //             name: req.body.name,
+  //             avatar: file ? img.data.link : user.avatar
+  //           })
+  //             .then(() => {
+  //               req.flash('success_messages', 'user profile was successfully updated!')
+  //               res.redirect('/index')
+  //             })
+  //             .catch(err => console.error(err))
+  //         })
+  //     })
+  //   } else {
+  //     return User.findByPk(req.params.id)
+  //       .then((user) => {
+  //         user.update({
+  //           name: req.body.name,
+  //           avatar: user.avatar
+  //         })
+  //           .then(() => {
+  //             req.flash('success_messages', 'user profile was successfully updated!')
+  //             res.redirect('/index')
+  //           })
+  //           .catch(err => console.error(err))
+  //       })
+
+  //   }
+  // },
 
   signInPage: (req, res) => {
     return res.render('signIn')

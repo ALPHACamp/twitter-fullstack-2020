@@ -1,23 +1,17 @@
 .wrap {
   margin: 0;
-  /* max-width: 1440px; 
-  max-height: 1200px;  */
+  min-width:768px;
+  max-width: 1440px; 
+  max-height: 1200px; 
   margin: 0 auto; 
 }
 
 .logo {
-  max-width:40px;
-  max-height:40px;
-  position: relative; 
-  margin-top:5.4vh;
-  margin-left: 48.6vw;
+  margin-top: 5vh;
 }
 
 .setting-logo {
-  max-width: 30px;
-  max-height: 30px; 
-  margin-left: 7.1vw;
-  margin-top: 1.2vh
+  margin-top: 5vh;
 }
 
 .sign-title {
@@ -32,17 +26,25 @@ text-align: center;
 }
 
 .register-from {
-  position: relative;
-  margin-left: 31.25vw;
-  margin-top: 3.3vh;
-  width: 37.5vw;
-  max-width: 540px;
+position: relative;
+ margin-left: 31.25%;
+  width: 37.5%;
+  height: 46px;
+margin:auto;
+max-width: 540px;
 }
 
 .form-control {
-  margin-bottom: 2.5%;
+  position: relative; 
+  top: 0;             
+  bottom: 0;           
+  left: 0;        
+  right: 0;
+  margin: 0;
+  margin-bottom: 0;
+  max-width: 540px;
   width: 37.5vw;
-  height: 46px;
+  height: 52px;
   background-color: #F5F8FA;
   border-radius: 4px;
   border: none;
@@ -59,7 +61,7 @@ text-align: center;
   border-bottom: solid 3px #50b5ff
 }
 
-.register-from ::placeholder {
+/* .register-from ::placeholder {
   color: #657786;
   position: absolute;
   height: 15px;
@@ -70,13 +72,32 @@ text-align: center;
   font-weight: 500;
   font-size: 15px;
   line-height: 15px;
-}
+} */
 
-.sign-button {
+.signin-button {
   position: relative;
-  margin-left: 31.25%;
+  margin-top: 12vh;
+  margin-left: 31.25%; 
   width: 37.5%;
   height: 46px;
+  max-width: 540px;
+  border-radius: 50px;
+  align-items: center;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
+}
+
+.signup-button {
+  position: relative;
+  margin-top: 40vh;
+  margin-left: 31.25%; 
+  width: 37.5%;
+  height: 46px;
+  max-width: 540px;
   border-radius: 50px;
   align-items: center;
   background-color: #fF6600;
@@ -124,6 +145,7 @@ a:hover{
 position: relative;
 margin:auto;
 width: 12vw;
+max-width:210px;
 margin-top: 25px;
 border-radius: 100px;
 align-items: center;
@@ -152,9 +174,26 @@ font-size: 26px;
 line-height: 40px;
 }
 
+.save-area{
+  position: relative; 
+  top: 0;             
+  bottom: 0;           
+  left: 0;        
+  right: 0;
+  margin: 0;
+  margin-bottom: 0;
+  max-width: 540px;
+  width: 37.5vw;
+  height: 52px;
+  text-align: right;
+}
+
 .save-button {
   position: relative;
-  width: 8vmin;
+  /* left: 20vw; */
+  width: 8vw;
+  margin:0;
+  max-width: 120px;
   margin-left: 31.25vmin;
   height: 46px;
   border-radius: 50px;
@@ -178,11 +217,9 @@ line-height: 40px;
 .left-side {
   position: relative;
   text-align: center;
+  border-right: 1px solid #e5e5e5;
 }
 
-.add-post {
-  background-color: white;
-}
 
 .user-pic {
   width: 50px;
@@ -195,9 +232,40 @@ line-height: 40px;
   flex-grow: 1;  
 }
 
+.tweet {
+  padding: 0;
+  /* width: 50vw; */
+}
+
+/* .tweet-content {
+  position: relative;
+  margin:0;
+} */
+
+.account-info {
+  position: relative;
+  border: 2px solid black
+}
+
+.new-post-content {
+  border: none;
+  background-color: white;
+  word-wrap: break-word;
+  border: 2px solid black
+}
+
 .post-content {
   border: none;
   background-color: white;
+  word-wrap: break-word;
+  border: 2px solid black
+}
+
+.reply-like {
+  /* position: relative;
+  left:0;
+  top:0vh;
+  display:none; */
 }
 
 input { 
@@ -213,6 +281,7 @@ input {
   font-weight: 500;
   font-size: 18px;
   line-height: 26px;
+  word-wrap:break-word;
 }
 
 
@@ -242,7 +311,6 @@ input {
 }
 
 .is-invalid {
-  margin: 0;
 }
 
 .valid-feedback {
@@ -250,11 +318,42 @@ input {
 }
 
 .invalid-feedback {
+  position: relative; 
+  top: 0;             
+  bottom: 0;           
+  left: 0;        
+  right: 0;
+  margin: 0;
+  max-width: 540px;
+}
+
+.user-name {
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 15px;
+line-height: 22px;
+}
+
+.account-time {
 font-family: Noto Sans TC;
 font-style: normal;
 font-weight: 500;
 font-size: 15px;
-line-height: 15px;
-color: #FC5A5A;
-margin-bottom: 5px;
+line-height: 22px;
+color: #657786;
 }
+
+.post-content {
+max-width:25vw;
+margin:0;
+height: 66px;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+color: #1C1C1C;
+word-wrap: wrap;
+}
+

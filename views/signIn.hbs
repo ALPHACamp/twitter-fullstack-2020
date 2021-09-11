@@ -7,30 +7,30 @@
     <div class="logo">
       <img
         src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
-        alt="" style="width: 40px;height: 40px;">
+        alt="" style="width: 40px;height: 40px;display:block; margin:auto;">
     </div>
 
     <div class="sign-title">
       登入Alphitter
     </div>
 
-    <div class="register-from">
-      <div>
+    <div class="register-from mt-3">
+      <div class="mt-4">
         <input type="text" name="account" class="form-control" id="account" placeholder="帳號" aria-label="account"
           data-minleng="5">
         <div class="invalid-feedback">
           帳號不得為空
         </div>
       </div>
-      <div>
+      <div class="mt-4">
         <input type="password" name="password" id="password" class="form-control" placeholder="密碼"
           aria-label="password">
         <div class="invalid-feedback">密碼不得為空</div>
       </div>
     </div>
 
-    <div class="text-align-center mt-5">
-      <button type="submit" class="sign-button">登入</button>
+    <div class="text-align-center mt-4">
+      <button type="submit" class="signin-button">登入</button>
     </div>
 
     <div class="text-link" style="margin-left: 54%;">
@@ -41,16 +41,21 @@
     </div>
 
   </div>
-
-
-  <script>
-    const account = document.querySelector("#account")
-    const password = document.querySelector("#password")
-    const signButton = document.querySelector(".sign-button")
-    signButton.addEventListener("click", function check(event) {
-      if (account.value.length < 1) account.classList.add("is-invalid")
-      if (password.value.length < 1) password.classList.add("is-invalid")
-      event.preventDefault()
-    })
-  </script>
 </form>
+
+
+<script>
+  const account = document.querySelector("#account")
+  const password = document.querySelector("#password")
+  const signButton = document.querySelector(".signin-button")
+  signButton.addEventListener("click", function check(event) {
+    if (account.value.length < 1) {
+      account.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (password.value.length < 1) {
+      password.classList.add("is-invalid")
+      event.preventDefault()
+    }
+  })
+</script>
