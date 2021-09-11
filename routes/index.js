@@ -6,26 +6,27 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 
-const authenticated = (req, res, next) => {
-  // console.log(helpers.ensureAuthenticated(req))
-  if (helpers.ensureAuthenticated(req)) {
-    return next()
-  }
-  res.redirect('/signin')
-}
 
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === "admin") {
+
+
+module.exports = (app, passport) => {
+  const authenticated = (req, res, next) => {
+    // console.log(helpers.ensureAuthenticated(req))
+    if (helpers.ensureAuthenticated(req)) {
       return next()
     }
-    return res.redirect('/')
+    res.redirect('/signin')
   }
-  res.redirect('/signin')
-}
 
-module.exports = app => {
-
+  const authenticatedAdmin = (req, res, next) => {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).role === "admin") {
+        return next()
+      }
+      return res.redirect('/')
+    }
+    res.redirect('/signin')
+  }
 
   //TODO:測試用路由
   app.get('/', authenticated, (req, res) => {
@@ -91,7 +92,7 @@ module.exports = app => {
 
   // //使用者登入頁面
   app.get('/signin', userController.signinPage)
-  app.post('/signin', userController.signin)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signin)
   // //使用者編輯帳號頁面
   app.get('/users/:user_id/edit', authenticated, userController.editAccount)
   // router.put('/users/:user_id', userController.putAccount)
