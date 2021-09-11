@@ -9,8 +9,15 @@
   max-width:40px;
   max-height:40px;
   position: relative; 
-  margin-top:5.4%;
-  margin-left: 48.6%;
+  margin-top:5.4vh;
+  margin-left: 48.6vw;
+}
+
+.setting-logo {
+  max-width: 30px;
+  max-height: 30px; 
+  margin-left: 7.1vw;
+  margin-top: 1.2vh
 }
 
 .sign-title {
@@ -34,6 +41,7 @@ text-align: center;
 
 .form-control {
   margin-bottom: 2.5%;
+  width: 45vmin;
   height: 46px;
   background-color: #F5F8FA;
   border-radius: 4px;
@@ -63,9 +71,9 @@ text-align: center;
   background-color: #fF6600;
   color: #ffffff;
   font-family: Noto Sans TC;
-font-style: normal;
-font-weight: bold;
-border:  #ffffff
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
 }
 
 .text-link {
@@ -80,4 +88,140 @@ font-size: 18px;
 line-height: 26px;
 text-decoration-line: none;
 color: #0099FF;
+}
+
+
+.list-group-item{
+  background-color: WHITE;
+  color:black;
+  border: none;
+  margin-top: 25px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 26px;
+  text-align: left;
+}
+
+a:hover{
+  background-color: WHITE;
+  text-decoration:none;
+}
+
+.tweet-button {
+position: relative;
+margin:auto;
+width: 12vw;
+margin-top: 25px;
+border-radius: 100px;
+align-items: center;
+background-color: #fF6600;
+color: #ffffff;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 25px;
+line-height: 40px;
+border:  #ffffff
+}
+
+.headerDivider { 
+  height:100vh;
+  border-left:1px solid rgba(0,0,0,.1); 
+  margin:0;
+} 
+
+.text-title {
+position: relative;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 26px;
+line-height: 40px;
+}
+
+.save-button {
+  position: relative;
+  width: 8vmin;
+  margin-left: 31.25vmin;
+  height: 46px;
+  border-radius: 50px;
+  align-items: center;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
+}
+
+.logout-button {
+  position: relative;
+  margin-top: 65vh;
+  margin-left: 10vh;
+  font-size: 25px;
+  color:black;
+}
+
+.left-side {
+  position: relative;
+  text-align: center;
+}
+
+.add-post {
+  background-color: white;
+}
+
+.user-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.type-location { 
+  flex-grow: 1;  
+}
+
+.post-content {
+  border: none;
+  background-color: white;
+}
+
+input { 
+  width: 100%; 
+  height: 100%; 
+  resize:none;
+  border: solid white;
+}
+
+.post-content::placeholder {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+
+.send-area {
+  background-color: white;
+  text-align: right;
+  height: 5vmin;
+}
+
+.send-button {
+  position: relative;
+  right: 5px;
+  width: 7vmin;
+  height: 46px;
+  border-radius: 50px;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-size: 20px;
+  font-weight: bold;
+  border:  #ffffff
 }

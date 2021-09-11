@@ -1,14 +1,36 @@
 const helpers = require('../_helpers')
-const bcrypt = require('bcryptjs')
 const db = require('../models')
-const Tweet = db.Tweet
 const User = db.User
+const Tweet = db.Tweet
 
 const tweetController = {
+  //顯示所有貼文(要改api)
   getTweets: (req, res) => {
-    console.log(req.user)
-    return res.render('tweets')
-  }
+    return Tweet.findAll({raw: true})
+      .then(tweet => {
+      return res.render('tweets', { tweet: tweet })
+    })
+  },
+  //顯示特定貼文
+  // getTweet: (req, res) => {
+
+  // },
+  //回覆特定貼文
+  // createTweetReplies: (req, res) => {
+
+  // },
+  //顯示特定貼文回覆
+  // getTweetReplies: (req, res) => {
+
+  // },
+  //喜歡特定貼文
+  // addLike: (req, res) => {
+
+  // },
+  //取消喜歡特定貼文
+  // removeLike: (req, res) => {
+
+  // }
 }
 
 module.exports = tweetController
