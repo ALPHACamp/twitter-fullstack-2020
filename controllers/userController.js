@@ -31,6 +31,7 @@ const userController = {
   },
 
   accountSetting: (req, res) => {
+    //檢查使用者是否在編輯自己的資料
     if (req.params.user_id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
       return res.redirect(`/setting/${helpers.getUser(req).id}`)
@@ -42,24 +43,18 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  // editAccount: (req, res) => {
-  //   console.log('hi')
-  //   console.log(req.params.user_id)
-  //   console.log(String(helpers.getUser(req).id))
-  //   console.log('noway')
-  //   console.log(req.user.id)
-  //   // if (req.params.user_id !== String(helpers.getUser(req).id)) {
-  //   //   req.flash('error_messages', '無法編輯其他使用者的資料')
-  //   //   return res.redirect(`/users/${helpers.getUser(req).id}`)
-  //   // }
-
-  //   User.findByPk(req.params.user_id)
-  //     .then(user => {
-  //       // console.log(req.user)
-  //       return res.render('accountSetting', { user: user })
-  //     })
-  //     .catch(err => console.log(err))
-  // },
+  profileSetting: (req, res) => {
+    //檢查使用者是否在編輯自己的資料
+    if (req.params.user_id !== String(helpers.getUser(req).id)) {
+      req.flash('error_messages', '無法編輯其他使用者的資料')
+      return res.redirect(`/setting/${helpers.getUser(req).id}`)
+    }
+    User.findByPk(req.params.user_id)
+      .then(user => {
+        return res.render('profileSetting', { user: user.toJSON() })
+      })
+      .catch(err => console.log(err))
+  },
 
   signInPage: (req, res) => {
     return res.render('signIn')
