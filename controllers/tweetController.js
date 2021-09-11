@@ -6,10 +6,10 @@ const Tweet = db.Tweet
 const tweetController = {
   //顯示所有貼文(要改api)
   getTweets: (req, res) => {
-    return Tweet.findAll({raw: true})
+    return Tweet.findAll({ raw: true })
       .then(tweet => {
-      return res.render('tweets', { tweet: tweet })
-    })
+        return res.render('main', { tweet: tweet })
+      })
   },
   //顯示特定貼文
   // getTweet: (req, res) => {
