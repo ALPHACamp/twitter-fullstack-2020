@@ -92,8 +92,10 @@ module.exports = (app, passport) => {
   // //使用者登入頁面
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-  // //使用者編輯帳號頁面
-  app.get('/users/:user_id/edit', userController.editAccount)
+  // //使用者編輯帳號設定
+  app.get('/setting/:user_id', userController.accountSetting)
+  // //使用者編輯個人資料
+  // app.get('/users/:user_id/edit', userController.editAccount)
   // router.put('/users/:user_id', userController.putAccount)
   // //註冊
   app.get('/signup', userController.signUpPage)
