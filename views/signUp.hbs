@@ -1,42 +1,44 @@
 <link rel="stylesheet" href="/stylesheets/showPage.css">
 
-{{!-- 包一層div讓內部有依據照比例縮 --}}
-<div class="wrap">
+<form action="/register" method="POST">
+  {{!-- 包一層div讓內部有依據照比例縮 --}}
+  <div class=" wrap">
 
-  <div class="logo">
-    <img
-      src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
-      alt="" style="width: 40px;height: 40px;">
-  </div>
-
-  <div class="sign-title">
-    建立你的帳號
-  </div>
-
-  <div class="register-from">
-    <div>
-      <input type="text" class="form-control" placeholder="帳號" aria-label="account">
+    <div class="logo">
+      <img
+        src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+        alt="" style="width: 40px;height: 40px;">
     </div>
-    <div>
-      <input type="text" class="form-control" placeholder="名稱" aria-label="name">
-    </div>
-    <div>
-      <input type="text" class="form-control" placeholder="Email" aria-label="email">
-    </div>
-    <div>
-      <input type="text" class="form-control" placeholder="密碼" aria-label="password">
-    </div>
-    <div>
-      <input type="text" class="form-control" placeholder="密碼確認" aria-label="checkPassword">
-    </div>
-  </div>
 
-  <div class="text-align-center">
-    <button type="submit" class="sign-button">註冊</button>
-  </div>
+    <div class="sign-title">
+      建立你的帳號
+    </div>
 
-<div class="text-link">
-  <a href="" style="text-decoration:underline;">取消</a>
-  </div>
+    <div class="register-from">
+      <div>
+        <input type="text" name="account" class="form-control" placeholder="帳號" aria-label="account">
+      </div>
+      <div>
+        <input type="text" name="name" class="form-control" placeholder="名稱" aria-label="name">
+      </div>
+      <div>
+        <input type="text" name="email" class="form-control" placeholder="Email" aria-label="email">
+      </div>
+      <div>
+        <input type="text" name="password" class="form-control" placeholder="密碼" aria-label="password">
+      </div>
+      <div>
+        <input type="text" name="checkPassword" class="form-control" placeholder="密碼確認" aria-label="checkPassword">
+      </div>
+    </div>
 
-</div>
+    <div class="text-align-center">
+      <button type="submit" class="sign-button">註冊</button>
+    </div>
+
+    <div class="text-link">
+      <a href="" style="text-decoration:underline;">取消</a>
+    </div>
+
+  </div>
+</form>

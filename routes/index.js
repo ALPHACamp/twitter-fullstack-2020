@@ -1,7 +1,7 @@
 const helpers = require('../_helpers')
 const express = require('express')
 const router = express.Router()
-// const passport = require('../config/passport')
+const passport = require('../config/passport')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
@@ -10,17 +10,18 @@ const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     return next()
   }
-  res.redirect('/setting')
+
+  res.redirect('/login')
 }
 
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).role === "admin") {
       return next()
     }
     return res.redirect('/')
   }
-  res.redirect('/signin')
+  res.redirect('/login')
 }
 
 module.exports = app => {
@@ -62,7 +63,7 @@ app.get('/setting', (req, res) => {
 // //取消追蹤使用者
 // router.delete('/following/:user_id', userController.removeFollowing)
 
-// //顯示所有貼文(要改api)
+TODO:// //顯示所有貼文(要改api)
 // router.get('/tweets', tweetController.getTweets)
 // //顯示特定貼文
 // router.get('/tweets/:id', tweetController.getTweet)
@@ -77,8 +78,8 @@ app.get('/setting', (req, res) => {
 
 
 // //管理者登入(後台登入)
-// router.get('/admin/signin', adminController.signInPage)
-// router.post('/admin/signin', adminController.signIn)
+// router.get('/admin/login', adminController.loginPage)
+// router.post('/admin/login', adminController.login)
 // //管理者顯示所有貼文
 // router.get('/admin/tweets', adminController.getTweets)
 // //管理者刪除貼文
@@ -88,16 +89,16 @@ app.get('/setting', (req, res) => {
 
 
 // //使用者登入頁面
-// router.get('/signin', userController.signInPage)
-// router.post('/signin', userController.signIn)
+router.get('/login', userController.loginPage)
+router.post('/login', userController.login)
 // //使用者編輯帳號頁面
-// router.get('/users/:user_id/edit', userController.editAccount)
+router.get('/users/:user_id/edit', userController.editAccount)
 // router.put('/users/:user_id', userController.putAccount)
 // //註冊
-// router.get('/signup', userController.signUpPage)
-// router.post('/signup', userController.signUp)
+router.get('/register', userController.registerPage)
+router.post('/register', userController.register)
 // //登出
-// router.get('/logout', userController.logout)
+router.get('/logout', userController.logout)
 
 }
 // module.exports = router
