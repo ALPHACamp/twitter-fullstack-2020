@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Tweet.init({
-    content: DataTypes.TEXT,
+    description: DataTypes.TEXT,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     UserId: DataTypes.INTEGER

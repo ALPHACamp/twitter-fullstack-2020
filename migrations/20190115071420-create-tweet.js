@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      content: {
+      description: {
         type: Sequelize.TEXT
       },
       createdAt: {

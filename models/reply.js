@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Reply.init({
-    content: DataTypes.TEXT,
+    comment: DataTypes.TEXT,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     UserId: DataTypes.INTEGER,
