@@ -56,7 +56,7 @@ router.get('/', (req, res) => {
 // router.delete('/following/:user_id', userController.removeFollowing)
 
 TODO:// //顯示所有貼文(要改api)
-// router.get('/tweets', tweetController.getTweets)
+router.get('/tweets', tweetController.getTweets)
 // //顯示特定貼文
 // router.get('/tweets/:id', tweetController.getTweet)
 // //回覆特定貼文
