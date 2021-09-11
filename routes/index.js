@@ -7,12 +7,10 @@ const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 
 const authenticated = (req, res, next) => {
-  console.log(helpers.ensureAuthenticated(req))
-
+  // console.log(helpers.ensureAuthenticated(req))
   if (helpers.ensureAuthenticated(req)) {
     return next()
   }
-
   res.redirect('/signin')
 }
 
@@ -29,17 +27,17 @@ const authenticatedAdmin = (req, res, next) => {
 module.exports = app => {
 
 
-//TODO:測試用路由
-app.get('/', authenticated, (req, res) => {
-  res.render('index')
-})
+  //TODO:測試用路由
+  app.get('/', authenticated, (req, res) => {
+    res.render('main')
+  })
 
-app.get('/setting', (req, res) => {
-  res.render('accountSetting')
-})
+  app.get('/setting', (req, res) => {
+    res.render('accountSetting')
+  })
 
 
-  // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到register測試)
+  // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
   // //使用者顯示主頁面
   // router.get('/current_user', userController.getCurrentUser)
 
@@ -67,7 +65,7 @@ app.get('/setting', (req, res) => {
   // router.delete('/following/:user_id', userController.removeFollowing)
 
   TODO:// //顯示所有貼文(要改api)
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/main', tweetController.getTweets)
   // //顯示特定貼文
   // router.get('/tweets/:id', tweetController.getTweet)
   // //回覆特定貼文
@@ -81,8 +79,8 @@ app.get('/setting', (req, res) => {
 
 
   // //管理者登入(後台登入)
-  // router.get('/admin/login', adminController.loginPage)
-  // router.post('/admin/login', adminController.login)
+  // router.get('/admin/signin', adminController.signinPage)
+  // router.post('/admin/signin', adminController.signin)
   // //管理者顯示所有貼文
   // router.get('/admin/tweets', adminController.getTweets)
   // //管理者刪除貼文
@@ -99,7 +97,7 @@ app.get('/setting', (req, res) => {
   // router.put('/users/:user_id', userController.putAccount)
   // //註冊
   app.get('/signup', userController.signupPage)
-  app.post('/signup',userController.signup)
+  app.post('/signup', userController.signup)
   // //登出
   app.get('/logout', userController.logout)
 }
