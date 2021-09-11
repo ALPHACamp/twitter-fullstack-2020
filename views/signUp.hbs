@@ -14,26 +14,44 @@
       建立你的帳號
     </div>
 
+    {{!-- //TODO:若帳號重複需抓後端回傳的錯誤訊息 --}}
     <div class="register-from">
       <div>
-        <input type="text" name="account" class="form-control" placeholder="帳號" aria-label="account" data-minleng="1" required data-pattern-error="帳號不得為空">
-        <div class="help-block with-errors"></div>
+        <input type="text" name="account" class="form-control" id="account" placeholder="帳號" aria-label="account"
+          data-minleng="5">
+        <div class="invalid-feedback">
+          帳號至少需5個字
+        </div>
       </div>
       <div>
-        <input type="text" name="name" class="form-control" placeholder="名稱" aria-label="name">
+        <input type="text" name="name" id="name" class="form-control" placeholder="名稱" aria-label="name"
+          data-maxleng="50">
+        <div class="invalid-feedback">
+          名稱不得超過50個字
+        </div>
       </div>
       <div>
-        <input type="text" name="email" class="form-control" placeholder="Email" aria-label="email">
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-label="email">
+        <div class="invalid-feedback">
+          email為必填欄位
+        </div>
       </div>
       <div>
-        <input type="password" name="password" class="form-control" placeholder="密碼" aria-label="password">
+        <input type="password" name="password" id="password" class="form-control" placeholder="密碼"
+          aria-label="password">
+        <div class="invalid-feedback">
+        </div>
       </div>
       <div>
-        <input type="password" name="checkPassword" class="form-control" placeholder="密碼確認" aria-label="checkPassword">
+        <input type="password" name="checkPassword" id="checkPassword" class="form-control" placeholder="密碼確認"
+          aria-label="checkPassword">
+        <div class="invalid-feedback">
+          密碼與確認密碼不相符
+        </div>
       </div>
     </div>
 
-    <div class="text-align-center">
+    <div class="text-align-center submitArea">
       <button type="submit" class="sign-button">註冊</button>
     </div>
 
@@ -43,3 +61,23 @@
 
   </div>
 </form>
+
+<script>
+  const account = document.querySelector("#account")
+  const name = document.querySelector("#name")
+  const email = document.querySelector("#email")
+  const password = document.querySelector("#password")
+  const checkPassword = document.querySelector("#checkPassword")
+  const signButton = document.querySelector(".sign-button")
+  signButton.addEventListener("click", function check(event) {
+    if (account.value.length < 5) account.classList.add("is-invalid")
+    if (name.value.length > 50) name.classList.add("is-invalid")
+    if (email.value.length < 1) email.classList.add("is-invalid")
+    if (password.value.length < 1) {
+      password.classList.add("is-invalid")
+      password.nextElementSibling.innerHTML = "密碼不得為空"
+    }
+    if (password.value !== checkPassword.value) checkPassword.classList.add("is-invalid")
+    event.preventDefault()
+  })
+</script>
