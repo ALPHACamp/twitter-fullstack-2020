@@ -8,7 +8,7 @@ const tweetController = {
   getTweets: (req, res) => {
     return Tweet.findAll({ raw: true })
       .then(tweet => {
-        return res.render('main', { tweet: tweet })
+        return res.render('index', { tweet: tweet })
       })
   },
   //顯示特定貼文

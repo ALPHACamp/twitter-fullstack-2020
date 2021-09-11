@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/showPage.css">
 
-<form action="/signin" method="POST"  data-toggle="validator">
+<form action="/signin" method="POST" data-toggle="validator">
   {{!-- 包一層div讓內部有依據照比例縮 --}}
   <div class="wrap">
 
@@ -41,16 +41,16 @@
     </div>
 
   </div>
+
+
+  <script>
+    const account = document.querySelector("#account")
+    const password = document.querySelector("#password")
+    const signButton = document.querySelector(".sign-button")
+    signButton.addEventListener("click", function check(event) {
+      if (account.value.length < 1) account.classList.add("is-invalid")
+      if (password.value.length < 1) password.classList.add("is-invalid")
+      event.preventDefault()
+    })
+  </script>
 </form>
-
-
-<script>
-  const account = document.querySelector("#account")
-  const password = document.querySelector("#password")
-  const signButton = document.querySelector(".sign-button")
-  signButton.addEventListener("click", function check(event) {
-    if (account.value.length < 1) account.classList.add("is-invalid")
-    if (password.value.length < 1) password.classList.add("is-invalid")
-    event.preventDefault()
-  })
-</script>
