@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/showPage.css">
 
-<form action="/login" method="POST">
+<form action="/signin" method="POST"  data-toggle="validator">
   {{!-- 包一層div讓內部有依據照比例縮 --}}
   <div class="wrap">
 
@@ -16,10 +16,16 @@
 
     <div class="register-from">
       <div>
-        <input type="text" name="account" class="form-control" placeholder="帳號" aria-label="account">
+        <input type="text" name="account" class="form-control" id="account" placeholder="帳號" aria-label="account"
+          data-minleng="5">
+        <div class="invalid-feedback">
+          帳號不得為空
+        </div>
       </div>
       <div>
-        <input type="text" name="password" class="form-control" placeholder="密碼" aria-label="password">
+        <input type="password" name="password" id="password" class="form-control" placeholder="密碼"
+          aria-label="password">
+        <div class="invalid-feedback">密碼不得為空</div>
       </div>
     </div>
 
@@ -36,3 +42,15 @@
 
   </div>
 </form>
+
+
+<script>
+  const account = document.querySelector("#account")
+  const password = document.querySelector("#password")
+  const signButton = document.querySelector(".sign-button")
+  signButton.addEventListener("click", function check(event) {
+    if (account.value.length < 1) account.classList.add("is-invalid")
+    if (password.value.length < 1) password.classList.add("is-invalid")
+    event.preventDefault()
+  })
+</script>
