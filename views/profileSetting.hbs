@@ -1,1 +1,15 @@
-<h1> this will be profile setting page</h1>
+<h1> 草稿: this will be profile setting page</h1>
+
+{{!-- 圖片上傳區 --}}
+<form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+  <div>
+    <label for="image">使用者照片(avatar)</label>
+    <input type="file" class="form-control-file" id="avatar" name="avatar">
+  </div>
+  <br>
+  <br>
+  <div>
+    <label for="image">背景圖片(cover)</label>
+    <input type="file" class="form-control-file" id="cover" name="cover">
+  </div>
+</form>

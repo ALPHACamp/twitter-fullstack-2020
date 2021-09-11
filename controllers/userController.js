@@ -56,6 +56,45 @@ const userController = {
       .catch(err => console.log(err))
   },
 
+  // editProfile: (req, res) => {
+  //   if (!req.body.name) {
+  //     req.flash('error_message', '請輸入使用者名稱')
+  //     return res.redirect('back')
+  //   }
+  //   const { file } = req
+  //   if (file) {
+  //     imgur.setClientID(IMGUR_CLIENT_ID);
+  //     imgur.upload(file.path, (err, img) => {
+  //       return User.findByPk(req.params.id)
+  //         .then((user) => {
+  //           user.update({
+  //             name: req.body.name,
+  //             avatar: file ? img.data.link : user.avatar
+  //           })
+  //             .then(() => {
+  //               req.flash('success_messages', 'user profile was successfully updated!')
+  //               res.redirect('/index')
+  //             })
+  //             .catch(err => console.error(err))
+  //         })
+  //     })
+  //   } else {
+  //     return User.findByPk(req.params.id)
+  //       .then((user) => {
+  //         user.update({
+  //           name: req.body.name,
+  //           avatar: user.avatar
+  //         })
+  //           .then(() => {
+  //             req.flash('success_messages', 'user profile was successfully updated!')
+  //             res.redirect('/index')
+  //           })
+  //           .catch(err => console.error(err))
+  //       })
+
+  //   }
+  // },
+
   signInPage: (req, res) => {
     return res.render('signIn')
   },

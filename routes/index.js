@@ -6,9 +6,6 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 
-
-
-
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -95,8 +92,8 @@ module.exports = (app, passport) => {
   // //使用者編輯帳號設定
   app.get('/setting/:user_id', authenticated, userController.accountSetting)
   // //使用者編輯個人資料
-  app.get('/users/:user_id/profile', userController.profileSetting)
-  // router.put('/users/:user_id', userController.putAccount)
+  app.get('/users/:user_id/profile', authenticated, userController.profileSetting)
+  // app.put('/users/:user_id', authenticated, upload.single('image'), userController.editProfile)
   // //註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
