@@ -21,7 +21,7 @@ const authenticatedAdmin = (req, res, next) => {
     }
     return res.redirect('/')
   }
-  res.redirect('/login')
+  res.redirect('/signin')
 }
 
 module.exports = app => {
