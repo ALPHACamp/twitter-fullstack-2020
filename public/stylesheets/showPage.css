@@ -3,7 +3,6 @@
   max-width: 1440px; 
   max-height: 1200px; 
   margin: 0 auto; 
-  border: solid black;
 }
 
 .logo {
@@ -11,7 +10,7 @@
 }
 
 .setting-logo {
-  
+  margin-top: 5vh;
 }
 
 .sign-title {
@@ -145,6 +144,7 @@ a:hover{
 position: relative;
 margin:auto;
 width: 12vw;
+max-width:210px;
 margin-top: 25px;
 border-radius: 100px;
 align-items: center;
@@ -173,9 +173,26 @@ font-size: 26px;
 line-height: 40px;
 }
 
+.save-area{
+  position: relative; 
+  top: 0;             
+  bottom: 0;           
+  left: 0;        
+  right: 0;
+  margin: 0;
+  margin-bottom: 0;
+  max-width: 540px;
+  width: 37.5vw;
+  height: 52px;
+  text-align: right;
+}
+
 .save-button {
   position: relative;
-  width: 8vmin;
+  /* left: 20vw; */
+  width: 8vw;
+  margin:0;
+  max-width: 120px;
   margin-left: 31.25vmin;
   height: 46px;
   border-radius: 50px;
@@ -275,7 +292,7 @@ input {
   bottom: 0;           
   left: 0;        
   right: 0;
-  margin: auto;
+  margin: 0;
   max-width: 540px;
 }
 
