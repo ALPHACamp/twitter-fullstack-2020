@@ -93,7 +93,7 @@ module.exports = app => {
   app.get('/signin', userController.signinPage)
   app.post('/signin', userController.signin)
   // //使用者編輯帳號頁面
-  app.get('/users/:user_id/edit', authenticated, userController.editAccount)
+  app.get('/users/:user_id/edit', userController.editAccount)
   // router.put('/users/:user_id', userController.putAccount)
   // //註冊
   app.get('/signup', userController.signupPage)
