@@ -8,6 +8,7 @@ const tweetController = {
   getTweets: (req, res) => {
     return Tweet.findAll({ raw: true })
       .then(tweet => {
+        console.log(tweet)
         return res.render('index', { tweet: tweet })
       })
   },
