@@ -4,15 +4,15 @@
 <div class="wrap d-flex">
   <div class="row col-md-12  justify-content-center" style="margin:0">
     {{!-- 左側欄位 --}}
-    <div class="left-side col-md-3">
+    <div class="left-side col-md-2">
       <div class="setting-logo">
         <img
           src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
-          alt="" style="width: 30px;height: 30px;">
+          alt="" style="max-width: 30px;max-height: 30px;">
       </div>
 
       <div>
-        <ul class="list-group mr-5">
+        <ul class="list-group">
 
           <li class="list-group-item active " style="background-color: white; color:#FF6600">
             <a href=""></a>
@@ -43,22 +43,21 @@
       </div>
     </div>
 
-    <div class="headerDivider"></div>
+    {{!-- <div class="headerDivider"></div> --}}
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title ml-4 mt-3">首頁</div>
 
       <hr style="margin:0; padding:0">
-
-      <div class="add-post d-flex" style="margin:0; padding:0">
+      {{!-- 新增貼文處 --}}
+      <div class="add-post d-flex" >
         <div class="mt-2 ml-2">
           <img class="user-pic"
             src="https://lh3.googleusercontent.com/proxy/DJ0Cdy5jSI5lJEzSa0TCAXIZA5tt2jRlchLHCCQwH2zrAYOVTndf8OvyK9nKn21r8RGcZ-9vkapH0955Nqg62_bL9IT7f_jOONoNO0Dh3uLko9vREyXHEJjA9-Zz_Put762In8mvUl9Ij5k1SQ_kDH6reHQM6cP1MkCNj7MfL9boI4rzqA"
             alt="">
         </div>
-
         <div class="type-location mt-2 ml-2 mb-2">
-          <input type="text" class="post-content" placeholder="有什麼新鮮事？">
+          <input type="text" class="new-post-content" placeholder="有什麼新鮮事？">
         </div>
       </div>
       <div class="send-area">
@@ -68,31 +67,53 @@
       <hr style="border: 10px solid #E6ECF0; margin-top:0">
 
       {{!-- TODO:待完成格式 --}}
-      {{!-- 貼文 --}}
-      <div class="add-post d-flex" style="margin:0; padding:0">
-        <div class="mt-2 ml-2">
-          <img class="user-pic" src="" alt="404">
+      {{!-- 貼文開始 --}}
+      <div class="tweet col-md-12">
+        <div class="d-flex">
+          <div class="mt-2 ml-2" >
+            <img class="user-pic mr-2" src="" alt="404">
+          </div>
+
+          <div class="flex-container">
+            <div class="account-info d-flex" style="flex:auto">
+              <div class="user-name">使用者名稱</div>
+              <div class="account-time ml-2">@帳號名稱．時間</div>
+            </div>
+            <div class="post-content mt-2">
+              學到的很多之前不清楚的概念，特別是在JavaScript中關於繼承、原型還有建構式的地方之前看了很多教學都還是不太瞭解，但這堂課說明的超級清楚，同時又有搭配英文字幕，歡迎大家參考，也很推薦大家上這門課！
+            </div>
+            <div class="reply-like d-flex mt-2">
+              <div><i class="far fa-comment mr-2"></i>留言數</div>
+              <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
+            </div>
+          </div>
+
         </div>
-
-        <div>
-          <div class="account-info d-flex">
-            <div>使用者名稱</div>
-            <div>@帳號名稱．時間</div>
-          </div>
-          <div class="content">
-            貼文內容
-          </div>
-
-          <div class="reply-like d-flex">
-            <div>留言數</div>
-            <div>讚數</div>
-          </div>
-
-        </div>
-        <hr />
-
       </div>
+      <hr />
+      {{!-- 貼文結束 --}}
 
+      <div class="tweet">
+        <div class="d-flex">
+          <div class="mt-2 ml-2">
+            <img class="user-pic mr-2" src="" alt="404">
+          </div>
+          <div>
+            <div class="account-info d-flex">
+              <div class="user-name">使用者名稱</div>
+              <div class="account-time ml-2">@帳號名稱．時間</div>
+            </div>
+            <div class="post-content mt-2">
+              學到的很多之前不清楚的概念，特別是在JavaScript中關於繼承、原型還有建構式的地方之前看了很多教學都還是不太瞭解，但這堂課說明的超級清楚，同時又有搭配英文字幕，歡迎大家參考，也很推薦大家上這門課！
+            </div>
+            <div class="reply-like d-flex mt-2">
+              <div><i class="far fa-comment mr-2"></i>留言數</div>
+              <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
 
 
     </div>
@@ -109,7 +130,6 @@
         <li class="list-group-item">A fourth item</li>
         <li class="list-group-item">And a fifth one</li>
       </ul>
-
     </div>
 
 

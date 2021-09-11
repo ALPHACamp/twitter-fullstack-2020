@@ -1,13 +1,14 @@
 <link rel="stylesheet" href="/stylesheets/showPage.css">
 
+
 {{!-- 包一層div讓內部有依據照比例縮 --}}
 <div class="wrap d-flex">
   <div class="row col-md-12 justify-content-center" style="margin:0">
-    <div class="left-side  col-md-3">
+    <div class="left-side  col-md-2">
       <div class="setting-logo">
         <img
           src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
-          alt="" style="width: 30px;height: 30px;">
+          alt="" style="max-width: 30px;max-height: 30px;">
       </div>
 
       <div>
@@ -40,30 +41,77 @@
       </div>
     </div>
 
-    <div class="headerDivider"></div>
+    {{!-- <div class="headerDivider"></div> --}}
 
     <div class="right-side col-md-8" style="padding:0; height:100%">
       <div class="text-title ml-4 mt-3">帳戶資訊</div>
-      <hr>
-
-      <div>
-        <input type="text" class="form-control ml-2" placeholder="帳號" aria-label="account" value="{{user.account}}">
-      </div>
-      <div>
-        <input type="text" class="form-control ml-2" placeholder="名稱" aria-label="name" value="{{user.name}}">
-      </div>
-      <div>
-        <input type="text" class="form-control ml-2" placeholder="Email" aria-label="email" value="{{user.email}}">
-      </div>
-      <div>
-        <input type="text" class="form-control ml-2" placeholder="密碼" aria-label="password">
-      </div>
-      <div>
-        <input type="text" class="form-control ml-2" placeholder="密碼確認" aria-label="checkPassword">
-      </div>
-      <div class="" style="text-align: right;width: 45vmin;">
-        <button type="submit" class="save-button">儲存</button>
-      </div>
+      <hr style="width:60vw;margin:0">
+      <form action="/signin" method="POST" data-toggle="validator">
+        <div class="mt-4">
+          <input type="text" name="account" class="form-control ml-2" id="account" placeholder="帳號" aria-label="account"
+            data-minleng="5" value="{{user.account}}">
+          <div class="invalid-feedback ml-2">
+            帳號至少需5個字
+          </div>
+        </div>
+        <div class="mt-4">
+          <input type="text" name="name" id="name" class="form-control ml-2" placeholder="名稱" aria-label="name"
+            data-maxleng="50" value="{{user.name}}">
+          <div class="invalid-feedback ml-2">
+            名稱不得超過50個字
+          </div>
+        </div>
+        <div class="mt-4">
+          <input type="email" name="email" id="email" class="form-control ml-2" placeholder="Email" aria-label="email" value="{{user.email}}">
+          <div class="invalid-feedback ml-2">
+            email為必填欄位
+          </div>
+        </div>
+        <div class="mt-4">
+          <input type="password" id="password" class="form-control ml-2" placeholder="密碼" aria-label="password">
+          <div class="invalid-feedback ml-2">
+          </div>
+        </div>
+        <div class="mt-4">
+          <input type="password" name="checkPassword" id="checkPassword" class="form-control  ml-2" placeholder="密碼確認"
+            aria-label="checkPassword">
+          <div class="invalid-feedback ml-2">
+            密碼與確認密碼不相符
+          </div>
+        </div>
+        <div class="save-area mt-4">
+          <button type="submit" class="save-button">儲存</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>
+
+
+<script>
+  const account = document.querySelector("#account")
+  const name = document.querySelector("#name")
+  const email = document.querySelector("#email")
+  const password = document.querySelector("#password")
+  const checkPassword = document.querySelector("#checkPassword")
+  const saveButton = document.querySelector(".save-button")
+  saveButton.addEventListener("click", function check(event) {
+    if (account.value.length < 5) {
+      account.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (name.value.length > 50) {
+      name.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (email.value.length < 1) {
+      email.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (password.value !== checkPassword.value) {
+      password.classList.remove("is-invalid")
+      checkPassword.classList.add("is-invalid")
+      event.preventDefault()
+    }
+  })
+</script>

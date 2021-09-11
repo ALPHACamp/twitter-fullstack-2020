@@ -7,7 +7,7 @@
     <div class="logo">
       <img
         src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
-        alt="" style="width: 40px;height: 40px;">
+        alt="" style="width: 40px;height: 40px;display:block; margin:auto;">
     </div>
 
     <div class="sign-title">
@@ -16,48 +16,47 @@
 
     {{!-- //TODO:若帳號重複需抓後端回傳的錯誤訊息 --}}
     <div class="register-from">
-      <div>
-        <input type="text" name="account" class="form-control" id="account" placeholder="帳號" aria-label="account"
-          data-minleng="5">
-        <div class="invalid-feedback">
-          帳號至少需5個字
-        </div>
-      </div>
-      <div>
-        <input type="text" name="name" id="name" class="form-control" placeholder="名稱" aria-label="name"
-          data-maxleng="50">
-        <div class="invalid-feedback">
-          名稱不得超過50個字
-        </div>
-      </div>
-      <div>
-        <input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-label="email">
-        <div class="invalid-feedback">
-          email為必填欄位
-        </div>
-      </div>
-      <div>
-        <input type="password" name="password" id="password" class="form-control" placeholder="密碼"
-          aria-label="password">
-        <div class="invalid-feedback">
-        </div>
-      </div>
-      <div>
-        <input type="password" name="checkPassword" id="checkPassword" class="form-control" placeholder="密碼確認"
-          aria-label="checkPassword">
-        <div class="invalid-feedback">
-          密碼與確認密碼不相符
-        </div>
+      <div class="mt-4">
+      <input type="text" name="account" class="form-control" id="account" placeholder="帳號" aria-label="account"
+        data-minleng="5">
+      <div class="invalid-feedback">
+        帳號至少需5個字
       </div>
     </div>
+    <div  class="mt-4">
+      <input type="text" name="name" id="name" class="form-control" placeholder="名稱" aria-label="name"
+        data-maxleng="50">
+      <div class="invalid-feedback">
+        名稱不得超過50個字
+      </div>
+    </div>
+    <div  class="mt-4">
+      <input type="email" name="email" id="email" class="form-control" placeholder="Email" aria-label="email">
+      <div class="invalid-feedback">
+        email為必填欄位
+      </div>
+    </div>
+    <div  class="mt-4">
+      <input type="password" name="password" id="password" class="form-control" placeholder="密碼" aria-label="password">
+      <div class="invalid-feedback">
+      </div>
+    </div>
+    <div  class="mt-4">
+      <input type="password" name="checkPassword" id="checkPassword" class="form-control" placeholder="密碼確認"
+        aria-label="checkPassword">
+      <div class="invalid-feedback">
+        密碼與確認密碼不相符
+      </div>
+    </div>
+  </div>
 
-    <div class="text-align-center submitArea">
-      <button type="submit" class="sign-button">註冊</button>
-    </div>
+  <div class="text-align-center mt-4">
+    <button type="submit" class="signup-button">註冊</button>
+  </div>
 
-    <div class="text-link">
-      <a href="" style="text-decoration:underline;">取消</a>
-    </div>
+  <div class="text-link">
+    <a href="" style="text-decoration:underline;">取消</a>
+  </div>
 
   </div>
 </form>
@@ -68,16 +67,31 @@
   const email = document.querySelector("#email")
   const password = document.querySelector("#password")
   const checkPassword = document.querySelector("#checkPassword")
-  const signButton = document.querySelector(".sign-button")
+  const signButton = document.querySelector(".signup-button")
   signButton.addEventListener("click", function check(event) {
-    if (account.value.length < 5) account.classList.add("is-invalid")
-    if (name.value.length > 50) name.classList.add("is-invalid")
-    if (email.value.length < 1) email.classList.add("is-invalid")
+    if (account.value.length < 5) {
+      account.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (name.value.length > 50){
+      event.preventDefault()
+    name.classList.add("is-invalid")
+    }
+    if (email.value.length < 1) {
+      email.classList.add("is-invalid")
+      event.preventDefault()
+    }
+
     if (password.value.length < 1) {
       password.classList.add("is-invalid")
       password.nextElementSibling.innerHTML = "密碼不得為空"
+      event.preventDefault()
     }
-    if (password.value !== checkPassword.value) checkPassword.classList.add("is-invalid")
-    //event.preventDefault()
+    if (password.value !== checkPassword.value) {
+      password.classList.remove("is-invalid")
+      checkPassword.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    
   })
 </script>
