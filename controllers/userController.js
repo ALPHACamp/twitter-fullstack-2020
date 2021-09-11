@@ -33,7 +33,6 @@ const userController = {
   editAccount: (req, res) => {
     console.log('hi')
     console.log(req.params.user_id)
-    console.log(req.user.id)
     // console.log(String(helpers.getUser(req).id))
     // if (req.params.user_id !== String(helpers.getUser(req).id)) {
     //   req.flash('error_messages', '無法編輯其他使用者的資料')
@@ -42,6 +41,7 @@ const userController = {
 
     User.findByPk(req.params.id)
       .then(user => {
+        console.log(req.user)
         return res.render('accountSetting', { user: user })
       })
       .catch(err => console.log(err))

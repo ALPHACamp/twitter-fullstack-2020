@@ -16,13 +16,11 @@ app.engine('hbs', exhbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
-app.use(express.static(__dirname + '/public'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
-app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
