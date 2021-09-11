@@ -8,10 +8,28 @@ const tweetController = {
   getTweets: (req, res) => {
     return Tweet.findAll({ raw: true })
       .then(tweet => {
-        console.log(tweet)
         return res.render('index', { tweet: tweet })
       })
   },
+  //新增一則貼文
+  createTweets: (req, res) => {
+    return res.render('create')
+  },
+  postTweets: (req, res) => {
+    if (!req.body.tweet) {
+      req.flash('error_messages', "請輸入貼文內容")
+      return res.redirect('back')
+    }
+    return Tweet.create({
+      // userId: ,
+      description: req.body.tweet
+    })
+      .then((tweet) => {
+        req.flash('success_messages', 'tweet was successfully created')
+        res.redirect('/')
+      })
+  },
+
   //顯示特定貼文
   // getTweet: (req, res) => {
 

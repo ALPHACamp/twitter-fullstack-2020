@@ -61,14 +61,20 @@ module.exports = (app, passport) => {
   // //取消追蹤使用者
   // router.delete('/following/:user_id', userController.removeFollowing)
 
-  TODO:// //顯示所有貼文(要改api)
+  TODO:// 貼文相關
+  //顯示所有貼文(要改api)
   app.get('/index', authenticated, tweetController.getTweets)
-  // //顯示特定貼文
+  // //顯示特定貼文 (之後要新增其所含的回文)
   // router.get('/tweets/:id', tweetController.getTweet)
+  // //使用者新增一則貼文
+  app.get('/index/create', authenticated, tweetController.createTweets)
+  app.post('/index/create', authenticated, tweetController.postTweets)
+
+  // 回文相關
   // //回覆特定貼文
   // router.post('tweets/:id/replies', tweetController.createTweetReplies)
-  // //顯示特定貼文回覆
-  // router.get('/tweets/:id/replies', tweetController.getTweetReplies)
+  
+  //Like & Unlike
   // //喜歡特定貼文
   // router.post('/tweets/:id/like', tweetController.addLike)
   // //取消喜歡特定貼文
