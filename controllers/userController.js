@@ -4,11 +4,11 @@ const db = require('../models')
 const User = db.User
 
 const userController = {
-  signupPage: (req, res) => {
+  signUpPage: (req, res) => {
     return res.render('signUp')
   },
 
-  signup: (req, res) => {
+  signUp: (req, res) => {
     if (req.body.checkPassword !== req.body.password) {
       req.flash('error_messages', 'Passwords you entered were inconsistent')
       return res.redirect('/signup')
@@ -47,13 +47,13 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  signinPage: (req, res) => {
+  signInPage: (req, res) => {
     return res.render('signIn')
   },
 
-  signin: (req, res) => {
+  signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/main')
+    res.redirect('/index')
   },
 
   logout: (req, res) => {
