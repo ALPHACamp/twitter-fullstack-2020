@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/showPage.css">
 
-<form action="/register" method="POST">
+<form action="/signup" method="POST" data-toggle="validator">
   {{!-- 包一層div讓內部有依據照比例縮 --}}
   <div class=" wrap">
 
@@ -16,7 +16,8 @@
 
     <div class="register-from">
       <div>
-        <input type="text" name="account" class="form-control" placeholder="帳號" aria-label="account">
+        <input type="text" name="account" class="form-control" placeholder="帳號" aria-label="account" data-minleng="1" required data-pattern-error="帳號不得為空">
+        <div class="help-block with-errors"></div>
       </div>
       <div>
         <input type="text" name="name" class="form-control" placeholder="名稱" aria-label="name">
@@ -25,10 +26,10 @@
         <input type="text" name="email" class="form-control" placeholder="Email" aria-label="email">
       </div>
       <div>
-        <input type="text" name="password" class="form-control" placeholder="密碼" aria-label="password">
+        <input type="password" name="password" class="form-control" placeholder="密碼" aria-label="password">
       </div>
       <div>
-        <input type="text" name="checkPassword" class="form-control" placeholder="密碼確認" aria-label="checkPassword">
+        <input type="password" name="checkPassword" class="form-control" placeholder="密碼確認" aria-label="checkPassword">
       </div>
     </div>
 

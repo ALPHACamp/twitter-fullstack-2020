@@ -13,7 +13,7 @@ const authenticated = (req, res, next) => {
     return next()
   }
 
-  res.redirect('/login')
+  res.redirect('/signin')
 }
 
 const authenticatedAdmin = (req, res, next) => {
@@ -92,16 +92,16 @@ app.get('/setting', (req, res) => {
 
 
   // //使用者登入頁面
-  app.get('/login', authenticated, userController.loginPage)
-  app.post('/login', authenticated, userController.login)
+  app.get('/signin', userController.signinPage)
+  app.post('/signin', userController.signin)
   // //使用者編輯帳號頁面
-  app.get('/users/:user_id/edit', authenticated, userController.editAccount)
+  app.get('/users/:user_id/edit', userController.editAccount)
   // router.put('/users/:user_id', userController.putAccount)
   // //註冊
-  app.get('/register', authenticated, userController.registerPage)
-  app.post('/register', authenticated, userController.register)
+  app.get('/signup', userController.signupPage)
+  app.post('/signup',userController.signup)
   // //登出
-  app.get('/logout', authenticated, userController.logout)
+  app.get('/logout', userController.logout)
 }
 
 

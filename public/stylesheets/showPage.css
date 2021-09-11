@@ -1,7 +1,7 @@
 .wrap {
   margin: 0;
-  max-width: 1440px; 
-  max-height: 1200px; 
+  /* max-width: 1440px; 
+  max-height: 1200px;  */
   margin: 0 auto; 
 }
 
@@ -33,19 +33,20 @@ text-align: center;
 
 .register-from {
   position: relative;
-  margin-left: 31.25%;
-  margin-top: 3.3%;
-  width: 37.5%;
+  margin-left: 31.25vw;
+  margin-top: 3.3vh;
+  width: 37.5vw;
   max-width: 540px;
 }
 
 .form-control {
   margin-bottom: 2.5%;
-  width: 45vmin;
+  width: 37.5vw;
   height: 46px;
   background-color: #F5F8FA;
   border-radius: 4px;
-  border-bottom: solid 2px #657786
+  border: none;
+  border-bottom: solid 3px #657786
 }
 
 .register-from ::placeholder {

@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
-const flash = require('connect-flash')
 const passport = require('./config/passport')
 
 
@@ -15,6 +14,7 @@ const port = 3000
 app.engine('hbs', exhbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
+app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
