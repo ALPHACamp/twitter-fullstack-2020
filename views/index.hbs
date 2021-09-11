@@ -49,14 +49,13 @@
       <div class="text-title ml-4 mt-3">首頁</div>
 
       <hr style="margin:0; padding:0">
-
+      {{!-- 新增貼文處 --}}
       <div class="add-post d-flex" style="margin:0; padding:0">
         <div class="mt-2 ml-2">
           <img class="user-pic"
             src="https://lh3.googleusercontent.com/proxy/DJ0Cdy5jSI5lJEzSa0TCAXIZA5tt2jRlchLHCCQwH2zrAYOVTndf8OvyK9nKn21r8RGcZ-9vkapH0955Nqg62_bL9IT7f_jOONoNO0Dh3uLko9vREyXHEJjA9-Zz_Put762In8mvUl9Ij5k1SQ_kDH6reHQM6cP1MkCNj7MfL9boI4rzqA"
             alt="">
         </div>
-
         <div class="type-location mt-2 ml-2 mb-2">
           <input type="text" class="post-content" placeholder="有什麼新鮮事？">
         </div>
@@ -71,21 +70,21 @@
       {{!-- 貼文 --}}
       <div class="add-post d-flex" style="margin:0; padding:0">
         <div class="mt-2 ml-2">
-          <img class="user-pic" src="" alt="404">
+          <img class="user-pic mr-2" src="" alt="404">
         </div>
 
         <div>
           <div class="account-info d-flex">
-            <div>使用者名稱</div>
-            <div>@帳號名稱．時間</div>
+            <div class="user-name">使用者名稱</div>
+            <div class="account-time ml-2">@帳號名稱．時間</div>
           </div>
-          <div class="content">
+          <div class="post-content">
             貼文內容
           </div>
 
           <div class="reply-like d-flex">
-            <div>留言數</div>
-            <div>讚數</div>
+            <div><i class="far fa-comment mr-2"></i>留言數</div>
+            <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
           </div>
 
         </div>

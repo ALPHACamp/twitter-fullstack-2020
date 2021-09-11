@@ -28,8 +28,8 @@ module.exports = app => {
 
 
   //TODO:測試用路由
-  app.get('/', authenticated, (req, res) => {
-    res.render('main')
+  app.get('/',  (req, res) => {
+    res.render('index')
   })
 
   app.get('/setting', (req, res) => {
@@ -65,7 +65,7 @@ module.exports = app => {
   // router.delete('/following/:user_id', userController.removeFollowing)
 
   TODO:// //顯示所有貼文(要改api)
-  app.get('/main', tweetController.getTweets)
+  app.get('/tweets', tweetController.getTweets)
   // //顯示特定貼文
   // router.get('/tweets/:id', tweetController.getTweet)
   // //回覆特定貼文
