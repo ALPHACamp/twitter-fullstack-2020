@@ -92,7 +92,7 @@ module.exports = (app, passport) => {
   // //使用者編輯帳號設定
   app.get('/setting/:user_id', authenticated, userController.accountSetting)
   // //使用者編輯個人資料
-  app.get('/users/:user_id/profile', authenticated, userController.profileSetting)
+  app.get('/users/:user_id/edit', authenticated, userController.profileSetting)
   // app.put('/users/:user_id', authenticated, upload.single('image'), userController.editProfile)
   // //註冊
   app.get('/signup', userController.signUpPage)
