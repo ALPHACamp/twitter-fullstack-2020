@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Tweet.belongsTo(models.User) // 加入關聯
+      Tweet.belongsTo(models.User)
+      Tweet.hasMany(models.Reply)
     }
   };
   Tweet.init({
