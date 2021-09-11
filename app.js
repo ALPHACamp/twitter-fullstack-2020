@@ -1,15 +1,11 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 const helpers = require('./_helpers')
-const A = '10000000'
-
-
-const A = 10
 
 const app = express()
 const port = 3000
 
-app.engine('hbs', handlebars({
+app.engine('handlebars', handlebars({
   defaultLayout: 'main'
 }))
 app.set('view engine', 'handlebars')
