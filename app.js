@@ -25,16 +25,7 @@ app.use(methodOverride('_method'))
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  // res.locals.user = req.user
-  // for test 用helpers.getUser(req)取代req.user，因為執行測試時，不能直接在測試設定檔裡呼叫第三方套件的函式，只能呼叫自己定義的函式。
   res.locals.user = helpers.getUser(req)
-  next()
-})
-
-app.use((req, res, next) => {
-  res.locals.success_messages = req.flash('success_messages')
-  res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = helpers.getUser(req) // 取代req.user
   next()
 })
 

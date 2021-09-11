@@ -6,33 +6,30 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 
-const authenticated = (req, res, next) => {
-  // console.log(helpers.ensureAuthenticated(req))
-  if (helpers.ensureAuthenticated(req)) {
-    return next()
-  }
-  res.redirect('/signin')
-}
-
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === "admin") {
+module.exports = (app, passport) => {
+  const authenticated = (req, res, next) => {
+    if (helpers.ensureAuthenticated(req)) {
       return next()
     }
-    return res.redirect('/')
+    res.redirect('/signin')
   }
-  res.redirect('/signin')
-}
 
-module.exports = app => {
-
+  const authenticatedAdmin = (req, res, next) => {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).role === "admin") {
+        return next()
+      }
+      return res.redirect('/')
+    }
+    res.redirect('/signin')
+  }
 
   //TODO:測試用路由
-  app.get('/',  (req, res) => {
+  app.get('/', authenticated, (req, res) => {
     res.render('index')
   })
 
-  app.get('/setting', (req, res) => {
+  app.get('/setting', authenticated, (req, res) => {
     res.render('accountSetting')
   })
 
@@ -65,7 +62,7 @@ module.exports = app => {
   // router.delete('/following/:user_id', userController.removeFollowing)
 
   TODO:// //顯示所有貼文(要改api)
-  app.get('/tweets', tweetController.getTweets)
+  app.get('/index', authenticated, tweetController.getTweets)
   // //顯示特定貼文
   // router.get('/tweets/:id', tweetController.getTweet)
   // //回覆特定貼文
@@ -90,14 +87,16 @@ module.exports = app => {
 
 
   // //使用者登入頁面
-  app.get('/signin', userController.signinPage)
-  app.post('/signin', userController.signin)
-  // //使用者編輯帳號頁面
-  app.get('/users/:user_id/edit', userController.editAccount)
-  // router.put('/users/:user_id', userController.putAccount)
+  app.get('/signin', userController.signInPage)
+  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+  // //使用者編輯帳號設定
+  app.get('/setting/:user_id', authenticated, userController.accountSetting)
+  // //使用者編輯個人資料
+  app.get('/users/:user_id/edit', authenticated, userController.profileSetting)
+  // app.put('/users/:user_id', authenticated, upload.single('image'), userController.editProfile)
   // //註冊
-  app.get('/signup', userController.signupPage)
-  app.post('/signup', userController.signup)
+  app.get('/signup', userController.signUpPage)
+  app.post('/signup', userController.signUp)
   // //登出
   app.get('/logout', userController.logout)
 }

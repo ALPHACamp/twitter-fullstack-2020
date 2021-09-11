@@ -19,13 +19,13 @@
             </li>
           </a>
 
-          <a href="">
+          <a href="/users/{{user.id}}/edit">
             <li class="list-group-item">
               <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
             </li>
           </a>
 
-          <a href="">
+          <a href="/setting/{{user.id}}">
             <li class="list-group-item active" style="background-color: white; color:#FF6600">
               <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
             </li>
@@ -43,27 +43,26 @@
 
     {{!-- <div class="headerDivider"></div> --}}
 
-
     <div class="right-side col-md-8" style="padding:0; height:100%">
       <div class="text-title ml-4 mt-3">帳戶資訊</div>
       <hr style="width:60vw;margin:0">
       <form action="/signin" method="POST" data-toggle="validator">
         <div class="mt-4">
           <input type="text" name="account" class="form-control ml-2" id="account" placeholder="帳號" aria-label="account"
-            data-minleng="5">
+            data-minleng="5" value="{{user.account}}">
           <div class="invalid-feedback ml-2">
             帳號至少需5個字
           </div>
         </div>
         <div class="mt-4">
           <input type="text" name="name" id="name" class="form-control ml-2" placeholder="名稱" aria-label="name"
-            data-maxleng="50">
+            data-maxleng="50" value="{{user.name}}">
           <div class="invalid-feedback ml-2">
             名稱不得超過50個字
           </div>
         </div>
         <div class="mt-4">
-          <input type="email" name="email" id="email" class="form-control ml-2" placeholder="Email" aria-label="email">
+          <input type="email" name="email" id="email" class="form-control ml-2" placeholder="Email" aria-label="email" value="{{user.email}}">
           <div class="invalid-feedback ml-2">
             email為必填欄位
           </div>
