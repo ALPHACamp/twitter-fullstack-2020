@@ -23,8 +23,8 @@ app.use((req, res, next) => {
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 
-app.get('/', (req, res) => res.send('Hello World!'))
-app.listen(2000, () => console.log(`Example app listening on port ${port}!`))
+app.get('/', (req, res) => res.render('twitter'))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
 module.exports = app
