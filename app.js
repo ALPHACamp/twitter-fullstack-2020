@@ -15,12 +15,12 @@ app.engine('hbs', exhbs({ defaultLayout: 'main', extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(methodOverride('_method'))
-app.use(express.static(__dirname + '/public'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
-app.use(flash())
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(flash())
+app.use(methodOverride('_method'))
+app.use(express.static(__dirname + '/public'))
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
@@ -31,8 +31,8 @@ app.use((req, res, next) => {
 
 app.listen(port, () => console.log(`Example app listening on http://localhost:${port}`))
 
-const routes = require('./routes')
-app.use(routes)
-// require('./routes')(app)
+// const routes = require('./routes')
+// app.use(routes)
+require('./routes')(app, passport)
 
 module.exports = app
