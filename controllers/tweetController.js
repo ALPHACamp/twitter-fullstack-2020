@@ -20,6 +20,7 @@ const tweetController = {
       req.flash('error_messages', "請輸入貼文內容")
       return res.redirect('back')
     }
+
     return Tweet.create({
       // userId: ,
       description: req.body.tweet
@@ -31,9 +32,16 @@ const tweetController = {
   },
 
   //顯示特定貼文
-  // getTweet: (req, res) => {
+  getTweet: (req, res) => {
+    console.log(req.params.id)
+   return Tweet.findByPk(req.params.id, {raw:true})
+    .then(tweet => {
+      return res.render('tweet', {
+        tweet: tweet
+      })
+    })
+  },
 
-  // },
   //回覆特定貼文
   // createTweetReplies: (req, res) => {
 

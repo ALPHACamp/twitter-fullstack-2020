@@ -65,7 +65,7 @@ module.exports = (app, passport) => {
   //顯示所有貼文(要改api)
   app.get('/index', authenticated, tweetController.getTweets)
   // //顯示特定貼文 (之後要新增其所含的回文)
-  // router.get('/tweets/:id', tweetController.getTweet)
+  app.get('/index/:id', tweetController.getTweet)
   // //使用者新增一則貼文
   app.get('/index/create', authenticated, tweetController.createTweets)
   app.post('/index/create', authenticated, tweetController.postTweets)
