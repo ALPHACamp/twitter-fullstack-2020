@@ -1,5 +1,6 @@
 .wrap {
   margin: 0;
+  min-width:768px;
   max-width: 1440px; 
   max-height: 1200px; 
   margin: 0 auto; 
@@ -216,11 +217,9 @@ line-height: 40px;
 .left-side {
   position: relative;
   text-align: center;
+  border-right: 1px solid #e5e5e5;
 }
 
-.add-post {
-  background-color: white;
-}
 
 .user-pic {
   width: 50px;
@@ -233,9 +232,40 @@ line-height: 40px;
   flex-grow: 1;  
 }
 
+.tweet {
+  padding: 0;
+  /* width: 50vw; */
+}
+
+/* .tweet-content {
+  position: relative;
+  margin:0;
+} */
+
+.account-info {
+  position: relative;
+  border: 2px solid black
+}
+
+.new-post-content {
+  border: none;
+  background-color: white;
+  word-wrap: break-word;
+  border: 2px solid black
+}
+
 .post-content {
   border: none;
   background-color: white;
+  word-wrap: break-word;
+  border: 2px solid black
+}
+
+.reply-like {
+  /* position: relative;
+  left:0;
+  top:0vh;
+  display:none; */
 }
 
 input { 
@@ -251,6 +281,7 @@ input {
   font-weight: 500;
   font-size: 18px;
   line-height: 26px;
+  word-wrap:break-word;
 }
 
 
@@ -314,7 +345,8 @@ color: #657786;
 }
 
 .post-content {
-width: 510px;
+max-width:25vw;
+margin:0;
 height: 66px;
 font-family: Noto Sans TC;
 font-style: normal;
@@ -322,5 +354,6 @@ font-weight: 500;
 font-size: 15px;
 line-height: 22px;
 color: #1C1C1C;
-
+word-wrap: wrap;
 }
+

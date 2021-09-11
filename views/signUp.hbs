@@ -69,17 +69,29 @@
   const checkPassword = document.querySelector("#checkPassword")
   const signButton = document.querySelector(".signup-button")
   signButton.addEventListener("click", function check(event) {
-    if (account.value.length < 5) account.classList.add("is-invalid")
-    if (name.value.length > 50) name.classList.add("is-invalid")
-    if (email.value.length < 1) email.classList.add("is-invalid")
+    if (account.value.length < 5) {
+      account.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (name.value.length > 50){
+      event.preventDefault()
+    name.classList.add("is-invalid")
+    }
+    if (email.value.length < 1) {
+      email.classList.add("is-invalid")
+      event.preventDefault()
+    }
+
     if (password.value.length < 1) {
       password.classList.add("is-invalid")
       password.nextElementSibling.innerHTML = "密碼不得為空"
+      event.preventDefault()
     }
     if (password.value !== checkPassword.value) {
       password.classList.remove("is-invalid")
       checkPassword.classList.add("is-invalid")
+      event.preventDefault()
     }
-    event.preventDefault()
+    
   })
 </script>

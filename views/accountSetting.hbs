@@ -8,7 +8,7 @@
       <div class="setting-logo">
         <img
           src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
-          alt="" style="width: 30px;height: 30px;">
+          alt="" style="max-width: 30px;max-height: 30px;">
       </div>
 
       <div>
@@ -41,7 +41,7 @@
       </div>
     </div>
 
-    <div class="headerDivider"></div>
+    {{!-- <div class="headerDivider"></div> --}}
 
 
     <div class="right-side col-md-8" style="padding:0; height:100%">
@@ -97,12 +97,16 @@
   const checkPassword = document.querySelector("#checkPassword")
   const saveButton = document.querySelector(".save-button")
   saveButton.addEventListener("click", function check(event) {
-    if (account.value.length < 5) account.classList.add("is-invalid")
-    if (name.value.length > 50) name.classList.add("is-invalid")
-    if (email.value.length < 1) email.classList.add("is-invalid")
-    if (password.value.length < 1) {
-      password.classList.add("is-invalid")
-      password.nextElementSibling.innerHTML = "密碼不得為空"
+    if (account.value.length < 5) {
+      account.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (name.value.length > 50) {
+      name.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (email.value.length < 1) {
+      email.classList.add("is-invalid")
       event.preventDefault()
     }
     if (password.value !== checkPassword.value) {
@@ -110,6 +114,5 @@
       checkPassword.classList.add("is-invalid")
       event.preventDefault()
     }
-    event.preventDefault()
   })
 </script>

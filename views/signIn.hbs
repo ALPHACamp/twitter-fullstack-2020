@@ -49,8 +49,13 @@
   const password = document.querySelector("#password")
   const signButton = document.querySelector(".signin-button")
   signButton.addEventListener("click", function check(event) {
-    if (account.value.length < 1) account.classList.add("is-invalid")
-    if (password.value.length < 1) password.classList.add("is-invalid")
-    event.preventDefault()
+    if (account.value.length < 1) {
+      account.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (password.value.length < 1) {
+      password.classList.add("is-invalid")
+      event.preventDefault()
+    }
   })
 </script>
