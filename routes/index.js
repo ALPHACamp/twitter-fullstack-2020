@@ -59,10 +59,16 @@ module.exports = (app, passport) => {
   // //取消追蹤使用者
   // router.delete('/followships/:user_id', userController.removeFollowing)
 
-  TODO:// //顯示所有貼文(要改api)
+  TODO:// 貼文相關
+  //顯示所有貼文(要改api)
   app.get('/index', authenticated, tweetController.getTweets)
-  // //顯示特定貼文
-  // router.get('/tweets/:id', tweetController.getTweet)
+  // //顯示特定貼文 (之後要新增其所含的回文)
+  app.get('/index/:id', tweetController.getTweet)
+  // //使用者新增一則貼文
+  app.get('/index/create', authenticated, tweetController.createTweets)
+  app.post('/index/create', authenticated, tweetController.postTweets)
+
+  // 回文相關
   // //回覆特定貼文
   // router.post('tweets/:id', tweetController.createReply)
   // //顯示特定貼文回覆
@@ -87,10 +93,10 @@ module.exports = (app, passport) => {
 
 
   // //管理者登入(後台登入)
-  // router.get('/admin/signin', adminController.signInPage)
-  // router.post('/admin/signin', adminController.signIn)
-  // //管理者顯示所有貼文
-  // router.get('/admin/tweets', adminController.getTweets)
+  // router.get('/admin/signin', adminController.signinPage)
+  // router.post('/admin/signin', adminController.signin)
+  //管理者顯示所有貼文
+  app.get('/admin/tweets', adminController.getTweets)
   // //管理者刪除貼文
   // router.delete('/admin/tweets/:id', adminController.deleteTweets)
   // //管理者顯示所有使用者

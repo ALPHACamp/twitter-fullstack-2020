@@ -72,15 +72,15 @@
           <div class="mt-2 ml-2 col-md-1">
             <img class="user-pic mr-2" src="" alt="404">
           </div>
-
+          {{#each tweet}}
           <div class="col-md-11">
             <div class="account-info d-flex" style="flex:auto">
-              <div class="user-name">Apple</div>
+              <div class="user-name">{{this.id}}</div>
               <div class="account-time ml-2">@apple．3小時</div>
             </div>
 
             <div class="post-text d-flex" style="flex:auto">
-              學到的很多之前不清楚的概念，特別是在JavaScript中關於繼承、原型還有建構式的地方之前看了很多教學都還是不太瞭解，但這堂課說明的超級清楚，同時又有搭配英文字幕，歡迎大家參考，也很推薦大家上這門課！
+              {{this.description}}
             </div>
 
             <div class="reply-like d-flex mt-2">
@@ -88,7 +88,7 @@
               <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
             </div>
           </div>
-
+          {{/each}}
         </div>
       </div>
       <hr />
