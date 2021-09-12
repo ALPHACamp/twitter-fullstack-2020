@@ -65,11 +65,13 @@ module.exports = (app, passport) => {
   TODO:// 貼文相關
   //顯示所有貼文(要改api)
   app.get('/index', authenticated, tweetController.getTweets)
-  // //顯示特定貼文 (之後要新增其所含的回文)
-  app.get('/index/:id', tweetController.getTweet)
+ 
   // //使用者新增一則貼文
   app.get('/index/create', authenticated, tweetController.createTweets)
   app.post('/index/create', authenticated, tweetController.postTweets)
+
+  // //顯示特定貼文 (之後要新增其所含的回文)
+  app.get('/index/:id', tweetController.getTweet)
 
   // 回文相關
   // //回覆特定貼文

@@ -8,9 +8,8 @@ module.exports = (sequelize, DataTypes) => {
 
   }, {});
   Tweet.associate = function(models) {
-
-
-
+    Tweet.belongsTo(models.User);
+   
 
   };
   return Tweet;

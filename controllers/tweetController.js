@@ -7,9 +7,14 @@ const tweetController = {
 //貼文相關
   //顯示所有貼文
   getTweets: (req, res) => {
-    return Tweet.findAll({ raw: true })
-      .then(tweet => {
-        return res.render('index', { tweet: tweet })
+    return Tweet.findAll({ 
+      raw: true, 
+      nest: true, 
+      include: [User]
+    }).then(tweet => {
+        return res.render('index', { 
+          tweet: tweet,
+          })
       }) //目前可以看到全部
   },
 
@@ -17,19 +22,19 @@ const tweetController = {
   createTweets: (req, res) => {
     return res.render('create')
   },
+
   postTweets: (req, res) => {
     if (!req.body.tweet) {
       req.flash('error_messages', "請輸入貼文內容")
-      return res.redirect('back')
+      return res.redirect('/index')
     }
-
-    return Tweet.create({
-      // userId: ,
+    return Tweet.create({  
+      UserId: req.user.id,
       description: req.body.tweet
     })
       .then((tweet) => {
         req.flash('success_messages', 'tweet was successfully created')
-        res.redirect('/')
+        res.redirect('/index')
       })
   },
   //顯示特定貼文(要改api)
