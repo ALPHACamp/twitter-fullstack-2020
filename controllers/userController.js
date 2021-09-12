@@ -33,24 +33,11 @@ const userController = {
     })
   },
 
-  editAccountPage: (req, res) => {
-    //檢查使用者是否在編輯自己的資料
-    if (req.params.user_id !== String(helpers.getUser(req).id)) {
-      req.flash('error_messages', '無法編輯其他使用者的資料')
-      return res.redirect(`/setting/${helpers.getUser(req).id}`)
-    }
-    User.findByPk(req.params.user_id)
-      .then(user => {
-        return res.render('accountSetting', { user: user.toJSON() })
-      })
-      .catch(err => console.log(err))
-  },
-
   editProfilePage: (req, res) => {
     //檢查使用者是否在編輯自己的資料
     if (req.params.user_id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
-      return res.redirect(`/setting/${helpers.getUser(req).id}`)
+      return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
     User.findByPk(req.params.user_id)
       .then(user => {
@@ -59,7 +46,21 @@ const userController = {
       .catch(err => console.log(err))
   },
 
+  editSettingPage: (req, res) => {
+    //檢查使用者是否在編輯自己的資料
+    if (req.params.user_id !== String(helpers.getUser(req).id)) {
+      req.flash('error_messages', '無法編輯其他使用者的資料')
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+    }
+    User.findByPk(req.params.user_id)
+      .then(user => {
+        return res.render('accountSetting', { user: user.toJSON() })
+      })
+      .catch(err => console.log(err))
+  },
+
   putProfile: (req, res) => {
+    //是否前端判斷？
     if (!req.body.name) {
       req.flash('error_message', '請輸入使用者名稱')
       return res.redirect('back')
@@ -101,6 +102,30 @@ const userController = {
 
     }
   },
+
+  putSetting: (req, res) => {
+    //是否前端判斷？
+    if (!req.body.name) {
+      req.flash('error_message', '請輸入使用者名稱')
+      return res.redirect('back')
+    }
+    return User.findByPk(req.params.user_id)
+      .then((user) => {
+        user.update({
+          account: req.body.account,
+          name: req.body.name,
+          email: req.body.email,
+          //是否前端判斷兩個密碼都有輸入，且一樣
+          password: req.body.password ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : user.password
+        })
+          .then(() => {
+            req.flash('success_messages', 'user setting was successfully updated!')
+            res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+          })
+          .catch(err => console.error(err))
+      })
+  },
+
 
   signInPage: (req, res) => {
     return res.render('signIn')

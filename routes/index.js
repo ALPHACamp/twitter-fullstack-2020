@@ -109,10 +109,10 @@ module.exports = (app, passport) => {
   // //使用者登入頁面
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-  // //使用者編輯帳號設定
-  app.get('/users/:user_id/setting', authenticated, userController.editAccountPage)
-  // app.put('/users/:user_id', authenticated, userController.putAccount)
-  // //使用者編輯個人資料
+  // //使用者編輯帳號設定(setting)
+  app.get('/users/:user_id/setting', authenticated, userController.editSettingPage)
+  app.put('/users/:user_id/setting', authenticated, userController.putSetting)
+  // //使用者編輯個人資料(edit)
   app.get('/users/:user_id/edit', authenticated, userController.editProfilePage)
   app.put('/users/:user_id/profile', authenticated, upload.single('avatar'), userController.putProfile)
   // //註冊
