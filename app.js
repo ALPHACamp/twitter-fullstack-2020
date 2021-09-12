@@ -1,6 +1,7 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
 const helpers = require('./_helpers')
+const bodyParser = require('body-parser')
 
 const userController = require('./controllers/userController')
 
@@ -11,7 +12,7 @@ app.engine('handlebars', handlebars({
   defaultLayout: 'main'
 }))
 app.set('view engine', 'handlebars')
-
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use((req, res, next) => {
   // res.locals.success_messages = req.flash('success_messages')
   // res.locals.error_messages = req.flash('error_messages')
@@ -22,7 +23,8 @@ app.use((req, res, next) => {
 
 
 app.get('/', (req, res) => res.render('twitter'))
-app.get('/signup', userController.signUpPage)
+app.get('/signup', userController.signupPage)
+app.post('/signup', userController.signup)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
