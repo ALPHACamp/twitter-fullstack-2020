@@ -29,8 +29,8 @@ module.exports = (app, passport) => {
     res.render('index')
   })
 
-  app.get('/setting', authenticated, (req, res) => {
-    res.render('accountSetting')
+  app.get('/admin/signin', (req, res) => {
+    res.render('./admin/adminSignIn')
   })
 
 
