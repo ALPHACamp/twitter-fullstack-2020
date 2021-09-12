@@ -1,21 +1,22 @@
 const bcrypt = require('bcrypt-nodejs')
-const bodyParser = require('body-parser')
-const { NONE } = require('sequelize')
 const db = require('../models')
 const User = db.User
 
 const userController = {
-  signUpPage: (req, res) => {
+  signupPage: (req, res) => {
     return res.render('signup', { layout: 'other' })
   },
 
-  signUp: (req, res) => {
-    const { name, email, password } = req.body
-    User.Creat({
+  signup: (req, res) => {
+    const { account, name, email, password } = req.body
+
+    User.create({
+      account,
       name,
       email,
       password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
     }).then(user => {
+      console.log('done')
       return res.redirect('/signin')
     })
   }
