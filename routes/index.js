@@ -30,7 +30,7 @@ module.exports = (app, passport) => {
   })
 
   app.get('/admin/signin', (req, res) => {
-    res.render('./admin/adminSignIn')
+    res.render('./admin/adminTweets')
   })
 
 
