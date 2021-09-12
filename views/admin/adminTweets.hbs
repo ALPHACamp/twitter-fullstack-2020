@@ -1,0 +1,109 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12 justify-content-center" style="margin:0; ; padding:0">
+    <div class="left-side  col-md-2"  style="padding:0">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+
+      <div>
+        <ul class="list-group">
+          <a href="/">
+            <li class="list-group-item active" style="background-color: white; color:#FF6600">
+              <div class="d-flex"><i class="fas fa-home mr-4"></i>推文清單</div>
+            </li>
+          </a>
+
+          <a href="/users/{{user.id}}/edit">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-user mr-4"></i>使用者列表</div>
+            </li>
+          </a>
+        </ul>
+
+        <a href="">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+      </div>
+    </div>
+
+    {{!-- <div class="headerDivider"></div> --}}
+
+    <div class="right-side col-md-10" style="padding:0">
+      <div class="text-title ml-4 mt-3">推文清單</div>
+      <hr>
+
+      {{!-- 貼文1開始 --}} 
+<div class="tweet">
+  <div class="d-flex" style="padding:0; margin:0; max-width: 60vw">
+    <div class="m-2" style="padding:0; width:50px">
+      <img class="user-pic"
+        src="https://lh3.googleusercontent.com/proxy/6khyrVYEvBFkxuAzcv5LCz7-vhpVECNdYCh90n1rzroX47UwAgzpQsg1tIBSRYM5M4bvM38CUPikU7XdcUrk8v6WqrP9V3nTgv1S1rlDhUPPWUI-mKF8gFAHOWQzEN26WSMhkvN0MRNDSezuWFQiFN6vPFNW5OQvIz938d9tGKTbz0PMHA"
+        alt="404">
+    </div>
+
+    <div class="tweets d-flex" style="padding:0; margin:auto 0;justify-content:space-between; flex-grow:1">
+      <div>
+        <div class="account-info d-flex" style="flex:auto;">
+          <div class="user-name">Orange</div>
+          <div class="account-time ml-2">@orange．3小時</div>
+        </div>
+        <div class="post-text d-flex" style="flex-grow:1; ">
+          [筆記] 談談Javascript 中的 Hoisting
+          [筆記] 談談Javascript 中的 Hoisting...
+        </div>
+      </div>
+
+      <div class="close-button">
+        <button type="button" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+      {{!-- 貼文1結束 --}}
+
+      {{!-- 貼文2開始 --}}
+      <div class="tweet">
+        <div class="d-flex" style="padding:0; margin:0; max-width: 60vw">
+          <div class="m-2" style="padding:0; width:50px">
+            <img class="user-pic"
+              src="https://lh3.googleusercontent.com/proxy/6khyrVYEvBFkxuAzcv5LCz7-vhpVECNdYCh90n1rzroX47UwAgzpQsg1tIBSRYM5M4bvM38CUPikU7XdcUrk8v6WqrP9V3nTgv1S1rlDhUPPWUI-mKF8gFAHOWQzEN26WSMhkvN0MRNDSezuWFQiFN6vPFNW5OQvIz938d9tGKTbz0PMHA"
+              alt="404">
+          </div>
+      
+          <div class="tweets d-flex" style="padding:0; margin:auto 0;justify-content:space-between; flex-grow:1">
+            <div>
+              <div class="account-info d-flex" style="flex:auto;">
+                <div class="user-name">Orange</div>
+                <div class="account-time ml-2">@orange．3小時</div>
+              </div>
+              <div class="post-text d-flex" style="flex-grow:1; ">
+                [筆記] 談談Javascript 中的 Hoisting
+                [筆記] 談談Javascript 中的 Hoisting...
+              </div>
+            </div>
+      
+            <div class="close-button">
+              <button type="button" class="close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      {{!-- 貼文2結束 --}}
+    </div>
+  </div>
+</div>

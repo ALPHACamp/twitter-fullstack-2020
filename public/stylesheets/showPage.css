@@ -6,6 +6,11 @@
   margin: 0 auto; 
 }
 
+hr {
+  width:60vw;
+  margin:0
+}
+
 .logo {
   margin-top: 5vh;
 }
@@ -211,9 +216,10 @@ line-height: 40px;
 .logout-button {
   position: relative;
   margin-top: 65vh;
-  margin-left: 10vh;
+  /* margin-left: 10vh; */
   font-size: 25px;
   color:black;
+
 }
 
 .left-side {
@@ -227,6 +233,9 @@ line-height: 40px;
   border-right: 1px solid #e5e5e5;
 }
 
+.right-side {
+  position: relative;
+}
 
 .user-pic {
   width: 50px;
@@ -427,4 +436,15 @@ font-weight: bold;
 font-size: 20px;
 line-height: 20px;
 color: #657786;
+}
+
+.tweets {
+position: relative; 
+/* margin: auto; */
+}
+
+.close-button {
+text-align: right;
+overflow:hidden;
+float:right
 }
