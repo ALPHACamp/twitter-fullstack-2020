@@ -46,7 +46,7 @@
     <div class="right-side col-md-8" style="padding:0; height:100%">
       <div class="text-title ml-4 mt-3">帳戶資訊</div>
       <hr style="width:60vw;margin:0">
-      <form action="/signin" method="POST" data-toggle="validator">
+      <form action="/users/{{user.id}}/setting?_method=PUT" method="POST" data-toggle="validator">
         <div class="mt-4">
           <input type="text" name="account" class="form-control ml-2" id="account" placeholder="帳號" aria-label="account"
             data-minleng="5" value="{{user.account}}">
@@ -69,7 +69,8 @@
           </div>
         </div>
         <div class="mt-4">
-          <input type="password" id="password" class="form-control ml-2" placeholder="密碼" aria-label="password">
+          <input type="password" name="password" id="password" class="form-control ml-2" placeholder="密碼"
+            aria-label="password">
           <div class="invalid-feedback ml-2">
           </div>
         </div>
