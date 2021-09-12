@@ -9,6 +9,7 @@ app.engine('handlebars', handlebars({
   defaultLayout: 'main'
 }))
 app.set('view engine', 'handlebars')
+app.use(express.static('public'))
 
 app.use((req, res, next) => {
   // res.locals.success_messages = req.flash('success_messages')
@@ -19,7 +20,7 @@ app.use((req, res, next) => {
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 
-app.get('/', (req, res) => res.render('twitter'))
+app.get('/', (req, res) => res.render('profile'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
