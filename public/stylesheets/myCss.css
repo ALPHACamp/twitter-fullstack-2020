@@ -6,3 +6,10 @@
 #ac-logo{
   width: 50px;
 }
+.orange{
+  background-color:#f60;
+}
+
+.round{
+  border-radius:50px;
+}
