@@ -2,6 +2,8 @@ const express = require('express')
 const handlebars = require('express-handlebars')
 const helpers = require('./_helpers')
 
+const userController = require('./controllers/userController')
+
 const app = express()
 const port = 3000
 
@@ -20,6 +22,7 @@ app.use((req, res, next) => {
 
 
 app.get('/', (req, res) => res.render('twitter'))
+app.get('/signup', userController.signUpPage)
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
