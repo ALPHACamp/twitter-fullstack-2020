@@ -6,6 +6,9 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -107,11 +110,11 @@ module.exports = (app, passport) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   // //使用者編輯帳號設定
-  // app.get('/users/:user_id/setting', authenticated, userController.editAccountPage)
+  app.get('/users/:user_id/setting', authenticated, userController.editAccountPage)
   // app.put('/users/:user_id', authenticated, userController.putAccount)
   // //使用者編輯個人資料
-  // app.get('/users/:user_id/edit', authenticated, userController.editProfilePage)
-  // app.put('/users/:user_id/profile', authenticated, upload.single('image'), userController.putProfile)
+  app.get('/users/:user_id/edit', authenticated, userController.editProfilePage)
+  app.put('/users/:user_id/profile', authenticated, upload.single('avatar'), userController.putProfile)
   // //註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

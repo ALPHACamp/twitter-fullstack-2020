@@ -25,7 +25,7 @@
             </li>
           </a>
 
-          <a href="/setting/{{user.id}}">
+          <a href="/users/{{user.id}}/setting">
             <li class="list-group-item active" style="background-color: white; color:#FF6600">
               <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
             </li>
@@ -62,7 +62,8 @@
           </div>
         </div>
         <div class="mt-4">
-          <input type="email" name="email" id="email" class="form-control ml-2" placeholder="Email" aria-label="email" value="{{user.email}}">
+          <input type="email" name="email" id="email" class="form-control ml-2" placeholder="Email" aria-label="email"
+            value="{{user.email}}">
           <div class="invalid-feedback ml-2">
             email為必填欄位
           </div>
