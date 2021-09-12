@@ -1,5 +1,4 @@
-// -- This is Test message -- 
-// TODO controller
+ // TODO controller
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
