@@ -1,0 +1,29 @@
+<div class="container">
+{{!-- 瀏覽特定貼文區域 --}}
+  <hr />
+  <div class ="row">
+    <div class = "col-md-4">
+      <div class="text-center" style="background:cornflowerblue; width: 100px;
+        height: 100px;">User.ava</div>
+    </div>
+    <div>
+      {{tweet.description}}
+    </div>
+  </div>
+
+{{!-- 回覆貼文區域 --}}
+  <form action="tweets/:id/replies" method="POST">
+
+    <div class="form-group mt-5">
+      <input type="text" class="form-control" max="140" name="tweet" id="tweet" placeholder="推你的回覆">
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+      <button type="submit" class="btn btn-primary">回覆(還不能用)</button>
+    </div>
+
+  </form>
+
+  <a href="javascript:history.back()">回上一頁</a>
+</div>
+
