@@ -3,6 +3,9 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signUp')
@@ -30,24 +33,11 @@ const userController = {
     })
   },
 
-  accountSetting: (req, res) => {
+  editProfilePage: (req, res) => {
     //檢查使用者是否在編輯自己的資料
     if (req.params.user_id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
-      return res.redirect(`/setting/${helpers.getUser(req).id}`)
-    }
-    User.findByPk(req.params.user_id)
-      .then(user => {
-        return res.render('accountSetting', { user: user.toJSON() })
-      })
-      .catch(err => console.log(err))
-  },
-
-  profileSetting: (req, res) => {
-    //檢查使用者是否在編輯自己的資料
-    if (req.params.user_id !== String(helpers.getUser(req).id)) {
-      req.flash('error_messages', '無法編輯其他使用者的資料')
-      return res.redirect(`/setting/${helpers.getUser(req).id}`)
+      return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
     User.findByPk(req.params.user_id)
       .then(user => {
@@ -56,44 +46,86 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  // editProfile: (req, res) => {
-  //   if (!req.body.name) {
-  //     req.flash('error_message', '請輸入使用者名稱')
-  //     return res.redirect('back')
-  //   }
-  //   const { file } = req
-  //   if (file) {
-  //     imgur.setClientID(IMGUR_CLIENT_ID);
-  //     imgur.upload(file.path, (err, img) => {
-  //       return User.findByPk(req.params.id)
-  //         .then((user) => {
-  //           user.update({
-  //             name: req.body.name,
-  //             avatar: file ? img.data.link : user.avatar
-  //           })
-  //             .then(() => {
-  //               req.flash('success_messages', 'user profile was successfully updated!')
-  //               res.redirect('/index')
-  //             })
-  //             .catch(err => console.error(err))
-  //         })
-  //     })
-  //   } else {
-  //     return User.findByPk(req.params.id)
-  //       .then((user) => {
-  //         user.update({
-  //           name: req.body.name,
-  //           avatar: user.avatar
-  //         })
-  //           .then(() => {
-  //             req.flash('success_messages', 'user profile was successfully updated!')
-  //             res.redirect('/index')
-  //           })
-  //           .catch(err => console.error(err))
-  //       })
+  editSettingPage: (req, res) => {
+    //檢查使用者是否在編輯自己的資料
+    if (req.params.user_id !== String(helpers.getUser(req).id)) {
+      req.flash('error_messages', '無法編輯其他使用者的資料')
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+    }
+    User.findByPk(req.params.user_id)
+      .then(user => {
+        return res.render('accountSetting', { user: user.toJSON() })
+      })
+      .catch(err => console.log(err))
+  },
 
-  //   }
-  // },
+  putProfile: (req, res) => {
+    //是否前端判斷？
+    if (!req.body.name) {
+      req.flash('error_message', '請輸入使用者名稱')
+      return res.redirect('back')
+    }
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(file.path, (err, img) => {
+        return User.findByPk(req.params.user_id)
+          .then((user) => {
+            user.update({
+              name: req.body.name,
+              introduction: req.body.introduction,
+              avatar: file ? img.data.link : user.avatar,
+              // cover: file ? img.data.link : user.cover
+            })
+              .then(() => {
+                req.flash('success_messages', 'user profile was successfully updated!')
+                res.redirect('/index')
+              })
+              .catch(err => console.error(err))
+          })
+      })
+    } else {
+      return User.findByPk(req.params.user_id)
+        .then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: user.avatar,
+            // cover: user.cover
+          })
+            .then(() => {
+              req.flash('success_messages', 'user profile was successfully updated!')
+              res.redirect('/index')
+            })
+            .catch(err => console.error(err))
+        })
+
+    }
+  },
+
+  putSetting: (req, res) => {
+    //是否前端判斷？
+    if (!req.body.name) {
+      req.flash('error_message', '請輸入使用者名稱')
+      return res.redirect('back')
+    }
+    return User.findByPk(req.params.user_id)
+      .then((user) => {
+        user.update({
+          account: req.body.account,
+          name: req.body.name,
+          email: req.body.email,
+          //是否前端判斷兩個密碼都有輸入，且一樣
+          password: req.body.password ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : user.password
+        })
+          .then(() => {
+            req.flash('success_messages', 'user setting was successfully updated!')
+            res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+          })
+          .catch(err => console.error(err))
+      })
+  },
+
 
   signInPage: (req, res) => {
     return res.render('signIn')
