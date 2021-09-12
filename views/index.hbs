@@ -50,7 +50,7 @@
 
       <hr style="margin:0; padding:0">
       {{!-- 新增貼文處 --}}
-      <div class="add-post d-flex" >
+      <div class="add-post d-flex">
         <div class="mt-2 ml-2">
           <img class="user-pic"
             src="https://lh3.googleusercontent.com/proxy/DJ0Cdy5jSI5lJEzSa0TCAXIZA5tt2jRlchLHCCQwH2zrAYOVTndf8OvyK9nKn21r8RGcZ-9vkapH0955Nqg62_bL9IT7f_jOONoNO0Dh3uLko9vREyXHEJjA9-Zz_Put762In8mvUl9Ij5k1SQ_kDH6reHQM6cP1MkCNj7MfL9boI4rzqA"
@@ -63,73 +63,123 @@
       <div class="send-area">
         <button type="submit" class="send-button">推文</button>
       </div>
-
       <hr style="border: 10px solid #E6ECF0; margin-top:0">
 
-      {{!-- TODO:待完成格式 --}}
-      {{!-- 貼文開始 --}}
+      {{!-- //TODO:擇一貼文做模板用Each即可 --}}
+      {{!-- 貼文1開始 --}}
       <div class="tweet col-md-12">
         <div class="d-flex">
-          <div class="mt-2 ml-2" >
+          <div class="mt-2 ml-2 col-md-1">
             <img class="user-pic mr-2" src="" alt="404">
           </div>
-            {{#each tweet}}
-          <div class="flex-container">
+          {{#each tweet}}
+          <div class="col-md-11">
             <div class="account-info d-flex" style="flex:auto">
               <div class="user-name">{{this.id}}</div>
-              <div class="account-time ml-2">@帳號名稱．時間</div>
+              <div class="account-time ml-2">@apple．3小時</div>
             </div>
-            <div class="post-content mt-2">
+
+            <div class="post-text d-flex" style="flex:auto">
               {{this.description}}
             </div>
+
             <div class="reply-like d-flex mt-2">
               <div><i class="far fa-comment mr-2"></i>留言數</div>
               <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
             </div>
           </div>
-            {{/each}}
+          {{/each}}
         </div>
       </div>
       <hr />
-      {{!-- 貼文結束 --}}
+      {{!-- 貼文1結束 --}}
 
-      <div class="tweet">
+      {{!-- 貼文2開始 --}}
+      <div class="tweet col-md-12">
         <div class="d-flex">
-          <div class="mt-2 ml-2">
+          <div class="mt-2 ml-2 col-md-1">
             <img class="user-pic mr-2" src="" alt="404">
           </div>
-          <div>
-            <div class="account-info d-flex">
-              <div class="user-name">使用者名稱</div>
-              <div class="account-time ml-2">@帳號名稱．時間</div>
+
+          <div class="col-md-11">
+            <div class="account-info d-flex" style="flex:auto">
+              <div class="user-name">Orange</div>
+              <div class="account-time ml-2">@orange．3小時</div>
             </div>
-            <div class="post-content mt-2">
-              學到的很多之前不清楚的概念，特別是在JavaScript中關於繼承、原型還有建構式的地方之前看了很多教學都還是不太瞭解，但這堂課說明的超級清楚，同時又有搭配英文字幕，歡迎大家參考，也很推薦大家上這門課！
+
+            <div class="post-text d-flex" style="flex:auto">
+              [筆記] 談談Javascript 中的 Hoisting
+              [筆記] JavaScript: undefined不是真的undefined !!
+              [筆記] 不同execution context的變項不會互相影響─了解function背後運作的邏輯
+              [筆記] JavaScript中Scope Chain和outer environment的概念
+              [筆記] 談談JavaScript中的asynchronous和event queue
+              [筆記] 談談JavaScript的Precedence和Associativity
+              [筆記] 談談JavaScript的coercion
+              [筆記] JavaScript中coercion的實際使用--if判斷式
+              [筆記] JavaScript中coercion的實際使用--建立函式預設值(default value)
             </div>
+
             <div class="reply-like d-flex mt-2">
               <div><i class="far fa-comment mr-2"></i>留言數</div>
               <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
             </div>
           </div>
+
         </div>
       </div>
       <hr />
-
+      {{!-- 貼文2結束 --}}
 
     </div>
 
-    <div class="headerDivider"></div>
+    {{!-- <div class="headerDivider"></div> --}}
     {{!-- 右側欄位 --}}
-    <div class="right-side col-md-3" style="padding:auto">
+    <div class="right-side col-md-3">
+      <div class="popular mt-2" style="padding:auto;">
+        <div class="popular-title mt-2">
+          Popular
+        </div>
+        <ul class="list-group">
+          {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
+          {{!-- 跟隨中使用者開始 --}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div>
+                <img class="user-pic" src="" alt="">
+              </div>
+              <div class="name-account ml-2">
+                <div class="name">Pizza Hut</div>
+                <div class="account">@pizzahut</div>
+              </div>
+              <div class="button">
+                <button type="submit" class="follow-button">正在跟隨</button>
+              </div>
+            </div>
+          </li>
+          {{!-- 使用者結束 --}}
+
+          {{!-- 未跟隨中使用者開始 --}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div>
+                <img class="user-pic" src="" alt="">
+              </div>
+              <div class="name-account ml-2">
+                <div class="name">McDonald's</div>
+                <div class="account">@McDonald's</div>
+              </div>
+              <div class="button">
+                <button type="submit" class="unfollow-button"> 跟隨 </button>
+              </div>
+            </div>
+          </li>
+          {{!-- 使用者結束 --}}
+
+        </ul>
+      </div>
 
 
-      <ul class="list-group">
-        <li class="list-group-item">An item</li>
-        <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-        <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li>
-      </ul>
+
     </div>
 
 
