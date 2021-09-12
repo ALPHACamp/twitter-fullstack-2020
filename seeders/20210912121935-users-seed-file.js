@@ -6,7 +6,7 @@ module.exports = {
 
     let data = []
     let amount = 5;
-    const root = {
+    data.push({
       account: 'root123',
       email: 'root@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
@@ -17,8 +17,7 @@ module.exports = {
       cover: 'https://i.pinimg.com/originals/59/35/5f/59355f751c1e3698cc6360b1a7390094.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
-    }
-    data.push(root)
+    })
 
     while (amount--) {
       data.push({
