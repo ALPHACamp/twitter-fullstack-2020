@@ -115,7 +115,6 @@ const userController = {
           account: req.body.account,
           name: req.body.name,
           email: req.body.email,
-          //是否前端判斷兩個密碼都有輸入，且一樣
           password: req.body.password ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : user.password
         })
           .then(() => {
