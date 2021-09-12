@@ -35,8 +35,6 @@ const userController = {
 
   editAccountPage: (req, res) => {
     //檢查使用者是否在編輯自己的資料
-    console.log(req.params.user_id)
-    console.log(String(helpers.getUser(req).id))
     if (req.params.user_id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
       return res.redirect(`/setting/${helpers.getUser(req).id}`)
