@@ -84,8 +84,8 @@ module.exports = (app, passport) => {
   // //管理者登入(後台登入)
   // router.get('/admin/signin', adminController.signinPage)
   // router.post('/admin/signin', adminController.signin)
-  // //管理者顯示所有貼文
-  // router.get('/admin/tweets', adminController.getTweets)
+  //管理者顯示所有貼文
+  app.get('/admin/tweets', adminController.getTweets)
   // //管理者刪除貼文
   // router.delete('/admin/tweets/:id', adminController.deleteTweets)
   // //管理者顯示所有使用者
