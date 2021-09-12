@@ -11,7 +11,8 @@
 }
 
 .setting-logo {
-  margin-top: 5vh;
+  text-align: start;
+  margin-top: 2vh;
 }
 
 .sign-title {
@@ -124,6 +125,7 @@ color: #0099FF;
 
 
 .list-group-item{
+  padding:0;
   background-color: WHITE;
   color:black;
   border: none;
@@ -215,8 +217,13 @@ line-height: 40px;
 }
 
 .left-side {
+  padding:0;
   position: relative;
   text-align: center;
+  border-right: 1px solid #e5e5e5;
+}
+
+.middle-side {
   border-right: 1px solid #e5e5e5;
 }
 
@@ -237,35 +244,18 @@ line-height: 40px;
   /* width: 50vw; */
 }
 
-/* .tweet-content {
-  position: relative;
-  margin:0;
-} */
-
 .account-info {
   position: relative;
-  border: 2px solid black
 }
 
 .new-post-content {
   border: none;
   background-color: white;
   word-wrap: break-word;
-  border: 2px solid black
-}
-
-.post-content {
-  border: none;
-  background-color: white;
-  word-wrap: break-word;
-  border: 2px solid black
 }
 
 .reply-like {
-  /* position: relative;
-  left:0;
-  top:0vh;
-  display:none; */
+
 }
 
 input { 
@@ -286,6 +276,7 @@ input {
 
 
 .send-area {
+   position: relative;
   background-color: white;
   text-align: right;
   height: 5vmin;
@@ -295,7 +286,6 @@ input {
   position: relative;
   right: 5px;
   width: 7vmin;
-  height: 46px;
   border-radius: 50px;
   background-color: #fF6600;
   color: #ffffff;
@@ -357,3 +347,84 @@ color: #1C1C1C;
 word-wrap: wrap;
 }
 
+
+
+/* 右側欄位 */
+.popular {
+  position:relative;
+  border-radius: 10px;
+  background: #f5f8fa;
+}
+
+.popular-title {
+position:relative;
+margin: 0px;
+padding-left: 15px;
+padding-bottom: 10px;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+border-bottom: 1px solid #E6ECF0;
+color: #1C1C1C;
+}
+
+.popular .list-group-item {
+  padding: 5px;
+  margin-top: 0;
+  background: #f5f8fa;
+}
+
+.button {
+  position:relative;
+  flex-grow: 1;
+  text-align: right;
+}
+
+/* 垂直置中 */
+.follow-button {
+position: relative; 
+top: 50%;
+transform: translate(0%,-50%);
+border-radius: 50px;
+background-color: #fF6600;
+color: #ffffff;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 15px;
+line-height: 3vh;
+border:1px #fF6600 solid;
+}
+
+.unfollow-button {
+position: relative; 
+top: 50%;
+transform: translate(0%,-50%);
+border-radius: 50px;
+background-color: #ffffff;
+color: #fF6600;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 15px;
+line-height: 3vh;
+border:1px #fF6600 solid;
+}
+
+.popular .name {
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 20px;
+line-height: 20px;
+}
+
+.popular .account {
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 20px;
+line-height: 20px;
+color: #657786;
+}

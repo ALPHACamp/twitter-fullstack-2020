@@ -43,8 +43,6 @@ module.exports = (app, passport) => {
   // router.get('/users/top', userController.getTopUsers)
   // //使用者顯示特定使用者頁面
   // router.get('/users/:user_id', userController.getUser)
-  // //使用者編輯個人頁面(要改成api)
-  // router.put('/users/:user_id/profile', userController.putUser)
   // //使用者所有貼文
   // router.get('/users/:user_id/tweets', userController.getUserTweets)
   // //使用者所有喜歡貼文
@@ -57,43 +55,57 @@ module.exports = (app, passport) => {
   // router.get('/users/:user_id/followers', userController.getUserFollowers)
 
   // //追蹤使用者
-  // router.post('/following/:user_id', userController.addFollowing)
+  // router.post('/followships/:user_id', userController.addFollowing)
   // //取消追蹤使用者
-  // router.delete('/following/:user_id', userController.removeFollowing)
+  // router.delete('/followships/:user_id', userController.removeFollowing)
 
   TODO:// //顯示所有貼文(要改api)
   app.get('/index', authenticated, tweetController.getTweets)
   // //顯示特定貼文
   // router.get('/tweets/:id', tweetController.getTweet)
   // //回覆特定貼文
-  // router.post('tweets/:id/replies', tweetController.createTweetReplies)
+  // router.post('tweets/:id', tweetController.createReply)
   // //顯示特定貼文回覆
   // router.get('/tweets/:id/replies', tweetController.getTweetReplies)
+  // 編輯貼文回覆
+  // router.get('/replies/:id/edit', tweetController.getReplyPage)
+  // router.put('/replies/:id', tweetController.putReply)
+  // 刪除回覆
+  // router.delete('/replies/:id', tweetController.removeReply)
   // //喜歡特定貼文
   // router.post('/tweets/:id/like', tweetController.addLike)
   // //取消喜歡特定貼文
   // router.delete('/tweets/:id/like', tweetController.removeLike)
+  // 新增貼文
+  // router.get('/tweets/create', tweetController.createTweetPage)
+  // router.post('/tweets', tweetController.createTweet)
+  // 編輯貼文
+  // router.get('/tweets/:id/edit', tweetController.editTweet)
+  // router.put('/tweets/:id', tweetController.putTweet)
+  // 刪除貼文
+  // router.delete('/tweets/:id', tweetController.removeTweet)
 
 
   // //管理者登入(後台登入)
-  // router.get('/admin/signin', adminController.signinPage)
-  // router.post('/admin/signin', adminController.signin)
+  // router.get('/admin/signin', adminController.signInPage)
+  // router.post('/admin/signin', adminController.signIn)
   // //管理者顯示所有貼文
   // router.get('/admin/tweets', adminController.getTweets)
   // //管理者刪除貼文
   // router.delete('/admin/tweets/:id', adminController.deleteTweets)
   // //管理者顯示所有使用者
-  // router.get('/admin/tweets', adminController.getUsers)
+  // router.get('/admin/users', adminController.getUsers)
 
 
   // //使用者登入頁面
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   // //使用者編輯帳號設定
-  app.get('/setting/:user_id', authenticated, userController.accountSetting)
+  // app.get('/users/:user_id/setting', authenticated, userController.editAccountPage)
+  // app.put('/users/:user_id', authenticated, userController.putAccount)
   // //使用者編輯個人資料
-  app.get('/users/:user_id/edit', authenticated, userController.profileSetting)
-  // app.put('/users/:user_id', authenticated, upload.single('image'), userController.editProfile)
+  // app.get('/users/:user_id/edit', authenticated, userController.editProfilePage)
+  // app.put('/users/:user_id/profile', authenticated, upload.single('image'), userController.putProfile)
   // //註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
