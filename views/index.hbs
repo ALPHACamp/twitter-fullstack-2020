@@ -67,33 +67,36 @@
 
       {{!-- //TODO:擇一貼文做模板用Each即可 --}}
       {{!-- 貼文1開始 --}}
+      {{#each tweet}}
       <div class="tweet col-md-12">
         <div class="d-flex">
           <div class="mt-2 ml-2 col-md-1" style="padding:0">
             <img class="user-pic" src="" alt="404">
           </div>
-          {{#each tweet}}
+
           <div class="col-md-11">
             <div class="account-info d-flex" style="flex:auto">
-              <div class="user-name">{{this.id}}</div>
+              <div class="user-name">{{this.User.name}}</div>
               <div class="account-time ml-2">@apple．3小時</div>
             </div>
 
-            <div class="post-text d-flex" style="flex:auto">
-              {{this.description}}
-            </div>
+          <a href="/index/{{this.id}}"  class="text-muted">
+          <div class="post-text d-flex" style="flex:auto">
+            {{this.description}}
+          </div>
+          </a>  
 
             <div class="reply-like d-flex mt-2">
               <div><i class="far fa-comment mr-2"></i>留言數</div>
               <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
             </div>
           </div>
-          {{/each}}
+         
         </div>
       </div>
       <hr />
       {{!-- 貼文1結束 --}}
-
+      {{/each}}
       {{!-- 貼文2開始 --}}
       <div class="tweet col-md-12">
         <div class="d-flex">
