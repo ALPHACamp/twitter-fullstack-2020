@@ -4,7 +4,7 @@ const faker = require('faker')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users', Array.from({length: 4}).map((d, i) => ({
+    await queryInterface.bulkInsert('Users', Array.from({ length: 5 }).map((d, i) => ({
       id: i * 5 + 5,
       account: faker.finance.accountName(),
       email: faker.internet.email(),
