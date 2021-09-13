@@ -8,6 +8,7 @@ const adminController = require('../controllers/adminController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
+const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
 
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
@@ -36,7 +37,7 @@ module.exports = (app, passport) => {
     res.render('./admin/adminTweets')
   })
 
-
+ 
   // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
   // //使用者顯示主頁面
   // router.get('/current_user', userController.getCurrentUser)
@@ -65,7 +66,7 @@ module.exports = (app, passport) => {
   TODO:// 貼文相關
   //顯示所有貼文(要改api)
   app.get('/index', authenticated, tweetController.getTweets)
- 
+
   // //使用者新增一則貼文
   app.get('/index/create', authenticated, tweetController.createTweets)
   app.post('/index/create', authenticated, tweetController.postTweets)
@@ -116,7 +117,7 @@ module.exports = (app, passport) => {
   app.put('/users/:user_id/setting', authenticated, userController.putSetting)
   // //使用者編輯個人資料(edit)
   app.get('/users/:user_id/edit', authenticated, userController.editProfilePage)
-  app.put('/users/:user_id/profile', authenticated, upload.single('avatar'), userController.putProfile)
+  app.put('/users/:user_id/profile', authenticated, upload.single('avatar'), userController.putProfile)  
   // //註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

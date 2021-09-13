@@ -103,6 +103,56 @@ const userController = {
     }
   },
 
+  //testing upload multiple photos
+  // putProfile: (req, res) => {
+  //   //是否前端判斷？
+  //   if (!req.body.name) {
+  //     req.flash('error_message', '請輸入使用者名稱')
+  //     return res.redirect('back')
+  //   }
+  //   const files = Object.assign({}, req.files)
+  //   console.log(files.ava)
+  //   // const { files } = req
+
+  //   if (files) {
+  //     console.log(files.avatar[0])
+  //     imgur.setClientID(IMGUR_CLIENT_ID)
+  //     imgur.upload(files.avatar[0].path, (err, img) => {
+  //       return User.findByPk(req.params.user_id)
+  //         .then((user) => {
+  //           console.log(img.data.link)
+  //           user.update({
+  //             name: req.body.name,
+  //             introduction: req.body.introduction,
+  //             avatar: files.avatar ? img.data.link : user.avatar,
+  //             // cover: files ? img.data.link : user.cover
+  //           })
+  //             .then(() => {
+  //               req.flash('success_messages', 'user profile was successfully updated!')
+  //               res.redirect('/index')
+  //             })
+  //             .catch(err => console.error(err))
+  //         })
+  //     })
+  //   } else {
+  //     return User.findByPk(req.params.user_id)
+  //       .then((user) => {
+  //         user.update({
+  //           name: req.body.name,
+  //           introduction: req.body.introduction,
+  //           avatar: user.avatar,
+  //           cover: user.cover
+  //         })
+  //           .then(() => {
+  //             req.flash('success_messages', 'user profile was successfully updated!')
+  //             res.redirect('/index')
+  //           })
+  //           .catch(err => console.error(err))
+  //       })
+
+  //   }
+  // },
+
   putSetting: (req, res) => {
     //是否前端判斷？
     if (!req.body.name) {
