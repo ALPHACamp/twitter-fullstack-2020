@@ -105,7 +105,7 @@ module.exports = (app, passport) => {
   // //管理者刪除貼文
   app.delete('/admin/tweets/:id', adminController.deleteTweets)
   // //管理者顯示所有使用者
-  // router.get('/admin/users', adminController.getUsers)
+  app.get('/admin/users', adminController.getUsers)
 
 
   // //使用者登入頁面

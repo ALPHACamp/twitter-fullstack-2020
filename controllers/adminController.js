@@ -25,6 +25,13 @@ const adminController = {
     .then((tweet) => {
       res.redirect('/admin/tweets')
     })
+  },
+  getUsers: (req, res) => {
+    return User.findAll( {raw: true} )
+    .then(user => {
+      res.render('admin/user', {user:user})
+    })
+    
   }
 }
 

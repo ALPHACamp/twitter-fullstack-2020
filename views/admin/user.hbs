@@ -1,0 +1,23 @@
+<div class="container">
+  <p>admin user</p>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">id</th>
+        <th scope="col">account</th>
+        <th scope="col">name</th>
+        <th scope="col">role</th>
+      </tr>
+    </thead>
+    {{#each user}}
+    <tbody>
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td>{{this.account}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.role}}</td>
+      </tr>
+    </tbody>
+    {{/each}}
+  </table>
+</div>
