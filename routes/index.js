@@ -20,22 +20,26 @@ module.exports = (app, passport) => {
 
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === "admin") {
-        return next()
-      }
-      return res.redirect('/')
+        if (helpers.getUser(req).role === "admin") { return next() }
+      return res.redirect('/admin/signin')
     }
-    res.redirect('/signin')
+    res.redirect('/admin/signin')
   }
 
   //TODO:測試用路由
+
+//   app.get('/',  (req, res) => {
+//     res.render('./admin/adminUsers')
+//   })
+
   app.get('/', authenticated, (req, res) => {
     res.render('index')
   })
 
-  app.get('/admin/signin', (req, res) => {
-    res.render('./admin/adminTweets')
-  })
+  // app.get('/admin/signin', (req, res) => {
+  //   res.render('./admin/adminTweets')
+  // })
+
 
  
   // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
@@ -98,15 +102,26 @@ module.exports = (app, passport) => {
   // router.delete('/tweets/:id', tweetController.removeTweet)
 
 
+//   passport.authenticate('local', { 
+//     failureRedirect: '/admin/signin', 
+//     failureFlash: true 
+//   }),
+
+
   // //管理者登入(後台登入)
-  // router.get('/admin/signin', adminController.signinPage)
-  // router.post('/admin/signin', adminController.signin)
+  app.get('/admin/signin', adminController.signinPage)
+  app.post('/admin/signin',passport.authenticate('local', { 
+    failureRedirect: '/admin/signin', 
+    failureFlash: true 
+  }), adminController.signin)
+  // //後台登出
+  app.get('/admin/logout', adminController.logout)
   //管理者顯示所有貼文
-  app.get('/admin/tweets', adminController.getTweets)
+  app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   // //管理者刪除貼文
   app.delete('/admin/tweets/:id', adminController.deleteTweets)
   // //管理者顯示所有使用者
-  app.get('/admin/users', adminController.getUsers)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 
   // //使用者登入頁面
