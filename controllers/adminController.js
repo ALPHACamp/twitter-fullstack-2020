@@ -4,6 +4,20 @@ const User = db.User
 const Tweet = db.Tweet
 
 const adminController = {
+  //登入登出
+  signinPage: (req, res) => {
+    return res.render('admin/adminSignIn')
+  },
+  signin: (req, res) => {
+    req.flash('success_messages', '成功登入！')
+    res.redirect('/admin/tweets')
+  },
+  logout: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/admin/signin')
+  },
+
   //貼文相關
   //顯示所有貼文
   getTweets: (req, res) => {
