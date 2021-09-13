@@ -26,7 +26,7 @@
           </a>
         </ul>
 
-        <a href="">
+        <a href="/logout">
           <div class="logout-button">
             <i class="fas fa-arrow-alt-circle-left"></i>
             登出
@@ -41,7 +41,8 @@
       <div class="text-title ml-4 mt-3">推文清單</div>
       <hr>
 
-      {{!-- 貼文1開始 --}} 
+      {{!-- 貼文1開始 --}}
+      {{#each tweet}} 
 <div class="tweet">
   <div class="d-flex" style="padding:0; margin:0; max-width: 60vw">
     <div class="m-2" style="padding:0; width:50px">
@@ -53,25 +54,28 @@
     <div class="tweets d-flex" style="padding:0; margin:auto 0;justify-content:space-between; flex-grow:1">
       <div>
         <div class="account-info d-flex" style="flex:auto;">
-          <div class="user-name">Orange</div>
+          <div class="user-name">{{this.User.name}}</div>
           <div class="account-time ml-2">@orange．3小時</div>
         </div>
         <div class="post-text d-flex" style="flex-grow:1; ">
-          [筆記] 談談Javascript 中的 Hoisting
-          [筆記] 談談Javascript 中的 Hoisting...
+          {{this.description}}
         </div>
       </div>
-
+            {{!-- 刪除 --}}
+    <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
       <div class="close-button">
-        <button type="button" class="close" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <button type="submit" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
       </div>
+    </form>
     </div>
+
   </div>
 </div>
 <hr>
       {{!-- 貼文1結束 --}}
+      {{/each}}
 
       {{!-- 貼文2開始 --}}
       <div class="tweet">
