@@ -32,7 +32,7 @@ module.exports = (app, passport) => {
 //   })
 
   app.get('/', authenticated, (req, res) => {
-    res.render('index')
+    res.redirect('/index')
   })
 
   // app.get('/admin/signin', (req, res) => {
