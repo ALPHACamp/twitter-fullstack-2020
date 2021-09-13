@@ -26,6 +26,10 @@ module.exports = (app, passport) => {
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', authenticatedAdmin, adminController.adminGetTweets)
 
+  // 追蹤
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+
   // 註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
