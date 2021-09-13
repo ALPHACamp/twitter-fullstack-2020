@@ -1,1 +1,132 @@
-<p>hi, this is tweet-2</p>
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12  justify-content-center" style="margin:0">
+    {{!-- 左側欄位 --}}
+    <div class="left-side col-md-2">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+
+      <div>
+        <ul class="list-group">
+
+          <li class="list-group-item ">
+            <a href=""></a>
+            <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+            </a>
+          </li>
+
+
+          <a href="/users/{{user.id}}/edit">
+            <li class="list-group-item active "  style="background-color: white; color:#FF6600">
+              <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
+            </li>
+          </a>
+
+          <a href="/users/{{user.id}}/setting">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
+            </li>
+          </a>
+        </ul>
+        <button type="submit" class="tweet-button">推文</button>
+        <a href="">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+      </div>
+    </div>
+
+    {{!-- <div class="headerDivider"></div> --}}
+    {{!-- 中間主欄位 --}}
+    <div class="middle-side col-md-5" style="padding:0; height:100%;">
+      <div class="text-title d-flex"> 
+        <div class="back-icon">
+        <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="name-info">
+        <div class="title-name">
+          John Doe
+        </div>
+        <div class="title-info">
+          25推文
+        </div>
+        </div>
+        
+
+      </div>
+
+      <hr style="margin:0; padding:0">
+      {{!-- 個人資訊 --}}
+      <div class="cover">
+        <img src="https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989__340.jpg" alt="">
+      </div>
+
+      <div class="user-info">
+        <div class="avatar">
+          <img src="" alt="">
+        </div>
+      </div>
+
+    </div>
+
+    {{!-- <div class="headerDivider"></div> --}}
+    {{!-- 右側欄位 --}}
+    <div class="right-side col-md-3">
+      <div class="popular mt-2" style="padding:auto;">
+        <div class="popular-title mt-2">
+          Popular
+        </div>
+        <ul class="list-group">
+          {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
+          {{!-- 跟隨中使用者開始 --}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div>
+                <img class="user-pic" src="" alt="">
+              </div>
+              <div class="name-account ml-2">
+                <div class="name">Pizza Hut</div>
+                <div class="account">@pizzahut</div>
+              </div>
+              <div class="button">
+                <button type="submit" class="follow-button">正在跟隨</button>
+              </div>
+            </div>
+          </li>
+          {{!-- 使用者結束 --}}
+
+          {{!-- 未跟隨中使用者開始 --}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div>
+                <img class="user-pic" src="" alt="">
+              </div>
+              <div class="name-account ml-2">
+                <div class="name">McDonald's</div>
+                <div class="account">@McDonald's</div>
+              </div>
+              <div class="button">
+                <button type="submit" class="unfollow-button"> 跟隨 </button>
+              </div>
+            </div>
+          </li>
+          {{!-- 使用者結束 --}}
+
+        </ul>
+      </div>
+
+
+
+    </div>
+
+
+
+  </div>
+</div>
