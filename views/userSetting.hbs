@@ -11,7 +11,7 @@
           alt="" style="max-width: 30px;max-height: 30px;">
       </div>
 
-      <div>
+      <div  style="text-align: left">
         <ul class="list-group">
           <a href="/">
             <li class="list-group-item">
@@ -44,7 +44,7 @@
     {{!-- <div class="headerDivider"></div> --}}
 
     <div class="right-side col-md-8" style="padding:0; height:100%">
-      <div class="text-title ml-4 mt-3">帳戶資訊</div>
+      <div class="text-title">帳戶資訊</div>
       <hr style="width:60vw;margin:0">
       <form action="/users/{{user.id}}/setting?_method=PUT" method="POST" data-toggle="validator">
         <div class="mt-4">

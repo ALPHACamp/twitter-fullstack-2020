@@ -1,0 +1,357 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12 justify-content-center" style="margin:0; ; padding:0">
+    <div class="left-side  col-md-2">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+
+      <div style="text-align: left">
+        <ul class="list-group">
+          <a href="/">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-home mr-4"></i>推文清單</div>
+            </li>
+          </a>
+
+          <a href="/users/{{user.id}}/edit">
+            <li class="list-group-item  active" style="background-color: white; color:#FF6600">
+              <div class="d-flex"><i class="fas fa-user mr-4"></i>使用者列表</div>
+            </li>
+          </a>
+        </ul>
+
+        <a href="">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+      </div>
+    </div>
+
+
+    <div class="right-side col-md-10" style="padding:0">
+      <div class="text-title">使用者列表</div>
+      <hr>
+
+      <div class="container">
+        <div class="row" id="data-panel">
+
+          {{!-- 卡片開始 --}}
+          <div class="card" id="601">
+            <img src="https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2020/11/07/20201107-092915_U13380_M651499_4ac4.jpg?itok=6KFZde7p" alt="" class="show-modal card-img-top">
+
+            <div class="card-body">
+
+              <div class="name-photo">
+                <div class="avatar">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="" class="show-modal">
+                  </button>
+                </div>
+                <div class="name">
+                  John Doe
+                </div>
+                <div class="account">
+                  @heyjohn
+                </div>
+              </div>
+
+
+              <div class="like-reply">
+                <i class="far fa-comment"></i> 留言數
+                <i class="far fa-heart ml-2"></i> 讚數
+              </div>
+
+              <div class="follow d-flex">
+                <div class="followship d-flex">
+                  <div class="follow-title">
+                    34個
+                  </div>
+                  <div class="follow-body">
+                    跟隨中
+                  </div>
+
+                  <div class="follow-title ml-2">
+                    34位
+                  </div>
+                  <div class="follow-body">
+                    跟隨者
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+          {{!-- 卡片結束 --}}
+
+          {{!-- 卡片開始 --}}
+          <div class="card" id="601">
+            <img src="https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989__340.jpg" alt="" class="show-modal card-img-top">
+
+            <div class="card-body">
+
+              <div class="name-photo">
+                <div class="avatar">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <img src="https://randomuser.me/api/portraits/men/87.jpg" alt="" class="show-modal">
+                  </button>
+                </div>
+                <div class="name">
+                  John Doe
+                </div>
+                <div class="account">
+                  @heyjohn
+                </div>
+              </div>
+
+
+              <div class="like-reply">
+                <i class="far fa-comment"></i> 留言數
+                <i class="far fa-heart ml-2"></i> 讚數
+              </div>
+
+              <div class="follow d-flex">
+                <div class="followship d-flex">
+                  <div class="follow-title">
+                    34個
+                  </div>
+                  <div class="follow-body">
+                    跟隨中
+                  </div>
+
+                  <div class="follow-title ml-2">
+                    34位
+                  </div>
+                  <div class="follow-body">
+                    跟隨者
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+          {{!-- 卡片結束 --}}
+
+          {{!-- 卡片開始 --}}
+          <div class="card" id="601">
+            <img src="" alt="" class="show-modal card-img-top">
+
+            <div class="card-body">
+
+              <div class="name-photo">
+                <div class="avatar">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <img src="" alt="" class="show-modal">
+                  </button>
+                </div>
+                <div class="name">
+                  John Doe
+                </div>
+                <div class="account">
+                  @heyjohn
+                </div>
+              </div>
+
+
+              <div class="like-reply">
+                <i class="far fa-comment"></i> 留言數
+                <i class="far fa-heart ml-2"></i> 讚數
+              </div>
+
+              <div class="follow d-flex">
+                <div class="followship d-flex">
+                  <div class="follow-title">
+                    34個
+                  </div>
+                  <div class="follow-body">
+                    跟隨中
+                  </div>
+
+                  <div class="follow-title ml-2">
+                    34位
+                  </div>
+                  <div class="follow-body">
+                    跟隨者
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+          {{!-- 卡片結束 --}}
+
+
+          {{!-- 卡片開始 --}}
+          <div class="card" id="601">
+            <img src="" alt="" class="show-modal card-img-top">
+
+            <div class="card-body">
+
+              <div class="name-photo">
+                <div class="avatar">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <img src="" alt="" class="show-modal">
+                  </button>
+                </div>
+                <div class="name">
+                  John Doe
+                </div>
+                <div class="account">
+                  @heyjohn
+                </div>
+              </div>
+
+
+              <div class="like-reply">
+                <i class="far fa-comment"></i> 留言數
+                <i class="far fa-heart ml-2"></i> 讚數
+              </div>
+
+              <div class="follow d-flex">
+                <div class="followship d-flex">
+                  <div class="follow-title">
+                    34個
+                  </div>
+                  <div class="follow-body">
+                    跟隨中
+                  </div>
+
+                  <div class="follow-title ml-2">
+                    34位
+                  </div>
+                  <div class="follow-body">
+                    跟隨者
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+          {{!-- 卡片結束 --}}
+
+
+          {{!-- 卡片開始 --}}
+          <div class="card" id="601">
+            <img src="" alt="" class="show-modal card-img-top">
+
+            <div class="card-body">
+
+              <div class="name-photo">
+                <div class="avatar">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <img src="" alt="" class="show-modal">
+                  </button>
+                </div>
+                <div class="name">
+                  John Doe
+                </div>
+                <div class="account">
+                  @heyjohn
+                </div>
+              </div>
+
+
+              <div class="like-reply">
+                <i class="far fa-comment"></i> 留言數
+                <i class="far fa-heart ml-2"></i> 讚數
+              </div>
+
+              <div class="follow d-flex">
+                <div class="followship d-flex">
+                  <div class="follow-title">
+                    34個
+                  </div>
+                  <div class="follow-body">
+                    跟隨中
+                  </div>
+
+                  <div class="follow-title ml-2">
+                    34位
+                  </div>
+                  <div class="follow-body">
+                    跟隨者
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+          {{!-- 卡片結束 --}}
+
+
+          {{!-- 卡片開始 --}}
+          <div class="card" id="601">
+            <img src="" alt="" class="show-modal card-img-top">
+
+            <div class="card-body">
+
+              <div class="name-photo">
+                <div class="avatar">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <img src="" alt="" class="show-modal">
+                  </button>
+                </div>
+                <div class="name">
+                  John Doe
+                </div>
+                <div class="account">
+                  @heyjohn
+                </div>
+              </div>
+
+
+              <div class="like-reply">
+                <i class="far fa-comment"></i> 留言數
+                <i class="far fa-heart ml-2"></i> 讚數
+              </div>
+
+              <div class="follow d-flex">
+                <div class="followship d-flex">
+                  <div class="follow-title">
+                    34個
+                  </div>
+                  <div class="follow-body">
+                    跟隨中
+                  </div>
+
+                  <div class="follow-title ml-2">
+                    34位
+                  </div>
+                  <div class="follow-body">
+                    跟隨者
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+
+          </div>
+          {{!-- 卡片結束 --}}
+
+
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>

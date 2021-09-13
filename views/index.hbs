@@ -11,7 +11,7 @@
           alt="" style="max-width: 30px;max-height: 30px;">
       </div>
 
-      <div>
+      <div style="text-align: left">
         <ul class="list-group">
 
           <li class="list-group-item active " style="background-color: white; color:#FF6600">
@@ -46,7 +46,7 @@
     {{!-- <div class="headerDivider"></div> --}}
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
-      <div class="text-title ml-4 mt-3">首頁</div>
+      <div class="text-title">首頁</div>
 
       <hr style="margin:0; padding:0">
       {{!-- 新增貼文處 --}}
@@ -56,22 +56,22 @@
             src="https://lh3.googleusercontent.com/proxy/DJ0Cdy5jSI5lJEzSa0TCAXIZA5tt2jRlchLHCCQwH2zrAYOVTndf8OvyK9nKn21r8RGcZ-9vkapH0955Nqg62_bL9IT7f_jOONoNO0Dh3uLko9vREyXHEJjA9-Zz_Put762In8mvUl9Ij5k1SQ_kDH6reHQM6cP1MkCNj7MfL9boI4rzqA"
             alt="">
         </div>
-        <div class="type-location mt-2 ml-2 mb-2">
+        <div class="type-location">
           <input type="text" class="new-post-content" placeholder="有什麼新鮮事？">
         </div>
       </div>
       <div class="send-area">
         <button type="submit" class="send-button">推文</button>
       </div>
-      <hr style="border: 10px solid #E6ECF0; margin-top:0">
+      <hr style="border: 5px solid #E6ECF0; margin:0">
 
       {{!-- //TODO:擇一貼文做模板用Each即可 --}}
       {{!-- 貼文1開始 --}}
       {{#each tweet}}
       <div class="tweet col-md-12">
         <div class="d-flex">
-          <div class="mt-2 ml-2 col-md-1">
-            <img class="user-pic mr-2" src="" alt="404">
+          <div class="mt-2 ml-2 col-md-1" style="padding:0">
+            <img class="user-pic" src="" alt="404">
           </div>
 
           <div class="col-md-11">
@@ -100,7 +100,7 @@
       {{!-- 貼文2開始 --}}
       <div class="tweet col-md-12">
         <div class="d-flex">
-          <div class="mt-2 ml-2 col-md-1">
+          <div class="mt-2 ml-2 col-md-1" style="padding:0">
             <img class="user-pic mr-2" src="" alt="404">
           </div>
 
@@ -147,10 +147,10 @@
           {{!-- 跟隨中使用者開始 --}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
-              <div>
+              <div class="popular-user-pic">
                 <img class="user-pic" src="" alt="">
               </div>
-              <div class="name-account ml-2">
+              <div class="name-account">
                 <div class="name">Pizza Hut</div>
                 <div class="account">@pizzahut</div>
               </div>
@@ -164,10 +164,10 @@
           {{!-- 未跟隨中使用者開始 --}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
-              <div>
+              <div  class="popular-user-pic">
                 <img class="user-pic" src="" alt="">
               </div>
-              <div class="name-account ml-2">
+              <div class="name-account">
                 <div class="name">McDonald's</div>
                 <div class="account">@McDonald's</div>
               </div>
