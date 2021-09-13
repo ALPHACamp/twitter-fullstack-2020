@@ -28,12 +28,8 @@ module.exports = (app, passport) => {
   }
 
   //TODO:測試用路由
-  app.get('/', authenticated, (req, res) => {
-    res.render('index')
-  })
-
-  app.get('/admin/signin', (req, res) => {
-    res.render('./admin/adminTweets')
+  app.get('/',  (req, res) => {
+    res.render('./admin/adminUsers')
   })
 
 
