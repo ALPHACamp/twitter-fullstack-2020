@@ -5,7 +5,7 @@
   <div class="createTweet border">
     <div class="d-flex">
       <span class="avatar m-2">
-        <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+        <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
       </span>
       <div class="d-flex align-items-center">
         <p class="text-secondary m-0">有甚麼新鮮事?</p>
@@ -18,19 +18,20 @@
     </div>
   </div>
   <div class="tweets border-top border-5">
+    {{#each tweets}}
     <div class="teeet border">
       <div class="d-flex">
         <span class="avatar m-2">
-          <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+          <img src="{{noImage this.User.avatar.url}}" alt="" class="rounded-circle userImage">
         </span>
         <div class="">
           <div class="d-flex">
-            <div class="name m-2">Apple</div>
-            <div class="tag m-2">@apple</div>
-            <div class="time m-2">3小時</div>
+            <div class="name m-2">{{this.User.name}}</div>
+            <div class="tag m-2">@{{this.User.name}}</div>
+            <div class="time m-2">{{moment this.createdAt}}</div>
           </div>
           <div class="tweetContent m-2">
-            <p>我發了推文我發了推文我發了推文我發了推文我發了推文我發了推文我發了推文我發了推文我發了推文我發了推文我發了推文我發了推文</p>
+            <p>{{this.description}}</p>
           </div>
           <div class="row d-flex flex-nowrap mb-2">
             <div class="commtent col-lg-2 d-flex">
@@ -49,8 +50,44 @@
         </div>
       </div>
     </div>
+    {{/each}}
   </div>
 </div>
 <div class="col-lg-4">
-  我是popular
+  <div class="popularArea mt-4 border">
+    <div class="title m-3">
+      <h5 class="fw-bolder">Popular</h5>
+    </div>
+    <div class="popularList border-top">
+      <div class="popularUser d-flex border-bottom justify-content-between">
+        <div class="user d-flex">
+          <div class="avatar m-2">
+            <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+          </div>
+          <div class="information">
+            <div class="name mt-3 ms-1 fw-bolder">Pizza Hut</div>
+            <div class="account ms-1">@Pizza Hut</div>
+          </div>
+        </div>
+        <div class="round m-3">
+          <button class="orange btn text-white round">正在跟隨</button>
+        </div>
+      </div>
+      <div class="popularUser d-flex border-bottom justify-content-between">
+        <div class="user d-flex">
+          <div class="avatar m-2">
+            <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+          </div>
+          <div class="information">
+            <div class="name mt-3 ms-1 fw-bolder">McDonald's</div>
+            <div class="account ms-1">@McDonald's</div>
+          </div>
+        </div>
+        <div class="round m-3">
+          <button class="btn followButton round">跟隨</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>

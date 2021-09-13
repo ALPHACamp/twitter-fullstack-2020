@@ -10,9 +10,21 @@
   width: 60px;
 }
 .orange{
-  background-color:#f60;
+  background-color:#FF6600;
 }
 
 .round{
   border-radius:50px;
+}
+
+.popularArea{
+  width: 350px;
+  height: 710px;
+  border-radius: 14px;
+  background-color:#F5F8FA;
+}
+
+.followButton{
+  border-color: #FF6600;
+  color: #FF6600;
 }

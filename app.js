@@ -13,7 +13,10 @@ const port = 3000
 app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({ extended: true }))
-app.engine('handlebars', handlebars({defaultLayout: 'main'}))
+app.engine('handlebars', handlebars({
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
+}))
 app.set('view engine', 'handlebars')
 
 // app.get('/', (req, res) => res.send('Hello World!'))
