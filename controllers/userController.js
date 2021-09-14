@@ -61,9 +61,9 @@ const userController = {
 
   putUserEdit: (req, res) => {
     //是否前端判斷？
-    if (!req.body.name) {
-      req.flash('error_message', '請輸入使用者名稱')
-      return res.redirect('back')
+    if (!req.body.name || !req.body.introduction) {
+      req.flash('error_messages', '不符合條件')
+      return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
     const { file } = req
     if (file) {
@@ -106,8 +106,8 @@ const userController = {
   //testing upload multiple photos
   // putUserEdit: (req, res) => {
   //   //是否前端判斷？
-  //   if (!req.body.name) {
-  //     req.flash('error_message', '請輸入使用者名稱')
+  //   if(!req.body.name || !req.body.introduction) {
+  //     req.flash('error_messages', '不符合條件')
   //     return res.redirect('back')
   //   }
   //   const files = Object.assign({}, req.files)
@@ -153,19 +153,40 @@ const userController = {
   //   }
   // },
 
+
+  //   ----
+  // if (account.value.length < 5) {
+  //   account.classList.add("is-invalid")
+  //   event.preventDefault()
+  // }
+  // if (name.value.length > 50) {
+  //   name.classList.add("is-invalid")
+  //   event.preventDefault()
+  // }
+  // if (email.value.length < 1) {
+  //   email.classList.add("is-invalid")
+  //   event.preventDefault()
+  // }
+  // if (password.value !== checkPassword.value) {
+  //   password.classList.remove("is-invalid")
+  //   checkPassword.classList.add("is-invalid")
+  //   event.preventDefault()
+  // }
+  //   ----
+
   putUserSetting: (req, res) => {
-    //是否前端判斷？
-    if (!req.body.name) {
-      req.flash('error_message', '請輸入使用者名稱')
+    const { account, name, email, password, checkPassword } = req.body
+    if (account.length < 5 || !name || name.length > 50 || !email || !password || checkPassword !== password) {
+      req.flash('error_messages', '不符合條件')
       return res.redirect('back')
     }
     return User.findByPk(req.params.user_id)
       .then((user) => {
         user.update({
-          account: req.body.account,
-          name: req.body.name,
-          email: req.body.email,
-          password: req.body.password ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : user.password
+          account,
+          name,
+          email,
+          password: password ? bcrypt.hashSync(password, bcrypt.genSaltSync(10), null) : user.password
         })
           .then(() => {
             req.flash('success_messages', 'user setting was successfully updated!')
