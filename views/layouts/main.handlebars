@@ -13,8 +13,8 @@
 
 <body>
   <div class="container">
+    {{#if user}}
     <div class="row justify-content-center">
-      {{!-- <div class="col-lg-1"></div> --}}
       <div class="userSidebar col-lg-2">
         <div class="logo">
           <img src="https://i.imgur.com/ZUJriDp.png" alt="" id="ac-logo">
@@ -48,9 +48,18 @@
         <div class="d-grid gap-2 col-9 round">
           <button class="orange btn text-white round">推文</button>
         </div>
+        <div class="logout d-flex">
+          <div class="logoutLogo me-3 d-flex align-items-center">
+            <i class="fas fa-sign-out-alt"></i>
+          </div>
+          <a href="/logout" class="btn">
+            <span class="fs-5 fw-bolder">登出</span>
+          </a>
+        </div>
       </div>
       {{{body}}}
     </div>
+    {{/if}}
   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
