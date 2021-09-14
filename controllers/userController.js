@@ -13,25 +13,36 @@ const userController = {
   },
 
   signUp: (req, res) => {
-    if (req.body.checkPassword !== req.body.password) {
-      req.flash('error_messages', 'Passwords you entered were inconsistent')
+    const { account, name, email, password, checkPassword } = req.body
+    if (account.length < 5 || !name || name.length > 50 || !email || checkPassword !== password) {
+      req.flash('error_messages', '表單內容不符合條件！')
       return res.redirect('/signup')
     }
-    User.findOne({ where: { [Op.or]: [{ email: req.body.email }, { account: req.body.account }] } }).then(user => {
-      if (user) {
-        req.flash('error_messages', 'This email or account had already been registered!')
-        return res.redirect('/signup')
-      }
-      User.create({
-        name: req.body.name,
-        account: req.body.account,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-      }).then(user => {
-        req.flash('success_messages', 'Your account had been successfully registered!')
-        return res.redirect('/signin')
-      })
+    //註冊時，account 和 email 不能與其他人重覆
+    User.findAll({
+      raw: true, nest: true,
+      where: { [Op.or]: [{ email }, { account }] }
     })
+      .then(users => {
+        if (users.some(item => item.account === account)) {
+          req.flash('error_messages', '註冊失敗，account 已重覆註冊！')
+          //64656
+          return res.redirect('/signup')
+        }
+        if (users.some(item => item.email === email)) {
+          req.flash('error_messages', '註冊失敗，email 已重覆註冊！')
+          return res.redirect('/signup')
+        }
+        User.create({
+          name,
+          account,
+          email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+        }).then(user => {
+          req.flash('success_messages', 'Your account had been successfully registered!')
+          return res.redirect('/signin')
+        })
+      })
   },
 
   getUserEdit: (req, res) => {
@@ -61,9 +72,13 @@ const userController = {
   },
 
   putUserEdit: (req, res) => {
-    //是否前端判斷？
-    if (!req.body.name || !req.body.introduction) {
-      req.flash('error_messages', '不符合條件')
+    const { name, introduction } = req.body
+    if (!name) {
+      req.flash('error_messages', '暱稱不能空白！')
+      return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
+    }
+    if (name.length > 50 || introduction.length > 160) {
+      req.flash('error_messages', '字數超出上限！')
       return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
     const { file } = req
@@ -107,9 +122,14 @@ const userController = {
   //testing upload multiple photos
   // putUserEdit: (req, res) => {
   //   //是否前端判斷？
-  //   if(!req.body.name || !req.body.introduction) {
-  //     req.flash('error_messages', '不符合條件')
-  //     return res.redirect('back')
+  //   const { name, introduction } = req.body
+  //   if(!name) {
+  //     req.flash('error_messages', '暱稱不能空白！')
+  //     return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
+  //   }
+  //     if(name.length > 50 || introduction.length > 160 ) {
+  //     req.flash('error_messages', '字數超出上限！')
+  //     return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
   //   }
   //   const files = Object.assign({}, req.files)
   //   console.log(files.ava)
@@ -154,47 +174,28 @@ const userController = {
   //   }
   // },
 
-
-  //   ----
-  // if (account.value.length < 5) {
-  //   account.classList.add("is-invalid")
-  //   event.preventDefault()
-  // }
-  // if (name.value.length > 50) {
-  //   name.classList.add("is-invalid")
-  //   event.preventDefault()
-  // }
-  // if (email.value.length < 1) {
-  //   email.classList.add("is-invalid")
-  //   event.preventDefault()
-  // }
-  // if (password.value !== checkPassword.value) {
-  //   password.classList.remove("is-invalid")
-  //   checkPassword.classList.add("is-invalid")
-  //   event.preventDefault()
-  // }
-  //   ----
-
   putUserSetting: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
+    //後端驗證表單內容
     if (account.length < 5 || !name || name.length > 50 || !email || checkPassword !== password) {
-      req.flash('error_messages', '不符合條件')
+      req.flash('error_messages', '表單內容不符合條件！')
       return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
     }
+    //編輯時，account 和 email 不能與其他人重覆
     User.findAll({
       raw: true, nest: true,
       where: {
-        [Op.or]: [{ email: req.body.email }, { account: req.body.account }],
-        id: { [Op.ne]: 1 }
+        [Op.or]: [{ email }, { account }],
+        id: { [Op.ne]: helpers.getUser(req).id }
       }
     })
-      .then(user => {
-        if (user.some(item => item.account === req.body.account)) {
-          req.flash('error_messages', 'Account 已被註冊!')
+      .then(users => {
+        if (users.some(item => item.account === account)) {
+          req.flash('error_messages', 'account 已被他人使用！')
           return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
         }
-        if (user.some(item => item.email === req.body.email)) {
-          req.flash('error_messages', 'Email已被註冊!')
+        if (users.some(item => item.email === email)) {
+          req.flash('error_messages', 'email 已被他人使用！')
           return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
         }
         return User.findByPk(req.params.user_id)
@@ -206,7 +207,7 @@ const userController = {
               password: password ? bcrypt.hashSync(password, bcrypt.genSaltSync(10), null) : user.password
             })
               .then(() => {
-                req.flash('success_messages', 'user setting was successfully updated!')
+                req.flash('success_messages', '使用者設定已成功被更新!')
                 res.redirect(`/index`)
               })
               .catch(err => console.error(err))
