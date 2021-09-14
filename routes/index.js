@@ -1,8 +1,11 @@
+const twitterController = require('../controllers/tweetController.js')
 const helpers = require('../_helpers')
 
 const tweetController = require('../controllers/tweetController.js')
-const adminController = require('../controllers/adminController.js')
+// const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
+
+const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -17,6 +20,7 @@ const authenticatedAdmin = (req, res, next) => {
   }
   res.redirect('/signin')
 }
+
 
 module.exports = (app, passport) => {
   // 前台首頁
@@ -55,5 +59,4 @@ module.exports = (app, passport) => {
   }), userController.signIn)
   // 登出
   app.get('/logout', userController.logout)
-
 }
