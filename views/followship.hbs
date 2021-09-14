@@ -1,0 +1,200 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12  justify-content-center" style="margin:0">
+    {{!-- 左側欄位 --}}
+    <div class="left-side col-md-2">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+
+      <div>
+        <ul class="list-group">
+
+          <li class="list-group-item ">
+            <a href=""></a>
+            <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+            </a>
+          </li>
+
+
+          <a href="/users/{{user.id}}/edit">
+            <li class="list-group-item active ">
+              <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
+            </li>
+          </a>
+
+          <a href="/users/{{user.id}}/setting">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
+            </li>
+          </a>
+        </ul>
+        <button type="submit" class="tweet-button">推文</button>
+        <a href="">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+      </div>
+    </div>
+
+    {{!-- <div class="headerDivider"></div> --}}
+    {{!-- 中間主欄位 --}}
+    <div class="middle-side col-md-5" style="padding:0; height:100%;">
+      <div class="text-title d-flex mt-0 mb-0">
+        <div class="back-icon">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="name-info">
+          <div class="title-name">
+            John Doe
+          </div>
+          <div class="title-info">
+            25推文
+          </div>
+        </div>
+      </div>
+        {{!-- 推文/推文與回覆/喜歡的內容區塊 --}}
+        <div class="follow-tweet">
+        {{!-- 推文區開始 --}}
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link active" href="">推文</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">推文與回覆</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="">喜歡的內容</a>
+          </li>
+        </ul>
+        <br /><br />
+        <div class="user-tweet">
+          {{!-- 貼文開始 --}}
+          <div class="tweet col-md-12">
+            <div class="d-flex">
+              <div class="mt-2 ml-2 col-md-1" style="padding:0">
+                <img class="user-pic mr-2" src="" alt="">
+              </div>
+
+              <div class="col-md-11">
+                <div class="account-followship">
+                <div class="account-info" style="flex:auto">
+                  <div class="user-name">Orange</div>
+                  <div class="account-time">@orange．3小時</div>
+                </div>
+                <div class="followship-button">
+                  {{!-- //TODO:追隨鈕 --}}
+                  {{!-- <button type="submit" class="follow-button">正在跟隨</button> --}}
+                  <button type="submit" class="unfollow-button">跟隨</button>
+                </div>
+                </div>
+
+                <div class="post-text d-flex" style="flex:auto">
+                  [筆記] 談談Javascript 中的 Hoisting
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <hr />
+          {{!-- 貼文結束 --}}
+
+                    {{!-- 貼文開始 --}}
+                    <div class="tweet col-md-12">
+                      <div class="d-flex">
+                        <div class="mt-2 ml-2 col-md-1" style="padding:0">
+                          <img class="user-pic mr-2" src="" alt="">
+                        </div>
+                    
+                        <div class="col-md-11">
+                          <div class="account-followship">
+                            <div class="account-info" style="flex:auto">
+                              <div class="user-name">Orange</div>
+                              <div class="account-time">@orange．3小時</div>
+                            </div>
+                            <div class="followship-button">
+                              <button type="submit" class="follow-button">正在跟隨</button>
+                              {{!-- <button type="submit" class="unfollow-button">跟隨</button> --}}
+                            </div>
+                          </div>
+                    
+                          <div class="post-text d-flex" style="flex:auto">
+                            [筆記] 談談Javascript 中的 Hoisting[筆記] JavaScript中函式(Function)就是一種物件(Objects) 
+                          </div>
+                        </div>
+                    
+                      </div>
+                    </div>
+                    <hr />
+                    {{!-- 貼文結束 --}}
+
+
+</div>
+        </div>
+        {{!-- 推文區結束 --}}
+
+        {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
+      </div>
+
+
+
+    {{!-- <div class="headerDivider"></div> --}}
+    {{!-- 右側欄位 --}}
+    <div class="right-side col-md-3">
+      <div class="popular mt-2" style="padding:auto;">
+        <div class="popular-title mt-2">
+          Popular
+        </div>
+        <ul class="list-group">
+          {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
+          {{!-- 跟隨中使用者開始 --}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div>
+                <img class="user-pic" src="" alt="">
+              </div>
+              <div class="name-account ml-2">
+                <div class="name">Pizza Hut</div>
+                <div class="account">@pizzahut</div>
+              </div>
+              <div class="button">
+                <button type="submit" class="follow-button">正在跟隨</button>
+              </div>
+            </div>
+          </li>
+          {{!-- 使用者結束 --}}
+
+          {{!-- 未跟隨中使用者開始 --}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div>
+                <img class="user-pic" src="" alt="">
+              </div>
+              <div class="name-account ml-2">
+                <div class="name">McDonald's</div>
+                <div class="account">@McDonald's</div>
+              </div>
+              <div class="button">
+                <button type="submit" class="unfollow-button"> 跟隨 </button>
+              </div>
+            </div>
+          </li>
+          {{!-- 使用者結束 --}}
+
+        </ul>
+      </div>
+
+
+
+    </div>
+
+
+
+  </div>
+</div>

@@ -28,7 +28,7 @@ module.exports = (app, passport) => {
 
   //TODO:測試用路由
   app.get('/', authenticated, (req, res) => {
-    res.render('tweet')
+    res.render('followship')
   })
 
   // app.get('/admin/signin', (req, res) => {
