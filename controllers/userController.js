@@ -9,7 +9,6 @@ const userController = {
     },
 
     signUp: (req, res, next) => {
-
         // 驗證兩次密碼相同，密碼不同導回註冊頁
         if (req.body.password !== req.body.passwordConfirmed) {
             req.flash('error_messages', '兩次密碼輸入不同！')
@@ -29,7 +28,7 @@ const userController = {
                 if (user) {
                     req.flash('error_messages', '「帳號已重覆註冊！」或「email 已重覆註冊！」')
                     return res.redirect('/users/register')
-                } else if(req.body.name.length > 50) {
+                } else if (req.body.name.length > 50) {
                     req.flash('error_messages', '「名字上限50字 請重新輸入！」')
                     return res.redirect('/users/register')
                 } else {
@@ -45,7 +44,24 @@ const userController = {
                 req.flash('success_messages', '成功註冊帳號！')
                 return res.redirect('/users/login')
             })
+            .catch(next) 
     },
+
+    signInPage: (req, res) => {
+        return res.render('login')
+    },  
+
+    signIn: (req, res) => {
+        req.flash('success_messages', '成功登入！')
+        res.redirect('/tweets')
+    },
+
+    logout: (req, res) => {
+        req.flash('success_messages', '登出成功！')
+        req.logout()
+        res.redirect('/user/login')
+    },
+
 }
 
 module.exports = userController
