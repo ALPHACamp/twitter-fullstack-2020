@@ -8,14 +8,14 @@ const {
   dataTypes,
   checkModelName,
   checkUniqueIndex,
-  checkPropertyExists
+  checkPropertyExists,
 } = require('sequelize-test-helpers')
 
 const db = require('../../models')
 const UserModel = require('../../models/user')
 
 describe('# User Model', () => {
-  before(done => {
+  before((done) => {
     done()
   })
 
@@ -24,9 +24,9 @@ describe('# User Model', () => {
   checkModelName(User)('User')
 
   context('properties', () => {
-    ;[
-      'name', 'email', 'password', 'account',  'cover', 'avatar'
-    ].forEach(checkPropertyExists(user))
+    ;['name', 'email', 'password', 'account', 'cover', 'avatar'].forEach(
+      checkPropertyExists(user)
+    )
   })
 
   context('associations', () => {
