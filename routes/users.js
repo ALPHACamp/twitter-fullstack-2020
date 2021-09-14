@@ -7,4 +7,4 @@ router.get('/signup', userController.getSignup)
 router.post('/signup', userController.postSignup)
 
 
-module.exports = router  
+module.exports = router

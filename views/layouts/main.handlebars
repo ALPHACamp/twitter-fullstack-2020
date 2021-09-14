@@ -18,11 +18,44 @@
 
 <body>
   <div class="container d-flex justify-content-around">
-    <div class="function">left</div>
+    <div class="function w-20" style="border:2px red solid;">
+      <img src="https://coursereport-production.imgix.net/uploads/school/logo/473/original/alpha-camp-logo.png" alt=""
+        style="width: 30px;">
+      <div style="height: 100%">
+        <ul class="nav flex-column mt-3">
+          <li class="nav-item m-2">
+            <a class="nav-link active text-start" href="#" style="width: 210px">
+              <i class=" fas fa-home fs-5"> 首頁 </i>
+            </a>
+          </li>
+          <li class="nav-item m-2">
+            <a class="nav-link text-start" href="#" style="width: 210px">
+              <i class="far fa-user fs-5"> 個人資料 </i>
+            </a>
+          </li>
+          <li class="nav-item m-2">
+            <a class="nav-link text-start" href="#" style="width: 210px">
+              <i class="fas fa-cog fs-5"> 設定 </i>
+            </a>
+          </li>
 
-    {{{body}}}
+          <a href="#" class="btn btn-white-orange rounded-pill" style="width: 210px">推文</a>
+          </li>
+        </ul>
+      </div>
+      <ul class="nav flex-column mt-3" style="height: 60px">
+        <li class="nav-item m-2">
+          <a class="nav-link text-start" href="#" style="width: 210px">
+            <i class="fas fa-sign-out-alt fs-5"> 登出 </i>
+          </a>
+        </li>
+      </ul>
 
-    <div class="popular">right</div>
+    </div>
+    <div class="body w-50" style="border:2px red solid;">
+      {{{body}}}
+    </div>
+    <div class="popular w-30" style="border:2px red solid;">right</div>
   </div>
 
 
