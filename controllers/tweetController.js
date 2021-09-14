@@ -4,7 +4,7 @@ const Reply = db.Reply
 const User = db.User
 const Followship = db.Followship
 
-const twitterController = {
+const tweetController = {
   // 首頁
   getTweets: (req, res) => {
     const id = req.params.id
@@ -81,4 +81,4 @@ const twitterController = {
   },
 }
 
-module.exports = twitterController
+module.exports = tweetController
