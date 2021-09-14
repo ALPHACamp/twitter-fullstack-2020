@@ -2,6 +2,7 @@ const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const { Op } = require("sequelize")
 
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -16,9 +17,9 @@ const userController = {
       req.flash('error_messages', 'Passwords you entered were inconsistent')
       return res.redirect('/signup')
     }
-    User.findOne({ where: { email: req.body.email } }).then(user => {
+    User.findOne({ where: { [Op.or]: [{ email: req.body.email }, { account: req.body.account }] } }).then(user => {
       if (user) {
-        req.flash('error_messages', 'This email address had already been registered!')
+        req.flash('error_messages', 'This email or account had already been registered!')
         return res.redirect('/signup')
       }
       User.create({
@@ -176,23 +177,40 @@ const userController = {
 
   putUserSetting: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
-    if (account.length < 5 || !name || name.length > 50 || !email || !password || checkPassword !== password) {
+    if (account.length < 5 || !name || name.length > 50 || !email || checkPassword !== password) {
       req.flash('error_messages', '不符合條件')
-      return res.redirect('back')
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
     }
-    return User.findByPk(req.params.user_id)
-      .then((user) => {
-        user.update({
-          account,
-          name,
-          email,
-          password: password ? bcrypt.hashSync(password, bcrypt.genSaltSync(10), null) : user.password
-        })
-          .then(() => {
-            req.flash('success_messages', 'user setting was successfully updated!')
-            res.redirect(`/index`)
+    User.findAll({
+      raw: true, nest: true,
+      where: {
+        [Op.or]: [{ email: req.body.email }, { account: req.body.account }],
+        id: { [Op.ne]: 1 }
+      }
+    })
+      .then(user => {
+        if (user.some(item => item.account === req.body.account)) {
+          req.flash('error_messages', 'Account 已被註冊!')
+          return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+        }
+        if (user.some(item => item.email === req.body.email)) {
+          req.flash('error_messages', 'Email已被註冊!')
+          return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+        }
+        return User.findByPk(req.params.user_id)
+          .then((user) => {
+            user.update({
+              account,
+              name,
+              email,
+              password: password ? bcrypt.hashSync(password, bcrypt.genSaltSync(10), null) : user.password
+            })
+              .then(() => {
+                req.flash('success_messages', 'user setting was successfully updated!')
+                res.redirect(`/index`)
+              })
+              .catch(err => console.error(err))
           })
-          .catch(err => console.error(err))
       })
   },
 
