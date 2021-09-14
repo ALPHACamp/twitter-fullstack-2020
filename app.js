@@ -3,8 +3,6 @@ const handlebars = require('express-handlebars')
 const helpers = require('./_helpers')
 const bodyParser = require('body-parser')
 
-const userController = require('./controllers/userController')
-
 const app = express()
 const port = 3000
 
@@ -21,11 +19,10 @@ app.use((req, res, next) => {
 })
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-
 app.get('/', (req, res) => res.render('twitter'))
-app.get('/signup', userController.signupPage)
-app.post('/signup', userController.signup)
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+require('./routes')(app)
 
 module.exports = app
