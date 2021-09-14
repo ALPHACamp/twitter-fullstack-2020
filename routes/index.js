@@ -20,7 +20,7 @@ module.exports = (app, passport) => {
 
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-        if (helpers.getUser(req).role === "admin") { return next() }
+      if (helpers.getUser(req).role === "admin") { return next() }
       return res.redirect('/admin/signin')
     }
     res.redirect('/admin/signin')
@@ -28,9 +28,9 @@ module.exports = (app, passport) => {
 
   //TODO:測試用路由
 
-//   app.get('/',  (req, res) => {
-//     res.render('./admin/adminUsers')
-//   })
+  //   app.get('/',  (req, res) => {
+  //     res.render('./admin/adminUsers')
+  //   })
 
   app.get('/', authenticated, (req, res) => {
     res.render('index')
@@ -41,7 +41,7 @@ module.exports = (app, passport) => {
   // })
 
 
- 
+
   // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
   // //使用者顯示主頁面
   // router.get('/current_user', userController.getCurrentUser)
@@ -102,17 +102,17 @@ module.exports = (app, passport) => {
   // router.delete('/tweets/:id', tweetController.removeTweet)
 
 
-//   passport.authenticate('local', { 
-//     failureRedirect: '/admin/signin', 
-//     failureFlash: true 
-//   }),
+  //   passport.authenticate('local', { 
+  //     failureRedirect: '/admin/signin', 
+  //     failureFlash: true 
+  //   }),
 
 
   // //管理者登入(後台登入)
   app.get('/admin/signin', adminController.signinPage)
-  app.post('/admin/signin',passport.authenticate('local', { 
-    failureRedirect: '/admin/signin', 
-    failureFlash: true 
+  app.post('/admin/signin', passport.authenticate('local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
   }), adminController.signin)
   // //後台登出
   app.get('/admin/logout', adminController.logout)
@@ -128,11 +128,11 @@ module.exports = (app, passport) => {
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
   // //使用者編輯帳號設定(setting)
-  app.get('/users/:user_id/setting', authenticated, userController.editSettingPage)
-  app.put('/users/:user_id/setting', authenticated, userController.putSetting)
+  app.get('/users/:user_id/setting', authenticated, userController.getUserSetting)
+  app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
   // //使用者編輯個人資料(edit)
-  app.get('/users/:user_id/edit', authenticated, userController.editProfilePage)
-  app.put('/users/:user_id/profile', authenticated, upload.single('avatar'), userController.putProfile)  
+  app.get('/users/:user_id/edit', authenticated, userController.getUserEdit)
+  app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
   // //註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)

@@ -7,6 +7,7 @@ module.exports = {
       ({
         UserId: Math.floor(Math.random() * 5) + 2,
         TweetId: Math.floor(Math.random() * 10) + 1,
+        comment: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       })

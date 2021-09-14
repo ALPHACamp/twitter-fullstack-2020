@@ -33,7 +33,7 @@ const userController = {
     })
   },
 
-  editProfilePage: (req, res) => {
+  getUserEdit: (req, res) => {
     //檢查使用者是否在編輯自己的資料
     if (req.params.user_id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
@@ -41,12 +41,12 @@ const userController = {
     }
     User.findByPk(req.params.user_id)
       .then(user => {
-        return res.render('profileSetting', { user: user.toJSON() })
+        return res.render('userEdit', { user: user.toJSON() })
       })
       .catch(err => console.log(err))
   },
 
-  editSettingPage: (req, res) => {
+  getUserSetting: (req, res) => {
     //檢查使用者是否在編輯自己的資料
     if (req.params.user_id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
@@ -54,12 +54,12 @@ const userController = {
     }
     User.findByPk(req.params.user_id)
       .then(user => {
-        return res.render('accountSetting', { user: user.toJSON() })
+        return res.render('userSetting', { user: user.toJSON() })
       })
       .catch(err => console.log(err))
   },
 
-  putProfile: (req, res) => {
+  putUserEdit: (req, res) => {
     //是否前端判斷？
     if (!req.body.name) {
       req.flash('error_message', '請輸入使用者名稱')
@@ -104,7 +104,7 @@ const userController = {
   },
 
   //testing upload multiple photos
-  // putProfile: (req, res) => {
+  // putUserEdit: (req, res) => {
   //   //是否前端判斷？
   //   if (!req.body.name) {
   //     req.flash('error_message', '請輸入使用者名稱')
@@ -153,7 +153,7 @@ const userController = {
   //   }
   // },
 
-  putSetting: (req, res) => {
+  putUserSetting: (req, res) => {
     //是否前端判斷？
     if (!req.body.name) {
       req.flash('error_message', '請輸入使用者名稱')
