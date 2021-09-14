@@ -7,7 +7,7 @@ const port = process.env.PORT || 3000
 const flash = require('connect-flash')
 const session = require('express-session')
 const db = require('./models') // 引入資料庫
-const passport = require('./config/passport')
+  const passport = require('./config/passport')
 const methodOverride = require('method-override')
 const moment = require('moment')
 
@@ -40,6 +40,6 @@ app.use(methodOverride('_method'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
-require('./routes')(app)
+require('./routes')(app, passport)
 
 module.exports = app

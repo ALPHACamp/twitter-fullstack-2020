@@ -43,15 +43,24 @@ const loginController = {
   },
 
   signInPage: (req, res) => {
-
+    return res.render('signin')
   }, 
 
   signIn: (req, res) => {
+    if (req.user.role) {
+      req.flash('error_messages', '帳號或密碼錯誤')
 
+      res.redirect('/signin')
+    } else {
+      req.flash('success_messages', '成功登入！')
+      res.redirect('signup')
+    }
   },
-  
-  logOut: (req, res) => {
 
+  logOut: (req, res) => {
+    req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
   }
 }
 
