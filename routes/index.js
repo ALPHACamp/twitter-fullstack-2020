@@ -56,9 +56,9 @@ module.exports = (app, passport) => {
   // //使用者粉絲清單(被追蹤)
   // router.get('/users/:user_id/followers', userController.getUserFollowers)
 
-  // //追蹤使用者
+  // //追蹤使用者 (row 45)
   // router.post('/followships/:user_id', userController.addFollowing)
-  // //取消追蹤使用者
+  // //取消追蹤使用者 (row 46)
   // router.delete('/followships/:user_id', userController.removeFollowing)
 
   TODO:// 貼文相關
@@ -66,41 +66,35 @@ module.exports = (app, passport) => {
   app.get('/index', authenticated, tweetController.getTweets)
 
   // //使用者新增一則貼文
-  app.get('/index/create', authenticated, tweetController.createTweets)
-  app.post('/index/create', authenticated, tweetController.postTweets)
+  app.get('/tweets/create', authenticated, tweetController.createTweets)
+  app.post('/tweets', authenticated, tweetController.postTweets)
 
-  // //顯示特定貼文 (之後要新增其所含的回文)
-  app.get('/index/:id', authenticated, tweetController.getTweet)
+  // //顯示特定貼文
+  app.get('/tweets/:id', authenticated, tweetController.getTweet)
 
   // 回文相關
-  // //回覆特定貼文
-  app.post('/index/:id', authenticated, tweetController.createReply)
-  // //顯示特定貼文回覆
-  // router.get('/tweets/:id/replies', tweetController.getTweetReplies)
-  // 編輯貼文回覆
+  // //顯示特定貼文回覆 (row40)
+  app.get('/tweets/:id/replies',authenticated, tweetController.getTweetReplies)
+  // //回覆特定貼文 (row 36)
+  app.post('/tweets/:id', authenticated, tweetController.createReply)
+  //------------擴充功能--------------//
+  // 編輯貼文回覆 (row 37-38)
   // router.get('/replies/:id/edit', tweetController.getReplyPage)
   // router.put('/replies/:id', tweetController.putReply)
-  // 刪除回覆
+  // 刪除回覆 (row 39)
   // router.delete('/replies/:id', tweetController.removeReply)
+  // 編輯貼文 (row 33-34)
+  // router.get('/tweets/:id/edit', tweetController.editTweet)
+  // router.put('/tweets/:id', tweetController.putTweet)
+  // 刪除貼文 (row 35)
+  // router.delete('/tweets/:id', tweetController.removeTweet)
+//------------------------------//
+
+// // Like & UnLike
   // //喜歡特定貼文
   // router.post('/tweets/:id/like', tweetController.addLike)
   // //取消喜歡特定貼文
   // router.delete('/tweets/:id/like', tweetController.removeLike)
-  // 新增貼文
-  // router.get('/tweets/create', tweetController.createTweetPage)
-  // router.post('/tweets', tweetController.createTweet)
-  // 編輯貼文
-  // router.get('/tweets/:id/edit', tweetController.editTweet)
-  // router.put('/tweets/:id', tweetController.putTweet)
-  // 刪除貼文
-  // router.delete('/tweets/:id', tweetController.removeTweet)
-
-
-  //   passport.authenticate('local', { 
-  //     failureRedirect: '/admin/signin', 
-  //     failureFlash: true 
-  //   }),
-
 
   // //管理者登入(後台登入)
   app.get('/admin/signin', adminController.signinPage)

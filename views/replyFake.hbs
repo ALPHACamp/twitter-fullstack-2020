@@ -1,0 +1,23 @@
+<div class="container">
+  <form action="/tweets/{{tweet.id}}" method="POST">
+
+    <a href="/index">X</a>
+    <h2>{{tweet.description}}</h2>
+    <hr />
+
+    {{#each tweet.Replies}}
+      <h4>{{this.comment}}</h4>
+    {{/each}}
+
+    <div class="form-group mt-5">
+      <label for="comment">回覆</label>
+      <input type="text" class="form-control" max="140" name="comment" id="comment" placeholder="回文?">
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <input type="hidden" name="TweetId" value="{{tweet.id}}" />
+      <button type="submit" class="btn btn-primary">推文</button>
+    </div>
+
+  </form>
+</div>

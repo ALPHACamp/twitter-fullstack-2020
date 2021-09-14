@@ -34,7 +34,7 @@
           </a>
         </ul>
 
-        <a href="/index/create" type="button" class="tweet-button">推文</a>
+        <a href="/tweets/create" type="button" class="tweet-button">推文</a>
 
         <a href="/logout">
           <div class="logout-button">
@@ -54,7 +54,7 @@
       <hr style="margin:0; padding:0">
       {{!-- 新增貼文處 --}}
 
-    <a href="/index/create">
+    <a href="/tweets/create">
       <div class="add-post d-flex">
         <div class="mt-2 ml-2">
           <img class="user-pic"
@@ -86,7 +86,7 @@
               <div class="account-time ml-2">@apple．3小時</div>
             </div>
 
-          <a href="/index/{{this.id}}"  class="text-muted">
+          <a href="/tweets/{{this.id}}"  class="text-muted">
           <div class="post-text d-flex" style="flex:auto">
             {{this.description}}
           </div>

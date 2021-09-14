@@ -64,15 +64,14 @@
             <img class="user-pic" src="" alt="">
           </div>
           <div class="name-account">
-            <div class="name">Apple</div>
-            <div class="account">@apple</div>
+            <div class="name">{{tweet.name}}</div>
+            <div class="account">@{{tweet.account}}</div>
           </div>
 
         </div>
 
         <div class="content">
-          Gitlab 合併請求（Merge Request ） 一般在團隊開發的時候，為了避免工程師直接對主要 Repo 進行修改，會要求工程師從 專案的主要 Repo
-          複製一份這個專案的副本（Fork）回來工程師的電腦進行開發/除錯。
+         <h2>{{tweet.description}}</h2> 
         </div>
 
         <div class="time">
@@ -95,12 +94,15 @@
         <hr>
 
         <div class="icon-reply d-flex">
-          <div><i class="far fa-comment"></i></div>
+          <div>
+            <a href="/tweets/{{tweet.id}}/replies"><i class="far fa-comment"></i></a>
+          </div>
           {{!-- //TODO:要分實心空心 --}}
           <div><i class="far fa-heart mr-2"></i></div>
         </div>
         <hr>
         {{!-- 回覆開始 --}}
+        {{#each tweet.Relies}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 ml-2 col-md-1" style="padding:0">
@@ -118,7 +120,7 @@
               </div>
 
               <div class="post-text d-flex" style="flex:auto">
-                GREAT~
+                {{this.comment}}
               </div>
             </div>
 
@@ -126,7 +128,7 @@
         </div>
         <hr />
         {{!-- 回覆結束 --}}
-
+        {{/each}}
         {{!-- 回覆開始 --}}
         <div class="tweet col-md-12">
           <div class="d-flex">
