@@ -4,6 +4,7 @@ const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Tweets',
+      //隨機建立10個tweets (Condition:5位使用者)
       Array.from({ length: 10 }).map((d, i) =>
       ({
         UserId: Math.floor(Math.random() * 5) + 2,
