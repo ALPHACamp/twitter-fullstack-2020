@@ -41,7 +41,7 @@ const userController = {
     }
     User.findByPk(req.params.user_id)
       .then(user => {
-        return res.render('profileSetting', { user: user.toJSON() })
+        return res.render('userEdit', { user: user.toJSON() })
       })
       .catch(err => console.log(err))
   },
@@ -54,7 +54,7 @@ const userController = {
     }
     User.findByPk(req.params.user_id)
       .then(user => {
-        return res.render('accountSetting', { user: user.toJSON() })
+        return res.render('userSetting', { user: user.toJSON() })
       })
       .catch(err => console.log(err))
   },
@@ -119,7 +119,7 @@ const userController = {
         })
           .then(() => {
             req.flash('success_messages', 'user setting was successfully updated!')
-            res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+            res.redirect(`/index`)
           })
           .catch(err => console.error(err))
       })
