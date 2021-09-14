@@ -87,4 +87,4 @@ typings/
 .dynamodb/
 
 # Temporary files
-.temp
+.temp/
