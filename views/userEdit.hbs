@@ -1,0 +1,36 @@
+<h1> 草稿: this will be profile setting page</h1>
+{{!-- 以下皆為測試畫面 --}}
+<form action="/users/{{user.id}}/edit?_method=PUT" method="POST" enctype="multipart/form-data">
+  {{!-- 名稱 --}}
+  <div class="form-group">
+    <label for="name">名稱</label>
+    <input type="text" class="form-control" name="name" id="name" value="{{user.name}}">
+  </div>
+  <br>
+  {{!-- 自介 --}}
+  <div class="form-group">
+    <label for="introduction">自我介紹</label>
+    <input type="text" class="form-control" name="introduction" id="introduction" value="{{user.introduction}}">
+  </div>
+  <br>
+  {{!-- 圖片 --}}
+  <div>
+    <img class="img-responsive center-block" src="{{user.avatar}}" style="width: 250px;margin-bottom: 25px;">
+  </div>
+  <br>
+  {{!-- 上傳圖片 --}}
+  <div>
+    <label for="image">上傳使用者照片(avatar)</label>
+    <input type="file" class="form-control-file" id="avatar" name="avatar">
+  </div>
+  <br>
+
+  {{!-- <div>
+    <label for="image">背景圖片(cover)</label>
+    <input type="file" class="form-control-file" id="cover" name="cover">
+  </div> --}}
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="javascript:history.back()">
+    <button type="button" class="btn btn-danger">Cancel</button>
+  </a>
+</form>

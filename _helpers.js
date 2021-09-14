@@ -6,7 +6,12 @@ function getUser(req) {
   return req.user;
 }
 
+function getAccount(req) {
+  return req.account;
+}
+
 module.exports = {
   ensureAuthenticated,
   getUser,
+  getAccount,
 };

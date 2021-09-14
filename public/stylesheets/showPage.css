@@ -1,0 +1,621 @@
+.wrap {
+  margin: 0;
+  min-width:768px;
+  max-width: 1440px; 
+  max-height: 1200px; 
+  margin: 0 auto; 
+}
+
+hr {
+  /* width:60vw; */
+  margin:0
+}
+
+.logo {
+  margin-top: 5vh;
+}
+
+.setting-logo {
+  text-align: start;
+  margin-top: 2vh;
+}
+
+.sign-title {
+position: relative;
+margin-top: 2.1%;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 23px;
+line-height: 33px;
+text-align: center;
+}
+
+.register-from {
+position: relative;
+ margin-left: 31.25%;
+  width: 37.5%;
+  height: 46px;
+margin:auto;
+max-width: 540px;
+}
+
+.form-control {
+  position: relative; 
+  top: 0;             
+  bottom: 0;           
+  left: 0;        
+  right: 0;
+  margin: 0;
+  margin-bottom: 0;
+  max-width: 540px;
+  width: 37.5vw;
+  height: 52px;
+  background-color: #F5F8FA;
+  border-radius: 4px;
+  border: none;
+  border-bottom: solid 3px #657786
+}
+
+.form-control :hover :focus{
+  margin-bottom: 2.5%;
+  width: 37.5vw;
+  height: 46px;
+  background-color: #F5F8FA;
+  border-radius: 4px;
+  border: none;
+  border-bottom: solid 3px #50b5ff
+}
+
+/* .register-from ::placeholder {
+  color: #657786;
+  position: absolute;
+  height: 15px;
+  left: 10px;
+  top: 5px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+} */
+
+.signin-button {
+  position: relative;
+  margin-top: 12vh;
+  margin-left: 31.25%; 
+  width: 37.5%;
+  height: 46px;
+  max-width: 540px;
+  border-radius: 50px;
+  align-items: center;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
+}
+
+.signup-button {
+  position: relative;
+  margin-top: 40vh;
+  margin-left: 31.25%; 
+  width: 37.5%;
+  height: 46px;
+  max-width: 540px;
+  border-radius: 50px;
+  align-items: center;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
+}
+
+.text-link {
+position: relative;
+height: 26px;
+margin-left: 48.75%;
+margin-top: 1.67%;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 26px;
+text-decoration-line: none;
+color: #0099FF;
+}
+
+
+.list-group-item{
+  padding:0;
+  background-color: WHITE;
+  color:black;
+  border: none;
+  margin-top: 25px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  text-align: left;
+}
+
+a:hover{
+  background-color: WHITE;
+  text-decoration:none;
+}
+
+.tweet-button {
+position: relative;
+margin:auto;
+width: 12vw;
+max-width:210px;
+margin-top: 25px;
+padding:0;
+border-radius: 100px;
+text-align:center;
+background-color: #fF6600;
+color: #ffffff;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 38px;
+border:  #ffffff
+}
+
+.headerDivider { 
+  height:100vh;
+  border-left:1px solid rgba(0,0,0,.1); 
+  margin:0;
+} 
+
+.text-title {
+position: relative;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 26px;
+margin: 15px;
+}
+
+.save-area{
+  position: relative; 
+  top: 0;             
+  bottom: 0;           
+  left: 0;        
+  right: 0;
+  margin: 0;
+  margin-bottom: 0;
+  max-width: 540px;
+  width: 37.5vw;
+  height: 52px;
+  text-align: right;
+}
+
+.save-button {
+  position: relative;
+  /* left: 20vw; */
+  width: 8vw;
+  margin:0;
+  max-width: 120px;
+  margin-left: 31.25vmin;
+  height: 46px;
+  border-radius: 50px;
+  align-items: center;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
+}
+
+.logout-button {
+  position: fixed;
+  top: 96.4vh;
+  margin-left:8vh;
+  font-size: 18px;
+  color:black;
+
+}
+
+.left-side {
+  padding:0;
+  padding-left: 2vw;
+  position: relative;
+  text-align: center;
+  border-right: 1px solid #e5e5e5;
+}
+
+.middle-side {
+  border-right: 1px solid #e5e5e5;
+}
+
+.right-side {
+  position: r;
+}
+
+.user-pic {
+  min-width: 50px;
+  min-height: 50px;
+  border-radius: 50%;
+  border:solid 2px black;
+  background-color: white;
+}
+
+.type-location { 
+  flex-grow: 1;  
+  margin-left: 10px;
+}
+
+.tweet {
+  padding: 0;
+  /* width: 50vw; */
+}
+
+.account-info {
+  position: relative;
+  margin-left: 10px;
+}
+
+.new-post-content {
+  border: none;
+  background-color: white;
+  word-wrap: break-word;
+}
+
+.reply-like {
+  margin-left: 10px;
+  margin-bottom: 14.26px;
+
+}
+
+input { 
+  width: 100%; 
+  height: 100%; 
+  resize:none;
+  border: solid white;
+}
+
+.post-content::placeholder {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 26px;
+  word-wrap:break-word;
+}
+
+
+.send-area {
+  position: relative;
+  background-color: white;
+  text-align: right;
+  /* height: 5vmin; */
+}
+
+.send-button {
+  position: relative;
+  right: 5px;
+  width: 66px;
+  margin-bottom: 10.5px;
+  border-radius: 50px;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: bold;
+  border:  #ffffff
+}
+
+.is-valid {
+
+}
+
+.is-invalid {
+}
+
+.valid-feedback {
+
+}
+
+.invalid-feedback {
+  position: relative; 
+  top: 0;             
+  bottom: 0;           
+  left: 0;        
+  right: 0;
+  margin: 0;
+  max-width: 540px;
+}
+
+.user-name {
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 15px;
+line-height: 22px;
+}
+
+.account-time {
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+color: #657786;
+}
+
+.post-content {
+max-width:25vw;
+margin:0;
+height: 66px;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+color: #1C1C1C;
+word-wrap: wrap;
+}
+
+.post-text {
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+margin-top: 6px;
+margin-right: 15px;
+margin-bottom: 14px;
+margin-left: 10px;
+
+}
+
+
+
+/* 右側欄位 */
+.popular {
+  position:relative;
+  border-radius: 10px;
+  background: #f5f8fa;
+}
+
+.popular-title {
+position:relative;
+margin: 0px;
+padding-left: 15px;
+padding-top: 10px;
+padding-bottom: 10px;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+border-bottom: 1px solid #E6ECF0;
+color: #1C1C1C;
+}
+
+.popular .list-group-item {
+  padding: 5px;
+  margin-top: 0;
+  background: #f5f8fa;
+}
+
+.popular-user-pic {
+  margin: 10px;
+  margin-left: 15px;
+}
+
+.name-account {
+  padding-top: 18px;
+}
+
+
+.button {
+  position:relative;
+  flex-grow: 1;
+  text-align: right;
+}
+
+/* 垂直置中 */
+.follow-button {
+position: relative; 
+top: 50%;
+transform: translate(0%,-50%);
+border-radius: 50px;
+background-color: #fF6600;
+color: #ffffff;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 15px;
+line-height: 3vh;
+border:1px #fF6600 solid;
+}
+
+.unfollow-button {
+position: relative; 
+top: 50%;
+transform: translate(0%,-50%);
+border-radius: 50px;
+background-color: #ffffff;
+color: #fF6600;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 15px;
+line-height: 3vh;
+border:1px #fF6600 solid;
+}
+
+.popular .name {
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 20px;
+line-height: 20px;
+}
+
+.popular .account {
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 20px;
+line-height: 20px;
+color: #657786;
+}
+
+.tweets {
+position: relative; 
+/* margin: auto; */
+}
+
+.close-button {
+text-align: right;
+overflow:hidden;
+float:right
+}
+
+/* 管理者查看使用者 */
+.container {
+  margin: 0;
+}
+
+.row {
+  padding: 15px;
+}
+
+.card {
+  border-radius: 10px 10px 10px 10px;
+  position:relative;
+  width: 245px;
+  height: 314px;
+  overflow: hidden;
+  margin: 15px;
+}
+
+.card-img-top {
+  position:relative;
+  border-radius: 10px 10px 0px 0px;
+  width: 245px;
+  height: 140px;
+  background: #c4c4c4;
+}
+
+/* img:after {
+  content: "\f1c5"attr(alt);
+  position: relative;
+  z-index: 2;
+  top: -120%;
+  width: 200px;
+  height: 25px;
+  color: #c4c4c4;
+  font-size: 50px;
+  background-color: #c4c4c4;
+} */
+
+
+.card-body {
+  position: relative;
+  height:174px;
+  background: #E5E5E5;
+  padding:0;
+
+}
+.name-photo {
+  position:relative;
+  top: -41.3%;
+  text-align: center;
+  background-color:transparent;
+  z-index: 1;
+}
+
+.name-photo .avatar {
+  position:relative;
+}
+
+.name-photo .name {
+  position:relative;
+  margin-top: 5px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.name-photo .account {
+  position:relative;
+  margin-top:2px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+}
+
+.avatar .btn {
+  position: relative;
+  background-color:transparent;
+  padding: 0;
+}
+
+.avatar img {
+  border-radius: 80px; 
+  width:100px;
+  height:100px;
+  border: 4px solid white;
+  overflow: hidden;
+}
+
+.show-modal {
+  background: #c4c4c4;
+}
+
+.like-reply {
+  position: relative;
+  width: 130px;
+  margin: 15px auto 0 auto;
+  top: -41.3%;
+  text-align: center;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.follow {
+  position: relative;
+  margin-top: 17px;
+  top: -41.3%;
+  text-align: center;
+}
+
+.followship {
+  margin:0 auto;
+}
+
+.followship .follow-title {
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 20px;
+}
+
+.followship .follow-body {
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 20px;
+color: #657786;
+}
