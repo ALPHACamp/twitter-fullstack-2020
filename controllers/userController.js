@@ -41,7 +41,7 @@ const userController = {
     }
     User.findByPk(req.params.user_id)
       .then(user => {
-        return res.render('profileSetting', { user: user.toJSON() })
+        return res.render('userEdit', { user: user.toJSON() })
       })
       .catch(err => console.log(err))
   },
@@ -69,6 +69,7 @@ const userController = {
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID);
       imgur.upload(file.path, (err, img) => {
+        console.log(img)
         return User.findByPk(req.params.user_id)
           .then((user) => {
             user.update({

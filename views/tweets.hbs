@@ -22,7 +22,7 @@
 
 
           <a href="/users/{{user.id}}/edit">
-            <li class="list-group-item active "  style="background-color: white; color:#FF6600">
+            <li class="list-group-item active ">
               <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
             </li>
           </a>
@@ -46,19 +46,19 @@
     {{!-- <div class="headerDivider"></div> --}}
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
-      <div class="text-title d-flex"> 
+      <div class="text-title d-flex">
         <div class="back-icon">
-        <i class="fas fa-arrow-left"></i>
+          <i class="fas fa-arrow-left"></i>
         </div>
         <div class="name-info">
-        <div class="title-name">
-          John Doe
+          <div class="title-name">
+            John Doe
+          </div>
+          <div class="title-info">
+            25推文
+          </div>
         </div>
-        <div class="title-info">
-          25推文
-        </div>
-        </div>
-        
+
 
       </div>
 
@@ -70,12 +70,181 @@
 
       <div class="user-info">
         <div class="avatar">
-          <img src="" alt="">
+          <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="">
         </div>
+        <div class="edit-button">
+          <button type="submit" class="unfollow-button">編輯個人資料</button>
+        </div>
+
       </div>
 
+<div class="text-info-tweets">
+
+  <div class="info-text">
+    <div class="name"> John Doe</div>
+    <div class="account">@heyjohn</div>
+    <div class="introduction">以下教材是來自學期二「Flexbox 佈局系統」和「巢狀 Flexbox 與 Flex Item」教材的重點摘錄，提供給大家複習和查閱，也推薦你可以自行閱讀經典的
+      CSS
+      教學文件 CSS Tricks - A Complete Guide
+      to Flexbox。</div>
+    <div class="follow d-flex">
+      <div class="followship d-flex m-0">
+        <div class="follow-title">
+          34個
+        </div>
+        <div class="follow-body">
+          跟隨中
+        </div>
+  
+        <div class="follow-title ml-2">
+          34位
+        </div>
+        <div class="follow-body">
+          跟隨者
+        </div>
+      </div>
+  
+    </div>
+  
+  
+  </div>
+
+      {{!-- 個人資訊結束 --}}
+
+      {{!-- 推文/推文與回覆/喜歡的內容區塊 --}}
+      {{!-- 推文區開始 --}}
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">喜歡的內容</a>
+        </li>
+      </ul>
+      <br /><br />
+      <div class="user-tweet">
+        {{!-- 貼文開始 --}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="mt-2 ml-2 col-md-1" style="padding:0">
+              <img class="user-pic mr-2" src="" alt="">
+            </div>
+
+            <div class="col-md-11">
+              <div class="account-info d-flex" style="flex:auto">
+                <div class="user-name">Orange</div>
+                <div class="account-time ml-2">@orange．3小時</div>
+              </div>
+
+              <div class="post-text d-flex" style="flex:auto">
+                [筆記] 談談Javascript 中的 Hoisting
+                [筆記] JavaScript: undefined不是真的undefined !!
+                [筆記] 不同execution context的變項不會互相影響─了解function背後運作的邏輯
+                [筆記] JavaScript中Scope Chain和outer environment的概念
+                [筆記] 談談JavaScript中的asynchronous和event queue
+                [筆記] 談談JavaScript的Precedence和Associativity
+                [筆記] 談談JavaScript的coercion
+                [筆記] JavaScript中coercion的實際使用--if判斷式
+                [筆記] JavaScript中coercion的實際使用--建立函式預設值(default value)
+              </div>
+
+              <div class="reply-like d-flex mt-2">
+                <div><i class="far fa-comment mr-2"></i>留言數</div>
+                <div class="ml-4 like"><i class="far fa-heart mr-2"></i>讚數</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <hr />
+        {{!-- 貼文結束 --}}
+
+        {{!-- 貼文開始 --}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="mt-2 ml-2 col-md-1" style="padding:0">
+              <img class="user-pic mr-2" src="" alt="">
+            </div>
+
+            <div class="col-md-11">
+              <div class="account-info d-flex" style="flex:auto">
+                <div class="user-name">Orange</div>
+                <div class="account-time ml-2">@orange．3小時</div>
+              </div>
+
+              <div class="post-text d-flex" style="flex:auto">
+                [筆記] 談談Javascript 中的 Hoisting
+                [筆記] JavaScript: undefined不是真的undefined !!
+                [筆記] 不同execution context的變項不會互相影響─了解function背後運作的邏輯
+                [筆記] JavaScript中Scope Chain和outer environment的概念
+                [筆記] 談談JavaScript中的asynchronous和event queue
+                [筆記] 談談JavaScript的Precedence和Associativity
+                [筆記] 談談JavaScript的coercion
+                [筆記] JavaScript中coercion的實際使用--if判斷式
+                [筆記] JavaScript中coercion的實際使用--建立函式預設值(default value)
+              </div>
+
+              <div class="reply-like d-flex mt-2">
+                <div><i class="far fa-comment mr-2"></i>留言數</div>
+                <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <hr />
+        {{!-- 貼文結束 --}}
+
+        {{!-- 貼文開始 --}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="mt-2 ml-2 col-md-1" style="padding:0">
+              <img class="user-pic mr-2" src="" alt="">
+            </div>
+        
+            <div class="col-md-11">
+              <div class="account-info d-flex" style="flex:auto">
+                <div class="user-name">Orange</div>
+                <div class="account-time ml-2">@orange．3小時</div>
+              </div>
+        
+              <div class="post-text d-flex" style="flex:auto">
+                [筆記] 談談Javascript 中的 Hoisting
+                [筆記] JavaScript: undefined不是真的undefined !!
+                [筆記] 不同execution context的變項不會互相影響─了解function背後運作的邏輯
+                [筆記] JavaScript中Scope Chain和outer environment的概念
+                [筆記] 談談JavaScript中的asynchronous和event queue
+                [筆記] 談談JavaScript的Precedence和Associativity
+                [筆記] 談談JavaScript的coercion
+                [筆記] JavaScript中coercion的實際使用--if判斷式
+                [筆記] JavaScript中coercion的實際使用--建立函式預設值(default value)
+              </div>
+        
+              <div class="reply-like d-flex mt-2">
+                <div><i class="far fa-comment mr-2"></i>留言數</div>
+                <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
+              </div>
+            </div>
+        
+          </div>
+        </div>
+        <hr />
+        {{!-- 貼文結束 --}}
+
+
+
+      </div>
+      {{!-- 推文區結束 --}}
+
+      {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
     </div>
 
+
+
+</div>
     {{!-- <div class="headerDivider"></div> --}}
     {{!-- 右側欄位 --}}
     <div class="right-side col-md-3">
