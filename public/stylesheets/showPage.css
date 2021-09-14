@@ -967,3 +967,22 @@ color: #657786;
   position: relative;
   margin-right: 150px;
 }
+
+/* 追蹤和被追蹤者貼文 */
+.follow-tweet .nav-tabs{
+  margin-top: 0;
+}
+
+.account-followship {
+  position: relative;
+  display:flex;
+}
+
+.account-followship .followship-button {
+  top:0;
+}
+
+.account-followship .account-time {
+  
+}
+
