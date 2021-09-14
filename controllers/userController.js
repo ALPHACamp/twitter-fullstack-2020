@@ -169,7 +169,7 @@ const userController = {
         })
           .then(() => {
             req.flash('success_messages', 'user setting was successfully updated!')
-            res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+            res.redirect(`/index`)
           })
           .catch(err => console.error(err))
       })

@@ -11,11 +11,17 @@
     </div>
   </div>
 
+  <hr />
+  {{#each tweet.Replies}}
+  <h2>{{this.comment}}</h2>
+  {{/each}}
+
 {{!-- 回覆貼文區域 --}}
-  <form action="tweets/:id/replies" method="POST">
+  <form action="/index/{{tweet.id}}" method="POST">
 
     <div class="form-group mt-5">
-      <input type="text" class="form-control" max="140" name="tweet" id="tweet" placeholder="推你的回覆">
+      <textarea class="form-control" id="reply" name="reply" rows="3"></textarea>
+      <input type="hidden" name="TweetId" value="{{tweet.id}}" />
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
@@ -24,6 +30,6 @@
 
   </form>
 
-  <a href="javascript:history.back()">回上一頁</a>
+  <a href="/index">回上一頁</a>
 </div>
 

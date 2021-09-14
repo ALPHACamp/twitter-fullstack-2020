@@ -33,7 +33,7 @@ module.exports = (app, passport) => {
   //   })
 
   app.get('/', authenticated, (req, res) => {
-    res.render('index')
+    res.redirect('/index')
   })
 
   // app.get('/admin/signin', (req, res) => {
@@ -76,11 +76,11 @@ module.exports = (app, passport) => {
   app.post('/index/create', authenticated, tweetController.postTweets)
 
   // //顯示特定貼文 (之後要新增其所含的回文)
-  app.get('/index/:id', tweetController.getTweet)
+  app.get('/index/:id', authenticated, tweetController.getTweet)
 
   // 回文相關
   // //回覆特定貼文
-  // router.post('tweets/:id', tweetController.createReply)
+  app.post('/index/:id', authenticated, tweetController.createReply)
   // //顯示特定貼文回覆
   // router.get('/tweets/:id/replies', tweetController.getTweetReplies)
   // 編輯貼文回覆

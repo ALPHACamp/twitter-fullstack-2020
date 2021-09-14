@@ -2,6 +2,7 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const Reply = db.Reply
 
 const tweetController = {
 //貼文相關
@@ -39,20 +40,28 @@ const tweetController = {
   },
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
-    console.log(req.params.id)
-   return Tweet.findByPk(req.params.id, {raw:true})
+   return Tweet.findByPk(req.params.id, {
+    include: [Reply]
+    })
     .then(tweet => {
       return res.render('tweet', {
-        tweet: tweet
+        tweet: tweet.toJSON()
       })
     })
   },
 
 //回文相關
   //回覆特定貼文
-  // createTweetReplies: (req, res) => {
-
-  // },
+  createReply: (req, res) => {
+    return Reply.create({
+      comment: req.body.reply,
+      TweetId: req.body.TweetId,
+      UserId: req.user.id
+    })
+    .then((reply)=>{
+      res.redirect(`/index/${req.body.TweetId}`)
+    })
+  },
   //顯示特定貼文回覆
   // getTweetReplies: (req, res) => {
 
