@@ -882,3 +882,88 @@ margin-left: 4px;
   border:2px orange;
   color: #E0245E;
 }
+
+/* 單一推文頁面 */
+
+.main-reply-tweet .account-info{
+  position: relative;
+  margin: 10px;
+}
+
+.main-reply-tweet .name-account {
+  position: relative;
+  margin-left:10px;
+}
+
+.main-reply-tweet .name {
+  position:relative;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 15px;
+line-height: 22px;
+}
+
+.main-reply-tweet .account {
+  position: relative;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+color: #657786;
+}
+
+.main-reply-tweet .content {
+  position: relative;
+  margin-left: 15px;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 23px;
+line-height: 34px;
+}
+
+.main-reply-tweet .time {
+  position: relative;
+  margin: 15px;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+color: #657786;
+}
+
+.main-reply-tweet .number-followers {
+  position: relative;
+  margin: 20px;
+}
+
+.main-reply-tweet .number {
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 19px;
+line-height: 28px;
+}
+
+.main-reply-tweet .text {
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 19px;
+line-height: 28px;
+color: #657786;
+}
+
+.icon-reply {
+  position: relative;
+  margin: 21px 0px 15px 17px;
+  font-size: 19px;
+}
+
+.icon-reply .fa-comment {
+  position: relative;
+  margin-right: 150px;
+}
