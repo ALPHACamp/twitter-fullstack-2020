@@ -3,11 +3,11 @@ const db = require('../models')
 const User = db.User
 
 const userController = {
-  signupPage: (req, res) => {
-    return res.render('signup', { layout: 'other' })
+  getSignup: (req, res) => {
+    return res.render('signup', { layout: 'userMain' })
   },
 
-  signup: (req, res) => {
+  postSignup: (req, res) => {
     const { account, name, email, password } = req.body
 
     User.create({
