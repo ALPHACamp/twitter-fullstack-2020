@@ -12,7 +12,8 @@ const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 
 
-
+router.get('/signup', loginController.signUpPage)
+router.post('/signup', loginController.signUp)
 
 
 
