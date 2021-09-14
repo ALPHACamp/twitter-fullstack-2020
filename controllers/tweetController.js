@@ -11,49 +11,51 @@ const tweetController = {
     const loginUserId = helper.getUser(req).id
     const whereQuery = {}
     // 如果推文的人在使用者的追隨名單內，就顯示推文
-    // followship內 A使用者在 B使用者 的
     // 驗證使用者
-    if (req.query.userId === loginUserId) {
+    if (req.query.userId) {
       userId = Number(req.query.userId)
       whereQuery.userId = userId
     }
-
-    Tweet.findAndCountAll({
+    // 找出所有在追隨者名單中的追隨者推文
+    Tweet.findAll({
       include: Followship,
-      where: whereQuery
+      where: { FollowingId: id }
     }).then(result => {
-      const data = result.rows.map(r => ({
+      // 如果是在個人資料，要顯示使用者推文數量
+      // 在此顯示 使用者自身推文、追隨者的貼文、回覆和喜歡的內容
+      // 依時間降冪排序
+      const followingUsersTweets = result.rows
+      const data = followingUsersTweets.map(r => ({
         ...r.dataValues,
-        isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
+        description: r.dataValues.description.substring(0, 50),
+        likedCount: r.dataValues.likedCount,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id), // 判斷是否對推文按讚過，有的話要更改圖示
+        repliedCount: r.dataValues.repliedCount,
+        isReplied: req.user.RepliedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
       }))
-        .findAll({
-          raw: true,
-          nest: true
-        }).then(() => {
+        .then(() => {
           return res.render('tweets', {
             tweets: data,
+            loginUserId // 判斷是否為使用者
           })
         })
     })
   },
-
+  // 取得單一推文資料，要有 使用者頭像，暱稱、帳號 
+  // 推文要有內容like, reply
   getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
+    const id = req.params.id
+    return Tweet.findByPk(id, {
+      // TODO 需要包含的資料有哪些?
       include: [
-        ,
-        { model: User, as: 'Followers' },
-        { model: User, as: 'LikedUsers' },
+        User,
         { model: Reply, include: [User] }
       ]
     })
-      .then(tweet => tweet.increment('viewCounts'))
       .then(tweet => {
-        const isFollowed = tweet.Followers.map(d => d.id).includes(req.user.id)
         const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
         return res.render('tweet', {
           tweet: tweet.toJSON(),
-          isFollowed,
           isLiked
         })
       })
