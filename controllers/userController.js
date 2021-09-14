@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
+const Reply = db.Reply
 
 const userController = {
   getSignup: (req, res) => {
@@ -19,6 +21,35 @@ const userController = {
       console.log('done')
       return res.redirect('/signin')
     })
+  },
+
+  getUser: (req, res) => {
+    const whereQuery = {}
+    whereQuery.userId = Number(req.params.id)
+
+    Tweet.findAndCountAll({
+      include: [
+        User
+      ],
+      where: whereQuery
+    }).then(result => {
+      const totalTweet = Number(result.count)
+      const data = result.rows.map(r => ({
+        ...r.dataValues,
+        content: r.dataValues.content
+      }))
+      User.findByPk(req.params.id)
+        .then(user => {
+          return res.render('profile', {
+            user: user.toJSON(),
+            totalTweet: totalTweet,
+            tweet: data
+          })
+        })
+    })
+
+
+
   }
 }
 
