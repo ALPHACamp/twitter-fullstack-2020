@@ -1,3 +1,4 @@
+/* 共用區 */
 *,
 *::before,
 *::after {
@@ -9,6 +10,7 @@ body{
   height: 1200px;
   font-family: "Noto Sans TC", sans-serif; /* 設定字型 */
   font-size: 1rem;
+  font-style: normal;
   background-color: #FFFFFF;
 }
 
@@ -25,6 +27,13 @@ button{
   width: 90%;
 }
 
+.reply-icon, .like-icon{
+  color: #657786;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* 以下是各別各組css */
 .home-nav-bar{
   width: 235px;
   position: relative;
@@ -75,6 +84,42 @@ button{
 
 .tweets .input-btn{
   text-align: right;
+}
+
+.tweets .tweets-article{
+  padding: 10px 15px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #E6ECF0;
+}
+
+.tweets-article .tweet-article{
+  margin-left: 0.8rem;
+}
+
+.tweets-article .name{
+  color: #1C1C1C;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.tweets-article .account{
+  color: #657786;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.tweets-article .time{
+  color: #657786;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.tweets-article .content{
+  color: #1C1C1C;
+  font-size: 1rem;
+  font-weight: 500;
+  margin:0 auto;
 }
 
 .popular{
