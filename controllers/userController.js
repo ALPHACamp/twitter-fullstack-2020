@@ -33,7 +33,7 @@ const userController = {
     })
   },
 
-  editProfilePage: (req, res) => {
+  getUserEdit: (req, res) => {
     //檢查使用者是否在編輯自己的資料
     if (req.params.user_id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
@@ -46,7 +46,7 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  editSettingPage: (req, res) => {
+  getUserSetting: (req, res) => {
     //檢查使用者是否在編輯自己的資料
     if (req.params.user_id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
@@ -59,7 +59,7 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  putProfile: (req, res) => {
+  putUserEdit: (req, res) => {
     //是否前端判斷？
     if (!req.body.name) {
       req.flash('error_message', '請輸入使用者名稱')
@@ -103,7 +103,57 @@ const userController = {
     }
   },
 
-  putSetting: (req, res) => {
+  //testing upload multiple photos
+  // putUserEdit: (req, res) => {
+  //   //是否前端判斷？
+  //   if (!req.body.name) {
+  //     req.flash('error_message', '請輸入使用者名稱')
+  //     return res.redirect('back')
+  //   }
+  //   const files = Object.assign({}, req.files)
+  //   console.log(files.ava)
+  //   // const { files } = req
+
+  //   if (files) {
+  //     console.log(files.avatar[0])
+  //     imgur.setClientID(IMGUR_CLIENT_ID)
+  //     imgur.upload(files.avatar[0].path, (err, img) => {
+  //       return User.findByPk(req.params.user_id)
+  //         .then((user) => {
+  //           console.log(img.data.link)
+  //           user.update({
+  //             name: req.body.name,
+  //             introduction: req.body.introduction,
+  //             avatar: files.avatar ? img.data.link : user.avatar,
+  //             // cover: files ? img.data.link : user.cover
+  //           })
+  //             .then(() => {
+  //               req.flash('success_messages', 'user profile was successfully updated!')
+  //               res.redirect('/index')
+  //             })
+  //             .catch(err => console.error(err))
+  //         })
+  //     })
+  //   } else {
+  //     return User.findByPk(req.params.user_id)
+  //       .then((user) => {
+  //         user.update({
+  //           name: req.body.name,
+  //           introduction: req.body.introduction,
+  //           avatar: user.avatar,
+  //           cover: user.cover
+  //         })
+  //           .then(() => {
+  //             req.flash('success_messages', 'user profile was successfully updated!')
+  //             res.redirect('/index')
+  //           })
+  //           .catch(err => console.error(err))
+  //       })
+
+  //   }
+  // },
+
+  putUserSetting: (req, res) => {
     //是否前端判斷？
     if (!req.body.name) {
       req.flash('error_message', '請輸入使用者名稱')
