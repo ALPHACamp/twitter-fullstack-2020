@@ -703,9 +703,9 @@ line-height: 19px;
 .user-info .edit-button {
   position:relative;
   display: flex;
-justify-content: right;  
-top: -30px;
-bottom: 0;
+  justify-content: right;  
+  top: -30px;
+  bottom: 0;
   margin-right: 15px;
 }
 
@@ -714,6 +714,39 @@ bottom: 0;
   text-align: right;
   padding:5px 15px;
 }
+
+/* 其他使用者 */
+.other-user-icon {
+  position:relative;
+  display:flex;
+  justify-content: right;  
+  top: -40px;
+  margin-right:15px;
+  align-items: center;
+}
+
+.other-user-icon .mail {
+  position: relative;
+  top: 50%;
+transform: translate(0%,-50%);
+padding:0 5px;
+border-radius: 50%;
+border: 1px solid #fF6600;
+color:#fF6600;
+}
+
+.other-user-icon .notification {
+  position: relative;
+  top: 50%;
+transform: translate(0%,-50%);
+padding:0 5px;
+border-radius: 50%;
+border: 1px solid #fF6600;
+color:#fF6600;
+margin: 0 10px;
+}
+
+
 
 .text-info-tweets {
   position: relative;

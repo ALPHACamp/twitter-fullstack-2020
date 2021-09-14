@@ -28,7 +28,7 @@ module.exports = (app, passport) => {
 
   //TODO:測試用路由
   app.get('/', authenticated, (req, res) => {
-    res.render('tweets-like(待合併).hbs')
+    res.render('tweet')
   })
 
   // app.get('/admin/signin', (req, res) => {
