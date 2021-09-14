@@ -1,4 +1,6 @@
+const userController = require('../controllers/userController')
 
 module.exports = app => {
-    app.get('/', (req, res) => res.render(''))
+    app.get('/users/register', userController.signUpPage)
+    app.post('/users/register', userController.signUp)
 }
