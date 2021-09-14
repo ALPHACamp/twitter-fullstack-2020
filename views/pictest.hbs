@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+​
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+​
+
+<body>
+  ​
+  <input type="file" id="file">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxd5nkidCLZUPmxINzGn0SlemchTgQ9ZYIgQ&usqp=CAU"
+    id="img" alt="">
+  <p id="url">url-dsaf-</p>
+  ​
+  ​
+  <script>
+    const file = document.getElementById('file')
+    const img = document.getElementById('img')
+    const url = document.getElementById('url')
+    file.addEventListener('change', ev => {
+      const formdata = new FormData()
+      console.log('a',ev.target.files[0])
+      formdata.append('image', ev.target.files[0])
+      fetch('https://api.imgur.com/3/image/', {
+        method: "post",
+        headers: {
+          Authorization: "Client-ID 81e2ebab1f6a7b7"
+        }
+        , body: formdata
+      })
+      .then(data => data.json()).then(data => {
+        console.log('b',data)
+        img.src = data.data.link
+        url.innerText = data.data.link
+      })
+    })
+  </script>
+</body>
+​
+
+</html>
+
+{{!-- <input type="file" onchange="previewFile()"><br>
+<img src="" height="200" alt="Image preview...">
+
+
+<script>
+function previewFile() {
+var preview = document.querySelector('img');
+var file  = document.querySelector('input[type=file]').files[0];
+console.log(input[type = file])
+var reader = new FileReader();
+reader.addEventListener("load", function () {
+preview.src = reader.result;
+}, false);
+if (file) {
+reader.readAsDataURL(file);
+}
+}</script> --}}

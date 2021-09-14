@@ -27,19 +27,13 @@ module.exports = (app, passport) => {
   }
 
   //TODO:測試用路由
-
-  //   app.get('/',  (req, res) => {
-  //     res.render('./admin/adminUsers')
-  //   })
-
   app.get('/', authenticated, (req, res) => {
-    res.redirect('/index')
+    res.render('tweets-like(待合併).hbs')
   })
 
   // app.get('/admin/signin', (req, res) => {
   //   res.render('./admin/adminTweets')
   // })
-
 
 
   // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
