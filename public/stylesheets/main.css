@@ -1,0 +1,82 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body{
+  max-width: 1440px;
+  height: 1200px;
+  font-family: "Noto Sans TC", sans-serif; /* 設定字型 */
+  font-size: 1rem;
+  background-color: #FFFFFF;
+}
+
+a{
+  text-decoration: none; /* 拿掉底線 */
+}
+
+button{
+  background-color: #FF6600!important;
+  color: #FFFFFF!important;
+}
+
+.for-center{
+  width: 90%;
+}
+
+.home-nav-bar{
+  width: 235px;
+  position: relative;
+}
+
+.home-nav-bar a{
+  color: #1C1C1C;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.home-nav-bar a:hover{
+  color: #FF6600;
+}
+
+.logout{
+  position: fixed;
+  bottom: 2%;
+}
+
+.tweets{
+  width: 600px;
+  border-width: 0px 1px 0px 1px;
+  border-style: solid;
+  border-color: #E6ECF0;
+  padding: 0;
+}
+
+.tweets .home-word{
+  color: #1C1C1C;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.tweets .input-block{
+  border-width: 1px 0px 10px 0px;
+  border-style: solid;
+  border-color: #E6ECF0;
+  padding: 10px 15px;
+}
+
+.tweets .input-word{
+  font-size: 1.1rem;
+  color: #9197A3;
+  font-weight: 700;
+  margin-left: 0.8rem;
+}
+
+.tweets .input-btn{
+  text-align: right;
+}
+
+.popular{
+  width: 350px;
+}
