@@ -1,35 +1,218 @@
-<div class="container">
-{{!-- 瀏覽特定貼文區域 --}}
-  <hr />
-  <div class ="row">
-    <div class = "col-md-4">
-      <div class="text-center" style="background:cornflowerblue; width: 100px;
-        height: 100px;">User.ava</div>
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12  justify-content-center" style="margin:0">
+    {{!-- 左側欄位 --}}
+    <div class="left-side col-md-2">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+
+      <div>
+        <ul class="list-group">
+
+          <li class="list-group-item ">
+            <a href=""></a>
+            <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+            </a>
+          </li>
+
+
+          <a href="/users/{{user.id}}/edit">
+            <li class="list-group-item active ">
+              <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
+            </li>
+          </a>
+
+          <a href="/users/{{user.id}}/setting">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
+            </li>
+          </a>
+        </ul>
+        <button type="submit" class="tweet-button">推文</button>
+        <a href="">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+      </div>
     </div>
-    <div>
-      {{tweet.description}}
+
+    {{!-- <div class="headerDivider"></div> --}}
+    {{!-- 中間主欄位 --}}
+    <div class="middle-side col-md-5" style="padding:0; height:100%;">
+      <div class="text-title d-flex align-items-center">
+        <div class="back-icon">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+        <div class="name-info">
+          <div class="title-name">
+            推文
+          </div>
+        </div>
+      </div>
+      <hr style="margin:0; padding:0">
+
+      <div class="main-reply-tweet">
+        <div class="account-info d-flex">
+          <div>
+            <img class="user-pic" src="" alt="">
+          </div>
+          <div class="name-account">
+            <div class="name">Apple</div>
+            <div class="account">@apple</div>
+          </div>
+
+        </div>
+
+        <div class="content">
+          Gitlab 合併請求（Merge Request ） 一般在團隊開發的時候，為了避免工程師直接對主要 Repo 進行修改，會要求工程師從 專案的主要 Repo
+          複製一份這個專案的副本（Fork）回來工程師的電腦進行開發/除錯。
+        </div>
+
+        <div class="time">
+          上午10:05．2020年6月10日
+        </div>
+
+        <hr>
+
+        <div class="number-followers  d-flex">
+          <div class="reply">
+            <div class="number">34</div>
+            <div class="text">回覆</div>
+          </div>
+          <div class="reply d-flex">
+            <div class="number">808</div>
+            <div class="text">喜歡次數</div>
+          </div>
+        </div>
+
+        <hr>
+
+        <div class="icon-reply d-flex">
+          <div><i class="far fa-comment"></i></div>
+          {{!-- //TODO:要分實心空心 --}}
+          <div><i class="far fa-heart mr-2"></i></div>
+        </div>
+        <hr>
+        {{!-- 回覆開始 --}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="mt-2 ml-2 col-md-1" style="padding:0">
+              <img class="user-pic mr-2" src="" alt="">
+            </div>
+
+            <div class="col-md-11">
+              <div class="account-info d-flex" style="flex:auto">
+                <div class="user-name">Orange</div>
+                <div class="account-time ml-2">@orange．3小時</div>
+              </div>
+              <div class="reply">
+                <div class="reply-text">回覆</div>
+                <div class="reply-account">@Daniel</div>
+              </div>
+
+              <div class="post-text d-flex" style="flex:auto">
+                GREAT~
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <hr />
+        {{!-- 回覆結束 --}}
+
+        {{!-- 回覆開始 --}}
+        <div class="tweet col-md-12">
+          <div class="d-flex">
+            <div class="mt-2 ml-2 col-md-1" style="padding:0">
+              <img class="user-pic mr-2" src="" alt="">
+            </div>
+
+            <div class="col-md-11">
+              <div class="account-info d-flex" style="flex:auto">
+                <div class="user-name">MJ</div>
+                <div class="account-time ml-2">@orange．3小時</div>
+              </div>
+              <div class="reply">
+                <div class="reply-text">回覆</div>
+                <div class="reply-account">@Daniel</div>
+              </div>
+
+              <div class="post-text d-flex" style="flex:auto">
+                GOOD JOB~
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <hr />
+        {{!-- 回覆結束 --}}
+
+
+
+      </div>
+
     </div>
+
+
+
+    {{!-- <div class="headerDivider"></div> --}}
+    {{!-- 右側欄位 --}}
+    <div class="right-side col-md-3">
+      <div class="popular mt-2" style="padding:auto;">
+        <div class="popular-title mt-2">
+          Popular
+        </div>
+        <ul class="list-group">
+          {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
+          {{!-- 跟隨中使用者開始 --}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div>
+                <img class="user-pic" src="" alt="">
+              </div>
+              <div class="name-account ml-2">
+                <div class="name">Pizza Hut</div>
+                <div class="account">@pizzahut</div>
+              </div>
+              <div class="button">
+                <button type="submit" class="follow-button">正在跟隨</button>
+              </div>
+            </div>
+          </li>
+          {{!-- 使用者結束 --}}
+
+          {{!-- 未跟隨中使用者開始 --}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div>
+                <img class="user-pic" src="" alt="">
+              </div>
+              <div class="name-account ml-2">
+                <div class="name">McDonald's</div>
+                <div class="account">@McDonald's</div>
+              </div>
+              <div class="button">
+                <button type="submit" class="unfollow-button"> 跟隨 </button>
+              </div>
+            </div>
+          </li>
+          {{!-- 使用者結束 --}}
+
+        </ul>
+      </div>
+
+
+
+    </div>
+
+
+
   </div>
-
-  <hr />
-  {{#each tweet.Replies}}
-  <h2>{{this.comment}}</h2>
-  {{/each}}
-
-{{!-- 回覆貼文區域 --}}
-  <form action="/index/{{tweet.id}}" method="POST">
-
-    <div class="form-group mt-5">
-      <textarea class="form-control" id="reply" name="reply" rows="3"></textarea>
-      <input type="hidden" name="TweetId" value="{{tweet.id}}" />
-    </div>
-
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-      <button type="submit" class="btn btn-primary">回覆(還不能用)</button>
-    </div>
-
-  </form>
-
-  <a href="/index">回上一頁</a>
 </div>
-
