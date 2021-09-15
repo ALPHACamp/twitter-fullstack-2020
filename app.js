@@ -26,8 +26,6 @@ app.use((req, res, next) => {
 })
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.get('/', (req, res) => res.render('twitter'))
-app.get('/admin/login', (req, res) => res.render('adminLogin', { layout: 'userMain' }))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
