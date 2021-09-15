@@ -53,7 +53,7 @@ const userController = {
 
     signIn: (req, res) => {
         req.flash('success_messages', '成功登入！')
-        res.redirect('/tweets')
+        res.redirect('/users/setting/:id')
     },
 
     logout: (req, res) => {
@@ -62,6 +62,9 @@ const userController = {
         res.redirect('/user/login')
     },
 
+    getSetting: (req, res) => {
+        return res.render('setting')
+    },
 }
 
 module.exports = userController

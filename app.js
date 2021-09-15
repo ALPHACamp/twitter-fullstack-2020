@@ -1,5 +1,5 @@
 const express = require('express')
-const helpers = require('./_helpers');
+const helpers = require('./_helpers')
 const handlebars = require('express-handlebars')
 const db = require('./models')
 const bodyParser = require('body-parser')
@@ -28,7 +28,7 @@ app.use(flash())
 app.use((req, res, next) => {
     res.locals.success_messages = req.flash('success_messages')
     res.locals.error_messages = req.flash('error_messages')
-    res.locals.user = helpers.getUser(req) // 取代 req.user
+    res.locals.user = req.user 
     next()
 })
 
