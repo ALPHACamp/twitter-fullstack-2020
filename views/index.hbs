@@ -54,21 +54,21 @@
       <hr style="margin:0; padding:0">
       {{!-- 新增貼文處 --}}
 
-    <a href="/index/create">
-      <div class="add-post d-flex">
-        <div class="mt-2 ml-2">
-          <img class="user-pic"
-            src="https://lh3.googleusercontent.com/proxy/DJ0Cdy5jSI5lJEzSa0TCAXIZA5tt2jRlchLHCCQwH2zrAYOVTndf8OvyK9nKn21r8RGcZ-9vkapH0955Nqg62_bL9IT7f_jOONoNO0Dh3uLko9vREyXHEJjA9-Zz_Put762In8mvUl9Ij5k1SQ_kDH6reHQM6cP1MkCNj7MfL9boI4rzqA"
-            alt="">
+      <a href="/index/create">
+        <div class="add-post d-flex">
+          <div class="mt-2 ml-2">
+            <img class="user-pic"
+              src="https://lh3.googleusercontent.com/proxy/DJ0Cdy5jSI5lJEzSa0TCAXIZA5tt2jRlchLHCCQwH2zrAYOVTndf8OvyK9nKn21r8RGcZ-9vkapH0955Nqg62_bL9IT7f_jOONoNO0Dh3uLko9vREyXHEJjA9-Zz_Put762In8mvUl9Ij5k1SQ_kDH6reHQM6cP1MkCNj7MfL9boI4rzqA"
+              alt="">
+          </div>
+          <div class="type-location">
+            <input type="text" class="new-post-content" placeholder="有什麼新鮮事？">
+          </div>
         </div>
-        <div class="type-location">
-          <input type="text" class="new-post-content" placeholder="有什麼新鮮事？">
+        <div class="send-area">
+          <button type="submit" class="send-button">推文</button>
         </div>
-      </div>
-      <div class="send-area">
-        <button type="submit" class="send-button">推文</button>
-      </div>
-    </a>
+      </a>
       <hr style="border: 5px solid #E6ECF0; margin:0">
 
       {{!-- //TODO:擇一貼文做模板用Each即可 --}}
@@ -77,7 +77,7 @@
       <div class="tweet col-md-12">
         <div class="d-flex">
           <div class="mt-2 ml-2 col-md-1" style="padding:0">
-            <img class="user-pic" src="" alt="404">
+            <img class="user-pic" src="" alt="">
           </div>
 
           <div class="col-md-11">
@@ -86,18 +86,18 @@
               <div class="account-time ml-2">@apple．3小時</div>
             </div>
 
-          <a href="/index/{{this.id}}"  class="text-muted">
-          <div class="post-text d-flex" style="flex:auto">
-            {{this.description}}
-          </div>
-          </a>  
+            <a href="/index/{{this.id}}" class="text-muted">
+              <div class="post-text d-flex" style="flex:auto">
+                {{this.description}}
+              </div>
+            </a>
 
             <div class="reply-like d-flex mt-2">
               <div><i class="far fa-comment mr-2"></i>留言數</div>
               <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
             </div>
           </div>
-         
+
         </div>
       </div>
       <hr />
@@ -170,7 +170,7 @@
           {{!-- 未跟隨中使用者開始 --}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
-              <div  class="popular-user-pic">
+              <div class="popular-user-pic">
                 <img class="user-pic" src="" alt="">
               </div>
               <div class="name-account">

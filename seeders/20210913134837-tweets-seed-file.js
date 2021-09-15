@@ -2,20 +2,27 @@
 const faker = require('faker')
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Tweets',
-      //隨機建立10個tweets (Condition:5位使用者)
-      Array.from({ length: 10 }).map((d, i) =>
+  up: (queryInterface, Sequelize) => {
+    //每個使用者有 10 篇 post (Condition:5位使用者)
+    const posts = 10
+    const users = 5
+    let result = []
+    Array.from({ length: posts }).map((d, i) => {
+      const data = Array.from({ length: users }).map((d, i) =>
       ({
-        UserId: Math.floor(Math.random() * 5) + 2,
-        description: faker.lorem.paragraph(faker.random.number({ min: 1, max: 3 })),
+        UserId: i + 2,
+        description: faker.lorem.paragraph(Math.floor(Math.random() * 3) + 1),
         createdAt: new Date(),
         updatedAt: new Date()
       })
-      ), {})
-  },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Tweets', null, {})
+      )
+      return result.push(...data)
+    })
+
+    return queryInterface.bulkInsert('Tweets', result, {})
+  },
+  down: (queryInterface, Sequelize) => {
+    return queryInterface.bulkDelete('Tweets', null, {})
   }
 };
