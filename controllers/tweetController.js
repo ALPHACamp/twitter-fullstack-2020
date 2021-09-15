@@ -41,7 +41,8 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
    return Tweet.findByPk(req.params.id, {
-    include: [Reply]
+    include: [User, 
+      {model: Reply, include:[User]}]
     })
     .then(tweet => {
       return res.render('tweet', {
@@ -64,7 +65,6 @@ const tweetController = {
   },
   //顯示特定貼文回覆
   getTweetReplies: (req, res) => {
-    console.log(req.params.id)
     return Tweet.findByPk(req.params.id,{
       include: [Reply]
     })

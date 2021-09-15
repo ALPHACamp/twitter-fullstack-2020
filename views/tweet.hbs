@@ -64,8 +64,8 @@
             <img class="user-pic" src="" alt="">
           </div>
           <div class="name-account">
-            <div class="name">{{tweet.name}}</div>
-            <div class="account">@{{tweet.account}}</div>
+            <div class="name">{{tweet.User.name}}</div>
+            <div class="account">@{{tweet.User.account}}</div>
           </div>
 
         </div>
@@ -102,7 +102,7 @@
         </div>
         <hr>
         {{!-- 回覆開始 --}}
-        {{#each tweet.Relies}}
+        {{#each tweet.Replies}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 ml-2 col-md-1" style="padding:0">
@@ -111,16 +111,15 @@
 
             <div class="col-md-11">
               <div class="account-info d-flex" style="flex:auto">
-                <div class="user-name">Orange</div>
+                <div class="user-name">{{this.User.name}}</div>
                 <div class="account-time ml-2">@orange．3小時</div>
               </div>
               <div class="reply">
-                <div class="reply-text">回覆</div>
-                <div class="reply-account">@Daniel</div>
+                <div class="reply-text">{{this.comment}}</div>
+                <div class="reply-account">@</div>
               </div>
 
               <div class="post-text d-flex" style="flex:auto">
-                {{this.comment}}
               </div>
             </div>
 
@@ -130,7 +129,7 @@
         {{!-- 回覆結束 --}}
         {{/each}}
         {{!-- 回覆開始 --}}
-        <div class="tweet col-md-12">
+        {{!-- <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 ml-2 col-md-1" style="padding:0">
               <img class="user-pic mr-2" src="" alt="">
@@ -153,7 +152,7 @@
 
           </div>
         </div>
-        <hr />
+        <hr /> --}}
         {{!-- 回覆結束 --}}
 
 
