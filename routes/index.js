@@ -13,16 +13,21 @@ const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      return next()
+      if (helpers.getUser(req).role === "normal") {
+        return next()
+      }
     }
+    req.flash('error_messages', '請確認使用者身分')
     res.redirect('/signin')
   }
 
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "admin") { return next() }
+      req.flash('error_messages', '請確認使用者身分')
       return res.redirect('/admin/signin')
     }
+    req.flash('error_messages', '請確認使用者身分')
     res.redirect('/admin/signin')
   }
 
