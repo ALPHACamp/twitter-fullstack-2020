@@ -13,16 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Tweet.belongsTo(models.User)
       Tweet.hasMany(models.Reply)
+      // 推文藉由使用者的Like產生多對多關聯
       Tweet.belongsToMany(models.User, {
-        through: models.Favorite,
+        through: models.Like,
         foreignKey: 'TweetId',
-        as: 'FavoritedUsers'
-      }),
-        Tweet.belongsToMany(models.User, {
-          through: models.Like,
-          foreignKey: 'TweetId',
-          as: 'LikedUsers'
-        })
+        as: 'LikedUsers'
+      })
     }
   };
   Tweet.init({
