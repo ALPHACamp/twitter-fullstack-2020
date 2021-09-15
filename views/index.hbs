@@ -35,7 +35,7 @@
         </ul>
 
         <div class="">
-          <button type="button" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+          <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
           </button>
         </div>
 
@@ -50,7 +50,6 @@
       </div>
     </div>
 
-    {{!-- <div class="headerDivider"></div> --}}
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title">首頁</div>
@@ -67,7 +66,7 @@
 
         {{!-- //TODO:要包FORM --}}
         <div class="type-location">
-          <textarea type="text" class="new-post-content" placeholder="有什麼新鮮事？" rows="2"></textarea>
+          <textarea type="text" class="new-post-content" placeholder="有什麼新鮮事？" rows="2" maxlength="140"></textarea>
         </div>
       </div>
       <div class="send-area">
@@ -76,7 +75,7 @@
 
       <hr style="border: 5px solid #E6ECF0; margin:0">
 
-      {{!-- //TODO:時間及讚數和留言數待傳入 --}}
+      {{!-- //TODO:依照時間排序，時間/讚數/留言數待傳入，點大頭貼會進入使用者頁面 --}}
       {{!-- 貼文1開始 --}}
       {{#each tweet}}
       <div class="tweet col-md-12">
@@ -91,7 +90,8 @@
             <div class="account-info d-flex" style="flex:auto">
               <a href="/users/{{this.User.id}}">
                 <div class="user-name">{{this.User.name}}</div>
-                <div class="account-time">@{{this.User.account}}．3小時</div>
+              </a>
+              <div class="account-time ml-2">@{{this.User.account}}．3小時</div>
             </div>
 
 
@@ -106,7 +106,7 @@
             <div class="reply-like d-flex mt-2">
               {{!-- modal叫出貼文回覆 --}}
 
-              <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet" >
+              <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet">
                 <i class="far fa-comment mr-2"></i>留言數
               </div>
 
@@ -118,10 +118,20 @@
       </div>
       <hr />
       {{!-- 貼文1結束 --}}
+
+      {{!-- reply-tweet Modal --}}
+      <div class="modal fade" id="reply-tweet" tabindex="-1" role="dialog" aria-labelledby="reply-tweet"
+        aria-hidden="true">
+
+        {{> reply-tweet currentUser=../currentUser avatar=avatar account=account}}
+
+      </div>
+      {{!-- reply-tweet Modal --}}
+
       {{/each}}
     </div>
 
-    {{!-- <div class="headerDivider"></div> --}}
+    {{!-- TODO:topUser Controller昨完引入資料 --}}
     {{!-- 右側欄位 --}}
     <div class="right-side col-md-3">
       <div class="popular mt-2" style="padding:auto;">
@@ -182,116 +192,16 @@
 {{!-- add-tweet Modal --}}
 <div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
 
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-
-      <hr>
-
-      <div class="type-area">
-        <div class="user-pic">
-          <img src="{{currentUser.avatar}}" alt="">
-        </div>
-        {{!-- //TODO:要包FORM --}}
-        <div class="type-text">
-          <textarea class="form-control new-post-content" placeholder="有什麼新鮮事？" rows="5"></textarea>
-        </div>
-
-      </div>
-
-      <div class="add-button">
-        <button type="submit" class="btn button">推文
-        </button>
-      </div>
-
-    </div>
-  </div>
+  {{> add-tweet}}
 
 </div>
 {{!-- add-tweet Modal --}}
 
 
-{{!-- reply-tweet Modal --}}
-<div class="modal fade" id="reply-tweet" tabindex="-1" role="dialog" aria-labelledby="reply-tweet" aria-hidden="true">
 
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-
-      <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-
-      <hr>
-
-      <div class="reply-tweet">
-        <div class="reply-modal-tweet">
-          <div class="mt-2 ml-2" style="padding:0">
-            <div>
-              <img class="user-pic" src="" alt="">
-            </div>
-            <div class="headerDivider"></div>
-          </div>
-
-          <div class="" style="flex-grow: 1; position:relative">
-            <div class="account-info d-flex" style="flex:auto">
-
-              <div class="user-name"></div>
-              <div class="account-time">@{{this.User.id}}．3小時</div>
-            </div>
-
-
-
-            <div class="post-text d-flex" style="flex:auto">
-              discription
-            </div>
-
-            <div class="reply" style="margin-left:10px; position:absolute;
-bottom:0px;">
-              <div class="reply-text">回覆給</div>
-              <div class="reply-account">@ {{tweet.User.account}}</div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
-      <div class="type-area">
-        <div class="user-pic ml-2">
-          <img src="{{currentUser.avatar}}" alt="">
-        </div>
-        {{!-- //TODO:要包FORM --}}
-        <div class="type-text">
-          <textarea class="form-control new-post-content" placeholder="有什麼新鮮事？" rows="5"></textarea>
-        </div>
-
-      </div>
-
-
-
-
-      <div class="add-button">
-        <button type="submit" class="btn button">回覆
-        </button>
-      </div>
-
-    </div>
-  </div>
-
-</div>
-{{!-- reply-tweet Modal --}}
 
 
 <script>
-  const replyBtn = document.querySelector(".logout-button")
-
-  replyBtn.addEventListener('click', function onPanelClick(event) {
-    console.log('reply')
-    event.preventDefault()
-  })
 
 
 </script>

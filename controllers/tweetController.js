@@ -14,15 +14,14 @@ const tweetController = {
       nest: true,
       include: [User]
     }).then(tweet => {
-      User.findByPk(helpers.getUser(req).id, {raw: true, nest:true, attributes:['avatar']} )
-      .then(user => {
+      console.log(tweet)
           return res.render('index', {
-          tweet: tweet,
-          currentUser: user
+            tweet: tweet,
+            currentUser: helpers.getUser(req)
+          })
         })
-      })
-      
-    }) //目前可以看到全部
+
+    //目前可以看到全部
   },
 
   //新增一則貼文(要改api)
@@ -47,7 +46,7 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
-      include: [User, { model: Reply, include: [User]}]
+      include: [User, { model: Reply, include: [User] }]
     })
       .then(tweet => {
         return res.render('tweet', {
@@ -64,48 +63,49 @@ const tweetController = {
       TweetId: req.body.TweetId,
       UserId: req.user.id
     })
-    .then((reply)=>{
-      res.redirect(`/tweets/${req.body.TweetId}`)
-    })
+      .then((reply) => {
+        res.redirect('back')
+        // res.redirect(`/tweets/${req.body.TweetId}`)
+      })
   },
   //顯示特定貼文回覆
   getTweetReplies: (req, res) => {
-    return Tweet.findByPk(req.params.id,{
+    return Tweet.findByPk(req.params.id, {
       include: [Reply]
     })
-    .then(tweet => {
-      return res.render('replyFake', {
-        tweet: tweet.toJSON()
+      .then(tweet => {
+        return res.render('replyFake', {
+          tweet: tweet.toJSON()
+        })
       })
-    })
-    
+
   },
 
   //Like & Unlike
   //喜歡特定貼文
   addLike: (req, res) => {
-   return Like.create({
-     UserId: req.user.id,
-     TweetId: req.params.id
-   })
-   .then((like) => {
-    return res.redirect('back')
-   })
+    return Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.id
+    })
+      .then((like) => {
+        return res.redirect('back')
+      })
   },
   //取消喜歡特定貼文
   removeLike: (req, res) => {
     return Like.findOne({
       where: {
         UserId: req.user.id,
-        TweetId: req.params.id 
+        TweetId: req.params.id
       }
     })
-    .then(like => {
-      like.destroy()
-      .then(tweet => {
-        return res.redirect('back')
+      .then(like => {
+        like.destroy()
+          .then(tweet => {
+            return res.redirect('back')
+          })
       })
-    })
   }
 }
 

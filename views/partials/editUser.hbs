@@ -1,0 +1,32 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+
+<div class="modal-title d-flex">
+    <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="title-text">編輯個人資料</div>
+    <div class="save-button">
+      <button type="submit" class="btn follow-button">儲存</button>
+    </div>
+</div>
+    <hr>
+
+    <div class="type-area">
+      <div class="user-pic">
+        <img src="{{currentUser.avatar}}" alt="">
+      </div>
+      {{!-- //TODO:要包FORM --}}
+      <div class="type-text">
+        <textarea class="form-control new-post-content" placeholder="有什麼新鮮事？" rows="5"></textarea>
+      </div>
+
+    </div>
+
+    <div class="add-button">
+      <button type="submit" class="btn button">推文
+      </button>
+    </div>
+
+  </div>
+</div>
