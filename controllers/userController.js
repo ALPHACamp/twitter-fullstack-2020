@@ -12,7 +12,7 @@ const userController = {
         // 驗證兩次密碼相同，密碼不同導回註冊頁
         if (req.body.password !== req.body.passwordConfirmed) {
             req.flash('error_messages', '兩次密碼輸入不同！')
-            return res.redirect('/users/register')
+            return res.redirect('/signin')
         }
         // 驗證 db 中帳號有無註冊過，有導回註冊頁，沒有 db 寫入資料
         User.findOne({
@@ -27,10 +27,10 @@ const userController = {
             .then(user => {
                 if (user) {
                     req.flash('error_messages', '「帳號已重覆註冊！」或「email 已重覆註冊！」')
-                    return res.redirect('/users/register')
+                    return res.redirect('/signin')
                 } else if (req.body.name.length > 50) {
                     req.flash('error_messages', '「名字上限50字 請重新輸入！」')
-                    return res.redirect('/users/register')
+                    return res.redirect('/signin')
                 } else {
                     User.create({
                         account: req.body.name,
@@ -38,13 +38,13 @@ const userController = {
                         email: req.body.email,
                         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
                     })
+                    .then(() => {
+                        req.flash('success_messages', '成功註冊帳號！')
+                        return res.redirect('/signin')
+                    })
+                    .catch(next) 
                 }
             })
-            .then(() => {
-                req.flash('success_messages', '成功註冊帳號！')
-                return res.redirect('/users/login')
-            })
-            .catch(next) 
     },
 
     signInPage: (req, res) => {
@@ -53,13 +53,13 @@ const userController = {
 
     signIn: (req, res) => {
         req.flash('success_messages', '成功登入！')
-        res.redirect('/users/setting/:id')
+        res.redirect('/tweets')
     },
 
     logout: (req, res) => {
         req.flash('success_messages', '登出成功！')
         req.logout()
-        res.redirect('/user/login')
+        res.redirect('/signin')
     },
 
     getSetting: (req, res) => {

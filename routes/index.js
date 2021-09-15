@@ -7,7 +7,7 @@ module.exports = (app, passport) => {
         if (req.isAuthenticated()) {
             return next()
         }
-        res.redirect('/users/login')
+        res.redirect('/signin')
     }
 
     const authenticatedAdmin = (req, res, next) => {
@@ -23,18 +23,18 @@ module.exports = (app, passport) => {
         if (req.isAuthenticated()) {
             if (!req.user.isAdmin) { return next() }
             req.flash('error_messages', '此帳號為管理者帳號，不可登入前台！')
-            return res.redirect('/users/login')
+            return res.redirect('/signin')
         }
-        res.redirect('/users/login')
+        res.redirect('/signin')
     }
 
     // test route
     app.get('/', (req, res) => {return res.render('setting')})
     // test route end
-    app.get('/users/register', userController.signUpPage)
-    app.post('/users/register', userController.signUp)
-    app.get('/users/login', userController.signInPage)
-    app.post('/users/login', passport.authenticate('local', { failureRedirect: '/users/login', failureFlash: true }), userController.signIn)
+    app.get('/signup', userController.signUpPage)
+    app.post('/signup', userController.signUp)
+    app.get('/signin', userController.signInPage)
+    app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
     app.get('/users/logout', userController.logout)
     app.get('/users/setting/:id', authenticatedUser, userController.getSetting)
 
