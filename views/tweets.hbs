@@ -78,7 +78,7 @@
           <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="">
         </div>
         <div class="edit-button">
-          <button type="submit" class="btn unfollow-button">編輯個人資料</button>
+          <button type="submit" class="btn unfollow-button" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
         </div>
 
       </div>
@@ -304,3 +304,9 @@
 
   </div>
 </div>
+
+{{!-- edit-user Modal --}}
+<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
+  {{> edit-user}}
+</div>
+{{!-- edit-user Modal --}}

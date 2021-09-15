@@ -26,7 +26,7 @@
           </a>
         </ul>
 
-        <a href="">
+        <a href="/admin/logout">
           <div class="logout-button">
             <i class="fas fa-arrow-alt-circle-left"></i>
             登出
@@ -42,19 +42,22 @@
 
       <div class="container">
         <div class="row" id="data-panel">
+
+          {{!-- 
+          TODO:按照推文數排序 --}}
           {{#each user}}
           {{!-- 卡片開始 --}}
           <div class="card" id="601">
             <img src="{{this.cover}}" alt="" class="show-modal card-img-top">
 
             <div class="card-body">
+
               <div class="name-photo">
                 <div class="avatar">
-                  {{!-- <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"> --}}
-                    <a href="/users/{{this.id}}">
-                    <img src="{{this.avatar}}" alt="">
-                    </a>
-                  {{!-- </button> --}}
+                  {{!-- TODO:顯示使用者自我介紹 --}}
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <img src="{{this.avatar}}" alt="" class="show-modal">
+                  </button>
                 </div>
                 <div class="name">
                   {{this.name}}
@@ -63,8 +66,8 @@
                   @{{this.account}}
                 </div>
               </div>
-
-              {{!-- //TODO:留言數和讚數還需要傳 --}}
+              {{!--
+              TODO:留言數/讚數/追蹤者/追隨者待補 --}}
               <div class="like-reply">
                 <i class="far fa-comment"></i> 留言數
                 <i class="far fa-heart ml-2"></i> 讚數
