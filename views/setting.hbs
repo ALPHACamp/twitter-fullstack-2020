@@ -4,20 +4,22 @@
 {{!-- 包一層div讓內部有依據照比例縮 --}}
 <div class="wrap d-flex">
   <div class="row col-md-12 justify-content-center" style="margin:0">
-    <div class="left-side  col-md-2">
+    <div class="left-side col-md-2">
       <div class="setting-logo">
         <img
           src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
           alt="" style="max-width: 30px;max-height: 30px;">
       </div>
 
-      <div  style="text-align: left">
+      <div>
         <ul class="list-group">
-          <a href="/">
-            <li class="list-group-item">
-              <div class="d-flex"><i class="fas fa-home mr-4"></i>首頁</div>
+
+          <a href="/index">
+            <li class="list-group-item ">
+              <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
             </li>
           </a>
+
 
           <a href="/users/{{user.id}}/edit">
             <li class="list-group-item">
@@ -26,12 +28,14 @@
           </a>
 
           <a href="/users/{{user.id}}/setting">
-            <li class="list-group-item active">
+            <li class="list-group-item  active ">
               <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
             </li>
           </a>
         </ul>
-        <button type="submit" class="tweet-button">推文</button>
+        {{!-- //TODO:待加入modal --}}
+        <a href="/index/create" type="button" class="tweet-button">推文</a>
+
         <a href="/logout">
           <div class="logout-button">
             <i class="fas fa-arrow-alt-circle-left"></i>
@@ -82,7 +86,7 @@
           </div>
         </div>
         <div class="save-area mt-4">
-          <button type="submit" class="save-button">儲存</button>
+          <button type="submit" class="btn save-button">儲存</button>
         </div>
       </form>
     </div>

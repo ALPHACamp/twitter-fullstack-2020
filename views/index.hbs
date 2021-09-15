@@ -14,11 +14,11 @@
       <div style="text-align: left">
         <ul class="list-group">
 
-          <li class="list-group-item active ">
-            <a href=""></a>
-            <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
-            </a>
-          </li>
+          <a href="/index">
+            <li class="list-group-item active">
+              <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+            </li>
+          </a>
 
 
           <a href="/users/{{user.id}}/edit">
@@ -73,17 +73,20 @@
       </a>
       <hr style="border: 5px solid #E6ECF0; margin:0">
 
-      {{!-- //TODO:擇一貼文做模板用Each即可 --}}
+      {{!-- //TODO:時間及讚數和留言數待傳入 --}}
       {{!-- 貼文1開始 --}}
       {{#each tweet}}
       <div class="tweet col-md-12">
         <div class="d-flex">
           <div class="mt-2 ml-2 col-md-1" style="padding:0">
+            <a href="/users/{{this.User.id}}">
             <img class="user-pic" src="" alt="">
+            </a>
           </div>
 
           <div class="col-md-11">
             <div class="account-info d-flex" style="flex:auto">
+              <a href="/users/{{this.User.id}}">
               <div class="user-name">{{this.User.name}}</div>
               <div class="account-time ml-2">@{{this.User.account}}．3小時</div>
             </div>
@@ -166,7 +169,7 @@
                 <div class="account">@pizzahut</div>
               </div>
               <div class="button">
-                <button type="submit" class="follow-button">正在跟隨</button>
+                <button type="submit" class="btn follow-button">正在跟隨</button>
               </div>
             </div>
           </li>
@@ -183,7 +186,7 @@
                 <div class="account">@McDonald's</div>
               </div>
               <div class="button">
-                <button type="submit" class="unfollow-button"> 跟隨 </button>
+                <button type="submit" class="btn unfollow-button"> 跟隨 </button>
               </div>
             </div>
           </li>
