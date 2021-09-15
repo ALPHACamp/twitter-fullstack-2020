@@ -1,8 +1,10 @@
 const express = require('express')
-const helpers = require('./_helpers');
+const helpers = require('./_helpers')
+const handlebars = require('express-handlebars')
 
 const app = express()
 const port = process.env.PORT || 3000
+
 
 const flash = require('connect-flash')
 const session = require('express-session')
@@ -28,6 +30,7 @@ app.use((req, res, next) => {
 })
 
 
+
 app.engine('hbs', exhbs({ defaultLayout: 'main', extname: 'hbs' }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -40,6 +43,8 @@ app.use(methodOverride('_method'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 
+
 require('./routes')(app, passport)
+
 
 module.exports = app

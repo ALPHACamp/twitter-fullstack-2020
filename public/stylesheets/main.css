@@ -1,0 +1,171 @@
+/* 共用區 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body{
+  max-width: 1440px;
+  height: 1200px;
+  font-family: "Noto Sans TC", sans-serif; /* 設定字型 */
+  font-size: 1rem;
+  font-style: normal;
+  background-color: #FFFFFF;
+}
+
+a{
+  text-decoration: none; /* 拿掉底線 */
+}
+
+p{
+  margin: 0;
+}
+
+button{
+  background-color: #FF6600!important;
+  color: #FFFFFF!important;
+}
+
+.for-center{
+  width: 90%;
+}
+
+.reply-icon, .like-icon{
+  color: #657786;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* 以下是各別各組css */
+.home-nav-bar{
+  max-width: 235px;
+  position: relative;
+}
+
+.home-nav-bar a{
+  color: #1C1C1C;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.home-nav-bar a:hover{
+  color: #FF6600;
+}
+
+.logout{
+  position: fixed;
+  bottom: 2%;
+}
+
+.tweets{
+  max-width: 600px;
+  border-width: 0px 1px 0px 1px;
+  border-style: solid;
+  border-color: #E6ECF0;
+  padding: 0;
+}
+
+.tweets .home-word{
+  color: #1C1C1C;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.tweets .input-block{
+  border-width: 1px 0px 10px 0px;
+  border-style: solid;
+  border-color: #E6ECF0;
+  padding: 10px 15px;
+}
+
+.tweets .input-word{
+  font-size: 1.1rem;
+  color: #9197A3;
+  font-weight: 700;
+  margin-left: 0.8rem;
+}
+
+.tweets .input-btn{
+  text-align: right;
+}
+
+.tweets .tweets-article{
+  padding: 10px 15px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #E6ECF0;
+}
+
+.tweets-article .tweet-article{
+  margin-left: 0.8rem;
+}
+
+.tweets-article .name{
+  color: #1C1C1C;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.tweets-article .account{
+  color: #657786;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.tweets-article .time{
+  color: #657786;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.tweets-article .content{
+  color: #1C1C1C;
+  font-size: 1rem;
+  font-weight: 500;
+  margin:0 auto;
+}
+
+.popular{
+  max-width: 350px;
+  background: #F5F8FA;
+  border-radius: 14px;
+  padding: 0;
+}
+
+.popular .word{
+  padding: 10px 15px;
+  color: #1C1C1C;
+  font-size: 1rem;
+  font-weight: 700;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #E6ECF0;
+}
+
+.popular .popular-user{
+  padding: 10px 15px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #E6ECF0;
+  margin: 0;
+}
+
+.popular .follow-btn{
+  text-align: right;
+  margin: auto;
+}
+
+.popular .popular-name{
+  line-height: 18px;
+  color: #1C1C1C;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.popular .popular-account{
+  line-height: 18px;
+  color: #657786;
+  font-size: 1rem;
+  font-weight: bold;
+}
