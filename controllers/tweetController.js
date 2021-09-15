@@ -4,40 +4,49 @@ const Reply = db.Reply
 const User = db.User
 const Followship = db.Followship
 
-const twitterController = {
+const helper = require('../_helpers');
+
+const tweetController = {
   // 首頁
-  getTweets: (req, res) => {
-    const id = req.params.id
-    const loginUserId = helper.getUser(req).id
-    const whereQuery = {}
-    // 如果推文的人在使用者的追隨名單內，就顯示推文
-    // followship內 A使用者在 B使用者 的
-    // 驗證使用者
-    if (req.query.userId === loginUserId) {
-      userId = Number(req.query.userId)
-      whereQuery.userId = userId
-    }
+  getTweets: async (req, res) => {
+    // const id = req.params.id
+    // console.log(helper.getUser(req),'哈哈')
+    // const loginUserId = helper.getUser(req).id
+    // const whereQuery = {}
+    // // 如果推文的人在使用者的追隨名單內，就顯示推文
+    // // followship內 A使用者在 B使用者 的
+    // // 驗證使用者
+    // if (req.query.userId === loginUserId) {
+    //   userId = Number(req.query.userId)
+    //   whereQuery.userId = userId
+    // }
 
-    Tweet.findAndCountAll({
-      include: Followship,
-      where: whereQuery
-    }).then(result => {
-      const data = result.rows.map(r => ({
-        ...r.dataValues,
-        isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
-      }))
-        .findAll({
-          raw: true,
-          nest: true
-        }).then(() => {
-          return res.render('tweets', {
-            tweets: data,
-          })
-        })
+    // Tweet.findAndCountAll({
+    //   // include: Followship,
+    //   where: whereQuery
+    // }).then(result => {
+    //   const data = result.rows.map(r => ({
+    //     ...r.dataValues,
+    //     isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+    //     isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
+    //   }))
+    //     .findAll({
+    //       raw: true,
+    //       nest: true
+    //     }).then(() => {
+    //       return res.render('home', {
+    //         tweets: data,
+    //       })
+    //     })
+    // })
+    const tweets = await Tweet.findAll({  
+      raw: true,
+      nest: true,
+      include: User
     })
+    // console.log(tweets)
+    return res.render('home',{ tweets})
   },
-
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
       include: [
@@ -81,4 +90,4 @@ const twitterController = {
   },
 }
 
-module.exports = twitterController
+module.exports = tweetController
