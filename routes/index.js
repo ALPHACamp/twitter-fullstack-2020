@@ -1,6 +1,6 @@
-const twitterController = require('../controllers/tweetController.js')
 const helpers = require('../_helpers')
 
+const tweetController = require('../controllers/tweetController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 
@@ -61,5 +61,5 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
   //取得特定貼文資料
-  app.get('/tweet/:id', tweetController.getTweet)
+  app.get('/tweets/:id', tweetController.getTweet)
 }
