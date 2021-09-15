@@ -10,9 +10,10 @@ app.engine('handlebars', handlebars({
   defaultLayout: 'main'
 }))
 app.set('view engine', 'handlebars')
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
-app.use(bodyParser.urlencoded({ extended: true }))
+
 app.use((req, res, next) => {
   // res.locals.success_messages = req.flash('success_messages')
   // res.locals.error_messages = req.flash('error_messages')
@@ -21,9 +22,6 @@ app.use((req, res, next) => {
 })
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-
-app.get('/', (req, res) => res.render('profile'))
-app.get('/', (req, res) => res.render('twitter'))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
