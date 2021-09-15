@@ -24,8 +24,8 @@ const authenticatedAdmin = (req, res, next) => {
 
 module.exports = (app, passport) => {
   // 前台首頁
-  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/', authenticated, (req, res) => res.redirect('/home'))
+  app.get('/home', authenticated, tweetController.getTweets)
   
   // 使用者
   app.get('/users/:id', authenticated, userController.getUser)
@@ -57,6 +57,7 @@ module.exports = (app, passport) => {
     failureRedirect: '/signin',
     failureFlash: true
   }), userController.signIn)
+  
   // 登出
   app.get('/logout', userController.logout)
 

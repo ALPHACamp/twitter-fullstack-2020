@@ -34,7 +34,7 @@ const tweetController = {
         isReplied: req.user.RepliedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
       }))
         .then(() => {
-          return res.render('tweets', {
+          return res.render('home', {
             tweets: data,
             loginUserId // 判斷是否為使用者
           })
