@@ -19,21 +19,8 @@ router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
 router.get('/logout', loginController.logOut)
 
-//tweets
-router.get('/',(req, res) =>  res.redirect('/tweets'))
-router.get('/tweets', tweetController.getTweets)
-
-
-
-
-
-// Admin
 router.get('/admin/signin', adminController.signInPage)
-router.get('/admin/tweets', adminController.getTweets)
-router.get('/admin/users', adminController.getUsers)
-
-
-
+router.post('/admin/signin', adminController.signIn)
 
 
 module.exports = router
