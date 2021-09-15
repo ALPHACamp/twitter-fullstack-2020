@@ -2,6 +2,7 @@ const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const { Op } = require("sequelize")
 
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -12,25 +13,36 @@ const userController = {
   },
 
   signUp: (req, res) => {
-    if (req.body.checkPassword !== req.body.password) {
-      req.flash('error_messages', 'Passwords you entered were inconsistent')
+    const { account, name, email, password, checkPassword } = req.body
+    if (account.length < 5 || !name || name.length > 50 || !email || checkPassword !== password) {
+      req.flash('error_messages', '表單內容不符合條件！')
       return res.redirect('/signup')
     }
-    User.findOne({ where: { email: req.body.email } }).then(user => {
-      if (user) {
-        req.flash('error_messages', 'This email address had already been registered!')
-        return res.redirect('/signup')
-      }
-      User.create({
-        name: req.body.name,
-        account: req.body.account,
-        email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-      }).then(user => {
-        req.flash('success_messages', 'Your account had been successfully registered!')
-        return res.redirect('/signin')
-      })
+    //註冊時，account 和 email 不能與其他人重覆
+    User.findAll({
+      raw: true, nest: true,
+      where: { [Op.or]: [{ email }, { account }] }
     })
+      .then(users => {
+        if (users.some(item => item.account === account)) {
+          req.flash('error_messages', '註冊失敗，account 已重覆註冊！')
+          //64656
+          return res.redirect('/signup')
+        }
+        if (users.some(item => item.email === email)) {
+          req.flash('error_messages', '註冊失敗，email 已重覆註冊！')
+          return res.redirect('/signup')
+        }
+        User.create({
+          name,
+          account,
+          email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+        }).then(user => {
+          req.flash('success_messages', 'Your account had been successfully registered!')
+          return res.redirect('/signin')
+        })
+      })
   },
 
   getUserEdit: (req, res) => {
@@ -60,10 +72,14 @@ const userController = {
   },
 
   putUserEdit: (req, res) => {
-    //是否前端判斷？
-    if (!req.body.name) {
-      req.flash('error_message', '請輸入使用者名稱')
-      return res.redirect('back')
+    const { name, introduction } = req.body
+    if (!name) {
+      req.flash('error_messages', '暱稱不能空白！')
+      return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
+    }
+    if (name.length > 50 || introduction.length > 160) {
+      req.flash('error_messages', '字數超出上限！')
+      return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
     const { file } = req
     if (file) {
@@ -106,9 +122,14 @@ const userController = {
   //testing upload multiple photos
   // putUserEdit: (req, res) => {
   //   //是否前端判斷？
-  //   if (!req.body.name) {
-  //     req.flash('error_message', '請輸入使用者名稱')
-  //     return res.redirect('back')
+  //   const { name, introduction } = req.body
+  //   if(!name) {
+  //     req.flash('error_messages', '暱稱不能空白！')
+  //     return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
+  //   }
+  //     if(name.length > 50 || introduction.length > 160 ) {
+  //     req.flash('error_messages', '字數超出上限！')
+  //     return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
   //   }
   //   const files = Object.assign({}, req.files)
   //   console.log(files.ava)
@@ -154,24 +175,43 @@ const userController = {
   // },
 
   putUserSetting: (req, res) => {
-    //是否前端判斷？
-    if (!req.body.name) {
-      req.flash('error_message', '請輸入使用者名稱')
-      return res.redirect('back')
+    const { account, name, email, password, checkPassword } = req.body
+    //後端驗證表單內容
+    if (account.length < 5 || !name || name.length > 50 || !email || checkPassword !== password) {
+      req.flash('error_messages', '表單內容不符合條件！')
+      return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
     }
-    return User.findByPk(req.params.user_id)
-      .then((user) => {
-        user.update({
-          account: req.body.account,
-          name: req.body.name,
-          email: req.body.email,
-          password: req.body.password ? bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null) : user.password
-        })
-          .then(() => {
-            req.flash('success_messages', 'user setting was successfully updated!')
-            res.redirect(`/index`)
+    //編輯時，account 和 email 不能與其他人重覆
+    User.findAll({
+      raw: true, nest: true,
+      where: {
+        [Op.or]: [{ email }, { account }],
+        id: { [Op.ne]: helpers.getUser(req).id }
+      }
+    })
+      .then(users => {
+        if (users.some(item => item.account === account)) {
+          req.flash('error_messages', 'account 已被他人使用！')
+          return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+        }
+        if (users.some(item => item.email === email)) {
+          req.flash('error_messages', 'email 已被他人使用！')
+          return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
+        }
+        return User.findByPk(req.params.user_id)
+          .then((user) => {
+            user.update({
+              account,
+              name,
+              email,
+              password: password ? bcrypt.hashSync(password, bcrypt.genSaltSync(10), null) : user.password
+            })
+              .then(() => {
+                req.flash('success_messages', '使用者設定已成功被更新!')
+                res.redirect(`/index`)
+              })
+              .catch(err => console.error(err))
           })
-          .catch(err => console.error(err))
       })
   },
 

@@ -18,7 +18,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     })
-
+    //隨機建立5個normal users帳號
     while (amount--) {
       data.push({
         account: faker.internet.userName(),
