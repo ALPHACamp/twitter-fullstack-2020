@@ -44,7 +44,7 @@ module.exports = (app, passport) => {
   // //TopUsers(要改成api)
   // router.get('/users/top', userController.getTopUsers)
   // //使用者顯示特定使用者頁面
-  // router.get('/users/:user_id', userController.getUser)
+  // app.get('/users/:user_id', userController.getUser)
   // //使用者所有貼文
   // router.get('/users/:user_id/tweets', userController.getUserTweets)
   // //使用者所有喜歡貼文
@@ -115,12 +115,15 @@ module.exports = (app, passport) => {
   // //使用者登入頁面
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-  // //使用者編輯帳號設定(setting)
+//-----------名稱勿再改動------------
+  // //使用者編輯帳號設定(setting) (row 21-22)
   app.get('/users/:user_id/setting', authenticated, userController.getUserSetting)
   app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
-  // //使用者編輯個人資料(edit)
+
+  // //使用者編輯個人資料(edit) (row 22-23)
   app.get('/users/:user_id/edit', authenticated, userController.getUserEdit)
   app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
+//--------------------------------------
   // //註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
