@@ -78,7 +78,7 @@
         </div>
 
         <div class="content">
-          {{tweet.description}}
+         <h2>{{tweet.description}}</h2> 
         </div>
 
 {{!-- //TODO:時間格式要調整 --}}
@@ -104,7 +104,9 @@
         <hr>
 
         <div class="icon-reply d-flex">
-          <div><i class="far fa-comment"></i></div>
+          <div>
+            <a href="/tweets/{{tweet.id}}/replies"><i class="far fa-comment"></i></a>
+          </div>
           {{!-- //TODO:要分實心空心 --}}
           <div><i class="far fa-heart mr-2"></i></div>
         </div>

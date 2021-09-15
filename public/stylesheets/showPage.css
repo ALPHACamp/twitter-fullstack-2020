@@ -1032,6 +1032,11 @@ color: #657786;
   margin-right: 150px;
 }
 
+
+.icon-reply a {
+  color:black;
+}
+
 /* 追蹤和被追蹤者貼文 */
 .follow-tweet .nav-tabs{
   margin-top: 0;
