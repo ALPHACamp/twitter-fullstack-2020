@@ -1,0 +1,46 @@
+*{
+  font-family: 微軟正黑體;
+}
+
+.grid{ 
+  display:grid;
+  grid-template-columns:1.5fr 6.5fr 3fr;
+}
+
+.fixed{
+  position:fixed;
+}
+
+.userSidebar{
+  position:fixed;
+}
+
+.popularArea{
+  position:fixed;
+}
+
+#ac-logo{
+  width: 50px;
+}
+.userImage{
+  width: 60px;
+}
+.orange{
+  background-color:#FF6600;
+}
+
+.round{
+  border-radius:50px;
+}
+
+.popularArea{
+  width: 350px;
+  height: 710px;
+  border-radius: 14px;
+  background-color:#F5F8FA;
+}
+
+.followButton{
+  border-color: #FF6600;
+  color: #FF6600;
+}

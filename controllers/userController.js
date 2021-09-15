@@ -1,3 +1,4 @@
+ // TODO controller
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
@@ -38,7 +39,7 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/tweets')
+    res.redirect('/home')
   },
 
   logout: (req, res) => {
