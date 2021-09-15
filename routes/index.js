@@ -53,4 +53,7 @@ module.exports = (app, passport) => {
   }), userController.signIn)
   // 登出
   app.get('/logout', userController.logout)
+
+  //取得特定貼文資料
+  app.get('/tweet/:id', tweetController.getTweet)
 }

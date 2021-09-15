@@ -11,6 +11,53 @@
 </head>
 
 <body>
+  <div class="container">
+    
+    <div class="{{#if user}}row grid{{/if}}">
+      {{#if user}}
+      <div>
+        <nav class="userSidebar fixed">
+          <div class="logo">
+            <img src="https://i.imgur.com/ZUJriDp.png" alt="" id="ac-logo">
+          </div>
+          <div class="buttonList mt-5">
+            <div class="navItem index d-flex mb-4">
+              <div class="icon d-flex align-items-center">
+                <i class="fas fa-home my-auto"></i>
+              </div>
+              <a href="" class="btn">
+                <span class="fs-5 fw-bolder">首頁</span>
+              </a>
+            </div>
+            <div class="navItem userProfile d-flex mb-4">
+              <div class="icon d-flex align-items-center">
+                <i class="fas fa-users"></i>
+              </div>
+              <a href="" class="btn">
+                <span class="fs-5 fw-bolder">個人資料</span>  
+              </a>
+            </div>
+            <div class="navItem setting d-flex mb-4">
+              <div class="icon d-flex align-items-center">
+                <i class="fas fa-cog"></i>
+              </div>
+              <a href="" class="btn">
+                <span class="fs-5 fw-bolder">設定</span> 
+              </a>
+            </div>
+          </div>
+          <div class="d-grid gap-2 col-9 round">
+            <button class="orange btn text-white round">推文</button>
+          </div>
+          <div class="logout d-flex">
+            <div class="logoutLogo me-3 d-flex align-items-center">
+              <i class="fas fa-sign-out-alt"></i>
+            </div>
+            <a href="/logout" class="btn">
+              <span class="fs-5 fw-bolder">登出</span>
+            </a>
+          </div>
+        </nav>
   <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
     <a class="navbar-brand" href="/">Simple Twitter</a>
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
@@ -42,7 +89,6 @@
           {{error_messages}}
         </div>
         {{/if}}
-
         {{{body}}}
       </div>
     </div>

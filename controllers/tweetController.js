@@ -42,30 +42,41 @@ const tweetController = {
     const tweets = await Tweet.findAll({  
       raw: true,
       nest: true,
-      include: User
+      include: [User]
     })
     // console.log(tweets)
     return res.render('home',{ tweets})
   },
-  getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [
-        ,
-        { model: User, as: 'Followers' },
-        { model: User, as: 'LikedUsers' },
-        { model: Reply, include: [User] }
-      ]
-    })
-      .then(tweet => tweet.increment('viewCounts'))
-      .then(tweet => {
-        const isFollowed = tweet.Followers.map(d => d.id).includes(req.user.id)
-        const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
-        return res.render('tweet', {
-          tweet: tweet.toJSON(),
-          isFollowed,
-          isLiked
-        })
+  getTweet: async (req, res) => {
+    // return Tweet.findByPk(req.params.id, {
+    //   include: [
+    //     ,
+    //     // { model: User, as: 'Followers' },
+    //     // { model: User, as: 'LikedUsers' },
+    //     // { model: Reply, include: [User] }
+    //   ]
+    // })
+    //   // .then(tweet => tweet.increment('viewCounts'))
+    //   .then(tweet => {
+    //     // const isFollowed = tweet.Followers.map(d => d.id).includes(req.user.id)
+    //     // const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
+    //     return res.render('tweet', {
+    //       tweet: tweet.toJSON(),
+    //       // isFollowed,
+    //       // isLiked
+    //     })
+    //   })
+    // console.log(req.params.id)
+    try{
+      const tweet = await Tweet.findByPk(
+        req.params.id,{
+        include: [User]  
       })
+      console.log(tweet,'哈哈')
+      return res.render('tweet',{tweet: tweet.toJSON()})
+    }catch(e){
+        console.log(e.message)
+    }
   },
   // 在此得列出最受歡迎的十個使用者
   // 依照追蹤者人數降冪排序
