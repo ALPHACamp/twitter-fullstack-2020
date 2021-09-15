@@ -5,6 +5,11 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     User.hasMany(models.Reply)
     User.hasMany(models.Tweet)
+    User.belongsToMany(models.Tweet, {
+      though: models.Like,
+      foreignKey: 'UserId',
+      as: 'LikedTweets'
+    })
   };
   return User;
 };
