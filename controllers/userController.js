@@ -49,6 +49,32 @@ const userController = {
     req.flash('success_messages', '登出成功')
     req.logout()
     res.redirect('/users/login')
+  },
+
+  getUser: (req, res) => {
+    const whereQuery = {}
+    whereQuery.userId = Number(req.params.id)
+
+    Tweet.findAndCountAll({
+      include: [
+        User
+      ],
+      where: whereQuery
+    }).then(result => {
+      const totalTweet = Number(result.count)
+      const data = result.rows.map(r => ({
+        ...r.dataValues,
+        content: r.dataValues.content
+      }))
+      User.findByPk(req.params.id)
+        .then(user => {
+          return res.render('profile', {
+            user: user.toJSON(),
+            totalTweet: totalTweet,
+            tweet: data
+          })
+        })
+    })
   }
 }
 
