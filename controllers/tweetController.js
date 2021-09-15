@@ -3,6 +3,7 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const Like = db.Like
 
 const tweetController = {
   //貼文相關
@@ -82,13 +83,30 @@ const tweetController = {
 
   //Like & Unlike
   //喜歡特定貼文
-  // addLike: (req, res) => {
-
-  // },
+  addLike: (req, res) => {
+   return Like.create({
+     UserId: req.user.id,
+     TweetId: req.params.id
+   })
+   .then((like) => {
+    return res.redirect('back')
+   })
+  },
   //取消喜歡特定貼文
-  // removeLike: (req, res) => {
-
-  // }
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.id 
+      }
+    })
+    .then(like => {
+      like.destroy()
+      .then(tweet => {
+        return res.redirect('back')
+      })
+    })
+  }
 }
 
 module.exports = tweetController

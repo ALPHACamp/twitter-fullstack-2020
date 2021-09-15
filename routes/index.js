@@ -13,16 +13,21 @@ const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
 module.exports = (app, passport) => {
   const authenticated = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      return next()
+      if (helpers.getUser(req).role === "normal") {
+        return next()
+      }
     }
+    req.flash('error_messages', '請確認使用者身分')
     res.redirect('/signin')
   }
 
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "admin") { return next() }
+      req.flash('error_messages', '請確認使用者身分')
       return res.redirect('/admin/signin')
     }
+    req.flash('error_messages', '請確認使用者身分')
     res.redirect('/admin/signin')
   }
 
@@ -92,9 +97,9 @@ module.exports = (app, passport) => {
 
 // // Like & UnLike
   // //喜歡特定貼文
-  // router.post('/tweets/:id/like', tweetController.addLike)
+  app.post('/tweets/:id/like', authenticated,  tweetController.addLike)
   // //取消喜歡特定貼文
-  // router.delete('/tweets/:id/like', tweetController.removeLike)
+  app.delete('/tweets/:id/like', tweetController.removeLike)
 
   // //管理者登入(後台登入)
   app.get('/admin/signin', adminController.signinPage)

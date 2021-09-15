@@ -108,7 +108,16 @@
             <a href="/tweets/{{tweet.id}}/replies"><i class="far fa-comment"></i></a>
           </div>
           {{!-- //TODO:要分實心空心 --}}
-          <div><i class="far fa-heart mr-2"></i></div>
+          <div>
+{{!-- 測試like功能用的超醜按鈕 --}}
+            <form action="/tweets/{{tweet.id}}/like" method="POST">
+              <button type="submit"><i class="far fa-heart mr-2"></i></button>
+            </form>
+            <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
+              <button type="submit">Unlike</button>
+            </form>
+{{!-- 測試like功能用的超醜按鈕 --}}
+          </div>
         </div>
         <hr>
 
