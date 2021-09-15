@@ -1,6 +1,8 @@
 const twitterController = require('../controllers/tweetController.js')
 const helpers = require('../_helpers')
 
+
+const tweetController = require('../controllers/tweetController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 
@@ -24,8 +26,8 @@ const authenticatedAdmin = (req, res, next) => {
 
 module.exports = (app, passport) => {
   // 前台首頁
-  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetController.getTweets)
+  app.get('/', authenticated, (req, res) => res.redirect('/home'))
+  app.get('/home', authenticated, tweetController.getTweets)
 
   // 後台登入
   app.get('/admin', adminController.signInPage)
@@ -51,6 +53,7 @@ module.exports = (app, passport) => {
     failureRedirect: '/signin',
     failureFlash: true
   }), userController.signIn)
+  
   // 登出
   app.get('/logout', userController.logout)
 
