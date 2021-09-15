@@ -2,6 +2,22 @@
   font-family: 微軟正黑體;
 }
 
+.grid{ 
+  display:grid;
+  grid-template-columns:1.5fr 6.5fr 3fr;
+}
+
+.fixed{
+  position:fixed;
+}
+
+.userSidebar{
+  position:fixed;
+}
+
+.popularArea{
+  position:fixed;
+}
 
 #ac-logo{
   width: 50px;

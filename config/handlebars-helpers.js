@@ -10,6 +10,9 @@ module.exports = {
   moment: function (a) {
     return moment(a).fromNow()
   },
+  momentFormat:function(a){
+    return moment(a).format('YYYY年MM月DD日, hh:mm')
+  },
   noImage: function(a){
     return a ? a: 'https://i.imgur.com/bGxaaO6.png'
   }
