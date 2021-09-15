@@ -1,14 +1,23 @@
 const express = require('express')
+
+const handlebars = require('express-handlebars')
 const helpers = require('./_helpers');
+<<<<<<< HEAD
 const exphbs = require("express-handlebars");
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 const PORT = process.env.PORT || 3000;
+=======
+const db = require('./models')
+
+>>>>>>> 38e79beb3449262431f76ce39965443dad3ac612
 const app = express()
+
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
+<<<<<<< HEAD
 if (process.env.NODE_ENV === "test") {
   app.use((req, res, next) => {
     req.user = helpers.getUser(req);
@@ -60,6 +69,14 @@ const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
 
 require("./routes/route.js")(app);
+=======
+app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+app.use(express.static('public'))
+
+>>>>>>> 38e79beb3449262431f76ce39965443dad3ac612
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+require('./routes')(app)
 
 module.exports = app

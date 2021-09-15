@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+<<<<<<< HEAD
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
@@ -23,6 +24,15 @@
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
+=======
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "chai": "^4.3.4",
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.2",
+>>>>>>> 38e79beb3449262431f76ce39965443dad3ac612
     "faker": "^4.1.0",
     "heroku": "^7.2.0",
     "heroku-cli": "^6.15.31",
@@ -30,17 +40,23 @@
     "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "mocha": "^6.0.2",
+<<<<<<< HEAD
     "multer": "^1.4.2",
     "mysql2": "^1.6.4",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
+=======
+    "mysql2": "^1.7.0",
+    "passport": "^0.4.1",
+>>>>>>> 38e79beb3449262431f76ce39965443dad3ac612
     "passport-local": "^1.0.0",
-    "sequelize": "^4.42.0",
+    "sequelize": "^4.44.4",
     "sequelize-cli": "^5.5.0",
-    "sinon": "^7.2.3",
-    "sinon-chai": "^3.3.0"
+    "sinon": "^7.5.0",
+    "sinon-chai": "^3.7.0"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "sequelize-test-helpers": "^1.0.7",
     "supertest": "^3.3.0"
   },
@@ -57,4 +73,9 @@
   },
   "homepage": "https://github.com/chia0416/twitter-fullstack-2020#readme",
   "description": ""
+=======
+    "sequelize-test-helpers": "^1.4.1",
+    "supertest": "^3.4.2"
+  }
+>>>>>>> 38e79beb3449262431f76ce39965443dad3ac612
 }
