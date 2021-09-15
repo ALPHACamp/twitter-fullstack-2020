@@ -11,11 +11,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Tweet.belongsTo(models.User) // 加入關聯
+      Tweet.belongsTo(models.User)
+      Tweet.hasMany(models.Reply)
+      // 推文藉由使用者的Like產生多對多關聯
+      Tweet.belongsToMany(models.User, {
+        through: models.Like,
+        foreignKey: 'TweetId',
+        as: 'LikedUsers'
+      })
     }
   };
   Tweet.init({
-    content: DataTypes.TEXT,
+    description: DataTypes.TEXT,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
     UserId: DataTypes.INTEGER
