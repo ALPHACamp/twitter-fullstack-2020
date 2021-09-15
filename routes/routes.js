@@ -20,7 +20,8 @@ router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
 router.get('/logout', loginController.logOut)
 
-
+router.get('/admin/signin', adminController.signInPage)
+router.post('/admin/signin', adminController.signIn)
 
 
 module.exports = router
