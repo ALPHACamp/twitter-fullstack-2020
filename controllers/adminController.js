@@ -6,7 +6,6 @@ const adminController = {
   signInPage: (req, res) => {
     return res.render('admin/signIn')
   },
-
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.send('signed in')

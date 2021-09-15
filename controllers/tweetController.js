@@ -45,6 +45,7 @@ const tweetController = {
       include: [User]
     })
     // console.log(tweets)
+    console.log('有到這嗎')
     return res.render('home',{ tweets})
   },
   getTweet: async (req, res) => {
@@ -72,7 +73,6 @@ const tweetController = {
         req.params.id,{
         include: [User]  
       })
-      console.log(tweet,'哈哈')
       return res.render('tweet',{tweet: tweet.toJSON()})
     }catch(e){
         console.log(e.message)
