@@ -14,6 +14,14 @@ hr {
   margin:0;
 }
 
+textarea {
+width:100%;
+overflow-wrap: break-word;
+resize:none;
+outline: none;
+flex-grow: 1;
+}
+
 .logo {
   margin-top: 5vh;
 }
@@ -220,9 +228,10 @@ border:  #ffffff
 
 
 .headerDivider { 
-  height:100vh;
-  border-left:1px solid rgba(0,0,0,.1); 
-  margin:0;
+  position: relative;
+  margin-left: 25px;
+  height:75%;
+  border-left:2px solid #CCD6DD; 
 } 
 
 .text-title {
@@ -337,10 +346,18 @@ color:#657786;
 font-size: 13px;
 }
 
+.reply-like .reply {
+  display:flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 input { 
   width: 100%; 
   height: 100%; 
   resize:none;
+  outline: none;
+  word-wrap: break-word;
   border: solid white;
 }
 
@@ -350,6 +367,7 @@ input {
   font-weight: 500;
   font-size: 18px;
   line-height: 26px;
+  outline: none;
   word-wrap:break-word;
 }
 
@@ -1062,6 +1080,13 @@ color: #657786;
 border-radius: 14px;
 width:600px;
 height:300px;
+height:100%;
+}
+
+#reply-tweet .modal-content {
+width:600px;
+height:450px;
+
 }
 
 .modal-content button.close{
@@ -1082,22 +1107,28 @@ margin: 15px 10px 15px 15px
 .user-pic img{
   width:50px;
   height:50px;
-   border-radius: 50%;
+  border-radius: 50%;
   background-color:#c4c4c4;
-  border:#fF6600 1px solid
 }
 
-
-.type-area .type-text {
+.type-text {
 margin-top: 27px;;
-width:510px;
-
+width:100%;
+padding-right: 15px;
 }
 
-.type-text .new-post-content {
-  width:510px;
-overflow-wrap: break-word;
-resize:none
+.type-text .new-post-content{
+width:100%;
+resize:none;
+outline: none;
+}
+
+
+
+.type-text .new-post-content.focus {
+width:100%;
+resize:none;
+outline: none;
 }
 
 .type-text .new-post-content::placeholder{
@@ -1129,4 +1160,10 @@ line-height: 18px;
 background-color: #fF6600;
 color: #FFFFFF;
 border-radius: 100px;
+}
+
+.reply-modal-tweet {
+  display: flex;
+  /* border: 2px solid red; */
+  height:163px;
 }
