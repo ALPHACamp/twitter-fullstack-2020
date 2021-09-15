@@ -92,9 +92,9 @@ module.exports = (app, passport) => {
 
 // // Like & UnLike
   // //喜歡特定貼文
-  // router.post('/tweets/:id/like', tweetController.addLike)
+  app.post('/tweets/:id/like', authenticated,  tweetController.addLike)
   // //取消喜歡特定貼文
-  // router.delete('/tweets/:id/like', tweetController.removeLike)
+  app.delete('/tweets/:id/like', tweetController.removeLike)
 
   // //管理者登入(後台登入)
   app.get('/admin/signin', adminController.signinPage)
