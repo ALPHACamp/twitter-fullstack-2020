@@ -34,7 +34,11 @@
           </a>
         </ul>
 
-        <a href="/tweets/create" type="button" class="tweet-button">推文</a>
+        <div class="">
+          <button type="button" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+          </button>
+        </div>
+
 
         <a href="/logout">
           <div class="logout-button">
@@ -59,7 +63,7 @@
         <div class="add-post d-flex">
           <div class="mt-2 ml-2">
             <img class="user-pic"
-              src="https://lh3.googleusercontent.com/proxy/DJ0Cdy5jSI5lJEzSa0TCAXIZA5tt2jRlchLHCCQwH2zrAYOVTndf8OvyK9nKn21r8RGcZ-9vkapH0955Nqg62_bL9IT7f_jOONoNO0Dh3uLko9vREyXHEJjA9-Zz_Put762In8mvUl9Ij5k1SQ_kDH6reHQM6cP1MkCNj7MfL9boI4rzqA"
+              src="{{currentUser.avatar}}"
               alt="">
           </div>
           <div class="type-location">
@@ -68,7 +72,7 @@
 
         </div>
         <div class="send-area">
-          <button type="submit" class="send-button">推文</button>
+          <button type="submit" class="btn send-button">推文</button>
         </div>
       </a>
       <hr style="border: 5px solid #E6ECF0; margin:0">
@@ -80,23 +84,23 @@
         <div class="d-flex">
           <div class="mt-2 ml-2 col-md-1" style="padding:0">
             <a href="/users/{{this.User.id}}">
-            <img class="user-pic" src="" alt="">
+              <img class="user-pic" src="{{this.User.avatar}}" alt="">
             </a>
           </div>
-
+          
           <div class="col-md-11">
             <div class="account-info d-flex" style="flex:auto">
               <a href="/users/{{this.User.id}}">
-              <div class="user-name">{{this.User.name}}</div>
-              <div class="account-time ml-2">@{{this.User.account}}．3小時</div>
+                <div class="user-name">{{this.User.name}}</div>
+                <div class="account-time">@{{this.User.account}}．3小時</div>
             </div>
-
-
-          <a href="/tweets/{{this.id}}"  class="text-muted">
-          <div class="post-text d-flex" style="flex:auto">
-            {{this.description}}
-          </div>
-          </a>  
+          
+          
+            <a href="/tweets/{{this.id}}" class="text-muted">
+              <div class="post-text d-flex" style="flex:auto">
+                {{this.description}}
+              </div>
+            </a>
 
 
 
@@ -111,42 +115,6 @@
       <hr />
       {{!-- 貼文1結束 --}}
       {{/each}}
-      {{!-- 貼文2開始
-      <div class="tweet col-md-12">
-        <div class="d-flex">
-          <div class="mt-2 ml-2 col-md-1" style="padding:0">
-            <img class="user-pic mr-2" src="" alt="">
-          </div>
-
-          <div class="col-md-11">
-            <div class="account-info d-flex" style="flex:auto">
-              <div class="user-name">Orange</div>
-              <div class="account-time ml-2">@orange．3小時</div>
-            </div>
-
-            <div class="post-text d-flex" style="flex:auto">
-              [筆記] 談談Javascript 中的 Hoisting
-              [筆記] JavaScript: undefined不是真的undefined !!
-              [筆記] 不同execution context的變項不會互相影響─了解function背後運作的邏輯
-              [筆記] JavaScript中Scope Chain和outer environment的概念
-              [筆記] 談談JavaScript中的asynchronous和event queue
-              [筆記] 談談JavaScript的Precedence和Associativity
-              [筆記] 談談JavaScript的coercion
-              [筆記] JavaScript中coercion的實際使用--if判斷式
-              [筆記] JavaScript中coercion的實際使用--建立函式預設值(default value)
-            </div>
-
-            <div class="reply-like d-flex mt-2">
-              <div><i class="far fa-comment mr-2"></i>留言數</div>
-              <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-      <hr /> --}}
-      {{!-- 貼文2結束 --}}
-
     </div>
 
     {{!-- <div class="headerDivider"></div> --}}
@@ -203,3 +171,48 @@
 
   </div>
 </div>
+
+
+
+
+{{!-- add-tweet Modal --}}
+<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+      <hr>
+
+      <div class="type-area">
+        <div class="user-pic">
+          <img src="{{currentUser.avatar}}" alt="">
+        </div>
+        <div class="type-text">
+          <textarea class="form-control new-post-content" placeholder="有什麼新鮮事？" rows="5"></textarea>
+        </div>
+
+      </div>
+
+      <div class="add-button">
+        <button type="submit" class="btn button">推文
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script>
+  const addTweetBtn = document.querySelector(".tweet-button")
+
+  addTweetBtn.addEventListener('click', function onPanelClick(event) {
+
+  })
+
+
+</script>

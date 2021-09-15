@@ -13,9 +13,14 @@ const tweetController = {
       nest: true,
       include: [User]
     }).then(tweet => {
-      return res.render('index', {
-        tweet: tweet,
+      User.findByPk(helpers.getUser(req).id, {raw: true, nest:true, attributes:['avatar']} )
+      .then(user => {
+          return res.render('index', {
+          tweet: tweet,
+          currentUser: user
+        })
       })
+      
     }) //目前可以看到全部
   },
 

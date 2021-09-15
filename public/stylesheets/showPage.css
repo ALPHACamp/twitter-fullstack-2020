@@ -282,7 +282,6 @@ margin: 15px;
 
 .left-side {
   padding:0;
-  padding-left: 2vw;
   position: relative;
   text-align: left;
   border-right: 1px solid #e5e5e5;
@@ -334,7 +333,8 @@ margin: 15px;
 .reply-like {
   margin-left: 10px;
   margin-bottom: 14.26px;
-
+color:#657786;
+font-size: 13px;
 }
 
 input { 
@@ -437,7 +437,7 @@ margin-top: 6px;
 margin-right: 15px;
 margin-bottom: 14px;
 margin-left: 10px;
-
+color:black;
 }
 
 
@@ -522,16 +522,16 @@ padding:0 15px;
 font-family: Noto Sans TC;
 font-style: normal;
 font-weight: bold;
-font-size: 20px;
-line-height: 20px;
+font-size: 15px;
+line-height: 15px;
 }
 
 .popular .account {
   font-family: Noto Sans TC;
 font-style: normal;
 font-weight: bold;
-font-size: 20px;
-line-height: 20px;
+font-size: 15px;
+line-height: 15px;
 color: #657786;
 }
 
@@ -1056,3 +1056,77 @@ color: #657786;
 }
 
 
+/* modal樣式 */
+
+.modal-content{
+border-radius: 14px;
+width:600px;
+height:300px;
+}
+
+.modal-content button.close{
+  color:#fF6600;
+  text-align:left;
+  margin: 19.5px;
+}
+
+.type-area {
+  display: flex;
+  height:192px;
+}
+
+.type-area .user-pic {
+margin: 15px 10px 15px 15px
+}
+
+.user-pic img{
+  width:50px;
+  height:50px;
+   border-radius: 50%;
+  background-color:#c4c4c4;
+  border:#fF6600 1px solid
+}
+
+
+.type-area .type-text {
+margin-top: 27px;;
+width:510px;
+
+}
+
+.type-text .new-post-content {
+  width:510px;
+overflow-wrap: break-word;
+resize:none
+}
+
+.type-text .new-post-content::placeholder{
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 26px;
+color: #9197A3;
+text-align:left;
+}
+
+
+.add-button {
+  text-align:right;
+  margin-bottom: 0;
+}
+
+.add-button button.button {
+  margin-right: 15px;
+  margin-bottom: 15px;
+  width:66px;
+  height:38px;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 18px;
+background-color: #fF6600;
+color: #FFFFFF;
+border-radius: 100px;
+}
