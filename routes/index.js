@@ -1,8 +1,7 @@
 const twitterController = require('../controllers/tweetController.js')
 const helpers = require('../_helpers')
 
-const tweetController = require('../controllers/tweetController.js')
-// const adminController = require('../controllers/adminController.js')
+const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
 
 const passport = require('../config/passport')
@@ -13,12 +12,13 @@ const authenticated = (req, res, next) => {
   }
   res.redirect('/signin')
 }
+
 const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) { return next() }
-    return res.redirect('/')
+  if (helpers.ensureAuthenticated(req) && helpers.getUser(req).isAdmin) {
+    return next()
   }
-  res.redirect('/signin')
+  req.flash('error_messages', '帳號或密碼輸入錯誤')
+  res.redirect('/admin')
 }
 
 
@@ -59,4 +59,7 @@ module.exports = (app, passport) => {
   }), userController.signIn)
   // 登出
   app.get('/logout', userController.logout)
+
+  //取得特定貼文資料
+  app.get('/tweet/:id', tweetController.getTweet)
 }
