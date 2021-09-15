@@ -2,11 +2,11 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    //隨機建立30組likes (Condition:5位使用者,10個tweets)
-    const likes = Array.from({ length: 30 }).map((d, i) =>
+    //隨機建立150組likes (Condition:5位使用者,50個tweets)
+    const likes = Array.from({ length: 150 }).map((d, i) =>
     ({
       userId: Math.floor(Math.random() * 5) + 2,
-      tweetId: Math.floor(Math.random() * 20) + 1,
+      tweetId: Math.floor(Math.random() * 50) + 1,
       createdAt: new Date(),
       updatedAt: new Date()
     }))
