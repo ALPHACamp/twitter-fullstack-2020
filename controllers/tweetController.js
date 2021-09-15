@@ -21,7 +21,7 @@ const tweetController = {
 
   //新增一則貼文(要改api)
   createTweets: (req, res) => {
-    return res.render('create')
+    return res.render('createFake')
   },
 
   postTweets: (req, res) => {
@@ -41,7 +41,8 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
    return Tweet.findByPk(req.params.id, {
-    include: [Reply]
+    include: [User, 
+      {model: Reply, include:[User]}]
     })
     .then(tweet => {
       return res.render('tweet', {
@@ -54,18 +55,26 @@ const tweetController = {
   //回覆特定貼文
   createReply: (req, res) => {
     return Reply.create({
-      comment: req.body.reply,
+      comment: req.body.comment,
       TweetId: req.body.TweetId,
       UserId: req.user.id
     })
     .then((reply)=>{
-      res.redirect(`/index/${req.body.TweetId}`)
+      res.redirect(`/tweets/${req.body.TweetId}`)
     })
   },
   //顯示特定貼文回覆
-  // getTweetReplies: (req, res) => {
-
-  // },
+  getTweetReplies: (req, res) => {
+    return Tweet.findByPk(req.params.id,{
+      include: [Reply]
+    })
+    .then(tweet => {
+      return res.render('replyFake', {
+        tweet: tweet.toJSON()
+      })
+    })
+    
+  },
 
 //Like & Unlike
   //喜歡特定貼文

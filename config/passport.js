@@ -29,7 +29,12 @@ passport.serializeUser((user, cb) => {
 })
 //TODO:搜尋條件待加入使用者關聯資料語法 i.e.{ model: User, as: 'Followers' }
 passport.deserializeUser((id, cb) => {
-  User.findByPk(id)
+  User.findByPk(id, {
+    include: [
+      {model: User, as: 'Followers'},
+      { model: User, as: 'Followings'}
+    ]
+  })
     .then(user => {
       user = user.toJSON()
       return cb(null, user)
