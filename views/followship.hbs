@@ -14,11 +14,11 @@
       <div>
         <ul class="list-group">
 
-          <li class="list-group-item ">
-            <a href=""></a>
-            <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
-            </a>
-          </li>
+          <a href="/index">
+            <li class="list-group-item ">
+              <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+            </li>
+          </a>
 
 
           <a href="/users/{{user.id}}/edit">
@@ -33,13 +33,16 @@
             </li>
           </a>
         </ul>
-        <button type="submit" class="tweet-button">推文</button>
-        <a href="">
+        {{!-- //TODO:待加入modal --}}
+        <a href="/index/create" type="button" class="tweet-button">推文</a>
+
+        <a href="/logout">
           <div class="logout-button">
             <i class="fas fa-arrow-alt-circle-left"></i>
             登出
           </div>
         </a>
+
       </div>
     </div>
 
@@ -47,9 +50,13 @@
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title d-flex mt-0 mb-0">
-        <div class="back-icon">
-          <i class="fas fa-arrow-left"></i>
-        </div>
+     
+            <a href="javascript:history.back()">
+              <div class="back-icon">
+                <i class="fas fa-arrow-left"></i>
+              </div>
+            </a>
+
         <div class="name-info">
           <div class="title-name">
             John Doe
@@ -59,8 +66,8 @@
           </div>
         </div>
       </div>
-        {{!-- 推文/推文與回覆/喜歡的內容區塊 --}}
-        <div class="follow-tweet">
+      {{!-- 推文/推文與回覆/喜歡的內容區塊 --}}
+      <div class="follow-tweet">
         {{!-- 推文區開始 --}}
         <ul class="nav nav-tabs">
           <li class="nav-item">
@@ -84,15 +91,15 @@
 
               <div class="col-md-11">
                 <div class="account-followship">
-                <div class="account-info" style="flex:auto">
-                  <div class="user-name">Orange</div>
-                  <div class="account-time">@orange．3小時</div>
-                </div>
-                <div class="followship-button">
-                  {{!-- //TODO:追隨鈕 --}}
-                  {{!-- <button type="submit" class="follow-button">正在跟隨</button> --}}
-                  <button type="submit" class="unfollow-button">跟隨</button>
-                </div>
+                  <div class="account-info" style="flex:auto">
+                    <div class="user-name">Orange</div>
+                    <div class="account-time">@orange．3小時</div>
+                  </div>
+                  <div class="followship-button">
+                    {{!-- //TODO:追隨鈕 --}}
+                    {{!-- <button type="submit" class="follow-button">正在跟隨</button> --}}
+                    <button type="submit" class="unfollow-button">跟隨</button>
+                  </div>
                 </div>
 
                 <div class="post-text d-flex" style="flex:auto">
@@ -105,42 +112,42 @@
           <hr />
           {{!-- 貼文結束 --}}
 
-                    {{!-- 貼文開始 --}}
-                    <div class="tweet col-md-12">
-                      <div class="d-flex">
-                        <div class="mt-2 ml-2 col-md-1" style="padding:0">
-                          <img class="user-pic mr-2" src="" alt="">
-                        </div>
-                    
-                        <div class="col-md-11">
-                          <div class="account-followship">
-                            <div class="account-info" style="flex:auto">
-                              <div class="user-name">Orange</div>
-                              <div class="account-time">@orange．3小時</div>
-                            </div>
-                            <div class="followship-button">
-                              <button type="submit" class="follow-button">正在跟隨</button>
-                              {{!-- <button type="submit" class="unfollow-button">跟隨</button> --}}
-                            </div>
-                          </div>
-                    
-                          <div class="post-text d-flex" style="flex:auto">
-                            [筆記] 談談Javascript 中的 Hoisting[筆記] JavaScript中函式(Function)就是一種物件(Objects) 
-                          </div>
-                        </div>
-                    
-                      </div>
-                    </div>
-                    <hr />
-                    {{!-- 貼文結束 --}}
+          {{!-- 貼文開始 --}}
+          <div class="tweet col-md-12">
+            <div class="d-flex">
+              <div class="mt-2 ml-2 col-md-1" style="padding:0">
+                <img class="user-pic mr-2" src="" alt="">
+              </div>
+
+              <div class="col-md-11">
+                <div class="account-followship">
+                  <div class="account-info" style="flex:auto">
+                    <div class="user-name">Orange</div>
+                    <div class="account-time">@orange．3小時</div>
+                  </div>
+                  <div class="followship-button">
+                    <button type="submit" class="follow-button">正在跟隨</button>
+                    {{!-- <button type="submit" class="unfollow-button">跟隨</button> --}}
+                  </div>
+                </div>
+
+                <div class="post-text d-flex" style="flex:auto">
+                  [筆記] 談談Javascript 中的 Hoisting[筆記] JavaScript中函式(Function)就是一種物件(Objects)
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <hr />
+          {{!-- 貼文結束 --}}
 
 
-</div>
         </div>
-        {{!-- 推文區結束 --}}
-
-        {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
       </div>
+      {{!-- 推文區結束 --}}
+
+      {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
+    </div>
 
 
 
@@ -164,7 +171,7 @@
                 <div class="account">@pizzahut</div>
               </div>
               <div class="button">
-                <button type="submit" class="follow-button">正在跟隨</button>
+                <button type="submit" class="btn follow-button">正在跟隨</button>
               </div>
             </div>
           </li>
@@ -181,7 +188,7 @@
                 <div class="account">@McDonald's</div>
               </div>
               <div class="button">
-                <button type="submit" class="unfollow-button"> 跟隨 </button>
+                <button type="submit" class="btn unfollow-button"> 跟隨 </button>
               </div>
             </div>
           </li>

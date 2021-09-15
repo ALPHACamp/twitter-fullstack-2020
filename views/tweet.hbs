@@ -14,11 +14,11 @@
       <div>
         <ul class="list-group">
 
-          <li class="list-group-item ">
-            <a href=""></a>
-            <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
-            </a>
-          </li>
+          <a href="/index">
+            <li class="list-group-item ">
+              <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+            </li>
+          </a>
 
 
           <a href="/users/{{user.id}}/edit">
@@ -33,13 +33,16 @@
             </li>
           </a>
         </ul>
-        <button type="submit" class="tweet-button">推文</button>
-        <a href="">
+        {{!-- //TODO:待加入modal --}}
+        <a href="/index/create" type="button" class="tweet-button">推文</a>
+
+        <a href="/logout">
           <div class="logout-button">
             <i class="fas fa-arrow-alt-circle-left"></i>
             登出
           </div>
         </a>
+
       </div>
     </div>
 
@@ -47,9 +50,13 @@
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title d-flex align-items-center">
+        
+        <a href="javascript:history.back()">
         <div class="back-icon">
-          <i class="fas fa-arrow-left"></i>
+          <i class="fas fa-arrow-left"></i>    
         </div>
+        </a>
+
         <div class="name-info">
           <div class="title-name">
             推文
@@ -61,7 +68,7 @@
       <div class="main-reply-tweet">
         <div class="account-info d-flex">
           <div>
-            <img class="user-pic" src="" alt="">
+            <img class="user-pic" src="{{tweet.User.avatar}}" alt="">
           </div>
           <div class="name-account">
             <div class="name">{{tweet.User.name}}</div>
@@ -74,19 +81,22 @@
          <h2>{{tweet.description}}</h2> 
         </div>
 
+{{!-- //TODO:時間格式要調整 --}}
         <div class="time">
-          上午10:05．2020年6月10日
+          {{tweet.createdAt}}
+          should be:上午10:05．2020年6月10日
         </div>
 
         <hr>
 
         <div class="number-followers  d-flex">
           <div class="reply">
-            <div class="number">34</div>
+            <div class="number">{{tweet.Replies.length}}</div>
             <div class="text">回覆</div>
           </div>
           <div class="reply d-flex">
             <div class="number">808</div>
+            {{!-- TODO:待回傳LIKE數 --}}
             <div class="text">喜歡次數</div>
           </div>
         </div>
@@ -110,58 +120,35 @@
           </div>
         </div>
         <hr>
+
         {{!-- 回覆開始 --}}
-        {{#each tweet.Replies}}
+    {{#each tweet.Replies}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 ml-2 col-md-1" style="padding:0">
-              <img class="user-pic mr-2" src="" alt="">
+              <img class="user-pic mr-2" src="{{this.User.avatar}}" alt="">
             </div>
 
             <div class="col-md-11">
               <div class="account-info d-flex" style="flex:auto">
                 <div class="user-name">{{this.User.name}}</div>
-                <div class="account-time ml-2">@orange．3小時</div>
+                {{!-- //TODO:時間回傳格式要改 --}}
+                <div class="account-time ml-2">@{{this.User.account}}．多久前</div>
               </div>
               <div class="reply">
-                <div class="reply-text">{{this.comment}}</div>
-                <div class="reply-account">@</div>
+                <div class="reply-text">回覆</div>
+                <div class="reply-account">@{{../tweet.User.account}}</div>
               </div>
 
               <div class="post-text d-flex" style="flex:auto">
+                {{this.comment}}
               </div>
             </div>
 
           </div>
         </div>
         <hr />
-        {{!-- 回覆結束 --}}
         {{/each}}
-        {{!-- 回覆開始 --}}
-        {{!-- <div class="tweet col-md-12">
-          <div class="d-flex">
-            <div class="mt-2 ml-2 col-md-1" style="padding:0">
-              <img class="user-pic mr-2" src="" alt="">
-            </div>
-
-            <div class="col-md-11">
-              <div class="account-info d-flex" style="flex:auto">
-                <div class="user-name">MJ</div>
-                <div class="account-time ml-2">@orange．3小時</div>
-              </div>
-              <div class="reply">
-                <div class="reply-text">回覆</div>
-                <div class="reply-account">@Daniel</div>
-              </div>
-
-              <div class="post-text d-flex" style="flex:auto">
-                GOOD JOB~
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <hr /> --}}
         {{!-- 回覆結束 --}}
 
 
@@ -192,7 +179,7 @@
                 <div class="account">@pizzahut</div>
               </div>
               <div class="button">
-                <button type="submit" class="follow-button">正在跟隨</button>
+                <button type="submit" class="btn follow-button">正在跟隨</button>
               </div>
             </div>
           </li>
@@ -209,7 +196,7 @@
                 <div class="account">@McDonald's</div>
               </div>
               <div class="button">
-                <button type="submit" class="unfollow-button"> 跟隨 </button>
+                <button type="submit" class="btn unfollow-button"> 跟隨 </button>
               </div>
             </div>
           </li>

@@ -2,9 +2,11 @@
   margin: 0;
   /* min-width:768px; */
   max-width: 1440px; 
+  min-height: 1200px;
   /* max-height: 1200px;  */
   margin: 0 auto; 
   /* overflow:scroll; */
+  flex-grow: 1;
 }
 
 hr {
@@ -98,6 +100,24 @@ max-width: 540px;
   border:  #ffffff
 }
 
+.signin-button.active {
+  position: relative;
+  margin-top: 12vh;
+  margin-left: 31.25%; 
+  width: 37.5%;
+  height: 46px;
+  max-width: 540px;
+  border-radius: 50px;
+  align-items: center;
+  background-color: #fF6600;
+  color: #ffffff;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  border:  #ffffff
+}
+
+
 .signup-button {
   position: relative;
   margin-top: 40vh;
@@ -149,8 +169,12 @@ color: #0099FF;
  color:#FF6600
 }
 
+.list-group-item .name-account{
+ margin: auto 0;
+} 
+
 a:hover{
-  background-color: WHITE;
+  background-color: transparent;
   text-decoration:none;
 }
 
@@ -173,6 +197,28 @@ line-height: 38px;
 border:  #ffffff
 }
 
+
+.tweet-button:hover {
+position: relative;
+margin:auto;
+width: 12vw;
+max-width:10vw;
+margin-top: 25px;
+padding:0;
+border-radius: 100px;
+text-align:center;
+background-color: #fF6600;
+color: #ffffff;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
+line-height: 38px;
+border:  #ffffff
+}
+
+
+
 .headerDivider { 
   height:100vh;
   border-left:1px solid rgba(0,0,0,.1); 
@@ -187,6 +233,10 @@ font-weight: bold;
 font-size: 18px;
 line-height: 26px;
 margin: 15px;
+}
+
+.text-title a {
+  color:black;
 }
 
 .save-area{
@@ -224,7 +274,7 @@ margin: 15px;
 .logout-button {
   position: fixed;
   top: 96.4vh;
-  margin-left:8vh;
+
   font-size: 18px;
   color:black;
 
@@ -234,8 +284,9 @@ margin: 15px;
   padding:0;
   padding-left: 2vw;
   position: relative;
-  text-align: center;
+  text-align: left;
   border-right: 1px solid #e5e5e5;
+  flex-grow: 1;
 }
 
 .middle-side {
@@ -249,8 +300,8 @@ margin: 15px;
 }
 
 .user-pic {
-  min-width: 50px;
-  min-height: 50px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   background-color:#c4c4c4;
 }
@@ -261,13 +312,17 @@ margin: 15px;
 }
 
 .tweet {
-  padding: 0;
+  padding: 10px 0 0 0;
   /* width: 50vw; */
 }
 
 .account-info {
   position: relative;
   margin-left: 10px;
+}
+
+.account-info a{
+  color:black
 }
 
 .new-post-content {
@@ -488,7 +543,13 @@ position: relative;
 .close-button {
 text-align: right;
 overflow:hidden;
-float:right
+float:right;
+background-color: transparent;
+}
+
+.close-button .close.active{
+border:transparent;
+background-color: transparent;
 }
 
 /* 管理者查看使用者 */
@@ -521,9 +582,7 @@ float:right
   content: "\f1c5"attr(alt);
   position: relative;
   z-index: 2;
-  top: -120%;
-  width: 200px;
-  height: 25px;
+  top: 0;
   color: #c4c4c4;
   font-size: 50px;
   background-color: #c4c4c4;
@@ -535,8 +594,10 @@ float:right
   height:174px;
   background: #E5E5E5;
   padding:0;
-
 }
+
+.card-body 
+
 .name-photo {
   position:relative;
   top: -41.3%;
@@ -634,12 +695,14 @@ color: #657786;
   width:17px;
   height:14px;
   margin:19px;
-  font-size: 18px;
+  font-size: 14px;
   display:flex;
 }
 
+
+
 .name-info {
-  margin-left:20px;
+  
 }
 
 .title-name {
@@ -648,6 +711,7 @@ font-style: normal;
 font-weight: 900;
 font-size: 19px;
 line-height: 28px;
+text-align: center;
 }
 
 .title-info {
@@ -693,7 +757,7 @@ line-height: 19px;
   overflow: hidden;
 }
 
-.avatar img {
+.user-info .avatar img {
   position: relative;
   background-color:#c4c4c4;
   width: 140px;
@@ -968,6 +1032,11 @@ color: #657786;
   margin-right: 150px;
 }
 
+
+.icon-reply a {
+  color:black;
+}
+
 /* 追蹤和被追蹤者貼文 */
 .follow-tweet .nav-tabs{
   margin-top: 0;
@@ -985,4 +1054,5 @@ color: #657786;
 .account-followship .account-time {
   
 }
+
 

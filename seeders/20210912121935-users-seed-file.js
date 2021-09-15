@@ -3,9 +3,9 @@ const faker = require('faker')
 const bcrypt = require('bcryptjs')
 module.exports = {
   up: (queryInterface, Sequelize) => {
-
+    //隨機建立 5 個一般使用者
+    let amount = 5
     let data = []
-    let amount = 5;
     data.push({
       account: 'root123',
       email: 'root@example.com',
@@ -18,7 +18,7 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date()
     })
-    //隨機建立5個normal users帳號
+    
     while (amount--) {
       data.push({
         account: faker.internet.userName(),
