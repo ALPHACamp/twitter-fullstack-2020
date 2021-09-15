@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Tweet.associate = function(models) {
     Tweet.hasMany(models.Reply)
+    Tweet.belongsTo(models.User)
   };
   return Tweet;
 };
