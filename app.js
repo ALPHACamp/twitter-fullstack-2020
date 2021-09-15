@@ -12,6 +12,7 @@ const port = 3000
 app.engine('handlebars', handlebars({
   defaultLayout: 'main'
 }))
+app.use(express.static('public'))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false}))
