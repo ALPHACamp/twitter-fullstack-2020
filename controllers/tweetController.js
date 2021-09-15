@@ -4,61 +4,79 @@ const Reply = db.Reply
 const User = db.User
 const Followship = db.Followship
 
+const helper = require('../_helpers');
+
 const tweetController = {
   // 首頁
-  getTweets: (req, res) => {
+  getTweets: async (req, res) => {
     const id = req.params.id
+    console.log(helper.getUser(req),'哈哈')
     const loginUserId = helper.getUser(req).id
     const whereQuery = {}
     // 如果推文的人在使用者的追隨名單內，就顯示推文
+    // followship內 A使用者在 B使用者 的
     // 驗證使用者
-    if (req.query.userId) {
+    if (req.query.userId === loginUserId) {
       userId = Number(req.query.userId)
       whereQuery.userId = userId
     }
-    // 找出所有在追隨者名單中的追隨者推文
-    Tweet.findAll({
-      include: Followship,
-      where: { FollowingId: id }
+
+    Tweet.findAndCountAll({
+      // include: Followship,
+      where: whereQuery
     }).then(result => {
-      // 如果是在個人資料，要顯示使用者推文數量
-      // 在此顯示 使用者自身推文、追隨者的貼文、回覆和喜歡的內容
-      // 依時間降冪排序
-      const followingUsersTweets = result.rows
-      const data = followingUsersTweets.map(r => ({
+      const data = result.rows.map(r => ({
         ...r.dataValues,
-        description: r.dataValues.description.substring(0, 50),
-        likedCount: r.dataValues.likedCount,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id), // 判斷是否對推文按讚過，有的話要更改圖示
-        repliedCount: r.dataValues.repliedCount,
-        isReplied: req.user.RepliedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+        // isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+        // isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
       }))
-        .then(() => {
+        .findAll({
+          raw: true,
+          nest: true
+        }).then(() => {
           return res.render('home', {
             tweets: data,
-            loginUserId // 判斷是否為使用者
           })
         })
     })
-  },
-  // 取得單一推文資料，要有 使用者頭像，暱稱、帳號 
-  // 推文要有內容like, reply
-  getTweet: (req, res) => {
-    const id = req.params.id
-    return Tweet.findByPk(id, {
-      // TODO 需要包含的資料有哪些?
-      include: [
-        User,
-        { model: Reply, include: [User] }
-      ]
+    const tweets = await Tweet.findAll({  
+      raw: true,
+      nest: true,
+      include: [User]
     })
-      .then(tweet => {
-        const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
-        return res.render('tweet', {
-          tweet: tweet.toJSON(),
-          isLiked
-        })
+    // console.log(tweets)
+    console.log('有到這嗎')
+    return res.render('home',{ tweets})
+  },
+  getTweet: async (req, res) => {
+    // return Tweet.findByPk(req.params.id, {
+    //   include: [
+    //     ,
+    //     // { model: User, as: 'Followers' },
+    //     // { model: User, as: 'LikedUsers' },
+    //     // { model: Reply, include: [User] }
+    //   ]
+    // })
+    //   // .then(tweet => tweet.increment('viewCounts'))
+    //   .then(tweet => {
+    //     // const isFollowed = tweet.Followers.map(d => d.id).includes(req.user.id)
+    //     // const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
+    //     return res.render('tweet', {
+    //       tweet: tweet.toJSON(),
+    //       // isFollowed,
+    //       // isLiked
+    //     })
+    //   })
+    // console.log(req.params.id)
+    try{
+      const tweet = await Tweet.findByPk(
+        req.params.id,{
+        include: [User]  
       })
+      return res.render('tweet',{tweet: tweet.toJSON()})
+    }catch(e){
+        console.log(e.message)
+    }
   },
   // 在此得列出最受歡迎的十個使用者
   // 依照追蹤者人數降冪排序
