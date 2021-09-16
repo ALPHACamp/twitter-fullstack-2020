@@ -50,9 +50,9 @@ module.exports = (app, passport) => {
   // //TopUsers(要改成api)
   // router.get('/users/top', userController.getTopUsers)
   // //使用者顯示特定使用者頁面(使用者所有貼文)
-  router.get('/users/:user_id/tweets', userController.getUserTweets)
+  app.get('/users/:user_id/tweets', authenticated, userController.getUserTweets)
   // //使用者所有喜歡貼文
-  app.get('/users/:user_id/likes', userController.getUserLikes)
+  app.get('/users/:user_id/likes', authenticated, userController.getUserLikes)
   // //使用者所有回覆
   // router.get('/users/:user_id/replied', userController.getUserReplied)
   // //使用者追蹤清單
@@ -125,7 +125,6 @@ module.exports = (app, passport) => {
   app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
 
   // //使用者編輯個人資料(edit) (row 22-23)
-  app.get('/users/:user_id/tweets', authenticated, userController.getUserTweets)
   app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
   //--------------------------------------
   // //註冊
