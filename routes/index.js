@@ -15,11 +15,16 @@ module.exports = (app, passport) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "normal") {
         return next()
+      } 
+      if (helpers.getUser(req).role === "admin") {
+        req.flash('error_messages', '管理者無法使用前台頁面')
+        return res.redirect('/admin/tweets')
       }
     }
-    req.flash('error_messages', '請確認使用者身分')
+    req.flash('error_messages', '請先登入')
     res.redirect('/signin')
   }
+
 
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -27,22 +32,14 @@ module.exports = (app, passport) => {
       req.flash('error_messages', '請確認使用者身分')
       return res.redirect('/admin/signin')
     }
-    req.flash('error_messages', '請確認使用者身分')
+    req.flash('error_messages', '請先登入')
     res.redirect('/admin/signin')
   }
 
   //TODO:測試用路由
   app.get('/', authenticated, (req, res) => {
-    res.render('replyFake')
+    res.redirect('/tweets')
   })
-  //admin跳轉測試
-  app.get('/tweets', authenticatedAdmin, (req, res) => {
-    res.redirect('/admin/tweets')
-  })
-  app.get('/users', authenticatedAdmin, (req, res) => {
-    res.redirect('/admin/users')
-  })
-
 
 
   // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
@@ -55,7 +52,7 @@ module.exports = (app, passport) => {
   // //使用者顯示特定使用者頁面(使用者所有貼文)
   // router.get('/users/:user_id/tweets', userController.getUserTweets)
   // //使用者所有喜歡貼文
-  // router.get('/users/:user_id/likes', userController.getUserLikes)
+  app.get('/users/:user_id/likes', userController.getUserLikes)
   // //使用者所有回覆
   // router.get('/users/:user_id/replied', userController.getUserReplied)
   // //使用者追蹤清單
@@ -70,7 +67,7 @@ module.exports = (app, passport) => {
 
   TODO:// 貼文相關
   //顯示所有貼文(要改api)
-  app.get('/index', authenticated, tweetController.getTweets)
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   // //使用者新增一則貼文
   app.get('/tweets/create', authenticated, tweetController.createTweets)
@@ -128,7 +125,7 @@ module.exports = (app, passport) => {
   app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
 
   // //使用者編輯個人資料(edit) (row 22-23)
-  app.get('/users/:user_id/edit', authenticated, userController.getUserEdit)
+  app.get('/users/:user_id/tweets', authenticated, userController.getUserEdit)
   app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
   //--------------------------------------
   // //註冊
@@ -140,4 +137,5 @@ module.exports = (app, passport) => {
 
 
 // module.exports = router
+
 

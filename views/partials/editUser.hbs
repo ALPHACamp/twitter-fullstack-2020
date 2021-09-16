@@ -1,32 +1,105 @@
-<div class="modal-dialog" role="document">
+<div class="modal-dialog" id="editUser" role="document">
   <div class="modal-content">
 
-<div class="modal-title d-flex">
-    <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <div class="title-text">編輯個人資料</div>
-    <div class="save-button">
-      <button type="submit" class="btn follow-button">儲存</button>
+    <div class="modal-title">
+      <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="title-text">編輯個人資料</div>
+      {{!-- //TODO:要包FORM --}}
+      <div class="save-button">
+        <button type="submit" class="btn button" id="save-button">儲存
+        </button>
+      </div>
     </div>
-</div>
     <hr>
 
-    <div class="type-area">
-      <div class="user-pic">
-        <img src="{{currentUser.avatar}}" alt="">
+    <div class="cover">
+      <img src="https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989__340.jpg" alt="">
+    </div>
+
+    <div class="edit-delete">
+      <a href="">
+        <i class="fas fa-camera mr-4"></i>
+      </a>
+      <a href="">
+        <i class="fas fa-times"></i>
+      </a>
+    </div>
+
+    <div class="user-info">
+      <div class="avatar">
+        <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="">
       </div>
-      {{!-- //TODO:要包FORM --}}
-      <div class="type-text">
-        <textarea class="form-control new-post-content" placeholder="有什麼新鮮事？" rows="5"></textarea>
+      <div class="edit-delete">
+        <a href="">
+          <i class="fas fa-camera mr-4"></i>
+        </a>
       </div>
+    </div>
+
+    <form action="/users/{{user.id}}/setting?_method=PUT" method="POST" data-toggle="validator" class="user-edit-info">
+    <div>
+      <div class="edit-name-title">名稱</div>
+    <input type="text" name="name" id="name" class="form-control" aria-label="name" data-maxleng="50" value="{{user.name}}">
+    <div class="invalid-feedback name">
+      名稱不得超過50個字
+    </div>
+      <div class="count-down">
+        <div class="count">0</div>
+        <div>/160</div>
+      </div>
+</div>
+
+<div>
+  <div class="edit-introduction-title">自我介紹</div>
+    <textarea type="text" name="introduction" id="introduction" class="form-control" aria-label="name" data-maxleng="160" value="{{user.name}}" rows="6"></textarea>
+    <div class="invalid-feedback" id="introduction">
+      自我介紹不得超過160個字
+    </div>
+    <div class="count-down introduction">
+    <div class="count">0</div>
+    <div>/160</div>
+    </div>
 
     </div>
 
-    <div class="add-button">
-      <button type="submit" class="btn button">推文
-      </button>
-    </div>
+    </form>
+
+
+
+
+
+
 
   </div>
 </div>
+
+{{!-- <script>
+  const name = document.querySelector("#name")
+  const introduction= document.querySelector("#introduction")
+  const saveButton = document.querySelector("#save-button")
+  saveButton.addEventListener("click", function check(event) {
+    if(name.value.length<l) {
+      name.classList.add("is-invalid")
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+      event.preventDefault()
+    }
+
+    if (introduction.value.length < l) {
+      introduction.classList.add("is-invalid")
+      introduction.nextElementSibling.innerHTML = "名稱不得為空"
+      event.preventDefault()
+    }
+
+
+    if (name.value.length > 50) {
+      name.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (introduction.value.length > 150) {
+      email.classList.add("is-invalid")
+      event.preventDefault()
+    }
+  })
+</script> --}}

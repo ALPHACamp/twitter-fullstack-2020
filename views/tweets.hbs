@@ -14,14 +14,14 @@
       <div>
         <ul class="list-group">
 
-          <a href="/index">
+          <a href="/tweets">
             <li class="list-group-item ">
               <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
           </li>
           </a>
 
 
-          <a href="/users/{{user.id}}/edit">
+          <a href="/users/{{user.id}}/tweets">
             <li class="list-group-item active ">
               <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
             </li>
@@ -33,8 +33,11 @@
             </li>
           </a>
         </ul>
-        {{!-- //TODO:待加入modal --}}
-        <a href="/index/create" type="button" class="tweet-button">推文</a>
+
+        <div class="">
+          <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+          </button>
+        </div>
 
         <a href="/logout">
           <div class="logout-button">
@@ -305,8 +308,49 @@
   </div>
 </div>
 
+{{!-- add-tweet Modal --}}
+<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+
+  {{> add-tweet}}
+
+</div>
+{{!-- add-tweet Modal --}}
+
 {{!-- edit-user Modal --}}
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
-  {{> edit-user}}
+  
+  {{> editUser}}
+  
 </div>
 {{!-- edit-user Modal --}}
+
+
+<script>
+  const name = document.querySelector("#name")
+  const introduction = document.querySelector("#introduction")
+  const saveButton = document.querySelector("#save-button")
+  saveButton.addEventListener("click", function check(event) {
+    console.log(event)
+    if (name.value.length < l) {
+      name.classList.add("is-invalid")
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+      event.preventDefault()
+    }
+
+    if (introduction.value.length < l) {
+      introduction.classList.add("is-invalid")
+      introduction.nextElementSibling.innerHTML = "名稱不得為空"
+      event.preventDefault()
+    }
+
+
+    if (name.value.length > 50) {
+      name.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (introduction.value.length > 150) {
+      email.classList.add("is-invalid")
+      event.preventDefault()
+    }
+  })
+</script>
