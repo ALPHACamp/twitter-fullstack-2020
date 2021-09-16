@@ -32,16 +32,8 @@ module.exports = (app, passport) => {
   }
 
   //TODO:測試用路由
-  app.get('/', authenticated, (req, res) => {
-    res.render('replyFake')
-  })
-//admin跳轉測試
-  app.get('/tweets',authenticatedAdmin, (req, res) => {
-    res.redirect('/admin/tweets')
-  })
-  app.get('/users',authenticatedAdmin, (req, res) => {
-    res.redirect('/admin/users')
-  })
+
+
 
 
 

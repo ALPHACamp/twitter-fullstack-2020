@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
 
 // FIXME:use helpers.getUser(req) to replace req.user
 // FIXME:use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -32,7 +33,8 @@ passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
     include: [
       {model: User, as: 'Followers'},
-      { model: User, as: 'Followings'}
+      { model: User, as: 'Followings'},
+      {model: Tweet, as: 'LikedTweets'}
     ]
   })
     .then(user => {
