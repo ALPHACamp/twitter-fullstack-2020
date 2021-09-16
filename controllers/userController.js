@@ -68,7 +68,7 @@ const userController = {
       }))
       User.findByPk(req.params.id)
         .then(user => {
-          return res.render('profile', {
+          return res.render('self', {
             user: user.toJSON(),
             totalTweet: totalTweet,
             tweet: data
