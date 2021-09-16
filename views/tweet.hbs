@@ -14,14 +14,14 @@
       <div>
         <ul class="list-group">
 
-          <a href="/index">
+          <a href="/tweets">
             <li class="list-group-item ">
               <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
             </li>
           </a>
 
 
-          <a href="/users/{{user.id}}/edit">
+          <a href="/users/{{user.id}}/tweets">
             <li class="list-group-item active ">
               <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
             </li>
@@ -33,8 +33,11 @@
             </li>
           </a>
         </ul>
-        {{!-- //TODO:待加入modal --}}
-        <a href="/index/create" type="button" class="tweet-button">推文</a>
+
+        <div class="">
+          <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+          </button>
+        </div>
 
         <a href="/logout">
           <div class="logout-button">
@@ -50,11 +53,11 @@
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title d-flex align-items-center">
-        
+
         <a href="javascript:history.back()">
-        <div class="back-icon">
-          <i class="fas fa-arrow-left"></i>    
-        </div>
+          <div class="back-icon">
+            <i class="fas fa-arrow-left"></i>
+          </div>
         </a>
 
         <div class="name-info">
@@ -78,10 +81,10 @@
         </div>
 
         <div class="content">
-         <h2>{{tweet.description}}</h2> 
+          <h2>{{tweet.description}}</h2>
         </div>
 
-{{!-- //TODO:時間格式要調整 --}}
+        {{!-- //TODO:時間格式要調整 --}}
         <div class="time">
           {{tweet.createdAt}}
           should be:上午10:05．2020年6月10日
@@ -109,20 +112,20 @@
           </div>
           {{!-- //TODO:要分實心空心 --}}
           <div>
-{{!-- 測試like功能用的超醜按鈕 --}}
+            {{!-- 測試like功能用的超醜按鈕 --}}
             <form action="/tweets/{{tweet.id}}/like" method="POST">
               <button type="submit"><i class="far fa-heart mr-2"></i></button>
             </form>
             <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
               <button type="submit">Unlike</button>
             </form>
-{{!-- 測試like功能用的超醜按鈕 --}}
+            {{!-- 測試like功能用的超醜按鈕 --}}
           </div>
         </div>
         <hr>
 
         {{!-- 回覆開始 --}}
-    {{#each tweet.Replies}}
+        {{#each tweet.Replies}}
         <div class="tweet col-md-12">
           <div class="d-flex">
             <div class="mt-2 ml-2 col-md-1" style="padding:0">
@@ -213,3 +216,11 @@
 
   </div>
 </div>
+
+{{!-- add-tweet Modal --}}
+<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+
+  {{> add-tweet}}
+
+</div>
+{{!-- add-tweet Modal --}}
