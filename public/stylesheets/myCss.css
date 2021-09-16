@@ -11,13 +11,10 @@
   position:fixed;
 }
 
-/* .userSidebar{
-  position:fixed;
-}
-
-.popularArea{
-  position:fixed;
+/* .sidebarItem:focus{
+  color: #FF6600;
 } */
+
 
 #ac-logo{
   width: 50px;

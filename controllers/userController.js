@@ -48,6 +48,26 @@ const userController = {
     res.redirect('/signin')
   },
 
+  getUserProfile:(req, res)=>{
+    return res.render('userProfile')
+  },
+  getsetting:(req, res)=>{
+    return res.render('setting')
+  },
+  putUser: async (req,res) =>{
+    console.log('到putUser了')
+    const user = await User.findByPk(req.params.id)
+    
+    user.update({
+        acount:req.body.acount,
+        name:req.body.name,
+        email:req.body.email,
+        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+    })
+     req.flash('success_messages', 'user was successfully to update')
+     res.redirect(`/home`)
+  },
+
   getUserTweets: (req, res) => {
     const id = req.params.id
     const loginUserId = helper.getUser(req).id
