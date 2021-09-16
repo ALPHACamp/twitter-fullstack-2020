@@ -12,14 +12,14 @@ const tweetController = {
     return Tweet.findAll({
       raw: true,
       nest: true,
-      include: [User, Like, Reply]
+      include: [User]
     }).then(tweet => {
       console.log(tweet)
-          return res.render('index', {
-            tweet: tweet,
-            currentUser: helpers.getUser(req)
-          })
-        })
+      return res.render('index', {
+        tweet: tweet,
+        currentUser: helpers.getUser(req)
+      })
+    })
 
     //目前可以看到全部
   },

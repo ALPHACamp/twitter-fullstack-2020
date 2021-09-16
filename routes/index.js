@@ -35,11 +35,11 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => {
     res.render('replyFake')
   })
-//admin跳轉測試
-  app.get('/tweets',authenticatedAdmin, (req, res) => {
+  //admin跳轉測試
+  app.get('/tweets', authenticatedAdmin, (req, res) => {
     res.redirect('/admin/tweets')
   })
-  app.get('/users',authenticatedAdmin, (req, res) => {
+  app.get('/users', authenticatedAdmin, (req, res) => {
     res.redirect('/admin/users')
   })
 
@@ -81,7 +81,7 @@ module.exports = (app, passport) => {
 
   // 回文相關
   // //顯示特定貼文回覆 (row40)
-  app.get('/tweets/:id/replies',authenticated, tweetController.getTweetReplies)
+  app.get('/tweets/:id/replies', authenticated, tweetController.getTweetReplies)
   // //回覆特定貼文 (row 36)
   app.post('/tweets/:id', authenticated, tweetController.createReply)
   //------------擴充功能--------------//
@@ -95,11 +95,11 @@ module.exports = (app, passport) => {
   // router.put('/tweets/:id', tweetController.putTweet)
   // 刪除貼文 (row 35)
   // router.delete('/tweets/:id', tweetController.removeTweet)
-//------------------------------//
+  //------------------------------//
 
-// // Like & UnLike
+  // // Like & UnLike
   // //喜歡特定貼文
-  app.post('/tweets/:id/like', authenticated,  tweetController.addLike)
+  app.post('/tweets/:id/like', authenticated, tweetController.addLike)
   // //取消喜歡特定貼文
   app.delete('/tweets/:id/like', tweetController.removeLike)
 
@@ -122,7 +122,7 @@ module.exports = (app, passport) => {
   // //使用者登入頁面
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-//-----------名稱勿再改動------------
+  //-----------名稱勿再改動------------
   // //使用者編輯帳號設定(setting) (row 21-22)
   app.get('/users/:user_id/setting', authenticated, userController.getUserSetting)
   app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
@@ -130,7 +130,7 @@ module.exports = (app, passport) => {
   // //使用者編輯個人資料(edit) (row 22-23)
   app.get('/users/:user_id/edit', authenticated, userController.getUserEdit)
   app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
-//--------------------------------------
+  //--------------------------------------
   // //註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
