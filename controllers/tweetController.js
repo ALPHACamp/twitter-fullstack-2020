@@ -3,7 +3,6 @@ const Tweet = db.Tweet
 
 const tweetController = {
   getTweets: (req, res) => {
-    console.log(req.user)
     return res.render('tweets')
   }, 
   addTweet: async (req, res) => {

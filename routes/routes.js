@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
-
-// 要放passport
+const passport = require('../config/passport')
 
 const helpers = require('../_helpers')
 
@@ -11,6 +9,7 @@ const followshipController = require('../controllers/followshipController')
 const loginController = require('../controllers/loginController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
+
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) return next()
@@ -29,6 +28,8 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.addTweet)
 
+// User
+// signin
 router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 
@@ -36,11 +37,15 @@ router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
 router.get('/logout', loginController.logOut)
 
+// Admin
+router.get('/admin/signin', adminController.signInPage)
+router.post('/admin/signin', adminController.signIn)
+router.get('/admin/tweets', adminController.getTweets)
+router.get('/admin/users', adminController.getUsers)
 
 // 如果使用者訪問首頁，就導向 /restaurants 的頁面
 router.get('/', authenticated, (req, res) => {
   res.redirect('/tweets')
 })
-
 
 module.exports = router
