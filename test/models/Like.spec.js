@@ -54,6 +54,7 @@ describe('# Like Model', () => {
     it('create', (done) => {
       db.Like.create({}).then((like) => {   
         data = like
+        console.log(data)
         done()
       })
     })

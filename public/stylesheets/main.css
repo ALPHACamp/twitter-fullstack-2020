@@ -26,7 +26,7 @@ p {
 .common-button{
   background-color: #FF6600!important;
   color: #FFFFFF!important;
-
+}
 
 .for-center {
   width: 90%;
@@ -126,7 +126,6 @@ p {
   color: #1c1c1c;
   font-size: 1rem;
   font-weight: 500;
-  margin: 0 auto;
 }
 
 .popular {
@@ -217,7 +216,9 @@ p {
 .tweet-modal-textarea-feedback{
   text-align: end;
   padding-right: 65px;
+}
 
+/* 後台 */
 .tweets-back,
 .users-back {
   border: 1px solid #e6ecf0;
