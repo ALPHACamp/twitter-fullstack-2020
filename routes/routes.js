@@ -3,6 +3,6 @@ const router = express.Router()
 
 const userController = require('../controllers/userController')
 
-router.get('/', userController.getLogin)
+router.get('/', (req, res) => res.redirect('/twitters'))
 
 module.exports = router
