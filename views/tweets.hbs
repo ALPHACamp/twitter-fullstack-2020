@@ -308,12 +308,6 @@
   </div>
 </div>
 
-{{!-- edit-user Modal --}}
-<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
-  {{> editUser}}
-</div>
-{{!-- edit-user Modal --}}
-
 {{!-- add-tweet Modal --}}
 <div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
 
@@ -321,3 +315,42 @@
 
 </div>
 {{!-- add-tweet Modal --}}
+
+{{!-- edit-user Modal --}}
+<div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
+  
+  {{> editUser}}
+  
+</div>
+{{!-- edit-user Modal --}}
+
+
+<script>
+  const name = document.querySelector("#name")
+  const introduction = document.querySelector("#introduction")
+  const saveButton = document.querySelector("#save-button")
+  saveButton.addEventListener("click", function check(event) {
+    console.log(event)
+    if (name.value.length < l) {
+      name.classList.add("is-invalid")
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+      event.preventDefault()
+    }
+
+    if (introduction.value.length < l) {
+      introduction.classList.add("is-invalid")
+      introduction.nextElementSibling.innerHTML = "名稱不得為空"
+      event.preventDefault()
+    }
+
+
+    if (name.value.length > 50) {
+      name.classList.add("is-invalid")
+      event.preventDefault()
+    }
+    if (introduction.value.length > 150) {
+      email.classList.add("is-invalid")
+      event.preventDefault()
+    }
+  })
+</script>
