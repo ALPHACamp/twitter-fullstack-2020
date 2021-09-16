@@ -1,4 +1,4 @@
- // TODO controller
+// TODO controller
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
@@ -83,7 +83,7 @@ const userController = {
           }).catch(err => console.log(err))
       }).catch(err => console.log(err))
   },
-  
+
   // 尋找回覆過且正在追隨的使用者推文
   // 不需要認證使用者
   getReplyTweets: (req, res) => {
@@ -126,12 +126,36 @@ const userController = {
             }).catch(err => console.log(err))
         })
 
-      // TODO 2.顯示喜歡的內容
-    
+        // TODO 2.顯示喜歡的內容
+
       })
       .catch(err => console.log(err))
   },
 
+  // Like
+  addLike: (req, res) => {
+    return Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.tweetId
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+  },
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      }
+    })
+      .then((Like) => {
+        Like.destroy()
+          .then(() => {
+            return res.redirect('back')
+          })
+      })
+  },
   addFollowing: (req, res) => {
     return Followship.create({
       followerId: req.user.id,
