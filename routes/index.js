@@ -33,12 +33,16 @@ module.exports = (app, passport) => {
 
   //TODO:測試用路由
   app.get('/', authenticated, (req, res) => {
-    res.render('tweets')
+    res.render('replyFake')
+  })
+//admin跳轉測試
+  app.get('/tweets',authenticatedAdmin, (req, res) => {
+    res.redirect('/admin/tweets')
+  })
+  app.get('/users',authenticatedAdmin, (req, res) => {
+    res.redirect('/admin/users')
   })
 
-  // app.get('/admin/signin', (req, res) => {
-  //   res.render('./admin/adminTweets')
-  // })
 
 
   // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
@@ -48,14 +52,12 @@ module.exports = (app, passport) => {
 
   // //TopUsers(要改成api)
   // router.get('/users/top', userController.getTopUsers)
-  // //使用者顯示特定使用者頁面
-  // app.get('/users/:user_id', userController.getUser)
-  // //使用者所有貼文
+  // //使用者顯示特定使用者頁面(使用者所有貼文)
   // router.get('/users/:user_id/tweets', userController.getUserTweets)
   // //使用者所有喜歡貼文
-  // router.get('/users/:user_id/likes', userController.getUserLikeTweets)
+  // router.get('/users/:user_id/likes', userController.getUserLikes)
   // //使用者所有回覆
-  // router.get('/users/:user_id/replied_tweets', userController.getUserReplies)
+  // router.get('/users/:user_id/replied', userController.getUserReplied)
   // //使用者追蹤清單
   // router.get('/users/:user_id/followings', userController.getUserFollowings)
   // //使用者粉絲清單(被追蹤)

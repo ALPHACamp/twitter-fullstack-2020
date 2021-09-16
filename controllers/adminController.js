@@ -43,6 +43,7 @@ const adminController = {
   getUsers: (req, res) => {
     return User.findAll( {raw: true} )
     .then(user => {
+      console.log(user)
       res.render('admin/adminUsers', {user:user})
     })
     

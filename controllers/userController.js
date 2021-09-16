@@ -53,7 +53,7 @@ const userController = {
     }
     User.findByPk(req.params.user_id)
       .then(user => {
-        return res.render('editUser', { user: user.toJSON() })
+        return res.render('tweets', { user: user.toJSON() })
       })
       .catch(err => console.log(err))
   },

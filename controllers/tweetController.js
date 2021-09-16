@@ -12,12 +12,16 @@ const tweetController = {
     return Tweet.findAll({
       raw: true,
       nest: true,
-      include: [User]
+      include: [User, Like, Reply]
     }).then(tweet => {
-      return res.render('index', {
-        tweet: tweet,
-      })
-    }) //目前可以看到全部
+      console.log(tweet)
+          return res.render('index', {
+            tweet: tweet,
+            currentUser: helpers.getUser(req)
+          })
+        })
+
+    //目前可以看到全部
   },
 
   //新增一則貼文(要改api)
@@ -42,7 +46,7 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
-      include: [User, { model: Reply, include: [User] }]
+      include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }]
     })
       .then(tweet => {
         return res.render('tweet', {
@@ -60,7 +64,8 @@ const tweetController = {
       UserId: req.user.id
     })
       .then((reply) => {
-        res.redirect(`/tweets/${req.body.TweetId}`)
+        res.redirect('back')
+        // res.redirect(`/tweets/${req.body.TweetId}`)
       })
   },
   //顯示特定貼文回覆
