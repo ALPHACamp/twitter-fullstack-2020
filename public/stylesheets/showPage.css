@@ -1088,11 +1088,19 @@ height:300px;
 height:100%;
 }
 
+#edit-user .modal-content{
+border-radius: 14px;
+width:600px;
+height:657px;
+}
+
 #reply-tweet .modal-content {
 width:600px;
 height:450px;
 
 }
+
+
 
 .modal-content button.close{
   color:#fF6600;
@@ -1179,18 +1187,8 @@ border-radius: 100px;
   display:flex;
   border-radius: 14px;
 width:600px;
-height:300px;
-height:100%;
-}
+height:60px;
 
-.modal-title .follow-button {
-
-}
-
-.modal-title .save-button {
-  position: relative;
-  text-align: center;
-  flex-grow: 1;
 }
 
 .modal-title .title-text {
@@ -1201,5 +1199,188 @@ font-style: normal;
 font-weight: bold;
 font-size: 19px;
 line-height: 28px;
-/* border:2px solid red; */
+width:100%;
+}
+
+.modal-title .save-button {
+  text-align:right;
+  margin-bottom: 0;
+  background-color: transparent;
+}
+
+.save-button button.button {
+  position: relative;
+  top:0;
+  margin: 15px 0;
+  margin-right: 15px;
+  width:66px;
+  height:28px;
+font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 18px;
+background-color: #fF6600;
+color: #FFFFFF;
+border-radius: 100px;
+}
+
+#editUser .cover {
+  opacity: 0.7;
+}
+
+#editUser .user-info {
+  height:140px;
+  justify-content: center;
+}
+
+#editUser .avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width:120x;
+  width:120px;
+  height:120px;
+  background-color: #c4c4c4;
+  border-radius: 80px;
+  overflow: hidden;
+}
+
+#editUser .avatar img{
+  position: relative;
+  background-color: #c4c4c4;
+  width:120px;
+  height:120px;
+  border-radius: 80px;
+  border: solid 4px#ffffff;
+  opacity: 0.8;
+}
+
+.edit-delete {
+  position: relative;
+  top: -120px;
+  text-align: center;
+  color:white;
+}
+
+.edit-delete a{
+  position: relative;
+  text-align: center;
+  color:white;
+  cursor: pointer;
+}
+
+.user-info .edit-delete {
+  color:black;
+  top:-70px;
+  text-align: left;
+}
+
+.user-info .edit-delete a{
+  position: relative;
+  text-align: center;
+  color:white;
+  cursor: pointer;
+  left:50px;
+}
+
+.user-edit-info {
+  position: relative;
+    top: -76px;
+    flex-grow: 1;
+    padding:15px;
+}
+
+.user-edit-info .form-control {
+  width:100%;
+  max-width: 570px;
+  position: absolute;
+  top:0;
+  left:15px;
+}
+
+.user-edit-info #name {
+ position: absolute;
+ top:0px;
+ padding: 0;
+ padding-left: 15px;
+ font-size: 19px;
+ padding-top: 24px;
+}
+
+.user-edit-info #introduction {
+ position: absolute;
+ top:76px;
+ padding-top:20px;
+ padding-left:15px;
+}
+
+.input-count {
+  display: flex;
+}
+
+.count-down {
+  display: flex;
+  justify-content: end;
+  position: absolute;
+  top:54px;
+  left:538px;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+color: #657786;
+}
+
+.count-down.introduction {
+  display: flex;
+  justify-content: end;
+  position: absolute;
+  top:230px;
+  left:538px;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 22px;
+color: #657786;
+}
+
+.user-edit-info .invalid-feedback.name{
+  position:absolute;
+  top:54px;
+  left:30px
+}
+
+.user-edit-info .invalid-feedback#introduction{
+  position:absolute;
+  top:230px;
+  left:30px;
+}
+
+.edit-name-title {
+  position: absolute;
+  top:5px;
+  left:30px;
+  z-index: 1;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 15px;
+color: #657786;
+}
+
+.edit-introduction-title {
+  position: absolute;
+  top:86px;
+  left:30px;
+  z-index: 1;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 15px;
+color: #657786;
 }

@@ -15,8 +15,8 @@ module.exports = (app, passport) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "normal") {
         return next()
-      }
-      if (helpers.getUser(req).role === "role") {
+      } 
+      if (helpers.getUser(req).role === "admin") {
         req.flash('error_messages', '管理者無法使用前台頁面')
         return res.redirect('/admin/tweets')
       }
@@ -137,4 +137,5 @@ module.exports = (app, passport) => {
 
 
 // module.exports = router
+
 
