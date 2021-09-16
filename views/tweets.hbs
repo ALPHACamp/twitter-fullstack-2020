@@ -83,7 +83,7 @@
         <div class="edit-button">
 
           {{#ifCond user.id viewUser.id}}
-          <button type="submit" class="btn unfollow-button" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
+          <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
           {{else}}
           {{#if this.isFollowed }}
           <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;"><button
@@ -258,6 +258,7 @@
   const name = document.querySelector("#name")
   const introduction = document.querySelector("#introduction")
   const saveButton = document.querySelector("#save-button")
+  
   saveButton.addEventListener("click", function check(event) {
     console.log(event)
     if (name.value.length < l) {
