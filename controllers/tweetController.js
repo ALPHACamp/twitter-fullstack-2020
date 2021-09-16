@@ -1,11 +1,21 @@
 const db = require('../models')
+const Tweet = db.Tweet
 
 const tweetController = {
   getTweets: (req, res) => {
-    res.render('tweets')
+    return res.render('tweets')
   }, 
-  addTweet: (req, res) => {
-
+  addTweet: async (req, res) => {
+    try {
+      const { description } = req.body
+      const tweet = await Tweet.create({
+        description,
+        UserId: req.user.id
+      })
+      return res.redirect('/tweets')
+    } catch(err) {
+      console.warn(err)
+    }   
   },
   getTweet: (req, res) => {
 

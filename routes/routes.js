@@ -10,6 +10,24 @@ const loginController = require('../controllers/loginController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 
+
+const authenticated = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) return next()
+  return res.redirect('/signin')
+}
+
+const authenticatedAdmin = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).role) return next()
+    return res.redirect('/')
+  }
+  return res.redirect('/signin')
+}
+
+// tweets相關路由
+router.get('/tweets', authenticated, tweetController.getTweets)
+router.post('/tweets', authenticated, tweetController.addTweet)
+
 // User
 // signin
 router.get('/signup', loginController.signUpPage)
@@ -36,5 +54,9 @@ router.post('/admin/signin', adminController.signIn)
 router.get('/admin/tweets', adminController.getTweets)
 router.get('/admin/users', adminController.getUsers)
 
+// 如果使用者訪問首頁，就導向 /restaurants 的頁面
+router.get('/', authenticated, (req, res) => {
+  res.redirect('/tweets')
+})
 
 module.exports = router
