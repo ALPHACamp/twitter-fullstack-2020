@@ -22,7 +22,7 @@ p{
   margin: 0;
 }
 
-button{
+.common-button{
   background-color: #FF6600!important;
   color: #FFFFFF!important;
 }
@@ -38,6 +38,7 @@ button{
 }
 
 /* 以下是各別各組css */
+/* tweets區 */
 .home-nav-bar{
   max-width: 235px;
   position: relative;
@@ -168,4 +169,49 @@ button{
   color: #657786;
   font-size: 1rem;
   font-weight: bold;
+}
+
+/* tweet modal區 */
+.tweet-modal-content{
+  border-radius: 14px;
+  width: 600px;
+}
+
+.tweet-modal-head{
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #E6ECF0;
+}
+
+.tweet-modal-close-btn{
+  padding: 19.5px;
+  width: 15px;
+  height: 15px;
+  color: #FF6600;
+}
+
+.tweet-modal-body{
+  min-height: 245px;
+  padding: 15px;
+}
+
+.tweet-modal-textarea{
+  border: none;
+  outline: none;
+  padding: 12px 15px 0px 15px;
+  font-size: 1.1rem;
+  color: #9197A3;
+  font-weight: 700;
+  resize: none;
+}
+
+.tweet-modal-tweet-btn{
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+
+.tweet-modal-textarea-feedback{
+  text-align: end;
+  padding-right: 65px;
 }

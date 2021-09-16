@@ -19,8 +19,12 @@ router.post('/signup', loginController.signUp)
 router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
 router.get('/logout', loginController.logOut)
+router.get('/tweets', tweetController.getTweets)
 
-
+// 如果使用者訪問首頁，就導向 /restaurants 的頁面
+router.get('/', (req, res) => {
+  res.redirect('/tweets')
+})
 
 
 module.exports = router
