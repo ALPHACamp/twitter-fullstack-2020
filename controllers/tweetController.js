@@ -14,11 +14,11 @@ const tweetController = {
       nest: true,
       include: [User]
     }).then(tweet => {
-          return res.render('index', {
-            tweet: tweet,
-            currentUser: helpers.getUser(req)
-          })
-        })
+      return res.render('index', {
+        tweet: tweet,
+        currentUser: helpers.getUser(req)
+      })
+    })
 
     //目前可以看到全部
   },
@@ -48,9 +48,11 @@ const tweetController = {
       include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }]
     })
       .then(tweet => {
+        const date = tweet.createdAt.toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' })
         return res.render('tweet', {
           tweet: tweet.toJSON(),
-          currentUser: helpers.getUser(req)
+          currentUser: helpers.getUser(req),
+          date
         })
       })
   },
