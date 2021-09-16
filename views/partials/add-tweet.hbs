@@ -2,7 +2,7 @@
   <div class="modal-content">
 
     <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
-            <i class="fas fa-times"></i>
+      <i class="fas fa-times"></i>
     </button>
 
     <hr>
@@ -13,7 +13,10 @@
       </div>
       {{!-- //TODO:要包FORM --}}
       <div class="type-text">
-        <textarea class="form-control new-post-content" placeholder="有什麼新鮮事？" rows="5" maxlength="140"></textarea>
+        <textarea class="form-control new-post-content is-invalid" placeholder="有什麼新鮮事？" rows="5" maxlength="140"></textarea>
+        <div class="invalid-feedback" id="add-tweet">
+          字數不可超過140字
+        </div>
       </div>
 
     </div>

@@ -14,7 +14,6 @@ const tweetController = {
       nest: true,
       include: [User]
     }).then(tweet => {
-      console.log(tweet)
           return res.render('index', {
             tweet: tweet,
             currentUser: helpers.getUser(req)
@@ -50,7 +49,8 @@ const tweetController = {
     })
       .then(tweet => {
         return res.render('tweet', {
-          tweet: tweet.toJSON()
+          tweet: tweet.toJSON(),
+          currentUser: helpers.getUser(req)
         })
       })
   },

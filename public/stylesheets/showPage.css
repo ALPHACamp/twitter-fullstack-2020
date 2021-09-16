@@ -235,6 +235,7 @@ border:  #ffffff
   position: relative;
   margin-left: 25px;
   height:75%;
+  flex-grow: 1;
   border-left:2px solid #CCD6DD; 
 } 
 
@@ -1050,15 +1051,41 @@ color: #657786;
   font-size: 19px;
 }
 
+.icon-reply i {
+  cursor: pointer;
+  font-size:25px;
+  padding:0;
+}
+
 .icon-reply .fa-comment {
   position: relative;
   margin-right: 150px;
+}
+
+.icon-reply .fa-heart {
+  position: relative;
+  margin-top:-18px;
 }
 
 
 .icon-reply a {
   color:black;
 }
+
+.icon-reply button{
+  position: relative;
+  top:0;
+background:transparent;
+border: transparent;
+ padding:0;
+}
+
+.icon-reply button:active{
+background:transparent;
+border: transparent;
+ padding:0;
+}
+
 
 /* 追蹤和被追蹤者貼文 */
 .follow-tweet .nav-tabs{
@@ -1383,4 +1410,16 @@ font-weight: 500;
 font-size: 15px;
 line-height: 15px;
 color: #657786;
+}
+
+.invalid-feedback#reply-tweet{
+  position:absolute;
+  top:382px;
+  left:420px;
+}
+
+.invalid-feedback#add-tweet{
+position: absolute;
+top: 219px;
+left:390px
 }
