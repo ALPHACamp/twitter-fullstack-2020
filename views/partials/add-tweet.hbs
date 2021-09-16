@@ -13,9 +13,9 @@
       </div>
       {{!-- //TODO:要包FORM --}}
       <div class="type-text">
-        <textarea class="form-control new-post-content is-invalid" placeholder="有什麼新鮮事？" rows="5" maxlength="140"></textarea>
+        <textarea type="text" class="new-post-content form-control" id="description" name="description"
+          placeholder="有什麼新鮮事？" rows="5"></textarea>
         <div class="invalid-feedback" id="add-tweet">
-          字數不可超過140字
         </div>
       </div>
 
@@ -28,3 +28,27 @@
 
   </div>
 </div>
+
+<script>
+
+
+
+  const addTweet = document.querySelector("#description")
+
+  addTweet.addEventListener('input', function check(event) {
+    if (addTweet.value.length < 1) {
+      addTweet.classList.add("is-invalid")
+      addTweet.nextElementSibling.innerHTML = "推文不得為空"
+    }
+    if (addTweet.value.length > 140) {
+      addTweet.classList.add("is-invalid")
+      addTweet.nextElementSibling.innerHTML = "字數不可超過140字"
+    }
+    if (addTweet.value.length > 0 && addTweet.value.length < 140) {
+      addTweet.classList.remove("is-invalid")
+    }
+  }
+  )
+
+
+</script>

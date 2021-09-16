@@ -46,8 +46,8 @@
 
         <div class="type-text form-group">
           <input type="hidden" name="TweetId" value="{{tweet.id}}" />
-          <textarea class="form-control new-post-content is-invalid" name="comment" id="comment" placeholder="推你的回覆"
-            rows="5" maxlength="140"></textarea>
+          <textarea class="form-control new-post-content" name="comment" id="comment" placeholder="推你的回覆" rows="5"
+            maxlength="140"></textarea>
           <div class="invalid-feedback" id="reply-tweet">
             內容不可空白
           </div>
@@ -55,7 +55,7 @@
       </div>
 
       <div class="add-button">
-        <button type="submit" class="btn button">回覆
+        <button type="submit" class="btn button" id="reply">回覆
         </button>
       </div>
 
@@ -65,3 +65,23 @@
     </form>
   </div>
 </div>
+
+
+<script>
+  const submitBtn = document.querySelector('#reply')
+  const comment = document.querySelector('#comment')
+
+  comment.addEventListener('input', function check(event) {
+    if (comment.value.length < 1) {
+      comment.classList.add("is-invalid")
+    }
+
+    if (comment.value.length > 1) {
+      comment.classList.remove("is-invalid")
+    }
+
+  })
+
+
+
+</script>

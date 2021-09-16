@@ -1382,8 +1382,8 @@ color: #657786;
 
 .user-edit-info .invalid-feedback#introduction{
   position:absolute;
-  top:230px;
-  left:30px;
+  top:210px;
+  left:15px;
 }
 
 .edit-name-title {
@@ -1421,7 +1421,7 @@ color: #657786;
 .invalid-feedback#add-tweet{
 position: absolute;
 top: 219px;
-left:390px
+left:400px
 }
 
 /* index的like */

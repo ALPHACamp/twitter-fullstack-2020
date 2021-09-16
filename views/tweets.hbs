@@ -81,7 +81,7 @@
           <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="">
         </div>
         <div class="edit-button">
-          <button type="submit" class="btn unfollow-button" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
+          <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
         </div>
 
       </div>
@@ -320,7 +320,7 @@
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
   
   {{> editUser}}
-  
+
 </div>
 {{!-- edit-user Modal --}}
 
@@ -329,6 +329,7 @@
   const name = document.querySelector("#name")
   const introduction = document.querySelector("#introduction")
   const saveButton = document.querySelector("#save-button")
+  
   saveButton.addEventListener("click", function check(event) {
     console.log(event)
     if (name.value.length < l) {
