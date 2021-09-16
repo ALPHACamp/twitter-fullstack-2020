@@ -44,8 +44,7 @@ const tweetController = {
     const tweets = await Tweet.findAll({
       raw: true,
       nest: true,
-      include: [User],
-      limit: 10
+      include: [User]
     })
     // console.log(tweets)
 
