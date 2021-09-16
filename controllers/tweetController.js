@@ -14,11 +14,11 @@ const tweetController = {
       nest: true,
       include: [User]
     }).then(tweet => {
-          return res.render('index', {
-            tweet: tweet,
-            currentUser: helpers.getUser(req)
-          })
-        })
+      return res.render('index', {
+        tweet: tweet,
+        currentUser: helpers.getUser(req)
+      })
+    })
 
     //目前可以看到全部
   },
@@ -45,7 +45,7 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
-      include: [User, { model: Like, include: [User] }, { model: Reply,  include: [User] }]
+      include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }]
     })
       .then(tweet => {
         const date = tweet.createdAt.toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' })

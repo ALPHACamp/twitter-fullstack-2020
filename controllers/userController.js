@@ -50,18 +50,18 @@ const userController = {
       })
   },
 
-  getUserEdit: (req, res) => {
-    //檢查使用者是否在編輯自己的資料
-    if (req.params.user_id !== String(helpers.getUser(req).id)) {
-      req.flash('error_messages', '無法編輯其他使用者的資料')
-      return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
-    }
-    User.findByPk(req.params.user_id)
-      .then(user => {
-        return res.render('tweets', { user: user.toJSON() })
-      })
-      .catch(err => console.log(err))
-  },
+  // getUserEdit: (req, res) => {
+  //   //檢查使用者是否在編輯自己的資料
+  //   if (req.params.user_id !== String(helpers.getUser(req).id)) {
+  //     req.flash('error_messages', '無法編輯其他使用者的資料')
+  //     return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
+  //   }
+  //   User.findByPk(req.params.user_id)
+  //     .then(user => {
+  //       return res.render('tweets', { user: user.toJSON() })
+  //     })
+  //     .catch(err => console.log(err))
+  // },
 
   getUserSetting: (req, res) => {
     //檢查使用者是否在編輯自己的資料
@@ -179,22 +179,60 @@ const userController = {
   //   }
   // },
 
-  getUserLikes: (req, res) => {
-    Tweet.findAll({
-      where: { UserId: req.params.user_id },
-      include: [{ model: Like, include: [User] }, { model: Reply, include: [User] }],
-      // raw: true, nest: true,
-    }).then((tweets) => {
-      // tweets2 = tweet.toJSON()
-      console.log(tweets[0])
-      console.log('------')
-      console.log(tweets[1])
-      // console.log(tweets.toJSON())
-      // return res.send(tweets)
-      return res.render('likes', {
-        tweets: tweets
+  getUserTweets: (req, res) => {
+    return Promise.all([
+      Tweet.findAll({
+        where: { UserId: req.params.user_id },
+        include: [
+          { model: Like, include: [User] },
+          { model: Reply, include: [User] },
+        ],
+      }),
+      User.findByPk(req.params.user_id, {
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ]).then(([tweets, user]) => {
+      const data = tweets.map(r => ({
+        ...r.dataValues,
+        likeCount: r.Likes.length,
+        replyCount: r.Replies.length
+      }))
+      const isFollowed = user.Followers.map((d) => d.id).includes(req.user.id)
+      console.log(isFollowed)
+      console.log(user.Followers.length)
+      return res.render('tweets', {
+        data: data,
+        viewUser: user.toJSON(),
+        isFollowed
       })
     })
+      .catch(err => console.log(err))
+  },
+
+  getUserLikes: (req, res) => {
+    // Tweet.findAll({
+    //   where: { UserId: req.params.user_id },
+    //   include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }],
+    //   // raw: true, nest: true
+    // }).then((tweets) => {
+    //   const data = tweets.map(r => ({
+    //     // 整理 tweets 資料
+    //     ...r.dataValues,
+    //     ...r.dataValues.User.toJSON(),
+    //     // 計算人數
+    //     likeCount: r.Likes.length,
+    //     replyCount: r.Replies.length,
+    //     //判斷目前登入使用者是否已追蹤該 User 物件 (???)
+    //   }))
+    //   console.log(data)
+    //   return res.render('likes', {
+    //     tweets: data
+    //   })
+    // })
   },
 
   getTopUsers: (req, res) => {

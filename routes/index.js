@@ -15,7 +15,7 @@ module.exports = (app, passport) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "normal") {
         return next()
-      } 
+      }
       if (helpers.getUser(req).role === "admin") {
         req.flash('error_messages', '管理者無法使用前台頁面')
         return res.redirect('/admin/tweets')
@@ -50,7 +50,7 @@ module.exports = (app, passport) => {
   // //TopUsers(要改成api)
   // router.get('/users/top', userController.getTopUsers)
   // //使用者顯示特定使用者頁面(使用者所有貼文)
-  // router.get('/users/:user_id/tweets', userController.getUserTweets)
+  router.get('/users/:user_id/tweets', userController.getUserTweets)
   // //使用者所有喜歡貼文
   app.get('/users/:user_id/likes', userController.getUserLikes)
   // //使用者所有回覆
@@ -125,7 +125,7 @@ module.exports = (app, passport) => {
   app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
 
   // //使用者編輯個人資料(edit) (row 22-23)
-  app.get('/users/:user_id/tweets', authenticated, userController.getUserEdit)
+  app.get('/users/:user_id/tweets', authenticated, userController.getUserTweets)
   app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
   //--------------------------------------
   // //註冊
