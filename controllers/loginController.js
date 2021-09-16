@@ -29,7 +29,8 @@ const loginController = {
                 name: req.body.name,
                 avatar: 'https://i.pinimg.com/474x/ff/4f/c3/ff4fc37f314916957e1103a2035a11fa.jpg',
                 email: req.body.email,
-                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+                role: false
               }).then(user => {
                 req.flash('success_messages', '成功註冊帳號！')
                 return res.redirect('/signin')
@@ -53,7 +54,7 @@ const loginController = {
       res.redirect('/signin')
     } else {
       req.flash('success_messages', '成功登入！')
-      res.redirect('signup')
+      res.redirect('/')
     }
   },
 
