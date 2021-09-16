@@ -2,7 +2,11 @@ const moment = require('moment')
 
 module.exports = {
   //...
-  moment: function (a) {
-    return moment(a).fromNow()
+  fromNow: function (a) {
+    return moment(a).locale('zh-tw').fromNow()
+  },
+
+  date: function (a) {
+    return moment(a).locale('zh-tw').format('LLLL')
   }
 }

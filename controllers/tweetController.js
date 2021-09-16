@@ -49,9 +49,8 @@ const tweetController = {
       include: [User, { model: Like, include: [User] }, { model: Reply,  include: [User] }]
     })
       .then(tweet => {
-        const date = tweet.createdAt.toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' })
         return res.render('tweet', {
-          tweet: tweet.toJSON(), date
+          tweet: tweet.toJSON()
         })
       })
   },
