@@ -9,9 +9,10 @@ const userController = require('../controllers/userController.js')
 const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
+  if (helpers.ensureAuthenticated(req) && !helpers.getUser(req).isAdmin) {
     return next()
   }
+  req.flash('error_messages', '帳號或密碼輸入錯誤')
   res.redirect('/signin')
 }
 
@@ -29,16 +30,16 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/home'))
   app.get('/home', authenticated, tweetController.getTweets)
 
-  // 後台登入
+  // 後台登入登出
   app.get('/admin', adminController.signInPage)
   app.post('/admin', passport.authenticate('local', {
     failureRedirect: '/admin',
     failureFlash: true
   }), adminController.signIn)
+  app.get('/logout', adminController.logout)
 
   // 後台首頁
-  // app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
-  // app.get('/admin/tweets', authenticatedAdmin, adminController.adminGetTweets)
+  app.get('/admin_main', authenticatedAdmin, tweetController.getTweets)
 
   // 追蹤
   app.post('/following/:userId', authenticated, userController.addFollowing)
@@ -53,7 +54,7 @@ module.exports = (app, passport) => {
     failureRedirect: '/signin',
     failureFlash: true
   }), userController.signIn)
-  
+
   // 登出
   app.get('/logout', userController.logout)
 
