@@ -49,7 +49,7 @@ const userController = {
         })
       })
   },
-
+  // 測試完可刪
   // getUserEdit: (req, res) => {
   //   //檢查使用者是否在編輯自己的資料
   //   if (req.params.user_id !== String(helpers.getUser(req).id)) {
@@ -188,24 +188,39 @@ const userController = {
           { model: Reply, include: [User] },
         ],
       }),
+      //可合併
       User.findByPk(req.params.user_id, {
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
+      }),
+      //可合併
+      User.findAll({
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       })
-    ]).then(([tweets, user]) => {
+    ]).then(([tweets, user, users]) => {
       const data = tweets.map(r => ({
         ...r.dataValues,
         likeCount: r.Likes.length,
         replyCount: r.Replies.length
       }))
       const isFollowed = user.Followers.map((d) => d.id).includes(req.user.id)
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+      })).sort((a, b) => b.FollowerCount - a.FollowerCount)
+
       return res.render('tweets', {
         data: data,
         viewUser: user.toJSON(),
-        isFollowed
+        isFollowed,
+        topUsers
       })
     })
       .catch(err => console.log(err))
@@ -232,22 +247,24 @@ const userController = {
     //   })
     // })
   },
-
+// 測試完可刪
   getTopUsers: (req, res) => {
-    Followship.findAll({
-      attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
-      include: User,
-      group: ['followingId'],
-      order: [[sequelize.col('count'), 'DESC']],
-      limit: 10,
-      raw: true, nest: true
-    }).then(users => {
-      const data = users.map(r => ({
-        count: r.count,
-        ...r.User,
-      }))
-      return res.render('topUsersFake', { topUsers: data })
+    User.findAll({
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
     })
+      .then(users => {
+        const users2 = users.map(user => ({
+          ...user.dataValues,
+          FollowerCount: user.Followers.length,
+          isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+        })).sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+        console.log(users2)
+        return res.render('topUsersFake', { users: users2 })
+      })
   },
 
   putUserSetting: (req, res) => {

@@ -86,11 +86,22 @@
           <button type="submit" class="btn unfollow-button" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
           {{else}}
           {{#if this.isFollowed }}
-          <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-              type="submit" class="btn follow-button">正在跟隨</button></form>
+          <div class="other-user-icon">
+            <div class="mail"><i class="far fa-envelope"></i></div>
+            <div class="notification"><i class="far fa-bell"></i></div>
+            <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+                type="submit" class="btn follow-button">正在跟隨</button></form>
+          </div>
           {{else}}
-          <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button type="submit"
-              class="btn unfollow-button"> 跟隨 </button></form>
+          <div class="other-user-icon">
+            <div class="mail"><i class="far fa-envelope"></i></div>
+            <div class="notification"><i class="far fa-bell"></i></div>
+            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn unfollow-button"> 跟隨 </button></form>
+          </div>
+
+
+
           {{/if}}
           {{/ifCond}}
 
@@ -191,38 +202,31 @@
         </div>
         <ul class="list-group">
           {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
-          {{!-- 跟隨中使用者開始 --}}
+          {{!-- 使用者開始 --}}
+          {{#each topUsers}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
               <div>
-                <img class="user-pic" src="" alt="">
+                <img class="user-pic" src="{{this.avatar}}" alt="">
               </div>
               <div class="name-account ml-2">
-                <div class="name">Pizza Hut</div>
-                <div class="account">@pizzahut</div>
+                <div class="name">{{this.name}}</div>
+                <div class="account">@{{this.account}}</div>
               </div>
               <div class="button">
-                <button type="submit" class="btn follow-button">正在跟隨</button>
-              </div>
-            </div>
-          </li>
-          {{!-- 使用者結束 --}}
 
-          {{!-- 未跟隨中使用者開始 --}}
-          <li class="list-group-item">
-            <div class="d-flex col-md-12" style="padding:0">
-              <div>
-                <img class="user-pic" src="" alt="">
-              </div>
-              <div class="name-account ml-2">
-                <div class="name">McDonald's</div>
-                <div class="account">@McDonald's</div>
-              </div>
-              <div class="button">
-                <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+                {{#if this.isFollowed }}
+                <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn follow-button">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
+                    type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+                {{/if}}
               </div>
             </div>
           </li>
+          {{/each}}
           {{!-- 使用者結束 --}}
 
         </ul>
