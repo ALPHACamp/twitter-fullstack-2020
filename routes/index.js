@@ -38,10 +38,14 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => {
     res.redirect('/tweets')
   })
+//admin跳轉測試
+  app.get('/tweets',authenticatedAdmin, (req, res) => {
+    res.redirect('/admin/tweets')
+  })
+  app.get('/users',authenticatedAdmin, (req, res) => {
+    res.redirect('/admin/users')
+  })
 
-  // app.get('/admin/signin', (req, res) => {
-  //   res.render('./admin/adminTweets')
-  // })
 
 
   // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
