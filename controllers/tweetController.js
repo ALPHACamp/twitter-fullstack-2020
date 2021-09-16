@@ -10,43 +10,59 @@ const tweetController = {
   // 首頁
   getTweets: async (req, res) => {
     const id = req.params.id
-    console.log(helper.getUser(req),'哈哈')
+    console.log('------------------分隔線1------------------')
+    console.log(id)
+    console.log(helper.getUser(req),'該使用者的資料 = req.user')
     const loginUserId = helper.getUser(req).id
-    const whereQuery = {}
+    console.log('------------------分隔線2------------------')
+    console.log(loginUserId) // root: 1
+    console.log(req.query) // {} 空的
+    console.log('------------------分隔線3------------------')
+    
     // 如果推文的人在使用者的追隨名單內，就顯示推文
     // followship內 A使用者在 B使用者 的
     // 驗證使用者
-    if (req.query.userId === loginUserId) {
-      userId = Number(req.query.userId)
-      whereQuery.userId = userId
-    }
-
-    Tweet.findAndCountAll({
-      // include: Followship,
+    const whereQuery = {}
+    whereQuery.userId = loginUserId
+    
+    console.log(whereQuery.userId)
+    console.log('------------------分隔線4------------------')
+    
+    // 類似餐廳清單Favorite的邏輯，需要找到所有追隨中的使用者
+    await Tweet.findAndCountAll({
+      raw: true,
+      nest: true,
+      include: [User],
       where: whereQuery
-    }).then(result => {
-      const data = result.rows.map(r => ({
-        ...r.dataValues,
+    }).then(tweets => {
+      console.log(tweets)
+      console.log('---------觀察rows---------')
+      console.log(tweets.rows)
+      console.log('---------觀察---------')
+      const data = tweets.rows.map(tweet => ({
+        ...tweet.dataValues,
+        // TweetCommentedCount: tweet.dataValues.CommentedTweets.length,
         // isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
-        // isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
+        //推文被喜歡的次數
+        TweetLikedCount: tweet.dataValues.LikedTweets.length,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
       }))
-        .findAll({
-          raw: true,
-          nest: true
-        }).then(() => {
+        .then(() => {
+          console.log(data)
+          console.log('---------觀察data---------')
           return res.render('home', {
-            tweets: data,
+            tweets: data
           })
         })
     })
-    const tweets = await Tweet.findAll({  
-      raw: true,
-      nest: true,
-      include: [User]
-    })
-    // console.log(tweets)
-    console.log('有到這嗎')
-    return res.render('home',{ tweets})
+    // const tweets = await Tweet.findAll({  
+    //   raw: true,
+    //   nest: true,
+    //   include: [User]
+    // })
+    // // console.log(tweets)
+    // console.log('有到這嗎')
+    // return res.render('home',{ tweets})
   },
   getTweet: async (req, res) => {
     // return Tweet.findByPk(req.params.id, {
