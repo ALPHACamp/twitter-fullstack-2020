@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     account: DataTypes.STRING,
     cover: DataTypes.STRING,
     role: DataTypes.STRING,
+    isAdmin: DataTypes.STRING,
   }, {});
   User.associate = function (models) {
     User.hasMany(models.Reply)
