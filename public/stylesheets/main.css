@@ -5,167 +5,248 @@
   box-sizing: border-box;
 }
 
-body{
+body {
   max-width: 1440px;
   height: 1200px;
   font-family: "Noto Sans TC", sans-serif; /* 設定字型 */
   font-size: 1rem;
   font-style: normal;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
-a{
+a {
   text-decoration: none; /* 拿掉底線 */
 }
 
-p{
+p {
   margin: 0;
 }
 
-button{
-  background-color: #FF6600!important;
-  color: #FFFFFF!important;
+button {
+  background-color: #ff6600 !important;
+  color: #ffffff !important;
 }
 
-.for-center{
+.for-center {
   width: 90%;
 }
 
-.reply-icon, .like-icon{
+.reply-icon,
+.like-icon {
   color: #657786;
   font-size: 0.8rem;
   font-weight: 500;
 }
 
 /* 以下是各別各組css */
-.home-nav-bar{
+.home-nav-bar {
   max-width: 235px;
   position: relative;
 }
 
-.home-nav-bar a{
-  color: #1C1C1C;
+.home-nav-bar a {
+  color: #1c1c1c;
   font-size: 1.1rem;
   font-weight: 700;
 }
 
-.home-nav-bar a:hover{
-  color: #FF6600;
+.home-nav-bar a:hover {
+  color: #ff6600;
 }
 
-.logout{
+.logout {
   position: fixed;
   bottom: 2%;
 }
 
-.tweets{
+.tweets {
   max-width: 600px;
   border-width: 0px 1px 0px 1px;
   border-style: solid;
-  border-color: #E6ECF0;
+  border-color: #e6ecf0;
   padding: 0;
 }
 
-.tweets .home-word{
-  color: #1C1C1C;
+.tweets .home-word {
+  color: #1c1c1c;
   font-size: 1.1rem;
   font-weight: bold;
 }
 
-.tweets .input-block{
+.tweets .input-block {
   border-width: 1px 0px 10px 0px;
   border-style: solid;
-  border-color: #E6ECF0;
+  border-color: #e6ecf0;
   padding: 10px 15px;
 }
 
-.tweets .input-word{
+.tweets .input-word {
   font-size: 1.1rem;
-  color: #9197A3;
+  color: #9197a3;
   font-weight: 700;
   margin-left: 0.8rem;
 }
 
-.tweets .input-btn{
+.tweets .input-btn {
   text-align: right;
 }
 
-.tweets .tweets-article{
+.tweets .tweets-article {
   padding: 10px 15px;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
-  border-color: #E6ECF0;
+  border-color: #e6ecf0;
 }
 
-.tweets-article .tweet-article{
+.tweets-article .tweet-article {
   margin-left: 0.8rem;
 }
 
-.tweets-article .name{
-  color: #1C1C1C;
+.tweets-article .name {
+  color: #1c1c1c;
   font-size: 1rem;
   font-weight: bold;
 }
 
-.tweets-article .account{
+.tweets-article .account {
   color: #657786;
   font-size: 1rem;
   font-weight: 500;
 }
 
-.tweets-article .time{
+.tweets-article .time {
   color: #657786;
   font-size: 1rem;
   font-weight: 500;
 }
 
-.tweets-article .content{
-  color: #1C1C1C;
+.tweets-article .content {
+  color: #1c1c1c;
   font-size: 1rem;
   font-weight: 500;
-  margin:0 auto;
+  margin: 0 auto;
 }
 
-.popular{
+.popular {
   max-width: 350px;
-  background: #F5F8FA;
+  background: #f5f8fa;
   border-radius: 14px;
   padding: 0;
 }
 
-.popular .word{
+.popular .word {
   padding: 10px 15px;
-  color: #1C1C1C;
+  color: #1c1c1c;
   font-size: 1rem;
   font-weight: 700;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
-  border-color: #E6ECF0;
+  border-color: #e6ecf0;
 }
 
-.popular .popular-user{
+.popular .popular-user {
   padding: 10px 15px;
   border-width: 0px 0px 1px 0px;
   border-style: solid;
-  border-color: #E6ECF0;
+  border-color: #e6ecf0;
   margin: 0;
 }
 
-.popular .follow-btn{
+.popular .follow-btn {
   text-align: right;
   margin: auto;
 }
 
-.popular .popular-name{
+.popular .popular-name {
   line-height: 18px;
-  color: #1C1C1C;
+  color: #1c1c1c;
   font-size: 1rem;
   font-weight: bold;
 }
 
-.popular .popular-account{
+.popular .popular-account {
   line-height: 18px;
   color: #657786;
   font-size: 1rem;
   font-weight: bold;
+}
+
+.tweets-back,
+.users-back {
+  border: 1px solid #e6ecf0;
+  height: 1202px;
+}
+
+.tweets-back .page-header,
+.users-back .page-header {
+  border-bottom: 0.1px solid #e6ecf0;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.tweets-back .tweet {
+  border-bottom: 0.1px solid #e6ecf0;
+  height: 75px;
+  padding: 12.5px;
+}
+
+.tweets-back .btn-close {
+  background-color: #ffffff !important;
+}
+
+.tweets-back .avatar-img {
+  border-radius: 50%;
+}
+
+.tweets-back .acc-time {
+  color: #657786;
+  font-size: 15px;
+}
+
+.user-back .user-detail {
+  padding-right: 0
+}
+
+.users-back .card {
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.users-back .cover-container {
+  height: 140px;
+  background: #c4c4c4;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.users-back .card-body {
+  background: #f6f7f8;
+  text-align: center;
+  padding: 30px 0 5px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  z-index: 1;
+}
+
+.users-back .card-user-img {
+  position: absolute;
+  top: 60px;
+  left: 50%;
+  margin-left: -50px;
+  background: #c4c4c4;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.users-back .user-name {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.users-back .user-acc-name {
+  color: #657786;
+}
+
+.users-back .user-com-likes {
+  font-size: 15px;
 }
