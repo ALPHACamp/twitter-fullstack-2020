@@ -300,14 +300,3 @@ p {
   font-size: 15px;
 
 }
-
-.user-tweets a {
-  text-decoration: none;
-  color: black;
-}
-
-
-.user-tweets .twi-count {
-  font-size: 13px;
-  color: #657786;
-}

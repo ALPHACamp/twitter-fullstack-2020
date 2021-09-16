@@ -10,15 +10,43 @@
         </div>
       
     </div>
-    <div class="input-block">
-      <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar"
-        width="50px" height="50px">
-      <span class="input-word">有什麼新鮮事？</span>
-      <div class="input-btn">
-        <button type="button" class="btn rounded-pill fw-bolder">
-          推文
-        </button>
+    <div class="cover-block">
+      <img src="" alt="cover" onerror='this.style.display = "none"'>
+    </div>
+    <div class="user-info-block d-flex justify-content-between">
+      <div class="user-info ms-3">
+        <img class="user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg" width="120"
+          height="120" alt="Card image cap">
+        <div class="user-detail">
+          <h5 class="user-name mb-0">John Doe</h5>
+          <h6 class="user-acc-name mb-0">@heyjohn</h6>
+          <p class="user-intro my-1">
+            afdasd fads fsad hfasjd sdkafjshf asd adksjfhaskdj sadkjf
+          <p class="user-followship">
+            <strong>34個</strong>跟隨中&nbsp;&nbsp;&nbsp;&nbsp;<strong>59位</strong>跟隨者
+            <p />
+        </div>
       </div>
+      <div class="edit-profile">
+        <button type="button" class="btn btn-outline-warning edit-profile-btn">
+        編輯個人資料
+      </button>
+      </div>
+      
+      {{!-- 加modal --}}
+    </div>
+    <div class="px-2 pt-3 mt-0 d-flex flex-row user-nav">
+      <ul class="nav nav-tabs">
+        <li class="nav-item current-nav">
+          <a class="nav-link active" aria-current="page" href="#">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">喜歡的內容</a>
+        </li>
+      </ul>
     </div>
 
     <div class="tweets-article d-flex">
