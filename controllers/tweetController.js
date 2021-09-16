@@ -12,7 +12,7 @@ const tweetController = {
     return Tweet.findAll({
       raw: true,
       nest: true,
-      include: [User]
+      include: [User, Like, Reply]
     }).then(tweet => {
       console.log(tweet)
           return res.render('index', {
@@ -46,7 +46,7 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
-      include: [User, { model: Reply, include: [User] }]
+      include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }]
     })
       .then(tweet => {
         return res.render('tweet', {
