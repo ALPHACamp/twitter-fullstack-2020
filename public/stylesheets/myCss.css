@@ -11,13 +11,10 @@
   position:fixed;
 }
 
-/* .userSidebar{
-  position:fixed;
+.activ-orange{
+  color: #FF6600;
 }
 
-.popularArea{
-  position:fixed;
-} */
 
 #ac-logo{
   width: 50px;
@@ -40,7 +37,27 @@
   background-color:#F5F8FA;
 }
 
+
 .followButton{
   border-color: #FF6600;
   color: #FF6600;
+}
+
+
+.userProfileImg{
+  width: 150px;
+  position: absolute;
+  transform: translate(0,-75px);  /*往上移蓋過cover */
+  z-index: 1;
+  margin-left:5px;  
+}
+
+.cover {
+   width: 800px; /* whatever width you want for the cover div */
+   height: 270px;
+   background-color: white; /* optional */
+   overflow: hidden;
+}
+.cover > img {
+   width: 100%;
 }

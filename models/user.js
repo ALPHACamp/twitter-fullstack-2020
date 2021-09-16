@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Tweet)
+      User.hasMany(models.Reply) //2021.9.16新增的
       User.belongsToMany(User, {
         through: models.Followship,
         foreignKey: 'followingId',

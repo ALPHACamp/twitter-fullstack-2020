@@ -44,8 +44,6 @@ const tweetController = {
       nest: true,
       include: [User]
     })
-    // console.log(tweets)
-    console.log('有到這嗎')
     return res.render('home',{ tweets})
   },
   getTweet: async (req, res) => {
@@ -71,8 +69,12 @@ const tweetController = {
     try{
       const tweet = await Tweet.findByPk(
         req.params.id,{
-        include: [User]  
+        include: [
+          User,
+          {model: Reply, include:[User]}
+        ]  
       })
+      console.log(tweet)
       return res.render('tweet',{tweet: tweet.toJSON()})
     }catch(e){
         console.log(e.message)

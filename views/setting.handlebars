@@ -1,0 +1,103 @@
+<!-- 推文的Modal -->
+<div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="createTweet border">
+        <div class="d-flex">
+          <a href="" class="avatar m-2">
+            <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+          </a>
+          <div class="d-flex align-items-center">
+            <p class="text-secondary m-0">有甚麼新鮮事?</p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div class="round m-3">
+            <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+              data-bs-target="#newTwitModal">推文</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row grid">
+  <div>
+    <nav class="userSidebar fixed">
+      <div class="logo">
+        <img src="https://i.imgur.com/ZUJriDp.png" alt="" id="ac-logo">
+      </div>
+      <div class="buttonList mt-5">
+        <div class="navItem index d-flex mb-4 ">
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-home my-auto"></i>
+          </div>
+          <a href="/home" class="btn sidebarItem">
+            <span class="fs-5 fw-bolder">首頁</span>
+          </a>
+        </div>
+        <div class="navItem userProfile d-flex mb-4 ">
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-users"></i>
+          </div>
+          <a href="/userProfile" class="btn sidebarItem">
+            <span class="fs-5 fw-bolder">個人資料</span>
+          </a>
+        </div>
+        <div class="navItem setting d-flex mb-4">
+          <div class="icon d-flex align-items-center activ-orange">
+            <i class="fas fa-cog"></i>
+          </div>
+          <a href="/setting" class="btn sidebarItem">
+            <span class="sidebar-item fs-5 fw-bolder">設定</span>
+          </a>
+        </div>
+      </div>
+      <div class="d-grid gap-2 col-9 round">
+        <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+          data-bs-target="#newTwitModal">推文</button>
+      </div>
+      <div class="logout d-flex">
+        <div class="logoutLogo me-3 d-flex align-items-center">
+          <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <a href="/logout" class="btn">
+          <span class="fs-5 fw-bolder">登出</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+
+  <div class="settingSection ">
+    <div class="title border">
+      <h5 class="fw-bolder m-3">帳戶設定</h5>
+    </div>
+    <form class="form-signin" action="/users/{{user.id}}/setting?_method=PUT" method="POST" style="width: 100%;">
+      <div class="form-label-group ">
+        <label for="inputName">帳號</label>
+        <input type="text" name="account" class="form-control" placeholder="Account" value="{{user.account}}" required autofocus>
+      </div>
+      <div class="form-label-group">
+        <label for="inputName">名稱</label>
+        <input type="text" name="name" class="form-control" placeholder="Name" value="{{user.name}}" required autofocus>
+      </div>
+      <div class="form-label-group">
+        <label for="inputEmail">Email</label>
+        <input type="text" name="email" class="form-control" placeholder="Email" value="{{user.email}}" required autofocus>
+      </div>
+      <div class="form-label-group">
+        <label for="inputPassword">密碼</label>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+      </div>
+      <div class="form-label-group">
+        <label for="inputPasswordCheck">密碼確認</label>
+        <input type="password" name="passwordCheck" class="form-control" placeholder="Password Check" required>
+      </div>
+      <br />
+      <button class="btn btn-lg orange text-white round" type="submit">儲存</button>
+    </form>
+  </div>
+</div>
