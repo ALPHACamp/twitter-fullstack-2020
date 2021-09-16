@@ -1,19 +1,18 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
+const helpers = require('../_helpers')
 
 const adminController = require('../controllers/adminController')
 
 const isAuthenticatedAdmin = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    if (req.user.isAdmin) { return next() }
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).isAdmin) { return next() }
     req.flash('error_messages', '只有管理員可登入後台')
   }
   res.redirect('/admins/login')
 }
 
-router.get('/', (req, res) => res.redirect('/admins/self'))
-router.get('/self', isAuthenticatedAdmin, adminController.getAdmin)
 
 // admin login & logout
 router.get('/login', adminController.getLogin)
