@@ -3,6 +3,11 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const { Op } = require("sequelize")
+const sequelize = require('sequelize')
+const Tweet = db.Tweet
+const Reply = db.Reply
+const Like = db.Like
+const Followship = db.Followship
 
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -173,6 +178,41 @@ const userController = {
 
   //   }
   // },
+
+  getUserLikes: (req, res) => {
+    Tweet.findAll({
+      where: { UserId: req.params.user_id },
+      include: [{ model: Like, include: [User] }, { model: Reply, include: [User] }],
+      // raw: true, nest: true,
+    }).then((tweets) => {
+      // tweets2 = tweet.toJSON()
+      console.log(tweets[0])
+      console.log('------')
+      console.log(tweets[1])
+      // console.log(tweets.toJSON())
+      // return res.send(tweets)
+      return res.render('likes', {
+        tweets: tweets
+      })
+    })
+  },
+
+  getTopUsers: (req, res) => {
+    Followship.findAll({
+      attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
+      include: User,
+      group: ['followingId'],
+      order: [[sequelize.col('count'), 'DESC']],
+      limit: 10,
+      raw: true, nest: true
+    }).then(users => {
+      const data = users.map(r => ({
+        count: r.count,
+        ...r.User,
+      }))
+      return res.render('topUsersFake', { topUsers: data })
+    })
+  },
 
   putUserSetting: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body

@@ -15,14 +15,16 @@ module.exports = (app, passport) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "normal") {
         return next()
-      } else {
+      }
+      if (helpers.getUser(req).role === "role") {
         req.flash('error_messages', '管理者無法使用前台頁面')
         return res.redirect('/admin/tweets')
       }
     }
-    req.flash('error_messages', '請確認使用者身分')
+    req.flash('error_messages', '請先登入')
     res.redirect('/signin')
   }
+
 
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -30,7 +32,7 @@ module.exports = (app, passport) => {
       req.flash('error_messages', '請確認使用者身分')
       return res.redirect('/admin/signin')
     }
-    req.flash('error_messages', '請確認使用者身分')
+    req.flash('error_messages', '請先登入')
     res.redirect('/admin/signin')
   }
 
@@ -38,14 +40,6 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => {
     res.redirect('/tweets')
   })
-//admin跳轉測試
-  app.get('/tweets',authenticatedAdmin, (req, res) => {
-    res.redirect('/admin/tweets')
-  })
-  app.get('/users',authenticatedAdmin, (req, res) => {
-    res.redirect('/admin/users')
-  })
-
 
 
   // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
@@ -58,7 +52,7 @@ module.exports = (app, passport) => {
   // //使用者顯示特定使用者頁面(使用者所有貼文)
   // router.get('/users/:user_id/tweets', userController.getUserTweets)
   // //使用者所有喜歡貼文
-  // router.get('/users/:user_id/likes', userController.getUserLikes)
+  app.get('/users/:user_id/likes', userController.getUserLikes)
   // //使用者所有回覆
   // router.get('/users/:user_id/replied', userController.getUserReplied)
   // //使用者追蹤清單
@@ -84,7 +78,7 @@ module.exports = (app, passport) => {
 
   // 回文相關
   // //顯示特定貼文回覆 (row40)
-  app.get('/tweets/:id/replies',authenticated, tweetController.getTweetReplies)
+  app.get('/tweets/:id/replies', authenticated, tweetController.getTweetReplies)
   // //回覆特定貼文 (row 36)
   app.post('/tweets/:id', authenticated, tweetController.createReply)
   //------------擴充功能--------------//
@@ -98,11 +92,11 @@ module.exports = (app, passport) => {
   // router.put('/tweets/:id', tweetController.putTweet)
   // 刪除貼文 (row 35)
   // router.delete('/tweets/:id', tweetController.removeTweet)
-//------------------------------//
+  //------------------------------//
 
-// // Like & UnLike
+  // // Like & UnLike
   // //喜歡特定貼文
-  app.post('/tweets/:id/like', authenticated,  tweetController.addLike)
+  app.post('/tweets/:id/like', authenticated, tweetController.addLike)
   // //取消喜歡特定貼文
   app.delete('/tweets/:id/like', tweetController.removeLike)
 
@@ -125,7 +119,7 @@ module.exports = (app, passport) => {
   // //使用者登入頁面
   app.get('/signin', userController.signInPage)
   app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-//-----------名稱勿再改動------------
+  //-----------名稱勿再改動------------
   // //使用者編輯帳號設定(setting) (row 21-22)
   app.get('/users/:user_id/setting', authenticated, userController.getUserSetting)
   app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
@@ -133,7 +127,7 @@ module.exports = (app, passport) => {
   // //使用者編輯個人資料(edit) (row 22-23)
   app.get('/users/:user_id/tweets', authenticated, userController.getUserEdit)
   app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
-//--------------------------------------
+  //--------------------------------------
   // //註冊
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
