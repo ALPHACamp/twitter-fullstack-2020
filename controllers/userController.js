@@ -202,8 +202,6 @@ const userController = {
         replyCount: r.Replies.length
       }))
       const isFollowed = user.Followers.map((d) => d.id).includes(req.user.id)
-      console.log(isFollowed)
-      console.log(user.Followers.length)
       return res.render('tweets', {
         data: data,
         viewUser: user.toJSON(),
