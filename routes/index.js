@@ -1,4 +1,3 @@
-const twitterController = require('../controllers/tweetController.js')
 const helpers = require('../_helpers')
 
 
@@ -43,6 +42,10 @@ module.exports = (app, passport) => {
   // 追蹤
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
+
+  // 喜歡
+  app.post('/like/:tweetId', authenticated, userController.addLike)
+  app.delete('/like/:tweetId', authenticated, userController.removeLike)
 
   // 註冊
   app.get('/signup', userController.signUpPage)
