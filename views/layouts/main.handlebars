@@ -16,13 +16,56 @@
 
   <header class="col-3">
     
+    <div class="left_column">
+      <a class="logo" href="#">
+        <div class="icon">
+          <img src="https://i.imgur.com/KqqLlPU.png?1" alt="AlphaCamp Logo" />
+        </div>
+      </a>
+      <nav class="nav_items">
+        {{!-- {{#if isAdmin}} --}}
+        <div class="navigation">
+          <a class="nav_item" href="#">
+            <i class="fas fa-home icon_index"></i>推文清單
+          </a>
+          <a class="nav_item" href="#">
+            <i class="far fa-user icon_index"></i>使用者列表
+          </a>
+        </div>
+        {{!-- {{else}}
+        <div class="navigation">
+          <a class="nav_item" href="#">
+            <i class="fas fa-home icon_index"></i>首頁
+          </a>
+          <a class="nav_item" href="#">
+            <i class="far fa-user icon_index"></i>個人資料
+          </a>
+          <a class="nav_item" href="#">
+            <i class="bi bi-gear icon_index"></i>設定
+          </a>
+          <form action="">
+            <div class="tweet_item" href="#">
+              <button class="btn_reply">推文</button>
+            </div>
+          </form>
+        </div> --}}
+        {{!-- {/if} --}}
+        <div class="logout_item">
+          <a class="nav_item" href="#">
+            <i class="bi bi-box-arrow-in-left icon_index"></i>登出
+          </a>
+        </div>
+      </nav>
+    </div>
+
   </header>
+
   <main class="col-6">
-   
+      {{{ body }}}
   </main>
-  <right-bar class="col-3">
-    {{{ body }}}
-  </right-bar>
+  {{!-- <right-bar class="col-3">
+
+  </right-bar> --}}
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
     crossorigin="anonymous"></script>
