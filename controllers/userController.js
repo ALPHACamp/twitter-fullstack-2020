@@ -74,6 +74,14 @@ const userController = {
           })
         })
     })
+  },
+
+  getUserReply: (req, res) => {
+    res.render('selfReply')
+  },
+
+  getUserLike: (req, res) => {
+    res.render('selfLike')
   }
 }
 

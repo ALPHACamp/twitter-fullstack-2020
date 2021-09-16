@@ -36,10 +36,10 @@
 
     <ul class="nav nav-tabs mt-4">
       <li class="nav-item">
-        <a class="nav-link fontWeight700 active" href="#">推文</a>
+        <a class="nav-link fontWeight700" href="/users/self/{{user.id}}">推文</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link fontWeight700" href="/users/self/reply/{{user.id}}">推文與回覆</a>
+        <a class="nav-link fontWeight700 active" href="#">推文與回覆</a>
       </li>
       <li class="nav-item">
         <a class="nav-link fontWeight700" href="/users/self/like/{{user.id}}">喜歡的內容</a>
@@ -66,5 +66,6 @@
       </div>
     </div>
     {{/each}}
+
   </div>
 </div>

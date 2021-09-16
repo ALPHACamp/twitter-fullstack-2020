@@ -10,12 +10,13 @@ const app = express()
 const port = 3000
 
 app.engine('handlebars', handlebars({
-  defaultLayout: 'main'
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
 }))
 app.use(express.static('public'))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false}))
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
