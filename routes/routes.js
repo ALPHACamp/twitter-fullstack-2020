@@ -24,6 +24,10 @@ router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/tweets', tweetController.getTweets)
 
 
+// users
+router.get('/users/tweets', userController.getUserTweets)  //要加userid
+
+
 
 
 // Admin
