@@ -51,7 +51,7 @@ const userController = {
   getUserProfile:(req, res)=>{
     return res.render('userProfile')
   },
-  getsetting:(req, res)=>{
+  getSetting:(req, res)=>{
     return res.render('setting')
   },
   putUser: async (req,res) =>{
