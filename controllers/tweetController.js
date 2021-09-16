@@ -4,7 +4,9 @@ const Reply = db.Reply
 const User = db.User
 const Followship = db.Followship
 
-const helper = require('../_helpers');
+const helper = require('../_helpers')
+
+const maxDescLen = 50
 
 const tweetController = {
   // 首頁
@@ -39,14 +41,22 @@ const tweetController = {
     //       })
     //     })
     // })
-    const tweets = await Tweet.findAll({  
+    const tweets = await Tweet.findAll({
       raw: true,
       nest: true,
-      include: [User]
+      include: [User],
+      limit: 10
     })
     // console.log(tweets)
+
+    if (helper.getUser(req).isAdmin) {
+      tweets.map(tweet => {
+        tweet.description = tweet.description.length <= 50 ? tweet.description : tweet.description.substring(0, maxDescLen) + "..."
+      })
+    }
     console.log('有到這嗎')
-    return res.render('home',{ tweets})
+    const renderPage = helper.getUser(req).isAdmin ? 'admin/admin_main' : 'home'
+    return res.render(renderPage, { tweets })
   },
   getTweet: async (req, res) => {
     // return Tweet.findByPk(req.params.id, {
@@ -68,14 +78,14 @@ const tweetController = {
     //     })
     //   })
     // console.log(req.params.id)
-    try{
+    try {
       const tweet = await Tweet.findByPk(
-        req.params.id,{
-        include: [User]  
+        req.params.id, {
+        include: [User]
       })
-      return res.render('tweet',{tweet: tweet.toJSON()})
-    }catch(e){
-        console.log(e.message)
+      return res.render('tweet', { tweet: tweet.toJSON() })
+    } catch (e) {
+      console.log(e.message)
     }
   },
   // 在此得列出最受歡迎的十個使用者
