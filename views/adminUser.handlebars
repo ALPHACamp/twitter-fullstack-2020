@@ -8,13 +8,13 @@
             <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
                 <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
                     <li class="nav-item px-2 py-1">
-                        <a class="nav-link align-middle text-dark " href="admin/tweets">
+                        <a class="nav-link align-middle text-dark " href="/admin/tweets">
                             <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
                             <span class="h5 menu-text home a-tomato">推文清單</span>
                         </a>
                     </li>
                     <li class="nav-item px-2 py-1">
-                        <a class="nav-link align-middle text-dark h-tomato" href="admin/users">
+                        <a class="nav-link align-middle text-dark h-tomato" href="/admin/users">
                             <i class="far fa-user" style="font-size: 1.2em;"></i>
                             <span class="h5 menu-text user">使用者列表</span>
                         </a>
@@ -23,40 +23,44 @@
             </div>
         </div>
 
+
         {{!-- 27-60找別人的--}}
-       <div class="col-9 mt-3">
+        <div class="col-9 mt-3">
+
             <div class="card-header">
                 使用者列表
             </div>
 
+            {{#each users}}
             <div class="d-flex felx-column">
                 <div class="col-3">
-                        <div class="card my-3 rounded-4 shadow">
-                            <div class="position-relative">
-                                <img src="https://loremflickr.com/800/550/landscape" class="position-absolute rounded-3"
-                                    style="width: 100%; z-index:0;" alt="background">
-                                <img src="https://loremflickr.com/250/250/people"
-                                    class="position-absolute rounded-circle mt-4"
-                                    style="width: 70px; height: 70px; left: 33%; top: 60px; border: white 3px solid; z-index: 1"
-                                    alt="face">
+                    <div class="card my-3 rounded-4 shadow">
+                        <div class="position-relative">
+                            <img src="https://loremflickr.com/800/550/landscape" class="position-absolute rounded-3"
+                                style="width: 100%; z-index:0;" alt="background">
+                            <img src="https://loremflickr.com/250/250/people"
+                                class="position-absolute rounded-circle mt-4"
+                                style="width: 70px; height: 70px; left: 33%; top: 60px; border: white 3px solid; z-index: 1"
+                                alt="face">
+                        </div>
+                        <div class="card-body bg-light" style="padding-top: 88%;">
+                            <h5 class="card-title text-center text-dark" style="font-weight: 900;">
+                            </h5>
+                            <h5 class="card-title text-center"
+                                style="color: #6c757d; font-size: 0.95em; font-weight: 500">{{this.name}}@</h5>
+                            <div class="text-center mt-3 text-dark">
+                                <i class="far fa-comment"></i>
+                                　 <i class="far fa-heart"></i>
                             </div>
-                            <div class="card-body bg-light" style="padding-top: 88%;">
-                                <h5 class="card-title text-center text-dark" style="font-weight: 900;">
-                                </h5>
-                                <h5 class="card-title text-center"
-                                    style="color: #6c757d; font-size: 0.95em; font-weight: 500">@</h5>
-                                <div class="text-center mt-3 text-dark">
-                                    <i class="far fa-comment"></i> 
-                                    　 <i class="far fa-heart"></i> 
-                                </div>
-                                <div class="text-center mt-2 text-dark">
-                                    <span><strong>個</strong>跟隨中</span>
-                                    <span><strong>位</strong>跟隨者</span>
-                                </div>
+                            <div class="text-center mt-2 text-dark">
+                                <span><strong>個</strong>跟隨中</span>
+                                <span><strong>位</strong>跟隨者</span>
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
+            {{/each}}
         </div>
 
     </div>

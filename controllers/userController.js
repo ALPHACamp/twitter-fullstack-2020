@@ -36,6 +36,7 @@ const userController = {
                         account: req.body.name,
                         name: req.body.name,
                         email: req.body.email,
+                        role:"user",
                         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
                     })
                     .then(() => {
@@ -62,7 +63,7 @@ const userController = {
         res.redirect('/signin')
     },
 
-    getSetting: (req, res) => {
+    getTweets: (req, res) => {
         return res.render('setting')
     },
 }
