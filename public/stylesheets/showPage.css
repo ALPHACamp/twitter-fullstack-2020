@@ -1423,3 +1423,19 @@ position: absolute;
 top: 219px;
 left:390px
 }
+
+/* index的like */
+.index-like button{
+  border:transparent;
+  background: transparent;
+  font-size: 13px;
+  color: #657786;
+  margin:0;
+  padding:0;
+}
+
+.index-like-count {
+  display: flex;
+  align-items: center;
+}
+
