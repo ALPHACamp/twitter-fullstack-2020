@@ -54,7 +54,7 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      email: 'user4@example.com',
+      email: 'user5@example.com',
       password: '12345678',
       name: 'user5',
       avatar: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
