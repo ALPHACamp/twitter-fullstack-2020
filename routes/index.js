@@ -15,6 +15,9 @@ module.exports = (app, passport) => {
     if (helpers.ensureAuthenticated(req)) {
       if (helpers.getUser(req).role === "normal") {
         return next()
+      } else {
+        req.flash('error_messages', '管理者無法使用前台頁面')
+        return res.redirect('/admin/tweets')
       }
     }
     req.flash('error_messages', '請確認使用者身分')
@@ -33,7 +36,7 @@ module.exports = (app, passport) => {
 
   //TODO:測試用路由
   app.get('/', authenticated, (req, res) => {
-    res.render('replyFake')
+    res.redirect('/tweets')
   })
 //admin跳轉測試
   app.get('/tweets',authenticatedAdmin, (req, res) => {
@@ -70,7 +73,7 @@ module.exports = (app, passport) => {
 
   TODO:// 貼文相關
   //顯示所有貼文(要改api)
-  app.get('/index', authenticated, tweetController.getTweets)
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   // //使用者新增一則貼文
   app.get('/tweets/create', authenticated, tweetController.createTweets)
@@ -128,7 +131,7 @@ module.exports = (app, passport) => {
   app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
 
   // //使用者編輯個人資料(edit) (row 22-23)
-  app.get('/users/:user_id/edit', authenticated, userController.getUserEdit)
+  app.get('/users/:user_id/tweets', authenticated, userController.getUserEdit)
   app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
 //--------------------------------------
   // //註冊

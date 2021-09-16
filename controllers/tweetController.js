@@ -32,7 +32,7 @@ const tweetController = {
   postTweets: (req, res) => {
     if (!req.body.tweet) {
       req.flash('error_messages', "請輸入貼文內容")
-      return res.redirect('/index')
+      return res.redirect('/tweets')
     }
     return Tweet.create({
       UserId: req.user.id,
@@ -40,7 +40,7 @@ const tweetController = {
     })
       .then((tweet) => {
         req.flash('success_messages', 'tweet was successfully created')
-        res.redirect('/index')
+        res.redirect('/tweets')
       })
   },
   //顯示特定貼文(要改api)

@@ -95,7 +95,7 @@ const userController = {
             })
               .then(() => {
                 req.flash('success_messages', 'user profile was successfully updated!')
-                res.redirect('/index')
+                res.redirect('/tweets')
               })
               .catch(err => console.error(err))
           })
@@ -111,7 +111,7 @@ const userController = {
           })
             .then(() => {
               req.flash('success_messages', 'user profile was successfully updated!')
-              res.redirect('/index')
+              res.redirect('/tweets')
             })
             .catch(err => console.error(err))
         })
@@ -208,7 +208,7 @@ const userController = {
             })
               .then(() => {
                 req.flash('success_messages', '使用者設定已成功被更新!')
-                res.redirect(`/index`)
+                res.redirect(`/tweets`)
               })
               .catch(err => console.error(err))
           })
@@ -222,7 +222,7 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/index')
+    res.redirect('/tweets')
   },
 
   logout: (req, res) => {

@@ -843,7 +843,7 @@ margin: 0 10px;
 
 .info-text {
   position: relative;
-  padding-left: 15px; 
+  margin: auto 15px; 
 }
 
 .info-text .name {
@@ -1097,7 +1097,8 @@ height:450px;
 .modal-content button.close{
   color:#fF6600;
   text-align:left;
-  margin: 19.5px;
+  margin: 15px;
+  font-size: 19px;
 }
 
 .type-area {
@@ -1174,6 +1175,14 @@ border-radius: 100px;
   height:163px;
 }
 
+.modal-title {
+  display:flex;
+  border-radius: 14px;
+width:600px;
+height:300px;
+height:100%;
+}
+
 .modal-title .follow-button {
 
 }
@@ -1192,5 +1201,5 @@ font-style: normal;
 font-weight: bold;
 font-size: 19px;
 line-height: 28px;
-border:2px solid red;
+/* border:2px solid red; */
 }
