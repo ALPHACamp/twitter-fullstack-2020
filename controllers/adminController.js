@@ -1,5 +1,6 @@
 const db = require('../models')
 const Tweet = db.Tweet
+const User = db.User
 
 const adminController = {
   getTweets: (req, res) => {
@@ -12,6 +13,11 @@ const adminController = {
       tweet.destroy().then(() => {
         return res.json({ status: 'success', tweet})
       })
+    })
+  },
+  getUsers: (req, res) => {
+    return User.findAll({ raw: true }).then(users => {
+      return res.json(users)
     })
   }
 }
