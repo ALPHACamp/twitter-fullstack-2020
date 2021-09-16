@@ -1,0 +1,107 @@
+<div class="card col-12 hovercard">
+  <div class="card-body col-12">
+    {{!-- 用onclick 事件屬性 包裹 整個留言  --}}
+    <div class="row  mb-1 p-2" onclick="javascript:location.href='/tweets/{{this.id}}'">
+      <div class="col-1 d-flex justify-content-center align-items-start">
+        <a href="/users/{{this.UserId}}">
+          <img src="https://static.newmobilelife.com/wp-content/uploads/2018/11/unnie1.jpg" class="rounded-circle"
+            style="width: 50px; height: 50px" alt="avatar" />
+        </a>
+      </div>
+      <div class="col-11 row">
+        <div class="col-12 d-inline-flex justify-content-between align-items-center">
+          <div style="height: 22px; font-size: 15px;">
+            <a href="/users/{{this.UserId}}" class="text-dark font-weight-bold">Apple</a>
+            <span style="color: #657786;">@apple．3小時</span>
+          </div>
+        </div>
+        <div class="col-12 mt-1">
+          <p class="fw-bold">開心</p>
+        </div>
+        {{!-- 留言中的 Reply modal button  起不了作用!!! --}}
+        <div class="col-12 d-flex align-items-center">
+          <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#replyModal">
+            <i class="far fa-comment" style="color: navy;width:12px;height:12px;"></i>
+          </button>
+          <span style="display:inline-block;margin-left:20px;margin-right:33px;">23</span>
+
+          <!--如果有按喜歡-->
+          <form action="/tweets/{{this.id}}/unlike" method="POST">
+            <button type="submit" class="btn btn-outline-light">
+              <i class="fas fa-heart" style="color: red;width:12px;height:12px;"></i>
+            </button>
+            <span style="display:inline-block;margin-left:20px;">12</span>
+          </form>
+          <!--如果沒有按喜歡-->
+          <form action="/tweets/{{this.id}}/like" method="POST">
+            <button type="submit" class="btn btn-outline-light">
+              <i class="far fa-heart" style="color: red; width: 12px; height: 12px;"></i>
+            </button>
+            <span style="display:inline-block;margin-left:20px;">12</span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- Modal reply--}}
+<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn btn-outline-light a-tomato" data-dismiss="modal" aria-label="Close">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="row align-items-start mb-1 px-3 ">
+          <div class="card-image col-1 d-flex justify-content-center align-items-center">
+            <img src="https://imgur.dcard.tw/YITgTc7h.jpg" class="rounded-circle mr-2"
+              style="width: 50px; height: 50px;" alt="大頭貼">
+          </div>
+          <div class="col-11 row">
+            <div class="col-12 d-inline-flex justify-content-between align-items-center">
+              <div style="height: 22px; line-height: 22px">
+                <span class="" style="font-size: 15px; font-weight: bold;">使用者名稱</span>
+                <span class="" style="color: #657786; font-size: 15px;font-weight: 500;">@使用者名稱．創立時間</span>
+              </div>
+            </div>
+            <div class="col-12">
+              <p class="" style="font-size: 15px;font-weight: 400;">推文內容</p>
+            </div>
+            <div class="col-12 inline-flex mt-2">
+              <span style="font-size: 10px">回覆給</span>
+              <span style="color: #FF6600; font-size: 10px">@使用者帳號</span>
+            </div>
+          </div>
+        </div>
+        <p class="position-absolute vertical-line" style="z-index: 3;left: -13px; top: 70px;"></p>
+
+        <div class="row">
+          <form action="/replies" method="POST" class="mt-2 ">
+            <div class="position-relative" style="margin-left:20px; padding: 75px 0;">
+              <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
+                <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2udte7QwU1oUkX-jf4Nc9JUQtJXAZ1EDNKg&usqp=CAU"
+                  class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;" alt="大頭貼" />
+              </div>
+              <div class="position-absolute" style="z-index: 0; width: 430px; top:-5px; left:-10px;">
+                <textarea class="mt-1 bd" id="content" name="content" rows="3" placeholder="推你的回覆" maxlength="140"
+                  style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
+                  required></textarea>
+                <input type="hidden" name="TweetId" value="" />
+              </div>
+              <div class="position-absolute" style="z-index: 5; right: -460px; bottom: 0;">
+                <button type="submit" class="tweet-btn btn btn-tomato"
+                  style="font-size:18px;font-weight:500; border-radius: 30px 30px 30px 30px;">推文</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

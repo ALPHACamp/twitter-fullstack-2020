@@ -1,0 +1,50 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+  {{!-- https://lighthouse.alphacamp.co/courses/40/units/5654 d-flex flex-columjustify-content-center
+  align-items-center --}}
+  {{!-- https://lighthouse.alphacamp.co/courses/40/units/5664 --}}
+
+  <div class="img mt-5 d-flex flex-column align-items-center  ">
+    <img src="https://uploads-ssl.webflow.com/60d29cc33f302e62731cf0e1/60d29cc33f302ede181cf183_AC%20nav%20logo.png"
+      style="width: 200px" />
+    <span>建立你的帳號</span>
+  </div>
+
+  {{!-- https://lighthouse.alphacamp.co/courses/42/units/8492 --}}
+  {{!-- https://getbootstrap.com/docs/4.1/components/forms/ --}}
+  <form action="/users/register" method="POST">
+
+    <div class="form-grou" style="height:54px; weight:540px">
+      <label for="account">帳號</label>
+      <input type="text" class="form-control" id="account">
+    </div>
+
+    <div class="form-group mt-3" style="height:54px; weight:540px">
+      <label for="name">名稱</label>
+      <input type="text" class="form-control" id="name">
+    </div>
+
+    <div class="form-group mt-2" style="height:54px; weight:540px">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email">
+    </div>
+
+    <div class="form-group mt-2" style="height:54px; weight:540px">
+      <label for="password">密碼</label>
+      <input type="password" class="form-control" id="password">
+    </div>
+
+    <div class="form-group mt-2" style="height:54px; weight:540px">
+      <label for="passwordConfirmed">密碼確認</label>
+      <input type="password" class="form-control" id="passwordConfirmed">
+    </div>
+
+    <button class="btn btn-primary btn-block mt-4" style="border-radius: 30px;" type="submit"
+      style="height:54px; weight:540px">註冊</button>
+
+    <div class="d-flex align-items-center mt-2" style="height:54px; weight:540px">
+      <p><a href="">取消</a></p>
+    </div>
+
+  </form>
+
+</div>
