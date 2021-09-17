@@ -29,13 +29,13 @@ const tweetController = {
   },
 
   postTweets: (req, res) => {
-    if (!req.body.tweet) {
+    if (!req.body.description) {
       req.flash('error_messages', "請輸入貼文內容")
       return res.redirect('/tweets')
     }
     return Tweet.create({
       UserId: req.user.id,
-      description: req.body.tweet
+      description: req.body.description
     })
       .then((tweet) => {
         req.flash('success_messages', 'tweet was successfully created')
