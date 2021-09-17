@@ -71,7 +71,6 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   // //使用者新增一則貼文
-  app.get('/tweets/create', authenticated, tweetController.createTweets)
   app.post('/tweets', authenticated, tweetController.postTweets)
 
   // //顯示特定貼文

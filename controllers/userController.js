@@ -93,16 +93,16 @@ const userController = {
     const user = await User.findByPk(req.params.user_id)
 
     // if (files) {
-    //files會有[Object: null prototype]
+    //files會有[Object: null prototype] {}
     imgur.setClientID(IMGUR_CLIENT_ID)
     if (files.avatar && files.cover) {
-      imgur.upload(file.avatar[0].path, async (err, avaImg) => {
-        imgur.upload(file.cover[0].path, async (err, covImg) => {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        imgur.upload(files.cover[0].path, async (err, covImg) => {
           await user.update({
             name: req.body.name,
             introduction: req.body.introduction,
-            avatar: file ? avaImg.data.link : user.avatar,
-            cover: file ? covImg.data.link : user.cover
+            avatar: avaImg.data.link,
+            cover: covImg.data.link
           })
           req.flash('success_messages', 'user profile was successfully updated!')
           return res.redirect('back')
@@ -120,7 +120,7 @@ const userController = {
         return res.redirect('back')
       })
     } else if (!files.avatar && files.cover) {
-      imgur.upload(files.avatar[0].path, async (err, covImg) => {
+      imgur.upload(files.cover[0].path, async (err, covImg) => {
         await user.update({
           name: req.body.name,
           introduction: req.body.introduction,
@@ -134,8 +134,6 @@ const userController = {
       await user.update({
         name: req.body.name,
         introduction: req.body.introduction,
-        // avatar: user.avatar,
-        // cover: user.cover
       })
       req.flash('success_messages', 'user profile was successfully updated!')
       return res.redirect('back')

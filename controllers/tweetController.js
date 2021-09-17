@@ -24,10 +24,6 @@ const tweetController = {
   },
 
   //新增一則貼文(要改api)
-  createTweets: (req, res) => {
-    return res.render('createFake')
-  },
-
   postTweets: (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', "請輸入貼文內容")
@@ -39,7 +35,7 @@ const tweetController = {
     })
       .then((tweet) => {
         req.flash('success_messages', 'tweet was successfully created')
-        res.redirect('/tweets')
+        res.redirect('back')
       })
   },
   //顯示特定貼文(要改api)
