@@ -201,8 +201,8 @@ const userController = {
         isLiked: r.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
       }))
       //使用者（與其他重複）
-      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const currentUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = currentUser[0].Followers.map((d) => d.id).includes(req.user.id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
@@ -211,7 +211,7 @@ const userController = {
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('tweets', {
         data: data,
-        viewUser: viewUser[0].toJSON(),
+        currentUser: currentUser[0].toJSON(),
         isFollowed,
         topUsers
       })
@@ -237,8 +237,8 @@ const userController = {
       })
     ]).then(([replies, users]) => {
       //使用者（與其他重複）
-      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const currentUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = currentUser[0].Followers.map((d) => d.id).includes(req.user.id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
@@ -247,7 +247,7 @@ const userController = {
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('replied', {
         data: replies,
-        viewUser: viewUser[0].toJSON(),
+        currentUser: currentUser[0].toJSON(),
         isFollowed,
         topUsers
       })
@@ -281,8 +281,8 @@ const userController = {
       }))
       //使用者（與其他重複）
       console.log(data)
-      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const currentUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = currentUser[0].Followers.map((d) => d.id).includes(req.user.id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
@@ -291,7 +291,7 @@ const userController = {
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('likes', {
         data,
-        viewUser: viewUser[0].toJSON(),
+        currentUser: currentUser[0].toJSON(),
         isFollowed,
         topUsers
       })
