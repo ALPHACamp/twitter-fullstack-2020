@@ -223,13 +223,16 @@ max-width: 600px;
 } 
 
 .tweet-followfhip .follow-btn{
-Font: Noto Sans TC;
-Weight: 700;
-Style:normal;
-Size:15px;
-Line-height :15px;
-==========================================
-/* tweet modal區 */
+  Font: Noto Sans TC;
+  Weight: 700;
+  Style:normal;
+  Size:15px;
+  Line-height :15px;
+}
+
+
+/*====================== tweet modal區 ======================*/
+
 .tweet-modal-content{
   border-radius: 14px;
   width: 600px;

@@ -64,7 +64,7 @@ router.delete('/followships/:userId', authenticated, followshipController.remove
 
 
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweets)
-=======
+
 // tweets
 router.get('/', (req, res) => res.redirect('/tweets'))
 router.get('/tweets', tweetController.getTweets)
