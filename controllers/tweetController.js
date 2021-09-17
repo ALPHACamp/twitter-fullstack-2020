@@ -6,40 +6,61 @@ const Followship = db.Followship
 
 const tweetController = {
   // 首頁
-  getTweets: (req, res) => {
+  getTweets: async (req, res) => {
     const id = req.params.id
+    console.log('------------------分隔線1------------------')
+    console.log(id)
+    console.log(helper.getUser(req),'該使用者的資料 = req.user')
     const loginUserId = helper.getUser(req).id
-    const whereQuery = {}
+    console.log('------------------分隔線2------------------')
+    console.log(loginUserId) // root: 1
+    console.log(req.query) // {} 空的
+    console.log('------------------分隔線3------------------')
+    
     // 如果推文的人在使用者的追隨名單內，就顯示推文
+    // followship內 A使用者在 B使用者 的
     // 驗證使用者
-    if (req.query.userId) {
-      userId = Number(req.query.userId)
-      whereQuery.userId = userId
-    }
-    // 找出所有在追隨者名單中的追隨者推文
-    Tweet.findAll({
-      include: Followship,
-      where: { FollowingId: id }
-    }).then(result => {
-      // 如果是在個人資料，要顯示使用者推文數量
-      // 在此顯示 使用者自身推文、追隨者的貼文、回覆和喜歡的內容
-      // 依時間降冪排序
-      const followingUsersTweets = result.rows
-      const data = followingUsersTweets.map(r => ({
-        ...r.dataValues,
-        description: r.dataValues.description.substring(0, 50),
-        likedCount: r.dataValues.likedCount,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id), // 判斷是否對推文按讚過，有的話要更改圖示
-        repliedCount: r.dataValues.repliedCount,
-        isReplied: req.user.RepliedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+    const whereQuery = {}
+    whereQuery.userId = loginUserId
+    
+    console.log(whereQuery.userId)
+    console.log('------------------分隔線4------------------')
+    
+    // 類似餐廳清單Favorite的邏輯，需要找到所有追隨中的使用者
+    await Tweet.findAndCountAll({
+      raw: true,
+      nest: true,
+      include: [User],
+      where: whereQuery
+    }).then(tweets => {
+      console.log(tweets)
+      console.log('---------觀察rows---------')
+      console.log(tweets.rows)
+      console.log('---------觀察---------')
+      const data = tweets.rows.map(tweet => ({
+        ...tweet.dataValues,
+        // TweetCommentedCount: tweet.dataValues.CommentedTweets.length,
+        // isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+        //推文被喜歡的次數
+        TweetLikedCount: tweet.dataValues.LikedTweets.length,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
       }))
         .then(() => {
+          console.log(data)
+          console.log('---------觀察data---------')
           return res.render('home', {
-            tweets: data,
-            loginUserId // 判斷是否為使用者
+            tweets: data
           })
         })
     })
+    // const tweets = await Tweet.findAll({  
+    //   raw: true,
+    //   nest: true,
+    //   include: [User]
+    // })
+    // // console.log(tweets)
+    // console.log('有到這嗎')
+    // return res.render('home',{ tweets})
   },
   // 取得單一推文資料，要有 使用者頭像，暱稱、帳號 
   // 推文要有內容like, reply

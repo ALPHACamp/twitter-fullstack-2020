@@ -42,9 +42,17 @@
             </div>
             <div clss="like col-lg-2 d-flex">
               <span class="likeIcon me-2">
-                <i class="far fa-heart "></i>
+                {{#if this.isLiked}}
+                <form action="/like/{{this.id}}" method="POST">
+                  <i class="far fa-heart" type="submit"></i>
+                </form>
+                {{else}}
+                <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <i class="fas fa-heart "></i>
+                </form>
+                {{/if}}
               </span>
-              <span class="likeAmount">30</span>
+              <span class="likeAmount">{{this.TweetLikedCount}}</span>
             </div>
           </div>
         </div>
