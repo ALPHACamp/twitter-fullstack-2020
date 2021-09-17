@@ -221,36 +221,31 @@ const userController = {
           { model: Reply, include: [User] },
         ],
       }),
-      //可合併
-      User.findByPk(req.params.user_id, {
+      User.findAll({
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      }),
-      //可合併
-      User.findAll({
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
       })
-    ]).then(([tweets, user, users]) => {
+    ]).then(([tweets, users]) => {
       const data = tweets.map(r => ({
         ...r.dataValues,
         likeCount: r.Likes.length,
         replyCount: r.Replies.length
       }))
-      const isFollowed = user.Followers.map((d) => d.id).includes(req.user.id)
+      //使用者（與其他重複）
+      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
         isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
-      })).sort((a, b) => b.FollowerCount - a.FollowerCount)
+      }))
+      topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('tweets', {
         data: data,
-        viewUser: user.toJSON(),
+        viewUser: viewUser[0].toJSON(),
         isFollowed,
         topUsers
       })
@@ -259,26 +254,45 @@ const userController = {
   },
 
   getUserLikes: (req, res) => {
-    // Tweet.findAll({
-    //   where: { UserId: req.params.user_id },
-    //   include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }],
-    //   // raw: true, nest: true
-    // }).then((tweets) => {
-    //   const data = tweets.map(r => ({
-    //     // 整理 tweets 資料
-    //     ...r.dataValues,
-    //     ...r.dataValues.User.toJSON(),
-    //     // 計算人數
-    //     likeCount: r.Likes.length,
-    //     replyCount: r.Replies.length,
-    //     //判斷目前登入使用者是否已追蹤該 User 物件 (???)
-    //   }))
-    //   console.log(data)
-    //   return res.render('likes', {
-    //     tweets: data
-    //   })
-    // })
+    return Promise.all([
+      Like.findAll({
+        where: { UserId: req.params.user_id },
+        include: [
+          // User,
+          { model: Tweet, include: [Reply, Like, User] },
+        ],
+      }),
+      User.findAll({
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ]).then(([tweets, users]) => {
+      const data = tweets.map(r => ({
+        ...r.dataValues,
+        ...r.dataValues.Tweet.toJSON()
+      }))
+      console.log(data)
+      //使用者（與其他重複）
+      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+      }))
+      topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      return res.render('likes', {
+        data,
+        viewUser: viewUser[0].toJSON(),
+        isFollowed,
+        topUsers
+      })
+    })
   },
+
   // 測試完可刪
   getTopUsers: (req, res) => {
     User.findAll({
