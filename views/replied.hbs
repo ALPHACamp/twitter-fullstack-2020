@@ -61,10 +61,10 @@
 
         <div class="name-info">
           <div class="title-name">
-            {{currentUser.name}}
+            {{viewUser.name}}
           </div>
           <div class="title-info">
-            {{currentUser.Tweets.length}}推文
+            {{viewUser.Tweets.length}}推文
           </div>
         </div>
 
@@ -74,16 +74,16 @@
       <hr style="margin:0; padding:0">
       {{!-- 個人資訊 --}}
       <div class="cover">
-        <img src="{{currentUser.cover}}" alt="">
+        <img src="{{viewUser.cover}}" alt="">
       </div>
 
       <div class="user-info">
         <div class="avatar">
-          <img src="{{currentUser.avatar}}" alt="">
+          <img src="{{viewUser.avatar}}" alt="">
         </div>
         <div class="edit-button">
 
-          {{#ifCond user.id currentUser.id}}
+          {{#ifCond user.id viewUser.id}}
           <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal"
             data-target="#edit-user">編輯個人資料</button>
           {{else}}
@@ -91,7 +91,7 @@
           <div class="other-user-icon">
             <div class="mail"><i class="far fa-envelope"></i></div>
             <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{currentUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+            <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
               <button type="submit" class="btn follow-button">正在跟隨</button>
             </form>
           </div>
@@ -99,7 +99,7 @@
           <div class="other-user-icon">
             <div class="mail"><i class="far fa-envelope"></i></div>
             <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{currentUser.id}}" method="POST" style="display: contents;"><button
+            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
                 type="submit" class="btn unfollow-button"> 跟隨 </button></form>
           </div>
 
@@ -115,20 +115,20 @@
       <div class="text-info-tweets">
 
         <div class="info-text">
-          <div class="name"> {{currentUser.name}}</div>
-          <div class="account">@{{currentUser.account}}</div>
-          <div class="introduction">{{currentUser.introduction}}</div>
+          <div class="name"> {{viewUser.name}}</div>
+          <div class="account">@{{viewUser.account}}</div>
+          <div class="introduction">{{viewUser.introduction}}</div>
           <div class="follow d-flex">
             <div class="followship d-flex m-0">
               <div class="follow-title">
-                {{currentUser.Followings.length}}個
+                {{viewUser.Followings.length}}個
               </div>
               <div class="follow-body">
                 跟隨中
               </div>
 
               <div class="follow-title ml-2">
-                {{currentUser.Followers.length}}位
+                {{viewUser.Followers.length}}位
               </div>
               <div class="follow-body">
                 跟隨者
@@ -146,13 +146,13 @@
         {{!-- 推文與回覆開始 --}}
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link" href="/users/{{currentUser.id}}/tweets">推文</a>
+            <a class="nav-link" href="/users/{{viewUser.id}}/tweets">推文</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  active" href="/users/{{currentUser.id}}/replied">推文與回覆</a>
+            <a class="nav-link  active" href="/users/{{viewUser.id}}/replied">推文與回覆</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/{{currentUser.id}}/likes">喜歡的內容</a>
+            <a class="nav-link" href="/users/{{viewUser.id}}/likes">喜歡的內容</a>
           </li>
         </ul>
         <br /><br />
@@ -162,15 +162,15 @@
           <div class="tweet col-md-12">
             <div class="d-flex">
               <div class="mt-2 ml-2 col-md-1" style="padding:0">
-                <a href="/users/{{../currentUser.id}}/replied" class="text-muted">
-                  <img class="user-pic mr-2" src="{{../currentUser.avatar}}" alt="">
+                <a href="/users/{{../viewUser.id}}/replied" class="text-muted">
+                  <img class="user-pic mr-2" src="{{../viewUser.avatar}}" alt="">
                 </a>
               </div>
 
               <div class="col-md-11">
                 <div class="account-info d-flex" style="flex:auto">
-                  <div class="user-name">{{../currentUser.name}}</div>
-                  <div class="account-time ml-2">@{{../currentUser.account}}．{{fromNow this.createdAt}}回覆</div>
+                  <div class="user-name">{{../viewUser.name}}</div>
+                  <div class="account-time ml-2">@{{../viewUser.account}}．{{fromNow this.createdAt}}回覆</div>
                 </div>
                 <div class="reply">
                   <div class="reply-text">回覆</div>
@@ -225,11 +225,11 @@
               <div class="button">
 
                 {{#if this.isFollowed }}
-                <form action="/followships/{{currentUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+                <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
                   <button type="submit" class="btn follow-button">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/followships/{{currentUser.id}}" method="POST" style="display: contents;"><button
+                <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
                     type="submit" class="btn unfollow-button"> 跟隨 </button></form>
                 {{/if}}
               </div>
@@ -253,7 +253,7 @@
 {{!-- add-tweet Modal --}}
 <div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
 
-  {{> add-tweet currentUser=currentUser}}
+  {{> add-tweet currentUser=viewUser}}
 
 </div>
 {{!-- add-tweet Modal --}}
