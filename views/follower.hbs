@@ -1,0 +1,74 @@
+<div class="row">
+  {{> homeNavBar}}
+
+  <div class="tweet-followfhip col d-flex flex-column mx-4">
+
+    {{!-------------------- 姓名欄 --------------------}}
+    <div class="d-flex">
+      <div class="p-3">
+        <a href="#"><i class="fas fa-arrow-left me-2 mb-3" style="color: #1C1C1C;"></i></a>
+      </div>
+      <div class="p-2">
+        <div class="home-word">John Doe</div>
+        <div class="count">25推文</div>
+      </div>
+    </div>
+
+    {{!-------------------- 切換欄 --------------------}}
+    <div class="p-2">
+      <ul class="nav">
+        <li class="nav-item">
+          <a class="nav-link active font-weight-bold" style="color:#FF6600; border-bottom:3px #FF6600 solid;"
+            href="#">跟隨者</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-secondary font-weight-bold" href="/following">正在跟隨</a>
+        </li>
+      </ul>
+    </div>
+
+    {{!-------------------- 追蹤者欄 --------------------}}
+
+    {{#each data}}
+
+    <div class="following d-flex">
+      <div class="" style="display:flex;justify-content: center;">
+        <img src="{{this.user.avatar}}" alt="..." class="rounded-circle m-2" style="width: 50px; height:50px;">
+      </div>
+      <div class="col-md-10" style="padding-left: 0px; width: 530px;">
+        <div style="display: flex; justify-content:space-between">
+          <div>
+            <div class="follow-name">{{this.user.name}}</div>
+            <div class="follow-account m-0">@{{this.account}}</div>
+          </div>
+          {{#if this.isFollowed }}
+          <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="rounded-pill fw-bolder m-2" style="width:90px; height:25px; border:none">
+              正在跟隨
+            </button>
+          </form>
+          {{else}}
+          <form action="/followships/{{this.user.id}}" method="POST">
+            <button type="submit" class="rounded-pill fw-bolder m-2" style="width:90px; height:25px; border:none">
+              跟隨
+            </button>
+          </form>
+          {{/if}}
+        </div>
+        <div class="m-1"
+          style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow: ellipsis; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px">
+          <p>
+            {{this.user.introduction}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {{/each}}
+  </div>
+
+  {{> popular}}
+</div>
+
+
+

@@ -1,0 +1,184 @@
+.user-tweets a {
+  text-decoration: none;
+  color: black;
+}
+
+.user-tweets .twi-count {
+  font-size: 13px;
+  color: #657786;
+}
+
+.user-tweets .cover-block {
+  height: 170px;
+  background-color: #999999;
+}
+
+.user-tweets .user-info-block {
+  height: 140px;
+}
+
+.user-tweets .user-img {
+  position: absolute;
+  top: 165px;
+  background: #c4c4c4;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+
+.user-tweets .user-detail {
+  margin-top: 55px;
+  font-size: 14px;
+}
+
+.user-tweets .user-name {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 25px;
+}
+
+.user-tweets .user-acc-name {
+  color: #657786;
+}
+
+.user-tweets .user-nav {
+  border-bottom: 0.1px solid #e6ecf0;
+  margin-top: 0;
+}
+
+.user-tweets .nav-tabs {
+  border-bottom: none !important;
+}
+
+.user-tweets .user-nav a {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  font-weight: bold !important;
+  color: #657786 !important;
+}
+
+.user-tweets .user-nav a:focus,
+.user-tweets .user-nav a:hover,
+.user-tweets .nav-link.active {
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  font-weight: bold !important;
+  border-bottom: 3px solid #ff6600 !important;
+  color: #657786 !important;
+}
+
+
+.user-tweets .edit-profile {
+  margin: 10px 10px 0 0;
+}
+
+.user-tweets .edit-profile-btn,
+.user-tweets .edit-profile-btn:visited,
+.user-profile-modal-btn:hover {
+  font-weight: bold !important;
+  border: 1.8px solid #ff6600 !important;
+  border-radius: 35px !important;
+  background-color: #ffffff !important;
+  color: #ff6600 !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.user-tweets .edit-profile-btn:hover,
+.user-profile-modal-btn,
+.user-profile-modal-btn:visited {
+  font-weight: bold !important;
+  border: 1.8px solid #ff6600 !important;
+  border-radius: 35px !important;
+  background-color: #ff6600 !important;
+  color: #ffffff !important;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.user-tweets .reply-user a {
+  color: #ff6600;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+.user-modal-content {
+  border-radius: 14px;
+  width: 600px;
+}
+
+.user-modal-content .user-modal-close-btn {
+  padding: 0px;
+  color: #ff6600 !important;
+}
+
+.user-modal-content .modal-title {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.user-modal-content .user-modal-header {
+  padding: 10px;
+}
+
+.user-modal-content .user-cover-block {
+  height: 200px;
+  background-position: 50% 50%;
+  background-size: 100% auto;
+  opacity: 50%;
+}
+
+.user-modal-content .user-info-block {
+  height: 300px;
+  padding: 0 10px 10px;
+}
+
+.user-modal-content .edit-btn-group {
+  height: 100%;
+}
+
+.user-modal-content .user-avatar-edit {
+  position: absolute;
+  top: 125px;
+  background-size: 100% auto;
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+  box-sizing: border-box;
+  height: 120px;
+  width: 120px;
+  padding: 0;
+}
+
+.user-modal-content .user-info-edit {
+  margin-top: 60px;
+}
+
+.user-modal-content .user-name-edit,
+.user-modal-content .user-intro-edit,
+.user-modal-content .user-input {
+  background-color: #f5f8fa;
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  /* border-bottom: 1px solid #657786; */
+  -webkit-box-shadow: none;
+  box-shadow: none !important;
+}
+
+.user-modal-content .user-intro-edit {
+  padding: 10px;
+}
+
+.user-modal-content label {
+  font-family: "Noto Sans TC";
+  font-size: 15px;
+  color: #657786;
+}
+
+.user-modal-content .count_message {
+  font-size: 15px;
+  color: #657786;
+  margin-top: 2px;
+}
