@@ -1481,15 +1481,28 @@ left:400px
 }
 
 .alert-success {
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:3;
-  width: 394px;
-  height:96px;
-  font-family: Roboto;
+position:fixed;
+bottom: 0;
+right:0;
+z-index:3;
+width: 394px;
+height:96px;
+font-family: Roboto;
 font-style: normal;
 font-weight: bold;
 font-size: 20px;
 line-height: 28px;
+background: #ffffff;
+box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.08);
+border-radius: 8px;
+color:black;
+border: transparent;
+display: flex;
+align-items: center;
+justify-content:space-between;
+}
+
+.alert-success i {
+  border: 2px solid red;
+color: #82C43C;
 }

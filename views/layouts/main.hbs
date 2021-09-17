@@ -15,7 +15,14 @@
 
 
 <body style="background: white">
-  {{#if success_messages}}
+
+  <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+    <div>success</div>
+    <div><i class="fas fa-check"></i></div>
+
+  </div>
+
+  {{!-- {{#if success_messages}}
   <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">success
     {{success_messages}}
   </div>
@@ -24,7 +31,7 @@
   <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">alert
     {{error_messages}}
   </div>
-  {{/if}}
+  {{/if}} --}}
 
   {{{body}}}
 
