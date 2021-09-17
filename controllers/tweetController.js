@@ -46,6 +46,7 @@ const tweetController = {
       nest: true,
       include: [User]
     })
+
     // console.log(tweets)
 
     if (helper.getUser(req).isAdmin) {
@@ -56,6 +57,7 @@ const tweetController = {
     console.log('有到這嗎')
     const renderPage = helper.getUser(req).isAdmin ? 'admin/admin_main' : 'home'
     return res.render(renderPage, { tweets })
+
   },
   getTweet: async (req, res) => {
     // return Tweet.findByPk(req.params.id, {
@@ -85,6 +87,8 @@ const tweetController = {
       return res.render('tweet', { tweet: tweet.toJSON() })
     } catch (e) {
       console.log(e.message)
+
+
     }
   },
   // 在此得列出最受歡迎的十個使用者
