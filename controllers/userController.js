@@ -186,7 +186,7 @@ const userController = {
         include: [
           { model: Like, include: [User] },
           { model: Reply, include: [User] },
-        ],
+        ]
       }),
       User.findAll({
         include: [
@@ -220,18 +220,51 @@ const userController = {
       .catch(err => console.log(err))
   },
 
+  getUserReplied: (req, res) => {
+    return Promise.all([
+      Reply.findAll({
+        where: { UserId: req.params.user_id },
+        include: [
+          { model: Tweet, include: [User] }
+        ],
+        raw: true, nest: true
+      }),
+      User.findAll({
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ]).then(([replies, users]) => {
+      //使用者（與其他重複）
+      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+      }))
+      topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      return res.render('replied', {
+        data: replies,
+        viewUser: viewUser[0].toJSON(),
+        isFollowed,
+        topUsers
+      })
+    })
+  },
+
   getUserLikes: (req, res) => {
     return Promise.all([
       Like.findAll({
         where: { UserId: req.params.user_id },
         include: [
-          // User,
-          { model: Tweet, include: [Reply, Like, User] },
+          { model: Tweet, include: [Reply, Like, User] }
         ],
       }),
       User.findAll({
         include: [
-          { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
@@ -258,9 +291,10 @@ const userController = {
         topUsers
       })
     })
+      .catch(err => console.log(err))
   },
-  
-  
+
+
 
   //works for tweets
   // getUserLikes: (req, res) => {
@@ -291,27 +325,6 @@ const userController = {
   //     })
   //   })
   // },
-
-
-  // 測試完可刪
-  getTopUsers: (req, res) => {
-    User.findAll({
-      include: [
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ]
-    })
-      .then(users => {
-        const users2 = users.map(user => ({
-          ...user.dataValues,
-          FollowerCount: user.Followers.length,
-          isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
-        })).sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-        console.log(users2)
-        return res.render('topUsersFake', { users: users2 })
-      })
-  },
 
   putUserSetting: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
