@@ -1,0 +1,252 @@
+<div class="row">
+  {{> homeNavBar}}
+  <div class="tweets col d-flex flex-column mx-4 user-tweets">
+    <div class="p-2 d-flex flex-row">
+      <a href="javascript:history.back()">
+        <i class="fas fa-arrow-left fa-lg mx-3 my-3"></i></a>
+      <div class="ms-3">
+        <p class="home-word">John Doe</p>
+        <p class="twi-count"> 25推文</p>
+      </div>
+
+    </div>
+    <div class="cover-block">
+      <img src="" alt="cover" onerror='this.style.display = "none"'>
+    </div>
+    <div class="user-info-block d-flex justify-content-between">
+      <div class="user-info ms-3">
+        <img class="user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
+          width="120" height="120" alt="Card image cap">
+        <div class="user-detail">
+          <h5 class="user-name mb-0">John Doe</h5>
+          <h6 class="user-acc-name mb-0">@heyjohn</h6>
+          <p class="user-intro my-1">
+            afdasd fads fsad hfasjd sdkafjshf asd adksjfhaskdj sadkjf
+          <p class="user-followship">
+            <strong>34個</strong>跟隨中&nbsp;&nbsp;&nbsp;&nbsp;<strong>59位</strong>跟隨者
+            <p />
+        </div>
+      </div>
+      <div class="edit-profile">
+        <button type="button" class="btn btn-outline-warning edit-profile-btn" data-bs-toggle="modal"
+          data-bs-target="#userModal">
+          編輯個人資料
+        </button>
+      </div>
+      {{!-- 加modal --}}
+    </div>
+    <div class="px-2 pt-3 mt-0 d-flex flex-row user-nav">
+      <ul class="nav nav-tabs">
+        <li class="nav-item current-nav">
+          <a class="nav-link" aria-current="page" href="/users/tweets">推文</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/replies">推文與回覆</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="/users/likes">喜歡的內容</a>
+        </li>
+      </ul>
+    </div>
+    <div class="tweets-article d-flex">
+      <div class="">
+        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar"
+          width="50px" height="50px">
+      </div>
+      <div class="d-flex flex-column tweet-article">
+        <div>
+          <span class="name">Name</span>
+          <span class="account">&nbsp;account</span>
+          <span class="time"><b>•</b>&nbsp;tweet time</span>
+        </div>
+        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
+          et quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
+          adipisci repellat laborum delectus.</p>
+        <div class="row">
+          <div class="col-2">
+            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
+          </div>
+          <div class="col-2">
+            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tweets-article d-flex">
+      <div class="">
+        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar">
+      </div>
+      <div class="d-flex flex-column tweet-article">
+        <div>
+          <span class="name">Name</span>
+          <span class="account">&nbsp;account</span>
+          <span class="time"><b>•</b>&nbsp;tweet time</span>
+        </div>
+        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
+          et
+          quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
+          adipisci
+          repellat laborum delectus.</p>
+        <div class="row">
+          <div class="col-2">
+            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
+          </div>
+          <div class="col-2">
+            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tweets-article d-flex">
+      <div class="">
+        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar">
+      </div>
+      <div class="d-flex flex-column tweet-article">
+        <div>
+          <span class="name">Name</span>
+          <span class="account">&nbsp;account</span>
+          <span class="time"><b>•</b>&nbsp;tweet time</span>
+        </div>
+        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
+          et
+          quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
+          adipisci
+          repellat laborum delectus.</p>
+        <div class="row">
+          <div class="col-2">
+            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
+          </div>
+          <div class="col-2">
+            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tweets-article d-flex">
+      <div class="">
+        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar">
+      </div>
+      <div class="d-flex flex-column tweet-article">
+        <div>
+          <span class="name">Name</span>
+          <span class="account">&nbsp;account</span>
+          <span class="time"><b>•</b>&nbsp;tweet time</span>
+        </div>
+        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
+          et
+          quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
+          adipisci
+          repellat laborum delectus.</p>
+        <div class="row">
+          <div class="col-2">
+            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
+          </div>
+          <div class="col-2">
+            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tweets-article d-flex">
+      <div class="">
+        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar">
+      </div>
+      <div class="d-flex flex-column tweet-article">
+        <div>
+          <span class="name">Name</span>
+          <span class="account">&nbsp;account</span>
+          <span class="time"><b>•</b>&nbsp;tweet time</span>
+        </div>
+        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
+          et
+          quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
+          adipisci
+          repellat laborum delectus.</p>
+        <div class="row">
+          <div class="col-2">
+            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
+          </div>
+          <div class="col-2">
+            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{> popular}}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="user-modal-Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content user-modal-content">
+      <form action="">
+        <div class="modal-header user-modal-header d-flex flex-row">
+          <div class="header">
+            <button type="button" class="btn-close user-modal-close-btn ms-1 me-3" data-bs-dismiss="modal"
+              aria-label="Close"></button>
+            <span class="modal-title" id="user-modal-Label">編輯個人資料</span>
+          </div>
+          <button type="submit" class="btn btn-info user-profile-modal-btn ms-auto px-3 py-1">儲存</button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="user-cover-block"
+            style="background-image: url('https://cdn.mos.cms.futurecdn.net/wtqqnkYDYi2ifsWZVW2MT4-1024-80.jpg.webp');">
+            <div class="edit-btn-group d-flex  justify-content-center align-items-center">
+              <i class="fas fa-camera fa-inverse fa-2x"></i>
+              <i class="fas fa-times fa-inverse fa-2x ms-5"></i>
+            </div>
+
+          </div>
+          <div class="user-info-block">
+            <div class="user-avatar-edit ms-3 d-flex  justify-content-center align-items-center"
+              style="background-image: url('https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg'">
+              <i class="fas fa-camera fa-inverse fa-2x"></i>
+            </div>
+            <div class="user-info-edit">
+              <div class="user-input">
+                <label for="userNameInput">名稱</label>
+                <input type="text" class="form-control user-name-edit" id="userNameInput" minlength="5" maxlength="50"
+                  placeholder="">
+              </div>
+              <div class="count_message mb-5 d-flex flex-row-reverse">
+                <p id="count_message_name">0/50</p>
+              </div>
+
+              <div class="user-input">
+                <label for="userInfoInput">自我介紹</label>
+                <textarea class="form-control user-intro-edit p-2" placeholder="" id="userInfoInput" maxlength="160"
+                  style="height: 120px"></textarea>
+              </div>
+              <div class="count_message mb-5 d-flex flex-row-reverse">
+                <p id="count_message_info">0/160</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  const userNameInput = document.querySelector('#userNameInput')
+  userNameInput.addEventListener('keyup', function countCharacters(event) {
+    const textEntered = document.querySelector('#userNameInput').value.length;
+    const noticeArea = document.querySelector('#count_message_name');
+    const countNotice = `${textEntered}/50`
+    noticeArea.innerHTML = countNotice;
+  })
+
+  const userInfoInput = document.querySelector('#userInfoInput')
+  userInfoInput.addEventListener('keyup', function countCharacters(event) {
+    const textEntered = document.querySelector('#userInfoInput').value.length;
+    const noticeArea = document.querySelector('#count_message_info');
+    const countNotice = `${textEntered}/160`
+    noticeArea.innerHTML = countNotice;
+  })
+
+
+
+</script>

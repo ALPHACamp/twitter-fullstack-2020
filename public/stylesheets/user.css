@@ -51,13 +51,16 @@
 }
 
 .user-tweets .user-nav a {
-  border: none !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
   font-weight: bold !important;
   color: #657786 !important;
 }
 
 .user-tweets .user-nav a:focus,
-.user-tweets .user-nav a:hover {
+.user-tweets .user-nav a:hover,
+.user-tweets .nav-link.active {
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
@@ -65,6 +68,7 @@
   border-bottom: 3px solid #ff6600 !important;
   color: #657786 !important;
 }
+
 
 .user-tweets .edit-profile {
   margin: 10px 10px 0 0;
@@ -94,10 +98,10 @@
   box-shadow: none;
 }
 
-.user-tweets .reply-user a{
+.user-tweets .reply-user a {
   color: #ff6600;
   background-color: transparent;
-  text-decoration: none;;
+  text-decoration: none;
 }
 
 .user-modal-content {
