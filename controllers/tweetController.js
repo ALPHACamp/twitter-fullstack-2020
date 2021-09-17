@@ -45,14 +45,17 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
-      include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }]
+      include: [User, 
+        { model: Like, include: [User] }, 
+        { model: Reply, include: [User] }
+      ]
     })
       .then(tweet => {
-        const date = tweet.createdAt.toLocaleDateString({ year: 'numeric', month: '2-digit', day: '2-digit' })
+        console.log(req.user.LikedTweets.map(d => d.id).includes(tweet.id))
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           currentUser: helpers.getUser(req),
-          date
+          like: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
         })
       })
   },
