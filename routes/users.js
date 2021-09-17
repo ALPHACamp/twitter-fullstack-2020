@@ -3,7 +3,7 @@ const router = express.Router()
 const passport = require('../config/passport')
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
-const helpers = require('../_helpers')
+
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
