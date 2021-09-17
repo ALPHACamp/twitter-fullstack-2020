@@ -10,17 +10,19 @@ const tweetController = {
   //顯示所有貼文
   getTweets: (req, res) => {
     return Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User]
-    }).then(tweet => {
+      include: [User, 
+        { model: Like, include: [Tweet] }],
+      order: [['createdAt', 'DESC']],
+      raw: true, nest: true
+    }).then(tweets => {
+     
       return res.render('index', {
-        tweet: tweet,
+        tweets:tweets,
         currentUser: helpers.getUser(req)
       })
     })
-
-    //目前可以看到全部
+      
+   
   },
 
   //新增一則貼文(要改api)
@@ -51,7 +53,6 @@ const tweetController = {
       ]
     })
       .then(tweet => {
-        console.log(req.user.LikedTweets.map(d => d.id).includes(tweet.id))
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           currentUser: helpers.getUser(req),
