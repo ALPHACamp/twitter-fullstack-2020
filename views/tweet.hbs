@@ -119,14 +119,16 @@
           {{!-- //TODO:要分實心空心 --}}
           
             {{!-- 測試like功能用的超醜按鈕 --}}
-            <form action="/tweets/{{tweet.id}}/like" method="POST">
-              <button class="btn" type="submit"><i class="far fa-heart"></i></button>
-            </form>
-            {{#if like}}
+            
+          {{#if like}}
             <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
               <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
             </form>
-            {{/if}}
+          {{else}}
+            <form action="/tweets/{{tweet.id}}/like" method="POST">
+              <button class="btn" type="submit"><i class="far fa-heart"></i></button>
+            </form>
+          {{/if}}
             {{!-- 測試like功能用的超醜按鈕 --}}
           
 
