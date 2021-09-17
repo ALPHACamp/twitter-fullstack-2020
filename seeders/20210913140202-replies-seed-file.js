@@ -13,7 +13,6 @@ module.exports = {
       const nums = new Set()
       while (nums.size !== 3) {
         nums.add(Math.floor(Math.random() * totalUsers) + 2)
-        nums.add(i)
       }
       commentedUsers.push(...nums)
     }
@@ -48,7 +47,7 @@ module.exports = {
       updatedAt: new Date()
     }))
     result.push(...data3)
-    
+
     return queryInterface.bulkInsert('Replies', result, {})
   },
   down: (queryInterface, Sequelize) => {

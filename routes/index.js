@@ -47,15 +47,12 @@ module.exports = (app, passport) => {
   // router.get('/current_user', userController.getCurrentUser)
 
 
-  // //TopUsers(要改成api)
-  // 測試完可刪
-  app.get('/users/top', userController.getTopUsers)
   // //使用者顯示特定使用者頁面(使用者所有貼文)
   app.get('/users/:user_id/tweets', authenticated, userController.getUserTweets)
   // //使用者所有喜歡貼文
   app.get('/users/:user_id/likes', authenticated, userController.getUserLikes)
   // //使用者所有回覆
-  // app.get('/users/:user_id/replied', userController.getUserReplied)
+  app.get('/users/:user_id/replied', userController.getUserReplied)
   // //使用者追蹤清單
   // router.get('/users/:user_id/followings', userController.getUserFollowings)
   // //使用者粉絲清單(被追蹤)
