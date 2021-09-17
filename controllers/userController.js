@@ -276,39 +276,6 @@ const userController = {
     })
   },
 
-
-
-  //works for tweets
-  // getUserLikes: (req, res) => {
-  //   Tweet.findAll({
-  //     where: { 
-
-  //       UserId: req.params.user_id 
-  //     },
-  //     include: [
-  //       User, 
-  //       { model: Like, include: [User] }, 
-  //       { model: Reply, include: [User] }
-  //     ],
-  //     // raw: true, nest: true
-  //   }).then((tweets) => {
-  //     const data = tweets.map(r => ({
-  //       // 整理 tweets 資料
-  //       ...r.dataValues,
-  //       ...r.dataValues.User.toJSON(),
-  //       // 計算人數
-  //       likeCount: r.Likes.length,
-  //       replyCount: r.Replies.length,
-  //       //判斷目前登入使用者是否已追蹤該 User 物件 (???)
-  //     }))
-  //     console.log(data)
-  //     return res.render('likes', {
-  //       tweets: data
-  //     })
-  //   })
-  // },
-
-
   // 測試完可刪
   getTopUsers: (req, res) => {
     User.findAll({
