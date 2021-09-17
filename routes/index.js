@@ -47,14 +47,12 @@ module.exports = (app, passport) => {
   // router.get('/current_user', userController.getCurrentUser)
 
 
-  // //TopUsers(要改成api)
-  // router.get('/users/top', userController.getTopUsers)
   // //使用者顯示特定使用者頁面(使用者所有貼文)
   app.get('/users/:user_id/tweets', authenticated, userController.getUserTweets)
   // //使用者所有喜歡貼文
   app.get('/users/:user_id/likes', authenticated, userController.getUserLikes)
   // //使用者所有回覆
-  // router.get('/users/:user_id/replied', userController.getUserReplied)
+  app.get('/users/:user_id/replied', userController.getUserReplied)
   // //使用者追蹤清單
   // router.get('/users/:user_id/followings', userController.getUserFollowings)
   // //使用者粉絲清單(被追蹤)
@@ -70,7 +68,6 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   // //使用者新增一則貼文
-  app.get('/tweets/create', authenticated, tweetController.createTweets)
   app.post('/tweets', authenticated, tweetController.postTweets)
 
   // //顯示特定貼文
@@ -122,10 +119,10 @@ module.exports = (app, passport) => {
   //-----------名稱勿再改動------------
   // //使用者編輯帳號設定(setting) (row 21-22)
   app.get('/users/:user_id/setting', authenticated, userController.getUserSetting)
-  app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
+  app.put('/users/:user_id/setting', authenticated ,userController.putUserSetting)
 
   // //使用者編輯個人資料(edit) (row 22-23)
-  app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
+  app.put('/users/:user_id/edit', authenticated, multipleUpload, userController.putUserEdit)
   //--------------------------------------
   // //註冊
   app.get('/signup', userController.signUpPage)

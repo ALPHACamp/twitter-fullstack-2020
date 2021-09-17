@@ -10,6 +10,7 @@ const Like = db.Like
 const Followship = db.Followship
 
 const imgur = require('imgur-node-api')
+const { fakeServer } = require('sinon')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
@@ -49,7 +50,7 @@ const userController = {
         })
       })
   },
-
+  // 測試完可刪
   // getUserEdit: (req, res) => {
   //   //檢查使用者是否在編輯自己的資料
   //   if (req.params.user_id !== String(helpers.getUser(req).id)) {
@@ -76,7 +77,7 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  putUserEdit: (req, res) => {
+  putUserEdit: async (req, res) => {
     const { name, introduction } = req.body
     if (!name) {
       req.flash('error_messages', '暱稱不能空白！')
@@ -86,41 +87,56 @@ const userController = {
       req.flash('error_messages', '字數超出上限！')
       return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
-    const { file } = req
-    if (file) {
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(file.path, (err, img) => {
-        return User.findByPk(req.params.user_id)
-          .then((user) => {
-            user.update({
-              name: req.body.name,
-              introduction: req.body.introduction,
-              avatar: file ? img.data.link : user.avatar,
-              // cover: file ? img.data.link : user.cover
-            })
-              .then(() => {
-                req.flash('success_messages', 'user profile was successfully updated!')
-                res.redirect('/tweets')
-              })
-              .catch(err => console.error(err))
-          })
-      })
-    } else {
-      return User.findByPk(req.params.user_id)
-        .then((user) => {
-          user.update({
+
+    // const file = Object.assign({}, req.files)
+    const { files } = req
+    const user = await User.findByPk(req.params.user_id)
+
+    // if (files) {
+    //files會有[Object: null prototype] {}
+    imgur.setClientID(IMGUR_CLIENT_ID)
+    if (files.avatar && files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        imgur.upload(files.cover[0].path, async (err, covImg) => {
+          await user.update({
             name: req.body.name,
             introduction: req.body.introduction,
-            avatar: user.avatar,
-            // cover: user.cover
+            avatar: avaImg.data.link,
+            cover: covImg.data.link
           })
-            .then(() => {
-              req.flash('success_messages', 'user profile was successfully updated!')
-              res.redirect('/tweets')
-            })
-            .catch(err => console.error(err))
+          req.flash('success_messages', 'user profile was successfully updated!')
+          return res.redirect('back')
         })
-
+      }
+      )
+    } else if (files.avatar && !files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          avatar: avaImg.data.link,
+        })
+        req.flash('success_messages', 'user profile was successfully updated!')
+        return res.redirect('back')
+      })
+    } else if (!files.avatar && files.cover) {
+      imgur.upload(files.cover[0].path, async (err, covImg) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          cover: covImg.data.link,
+        })
+        req.flash('success_messages', 'user profile was successfully updated!')
+        return res.redirect('back')
+      })
+    } else {
+      console.log('nofile', files)
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+      })
+      req.flash('success_messages', 'user profile was successfully updated!')
+      return res.redirect('back')
     }
   },
 
@@ -186,68 +202,117 @@ const userController = {
         include: [
           { model: Like, include: [User] },
           { model: Reply, include: [User] },
-        ],
+        ]
       }),
-      User.findByPk(req.params.user_id, {
+      User.findAll({
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
       })
-    ]).then(([tweets, user]) => {
+    ]).then(([tweets, users]) => {
       const data = tweets.map(r => ({
         ...r.dataValues,
-        likeCount: r.Likes.length,
-        replyCount: r.Replies.length
+        isLiked: r.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
       }))
-      const isFollowed = user.Followers.map((d) => d.id).includes(req.user.id)
+      //使用者（與其他重複）
+      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: user.Followers.map(d => d.id).includes(req.user.id),
+      }))
+      topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('tweets', {
         data: data,
-        viewUser: user.toJSON(),
-        isFollowed
+        viewUser: viewUser[0].toJSON(),
+        isFollowed,
+        topUsers
       })
     })
       .catch(err => console.log(err))
   },
 
-  getUserLikes: (req, res) => {
-    // Tweet.findAll({
-    //   where: { UserId: req.params.user_id },
-    //   include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }],
-    //   // raw: true, nest: true
-    // }).then((tweets) => {
-    //   const data = tweets.map(r => ({
-    //     // 整理 tweets 資料
-    //     ...r.dataValues,
-    //     ...r.dataValues.User.toJSON(),
-    //     // 計算人數
-    //     likeCount: r.Likes.length,
-    //     replyCount: r.Replies.length,
-    //     //判斷目前登入使用者是否已追蹤該 User 物件 (???)
-    //   }))
-    //   console.log(data)
-    //   return res.render('likes', {
-    //     tweets: data
-    //   })
-    // })
+  getUserReplied: (req, res) => {
+    return Promise.all([
+      Reply.findAll({
+        where: { UserId: req.params.user_id },
+        include: [
+          { model: Tweet, include: [User] }
+        ],
+        raw: true, nest: true
+      }),
+      User.findAll({
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ]).then(([replies, users]) => {
+      //使用者（與其他重複）
+      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+      }))
+      topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      return res.render('replied', {
+        data: replies,
+        viewUser: viewUser[0].toJSON(),
+        isFollowed,
+        topUsers
+      })
+    })
   },
 
-  getTopUsers: (req, res) => {
-    Followship.findAll({
-      attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
-      include: User,
-      group: ['followingId'],
-      order: [[sequelize.col('count'), 'DESC']],
-      limit: 10,
-      raw: true, nest: true
-    }).then(users => {
-      const data = users.map(r => ({
-        count: r.count,
-        ...r.User,
+  getUserLikes: (req, res) => {
+    return Promise.all([
+      Like.findAll({
+        where: { UserId: req.params.user_id },
+        include: [
+          { model: Tweet, include: [Reply, Like, User] }
+        ],
+      }),
+      User.findAll({
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ]).then(([tweets, users]) => {
+      const data = tweets.map(r => ({
+        ...r.dataValues,
+        ...r.dataValues.Tweet.toJSON(),
+        // description: r.dataValues.Tweet.dataValues.description.substring(0, 50),
+        // userAvatar: r.dataValues.User.dataValues.avatar,
+        // userName: r.dataValues.User.dataValues.name,
+        // userAccount: r.dataValues.User.dataValues.name,
+        isLiked: r.dataValues.Tweet.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
       }))
-      return res.render('topUsersFake', { topUsers: data })
+      //使用者（與其他重複）
+      console.log(data)
+      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+      }))
+      topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      return res.render('likes', {
+        data,
+        viewUser: viewUser[0].toJSON(),
+        isFollowed,
+        topUsers
+      })
     })
+      .catch(err => console.log(err))
   },
 
   putUserSetting: (req, res) => {
@@ -306,7 +371,8 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-
 }
+
+
 
 module.exports = userController

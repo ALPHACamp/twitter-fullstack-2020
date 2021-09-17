@@ -83,14 +83,26 @@
         <div class="edit-button">
 
           {{#ifCond user.id viewUser.id}}
-          <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
+          <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal"
+            data-target="#edit-user">編輯個人資料</button>
           {{else}}
           {{#if this.isFollowed }}
-          <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-              type="submit" class="btn follow-button">正在跟隨</button></form>
+          <div class="other-user-icon">
+            <div class="mail"><i class="far fa-envelope"></i></div>
+            <div class="notification"><i class="far fa-bell"></i></div>
+            <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;"><button
+                type="submit" class="btn follow-button">正在跟隨</button></form>
+          </div>
           {{else}}
-          <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button type="submit"
-              class="btn unfollow-button"> 跟隨 </button></form>
+          <div class="other-user-icon">
+            <div class="mail"><i class="far fa-envelope"></i></div>
+            <div class="notification"><i class="far fa-bell"></i></div>
+            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn unfollow-button"> 跟隨 </button></form>
+          </div>
+
+
+
           {{/if}}
           {{/ifCond}}
 
@@ -162,8 +174,21 @@
                 </div>
 
                 <div class="reply-like d-flex mt-2">
-                  <div><i class="far fa-comment mr-2"></i>{{this.replyCount}}</div>
-                  <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.likeCount}}</div>
+                  <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
+                  <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.Likes.length}}</div>
+
+
+                  {{#if isLiked}}
+                  <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+                    <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
+                  </form>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="POST">
+                    <button class="btn" type="submit"><i class="far fa-heart"></i></button>
+                  </form>
+                  {{/if}}
+
+
                 </div>
               </div>
 
@@ -191,38 +216,31 @@
         </div>
         <ul class="list-group">
           {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
-          {{!-- 跟隨中使用者開始 --}}
+          {{!-- 使用者開始 --}}
+          {{#each topUsers}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
               <div>
-                <img class="user-pic" src="" alt="">
+                <img class="user-pic" src="{{this.avatar}}" alt="">
               </div>
               <div class="name-account ml-2">
-                <div class="name">Pizza Hut</div>
-                <div class="account">@pizzahut</div>
+                <div class="name">{{this.name}}</div>
+                <div class="account">@{{this.account}}</div>
               </div>
               <div class="button">
-                <button type="submit" class="btn follow-button">正在跟隨</button>
-              </div>
-            </div>
-          </li>
-          {{!-- 使用者結束 --}}
 
-          {{!-- 未跟隨中使用者開始 --}}
-          <li class="list-group-item">
-            <div class="d-flex col-md-12" style="padding:0">
-              <div>
-                <img class="user-pic" src="" alt="">
-              </div>
-              <div class="name-account ml-2">
-                <div class="name">McDonald's</div>
-                <div class="account">@McDonald's</div>
-              </div>
-              <div class="button">
-                <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+                {{#if this.isFollowed }}
+                <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn follow-button">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
+                    type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+                {{/if}}
               </div>
             </div>
           </li>
+          {{/each}}
           {{!-- 使用者結束 --}}
 
         </ul>
@@ -240,7 +258,7 @@
 {{!-- add-tweet Modal --}}
 <div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
 
-  {{> add-tweet}}
+  {{> add-tweet currentUser=currentUser}}
 
 </div>
 {{!-- add-tweet Modal --}}
@@ -248,7 +266,7 @@
 {{!-- edit-user Modal --}}
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
 
-  {{> editUser}}
+  {{> editUser currentUser=currentUser viewUser=viewUser}}
 
 </div>
 {{!-- edit-user Modal --}}
@@ -258,7 +276,7 @@
   const name = document.querySelector("#name")
   const introduction = document.querySelector("#introduction")
   const saveButton = document.querySelector("#save-button")
-  
+
   saveButton.addEventListener("click", function check(event) {
     console.log(event)
     if (name.value.length < l) {

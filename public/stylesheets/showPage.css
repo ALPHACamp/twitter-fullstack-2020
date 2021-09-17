@@ -9,6 +9,10 @@
   flex-grow: 1;
 }
 
+body{
+  position:relative;
+}
+
 hr {
   width:60vw;
   margin:0;
@@ -419,6 +423,7 @@ input {
   right: 0;
   margin: 0;
   max-width: 540px;
+  z-index: 3;
 }
 
 .user-name {
@@ -1297,6 +1302,14 @@ border-radius: 100px;
   cursor: pointer;
 }
 
+.edit-delete i{
+  position: relative;
+  text-align: center;
+  color:white;
+  cursor: pointer;
+}
+
+
 .user-info .edit-delete {
   color:black;
   top:-70px;
@@ -1340,6 +1353,11 @@ border-radius: 100px;
  top:76px;
  padding-top:20px;
  padding-left:15px;
+ font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 19px;
+line-height: 28px;
 }
 
 .input-count {
@@ -1377,13 +1395,25 @@ color: #657786;
 .user-edit-info .invalid-feedback.name{
   position:absolute;
   top:54px;
-  left:30px
+  left:30px;
+    font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 15px;
+color: #FC5A5A;
 }
 
 .user-edit-info .invalid-feedback#introduction{
   position:absolute;
-  top:210px;
+  top:215px;
   left:15px;
+  font-family: Noto Sans TC;
+font-style: normal;
+font-weight: 500;
+font-size: 15px;
+line-height: 15px;
+color: #FC5A5A;
 }
 
 .edit-name-title {
@@ -1439,3 +1469,27 @@ left:400px
   align-items: center;
 }
 
+.pic-icon {
+  cursor: pointer;
+}
+
+.edit-avatar {
+  position: absolute;
+  top:44px;
+  left:65px;
+  color: white;
+}
+
+.alert-success {
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:3;
+  width: 394px;
+  height:96px;
+  font-family: Roboto;
+font-style: normal;
+font-weight: bold;
+font-size: 20px;
+line-height: 28px;
+}
