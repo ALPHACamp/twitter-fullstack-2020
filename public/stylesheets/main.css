@@ -70,7 +70,7 @@ button{
   color: #1C1C1C;
   font-size: 1.1rem;
   font-weight: bold;
-}
+} 
 
 .tweets .input-block{
   border-width: 1px 0px 10px 0px;
@@ -168,4 +168,59 @@ button{
   color: #657786;
   font-size: 1rem;
   font-weight: bold;
+}
+
+
+
+/*=============== tweet-followfhip ===============*/
+
+.tweet-followfhip{
+max-width: 600px;
+  border-width: 0px 1px 0px 1px;
+  border-style: solid;
+  border-color: #E6ECF0;
+  padding: 0;
+}
+
+.tweet-followfhip .home-word{
+  color: #1C1C1C;
+  font-size: 19px;
+  font-weight: 700;
+} 
+
+.tweet-followfhip .count{
+  color: #657786;
+  font-size: 13px;
+  Font-family: Noto Sans TC;
+  Font-style: Medium;
+  font-weight: 700;
+}
+
+.tweet-followfhip .follow-name{
+  color: #1C1C1C;
+  font-size: 15px;
+  font-weight: 700;
+} 
+
+.tweet-followfhip .follow-account{
+  color: #657786;
+  font-size: 15px;
+  Font-family: Noto Sans TC;
+  Font-style: Medium;
+  font-weight: 500;
+} 
+
+.tweet-followfhip .following{
+  border-width: 1px 0px 1px 0px;
+  border-style: solid;
+  border-color: #E6ECF0;
+  height: 100px;
+} 
+
+.tweet-followfhip .follow-btn{
+Font: Noto Sans TC;
+Weight: 700;
+Style:normal;
+Size:15px;
+Line-height :15px;
 }
