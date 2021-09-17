@@ -85,9 +85,17 @@ const userController = {
   },
 
   getUserSetting: (req, res) => {
-    const id = req.params.id
-    
-  }
+    const id = req.user.id
+
+    User.findByPk(id)
+      .then(user => {
+        console.log(req.params)
+        return res.render('setting', { 
+          layout: 'settingMain',
+          user: user.toJSON()
+         })
+      })
+  },
 }
 
 module.exports = userController
