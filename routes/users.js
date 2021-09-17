@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
+const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
 const helpers = require('../_helpers')
 
@@ -24,6 +25,7 @@ router.get('/logout', userController.logout)
 router.get('/self/:id', authenticated, userController.getUser)
 router.get('/self/reply/:id', authenticated, userController.getUserReply)
 router.get('/self/like/:id', authenticated, userController.getUserLike)
+
 
 
 module.exports = router
