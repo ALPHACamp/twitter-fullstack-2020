@@ -1,6 +1,4 @@
-const twitterController = require('../controllers/tweetController.js')
 const helpers = require('../_helpers')
-
 
 const tweetController = require('../controllers/tweetController.js')
 const adminController = require('../controllers/adminController.js')
@@ -30,8 +28,13 @@ module.exports = (app, passport) => {
   // 前台首頁
   app.get('/', authenticated, (req, res) => res.redirect('/home'))
   app.get('/home', authenticated, tweetController.getTweets)
+
+  // Like - Tweet
+  app.post('/like/:tweetId', authenticated, userController.addLike)
+  app.delete('/like/:tweetId', authenticated, userController.removeLike)
+
   app.get('/userProfile', authenticated, userController.getUserProfile)
-  app.get('/setting', authenticated, userController.getsetting)
+  app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
 
   // 後台登入登出
@@ -42,12 +45,20 @@ module.exports = (app, passport) => {
   }), adminController.signIn)
   app.get('/logout', adminController.logout)
 
-  // 後台首頁
+  // 後台首頁(測試用)
   app.get('/admin_main', authenticatedAdmin, tweetController.getTweets)
 
   // 追蹤
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
+
+  // 後台 - 首頁
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+  // 後台 - 使用者列表
+  app.get('/admin/users', authenticatedAdmin, adminController.adminGetUsers)
+  // 後台 - 推文清單
+  app.get('/admin/tweets', authenticatedAdmin, adminController.adminGetTweets)
+  router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   // 註冊
   app.get('/signup', userController.signUpPage)
@@ -63,5 +74,5 @@ module.exports = (app, passport) => {
   app.get('/logout', userController.logout)
 
   //取得特定貼文資料
-  app.get('/tweet/:id', tweetController.getTweet)
+  app.get('/tweets/:id', tweetController.getTweet)
 }
