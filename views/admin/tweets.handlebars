@@ -1,0 +1,54 @@
+<div>
+  {{> message}}
+  <div>
+    <div class="navbar d-flex flex-column" style="max-height: 1200px; min-width: 235px">
+      <div style="font-weight: bold;font-size: 20px;display:contents">
+        <div style="margin-bottom:100px">
+          <img src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4" alt="" style="height: 100px;">
+        </div>
+
+        <div style="">
+          <a href="/admin/tweets" style="color: black;">推文清單</a>
+          <br>
+          <br>
+          <a href="/admin/users" style="color: black;">使用者清單</a>
+        </div>
+
+        {{#if user}}
+
+
+        <div style="margin-top: 844px;">
+          <a href="/logout" style="color: black; text-decoration: none;">
+            <span><i class="fas fa-sign-out-alt fa-rotate-180"></i></span>
+            <span style="margin-left: 23px;">登出</span>
+          </a>
+        </div>
+
+        {{/if}}
+
+
+      </div>
+
+      <div style="padding-left: 150px;width:1200px">
+        <table class="table">
+          <tbody>
+            {{#each tweets}}
+            <tr>
+              <th scope="row" style="width: 100px;"><img src="{{this.avatar}}" alt=""
+                  style="border-radius: 50%;width:100%"></th>
+              <td>{{this.name}} {{this.account}}
+                <br>
+                {{this.description}}
+              </td>
+              <td>
+                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                  <button type="submit" class="btn btn-link">X</button>
+                </form>
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>

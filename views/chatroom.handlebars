@@ -1,0 +1,59 @@
+{{> nav}}
+<div calss="flex-column" style="background: #F5F8FA;min-width: 350px;height: 517px;">
+  <h1 class="nowline">{{!--上線使用者--}}</h1>
+  <div class="chat-users">
+    {{!-- <img src="{{user.avatar}}" style="width: 50px; height: 50px" alt="">
+    <div>{{user.id}}||||{{user.account}}</div> --}}
+
+  </div>
+</div>
+
+<div class="flex-column" style="min-width: 600px; border: 1px solid #E6ECF0">
+  <h1>公開聊天室</h1>
+  {{#if historyMsgs.length}}
+  <div class="text-center">
+    <button type="button" id="historyMsgsBtn" class="btn btn-primary">歷史訊息</button>
+  </div>
+  {{else}}
+  <button type="button" id="historyMsgsBtn" class="d-none btn btn-primary">歷史訊息</button>
+  {{/if}}
+
+  <div class="chat-messages" style="max-height: 517px; overflow: auto;">
+
+    <div id="historyMessages" class="d-none">
+      {{#each historyMsgs}}
+      <div class="d-flex justify-content-center">
+        <a href="/users/{{this.User.id}}" style="text-decoration: none;">
+          <img src="{{this.User.avatar}}" style="width: 50px; height: 50px; border-radius: 50%" alt="">
+        </a>
+        <div class="ml-3 flex-column">
+          <p class="m-0">{{this.User.name}}</p>
+          <p> {{this.message}} </p>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+
+  </div>
+
+  <div class="">
+    <form id="chat-form">
+      <input id="msg" type="text" placeholder="輸入訊息..." required autocomplete="off" />
+      <button class="btn btn-primary">Send</button>
+    </form>
+  </div>
+
+</div>
+
+<div class="d-none now-user">
+  <img class="avatar" src="{{user.avatar}}" style="width: 50px; height: 50px" alt="">
+  <div class="user-id">{{user.id}}</div>
+  <div class="user-name">{{user.name}}</div>
+  <div class="user-account">{{user.account}}</div>
+
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/chat.js"></script>

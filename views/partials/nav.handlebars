@@ -1,0 +1,55 @@
+<nav class="navbar d-flex flex-column" style="max-height: 1200px; min-width: 235px;">
+  <div style="font-weight: bold;font-size: 18px;">
+
+    <div>
+      <img src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4" alt="" style="height: 50px;">
+    </div>
+
+    <div style="margin-top: 51px;">
+      <a href="/tweets" style="color: black; text-decoration: none;">
+        <span><i class="fas fa-home"></i></span>
+        <span style="margin-left: 20.9px;">首頁</span>
+      </a>
+    </div>
+
+    <div style="margin-top: 34px;">
+      <a href="/chatroom" style="color: black; text-decoration: none;">
+        <span><i class="far fa-envelope"></i></span>
+        <span style="margin-left: 20.9px;">公開聊天室</span>
+      </a>
+    </div>
+
+    {{#if user}}
+    <div style="margin-top: 34px; margin-bottom: 34px;">
+      <a href="/users/{{user.id}}?{{user.id}}" style="color: black; text-decoration: none;">
+        <span><i class="far fa-user"></i></span>
+        <span style="margin-left: 23.65px;">個人資料</span>
+      </a>
+    </div>
+
+    <div style="margin-bottom: 34px;">
+      <a href="/users/{{user.id}}/set" style="color: black; text-decoration: none;">
+        <span><i class="fas fa-cog"></i></span>
+        <span style="margin-left: 21.62px;">設定</span>
+      </a>
+    </div>
+
+    <button class="btn" data-toggle="modal" data-target="#postTweet"
+      style="width: 210px; height: 45px; font-weight: 500; font-size: 18px; background: #FF6600; border-radius: 100px; color: white">
+      推文
+    </button>
+
+
+
+
+    <div style="margin-top: 844px;">
+      <a href="/logout" style="color: black; text-decoration: none;">
+        <span><i class="fas fa-sign-out-alt fa-rotate-180"></i></span>
+        <span style="margin-left: 23px;">登出</span>
+      </a>
+    </div>
+
+    {{/if}}
+
+  </div>
+</nav>

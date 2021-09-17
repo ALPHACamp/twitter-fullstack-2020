@@ -1,0 +1,27 @@
+<div style="flex-direction: column;justify-content:center;width:inherit">
+  <div style="margin-bottom:100px">
+    <img src="https://avatars.githubusercontent.com/u/8667311?s=200&v=4" alt="" style="padding: 15px;margin-left:41%">
+    <h1 style="padding: 15px;margin-left:36%;font-weight:bolder">Alphitter 後台管理系統 </h1>
+  </div>
+  <form action="/admin/signin" method="POST" style="width: 100%;">
+    <div class="text-center mb-4">
+      {{> message}}
+    </div>
+    <div class="form-label-group">
+      <label for="inputAccount">Account</label>
+      <input type="text" name="account" class="form-control" placeholder="Account" required autofocus>
+    </div>
+    <div class="form-label-group">
+      <label for="inputPassword">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" required>
+    </div>
+    <br />
+    <button class="btn btn-lg btn-primary btn-block" type="submit"
+      style="border-radius: 15px; background-color:rgb(248, 101, 47);font-weight:bolder">登入</button>
+    <div class="text-center mb-4">
+      <p style="display: flex; justify-content:flex-end; margin:revert;font-weight:bolder"><a href="/signin">前台登入</a>
+      </p>
+    </div>
+    <p class="mt-5 mb-3 text-muted text-center">© 2020-2021</p>
+  </form>
+</div>

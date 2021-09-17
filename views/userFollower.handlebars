@@ -1,0 +1,54 @@
+{{> nav}}
+<div class="mr-5">
+  {{> message}}
+  <div>
+    <div>
+      <a href="javascript:history.back()">回上一頁</a>
+    </div>
+    <div>
+      <h4>{{userView.name}}</h4>
+      <p>{{userView.TweetsCount}}推文</p>
+    </div>
+  </div>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" href="/users/{{userView.id}}/followers">跟隨者</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/users/{{userView.id}}/followings">正在跟隨</a>
+    </li>
+  </ul>
+  {{#each userView.Followers}}
+  <div class="card mb-3 " style="width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-2">
+        <img src="{{this.avatar}}" alt="..." style="width: 50px;
+            height: 50px; border-radius: 50%">
+      </div>
+      <div class="col-md-10">
+        <div class="card-body">
+          <h5 class="card-title"><a href="/users/{{this.id}}">{{this.name}}</a>
+            {{#if this.isFollowed}}
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-danger"
+                style="background: #FF6600; border-radius: 100px; color: white; width: 92px; height: 30px; font-size: 15px; line-height: 15px;">正在跟隨</button>
+            </form>
+            {{else}}
+            <form action=" /followships/" method="POST">
+              <input type="hidden" name="id" value="{{this.id}}">
+              <button type="submit" class="btn btn-danger"
+                style="background: #FF6600; border-radius: 100px; color: white; width: 92px; height: 30px; font-size: 15px; line-height: 15px;">跟隨</button>
+            </form>
+            {{/if}}
+          </h5>
+          <p class="card-text">{{this.account}}</p>
+          <p>{{this.introduction}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<!--================= 跟隨 ================= -->
+{{> follower}}
