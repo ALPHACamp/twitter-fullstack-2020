@@ -145,13 +145,13 @@
         {{!-- 推文區開始 --}}
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link" href="">推文</a>
+            <a class="nav-link" href="/users/{{viewUser.id}}/tweets">推文</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="">推文與回覆</a>
+            <a class="nav-link" href="/users/{{viewUser.id}}/replied">推文與回覆</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link  active" href="">喜歡的內容</a>
+            <a class="nav-link  active" href="/users/{{viewUser.id}}/likes">喜歡的內容</a>
           </li>
         </ul>
         <br /><br />
@@ -167,7 +167,7 @@
               <div class="col-md-11">
                 <div class="account-info d-flex" style="flex:auto">
                   <div class="user-name">{{User.name}}</div>
-                  <div class="account-time ml-2">@{{User.account}}．{{fromNow this.createdAt}}按喜歡</div>
+                  <div class="account-time ml-2">@{{User.account}}．{{fromNow this.createdAt}}按讚</div>
                 </div>
 
                 <div class="post-text d-flex" style="flex:auto">
@@ -208,37 +208,30 @@
         <ul class="list-group">
           {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
           {{!-- 跟隨中使用者開始 --}}
+          {{#each topUsers}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
               <div>
-                <img class="user-pic" src="" alt="">
+                <img class="user-pic" src="{{this.avatar}}" alt="">
               </div>
               <div class="name-account ml-2">
-                <div class="name">Pizza Hut</div>
-                <div class="account">@pizzahut</div>
+                <div class="name">{{this.name}}</div>
+                <div class="account">@{{this.account}}</div>
               </div>
               <div class="button">
-                <button type="submit" class="btn follow-button">正在跟隨</button>
-              </div>
-            </div>
-          </li>
-          {{!-- 使用者結束 --}}
 
-          {{!-- 未跟隨中使用者開始 --}}
-          <li class="list-group-item">
-            <div class="d-flex col-md-12" style="padding:0">
-              <div>
-                <img class="user-pic" src="" alt="">
-              </div>
-              <div class="name-account ml-2">
-                <div class="name">McDonald's</div>
-                <div class="account">@McDonald's</div>
-              </div>
-              <div class="button">
-                <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+                {{#if this.isFollowed }}
+                <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn follow-button">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
+                    type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+                {{/if}}
               </div>
             </div>
           </li>
+          {{/each}}
           {{!-- 使用者結束 --}}
 
         </ul>
