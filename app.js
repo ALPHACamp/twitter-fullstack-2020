@@ -9,6 +9,14 @@ const passport = require('./config/passport')
 const app = express()
 const port = 3000
 
+app.engine('hbs', handlebars({
+  defaultLayout: 'main',
+  extname: '.hbs'
+})) 
+app.set('view engine', 'hbs') 
+app.use(express.static('public'))
+
+
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
