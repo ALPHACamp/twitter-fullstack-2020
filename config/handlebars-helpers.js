@@ -7,7 +7,7 @@ module.exports = {
   },
 
   date: function (a) {
-    return moment(a).locale('zh-tw').format('LLLL')
+    return moment(a).locale('zh-tw').format('a h:mm．LL')
   },
 
   ifCond: function (a, b, options) {

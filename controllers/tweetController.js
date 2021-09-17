@@ -50,8 +50,7 @@ const tweetController = {
       .then(tweet => {
         return res.render('tweet', {
           tweet: tweet.toJSON(),
-          currentUser: helpers.getUser(req),
-          date
+          currentUser: helpers.getUser(req)
         })
       })
   },
