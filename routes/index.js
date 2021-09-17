@@ -37,6 +37,9 @@ module.exports = (app, passport) => {
         } return next()
     }
 
+    //
+    app.get('/', (req, res) => {res.render('tweets')})
+    //
     app.get('/signup', userController.signUpPage)
     app.post('/signup', userController.signUp)
     app.get('/signin', userController.signInPage)

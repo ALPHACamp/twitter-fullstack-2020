@@ -22,7 +22,7 @@ app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({ defaultLayout: 'main' })) // Handlebars 註冊樣板引擎
-app.set('view engine', 'handlebars') // 設定Handlebars 做為樣板引擎
+app.set('view engine', 'hbs') // 設定Handlebars 做為樣板引擎
 app.use(express.static('public'))
 // setup session 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
