@@ -258,7 +258,7 @@
 {{!-- add-tweet Modal --}}
 <div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
 
-  {{> add-tweet}}
+  {{> add-tweet currentUser=currentUser}}
 
 </div>
 {{!-- add-tweet Modal --}}
@@ -266,7 +266,7 @@
 {{!-- edit-user Modal --}}
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
 
-  {{> editUser}}
+  {{> editUser currentUser=currentUser viewUser=viewUser}}
 
 </div>
 {{!-- edit-user Modal --}}

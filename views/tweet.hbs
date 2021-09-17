@@ -22,7 +22,7 @@
 
 
           <a href="/users/{{user.id}}/tweets">
-            <li class="list-group-item active ">
+            <li class="list-group-item ">
               <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
             </li>
           </a>
@@ -90,7 +90,7 @@
 
         {{!-- //TODO:時間格式要調整 --}}
         <div class="time">
-          <p>發表於:{{date tweet.createdAt}}</p>
+          <p>{{date tweet.createdAt}}</p>
           {{!-- should be:上午10:05．2020年6月10日 --}}
         </div>
 
@@ -233,7 +233,7 @@
 {{!-- add-tweet Modal --}}
 <div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
 
-  {{> add-tweet}}
+  {{> add-tweet currentUser=currentUser}}
 
 </div>
 {{!-- add-tweet Modal --}}
