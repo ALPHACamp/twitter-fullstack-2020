@@ -177,6 +177,17 @@
                 <div class="reply-like d-flex mt-2">
                   <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
                   <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.Likes.length}}</div>
+
+                  {{#if isLiked}}
+                  <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+                    <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
+                  </form>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="POST">
+                    <button class="btn" type="submit"><i class="far fa-heart"></i></button>
+                  </form>
+                  {{/if}}
+
                 </div>
               </div>
 

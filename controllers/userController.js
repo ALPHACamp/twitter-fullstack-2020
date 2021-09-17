@@ -198,8 +198,7 @@ const userController = {
     ]).then(([tweets, users]) => {
       const data = tweets.map(r => ({
         ...r.dataValues,
-        likeCount: r.Likes.length,
-        replyCount: r.Replies.length
+        isLiked: r.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
       }))
       //使用者（與其他重複）
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
@@ -207,7 +206,7 @@ const userController = {
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+        isFollowed: user.Followers.map(d => d.id).includes(req.user.id),
       }))
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('tweets', {
@@ -265,6 +264,7 @@ const userController = {
       }),
       User.findAll({
         include: [
+          { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
@@ -272,7 +272,8 @@ const userController = {
     ]).then(([tweets, users]) => {
       const data = tweets.map(r => ({
         ...r.dataValues,
-        ...r.dataValues.Tweet.toJSON()
+        ...r.dataValues.Tweet.toJSON(),
+        isLiked: r.dataValues.Tweet.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
       }))
       console.log(data)
       //使用者（與其他重複）
