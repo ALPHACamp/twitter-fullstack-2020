@@ -10,6 +10,7 @@ const Like = db.Like
 const Followship = db.Followship
 
 const imgur = require('imgur-node-api')
+const { fakeServer } = require('sinon')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
@@ -76,7 +77,7 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  putUserEdit: (req, res) => {
+  putUserEdit: async (req, res) => {
     const { name, introduction } = req.body
     if (!name) {
       req.flash('error_messages', '暱稱不能空白！')
@@ -86,41 +87,56 @@ const userController = {
       req.flash('error_messages', '字數超出上限！')
       return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
-    const { file } = req
-    if (file) {
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(file.path, (err, img) => {
-        return User.findByPk(req.params.user_id)
-          .then((user) => {
-            user.update({
-              name: req.body.name,
-              introduction: req.body.introduction,
-              avatar: file ? img.data.link : user.avatar,
-              // cover: file ? img.data.link : user.cover
-            })
-              .then(() => {
-                req.flash('success_messages', 'user profile was successfully updated!')
-                res.redirect('/tweets')
-              })
-              .catch(err => console.error(err))
-          })
-      })
-    } else {
-      return User.findByPk(req.params.user_id)
-        .then((user) => {
-          user.update({
+
+    // const file = Object.assign({}, req.files)
+    const { files } = req
+    const user = await User.findByPk(req.params.user_id)
+
+    // if (files) {
+    //files會有[Object: null prototype] {}
+    imgur.setClientID(IMGUR_CLIENT_ID)
+    if (files.avatar && files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        imgur.upload(files.cover[0].path, async (err, covImg) => {
+          await user.update({
             name: req.body.name,
             introduction: req.body.introduction,
-            avatar: user.avatar,
-            // cover: user.cover
+            avatar: avaImg.data.link,
+            cover: covImg.data.link
           })
-            .then(() => {
-              req.flash('success_messages', 'user profile was successfully updated!')
-              res.redirect('/tweets')
-            })
-            .catch(err => console.error(err))
+          req.flash('success_messages', 'user profile was successfully updated!')
+          return res.redirect('back')
         })
-
+      }
+      )
+    } else if (files.avatar && !files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          avatar: avaImg.data.link,
+        })
+        req.flash('success_messages', 'user profile was successfully updated!')
+        return res.redirect('back')
+      })
+    } else if (!files.avatar && files.cover) {
+      imgur.upload(files.cover[0].path, async (err, covImg) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          cover: covImg.data.link,
+        })
+        req.flash('success_messages', 'user profile was successfully updated!')
+        return res.redirect('back')
+      })
+    } else {
+      console.log('nofile', files)
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+      })
+      req.flash('success_messages', 'user profile was successfully updated!')
+      return res.redirect('back')
     }
   },
 
@@ -299,38 +315,6 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-
-
-  //works for tweets
-  // getUserLikes: (req, res) => {
-  //   Tweet.findAll({
-  //     where: { 
-
-  //       UserId: req.params.user_id 
-  //     },
-  //     include: [
-  //       User, 
-  //       { model: Like, include: [User] }, 
-  //       { model: Reply, include: [User] }
-  //     ],
-  //     // raw: true, nest: true
-  //   }).then((tweets) => {
-  //     const data = tweets.map(r => ({
-  //       // 整理 tweets 資料
-  //       ...r.dataValues,
-  //       ...r.dataValues.User.toJSON(),
-  //       // 計算人數
-  //       likeCount: r.Likes.length,
-  //       replyCount: r.Replies.length,
-  //       //判斷目前登入使用者是否已追蹤該 User 物件 (???)
-  //     }))
-  //     console.log(data)
-  //     return res.render('likes', {
-  //       tweets: data
-  //     })
-  //   })
-  // },
-
   putUserSetting: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
     //後端驗證表單內容
@@ -387,7 +371,8 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-
 }
+
+
 
 module.exports = userController

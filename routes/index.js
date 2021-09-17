@@ -68,7 +68,6 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   // //使用者新增一則貼文
-  app.get('/tweets/create', authenticated, tweetController.createTweets)
   app.post('/tweets', authenticated, tweetController.postTweets)
 
   // //顯示特定貼文
@@ -120,10 +119,10 @@ module.exports = (app, passport) => {
   //-----------名稱勿再改動------------
   // //使用者編輯帳號設定(setting) (row 21-22)
   app.get('/users/:user_id/setting', authenticated, userController.getUserSetting)
-  app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
+  app.put('/users/:user_id/setting', authenticated ,userController.putUserSetting)
 
   // //使用者編輯個人資料(edit) (row 22-23)
-  app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
+  app.put('/users/:user_id/edit', authenticated, multipleUpload, userController.putUserEdit)
   //--------------------------------------
   // //註冊
   app.get('/signup', userController.signUpPage)

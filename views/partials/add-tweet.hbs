@@ -7,17 +7,21 @@
 
     <hr>
 
+
+  <form action="/tweets" method="POST">
     <div class="type-area">
       <div class="user-pic">
         <img src="{{currentUser.avatar}}" alt="">
       </div>
-      {{!-- //TODO:要包FORM --}}
-      <div class="type-text">
-        <textarea type="text" class="new-post-content form-control" id="description" name="description"
-          placeholder="有什麼新鮮事？" rows="5"></textarea>
-        <div class="invalid-feedback" id="add-tweet">
+
+    
+      
+        <div class="type-text">
+          <textarea type="text" class="new-post-content form-control" id="description" name="description"
+            placeholder="有什麼新鮮事？" rows="5"></textarea>
+          <div class="invalid-feedback" id="add-tweet">
+          </div>
         </div>
-      </div>
 
     </div>
 
@@ -25,6 +29,8 @@
       <button type="submit" class="btn button">推文
       </button>
     </div>
+
+    </form>
 
   </div>
 </div>
