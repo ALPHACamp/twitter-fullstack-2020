@@ -54,7 +54,9 @@ const loginController = {
       res.redirect('/signin')
     } else {
       req.flash('success_messages', '成功登入！')
+
       res.redirect('/')
+
     }
   },
 
