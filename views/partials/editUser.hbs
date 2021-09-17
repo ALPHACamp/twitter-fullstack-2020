@@ -6,42 +6,57 @@
         <i class="fas fa-times"></i>
       </button>
       <div class="title-text">編輯個人資料</div>
-      {{!-- //TODO:要包FORM --}}
-      <div class="save-button">
-        <button type="submit" class="btn button" id="save-button">儲存
-        </button>
-      </div>
+
+      <form action="/users/{{user.id}}/edit?_method=PUT" method="POST" data-toggle="validator"
+        enctype="multipart/form-data">
+
+        <div class="save-button">
+          <button type="submit" class="btn button" id="save-button">儲存
+          </button>
+        </div>
     </div>
     <hr>
 
     <div class="cover">
-      <img src="https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989__340.jpg" alt="">
+      <img src="{{viewUser.cover}}" id="cover" alt="">
     </div>
 
+
     <div class="edit-delete">
-      <a href="">
+
+      <label class="pic-icon">
+        <input type="file" onchange="coverPreview()" id="cover_upload" class="form-control-file" name="cover"
+          style="display:none">
         <i class="fas fa-camera mr-4"></i>
-      </a>
+      </label>
+
       <a href="">
         <i class="fas fa-times"></i>
       </a>
+
     </div>
 
     <div class="user-info">
       <div class="avatar">
-        <img src="https://randomuser.me/api/portraits/men/88.jpg" alt="">
+        <img src="{{viewUser.avatar}}" alt="" id="avatar">
       </div>
-      <div class="edit-delete">
-        <a href="">
+
+      <div class="edit-avatar">
+
+        <label class="pic-icon">
+          <input type="file" onchange="avatarPreview()" id="avatar_upload" class="form-control-file" name="avatar"
+            style="display:none">
           <i class="fas fa-camera mr-4"></i>
-        </a>
+        </label>
+
       </div>
     </div>
 
-    <form action="/users/{{user.id}}/setting?_method=PUT" method="POST" data-toggle="validator" class="user-edit-info">
+    <div class="user-edit-info">
+
       <div>
         <div class="edit-name-title">名稱</div>
-        <input type="text" name="name" id="name" class="form-control" aria-label="name" value="{{user.name}}">
+        <input type="text" name="name" id="name" class="form-control" aria-label="name" value="{{viewUser.name}}">
         <div class="invalid-feedback name">
         </div>
         <div class="count-down">
@@ -53,7 +68,7 @@
       <div>
         <div class="edit-introduction-title">自我介紹</div>
         <textarea type="text" name="introduction" id="introduction" class="form-control" aria-label="name"
-          value="{{user.description}}" rows="6"></textarea>
+          rows="6">{{viewUser.introduction}}</textarea>
         <div class="invalid-feedback" id="introduction">
         </div>
         <div class="count-down introduction">
@@ -63,14 +78,11 @@
 
       </div>
 
+    </div>
+
+
+
     </form>
-
-
-
-
-
-
-
   </div>
 </div>
 
@@ -80,6 +92,7 @@
   const introduction = document.querySelector('#introduction')
   const introductionCount = document.querySelector('#introduction-count')
   const editUserBtn = document.querySelector('.edit-user')
+  const saveBtn = document.querySelector('#save-button')
 
   editUserBtn.addEventListener('click', function countInitial(event) {
     introductionCount.innerText = introduction.value.length
@@ -106,14 +119,48 @@
       introduction.classList.add('is-invalid')
       introduction.nextElementSibling.innerHTML = "自我介紹不得為空"
     }
-    if (introduction.value.length > 50) {
+    if (introduction.value.length > 160) {
       introduction.classList.add('is-invalid')
       introduction.nextElementSibling.innerHTML = "自我介紹不得超過160個字"
     }
-    if (introduction.value.length > 0 && introduction.value.length < 50) {
+    if (introduction.value.length > 0 && introduction.value.length < 160) {
       introduction.classList.remove('is-invalid')
     }
     introductionCount.innerText = introduction.value.length
   })
+
+  saveBtn.addEventListener('click', function check(event) {
+    if (introduction.classList.contains('is-invalid') || name.classList.contains('is-invalid')) {
+      event.preventDefault()
+    }
+  })
+
+  //預覽圖片
+  function coverPreview() {
+    const cover = document.querySelector('#cover')
+    const coverfile = document.querySelector('#cover_upload').files[0]
+    const reader = new FileReader()
+
+    reader.addEventListener("load", function () {
+      cover.src = reader.result
+    }, false);
+    if (coverfile) {
+      reader.readAsDataURL(coverfile);
+    }
+  }
+
+  function avatarPreview() {
+    const avatar = document.querySelector('#avatar')
+    const avatarFile = document.querySelector('#avatar_upload').files[0]
+    const reader = new FileReader()
+
+    reader.addEventListener("load", function () {
+      avatar.src = reader.result
+    }, false);
+    if (avatarFile) {
+      reader.readAsDataURL(avatarFile);
+    }
+  }
+
 
 </script>
