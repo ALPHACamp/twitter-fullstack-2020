@@ -88,72 +88,57 @@ const userController = {
       return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
 
-    const file = Object.assign({}, req.files)
+    // const file = Object.assign({}, req.files)
+    const { files } = req
+    const user = await User.findByPk(req.params.user_id)
 
-    if (file) {
-      imgur.setClientID(IMGUR_CLIENT_ID)
-      const user = await User.findByPk(req.params.user_id)
-      if (file.avatar && file.cover) {
-        imgur.upload(file.avatar[0].path, async (err, avaImg) => {
-          imgur.upload(file.cover[0].path, async (err, covImg) => {
-            await user.update({
-              name: req.body.name,
-              introduction: req.body.introduction,
-              avatar: file ? avaImg.data.link : user.avatar,
-              cover: file ? covImg.data.link : user.cover
-            })
-            req.flash('success_messages', 'user profile was successfully updated!')
-            return res.redirect('back')
-          })
-        }
-        )
-      }
-
-      if (file.avatar && !file.cover) {
-        imgur.upload(file.avatar[0].path, async (err, avaImg) => {
+    // if (files) {
+    //files會有[Object: null prototype]
+    imgur.setClientID(IMGUR_CLIENT_ID)
+    if (files.avatar && files.cover) {
+      imgur.upload(file.avatar[0].path, async (err, avaImg) => {
+        imgur.upload(file.cover[0].path, async (err, covImg) => {
           await user.update({
             name: req.body.name,
             introduction: req.body.introduction,
             avatar: file ? avaImg.data.link : user.avatar,
+            cover: file ? covImg.data.link : user.cover
           })
           req.flash('success_messages', 'user profile was successfully updated!')
           return res.redirect('back')
         })
       }
-
-      if (!file.avatar && file.cover) {
-        imgur.upload(file.avatar[0].path, async (err, covImg) => {
-          await user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            cover: file ? covImg.data.link : user.cover,
-          })
-          req.flash('success_messages', 'user profile was successfully updated!')
-          return res.redirect('back')
+      )
+    } else if (files.avatar && !files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          avatar: avaImg.data.link,
         })
-      }
-
-
-
-      // const cover = await imgur.upload(file.cover[0].path, (err, img) => { return img.data.link })
-
-
-
+        req.flash('success_messages', 'user profile was successfully updated!')
+        return res.redirect('back')
+      })
+    } else if (!files.avatar && files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, covImg) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          cover: covImg.data.link,
+        })
+        req.flash('success_messages', 'user profile was successfully updated!')
+        return res.redirect('back')
+      })
     } else {
-      return User.findByPk(req.params.user_id)
-        .then((user) => {
-          user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            avatar: user.avatar,
-            cover: user.cover
-          })
-            .then(() => {
-              req.flash('success_messages', 'user profile was successfully updated!')
-              res.redirect('back')
-            })
-            .catch(err => console.error(err))
-        })
+      console.log('nofile', files)
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+        // avatar: user.avatar,
+        // cover: user.cover
+      })
+      req.flash('success_messages', 'user profile was successfully updated!')
+      return res.redirect('back')
     }
   },
 
@@ -221,36 +206,31 @@ const userController = {
           { model: Reply, include: [User] },
         ],
       }),
-      //可合併
-      User.findByPk(req.params.user_id, {
+      User.findAll({
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      }),
-      //可合併
-      User.findAll({
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
       })
-    ]).then(([tweets, user, users]) => {
+    ]).then(([tweets, users]) => {
       const data = tweets.map(r => ({
         ...r.dataValues,
         likeCount: r.Likes.length,
         replyCount: r.Replies.length
       }))
-      const isFollowed = user.Followers.map((d) => d.id).includes(req.user.id)
+      //使用者（與其他重複）
+      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
         isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
-      })).sort((a, b) => b.FollowerCount - a.FollowerCount)
+      }))
+      topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('tweets', {
         data: data,
-        viewUser: user.toJSON(),
+        viewUser: viewUser[0].toJSON(),
         isFollowed,
         topUsers
       })
@@ -259,26 +239,78 @@ const userController = {
   },
 
   getUserLikes: (req, res) => {
-    // Tweet.findAll({
-    //   where: { UserId: req.params.user_id },
-    //   include: [User, { model: Like, include: [User] }, { model: Reply, include: [User] }],
-    //   // raw: true, nest: true
-    // }).then((tweets) => {
-    //   const data = tweets.map(r => ({
-    //     // 整理 tweets 資料
-    //     ...r.dataValues,
-    //     ...r.dataValues.User.toJSON(),
-    //     // 計算人數
-    //     likeCount: r.Likes.length,
-    //     replyCount: r.Replies.length,
-    //     //判斷目前登入使用者是否已追蹤該 User 物件 (???)
-    //   }))
-    //   console.log(data)
-    //   return res.render('likes', {
-    //     tweets: data
-    //   })
-    // })
+    return Promise.all([
+      Like.findAll({
+        where: { UserId: req.params.user_id },
+        include: [
+          // User,
+          { model: Tweet, include: [Reply, Like, User] },
+        ],
+      }),
+      User.findAll({
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ]).then(([tweets, users]) => {
+      const data = tweets.map(r => ({
+        ...r.dataValues,
+        ...r.dataValues.Tweet.toJSON()
+      }))
+      console.log(data)
+      //使用者（與其他重複）
+      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+      }))
+      topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      return res.render('likes', {
+        data,
+        viewUser: viewUser[0].toJSON(),
+        isFollowed,
+        topUsers
+      })
+    })
   },
+
+
+
+  //works for tweets
+  // getUserLikes: (req, res) => {
+  //   Tweet.findAll({
+  //     where: { 
+
+  //       UserId: req.params.user_id 
+  //     },
+  //     include: [
+  //       User, 
+  //       { model: Like, include: [User] }, 
+  //       { model: Reply, include: [User] }
+  //     ],
+  //     // raw: true, nest: true
+  //   }).then((tweets) => {
+  //     const data = tweets.map(r => ({
+  //       // 整理 tweets 資料
+  //       ...r.dataValues,
+  //       ...r.dataValues.User.toJSON(),
+  //       // 計算人數
+  //       likeCount: r.Likes.length,
+  //       replyCount: r.Replies.length,
+  //       //判斷目前登入使用者是否已追蹤該 User 物件 (???)
+  //     }))
+  //     console.log(data)
+  //     return res.render('likes', {
+  //       tweets: data
+  //     })
+  //   })
+  // },
+
+
   // 測試完可刪
   getTopUsers: (req, res) => {
     User.findAll({
