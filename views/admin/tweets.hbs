@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="list-group col-md-2">
+    <a href="/admin/tweets" class="list-group-item list-group-item-action active">推文清單</a>
+    <a href="/admin/users" class="list-group-item list-group-item-action">使用者列表</a>
+  </div>
+
+  <div class="col-md-10">
+    <li class="list-group-item">推文清單</li>
+    {{#each tweets}}
+    <div class="card">
+      <div class="row g-0 p-1">
+        <div class="col-md-2"
+          style="border-radius: 50%; border: 1px; width: 85px; height: 85px; background-image: url(https://cdn.pixabay.com/photo/2017/02/22/17/06/wave-2089959_960_720.jpg);">
+        </div>
+        <div class="col-md-10">
+          <div class="card-body">
+            <h4 class="card-title" style="display: contents;">{{this.User.name}}</h4>
+            <span class="lead">@{{this.User.account}}．</span>
+            <span class="lead">{{moment this.createdAt}}</span>
+            <p class="card-text">{{this.description}}</p>
+          </div>
+        </div>
+
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" class="col">
+          <button type="submit" class="btn-close" onclick="return confirm('Sure to delete?')"></button>
+        </form>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

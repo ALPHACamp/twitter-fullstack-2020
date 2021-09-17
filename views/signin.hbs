@@ -1,0 +1,21 @@
+<h1 class="text-center">登入Alphitter</h1>
+
+<form class="row g-3" action="/signin" method="POST">
+  <div class="col-md-8 mx-auto">
+    <label for="account" class="form-label">Account</label>
+    <input type="text" class="form-control" id="account" name="account">
+  </div>
+  <div class="col-md-8 mx-auto">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" name="password">
+  </div>
+  <div class="col-8 d-grid gap-2 mx-auto">
+    <button type="submit" class="btn btn-primary">Sign in</button>
+  </div>
+  <br>
+
+  <div class="col-8 text-end mx-auto">
+    <a href="/signup">註冊Alphitter</a> ．
+    <a href="/admin/signin">後台登入</a>
+  </div>
+</form>

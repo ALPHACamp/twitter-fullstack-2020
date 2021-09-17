@@ -1,0 +1,88 @@
+{{#each data}}
+    <div class=" card d-flex flex-row row">
+        <div class="col-2 d-flex justify-content-center mt-3">
+            <a href="/users/{{this.User.id}}/tweets">
+            <img class="rounded-circle" src="{{this.User.avatar}}" alt="" width="50px" height="50px">
+            </a>
+        </div>
+        <div class="col-10 card-body">
+            <div class="row">
+                <p><span style="font-weight: bolder;">{{this.User.name}}</span><span
+                        style="color: gray;">@{{this.User.account}}．{{moment this.createdAt}}</span></p>
+            </div>
+            <a href="/tweets/{{this.id}}/replies" style="text-decoration:none;color:#333;">
+                <div class="row">
+                    <p>{{this.description}}</p>
+                </div>
+            </a>
+            <div class="row action-bar">
+                <button href="#" class="btn btn-link col-3" style="margin-right:40px; width: 40px" data-bs-toggle="modal"
+                    data-bs-target="#tweet-{{this.id}}"><i class="far fa-comment" style="color: gray;"><span
+                            style="margin-left: 10px;">{{this.countReplies}}</span></i></button>
+                {{#if this.isLike}}
+                <form class="col-3" action="/tweets/{{this.id}}/like" method="post">
+                    <button type="submit" class="btn btn-link"><i class="like fas fa-heart "
+                            style="color: #e0245e"><span
+                                style="margin-left: 10px;">{{this.countLikes}}</span></i></button>
+                </form>
+                {{else}}
+                <form class="col-3" action="/tweets/{{this.id}}/like" method="post">
+                    <button type="submit" class="btn btn-link"><i class="unlike far fa-heart" style="color: gray;"><span
+                                style="margin-left: 3px;">{{this.countLikes}}</span></i></button>
+                </form>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <form action="/tweets/{{this.id}}/replies" method="POST">
+        <div class="modal fade" id="tweet-{{this.id}}" tabindex="-1" aria-labelledby="tweet-{{this.id}}Label"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+
+                    <div class="modal-body d-flex flex-row row">
+                        {{!-- 推文 --}}
+                        <div class="row d-flex flex-row ">
+                            <div class="col-2 d-flex justify-content-center mt-3">
+                                <img class="rounded-circle" src="{{this.User.avatar}}" alt="" width="50px"
+                                    height="50px">
+                            </div>
+                            <div class="col-10 ">
+                                <div class="row">
+                                    <p><span style="font-weight: bolder;">{{this.User.name}}</span><span
+                                            style="color: gray;">@taiwan．{{moment this.createdAt}}</span></p>
+                                </div>
+                                <div class="row">
+                                    <p>{{this.description}}</p>
+                                </div>
+                                <div class="row">
+                                    <p style="color: gray;">回覆給<span
+                                            style="color: #ff6600;">＠{{this.User.account}}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {{!-- 回文 --}}
+                        <div class="row mt-3">
+                            <div class="col-2">
+                                <img class="rounded-circle" src="{{../user.avatar}}" alt="" width="50px" height="50px">
+                            </div>
+                            <div class="col-10">
+                                <textarea name="comment" id="comment" cols="40" rows="5"
+                                    style="resize:none; border: 0px;" placeholder="推你的回覆"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary rounded-pill">回覆</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {{/each}}
