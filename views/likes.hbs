@@ -91,15 +91,16 @@
           <div class="other-user-icon">
             <div class="mail"><i class="far fa-envelope"></i></div>
             <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{currentUser.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-                type="submit" class="btn follow-button">正在跟隨</button></form>
+            <form action="/followships/{{currentUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <button type="submit" class="btn follow-button">正在跟隨</button>
+            </form>
           </div>
           {{else}}
           <div class="other-user-icon">
             <div class="mail"><i class="far fa-envelope"></i></div>
             <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{currentUser.id}}" method="POST" style="display: contents;"><button type="submit"
-                class="btn unfollow-button"> 跟隨 </button></form>
+            <form action="/followships/{{currentUser.id}}" method="POST" style="display: contents;"><button
+                type="submit" class="btn unfollow-button"> 跟隨 </button></form>
           </div>
 
 
@@ -161,7 +162,9 @@
           <div class="tweet col-md-12">
             <div class="d-flex">
               <div class="mt-2 ml-2 col-md-1" style="padding:0">
-                <img class="user-pic mr-2" src="{{User.avatar}}" alt="">
+                <a href="/users/{{User.id}}/likes" class="text-muted">
+                  <img class="user-pic mr-2" src="{{User.avatar}}" alt="">
+                </a>
               </div>
 
               <div class="col-md-11">
@@ -170,9 +173,11 @@
                   <div class="account-time ml-2">@{{User.account}}．{{fromNow this.createdAt}}按讚</div>
                 </div>
 
-                <div class="post-text d-flex" style="flex:auto">
-                  {{this.description}}
-                </div>
+                <a href="/tweets/{{this.TweetId}}" class="text-muted">
+                  <div class="post-text d-flex" style="flex:auto">
+                    {{this.description}}
+                  </div>
+                </a>
 
                 <div class="reply-like d-flex mt-2">
                   <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>

@@ -18,7 +18,7 @@
     <hr>
 
     <div class="cover">
-      <img src="{{viewUser.cover}}" id="cover" alt="">
+      <img src="{{currentUser.cover}}" id="cover" alt="">
     </div>
 
 
@@ -38,7 +38,7 @@
 
     <div class="user-info">
       <div class="avatar">
-        <img src="{{viewUser.avatar}}" alt="" id="avatar">
+        <img src="{{currentUser.avatar}}" alt="" id="avatar">
       </div>
 
       <div class="edit-avatar">
@@ -56,7 +56,7 @@
 
       <div>
         <div class="edit-name-title">名稱</div>
-        <input type="text" name="name" id="name" class="form-control" aria-label="name" value="{{viewUser.name}}">
+        <input type="text" name="name" id="name" class="form-control" aria-label="name" value="{{currentUser.name}}">
         <div class="invalid-feedback name">
         </div>
         <div class="count-down">
@@ -68,7 +68,7 @@
       <div>
         <div class="edit-introduction-title">自我介紹</div>
         <textarea type="text" name="introduction" id="introduction" class="form-control" aria-label="name"
-          rows="6">{{viewUser.introduction}}</textarea>
+          rows="6">{{currentUser.introduction}}</textarea>
         <div class="invalid-feedback" id="introduction">
         </div>
         <div class="count-down introduction">

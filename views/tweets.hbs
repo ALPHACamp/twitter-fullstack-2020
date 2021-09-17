@@ -91,7 +91,8 @@
             <div class="mail"><i class="far fa-envelope"></i></div>
             <div class="notification"><i class="far fa-bell"></i></div>
             <form action="/followships/{{currentUser.id}}?_method=DELETE" method="POST" style="display: contents;">
-              <button type="submit" class="btn follow-button">正在跟隨</button></form>
+              <button type="submit" class="btn follow-button">正在跟隨</button>
+            </form>
           </div>
           {{else}}
           <div class="other-user-icon">
@@ -160,7 +161,9 @@
           <div class="tweet col-md-12">
             <div class="d-flex">
               <div class="mt-2 ml-2 col-md-1" style="padding:0">
-                <img class="user-pic mr-2" src="{{../currentUser.avatar}}" alt="">
+                <a href="/users/{{../currentUser.id}}/tweets" class="text-muted">
+                  <img class="user-pic mr-2" src="{{../currentUser.avatar}}" alt="">
+                </a>
               </div>
 
               <div class="col-md-11">
@@ -168,13 +171,15 @@
                   <div class="user-name">{{../currentUser.name}}</div>
                   <div class="account-time ml-2">@{{../currentUser.account}}．{{fromNow this.createdAt}}</div>
                 </div>
-
-                <div class="post-text d-flex" style="flex:auto">
-                  {{this.description}}
-                </div>
-
+                <a href="/tweets/{{this.id}}" class="text-muted">
+                  <div class="post-text d-flex" style="flex:auto">
+                    {{this.description}}
+                  </div>
+                </a>
                 <div class="reply-like d-flex mt-2">
-                  <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
+                  <a href="/tweets/{{this.id}}" class="text-muted">
+                    <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
+                  </a>
                   <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.Likes.length}}</div>
 
 
@@ -266,7 +271,7 @@
 {{!-- edit-user Modal --}}
 <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
 
-  {{> editUser currentUser=currentUser viewUser=viewUser}}
+  {{> editUser currentUser=currentUser currentUser=currentUser}}
 
 </div>
 {{!-- edit-user Modal --}}

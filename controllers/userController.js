@@ -289,10 +289,6 @@ const userController = {
       const data = tweets.map(r => ({
         ...r.dataValues,
         ...r.dataValues.Tweet.toJSON(),
-        // description: r.dataValues.Tweet.dataValues.description.substring(0, 50),
-        // userAvatar: r.dataValues.User.dataValues.avatar,
-        // userName: r.dataValues.User.dataValues.name,
-        // userAccount: r.dataValues.User.dataValues.name,
         isLiked: r.dataValues.Tweet.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
       }))
       //使用者（與其他重複）
