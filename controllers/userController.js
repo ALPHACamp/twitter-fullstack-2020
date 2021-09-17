@@ -77,7 +77,7 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  putUserEdit: (req, res) => {
+  putUserEdit: async (req, res) => {
     const { name, introduction } = req.body
     if (!name) {
       req.flash('error_messages', '暱稱不能空白！')
@@ -87,27 +87,58 @@ const userController = {
       req.flash('error_messages', '字數超出上限！')
       return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
-    const { file } = req
+
+    const file = Object.assign({}, req.files)
 
     if (file) {
-      // imgur上傳方式
-      imgur.setClientID(IMGUR_CLIENT_ID);
-      imgur.upload(file.path, (err, img) => {
-        return User.findByPk(req.params.user_id)
-          .then((user) => {
-            user.update({
+      imgur.setClientID(IMGUR_CLIENT_ID)
+      const user = await User.findByPk(req.params.user_id)
+      if (file.avatar && file.cover) {
+        imgur.upload(file.avatar[0].path, async (err, avaImg) => {
+          imgur.upload(file.cover[0].path, async (err, covImg) => {
+            await user.update({
               name: req.body.name,
               introduction: req.body.introduction,
-              avatar: file ? img.data.link : user.avatar,
-              // cover: file ? img.data.link : user.cover
+              avatar: file ? avaImg.data.link : user.avatar,
+              cover: file ? covImg.data.link : user.cover
             })
-              .then(() => {
-                req.flash('success_messages', 'user profile was successfully updated!')
-                res.redirect('back')
-              })
-              .catch(err => console.error(err))
+            req.flash('success_messages', 'user profile was successfully updated!')
+            return res.redirect('back')
           })
-      })
+        }
+        )
+      }
+
+      if (file.avatar && !file.cover) {
+        imgur.upload(file.avatar[0].path, async (err, avaImg) => {
+          await user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: file ? avaImg.data.link : user.avatar,
+          })
+          req.flash('success_messages', 'user profile was successfully updated!')
+          return res.redirect('back')
+        })
+      }
+
+      if (!file.avatar && file.cover) {
+        imgur.upload(file.avatar[0].path, async (err, covImg) => {
+          await user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            cover: file ? covImg.data.link : user.cover,
+          })
+          req.flash('success_messages', 'user profile was successfully updated!')
+          return res.redirect('back')
+        })
+      }
+
+
+
+      // const cover = await imgur.upload(file.cover[0].path, (err, img) => { return img.data.link })
+
+
+
     } else {
       return User.findByPk(req.params.user_id)
         .then((user) => {
@@ -123,7 +154,6 @@ const userController = {
             })
             .catch(err => console.error(err))
         })
-
     }
   },
 
@@ -249,7 +279,7 @@ const userController = {
     //   })
     // })
   },
-// 測試完可刪
+  // 測試完可刪
   getTopUsers: (req, res) => {
     User.findAll({
       include: [
@@ -323,7 +353,8 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-
 }
+
+
 
 module.exports = userController

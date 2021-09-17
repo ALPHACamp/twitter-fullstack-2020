@@ -126,7 +126,7 @@ module.exports = (app, passport) => {
   app.put('/users/:user_id/setting', authenticated ,userController.putUserSetting)
 
   // //使用者編輯個人資料(edit) (row 22-23)
-  app.put('/users/:user_id/edit', authenticated, upload.single('avatar'), userController.putUserEdit)
+  app.put('/users/:user_id/edit', authenticated, multipleUpload, userController.putUserEdit)
   //--------------------------------------
   // //註冊
   app.get('/signup', userController.signUpPage)
