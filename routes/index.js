@@ -4,7 +4,8 @@ const adminController = require('../controllers/adminController.js')
 module.exports = app => {
   app.get('/', (req, res) => res.redirect('/tweets'))
   // tweetController
-  app.get('/tweets', tweetController.getRestaurants)
+  app.get('/tweets', tweetController.getTweets)
+  app.get('/tweets/:id', tweetController.getTweet)
 
 
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
