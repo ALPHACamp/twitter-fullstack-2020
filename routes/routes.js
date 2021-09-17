@@ -40,6 +40,7 @@ const authenticatedAdmin = (req, res, next) => {
 // tweets相關路由
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.addTweet)
+router.post('/tweets/:tweetId/replies', authenticated, tweetController.postReplies)
 
 // User
 // signin

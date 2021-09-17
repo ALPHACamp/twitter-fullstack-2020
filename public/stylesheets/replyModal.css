@@ -1,0 +1,17 @@
+.reply-modal{
+  padding: 18px 15px;
+}
+
+.reply-to{
+  color: #657786;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+}
+
+.reply-account{
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: #FF6600;
+}

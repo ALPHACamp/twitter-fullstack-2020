@@ -58,7 +58,9 @@ describe('# Like Model', () => {
       })
     })
     it('read', (done) => {
-        db.Like.findByPk(data.id).then((like) => {  
+        db.Like.findByPk(data.id).then((like) => { 
+          console.log('data', data)
+          console.log('like', like)
           expect(data.id).to.be.equal(like.id)
           done()
         })
