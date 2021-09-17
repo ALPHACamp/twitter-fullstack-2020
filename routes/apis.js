@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-// 要放passport
+const passport = require('../config/passport')
 
 const userController = require('../controllers/api/userController')
 

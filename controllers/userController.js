@@ -5,6 +5,7 @@ const helpers = require('../_helpers')
 
 const userController = {
   getUserTweets: (req, res) => {
+    res.render('userTweets')
 
   },
   getSetting: (req, res) => {
@@ -14,10 +15,10 @@ const userController = {
 
   },
   getReplies: (req, res) => {
-
+    res.render('userReply')
   },
   getLikes: (req, res) => {
-
+res.render('userLike')
   },
   getFollowings: async (req, res) => {
     try {
