@@ -44,7 +44,28 @@ const tweetController = {
     const tweets = await Tweet.findAll({
       raw: true,
       nest: true,
-      include: [User]
+      include: [User],
+      where: whereQuery
+    }).then(tweets => {
+      console.log(tweets)
+      console.log('---------觀察rows---------')
+      console.log(tweets.rows)
+      console.log('---------觀察---------')
+      const data = tweets.rows.map(tweet => ({
+        ...tweet.dataValues,
+        // TweetCommentedCount: tweet.dataValues.CommentedTweets.length,
+        // isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+        //推文被喜歡的次數
+        TweetLikedCount: tweet.dataValues.LikedTweets.length,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
+      }))
+        .then(() => {
+          console.log(data)
+          console.log('---------觀察data---------')
+          return res.render('home', {
+            tweets: data
+          })
+        })
     })
 
     // console.log(tweets)
