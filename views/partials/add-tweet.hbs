@@ -7,12 +7,14 @@
 
     <hr>
 
+
+  <form action="/tweets" method="POST">
     <div class="type-area">
       <div class="user-pic">
         <img src="{{currentUser.avatar}}" alt="">
       </div>
 
-      <form action="/tweets/{{tweet.id}}" method="POST">
+    
       
         <div class="type-text">
           <textarea type="text" class="new-post-content form-control" id="description" name="description"
