@@ -3,6 +3,7 @@ const db = require('../models')
 
 const userController = {
   getUserTweets: (req, res) => {
+    res.render('userTweets')
 
   }, 
   getSetting: (req, res) => {
@@ -12,10 +13,10 @@ const userController = {
 
   }, 
   getReplies: (req, res) => {
-
+    res.render('userReply')
   }, 
   getLikes: (req, res) => {
-
+    res.render('userLike')
   }, 
   getFollowings: (req, res) => {
 

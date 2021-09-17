@@ -37,6 +37,20 @@ router.get('/signin', loginController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
 router.get('/logout', loginController.logOut)
 
+// tweets
+router.get('/', (req, res) => res.redirect('/tweets'))
+router.get('/tweets', tweetController.getTweets)
+
+
+// users
+//以下都還要加userid
+router.get('/users/tweets', userController.getUserTweets) 
+router.get('/users/replies', userController.getReplies) 
+router.get('/users/likes', userController.getLikes)  
+
+
+
+
 // Admin
 router.get('/admin/signin', adminController.signInPage)
 router.post('/admin/signin', adminController.signIn)

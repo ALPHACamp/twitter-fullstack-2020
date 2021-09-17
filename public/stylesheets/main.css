@@ -26,9 +26,10 @@ p {
 .common-button{
   background-color: #FF6600!important;
   color: #FFFFFF!important;
+}
 
 
-.for-center {
+.for-center{
   width: 90%;
 }
 
@@ -217,6 +218,7 @@ p {
 .tweet-modal-textarea-feedback{
   text-align: end;
   padding-right: 65px;
+}
 
 .tweets-back,
 .users-back {
