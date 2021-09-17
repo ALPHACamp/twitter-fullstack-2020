@@ -4,30 +4,44 @@ const Reply = db.Reply
 const User = db.User
 const Followship = db.Followship
 
+const helper = require('../_helpers')
+
+const maxDescLen = 50
+
 const tweetController = {
   // 首頁
   getTweets: async (req, res) => {
-    const id = req.params.id
-    console.log('------------------分隔線1------------------')
-    console.log(id)
-    console.log(helper.getUser(req),'該使用者的資料 = req.user')
-    const loginUserId = helper.getUser(req).id
-    console.log('------------------分隔線2------------------')
-    console.log(loginUserId) // root: 1
-    console.log(req.query) // {} 空的
-    console.log('------------------分隔線3------------------')
-    
-    // 如果推文的人在使用者的追隨名單內，就顯示推文
-    // followship內 A使用者在 B使用者 的
-    // 驗證使用者
-    const whereQuery = {}
-    whereQuery.userId = loginUserId
-    
-    console.log(whereQuery.userId)
-    console.log('------------------分隔線4------------------')
-    
-    // 類似餐廳清單Favorite的邏輯，需要找到所有追隨中的使用者
-    await Tweet.findAndCountAll({
+    // const id = req.params.id
+    // console.log(helper.getUser(req),'哈哈')
+    // const loginUserId = helper.getUser(req).id
+    // const whereQuery = {}
+    // // 如果推文的人在使用者的追隨名單內，就顯示推文
+    // // followship內 A使用者在 B使用者 的
+    // // 驗證使用者
+    // if (req.query.userId === loginUserId) {
+    //   userId = Number(req.query.userId)
+    //   whereQuery.userId = userId
+    // }
+
+    // Tweet.findAndCountAll({
+    //   // include: Followship,
+    //   where: whereQuery
+    // }).then(result => {
+    //   const data = result.rows.map(r => ({
+    //     ...r.dataValues,
+    //     isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+    //     isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
+    //   }))
+    //     .findAll({
+    //       raw: true,
+    //       nest: true
+    //     }).then(() => {
+    //       return res.render('home', {
+    //         tweets: data,
+    //       })
+    //     })
+    // })
+    const tweets = await Tweet.findAll({
       raw: true,
       nest: true,
       include: [User],
@@ -53,33 +67,50 @@ const tweetController = {
           })
         })
     })
-    // const tweets = await Tweet.findAll({  
-    //   raw: true,
-    //   nest: true,
-    //   include: [User]
-    // })
-    // // console.log(tweets)
-    // console.log('有到這嗎')
-    // return res.render('home',{ tweets})
-  },
-  // 取得單一推文資料，要有 使用者頭像，暱稱、帳號 
-  // 推文要有內容like, reply
-  getTweet: (req, res) => {
-    const id = req.params.id
-    return Tweet.findByPk(id, {
-      // TODO 需要包含的資料有哪些?
-      include: [
-        User,
-        { model: Reply, include: [User] }
-      ]
-    })
-      .then(tweet => {
-        const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
-        return res.render('tweet', {
-          tweet: tweet.toJSON(),
-          isLiked
-        })
+
+    // console.log(tweets)
+
+    if (helper.getUser(req).isAdmin) {
+      tweets.map(tweet => {
+        tweet.description = tweet.description.length <= 50 ? tweet.description : tweet.description.substring(0, maxDescLen) + "..."
       })
+    }
+    console.log('有到這嗎')
+    const renderPage = helper.getUser(req).isAdmin ? 'admin/admin_main' : 'home'
+    return res.render(renderPage, { tweets })
+
+  },
+  getTweet: async (req, res) => {
+    // return Tweet.findByPk(req.params.id, {
+    //   include: [
+    //     ,
+    //     // { model: User, as: 'Followers' },
+    //     // { model: User, as: 'LikedUsers' },
+    //     // { model: Reply, include: [User] }
+    //   ]
+    // })
+    //   // .then(tweet => tweet.increment('viewCounts'))
+    //   .then(tweet => {
+    //     // const isFollowed = tweet.Followers.map(d => d.id).includes(req.user.id)
+    //     // const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
+    //     return res.render('tweet', {
+    //       tweet: tweet.toJSON(),
+    //       // isFollowed,
+    //       // isLiked
+    //     })
+    //   })
+    // console.log(req.params.id)
+    try {
+      const tweet = await Tweet.findByPk(
+        req.params.id, {
+        include: [User]
+      })
+      return res.render('tweet', { tweet: tweet.toJSON() })
+    } catch (e) {
+      console.log(e.message)
+
+
+    }
   },
   // 在此得列出最受歡迎的十個使用者
   // 依照追蹤者人數降冪排序

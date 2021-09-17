@@ -3,13 +3,15 @@ const helpers = require('../_helpers')
 const tweetController = require('../controllers/tweetController.js')
 const adminController = require('../controllers/adminController.js')
 const userController = require('../controllers/userController.js')
+const replyController = require('../controllers/replyController.js')
 
 const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
+  if (helpers.ensureAuthenticated(req) && !helpers.getUser(req).isAdmin) {
     return next()
   }
+  req.flash('error_messages', '帳號或密碼輸入錯誤')
   res.redirect('/signin')
 }
 
@@ -26,15 +28,25 @@ module.exports = (app, passport) => {
   // 前台首頁
   app.get('/', authenticated, (req, res) => res.redirect('/home'))
   app.get('/home', authenticated, tweetController.getTweets)
-  
-  // 使用者
-  app.get('/users/:id', authenticated, userController.getUser)
-  app.get('/users/:id/edit', authenticated, userController.editUser)
-  app.put('/users/:id', authenticated, upload.single('image'), userController.putUser)
 
   // Like - Tweet
   app.post('/like/:tweetId', authenticated, userController.addLike)
   app.delete('/like/:tweetId', authenticated, userController.removeLike)
+
+  app.get('/userProfile', authenticated, userController.getUserProfile)
+  app.get('/setting', authenticated, userController.getSetting)
+  app.put('/users/:id/setting', authenticated, userController.putUser)
+
+  // 後台登入登出
+  app.get('/admin', adminController.signInPage)
+  app.post('/admin', passport.authenticate('local', {
+    failureRedirect: '/admin',
+    failureFlash: true
+  }), adminController.signIn)
+  app.get('/logout', adminController.logout)
+
+  // 後台首頁(測試用)
+  app.get('/admin_main', authenticatedAdmin, tweetController.getTweets)
 
   // 追蹤
   app.post('/following/:userId', authenticated, userController.addFollowing)
@@ -57,7 +69,7 @@ module.exports = (app, passport) => {
     failureRedirect: '/signin',
     failureFlash: true
   }), userController.signIn)
-  
+
   // 登出
   app.get('/logout', userController.logout)
 
