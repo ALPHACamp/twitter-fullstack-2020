@@ -94,6 +94,12 @@
   box-shadow: none;
 }
 
+.user-tweets .reply-user a{
+  color: #ff6600;
+  background-color: transparent;
+  text-decoration: none;;
+}
+
 .user-modal-content {
   border-radius: 14px;
   width: 600px;

@@ -13,10 +13,10 @@ const userController = {
 
   }, 
   getReplies: (req, res) => {
-
+    res.render('userReply')
   }, 
   getLikes: (req, res) => {
-
+    res.render('userLike')
   }, 
   getFollowings: (req, res) => {
 

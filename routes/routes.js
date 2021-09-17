@@ -43,7 +43,10 @@ router.get('/tweets', tweetController.getTweets)
 
 
 // users
-router.get('/users/tweets', userController.getUserTweets)  //要加userid
+//以下都還要加userid
+router.get('/users/tweets', userController.getUserTweets) 
+router.get('/users/replies', userController.getReplies) 
+router.get('/users/likes', userController.getLikes)  
 
 
 
