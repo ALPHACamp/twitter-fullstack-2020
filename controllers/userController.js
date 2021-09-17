@@ -82,6 +82,11 @@ const userController = {
 
   getUserLike: (req, res) => {
     res.render('selfLike')
+  },
+
+  getUserSetting: (req, res) => {
+    const id = req.params.id
+    
   }
 }
 
