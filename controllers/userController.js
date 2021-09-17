@@ -10,6 +10,7 @@ const Like = db.Like
 const Followship = db.Followship
 
 const imgur = require('imgur-node-api')
+const { fakeServer } = require('sinon')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
@@ -87,7 +88,9 @@ const userController = {
       return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
     }
     const { file } = req
+
     if (file) {
+      // imgur上傳方式
       imgur.setClientID(IMGUR_CLIENT_ID);
       imgur.upload(file.path, (err, img) => {
         return User.findByPk(req.params.user_id)
@@ -100,7 +103,7 @@ const userController = {
             })
               .then(() => {
                 req.flash('success_messages', 'user profile was successfully updated!')
-                res.redirect('/tweets')
+                res.redirect('back')
               })
               .catch(err => console.error(err))
           })
@@ -112,11 +115,11 @@ const userController = {
             name: req.body.name,
             introduction: req.body.introduction,
             avatar: user.avatar,
-            // cover: user.cover
+            cover: user.cover
           })
             .then(() => {
               req.flash('success_messages', 'user profile was successfully updated!')
-              res.redirect('/tweets')
+              res.redirect('back')
             })
             .catch(err => console.error(err))
         })
@@ -215,7 +218,6 @@ const userController = {
         FollowerCount: user.Followers.length,
         isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
-
       return res.render('tweets', {
         data: data,
         viewUser: user.toJSON(),
@@ -261,8 +263,6 @@ const userController = {
           FollowerCount: user.Followers.length,
           isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
         })).sort((a, b) => b.FollowerCount - a.FollowerCount)
-
-        console.log(users2)
         return res.render('topUsersFake', { users: users2 })
       })
   },
