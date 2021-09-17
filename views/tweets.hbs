@@ -83,7 +83,7 @@
         <div class="edit-button">
 
           {{#ifCond user.id viewUser.id}}
-          <button type="submit" class="btn unfollow-button" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
+          <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
           {{else}}
           {{#if this.isFollowed }}
           <div class="other-user-icon">
@@ -165,7 +165,7 @@
               <div class="col-md-11">
                 <div class="account-info d-flex" style="flex:auto">
                   <div class="user-name">{{../viewUser.name}}</div>
-                  <div class="account-time ml-2">@{{../viewUser.account}}．{{moment this.createdAt}}</div>
+                  <div class="account-time ml-2">@{{../viewUser.account}}．{{fromNow this.createdAt}}</div>
                 </div>
 
                 <div class="post-text d-flex" style="flex:auto">
@@ -262,6 +262,7 @@
   const name = document.querySelector("#name")
   const introduction = document.querySelector("#introduction")
   const saveButton = document.querySelector("#save-button")
+  
   saveButton.addEventListener("click", function check(event) {
     console.log(event)
     if (name.value.length < l) {

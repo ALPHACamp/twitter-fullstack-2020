@@ -32,8 +32,11 @@
             </li>
           </a>
         </ul>
-        {{!-- //TODO:待加入modal --}}
-        <a href="/index/create" type="button" class="tweet-button">推文</a>
+
+        <div class="">
+          <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+          </button>
+        </div>
 
         <a href="/logout">
           <div class="logout-button">
@@ -302,3 +305,11 @@
 
   </div>
 </div>
+
+{{!-- add-tweet Modal --}}
+<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+
+  {{> add-tweet}}
+
+</div>
+{{!-- add-tweet Modal --}}

@@ -71,23 +71,26 @@
       <div class="main-reply-tweet">
         <div class="account-info d-flex">
           <div>
-            <img class="user-pic" src="{{tweet.User.avatar}}" alt="">
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <img class="user-pic" src="{{tweet.User.avatar}}" alt="">
+            </a>
           </div>
           <div class="name-account">
-            <div class="name">{{tweet.User.name}}</div>
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <div class="name">{{tweet.User.name}}</div>
+            </a>
             <div class="account">@{{tweet.User.account}}</div>
           </div>
 
         </div>
 
-        <div class="content">
-          <h2>{{tweet.description}}</h2>
+        <div class="content tweet-description">
+          {{tweet.description}}
         </div>
 
         {{!-- //TODO:時間格式要調整 --}}
         <div class="time">
-          {{moment tweet.createdAt}}
-          <p>發表於:{{date}}</p>
+          <p>發表於:{{date tweet.createdAt}}</p>
           {{!-- should be:上午10:05．2020年6月10日 --}}
         </div>
 
@@ -108,20 +111,28 @@
         <hr>
 
         <div class="icon-reply d-flex">
-          <div>
-            <a href="/tweets/{{tweet.id}}/replies"><i class="far fa-comment"></i></a>
+
+          <div  class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet{{tweet.id}}">
+            <i class="far fa-comment"></i>
           </div>
+
           {{!-- //TODO:要分實心空心 --}}
-          <div>
+          
             {{!-- 測試like功能用的超醜按鈕 --}}
-            <form action="/tweets/{{tweet.id}}/like" method="POST">
-              <button type="submit"><i class="far fa-heart mr-2"></i></button>
-            </form>
+            
+          {{#if like}}
             <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
-              <button type="submit">Unlike</button>
+              <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
             </form>
+          {{else}}
+            <form action="/tweets/{{tweet.id}}/like" method="POST">
+              <button class="btn" type="submit"><i class="far fa-heart"></i></button>
+            </form>
+          {{/if}}
             {{!-- 測試like功能用的超醜按鈕 --}}
-          </div>
+          
+
+
         </div>
         <hr>
 
@@ -137,7 +148,7 @@
               <div class="account-info d-flex" style="flex:auto">
                 <div class="user-name">{{this.User.name}}</div>
                 {{!-- //TODO:時間回傳格式要改 --}}
-                <div class="account-time ml-2">@{{this.User.account}}．{{moment this.createdAt}}</div>
+                <div class="account-time ml-2">@{{this.User.account}}．{{fromNow this.createdAt}}</div>
               </div>
               <div class="reply">
                 <div class="reply-text">回覆</div>
@@ -153,6 +164,7 @@
         </div>
         <hr />
         {{/each}}
+
         {{!-- 回覆結束 --}}
 
 
@@ -225,3 +237,12 @@
 
 </div>
 {{!-- add-tweet Modal --}}
+
+{{!-- reply-tweet Modal --}}
+<div class="modal fade" id="reply-tweet{{tweet.id}}" tabindex="-1" role="dialog" aria-labelledby="reply-tweet" aria-hidden="true">
+  
+
+  {{> reply-tweet tweet=tweet currentUser=currentUser account=tweet.User.account }}
+
+</div>
+{{!-- reply-tweet Modal --}}

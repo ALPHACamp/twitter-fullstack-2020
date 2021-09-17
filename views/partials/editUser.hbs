@@ -39,30 +39,29 @@
     </div>
 
     <form action="/users/{{user.id}}/setting?_method=PUT" method="POST" data-toggle="validator" class="user-edit-info">
-    <div>
-      <div class="edit-name-title">名稱</div>
-    <input type="text" name="name" id="name" class="form-control" aria-label="name" data-maxleng="50" value="{{user.name}}">
-    <div class="invalid-feedback name">
-      名稱不得超過50個字
-    </div>
-      <div class="count-down">
-        <div class="count">0</div>
-        <div>/160</div>
+      <div>
+        <div class="edit-name-title">名稱</div>
+        <input type="text" name="name" id="name" class="form-control" aria-label="name" value="{{user.name}}">
+        <div class="invalid-feedback name">
+        </div>
+        <div class="count-down">
+          <div class="count" id="name-count">0</div>
+          <div>/50</div>
+        </div>
       </div>
-</div>
 
-<div>
-  <div class="edit-introduction-title">自我介紹</div>
-    <textarea type="text" name="introduction" id="introduction" class="form-control" aria-label="name" data-maxleng="160" value="{{user.name}}" rows="6"></textarea>
-    <div class="invalid-feedback" id="introduction">
-      自我介紹不得超過160個字
-    </div>
-    <div class="count-down introduction">
-    <div class="count">0</div>
-    <div>/160</div>
-    </div>
+      <div>
+        <div class="edit-introduction-title">自我介紹</div>
+        <textarea type="text" name="introduction" id="introduction" class="form-control" aria-label="name"
+          value="{{user.description}}" rows="6"></textarea>
+        <div class="invalid-feedback" id="introduction">
+        </div>
+        <div class="count-down introduction">
+          <div class="count" id="introduction-count">0</div>
+          <div>/160</div>
+        </div>
 
-    </div>
+      </div>
 
     </form>
 
@@ -75,31 +74,46 @@
   </div>
 </div>
 
-{{!-- <script>
-  const name = document.querySelector("#name")
-  const introduction= document.querySelector("#introduction")
-  const saveButton = document.querySelector("#save-button")
-  saveButton.addEventListener("click", function check(event) {
-    if(name.value.length<l) {
-      name.classList.add("is-invalid")
-      name.nextElementSibling.innerHTML = "名稱不得為空"
-      event.preventDefault()
-    }
+<script>
+  const name = document.querySelector('#name')
+  const nameCount = document.querySelector('#name-count')
+  const introduction = document.querySelector('#introduction')
+  const introductionCount = document.querySelector('#introduction-count')
+  const editUserBtn = document.querySelector('.edit-user')
 
-    if (introduction.value.length < l) {
-      introduction.classList.add("is-invalid")
-      introduction.nextElementSibling.innerHTML = "名稱不得為空"
-      event.preventDefault()
-    }
-
-
-    if (name.value.length > 50) {
-      name.classList.add("is-invalid")
-      event.preventDefault()
-    }
-    if (introduction.value.length > 150) {
-      email.classList.add("is-invalid")
-      event.preventDefault()
-    }
+  editUserBtn.addEventListener('click', function countInitial(event) {
+    introductionCount.innerText = introduction.value.length
+    nameCount.innerText = name.value.length
   })
-</script> --}}
+
+  name.addEventListener('input', function check(event) {
+    if (name.value.length < 1) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+    }
+    if (name.value.length > 50) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得超過50個字"
+    }
+    if (name.value.length > 0 && name.value.length < 50) {
+      name.classList.remove('is-invalid')
+    }
+    nameCount.innerText = name.value.length
+  })
+
+  introduction.addEventListener('input', function check(event) {
+    if (introduction.value.length < 1) {
+      introduction.classList.add('is-invalid')
+      introduction.nextElementSibling.innerHTML = "自我介紹不得為空"
+    }
+    if (introduction.value.length > 50) {
+      introduction.classList.add('is-invalid')
+      introduction.nextElementSibling.innerHTML = "自我介紹不得超過160個字"
+    }
+    if (introduction.value.length > 0 && introduction.value.length < 50) {
+      introduction.classList.remove('is-invalid')
+    }
+    introductionCount.innerText = introduction.value.length
+  })
+
+</script>
