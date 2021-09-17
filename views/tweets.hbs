@@ -83,7 +83,8 @@
         <div class="edit-button">
 
           {{#ifCond user.id viewUser.id}}
-          <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal" data-target="#edit-user">編輯個人資料</button>
+          <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal"
+            data-target="#edit-user">編輯個人資料</button>
           {{else}}
           {{#if this.isFollowed }}
           <div class="other-user-icon">
@@ -173,8 +174,21 @@
                 </div>
 
                 <div class="reply-like d-flex mt-2">
-                  <div><i class="far fa-comment mr-2"></i>{{this.replyCount}}</div>
-                  <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.likeCount}}</div>
+                  <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
+                  <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.Likes.length}}</div>
+
+
+                  {{#if isLiked}}
+                  <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+                    <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
+                  </form>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="POST">
+                    <button class="btn" type="submit"><i class="far fa-heart"></i></button>
+                  </form>
+                  {{/if}}
+
+
                 </div>
               </div>
 
@@ -262,7 +276,7 @@
   const name = document.querySelector("#name")
   const introduction = document.querySelector("#introduction")
   const saveButton = document.querySelector("#save-button")
-  
+
   saveButton.addEventListener("click", function check(event) {
     console.log(event)
     if (name.value.length < l) {
