@@ -61,7 +61,9 @@
 
       <div class="add-post d-flex">
         <div class="mt-2 ml-2">
+          <a href="/users/{{user.id}}">
           <img class="user-pic" src="{{currentUser.avatar}}" alt="">
+          </a>
         </div>
 
         {{!-- //TODO:要包FORM --}}
@@ -76,7 +78,7 @@
       <hr style="border: 5px solid #E6ECF0; margin:0">
 
       {{!-- //TODO:依照時間排序，時間/讚數/留言數待傳入，點大頭貼會進入使用者頁面 --}}
-      {{!-- 貼文1開始 --}}
+      {{!-- 貼文開始 --}}
       {{#each tweet}}
       <div class="tweet col-md-12">
         <div class="d-flex">
@@ -88,10 +90,10 @@
 
           <div class="col-md-11">
             <div class="account-info d-flex" style="flex:auto">
-              <a href="/users/{{this.User.id}}">
+              <a href="/users/{{this.User.id}}/tweets">
                 <div class="user-name">{{this.User.name}}</div>
               </a>
-              <div class="account-time ml-2">@{{this.User.account}}．3小時</div>
+              <div class="account-time ml-2">@{{this.User.account}}．{{moment this.createdAt}}</div>
             </div>
 
 
@@ -105,26 +107,37 @@
 
             <div class="reply-like d-flex mt-2">
               {{!-- modal叫出貼文回覆 --}}
-
-              <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet">
+              <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet{{this.id}}">
                 <div class="number"></div>
                 <i class="far fa-comment mr-2"></i>留言數
               </div>
 
-              <div class="ml-4"><i class="far fa-heart mr-2"></i>讚數</div>
+
+              <div class="ml-4 d-flex index-like">
+                <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+                <button class="btn" type="submit">
+                  
+                  <i class="far fa-heart"></i>
+                  {{#if like}}
+                  <i class="fas fa-heart" style="color:#E0245E"></i>
+                  {{/if}}
+                </button>
+                </form>
+                <div class="index-like-count ml-2">讚數</div>
+              </div>
             </div>
           </div>
 
         </div>
       </div>
       <hr />
-      {{!-- 貼文1結束 --}}
+      {{!-- 貼文結束 --}}
 
       {{!-- reply-tweet Modal --}}
-      <div class="modal fade" id="reply-tweet" tabindex="-1" role="dialog" aria-labelledby="reply-tweet"
+      <div class="modal fade" id="reply-tweet{{this.id}}" tabindex="-1" role="dialog" aria-labelledby="reply-tweet"
         aria-hidden="true">
 
-        {{> reply-tweet currentUser=../currentUser avatar=avatar account=account}}
+        {{> reply-tweet account=this.User.account currentUser=../currentUser tweet=this}}
 
       </div>
       {{!-- reply-tweet Modal --}}
@@ -203,6 +216,12 @@
 
 
 <script>
+const tweetBtn = document.querySelector('.send-button')
+
+tweetBtn.addEventListener('click', function test(event) {
+  consol.log('1')
+})
+
 
 
 </script>

@@ -8,5 +8,12 @@ module.exports = {
 
   date: function (a) {
     return moment(a).locale('zh-tw').format('LLLL')
+  },
+
+  ifCond: function (a, b, options) {
+    if (a === b) {
+      return options.fn(this)
+    }
+    return options.inverse(this)
   }
 }
