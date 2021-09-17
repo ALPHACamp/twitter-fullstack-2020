@@ -37,6 +37,7 @@ p {
   color: #657786;
   font-size: 0.8rem;
   font-weight: 500;
+  cursor: pointer;
 }
 
 /* 以下是各別各組css */

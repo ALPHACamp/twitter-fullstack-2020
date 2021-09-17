@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.4",
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
@@ -29,7 +30,8 @@
     "sequelize": "^4.44.4",
     "sequelize-cli": "^5.5.1",
     "sinon": "^7.5.0",
-    "sinon-chai": "^3.7.0"
+    "sinon-chai": "^3.7.0",
+    "sweetalert2": "^11.1.5"
   },
   "devDependencies": {
     "sequelize-test-helpers": "^1.0.7",
