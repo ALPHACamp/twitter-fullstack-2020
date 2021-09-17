@@ -55,7 +55,7 @@ module.exports = (app, passport) => {
   // //使用者所有喜歡貼文
   app.get('/users/:user_id/likes', authenticated, userController.getUserLikes)
   // //使用者所有回覆
-  // router.get('/users/:user_id/replied', userController.getUserReplied)
+  app.get('/users/:user_id/replied', userController.getUserReplied)
   // //使用者追蹤清單
   // router.get('/users/:user_id/followings', userController.getUserFollowings)
   // //使用者粉絲清單(被追蹤)
