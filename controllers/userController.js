@@ -3,6 +3,7 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const Like = db.Like
 
 
 
@@ -56,14 +57,20 @@ const userController = {
 
     Tweet.findAndCountAll({
       include: [
-        User
+        User,
+        Reply,
+        Like
       ],
-      where: whereQuery
+      where: whereQuery,
+      order: [['createdAt', 'DESC']]
     }).then(result => {
+      console.log(result)
       const totalTweet = Number(result.count)
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        content: r.dataValues.content
+        content: r.dataValues.content,
+        replyCount: r.dataValues.Replies.length,
+        likeCount: r.dataValues.Likes.length
       }))
       User.findByPk(req.params.id)
         .then(user => {
@@ -90,12 +97,27 @@ const userController = {
     User.findByPk(id)
       .then(user => {
         console.log(req.params)
-        return res.render('setting', { 
+        return res.render('setting', {
           layout: 'settingMain',
           user: user.toJSON()
-         })
+        })
       })
   },
+
+  putUserSetting: (req, res) => {
+    const { account, name, email, password } = req.body
+    User.findByPk(req.params.id)
+      .then(user => {
+        user.update({
+          account,
+          name,
+          email,
+          password
+        }).then(user => {
+          return res.redirect(`/users/self/${user.id}`)
+        })
+      })
+  }
 }
 
 module.exports = userController

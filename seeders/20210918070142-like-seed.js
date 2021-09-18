@@ -6,37 +6,51 @@ const Tweet = db.Tweet
 const getUserId = new Promise((resolve, reject) => {
   User.findAll({ raw: true, nest: true })
     .then(users => {
-      const userId = []
+      const userIds = []
       users.forEach(user => {
-        userId.push(user.id)
+        userIds.push(user.id)
       })
-      return resolve(userId)
+      return resolve(userIds)
     })
 })
-
 const getTweetId = new Promise((resolve, reject) => {
   Tweet.findAll({ raw: true, nest: true })
     .then(tweets => {
-      const tweetId = []
+      const tweetIds = []
       tweets.forEach(tweet => {
-        tweetId.push(tweet.id)
+        tweetIds.push(tweet.id)
       })
-      return resolve(tweetId)
+      return resolve(tweetIds)
     })
 })
+function userLikeTweets(userIds, tweetIds) {
+  const allUserLikeTweets = []
+  let tweetLimit = 0
+  userIds.forEach(userId => {
+    for (let i = 0; i < 10; i++) {
+      const userLikeTweet = {
+        UserId: userId,
+        TweetId: tweetIds[tweetLimit],
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+      if (tweetLimit > (tweetIds.length - 2)) {
+        tweetLimit = 0
+      } else {
+        tweetLimit += 1
+      }
+      allUserLikeTweets.push(userLikeTweet)
+    }
+  })
+  return allUserLikeTweets
+}
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    const userId = await getUserId
-    const tweetId = await getTweetId
-    await queryInterface.bulkInsert('Likes',
-      Array.from({ length: 10 }).map((d, i) =>
-      ({
-        UserId: userId[Math.floor(Math.random() * userId.length)],
-        TweetId: tweetId[Math.floor(Math.random() * tweetId.length)],
-        createdAt: new Date(),
-        updatedAt: new Date()
-      })), {})
+    const userIds = await getUserId
+    const tweetIds = await getTweetId
+    const likeSeed = userLikeTweets(userIds, tweetIds)
+    await queryInterface.bulkInsert('Likes', likeSeed, {})
   },
 
   down: async (queryInterface, Sequelize) => {
