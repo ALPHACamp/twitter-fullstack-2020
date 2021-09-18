@@ -1,4 +1,4 @@
-<div class="popular col d-flex flex-column mt-3">
+<d iv class="popular col d-flex flex-column mt-3">
   <p class="word mt-2">Popular</p>
 
   {{#each user}}
@@ -10,14 +10,14 @@
       <p class="popular-name">&nbsp;&nbsp;{{this.name}}<br />&nbsp;&nbsp;<span class="popular-account">account</span></p>
     </div>
 
-    <div class="follow-btn col-8">
+    <div class="follow-btn col-8 ">
       {{#if this.isFollowed }}
       <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-      <button type="submit" class="btn rounded-pill fw-bolder">正在跟隨</button>
+      <button type="submit" class="btn rounded-pill fw-bolder common-button">正在跟隨</button>
       </form>
       {{else}}
         <form action="/followships/{{this.id}}" method="POST">
-        <button type="submit" class="btn rounded-pill fw-bolder">跟隨</button>
+        <button type="submit" class="btn rounded-pill fw-bolder common-button">跟隨</button>
         </form>
       {{/if}}
 

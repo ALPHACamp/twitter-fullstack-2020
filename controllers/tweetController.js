@@ -15,7 +15,7 @@ const tweetController = {
         ],
         order: [['createdAt', 'DESC']]
       })
-      console.log('get tweets:', tweets[1].dataValues.User.name)
+      //console.log('get tweets:', tweets[1].dataValues.User.name)
       const reorganizationTweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         userName: tweet.User.name,
@@ -24,7 +24,7 @@ const tweetController = {
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length
       }))
-      console.log('mapping tweet:', reorganizationTweets)
+      //console.log('mapping tweet:', reorganizationTweets)
       return res.render('tweets', { reorganizationTweets })
     } catch(err) {
       console.warn(err)
@@ -56,7 +56,7 @@ const tweetController = {
   postReplies: async (req, res) => {
     try {
       const { comment } = req.body
-      console.log(comment)
+      //console.log(comment)
       if (!comment) {
         req.flash('error_messages', '內文不可空白')
         return res.json({ status: 'error', message: '內文不可空白' })
