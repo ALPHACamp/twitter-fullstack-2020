@@ -14,18 +14,28 @@ const getUserId = new Promise((resolve, reject) => {
     })
 })
 
-module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    const userIds = await getUserId
-
-    await queryInterface.bulkInsert('Tweets',
-      Array.from({ length: 10 }).map((d, i) =>
-      ({
-        UserId: userIds[Math.floor(Math.random() * userIds.length)],
+function userTweets(userIds) {
+  const allUserTweets = []
+  userIds.forEach(userId => {
+    for (let i = 0; i < 10; i++) {
+      const userTweet = {
+        UserId: userId,
         content: faker.lorem.text(),
         createdAt: new Date(),
         updatedAt: new Date()
-      })), {})
+      }
+      allUserTweets.push(userTweet)
+    }
+  })
+  return allUserTweets
+}
+
+
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    const userIds = await getUserId
+    const tweetSeed = userTweets(userIds)
+    await queryInterface.bulkInsert('Tweets', tweetSeed, {})
   },
 
   down: async (queryInterface, Sequelize) => {

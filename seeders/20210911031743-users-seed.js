@@ -31,7 +31,37 @@ module.exports = {
       introduction: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
-    }], {})
+    }, {
+      account: 'user3',
+      email: 'test3@example.com',
+      password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
+      isAdmin: false,
+      name: 'test3',
+      introduction: faker.lorem.text(),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      account: 'user4',
+      email: 'test4@example.com',
+      password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
+      isAdmin: false,
+      name: 'test4',
+      introduction: faker.lorem.text(),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }, {
+      account: 'user5',
+      email: 'test5@example.com',
+      password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
+      isAdmin: false,
+      name: 'test5',
+      introduction: faker.lorem.text(),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
+
+
+    ], {})
   },
 
   down: async (queryInterface, Sequelize) => {
