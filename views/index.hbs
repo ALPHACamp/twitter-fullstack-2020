@@ -79,7 +79,7 @@
 
       {{!-- //TODO:依照時間排序，時間/讚數/留言數待傳入，點大頭貼會進入使用者頁面 --}}
       {{!-- 貼文開始 --}}
-      {{#each tweets}}
+      {{#each data}}
       <div class="tweet col-md-12">
         <div class="d-flex">
           <div class="mt-2 ml-2 col-md-1" style="padding:0">
@@ -109,21 +109,22 @@
               {{!-- modal叫出貼文回覆 --}}
               <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet{{this.id}}">
                 <div class="number"></div>
-                <i class="far fa-comment mr-2"></i>留言數{{data.RepliesCount.length}}
+                <i class="far fa-comment mr-2"></i>留言數{{this.replyCount}}
               </div>
 
 
               <div class="ml-4 d-flex index-like">
+                
                 <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
                   <button class="btn" type="submit">
-
                     <i class="far fa-heart"></i>
-                    {{#if like}}
+                    {{#if isLiked}}
                     <i class="fas fa-heart" style="color:#E0245E"></i>
                     {{/if}}
                   </button>
                 </form>
-                <div class="index-like-count ml-2">讚數</div>
+                <div class="index-like-count ml-2"><div class="number">{{this.likedCount.length}}</div>讚數</div>
+
               </div>
             </div>
           </div>
