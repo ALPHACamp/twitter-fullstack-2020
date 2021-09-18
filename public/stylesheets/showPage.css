@@ -797,19 +797,28 @@ line-height: 19px;
   position:relative;
   display: flex;
   justify-content: right;  
-  top: -50px;
+  top: -30px;
   bottom: 0;
   margin-right: 15px;
 }
 
-.edit-button .unfollow-button {
+.user-info .edit-button-other {
+  position:relative;
+  display: flex;
+  justify-content: right;  
+  top: -30px;
+  bottom: 0;
+  margin-right: 15px;
+}
+
+.edit-button-other .unfollow-button {
   position:relative;
   top:17px;
   text-align: right;
   padding:5px auto;
 }
 
-.edit-button .follow-button {
+.edit-button-other .follow-button {
   position:relative;
   top:17px;
   text-align: right;

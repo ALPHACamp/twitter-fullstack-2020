@@ -80,12 +80,14 @@
         <div class="avatar">
           <img src="{{viewUser.avatar}}" alt="">
         </div>
-        <div class="edit-button">
+        
 
           {{#ifCond user.id viewUser.id}}
+          <div class="edit-button">
           <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal"
             data-target="#edit-user">編輯個人資料</button>
           {{else}}
+          <div class="edit-button-other">
           {{#if this.isFollowed }}
           <div class="other-user-icon">
             <div class="mail"><i class="far fa-envelope"></i></div>
