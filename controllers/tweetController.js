@@ -1,5 +1,8 @@
 const helpers = require('../_helpers')
 const db = require('../models')
+const tweet = require('../models/tweet')
+// const { Op } = require("sequelize")
+const { sequelize } = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -9,18 +12,37 @@ const tweetController = {
   //貼文相關
   //顯示所有貼文
   getTweets: (req, res) => {
-    return Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User]
-    }).then(tweet => {
+    return Promise.all([
+      Tweet.findAll({
+      include: [User, { model: Like, include: [Tweet] }],
+      order: [['createdAt', 'DESC']],
+      raw: true, 
+      nest: true
+    }),
+      replies = sequelize.query('select `TweetId`, COUNT(`id`) AS `replycount` from `replies` GROUP BY `TweetId`;', {
+      type: sequelize.QueryTypes.SELECT
+      })
+    ]) 
+    .then(([tweets,replies]) => {
+       
+         const data = tweets.map( r => ({
+        ...r.dataValues,
+        id:r.id,
+        User: r.User,
+        description: r.description,
+        createdAt:r.createdAt,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
+        replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
+      }))
+     
+      
       return res.render('index', {
-        tweet: tweet,
+        data:data,
+       
         currentUser: helpers.getUser(req)
       })
     })
-
-    //目前可以看到全部
+    
   },
 
   //新增一則貼文(要改api)
@@ -47,7 +69,6 @@ const tweetController = {
       ]
     })
       .then(tweet => {
-        console.log(req.user.LikedTweets.map(d => d.id).includes(tweet.id))
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           currentUser: helpers.getUser(req),
