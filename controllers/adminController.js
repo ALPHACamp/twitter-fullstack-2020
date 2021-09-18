@@ -1,7 +1,6 @@
 const db = require('../models')
-
-
-
+const User = db.User
+const Tweet = db.Tweet
 
 const adminController = {
   signInPage: (req, res) => {
@@ -18,19 +17,37 @@ const adminController = {
     }
   },
   logOut: (req, res) => {
- 
+    req.flash('success_messages', '成功登入！')
+    req.logOut()
+    res.redirect('admin/signin')
   },
-  getTweets: (req, res) => {
-    return res.render('admin/tweets')
+  getTweets: async (req, res) => {
+    let tweets = await Tweet.findAll({
+      raw: true,
+      nest: true,
+      attributes: ['id', 'description', 'createdAt'],
+      include: {
+        model: User,
+        attributes: ['id', 'name', 'account', 'avatar'],
+        where: { role: 0 }
+      }
+    })
+    tweets = tweets.map(data => ({
+      ...data,
+      description:
+        data.description.length < 50
+          ? data.description
+          : data.description.substring(0, 50) + '...'
+    }))
+    return res.render('admin/tweets', { tweets })
   },
-  deleteTweet: (req, res) => {
 
+  deleteTweet: async (req, res) => {
+    const id = req.params.tweetid
   },
   getUsers: (req, res) => {
     return res.render('admin/users')
   }
 }
-
-
 
 module.exports = adminController

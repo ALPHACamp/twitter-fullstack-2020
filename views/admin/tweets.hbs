@@ -5,248 +5,30 @@
         <div class="col-12 page-header">
           <h6><strong>推文清單</strong></h6>
         </div>
-        <div class="col-12 d-flex flex-row justify-content-between tweet">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
+        {{#each tweets}}
         <div class="col-12 tweet d-flex flex-row justify-content-between">
           <div class="user-info d-flex flex-row">
             <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
+              <img class="avatar-img" src="{{this.User.avatar}}"
                 width="50" height="50" alt="">
             </div>
             <div class="tweet-text ms-3">
               <div class="d-inline name">
-                <strong>Apple</strong>
+                <strong>{{this.User.name}}</strong>
               </div>
               <div class="d-inline acc-time">
-                @appleㆍ3小時
+                @{{this.User.account}}ㆍ3小時
               </div>
               <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
+                {{this.description}}
               </div>
             </div>
           </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
+          <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn-close" aria-label="Close"></button>
           </form>
         </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
-        <div class="col-12 tweet d-flex flex-row justify-content-between">
-          <div class="user-info d-flex flex-row">
-            <div class="avatar ">
-              <img class="avatar-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-12.jpg"
-                width="50" height="50" alt="">
-            </div>
-            <div class="tweet-text ms-3">
-              <div class="d-inline name">
-                <strong>Apple</strong>
-              </div>
-              <div class="d-inline acc-time">
-                @appleㆍ3小時
-              </div>
-              <div class="twi-content">
-                sed risus pretium quam vulputate dignissim suspendisse in est ante....
-              </div>
-            </div>
-          </div>
-          <form action="">
-            <button type="button" class="btn-close" aria-label="Close"></button>
-          </form>
-        </div>
+        {{/each}}
       </div>
     </div>
   </div>
