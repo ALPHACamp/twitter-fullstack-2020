@@ -1,23 +1,24 @@
-const bcrypt = require('bcryptjs') 
-const { urlencoded } = require('express')
+const bcrypt = require("bcryptjs");
+const { urlencoded } = require("express");
 
 //for test only
-const helpers = require('../_helpers.js')
-const getTestUser = function(req){
-if (process.env.NODE_ENV === 'test'){
-  return helpers.getUser(req)
-}else{ return req.user }
-}
-
+const helpers = require("../_helpers.js");
+const getTestUser = function (req) {
+  if (process.env.NODE_ENV === "test") {
+    return helpers.getUser(req);
+  } else {
+    return req.user;
+  }
+};
 
 const userController = {
   signInPage: (req, res) => {
-    return res.render('signin')
+    return res.render("login");
   },
 
   profilePage: (req, res) => {
-    return res.render('profile')
-  }
-}
+    return res.render("main");
+  },
+};
 
-module.exports = userController
+module.exports = userController;
