@@ -105,13 +105,14 @@ const userController = {
   },
 
   putUserSetting: (req, res) => {
-    const { account, name, email } = req.body
+    const { account, name, email, password } = req.body
     User.findByPk(req.params.id)
       .then(user => {
         user.update({
           account,
           name,
-          email
+          email,
+          password
         }).then(user => {
           return res.redirect(`/users/self/${user.id}`)
         })
