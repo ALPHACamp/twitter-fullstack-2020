@@ -20,31 +20,33 @@ module.exports = (app, passport) => {
       }
       return res.redirect('/')
     }
-    res.redirect('/login')
+    res.redirect('/signin')
   }
 
   app.get('/', authenticatedGeneral, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticatedGeneral, tweetController.getTweets)
-  app.get('/admin/login', adminController.loginPage)
+
+  app.get('/admin/signin', adminController.signinPage)
   app.post(
-    '/admin/login',
+    '/admin/signin',
     passport.authenticate('local', {
-      failureRedirect: '/admin/login',
+      failureRedirect: '/admin/signin',
       failureFlash: true
     }),
-    adminController.login
+    adminController.signin
   )
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-  app.get('/register', userController.registerPage)
-  app.post('/register', userController.register)
-  app.get('/login', userController.loginPage)
+
+  app.get('/signup', userController.signupPage)
+  app.post('/signup', userController.signup)
+  app.get('/signin', userController.signinPage)
   app.post(
-    '/login',
+    '/signin',
     passport.authenticate('local', {
-      failureRedirect: '/login',
+      failureRedirect: '/signin',
       failureFlash: true
     }),
-    userController.login
+    userController.signin
   )
   app.get('/logout', userController.logout)
 }
