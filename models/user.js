@@ -6,17 +6,15 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     name: DataTypes.STRING,
     avatar: DataTypes.STRING,
+    account: DataTypes.TEXT,
     introduction: DataTypes.STRING,
+    cover: DataTypes.TEXT,
     role: DataTypes.STRING,
   }, {});
   User.associate = function(models) {
     User.hasMany(models.Reply)
     User.hasMany(models.Tweet)
-    User.belongsToMany(models.Tweet, {
-      through: models.Like,
-      foreignKey: 'UserId',
-      as: 'LikedTweets'
-    })
+    User.hasMany(models.Like)
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followingId',
