@@ -59,6 +59,26 @@ body {
   cursor: pointer;
 }
 
+.vertical-line {
+  width: 50px;
+  height: 20%;
+  border-right: solid #CCD6DD;
+
+}
+
+
+/* following.hbs follower.hbs */
+.follower-head .nav-tabs .nav-link {
+  color: lightgray;
+  font-weight: 600;
+  border: none;
+}
+.follower-head .nav-tabs .nav-link.active {
+  color: #ff6600;
+  border: none;
+  border-bottom: 1px solid #ff6600;
+}
+
 .bd {
   outline: 2px solid red;
 }
@@ -76,17 +96,6 @@ body {
   border-color: tomato;
 }
 
-/* followingship.hbs followership.hbs */
-.follower-head .nav-tabs .nav-link {
-  color: lightgray;
-  font-weight: 600;
-  border: none;
-}
-.follower-head .nav-tabs .nav-link.active {
-  color: #ff6600;
-  border: none;
-  border-bottom: 1px solid #ff6600;
-}
 /* followingship.hbs followership.hbs */
 
 /* userprofile.hbs */
@@ -220,4 +229,8 @@ body {
   background-color: tomato;
   color: white;
   padding: 0.4rem 0.6rem;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/master

@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-6">
+
+            <div class="img mt-5 d-flex flex-column align-items-center  ">
+                <img src="https://uploads-ssl.webflow.com/60d29cc33f302e62731cf0e1/60d29cc33f302ede181cf183_AC%20nav%20logo.png"
+                    style="width: 200px" />
+                <strong>登入Alphitter</strong>
+            </div>
+
+            <form action="/signin" method="POST">
+
+                <div class="form-group">
+                    <label for="account">帳號</label>
+                    <input type="text" class="form-control" id="account" name="account">
+                </div>
+
+                <div class="form-group mt-4">
+                    <label for="password">密碼</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+
+                <button class="btn btn-primary btn-block mt-4" style="border-radius: 30px;" type="submit">登入</button>
+
+                <div class="d-flex align-items-center mt-3 justify-content-end">
+                    <p><a href="/signup">註冊Alphitter,</a></p>
+                    <p><a href="/admin/signin">後臺登入</a></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
