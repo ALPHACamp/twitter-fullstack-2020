@@ -11,7 +11,7 @@
   position:fixed;
 }
 
-.activ-orange{
+.color-orange{
   color: #FF6600;
 }
 
@@ -64,4 +64,11 @@
 }
 .cover > img {
    width: 100%;
+}
+
+.whathtNew{
+  border: 0;  
+  outline: none;   /*去掉有甚麼新鮮事的外框*/
+  width: 400px;
+  min-height: 150px;
 }

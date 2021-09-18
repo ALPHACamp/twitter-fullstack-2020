@@ -4,7 +4,7 @@ const Reply = db.Reply
 const User = db.User
 const Followship = db.Followship
 
-const helper = require('../_helpers')
+const helpers = require('../_helpers')
 
 const maxDescLen = 50
 
@@ -29,14 +29,14 @@ const tweetController = {
     // }).then(result => {
     //   const data = result.rows.map(r => ({
     //     ...r.dataValues,
-    //     isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
-    //     isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
+    //     isCommented: helpers.getUser(req).CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+    //     isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
     //   }))
     //     .findAll({
     //       raw: true,
     //       nest: true
     //     }).then(() => {
-    //       return res.render('home', {
+    //       return res.render('tweets', {
     //         tweets: data,
     //       })
     //     })
@@ -45,40 +45,37 @@ const tweetController = {
       raw: true,
       nest: true,
       include: [User],
-      where: whereQuery
-    }).then(tweets => {
-      console.log(tweets)
-      console.log('---------觀察rows---------')
-      console.log(tweets.rows)
-      console.log('---------觀察---------')
-      const data = tweets.rows.map(tweet => ({
-        ...tweet.dataValues,
-        // TweetCommentedCount: tweet.dataValues.CommentedTweets.length,
-        // isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
-        //推文被喜歡的次數
-        TweetLikedCount: tweet.dataValues.LikedTweets.length,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
-      }))
-        .then(() => {
-          console.log(data)
-          console.log('---------觀察data---------')
-          return res.render('home', {
-            tweets: data
-          })
-        })
+      order: [
+        ['createdAt', 'DESC'], // Sorts by createdAt in ascending order
+      ],
     })
 
     // console.log(tweets)
 
-    if (helper.getUser(req).isAdmin) {
+    if (helpers.getUser(req).isAdmin) {
       tweets.map(tweet => {
         tweet.description = tweet.description.length <= 50 ? tweet.description : tweet.description.substring(0, maxDescLen) + "..."
       })
     }
-    console.log('有到這嗎')
-    const renderPage = helper.getUser(req).isAdmin ? 'admin/admin_main' : 'home'
+    const renderPage = helpers.getUser(req).isAdmin ? 'admin/admin_main' : 'tweets'
     return res.render(renderPage, { tweets })
 
+  },
+  postTweet: async (req, res) =>{
+    let { description } = req.body
+    if (!description.trim()) {
+      req.flash('error_messages', '推文不能空白！')
+      return res.redirect('back')
+    }
+     if (description.length > 140) {
+      req.flash('error_messages', '推文不能為超過140字！')
+      return res.redirect('back')
+    }
+    await Tweet.create({
+      description: req.body.description,
+      UserId: helpers.getUser(req).id
+    })
+    res.redirect('/tweets')
   },
   getTweet: async (req, res) => {
     // return Tweet.findByPk(req.params.id, {
@@ -124,7 +121,7 @@ const tweetController = {
       users = users.map(user => ({
         ...user.dataValues,
         FollowedCount: user.FollowedUsers.length,
-        isFollowed: req.user.FollowedUsers.map(d => d.id).includes(user.id)
+        isFollowed: helpers.getUser(req).FollowedUsers.map(d => d.id).includes(user.id)
       }))
 
       users = users
