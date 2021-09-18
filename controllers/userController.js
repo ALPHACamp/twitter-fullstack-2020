@@ -90,6 +90,7 @@ const userController = {
 
     // const file = Object.assign({}, req.files)
     const { files } = req
+    const isCoverDelete = req.body.isDelete
     const user = await User.findByPk(req.params.user_id)
 
     // if (files) {
@@ -102,7 +103,7 @@ const userController = {
             name: req.body.name,
             introduction: req.body.introduction,
             avatar: avaImg.data.link,
-            cover: covImg.data.link
+            cover: isCoverDelete ? '' :covImg.data.link
           })
           req.flash('success_messages', 'user profile was successfully updated!')
           return res.redirect('back')
@@ -115,6 +116,7 @@ const userController = {
           name: req.body.name,
           introduction: req.body.introduction,
           avatar: avaImg.data.link,
+          cover: isCoverDelete ? '' : user.cover
         })
         req.flash('success_messages', 'user profile was successfully updated!')
         return res.redirect('back')
@@ -124,7 +126,7 @@ const userController = {
         await user.update({
           name: req.body.name,
           introduction: req.body.introduction,
-          cover: covImg.data.link,
+          cover: isCoverDelete ? '' :covImg.data.link,
         })
         req.flash('success_messages', 'user profile was successfully updated!')
         return res.redirect('back')
@@ -134,6 +136,7 @@ const userController = {
       await user.update({
         name: req.body.name,
         introduction: req.body.introduction,
+        cover: isCoverDelete ? '' : user.cover
       })
       req.flash('success_messages', 'user profile was successfully updated!')
       return res.redirect('back')
