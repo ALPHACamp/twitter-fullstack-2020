@@ -26,8 +26,8 @@ const authenticatedAdmin = (req, res, next) => {
 
 module.exports = (app, passport) => {
   // 前台
-  app.get('/', authenticated, (req, res) => res.redirect('/home'))
-  app.get('/home', authenticated, tweetController.getTweets)
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   // Like - Tweet
   app.post('/like/:tweetId', authenticated, userController.addLike)

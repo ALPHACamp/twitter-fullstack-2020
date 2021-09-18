@@ -11,27 +11,38 @@ const userController = {
   },
 
   signUp: (req, res) => {
-    if (req.body.passwordCheck !== req.body.password) {
-      req.flash('error_messages', '兩次密碼輸入不同！')
+    const { account,name, email, password, checkPassword } = req.body
+    if (!account || !name || !email || !password || !checkPassword) {
+      req.flash('error_messages', '所有欄位都是必填');
       return res.redirect('/signup')
-    } else {
-      // confirm unique user
-      User.findOne({ where: { email: req.body.email } }).then(user => {
-        if (user) {
-          req.flash('error_messages', '信箱重複！')
-          return res.redirect('/signup')
-        } else {
-          User.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-          }).then(user => {
-            req.flash('success_messages', '成功註冊帳號！')
-            return res.redirect('/signin')
-          })
-        }
-      })
     }
+    if (password !== checkPassword) {
+      // req.flash('error_messages', '兩次密碼輸入不同！')
+      req.flash('error_messages', '兩次密碼輸入不一致');
+      return res.redirect('/signup')
+    }
+    // confirm unique user
+    User.findOne({ where: [{ email } , { account }]}).then(user => {
+      if (user) {
+        if(user.email === email){
+          req.flash('error_messages', '信箱重複！')
+        }
+        if(user.account === account){
+          req.flash('error_messages', '信箱重複！')
+        }
+        return res.redirect('/signup')
+      } else {
+        User.create({
+          account: account,
+          name: name,
+          email: email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+        }).then(user => {
+          req.flash('success_messages', '成功註冊帳號！')
+          return res.redirect('/signin')
+        })
+      }
+    })
   },
   signInPage: (req, res) => {
     return res.render('signin')
@@ -39,7 +50,7 @@ const userController = {
 
   signIn: (req, res) => {
     req.flash('success_messages', '成功登入！')
-    res.redirect('/home')
+    res.redirect('/tweets')
   },
 
   logout: (req, res) => {
@@ -64,7 +75,7 @@ const userController = {
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
     })
      req.flash('success_messages', 'user was successfully to update')
-     res.redirect(`/home`)
+     res.redirect('/tweets')
   },
 
   getUserTweets: (req, res) => {

@@ -4,7 +4,7 @@ const Reply = db.Reply
 const User = db.User
 const Followship = db.Followship
 
-const helper = require('../_helpers')
+const helpers = require('../_helpers')
 
 const maxDescLen = 50
 
@@ -29,14 +29,14 @@ const tweetController = {
     // }).then(result => {
     //   const data = result.rows.map(r => ({
     //     ...r.dataValues,
-    //     isCommented: req.user.CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
-    //     isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
+    //     isCommented: helpers.getUser(req).CommentedTweets.map(d => d.id).includes(r.id), // 被回覆過的推文
+    //     isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.id) // 被喜歡過的推文
     //   }))
     //     .findAll({
     //       raw: true,
     //       nest: true
     //     }).then(() => {
-    //       return res.render('home', {
+    //       return res.render('tweets', {
     //         tweets: data,
     //       })
     //     })
@@ -52,19 +52,17 @@ const tweetController = {
 
     // console.log(tweets)
 
-    if (helper.getUser(req).isAdmin) {
+    if (helpers.getUser(req).isAdmin) {
       tweets.map(tweet => {
         tweet.description = tweet.description.length <= 50 ? tweet.description : tweet.description.substring(0, maxDescLen) + "..."
       })
     }
-    console.log('有到這嗎')
-    const renderPage = helper.getUser(req).isAdmin ? 'admin/admin_main' : 'home'
+    const renderPage = helpers.getUser(req).isAdmin ? 'admin/admin_main' : 'tweets'
     return res.render(renderPage, { tweets })
 
   },
   postTweet: async (req, res) =>{
     let { description } = req.body
-    console.log(description,'我是description')
     if (!description.trim()) {
       req.flash('error_messages', '推文不能空白！')
       return res.redirect('back')
@@ -75,9 +73,9 @@ const tweetController = {
     }
     await Tweet.create({
       description: req.body.description,
-      UserId: req.user.id
+      UserId: helpers.getUser(req).id
     })
-    res.redirect('/home')
+    res.redirect('/tweets')
   },
   getTweet: async (req, res) => {
     // return Tweet.findByPk(req.params.id, {
@@ -123,7 +121,7 @@ const tweetController = {
       users = users.map(user => ({
         ...user.dataValues,
         FollowedCount: user.FollowedUsers.length,
-        isFollowed: req.user.FollowedUsers.map(d => d.id).includes(user.id)
+        isFollowed: helpers.getUser(req).FollowedUsers.map(d => d.id).includes(user.id)
       }))
 
       users = users
