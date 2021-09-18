@@ -11,18 +11,18 @@ const loginController = require('../controllers/loginController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 
-const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    return next()
-  }
-  res.redirect('/signin')
-}
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser.role) { return next() }
-  }
-  res.redirect('/admin/signin')
-}
+// const authenticated = (req, res, next) => {
+//   if (helpers.ensureAuthenticated(req)) {
+//     return next()
+//   }
+//   res.redirect('/signin')
+// }
+// const authenticatedAdmin = (req, res, next) => {
+//   if (helpers.ensureAuthenticated(req)) {
+//     if (helpers.getUser.role) { return next() }
+//   }
+//   res.redirect('/admin/signin')
+// }
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) return next()
@@ -65,10 +65,6 @@ router.delete('/followships/:userId', authenticated, followshipController.remove
 
 
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweets)
-=======
-// tweets
-router.get('/', (req, res) => res.redirect('/tweets'))
-router.get('/tweets', tweetController.getTweets)
 
 
 // users
