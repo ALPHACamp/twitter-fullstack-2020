@@ -72,7 +72,7 @@ const userController = {
     }
     User.findByPk(req.params.user_id)
       .then(user => {
-        return res.render('setting', { user: user.toJSON() })
+        return res.render('setting', { currentUser: user.toJSON() })
       })
       .catch(err => console.log(err))
   },
@@ -228,6 +228,7 @@ const userController = {
       return res.render('tweets', {
         data: data,
         viewUser: viewUser[0].toJSON(),
+        currentUser: helpers.getUser(req),
         isFollowed,
         topUsers
       })
@@ -264,6 +265,7 @@ const userController = {
       return res.render('replied', {
         data: replies,
         viewUser: viewUser[0].toJSON(),
+        currentUser: helpers.getUser(req),
         isFollowed,
         topUsers
       })
@@ -285,14 +287,10 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-    ]).then(([tweets, users]) => {
-      const data = tweets.map(r => ({
+    ]).then(([likes, users]) => {
+      const data = likes.map(r => ({
         ...r.dataValues,
         ...r.dataValues.Tweet.toJSON(),
-        // description: r.dataValues.Tweet.dataValues.description.substring(0, 50),
-        // userAvatar: r.dataValues.User.dataValues.avatar,
-        // userName: r.dataValues.User.dataValues.name,
-        // userAccount: r.dataValues.User.dataValues.name,
         isLiked: r.dataValues.Tweet.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
       }))
       //使用者（與其他重複）
@@ -308,6 +306,7 @@ const userController = {
       return res.render('likes', {
         data,
         viewUser: viewUser[0].toJSON(),
+        currentUser: helpers.getUser(req),
         isFollowed,
         topUsers
       })
