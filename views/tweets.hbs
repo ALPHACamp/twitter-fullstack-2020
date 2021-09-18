@@ -180,10 +180,31 @@
                   <a href="/tweets/{{this.id}}" class="text-muted">
                     <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
                   </a>
-                  <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.Likes.length}}</div>
-
 
                   {{#if isLiked}}
+                  <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+                    <div class="ml-4 like">
+                      <button type="submit" class="unlike btn">
+                        <i class="fas fa-heart mr-1"></i>
+                      </button>
+                      {{this.Likes.length}}
+                    </div>
+                  </form>
+                  {{else}}
+                  <form action="/tweets/{{this.id}}/like" method="POST">
+                  <div class="ml-4 like">
+                    <button type="submit" class="like btn">
+                      <i class="far fa-heart mr-1"></i>
+                    </button>
+                    {{this.Likes.length}}
+                  </div>
+                  </form>
+
+
+                  {{/if}}
+
+
+                  {{!-- {{#if isLiked}}
                   <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
                     <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
                   </form>
@@ -191,7 +212,7 @@
                   <form action="/tweets/{{this.id}}/like" method="POST">
                     <button class="btn" type="submit"><i class="far fa-heart"></i></button>
                   </form>
-                  {{/if}}
+                  {{/if}} --}}
 
 
                 </div>

@@ -224,7 +224,7 @@ const userController = {
       const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
-        FollowerCount: user.Followers.length,
+        // FollowerCount: user.Followers.length,
         isFollowed: user.Followers.map(d => d.id).includes(req.user.id),
       }))
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
@@ -351,7 +351,7 @@ const userController = {
             })
               .then(() => {
                 req.flash('success_messages', '使用者設定已成功被更新!')
-                res.redirect(`/tweets`)
+                res.redirect('back')
               })
               .catch(err => console.error(err))
           })
