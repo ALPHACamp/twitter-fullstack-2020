@@ -92,22 +92,24 @@
     </div>
     <div class="tweets border-top border-5">
       {{#each tweets}}
-      <div class="teeet border">
+      <div class="tweet border">
         <div class="d-flex">
           <span class="avatar m-2">
-            <img src="{{noImage this.User.avatar.url}}" alt="" class="rounded-circle userImage">
+            <img src="{{noImage this.user.avatar.url}}" alt="" class="rounded-circle userImage">
           </span>
           <div class="">
             <div class="d-flex">
-              <div class="name m-2">{{this.User.name}}</div>
-              <div class="tag m-2">@{{this.User.account}}</div>
-              <div class="time m-2">{{moment this.createdAt}}</div>
+              <div class="name m-2">{{this.userName}}</div>
+              <div class="tag m-2">@{{this.userAccount}}</div>
+              <a class="time m-2" title="{{momentFormat this.createdAt}}" href="/tweets/{{this.id}}">
+                {{moment this.createdAt}}
+              </a>
             </div>
             <a href="/tweet/{{this.id}}" class="tweetContent m-2 btn">
               <p>{{this.description}}</p>
             </a>
             <div class="row d-flex flex-nowrap mb-2">
-              <div class="commtent col-lg-2 d-flex">
+              <div class="comment col-lg-2 d-flex">
                 <span class="commentIcon me-3">
                   <i class="far fa-comment"></i>
                 </span>
@@ -115,9 +117,17 @@
               </div>
               <div clss="like col-lg-2 d-flex">
                 <span class="likeIcon me-2">
-                  <i class="far fa-heart "></i>
+                  {{#if this.data.isLiked}}
+                  <form action="/like/{{this.id}}" method="POST">
+                    <i class="far fa-heart" type="submit"></i>
+                  </form>
+                  {{else}}
+                  <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                    <i class="fas fa-heart "></i>
+                  </form>
+                  {{/if}}
                 </span>
-                <span class="likeAmount">30</span>
+                <span class="likeAmount">{{this.likedCount}}</span>
               </div>
             </div>
           </div>
@@ -131,36 +141,33 @@
       <div class="title m-3">
         <h5 class="fw-bolder">Popular</h5>
       </div>
+      {{#each users}}
       <div class="popularList border-top">
         <div class="popularUser d-flex border-bottom justify-content-between">
           <div class="user d-flex">
             <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+              <a href="/users/{{this.id}}">
+                <img src="{{noImage this.image}}" alt="" class="rounded-circle userImage">
+              </a>
             </div>
             <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">Pizza Hut</div>
-              <div class="account ms-1">@Pizza Hut</div>
+              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}</div>
+              <div class="account ms-1">{{this.account}}</div>
             </div>
           </div>
           <div class="round m-3">
-            <button class="orange btn text-white round">正在跟隨</button>
+          {{#if isFollowing }}
+          <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn orange text-white round">取消跟隨</button>
+          </form>
+          {{else}}
+          <form action="/following/{{this.id}}" method="POST">
+            <button type="submit" class="btn followButton round">跟隨</button>
+          </form>
+          {{/if}}
           </div>
         </div>
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">McDonald's</div>
-              <div class="account ms-1">@McDonald's</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="btn followButton round">跟隨</button>
-          </div>
-        </div>
-      </div>
+      {{/each}}
 
     </div>
   </div>

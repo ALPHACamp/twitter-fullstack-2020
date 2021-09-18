@@ -52,13 +52,13 @@ module.exports = (app, passport) => {
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
 
-  // 後台 - 首頁
-  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
-  // 後台 - 使用者列表
-  app.get('/admin/users', authenticatedAdmin, adminController.adminGetUsers)
-  // 後台 - 推文清單
-  app.get('/admin/tweets', authenticatedAdmin, adminController.adminGetTweets)
-  router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+  // // 後台 - 首頁
+  // app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+  // // 後台 - 使用者列表
+  // app.get('/admin/users', authenticatedAdmin, adminController.adminGetUsers)
+  // // 後台 - 推文清單
+  // app.get('/admin/tweets', authenticatedAdmin, adminController.adminGetTweets)
+  // app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   // 註冊
   app.get('/signup', userController.signUpPage)
