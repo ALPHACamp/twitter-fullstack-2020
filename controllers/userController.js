@@ -82,7 +82,20 @@ const userController = {
 
   getUserLike: (req, res) => {
     res.render('selfLike')
-  }
+  },
+
+  getUserSetting: (req, res) => {
+    const id = req.user.id
+
+    User.findByPk(id)
+      .then(user => {
+        console.log(req.params)
+        return res.render('setting', { 
+          layout: 'settingMain',
+          user: user.toJSON()
+         })
+      })
+  },
 }
 
 module.exports = userController

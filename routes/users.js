@@ -3,7 +3,7 @@ const router = express.Router()
 const passport = require('../config/passport')
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
-const helpers = require('../_helpers')
+
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -26,6 +26,7 @@ router.get('/self/:id', authenticated, userController.getUser)
 router.get('/self/reply/:id', authenticated, userController.getUserReply)
 router.get('/self/like/:id', authenticated, userController.getUserLike)
 
-
+// user's setting
+router.get('/setting/:id', authenticated, userController.getUserSetting)
 
 module.exports = router
