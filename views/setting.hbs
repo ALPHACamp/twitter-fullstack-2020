@@ -58,21 +58,18 @@
           <input type="text" name="account" class="form-control ml-2" id="account" placeholder="帳號" aria-label="account"
             data-minleng="5" value="{{currentUser.account}}">
           <div class="invalid-feedback ml-2">
-            帳號至少需5個字
           </div>
         </div>
         <div class="mt-4">
           <input type="text" name="name" id="name" class="form-control ml-2" placeholder="名稱" aria-label="name"
             data-maxleng="50" value="{{currentUser.name}}">
           <div class="invalid-feedback ml-2">
-            名稱不得超過50個字
           </div>
         </div>
         <div class="mt-4">
           <input type="email" name="email" id="email" class="form-control ml-2" placeholder="Email" aria-label="email"
             value="{{user.email}}">
           <div class="invalid-feedback ml-2">
-            email為必填欄位
           </div>
         </div>
         <div class="mt-4">
@@ -112,17 +109,26 @@
   const password = document.querySelector("#password")
   const checkPassword = document.querySelector("#checkPassword")
   const saveButton = document.querySelector(".save-button")
+
   saveButton.addEventListener("click", function check(event) {
     if (account.value.length < 5) {
       account.classList.add("is-invalid")
+      account.nextElementSibling.innerHTML ="帳號至少需5個字"
       event.preventDefault()
     }
     if (name.value.length > 50) {
       name.classList.add("is-invalid")
+      name.nextElementSibling.innerHTML = "名稱不得超過50個字"
+      event.preventDefault()
+    }
+    if (name.value.length < 1) {
+      name.classList.add("is-invalid")
+      name.nextElementSibling.innerHTML = "名稱不得為空"
       event.preventDefault()
     }
     if (email.value.length < 1) {
       email.classList.add("is-invalid")
+      email.nextElementSibling.innerHTML ="email為必填欄位"
       event.preventDefault()
     }
     if (password.value !== checkPassword.value) {

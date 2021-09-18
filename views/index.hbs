@@ -59,21 +59,22 @@
 
 
       <form action="/tweets" method="POST">
-      <div class="add-post d-flex">
-        <div class="mt-2 ml-2">
-          <a href="/users/{{user.id}}">
-            <img class="user-pic" src="{{currentUser.avatar}}" alt="">
-          </a>
-        </div>
-
-  
-          <div class="type-location">
-            <textarea type="text" class="new-post-content" name="description" placeholder="有什麼新鮮事？" rows="2" maxlength="140"   id="description"></textarea>
+        <div class="add-post d-flex">
+          <div class="mt-2 ml-2">
+            <a href="/users/{{user.id}}">
+              <img class="user-pic" src="{{currentUser.avatar}}" alt="">
+            </a>
           </div>
-      </div>
-      <div class="send-area">
-        <button type="submit" class="btn send-button">推文</button>
-      </div>
+
+
+          <div class="type-location">
+            <textarea type="text" class="new-post-content" name="description" placeholder="有什麼新鮮事？" rows="2"
+              maxlength="140" id="description"></textarea>
+          </div>
+        </div>
+        <div class="send-area">
+          <button type="submit" class="btn send-button">推文</button>
+        </div>
       </form>
       <hr style="border: 5px solid #E6ECF0; margin:0">
 
@@ -109,21 +110,35 @@
               {{!-- modal叫出貼文回覆 --}}
               <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet{{this.id}}">
                 <div class="number"></div>
-                <i class="far fa-comment mr-2"></i>留言數{{this.replyCount}}
+                <i class="far fa-comment mr-2"></i>{{this.replyCount}}
               </div>
 
 
               <div class="ml-4 d-flex index-like">
-                
+
+                {{#if isLiked}}
                 <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
-                  <button class="btn" type="submit">
-                    <i class="far fa-heart"></i>
-                    {{#if isLiked}}
-                    <i class="fas fa-heart" style="color:#E0245E"></i>
-                    {{/if}}
-                  </button>
+                  <div class="ml-4 like">
+                    <button type="submit" class="unlike btn">
+                      <i class="fas fa-heart mr-1"></i>
+                    </button>
+                    {{this.Likes.length}}
+                  </div>
                 </form>
-                <div class="index-like-count ml-2"><div class="number">{{this.likedCount.length}}</div>讚數</div>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                  <div class="ml-4 like">
+                    <button type="submit" class="like btn">
+                      <i class="far fa-heart mr-1"></i>
+                    </button>
+                    {{this.Likes.length}}
+                  </div>
+                </form>
+                {{/if}}
+
+                <div class="index-like-count ml-2">
+                  <div class="number">{{this.likeCount}}讚數</div>
+                </div>
 
               </div>
             </div>

@@ -8,27 +8,27 @@
     <hr>
 
 
-  <form action="/tweets" method="POST">
-    <div class="type-area">
-      <div class="user-pic">
-        <img src="{{currentUser.avatar}}" alt="">
-      </div>
+    <form action="/tweets" method="POST">
+      <div class="type-area">
+        <div class="user-pic">
+          <img src="{{currentUser.avatar}}" alt="">
+        </div>
 
-    
-      
+
+
         <div class="type-text">
-          <textarea type="text" class="new-post-content form-control" id="description" name="description"
+          <textarea type="text" class="new-post-content form-control" id="description-modal" name="description"
             placeholder="有什麼新鮮事？" rows="5"></textarea>
           <div class="invalid-feedback" id="add-tweet">
           </div>
         </div>
 
-    </div>
+      </div>
 
-    <div class="add-button">
-      <button type="submit" class="btn button">推文
-      </button>
-    </div>
+      <div class="add-button">
+        <button type="submit" class="btn button" id="modal-send-button">推文
+        </button>
+      </div>
 
     </form>
 
@@ -37,9 +37,9 @@
 
 <script>
 
+  const addTweet = document.querySelector("#description-modal")
+  const addBtn = document.querySelector("#modal-send-button")
 
-
-  const addTweet = document.querySelector("#description")
 
   addTweet.addEventListener('input', function check(event) {
     if (addTweet.value.length < 1) {
@@ -53,8 +53,19 @@
     if (addTweet.value.length > 0 && addTweet.value.length < 140) {
       addTweet.classList.remove("is-invalid")
     }
-  }
-  )
+  })
 
+  addBtn.addEventListener('click', function check(event) {
+    if (addTweet.value.length < 1) {
+      addTweet.classList.add("is-invalid")
+      addTweet.nextElementSibling.innerHTML = "推文不得為空"
+      event.preventDefault()
+    }
+    if (addTweet.value.length > 140) {
+      addTweet.classList.add("is-invalid")
+      addTweet.nextElementSibling.innerHTML = "字數不可超過140字"
+      event.preventDefault()
+    }
+  })
 
 </script>
