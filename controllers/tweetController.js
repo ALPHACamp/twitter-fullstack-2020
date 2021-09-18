@@ -12,6 +12,8 @@ const tweetController = {
   //貼文相關
   //顯示所有貼文
   getTweets: (req, res) => {
+    const UserId = req.user.id
+
     return Promise.all([
       Tweet.findAll({
       include: [User, { model: Like, include: [Tweet] }],
@@ -19,11 +21,14 @@ const tweetController = {
       raw: true, 
       nest: true
     }),
-      replies = sequelize.query('select `TweetId`, COUNT(`id`) AS `replycount` from `replies` GROUP BY `TweetId`;', {
-      type: sequelize.QueryTypes.SELECT
+      // replies = sequelize.query('select `TweetId`, COUNT(`id`) AS `replycount` from `replies` GROUP BY `TweetId`;', {
+      // type: sequelize.QueryTypes.SELECT
+      // }),
+      User.findAll({
+        include:[{model: User, as: 'Followers'}],
       })
     ]) 
-    .then(([tweets,replies]) => {
+    .then(([tweets,users]) => {
        
          const data = tweets.map( r => ({
         ...r.dataValues,
@@ -32,13 +37,28 @@ const tweetController = {
         description: r.description,
         createdAt:r.createdAt,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
-        replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
+        // replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
       }))
-     
-      
+    //整理popular要用的資料 
+      const popular = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        myself: Boolean(user.id === UserId),
+        isFollowed: req.user.Followings.map(d => d.id).includes(UserId)
+      }))
+      //排除admin
+      const normal = popular.filter(d => d.role === 'normal')
+
+      //區分已followed和未followed並排序
+      const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+      const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+      console.log(unFollowed)
       return res.render('index', {
         data:data,
-       
+        isFollowed: isFollowed,
+        unFollowed: unFollowed,
         currentUser: helpers.getUser(req)
       })
     })
