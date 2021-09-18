@@ -17,7 +17,7 @@
     <img src="https://randomuser.me/api/portraits/men/88.jpg"
       style="width: 9rem; position:absolute; top: 20rem; left: 1rem;" class="rounded-circle" alt="...">
     <div class="d-flex flex-row-reverse m-2">
-      <a href="/user/self/edit" class="btn btn-orange-white rounded-pill">編輯個人資料</a>
+      <a href="/user/self/edit/{{user.id}}" class="btn btn-orange-white rounded-pill">編輯個人資料</a>
     </div>
     <div class="card-body">
       <h5 class="card-title fontWeight900">{{user.name}}</h5>
@@ -60,8 +60,8 @@
             <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
           </div>
           <p class="card-text fontWeight500">{{this.content}}</p>
-          <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">13</span>
-          <i class="far fa-comment me-3"></i><span class="fontWeight500">76</span>
+          <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span>
+          <i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.replyCount}}</span>
         </div>
       </div>
     </div>
