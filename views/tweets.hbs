@@ -248,7 +248,7 @@
                 </div>
                 <div class="button">
 
-                  {{#ifCond ../user.id this.id}}
+                  {{#if myself}}
                   {{else}}
                   {{#if this.isFollowed }}
                   <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
@@ -258,7 +258,7 @@
                   <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
                       type="submit" class="btn unfollow-button"> 跟隨 </button></form>
                   {{/if}}
-                  {{/ifCond}}
+                  {{/if}}
                 </div>
               </div>
             </li>

@@ -131,6 +131,7 @@ const userController = {
   },
 
   getUserTweets: (req, res) => {
+    const currentUser = helpers.getUser(req)
     return Promise.all([
       Tweet.findAll({
         where: { UserId: req.params.user_id },
@@ -152,22 +153,23 @@ const userController = {
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
       const data = tweets.map(r => ({
         ...r.dataValues,
-        isLiked: r.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
+        isLiked: r.dataValues.Likes.map(d => d.UserId).includes(currentUser.id)
       }))
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
       //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
       const allUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id),
+        myself: Boolean(user.id === currentUser.id),
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
       }))
       const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       return res.render('tweets', {
-        data: data,
+        data,
         viewUser: viewUser[0].toJSON(),
-        currentUser: helpers.getUser(req),
+        currentUser,
         isFollowed,
         topUsers
       })
@@ -176,6 +178,7 @@ const userController = {
   },
 
   getUserReplied: (req, res) => {
+    const currentUser = helpers.getUser(req)
     return Promise.all([
       Reply.findAll({
         where: { UserId: req.params.user_id },
@@ -196,18 +199,19 @@ const userController = {
     ]).then(([replies, users]) => {
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
       //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
       const allUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id),
+        myself: Boolean(user.id === currentUser.id),
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
       }))
       const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       return res.render('replied', {
         data: replies,
         viewUser: viewUser[0].toJSON(),
-        currentUser: helpers.getUser(req),
+        currentUser,
         isFollowed,
         topUsers
       })
@@ -215,6 +219,7 @@ const userController = {
   },
 
   getUserLikes: (req, res) => {
+    const currentUser = helpers.getUser(req)
     return Promise.all([
       Like.findAll({
         where: { UserId: req.params.user_id },
@@ -236,23 +241,23 @@ const userController = {
       const data = likes.map(r => ({
         ...r.Tweet.toJSON(),
         likedAt: r.createdAt,
-        isLiked: r.Tweet.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
+        isLiked: req.user.LikedTweets.map(d => d.TweetId).includes(r.id)
       }))
-      console.log(data)
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
       //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
       const allUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id),
+        myself: Boolean(user.id === currentUser.id),
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
       }))
       const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       return res.render('likes', {
         data,
         viewUser: viewUser[0].toJSON(),
-        currentUser: helpers.getUser(req),
+        currentUser,
         isFollowed,
         topUsers
       })
