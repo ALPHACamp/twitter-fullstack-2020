@@ -41,6 +41,8 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.addTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetController.postReplies)
+router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+router.delete('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 
 // User
 // signin
