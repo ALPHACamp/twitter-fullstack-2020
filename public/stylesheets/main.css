@@ -28,7 +28,6 @@ p {
   color: #FFFFFF!important;
 }
 
-
 .for-center{
   width: 90%;
 }
@@ -38,6 +37,7 @@ p {
   color: #657786;
   font-size: 0.8rem;
   font-weight: 500;
+  cursor: pointer;
 }
 
 /* 以下是各別各組css */
@@ -127,7 +127,6 @@ p {
   color: #1c1c1c;
   font-size: 1rem;
   font-weight: 500;
-  margin: 0 auto;
 }
 
 .popular {
@@ -277,6 +276,7 @@ max-width: 600px;
   padding-right: 65px;
 }
 
+/* 後台 */
 .tweets-back,
 .users-back {
   border: 1px solid #e6ecf0;
