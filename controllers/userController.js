@@ -3,24 +3,24 @@ const db = require('../models')
 const User = db.User
 
 let userController = {
-  registerPage: (req, res) => {
-    return res.render('register')
+  signupPage: (req, res) => {
+    return res.render('signup')
   },
 
-  register: (req, res) => {
+  signup: (req, res) => {
     if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/register')
+      return res.redirect('/signup')
     } else {
       User.findOne({ where: { account: req.body.account } }).then((user) => {
         if (user) {
           req.flash('error_messages', '帳號已重複註冊！')
-          return res.redirect('/register')
+          return res.redirect('/signup')
         } else {
           User.findOne({ where: { email: req.body.email } }).then((user) => {
             if (user) {
               req.flash('error_messages', '信箱已重複註冊！')
-              return res.redirect('/register')
+              return res.redirect('/signup')
             } else {
               User.create({
                 account: req.body.account,
@@ -33,7 +33,7 @@ let userController = {
                 )
               }).then((user) => {
                 req.flash('success_messages', '成功註冊帳號！')
-                return res.redirect('/login')
+                return res.redirect('/signin')
               })
             }
           })
@@ -42,11 +42,11 @@ let userController = {
     }
   },
 
-  loginPage: (req, res) => {
-    return res.render('login')
+  signinPage: (req, res) => {
+    return res.render('signin')
   },
 
-  login: (req, res) => {
+  signin: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.redirect('/tweets')
   },
@@ -54,7 +54,7 @@ let userController = {
   logout: (req, res) => {
     req.flash('success_messages', '登出成功！')
     req.logout()
-    res.redirect('/login')
+    res.redirect('/signin')
   }
 }
 module.exports = userController
