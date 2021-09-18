@@ -63,10 +63,6 @@ router.get('/follower', authenticated, userController.getFollowers)
 router.post('/followships/:userId', authenticated, followshipController.addFollowing)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)
 
-
-router.get('/admin/tweets', authenticatedAdmin, adminController.tweets)
-
-
 // users
 //以下都還要加userid
 router.get('/users/tweets', userController.getUserTweets) 
@@ -76,10 +72,10 @@ router.get('/users/likes', userController.getLikes)
 
 
 // Admin
-router.get('/admin/signin', adminController.signInPage)
-router.post('/admin/signin', adminController.signIn)
-router.get('/admin/tweets', adminController.getTweets)
-router.get('/admin/users', adminController.getUsers)
+router.get('/admin/signin', authenticatedAdmin, adminController.signInPage)
+router.post('/admin/signin', authenticatedAdmin, adminController.signIn)
+router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 // 如果使用者訪問首頁，就導向 /restaurants 的頁面
 router.get('/', authenticated, (req, res) => {
