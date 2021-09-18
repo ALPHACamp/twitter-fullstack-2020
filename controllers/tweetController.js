@@ -46,10 +46,10 @@ const tweetController = {
         myself: Boolean(user.id === UserId),
         isFollowed: req.user.Followings.map(d => d.id).includes(UserId)
       }))
-      //排除admin
-      const normal = popular.filter(d => d.role === 'normal')
+      //排除admin並限制前10名
+      const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0,10)  
 
-      //區分已followed和未followed並排序
+      //區分已followed和未followed+排序
       const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
       const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
