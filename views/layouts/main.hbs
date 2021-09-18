@@ -16,19 +16,31 @@
 
 <body style="background: white">
   {{#if success_messages}}
-  <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">success
-    {{success_messages}}
+  <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+    <div>{{success_messages}}</div>
+    <div class="success-icon"><i class="fas fa-check"></i></div>
   </div>
   {{/if}}
   {{#if error_messages}}
-  <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">alert
-    {{error_messages}}
+  <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
+    <div>{{error_messages}}</div>
+    <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
   </div>
   {{/if}}
 
   {{{body}}}
 
 </body>
+
+<script>
+  //alert自動消失
+  const alert = document.querySelector('.alert')
+  if (alert) {
+    setTimeout(() => {
+      alert.classList.add('fade')
+    }, 2000)
+  }
+</script>
 
 {{!-- 引用Jquery/popper/bootstrap --}}
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

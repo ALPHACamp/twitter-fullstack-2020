@@ -72,7 +72,7 @@ const userController = {
     }
     User.findByPk(req.params.user_id)
       .then(user => {
-        return res.render('setting', { user: user.toJSON() })
+        return res.render('setting', { currentUser: user.toJSON() })
       })
       .catch(err => console.log(err))
   },
@@ -90,6 +90,7 @@ const userController = {
 
     // const file = Object.assign({}, req.files)
     const { files } = req
+    const isCoverDelete = req.body.isDelete
     const user = await User.findByPk(req.params.user_id)
 
     // if (files) {
@@ -102,7 +103,7 @@ const userController = {
             name: req.body.name,
             introduction: req.body.introduction,
             avatar: avaImg.data.link,
-            cover: covImg.data.link
+            cover: isCoverDelete ? '' :covImg.data.link
           })
           req.flash('success_messages', 'user profile was successfully updated!')
           return res.redirect('back')
@@ -115,6 +116,7 @@ const userController = {
           name: req.body.name,
           introduction: req.body.introduction,
           avatar: avaImg.data.link,
+          cover: isCoverDelete ? '' : user.cover
         })
         req.flash('success_messages', 'user profile was successfully updated!')
         return res.redirect('back')
@@ -124,7 +126,7 @@ const userController = {
         await user.update({
           name: req.body.name,
           introduction: req.body.introduction,
-          cover: covImg.data.link,
+          cover: isCoverDelete ? '' :covImg.data.link,
         })
         req.flash('success_messages', 'user profile was successfully updated!')
         return res.redirect('back')
@@ -134,6 +136,7 @@ const userController = {
       await user.update({
         name: req.body.name,
         introduction: req.body.introduction,
+        cover: isCoverDelete ? '' : user.cover
       })
       req.flash('success_messages', 'user profile was successfully updated!')
       return res.redirect('back')
@@ -214,20 +217,21 @@ const userController = {
     ]).then(([tweets, users]) => {
       const data = tweets.map(r => ({
         ...r.dataValues,
-        isLiked: r.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
+        isLiked: r.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
       }))
       //使用者（與其他重複）
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        isFollowed: user.Followers.map(d => d.id).includes(req.user.id),
+        // FollowerCount: user.Followers.length,
+        isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id),
       }))
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('tweets', {
         data: data,
         viewUser: viewUser[0].toJSON(),
+        currentUser: helpers.getUser(req),
         isFollowed,
         topUsers
       })
@@ -254,16 +258,17 @@ const userController = {
     ]).then(([replies, users]) => {
       //使用者（與其他重複）
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+        isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id)
       }))
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('replied', {
         data: replies,
         viewUser: viewUser[0].toJSON(),
+        currentUser: helpers.getUser(req),
         isFollowed,
         topUsers
       })
@@ -285,29 +290,26 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-    ]).then(([tweets, users]) => {
-      const data = tweets.map(r => ({
+    ]).then(([likes, users]) => {
+      const data = likes.map(r => ({
         ...r.dataValues,
         ...r.dataValues.Tweet.toJSON(),
-        // description: r.dataValues.Tweet.dataValues.description.substring(0, 50),
-        // userAvatar: r.dataValues.User.dataValues.avatar,
-        // userName: r.dataValues.User.dataValues.name,
-        // userAccount: r.dataValues.User.dataValues.name,
-        isLiked: r.dataValues.Tweet.dataValues.Likes.map(d => d.UserId).includes(req.user.id)
+        isLiked: r.dataValues.Tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
       }))
       //使用者（與其他重複）
       console.log(data)
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(req.user.id)
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: user.Followers.map(d => d.id).includes(req.user.id)
+        isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id)
       }))
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('likes', {
         data,
         viewUser: viewUser[0].toJSON(),
+        currentUser: helpers.getUser(req),
         isFollowed,
         topUsers
       })
@@ -349,7 +351,7 @@ const userController = {
             })
               .then(() => {
                 req.flash('success_messages', '使用者設定已成功被更新!')
-                res.redirect(`/tweets`)
+                res.redirect('back')
               })
               .catch(err => console.error(err))
           })

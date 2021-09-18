@@ -18,7 +18,7 @@
     <hr>
 
     <div class="cover">
-      <img src="{{viewUser.cover}}" id="cover" alt="">
+      <img src="{{currentUser.cover}}" id="cover" alt="">
     </div>
 
 
@@ -30,15 +30,17 @@
         <i class="fas fa-camera mr-4"></i>
       </label>
 
-      
-        <i class="fas fa-times" id="edit-delete"></i>
-      
+
+      <i class="fas fa-times" id="edit-delete">
+        <input type="hidden" name="isDelete" id="isDelete" value="" disabled="true"/>
+      </i>
+
 
     </div>
 
     <div class="user-info">
       <div class="avatar">
-        <img src="{{viewUser.avatar}}" alt="" id="avatar">
+        <img src="{{currentUser.avatar}}" alt="" id="avatar">
       </div>
 
       <div class="edit-avatar">
@@ -56,7 +58,7 @@
 
       <div>
         <div class="edit-name-title">名稱</div>
-        <input type="text" name="name" id="name" class="form-control" aria-label="name" value="{{viewUser.name}}">
+        <input type="text" name="name" id="name" class="form-control" aria-label="name" value="{{currentUser.name}}">
         <div class="invalid-feedback name">
         </div>
         <div class="count-down">
@@ -68,7 +70,7 @@
       <div>
         <div class="edit-introduction-title">自我介紹</div>
         <textarea type="text" name="introduction" id="introduction" class="form-control" aria-label="name"
-          rows="6">{{viewUser.introduction}}</textarea>
+          rows="6">{{currentUser.introduction}}</textarea>
         <div class="invalid-feedback" id="introduction">
         </div>
         <div class="count-down introduction">
@@ -94,6 +96,7 @@
   const editUserBtn = document.querySelector('.edit-user')
   const saveBtn = document.querySelector('#save-button')
   const deleteCover = document.querySelector('#edit-delete')
+
 
   editUserBtn.addEventListener('click', function countInitial(event) {
     introductionCount.innerText = introduction.value.length
@@ -163,10 +166,14 @@
     }
   }
 
-//刪除圖片
-{{!-- deleteCover.addEventListener('click', function delete(event) {
-  const cover = document.querySelector('#cover')
-  cover.src = ""
-}) --}}
+  //刪除圖片
+  deleteCover.addEventListener('click', function deleteCover() {
+    const cover = document.querySelector('#cover')
+    const isDelete = document.querySelector('#isDelete')
+    cover.src = ''
+    isDelete.disabled= "false"
+  })
+
+
 
 </script>
