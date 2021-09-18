@@ -1,17 +1,19 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
+const helpers = require('../_helpers')
 
 const twitterController = require('../controllers/twitterController.js')
 
 const authenticated = (req, res, next) => {
-  if (req.isAuthenticated) {
+  if (helpers.ensureAuthenticated(req)) {
     return next()
   }
-  res.redirect('/users/signup')
+  res.redirect('/users/login')
 }
 
-router.get('/', twitterController.getTwitters)
+
+router.get('/', authenticated, twitterController.getTwitters)
 
 
 module.exports = router
