@@ -1,5 +1,5 @@
 'use strict';
-
+const faker = require('faker')
 const randomChoose = require('../shuffle')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -7,21 +7,19 @@ module.exports = {
       'SELECT id FROM Users;',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     )
-
-    await queryInterface.bulkInsert('Followships',
+    await queryInterface.bulkInsert('Tweets',
       Array.from({ length: 5 }, () => {
-        const ranNum = randomChoose(users.length, 2)
+        const ranNum = randomChoose(users.length, 1)
         return {
-          followerId: users[ranNum[0]].id,
-          followingId: users[ranNum[1]].id,
+          description: faker.lorem.text().substring(0, 140),
+          UserId: users[ranNum[0]].id,
           createdAt: new Date(),
           updatedAt: new Date()
         }
       }
       ))
   },
-
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Followships', null, {})
+    await queryInterface.bulkDelete('Tweets', null, {})
   }
-}
+};

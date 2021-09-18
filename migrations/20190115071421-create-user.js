@@ -15,16 +15,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING(50),
       },
-<<<<<<< HEAD
-      name: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      password: {
-        type: Sequelize.STRING
-=======
       email: {
         type: Sequelize.STRING(50),
         unique: true,
@@ -33,7 +23,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       password: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(150),
       },
 
       avatar: {
@@ -44,7 +34,6 @@ module.exports = {
       },
       role: {
         type: Sequelize.STRING,
->>>>>>> develop
       },
       createdAt: {
         allowNull: false,
@@ -52,23 +41,6 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-<<<<<<< HEAD
-        type: Sequelize.DATE
-      },
-      isAdmin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-      },
-      image: {
-        type: Sequelize.STRING
-      }
-    });
-  },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
-  }
-};
-=======
         type: Sequelize.DATE,
       },
     })
@@ -77,4 +49,3 @@ module.exports = {
     return queryInterface.dropTable('Users')
   },
 }
->>>>>>> develop
