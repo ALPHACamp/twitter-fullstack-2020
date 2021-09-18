@@ -6,7 +6,7 @@
         <i class="fas fa-arrow-left fa-lg mx-3 my-3"></i></a>
         <div class="ms-3">
           <p class="home-word">{{user.name}}</p>
-          <p class="twi-count"> {{tweetCount}}推文</p>
+          <p class="twi-count"> {{user.tweetLength}}推文</p>
         </div>
     </div>
     <div class="cover-block">
@@ -104,7 +104,7 @@
           <div class="user-info-edit">
             <div class="user-input">
             <label for="userNameInput">名稱</label>
-            <input type="text" class="form-control user-name-edit" id="userNameInput" minlength="5" maxlength="50" placeholder="">  
+            <input type="text" class="form-control user-name-edit" id="userNameInput" minlength="5" maxlength="50" value="{{user.name}}">  
           </div>
           <div class="count_message mb-5 d-flex flex-row-reverse"><p id="count_message_name">0/50</p></div>
          

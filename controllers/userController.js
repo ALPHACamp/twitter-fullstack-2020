@@ -15,7 +15,8 @@ const userController = {
         where: { id: userId, role: 0 },
         include: [
           { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
+          { model: User, as: 'Followings' },
+          { model: Tweet, attributes: ['id'] }
         ]
       })
       user.dataValues.introduction =
@@ -24,24 +25,22 @@ const userController = {
           : user.dataValues.introduction.substring(0, 50) + '...'
       user.dataValues.followerLength = user.Followers.length
       user.dataValues.followingLength = user.Followings.length
+      user.dataValues.tweetLength = user.Tweets.length
 
-      const tweetsRaw = await Tweet.findAndCountAll({
+      const tweetsRaw = await Tweet.findAll({
         where: { UserId: userId },
         include: [Reply, Like],
         order: [['createdAt', 'DESC']]
       })
 
-      const tweets = tweetsRaw.rows.map(tweet => ({
+      const tweets = tweetsRaw.map(tweet => ({
         ...tweet.dataValues,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length
       }))
 
       res.render('userTweets', {
-        user: user.toJSON(),
-        id,
-        tweets,
-        tweetCount: tweetsRaw.count
+        user: user.toJSON(),tweets,id
       })
     } catch (err) {
       console.log(err)
@@ -51,8 +50,42 @@ const userController = {
   },
   getSetting: (req, res) => {},
   editSetting: (req, res) => {},
-  getReplies: (req, res) => {
-    res.render('userReply')
+  getReplies: async (req, res) => {
+    try {
+      const userId = req.params.userId
+      const id = helpers.getUser(req).id
+      const user = await User.findOne({
+        where: { id: userId, role: 0 },
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Tweet, attributes: ['id'] }
+        ]
+      })
+      user.dataValues.introduction =
+        user.dataValues.introduction < 50
+          ? user.dataValues.introduction
+          : user.dataValues.introduction.substring(0, 50) + '...'
+      user.dataValues.followerLength = user.Followers.length
+      user.dataValues.followingLength = user.Followings.length
+      user.dataValues.tweetLength = user.Tweets.length
+
+      const replies = await Reply.findAll({
+        where: { UserId: userId },
+        include: [
+          {
+            model: Tweet,
+            attributes: ['id'],
+            include: [{ model: User, attributes: ['id', 'account'] }]
+          }
+        ],
+        order: [['createdAt', 'DESC']]
+      })
+
+      res.render('userReply', { user: user.toJSON(), replies, id })
+    } catch (err) {
+      console.log(err)
+    }
   },
   getLikes: (req, res) => {
     res.render('userLike')
