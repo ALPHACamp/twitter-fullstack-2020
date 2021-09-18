@@ -26,11 +26,11 @@ const authenticatedAdmin = (req, res, next) => {
 
 
 module.exports = (app, passport) => {
-  // 前台首頁
+  // 前台
   app.get('/', authenticated, (req, res) => res.redirect('/home'))
   app.get('/home', authenticated, tweetController.getTweets)
   app.get('/userProfile', authenticated, userController.getUserProfile)
-  app.get('/setting', authenticated, userController.getsetting)
+  app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
 
   // 後台登入
@@ -40,7 +40,7 @@ module.exports = (app, passport) => {
     failureFlash: true
   }), adminController.signIn)
 
-  // 後台首頁
+  // //後台首頁
   // app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   // app.get('/admin/tweets', authenticatedAdmin, adminController.adminGetTweets)
 
@@ -61,6 +61,8 @@ module.exports = (app, passport) => {
   // 登出
   app.get('/logout', userController.logout)
 
+
+  app.post('/tweets', tweetController.postTweet)
   //取得特定貼文資料
   app.get('/tweet/:id', tweetController.getTweet)
 }

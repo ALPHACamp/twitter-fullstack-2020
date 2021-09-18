@@ -1,23 +1,24 @@
+
+
 <!-- Modal -->
 <div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
       <div class="createTweet border">
-        <div class="d-flex">
-          <a href="" class="avatar m-2">
-            <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
-          </a>
-          <div class="d-flex align-items-center">
-            <p class="text-secondary m-0">有甚麼新鮮事?</p>
+        <form action="/tweets" method="POST">
+          <div class="d-flex">
+            <a href="" class="avatar m-2">
+              <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+            </a>
+            <textarea class="whathtNew" id="description" name="description" placeholder="有甚麼新鮮事?" maxlength="140" required></textarea>
           </div>
-        </div>
-        <div class="d-flex justify-content-end">
-          <div class="round m-3">
-            <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
-              data-bs-target="#newTwitModal">推文</button>
+          <div class="d-flex justify-content-end">
+            <div class="round m-3">
+              <button type="submit" class="orange btn text-white round" >推文</button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -32,7 +33,7 @@
       </div>
       <div class="buttonList mt-5">
         <div class="navItem index d-flex mb-4 ">
-          <div class="icon d-flex align-items-center activ-orange">
+          <div class="icon d-flex align-items-center color-orange">
             <i class="fas fa-home my-auto"></i>
           </div>
           <a href="/home" class="btn sidebarItem">
@@ -72,6 +73,7 @@
 
 
   <div class=" mainSection ">
+    {{>message}}
     <div class="title border">
       <h5 class="fw-bolder m-3">首頁</h5>
     </div>
@@ -81,7 +83,8 @@
           <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
         </a>
         <div class="d-flex align-items-center">
-          <p class="text-secondary m-0">有甚麼新鮮事?</p>
+          <button type="button" class="btn text-secondary" data-bs-toggle="modal"
+            data-bs-target="#newTwitModal">有甚麼新鮮事?</button>
         </div>
       </div>
       <div class="d-flex justify-content-end">

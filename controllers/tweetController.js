@@ -42,9 +42,29 @@ const tweetController = {
     const tweets = await Tweet.findAll({  
       raw: true,
       nest: true,
-      include: [User]
+      include: [User],
+      order: [
+        ['createdAt', 'DESC'], // Sorts by createdAt in ascending order
+      ],
     })
     return res.render('home',{ tweets})
+  },
+  postTweet: async (req, res) =>{
+    let { description } = req.body
+    console.log(description,'我是description')
+    if (!description.trim()) {
+      req.flash('error_messages', '推文不能空白！')
+      return res.redirect('back')
+    }
+     if (description.length > 140) {
+      req.flash('error_messages', '推文不能為超過140字！')
+      return res.redirect('back')
+    }
+    await Tweet.create({
+      description: req.body.description,
+      UserId: req.user.id
+    })
+    res.redirect('/home')
   },
   getTweet: async (req, res) => {
     // return Tweet.findByPk(req.params.id, {

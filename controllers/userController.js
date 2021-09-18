@@ -51,15 +51,14 @@ const userController = {
   getUserProfile:(req, res)=>{
     return res.render('userProfile')
   },
-  getsetting:(req, res)=>{
+  getSetting:(req, res)=>{
     return res.render('setting')
   },
   putUser: async (req,res) =>{
-    console.log('到putUser了')
     const user = await User.findByPk(req.params.id)
     
     user.update({
-        acount:req.body.acount,
+        acount:req.body.account,
         name:req.body.name,
         email:req.body.email,
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
