@@ -7,8 +7,7 @@
 
   <div class="border border-1 border-box" style="background-color: #FFFFFF; border-color: #E6ECF0; height: 120px;">
     <div class="d-flex flex-row" style="width: 500px">
-      <img src="https://randomuser.me/api/portraits/women/40.jpg" style="width: 50px; height: 50px; "
-        class="rounded-circle m-2" alt="...">
+      <img src="{{user.avatar}}" style="width: 50px; height: 50px; " class="rounded-circle m-2" alt="...">
       <div class="m-2" style="">
         <input class="form-control" type="text" placeholder="有什麼新鮮事?" aria-label="userPostArea"
           style="width: 480px; height: 50px; border-color: #FFFFFF; font-size: 18px;">
@@ -21,17 +20,17 @@
 
   <div class="divider" style="background-color: #E6ECF0; height: 10px;"></div>
 
+  {{#each tweets}}
   <div class="card p-3">
     <div class="d-flex">
       <div>
-        <img src="https://randomuser.me/api/portraits/women/40.jpg" style="width: 3rem" class="rounded-circle me-3"
-          alt="...">
+        <img src="{{user.avatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
       </div>
 
       <div class="col-md-8">
         <div class="userInfo d-flex">
           <h6 class="fontWeight700 me-2">{{user.name}}</h6>
-          <h6 class="fontWeight500" style="color:#657786;">@heyjohn</h6>
+          <h6 class="fontWeight500" style="color:#657786;">@{{user.account}}</h6>
           <h6 class="fontWeight500" style="color:#657786;">‧3小時</h6>
         </div>
         <p class="card-text fontWeight500">Some quick example text to build on the card title and make up the bulk of
@@ -43,5 +42,6 @@
       </div>
     </div>
   </div>
+  {{/each}}
 
 </div>

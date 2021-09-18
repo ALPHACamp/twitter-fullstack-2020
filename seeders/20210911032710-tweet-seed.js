@@ -4,7 +4,11 @@ const db = require('../models')
 const User = db.User
 
 const getUserId = new Promise((resolve, reject) => {
-  User.findAll({ raw: true, nest: true })
+  User.findAll({
+    raw: true,
+    nest: true,
+    where: { isAdmin: 0 }
+  })
     .then(users => {
       const userIds = []
       users.forEach(user => {
