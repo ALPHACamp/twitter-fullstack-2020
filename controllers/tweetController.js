@@ -25,7 +25,7 @@ const tweetController = {
     return Tweet.findByPk(req.params.id, {
       include: [
         { model: User, as: 'LikedUsers' },
-        { model: Reply, include: [User]}
+        { model: Reply, include: [User] }
       ]
     }).then(tweet => {
       const ReplyCount = tweet.Replies.length
@@ -34,6 +34,25 @@ const tweetController = {
       LikedUsers = tweet.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
       return res.json({ tweet, ReplyCount, LikedCount })
     })
-  }
+  },
+  postTweet: (req, res) => {
+    const { description } = req.body
+    if (!description) {
+      //req.flash('error_message', '你並未輸入任何文字')
+      return res.redirect('back')
+    }
+    if (description.length > 140) {
+      //req.flash('error_message', '你並未輸入任何文字')
+      return res.redirect('back')
+    }
+    else {
+      return Tweet.create({
+        description
+      })
+        .then(() => {
+          return res.redirect('/tweets')
+        })
+    }
+  },
 }
 module.exports = tweetController

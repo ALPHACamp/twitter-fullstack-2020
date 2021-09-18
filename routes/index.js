@@ -6,7 +6,7 @@ module.exports = app => {
   // tweetController
   app.get('/tweets', tweetController.getTweets)
   app.get('/tweets/:id', tweetController.getTweet)
-
+  app.post('/tweets', tweetController.postTweet)
 
   app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
   app.get('/admin/tweets', adminController.getTweets)
