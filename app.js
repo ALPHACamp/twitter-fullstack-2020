@@ -9,8 +9,9 @@ const app = express();
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-app.engine("handlebars", handlebars({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+app.engine(".hbs", handlebars({ extname: ".hbs", defaultLayout: "main" }));
+app.set("view engine", ".hbs");
+
 app.use(express.static("public"));
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
