@@ -2,176 +2,76 @@
   {{> homeNavBar}}
   <div class="tweets col d-flex flex-column mx-4 user-tweets">
     <div class="p-2 d-flex flex-row">
-      <a href="javascript:history.back()">
+      <a href="/tweets">
         <i class="fas fa-arrow-left fa-lg mx-3 my-3"></i></a>
         <div class="ms-3">
-          <p class="home-word">John Doe</p>
-          <p class="twi-count"> 25推文</p>
+          <p class="home-word">{{user.name}}</p>
+          <p class="twi-count"> {{tweetCount}}推文</p>
         </div>
-      
     </div>
     <div class="cover-block">
-      <img src="" alt="cover" onerror='this.style.display = "none"'>
+      <img src="{{user.cover}}" alt="cover" height="100%" width="100%" onerror='this.style.display = "none"'>
     </div>
     <div class="user-info-block d-flex justify-content-between">
       <div class="user-info ms-3">
-        <img class="user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg" width="120"
+        <img class="user-img" src="{{user.avatar}}" width="120"
           height="120" alt="Card image cap">
         <div class="user-detail">
-          <h5 class="user-name mb-0">John Doe</h5>
-          <h6 class="user-acc-name mb-0">@heyjohn</h6>
+          <h5 class="user-name mb-0">{{user.name}}</h5>
+          <h6 class="user-acc-name mb-0">@{{user.account}}</h6>
           <p class="user-intro my-1">
-            afdasd fads fsad hfasjd sdkafjshf asd adksjfhaskdj sadkjf
-          <p class="user-followship">
-            <strong>34個</strong>跟隨中&nbsp;&nbsp;&nbsp;&nbsp;<strong>59位</strong>跟隨者
+            {{user.introduction}}
+          <p class="user-followship"><a href="/users/{{user.id}}/followings"><strong>{{user.followingLength}}個</strong></a>
+            跟隨中&nbsp;&nbsp;&nbsp;&nbsp;<a href="/users/{{user.id}}/followers"><strong>{{user.followerLength}}位</strong></a>跟隨者
             <p />
         </div>
       </div>
+      {{#ifEqual user.id id}}
       <div class="edit-profile">
         <button type="button" class="btn btn-outline-warning edit-profile-btn" data-bs-toggle="modal" data-bs-target="#userModal"> 
         編輯個人資料
       </button>
       </div>
+      {{/ifEqual}}
       {{!-- 加modal --}}
     </div>
     <div class="px-2 pt-3 mt-0 d-flex flex-row user-nav">
       <ul class="nav nav-tabs">
         <li class="nav-item current-nav">
-          <a class="nav-link active" aria-current="page" href="/users/tweets">推文</a>
+          <a class="nav-link active" aria-current="page" href="/users/{{user.id}}/tweets">推文</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/replies">推文與回覆</a>
+          <a class="nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/likes">喜歡的內容</a>
+          <a class="nav-link" href="/users/{{user.id}}/likes">喜歡的內容</a>
         </li>
       </ul>
     </div>
-
+    {{#each tweets}}
     <div class="tweets-article d-flex">
       <div class="">
-        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar"
+        <img class="rounded-circle" src="{{../user.avatar}}" alt="avatar" title="avatar"
           width="50px" height="50px">
       </div>
       <div class="d-flex flex-column tweet-article">
         <div>
-          <span class="name">Name</span>
-          <span class="account">&nbsp;account</span>
-          <span class="time"><b>•</b>&nbsp;tweet time</span>
+          <span class="name">{{../user.name}}</span>
+          <span class="account">&nbsp;@{{../user.account}}</span>
+          <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
         </div>
-        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
-          et quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
-          adipisci repellat laborum delectus.</p>
+        <p class="content">{{this.description}}</p>
         <div class="row">
           <div class="col-2">
-            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
+            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
           </div>
           <div class="col-2">
-            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
+            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;{{this.likeLength}}</i>
           </div>
         </div>
       </div>
     </div>
-    <div class="tweets-article d-flex">
-      <div class="">
-        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar">
-      </div>
-      <div class="d-flex flex-column tweet-article">
-        <div>
-          <span class="name">Name</span>
-          <span class="account">&nbsp;account</span>
-          <span class="time"><b>•</b>&nbsp;tweet time</span>
-        </div>
-        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
-          et
-          quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
-          adipisci
-          repellat laborum delectus.</p>
-        <div class="row">
-          <div class="col-2">
-            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
-          </div>
-          <div class="col-2">
-            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tweets-article d-flex">
-      <div class="">
-        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar">
-      </div>
-      <div class="d-flex flex-column tweet-article">
-        <div>
-          <span class="name">Name</span>
-          <span class="account">&nbsp;account</span>
-          <span class="time"><b>•</b>&nbsp;tweet time</span>
-        </div>
-        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
-          et
-          quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
-          adipisci
-          repellat laborum delectus.</p>
-        <div class="row">
-          <div class="col-2">
-            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
-          </div>
-          <div class="col-2">
-            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tweets-article d-flex">
-      <div class="">
-        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar">
-      </div>
-      <div class="d-flex flex-column tweet-article">
-        <div>
-          <span class="name">Name</span>
-          <span class="account">&nbsp;account</span>
-          <span class="time"><b>•</b>&nbsp;tweet time</span>
-        </div>
-        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
-          et
-          quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
-          adipisci
-          repellat laborum delectus.</p>
-        <div class="row">
-          <div class="col-2">
-            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
-          </div>
-          <div class="col-2">
-            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="tweets-article d-flex">
-      <div class="">
-        <img class="rounded-circle" src="https://loremflickr.com/50/50/paris,girl/all" alt="avatar" title="avatar">
-      </div>
-      <div class="d-flex flex-column tweet-article">
-        <div>
-          <span class="name">Name</span>
-          <span class="account">&nbsp;account</span>
-          <span class="time"><b>•</b>&nbsp;tweet time</span>
-        </div>
-        <p class="content">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis deleniti, facilis recusandae
-          et
-          quaerat unde est maxime. Fuga incidunt provident tempora voluptate amet, suscipit maiores voluptatibus,
-          adipisci
-          repellat laborum delectus.</p>
-        <div class="row">
-          <div class="col-2">
-            <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;23</i>
-          </div>
-          <div class="col-2">
-            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;12</i>
-          </div>
-        </div>
-      </div>
-    </div>
+    {{/each}}
   </div>
   {{> popular}}
 </div>

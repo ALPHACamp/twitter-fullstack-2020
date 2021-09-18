@@ -40,7 +40,11 @@ const authenticatedAdmin = (req, res, next) => {
 // tweets相關路由
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.addTweet)
-router.post('/tweets/:tweetId/replies', authenticated, tweetController.postReplies)
+router.post(
+  '/tweets/:tweetId/replies',
+  authenticated,
+  tweetController.postReplies
+)
 
 // User
 // signin
@@ -48,32 +52,47 @@ router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 
 router.get('/signin', loginController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), loginController.signIn)
+router.post(
+  '/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: true
+  }),
+  loginController.signIn
+)
 router.get('/logout', loginController.logOut)
 
-
-
 router.get('/admin/signin', adminController.signInPage)
-router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
-
+router.post(
+  '/admin/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+  }),
+  adminController.signIn
+)
 
 //routes for follow
 router.get('/following', authenticated, userController.getFollowings)
 router.get('/follower', authenticated, userController.getFollowers)
-router.post('/followships/:userId', authenticated, followshipController.addFollowing)
-router.delete('/followships/:userId', authenticated, followshipController.removeFollowing)
+router.post(
+  '/followships/:userId',
+  authenticated,
+  followshipController.addFollowing
+)
+router.delete(
+  '/followships/:userId',
+  authenticated,
+  followshipController.removeFollowing
+)
 
 // users
 //以下都還要加userid
-router.get('/users/tweets', userController.getUserTweets) 
-router.get('/users/replies', userController.getReplies) 
-router.get('/users/likes', userController.getLikes)  
-
-
+router.get('/users/:userId/tweets', authenticated, userController.getUserTweets)
+router.get('/users/:userId/replies', authenticated, userController.getReplies)
+router.get('/users/:userId/likes', authenticated, userController.getLikes)
 
 // Admin
-router.get('/admin/signin', authenticatedAdmin, adminController.signInPage)
-router.post('/admin/signin', authenticatedAdmin, adminController.signIn)
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
