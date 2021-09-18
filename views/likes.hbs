@@ -99,8 +99,8 @@
           <div class="other-user-icon">
             <div class="mail"><i class="far fa-envelope"></i></div>
             <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
-                type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn unfollow-button"> 跟隨 </button></form>
           </div>
 
 
@@ -171,7 +171,7 @@
               <div class="col-md-11">
                 <div class="account-info d-flex" style="flex:auto">
                   <div class="user-name">{{User.name}}</div>
-                  <div class="account-time ml-2">@{{User.account}}．{{fromNow this.createdAt}}按讚</div>
+                  <div class="account-time ml-2">@{{User.account}}．{{fromNow likedAt}}按讚</div>
                 </div>
 
                 <a href="/tweets/{{this.TweetId}}" class="text-muted">
@@ -182,7 +182,7 @@
 
                 <div class="reply-like d-flex mt-2">
                   <a href="/tweets/{{this.id}}" class="text-muted">
-                  <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
+                    <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
                   </a>
 
                   {{#if isLiked}}
@@ -203,8 +203,8 @@
                       {{this.Likes.length}}
                     </div>
                   </form>
-                  
-                  
+
+
                   {{/if}}
                 </div>
               </div>
@@ -250,6 +250,8 @@
               </div>
               <div class="button">
 
+                {{#ifCond ../user.id this.id}}
+                {{else}}
                 {{#if this.isFollowed }}
                 <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
                   <button type="submit" class="btn follow-button">正在跟隨</button>
@@ -258,6 +260,7 @@
                 <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
                     type="submit" class="btn unfollow-button"> 跟隨 </button></form>
                 {{/if}}
+                {{/ifCond}}
               </div>
             </div>
           </li>
