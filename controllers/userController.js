@@ -321,6 +321,16 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
+  getUserFollowings: (req, res) => {
+    return res.render('followship')
+  },
+
+  getUserFollowers: (req, res) => {
+    return res.render('followship')
+  },
+
+
 }
 
 
