@@ -48,7 +48,6 @@
       </div>
     </div>
 
-    {{!-- <div class="headerDivider"></div> --}}
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title d-flex">
@@ -99,21 +98,15 @@
           <div class="other-user-icon">
             <div class="mail"><i class="far fa-envelope"></i></div>
             <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
-                type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn unfollow-button"> 跟隨 </button></form>
           </div>
-
-
-
           {{/if}}
           {{/ifCond}}
-
         </div>
-
       </div>
 
       <div class="text-info-tweets">
-
         <div class="info-text">
           <div class="name"> {{viewUser.name}}</div>
           <div class="account">@{{viewUser.account}}</div>
@@ -210,7 +203,7 @@
 
 
     </div>
-    {{!-- <div class="headerDivider"></div> --}}
+
     {{!-- 右側欄位 --}}
     <div class="right-side col-md-3">
       <div class="popular mt-2" style="padding:auto;">
@@ -223,17 +216,19 @@
           {{#each topUsers}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
-              <div>
+              <div class="popular-user-pic">
                 <a href="/users/{{this.id}}/tweets" class="text-muted">
                   <img class="user-pic" src="{{this.avatar}}" alt="">
                 </a>
               </div>
-              <div class="name-account ml-2">
+              <div class="name-account">
                 <div class="name">{{this.name}}</div>
                 <div class="account">@{{this.account}}</div>
               </div>
               <div class="button">
 
+                {{#if myself}}
+                {{else}}
                 {{#if this.isFollowed }}
                 <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
                   <button type="submit" class="btn follow-button">正在跟隨</button>
@@ -241,6 +236,7 @@
                 {{else}}
                 <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
                     type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+                {{/if}}
                 {{/if}}
               </div>
             </div>
