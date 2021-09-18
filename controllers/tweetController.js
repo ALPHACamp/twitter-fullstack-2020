@@ -27,15 +27,15 @@ const tweetController = {
       })
     ]).then(([tweets, users]) => {
       // 列出 追隨數前十名的使用者
-      const topUsers = 
-      users.rows.map(user =>({
-        ...user.dataValues,
-        FollowedCount: user.Followers.length,
-        isFollowed: req.user.Followers.map(d => d.id).includes(user.id)
-      }))
-      .sort((a, b) => b.FollowedCount - a.FollowedCount)
-      .slice(0, 10)
-      
+      const topUsers =
+        users.rows.map(user => ({
+          ...user.dataValues,
+          FollowedCount: user.Followers.length,
+          isFollowed: req.user.Followers.map(d => d.id).includes(user.id)
+        }))
+          .sort((a, b) => b.FollowedCount - a.FollowedCount)
+          .slice(0, 10)
+
       const data = tweets.rows.map(tweet => ({
         ...tweet.dataValues,
         likedCount: req.user.LikedTweets.length,
@@ -51,7 +51,7 @@ const tweetController = {
         include: [Tweet]
       })
         .then((user) => {
-          return res.render('home', {
+          return res.render('tweets', {
             tweets: data,
             users: topUsers
           })
@@ -78,13 +78,13 @@ const tweetController = {
     // return res.render(renderPage, { tweets })
 
   },
-  postTweet: async (req, res) =>{
+  postTweet: async (req, res) => {
     let { description } = req.body
     if (!description.trim()) {
       req.flash('error_messages', '推文不能空白！')
       return res.redirect('back')
     }
-     if (description.length > 140) {
+    if (description.length > 140) {
       req.flash('error_messages', '推文不能為超過140字！')
       return res.redirect('back')
     }
