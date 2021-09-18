@@ -30,6 +30,7 @@ const adminController = {
         tweet = tweet.map( r => ({ 
           ...r.dataValues,
           User: r.User,
+          id:r.id,
           updatedAt: r.updatedAt,
           description: r.description.substring(0, 50),
         }))

@@ -49,10 +49,6 @@ const tweetController = {
       }))
       //排除admin並限制前10名
       const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0,10)  
-
-      //區分已followed和未followed+排序
-      const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
-
         //區分已followed和未followed並排序
         const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
