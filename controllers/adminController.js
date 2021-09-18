@@ -27,8 +27,14 @@ const adminController = {
       include: [User]
     })
       .then(tweet => {
+        tweet = tweet.map( r => ({ 
+          ...r.dataValues,
+          User: r.User,
+          updatedAt: r.updatedAt,
+          description: r.description.substring(0, 50),
+        }))
         return res.render('admin/adminTweets', { tweet: tweet })
-      }) //目前可以看到全部
+      }) 
   },
   //刪除貼文
   deleteTweets: (req, res) => {
@@ -40,6 +46,7 @@ const adminController = {
       res.redirect('/admin/tweets')
     })
   },
+  //使用者清單
   getUsers: (req, res) => {
     return User.findAll( {raw: true} )
     .then(user => {
