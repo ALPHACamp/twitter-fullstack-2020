@@ -5,11 +5,13 @@ const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
 
 module.exports = (app, passport) => {
-  const authenticated = (req, res, next) => {
+  const authenticatedGeneral = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
-      return next()
+      if (!helpers.getUser(req).isAdmin) {
+        return next()
+      }
     }
-    res.redirect('/login')
+    res.redirect('/admin/login')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -21,10 +23,16 @@ module.exports = (app, passport) => {
     res.redirect('/login')
   }
 
-  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-  app.get('/tweets', authenticated, tweetController.getTweets)
-  app.get('/admin', authenticatedAdmin, (req, res) =>
-    res.redirect('/admin/tweets')
+  app.get('/', authenticatedGeneral, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticatedGeneral, tweetController.getTweets)
+  app.get('/admin/login', adminController.loginPage)
+  app.post(
+    '/admin/login',
+    passport.authenticate('local', {
+      failureRedirect: '/admin/login',
+      failureFlash: true
+    }),
+    adminController.login
   )
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   app.get('/register', userController.registerPage)
