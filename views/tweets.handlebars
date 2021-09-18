@@ -1,0 +1,179 @@
+<!-- Modal -->
+<div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="createTweet border">
+        <form action="/tweets" method="POST">
+          <div class="d-flex">
+            <a href="" class="avatar m-2">
+              <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+            </a>
+            <textarea class="whathtNew" id="description" name="description" placeholder="有甚麼新鮮事?" maxlength="140"
+              required></textarea>
+          </div>
+          <div class="d-flex justify-content-end">
+            <div class="round m-3">
+              <button type="submit" class="orange btn text-white round">推文</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row grid">
+
+  <div>
+    <nav class="userSidebar fixed">
+      <div class="logo">
+        <img src="https://i.imgur.com/ZUJriDp.png" alt="" id="ac-logo">
+      </div>
+      <div class="buttonList mt-5">
+        <div class="navItem index d-flex mb-4 ">
+          <div class="icon d-flex align-items-center color-orange">
+            <i class="fas fa-tweets my-auto"></i>
+          </div>
+          <a href="/tweets" class="btn sidebarItem">
+            <span class="fs-5 fw-bolder">首頁</span>
+          </a>
+        </div>
+        <div class="navItem userProfile d-flex mb-4 ">
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-users"></i>
+          </div>
+          <a href="/userProfile" class="btn sidebarItem">
+            <span class="fs-5 fw-bolder">個人資料</span>
+          </a>
+        </div>
+        <div class="navItem setting d-flex mb-4">
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-cog"></i>
+          </div>
+          <a href="/setting" class="btn sidebarItem">
+            <span class="sidebar-item fs-5 fw-bolder">設定</span>
+          </a>
+        </div>
+      </div>
+      <div class="d-grid gap-2 col-9 round">
+        <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+          data-bs-target="#newTwitModal">推文</button>
+      </div>
+      <div class="logout d-flex">
+        <div class="logoutLogo me-3 d-flex align-items-center">
+          <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <a href="/logout" class="btn">
+          <span class="fs-5 fw-bolder">登出</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+
+  <div class=" mainSection ">
+    {{>message}}
+    <div class="title border">
+      <h5 class="fw-bolder m-3">首頁</h5>
+    </div>
+    <div class="createTweet border">
+      <div class="d-flex">
+        <a href="" class="avatar m-2">
+          <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+        </a>
+        <div class="d-flex align-items-center">
+          <button type="button" class="btn text-secondary" data-bs-toggle="modal"
+            data-bs-target="#newTwitModal">有甚麼新鮮事?</button>
+        </div>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="round m-3">
+          <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+            data-bs-target="#newTwitModal">推文</button>
+        </div>
+      </div>
+    </div>
+    <div class="tweets border-top border-5">
+      {{#each tweets}}
+      <div class="tweet border">
+        <div class="d-flex">
+          <span class="avatar m-2">
+            <img src="{{noImage this.user.avatar.url}}" alt="" class="rounded-circle userImage">
+          </span>
+          <div class="">
+            <div class="d-flex">
+              <div class="name m-2">{{this.userName}}</div>
+              <div class="tag m-2">@{{this.userAccount}}</div>
+              <a class="time m-2" title="{{momentFormat this.createdAt}}" href="/tweets/{{this.id}}">
+                {{moment this.createdAt}}
+              </a>
+            </div>
+            <a href="/tweet/{{this.id}}" class="tweetContent m-2 btn">
+              <p>{{this.description}}</p>
+            </a>
+            <div class="row d-flex flex-nowrap mb-2">
+              <div class="comment col-lg-2 d-flex">
+                <span class="commentIcon me-3">
+                  <i class="far fa-comment"></i>
+                </span>
+                <span class="commentAmount">20</span>
+              </div>
+              <div clss="like col-lg-2 d-flex">
+                <span class="likeIcon me-2">
+                  {{#if this.data.isLiked}}
+                  <form action="/like/{{this.id}}" method="POST">
+                    <i class="far fa-heart" type="submit"></i>
+                  </form>
+                  {{else}}
+                  <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                    <i class="fas fa-heart "></i>
+                  </form>
+                  {{/if}}
+                </span>
+                <span class="likeAmount">{{this.likedCount}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="">
+    <div class="popularArea fixed mt-4 border">
+      <div class="title m-3">
+        <h5 class="fw-bolder">Popular</h5>
+      </div>
+      {{#each users}}
+      <div class="popularList border-top">
+        <div class="popularUser d-flex border-bottom justify-content-between">
+          <div class="user d-flex">
+            <div class="avatar m-2">
+              <a href="/users/{{this.id}}">
+                <img src="{{noImage this.image}}" alt="" class="rounded-circle userImage">
+              </a>
+            </div>
+            <div class="information">
+              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}</div>
+              <div class="account ms-1">{{this.account}}</div>
+            </div>
+          </div>
+          <div class="round m-3">
+            {{#if isFollowing }}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn orange text-white round">取消跟隨</button>
+            </form>
+            {{else}}
+            <form action="/following/{{this.id}}" method="POST">
+              <button type="submit" class="btn followButton round">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+        {{/each}}
+
+      </div>
+    </div>
+
+  </div>

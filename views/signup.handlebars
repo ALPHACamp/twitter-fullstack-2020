@@ -1,0 +1,58 @@
+{{#if success_messages}}
+<div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+  {{success_messages}}
+</div>
+{{/if}}
+{{#if error_messages}}
+<div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
+  {{error_messages}}
+</div>
+{{/if}}
+{{#if user}}
+<form action="/users/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" value="{{user.name}}">
+  </div>
+
+  <div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" class="form-control-file" id="image" name="image">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+
+</form>
+{{else}}
+<form class="form-signin" action="/signup" method="POST" style="width: 100%;">
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
+  </div>
+  <div class="form-label-group">
+    <label for="inputEmail">帳號</label>
+    <input type="text" name="account" class="form-control" placeholder="請輸入帳號" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <label for="inputName">名稱</label>
+    <input type="text" name="name" class="form-control" placeholder="請輸入名稱" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <label for="inputEmail">Email</label>
+    <input type="text" name="email" class="form-control" placeholder="請輸入信箱" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <label for="inputPassword">密碼</label>
+    <input type="password" name="password" class="form-control" placeholder="Password" required>
+  </div>
+  <div class="form-label-group">
+    <label for="inputPasswordCheck">密碼確認</label>
+    <input type="password" name="checkPassword" class="form-control" placeholder="checkPassword" required>
+  </div>
+  <br />
+  <button class="btn btn-lg btn-primary btn-block" type="submit">註冊</button>
+  <div class="text-center mb-4">
+    <p><a href="/signin">Sign In</a></p>
+  </div>
+  <p class="mt-5 mb-3 text-muted text-center">© 2017-2018</p>
+</form>
+{{/if}}

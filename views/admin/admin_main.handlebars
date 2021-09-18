@@ -1,0 +1,61 @@
+<div class="container">
+  <div>
+    <div class="row grid">
+      <div>
+        <nav class="userSidebar fixed">
+          <div class="logo">
+            <img src="https://i.imgur.com/ZUJriDp.png" id="ac-logo">
+          </div>
+          <div class="buttonList mt-5">
+            <div class="navItem index d-flex mb-4">
+              <div class="icon d-flex align-items-center">
+                <i class="fas fa-tweets my-auto"></i>
+              </div>
+              <a href="" class="btn">
+                <span class="fs-5 fw-bolder">推文清單</span>
+              </a>
+            </div>
+            <div class="navItem userProfile d-flex mb-4">
+              <div class="icon d-flex align-items-center">
+                <i class="fas fa-users"></i>
+              </div>
+              <a href="" class="btn">
+                <span class="fs-5 fw-bolder">使用者列表</span>
+              </a>
+            </div>
+            <a href="/logout" class="btn">
+              <span class="fs-5 fw-bolder">登出</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <div class=" mainSection">
+        <div class="title border">
+          <h5 class="fw-bolder m-3">推文清單</h5>
+        </div>
+
+        <div class="tweets border-top border-5">
+          {{#each tweets}}
+          <div class="tweet border">
+            <div class="d-flex">
+              <span class="avatar m-2">
+                <img src="{{noImage this.User.avatar}}" class="rounded-circle userImage">
+              </span>
+              <div class="">
+                <div class="d-flex">
+                  <span class="name fw-bold mt-2 mr-1">{{this.User.name}}&nbsp;</span>
+                  <span class="tag text-secondary mt-2 mr-1"> @{{this.User.name}}．{{moment
+                    this.createdAt}}</span>
+                </div>
+
+                <p>{{this.description}}</p>
+
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>

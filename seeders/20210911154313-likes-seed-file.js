@@ -1,5 +1,4 @@
 'use strict'
-const faker = require('faker')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -9,7 +8,7 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
         UserId: Math.floor(Math.random() * 5) + 2,
-        TweetID: Math.floor(Math.random() * 50) + 1,
+        TweetId: Math.floor(Math.random() * 50) + 1,
       })
       ), {})
   },
