@@ -1,24 +1,12 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+'use strict'
+
 module.exports = (sequelize, DataTypes) => {
-  class Followship extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      // define association here
-    }
-  };
-  Followship.init({
+  const Followship = sequelize.define('Followship', {
     followerId: DataTypes.INTEGER,
     followingId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Followship',
-  });
-  return Followship;
-};
+  }, {})
+  Followship.associate = function (models) {
+    // associations can be defined here
+  }
+  return Followship
+}
