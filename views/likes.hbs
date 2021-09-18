@@ -156,6 +156,7 @@
           </li>
         </ul>
         <br /><br />
+
         <div class="user-tweet">
           {{!-- 貼文開始 --}}
           {{#each data}}
@@ -180,19 +181,31 @@
                 </a>
 
                 <div class="reply-like d-flex mt-2">
+                  <a href="/tweets/{{this.id}}" class="text-muted">
                   <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
-                  <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.Likes.length}}</div>
+                  </a>
 
                   {{#if isLiked}}
                   <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
-                    <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
+                    <div class="ml-4 like">
+                      <button type="submit" class="unlike btn">
+                        <i class="fas fa-heart mr-1"></i>
+                      </button>
+                      {{this.Likes.length}}
+                    </div>
                   </form>
                   {{else}}
                   <form action="/tweets/{{this.id}}/like" method="POST">
-                    <button class="btn" type="submit"><i class="far fa-heart"></i></button>
+                    <div class="ml-4 like">
+                      <button type="submit" class="like btn">
+                        <i class="far fa-heart mr-1"></i>
+                      </button>
+                      {{this.Likes.length}}
+                    </div>
                   </form>
+                  
+                  
                   {{/if}}
-
                 </div>
               </div>
 
@@ -200,7 +213,6 @@
           </div>
           <hr />
           {{/each}}
-          <hr />
           {{!-- 貼文結束 --}}
 
 

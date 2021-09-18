@@ -14,35 +14,38 @@ const tweetController = {
   getTweets: (req, res) => {
     return Promise.all([
       Tweet.findAll({
-      include: [User, { model: Like, include: [Tweet] }],
-      order: [['createdAt', 'DESC']],
-      raw: true, 
-      nest: true
-    }),
-      replies = sequelize.query('select `TweetId`, COUNT(`id`) AS `replycount` from `replies` GROUP BY `TweetId`;', {
-      type: sequelize.QueryTypes.SELECT
+        include: [User, { model: Like, include: [Tweet] }],
+        order: [['createdAt', 'DESC']],
+        raw: true,
+        nest: true
+      }),
+      Reply.findAll({
+        attributes:['TweetId',[sequelize.fn('COUNT',sequelize.col('TweetId')),'count']],
+        group:'TweetId',
+        raw: true,
+        nest: true
       })
-    ]) 
-    .then(([tweets,replies]) => {
-       
-         const data = tweets.map( r => ({
-        ...r.dataValues,
-        id:r.id,
-        User: r.User,
-        description: r.description,
-        createdAt:r.createdAt,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
-        replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
-      }))
-     
-      
-      return res.render('index', {
-        data:data,
-       
-        currentUser: helpers.getUser(req)
+      // replies = sequelize.query('select `TweetId`, COUNT(`id`) AS `replycount` from `replies` GROUP BY `TweetId`;', {
+      //   type: sequelize.QueryTypes.SELECT
+      // })
+    ])
+      .then(([tweets, replies]) => {
+        const data = tweets.map(r => ({
+          ...r.dataValues,
+          id: r.id,
+          User: r.User,
+          description: r.description,
+          createdAt: r.createdAt,
+          isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
+          likeCount: r.Likes.length,
+          replyCount: replies.filter(d => d.TweetId === r.id)[0] ? replies.filter(d => d.TweetId === r.id)[0].count : 0
+        }))
+        return res.render('index', {
+          data: data,
+          currentUser: helpers.getUser(req)
+        })
       })
-    })
-    
+
   },
 
   //新增一則貼文(要改api)
@@ -63,8 +66,8 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
-      include: [User, 
-        { model: Like, include: [User] }, 
+      include: [User,
+        { model: Like, include: [User] },
         { model: Reply, include: [User] }
       ]
     })

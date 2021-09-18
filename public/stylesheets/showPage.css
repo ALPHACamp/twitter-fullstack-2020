@@ -194,6 +194,10 @@ a:hover{
   text-decoration:none;
 }
 
+.tweet-description {
+  word-break: break-all;
+}
+
 .tweet-button {
 position: relative;
 margin:auto;
@@ -467,6 +471,7 @@ margin-right: 15px;
 margin-bottom: 14px;
 margin-left: 10px;
 color:black;
+word-break: break-all;
 }
 
 
