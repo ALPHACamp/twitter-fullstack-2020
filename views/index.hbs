@@ -156,37 +156,45 @@
         <ul class="list-group">
           {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
           {{!-- 跟隨中使用者開始 --}}
+          {{#each isFollowed}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
               <div class="popular-user-pic">
-                <img class="user-pic" src="" alt="">
+                <img class="user-pic" src="{{this.avatar}}" alt="">
               </div>
               <div class="name-account">
-                <div class="name">Pizza Hut</div>
-                <div class="account">@pizzahut</div>
+                <div class="name">{{this.name}}</div>
+                <div class="account">{{this.account}}</div>
               </div>
               <div class="button">
                 <button type="submit" class="btn follow-button">正在跟隨</button>
               </div>
             </div>
           </li>
+          {{/each}}
           {{!-- 使用者結束 --}}
-
+        
           {{!-- 未跟隨中使用者開始 --}}
+          {{#each unFollowed}}
           <li class="list-group-item">
             <div class="d-flex col-md-12" style="padding:0">
               <div class="popular-user-pic">
-                <img class="user-pic" src="" alt="">
+                <img class="user-pic" src="{{this.avatar}}" alt="">
               </div>
               <div class="name-account">
-                <div class="name">McDonald's</div>
-                <div class="account">@McDonald's</div>
+                <div class="name">{{this.name}}</div>
+                <div class="account">{{this.account}}</div>
               </div>
+            {{#if myself}}
+              <div></div>
+              {{else}}
               <div class="button">
                 <button type="submit" class="btn unfollow-button"> 跟隨 </button>
               </div>
+            {{/if}}
             </div>
           </li>
+          {{/each}}
           {{!-- 使用者結束 --}}
 
         </ul>
