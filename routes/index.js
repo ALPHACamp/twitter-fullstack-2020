@@ -54,9 +54,9 @@ module.exports = (app, passport) => {
   // //使用者所有回覆
   app.get('/users/:user_id/replied', userController.getUserReplied)
   // //使用者追蹤清單
-  // router.get('/users/:user_id/followings', userController.getUserFollowings)
+  app.get('/users/:user_id/followings', userController.getUserFollowings)
   // //使用者粉絲清單(被追蹤)
-  // router.get('/users/:user_id/followers', userController.getUserFollowers)
+  app.get('/users/:user_id/followers', userController.getUserFollowers)
 
   // //追蹤使用者 (row 45)
   // router.post('/followships/:user_id', userController.addFollowing)

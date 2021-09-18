@@ -103,7 +103,7 @@ const userController = {
             name: req.body.name,
             introduction: req.body.introduction,
             avatar: avaImg.data.link,
-            cover: isCoverDelete ? '' :covImg.data.link
+            cover: isCoverDelete ? '' : covImg.data.link
           })
           req.flash('success_messages', 'user profile was successfully updated!')
           return res.redirect('back')
@@ -126,7 +126,7 @@ const userController = {
         await user.update({
           name: req.body.name,
           introduction: req.body.introduction,
-          cover: isCoverDelete ? '' :covImg.data.link,
+          cover: isCoverDelete ? '' : covImg.data.link,
         })
         req.flash('success_messages', 'user profile was successfully updated!')
         return res.redirect('back')
@@ -258,18 +258,20 @@ const userController = {
     ]).then(([replies, users]) => {
       //使用者（與其他重複）
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
+      console.log(viewUser)
+      // const isFollowed = viewUser[0].Followers.map((d) => d.id) ?
+      //   viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id) : ''
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id)
+        // isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id)
       }))
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('replied', {
         data: replies,
         viewUser: viewUser[0].toJSON(),
         currentUser: helpers.getUser(req),
-        isFollowed,
+        // isFollowed,
         topUsers
       })
     })
@@ -373,6 +375,16 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+
+  getUserFollowings: (req, res) => {
+    return res.render('followship')
+  },
+
+  getUserFollowers: (req, res) => {
+    return res.render('followship')
+  },
+
+
 }
 
 

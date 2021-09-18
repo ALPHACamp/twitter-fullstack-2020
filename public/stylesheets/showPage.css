@@ -703,6 +703,11 @@ background-color: transparent;
   text-align: center;
 }
 
+.follow a {
+  display:flex;
+  color:transparent;
+}
+
 .followship {
   margin:0 auto;
 }
@@ -713,6 +718,7 @@ font-style: normal;
 font-weight: 500;
 font-size: 14px;
 line-height: 20px;
+color: #000000;
 }
 
 .followship .follow-body {

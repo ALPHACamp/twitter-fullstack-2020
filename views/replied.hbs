@@ -119,21 +119,31 @@
           <div class="account">@{{viewUser.account}}</div>
           <div class="introduction">{{viewUser.introduction}}</div>
           <div class="follow d-flex">
-            <div class="followship d-flex m-0">
-              <div class="follow-title">
-                {{viewUser.Followings.length}}個
-              </div>
-              <div class="follow-body">
-                跟隨中
-              </div>
 
+            <a href="/users/{{viewUser.id}}/followings">
+              <div class="followship d-flex m-0">
+                <div class="follow-title">
+                  {{viewUser.Followings.length}}個
+                </div>
+                <div class="follow-body">
+                  跟隨中
+                </div>
+            </a>
+            
+            <a href="/users/{{viewUser.id}}/followers">
               <div class="follow-title ml-2">
                 {{viewUser.Followers.length}}位
               </div>
               <div class="follow-body">
                 跟隨者
               </div>
+            
+            </a>
+
+            
             </div>
+
+
 
           </div>
 
