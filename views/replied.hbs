@@ -99,8 +99,8 @@
           <div class="other-user-icon">
             <div class="mail"><i class="far fa-envelope"></i></div>
             <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
-                type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button type="submit"
+                class="btn unfollow-button"> 跟隨 </button></form>
           </div>
 
 
@@ -224,6 +224,8 @@
               </div>
               <div class="button">
 
+                {{#if myself}}
+                {{else}}
                 {{#if this.isFollowed }}
                 <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
                   <button type="submit" class="btn follow-button">正在跟隨</button>
@@ -231,6 +233,7 @@
                 {{else}}
                 <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
                     type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+                {{/if}}
                 {{/if}}
               </div>
             </div>
