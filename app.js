@@ -1,8 +1,4 @@
 const express = require('express')
-<<<<<<< HEAD
-const helpers = require('./_helpers');
-const handlebars = require('express-handlebars')
-=======
 const helpers = require('./_helpers')
 const handlebars = require('express-handlebars')
 const db = require('./models')
@@ -10,44 +6,12 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash') //  自訂訊息並存到 session 裡
 const session = require('express-session') 
 const passport = require('./config/passport')
->>>>>>> origin/master
 const app = express()
 const port = 3000
 
 app.engine('hbs', handlebars({
   defaultLayout: 'main',
   extname: '.hbs'
-<<<<<<< HEAD
-}))
-app.set('view engine', 'hbs')
-app.use(express.static('public'))
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
-app.get('/', (req, res) => res.send('Hello World!'))
-
-app.get('/tweets', (req, res) => {
-  res.render('tweets')
-})
-app.get('/profileTweets', (req, res) => {
-  res.render('profileTweets')
-})
-app.get('/profileReplies', (req, res) => {
-  res.render('profileReplies')
-})
-app.get('/profileLike', (req, res) => {
-  res.render('profileLike')
-})
-app.get('/follower', (req, res) => {
-  res.render('follower')
-})
-app.get('/following', (req, res) => {
-  res.render('following')
-})
-
-
-=======
 })) 
 app.set('view engine', 'hbs') 
 app.use(express.static('public'))
@@ -75,7 +39,6 @@ app.use((req, res, next) => {
     res.locals.user = helpers.getUser(req)
     next()
 })
->>>>>>> origin/master
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
