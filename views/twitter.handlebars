@@ -24,18 +24,17 @@
   <div class="card p-3">
     <div class="d-flex">
       <div>
-        <img src="{{user.avatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
+        <img src="{{this.User.avatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
       </div>
 
       <div class="col-md-8">
         <div class="userInfo d-flex">
-          <h6 class="fontWeight700 me-2">{{user.name}}</h6>
-          <h6 class="fontWeight500" style="color:#657786;">@{{user.account}}</h6>
+          <h6 class="fontWeight700 me-2">{{this.User.name}}</h6>
+          <h6 class="fontWeight500" style="color:#657786;">@{{this.User.account}}</h6>
           <h6 class="fontWeight500" style="color:#657786;">‧3小時</h6>
         </div>
-        <p class="card-text fontWeight500">Some quick example text to build on the card title and make up the bulk of
-          the card's
-          content. Some quick example text t.
+        <p class="card-text fontWeight500">
+          {{this.content}}
         </p>
         <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">13</span>
         <i class="far fa-comment me-3"></i><span class="fontWeight500">76</span>

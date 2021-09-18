@@ -8,10 +8,11 @@ const twitterController = {
   getTwitters: (req, res) => {
     return Promise.all([
       Tweet.findAll({
+        limit: 10,
         raw: true,
         nest: true,
         order: [['createdAt', 'DESC']],
-        include: [User, Reply, Like]
+        include: [User, Like]
       }).then((tweets) => {
         return res.render('twitter', {
           tweets: tweets
