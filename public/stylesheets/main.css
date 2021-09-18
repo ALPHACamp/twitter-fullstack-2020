@@ -224,8 +224,8 @@ max-width: 600px;
 
 .tweet-followfhip .follow-btn{
   Font: Noto Sans TC;
-  Weight: 700;
-  Style:normal;
+  font-weight: 700;
+  Font-style:normal;
   Size:15px;
   Line-height :15px;
 }
