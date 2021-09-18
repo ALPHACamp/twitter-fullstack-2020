@@ -17,7 +17,7 @@
                 <strong>{{this.User.name}}</strong>
               </div>
               <div class="d-inline acc-time">
-                @{{this.User.account}}ㆍ3小時
+                @{{this.User.account}}ㆍ{{moment this.createdAt}}
               </div>
               <div class="twi-content">
                 {{this.description}}

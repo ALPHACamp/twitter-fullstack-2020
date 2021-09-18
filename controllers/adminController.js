@@ -27,6 +27,7 @@ const adminController = {
         raw: true,
         nest: true,
         attributes: ['id', 'description', 'createdAt'],
+        order: [['createdAt', 'DESC']],
         include: {
           model: User,
           attributes: ['id', 'name', 'account', 'avatar'],

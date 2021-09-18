@@ -40,7 +40,9 @@ const userController = {
       }))
 
       res.render('userTweets', {
-        user: user.toJSON(),tweets,id
+        user: user.toJSON(),
+        tweets,
+        id
       })
     } catch (err) {
       console.log(err)
@@ -87,8 +89,52 @@ const userController = {
       console.log(err)
     }
   },
-  getLikes: (req, res) => {
-    res.render('userLike')
+  getLikes: async (req, res) => {
+    try {
+      const userId = req.params.userId
+      const id = helpers.getUser(req).id
+      const user = await User.findOne({
+        where: { id: userId, role: 0 },
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+          { model: Tweet, attributes: ['id'] }
+        ]
+      })
+      user.dataValues.introduction =
+        user.dataValues.introduction < 50
+          ? user.dataValues.introduction
+          : user.dataValues.introduction.substring(0, 50) + '...'
+      user.dataValues.followerLength = user.Followers.length
+      user.dataValues.followingLength = user.Followings.length
+      user.dataValues.tweetLength = user.Tweets.length
+
+      const likedTweetsRaw = await Like.findAll({
+        where: { UserId: userId },
+        include: [
+          {
+            model: Tweet,
+            attributes: ['description', 'createdAt'],
+            include: [
+              User,
+              { model: Like, attributes: ['id'] },
+              { model: Reply, attributes: ['id'] }
+            ],
+            order: [['createdAt', 'DESC']]
+          }
+        ]
+      })
+
+      const likedTweets = likedTweetsRaw.map(like => ({
+        ...like.dataValues,
+        replyLength: like.Tweet.Replies.length,
+        likeLength: like.Tweet.Likes.length
+      }))
+
+      res.render('userLike', { user: user.toJSON(), likedTweets, id })
+    } catch (err) {
+      console.log(err)
+    }
   },
   getFollowings: async (req, res) => {
     try {
