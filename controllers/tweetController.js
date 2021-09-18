@@ -4,18 +4,21 @@ const Reply = db.Reply
 const User = db.User
 const Followship = db.Followship
 
-const helper = require('../_helpers')
+const helpers = require('../_helpers')
 
 const maxDescLen = 50
 
 const tweetController = {
   // 首頁
-  getTweets: async (req, res) => {
+  getTweets: (req, res) => {
     return Promise.all([
       Tweet.findAndCountAll({
         raw: true,
         nest: true,
         include: [User],
+        order: [
+          ['createdAt', 'DESC'], // Sorts by createdAt in ascending order
+        ]
       }),
       User.findAndCountAll({
         include: [
@@ -55,7 +58,41 @@ const tweetController = {
         })
     })
 
-    
+    // const tweets = await Tweet.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   include: [User],
+    //   order: [
+    //     ['createdAt', 'DESC'], // Sorts by createdAt in ascending order
+    //   ],
+    // })
+
+    // console.log(tweets)
+
+    // if (helpers.getUser(req).isAdmin) {
+    //   tweets.map(tweet => {
+    //     tweet.description = tweet.description.length <= 50 ? tweet.description : tweet.description.substring(0, maxDescLen) + "..."
+    //   })
+    // }
+    // const renderPage = helpers.getUser(req).isAdmin ? 'admin/admin_main' : 'tweets'
+    // return res.render(renderPage, { tweets })
+
+  },
+  postTweet: async (req, res) =>{
+    let { description } = req.body
+    if (!description.trim()) {
+      req.flash('error_messages', '推文不能空白！')
+      return res.redirect('back')
+    }
+     if (description.length > 140) {
+      req.flash('error_messages', '推文不能為超過140字！')
+      return res.redirect('back')
+    }
+    await Tweet.create({
+      description: req.body.description,
+      UserId: helpers.getUser(req).id
+    })
+    res.redirect('/tweets')
   },
   getTweet: async (req, res) => {
     // return Tweet.findByPk(req.params.id, {

@@ -25,9 +25,9 @@ const authenticatedAdmin = (req, res, next) => {
 
 
 module.exports = (app, passport) => {
-  // 前台首頁
-  app.get('/', authenticated, (req, res) => res.redirect('/home'))
-  app.get('/home', authenticated, tweetController.getTweets)
+  // 前台
+  app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+  app.get('/tweets', authenticated, tweetController.getTweets)
 
   // Like - Tweet
   app.post('/like/:tweetId', authenticated, userController.addLike)
@@ -45,15 +45,15 @@ module.exports = (app, passport) => {
   }), adminController.signIn)
   app.get('/logout', adminController.logout)
 
-  // 後台首頁(測試用)
-  app.get('/admin_main', authenticatedAdmin, tweetController.getTweets)
+  // // 後台首頁(測試用)
+  // app.get('/admin_main', authenticatedAdmin, tweetController.getTweets)
 
   // 追蹤
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
 
-  // // 後台 - 首頁
-  // app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+  //後台 - 首頁
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   // // 後台 - 使用者列表
   // app.get('/admin/users', authenticatedAdmin, adminController.adminGetUsers)
   // // 後台 - 推文清單
@@ -73,6 +73,7 @@ module.exports = (app, passport) => {
   // 登出
   app.get('/logout', userController.logout)
 
+  app.post('/tweets', tweetController.postTweet)
   //取得特定貼文資料
   app.get('/tweets/:id', tweetController.getTweet)
 }
