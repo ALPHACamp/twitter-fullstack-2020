@@ -27,27 +27,31 @@ const tweetController = {
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
       })
-    ])
-      .then(([tweets, users]) => {
 
-        const data = tweets.map(r => ({
-          ...r.dataValues,
-          id: r.id,
-          User: r.User,
-          description: r.description,
-          createdAt: r.createdAt,
-          isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
-          // replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
-        }))
-        //整理popular要用的資料 
-        const popular = users.map(user => ({
-          ...user.dataValues,
-          FollowerCount: user.Followers.length,
-          myself: Boolean(user.id === UserId),
-          isFollowed: req.user.Followings.map(d => d.id).includes(UserId)
-        }))
-        //排除admin
-        const normal = popular.filter(d => d.role === 'normal')
+    ]) 
+    .then(([tweets,users]) => {
+       
+         const data = tweets.map( r => ({
+        ...r.dataValues,
+        id:r.id,
+        User: r.User,
+        description: r.description,
+        createdAt:r.createdAt,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
+        // replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
+      }))
+    //整理popular要用的資料 
+      const popular = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        myself: Boolean(user.id === UserId),
+        isFollowed: req.user.Followings.map(d => d.id).includes(UserId)
+      }))
+      //排除admin並限制前10名
+      const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0,10)  
+
+      //區分已followed和未followed+排序
+      const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
         //區分已followed和未followed並排序
         const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
