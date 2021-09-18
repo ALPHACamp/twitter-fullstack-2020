@@ -27,34 +27,33 @@ const tweetController = {
       User.findAll({
         include: [{ model: User, as: 'Followers' }],
       })
-
-    ]) 
-    .then(([tweets,users]) => {
-       
-         const data = tweets.map( r => ({
-        ...r.dataValues,
-        id:r.id,
-        User: r.User,
-        description: r.description,
-        createdAt:r.createdAt,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
-        // replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
-      }))
-    //整理popular要用的資料 
-      const popular = users.map(user => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        myself: Boolean(user.id === UserId),
-        isFollowed: req.user.Followings.map(d => d.id).includes(UserId)
-      }))
-      //排除admin並限制前10名
-      const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0,10)  
+    ])
+      .then(([tweets, users]) => {
+        const data = tweets.map(r => ({
+          ...r.dataValues,
+          id: r.id,
+          User: r.User,
+          description: r.description,
+          createdAt: r.createdAt,
+          isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
+          // replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
+        }))
+  
+        //整理popular要用的資料 
+        const popular = users.map(user => ({
+          ...user.dataValues,
+          FollowerCount: user.Followers.length,
+          myself: Boolean(user.id === UserId),
+          isFollowed: req.user.Followings.map(d => d.id).includes(UserId)
+        }))
+        //排除admin並限制前10名
+        const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0, 10)
         //區分已followed和未followed並排序
         const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
         const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-        console.log(unFollowed)
+        // console.log(unFollowed)
         return res.render('index', {
           data: data,
           isFollowed: isFollowed,
@@ -95,33 +94,33 @@ const tweetController = {
         })
       })
   }
-,
+  ,
 
   //回文相關
   //回覆特定貼文
   createReply: (req, res) => {
-          return Reply.create({
-    comment: req.body.comment,
-    TweetId: req.body.TweetId,
-    UserId: req.user.id
-  })
-  .then((reply) => {
-    res.redirect('back')
-    // res.redirect(`/tweets/${req.body.TweetId}`)
-  })
-        },
-//顯示特定貼文回覆
-getTweetReplies: (req, res) => {
-  return Tweet.findByPk(req.params.id, {
-    include: [Reply]
-  })
-    .then(tweet => {
-      return res.render('replyFake', {
-        tweet: tweet.toJSON()
-      })
+    return Reply.create({
+      comment: req.body.comment,
+      TweetId: req.body.TweetId,
+      UserId: req.user.id
     })
+      .then((reply) => {
+        res.redirect('back')
+        // res.redirect(`/tweets/${req.body.TweetId}`)
+      })
+  },
+  //顯示特定貼文回覆
+  getTweetReplies: (req, res) => {
+    return Tweet.findByPk(req.params.id, {
+      include: [Reply]
+    })
+      .then(tweet => {
+        return res.render('replyFake', {
+          tweet: tweet.toJSON()
+        })
+      })
 
-},
+  },
 
   //Like & Unlike
   //喜歡特定貼文
@@ -134,21 +133,21 @@ getTweetReplies: (req, res) => {
         return res.redirect('back')
       })
   },
-    //取消喜歡特定貼文
-    removeLike: (req, res) => {
-      return Like.findOne({
-        where: {
-          UserId: req.user.id,
-          TweetId: req.params.id
-        }
+  //取消喜歡特定貼文
+  removeLike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.id
+      }
+    })
+      .then(like => {
+        like.destroy()
+          .then(tweet => {
+            return res.redirect('back')
+          })
       })
-        .then(like => {
-          like.destroy()
-            .then(tweet => {
-              return res.redirect('back')
-            })
-        })
-    }
+  }
 }
 
 module.exports = tweetController

@@ -38,19 +38,19 @@
           <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
           </button>
         </div>
-
         <a href="/logout">
           <div class="logout-button">
             <i class="fas fa-arrow-alt-circle-left"></i>
             登出
           </div>
         </a>
-
       </div>
     </div>
 
-    {{!-- <div class="headerDivider"></div> --}}
+
+
     {{!-- 中間主欄位 --}}
+
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title d-flex mt-0 mb-0">
 
@@ -69,6 +69,8 @@
           </div>
         </div>
       </div>
+
+      {{!-- 追隨者 --}}
       {{!-- 推文/推文與回覆/喜歡的內容區塊 --}}
       <div class="follow-tweet">
         {{!-- 推文區開始 --}}
@@ -147,11 +149,94 @@
       {{!-- 推文區結束 --}}
 
       {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
+      {{!-- 追隨者結束 --}}
+
+      {{!-- 正在追蹤 --}}
+
+
+      {{!-- 推文/推文與回覆/喜歡的內容區塊 --}}
+      <div class="follow-tweet">
+        {{!-- 推文區開始 --}}
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="">追隨者</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="">正在追蹤</a>
+          </li>
+        </ul>
+        <br /><br />
+        <div class="user-tweet">
+          {{!-- 貼文開始 --}}
+          <div class="tweet col-md-12">
+            <div class="d-flex">
+              <div class="mt-2 ml-2 col-md-1" style="padding:0">
+                <img class="user-pic mr-2" src="" alt="">
+              </div>
+
+              <div class="col-md-11">
+                <div class="account-followship">
+                  <div class="account-info" style="flex:auto">
+                    <div class="user-name">Orange</div>
+                    <div class="account-time">@orange</div>
+                  </div>
+                  <div class="followship-button">
+                    {{!-- //TODO:追隨鈕 --}}
+                    {{!-- <button type="submit" class="follow-button">正在跟隨</button> --}}
+                    <button type="submit" class="unfollow-button">跟隨</button>
+                  </div>
+                </div>
+
+                <div class="post-text d-flex" style="flex:auto">
+                  [筆記] 談談Javascript 中的 Hoisting
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <hr />
+          {{!-- 貼文結束 --}}
+
+          {{!-- 貼文開始 --}}
+          <div class="tweet col-md-12">
+            <div class="d-flex">
+              <div class="mt-2 ml-2 col-md-1" style="padding:0">
+                <img class="user-pic mr-2" src="" alt="">
+              </div>
+
+              <div class="col-md-11">
+                <div class="account-followship">
+                  <div class="account-info" style="flex:auto">
+                    <div class="user-name">Orange</div>
+                    <div class="account-time">@orange</div>
+                  </div>
+                  <div class="followship-button">
+                    <button type="submit" class="follow-button">正在跟隨</button>
+                    {{!-- <button type="submit" class="unfollow-button">跟隨</button> --}}
+                  </div>
+                </div>
+
+                <div class="post-text d-flex" style="flex:auto">
+                  [筆記] 談談Javascript 中的 Hoisting[筆記] JavaScript中函式(Function)就是一種物件(Objects)
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <hr />
+          {{!-- 貼文結束 --}}
+
+
+        </div>
+      </div>
+      {{!-- 推文區結束 --}}
+
+      {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
+
+      {{!-- 正在追蹤結束 --}}
     </div>
 
 
-
-    {{!-- <div class="headerDivider"></div> --}}
     {{!-- 右側欄位 --}}
     <div class="right-side col-md-3">
       <div class="popular mt-2" style="padding:auto;">

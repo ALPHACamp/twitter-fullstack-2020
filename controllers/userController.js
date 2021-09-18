@@ -259,19 +259,18 @@ const userController = {
       //使用者（與其他重複）
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
       console.log(viewUser)
-      // const isFollowed = viewUser[0].Followers.map((d) => d.id) ?
-      //   viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id) : ''
+      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
       const topUsers = users.map(user => ({
         ...user.dataValues,
         FollowerCount: user.Followers.length,
-        // isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id)
+        isFollowed: user.Followers.map(d => d.id).includes(helpers.getUser(req).id)
       }))
       topUsers.sort((a, b) => b.FollowerCount - a.FollowerCount)
       return res.render('replied', {
         data: replies,
         viewUser: viewUser[0].toJSON(),
         currentUser: helpers.getUser(req),
-        // isFollowed,
+        isFollowed,
         topUsers
       })
     })
@@ -299,7 +298,6 @@ const userController = {
         isLiked: r.dataValues.Tweet.dataValues.Likes.map(d => d.UserId).includes(helpers.getUser(req).id)
       }))
       //使用者（與其他重複）
-      console.log(data)
       const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
       const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(helpers.getUser(req).id)
       const topUsers = users.map(user => ({
