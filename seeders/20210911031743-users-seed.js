@@ -7,7 +7,7 @@ module.exports = {
     await queryInterface.bulkInsert('Users', [{
       account: 'root',
       email: 'root@example.com',
-      password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: true,
       name: 'root',
       avatar: 'https://randomuser.me/portraits/women/17.jpg',
@@ -54,13 +54,23 @@ module.exports = {
       password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       name: 'test4',
-      avatar: 'https://imgur.com/a/zA6um7Z',
+      avatar: 'https://imgur.com/a/zA6uhttps://randomuser.me/portraits/women/73.jpg',
       cover: 'https://w.wallhaven.cc/full/45/wallhaven-4528o9.jpg',
       introduction: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
-    }
-    ], {})
+    }, {
+      account: 'user5',
+      email: 'test5@example.com',
+      password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
+      isAdmin: false,
+      name: 'test5',
+      avatar: 'https://imgur.com/a/zA6um7Z',
+      cover: 'https://w.wallhaven.cc/full/45/wallhaven-45https://w.wallhaven.cc/full/72/wallhaven-72rxqo.jpg',
+      introduction: faker.lorem.text(),
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }], {})
   },
 
   down: async (queryInterface, Sequelize) => {

@@ -25,22 +25,37 @@ const getTweetId = new Promise((resolve, reject) => {
     })
 })
 
+function tweetReplies(userIds, tweetIds) {
+  const allTweetReplies = []
+  let eachUserId = 0
+  tweetIds.forEach(tweetId => {
+    for (let i = 0; i < 3; i++) {
+      const tweetReply = {
+        UserId: userIds[eachUserId],
+        TweetId: tweetIds[i],
+        content: faker.lorem.sentence(),
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+      if (eachUserId > (userIds.length - 2)) {
+        eachUserId = 0
+      } else {
+        eachUserId += 1
+      }
+      allTweetReplies.push(tweetReply)
+    }
+  })
+  return allTweetReplies
+}
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const userIds = await getUserId
     const tweetIds = await getTweetId
+    const tweetRepliesSeed = tweetReplies(userIds, tweetIds)
 
-    await queryInterface.bulkInsert('Replies',
-      Array.from({ length: 10 }).map((d, i) =>
-      ({
-        UserId: userIds[Math.floor(Math.random() * userIds.length)],
-        TweetId: tweetIds[Math.floor(Math.random() * tweetIds.length)],
-        content: faker.lorem.sentence(),
-        createdAt: new Date(),
-        updatedAt: new Date()
-      })), {})
+    await queryInterface.bulkInsert('Replies', tweetRepliesSeed, {})
   },
-
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Replies', null, {})
   }
