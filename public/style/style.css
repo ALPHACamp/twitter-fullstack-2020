@@ -1,0 +1,162 @@
+.main_sidebar {
+  width: 14rem;
+  height: 100vh;
+  border-right: thin solid #e6ecf0;
+  margin-left: 3rem;
+}
+.nav_logo {
+  margin: 1rem 0;
+}
+.nav_item {
+  margin-top: 2rem;
+}
+.item {
+  margin: 1rem;
+}
+.nav_item a {
+  color: black;
+}
+.logout {
+  position: fixed;
+  bottom: 2rem;
+  left: 5rem;
+}
+.logout a {
+  color: black;
+}
+.nav_post {
+  background-color: orangered;
+  color: white;
+  border-radius: 100px;
+  margin-top: 2rem;
+  margin-left: 1rem;
+  width: 150px;
+}
+
+#admin_Left_Column {
+  height: 975px;
+  max-width: 200px;
+  margin-top: 4px;
+}
+.nav_tweets {
+  margin-top: 50px;
+  margin-left: 13px;
+}
+
+.nav_users {
+  margin-top: 20px;
+  margin-left: 15px;
+}
+
+.nav_logout {
+  margin-top: 600px;
+  margin-left: 15px;
+}
+.nav_logout a {
+  text-decoration: none;
+  color: black;
+}
+
+#admin_Right_Column {
+  width: 1000px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e6ecf0;
+}
+#header {
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: #e6ecf0;
+  margin: -10px;
+  margin-top: 6px;
+  height: 55px;
+  padding: 12px;
+}
+.col-12 {
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: #e6ecf0;
+}
+
+.user-card {
+  position: relative;
+  background: #f6f7f8;
+  border-radius: 10px;
+  width: 100%;
+  height: 320px;
+}
+.user-cover {
+  height: 140px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+.user-card-avatar {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  position: absolute;
+  top: 140px;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
+
+.tweet_new {
+  border: none;
+  width: 100%;
+  height: 8rem;
+}
+.tweet_new:focus {
+  outline: none;
+}
+.new_post {
+  background-color: orangered;
+  color: white;
+  border-radius: 100px;
+  position: absolute;
+  top: 5rem;
+  left: 19rem;
+}
+.tweet_text {
+  color: black;
+  text-decoration: none;
+}
+.tweet_text:hover {
+  color: black;
+  text-decoration: none;
+}
+.tweet_text:focus {
+  color: black;
+  text-decoration: none;
+}
+
+#admin_tweets_panel {
+  max-height: 900px;
+  position: relative;
+  overflow: auto;
+}
+#follower_Column {
+  width: 1000px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: #e6ecf0;
+}
+.control-area {
+  border-bottom-style: solid;
+  border-width: 1px;
+  border-color: #e6ecf0;
+  margin: -10px;
+  height: 106px;
+  margin-top: 6px;
+  padding: 12px;
+}
+#follower_panel {
+  max-height: 900px;
+  position: relative;
+  overflow: auto;
+}
+#follower_main {
+  margin-left: 264px;
+}
