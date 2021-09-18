@@ -96,6 +96,20 @@ const userController = {
          })
       })
   },
+
+  putUserSetting: (req, res) => {
+    const { account, name, email } = req.body
+    User.findByPk(req.params.id)
+      .then(user => {
+        user.update({
+          account,
+          name,
+          email
+        }).then(user => {
+          return res.redirect(`/users/self/${user.id}`)
+        })
+      })
+  }
 }
 
 module.exports = userController
