@@ -64,7 +64,10 @@
   flex: 0 0 65px;
   width: 65px;
 }
-
+.profilepage-messageboard {
+  background-color: #fff;
+  position: relative;
+}
 .profilepage-banner {
   position: relative;
   height: 200px;
@@ -215,4 +218,71 @@
   width: 50px;
   min-height: 50px;
   min-width: 50px;
+}
+/*global*/
+.btn-outline-orange {
+  border: 1px solid #ff6600;
+  background: #fff;
+  border-radius: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 15px;
+
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  /* identical to box height, or 100% */
+  color: #ff6600;
+}
+.btn-orange {
+  padding: 10px 15px;
+
+  background: #ff6600;
+  border: 1px solid #ff6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #ffffff;
+}
+.upper-right {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  display: flex;
+  justify-content: end;
+}
+.upper-right > * {
+  flex: 0 0 auto;
+}
+.icon-btn {
+  position: relative;
+  border: 1px solid #ff6600;
+  background: #fff;
+  border-radius: 100px;
+  height: 35px;
+  width: 35px;
+  color: #ff6600;
+  margin-right: 10px;
+}
+.icon-btn.fill {
+  border: 1px solid #fff;
+  background: #ff6600;
+  color: #fff;
+}
+.icon-btn svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  fill: currentColor;
 }
