@@ -5,6 +5,7 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const { Op } = require("sequelize")
+const sequelize = require('sequelize')
 
 const adminController = {
   //登入登出
@@ -54,28 +55,63 @@ const adminController = {
 
   //使用者清單
   getUsers: (req, res) => {
-    return User.findAll({
-      where: { role: { [Op.ne]: 'admin' } },
-      include: [
-        Tweet, Reply, Like,
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
-      ],
-    }).then(user => {
-      const users = user.map(user => ({
-        cover: user.cover,
-        avatar: user.avatar,
-        name: user.name,
-        account: user.account,
-        tweetCount: user.Tweets.length,
-        replyCount: user.Replies.length,
-        likeCount: user.Likes.length,
-        followerCount: user.Followers.length,
-        followingCount: user.Followings.length
-      }))
-      const usersSorted = users.sort((a, b) => b.tweetCount - a.tweetCount)
-      res.render('admin/adminUsers', { users: usersSorted })
-    })
+    return Promise.all([
+      User.findAll({
+        where: { role: { [Op.ne]: 'admin' } },
+        include: [
+          Reply, Like,
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+      }),
+      Tweet.findAll({
+        attributes: ['userId', [sequelize.fn('COUNT', sequelize.col('userId')), 'tweetCount']],
+        group: ['userId'],
+        raw: true, nest: true,
+      })
+    ])
+      .then(([users, tweets]) => {
+        const usersList = users.map(user => ({
+          cover: user.cover,
+          avatar: user.avatar,
+          name: user.name,
+          account: user.account,
+          tweetCount: tweets.filter(d => d.userId === user.id)[0].tweetCount ? tweets.filter(d => d.userId === user.id)[0].tweetCount : 0,
+          replyCount: user.Replies.length,
+          likeCount: user.Likes.length,
+          followerCount: user.Followers.length,
+          followingCount: user.Followings.length
+        }))
+        const usersSorted = usersList.sort((a, b) => b.tweetCount - a.tweetCount)
+        res.render('admin/adminUsers', { users: usersSorted })
+      })
+
+
+
+
+
+    // return User.findAll({
+    //   where: { role: { [Op.ne]: 'admin' } },
+    //   include: [
+    //     Tweet, Reply, Like,
+    //     { model: User, as: 'Followers' },
+    //     { model: User, as: 'Followings' }
+    //   ],
+    // }).then(user => {
+    //   const users = user.map(user => ({
+    //     cover: user.cover,
+    //     avatar: user.avatar,
+    //     name: user.name,
+    //     account: user.account,
+    //     tweetCount: user.Tweets.length,
+    //     replyCount: user.Replies.length,
+    //     likeCount: user.Likes.length,
+    //     followerCount: user.Followers.length,
+    //     followingCount: user.Followings.length
+    //   }))
+    //   const usersSorted = users.sort((a, b) => b.tweetCount - a.tweetCount)
+    //   res.render('admin/adminUsers', { users: usersSorted })
+    // })
 
   }
 }
