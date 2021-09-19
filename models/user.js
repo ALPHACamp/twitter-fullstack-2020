@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     cover: DataTypes.STRING,
     description: DataTypes.TEXT,
-    isAdmin: DataTypes.BOOLEAN,
+    role: DataTypes.STRING,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   }, {})
