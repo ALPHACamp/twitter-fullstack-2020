@@ -4,11 +4,15 @@ const User = db.User
 const Tweet = db.Tweet
 
 const getUserId = new Promise((resolve, reject) => {
-  User.findAll({ raw: true, nest: true })
+  User.findAll({
+    raw: true,
+    nest: true,
+    where: { isAdmin: 0 }
+  })
     .then(users => {
       const userIds = []
       users.forEach(user => {
-        userIds.push(user.id)
+        userIds.unshift(user.id)
       })
       return resolve(userIds)
     })
@@ -26,7 +30,11 @@ const getTweetId = new Promise((resolve, reject) => {
 function userLikeTweets(userIds, tweetIds) {
   const allUserLikeTweets = []
   let tweetLimit = 0
+  let avoidMiddleUser = 0
   userIds.forEach(userId => {
+    if (avoidMiddleUser === 2) {
+      tweetLimit = 40
+    }
     for (let i = 0; i < 10; i++) {
       const userLikeTweet = {
         UserId: userId,
@@ -41,6 +49,7 @@ function userLikeTweets(userIds, tweetIds) {
       }
       allUserLikeTweets.push(userLikeTweet)
     }
+    avoidMiddleUser += 1
   })
   return allUserLikeTweets
 }

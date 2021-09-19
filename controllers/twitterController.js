@@ -6,26 +6,24 @@ const Like = db.Like
 
 const twitterController = {
   getTwitters: (req, res) => {
-    res.render('twitter')
+    Tweet.findAndCountAll({
+      order: [['createdAt', 'DESC']],
+      include: [User, Reply, Like]
+    }).then(tweets => {
+      const tweetData = tweets.rows.map(row => ({
+        ...row.dataValues,
+        tweetUserAvatar: row.User.dataValues.avatar,
+        tweetUserName: row.User.dataValues.name,
+        tweetUserAccount: row.User.dataValues.account,
+        tweetContent: row.content,
+        tweetRepliesCount: row.Replies.length,
+        tweetLikesCount: row.Likes.length,
+      }))
+      return res.render('twitter', {
+        tweets: tweetData
+      })
+    })
   }
-
-
-  //   return Promise.all([
-  //     Tweet.findAll({
-  //       limit: 10,
-  //       raw: true,
-  //       nest: true,
-  //       order: [['createdAt', 'DESC']],
-  //       include: [User, Reply, Like]
-  //     }).then((tweets) => {
-  //       return res.render('twitter', {
-  //         tweets: tweets,
-  //         User: users
-  //       })
-  //     })
-  //   ])
-  // },
-
 }
 
 module.exports = twitterController

@@ -4,6 +4,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
 
 
 
@@ -62,33 +63,127 @@ const userController = {
         Like
       ],
       where: whereQuery,
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']],
     }).then(result => {
-      console.log(result)
-      const totalTweet = Number(result.count)
+      const totalTweet = result.rows.length
       const data = result.rows.map(r => ({
         ...r.dataValues,
         content: r.dataValues.content,
         replyCount: r.dataValues.Replies.length,
         likeCount: r.dataValues.Likes.length
       }))
-      User.findByPk(req.params.id)
-        .then(user => {
-          return res.render('self', {
-            user: user.toJSON(),
-            totalTweet: totalTweet,
-            tweet: data
+
+      Followship.findAndCountAll({
+        raw: true,
+        nest: true,
+      }).then(result => {
+        const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
+        const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
+
+        User.findByPk(req.params.id)
+          .then(user => {
+            return res.render('self', {
+              user: user.toJSON(),
+              totalTweet: totalTweet,
+              tweet: data,
+              followerCount: followerCount.length,
+              followingCount: followingCount.length
+            })
           })
-        })
+      })
     })
   },
 
   getUserReply: (req, res) => {
-    res.render('selfReply')
+    const whereQuery = {}
+    whereQuery.userId = Number(req.params.id)
+
+    Reply.findAndCountAll({
+      include: [
+        { model: Tweet, include: [User] }
+      ],
+      where: whereQuery,
+      order: [['createdAt', 'DESC']],
+    }).then(result => {
+      const data = result.rows.map(r => ({
+        ...r.dataValues,
+        content: r.dataValues.content,
+        replyUserAccount: r.dataValues.Tweet.dataValues.User.account
+      }))
+      Tweet.findAndCountAll({
+        where: whereQuery,
+      }).then(result => {
+        const totalTweet = result.rows.length
+
+        Followship.findAndCountAll({
+          raw: true,
+          nest: true,
+        }).then(result => {
+          const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
+          const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
+
+          User.findByPk(req.params.id)
+            .then(user => {
+              return res.render('selfReply', {
+                user: user.toJSON(),
+                totalTweet: totalTweet,
+                Reply: data,
+                followerCount: followerCount.length,
+                followingCount: followingCount.length
+              })
+            })
+        })
+      })
+    })
   },
 
   getUserLike: (req, res) => {
-    res.render('selfLike')
+    const whereQuery = {}
+    whereQuery.userId = Number(req.params.id)
+
+    Like.findAndCountAll({
+      include: [
+        { model: Tweet, include: [User, Reply, Like] }
+      ],
+      where: whereQuery,
+      order: [['createdAt', 'DESC']],
+    }).then(result => {
+      console.log(result.rows[0].dataValues.Tweet)
+      const data = result.rows.map(r => ({
+        ...r.dataValues,
+        content: r.dataValues.Tweet.dataValues.content,
+        createdAt: r.dataValues.Tweet.dataValues.creatAt,
+        likeAvatar: r.dataValues.Tweet.dataValues.User.avatar,
+        likeUserName: r.dataValues.Tweet.dataValues.User.name,
+        likeUserAccount: r.dataValues.Tweet.dataValues.User.account,
+        replyCount: r.dataValues.Tweet.dataValues.Replies.length,
+        likeCount: r.dataValues.Tweet.dataValues.Likes.length
+      }))
+      Tweet.findAndCountAll({
+        where: whereQuery,
+      }).then(result => {
+        const totalTweet = result.rows.length
+
+        Followship.findAndCountAll({
+          raw: true,
+          nest: true,
+        }).then(result => {
+          const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
+          const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
+
+          User.findByPk(req.params.id)
+            .then(user => {
+              return res.render('selfLike', {
+                user: user.toJSON(),
+                totalTweet: totalTweet,
+                Like: data,
+                followerCount: followerCount.length,
+                followingCount: followingCount.length
+              })
+            })
+        })
+      })
+    })
   },
 
   getUserSetting: (req, res) => {
@@ -96,7 +191,6 @@ const userController = {
 
     User.findByPk(id)
       .then(user => {
-        console.log(req.params)
         return res.render('setting', {
           layout: 'settingMain',
           user: user.toJSON()
