@@ -5,7 +5,11 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const getUserId = new Promise((resolve, reject) => {
-  User.findAll({ raw: true, nest: true })
+  User.findAll({
+    raw: true,
+    nest: true,
+    where: { isAdmin: 0 }
+  })
     .then(users => {
       const userIds = []
       users.forEach(user => {
@@ -32,13 +36,13 @@ function tweetReplies(userIds, tweetIds) {
     for (let i = 0; i < 3; i++) {
       const tweetReply = {
         UserId: userIds[eachUserId],
-        TweetId: tweetIds[i],
+        TweetId: tweetId,
         content: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       }
       if (eachUserId > (userIds.length - 2)) {
-        eachUserId = 0
+        eachUserId = 1
       } else {
         eachUserId += 1
       }
