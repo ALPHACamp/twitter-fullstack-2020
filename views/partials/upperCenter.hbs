@@ -1,27 +1,78 @@
 <div class="profile-messageboard">
+{{#if ucChoice}}
+  <!--start::index profile-->
   <div class="profile-avatar-container">
     <div class="avatar profile-avatar">
-      <img
-        src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-        alt="avatar-img"
-      />
+      <img src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+        alt="avatar-img" />
     </div>
   </div>
 
   <div class="profile-textarea-container">
-    <textarea
-      name="profile-textarea"
-      class="form-control form-control-lg"
-      id="post"
-      placeholder="有什麼新鮮事?"
-      rows="3"
-    ></textarea>
+    <textarea name="profile-textarea" class="form-control form-control-lg" id="post" placeholder="有什麼新鮮事?"
+      rows="3"></textarea>
   </div>
-  <div
-    class="btn btn-twitter"
-    id="myInput"
-    data-bs-toggle="modal"
-    data-bs-target="#exampleModel"
-  ><span>推文</span>
+  <div class="btn btn-twitter" id="myInput" data-bs-toggle="modal" data-bs-target="#exampleModel"><span>推文</span>
   </div>
+  <!--end::index profile-->
+{{/if}}
+{{#if postChoice}}
+  <!--start::post-->
+  <div class="mainpost-messageboard">
+    <div class="post-card1">
+      <div class="avatar profile-avatar"><img
+          src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+          alt="avatar-img" /></div>
+    </div>
+    <div class="post-card2">
+      <h5 class="d-inline-block post-title">Post Title&nbsp;<br /><span class="post-sub-info mainpost-sm">@Apple
+          &#x2027;
+          5minutes</span></h5>
+      <p class="mainpost-x">Lorem ipsum dolor sit, amet consectetur
+        adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Ea, vel.</p>
+      <p class="post-sub-info mainpost-sm">上午10:05 2020年6月10日</p>
+    </div>
+  </div>
+  <div class="mainpost-appendboard">
+    <div class="reply-like-container">
+      <p class="mainpost-md reply-like-text"><b>34</b>&nbsp;回覆
+        <b>808</b>&nbsp;喜歡次數
+      </p>
+    </div>
+    <p class="mainpost-sub-info mt-3"><span class="mainpost-icon-block"><i class="bi bi-chat" data-bs-toggle="modal"
+          data-bs-target="#exampleModel" id="myInput"></i></span><span class="mainpost-icon-block"><i
+          class="bi bi-heart"></i></span></p>
+  </div>
+</div>
+<!--end::post-->
+{{/if}}
+{{#if ppChoice}}
+<!--start::index-->
+<div class="personalpage-wrapper d-f flex-column">
+  <div class="personalpage-banner"><img src="https://i.ytimg.com/vi/w_8ddLqNTuo/maxresdefault.jpg" />
+    <div class="personalpage-card1">
+      <div class="avatar personalpage-avatar"><img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT5cCP8TaZvRFktb9AaXmCsShcNhbzXxJtBw&amp;usqp=CAU"
+          alt="avatar-img" /></div>
+    </div>
+  </div>
+  <div class="mainpost-messageboard">
+    <div class="personalpage-card2">
+      <h5 class="d-inline-block post-title">Illyasviel von Einzbern&nbsp;<br /><span
+          class="post-sub-info mainpost-sm">@善良的小女孩</span></h5>
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Lorem ipsum
+        dolor sit amet consectetur adipisicing elit. Ea, vel.</p>
+      <p class="mainpost-sm reply-like-text"><b>34個<span class="post-sub-info">&nbsp;跟隨中</span>
+          808位<span class="post-sub-info">&nbsp;跟隨者</span></b></p>
+      <ul class="nav personalpage-tags mt-2">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">推文</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">推文與回覆</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">喜歡的內容</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--end::index-->
+{{/if}}
 </div>
