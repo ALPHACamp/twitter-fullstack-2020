@@ -12,10 +12,9 @@
       </div>
     </div>
 
-    <img src="https://w.wallhaven.cc/full/72/wallhaven-72rxqo.jpg" style="position:absolute z-index:-1;" class=""
+    <img src="{{user.cover}}" style="position:absolute z-index:-1;" class="" alt="...">
+    <img src="{{user.avatar}}" style="width: 9rem; position:absolute; top: 20rem; left: 1rem;" class="rounded-circle"
       alt="...">
-    <img src="https://randomuser.me/api/portraits/men/88.jpg"
-      style="width: 9rem; position:absolute; top: 20rem; left: 1rem;" class="rounded-circle" alt="...">
     <div class="d-flex flex-row-reverse m-2">
       <a href="/user/self/edit/{{user.id}}" class="btn btn-orange-white rounded-pill">編輯個人資料</a>
     </div>
@@ -27,10 +26,10 @@
 
     <div class="d-flex mx-3">
       <a href="/user/self/following" class="btn ps-0">
-        <span class="fontWeight500">34個</span><span style="color:#657786;">跟隨中</span>
+        <span class="fontWeight500">{{followerCount}}個</span><span style="color:#657786;">跟隨中</span>
       </a>
       <a href="/user/self/follower" class="btn">
-        <span class="fontWeight500">59位</span><span style="color:#657786;">跟隨者</span>
+        <span class="fontWeight500">{{followingCount}}位</span><span style="color:#657786;">跟隨者</span>
       </a>
     </div>
 
@@ -46,17 +45,17 @@
       </li>
     </ul>
 
+
     {{#each tweet}}
     <div class="card p-3">
       <div class="d-flex">
         <div>
-          <img src="https://randomuser.me/api/portraits/men/88.jpg" style="width: 3rem" class="rounded-circle me-3"
-            alt="...">
+          <img src="{{../user.avatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
         </div>
         <div class="col-md-8">
           <div class="userInfo d-flex">
-            <h6 class="fontWeight700 me-2">{{user.name}}</h6>
-            <h6 class="fontWeight500" style="color:#657786;">@{{user.account}}</h6>
+            <h6 class="fontWeight700 me-2">{{../user.name}}</h6>
+            <h6 class="fontWeight500" style="color:#657786;">@{{../user.account}}</h6>
             <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
           </div>
           <p class="card-text fontWeight500">{{this.content}}</p>

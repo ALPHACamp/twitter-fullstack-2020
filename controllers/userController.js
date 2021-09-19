@@ -4,6 +4,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
 
 
 
@@ -71,14 +72,25 @@ const userController = {
         replyCount: r.dataValues.Replies.length,
         likeCount: r.dataValues.Likes.length
       }))
-      User.findByPk(req.params.id)
-        .then(user => {
-          return res.render('self', {
-            user: user.toJSON(),
-            totalTweet: totalTweet,
-            tweet: data
+
+      Followship.findAndCountAll({
+        raw: true,
+        nest: true,
+      }).then(result => {
+        const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
+        const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
+
+        User.findByPk(req.params.id)
+          .then(user => {
+            return res.render('self', {
+              user: user.toJSON(),
+              totalTweet: totalTweet,
+              tweet: data,
+              followerCount: followerCount.length,
+              followingCount: followingCount.length
+            })
           })
-        })
+      })
     })
   },
 
@@ -95,7 +107,6 @@ const userController = {
 
     User.findByPk(id)
       .then(user => {
-        console.log(req.params)
         return res.render('setting', {
           layout: 'settingMain',
           user: user.toJSON()
