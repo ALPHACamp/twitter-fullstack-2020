@@ -1,7 +1,7 @@
 const helpers = require('../_helpers')
 const db = require('../models')
 const tweet = require('../models/tweet')
-// const { Op } = require("sequelize")
+const { Op } = require("sequelize")
 const { sequelize } = require('../models')
 const User = db.User
 const Tweet = db.Tweet
@@ -16,10 +16,16 @@ const tweetController = {
 
     return Promise.all([
       Tweet.findAll({
-      include: [User, { model: Like, include: [Tweet] }],
+      
+      include: [
+        { model:User , attributes:['id', 'name', 'avatar', 'account']}, 
+        { model:Like },
+        { model:Reply}
+        // , attributes: ['TweetId',[sequelize.fn('COUNT', sequelize.col('id')), 'replycount']], group: 'TweetId' 
+      ],
       order: [['createdAt', 'DESC']],
-      raw: true, 
-      nest: true
+      // raw: true, 
+      // nest: true
     }),
       // replies = sequelize.query('select `TweetId`, COUNT(`id`) AS `replycount` from `replies` GROUP BY `TweetId`;', {
       // type: sequelize.QueryTypes.SELECT
@@ -29,15 +35,17 @@ const tweetController = {
       })
     ]) 
     .then(([tweets,users]) => {
-       
-         const data = tweets.map( r => ({
+      //  console.log(tweets[0])
+        tweets = tweets.map( r => ({
         ...r.dataValues,
+        
         id:r.id,
-        User: r.User,
+        User: r.User.dataValues,
         description: r.description,
         createdAt:r.createdAt,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
-        // replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
+        Likes:r.Likes.length,
+        Replies: r.Replies.length,
       }))
     //整理popular要用的資料 
       const popular = users.map(user => ({
@@ -54,9 +62,10 @@ const tweetController = {
 
       const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-      console.log(unFollowed)
+      console.log(tweets[0])
+      // console.log(data[0])
       return res.render('index', {
-        data:data,
+        tweets:tweets,
         isFollowed: isFollowed,
         unFollowed: unFollowed,
         currentUser: helpers.getUser(req)
