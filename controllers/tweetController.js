@@ -50,7 +50,7 @@ const tweetController = {
     }   
   },
   getTweet: (req, res) => {
-
+    res.render('tweet')
   }, 
   postReplies: async (req, res) => {
     try {
