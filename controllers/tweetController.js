@@ -17,8 +17,8 @@ const tweetController = {
         nest: true,
         include: [User],
         order: [
-          ['createdAt', 'DESC'], // Sorts by createdAt in ascending order
-        ]
+          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
+        ],
       }),
       User.findAndCountAll({
         include: [
@@ -26,6 +26,17 @@ const tweetController = {
         ]
       })
     ]).then(([tweets, users]) => {
+
+      // 如果是admin呼叫getTweets，需處理tweets內容，超出50字則擷取前50字並加上…即可render頁面
+      if (helpers.getUser(req).isAdmin) {
+        tweets = tweets.rows
+        tweets.map(tweet => {
+          tweet.description = tweet.description.length <= 50 ? tweet.description : tweet.description.substring(0, maxDescLen) + "..."
+        })
+        return res.render('admin/tweets', { tweets })
+      }
+
+
       // 列出 追隨數前十名的使用者
       const topUsers =
         users.rows.map(user => ({
