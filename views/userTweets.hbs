@@ -33,7 +33,6 @@
       </button>
       </div>
       {{/ifEqual}}
-      {{!-- 加modal --}}
     </div>
     <div class="px-2 pt-3 mt-0 d-flex flex-row user-nav">
       <ul class="nav nav-tabs">
@@ -75,98 +74,6 @@
   </div>
   {{> popular}}
 </div>
+{{> userProfileModal}}
 
-<!-- Modal -->
-<div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-  aria-labelledby="user-modal-Label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content user-modal-content">
-       <form action="/api/users/:userId" method="POST" >
-         <div class="modal-header user-modal-header d-flex flex-row">
-        <div class="header">
-          <button type="button" class="btn-close user-modal-close-btn ms-1 me-3" data-bs-dismiss="modal" aria-label="Close"></button>
-        <span class="modal-title" id="user-modal-Label">編輯個人資料</span>
-        </div>
-          <button type="submit" class="btn btn-info user-profile-modal-btn ms-auto px-3 py-1">儲存</button>
-      </div>
-      <div class="modal-body p-0">
-        <div class="user-cover-block" id="user-cover-block"
-        style="background-image: url('https://cdn.mos.cms.futurecdn.net/wtqqnkYDYi2ifsWZVW2MT4-1024-80.jpg.webp');">
-        <div class="edit-btn-group d-flex  justify-content-center align-items-center">
-          <i class="fas fa-camera fa-inverse fa-2x"></i>
-          <i class="fas fa-times fa-inverse fa-2x ms-5"></i>
-        </div>
-      
-        </div>
-        <div class="user-info-block">
-          <div class="user-avatar-edit ms-3 d-flex  justify-content-center align-items-center" id="user-avatar-edit" style="background-image: url('https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg'">
-          <i class="fas fa-camera fa-inverse fa-2x"></i>
-          </div>
-          <div class="user-info-edit">
-            <div class="user-input">
-            <label for="userNameInput">名稱</label>
-            <input type="text" class="form-control user-name-edit" id="user-name-input" minlength="5" maxlength="50">  
-          </div>
-          <div class="count_message mb-5 d-flex flex-row-reverse"><p id="count_message_name">0/50</p></div>
-         
-          <div class="user-input">
-            <label for="userInfoInput">自我介紹</label>
-            <textarea class="form-control user-intro-edit p-2" placeholder="" id="user-info-input" maxlength="160"
-              style="height: 120px"></textarea>
-          </div>
-          <div class="count_message mb-5 d-flex flex-row-reverse"><p id="count_message_info">0/160</p></div>
-          
-          </div>
-        </div>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
-<script>
-  const profileEdit = document.querySelector('#edit-profile')
-  const userCoverInput = document.querySelector('#user-cover-block')
-  const userAvatarInput = document.querySelector('#user-avatar-edit')
-  const userNameInput = document.querySelector('#user-name-input')
-  const userInfoInput = document.querySelector('#user-info-input')
-  const baseURL = 'http://localhost:3000'
-
-  
-  userNameInput.addEventListener('keyup', function countCharacters(event) {
-    const textEntered = document.querySelector('#user-name-input').value.length;
-    const noticeArea = document.querySelector('#count_message_name');
-    const countNotice = `${textEntered}/50`
-    noticeArea.innerHTML = countNotice;
-  })
-
-
-  userInfoInput.addEventListener('keyup', function countCharacters(event) {
-      const textEntered = document.querySelector('#user-info-input').value.length;
-      const noticeArea = document.querySelector('#count_message_info');
-      const countNotice = `${textEntered}/160`
-      noticeArea.innerHTML = countNotice;
-  })
-
-  profileEdit.addEventListener('click', function onIconClicked(event) {
-    if (event.target.matches('#edit-profile-btn')) {
-      userId = event.target.dataset.id
-      getUserProfile(userId)
-    }
-  })
-
-  async function getUserProfile(id) {
-      try {
-        const dataRaw = await axios.get(`${baseURL}/api/users/${userId}`);
-        const userData = dataRaw.data.user
-    
-        userCoverInput.style.backgroundImage = `url('${userData.cover}')`
-        userCoverInput.style.backgroundImage = `url('${userData.avatar}')`
-        userNameInput.value = userData.name
-        userInfoInput.value = userData.introduction
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
- 
-</script>
+<script src="/javascripts/userModal.js"></script>
