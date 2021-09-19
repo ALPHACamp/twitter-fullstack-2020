@@ -64,7 +64,7 @@ const adminController = {
           { model: User, as: 'Followings' }
         ],
       }),
-      Tweet.findAll({
+      Tweet.findAll({ //分開查詢，加快效率
         attributes: ['userId', [sequelize.fn('COUNT', sequelize.col('userId')), 'tweetCount']],
         group: ['userId'],
         raw: true, nest: true,
@@ -85,33 +85,6 @@ const adminController = {
         const usersSorted = usersList.sort((a, b) => b.tweetCount - a.tweetCount)
         res.render('admin/adminUsers', { users: usersSorted })
       })
-
-
-
-
-
-    // return User.findAll({
-    //   where: { role: { [Op.ne]: 'admin' } },
-    //   include: [
-    //     Tweet, Reply, Like,
-    //     { model: User, as: 'Followers' },
-    //     { model: User, as: 'Followings' }
-    //   ],
-    // }).then(user => {
-    //   const users = user.map(user => ({
-    //     cover: user.cover,
-    //     avatar: user.avatar,
-    //     name: user.name,
-    //     account: user.account,
-    //     tweetCount: user.Tweets.length,
-    //     replyCount: user.Replies.length,
-    //     likeCount: user.Likes.length,
-    //     followerCount: user.Followers.length,
-    //     followingCount: user.Followings.length
-    //   }))
-    //   const usersSorted = users.sort((a, b) => b.tweetCount - a.tweetCount)
-    //   res.render('admin/adminUsers', { users: usersSorted })
-    // })
 
   }
 }
