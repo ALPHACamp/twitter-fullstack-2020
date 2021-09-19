@@ -54,8 +54,8 @@ module.exports = {
       password: bcrypt.hashSync('123', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       name: 'test4',
-      avatar: 'https://imgur.com/a/zA6uhttps://randomuser.me/portraits/women/73.jpg',
-      cover: 'https://w.wallhaven.cc/full/45/wallhaven-4528o9.jpg',
+      avatar: 'https://randomuser.me/portraits/women/73.jpg',
+      cover: 'https://w.wallhaven.cc/full/8o/wallhaven-8oev1j.jpg',
       introduction: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -66,7 +66,7 @@ module.exports = {
       isAdmin: false,
       name: 'test5',
       avatar: 'https://i.imgur.com/8Jp9j1r.jpg',
-      cover: 'https://w.wallhaven.cc/full/45/wallhaven-45https://w.wallhaven.cc/full/72/wallhaven-72rxqo.jpg',
+      cover: 'https://w.wallhaven.cc/full/j3/wallhaven-j3339m.jpg',
       introduction: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
