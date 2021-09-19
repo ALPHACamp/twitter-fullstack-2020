@@ -58,13 +58,10 @@ const tweetController = {
           Like
         ]
       })
-      // console.log('getTweet:', tweet)
-      // console.log('getTweet Replies user:', tweet.Replies[0].dataValues)
       const tweetJson = tweet.toJSON()
       const tweetReplies = tweetJson.Replies.map(reply => ({
         ...reply
       }))
-      // console.log('getTweet reply:', tweetReplies)
       res.render('tweet', { tweetReplies, tweet: tweetJson })
     } catch(err) {
       console.warn(err)
