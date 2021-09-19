@@ -1,0 +1,36 @@
+<div class="row justify-content-center">
+  <div class="col">
+    {{>columnLeft}}
+  </div>
+
+  {{>modalIndex}}
+  <div class="profile-container">
+    <div class="profile-nav">
+      <h3 class="profile-nav-header">首頁</h3>
+    </div>
+  {{>upperCenter ucChoice=true}}
+    <div class="posts-container">
+  <!--start::list of post-->
+      <div class="post">
+        <div class="post-card1">
+          <div class="avatar profile-avatar">
+            <img
+              src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+              alt="avatar-img">
+          </div>
+        </div>
+        <div class="post-card2">
+          <h5 class="d-inline-block post-title">Post Title&nbsp;<span class="post-sub-info">@Apple ‧ 5minutes</span></h5>
+          <p class="post-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+          <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>75</span><span
+              class="post-icon-block"><i class="bi bi-heart"></i>15</span></p>
+        </div>
+      </div>
+  <!--end::list of post-->
+    </div>
+  </div>
+
+  <div class="col">
+    {{>columnRight}}
+  </div>
+</div>

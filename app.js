@@ -1,21 +1,23 @@
-const express = require('express')
+const express = require("express");
+port = process.env.PORT || 3000;
+host = process.env.BASE_URL || "http://localhost";
 
-const handlebars = require('express-handlebars')
-const helpers = require('./_helpers');
-const db = require('./models')
+const handlebars = require("express-handlebars");
+const helpers = require("./_helpers");
+const db = require("./models");
 
-const app = express()
-const port = 3000
-
+const app = express();
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
-app.set('view engine', 'handlebars')
-app.use(express.static('public'))
+app.engine(".hbs", handlebars({ extname: ".hbs", defaultLayout: "main" }));
+app.set("view engine", ".hbs");
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.use(express.static("public"));
+const routes = require("./routes");
+app.use(routes);
+app.listen(port, () =>
+  console.log(`simple-twitter app listening at ${host}:${port}`)
+);
 
-require('./routes')(app)
-
-module.exports = app
+module.exports = app;
