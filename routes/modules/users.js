@@ -22,4 +22,7 @@ router.get("/register", (req, res) => {
 router.get("/setting", (req, res) => {
   return res.render("setting");
 });
+router.get("/followship", (req, res) => {
+  return res.render("followship");
+});
 module.exports = router;

@@ -125,7 +125,12 @@
   left: -15px;
   margin-bottom: 0;
 }
-.profilepage-tags .nav-item {
+.followship-tags {
+  position: relative;
+  margin-bottom: 0;
+  background: #fff;
+}
+.nav-item {
   position: relative;
   padding-top: 15px;
   padding-bottom: 15px;
@@ -133,17 +138,17 @@
   margin-bottom: 0;
   text-align: center;
 }
-.profilepage-tags .nav-item .nav-link {
+.nav-item .nav-link {
   margin: 0;
   padding: 0;
   color: #657786;
   font-weight: 700;
   cursor: pointer;
 }
-.profilepage-tags .nav-item .nav-link.active {
+.nav-item .nav-link.active {
   color: #ff6600;
 }
-.profilepage-tags .nav-item .nav-link.active::after {
+.nav-item .nav-link.active::after {
   content: "";
   height: 2px;
   width: 130px;
@@ -252,6 +257,10 @@
   font-size: 15px;
   line-height: 15px;
   color: #ffffff;
+}
+.btn-orange.btn-short,
+.btn-outline-orange.btn-short {
+  padding: 5px 15px;
 }
 .upper-right {
   position: absolute;
