@@ -393,12 +393,96 @@ const userController = {
   },
 
   getUserFollowings: (req, res) => {
-    return res.render('followship')
+    const currentUser = helpers.getUser(req)
+    return Promise.all([
+      User.findAll({ where: { id: req.user.id }, include: [{ model: User, as: 'Followings' }], raw: true, nest: true })
+      , User.findAll({
+        where: { role: { [Op.ne]: 'admin' } },
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })])
+      .then(([usersFollowings, users]) => {
+        //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
+        const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+        const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
+        //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
+        const allUsers = users.map(user => ({
+          ...user.dataValues,
+          FollowerCount: user.Followers.length,
+          myself: Boolean(user.id === currentUser.id),
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        }))
+        const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+        return res.render('followship', {
+          usersFollowings,
+          user: req.user,
+          isFollowed,
+          topUsers
+        })
+      })
   },
 
   getUserFollowers: (req, res) => {
-    return res.render('followship')
+    const currentUser = helpers.getUser(req)
+    return Promise.all([
+      User.findAll({ where: { id: req.user.id }, include: [{ model: User, as: 'Followers' }], raw: true, nest: true })
+      , User.findAll({
+        where: { role: { [Op.ne]: 'admin' } },
+        include: [
+          { model: Tweet },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })])
+      .then(([usersFollowers, users]) => {
+        //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
+        const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+        const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
+        //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
+        const allUsers = users.map(user => ({
+          ...user.dataValues,
+          FollowerCount: user.Followers.length,
+          myself: Boolean(user.id === currentUser.id),
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        }))
+        const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+        return res.render('followship', {
+          usersFollowers,
+          user: req.user,
+          isFollowed,
+          topUsers
+        })
+      })
   },
+
+  addFollowing: (req, res) => {
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.user_id
+    })
+      .then(followship => {
+        return res.redirect('back')
+      })
+  },
+
+  removeFollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.user_id
+      }
+    })
+      .then(followship => {
+        followship.destroy()
+          .then(() => {
+            return res.redirect('back')
+          })
+      })
+
+  }
 
 
 }

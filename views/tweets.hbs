@@ -66,8 +66,6 @@
             {{viewUser.tweetsCount}}推文
           </div>
         </div>
-
-
       </div>
 
       <hr style="margin:0; padding:0">
@@ -92,7 +90,8 @@
             <div class="other-user-icon">
               <div class="mail"><i class="far fa-envelope"></i></div>
               <div class="notification"><i class="far fa-bell"></i></div>
-              <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+              <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST"
+                style="display: contents;">
                 <button type="submit" class="btn follow-button">正在跟隨</button>
               </form>
             </div>
@@ -138,7 +137,7 @@
 
               </div>
 
-            </div>
+            </a>
 
 
           </div>
@@ -207,6 +206,25 @@
 
                     {{/if}}
 
+                {{#if isLiked}}
+                <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+                  <div class="ml-4 like">
+                    <button type="submit" class="unlike btn">
+                      <i class="fas fa-heart mr-1"></i>
+                    </button>
+                    {{this.Likes.length}}
+                  </div>
+                </form>
+                {{else}}
+                <form action="/tweets/{{this.id}}/like" method="POST">
+                  <div class="ml-4 like">
+                    <button type="submit" class="like btn">
+                      <i class="far fa-heart mr-1"></i>
+                    </button>
+                    {{this.Likes.length}}
+                  </div>
+                </form>
+                {{/if}}
 
                   </div>
                 </div>
