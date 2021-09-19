@@ -9,7 +9,6 @@ const getUserId = new Promise((resolve, reject) => {
       users.forEach(user => {
         userIds.push(user.id)
       })
-      console.log(userIds)
       return resolve(userIds)
     })
 })
