@@ -7,6 +7,11 @@
   grid-template-columns:1.5fr 6.5fr 3fr;
 }
 
+.adminGrid{ 
+  display:grid;
+  grid-template-columns:1.5fr 9.5fr;
+}
+
 .fixed{
   position:fixed;
 }
