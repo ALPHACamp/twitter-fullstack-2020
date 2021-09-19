@@ -20,7 +20,7 @@ const authenticatedAdmin = (req, res, next) => {
     return next()
   }
   req.flash('error_messages', '帳號或密碼輸入錯誤')
-  res.redirect('/admin')
+  res.redirect('/admin/signin')
 }
 
 
@@ -37,6 +37,10 @@ module.exports = (app, passport) => {
   app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
 
+  // 追蹤
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+
   // 後台登入登出
   app.get('/admin/signin', adminController.signInPage)
   app.post('/admin/signin', passport.authenticate('local', {
@@ -45,20 +49,13 @@ module.exports = (app, passport) => {
   }), adminController.signIn)
   app.get('/admin/logout', adminController.logout)
 
-  // // 後台首頁(測試用)
-  // app.get('/admin_main', authenticatedAdmin, tweetController.getTweets)
-
-  // 追蹤
-  app.post('/following/:userId', authenticated, userController.addFollowing)
-  app.delete('/following/:userId', authenticated, userController.removeFollowing)
-
   //後台 - 首頁
-  app.get('/admin_main', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   // // 後台 - 使用者列表
   // app.get('/admin/users', authenticatedAdmin, adminController.adminGetUsers)
   // // 後台 - 推文清單
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-  // app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+  app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   // 註冊
   app.get('/signup', userController.signUpPage)

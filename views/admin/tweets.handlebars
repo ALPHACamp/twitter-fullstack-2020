@@ -50,8 +50,12 @@
                 </div>
                 <p>{{this.description}}</p>
               </div>
-              <div class="col-1 d-flex align-items-center" style="color:#657786">
-                <i class="fas fa-times fa-2x"></i>
+              <div class="col-1 d-flex align-items-center">
+                <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;"
+                  onclick="return confirm('確定要刪除這筆推文嗎？')">
+                  <button type="submit" class="btn btn-link" style="color:#657786"><i
+                      class="fas fa-times fa-2x"></i></button>
+                </form>
               </div>
             </div>
           </div>

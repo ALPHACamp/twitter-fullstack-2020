@@ -1,6 +1,8 @@
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
+const Like = db.Like
+const Reply = db.Reply
 
 const maxDescLen = 50
 
@@ -39,6 +41,71 @@ const adminController = {
     })
 
     return res.render('admin/tweets', { tweets })
+  },
+
+  // 刪除單一tweet
+  deleteTweet: async (req, res) => {
+    const TweetID = req.params.id
+
+    // await Like.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: { TweetID }
+    // }).then(likes => {
+    //   console.log("===============")
+    //   console.log("likes before:", likes)
+    // })
+
+    // await Reply.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: { TweetID }
+    // }).then(replies => {
+    //   console.log("===============")
+    //   console.log("reply before:", replies)
+    // })
+
+    // await Tweet.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: { id: TweetID }
+    // }).then(tweets => {
+    //   console.log("===============")
+    //   console.log("tweet before:", tweets)
+    // })
+
+    await Like.destroy({ where: { TweetID } })
+    // await Reply.destroy({ where: { TweetID } })
+    await Tweet.destroy({ where: { id: TweetID } })
+
+    // await Like.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: { TweetID }
+    // }).then(likes => {
+    //   console.log("===============")
+    //   console.log("likes after:", likes)
+    // })
+
+    // await Reply.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: { TweetID }
+    // }).then(replies => {
+    //   console.log("===============")
+    //   console.log("reply after:", replies)
+    // })
+
+    // await Tweet.findAll({
+    //   raw: true,
+    //   nest: true,
+    //   where: { id: TweetID }
+    // }).then(tweets => {
+    //   console.log("===============")
+    //   console.log("tweet after:", tweets)
+    // })
+
+    res.redirect('/admin/tweets')
   }
 }
 
