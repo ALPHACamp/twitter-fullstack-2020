@@ -1,5 +1,6 @@
 const express = require("express");
 port = process.env.PORT || 3000;
+host = process.env.BASE_URL || "http://localhost";
 
 const handlebars = require("express-handlebars");
 const helpers = require("./_helpers");
@@ -14,7 +15,7 @@ app.set("view engine", ".hbs");
 
 app.use(express.static("public"));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Example app listening at ${host}:${port}`));
 
 require("./routes")(app);
 

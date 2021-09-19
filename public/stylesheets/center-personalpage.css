@@ -1,0 +1,218 @@
+.profile-container {
+  position: relative;
+  top: -1px;
+  margin: 0 auto;
+  height: 100%;
+  width: 600px;
+  max-width: 600px;
+  background: #e6ecf0;
+}
+.profile-container > * {
+  border: 1px solid #e6ecf0;
+}
+.profile-container .mainpost-sm {
+  font: 500 15px "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-x {
+  font: 500 23px "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-md {
+  font: 500 19px "Noto Sans TC", sans-serif;
+}
+.profile-container .mainpost-nav {
+  height: 55px;
+  background: #fff;
+  border: 1px solid #e6ecf0;
+}
+.profile-container .mainpost-nav .col1 {
+  flex: 0 0 17px;
+  margin-left: 20px;
+  padding: 0;
+}
+.profile-container .mainpost-nav .col2 {
+  flex: 0 0 200px;
+  margin-left: 40px;
+  padding: 0;
+}
+.profile-container .mainpost-nav .nav-bold {
+  color: #1c1c1c;
+  line-height: 20px;
+  font: 18px "Noto Sans TC", sans-serif;
+  font-weight: 700;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+.profile-container .mainpost-nav p.nav-bold {
+  margin-top: 5px;
+}
+.mainpost-nav i.nav-bold::before {
+  line-height: 55px;
+}
+.profile-container .mainpost-nav small {
+  margin-top: 0;
+  font-family: "Noto Sans TC", sans-serif;
+  color: #657786;
+}
+.profile-container .mainpost-messageboard {
+  display: flex;
+  flex-direction: row;
+  background-color: #fff;
+  position: relative;
+}
+.profile-container .mainpost-avatar-container {
+  flex: 0 0 65px;
+  width: 65px;
+}
+
+.personalpage-banner {
+  position: relative;
+  height: 200px;
+  border: 1px solid #e6ecf0;
+}
+.personalpage-banner img {
+  object-fit: cover;
+  min-height: 200px;
+  height: 200px;
+  width: 598px;
+}
+.personalpage-card1 {
+  position: absolute;
+  height: 140px;
+  width: 140px;
+  top: 124px;
+  left: 15px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  z-index: 5;
+}
+.personalpage-card1 .personalpage-avatar {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  top: -5px;
+  left: -5px;
+}
+.personalpage-card1 .personalpage-avatar img {
+  object-fit: cover;
+  object-position: center center;
+  height: 150px;
+  width: auto;
+  max-width: 200px;
+}
+.personalpage-card2 {
+  flex: 0 0 598px;
+  width: 598px;
+  padding-left: 15px;
+  padding-top: 70px;
+  min-height: 70px;
+}
+.personalpage-card2 * {
+  font-family: "Noto Sans TC", sans-serif;
+  margin: 0;
+  margin-bottom: 10px;
+}
+.personalpage-card2 .post-title {
+  font-weight: 700;
+}
+
+.personalpage-tags {
+  position: relative;
+  left: -15px;
+  margin-bottom: 0;
+}
+.personalpage-tags .nav-item {
+  position: relative;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  width: 130px;
+  margin-bottom: 0;
+  text-align: center;
+}
+.personalpage-tags .nav-item .nav-link {
+  margin: 0;
+  padding: 0;
+  color: #657786;
+  font-weight: 700;
+  cursor: pointer;
+}
+.personalpage-tags .nav-item .nav-link.active {
+  color: #ff6600;
+}
+.personalpage-tags .nav-item .nav-link.active::after {
+  content: "";
+  height: 2px;
+  width: 130px;
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  background-color: #ff6600;
+}
+
+.posts-container {
+  margin-top: 10px;
+}
+
+.post {
+  display: flex;
+  flex: 1;
+  background-color: #fff;
+  position: relative;
+  border: 1px solid #e6ecf0;
+}
+
+.post-card1 {
+  flex: 0 0 65px;
+  width: 65px;
+  font-weight: 400;
+}
+
+.post-card2 {
+  flex: 0 0 535px;
+  width: 535px;
+  padding-left: 10px;
+  padding-top: 10px;
+  min-height: 70px;
+}
+.post-card2 h5,
+.post-card2 p {
+  font-family: "Noto Sans TC", sans-serif;
+  margin: 0;
+  margin-bottom: 10px;
+  font-size: 15px;
+}
+
+.post-sub-info {
+  font-family: "Noto Sans TC", sans-serif;
+  color: #657786;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.post-icon-block {
+  display: inline-block;
+  width: 75px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: 13px;
+}
+
+.profile-avatar {
+  position: relative;
+  height: 100%;
+  top: 10px;
+  left: 15px;
+  margin-right: 0;
+  flex: 0 0 50px;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profile-avatar img {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+  min-height: 50px;
+  min-width: 50px;
+}
