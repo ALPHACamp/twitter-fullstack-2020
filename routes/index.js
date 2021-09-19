@@ -53,11 +53,11 @@ module.exports = (app, passport) => {
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
 
   //後台 - 首頁
-  app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
+  app.get('/admin_main', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   // // 後台 - 使用者列表
   // app.get('/admin/users', authenticatedAdmin, adminController.adminGetUsers)
   // // 後台 - 推文清單
-  // app.get('/admin/tweets', authenticatedAdmin, adminController.adminGetTweets)
+  app.get('/admin/tweets', authenticatedAdmin, tweetController.getTweets)
   // app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   // 註冊
