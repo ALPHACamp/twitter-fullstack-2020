@@ -1,51 +1,51 @@
 {{#if ucChoice}}
-<div class="profile-messageboard"></div>
-<!--start::index profile-->
-<div class="profile-avatar-container">
-  <div class="avatar profile-avatar">
-    <img src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-      alt="avatar-img" />
+<div class="profile-messageboard">
+  <!--start::index profile-->
+  <div class="profile-avatar-container">
+    <div class="avatar profile-avatar">
+      <img src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+        alt="avatar-img" />
+    </div>
   </div>
-</div>
 
-<div class="profile-textarea-container">
-  <textarea name="profile-textarea" class="form-control form-control-lg" id="post" placeholder="有什麼新鮮事?"
-    rows="3"></textarea>
-</div>
-<div class="btn btn-twitter" id="myInput" data-bs-toggle="modal" data-bs-target="#exampleModel"><span>推文</span>
-</div>
+  <div class="profile-textarea-container">
+    <textarea name="profile-textarea" class="form-control form-control-lg" id="post" placeholder="有什麼新鮮事?"
+      rows="3"></textarea>
+  </div>
+  <div class="btn btn-twitter" id="myInput" data-bs-toggle="modal" data-bs-target="#exampleModel"><span>推文</span>
+  </div>
 </div>
 <!--end::index profile-->
 {{/if}}
 {{#if postChoice}}
-<div class="profile-messageboard"></div>
-<!--start::post-->
-<div class="mainpost-messageboard">
-  <div class="post-card1">
-    <div class="avatar profile-avatar"><img
-        src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-        alt="avatar-img" /></div>
+<div class="profilepage-messageboard">
+  <!--start::post-->
+  <div class="mainpost-messageboard">
+    <div class="post-card1">
+      <div class="avatar profile-avatar"><img
+          src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+          alt="avatar-img" /></div>
+    </div>
+    <div class="post-card2">
+      <h5 class="d-inline-block post-title">Post Title&nbsp;<br /><span class="post-sub-info mainpost-sm">@Apple
+          &#x2027;
+          5minutes</span></h5>
+      <p class="mainpost-x">Lorem ipsum dolor sit, amet consectetur
+        adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Ea, vel.</p>
+      <p class="post-sub-info mainpost-sm">上午10:05 2020年6月10日</p>
+    </div>
   </div>
-  <div class="post-card2">
-    <h5 class="d-inline-block post-title">Post Title&nbsp;<br /><span class="post-sub-info mainpost-sm">@Apple
-        &#x2027;
-        5minutes</span></h5>
-    <p class="mainpost-x">Lorem ipsum dolor sit, amet consectetur
-      adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing
-      elit. Ea, vel.</p>
-    <p class="post-sub-info mainpost-sm">上午10:05 2020年6月10日</p>
+  <div class="mainpost-appendboard">
+    <div class="reply-like-container">
+      <p class="mainpost-md reply-like-text"><b>34</b>&nbsp;回覆
+        <b>808</b>&nbsp;喜歡次數
+      </p>
+    </div>
+    <p class="mainpost-sub-info mt-3"><span class="mainpost-icon-block"><i class="bi bi-chat" data-bs-toggle="modal"
+          data-bs-target="#exampleModel" id="myInput"></i></span><span class="mainpost-icon-block"><i
+          class="bi bi-heart"></i></span></p>
   </div>
-</div>
-<div class="mainpost-appendboard">
-  <div class="reply-like-container">
-    <p class="mainpost-md reply-like-text"><b>34</b>&nbsp;回覆
-      <b>808</b>&nbsp;喜歡次數
-    </p>
-  </div>
-  <p class="mainpost-sub-info mt-3"><span class="mainpost-icon-block"><i class="bi bi-chat" data-bs-toggle="modal"
-        data-bs-target="#exampleModel" id="myInput"></i></span><span class="mainpost-icon-block"><i
-        class="bi bi-heart"></i></span></p>
-</div>
 </div>
 </div>
 <!--end::post-->
@@ -64,19 +64,19 @@
     <div class="profilepage-card2">
       <div class="upper-right">
         <p>
-        <!-- 個人profile的按鈕 編輯個人檔案
+          <!-- 個人profile的按鈕 編輯個人檔案
         <form class="ms-auto" action="?_method=PUT" method="POST">
           <button type="submit" class="btn-outline-orange ">編輯個人檔案</button>
         </form>  -->
 
-        <!-- 訊息按鈕與鈴鐺按鈕 將fill的class拿掉就會變成框線按鈕 -->
+          <!-- 訊息按鈕與鈴鐺按鈕 將fill的class拿掉就會變成框線按鈕 -->
         <div class="icon-btn fill d-inline-block">
           <svg width="19" height="17" viewBox="0 0 19 17" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M15.8438 0.640625H3.15625C1.82888 0.640625 0.75 1.72038 0.75 3.04862V13.9817C0.75 15.31 1.82888 16.3906 3.15625 16.3906H15.8438C17.1711 16.3906 18.25 15.31 18.25 13.9817V3.04862C18.25 1.72038 17.1711 0.640625 15.8438 0.640625ZM3.15625 1.95313H15.8438C16.4475 1.95313 16.9375 2.44313 16.9375 3.04688V3.67162L9.89375 8.36775C9.65487 8.52525 9.346 8.527 9.10625 8.366L2.0625 3.67162V3.04688C2.0625 2.44313 2.5525 1.95313 3.15625 1.95313ZM15.8438 15.0764H3.15625C2.5525 15.0764 2.0625 14.5864 2.0625 13.9826V5.20988L8.3975 9.43612C8.73263 9.66012 9.11675 9.77213 9.5 9.77213C9.885 9.77213 10.2674 9.66013 10.6025 9.437L16.9375 5.21075V13.98C16.9375 14.5838 16.4475 15.0738 15.8438 15.0738V15.0764Z" />
           </svg>
         </div>
-        
+
         <div class="icon-btn d-inline-block">
           <svg width="21" height="20" viewBox="0 0 21 20" xmlns="http://www.w3.org/2000/svg">
             <path
