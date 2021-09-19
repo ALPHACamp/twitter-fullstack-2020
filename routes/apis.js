@@ -24,6 +24,10 @@ router.get('/tweets/:tweetId/replies', authenticated, tweetController.getModalTw
 
 
 
+router.get('/users/:userId', authenticated, userController.getUser)
+
+
+
 
 
 
