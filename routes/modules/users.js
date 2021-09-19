@@ -1,4 +1,4 @@
-// This modules is for user-related routers
+// This modules is for user and profile routers
 const express = require("express");
 const router = express.Router();
 const db = require("../../models");
