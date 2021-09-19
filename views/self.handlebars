@@ -14,7 +14,7 @@
 
     <img src="https://w.wallhaven.cc/full/72/wallhaven-72rxqo.jpg" style="position:absolute z-index:-1;" class=""
       alt="...">
-    <img src="https://randomuser.me/api/portraits/men/88.jpg"
+    <img src="{{ user.avatar }}"
       style="width: 9rem; position:absolute; top: 20rem; left: 1rem;" class="rounded-circle" alt="...">
     <div class="d-flex flex-row-reverse m-2">
       <a href="/user/self/edit/{{user.id}}" class="btn btn-orange-white rounded-pill">編輯個人資料</a>
@@ -45,18 +45,18 @@
         <a class="nav-link fontWeight700" href="/users/self/like/{{user.id}}">喜歡的內容</a>
       </li>
     </ul>
-
+    
     {{#each tweet}}
     <div class="card p-3">
       <div class="d-flex">
         <div>
-          <img src="https://randomuser.me/api/portraits/men/88.jpg" style="width: 3rem" class="rounded-circle me-3"
+          <img src="{{ ../user.avatar }}" style="width: 3rem" class="rounded-circle me-3"
             alt="...">
         </div>
         <div class="col-md-8">
           <div class="userInfo d-flex">
-            <h6 class="fontWeight700 me-2">{{user.name}}</h6>
-            <h6 class="fontWeight500" style="color:#657786;">@{{user.account}}</h6>
+            <h6 class="fontWeight700 me-2">{{ ../user.name}}</h6>
+            <h6 class="fontWeight500" style="color:#657786;">@{{ ../user.account}}</h6>
             <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
           </div>
           <p class="card-text fontWeight500">{{this.content}}</p>
