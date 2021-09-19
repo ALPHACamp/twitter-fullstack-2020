@@ -75,7 +75,7 @@ module.exports = (app, passport) => {
   //後台 - 首頁
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
   // // 後台 - 使用者列表
-  // app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+  app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
   // // 後台 - 推文清單
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)

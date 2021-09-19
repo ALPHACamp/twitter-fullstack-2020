@@ -106,6 +106,17 @@ const adminController = {
     // })
 
     res.redirect('/admin/tweets')
+  },
+
+  // 列出所有使用者
+  getUsers: (req, res) => {
+    User.findAll({
+      raw: true,
+      nest: true
+    }).then(users => {
+      console.log(users)
+      res.render('admin/users')
+    })
   }
 }
 

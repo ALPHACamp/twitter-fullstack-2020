@@ -67,15 +67,6 @@ const tweetController = {
     // })
 
     // console.log(tweets)
-
-    // if (helpers.getUser(req).isAdmin) {
-    //   tweets.map(tweet => {
-    //     tweet.description = tweet.description.length <= 50 ? tweet.description : tweet.description.substring(0, maxDescLen) + "..."
-    //   })
-    // }
-    // const renderPage = helpers.getUser(req).isAdmin ? 'admin/admin_main' : 'tweets'
-    // return res.render(renderPage, { tweets })
-
   },
   postTweet: async (req, res) => {
     let { description } = req.body
