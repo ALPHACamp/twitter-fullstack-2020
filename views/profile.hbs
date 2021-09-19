@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <div class="col">
-    {{>leftColumn}}
+    {{>columnLeft}}
   </div>
 
   <div class="profile-container">
@@ -12,30 +12,7 @@
         </div>
       </div>
     </div>
-    <div class="personalpage-wrapper d-f flex-column">
-      <div class="personalpage-banner"><img src="https://i.ytimg.com/vi/w_8ddLqNTuo/maxresdefault.jpg" />
-        <div class="personalpage-card1">
-          <div class="avatar personalpage-avatar"><img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT5cCP8TaZvRFktb9AaXmCsShcNhbzXxJtBw&amp;usqp=CAU"
-              alt="avatar-img" /></div>
-        </div>
-      </div>
-      <div class="mainpost-messageboard">
-        <div class="personalpage-card2">
-          <h5 class="d-inline-block post-title">Illyasviel von Einzbern&nbsp;<br /><span
-              class="post-sub-info mainpost-sm">@善良的小女孩</span></h5>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Lorem ipsum
-            dolor sit amet consectetur adipisicing elit. Ea, vel.</p>
-          <p class="mainpost-sm reply-like-text"><b>34個<span class="post-sub-info">&nbsp;跟隨中</span>
-              808位<span class="post-sub-info">&nbsp;跟隨者</span></b></p>
-          <ul class="nav personalpage-tags mt-2">
-            <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">推文</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">推文與回覆</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">喜歡的內容</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
+    {{>upperCenter ppChoice=true}}
     <div class="col flex-direction-column">
     <!--start::list of 推文-->
       <div class="post">
@@ -91,6 +68,6 @@
   </div>
 
   <div class="col">
-    {{>rightColumn}}
+    {{>columnRight}}
   </div>
 </div>

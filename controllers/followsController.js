@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const { urlencoded } = require("express");
 
 //for test only
@@ -11,14 +10,6 @@ const getTestUser = function (req) {
   }
 };
 
-const userController = {
-  signInPage: (req, res) => {
-    return res.render("login");
-  },
+const followsController = {};
 
-  registerPage: (req, res) => {
-    return res.render("register");
-  },
-};
-
-module.exports = userController;
+module.exports = followsController;

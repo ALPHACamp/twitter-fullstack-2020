@@ -1,17 +1,16 @@
-const tweetController = require('../controllers/tweetController.js')
-const adminController = require('../controllers/adminController.js')
+const express = require("express");
+const router = express.Router();
 
-module.exports = app => {
-  app.get("/", (req, res) => res.render("index"));
-  app.get("/posts", (req, res) => res.render("posts"));
-  app.get("/users/1/main", (req, res) => res.render("personalpage"));
-  
-  // tweetController
-  app.get('/tweets', tweetController.getRestaurants)
+const usersRouter = require("./modules/users");
+const adminRouter = require("./modules/admin");
+const postsRouter = require("./modules/posts");
+const followsRouter = require("./modules/follows");
+const homeRouter = require("./modules/home");
 
+router.use("/users", usersRouter);
+router.use("/admin", adminRouter);
+router.use("/posts", postsRouter);
+router.use("/follows", followsRouter);
+router.use("/", homeRouter);
 
-  app.get('/admin', (req, res) => res.redirect('/admin/tweets'))
-  app.get('/admin/tweets', adminController.getTweets)
-  app.delete('/admin/tweets/:id', adminController.deleteAdminTweets)
-  app.get('/admin/users', adminController.getUsers)
-}
+module.exports = router;

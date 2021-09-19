@@ -1,14 +1,14 @@
 <div class="row justify-content-center">
   <div class="col">
-    {{>leftColumn}}
+    {{>columnLeft}}
   </div>
 
-  {{>modalProfile}}
+  {{>modalIndex}}
   <div class="profile-container">
     <div class="profile-nav">
       <h3 class="profile-nav-header">首頁</h3>
     </div>
-  {{>upperCenter}}
+  {{>upperCenter ucChoice=true}}
     <div class="posts-container">
   <!--start::list of post-->
       <div class="post">
@@ -31,6 +31,6 @@
   </div>
 
   <div class="col">
-    {{>rightColumn}}
+    {{>columnRight}}
   </div>
 </div>
