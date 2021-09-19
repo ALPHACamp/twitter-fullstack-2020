@@ -63,7 +63,7 @@
             {{viewUser.name}}
           </div>
           <div class="title-info">
-            {{viewUser.Tweets.length}}推文
+            {{viewUser.tweetsCount}}推文
           </div>
         </div>
       </div>
@@ -80,12 +80,12 @@
         </div>
 
 
-        {{#ifCond user.id viewUser.id}}
+        {{#if viewUser.isSelf}}
         <div class="edit-button">
           <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal"
             data-target="#edit-user">編輯個人資料</button>
           {{else}}
-          {{#if this.isFollowed }}
+          {{#if viewUser.isFollowed }}
           <div class="edit-button-other">
             <div class="other-user-icon">
               <div class="mail"><i class="far fa-envelope"></i></div>
@@ -104,7 +104,7 @@
                 </form>
               </div>
               {{/if}}
-              {{/ifCond}}
+              {{/if}}
             </div>
           </div>
 
@@ -117,7 +117,7 @@
                 <a href="/users/{{viewUser.id}}/followings">
                   <div class="followship d-flex m-0">
                     <div class="follow-title">
-                      {{viewUser.Followings.length}}個
+                      {{viewUser.followingsCount}}個
                     </div>
                     <div class="follow-body">
                       跟隨中
@@ -126,7 +126,7 @@
 
                 <a href="/users/{{viewUser.id}}/followers">
                   <div class="follow-title ml-2">
-                    {{viewUser.Followers.length}}位
+                    {{viewUser.followersCount}}位
                   </div>
                   <div class="follow-body">
                     跟隨者
@@ -154,45 +154,45 @@
           <br /><br />
           {{!-- 貼文開始 --}}
           <div class="user-tweet">
-          {{#each data}}
-          <div class="tweet col-md-12">
-            <div class="d-flex">
-              <div class="mt-2 ml-2 col-md-1" style="padding:0">
-                <a href="/users/{{../viewUser.id}}/replied" class="text-muted">
-                  <img class="user-pic mr-2" src="{{../viewUser.avatar}}" alt="">
-                </a>
-              </div>
-
-              <div class="col-md-11">
-                <div class="account-info d-flex" style="flex:auto">
-                  <div class="user-name">{{../viewUser.name}}</div>
-                  <div class="account-time ml-2">@{{../viewUser.account}}．{{fromNow this.createdAt}}回覆</div>
-                </div>
-                <div class="reply">
-                  <div class="reply-text">回覆</div>
-                  <a href="/users/{{this.Tweet.User.id}}/replied" class="text-muted">
-                    <div class="reply-account">@{{this.Tweet.User.name}}</div>
+            {{#each data}}
+            <div class="tweet col-md-12">
+              <div class="d-flex">
+                <div class="mt-2 ml-2 col-md-1" style="padding:0">
+                  <a href="/users/{{../viewUser.id}}/replied" class="text-muted">
+                    <img class="user-pic mr-2" src="{{../viewUser.avatar}}" alt="">
                   </a>
                 </div>
-                <a href="/tweets/{{this.TweetId}}" class="text-muted">
-                  <div class="post-text d-flex" style="flex:auto">
-                    {{this.comment}}
+
+                <div class="col-md-11">
+                  <div class="account-info d-flex" style="flex:auto">
+                    <div class="user-name">{{../viewUser.name}}</div>
+                    <div class="account-time ml-2">@{{../viewUser.account}}．{{fromNow this.repliedAt}}回覆</div>
                   </div>
-                </a>
+                  <div class="reply">
+                    <div class="reply-text">回覆</div>
+                    <a href="/users/{{this.repliedById}}/replied" class="text-muted">
+                      <div class="reply-account">@{{this.repliedByAccount}}</div>
+                    </a>
+                  </div>
+                  <a href="/tweets/{{this.tweetId}}" class="text-muted">
+                    <div class="post-text d-flex" style="flex:auto">
+                      {{this.comment}}
+                    </div>
+                  </a>
+                </div>
+
               </div>
-
             </div>
+            <hr />
+            {{/each}}
+
+            {{!-- 貼文結束 --}}
+
           </div>
-          <hr />
-          {{/each}}
+          {{!-- 推文區結束 --}}
 
-          {{!-- 貼文結束 --}}
-
+          {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
         </div>
-        {{!-- 推文區結束 --}}
-
-        {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
-      </div>
       </div>
 
       {{!-- 右側欄位 --}}
@@ -218,9 +218,9 @@
                 </div>
                 <div class="button">
 
-                  {{#if myself}}
+                  {{#if isSelf}}
                   {{else}}
-                  {{#if this.isFollowed }}
+                  {{#if isFollowed }}
                   <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
                     <button type="submit" class="btn follow-button">正在跟隨</button>
                   </form>

@@ -141,41 +141,110 @@ const userController = {
         ],
         order: [['createdAt', 'DESC']]
       }),
-      User.findAll({
-        where: { role: { [Op.ne]: 'admin' } },
+      User.findOne({
+        where: { id: req.params.user_id },
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      })
-    ]).then(([tweets, users]) => {
+      }),
+      Followship.findAll({
+        attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
+        include: [
+          { model: User, as: 'FollowingLinks' } //self-referential super-many-to-many
+        ],
+        group: ['followingId'],
+        order: [[sequelize.col('count'), 'DESC']],
+        limit: 10, raw: true, nest: true
+      }),
+    ]).then(([tweets, user, users]) => {
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
-      const data = tweets.map(r => ({
-        ...r.dataValues,
-        isLiked: r.dataValues.Likes.map(d => d.UserId).includes(currentUser.id)
+      const data = tweets.map(tweet => ({
+        id: tweet.id,
+        description: tweet.description,
+        tweetedAt: tweet.createdAt,
+        replyCount: tweet.Replies.length,
+        likeCount: tweet.Likes.length,
+        isLiked: tweet.Likes.map(d => d.UserId).includes(currentUser.id)
       }))
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
-      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
-      //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
-      const allUsers = users.map(user => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        myself: Boolean(user.id === currentUser.id),
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-      }))
-      const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-      return res.render('tweets', {
-        data,
-        viewUser: viewUser[0].toJSON(),
-        currentUser,
-        isFollowed,
-        topUsers
+      const viewUser = Object.assign({}, {
+        id: user.id,
+        name: user.name,
+        account: user.account,
+        introduction: user.introduction,
+        cover: user.cover,
+        avatar: user.avatar,
+        tweetsCount: user.Tweets.length,
+        followingsCount: user.Followings.length,
+        followersCount: user.Followers.length,
+        isFollowed: user.Followers.map((d) => d.id).includes(currentUser.id),
+        isSelf: Boolean(user.id === currentUser.id)
       })
+      //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
+      const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
+      const topUsers = normalUsers.map(user => ({
+        id: user.FollowingLinks.id,
+        name: user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name,
+        account: user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account,
+        avatar: user.FollowingLinks.avatar,
+        followersCount: user.count,
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
+        isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
+      }))
+      return res.render('tweets', { data, viewUser, currentUser, topUsers })
     })
       .catch(err => console.log(err))
   },
+
+  // //old getTweets
+  // getUserTweets: (req, res) => {
+  //   const currentUser = helpers.getUser(req)
+  //   return Promise.all([
+  //     Tweet.findAll({
+  //       where: { UserId: req.params.user_id },
+  //       include: [
+  //         { model: Like, include: [User] },
+  //         { model: Reply, include: [User] },
+  //       ],
+  //       order: [['createdAt', 'DESC']]
+  //     }),
+  //     User.findAll({
+  //       where: { role: { [Op.ne]: 'admin' } },
+  //       include: [
+  //         { model: Tweet },
+  //         { model: User, as: 'Followers' },
+  //         { model: User, as: 'Followings' }
+  //       ]
+  //     })
+  //   ]).then(([tweets, users]) => {
+  //     //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
+  //     const data = tweets.map(r => ({
+  //       ...r.dataValues,
+  //       isLiked: r.dataValues.Likes.map(d => d.UserId).includes(currentUser.id)
+  //     }))
+  //     //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
+  //     const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+  //     const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
+  //     //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
+  //     const allUsers = users.map(user => ({
+  //       ...user.dataValues,
+  //       FollowerCount: user.Followers.length,
+  //       myself: Boolean(user.id === currentUser.id),
+  //       isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+  //     }))
+  //     const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+  //     return res.render('tweets', {
+  //       data,
+  //       viewUser: viewUser[0].toJSON(),
+  //       currentUser,
+  //       isFollowed,
+  //       topUsers
+  //     })
+  //   })
+  //     .catch(err => console.log(err))
+  // },
 
   getUserReplied: (req, res) => {
     const currentUser = helpers.getUser(req)
@@ -188,33 +257,58 @@ const userController = {
         order: [['createdAt', 'DESC']],
         raw: true, nest: true
       }),
-      User.findAll({
-        where: { role: { [Op.ne]: 'admin' } },
+      User.findOne({
+        where: { id: req.params.user_id },
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      })
-    ]).then(([replies, users]) => {
-      //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
-      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
-      //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
-      const allUsers = users.map(user => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        myself: Boolean(user.id === currentUser.id),
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+      }),
+      Followship.findAll({
+        attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
+        include: [
+          { model: User, as: 'FollowingLinks' } //self-referential super-many-to-many
+        ],
+        group: ['followingId'],
+        order: [[sequelize.col('count'), 'DESC']],
+        limit: 10, raw: true, nest: true
+      }),
+    ]).then(([replies, user, users]) => {
+      //整理某使用者的所有回覆
+      const data = replies.map(reply => ({
+        comment: reply.comment,
+        tweetId: reply.TweetId,
+        repliedAt: reply.createdAt,
+        repliedByAccount: reply.Tweet.User.account,
+        repliedByAccountId: reply.Tweet.User.id
       }))
-      const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-      return res.render('replied', {
-        data: replies,
-        viewUser: viewUser[0].toJSON(),
-        currentUser,
-        isFollowed,
-        topUsers
+      //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
+      const viewUser = Object.assign({}, {
+        id: user.id,
+        name: user.name,
+        account: user.account,
+        introduction: user.introduction,
+        cover: user.cover,
+        avatar: user.avatar,
+        tweetsCount: user.Tweets.length,
+        followingsCount: user.Followings.length,
+        followersCount: user.Followers.length,
+        isFollowed: user.Followers.map((d) => d.id).includes(currentUser.id),
+        isSelf: Boolean(user.id === currentUser.id)
       })
+      //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
+      const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
+      const topUsers = normalUsers.map(user => ({
+        id: user.FollowingLinks.id,
+        name: user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name,
+        account: user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account,
+        avatar: user.FollowingLinks.avatar,
+        followersCount: user.count,
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
+        isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
+      }))
+      return res.render('replied', { data, viewUser, currentUser, topUsers })
     })
   },
 
@@ -228,39 +322,63 @@ const userController = {
         ],
         order: [['createdAt', 'DESC']]
       }),
-      User.findAll({
-        where: { role: { [Op.ne]: 'admin' } },
+      User.findOne({
+        where: { id: req.params.user_id },
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
-      })
-    ]).then(([likes, users]) => {
+      }),
+      Followship.findAll({
+        attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
+        include: [
+          { model: User, as: 'FollowingLinks' } //self-referential super-many-to-many
+        ],
+        group: ['followingId'],
+        order: [[sequelize.col('count'), 'DESC']],
+        limit: 10, raw: true, nest: true
+      }),
+    ]).then(([likes, user, users]) => {
       //整理某使用者所有讚過的推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
-      const data = likes.map(r => ({
-        ...r.Tweet.toJSON(),
-        likedAt: r.createdAt,
-        isLiked: req.user.LikedTweets.map(d => d.TweetId).includes(r.id)
+      const data = likes.map(like => ({
+        id: like.Tweet.User.id,
+        name: like.Tweet.User.name,
+        account: like.Tweet.User.account,
+        avatar: like.Tweet.User.avatar,
+        likedAt: like.createdAt,
+        tweetId: like.TweetId,
+        tweetDescription: like.Tweet.description,
+        tweetReplyCount: like.Tweet.Replies.length,
+        tweetLikeCount: like.Tweet.Likes.length,
+        isLiked: like.Tweet.Likes.map(d => d.UserId).includes(currentUser.id)
       }))
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
-      const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
-      const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
-      //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
-      const allUsers = users.map(user => ({
-        ...user.dataValues,
-        FollowerCount: user.Followers.length,
-        myself: Boolean(user.id === currentUser.id),
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
-      }))
-      const topUsers = allUsers.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-      return res.render('likes', {
-        data,
-        viewUser: viewUser[0].toJSON(),
-        currentUser,
-        isFollowed,
-        topUsers
+      const viewUser = Object.assign({}, {
+        id: user.id,
+        name: user.name,
+        account: user.account,
+        introduction: user.introduction,
+        cover: user.cover,
+        avatar: user.avatar,
+        tweetsCount: user.Tweets.length,
+        followingsCount: user.Followings.length,
+        followersCount: user.Followers.length,
+        isFollowed: user.Followers.map((d) => d.id).includes(currentUser.id),
+        isSelf: Boolean(user.id === currentUser.id)
       })
+      //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
+      const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
+      const topUsers = normalUsers.map(user => ({
+        id: user.FollowingLinks.id,
+        name: user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name,
+        account: user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account,
+        avatar: user.FollowingLinks.avatar,
+        followersCount: user.count,
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
+        isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
+      }))
+      return res.render('likes', { data, viewUser, currentUser, topUsers })
     })
       .catch(err => console.log(err))
   },
