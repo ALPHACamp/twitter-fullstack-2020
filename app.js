@@ -14,9 +14,10 @@ app.engine(".hbs", handlebars({ extname: ".hbs", defaultLayout: "main" }));
 app.set("view engine", ".hbs");
 
 app.use(express.static("public"));
-
-app.listen(port, () => console.log(`Example app listening at ${host}:${port}`));
-
-require("./routes")(app);
+const routes = require("./routes");
+app.use(routes);
+app.listen(port, () =>
+  console.log(`simple-twitter app listening at ${host}:${port}`)
+);
 
 module.exports = app;
