@@ -52,16 +52,16 @@ module.exports = (app, passport) => {
   // //使用者所有喜歡貼文
   app.get('/users/:user_id/likes', authenticated, userController.getUserLikes)
   // //使用者所有回覆
-  app.get('/users/:user_id/replied', userController.getUserReplied)
+  app.get('/users/:user_id/replied', authenticated, userController.getUserReplied)
   // //使用者追蹤清單
-  // router.get('/users/:user_id/followings', userController.getUserFollowings)
+  app.get('/users/:user_id/followings', authenticated, userController.getUserFollowings)
   // //使用者粉絲清單(被追蹤)
-  // router.get('/users/:user_id/followers', userController.getUserFollowers)
+  app.get('/users/:user_id/followers', authenticated, userController.getUserFollowers)
 
   // //追蹤使用者 (row 45)
-  // router.post('/followships/:user_id', userController.addFollowing)
+  app.post('/followships/:user_id', authenticated, userController.addFollowing)
   // //取消追蹤使用者 (row 46)
-  // router.delete('/followships/:user_id', userController.removeFollowing)
+  app.delete('/followships/:user_id', authenticated, userController.removeFollowing)
 
   TODO:// 貼文相關
   //顯示所有貼文(要改api)
@@ -119,7 +119,7 @@ module.exports = (app, passport) => {
   //-----------名稱勿再改動------------
   // //使用者編輯帳號設定(setting) (row 21-22)
   app.get('/users/:user_id/setting', authenticated, userController.getUserSetting)
-  app.put('/users/:user_id/setting', authenticated ,userController.putUserSetting)
+  app.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
 
   // //使用者編輯個人資料(edit) (row 22-23)
   app.put('/users/:user_id/edit', authenticated, multipleUpload, userController.putUserEdit)

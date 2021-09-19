@@ -7,7 +7,9 @@ module.exports = (sequelize, DataTypes) => {
 
   }, {});
   Followship.associate = function (models) {
-
+    //self-referential super-many-to-many
+    Followship.belongsTo(models.User, { foreignKey: 'followerId', as: 'FollowerLinks' });
+    Followship.belongsTo(models.User, { foreignKey: 'followingId', as: 'FollowingLinks' });
   };
   return Followship;
 };

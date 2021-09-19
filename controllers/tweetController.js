@@ -31,7 +31,7 @@ const tweetController = {
       // type: sequelize.QueryTypes.SELECT
       // }),
       User.findAll({
-        include:[{model: User, as: 'Followers'}],
+        include: [{ model: User, as: 'Followers' }],
       })
     ]) 
     .then(([tweets,users]) => {
@@ -57,12 +57,11 @@ const tweetController = {
       //排除admin並限制前10名
       const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0,10)  
 
-      //區分已followed和未followed+排序
       const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
       const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-      console.log(tweets[0])
+      // console.log(tweets[0])
       // console.log(data[0])
       return res.render('index', {
         tweets:tweets,
@@ -71,7 +70,6 @@ const tweetController = {
         currentUser: helpers.getUser(req)
       })
     })
-    
   },
 
   //新增一則貼文(要改api)
@@ -92,8 +90,8 @@ const tweetController = {
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
-      include: [User, 
-        { model: Like, include: [User] }, 
+      include: [User,
+        { model: Like, include: [User] },
         { model: Reply, include: [User] }
       ]
     })
@@ -158,6 +156,8 @@ const tweetController = {
           })
       })
   }
+
 }
+
 
 module.exports = tweetController

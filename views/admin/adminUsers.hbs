@@ -43,9 +43,9 @@
       <div class="container">
         <div class="row" id="data-panel">
 
-          {{!-- 
+          {{!--
           TODO:按照推文數排序 --}}
-          {{#each user}}
+          {{#each users}}
           {{!-- 卡片開始 --}}
           <div class="card" id="601">
             <img src="{{this.cover}}" alt="" class="show-modal card-img-top">
@@ -69,21 +69,21 @@
               {{!--
               TODO:留言數/讚數/追蹤者/追隨者待補 --}}
               <div class="like-reply">
-                <i class="far fa-comment"></i> 留言數
-                <i class="far fa-heart ml-2"></i> 讚數
+                <i class="far fa-comment"></i> {{this.replyCount}}
+                <i class="far fa-heart ml-2"></i> {{this.likeCount}}
               </div>
 
               <div class="follow d-flex">
                 <div class="followship d-flex">
                   <div class="follow-title">
-                    34個
+                    {{this.followerCount}}個
                   </div>
                   <div class="follow-body">
                     跟隨中
                   </div>
 
                   <div class="follow-title ml-2">
-                    34位
+                    {{this.followingCount}}位
                   </div>
                   <div class="follow-body">
                     跟隨者

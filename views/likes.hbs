@@ -47,8 +47,6 @@
       </div>
     </div>
 
-
-    {{!-- <div class="headerDivider"></div> --}}
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title d-flex">
@@ -81,186 +79,247 @@
         <div class="avatar">
           <img src="{{viewUser.avatar}}" alt="">
         </div>
-        <div class="edit-button">
 
-          {{#ifCond user.id viewUser.id}}
+
+        {{#if viewUser.isSelf}}
+        <div class="edit-button">
           <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal"
             data-target="#edit-user">編輯個人資料</button>
           {{else}}
-          {{#if this.isFollowed }}
-          <div class="other-user-icon">
-            <div class="mail"><i class="far fa-envelope"></i></div>
-            <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;"><button
-                type="submit" class="btn follow-button">正在跟隨</button></form>
-          </div>
-          {{else}}
-          <div class="other-user-icon">
-            <div class="mail"><i class="far fa-envelope"></i></div>
-            <div class="notification"><i class="far fa-bell"></i></div>
-            <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button type="submit"
-                class="btn unfollow-button"> 跟隨 </button></form>
-          </div>
-
-
-
-          {{/if}}
-          {{/ifCond}}
-
-        </div>
-
-      </div>
-
-      <div class="text-info-tweets">
-
-        <div class="info-text">
-          <div class="name"> {{viewUser.name}}</div>
-          <div class="account">@{{viewUser.account}}</div>
-          <div class="introduction">{{viewUser.introduction}}</div>
-          <div class="follow d-flex">
-            <div class="followship d-flex m-0">
-              <div class="follow-title">
-                {{viewUser.Followings.length}}個
-              </div>
-              <div class="follow-body">
-                跟隨中
-              </div>
-
-              <div class="follow-title ml-2">
-                {{viewUser.Followers.length}}位
-              </div>
-              <div class="follow-body">
-                跟隨者
-              </div>
+          {{#if viewUser.isFollowed }}
+          <div class="edit-button-other">
+            <div class="other-user-icon">
+              <div class="mail"><i class="far fa-envelope"></i></div>
+              <div class="notification"><i class="far fa-bell"></i></div>
+              <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+                <button type="submit" class="btn follow-button">正在跟隨</button>
+              </form>
             </div>
-
-          </div>
-
-
-        </div>
-
-        {{!-- 個人資訊結束 --}}
-
-        {{!-- 推文/推文與回覆/喜歡的內容區塊 --}}
-        {{!-- 推文區開始 --}}
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link" href="/users/{{viewUser.id}}/tweets">推文</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/users/{{viewUser.id}}/replied">推文與回覆</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link  active" href="/users/{{viewUser.id}}/likes">喜歡的內容</a>
-          </li>
-        </ul>
-        <br /><br />
-        <div class="user-tweet">
-          {{!-- 貼文開始 --}}
-          {{#each data}}
-          <div class="tweet col-md-12">
-            <div class="d-flex">
-              <div class="mt-2 ml-2 col-md-1" style="padding:0">
-                <img class="user-pic mr-2" src="{{User.avatar}}" alt="">
-              </div>
-
-              <div class="col-md-11">
-                <div class="account-info d-flex" style="flex:auto">
-                  <div class="user-name">{{User.name}}</div>
-                  <div class="account-time ml-2">@{{User.account}}．{{fromNow this.createdAt}}按讚</div>
-                </div>
-
-                <div class="post-text d-flex" style="flex:auto">
-                  {{this.description}}
-                </div>
-
-                <div class="reply-like d-flex mt-2">
-                  <div><i class="far fa-comment mr-2"></i>{{this.Replies.length}}</div>
-                  <div class="ml-4 like"><i class="far fa-heart mr-2"></i>{{this.Likes.length}}</div>
-
-                  {{#if isLiked}}
-                  <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
-                    <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
-                  </form>
-                  {{else}}
-                  <form action="/tweets/{{this.id}}/like" method="POST">
-                    <button class="btn" type="submit"><i class="far fa-heart"></i></button>
-                  </form>
-                  {{/if}}
-
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <hr />
-          {{/each}}
-          <hr />
-          {{!-- 貼文結束 --}}
-
-
-
-        </div>
-        {{!-- 推文區結束 --}}
-
-        {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
-      </div>
-
-
-
-    </div>
-    {{!-- <div class="headerDivider"></div> --}}
-    {{!-- 右側欄位 --}}
-    <div class="right-side col-md-3">
-      <div class="popular mt-2" style="padding:auto;">
-        <div class="popular-title mt-2">
-          Popular
-        </div>
-        <ul class="list-group">
-          {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
-          {{!-- 跟隨中使用者開始 --}}
-          {{#each topUsers}}
-          <li class="list-group-item">
-            <div class="d-flex col-md-12" style="padding:0">
-              <div>
-                <img class="user-pic" src="{{this.avatar}}" alt="">
-              </div>
-              <div class="name-account ml-2">
-                <div class="name">{{this.name}}</div>
-                <div class="account">@{{this.account}}</div>
-              </div>
-              <div class="button">
-
-                {{#if this.isFollowed }}
-                <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
-                  <button type="submit" class="btn follow-button">正在跟隨</button>
-                </form>
-                {{else}}
+            {{else}}
+            <div class="edit-button-other">
+              <div class="other-user-icon">
+                <div class="mail"><i class="far fa-envelope"></i></div>
+                <div class="notification"><i class="far fa-bell"></i></div>
                 <form action="/followships/{{viewUser.id}}" method="POST" style="display: contents;"><button
                     type="submit" class="btn unfollow-button"> 跟隨 </button></form>
-                {{/if}}
+              </div>
+              {{/if}}
+              {{/if}}
+            </div>
+          </div>
+
+          <div class="text-info-tweets">
+            <div class="info-text">
+              <div class="name"> {{viewUser.name}}</div>
+              <div class="account">@{{viewUser.account}}</div>
+              <div class="introduction">{{viewUser.introduction}}</div>
+              <div class="follow d-flex">
+
+                <a href="/users/{{viewUser.id}}/followings">
+                  <div class="followship d-flex m-0">
+                    <div class="follow-title">
+                      {{viewUser.followingsCount}}個
+                    </div>
+                    <div class="follow-body">
+                      跟隨中
+                    </div>
+                </a>
+
+                <a href="/users/{{viewUser.id}}/followers">
+                  <div class="follow-title ml-2">
+                    {{viewUser.followersCount}}位
+                  </div>
+                  <div class="follow-body">
+                    跟隨者
+                  </div>
+
+                </a>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+          {{!-- 個人資訊結束 --}}
+
+          {{!-- 推文/推文與回覆/喜歡的內容區塊 --}}
+          {{!-- 推文區開始 --}}
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link" href="/users/{{viewUser.id}}/tweets">推文</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/{{viewUser.id}}/replied">推文與回覆</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link  active" href="/users/{{viewUser.id}}/likes">喜歡的內容</a>
+            </li>
+          </ul>
+          <br /><br />
+
+          <div class="user-tweet">
+            {{!-- 貼文開始 --}}
+            {{#each data}}
+            <div class="tweet col-md-12">
+              <div class="d-flex">
+                <div class="mt-2 ml-2 col-md-1" style="padding:0">
+                  <a href="/users/{{this.id}}/likes" class="text-muted">
+                    <img class="user-pic mr-2" src="{{this.avatar}}" alt="">
+                  </a>
+                </div>
+
+                <div class="col-md-11">
+                  <div class="account-info d-flex" style="flex:auto">
+                    <div class="user-name">{{this.name}}</div>
+                    <div class="account-time ml-2">@{{this.account}}．{{fromNow likedAt}}按讚</div>
+                  </div>
+
+                  <a href="/tweets/{{this.tweetId}}" class="text-muted">
+                    <div class="post-text d-flex" style="flex:auto">
+                      {{this.tweetDescription}}
+                    </div>
+                  </a>
+
+                  <div class="reply-like d-flex mt-2">
+                    <a href="/tweets/{{this.tweetId}}" class="text-muted">
+                      <div><i class="far fa-comment mr-2"></i>{{this.tweetReplyCount}}</div>
+                    </a>
+
+                    {{#if this.isLiked}}
+                    <form action="/tweets/{{this.tweetId}}/like?_method=DELETE" method="POST">
+                      <div class="ml-4 like">
+                        <button type="submit" class="unlike btn">
+                          <i class="fas fa-heart mr-1"></i>
+                        </button>
+                        {{this.tweetLikeCount}}
+                      </div>
+                    </form>
+                    {{else}}
+                    <form action="/tweets/{{this.tweetId}}/like" method="POST">
+                      <div class="ml-4 like">
+                        <button type="submit" class="like btn">
+                          <i class="far fa-heart mr-1"></i>
+                        </button>
+                        {{this.tweetLikeCount}}
+                      </div>
+                    </form>
+
+
+                    {{/if}}
+                  </div>
+                </div>
+
               </div>
             </div>
-          </li>
-          {{/each}}
-          {{!-- 使用者結束 --}}
+            <hr />
+            {{/each}}
+            {{!-- 貼文結束 --}}
 
-        </ul>
+
+
+          </div>
+          {{!-- 推文區結束 --}}
+
+          {{!-- 推文/推文與回覆/喜歡的內容區塊結束 --}}
+        </div>
       </div>
 
 
+      {{!-- 右側欄位 --}}
+      <div class="right-side col-md-3">
+        <div class="popular mt-2" style="padding:auto;">
+          <div class="popular-title mt-2">
+            Popular
+          </div>
+          <ul class="list-group">
+            {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
+            {{!-- 跟隨中使用者開始 --}}
+            {{#each topUsers}}
+            <li class="list-group-item">
+              <div class="d-flex col-md-12" style="padding:0">
+                <div class="popular-user-pic">
+                  <a href="/users/{{this.id}}/tweets" class="text-muted">
+                    <img class="user-pic" src="{{this.avatar}}" alt="">
+                  </a>
+                </div>
+                <div class="name-account">
+                  <div class="name">{{this.name}}</div>
+                  <div class="account">@{{this.account}}</div>
+                </div>
+                <div class="button">
 
+                  {{#if isSelf}}
+                  {{else}}
+                  {{#if isFollowed }}
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                    <button type="submit" class="btn follow-button">正在跟隨</button>
+                  </form>
+                  {{else}}
+                  <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                      class="btn unfollow-button"> 跟隨 </button></form>
+                  {{/if}}
+                  {{/if}}
+                </div>
+              </div>
+            </li>
+            {{/each}}
+            {{!-- 使用者結束 --}}
+
+          </ul>
+        </div>
+
+
+
+      </div>
     </div>
+  </div>
 
+  {{!-- add-tweet Modal --}}
+  <div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
 
+    {{> add-tweet currentUser=viewUser}}
 
   </div>
-</div>
+  {{!-- add-tweet Modal --}}
 
-{{!-- add-tweet Modal --}}
-<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+  {{!-- edit-user Modal --}}
+  <div class="modal fade" id="edit-user" tabindex="-1" role="dialog" aria-labelledby="edit-user" aria-hidden="true">
 
-  {{> add-tweet currentUser=currentUser}}
+    {{> editUser currentUser=currentUser}}
 
-</div>
-{{!-- add-tweet Modal --}}
+  </div>
+  {{!-- edit-user Modal --}}
+
+
+  <script>
+    const name = document.querySelector("#name")
+    const introduction = document.querySelector("#introduction")
+    const saveButton = document.querySelector("#save-button")
+
+    saveButton.addEventListener("click", function check(event) {
+      console.log(event)
+      if (name.value.length < l) {
+        name.classList.add("is-invalid")
+        name.nextElementSibling.innerHTML = "名稱不得為空"
+        event.preventDefault()
+      }
+
+      if (introduction.value.length < l) {
+        introduction.classList.add("is-invalid")
+        introduction.nextElementSibling.innerHTML = "名稱不得為空"
+        event.preventDefault()
+      }
+
+
+      if (name.value.length > 50) {
+        name.classList.add("is-invalid")
+        event.preventDefault()
+      }
+      if (introduction.value.length > 150) {
+        email.classList.add("is-invalid")
+        event.preventDefault()
+      }
+    })
+  </script>
