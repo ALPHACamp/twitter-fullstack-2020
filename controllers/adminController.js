@@ -57,25 +57,24 @@ const adminController = {
     return User.findAll({
       where: { role: { [Op.ne]: 'admin' } },
       include: [
-        { model: Reply },
-        { model: Like },
+        Tweet, Reply, Like,
         { model: User, as: 'Followers' },
         { model: User, as: 'Followings' }
-      ]
+      ],
     }).then(user => {
       const users = user.map(user => ({
-        ...user.dataValues,
         cover: user.cover,
         avatar: user.avatar,
         name: user.name,
         account: user.account,
+        tweetCount: user.Tweets.length,
         replyCount: user.Replies.length,
         likeCount: user.Likes.length,
         followerCount: user.Followers.length,
         followingCount: user.Followings.length
       }))
-      console.log(users)
-      res.render('admin/adminUsers', { users })
+      const usersSorted = users.sort((a, b) => b.tweetCount - a.tweetCount)
+      res.render('admin/adminUsers', { users: usersSorted })
     })
 
   }
