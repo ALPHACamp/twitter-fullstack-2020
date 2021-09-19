@@ -1,6 +1,5 @@
 const db = require('../models')
-const Tweet = db.Tweet
-const User = db.User
+const { Reply, User, Tweet, Like, Followship } = db
 
 const adminController = {
   getPosts: (req, res) => {
@@ -22,8 +21,23 @@ const adminController = {
     })
   },
   getUsers: (req, res) => {
-    return User.findAll({ raw: true }).then(users => {
-      return res.json(users)
+    return User.findAll({
+      include: [
+        Reply, Tweet, Like,
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(users => {
+      const data = users.map(data => ({
+        ...data.dataValues,
+        TweetCount: data.Tweets.length,
+        ReplyCount: data.Replies.length,
+        LikedCount: data.Likes.length,
+        FollowersCount: data.Followers.length,
+        FollowingsCount: data.Followings.length
+      }))
+      data.sort((a, b) => b.TweetCount - a.TweetCount)
+      return res.json(data)
     })
   }
 }
