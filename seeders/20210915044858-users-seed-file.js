@@ -1,14 +1,16 @@
 'use strict';
 const bcrypt = require('bcryptjs')
-
+const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Users', [{
       email: 'root@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: 'root',
+      account: '@root',
+      cover: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
       avatar: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
-      introduction: 'faker.lorem.text().substring(0, 160)',
+      introduction: faker.lorem.text().substring(0, 160),
       role: 'admin',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -17,8 +19,10 @@ module.exports = {
       email: 'user1@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: 'user1',
+      account: '@user1',
+      cover: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
       avatar: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
-      introduction: 'aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat',
+      introduction: faker.lorem.text().substring(0, 160),
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -27,8 +31,10 @@ module.exports = {
       email: 'user2@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: 'user2',
+      account: '@user2',
+      cover: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
       avatar: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
-      introduction: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur',
+      introduction: faker.lorem.text().substring(0, 160),
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -37,8 +43,10 @@ module.exports = {
       email: 'user3@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: 'user3',
+      account: '@user3',
+      cover: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
       avatar: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
-      introduction: ' sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+      introduction: faker.lorem.text().substring(0, 160),
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -47,8 +55,10 @@ module.exports = {
       email: 'user4@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: 'user4',
+      account: '@user4',
+      cover: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
       avatar: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
-      introduction: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque',
+      introduction: faker.lorem.text().substring(0, 160),
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
@@ -57,8 +67,10 @@ module.exports = {
       email: 'user5@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       name: 'user5',
+      account: '@user5',
+      cover: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
       avatar: `https://loremflickr.com/100/100/restaurant,food/?random=${Math.random() * 100}`,
-      introduction: ' ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+      introduction: faker.lorem.text().substring(0, 160),
       role: 'user',
       createdAt: new Date(),
       updatedAt: new Date()
