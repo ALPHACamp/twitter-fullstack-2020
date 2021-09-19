@@ -186,7 +186,7 @@ const userController = {
         account: user.FollowingLinks.account,
         avatar: user.FollowingLinks.avatar,
         followersCount: user.count,
-        isFollowed: currentUser.Followers.map((d) => d.id).includes(user.id),
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
         isSelf: Boolean(user.id === currentUser.id),
       }))
       return res.render('tweets', {
