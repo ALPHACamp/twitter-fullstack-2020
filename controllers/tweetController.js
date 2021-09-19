@@ -1,27 +1,32 @@
 const db = require('../models')
+const moment = require('moment')
+
 const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
 const Like = db.Like
 
 const tweetController = {
-  getTweets: (req, res) => {
+  getPosts: (req, res) => {
     return Tweet.findAll({
-      include: [Reply, { model: User, as: 'LikedUsers' }],
+      include: [Reply, User,
+        { model: User, as: 'LikedUsers' }],
       order: [['createdAt', 'DESC']],
+      limit: 20
     }).then(tweets => {
       const data = tweets.map(data => ({
         ...data.dataValues,
         ReplyCount: data.Replies.length,
         LikedCount: data.LikedUsers.length,
         Replies: data.Replies.sort((a, b) => b.createdAt - a.createdAt),
-        LikedUsers: data.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
+        LikedUsers: data.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt),
+        createdAt: moment(data.createdAt).fromNow()
       }))
-
-      return res.json({ data })
+      // return res.json(data)
+      return res.render("index", { tweets: data });
     })
   },
-  getTweet: (req, res) => {
+  getPost: (req, res) => {
     return Tweet.findByPk(req.params.id, {
       include: [
         { model: User, as: 'LikedUsers' },
