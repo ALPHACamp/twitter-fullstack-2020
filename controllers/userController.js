@@ -62,10 +62,9 @@ const userController = {
         Like
       ],
       where: whereQuery,
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']],
     }).then(result => {
-      console.log(result)
-      const totalTweet = Number(result.count)
+      const totalTweet = result.rows.length
       const data = result.rows.map(r => ({
         ...r.dataValues,
         content: r.dataValues.content,
