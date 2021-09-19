@@ -155,12 +155,12 @@
               </a>
             </div>
             <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}</div>
+              <div class="name mt-3 ms-1 fw-bolder">{{this.name}} <span>{{#if this.isFollowed }} 追隨中 {{/if}}</span></div>
               <div class="account ms-1">{{this.account}}</div>
             </div>
           </div>
           <div class="round m-3">
-            {{#if isFollowing }}
+            {{#if this.isFollowed }}
             <form action="/following/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn orange text-white round">取消跟隨</button>
             </form>
