@@ -5,7 +5,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
-    UserId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    likeCount: DataTypes.INTEGER,
+    replyCount: DataTypes.INTEGER
   }, {})
   Tweet.associate = function (models) {
     // associations can be defined here
