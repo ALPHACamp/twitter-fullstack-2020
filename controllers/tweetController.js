@@ -30,10 +30,9 @@ const tweetController = {
       const topUsers =
         users.rows.map(user => ({
           ...user.dataValues,
-          FollowedCount: user.Followers.length,
           isFollowed: req.user.Followers.map(d => d.id).includes(user.id)
         }))
-          .sort((a, b) => b.FollowedCount - a.FollowedCount)
+          .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
 
       const data = tweets.rows.map(tweet => ({
@@ -45,15 +44,18 @@ const tweetController = {
         userAccount: tweet.User.account,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
       }))
+      // console.log('!~~觀察~~!')
+      // console.log(topUsers)
       User.findAll({
         raw: true,
         nest: true,
         include: [Tweet]
       })
-        .then((user) => {
+        .then(() => {
           return res.render('tweets', {
             tweets: data,
-            users: topUsers
+            users: topUsers,
+            theUser: helpers.getUser(req).id
           })
         })
     })
@@ -115,8 +117,7 @@ const tweetController = {
     //   })
     // console.log(req.params.id)
     try {
-      const tweet = await Tweet.findByPk(
-        req.params.id, {
+      const tweet = await Tweet.findByPk(req.params.id, {
         include: [User]
       })
       return res.render('tweet', { tweet: tweet.toJSON() })
