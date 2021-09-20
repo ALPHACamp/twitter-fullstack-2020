@@ -119,6 +119,8 @@ hr {
 .follower_photo {
   background: #c4c4c4;
   border-radius: 99rem;
+  width: 50px;
+  height: 50px;
 }
 .follower_name_account {
   padding-left: 10px;

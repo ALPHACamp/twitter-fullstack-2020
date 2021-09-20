@@ -2,15 +2,15 @@
   <header class="followers_title">Popular</header>
 
   <div class="followers">
-    {{!-- {{#each user}} --}}
+    {{#each users}}
     <hr>
     <div class="follower">
       <a class="follower_photo_box" href="#">
-        <img class="follower_photo" src="https://picsum.photos/50/50" alt="follower_photo">
+        <img class="follower_photo" src="{{this.avatar}}" alt="follower_photo">
       </a>
       <div class="follower_name_account">
-        <p class="follower_name">Pizza Hut</p>
-        <p class="follower_account">@pizzahut</p>
+        <p class="follower_name">{{this.name}}</p>
+        <p class="follower_account">{{this.account}}</p>
       </div>
       {{!-- {{#if isFollowing}} --}}
       <form class="ms-auto" action="?_method=DELETE" method="POST"><button type="submit"
@@ -21,6 +21,6 @@
           class="unfollow_button">跟隨</button></form> --}}
       {{!-- {{/if}} --}}
     </div>
-    {{!-- {{/each}} --}}
+    {{/each}}
   </div>
 </div>

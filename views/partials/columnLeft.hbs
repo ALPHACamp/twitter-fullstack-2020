@@ -5,7 +5,7 @@
     </div>
   </a>
   <nav class="nav_items">
-    {{!-- {{#if isAdmin}} --}}
+    {{!-- {{#ifCond User.role admin }}
     <div class="navigation">
       <a class="nav_item" href="#">
         <i class="fas fa-home icon_index"></i>推文清單
@@ -14,7 +14,7 @@
         <i class="far fa-user icon_index"></i>使用者列表
       </a>
     </div>
-    {{!-- {{else}}
+    {{else}} --}}
     <div class="navigation">
       <a class="nav_item" href="#">
         <i class="fas fa-home icon_index"></i>首頁
@@ -30,8 +30,8 @@
           <button class="btn_reply">推文</button>
         </div>
       </form>
-    </div> --}}
-    {{!-- {/if} --}}
+    </div> 
+    {{!-- {{/if}} --}}
     <div class="logout_item">
       <a class="nav_item" href="#">
         <i class="bi bi-box-arrow-in-left icon_index"></i>登出

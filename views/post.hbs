@@ -11,20 +11,22 @@
     <div class="mainpost-wrapper d-f flex-column">
     {{>upperCenter postChoice=true}}
     <!--start::comment-->
+    {{# each tweet.Replies}}
     <div class="col-12 flex-direction-column posts-container">
       <div class="post">
         <div class="post-card1">
           <div class="avatar profile-avatar"><img
-              src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+              src="{{this.User.avatar}}"
               alt="avatar-img" /></div>
         </div>
         <div class="post-card2">
-          <h5 class="d-inline-block profile-nav-header post-title">Post Title&nbsp;<span class="post-sub-info">@Apple &#x2027; 5minutes</span></h5>
-          <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p><span class="post-sub-info">回覆 <span class="orange-text">@Apple</span></span>
-          <p>Great~</p>
+          <h5 class="d-inline-block profile-nav-header post-title">{{this.User.name}}&nbsp;<span class="post-sub-info">{{this.User.account}} &#x2027; {{createdTimeByReply}}</span></h5>
+          <span class="post-sub-info">回覆 <span class="orange-text">{{../tweet.User.account}}</span></span>
+          <p>{{this.comment}}~</p>
         </div>
       </div>
     </div>
+    {{/each}}
     <!--start::comment-->
   </div>
   <div class="col">
