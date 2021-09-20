@@ -130,6 +130,7 @@ const userController = {
     }
   },
 
+  // //new get Tweets
   getUserTweets: (req, res) => {
     const currentUser = helpers.getUser(req)
     return Promise.all([
@@ -179,7 +180,7 @@ const userController = {
         tweetsCount: user.Tweets.length,
         followingsCount: user.Followings.length,
         followersCount: user.Followers.length,
-        isFollowed: user.Followers.map((d) => d.id).includes(currentUser.id),
+        isFollowed: req.user.Followings.map((d) => d.id).includes(user.id),
         isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
@@ -281,7 +282,7 @@ const userController = {
         tweetId: reply.TweetId,
         repliedAt: reply.createdAt,
         repliedByAccount: reply.Tweet.User.account,
-        repliedByAccountId: reply.Tweet.User.id
+        repliedById: reply.Tweet.User.id
       }))
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
       const viewUser = Object.assign({}, {
@@ -517,22 +518,29 @@ const userController = {
   },
 
   removeFollowing: (req, res) => {
-    return Followship.findOne({
+    return Followship.destroy({
       where: {
         followerId: req.user.id,
         followingId: req.params.user_id
       }
-    })
-      .then(followship => {
-        followship.destroy()
-          .then(() => {
-            return res.redirect('back')
-          })
+    }).then(() => {
+        return res.redirect('back')
       })
 
+    // return Followship.findOne({
+    //   where: {
+    //     followerId: req.user.id,
+    //     followingId: req.params.user_id
+    //   }
+    // })
+    //   .then(followship => {
+    //     console.log('------------')
+    //     followship.destroy()
+    //       .then(() => {
+    //         return res.redirect('back')
+    //       })
+    //   })
   }
-
-
 }
 
 
