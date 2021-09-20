@@ -1,0 +1,207 @@
+.sign-button {
+
+cursor: pointer;
+width: 420px;
+height: 50px;
+background: #FF6600;
+border-radius: 70px;
+border-color: #FF6600;
+}
+
+.text {
+  /* 註冊 */
+color: #FFFFFF;
+}
+
+.left-zone-items {
+font-weight: bolder;
+color:#000000;
+font-size: large;
+}
+
+.left-zone-btn {
+  cursor: pointer;
+  width: 70%;
+  height: 50px;
+  max-width: 200px;
+  background: #FF6600;
+  border: 1px solid #FF6600;
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: large;
+  border-radius: 50px;
+}
+
+.right-zone {
+  color: #000000;
+  font-weight: bold;
+}
+
+.list-group .right-zone-header {
+  background-color:	#F5F5F5 ;
+  border-top: 1px solid #F5F5F5;
+  border-right: 1px solid #F5F5F5;
+  border-left: 1px solid #F5F5F5;
+  border-radius: 20px 20px 0 0 !important ;
+}
+
+.list-group .right-zone-body{
+  border-right: 1px solid #F5F5F5;
+  border-left: 1px solid #F5F5F5;
+  background-color:	#F5F5F5;
+}
+
+.list-group .right-zone-footer {
+  background-color:	#F5F5F5;
+  border-bottom: 1px solid #F5F5F5;
+  border-right: 1px solid #F5F5F5;
+  border-left: 1px solid #F5F5F5;
+  border-radius: 0 0 20px 20px !important;
+
+}
+
+.logout {
+  color:#000000;
+  font-weight: bold;
+  font-size: large;
+}
+
+.followship-following-btn{
+  cursor: pointer;
+width: 90px;
+height: 30px;
+background: #FF6600;
+border-radius: 50px;
+border: 1px solid #FF6600;
+color: #FFFFFF;
+font-weight:bold;
+}
+
+.followship-follower-btn {
+  cursor: pointer;
+  width: 60px;
+  height: 30px;
+  border: 1px solid#FF6600;
+  border-radius: 50px;
+  background: #FFFFFF;
+  color: #FF6600;
+  font-weight:bold;
+}
+
+.following-follower, .follower-following, .followship-tweetsCount {
+  color: 	#7B7B7B;
+  font-weight:bold;
+}
+
+.user-header .user-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.user-header .user-avatar {
+  width: 140px;
+  height:140px;
+  border-radius: 50%;
+  position: absolute;
+  top: 175px;
+  left: 5%;
+  border: 5px solid #FFFFFF;
+}
+
+.user-edit-btn {
+  cursor: pointer;
+  border-radius: 50px;
+  width: 120px;
+  height: 45px;
+  background-color: #FFFFFF;
+  color: #FF6600;
+  border: 2px solid#FF6600;
+  font-weight: bold;
+}
+
+.tweets-index {
+  width: 600px;
+  height: 55px;
+  left: 378px;
+  top: -1px;
+  background: #FFFFFF;
+  box-sizing: border-box; 
+  font-weight:bold;
+  font-size:18px;
+  color:#1C1C1C;
+}
+
+.tweets-description {
+  background: #FFFFFF;
+  border: 0px solid #E6ECF0;
+  box-sizing: border-box;
+  color:#9197A3;
+  font-family: Noto Sans TC;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  padding-right: 20px;
+}
+
+.tweets-user-account {
+  color:#6E7783;
+  font-size:14px;
+}
+.tweets-reply-button {
+  background: none;
+  border: none;
+  color: #7B7B7B;
+}
+.tweets-like-button {
+  background: none;
+  border: none;
+  color:#FF0088;
+}
+
+.tweets-unlike-button {
+  background: none;
+  border: none;
+  color:#7B7B7B;
+}
+
+.tweets-avatar {
+  width: 50px;
+  height: 50px;
+  background: #C4C4C4;
+}
+
+.line {
+  background: #E6ECF0;
+  height: 1px;
+  width: 100%;
+  left: 0px;
+  top: 135px;
+  border-radius: 0px;
+}
+
+.tweets-button {
+
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 450;
+  font-size: 18px;
+  line-height: 18px;
+  color: #FFFFFF;
+
+}
+
+.text-main {
+  background: #FFFFFF;
+  border: 1px solid #E6ECF0;
+  box-sizing: border-box;
+}
+
+.user-name {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  color: #1C1C1C;
+}

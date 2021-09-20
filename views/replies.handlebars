@@ -1,0 +1,115 @@
+<div class="row mt-3">
+
+  <div class="col-md-3 pl-0">
+
+    {{> left}}
+
+  </div>
+
+  <div class="col-md-6 px-3 border-left border-right">
+
+    {{> message}}
+
+    <div class="row ml-1 align-items-center">
+      <i class="fas fa-arrow-left fa-lg"></i>
+      <div class="ml-5">
+        <h4 class="m-0 font-weight-bold">{{users.dataValues.name}}</h4>
+        <p class="followship-tweetsCount m-0">{{users.Tweets.length}}推文</p>
+      </div>
+    </div>
+
+    <div class="user-header mt-1">
+      <div class="row">
+        <img src="{{users.dataValues.cover}}" alt="user-cover" class="user-cover img-fluid">
+        <img src="{{users.dataValues.avatar}}" alt="user-avatar" class="user-avatar" style="width: 140px; height:
+          140px;">
+      </div>
+      <div class="row justify-content-end">
+        {{#if checkUser}}
+        <!-- Button trigger modal -->
+        <button type="button" class="user-edit-btn m-3" data-toggle="modal" data-target="#exampleModalCenter"> 編輯個人資料
+        </button>
+
+
+        {{else}}
+        <div style="height:78px;">&emsp;</div>
+        {{/if}}
+      </div>
+      <div class="row">
+        <div class="col">
+          <h4 class="user-name m-0 mt-1">{{users.dataValues.name}}</h4>
+          <p class="user-account mb-2" style="color:#7B7B7B">{{users.dataValues.account}}</p>
+          <p class="user-introduction">{{users.dataValues.introduction}}</p>
+          <div class="row pl-3">
+            <a class="user-followings font-weight-bold" href="/users/{{users.dataValues.id}}/following"
+              style="text-decoration: none; color:black">
+              {{users.dataValues.Followings.length}}個</a>
+            <p style="color:#7B7B7B">跟隨中</p>
+            <a class="user-folowers ml-3 font-weight-bold" href="/users/{{users.dataValues.id}}/follower"
+              style="text-decoration: none; color:black">{{users.dataValues.Followers.length}}位</a>
+            <p style="color:#7B7B7B">跟隨者</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row border-bottom">
+      <a href="/users/{{users.dataValues.id}}" style="text-decoration: none">
+        <h6 class="follower-following m-0 px-4 py-3 font-weight-bold">&emsp;推文&emsp;</h6>
+      </a>
+      <a href="/users/{{users.dataValues.id}}/replies" style="text-decoration: none">
+        <h6 class="follower-follower m-0 px-4 py-3 font-weight-bold"
+          style="color:#FF6600;border-bottom:2px solid #FF6600;">推文與回覆</h6>
+      </a>
+      <a href="/users/{{users.dataValues.id}}/likes" style="text-decoration: none">
+        <h6 class="follower-following m-0 px-4 py-3 font-weight-bold">喜歡的內容</h6>
+      </a>
+    </div>
+
+    {{#each tweetsAndRepliesList}}
+    <div class="row justify-content-between">
+      <div class="row col-11">
+        <div class="avatar mt-2 ml-4">
+          <img src="{{this.User.dataValues.avatar}}" alt=" image" class="border rounded-circle"
+            style="width: 60px; height: 60px">
+        </div>
+        <div class="information d-flex flex-column mt-2 col">
+          <div class="d-flex">
+            <div class="name" name="name">
+              <a><strong>{{this.User.dataValues.name}}&ensp;</strong></a>
+            </div>
+            <div class="account" name="account">
+              <a>{{this.User.dataValues.account}} </a>
+            </div>
+            <div class="createdAt" name="createdAt">
+              &ensp;·&ensp;{{moment this.dataValues.createdAt}}
+            </div>
+          </div>
+          <div class="description text-wrap" name="description" style="word-break:break-all; word-wrap:break-all;">
+            {{this.dataValues.description}}
+          </div>
+          <div>
+            <i class="far fa-comment" style="color: #7B7B7B">&ensp;{{this.dataValues.Replies.length}}</i>
+            <i class="far fa-heart ml-5" style="color: #7B7B7B">&ensp;{{this.dataValues.Likes.length}}</i>
+          </div>
+        </div>
+      </div>
+      {{!-- <form action="/tweets/{{this.dataValues.id}}?_method=DELETE" method="POST" class="col-1 mr-2">
+        <button type="submit" class="close" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </form> --}}
+    </div>
+    <hr>
+    {{/each}}
+
+  </div>
+
+  <div class="col-md-3">
+
+    {{> right}}
+
+  </div>
+</div>
+
+{{> modal}}

@@ -1,0 +1,88 @@
+<div class="left-zone">
+  <div class="AC-icon">
+    <img src="https://meethub.bnext.com.tw/wp-content/uploads/2019/03/medium_alpha-logo-square-89-300x300.png"
+      style="width:75px">
+  </div>
+
+  </br>
+  </br>
+
+  <div class="home" name="home">
+    <a class="left-zone-items" href="/tweets" style="text-decoration: none"><i class="fas fa-home"></i>&ensp;首頁</a>
+  </div>
+
+  </br>
+  </br>
+
+  <div class="profile" name="profile">
+    <a class="left-zone-items" href="/users/{{user.id}}" style="text-decoration: none"><i
+        class="far fa-user"></i>&ensp;個人資料</a>
+  </div>
+
+  </br>
+  </br>
+
+  <div class="setting" name="setting">
+    <a class="left-zone-items" href="/users/{{user.id}}/setting" style="text-decoration: none"><i
+        class="fas fa-cog"></i>&ensp;設定</a>
+  </div>
+
+  </br>
+  </br>
+
+
+  <button type="button" class="left-zone-btn" data-toggle="modal" data-target="#tweetModal">
+    <span style="color: #FFFFFF;">推文</span>
+  </button>
+  <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="tweet-title btn">推文</div>
+        </div>
+        <div class="modal-title">
+          <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" class="d-flex">
+          <div class="body-avatar d-flex align-items-stretch">
+            <div class="right">
+              <a href="/tweets/{{user.id}}">
+                <img src="{{user.avatar}}" class="rounded-circle mr-3"
+                  style="width: 50px;height: 50px;background: #C4C4C4;">
+              </a>
+            </div>
+
+            <div class="left" class="d-flex">
+              <form method="POST" action="/tweets/{{user.id}}">
+                <textarea name="description" cols="40" rows="10"
+                  style="background: #FFFFFF;border: 0px solid #E6ECF0;box-sizing: border-box;"
+                  placeholder="有什麼新鮮事"></textarea>
+                <button type="submit" class="btn" style="background: #FF6600;border-radius: 100px;">
+                  <span style="color: #FFFFFF;">推文</span></button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+  </br>
+
+
+  <a href="/logout" class="logout" style="text-decoration: none"><i class="fas fa-sign-out-alt"></i>&ensp;LogOut</a>
+
+</div>
