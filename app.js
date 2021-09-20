@@ -21,6 +21,7 @@ app.set('view engine', 'hbs')
 app.use('/upload', express.static(__dirname + '/upload'))
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -38,7 +39,7 @@ app.listen(port, () => console.log(`Example app listening on http://localhost:${
 
 // const routes = require('./routes')
 // app.use(routes)
-require('./routes')(app, passport)
+require('./routes')(app)
 
 
 module.exports = app

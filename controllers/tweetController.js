@@ -14,6 +14,7 @@ const tweetController = {
   //顯示所有貼文
   getTweets: (req, res) => {
     const currentUser = helpers.getUser(req)
+    console.log(req.body)
     return Promise.all([
       Tweet.findAll({
         include: [
@@ -54,7 +55,6 @@ const tweetController = {
           isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
           // isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
         }))
-
         return res.render('index', {
           tweets,
           topUsers,
@@ -132,18 +132,18 @@ const tweetController = {
         // res.redirect(`/tweets/${req.body.TweetId}`)
       })
   },
-  //顯示特定貼文回覆
-  getTweetReplies: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [Reply]
-    })
-      .then(tweet => {
-        return res.render('replyFake', {
-          tweet: tweet.toJSON()
-        })
-      })
+  // //顯示特定貼文回覆
+  // getTweetReplies: (req, res) => {
+  //   return Tweet.findByPk(req.params.id, {
+  //     include: [Reply]
+  //   })
+  //     .then(tweet => {
+  //       return res.render('tweet', {
+  //         tweet: tweet.toJSON()
+  //       })
+  //     })
 
-  },
+  // },
 
   //Like & Unlike
   //喜歡特定貼文
@@ -151,7 +151,7 @@ const tweetController = {
     const currentUserId = helpers.getUser(req).id
     return Like.create({
       UserId: currentUserId,
-      TweetId: req.params.user_id
+      TweetId: req.params.id
     })
       .then((like) => {
         return res.redirect('back')

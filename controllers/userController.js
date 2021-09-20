@@ -55,11 +55,11 @@ const userController = {
 
   getUserSetting: (req, res) => {
     //檢查使用者是否在編輯自己的資料
-    if (req.params.user_id !== String(helpers.getUser(req).id)) {
+    if (req.params.id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
       return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
     }
-    User.findByPk(req.params.user_id)
+    User.findByPk(req.params.id)
       .then(user => {
         return res.render('setting', { currentUser: user.toJSON() })
       })
@@ -68,6 +68,7 @@ const userController = {
 
   putUserEdit: async (req, res) => {
     const { name, introduction } = req.body
+    console.log(req.body)
     if (!name) {
       req.flash('error_messages', '暱稱不能空白！')
       return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
@@ -80,7 +81,7 @@ const userController = {
     // const file = Object.assign({}, req.files)
     const { files } = req
     const isCoverDelete = req.body.isDelete
-    const user = await User.findByPk(req.params.user_id)
+    const user = await User.findByPk(req.params.id)
 
     // if (files) {
     //files會有[Object: null prototype] {}
@@ -136,7 +137,7 @@ const userController = {
     const currentUser = helpers.getUser(req)
     return Promise.all([
       Tweet.findAll({
-        where: { UserId: req.params.user_id },
+        where: { UserId: req.params.id },
         include: [
           { model: Like, include: [User] },
           { model: Reply, include: [User] },
@@ -144,7 +145,7 @@ const userController = {
         order: [['createdAt', 'DESC']]
       }),
       User.findOne({
-        where: { id: req.params.user_id },
+        where: { id: req.params.id },
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
@@ -205,7 +206,7 @@ const userController = {
   //   const currentUser = helpers.getUser(req)
   //   return Promise.all([
   //     Tweet.findAll({
-  //       where: { UserId: req.params.user_id },
+  //       where: { UserId: req.params.id },
   //       include: [
   //         { model: Like, include: [User] },
   //         { model: Reply, include: [User] },
@@ -227,7 +228,7 @@ const userController = {
   //       isLiked: r.dataValues.Likes.map(d => d.UserId).includes(currentUser.id)
   //     }))
   //     //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
-  //     const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.user_id) })
+  //     const viewUser = users.filter(obj => { return obj.dataValues.id === Number(req.params.id) })
   //     const isFollowed = viewUser[0].Followers.map((d) => d.id).includes(currentUser.id)
   //     //B. 取得所有使用者 & 依 followers 數量排列前 10 的使用者推薦名單
   //     const allUsers = users.map(user => ({
@@ -252,7 +253,7 @@ const userController = {
     const currentUser = helpers.getUser(req)
     return Promise.all([
       Reply.findAll({
-        where: { UserId: req.params.user_id },
+        where: { UserId: req.params.id },
         include: [
           { model: Tweet, include: [User] }
         ],
@@ -260,7 +261,7 @@ const userController = {
         raw: true, nest: true
       }),
       User.findOne({
-        where: { id: req.params.user_id },
+        where: { id: req.params.id },
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
@@ -318,14 +319,14 @@ const userController = {
     const currentUser = helpers.getUser(req)
     return Promise.all([
       Like.findAll({
-        where: { UserId: req.params.user_id },
+        where: { UserId: req.params.id },
         include: [
           { model: Tweet, include: [Reply, Like, User] }
         ],
         order: [['createdAt', 'DESC']]
       }),
       User.findOne({
-        where: { id: req.params.user_id },
+        where: { id: req.params.id },
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
@@ -409,7 +410,7 @@ const userController = {
           req.flash('error_messages', 'email 已被他人使用！')
           return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
         }
-        return User.findByPk(req.params.user_id)
+        return User.findByPk(req.params.id)
           .then((user) => {
             user.update({
               account,
@@ -446,7 +447,7 @@ const userController = {
     const currentUser = helpers.getUser(req)
     return Promise.all([
       User.findOne({
-        where: { id: req.params.user_id },
+        where: { id: req.params.id },
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
@@ -510,7 +511,7 @@ const userController = {
     const currentUser = helpers.getUser(req)
     return Promise.all([
       User.findOne({
-        where: { id: req.params.user_id },
+        where: { id: req.params.id },
         include: [
           { model: Tweet },
           { model: User, as: 'Followers' },
@@ -573,7 +574,7 @@ const userController = {
   addFollowing: async (req, res) => {
     try {
       const followerId = helpers.getUser(req).id
-      const followingId = Number(req.params.user_id)
+      const followingId = Number(req.body.id)
       const user = await User.findByPk(followerId)
       const targetUser = await User.findByPk(followingId)
       const followship = await Followship.findOne({
@@ -588,12 +589,12 @@ const userController = {
 
       if (!user || !targetUser) {
         req.flash('error_messages', '無效使用者')
-        return res.status(400).redirect('back')
+        return res.status(400).redirect('/tweets')
       }
 
       if (followerId === followingId) {
         req.flash('error_messages', '無法追蹤自己')
-        return res.status(400).redirect('back')
+        return res.status(400).redirect('/tweets')
       }
 
       if (followship) {
@@ -605,6 +606,7 @@ const userController = {
           followingId
         })
         req.flash('success_messages', '成功追蹤')
+        console.log(req.body)
         return res.status(200).redirect('back')
       }
     }
@@ -618,7 +620,7 @@ const userController = {
     return Followship.destroy({
       where: {
         followerId: currentUserId,
-        followingId: req.params.user_id
+        followingId: req.params.id
       }
     }).then(() => {
       return res.redirect('back')
@@ -627,7 +629,7 @@ const userController = {
     // return Followship.findOne({
     //   where: {
     //     followerId: req.user.id,
-    //     followingId: req.params.user_id
+    //     followingId: req.params.id
     //   }
     // })
     //   .then(followship => {

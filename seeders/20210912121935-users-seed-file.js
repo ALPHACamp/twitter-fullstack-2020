@@ -17,7 +17,19 @@ module.exports = {
       cover: 'https://i.pinimg.com/originals/59/35/5f/59355f751c1e3698cc6360b1a7390094.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
-    })
+    },{
+      account: 'Isai64',
+      email: '64@example.com',
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      role: 'normal',
+      name: 'testuser',
+      introduction: 'Hello there! I\'m root. There will come a time when you believe everything is finished. That will be the beginning.',
+      avatar: 'https://thumbs.dreamstime.com/b/admin-sign-laptop-icon-stock-vector-166205404.jpg',
+      cover: 'https://i.pinimg.com/originals/59/35/5f/59355f751c1e3698cc6360b1a7390094.jpg',
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }
+    )
     
     while (amount--) {
       data.push({
