@@ -34,6 +34,7 @@ module.exports = (app, passport) => {
   app.delete('/like/:tweetId', authenticated, userController.removeLike)
 
   app.get('/user/self', authenticated, userController.getUserSelf)
+  app.get('/user/self/reply', authenticated, userController.getUserSelfReply)
   app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
 

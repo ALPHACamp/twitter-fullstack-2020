@@ -68,9 +68,26 @@ const userController = {
       include: [User, Reply],
       order: [['createdAt', 'DESC']]
     })
-    console.log(tweets)
     return res.render('userSelf',{ tweets })
   },
+
+  getUserSelfReply: async (req ,res) =>{
+    const currentUser = helpers.getUser(req)
+    const replies = await Reply.findAll({
+      raw: true,
+      nest: true,
+      where: {UserId:currentUser.id},
+      include: [User,{model: Tweet, include: [User]}],
+      order: [['createdAt', 'DESC']]
+    })
+    const tweets = await Tweet.findAll({
+      where: {UserId:currentUser.id},
+      include: [User, Reply],
+      order: [['createdAt', 'DESC']]
+    })
+    return res.render('userSelfReply',{replies, tweets})
+  },
+
   getSetting:(req, res)=>{
     return res.render('setting')
   },
