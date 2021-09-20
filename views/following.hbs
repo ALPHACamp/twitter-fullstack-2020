@@ -9,7 +9,7 @@
         <a href="#"><i class="fas fa-arrow-left me-2 mb-3" style="color: #1C1C1C;"></i></a>
       </div>
       <div class="p-2">
-        <div class="home-word">John Doe</div>
+        <div class="home-word">{{userself.name}}</div>
         <div class="count">25推文</div>
       </div>
     </div>
@@ -40,9 +40,9 @@
             <div class="follow-name">{{this.name}}</div>
             <div class="follow-account m-0">@{{this.account}}</div>
           </div>
-          <div class="follow-btn">
+          <div class="follow-btn ">
             <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="rounded-pill fw-bolder m-2" style="width:90px; height:25px; border:none">
+              <button type="submit" class="rounded-pill fw-bolder m-2 common-button" style="width:90px; height:25px; border:none">
                 正在跟隨
               </button>
             </form>

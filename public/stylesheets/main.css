@@ -28,6 +28,19 @@ p {
   color: #FFFFFF!important;
 }
 
+.unfollow-button{
+  margin: auto;
+  color: #FF6600!important;
+  border-color:#FF6600;
+}
+
+.unfollow-button-follower{
+  color: #FF6600!important;
+  border-color:#FF6600;
+  background-color: #FFFFFF!important;
+  line-height: 12px;
+}
+
 .for-center{
   width: 90%;
 }
@@ -228,6 +241,9 @@ max-width: 600px;
 } 
 
 .tweet-followfhip .follow-btn{
+
+  
+ 
 Font-family: Noto Sans TC;
 font-weight: 700;
 Font-style:normal;
@@ -235,7 +251,8 @@ size:15px;
 line-height :15px;
 }
 
-/* tweet modal區 */
+/*====================== tweet modal區 ======================*/
+
 .tweet-modal-content{
   border-radius: 14px;
   width: 600px;
@@ -280,7 +297,7 @@ line-height :15px;
   padding-right: 65px;
 }
 
-/* 後台 */
+/*=============== 後台 ===============*/
 .tweets-back,
 .users-back {
   border: 1px solid #e6ecf0;
@@ -359,4 +376,12 @@ line-height :15px;
 
 .users-back .user-com-likes {
   font-size: 15px;
+}
+
+/*=============== 登入、註冊頁面 ===============*/
+
+.signpage {
+  background-color:#F5F8FA;
+  border:none;
+  border-bottom: 2px solid #657786;
 }

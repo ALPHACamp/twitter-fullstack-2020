@@ -18,11 +18,11 @@ const userController = {
     res.render('userReply')
   },
   getLikes: (req, res) => {
-res.render('userLike')
+    res.render('userLike')
   },
   getFollowings: async (req, res) => {
     try {
-      const userself = req.user.id
+      const userself = req.user
       const users = await User.findAll({// 撈出所有 User 與 followers 資料
         order: [['createdAt', 'DESC']],
         include: [
@@ -38,10 +38,10 @@ res.render('userLike')
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id),// 判斷目前登入使用者是否已追蹤該 User 物件
       }))
 
-      helpers.removeUser(user, userself)//移除使用者自身資訊
+      helpers.removeUser(user, userself.id)//移除使用者自身資訊
       user = user.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
-      return res.render('following', { user })
+      return res.render('following', { user, userself })
     }
     catch (err) {
       console.log(err)
@@ -52,7 +52,7 @@ res.render('userLike')
 
   getFollowers: async (req, res) => {
     try {
-      const userself = req.user.id
+      const userself = req.user
       const users = await User.findAll({// 撈出所有 User 與 followers 資料
         include: [
           { model: User, as: 'Followers' },
@@ -67,7 +67,7 @@ res.render('userLike')
         FollowerCount: user.Followers.length,// 計算追蹤者人數
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id),// 判斷目前登入使用者是否已追蹤該 User 物件
       }))
-      helpers.removeUser(user, userself)//移除使用者自身資訊
+      helpers.removeUser(user, userself.id)//移除使用者自身資訊
       user = user.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       const followers = await Followship.findAll({//依追蹤時間排序追蹤者
@@ -94,8 +94,9 @@ res.render('userLike')
         }
       })
 
+
       Promise.all(Data).then(data => {
-        return res.render('follower', { user, data })
+        return res.render('follower', { user, data, userself })
       })
 
     }

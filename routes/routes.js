@@ -24,18 +24,9 @@ const userController = require('../controllers/userController')
 //   res.redirect('/admin/signin')
 // }
 
-const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) return next()
-  return res.redirect('/signin')
-}
 
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role) return next()
-    return res.redirect('/')
-  }
-  return res.redirect('/signin')
-}
+// 如果使用者訪問首頁，就導向 /restaurants 的頁面
+router.get('/', authenticated, (req, res) => {res.redirect('/tweets')})
 
 // tweets相關路由
 router.get('/tweets', authenticated, tweetController.getTweets)
@@ -70,23 +61,27 @@ router.delete('/followships/:userId', authenticated, followshipController.remove
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweets)
 
 
+// tweets
+router.get('/tweets', authenticated, tweetController.getTweets)
+
+
+
+ 
+
 // users
 //以下都還要加userid
-router.get('/users/tweets', userController.getUserTweets) 
-router.get('/users/replies', userController.getReplies) 
-router.get('/users/likes', userController.getLikes)  
+router.get('/users/tweets', authenticated, userController.getUserTweets)
+router.get('/users/replies', authenticated, userController.getReplies)
+router.get('/users/likes', authenticated, userController.getLikes)
 
 
 
 // Admin
-router.get('/admin/signin', adminController.signInPage)
-router.post('/admin/signin', adminController.signIn)
-router.get('/admin/tweets', adminController.getTweets)
-router.get('/admin/users', adminController.getUsers)
+router.get('/admin/signin', authenticatedAdmin, adminController.signInPage)
+router.post('/admin/signin', authenticatedAdmin, adminController.signIn)
+router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
-// 如果使用者訪問首頁，就導向 /restaurants 的頁面
-router.get('/', authenticated, (req, res) => {
-  res.redirect('/tweets')
-})
+
 
 module.exports = router
