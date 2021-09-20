@@ -3,10 +3,31 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const User = db.User
 const Like = db.Like
+const helpers = require('../_helpers')
+
 
 const tweetController = {
   getTweets: async (req, res) => {
     try {
+      const userself = req.user
+      const users = await User.findAll({// 撈出所有 User 與 followers 資料
+        order: [['createdAt', 'DESC']],
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
+        ]
+      })
+      let user = []
+
+      user = users.map(user => ({ // 整理 users 資料
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,// 計算追蹤者人數
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id),// 判斷目前登入使用者是否已追蹤該 User 物件
+      }))
+
+      helpers.removeUser(user, userself.id)//移除使用者自身資訊
+      user = user.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+
       const tweets = await Tweet.findAll({
         include: [
           Reply,
@@ -15,6 +36,9 @@ const tweetController = {
         ],
         order: [['createdAt', 'DESC']]
       })
+
+      //console.log('get tweets:', tweets[1].dataValues.User.name)
+
       const reorganizationTweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         userName: tweet.User.name,
@@ -24,7 +48,9 @@ const tweetController = {
         likeLength: tweet.Likes.length,
         isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
-      return res.render('tweets', { reorganizationTweets })
+
+      //console.log('mapping tweet:', reorganizationTweets)
+      return res.render('tweets', { reorganizationTweets, user, userself })
     } catch(err) {
       console.warn(err)
     }
@@ -55,7 +81,7 @@ const tweetController = {
   postReplies: async (req, res) => {
     try {
       const { comment } = req.body
-      console.log(comment)
+      //console.log(comment)
       if (!comment) {
         req.flash('error_messages', '內文不可空白')
         return res.json({ status: 'error', message: '內文不可空白' })
