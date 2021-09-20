@@ -31,11 +31,11 @@
 
     {{#each data}}
 
-    <div class="following d-flex">
+    <div class=" d-flex">
       <div class="" style="display:flex;justify-content: center;">
         <img src="{{this.user.avatar}}" alt="..." class="rounded-circle m-2" style="width: 50px; height:50px;">
       </div>
-      <div class="col-md-10" style="padding-left: 0px; width: 530px;">
+      <div class="col-md-10 " style="padding-left: 0px; width: 530px;">
         <div style="display: flex; justify-content:space-between">
           <div>
             <div class="follow-name">{{this.user.name}}</div>
@@ -49,7 +49,7 @@
           </form>
           {{else}}
           <form action="/followships/{{this.user.id}}" method="POST">
-            <button type="submit" class="rounded-pill fw-bolder m-2 common-button" style="width:90px; height:25px; border:none">
+            <button type="submit" class="btn rounded-pill fw-bolder m-2 unfollow-button-follower " style="width:70px; height:25px;">
               跟隨
             </button>
           </form>

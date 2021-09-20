@@ -28,6 +28,19 @@ p {
   color: #FFFFFF!important;
 }
 
+.unfollow-button{
+  margin: auto;
+  color: #FF6600!important;
+  border-color:#FF6600;
+}
+
+.unfollow-button-follower{
+  color: #FF6600!important;
+  border-color:#FF6600;
+  background-color: #FFFFFF!important;
+  line-height: 12px;
+}
+
 .for-center{
   width: 90%;
 }
