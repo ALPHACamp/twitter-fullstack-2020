@@ -347,7 +347,8 @@ line-height :15px;
   margin-bottom: 10px;
 }
 
-.users-back .cover-container {
+.users-back .cover-container,
+.users-back  .card-cover-img{
   height: 140px;
   background: #c4c4c4;
   border-top-right-radius: 10px;

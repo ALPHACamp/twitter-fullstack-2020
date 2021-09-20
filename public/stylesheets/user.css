@@ -130,6 +130,10 @@
   opacity: 50%;
 }
 
+.user-modal-content .upload-icon {
+  cursor: pointer;
+}
+
 .user-modal-content .user-info-block {
   height: 300px;
   padding: 0 10px 10px;
