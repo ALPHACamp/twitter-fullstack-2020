@@ -2,8 +2,7 @@ let routes = require('./routes')
 let apis = require('./apis')
 
 
-module.exports = (app, passport) => {
+module.exports = (app) => {
   app.use('/', routes)
-  app.use('/api', apis);
-
+  app.use('/api', apis)
 }

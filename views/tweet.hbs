@@ -68,55 +68,7 @@
 
 
 <!-- tweet reply Modal -->
-<div class="modal fade" id="tweetReplyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content tweet-modal-content">
-      <div class="tweet-modal-head">
-        <button type="button" class="btn-close tweet-modal-close-btn" data-bs-dismiss="modal"
-          aria-label="Close"></button>
-      </div>
-      <div class="tweets-article reply-modal d-flex">
-        <div class="" id="tweet-reply-modal-avatar">
-          <a href="/users/{{tweet.UserId}}/tweets">
-            <img class="rounded-circle" src="{{tweet.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
-          </a>
-        </div>
-        <div class="d-flex flex-column tweet-article">
-          <div id="tweet-reply-modal-name">
-            <a href="/users/{{tweet.UserId}}/tweets">
-              <span class="name">{{tweet.User.name}}</span>
-              <span class="account">&nbsp;{{tweet.User.account}}</span>
-            </a>
-            <span class="time"><b>•</b>&nbsp;{{moment tweet.createdAt}}</span>
-          </div>
-          <p class="content" id="tweet-reply-modal-description">{{tweet.description}}</p>
-          <div class="mt-2" id="tweet-reply-modal-account">
-            <span class="reply-to">回覆給</span>
-            <span class="reply-account">&nbsp;{{tweet.User.account}}</span>
-          </div>
-        </div>
-      </div>
-      <div class="tweet-modal-body d-flex">
-        <div class="tweet-modal-img">
-          <img class="rounded-circle" src="{{user.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
-        </div>
-        <div class="w-100" id="tweet-reply-modal-reply">
-          <form class="needs-validation" action="/tweets/{{tweet.id}}/replies" method="POST" novalidate>
-            <textarea class="form-control tweet-modal-textarea w-100" id="comment" name="comment" rows="9"
-              placeholder="推你的回覆" required></textarea>
-            <div class="tweet-modal-textarea-feedback invalid-feedback">
-              內文不可以空白
-            </div>
-            <button type="submit" class="btn rounded-pill fw-bolder common-button tweet-modal-tweet-btn"
-              onclick="return(confirm('確認回覆了嗎？'))">
-              回覆
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{{> tweetReplyModal}}
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>

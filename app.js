@@ -53,6 +53,6 @@ app.use(methodOverride('_method'))
 //app.get('/', (req, res) => res.render('admin/signin'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
 module.exports = app

@@ -1,0 +1,28 @@
+<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content tweet-modal-content">
+      <div class="tweet-modal-head">
+        <button type="button" class="btn-close tweet-modal-close-btn" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="tweet-modal-body d-flex">
+        <div class="tweet-modal-img">
+          <img class="rounded-circle" src="{{user.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+        </div>
+        <div class="w-100">
+          <form class="needs-validation" action="/tweets" method="POST" novalidate>
+            <textarea class="form-control tweet-modal-textarea w-100" id="description" name="description" rows="9"
+              placeholder="有什麼新鮮事？" maxlength="140" required></textarea>
+            <div class="tweet-modal-textarea-feedback invalid-feedback">
+              內文不可以空白
+            </div>
+            <button type="submit" class="btn rounded-pill fw-bolder common-button tweet-modal-tweet-btn"
+              onclick="return(confirm('確認推文了嗎？'))">
+              推文
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
