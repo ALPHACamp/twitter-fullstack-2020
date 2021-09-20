@@ -26,17 +26,13 @@ const followshipController = {
   removeFollowing: async (req, res) => { //照點擊順序移除??
 
     try {
-      const followship = await Followship.findOne({
+
+      await Followship.destroy({
         where: {
           followerId: req.user.id,
           followingId: req.params.userId
         }
       })
-      console.log('=========================================')
-      console.log(req.params.userId)
-      console.log('=========================================')
-
-      await followship.destroy()
 
       return res.redirect('back')
 
