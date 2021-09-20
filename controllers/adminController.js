@@ -41,6 +41,7 @@ const adminController = {
             ? data.description
             : data.description.substring(0, 50) + '...'
       }))
+      console.log(tweets[0])
       return res.render('admin/tweets', { tweets })
     } catch (err) {
       console.log(err)
@@ -52,7 +53,7 @@ const adminController = {
       const id = req.params.tweetId
 
       await Tweet.destroy({ where: { id } })
-      return res.redirect('admin/tweets')
+      return res.redirect('back')
     } catch (err) {
       console.log(err)
     }
@@ -78,7 +79,7 @@ const adminController = {
       }))
       users.sort((a, b) => b.tweetCount - a.tweetCount)
 
-      return res.render('admin/users', {users})
+      return res.render('admin/users', { users })
     } catch (err) {
       console.log(err)
     }
