@@ -25,19 +25,17 @@
   border: 1px solid #e6ecf0;
 }
 .profile-container .mainpost-nav .col1 {
-  flex: 0 0 17px;
-  margin-left: 20px;
+  flex: 0 0 20px;
+  margin-left: 32px;
   padding: 0;
 }
 .profile-container .mainpost-nav .col2 {
   flex: 0 0 200px;
-  margin-left: 40px;
+  margin-left: 37px;
   padding: 0;
 }
 .profile-container .mainpost-nav .nav-bold {
   color: #1c1c1c;
-  line-height: 20px;
-  font: 18px "Noto Sans TC", sans-serif;
   font-weight: 700;
   margin-left: 0;
   margin-right: 0;
@@ -45,14 +43,20 @@
 }
 .profile-container .mainpost-nav p.nav-bold {
   margin-top: 5px;
+  font-weight: 900;
+  font-size: 19px;
 }
 .mainpost-nav i.nav-bold::before {
+  color: #000000;
   line-height: 55px;
+  font-weight: 700;
+  font-size: 20px;
 }
 .profile-container .mainpost-nav small {
   margin-top: 0;
   font-family: "Noto Sans TC", sans-serif;
   color: #657786;
+  font-size: 13px;
 }
 .profile-container .mainpost-messageboard {
   display: flex;
@@ -294,4 +298,77 @@
   margin: 0;
   transform: translate(-50%, -50%);
   fill: currentColor;
+}
+.m75 {
+  margin-top: 75px;
+}
+.modal-input {
+  width: 570px;
+  margin-left: 0px;
+  margin-right: 0px;
+  background: #f5f8fa;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #657786;
+  border-radius: 4px 4px 0 0;
+}
+textarea.modal-input {
+  resize: none;
+}
+.modal-input ~ label {
+  top: 15px;
+  left: 15px;
+  font-size: 15px;
+  transform: translateY(-15px);
+  font: 500 15px "Noto Sans TC";
+  color: #657786;
+}
+.form-floating {
+  padding: 15px;
+}
+.form-floating small {
+  text-align: right;
+  font-size: 15px;
+  font: 500 15px "Noto Sans TC";
+  color: #657786;
+}
+.form-floating > textarea.form-control {
+  height: 150px;
+  margin-bottom: 56px;
+}
+.modal-content {
+  border-radius: 14px;
+}
+.modal-input-count,
+.modal-textarea-count {
+  position: absolute;
+  top: 70px;
+  right: 15px;
+  font-size: 15px;
+  color: #657786;
+}
+.modal-textarea-count {
+  top: 166px;
+}
+.floating-wrapper {
+  position: relative;
+}
+.modal .modal-dialog .modal-header.profile-edit {
+  height: 59px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.modal-header .modal-heading {
+  position: absolute;
+  left: 79px;
+  top: 15px;
+  font-size: 19px;
+}
+.modal .modal-dialog .modal-header.profile-edit .btn-close i {
+  font-size: 15px;
+}
+.modal-header.profile-edit .upper-right.btn-short {
+  top: 17px;
+  right: 17px;
 }
