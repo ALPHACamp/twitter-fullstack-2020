@@ -1,6 +1,8 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
+const Like = db.Like
+const Tweet = db.Tweet
 const { Op } = require("sequelize")
 
 const userController = {
@@ -65,6 +67,39 @@ const userController = {
 
     getTweets: (req, res) => {
         return res.render('setting')
+    },
+    //MUSH新增
+    addLike: (req, res) => {
+        return Like.create({
+            UserId: req.user.id,
+            TweetId: req.params.TweetId
+        })
+            .then(() => {
+                return Tweet.findByPk(req.params.TweetId)
+                    .then((tweet) => {
+                        return tweet.increment('likeCount')
+                    })
+            })
+            .then(() => {
+                return res.redirect('back')
+            })
+    },
+    removeLike: (req, res) => {
+        return Like.findOne({
+            where: {
+                UserId: req.user.id,
+                TweetId: req.params.TweetId
+            }
+        })
+            .then((like) => {
+                like.destroy()
+                    .then(() => {
+                        return Tweet.findByPk(req.params.TweetId).then((tweet) => {
+                            tweet.decrement('likeCount')
+                            res.redirect('back')
+                        })
+                    })
+            })
     },
 }
 

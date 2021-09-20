@@ -21,7 +21,10 @@ app.use(express.static('public'))
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.use(bodyParser.urlencoded({ extended: true }))
-app.engine('handlebars', handlebars({ defaultLayout: 'main' })) // Handlebars 註冊樣板引擎
+app.engine('handlebars', handlebars({ 
+  defaultLayout: 'main',
+  helpers: require('./config/handlebars-helpers')
+})) // Handlebars 註冊樣板引擎
 app.set('view engine', 'handlebars') // 設定Handlebars 做為樣板引擎
 app.use(express.static('public'))
 // setup session 
@@ -39,6 +42,8 @@ app.use((req, res, next) => {
     res.locals.user = helpers.getUser(req)
     next()
 })
+
+app.get('/follower', (req, res) => res.render('follower'))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

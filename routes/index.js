@@ -1,6 +1,8 @@
 const userController = require('../controllers/userController')
 const adminController = require('../controllers/adminController')
+const tweetController = require('../controllers/tweetController')
 const helpers = require('../_helpers')
+const replyController = require('../controllers/replyController')
 
 module.exports = (app, passport) => {
     const authenticated = (req, res, next) => {
@@ -37,6 +39,21 @@ module.exports = (app, passport) => {
         } return next()
     }
 
+    //如果使用者訪問首頁，就導向 /restaurants 的頁面
+    app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+    //在前台瀏覽全部推文清單
+    app.get('/tweets', authenticatedUser, tweetController.getTweets)
+    app.post('/tweets', tweetController.postTweet)
+    //在前台瀏覽推文詳細資料
+    app.get('/tweets/:id',authenticatedUser, tweetController.getTweet)
+
+    //在前台回覆一則推文
+    app.post('/tweets/:id/replies', authenticatedUser, replyController.postReply)
+
+    //在前台按一則推文喜歡,取消喜歡
+    app.post('/tweets/:TweetId/like', authenticatedUser, userController.addLike)
+    app.post('/tweets/:TweetId/unlike', userController.removeLike)
+
     app.get('/signup', userController.signUpPage)
     app.post('/signup', userController.signUp)
     app.get('/signin', userController.signInPage)
@@ -44,7 +61,7 @@ module.exports = (app, passport) => {
     app.get('/signout', userController.logout)
 
     app.get('/tweets', authenticatedUserTweets, authenticatedUser, userController.getTweets)
-
+   
     app.get('/admin/signin', adminController.signInPage)
     app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
     app.get('/admin/logout', adminController.logout)
