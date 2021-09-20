@@ -3,23 +3,23 @@ const express = require("express");
 const router = express.Router();
 const db = require("../../models");
 const { User, Tweet, Reply } = db;
-//以下路由為方便測試使用 可刪
+
 router.get("/", (req, res) => {
-  return res.render("index");
-});
-router.get("/login", (req, res) => {
-  return res.render("login");
-});
-router.get("/post", (req, res) => {
-  return res.render("post");
+  return res.redirect(`users/${req.user.id}/main`);
 });
 router.get("/profile", (req, res) => {
   return res.render("profile");
 });
-router.get("/signin", (req, res) => {
-  return res.render("signin");
+router.post("/signout", (req, res) => {
+  //signout action
 });
-router.get("/setting", (req, res) => {
+router.get("/:id/edit", (req, res) => {
   return res.render("setting");
+});
+router.put("/:id", (req, res) => {
+  //revise account setting
+});
+router.get("/:id/main", (req, res) => {
+  return res.render("index");
 });
 module.exports = router;
