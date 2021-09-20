@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Twitter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+  <script src="https://kit.fontawesome.com/149a22a609.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/stylesheets/main.css">
+</head>
+
+<body>
+  <div class="container-fluid m-0 p-0">
+    {{#if error_messages}}
+    {{> messages}}
+    {{/if}}
+    {{#if success_messages}}
+    {{> messages}}
+    {{/if}}
+
+    {{{body}}}
+  </div>
+
+  {{!-- <!-- Left-->
+      <nav class="col-2 .d-none.d-md-block">
+        <a><i class="fas fa-dove"></i></a>
+        <a href="/"><i class="fas fa-home"></i></a>
+        <a href="/users/{{user.id}}"><i class=" fas fa-user"></i></a>
+        <a href="/"><i class="fas fa-cog"></i></a>
+        <!--發文樣式再修改 -->
+        <div class="div">
+          <button type="submit" style="color:white; background-color:#FF6103;">發文</button>
+
+          <div class="row align-items-end"><a href="#"><i class="fas fa-sign-out-alt"></i></a></div>
+        </div>
+      </nav> --}}
+
+  <!--Middle Side -->
+
+  {{!-- <div class="titleContainer">
+
+          <div class="postFormContainer">
+            <div class="userImageContainer"><img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/1600px-Image_created_with_a_mobile_phone.png"
+                alt="User's profile picture" /></div>
+            <div class="textareaContainer"><textarea id="postTextarea" placeholder="What's happening?"></textarea>
+              <div class="buttonsContainer"><button id="submitPostButton" disabled="">Post</button></div>
+            </div>
+          </div>
+
+        </div> --}}
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+</html>
