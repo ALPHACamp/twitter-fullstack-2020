@@ -41,11 +41,7 @@ const tweetController = {
       //  console.log(tweets[0])
         tweets = tweets.map( r => ({
         ...r.dataValues,
-        
-        id:r.id,
         User: r.User.dataValues,
-        description: r.description,
-        createdAt:r.createdAt,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
         Likes:r.Likes.length,
         Replies: r.Replies.length,
@@ -59,7 +55,7 @@ const tweetController = {
         Followings: user.Followings.map(d => d.id),
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
       }))
-      console.log(popular)
+      // console.log(popular)
       //排除admin並限制前10名
       const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0,10)  
 
@@ -68,7 +64,7 @@ const tweetController = {
       const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
       // console.log(isFollowed)
-      // console.log(data[0])
+      console.log(tweets[0])
       return res.render('index', {
         tweets:tweets,
         isFollowed: isFollowed,
