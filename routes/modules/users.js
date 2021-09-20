@@ -22,4 +22,13 @@ router.get("/register", (req, res) => {
 router.get("/setting", (req, res) => {
   return res.render("setting");
 });
+router.get("/followship", (req, res) => {
+  return res.render("followship");
+});
+router.get("/tweets", (req, res) => {
+  return res.render("admin/tweets");
+});
+router.get("/users", (req, res) => {
+  return res.render("admin/users");
+});
 module.exports = router;
