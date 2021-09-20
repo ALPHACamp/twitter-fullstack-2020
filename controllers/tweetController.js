@@ -1,7 +1,7 @@
 const helpers = require('../_helpers')
 const db = require('../models')
 const tweet = require('../models/tweet')
-// const { Op } = require("sequelize")
+const { Op } = require("sequelize")
 const { sequelize } = require('../models')
 const User = db.User
 const Tweet = db.Tweet
@@ -13,54 +13,65 @@ const tweetController = {
   //顯示所有貼文
   getTweets: (req, res) => {
     const UserId = req.user.id
+    // console.log(UserId)
 
     return Promise.all([
       Tweet.findAll({
-        include: [User, { model: Like, include: [Tweet] }],
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      }),
+      
+      include: [
+        { model:User , attributes:['id', 'name', 'avatar', 'account']}, 
+        { model:Like },
+        { model:Reply}
+        // , attributes: ['TweetId',[sequelize.fn('COUNT', sequelize.col('id')), 'replycount']], group: 'TweetId' 
+      ],
+      order: [['createdAt', 'DESC']],
+      // raw: true, 
+      // nest: true
+    }),
       // replies = sequelize.query('select `TweetId`, COUNT(`id`) AS `replycount` from `replies` GROUP BY `TweetId`;', {
       // type: sequelize.QueryTypes.SELECT
       // }),
       User.findAll({
-        include: [{ model: User, as: 'Followers' }],
+        include: [
+          { model: User, as: 'Followers' }, 
+          { model: User, as: 'Followings' }],
       })
-    ])
-      .then(([tweets, users]) => {
-        const data = tweets.map(r => ({
-          ...r.dataValues,
-          id: r.id,
-          User: r.User,
-          description: r.description,
-          createdAt: r.createdAt,
-          isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
-          // replyCount: replies.filter(d => d.TweetId === r.id)[0].replycount
-        }))
-  
-        //整理popular要用的資料 
-        const popular = users.map(user => ({
-          ...user.dataValues,
-          FollowerCount: user.Followers.length,
-          myself: Boolean(user.id === UserId),
-          isFollowed: req.user.Followings.map(d => d.id).includes(UserId)
-        }))
-        //排除admin並限制前10名
-        const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0, 10)
-        //區分已followed和未followed並排序
-        const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
+    ]) 
+    .then(([tweets,users]) => {
+      //  console.log(tweets[0])
+        tweets = tweets.map( r => ({
+        ...r.dataValues,
+        User: r.User.dataValues,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
+        Likes:r.Likes.length,
+        Replies: r.Replies.length,
+      }))
+    //整理popular要用的資料 
+      const popular = users.map(user => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        myself: Boolean(user.id === UserId),
+        Followers: user.Followers.map(d => d.id),
+        Followings: user.Followings.map(d => d.id),
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+      }))
+      // console.log(popular)
+      //排除admin並限制前10名
+      const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0,10)  
 
-        const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
+      const isFollowed = normal.filter(d => d.isFollowed === true).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-        // console.log(unFollowed)
-        return res.render('index', {
-          data: data,
-          isFollowed: isFollowed,
-          unFollowed: unFollowed,
-          currentUser: helpers.getUser(req)
-        })
+      const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+      // console.log(isFollowed)
+      console.log(tweets[0])
+      return res.render('index', {
+        tweets:tweets,
+        isFollowed: isFollowed,
+        unFollowed: unFollowed,
+        currentUser: helpers.getUser(req)
       })
+    })
   },
 
   //新增一則貼文(要改api)
@@ -93,8 +104,7 @@ const tweetController = {
           like: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
         })
       })
-  }
-  ,
+  },
 
   //回文相關
   //回覆特定貼文
@@ -148,6 +158,8 @@ const tweetController = {
           })
       })
   }
+
 }
+
 
 module.exports = tweetController
