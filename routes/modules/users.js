@@ -28,4 +28,7 @@ router.get("/followship", (req, res) => {
 router.get("/tweets", (req, res) => {
   return res.render("admin/tweets");
 });
+router.get("/users", (req, res) => {
+  return res.render("admin/users");
+});
 module.exports = router;
