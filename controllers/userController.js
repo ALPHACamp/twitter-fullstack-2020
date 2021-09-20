@@ -166,7 +166,7 @@ const userController = {
         tweetedAt: tweet.createdAt,
         replyCount: tweet.Replies.length,
         likeCount: tweet.Likes.length,
-        isLiked: tweet.Likes.map(d => d.UserId).includes(currentUser.id)
+        // isLiked: tweet.Likes.map(d => d.UserId).includes(currentUser.id)
       }))
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
       const viewUser = Object.assign({}, {
@@ -179,7 +179,7 @@ const userController = {
         tweetsCount: user.Tweets.length,
         followingsCount: user.Followings.length,
         followersCount: user.Followers.length,
-        isFollowed: req.user.Followings.map((d) => d.id).includes(user.id),
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(user.id),
         isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
@@ -496,7 +496,7 @@ const userController = {
       }))
       return res.render('followship', {
         usersFollowings: usersFollowings.length !== 0 ? usersFollowings : true,
-        user: req.user,
+        user: helpers.getUser(req),
         topUsers,
         viewUser,
         noFollowing
@@ -561,7 +561,7 @@ const userController = {
       }))
       return res.render('followship', {
         usersFollowers: usersFollowers.length !== 0 ? usersFollowers : true,
-        user: req.user,
+        user: helpers.getUser(req),
         topUsers,
         viewUser,
         noFollower
@@ -571,7 +571,7 @@ const userController = {
 
   addFollowing: (req, res) => {
     return Followship.create({
-      followerId: req.user.id,
+      followerId: helpers.getUser(req).id,
       followingId: req.params.user_id
     })
       .then(followship => {
@@ -582,12 +582,12 @@ const userController = {
   removeFollowing: (req, res) => {
     return Followship.destroy({
       where: {
-        followerId: req.user.id,
+        followerId: helpers.getUser(req).id,
         followingId: req.params.user_id
       }
     }).then(() => {
-        return res.redirect('back')
-      })
+      return res.redirect('back')
+    })
 
     // return Followship.findOne({
     //   where: {
