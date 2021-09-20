@@ -13,6 +13,7 @@ const tweetController = {
   //顯示所有貼文
   getTweets: (req, res) => {
     const UserId = req.user.id
+    // console.log(UserId)
 
     return Promise.all([
       Tweet.findAll({
@@ -31,7 +32,9 @@ const tweetController = {
       // type: sequelize.QueryTypes.SELECT
       // }),
       User.findAll({
-        include: [{ model: User, as: 'Followers' }],
+        include: [
+          { model: User, as: 'Followers' }, 
+          { model: User, as: 'Followings' }],
       })
     ]) 
     .then(([tweets,users]) => {
@@ -52,8 +55,11 @@ const tweetController = {
         ...user.dataValues,
         FollowerCount: user.Followers.length,
         myself: Boolean(user.id === UserId),
-        isFollowed: req.user.Followings.map(d => d.id).includes(UserId)
+        Followers: user.Followers.map(d => d.id),
+        Followings: user.Followings.map(d => d.id),
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
       }))
+      console.log(popular)
       //排除admin並限制前10名
       const normal = popular.filter(d => d.role === 'normal').sort((a, b) => b.FollowerCount - a.FollowerCount).splice(0,10)  
 
@@ -61,7 +67,7 @@ const tweetController = {
 
       const unFollowed = normal.filter(d => d.isFollowed === false).sort((a, b) => b.FollowerCount - a.FollowerCount)
 
-      // console.log(tweets[0])
+      // console.log(isFollowed)
       // console.log(data[0])
       return res.render('index', {
         tweets:tweets,

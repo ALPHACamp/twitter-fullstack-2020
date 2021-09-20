@@ -180,11 +180,13 @@
                 <div class="name">{{this.name}}</div>
                 <div class="account">{{this.account}}</div>
               </div>
-              <div class="button">
 
-                
-                <button type="submit" class="btn follow-button">正在跟隨</button>
+              <div  class="button">
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn follow-button">正在跟隨</button>
+                </form>
               </div>
+              
             </div>
           </li>
           {{/each}}
@@ -204,9 +206,12 @@
             {{#if myself}}
               <div></div>
               {{else}}
+
               <div class="button">
-                <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+                <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                    class="btn unfollow-button"> 跟隨 </button></form>
               </div>
+
             {{/if}}
             </div>
           </li>
