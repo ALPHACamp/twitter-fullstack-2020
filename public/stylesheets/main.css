@@ -289,7 +289,7 @@ max-width: 600px;
   padding-right: 65px;
 }
 
-/* 後台 */
+/*=============== 後台 ===============*/
 .tweets-back,
 .users-back {
   border: 1px solid #e6ecf0;
@@ -368,4 +368,12 @@ max-width: 600px;
 
 .users-back .user-com-likes {
   font-size: 15px;
+}
+
+/*=============== 登入、註冊頁面 ===============*/
+
+.signpage {
+  background-color:#F5F8FA;
+  border:none;
+  border-bottom: 2px solid #657786;
 }
