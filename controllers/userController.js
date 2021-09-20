@@ -186,26 +186,36 @@ const userController = {
           })
       })
   },
+  
+  // Followship
   addFollowing: (req, res) => {
-    return Followship.create({
-      followerId: req.user.id,
-      followingId: req.params.userId
-    })
-      .then(() => {
+    const followerId = req.user.id
+    const followingId = req.params.userId
+
+    // 確認不能追蹤自己
+    if (followerId !== followingId) {
+      return Followship.create({
+        followerId: req.user.id,
+        followingId: req.params.userId
+      }).then(() => {
         return res.redirect('back')
       })
+    } else {
+      req.flash('error_messages', 'You can\'t follow yourself!')
+      res.redirect('/tweets')
+    }
   },
 
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
-        followerId: req.user.id,
-        followingId: req.params.userId
+        followerId : req.user.id,
+        followingId : req.params.userId
       }
     })
       .then((followship) => {
         followship.destroy()
-          .then(() => {
+          .then((followship) => {
             return res.redirect('back')
           })
       })
