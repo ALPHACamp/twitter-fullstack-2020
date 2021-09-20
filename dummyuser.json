@@ -1,5 +1,5 @@
 {
-  "req.user": {
+  "dummyuser": {
     "id": 1,
     "name": "root",
     "email": "root@example.com",

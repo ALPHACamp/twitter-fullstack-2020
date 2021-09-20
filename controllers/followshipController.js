@@ -1,7 +1,7 @@
 const db = require("../models");
 const { User, Tweet, Reply, Like, Followship } = db;
 const moment = require("moment");
-const { dummyuser } = require("../../dummyuser.json");
+const { dummyuser } = require("../dummyuser.json");
 //for test only
 
 const helpers = require("../_helpers.js");
@@ -17,18 +17,24 @@ const followshipController = {
   getFollowers: async (req, res) => {
     const user = dummyuser;
     console.log("dummyuser: ", dummyuser);
-    const followings = await User.findAll({
-      include: { model: User, as: "Followings" },
-      where: { FollowerId: user.id },
-    });
-    const followers = await User.findAll({
-      include: { model: User, as: "Followers" },
-      where: { FollowingId: user.id },
+    // const followings = await User.findAll({
+    //   include: {
+    //     model: User,
+    //     as: "Followings",
+    //     where: { FollowingId: user.id },
+    //   },
+    // });
+    User.findAll({
+      //who follows me
+      include: {
+        model: User,
+        as: "Followings",
+        where: { id: user.id },
+      },
     })
-      .then(() => {
-        console.log("following 1:", followings[0]);
-        console.log("follower 1:", followers[0]);
-        return res.redirect("back");
+      .then((followers) => {
+        console.log("follower 1:", followers);
+        return res.json(followers);
       })
       .catch((error) => res.status(400).json(error));
   },
