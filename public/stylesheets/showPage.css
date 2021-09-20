@@ -22,6 +22,10 @@ span {
  margin: auto 0;
 }
 
+a .user-name {
+  color: #000000;
+}
+
 textarea {
 width:100%;
 overflow-wrap: break-word;
@@ -510,6 +514,10 @@ color: #1C1C1C;
 
 .name-account {
   padding: 0 auto;
+}
+
+.name-account .name {
+  color: #000000;
 }
 
 
@@ -1510,8 +1518,8 @@ left:400px
 
 .alert-success {
 position:fixed;
-bottom: 0;
-right:0;
+top: 0;
+left: 0;
 z-index:3;
 width: 394px;
 height:96px;
@@ -1552,8 +1560,9 @@ height:56px;
 
 .alert-danger {
 position:fixed;
-bottom: 0;
-right:0;
+top: 0;
+left: 0;
+margin-left: 10px;
 z-index:3;
 width: 394px;
 height:96px;

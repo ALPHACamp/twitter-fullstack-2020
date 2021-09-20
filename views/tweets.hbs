@@ -172,7 +172,9 @@
 
                 <div class="col-md-11">
                   <div class="account-info d-flex" style="flex:auto">
+                    <a href="/users/{{../viewUser.avatar}}/tweets" class="text-muted">
                     <div class="user-name">{{../viewUser.name}}</div>
+                    </a>
                     <div class="account-time ml-2">@{{../viewUser.account}}．{{fromNow this.tweetedAt}}</div>
                   </div>
                   <a href="/tweets/{{this.id}}" class="text-muted">
@@ -227,51 +229,53 @@
       </div>
 
       {{!-- 右側欄位 --}}
-      <div class="right-side col-md-3">
-        <div class="popular mt-2" style="padding:auto;">
-          <div class="popular-title mt-2">
-            Popular
-          </div>
-          <ul class="list-group">
-            {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
-            {{!-- 跟隨中使用者開始 --}}
-            {{#each topUsers}}
-            <li class="list-group-item">
-              <div class="d-flex col-md-12" style="padding:0">
-                <div class="popular-user-pic">
-                  <a href="/users/{{this.id}}/tweets" class="text-muted">
-                    <img class="user-pic" src="{{this.avatar}}" alt="">
-                  </a>
-                </div>
-                <div class="name-account">
-                  <div class="name">{{this.name}}</div>
-                  <div class="account">@{{this.account}}</div>
-                </div>
-                <div class="button">
-
-                  {{#if isSelf}}
-                  {{else}}
-                  {{#if isFollowed }}
-                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                    <button type="submit" class="btn follow-button">正在跟隨</button>
-                  </form>
-                  {{else}}
-                  <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
-                      class="btn unfollow-button"> 跟隨 </button></form>
-                  {{/if}}
-                  {{/if}}
-                </div>
-              </div>
-            </li>
-            {{/each}}
-            {{!-- 使用者結束 --}}
-
-          </ul>
+    <div class="right-side col-md-3">
+      <div class="popular mt-2" style="padding:auto;">
+        <div class="popular-title mt-2">
+          Popular
         </div>
-
-
-
+        <ul class="list-group">
+          {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
+          {{!-- 跟隨中使用者開始 --}}
+          {{#each topUsers}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div class="popular-user-pic">
+                <a href="/users/{{this.id}}/tweets" class="text-muted">
+                  <img class="user-pic" src="{{this.avatar}}" alt="">
+                </a>
+              </div>
+              <div class="name-account">
+                <a href="/users/{{this.id}}/tweets" class="text-muted">
+                  <div class="name">{{this.name}}</div>
+                </a>
+                <div class="account">@{{this.account}}</div>
+              </div>
+              <div class="button">
+    
+                {{#if isSelf}}
+                {{else}}
+                {{#if isFollowed }}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn follow-button">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                    class="btn unfollow-button"> 跟隨 </button></form>
+                {{/if}}
+                {{/if}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          {{!-- 使用者結束 --}}
+    
+        </ul>
       </div>
+    
+    
+    
+    </div>
     </div>
 
 

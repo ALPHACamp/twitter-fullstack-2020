@@ -471,15 +471,15 @@ const userController = {
       const viewUser = Object.assign({}, {
         id: user.id,
         name: user.name,
-        account: user.account,
-        introduction: user.introduction,
-        cover: user.cover,
-        avatar: user.avatar,
+        // account: user.account,
+        // introduction: user.introduction,
+        // cover: user.cover,
+        // avatar: user.avatar,
         tweetsCount: user.Tweets.length,
-        followingsCount: user.Followings.length,
-        followersCount: user.Followers.length,
-        isFollowed: currentUser.Followers.map((d) => d.id).includes(user.id),
-        isSelf: Boolean(user.id === currentUser.id)
+        // followingsCount: user.Followings.length,
+        // followersCount: user.Followers.length,
+        // isFollowed: currentUser.Followers.map((d) => d.id).includes(user.id),
+        // isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
       const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
@@ -527,7 +527,6 @@ const userController = {
         ...d.dataValues,
         isFollowed: currentUser.Followings.map((d) => d.id).includes(d.dataValues.id)
       }))
-      console.log(usersFollowers)
 
 
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
