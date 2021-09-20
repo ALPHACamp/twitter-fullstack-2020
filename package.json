@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@handlebars/allow-prototype-access": "^1.0.5",
     "axios": "^0.21.4",
     "bcrypt-nodejs": "0.0.3",
     "bcryptjs": "^2.4.3",
@@ -22,6 +23,7 @@
     "express-handlebars": "^3.1.0",
     "express-session": "^1.17.2",
     "faker": "^4.1.0",
+    "handlebars": "^4.7.7",
     "imgur-node-api": "^0.1.0",
     "method-override": "^3.0.0",
     "mocha": "^6.2.3",

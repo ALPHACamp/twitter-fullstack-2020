@@ -1,5 +1,9 @@
 const express = require('express')
 const helpers = require('./_helpers')
+const Handlebars = require('handlebars')
+const exphbs = require('express-handlebars')
+
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -10,12 +14,11 @@ if (process.env.NODE_ENV !== 'production') {
 
 const flash = require('connect-flash')
 const session = require('express-session')
-const db = require('./models') 
+const db = require('./models')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
 const moment = require('moment')
 
-const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 // setup passport
@@ -31,25 +34,24 @@ app.use((req, res, next) => {
   next()
 })
 
-
-app.engine('hbs', exphbs({ 
-  defaultLayout: 'main',
-  extname: 'hbs',
-  helpers: require('./config/handlebars-helpers')
- }))
+app.engine(
+  'hbs',
+  exphbs({
+    defaultLayout: 'main',
+    extname: 'hbs',
+    helpers: require('./config/handlebars-helpers'),
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
+  })
+)
 app.set('view engine', 'hbs')
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 
 app.use(methodOverride('_method'))
 
-
 //app.get('/', (req, res) => res.render('admin/signin'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-
-
 require('./routes')(app, passport)
-
 
 module.exports = app
