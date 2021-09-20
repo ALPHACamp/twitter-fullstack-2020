@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     role: DataTypes.STRING,
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    updatedAt: DataTypes.DATE,
+    followingCount: DataTypes.INTEGER,
+    followerCount: DataTypes.INTEGER
   }, {})
   User.associate = function (models) {
     // associations can be defined here
