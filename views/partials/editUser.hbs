@@ -32,7 +32,7 @@
 
 
       <i class="fas fa-times" id="edit-delete">
-        <input type="hidden" name="isDelete" id="isDelete" value="" disabled="true"/>
+        <input type="hidden" name="isDelete" id="isDelete" class="isDelete" value="isDelete" disabled="true"/>
       </i>
 
 
@@ -134,6 +134,14 @@
   })
 
   saveBtn.addEventListener('click', function check(event) {
+    if (introduction.value.length < 1) {
+      introduction.classList.add('is-invalid')
+      introduction.nextElementSibling.innerHTML = "自我介紹不得為空"
+    }
+    if (name.value.length < 1) {
+      name.classList.add('is-invalid')
+      name.nextElementSibling.innerHTML = "名稱不得為空"
+    }
     if (introduction.classList.contains('is-invalid') || name.classList.contains('is-invalid')) {
       event.preventDefault()
     }
@@ -171,7 +179,7 @@
     const cover = document.querySelector('#cover')
     const isDelete = document.querySelector('#isDelete')
     cover.src = ''
-    isDelete.disabled= "false"
+    isDelete.disabled = false
   })
 
 

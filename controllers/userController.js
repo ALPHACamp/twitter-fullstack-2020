@@ -464,7 +464,7 @@ const userController = {
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
       const usersFollowings = user.Followings.map(d => ({
         ...d.dataValues,
-        isFollowed: user.Followers.map((d) => d.id).includes(currentUser.id)
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(d.dataValues.id)
       }))
 
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
@@ -478,7 +478,7 @@ const userController = {
         tweetsCount: user.Tweets.length,
         followingsCount: user.Followings.length,
         followersCount: user.Followers.length,
-        isFollowed: user.Followers.map((d) => d.id).includes(currentUser.id),
+        isFollowed: currentUser.Followers.map((d) => d.id).includes(user.id),
         isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
@@ -525,8 +525,10 @@ const userController = {
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
       const usersFollowers = user.Followers.map(d => ({
         ...d.dataValues,
-        isFollowed: user.Followers.map((d) => d.id).includes(currentUser.id)
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(d.dataValues.id)
       }))
+      console.log(usersFollowers)
+
 
       //A. 取得某使用者的個人資料 & followship 數量 & 登入中使用者是否有追蹤
       const viewUser = Object.assign({}, {
@@ -539,7 +541,7 @@ const userController = {
         tweetsCount: user.Tweets.length,
         followingsCount: user.Followings.length,
         followersCount: user.Followers.length,
-        isFollowed: user.Followers.map((d) => d.id).includes(currentUser.id),
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(user.id),
         isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
