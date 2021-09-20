@@ -1,0 +1,113 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-3 col-md-3 col-lg-3 pl-0">
+      {{> left}}
+    </div>
+    <div class="col-6 col-md-6 col-lg-6 px-0 border-left">
+      {{> message}}
+      <div class="main main-title">
+        <div class="header tweets-index ml-3">首頁</div>
+        <div class="line"></div>
+        <div class="body">
+          <div class="body-avatar d-flex align-items-stretch">
+            <div class="right">
+              <img src="{{users.dataValues.avatar}}" class="rounded-circle tweets-avatar ml-2 mr-2 mt-2">
+            </div>
+            <div class="left" class="d-flex">
+              <form method="POST" action="/tweets/{{users.dataValues.id}}">
+                <textarea name="description" class="tweets-description" cols="47" rows="5"
+                  placeholder="有什麼新鮮事"></textarea>
+                <button type="submit" class="btn tweet-button" style="background: #FF6600;border-radius: 100px;">
+                  <span style="color: #FFFFFF;">推文</span></button>
+              </form>
+            </div>
+          </div>
+          <div class="divider" style="height: 10px;left: 378px;top: 173px;background: #E6ECF0;">
+          </div>
+
+        </div>
+        <div class="text-main">
+          <div class="tweet-list">
+            {{#each tweets}}
+            <div class="tweet mt-2">
+              <div class="tweet-item-left d-flex align-items-stretch" href="/tweets/{{this.User.dataValues.id}}">
+                <div class="tweet-left d-flex align-items-stretch">
+                  <a href="/users/{{this.User.dataValues.id}}">
+                    <img src="{{this.User.dataValues.avatar}}" class="rounded-circle ml-2"
+                      style="background-size:cover; width: 50px;height: 50px;">
+                  </a>
+                </div>
+                <div class="tweet-item-right  ml-3">
+                  <div class="tweet-item-title">
+                    <span class="mt-1 user-name">{{this.User.dataValues.name}}</span>
+                    <span class="tweets-user-account">
+                      {{this.User.dataValues.account}}．{{moment this.createdAt}}
+                    </span>
+                  </div>
+                  <div class="tweet-text tweets-description mt-2">
+                    <a href="/tweets/{{this.id}}" style="text-decoration: none; color:black">
+                      {{this.description}}
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="footer ml-5">
+                <button type="button" class="mt-4 mb-4 tweets-reply-button" data-toggle="modal"
+                  data-target="#replyModal">
+                  <i class="far fa-comment"></i> {{this.Replies.length}}
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header"></div>
+                      <div class="modal-title">
+                        <button type="button" class="close mr-2" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body" class="d-flex">
+                        <img src="{{this.User.dataValues.avatar}}" class="rounded-circle"
+                          style="background-size:cover; width: 50px;height: 50px;">
+                        <span class="mt-1">{{this.User.dataValues.name}}</span>
+                        <div class="tweet-text d-flex align-items-stretch">
+                          {{this.User.dataValues.description}}
+                        </div>
+                        <form method="POST" action="/tweets/{{this.id}}/replies">
+                          <textarea name="comment" cols="55" rows="5"
+                            style="background: #FFFFFF;border: 1px solid #E6ECF0;box-sizing: border-box;"
+                            placeholder="推你的回覆"></textarea>
+                          <button type="submit"
+                            style="width: 64px;height: 40px;left: 899px;top: 123px;background: #FF6600;border-radius: 100px;">
+                            <span style="color: #FFFFFF;">回覆</span></button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {{#if isLiked}}
+                <form action="/unlike/{{this.id}}?_method=DELETE" method="POST" style="display:inline;">
+                  <button type="submit" class="mt-4 mb-4 tweets-like-button">
+                    <i class="fas fa-heart"></i>
+                    {{else}}
+                    <form action="/like/{{this.id}}" method="POST" style="display:inline; ">
+                      <button type="submit" class="mt-4 mb-4 tweets-unlike-button">
+                        <i class="far fa-heart"></i>
+                        {{/if}}
+                        {{this.LikedUsers.length}}
+                      </button>
+                    </form>
+              </div>
+              <div class="line"></div>
+            </div>
+            {{/each}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 col-md-3 col-lg-3">
+      {{> right}}
+    </div>
+  </div>

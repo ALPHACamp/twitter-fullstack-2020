@@ -1,0 +1,105 @@
+<div class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true" style="background: #FFFFFF;
+width: 650px;
+height: 700px;
+left: 40%;
+border-radius: 14px;">
+
+  <div class="modal-dialog modal-dialog-centered justify-content-center
+ ">
+
+    <div class="modal-content " style="width: 600px;">
+      <form class="col-md-9 pl-0 border-left" action="/users/{{users.dataValues.id}}/edit?_method=PUT" method="POST"
+        enctype="multipart/form-data">
+
+
+        <div class="modal-header" style="width: 570px;">
+
+
+
+          <h5 class=" modal-title" id="exampleModalLongTitle">
+
+            <button type="button" data-dismiss="modal" aria-label="Close" class="close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h6 class="font-weight-bold"> 編輯個人資料 </h6>
+
+          </h5>
+
+
+
+          <button type="submit" class="btn" style="background: #FF6600; width:100% border-radius: 100px;">
+            <span style="color: #FFFFFF;">儲存</span></button>
+
+        </div>
+
+        <div class="modal-body">
+
+
+
+
+          <div class="form-label-group tweet-left d-flex align-items-stretch">
+            <a href="#">
+              <div class="cover" style="background: url({{user.cover}}),#C4C4C4; background-position:center; width: 580px;
+                    height: 200px;">
+
+                <label class="btn" style="background: #FF6600;border-radius: 100px;">
+                  <input id="upload_img" style="display:none;" id="cover" name="cover" type="file">
+                  <i class="fas fa-upload" style="color: #FFFFFF;"></i>
+                </label>
+              </div>
+
+            </a>
+          </div>
+
+          <div class=" form-label-group tweet-left d-flex align-items-stretch">
+
+            <div class="avatar rounded-circle" style="background: url({{user.avatar}}),#C4C4C4; background-position:center; background-size:cover; width: 120px;
+height: 120px; top: 70%">
+
+              <label class="btn " style="background: #FF6600;border-radius: 100px;">
+                <input id="upload_img" style="display:none;" id="avatar" name="avatar" type="file">
+                <i class="fas fa-upload" style="color: #FFFFFF;"></i>
+              </label>
+
+            </div>
+
+          </div>
+
+          <div class="form-label-group">
+            <label for="name">名稱</label>
+            <input type="text" maxlength="50" id="name" name="name" class="form-control nametext nametext"
+              style="width: 570px; height: 54px; background: #F5F8FA" placeholder="
+                          {{$user.name}}" value="{{user.name}}" required autofocus>
+
+            <div class="text-right" style="width: 570px">
+              <span class="text-right namecount"></span>/50
+            </div>
+          </div>
+
+          <div class="form-label-group inputCount">
+            <label for="inputPassword">自我介紹</label>
+            <textarea class="form-control introtext" style="width: 570px; height: 150px; background: #F5F8FA"
+              id="inputprdDesc" aria-label="With textarea" name="introduction" maxlength="160">{{user.introduction}}    
+            </textarea>
+            <div class="text-right" style="width: 570px">
+              <span class="text-right introcount"></span>/160
+            </div>
+
+          </div>
+
+
+
+
+
+      </form>
+
+
+
+
+
+    </div>
+
+  </div>
+
+</div>
