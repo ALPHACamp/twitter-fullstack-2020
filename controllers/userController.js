@@ -9,8 +9,10 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
+
 const imgur = require('imgur-node-api')
 const { fakeServer } = require('sinon')
+const followship = require('../models/followship')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userController = {
@@ -569,17 +571,51 @@ const userController = {
     })
   },
 
-  addFollowing: (req, res) => {
-    return Followship.create({
-      followerId: helpers.getUser(req).id,
-      followingId: req.params.user_id
-    })
-      .then(followship => {
-        return res.redirect('back')
+  addFollowing: async (req, res) => {
+    try {
+      const followerId = helpers.getUser(req).id
+      const followingId = Number(req.params.user_id)
+      const user = await User.findByPk(followerId)
+      const targetUser = await User.findByPk(followingId)
+      const followship = await Followship.findOne({
+        where: {
+          [Op.and]: [
+            { followerId },
+            { followingId }
+          ]
+        }
       })
+
+
+      if (!user || !targetUser) {
+        req.flash('error_messages', '無效使用者')
+        return res.status(400).redirect('back')
+      }
+
+      if (followerId === followingId) {
+        req.flash('error_messages', '無法追蹤自己')
+        return res.status(400).redirect('back')
+      }
+
+      if (followship) {
+        req.flash('error_messages', '不得重複追蹤')
+        return res.status(400).redirect('back')
+      } else {
+        await Followship.create({
+          followerId,
+          followingId
+        })
+        req.flash('success_messages', '成功追蹤')
+        return res.status(200).redirect('back')
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
   },
 
   removeFollowing: (req, res) => {
+    const currentUserId = helpers.getUser(req).id
     return Followship.destroy({
       where: {
         followerId: helpers.getUser(req).id,

@@ -4,18 +4,6 @@
 <div class="wrap d-flex">
   <div class="row col-md-12  justify-content-center" style="margin:0">
     {{!-- 左側欄位 --}}
-  {{#if success_messages}}
-  <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
-    <div>{{success_messages}}</div>
-    <div class="success-icon"><i class="fas fa-check"></i></div>
-  </div>
-  {{/if}}
-  {{#if error_messages}}
-  <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
-    <div>{{error_messages}}</div>
-    <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
-  </div>
-  {{/if}}
 
 
     <div class="left-side col-md-2">
@@ -82,12 +70,12 @@
 
 
           <div class="type-location">
-            <textarea type="text" class="new-post-content" name="description" placeholder="有什麼新鮮事？" rows="2"
-              maxlength="140" id="description"></textarea>
+            <textarea type="text" class="new-post-content is-invalid" name="description" placeholder="有什麼新鮮事？" rows="2"
+              maxlength="140" id="index-description"></textarea>
           </div>
         </div>
         <div class="send-area">
-          <button type="submit" class="btn send-button">推文</button>
+          <button type="submit" class="btn send-button" id="send-button">推文</button>
         </div>
       </form>
       <hr style="border: 5px solid #E6ECF0; margin:0">
@@ -194,12 +182,12 @@
               </div>
               <div class="name-account">
                 <a href="/users/{{this.id}}/tweets" class="text-muted">
-                <div class="name">{{this.name}}</div>
+                  <div class="name">{{this.name}}</div>
                 </a>
                 <div class="account">@{{this.account}}</div>
               </div>
               <div class="button">
-    
+
                 {{#if isSelf}}
                 {{else}}
                 {{#if isFollowed }}
@@ -216,20 +204,13 @@
           </li>
           {{/each}}
           {{!-- 使用者結束 --}}
-    
+
         </ul>
       </div>
-    
-    
-    
-    </div>
 
 
 
     </div>
-
-
-
   </div>
 </div>
 
@@ -243,9 +224,6 @@
 
 </div>
 {{!-- add-tweet Modal --}}
-
-
-
 
 
 <script>
