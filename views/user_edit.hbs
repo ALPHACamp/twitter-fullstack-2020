@@ -1,0 +1,23 @@
+<form action="/users/{{user.id}}/edit?_method=PUT" method="post">
+  <br>
+  <br>
+  <div class="form-label-group">
+    <label for="inputName">Name</label>
+    <input type="text" name="name" class="form-control" placeholder="Name" value="{{user.name}}" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <label for="inputName">Account</label>
+    <input type="text" name="account" class="form-control" placeholder="Account" value="{{user.account}}" required
+      autofocus>
+  </div>
+  <div class="form-label-group">
+    <label for="inputEmail">Email</label>
+    <input type="text" name="email" class="form-control" placeholder="Email" value="{{user.email}}" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <label for="inputPassword">Password</label>
+    <input type="password" name="password" class="form-control" placeholder="Password" required>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
