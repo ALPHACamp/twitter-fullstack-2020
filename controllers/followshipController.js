@@ -17,24 +17,26 @@ const followshipController = {
   getFollowers: async (req, res) => {
     const user = dummyuser;
     console.log("dummyuser: ", dummyuser);
-    // const followings = await User.findAll({
-    //   include: {
-    //     model: User,
-    //     as: "Followings",
-    //     where: { FollowingId: user.id },
-    //   },
-    // });
     User.findAll({
+      attributes: ["name", "account", "introduction"],
       //who follows me
       include: {
         model: User,
         as: "Followings",
         where: { id: user.id },
+        attributes: ["id"],
       },
     })
       .then((followers) => {
-        console.log("follower 1:", followers);
-        return res.json(followers);
+        followers.forEach((follower) => {
+          const arr = follower.Followings.map((el) => el.id);
+          if (arr.indexOf(user.id) > 0) follower.isFollowed = true;
+          else follower.isFollowed = false;
+        });
+        return followers;
+      })
+      .then((followers) => {
+        res.render("followship", { tagA: true, followers });
       })
       .catch((error) => res.status(400).json(error));
   },
