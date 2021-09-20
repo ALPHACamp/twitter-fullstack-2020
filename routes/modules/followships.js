@@ -3,6 +3,7 @@ const express = require("express");
 const followshipController = require("../../controllers/followshipController");
 const router = express.Router();
 const db = require("../../models");
+const { User, Tweet, Reply, Followship, Like } = db;
 
 router.get("/profile/:userId/followers", followshipController.getFollowers);
 router.get("/profile/:userId/followings", followshipController.getFollowings);

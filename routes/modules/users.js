@@ -16,8 +16,8 @@ router.get("/post", (req, res) => {
 router.get("/profile", (req, res) => {
   return res.render("profile");
 });
-router.get("/register", (req, res) => {
-  return res.render("register");
+router.get("/signin", (req, res) => {
+  return res.render("signin");
 });
 router.get("/setting", (req, res) => {
   return res.render("setting");

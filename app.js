@@ -2,18 +2,34 @@ const express = require("express");
 port = process.env.PORT || 3000;
 host = process.env.BASE_URL || "http://localhost";
 
-const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
-const Handlebars = require('handlebars')
+const {
+  allowInsecurePrototypeAccess,
+} = require("@handlebars/allow-prototype-access");
+const Handlebars = require("handlebars");
 const handlebars = require("express-handlebars");
 const helpers = require("./_helpers");
 const db = require("./models");
 
 const app = express();
 
-// use helpers.getUser(req) to replace req.user
+// 設定在測試環境下使用 helpers.getUser(req) 作為 req.user
+if (process.env.NODE_ENV === "test") {
+  app.use((req, res, next) => {
+    req.user = helpers.getUser(req);
+    next();
+  });
+}
+
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine(".hbs", handlebars({ extname: ".hbs", defaultLayout: "main", handlebars: allowInsecurePrototypeAccess(Handlebars) }));
+app.engine(
+  ".hbs",
+  handlebars({
+    extname: ".hbs",
+    defaultLayout: "main",
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
+  })
+);
 app.set("view engine", ".hbs");
 
 app.use(express.static("public"));

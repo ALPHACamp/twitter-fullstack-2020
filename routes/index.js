@@ -1,16 +1,49 @@
 const express = require("express");
 const router = express.Router();
 
+const passport = require("../config/passport");
 const usersRouter = require("./modules/users");
 const adminRouter = require("./modules/admin");
 const postsRouter = require("./modules/posts");
-const followsRouter = require("./modules/follows");
+const followshipRouter = require("./modules/followships");
 const homeRouter = require("./modules/home");
+const helpers = require("../_helpers");
 
-router.use("/users", usersRouter);
-router.use("/admin", adminRouter);
-router.use("/posts", postsRouter);
-router.use("/follows", followsRouter);
+const authenticated = (req, res, next) => {
+  if (process.env.NODE_ENV === "test") {
+    if (helpers.ensureAuthenticated(req)) {
+      return next();
+    }
+  } else {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+  }
+  res.redirect("/signin");
+};
+
+const authenticatedAdmin = (req, res, next) => {
+  if (process.env.NODE_ENV === "test") {
+    if (helpers.ensureAuthenticated(req)) {
+      if (helpers.getUser(req).isAdmin) {
+        return next();
+      }
+      return res.redirect("/");
+    }
+  }
+  if (req.isAuthenticated()) {
+    if (req.user.isAdmin) {
+      return next();
+    }
+    return res.redirect("/");
+  }
+  res.redirect("/signin");
+};
+
+router.use("/users", authenticated, usersRouter);
+router.use("/admin", authenticatedAdmin, adminRouter);
+router.use("/posts", authenticated, postsRouter);
+router.use("/followships", authenticated, followshipRouter);
 router.use("/", homeRouter);
 
 module.exports = router;
