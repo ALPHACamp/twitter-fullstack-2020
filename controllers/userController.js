@@ -525,7 +525,8 @@ const userController = {
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
       const usersFollowers = user.Followers.map(d => ({
         ...d.dataValues,
-        isFollowed: currentUser.Followings.map((d) => d.id).includes(d.dataValues.id)
+        isFollowed: currentUser.Followings.map((d) => d.id).includes(d.dataValues.id),
+        ...d.Followship,
       }))
       console.log(usersFollowers)
 
