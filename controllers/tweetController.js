@@ -3,7 +3,10 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const User = db.User
 const Like = db.Like
+
+const dayjs = require('dayjs')
 const helpers = require('../_helpers')
+
 
 
 const tweetController = {
@@ -75,8 +78,29 @@ const tweetController = {
       console.warn(err)
     }   
   },
-  getTweet: (req, res) => {
-
+  getTweet: async (req, res) => {
+    try {
+      const tweet = await Tweet.findByPk(req.params.tweetId, {
+        include: [
+          { model: Reply, include: [User] },
+          User,
+          Like
+        ]
+      })
+      const tweetJson = tweet.toJSON()
+      tweetJson.amPm = dayjs(`${tweetJson.createdAt}`).format('A') === 'PM' ? '下午' : '上午'
+      tweetJson.hourMinute = dayjs(`${tweetJson.createdAt}`).format('HH:mm')
+      tweetJson.year = dayjs(`${tweetJson.createdAt}`).format('YYYY')
+      tweetJson.month = dayjs(`${tweetJson.createdAt}`).format('M')
+      tweetJson.day = dayjs(`${tweetJson.createdAt}`).format('D')
+      tweetJson.isLiked = req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweetJson.id)
+      const tweetReplies = tweetJson.Replies.map(reply => ({
+        ...reply
+      }))
+      res.render('tweet', { tweetReplies, tweet: tweetJson })
+    } catch(err) {
+      console.warn(err)
+    }
   }, 
   postReplies: async (req, res) => {
     try {

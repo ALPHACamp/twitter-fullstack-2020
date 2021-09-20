@@ -1,0 +1,159 @@
+<div class="row">
+  {{> homeNavBar}}
+  <div class="tweets col d-flex flex-column mx-4" id="tweet">
+    <div class="p-2">
+      <a href="javascript:history.back()"><i class="fas fa-arrow-left me-4" style="color: #1C1C1C;"></i></a>
+      <span class="tweet-word">推文</span>
+    </div>
+    <div class="tweet-block d-flex flex-column">
+      <div class="d-flex">
+        <div>
+          <a href="/users/{{tweet.User.id}}/tweets">
+            <img class="rounded-circle" src="{{tweet.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+          </a>
+        </div>
+        <div class="tweet-name-account">
+          <a href="/users/{{tweet.User.id}}/tweets">
+            <p class="tweet-name">&nbsp;&nbsp;{{tweet.User.name}}<br />&nbsp;&nbsp;<span class="tweet-account">{{tweet.User.account}}</span></p>
+          </a>
+        </div>
+      </div>
+      <div class="tweet-description-block">
+        <p class="tweet-description">{{tweet.description}}</p>
+      </div>
+      <div class="tweet-time">{{tweet.amPm}}&nbsp;{{tweet.hourMinute}}・{{tweet.year}}年{{tweet.month}}月{{tweet.day}}日</div>
+    </div>
+    <div class="tweet-reply-like-count">
+      <span class="tweet-reply-count">{{tweetReplies.length}}&nbsp;</span>
+      <span class="tweet-like-count ms-3" id="tweet-like-count">{{tweet.Likes.length}}&nbsp;</span>
+    </div>
+    <div class="d-flex tweet-icon">
+      <div class="">
+        <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"></i>
+      </div>
+      <div  class="tweet-like" id="tweet-like">
+        {{#if tweet.isLiked}}
+        <i class="unlike-icon fas fa-heart" data-id="{{tweet.id}}"></i>
+        {{else}}
+        <i class="like-icon far fa-heart" data-id="{{tweet.id}}"></i>
+        {{/if}}
+      </div>
+    </div>
+    {{#each tweetReplies}}
+    <div class="tweets-article d-flex">
+      <div class="">
+        <a href="/users/{{this.User.id}}/tweets">
+          <img class="rounded-circle" src="{{this.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+        </a>
+      </div>
+      <div class="d-flex flex-column tweet-article">
+        <div>
+          <a href="/users/{{this.User.id}}/tweets">
+            <span class="name">{{this.User.name}}</span>
+            <span class="account">&nbsp;{{this.User.account}}</span>
+          </a>
+          <span class="time"><b>•</b>&nbsp;{{moment this.User.createdAt}}</span>
+        </div>
+        <div>
+          <span class="reply-to">回覆</span>
+          <span class="reply-account">&nbsp;{{this.User.account}}</span>
+        </div>
+        <p class="content">{{this.comment}}</p>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{> popular}}
+</div>
+
+
+<!-- tweet reply Modal -->
+<div class="modal fade" id="tweetReplyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content tweet-modal-content">
+      <div class="tweet-modal-head">
+        <button type="button" class="btn-close tweet-modal-close-btn" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <div class="tweets-article reply-modal d-flex">
+        <div class="" id="tweet-reply-modal-avatar">
+          <a href="/users/{{tweet.UserId}}/tweets">
+            <img class="rounded-circle" src="{{tweet.User.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+          </a>
+        </div>
+        <div class="d-flex flex-column tweet-article">
+          <div id="tweet-reply-modal-name">
+            <a href="/users/{{tweet.UserId}}/tweets">
+              <span class="name">{{tweet.User.name}}</span>
+              <span class="account">&nbsp;{{tweet.User.account}}</span>
+            </a>
+            <span class="time"><b>•</b>&nbsp;{{moment tweet.createdAt}}</span>
+          </div>
+          <p class="content" id="tweet-reply-modal-description">{{tweet.description}}</p>
+          <div class="mt-2" id="tweet-reply-modal-account">
+            <span class="reply-to">回覆給</span>
+            <span class="reply-account">&nbsp;{{tweet.User.account}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="tweet-modal-body d-flex">
+        <div class="tweet-modal-img">
+          <img class="rounded-circle" src="{{user.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
+        </div>
+        <div class="w-100" id="tweet-reply-modal-reply">
+          <form class="needs-validation" action="/tweets/{{tweet.id}}/replies" method="POST" novalidate>
+            <textarea class="form-control tweet-modal-textarea w-100" id="comment" name="comment" rows="9"
+              placeholder="推你的回覆" required></textarea>
+            <div class="tweet-modal-textarea-feedback invalid-feedback">
+              內文不可以空白
+            </div>
+            <button type="submit" class="btn rounded-pill fw-bolder common-button tweet-modal-tweet-btn"
+              onclick="return(confirm('確認回覆了嗎？'))">
+              回覆
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const tweetLike = document.querySelector('#tweet-like')
+  const tweetLikeCount = document.querySelector('#tweet-like-count')
+  const baseURL = 'http://localhost:3000'
+
+  tweetLike.addEventListener('click', function onIconClicked(event) {
+    tweetId = event.target.dataset.id
+    if (event.target.matches('.like-icon')) {
+      console.log(event.target)
+      axios.post(`${baseURL}/tweets/${tweetId}/like`)
+        .then(message => {
+          console.log('post like路由通囉且回傳囉', message)
+          event.target.classList.toggle("like-icon")
+          event.target.classList.toggle("unlike-icon")
+          event.target.classList.toggle("fas")
+          event.target.classList.toggle("far")
+          let likePlus = Number(tweetLikeCount.innerText)
+          likePlus += 1
+          tweetLikeCount.innerText = likePlus
+        })
+    }
+
+    if (event.target.matches('.unlike-icon')) {
+      console.log(event.target)
+      axios.post(`${baseURL}/tweets/${tweetId}/unlike?_method=DELETE`)
+        .then(message => {
+          console.log('post unlike路由通囉且回傳囉', message)
+          event.target.classList.toggle("like-icon")
+          event.target.classList.toggle("unlike-icon")
+          event.target.classList.toggle("fas")
+          event.target.classList.toggle("far")
+          let likePlus = Number(tweetLikeCount.innerText)
+          likePlus -= 1
+          tweetLikeCount.innerText = likePlus
+        })
+    }
+  })
+</script>

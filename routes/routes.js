@@ -30,6 +30,7 @@ router.get('/', authenticated, (req, res) => {res.redirect('/tweets')})
 
 // tweets相關路由
 router.get('/tweets', authenticated, tweetController.getTweets)
+router.get('/tweets/:tweetId/replies', authenticated, tweetController.getTweet)
 router.post('/tweets', authenticated, tweetController.addTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetController.postReplies)
 router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)

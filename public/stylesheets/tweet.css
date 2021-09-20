@@ -1,0 +1,93 @@
+.tweets .tweet-word {
+  color: #1c1c1c;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.tweet-block{
+  border-width: 1px 0px 1px 0px;
+  border-style: solid;
+  border-color: #e6ecf0;
+  padding: 15px;
+}
+
+.tweet-block .tweet-name{
+  line-height: 18px;
+  color: #1c1c1c;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.tweet-block .tweet-account{
+  line-height: 18px;
+  color: #657786;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.tweet-name-account{
+  margin: auto 0;
+}
+
+.tweet-block .tweet-description-block{
+  width: 90%;
+  padding-top: 15px;
+}
+
+.tweet-block .tweet-description{
+  color: #1C1C1C;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.tweet-block .tweet-time{
+  padding: 15px 0px 0px 0px;
+  color: #657786;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.tweet-reply-count,
+.tweet-like-count
+{
+  color: #000000;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.tweet-reply-like-count{
+  padding: 20px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #e6ecf0;
+}
+
+.tweet-reply-count::after{
+  content: '回覆';
+  color: #657786;
+}
+
+.tweet-like-count::after{
+  content: '喜歡次數';
+  color: #657786;
+}
+
+.tweet-icon{
+  padding: 20px 17px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #e6ecf0;
+}
+
+.tweet-icon .tweet-like{
+  margin-left: 155px;
+}
+
+.tweet-icon .reply-icon,
+.tweet-icon .unlike-icon,
+.tweet-icon .like-icon
+{
+  color: #657786;
+  cursor: pointer;
+  font-size: 25px;
+}
