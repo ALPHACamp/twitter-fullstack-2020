@@ -25,4 +25,7 @@ router.get("/setting", (req, res) => {
 router.get("/followship", (req, res) => {
   return res.render("followship");
 });
+router.get("/followships", (req, res) => {
+  return res.render("admin/followships");
+});
 module.exports = router;

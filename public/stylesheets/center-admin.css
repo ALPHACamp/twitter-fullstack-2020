@@ -1,0 +1,28 @@
+.profile-container.fluid {
+  flex-grow: 1;
+  width: auto;
+  max-width: unset;
+  margin: 0;
+}
+
+.post-card3 {
+  flex: 0 0 35px;
+  width: 35px;
+  margin-left: auto;
+  padding-top: 20px;
+  padding-right: 20px;
+}
+.post-card3 .btn-close {
+  padding: 0;
+  height: 15px;
+  width: 15px;
+}
+.post-card3 .btn-close i {
+  font-size: 15px;
+}
+
+.admin-comments {
+  display: block;
+  width: 533px;
+  font-size: 15px;
+}
