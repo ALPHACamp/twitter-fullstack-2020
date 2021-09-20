@@ -11,18 +11,18 @@ const loginController = require('../controllers/loginController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 
-const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    return next()
-  }
-  res.redirect('/signin')
-}
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser.role) { return next() }
-  }
-  res.redirect('/admin/signin')
-}
+// const authenticated = (req, res, next) => {
+//   if (helpers.ensureAuthenticated(req)) {
+//     return next()
+//   }
+//   res.redirect('/signin')
+// }
+// const authenticatedAdmin = (req, res, next) => {
+//   if (helpers.ensureAuthenticated(req)) {
+//     if (helpers.getUser.role) { return next() }
+//   }
+//   res.redirect('/admin/signin')
+// }
 
 
 // 如果使用者訪問首頁，就導向 /restaurants 的頁面
@@ -32,6 +32,8 @@ router.get('/', authenticated, (req, res) => {res.redirect('/tweets')})
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.post('/tweets', authenticated, tweetController.addTweet)
 router.post('/tweets/:tweetId/replies', authenticated, tweetController.postReplies)
+router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
+router.delete('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
 
 // User
 // signin
@@ -57,9 +59,13 @@ router.delete('/followships/:userId', authenticated, followshipController.remove
 
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweets)
 
+
 // tweets
 router.get('/tweets', authenticated, tweetController.getTweets)
 
+
+
+ 
 
 // users
 //以下都還要加userid

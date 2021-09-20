@@ -36,15 +36,19 @@ const tweetController = {
         ],
         order: [['createdAt', 'DESC']]
       })
+
       //console.log('get tweets:', tweets[1].dataValues.User.name)
+
       const reorganizationTweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         userName: tweet.User.name,
         userAccount: tweet.User.account,
         userAvatar: tweet.User.avatar,
         replyLength: tweet.Replies.length,
-        likeLength: tweet.Likes.length
+        likeLength: tweet.Likes.length,
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
+
       //console.log('mapping tweet:', reorganizationTweets)
       return res.render('tweets', { reorganizationTweets, user, userself })
     } catch(err) {
@@ -93,11 +97,30 @@ const tweetController = {
     }
     
   },
-  addLike: (req, res) => {
-
+  addLike: async (req, res) => {
+    try {
+      await Like.create({
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      })
+      return res.json({status: 'success', message: 'add likes'})
+    } catch(err) {
+      console.warn(err)
+    }
   }, 
-  removeLike: (req, res) =>{
-
+  removeLike: async (req, res) =>{
+    try {
+      const like = await Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId: req.params.tweetId
+        }
+      })
+      await like.destroy()
+      return res.json({ status: 'success', message: 'remove likes' })
+    } catch(err) {
+      console.warn(err)
+    }
   }
 }
 

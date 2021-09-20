@@ -46,10 +46,16 @@ p {
 }
 
 .reply-icon,
-.like-icon {
+.like-icon,
+.like-number {
   color: #657786;
   font-size: 0.8rem;
   font-weight: 500;
+  cursor: pointer;
+}
+
+.unlike-icon{
+  color: #E0245E;
   cursor: pointer;
 }
 
@@ -235,13 +241,15 @@ max-width: 600px;
 } 
 
 .tweet-followfhip .follow-btn{
-  Font: Noto Sans TC;
-  font-weight: 700;
-  Font-style:normal;
-  Size:15px;
-  Line-height :15px;
-}
 
+  
+ 
+Font-family: Noto Sans TC;
+font-weight: 700;
+Font-style:normal;
+size:15px;
+line-height :15px;
+}
 
 /*====================== tweet modal區 ======================*/
 
