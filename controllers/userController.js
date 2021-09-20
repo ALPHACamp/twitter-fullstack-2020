@@ -5,213 +5,222 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
+const userModal = document.querySelector('#userModal')
+
+userModal.addEventListener('click', function onPanelClicked(event) {
+  if (event.target.matches('.btn-userModal')) {
+    showMovieModal(event.target.dataset.id)
+  }
 
 
+  const userController = {
+    getSignup: (req, res) => {
+      return res.render('signup', { layout: 'userMain' })
+    },
 
-const userController = {
-  getSignup: (req, res) => {
-    return res.render('signup', { layout: 'userMain' })
-  },
+    postSignup: (req, res) => {
+      if (req.body.password !== req.body.confirmPassword) {
+        req.flash('error_messages', '兩次密碼輸入不符！')
+        res.redirect('/users/signup')
+      } else {
+        User.findOne({ where: { email: req.body.email } })
+          .then(user => {
+            if (user) {
+              req.flash('error_messages', '此信箱已註冊過！')
+              res.redirect('/users/signup')
+            } else {
+              User.create({
+                account: req.body.account,
+                name: req.body.name,
+                email: req.body.email,
+                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+              }).then(user => {
+                req.flash('success_messages', '註冊成功！')
+                return res.redirect('/users/login')
+              })
+            }
+          })
+      }
+    },
 
-  postSignup: (req, res) => {
-    if (req.body.password !== req.body.confirmPassword) {
-      req.flash('error_messages', '兩次密碼輸入不符！')
-      res.redirect('/users/signup')
-    } else {
-      User.findOne({ where: { email: req.body.email } })
-        .then(user => {
-          if (user) {
-            req.flash('error_messages', '此信箱已註冊過！')
-            res.redirect('/users/signup')
-          } else {
-            User.create({
-              account: req.body.account,
-              name: req.body.name,
-              email: req.body.email,
-              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-            }).then(user => {
-              req.flash('success_messages', '註冊成功！')
-              return res.redirect('/users/login')
+    getLogin: (req, res) => {
+      return res.render('userLogin', { layout: 'userMain' })
+    },
+
+    postLogin: (req, res) => {
+      res.redirect('/twitters')
+    },
+
+    logout: (req, res) => {
+      req.flash('success_messages', '登出成功')
+      req.logout()
+      res.redirect('/users/login')
+    },
+
+    getUser: (req, res) => {
+      const whereQuery = {}
+      whereQuery.userId = Number(req.params.id)
+
+      Tweet.findAndCountAll({
+        include: [
+          User,
+          Reply,
+          Like
+        ],
+        where: whereQuery,
+        order: [['createdAt', 'DESC']],
+      }).then(result => {
+        const totalTweet = result.rows.length
+        const data = result.rows.map(r => ({
+          ...r.dataValues,
+          content: r.dataValues.content,
+          replyCount: r.dataValues.Replies.length,
+          likeCount: r.dataValues.Likes.length
+        }))
+
+        Followship.findAndCountAll({
+          raw: true,
+          nest: true,
+        }).then(result => {
+          const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
+          const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
+
+          User.findByPk(req.params.id)
+            .then(user => {
+              return res.render('self', {
+                user: user.toJSON(),
+                totalTweet: totalTweet,
+                tweet: data,
+                followerCount: followerCount.length,
+                followingCount: followingCount.length
+              })
             })
-          }
+        })
+      })
+    },
+
+    getUserReply: (req, res) => {
+      const whereQuery = {}
+      whereQuery.userId = Number(req.params.id)
+
+      Reply.findAndCountAll({
+        include: [
+          { model: Tweet, include: [User] }
+        ],
+        where: whereQuery,
+        order: [['createdAt', 'DESC']],
+      }).then(result => {
+        const data = result.rows.map(r => ({
+          ...r.dataValues,
+          content: r.dataValues.content,
+          replyUserAccount: r.dataValues.Tweet.dataValues.User.account
+        }))
+        Tweet.findAndCountAll({
+          where: whereQuery,
+        }).then(result => {
+          const totalTweet = result.rows.length
+
+          Followship.findAndCountAll({
+            raw: true,
+            nest: true,
+          }).then(result => {
+            const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
+            const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
+
+            User.findByPk(req.params.id)
+              .then(user => {
+                return res.render('selfReply', {
+                  user: user.toJSON(),
+                  totalTweet: totalTweet,
+                  Reply: data,
+                  followerCount: followerCount.length,
+                  followingCount: followingCount.length
+                })
+              })
+          })
+        })
+      })
+    },
+
+    getUserLike: (req, res) => {
+      const whereQuery = {}
+      whereQuery.userId = Number(req.params.id)
+
+      Like.findAndCountAll({
+        include: [
+          { model: Tweet, include: [User, Reply, Like] }
+        ],
+        where: whereQuery,
+        order: [['createdAt', 'DESC']],
+      }).then(result => {
+        console.log(result.rows[0].dataValues.Tweet)
+        const data = result.rows.map(r => ({
+          ...r.dataValues,
+          content: r.dataValues.Tweet.dataValues.content,
+          createdAt: r.dataValues.Tweet.dataValues.creatAt,
+          likeAvatar: r.dataValues.Tweet.dataValues.User.avatar,
+          likeUserName: r.dataValues.Tweet.dataValues.User.name,
+          likeUserAccount: r.dataValues.Tweet.dataValues.User.account,
+          replyCount: r.dataValues.Tweet.dataValues.Replies.length,
+          likeCount: r.dataValues.Tweet.dataValues.Likes.length
+        }))
+        Tweet.findAndCountAll({
+          where: whereQuery,
+        }).then(result => {
+          const totalTweet = result.rows.length
+
+          Followship.findAndCountAll({
+            raw: true,
+            nest: true,
+          }).then(result => {
+            const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
+            const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
+
+            User.findByPk(req.params.id)
+              .then(user => {
+                return res.render('selfLike', {
+                  user: user.toJSON(),
+                  totalTweet: totalTweet,
+                  Like: data,
+                  followerCount: followerCount.length,
+                  followingCount: followingCount.length
+                })
+              })
+          })
+        })
+      })
+    },
+
+    getUserModal: (req, res) => {
+
+    },
+
+    getUserSetting: (req, res) => {
+      const id = req.user.id
+
+      User.findByPk(id)
+        .then(user => {
+          return res.render('setting', {
+            layout: 'settingMain',
+            user: user.toJSON()
+          })
+        })
+    },
+
+    putUserSetting: (req, res) => {
+      const { account, name, email, password } = req.body
+      User.findByPk(req.params.id)
+        .then(user => {
+          user.update({
+            account,
+            name,
+            email,
+            password
+          }).then(user => {
+            return res.redirect(`/users/self/${user.id}`)
+          })
         })
     }
-  },
-
-  getLogin: (req, res) => {
-    return res.render('userLogin', { layout: 'userMain' })
-  },
-
-  postLogin: (req, res) => {
-    res.redirect('/twitters')
-  },
-
-  logout: (req, res) => {
-    req.flash('success_messages', '登出成功')
-    req.logout()
-    res.redirect('/users/login')
-  },
-
-  getUser: (req, res) => {
-    const whereQuery = {}
-    whereQuery.userId = Number(req.params.id)
-
-    Tweet.findAndCountAll({
-      include: [
-        User,
-        Reply,
-        Like
-      ],
-      where: whereQuery,
-      order: [['createdAt', 'DESC']],
-    }).then(result => {
-      const totalTweet = result.rows.length
-      const data = result.rows.map(r => ({
-        ...r.dataValues,
-        content: r.dataValues.content,
-        replyCount: r.dataValues.Replies.length,
-        likeCount: r.dataValues.Likes.length
-      }))
-
-      Followship.findAndCountAll({
-        raw: true,
-        nest: true,
-      }).then(result => {
-        const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
-        const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
-
-        User.findByPk(req.params.id)
-          .then(user => {
-            return res.render('self', {
-              user: user.toJSON(),
-              totalTweet: totalTweet,
-              tweet: data,
-              followerCount: followerCount.length,
-              followingCount: followingCount.length
-            })
-          })
-      })
-    })
-  },
-
-  getUserReply: (req, res) => {
-    const whereQuery = {}
-    whereQuery.userId = Number(req.params.id)
-
-    Reply.findAndCountAll({
-      include: [
-        { model: Tweet, include: [User] }
-      ],
-      where: whereQuery,
-      order: [['createdAt', 'DESC']],
-    }).then(result => {
-      const data = result.rows.map(r => ({
-        ...r.dataValues,
-        content: r.dataValues.content,
-        replyUserAccount: r.dataValues.Tweet.dataValues.User.account
-      }))
-      Tweet.findAndCountAll({
-        where: whereQuery,
-      }).then(result => {
-        const totalTweet = result.rows.length
-
-        Followship.findAndCountAll({
-          raw: true,
-          nest: true,
-        }).then(result => {
-          const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
-          const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
-
-          User.findByPk(req.params.id)
-            .then(user => {
-              return res.render('selfReply', {
-                user: user.toJSON(),
-                totalTweet: totalTweet,
-                Reply: data,
-                followerCount: followerCount.length,
-                followingCount: followingCount.length
-              })
-            })
-        })
-      })
-    })
-  },
-
-  getUserLike: (req, res) => {
-    const whereQuery = {}
-    whereQuery.userId = Number(req.params.id)
-
-    Like.findAndCountAll({
-      include: [
-        { model: Tweet, include: [User, Reply, Like] }
-      ],
-      where: whereQuery,
-      order: [['createdAt', 'DESC']],
-    }).then(result => {
-      console.log(result.rows[0].dataValues.Tweet)
-      const data = result.rows.map(r => ({
-        ...r.dataValues,
-        content: r.dataValues.Tweet.dataValues.content,
-        createdAt: r.dataValues.Tweet.dataValues.creatAt,
-        likeAvatar: r.dataValues.Tweet.dataValues.User.avatar,
-        likeUserName: r.dataValues.Tweet.dataValues.User.name,
-        likeUserAccount: r.dataValues.Tweet.dataValues.User.account,
-        replyCount: r.dataValues.Tweet.dataValues.Replies.length,
-        likeCount: r.dataValues.Tweet.dataValues.Likes.length
-      }))
-      Tweet.findAndCountAll({
-        where: whereQuery,
-      }).then(result => {
-        const totalTweet = result.rows.length
-
-        Followship.findAndCountAll({
-          raw: true,
-          nest: true,
-        }).then(result => {
-          const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
-          const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
-
-          User.findByPk(req.params.id)
-            .then(user => {
-              return res.render('selfLike', {
-                user: user.toJSON(),
-                totalTweet: totalTweet,
-                Like: data,
-                followerCount: followerCount.length,
-                followingCount: followingCount.length
-              })
-            })
-        })
-      })
-    })
-  },
-
-  getUserSetting: (req, res) => {
-    const id = req.user.id
-
-    User.findByPk(id)
-      .then(user => {
-        return res.render('setting', {
-          layout: 'settingMain',
-          user: user.toJSON()
-        })
-      })
-  },
-
-  putUserSetting: (req, res) => {
-    const { account, name, email, password } = req.body
-    User.findByPk(req.params.id)
-      .then(user => {
-        user.update({
-          account,
-          name,
-          email,
-          password
-        }).then(user => {
-          return res.redirect(`/users/self/${user.id}`)
-        })
-      })
   }
-}
 
-module.exports = userController
+  module.exports = userController

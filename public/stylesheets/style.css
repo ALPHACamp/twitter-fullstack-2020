@@ -38,3 +38,9 @@ html, body{
   border-bottom: 2px solid #FF6600 !important;
 }
 
+.editInput{
+  background-color: #F5F8FA;
+  border: 0px;
+  border-radius: 0px 0px 4px 4px;
+  border-bottom: 2px solid #657786;
+}
