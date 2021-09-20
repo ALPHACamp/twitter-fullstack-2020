@@ -22,7 +22,9 @@
           <h5 class="d-inline-block post-title">{{this.User.name}}&nbsp;<span
               class="post-sub-info">{{this.User.account}} ‧
               {{this.createdAt}}</span></h5>
-          <p class="post-text">{{this.description}}</p>
+                <a href="/posts/{{this.id}}">
+          <p class="post-text" >{{this.description}}</p>
+          </a>
           <p class="post-sub-info"><span class="post-icon-block"><i
                 class="bi bi-chat"></i>{{this.ReplyCount}}</span><span class="post-icon-block"><i
                 class="bi bi-heart"></i>{{this.LikedCount}}</span></p>

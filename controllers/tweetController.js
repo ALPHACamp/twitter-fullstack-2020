@@ -41,20 +41,40 @@ const tweetController = {
     }
   },
 
-  getPost: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [
-        { model: User, as: 'LikedUsers' },
-        { model: Reply, include: [User] }
-      ]
-    }).then(tweet => {
+  getPost: async (req, res) => {
+    try {
+      const tweet = await Tweet.findByPk(req.params.id, {
+        include: [
+          User,
+          { model: User, as: 'LikedUsers' },
+          { model: Reply, include: [User] }
+        ]
+      })
       const ReplyCount = tweet.Replies.length
       const LikedCount = tweet.LikedUsers.length
       Replies = tweet.Replies.sort((a, b) => b.createdAt - a.createdAt)
       LikedUsers = tweet.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt)
-      return res.json({ tweet, ReplyCount, LikedCount })
-    })
+      const createdTimeFromNow = moment(tweet.createdAt).fromNow()
+      const createdTimeByReply = moment(tweet.Replies.createdAt).fromNow()
+      const rawUsers = await User.findAll({
+        include: [
+          { model: User, as: 'Followers' }
+        ],
+      })
+      let Users = await rawUsers.map(data => ({
+        ...data.dataValues,
+        FollowerCount: data.Followers.length,
+      }))
+      Users = Users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      const TopUsers = Users.slice(0, 10)
+
+      // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers, createdTimeFromNow, createdTimeByReply})
+      return res.render("post", { tweet, ReplyCount, LikedCount, users: TopUsers, createdTimeFromNow, createdTimeByReply })
+    } catch (error) {
+      return console.log(error)
+    }
   },
+
   postTweet: (req, res) => {
     const { description } = req.body
     if (!description) {
