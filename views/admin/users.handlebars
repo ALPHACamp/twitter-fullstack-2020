@@ -7,7 +7,7 @@
             <img src="https://i.imgur.com/ZUJriDp.png" id="ac-logo">
           </div>
           <div class="buttonList mt-5">
-            <div class="navItem index d-flex mb-4　">
+            <div class="navItem index d-flex mb-4">
               <div class="icon d-flex align-items-center">
                 <i class="fas fa-home my-auto"></i>
               </div>
@@ -36,11 +36,34 @@
         </div>
 
         <div class="users border-top border-5">
-
-
-
-
+          <div class="row">
+            {{#each users}}
+            <div class="col-3">
+              <div class="card userCard mb-2">
+                <img src="{{this.cover}}" class="card-img-top userCover">
+                <div class="userAvatar mx-auto">
+                  <img src=" {{this.avatar}}" class="avatar rounded-circle">
+                </div>
+                <div class="card-body userCardBody text-center">
+                  <p class="fw-bold mb-1 lh-1">{{this.name}}
+                  </p>
+                  <p class="text-secondary color-gray mb-1 lh-1">@{{this.account}}
+                  </p>
+                  <div class="dataInfo d-flex justify-content-center">
+                    <div class="tweetInfo d-flex justify-content-between" style="width: 45%;">
+                      <div>
+                        <span><i class="far fa-comment color-gray"></i></span> {{this.tweetCount}}
+                      </div>
+                      <div>
+                        <span><i class="far fa-heart color-gray"></i></span> {{this.likeCount}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </div>
         </div>
       </div>
     </div>
-  </div>

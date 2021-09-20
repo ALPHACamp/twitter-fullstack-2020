@@ -3,6 +3,7 @@ const Tweet = db.Tweet
 const User = db.User
 const Like = db.Like
 const Reply = db.Reply
+const Followship = db.Followship
 
 const maxDescLen = 50
 
@@ -75,7 +76,7 @@ const adminController = {
     // })
 
     await Like.destroy({ where: { TweetID } })
-    // await Reply.destroy({ where: { TweetID } })
+    await Reply.destroy({ where: { TweetID } })
     await Tweet.destroy({ where: { id: TweetID } })
 
     // await Like.findAll({
@@ -110,14 +111,51 @@ const adminController = {
 
   // 列出所有使用者
   getUsers: (req, res) => {
-    User.findAll({
-      raw: true,
-      nest: true
-    }).then(users => {
-      console.log(users)
-      res.render('admin/users')
+    Promise.all([
+      User.findAll({
+        include: [
+          { model: User, as: 'Followers' },
+          Tweet
+        ],
+        where: { isAdmin: false }
+      }),
+      Tweet.findAll({
+        raw: true,
+        nest: true,
+        include: [Like]
+      })
+    ]).then(([users, tweets]) => {
+
+      const usersData =
+        users.map(user => ({
+          ...user.dataValues,
+          tweetCount: user.Tweets.length,
+          // tweetCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).length,
+          likeCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).reduce((accumulator, currentValue) => {
+            // console.log("===================")
+            // console.log("tweetid:", currentValue.id)
+            // console.log("accumulator:", accumulator)
+            // console.log("currentlikes:", currentValue.Likes)
+            let addCount = currentValue.Likes.UserId ? 1 : 0
+            // console.log("currentValue:", addCount)
+            // console.log("return:", accumulator + addCount)
+            return accumulator + addCount
+          }, 0)
+          // likeCount: user.Tweets.reduce((accumulator, currentValue) => {
+          //   console.log("===================")
+          //   console.log("tweetid:", currentValue.dataValues.id)
+          //   console.log("accumulator:", accumulator)
+          //   console.log("currentlikes:", currentValue.dataValues.Likes)
+          //   console.log("currentValue:", currentValue.dataValues.Likes.length)
+          //   console.log("return:", accumulator + currentValue.dataValues.Likes.length)
+          //   return accumulator + currentValue.dataValues.Likes.length
+          // }, 0)
+        }))
+      console.log(usersData)
+      res.render('admin/users', { users: usersData })
     })
   }
 }
+
 
 module.exports = adminController
