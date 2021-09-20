@@ -21,22 +21,21 @@
       <div class="tweet-description-block">
         <p class="tweet-description">{{tweet.description}}</p>
       </div>
-      <div class="tweet-time">{{moment tweet.createdAt}}</div>
+      <div class="tweet-time">{{tweet.amPm}}&nbsp;{{tweet.hourMinute}}・{{tweet.year}}年{{tweet.month}}月{{tweet.day}}日</div>
     </div>
     <div class="tweet-reply-like-count">
       <span class="tweet-reply-count">{{tweetReplies.length}}&nbsp;</span>
-      <span class="tweet-like-count ms-3">{{tweet.Likes.length}}&nbsp;</span>
+      <span class="tweet-like-count ms-3" id="tweet-like-count">{{tweet.Likes.length}}&nbsp;</span>
     </div>
     <div class="d-flex tweet-icon">
       <div class="">
-        <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"
-          data-id="{{this.id}}"></i>
+        <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"></i>
       </div>
       <div  class="tweet-like" id="tweet-like">
-        {{#if this.isLiked}}
-        <i class="unlike-icon fas fa-heart" data-id="{{this.id}}"></i>
+        {{#if tweet.isLiked}}
+        <i class="unlike-icon fas fa-heart" data-id="{{tweet.id}}"></i>
         {{else}}
-        <i class="like-icon far fa-heart" data-id="{{this.id}}"></i>
+        <i class="like-icon far fa-heart" data-id="{{tweet.id}}"></i>
         {{/if}}
       </div>
     </div>
@@ -121,5 +120,40 @@
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+  const tweetLike = document.querySelector('#tweet-like')
+  const tweetLikeCount = document.querySelector('#tweet-like-count')
+  const baseURL = 'http://localhost:3000'
 
+  tweetLike.addEventListener('click', function onIconClicked(event) {
+    tweetId = event.target.dataset.id
+    if (event.target.matches('.like-icon')) {
+      console.log(event.target)
+      axios.post(`${baseURL}/tweets/${tweetId}/like`)
+        .then(message => {
+          console.log('post like路由通囉且回傳囉', message)
+          event.target.classList.toggle("like-icon")
+          event.target.classList.toggle("unlike-icon")
+          event.target.classList.toggle("fas")
+          event.target.classList.toggle("far")
+          let likePlus = Number(tweetLikeCount.innerText)
+          likePlus += 1
+          tweetLikeCount.innerText = likePlus
+        })
+    }
+
+    if (event.target.matches('.unlike-icon')) {
+      console.log(event.target)
+      axios.post(`${baseURL}/tweets/${tweetId}/unlike?_method=DELETE`)
+        .then(message => {
+          console.log('post unlike路由通囉且回傳囉', message)
+          event.target.classList.toggle("like-icon")
+          event.target.classList.toggle("unlike-icon")
+          event.target.classList.toggle("fas")
+          event.target.classList.toggle("far")
+          let likePlus = Number(tweetLikeCount.innerText)
+          likePlus -= 1
+          tweetLikeCount.innerText = likePlus
+        })
+    }
+  })
 </script>
