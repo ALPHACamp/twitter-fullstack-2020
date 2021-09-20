@@ -14,7 +14,6 @@ const tweetController = {
   //顯示所有貼文
   getTweets: (req, res) => {
     const currentUser = helpers.getUser(req)
-
     return Promise.all([
       Tweet.findAll({
         include: [
@@ -39,7 +38,7 @@ const tweetController = {
         tweets = tweets.map(r => ({
           ...r.dataValues,
           User: r.User.dataValues,
-          isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
+          isLiked: currentUser.LikedTweets.map(d => d.id).includes(r.id),
           Likes: r.Likes.length,
           Replies: r.Replies.length,
         }))
@@ -53,11 +52,11 @@ const tweetController = {
           avatar: user.FollowingLinks.avatar,
           followersCount: user.count,
           isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
-          isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
+          // isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
         }))
 
         return res.render('index', {
-          tweets: tweets,
+          tweets,
           topUsers,
           currentUser
         })
@@ -113,7 +112,7 @@ const tweetController = {
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           currentUser: helpers.getUser(req),
-          like: req.user.LikedTweets.map(d => d.id).includes(tweet.id),
+          like: currentUser.LikedTweets.map(d => d.id).includes(tweet.id),
           topUsers
         })
       })
@@ -122,10 +121,11 @@ const tweetController = {
   //回文相關
   //回覆特定貼文
   createReply: (req, res) => {
+    const currentUser = helpers.getUser(req)
     return Reply.create({
       comment: req.body.comment,
       TweetId: req.body.TweetId,
-      UserId: req.user.id
+      UserId: currentUser.id
     })
       .then((reply) => {
         res.redirect('back')
@@ -148,9 +148,10 @@ const tweetController = {
   //Like & Unlike
   //喜歡特定貼文
   addLike: (req, res) => {
+    const currentUserId = helpers.getUser(req).id
     return Like.create({
-      UserId: req.user.id,
-      TweetId: req.params.id
+      UserId: currentUserId,
+      TweetId: req.params.user_id
     })
       .then((like) => {
         return res.redirect('back')
@@ -158,9 +159,10 @@ const tweetController = {
   },
   //取消喜歡特定貼文
   removeLike: (req, res) => {
+    const currentUserId = helpers.getUser(req).id
     return Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: currentUserId,
         TweetId: req.params.id
       }
     })
