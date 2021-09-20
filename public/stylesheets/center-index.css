@@ -33,7 +33,8 @@ a {
   background: #fff;
   border: 1px solid #e6ecf0;
 }
-.profile-container .profile-nav h3 {
+.profile-container .profile-nav h3,
+.profile-container .profile-nav h3::before {
   color: #1c1c1c;
   line-height: 55px;
   margin: 0 15px;
@@ -197,7 +198,7 @@ a {
 .modal-body {
   padding: 0;
   position: relative;
-  background-color: pink;
+  background-color: rgb(255, 255, 255);
   border-radius: 5px;
   overflow: hidden;
 }
@@ -209,4 +210,8 @@ a {
   width: 598px;
   border-bottom: none;
   height: 245px;
+}
+.modal-body .profile-container .profile-edit {
+  width: 598px;
+  border: none;
 }
