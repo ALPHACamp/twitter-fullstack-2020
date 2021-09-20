@@ -1,14 +1,15 @@
 const express = require("express");
 port = process.env.PORT || 3000;
 host = process.env.BASE_URL || "http://localhost";
-
+const session = require("express-session");
+const db = require("./models");
+const usePassport = require("./config/passport");
 const {
   allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
 const Handlebars = require("handlebars");
 const handlebars = require("express-handlebars");
 const helpers = require("./_helpers");
-const db = require("./models");
 
 const app = express();
 

@@ -1,8 +1,9 @@
 const db = require("../models");
 const { User, Tweet, Reply, Like, Followship } = db;
 const moment = require("moment");
-
+const { dummyuser } = require("../../dummyuser.json");
 //for test only
+
 const helpers = require("../_helpers.js");
 const getTestUser = function (req) {
   if (process.env.NODE_ENV === "test") {
@@ -14,7 +15,8 @@ const getTestUser = function (req) {
 
 const followshipController = {
   getFollowers: async (req, res) => {
-    const user = getTestUser(req);
+    const user = dummyuser;
+    console.log("dummyuser: ", dummyuser);
     const followings = await User.findAll({
       include: { model: User, as: "Followings" },
       where: { FollowerId: user.id },
@@ -32,12 +34,12 @@ const followshipController = {
   },
 
   getFollowings: (req, res) => {
-    const user = getTestUser(req);
+    const user = dummyuser;
     res.send("getFollowings!");
   },
 
   postFollowers: (req, res) => {
-    const user = getTestUser(req);
+    const user = dummyuser;
     return Followship.create({
       FollowerId: user.id,
       FollowingId: req.params.userId,
@@ -50,7 +52,7 @@ const followshipController = {
   },
 
   deleteFollowers: (req, res) => {
-    const user = getTestUser(req);
+    const user = dummyuser;
     return Followship.findOne({
       where: { FollowerId: user.id, FollowingId: req.params.userId },
     }).then(() => {
