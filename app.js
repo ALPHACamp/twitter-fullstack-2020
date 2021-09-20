@@ -6,8 +6,12 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash') //  自訂訊息並存到 session 裡
 const session = require('express-session') 
 const passport = require('./config/passport')
+const methodOverride = require('method-override') // 載入 method-override
 const app = express()
 const port = 3000
+
+// use helpers.getUser(req) to replace req.user
+// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.engine('hbs', handlebars({
   defaultLayout: 'main',
@@ -15,11 +19,6 @@ app.engine('hbs', handlebars({
 })) 
 app.set('view engine', 'hbs') 
 app.use(express.static('public'))
-
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({ defaultLayout: 'main' })) // Handlebars 註冊樣板引擎
 app.set('view engine', 'hbs') // 設定Handlebars 做為樣板引擎
@@ -39,6 +38,8 @@ app.use((req, res, next) => {
     res.locals.user = helpers.getUser(req)
     next()
 })
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

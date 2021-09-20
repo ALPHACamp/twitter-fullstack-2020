@@ -49,15 +49,15 @@
           <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">1000 推文數</span>
         </a>
       </div>
-      <div class='follower-head col-12 row'>
-        <ul class='nav nav-tabs' id='myTab' role='tablist'>
+
+      <div class="follower-head col-12 row mt-3">
+        <ul class='nav nav-tabs' id='myTab' role='tablist' style="border-bottom: none;margin-bottom:-4px;">
           <li class='nav-item'>
-            <a class='nav-link active' id='message-tab'  href='/users/{{id}}/followers' role='tab'
+            <a class='nav-link' id='message-tab' href='/users/{{id}}/followers' role='tab'
               aria-controls='home' aria-selected='true'>跟隨者</a>
           </li>
           <li class='nav-item'>
-
-            <a class='nav-link' id='profile-tab' href='/users/{{id}}/followings' role='tab'
+            <a class='nav-link active' id='profile-tab'  href='/users/{{id}}/followings' role='tab'
               aria-controls='profile' aria-selected='false'>正在跟隨</a>
           </li>
         </ul>
@@ -67,8 +67,8 @@
         <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
           <ul class='list-group list-group-flush border-bottom'>
 
-            {{#each users}}
-            {{#if this.isFollowing}}
+           {{#each followings}}
+            {{#if this.isFollowed}}
             <li class='list-group-item'>
               <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
                 <div class='col-1 d-flex justify-content-center align-items-center'>
@@ -80,7 +80,7 @@
                   <a href='/users/{{this.id}}' class='h5 fw-bold text-decoration-none text-dark'>{{this.name}}</a>
                   <p class='text-muted'>@{{this.account}}</p>
                   <h6 class='card-text'>{{this.introduction}}</h6>
-                </div>  
+                </div>
                 <div class='col-4 ps-3 d-flex justify-content-center align-items-center'>
 
                   {{#if this.isFollowed}}
@@ -144,7 +144,7 @@
           </li>
 
           <!--seeder開頭-->
-          {{#each Top10Users}}
+          {{#each Top10Users  }}
           <li class="list-group-item bg-light" style="border-left: none;border-right: none">
             <div class="row justify-content-around align-items-center">
               <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">

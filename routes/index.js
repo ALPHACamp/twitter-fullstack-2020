@@ -38,7 +38,7 @@ module.exports = (app, passport) => {
     }
 
     // test
-    app.get('/', (req, res) => {res.render('tweet')})
+    app.get('/', (req, res) => res.render('following'))
     // test
     app.get('/signup', userController.signUpPage)
     app.post('/signup', userController.signUp)
@@ -54,5 +54,15 @@ module.exports = (app, passport) => {
     app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
     app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+
+    // new
+    app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
+    app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
+    // app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
+    // app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
+
+    // test 
+    app.get('/users/:id/followers', authenticatedUser, userController.getFollowerstest)
+    app.get('/users/:id/followings', authenticatedUser, userController.getFollowingstest)
 
 }
