@@ -55,7 +55,7 @@ const tweetController = {
           // isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
         }))
 
-        return res.render('index', {
+        return res.status(200).render('index', {
           tweets,
           topUsers,
           currentUser
@@ -70,7 +70,7 @@ const tweetController = {
       return res.redirect('/tweets')
     }
     return Tweet.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       description: req.body.description
     })
       .then((tweet) => {
