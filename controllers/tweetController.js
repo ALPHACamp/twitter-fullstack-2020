@@ -17,13 +17,13 @@ const tweetController = {
 
     return Promise.all([
       Tweet.findAll({
-      include: [
-        { model:User , attributes:['id', 'name', 'avatar', 'account']}, 
-        { model:Like },
-        { model:Reply}
-      ],
-      order: [['createdAt', 'DESC']],
-    }),
+        include: [
+          { model: User, attributes: ['id', 'name', 'avatar', 'account'] },
+          { model: Like },
+          { model: Reply }
+        ],
+        order: [['createdAt', 'DESC']],
+      }),
       Followship.findAll({
         attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
         include: [
@@ -33,35 +33,35 @@ const tweetController = {
         order: [[sequelize.col('count'), 'DESC']],
         limit: 10, raw: true, nest: true
       })
-     
-    ]) 
-    .then(([tweets,users]) => {
-        tweets = tweets.map( r => ({
-        ...r.dataValues,
-        User: r.User.dataValues,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
-        Likes:r.Likes.length,
-        Replies: r.Replies.length,
-      }))
 
-      //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
-      const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
-      const topUsers = normalUsers.map(user => ({
-        id: user.FollowingLinks.id,
-        name: user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name,
-        account: user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account,
-        avatar: user.FollowingLinks.avatar,
-        followersCount: user.count,
-        isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
-        isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
-      }))
-    
-      return res.render('index', {
-        tweets:tweets,
-        topUsers,
-        currentUser
+    ])
+      .then(([tweets, users]) => {
+        tweets = tweets.map(r => ({
+          ...r.dataValues,
+          User: r.User.dataValues,
+          isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
+          Likes: r.Likes.length,
+          Replies: r.Replies.length,
+        }))
+
+        //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
+        const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
+        const topUsers = normalUsers.map(user => ({
+          id: user.FollowingLinks.id,
+          name: user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name,
+          account: user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account,
+          avatar: user.FollowingLinks.avatar,
+          followersCount: user.count,
+          isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
+          isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
+        }))
+
+        return res.render('index', {
+          tweets: tweets,
+          topUsers,
+          currentUser
+        })
       })
-    })
   },
 
   //新增一則貼文(要改api)
@@ -81,17 +81,40 @@ const tweetController = {
   },
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [User,
-        { model: Like, include: [User] },
-        { model: Reply, include: [User] }
-      ]
-    })
-      .then(tweet => {
+    const currentUser = helpers.getUser(req)
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
+        include: [User,
+          { model: Like, include: [User] },
+          { model: Reply, include: [User] }
+        ]
+      }), Followship.findAll({
+        attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
+        include: [
+          { model: User, as: 'FollowingLinks' } //self-referential super-many-to-many
+        ],
+        group: ['followingId'],
+        order: [[sequelize.col('count'), 'DESC']],
+        limit: 10, raw: true, nest: true
+      })
+    ])
+      .then(([tweet, users]) => {
+        //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
+        const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
+        const topUsers = normalUsers.map(user => ({
+          id: user.FollowingLinks.id,
+          name: user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name,
+          account: user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account,
+          avatar: user.FollowingLinks.avatar,
+          followersCount: user.count,
+          isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
+          isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
+        }))
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           currentUser: helpers.getUser(req),
-          like: req.user.LikedTweets.map(d => d.id).includes(tweet.id)
+          like: req.user.LikedTweets.map(d => d.id).includes(tweet.id),
+          topUsers
         })
       })
   },
