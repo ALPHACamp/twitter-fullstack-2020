@@ -23,23 +23,21 @@
   <div class="mainpost-messageboard">
     <div class="post-card1">
       <div class="avatar profile-avatar"><img
-          src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+          src="{{tweet.User.avatar}}"
           alt="avatar-img" /></div>
     </div>
     <div class="post-card2">
-      <h5 class="d-inline-block post-title">Post Title&nbsp;<br /><span class="post-sub-info mainpost-sm">@Apple
+      <h5 class="d-inline-block post-title">{{tweet.User.name}}&nbsp;<br /><span class="post-sub-info mainpost-sm">{{tweet.User.account}}
           &#x2027;
-          5minutes</span></h5>
-      <p class="mainpost-x">Lorem ipsum dolor sit, amet consectetur
-        adipisicing elit. Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Ea, vel.</p>
+          {{createdTimeFromNow}}</span></h5>
+      <p class="mainpost-x">{{tweet.description}}</p>
       <p class="post-sub-info mainpost-sm">上午10:05 2020年6月10日</p>
     </div>
   </div>
   <div class="mainpost-appendboard">
     <div class="reply-like-container">
-      <p class="mainpost-md reply-like-text"><b>34</b>&nbsp;回覆
-        <b>808</b>&nbsp;喜歡次數
+      <p class="mainpost-md reply-like-text"><b>{{ReplyCount}}</b>&nbsp;回覆
+        <b>{{LikedCount}}</b>&nbsp;喜歡次數
       </p>
     </div>
     <p class="mainpost-sub-info mt-3"><span class="mainpost-icon-block"><i class="bi bi-chat" data-bs-toggle="modal"
