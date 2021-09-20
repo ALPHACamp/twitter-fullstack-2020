@@ -1,6 +1,6 @@
 const express = require('express')
 const helpers = require('./_helpers')
-const handlebars = require('express-handlebars')
+// const handlebars = require('express-handlebars')
 
 const app = express()
 const port = process.env.PORT || 3000
@@ -11,10 +11,10 @@ const session = require('express-session')
 const db = require('./models') 
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
-const moment = require('moment')
+// const moment = require('moment')
 
 const exhbs = require('express-handlebars')
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 // setup passport
 app.use(passport.initialize())

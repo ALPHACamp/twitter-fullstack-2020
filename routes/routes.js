@@ -11,22 +11,21 @@ const loginController = require('../controllers/loginController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 
-// const authenticated = (req, res, next) => {
-//   if (helpers.ensureAuthenticated(req)) {
-//     return next()
-//   }
-//   res.redirect('/signin')
-// }
-// const authenticatedAdmin = (req, res, next) => {
-//   if (helpers.ensureAuthenticated(req)) {
-//     if (helpers.getUser.role) { return next() }
-//   }
-//   res.redirect('/admin/signin')
-// }
+const authenticated = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    return next()
+  }
+  res.redirect('/signin')
+}
+const authenticatedAdmin = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser.role) { return next() }
+  }
+  res.redirect('/admin/signin')
+}
 
 
-// 如果使用者訪問首頁，就導向 /restaurants 的頁面
-router.get('/', authenticated, (req, res) => {res.redirect('/tweets')})
+
 
 // tweets相關路由
 router.get('/tweets', authenticated, tweetController.getTweets)
@@ -60,14 +59,6 @@ router.delete('/followships/:userId', authenticated, followshipController.remove
 
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweets)
 
-
-// tweets
-router.get('/tweets', authenticated, tweetController.getTweets)
-
-
-
- 
-
 // users
 //以下都還要加userid
 router.get('/users/tweets', authenticated, userController.getUserTweets)
@@ -82,6 +73,7 @@ router.post('/admin/signin', authenticatedAdmin, adminController.signIn)
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
-
+// 如果使用者訪問首頁，就導向 /restaurants 的頁面
+router.get('/', authenticated, (req, res) => { res.redirect('/tweets') })
 
 module.exports = router
