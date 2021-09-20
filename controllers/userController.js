@@ -3,7 +3,9 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const Reply = db.Reply
 const Followship = db.Followship
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -59,8 +61,15 @@ const userController = {
     res.redirect('/signin')
   },
 
-  getUserProfile:(req, res)=>{
-    return res.render('userProfile')
+  getUserSelf:async(req, res)=>{
+    const currentUser = helpers.getUser(req)
+    const tweets = await Tweet.findAll({
+      where: {UserId:currentUser.id},
+      include: [User, Reply],
+      order: [['createdAt', 'DESC']]
+    })
+    console.log(tweets)
+    return res.render('userSelf',{ tweets })
   },
   getSetting:(req, res)=>{
     return res.render('setting')

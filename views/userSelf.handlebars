@@ -42,7 +42,7 @@
           <div class="icon d-flex align-items-center color-orange">
             <i class="fas fa-users"></i>
           </div>
-          <a href="/userProfile" class="btn sidebarItem">
+          <a href="/user/self" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">個人資料</span>
           </a>
         </div>
@@ -110,7 +110,7 @@
     </div>
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/=">推文</a>
+        <a class="nav-link text-secondary active" href="/user/self">推文</a>
       </li>
       <li class="nav-item">
         <a class="nav-link text-secondary" href="/=">推文與回覆</a>
@@ -119,6 +119,39 @@
         <a class="nav-link text-secondary" href="/=">喜歡的內容</a>
       </li>
     </ul>
+    {{#each tweets}}
+    <div class="teeet border">
+      <div class="d-flex">
+        <span class="avatar m-2">
+          <img src="{{noImage this.User.avatar.url}}" alt="" class="rounded-circle userImage">
+        </span>
+        <div class="">
+          <div class="d-flex">
+            <div class="name m-2">{{this.User.name}}</div>
+            <div class="tag m-2">@{{this.User.account}}</div>
+            <div class="time m-2">{{moment this.createdAt}}</div>
+          </div>
+          <a href="/tweets/{{this.id}}" class="tweetContent m-2 btn">
+            <p>{{this.description}}</p>
+          </a>
+          <div class="d-flex mb-2">
+            <a href="/tweets/{{this.id}}" class="comment d-flex me-2 btn">
+              <span class="commentIcon me-2">
+                <i class="far fa-comment"></i>
+              </span>
+              <span class="commentAmount">{{this.Replies.length}}</span>
+            </a>
+            <a href="" class="like d-flex btn">
+              <span class="likeIcon me-1">
+                <i class="far fa-heart "></i>
+              </span>
+              <span class="likeAmount">30</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
     
   </div>
   <div class="">
