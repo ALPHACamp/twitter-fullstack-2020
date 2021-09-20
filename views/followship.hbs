@@ -76,10 +76,10 @@
       <div class="follow-tweet">
         <ul class="nav nav-tabs">
           <li class="nav-item">
-            <a class="nav-link  active" id="follower" href="/users/{{user.id}}/followers">追隨者</a>
+            <a class="nav-link  active" id="follower" href="/users/{{viewUser.id}}/followers">追隨者</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="following" href="/users/{{user.id}}/followings">正在追蹤</a>
+            <a class="nav-link" id="following" href="/users/{{viewUser.id}}/followings">正在追蹤</a>
           </li>
         </ul>
         <br /><br />
@@ -90,13 +90,17 @@
           <div class="tweet col-md-12">
             <div class="d-flex">
               <div class="mt-2 ml-2 col-md-1" style="padding:0">
-                <img class="user-pic mr-2" src="{{this.avatar}}" alt="">
+                <a href="/users/{{this.id}}/tweets">
+                  <img class="user-pic mr-2" src="{{this.avatar}}" alt="">
+
               </div>
 
               <div class="col-md-11">
                 <div class="account-followship">
                   <div class="account-info" style="flex:auto">
-                    <div class="user-name">{{this.name}}</div>
+                    <a href="/users/{{this.id}}/tweets">
+                      <div class="user-name">{{this.name}}</div>
+                    </a>
                     <div class="account-time">@{{this.account}}</div>
                   </div>
 
@@ -138,10 +142,10 @@
         <div class="follow-tweet">
           <ul class="nav nav-tabs">
             <li class="nav-item">
-              <a class="nav-link" id="follower" href="/users/{{user.id}}/followers">追隨者</a>
+              <a class="nav-link" id="follower" href="/users/{{viewUser.id}}/followers">追隨者</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link active" id="following" href="/users/{{user.id}}/followings">正在追蹤</a>
+              <a class="nav-link active" id="following" href="/users/{{viewUser.id}}/followings">正在追蹤</a>
             </li>
           </ul>
           <br /><br />
@@ -152,13 +156,17 @@
             <div class="tweet col-md-12">
               <div class="d-flex">
                 <div class="mt-2 ml-2 col-md-1" style="padding:0">
-                  <img class="user-pic mr-2" src="{{this.avatar}}" alt="">
+                  <a href="/users/{{this.id}}/tweets">
+                    <img class="user-pic mr-2" src="{{this.avatar}}" alt="">
+                  </a>
                 </div>
 
                 <div class="col-md-11">
                   <div class="account-followship">
                     <div class="account-info" style="flex:auto">
-                      <div class="user-name">{{this.name}}</div>
+                      <a href="/users/{{this.id}}/tweets">
+                        <div class="user-name">{{this.name}}</div>
+                      </a>
                       <div class="account-time">@{{this.account}}</div>
                     </div>
 
@@ -207,53 +215,53 @@
 
 
       {{!-- 右側欄位 --}}
-    <div class="right-side col-md-3">
-      <div class="popular mt-2" style="padding:auto;">
-        <div class="popular-title mt-2">
-          Popular
+      <div class="right-side col-md-3">
+        <div class="popular mt-2" style="padding:auto;">
+          <div class="popular-title mt-2">
+            Popular
+          </div>
+          <ul class="list-group">
+            {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
+            {{!-- 跟隨中使用者開始 --}}
+            {{#each topUsers}}
+            <li class="list-group-item">
+              <div class="d-flex col-md-12" style="padding:0">
+                <div class="popular-user-pic">
+                  <a href="/users/{{this.id}}/tweets" class="text-muted">
+                    <img class="user-pic" src="{{this.avatar}}" alt="">
+                  </a>
+                </div>
+                <div class="name-account">
+                  <a href="/users/{{this.id}}/tweets" class="text-muted">
+                    <div class="name">{{this.name}}</div>
+                  </a>
+                  <div class="account">@{{this.account}}</div>
+                </div>
+                <div class="button">
+
+                  {{#if isSelf}}
+                  {{else}}
+                  {{#if isFollowed }}
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                    <button type="submit" class="btn follow-button">正在跟隨</button>
+                  </form>
+                  {{else}}
+                  <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+                      class="btn unfollow-button"> 跟隨 </button></form>
+                  {{/if}}
+                  {{/if}}
+                </div>
+              </div>
+            </li>
+            {{/each}}
+            {{!-- 使用者結束 --}}
+
+          </ul>
         </div>
-        <ul class="list-group">
-          {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
-          {{!-- 跟隨中使用者開始 --}}
-          {{#each topUsers}}
-          <li class="list-group-item">
-            <div class="d-flex col-md-12" style="padding:0">
-              <div class="popular-user-pic">
-                <a href="/users/{{this.id}}/tweets" class="text-muted">
-                  <img class="user-pic" src="{{this.avatar}}" alt="">
-                </a>
-              </div>
-              <div class="name-account">
-                <a href="/users/{{this.id}}/tweets" class="text-muted">
-                  <div class="name">{{this.name}}</div>
-                </a>
-                <div class="account">@{{this.account}}</div>
-              </div>
-              <div class="button">
-    
-                {{#if isSelf}}
-                {{else}}
-                {{#if isFollowed }}
-                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                  <button type="submit" class="btn follow-button">正在跟隨</button>
-                </form>
-                {{else}}
-                <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
-                    class="btn unfollow-button"> 跟隨 </button></form>
-                {{/if}}
-                {{/if}}
-              </div>
-            </div>
-          </li>
-          {{/each}}
-          {{!-- 使用者結束 --}}
-    
-        </ul>
+
+
+
       </div>
-    
-    
-    
-    </div>
 
 
 
