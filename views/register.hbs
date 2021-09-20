@@ -1,0 +1,43 @@
+<div class="row mt-5">
+  <div class="col-md-6 m-auto">
+    <div class="card card-body">
+      <div class="col mb-5 text-center">
+        <img style="width: 50px; height: 50px" src="https://i.imgur.com/yqet9K2.png" alt="AlphaCamp">
+        <h1 class="text-center mt-3">建立你的賬號</h1>
+      </div>
+      <form action="/signup" method="POST">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" value="{{ name }}"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value="{{ email }}"
+            required>
+        </div>
+        <div class="form-group">
+          <label for="account">Account</label>
+          <input type="text" id="account" name="account" class="form-control" placeholder="Enter account"
+            value="{{ account }}" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
+            value="{{ password }}" required>
+        </div>
+        <div class="form-group">
+          <label for="checkPassword">Confirm Password</label>
+          <input type="password" id="checkPassword" name="checkPassword" class="form-control"
+            placeholder="Confirm Password" value="{{ checkPassword }}" required>
+        </div>
+        <button type="submit" class="btn btn-block"
+          style="border-radius: 18px; background: coral; color:white">註冊</button>
+        {{!-- <a href="/auth/facebook" class="btn btn-info btn-block">Facebook</a> --}}
+      </form>
+      <p class=" lead mt-4 text-center" style="font-size: 14px; font-weight: bold;">
+        <a href="/signin"><u>取消</u></a>
+      </p>
+    </div>
+  </div>
+</div>

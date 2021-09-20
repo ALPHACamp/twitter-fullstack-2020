@@ -1,0 +1,31 @@
+<div class="col border-left border-right">
+  <br />
+  <div class="row">
+    <div class="col-12">
+      <h5>使用者清單</h5>
+      <hr>
+    </div>
+    {{#each users}}
+      <div class="col-md-3">
+        <div class="card mb-2 mr-1 admin-users-card" style="width: 13rem; background-color: rgb(247, 247, 247)">
+          <img class="card-img-top rounded-top admin-users-cover" style="height: 150px" src="{{this.cover}}"
+            alt="Card image cap">
+          <img src="{{this.avatar}}" class="border-avatar" style="border-radius: 50%; height: 100px; width: 100px;"
+            alt="">
+          <div class="card-body text-center">
+            <h5 class="card-title mt-2">{{this.name}}</h5>
+            <p class="card-text" style="color: grey">
+              @{{this.account}}
+            </p>
+            <i class="far fa-comment mr-3" style="color: grey;"> {{this.Tweets.length}}</i>
+            <i class="far fa-heart" style="color: grey;"> {{this.Likes.length}}</i>
+            <br />
+            <br />
+            {{this.Followings.length}}個<span style="color:grey">跟隨中</span> {{this.Followers.length}}位<span
+              style="color: grey">跟隨者</span>
+          </div>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

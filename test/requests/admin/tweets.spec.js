@@ -56,7 +56,7 @@ describe('# Admin::Tweet request', () => {
         await db.Tweet.destroy({where: {},truncate: true})
         await db.User.create({})
         await db.User.create({})
-        await db.Tweet.create({UserId: 2, description: 'Tweet1'})
+        await db.Tweet.create({UserId: 2, description: 'Tweet1', id: 1})
       })
 
       it('should see all tweets instance', (done) => {

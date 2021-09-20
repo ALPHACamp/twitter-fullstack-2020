@@ -1,0 +1,25 @@
+{{!-- Center --}}
+<div class="col border-left border-right">
+  <br>
+  <h5>推文清單</h5>
+  <hr>
+  {{#each tweets}}
+    <div class="row">
+      <div class="col-1">
+        <img style="width: 60px; height:60px; border-radius: 50%" src="{{this.User.avatar}}" alt="">
+      </div>
+      <div class="col-11">
+        <span class="bold"><b>{{this.User.account}}</b></span>
+        <span style="color: grey">@{{this.User.name}}・{{moment this.createdAt}}</span>
+        <button class="close" data-toggle="modal" data-target="#dt{{this.id}}">
+          <span aria-hidden=" true">&times;</span>
+        </button>
+        <br />
+        {{this.description}}
+      </div>
+    </div>
+    <hr>
+    <!-- pop up delete tweets in admin tweet page -->
+    {{> delete}}
+  {{/each}}
+</div>

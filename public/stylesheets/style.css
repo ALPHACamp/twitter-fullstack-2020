@@ -1,0 +1,93 @@
+.flex-container{
+  display: flex;
+}
+
+.btn-cancel{
+  background-color:lightgray; 
+  color:white;
+}
+
+.btn-edit, .btn-delete, .btn-create {
+  background-color:rgb(255, 102, 0); 
+  color:white;
+}
+
+.user-avatar {
+  width: 50px; 
+  border-radius: 50%;
+}
+
+.btn-push {
+  border: none; 
+  color:black; 
+  background-color:white;
+}
+
+.user_cover {
+  height: 200px; 
+  width: 100%;
+}
+.user_avatar {
+  position: relative;
+  background: #fff;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0);
+  transform: translateY(-50%);
+  /* left: 50%; */
+  /* cursor: pointer;  */
+}
+.user_avatar_s {
+  background: #fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0);
+}
+.selected_nav {
+  color: rgb(255, 102, 0); 
+  border-bottom: rgb(255, 102, 0) solid;
+}
+
+.unselected_nav {
+  color: grey;
+}
+.border-avatar {
+  border-width: 5px;
+  border-style: solid;
+  border-color: white;
+  position: absolute;
+  top: 80px;
+  left: 55px
+}
+.admin-users-card{
+  border-color: white;
+}
+.unselected_nav {
+  color: grey;
+}
+.btn-twitter {
+  background:rgb(255, 102, 0);
+  color:white;
+}
+.btn-outline-twitter {
+  width: auto; 
+  border-color: rgb(255, 102, 0); 
+  color: rgb(255, 102, 0);
+}
+.btn-outline-twitter-active {
+  width: auto; 
+  background:rgb(255, 102, 0);
+  color:white;
+}
+
+#chat-messages {
+  padding: 30px;
+  max-height: 550px;
+	overflow-y: scroll;
+}
+
+.clearfix {
+  clear: both;
+}

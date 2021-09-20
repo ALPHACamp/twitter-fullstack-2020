@@ -1,0 +1,99 @@
+<!-- pop up delete tweet message in tweets page -->
+<div class="modal fade" id="t{{this.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>刪除貼文?</h4>
+      </div>
+      <div class="modal-body">
+        確定要刪除這則貼文?
+      </div>
+      <div class="modal-footer">
+        <form action="/tweets/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-delete">刪除</button>
+        </form>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- pop up delete reply comment message in tweet page -->
+<div class="modal fade" id="cr{{this.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>刪除留言?</h4>
+      </div>
+      <div class="modal-body">
+        確定要刪除這則留言?
+      </div>
+      <div class="modal-footer">
+        <form action="/replies/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-delete">刪除</button>
+        </form>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- pop up delete tweet message in tweet page -->
+<div class="modal fade" id="t{{tweet.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>刪除貼文?</h4>
+      </div>
+      <div class="modal-body">
+        確定要刪除這則貼文?
+      </div>
+      <div class="modal-footer">
+        <form action="/tweets/{{tweet.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-delete">刪除</button>
+        </form>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- pop up delete tweet reply message in tweet page -->
+<div class="modal fade" id="tr{{this.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>刪除留言?</h4>
+      </div>
+      <div class="modal-body">
+        確定要刪除這則留言?
+      </div>
+      <div class="modal-footer">
+        <form action="/tweets/{{this.id}}/replies?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-delete">刪除</button>
+        </form>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- pop up delete tweets in admin tweet page -->
+<div class="modal fade" id="dt{{this.id}}" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4>刪除貼文?</h4>
+      </div>
+      <div class="modal-body">
+        確定要刪除這則貼文?
+      </div>
+      <div class="modal-footer">
+        <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-delete">刪除</button>
+        </form>
+        <button type="button" class="btn btn-cancel" data-dismiss="modal">取消</button>
+    </div>
+    </div>
+  </div>
+</div>
