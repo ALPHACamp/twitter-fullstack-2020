@@ -4,6 +4,20 @@
 <div class="wrap d-flex">
   <div class="row col-md-12  justify-content-center" style="margin:0">
     {{!-- 左側欄位 --}}
+  {{#if success_messages}}
+  <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+    <div>{{success_messages}}</div>
+    <div class="success-icon"><i class="fas fa-check"></i></div>
+  </div>
+  {{/if}}
+  {{#if error_messages}}
+  <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
+    <div>{{error_messages}}</div>
+    <div class="alert-icon"><i class="fas fa-exclamation-circle"></i></div>
+  </div>
+  {{/if}}
+
+
     <div class="left-side col-md-2">
       <div class="setting-logo">
         <img
@@ -61,7 +75,7 @@
       <form action="/tweets" method="POST">
         <div class="add-post d-flex">
           <div class="mt-2 ml-2">
-            <a href="/users/{{user.id}}">
+            <a href="/users/{{user.id}}/tweets">
               <img class="user-pic" src="{{currentUser.avatar}}" alt="">
             </a>
           </div>
@@ -179,14 +193,16 @@
                 </a>
               </div>
               <div class="name-account">
+                <a href="/users/{{this.id}}/tweets" class="text-muted">
                 <div class="name">{{this.name}}</div>
+                </a>
                 <div class="account">@{{this.account}}</div>
               </div>
               <div class="button">
-
+    
                 {{#if isSelf}}
                 {{else}}
-                {{#if this.isFollowed }}
+                {{#if isFollowed }}
                 <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
                   <button type="submit" class="btn follow-button">正在跟隨</button>
                 </form>
@@ -200,9 +216,13 @@
           </li>
           {{/each}}
           {{!-- 使用者結束 --}}
-
+    
         </ul>
       </div>
+    
+    
+    
+    </div>
 
 
 
