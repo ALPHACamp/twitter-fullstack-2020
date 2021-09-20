@@ -8,25 +8,30 @@
     <div class="profile-nav">
       <h3 class="profile-nav-header">首頁</h3>
     </div>
-  {{>upperCenter ucChoice=true}}
+    {{>upperCenter ucChoice=true}}
     <div class="posts-container">
-  <!--start::list of post-->
+      <!--start::list of post-->
+      {{#each tweets}}
       <div class="post">
         <div class="post-card1">
           <div class="avatar profile-avatar">
-            <img
-              src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-              alt="avatar-img">
+            <img src="{{this.User.avatar}}" alt="avatar-img">
           </div>
         </div>
         <div class="post-card2">
-          <h5 class="d-inline-block post-title">Post Title&nbsp;<span class="post-sub-info">@Apple ‧ 5minutes</span></h5>
-          <p class="post-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-          <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>75</span><span
-              class="post-icon-block"><i class="bi bi-heart"></i>15</span></p>
+          <h5 class="d-inline-block post-title">{{this.User.name}}&nbsp;<span
+              class="post-sub-info">{{this.User.account}} ‧
+              {{this.createdAt}}</span></h5>
+                <a href="/posts/{{this.id}}">
+          <p class="post-text" >{{this.description}}</p>
+          </a>
+          <p class="post-sub-info"><span class="post-icon-block"><i
+                class="bi bi-chat"></i>{{this.ReplyCount}}</span><span class="post-icon-block"><i
+                class="bi bi-heart"></i>{{this.LikedCount}}</span></p>
         </div>
       </div>
-  <!--end::list of post-->
+      {{/each}}
+      <!--end::list of post-->
     </div>
   </div>
 
