@@ -76,7 +76,7 @@ const adminController = {
           avatar: user.avatar,
           name: user.name,
           account: user.account,
-          tweetCount: tweets.filter(d => d.userId === user.id)[0].tweetCount ? tweets.filter(d => d.userId === user.id)[0].tweetCount : 0,
+          tweetCount: tweets.filter(d => d.userId === user.id)[0] ? tweets.filter(d => d.userId === user.id)[0].tweetCount : 0,
           replyCount: user.Replies.length,
           likeCount: user.Likes.length,
           followerCount: user.Followers.length,
