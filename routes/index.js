@@ -76,4 +76,7 @@ module.exports = (app, passport) => {
   app.post('/tweets', tweetController.postTweet)
   //取得特定貼文資料
   app.get('/tweets/:id', tweetController.getTweet)
+  //Reply回覆
+  app.post('/replies', authenticated, replyController.postReply)
+
 }

@@ -42,15 +42,20 @@ const tweetController = {
     //     })
     // })
     const tweets = await Tweet.findAll({
-      raw: true,
-      nest: true,
-      include: [User],
+      // raw: true,  //nest、raw先註解，tweets.handlexbars才能收到Reply的數量
+      // nest: true,
+      include: [
+          User,
+          Reply
+      ],
       order: [
-        ['createdAt', 'DESC'], // Sorts by createdAt in ascending order
+        ['createdAt', 'DESC'], // Sorts by createdAt in descending order
       ],
     })
-
-    // console.log(tweets)
+    // const tweets = data.map(d => ({
+    //   ...d.dataValues,
+    //   // isLiked: d.LikedUsers.map(i => i.id).includes(helpers.getUser(req).id)
+    // }))
 
     if (helpers.getUser(req).isAdmin) {
       tweets.map(tweet => {
@@ -100,13 +105,16 @@ const tweetController = {
     try {
       const tweet = await Tweet.findByPk(
         req.params.id, {
-        include: [User]
+        include: [
+          User,
+          {model:Reply, include: [User]}
+        ],
+        order: [['Replies', 'createdAt', 'DESC']]
       })
+      console.log('tweet:',tweet)
       return res.render('tweet', { tweet: tweet.toJSON() })
     } catch (e) {
       console.log(e.message)
-
-
     }
   },
   // 在此得列出最受歡迎的十個使用者
