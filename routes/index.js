@@ -58,7 +58,7 @@ module.exports = (app, passport) => {
   // app.get('/admin/users', authenticatedAdmin, adminController.adminGetUsers)
   // // 後台 - 推文清單
   // app.get('/admin/tweets', authenticatedAdmin, adminController.adminGetTweets)
-  // router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
+  // app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 
   // 註冊
   app.get('/signup', userController.signUpPage)

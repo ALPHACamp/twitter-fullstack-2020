@@ -69,7 +69,7 @@ const userController = {
     const user = await User.findByPk(req.params.id)
     
     user.update({
-        acount:req.body.account,
+        account:req.body.account,
         name:req.body.name,
         email:req.body.email,
         password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
