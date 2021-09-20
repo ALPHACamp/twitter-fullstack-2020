@@ -80,7 +80,7 @@
 
       {{!-- //TODO:依照時間排序，時間/讚數/留言數待傳入，點大頭貼會進入使用者頁面 --}}
       {{!-- 貼文開始 --}}
-      {{#each data}}
+      {{#each tweets}}
       <div class="tweet col-md-12">
         <div class="d-flex">
           <div class="mt-2 ml-2 col-md-1" style="padding:0">
@@ -110,7 +110,7 @@
               {{!-- modal叫出貼文回覆 --}}
               <div class="reply" id="reply" data-toggle="modal" data-target="#reply-tweet{{this.id}}">
                 <div class="number"></div>
-                <i class="far fa-comment mr-2"></i>{{this.replyCount}}
+                <i class="far fa-comment mr-2"></i>留言數{{this.Replies}}
               </div>
 
 
@@ -134,11 +134,8 @@
                     {{this.Likes.length}}
                   </div>
                 </form>
-                {{/if}}
-
-                <div class="index-like-count ml-2">
-                  <div class="number">{{this.likeCount}}讚數</div>
-                </div>
+              {{/if}}
+                <div class="index-like-count ml-2"><div class="number"></div>讚數{{this.Likes}}</div>
 
               </div>
             </div>
@@ -183,13 +180,14 @@
                 <div class="name">{{this.name}}</div>
                 <div class="account">{{this.account}}</div>
               </div>
-              <div class="button">
 
 
+              <div  class="button">
                 <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
                   <button type="submit" class="btn follow-button">正在跟隨</button>
                 </form>
               </div>
+              
             </div>
           </li>
           {{/each}}
@@ -209,11 +207,13 @@
               {{#if myself}}
               <div></div>
               {{else}}
+
               <div class="button">
                 <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
                     class="btn unfollow-button"> 跟隨 </button></form>
               </div>
-              {{/if}}
+            {{/if}}
+
             </div>
           </li>
           {{/each}}
