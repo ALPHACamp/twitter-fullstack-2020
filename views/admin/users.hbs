@@ -5,246 +5,32 @@
         <div class="col-12 page-header mb-2">
           <h6><strong>使用者列表</strong></h6>
         </div>
+        {{#each users}}
         <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
           <div class="card" style="width: 238px; height: 305px;">
             <div class="cover-container">
-              <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
+              <img class="card-cover-img" src="{{this.cover}}" alt="cover-img"  height="100%" width="100%" onerror='this.style.display = "none"'>
             </div>
             <div class="card-body">
-              <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                width="100" height="100" alt="Card image cap">
+              <img class="card-user-img" src="{{this.avatar}}"
+                width="100" height="100" alt="avatar-img">
               <div class="card-text">
-                <h5 class="user-name">John Doe</h5>
-                <h6 class="user-acc-name">@heyjohn</h6>
+                <h5 class="user-name">{{this.name}}</h5>
+                <h6 class="user-acc-name">@{{this.account}}</h6>
                 <p class="user-com-likes my-3">
                   <span>
-                    <i class="far fa-lg fa-comment"></i> 1.5k
-                    <i class="far fa-lg fa-heart ms-3"></i> 20K
+                    <i class="far fa-lg fa-comment"></i> {{this.tweetCount}}
+                    <i class="far fa-lg fa-heart ms-3"></i> {{this.likedCount}}
                   </span>
                 </p>
                 <p class="user-followship mt-2">
-                  <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
+                  <strong>{{this.followingCount}}個</strong>跟隨中 <strong>{{this.followerCount}}位</strong>跟隨者
                   <p />
               </div>
             </div>
           </div>
         </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-          <div class="card" style="width: 238px; height: 305px;">
-            <div class="cover-container">
-              <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-            </div>
-            <div class="card-body">
-              <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                width="100" height="100" alt="Card image cap">
-              <div class="card-text">
-                <h5 class="user-name">John Doe</h5>
-                <h6 class="user-acc-name">@heyjohn</h6>
-                <p class="user-com-likes my-3">
-                  <span>
-                    <i class="far fa-lg fa-comment"></i> 1.5k
-                    <i class="far fa-lg fa-heart ms-3"></i> 20K
-                  </span>
-                </p>
-                <p class="user-followship mt-2">
-                  <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                  <p />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-          <div class="card" style="width: 238px; height: 305px;">
-            <div class="cover-container">
-              <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-            </div>
-            <div class="card-body">
-              <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                width="100" height="100" alt="Card image cap">
-              <div class="card-text">
-                <h5 class="user-name">John Doe</h5>
-                <h6 class="user-acc-name">@heyjohn</h6>
-                <p class="user-com-likes my-3">
-                  <span>
-                    <i class="far fa-lg fa-comment"></i> 1.5k
-                    <i class="far fa-lg fa-heart ms-3"></i> 20K
-                  </span>
-                </p>
-                <p class="user-followship mt-2">
-                  <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                  <p />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-          <div class="card" style="width: 238px; height: 305px;">
-            <div class="cover-container">
-              <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-            </div>
-            <div class="card-body">
-              <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                width="100" height="100" alt="Card image cap">
-              <div class="card-text">
-                <h5 class="user-name">John Doe</h5>
-                <h6 class="user-acc-name">@heyjohn</h6>
-                <p class="user-com-likes my-3">
-                  <span>
-                    <i class="far fa-lg fa-comment"></i> 1.5k
-                    <i class="far fa-lg fa-heart ms-3"></i> 20K
-                  </span>
-                </p>
-                <p class="user-followship mt-2">
-                  <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                  <p />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-          <div class="card" style="width: 238px; height: 305px;">
-            <div class="cover-container">
-              <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-            </div>
-            <div class="card-body">
-              <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                width="100" height="100" alt="Card image cap">
-              <div class="card-text">
-                <h5 class="user-name">John Doe</h5>
-                <h6 class="user-acc-name">@heyjohn</h6>
-                <p class="user-com-likes my-3">
-                  <span>
-                    <i class="far fa-lg fa-comment"></i> 1.5k
-                    <i class="far fa-lg fa-heart ms-3"></i> 20K
-                  </span>
-                </p>
-                <p class="user-followship mt-2">
-                  <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                  <p />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-          <div class="card" style="width: 238px; height: 305px;">
-            <div class="cover-container">
-              <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-            </div>
-            <div class="card-body">
-              <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                width="100" height="100" alt="Card image cap">
-              <div class="card-text">
-                <h5 class="user-name">John Doe</h5>
-                <h6 class="user-acc-name">@heyjohn</h6>
-                <p class="user-com-likes my-3">
-                  <span>
-                    <i class="far fa-lg fa-comment"></i> 1.5k
-                    <i class="far fa-lg fa-heart ms-3"></i> 20K
-                  </span>
-                </p>
-                <p class="user-followship mt-2">
-                  <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                  <p />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-            <div class="card" style="width: 238px; height: 305px;">
-              <div class="cover-container">
-                <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-              </div>
-              <div class="card-body">
-                <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                  width="100" height="100" alt="Card image cap">
-                <div class="card-text">
-                  <h5 class="user-name">John Doe</h5>
-                  <h6 class="user-acc-name">@heyjohn</h6>
-                  <p class="user-com-likes my-3">
-                    <span>
-                      <i class="far fa-lg fa-comment"></i> 1.5k
-                      <i class="far fa-lg fa-heart ms-3"></i> 20K
-                    </span>
-                  </p>
-                  <p class="user-followship mt-2">
-                    <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                    <p />
-                </div>
-              </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-              <div class="card" style="width: 238px; height: 305px;">
-                <div class="cover-container">
-                  <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-                </div>
-                <div class="card-body">
-                  <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                    width="100" height="100" alt="Card image cap">
-                  <div class="card-text">
-                    <h5 class="user-name">John Doe</h5>
-                    <h6 class="user-acc-name">@heyjohn</h6>
-                    <p class="user-com-likes my-3">
-                      <span>
-                        <i class="far fa-lg fa-comment"></i> 1.5k
-                        <i class="far fa-lg fa-heart ms-3"></i> 20K
-                      </span>
-                    </p>
-                    <p class="user-followship mt-2">
-                      <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                      <p />
-                  </div>
-                </div>
-              </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-                <div class="card" style="width: 238px; height: 305px;">
-                  <div class="cover-container">
-                    <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-                  </div>
-                  <div class="card-body">
-                    <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                      width="100" height="100" alt="Card image cap">
-                    <div class="card-text">
-                      <h5 class="user-name">John Doe</h5>
-                      <h6 class="user-acc-name">@heyjohn</h6>
-                      <p class="user-com-likes my-3">
-                        <span>
-                          <i class="far fa-lg fa-comment"></i> 1.5k
-                          <i class="far fa-lg fa-heart ms-3"></i> 20K
-                        </span>
-                      </p>
-                      <p class="user-followship mt-2">
-                        <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                        <p />
-                    </div>
-                  </div>
-                </div>
-        </div>
-        <div class="col-12 col-md-4 col-lg-3 ps-2 user-detail">
-                  <div class="card" style="width: 238px; height: 305px;">
-                    <div class="cover-container">
-                      <img class="card-cover-img" src="" alt="Card image cap" onerror='this.style.display = "none"'>
-                    </div>
-                    <div class="card-body">
-                      <img class="card-user-img" src="https://icon-library.com/images/default-user-icon/default-user-icon-1.jpg"
-                        width="100" height="100" alt="Card image cap">
-                      <div class="card-text">
-                        <p class="user-name">John Doe</p>
-                        <p class="user-acc-name">@heyjohn</p>
-                        <p class="user-com-likes my-3">
-                          <span>
-                            <i class="far fa-lg fa-comment"></i> 1.5k
-                            <i class="far fa-lg fa-heart ms-3"></i> 20K
-                          </span>
-                        </p>
-                        <p class="user-followship mt-2">
-                          <strong>34個</strong>跟隨中 <strong>59位</strong>跟隨者
-                          <p />
-                      </div>
-                    </div>
-                  </div>
-        </div>
+        {{/each}}
       </div>
     </div>
   </div>
