@@ -4,6 +4,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -36,13 +37,39 @@ const userController = {
       const tweets = tweetsRaw.map(tweet => ({
         ...tweet.dataValues,
         replyLength: tweet.Replies.length,
-        likeLength: tweet.Likes.length
+        likeLength: tweet.Likes.length,
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
+
+
+      const userself = req.user
+      const users = await User.findAll({// 撈出所有 User 與 followers 資料
+        order: [['createdAt', 'DESC']],
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+      let popularUser = []
+
+      popularUser = users.map(user => ({
+        // 整理 users 資料
+        ...user.dataValues,
+        FollowerCount: user.Followers.length, // 計算追蹤者人數
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
+      }))
+
+      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+
+
 
       res.render('userTweets', {
         profileUser: profileUser.toJSON(),
         tweets,
-        id
+        id,
+        popularUser,
+        userself
       })
     } catch (err) {
       console.log(err)
@@ -50,8 +77,48 @@ const userController = {
       res.redirect('/tweets')
     }
   },
-  getSetting: (req, res) => {},
-  editSetting: (req, res) => {},
+  getSetting:async (req, res) => {
+    try {
+       User.findByPk(req.user.id, { raw: true }).then(user => {
+       res.render('setting', { userdata: user })
+    })
+    } catch (error) {
+      console.log(err)
+      console.log('getSetting err')
+    }
+  },
+
+  editSetting:async (req, res) => {
+    try {
+      const userId = req.user.id
+      if (req.body.passwordCheck !== req.body.password) {
+        req.flash('error_messages', '兩次密碼輸入不同！')
+        return res.redirect('back')
+      } else {
+        console.log('======================================')
+        console.log(req.user.id)
+        console.log('======================================')
+
+        User.findByPk(userId)
+          .then((user) => {
+            user.update({
+              account:req.body.account,
+              name: req.body.name,
+              email:req.body.email,
+              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+            })
+              .then(() => {
+                req.flash('success_messages', '成功修改帳戶資料')
+                res.redirect('back')
+              })
+          })
+      }
+    } catch (error) {
+      console.log(err)
+      console.log('getSetting err')
+    }
+  },
+
   getReplies: async (req, res) => {
     try {
       const userId = req.params.userId
@@ -84,6 +151,8 @@ const userController = {
         order: [['createdAt', 'DESC']]
       })
 
+      
+
       res.render('userReply', { user: user.toJSON(), replies, id })
     } catch (err) {
       console.log(err)
@@ -115,7 +184,7 @@ const userController = {
         include: [
           {
             model: Tweet,
-            attributes: ['description', 'createdAt'],
+            attributes: ['description', 'createdAt', 'id'],
             include: [
               User,
               { model: Like, attributes: ['id'] },
@@ -124,11 +193,12 @@ const userController = {
           }
         ]
       })
-
+      console.log('likedTweetsRaw', likedTweetsRaw[0])
       const likedTweets = likedTweetsRaw.map(like => ({
         ...like.dataValues,
         replyLength: like.Tweet.Replies.length,
-        likeLength: like.Tweet.Likes.length
+        likeLength: like.Tweet.Likes.length,
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(like.Tweet.id)
       }))
 
       res.render('userLike', { user: user.toJSON(), likedTweets, id })
@@ -148,20 +218,21 @@ const userController = {
           { model: User, as: 'Followings' }
         ]
       })
-      let user = []
+      let popularUser = []
 
-      user = users.map(user => ({
+      popularUser = users.map(user => ({
         // 整理 users 資料
         ...user.dataValues,
         FollowerCount: user.Followers.length, // 計算追蹤者人數
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
       }))
 
-      helpers.removeUser(user, userself.id) //移除使用者自身資訊
-      user = user.sort((a, b) => b.FollowerCount - a.FollowerCount) // 依追蹤者人數排序清單
+      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
-      return res.render('following', { user, userself })
-    } catch (err) {
+      return res.render('following', { popularUser, userself })
+    }
+    catch (err) {
       console.log(err)
       console.log('getUserFollowers err')
       return res.redirect('back')
@@ -179,16 +250,16 @@ const userController = {
         ]
       })
 
-      let user = []
+      let popularUser = []
 
-      user = users.map(user => ({
+      popularUser = users.map(user => ({
         // 整理 users 資料
         ...user.dataValues,
         FollowerCount: user.Followers.length, // 計算追蹤者人數
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
       }))
-      helpers.removeUser(user, userself.id) //移除使用者自身資訊
-      user = user.sort((a, b) => b.FollowerCount - a.FollowerCount) // 依追蹤者人數排序清單
+      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       const followers = await Followship.findAll({
         //依追蹤時間排序追蹤者
@@ -215,7 +286,7 @@ const userController = {
       })
 
       Promise.all(Data).then(data => {
-        return res.render('follower', { user, data, userself })
+        return res.render('follower', { popularUser, data, userself })
       })
     } catch (err) {
       console.log(err)

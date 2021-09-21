@@ -11,12 +11,14 @@ const Tweet = db.Tweet
 passport.use(new LocalStrategy(
   // customize user field
   {
-    usernameField: 'email',
+    usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true
   },
   // authenticate user
   (req, username, password, cb) => {
+    console.log('================')
+    console.log('進入passport authenticate user')
     User.findOne({ where: { account: username } }).then(user => {
       if (!user) return cb(null, false, req.flash('error_messages', '帳號或密碼輸入錯誤'))
       if (!bcrypt.compareSync(password, user.password)) return cb(null, false, req.flash('error_messages', '密碼輸入錯誤！'))
@@ -29,9 +31,13 @@ passport.use(new LocalStrategy(
 
 // serialize and deserialize user
 passport.serializeUser((user, cb) => {
+  console.log('================')
+  console.log('正在進行serialize')
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
+  console.log('================')
+  console.log('正在進行deserialize')
   User.findByPk(id, {
     include: [
       { model: User, as: 'Followers' },

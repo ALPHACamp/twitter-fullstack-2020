@@ -27,7 +27,7 @@ const loginController = {
               User.create({
                 account: req.body.account,
                 name: req.body.name,
-                avatar: 'https://i.pinimg.com/474x/ff/4f/c3/ff4fc37f314916957e1103a2035a11fa.jpg',
+                avatar: `https://loremflickr.com/320/240/selfie?random=${Math.random() * 100}`,
                 email: req.body.email,
                 password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
                 role: false

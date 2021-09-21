@@ -5,9 +5,8 @@ const userNameInput = document.querySelector('#user-name-input')
 const userInfoInput = document.querySelector('#user-intro-input')
 const messageNameCount = document.querySelector('#count_message_name')
 const messageIntroCount = document.querySelector('#count_message_info')
-const baseURL = 'http://localhost:3000'
-
-async function getUserProfile (id) {
+// const baseURL = 'http://localhost:3000'
+async function getUserProfile(id, baseURL) {
   try {
     const dataRaw = await axios.get(`${baseURL}/api/users/${userId}`)
     const userData = dataRaw.data.user
@@ -39,7 +38,8 @@ userInfoInput.addEventListener('keyup', function countCharacters (event) {
 
 profileEdit.addEventListener('click', function onIconClicked (event) {
   if (event.target.matches('#edit-profile-btn')) {
+    const baseURL = event.target.dataset.url
     userId = event.target.dataset.id
-    getUserProfile(userId)
+    getUserProfile(userId, baseURL)
   }
 })

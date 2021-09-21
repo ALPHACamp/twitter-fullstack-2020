@@ -3,8 +3,6 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const User = db.User
 const Like = db.Like
-
-const dayjs = require('dayjs')
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -20,7 +18,7 @@ const tweetController = {
           { model: User, as: 'Followings' }
         ]
       })
-      let user = []
+      let popularUser = []
 
       user = users.map(user => ({
         // 整理 users 資料
@@ -36,9 +34,7 @@ const tweetController = {
         include: [Reply, User, Like],
         order: [['createdAt', 'DESC']]
       })
-
       //console.log('get tweets:', tweets[1].dataValues.User.name)
-
       const reorganizationTweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         userName: tweet.User.name,
@@ -50,7 +46,6 @@ const tweetController = {
           tweet.id
         )
       }))
-
       //console.log('mapping tweet:', reorganizationTweets)
       return res.render('tweets', { reorganizationTweets, user, userself })
     } catch (err) {
@@ -62,11 +57,11 @@ const tweetController = {
       const { description } = req.body
       if (!description) {
         req.flash('error_messages', '內文不可空白')
-        return res.json({ status: 'error', message: '內文不可空白' })
+        return res.redirect('/tweets')
       }
       if (description.length > 140) {
         req.flash('error_messages', '內文不可超過140字')
-        return res.json({ status: 'error', message: '內文不可超過140字' })
+        return res.redirect('/tweets')
       }
       const tweet = await Tweet.create({
         description,
