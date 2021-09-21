@@ -33,13 +33,13 @@
         <div class="d-flex">
           <div class="me-5">
             <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"
-              data-id="{{this.id}}">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
+              data-id="{{this.id}}" data-url="{{baseURL}}">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
           </div>
           <div id="tweet-like">
             {{#if this.isLiked}}
-            <i class="unlike-icon fas fa-heart" data-id="{{this.id}}"></i>
+            <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
             {{else}}
-            <i class="like-icon far fa-heart" data-id="{{this.id}}"></i>
+            <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
             {{/if}}
             <span class="like-number ms-2">{{this.likeLength}}</span>
           </div>
@@ -63,14 +63,14 @@
   const tweetReplyModalAccount = document.querySelector('#tweet-reply-modal-account')
   const tweetReplyModalReply = document.querySelector('#tweet-reply-modal-reply')
   const tweetLike = document.querySelector('#tweet-like')
-  const baseURL = 'http://localhost:3000'
-  let tweetModal
+
   tweets.addEventListener('click', function onIconClicked(event) {
-    tweetId = event.target.dataset.id
+    const baseURL = event.target.dataset.url
+    const tweetId = event.target.dataset.id
     if (event.target.matches('.reply-icon')) {
       axios.get(`${baseURL}/api/tweets/${tweetId}/replies`)
         .then(tweet => {
-          tweetModal = tweet.data.tweetModal
+          const tweetModal = tweet.data.tweetModal
           tweetReplyModalAvatar.innerHTML = `
               <a href="/users/${tweetModal.UserId}/tweets">
             <img class="rounded-circle" src="${tweetModal.User.avatar}" alt="avatar" title="avatar" width="50px" height="50px">

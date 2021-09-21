@@ -37,7 +37,8 @@ const userController = {
       const tweets = tweetsRaw.map(tweet => ({
         ...tweet.dataValues,
         replyLength: tweet.Replies.length,
-        likeLength: tweet.Likes.length
+        likeLength: tweet.Likes.length,
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
 
 
@@ -182,7 +183,7 @@ const userController = {
         include: [
           {
             model: Tweet,
-            attributes: ['description', 'createdAt'],
+            attributes: ['description', 'createdAt', 'id'],
             include: [
               User,
               { model: Like, attributes: ['id'] },
@@ -192,11 +193,12 @@ const userController = {
           }
         ]
       })
-
+      console.log('likedTweetsRaw', likedTweetsRaw[0])
       const likedTweets = likedTweetsRaw.map(like => ({
         ...like.dataValues,
         replyLength: like.Tweet.Replies.length,
-        likeLength: like.Tweet.Likes.length
+        likeLength: like.Tweet.Likes.length,
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(like.Tweet.id)
       }))
 
       res.render('userLike', { user: user.toJSON(), likedTweets, id })

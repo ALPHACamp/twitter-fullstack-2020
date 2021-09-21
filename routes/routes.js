@@ -11,8 +11,12 @@ const userController = require('../controllers/userController')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
+    console.log('================')
+    console.log('authenticated通過 next()')
     return next()
   }
+  console.log('================')
+  console.log('authenticated未通過導入/signin')
   res.redirect('/signin')
 }
 const authenticatedAdmin = (req, res, next) => {
