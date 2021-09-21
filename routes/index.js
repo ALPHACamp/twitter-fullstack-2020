@@ -55,14 +55,9 @@ module.exports = (app, passport) => {
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
     app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
-    // new
     app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
     app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
-    // app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
-    // app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
-
-    // test 
-    app.get('/users/:id/followers', authenticatedUser, userController.getFollowerstest)
-    app.get('/users/:id/followings', authenticatedUser, userController.getFollowingstest)
+    app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
+    app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
 
 }
