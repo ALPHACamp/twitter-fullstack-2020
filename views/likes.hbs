@@ -190,7 +190,7 @@
                     </a>
 
                     {{#if this.isLiked}}
-                    <form action="/tweets/{{this.tweetId}}/like?_method=DELETE" method="POST">
+                    <form action="/tweets/{{this.tweetId}}/unlike" method="POST">
                       <div class="ml-4 like">
                         <button type="submit" class="unlike btn">
                           <i class="fas fa-heart mr-1"></i>

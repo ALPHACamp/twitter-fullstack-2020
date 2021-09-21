@@ -15,7 +15,7 @@ const tweetController = {
   getTweets: (req, res) => {
     const currentUser = helpers.getUser(req)
     const currentUserId = currentUser.id
-    console.log(currentUser)
+    // console.log(currentUser)
     return Promise.all([
       Tweet.findAll({
         include: [
@@ -150,23 +150,31 @@ const tweetController = {
 
   //Like & Unlike
   //喜歡特定貼文
-  addLike: (req, res) => {
+  addLike: async(req, res) => {
+    try {
     const currentUserId = helpers.getUser(req).id
-    return Like.create({
+    console.log(req.params.id)
+    await Like.create({
       UserId: currentUserId,
-      TweetId: req.params.user_id
+      TweetId: req.params.id
     })
       .then((like) => {
         return res.redirect('back')
       })
+    } catch (error){
+    console.log(error)
+    res.render('new', {Error})}
   },
+  
   //取消喜歡特定貼文
-  removeLike: (req, res) => {
+  removeLike: async(req, res) => {
+    try{
     const currentUserId = helpers.getUser(req).id
-    return Like.findOne({
+    console.log(req.params)
+    await Like.findOne({
       where: {
         UserId: currentUserId,
-        TweetId: req.params.user_id
+        TweetId: req.params.id
       }
     })
       .then(like => {
@@ -175,6 +183,10 @@ const tweetController = {
             return res.redirect('back')
           })
       })
+    } catch (error){
+    console.log(error)
+    res.render('new', {Error})}
+  
   }
 
 }

@@ -119,7 +119,7 @@
               <div class="ml-4 d-flex index-like">
 
                 {{#if isLiked}}
-                <form action="/tweets/{{this.id}}/like?_method=DELETE" method="POST">
+                <form action="/tweets/{{this.id}}/unlike" method="POST">
                   <div class="ml-4 like">
                     <button type="submit" class="unlike btn">
                       <i class="fas fa-heart mr-1"></i>

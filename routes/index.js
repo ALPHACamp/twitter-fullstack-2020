@@ -90,7 +90,7 @@ module.exports = (app, passport) => {
   // //喜歡特定貼文
   app.post('/tweets/:id/like', authenticated, tweetController.addLike)
   // //取消喜歡特定貼文
-  app.delete('/tweets/:id/like', tweetController.removeLike)
+  app.post('/tweets/:id/unlike', tweetController.removeLike)
 
   // //管理者登入(後台登入)
   app.get('/admin/signin', adminController.signinPage)
