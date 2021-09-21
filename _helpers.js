@@ -1,4 +1,6 @@
 function ensureAuthenticated(req) {
+  console.log('================')
+  console.log('進入req.isAuthenticated()')
   return req.isAuthenticated();
 }
 

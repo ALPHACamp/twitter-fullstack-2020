@@ -1,24 +1,33 @@
 const express = require('express')
-const helpers = require('./_helpers')
 const Handlebars = require('handlebars')
 const exphbs = require('express-handlebars')
-
+const flash = require('connect-flash')
+const session = require('express-session')
+const methodOverride = require('method-override')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
-
 const app = express()
-const port = process.env.PORT || 3000
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
-}
+} //有用到process.env.PORT的資料變數要放下面
 
-const flash = require('connect-flash')
-const session = require('express-session')
-const db = require('./models')
+const port = process.env.PORT //把PORT=3000放入.env
 const passport = require('./config/passport')
-const methodOverride = require('method-override')
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+app.engine(
+  'hbs',
+  exphbs({
+    defaultLayout: 'main',
+    extname: 'hbs',
+    helpers: require('./config/handlebars-helpers'),
+    handlebars: allowInsecurePrototypeAccess(Handlebars)
+  })
+)
+app.set('view engine', 'hbs')
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static('public'))
+app.use(methodOverride('_method'))
 // setup passport
 app.use(passport.initialize())
 app.use(passport.session())
@@ -32,22 +41,10 @@ app.use((req, res, next) => {
   next()
 })
 
-app.engine(
-  'hbs',
-  exphbs({
-    defaultLayout: 'main',
-    extname: 'hbs',
-    helpers: require('./config/handlebars-helpers'),
-    handlebars: allowInsecurePrototypeAccess(Handlebars)
-  })
-)
-app.set('view engine', 'hbs')
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
-
-app.use(methodOverride('_method'))
-
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+console.log('================')
+console.log('進入app.js')
 
 require('./routes')(app)
 
