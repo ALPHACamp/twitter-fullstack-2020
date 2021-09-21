@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const express = require('express')
 const handlebars = require('express-handlebars')
 const helpers = require('./_helpers')
@@ -15,6 +19,7 @@ app.engine('handlebars', handlebars({
   helpers: require('./config/handlebars-helpers')
 }))
 app.use(express.static('public'))
+app.use('/upload', express.static(__dirname + '/upload'))
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
