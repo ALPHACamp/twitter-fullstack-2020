@@ -33,8 +33,8 @@ module.exports = (app, passport) => {
   app.post('/like/:tweetId', authenticated, userController.addLike)
   app.delete('/like/:tweetId', authenticated, userController.removeLike)
 
-  app.get('/user/self', authenticated, userController.getUserSelf)
-  app.get('/user/self/reply', authenticated, userController.getUserSelfReply)
+  app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
+  app.get('/user/self/reply', authenticated, userController.getReplyTweets)
   app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
 
