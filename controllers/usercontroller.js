@@ -20,8 +20,13 @@ const userController = {
     //put some sign in strategy here
   },
 
-  registerPage: (req, res) => {
-    return res.render("register");
+  signupPage: (req, res) => {
+    return res.render("signup");
+  },
+
+  signup: (req, res) => {
+    return res.render("signup");
+    //put sign up function here
   },
 };
 
