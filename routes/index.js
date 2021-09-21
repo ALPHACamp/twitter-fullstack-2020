@@ -9,24 +9,25 @@ const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (!helpers.getUser(req).role !== "admin") {
+    if (helpers.getUser(req).role !== "admin") {
       return next()
-    } 
-  } else {
-    req.flash('error_messages', '帳號或密碼輸入錯誤')
+    }
+    else {
+      req.flash('error_messages', '帳號或密碼輸入錯誤')
+    }
   }
   res.redirect('/signin')
 }
 
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (!helpers.getUser(req).role !== "admin") {
+    if (helpers.getUser(req).role === "admin") {
       return next()
-    } 
+    }
   } else {
     req.flash('error_messages', '帳號或密碼輸入錯誤')
   }
-  res.redirect('/signin')
+  res.redirect('/admin/signin')
 }
 
 

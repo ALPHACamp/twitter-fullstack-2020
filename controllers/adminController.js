@@ -118,7 +118,7 @@ const adminController = {
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }
         ],
-        where: { isAdmin: false }
+        where: { role: "user" }
       }),
       Tweet.findAll({
         raw: true,
@@ -138,7 +138,7 @@ const adminController = {
             // console.log("tweetid:", currentValue.id)
             // console.log("accumulator:", accumulator)
             // console.log("currentlikes:", currentValue.Likes)
-            let addCount = currentValue.Likes.UserId ? 1 : 0
+            const addCount = currentValue.Likes.UserId ? 1 : 0
             // console.log("currentValue:", addCount)
             // console.log("return:", accumulator + addCount)
             return accumulator + addCount
