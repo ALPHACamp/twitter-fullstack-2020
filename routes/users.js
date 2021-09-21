@@ -22,9 +22,11 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/users/
 router.get('/logout', userController.logout)
 
 //user's profile
+router.put('/self/edit/:id', authenticated, userController.putUserEdit)
 router.get('/self/:id', authenticated, userController.getUser)
 router.get('/self/reply/:id', authenticated, userController.getUserReply)
 router.get('/self/like/:id', authenticated, userController.getUserLike)
+
 
 // user's setting
 router.get('/setting/:id', authenticated, userController.getUserSetting)

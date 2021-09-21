@@ -7,7 +7,6 @@ const Like = db.Like
 const Followship = db.Followship
 
 
-
 const userController = {
   getSignup: (req, res) => {
     return res.render('signup', { layout: 'userMain' })
@@ -82,8 +81,12 @@ const userController = {
 
         User.findByPk(req.params.id)
           .then(user => {
+            const nameWordCount = user.dataValues.name.length
+            const introWordCount = user.dataValues.introduction.length
             return res.render('self', {
               user: user.toJSON(),
+              nameWordCount: nameWordCount,
+              introWordCount: introWordCount,
               totalTweet: totalTweet,
               tweet: data,
               followerCount: followerCount.length,
@@ -148,7 +151,6 @@ const userController = {
       where: whereQuery,
       order: [['createdAt', 'DESC']],
     }).then(result => {
-      console.log(result.rows[0].dataValues.Tweet)
       const data = result.rows.map(r => ({
         ...r.dataValues,
         content: r.dataValues.Tweet.dataValues.content,
@@ -184,6 +186,19 @@ const userController = {
         })
       })
     })
+  },
+
+  putUserEdit: (req, res) => {
+    const { name, introduction } = req.body
+    User.findByPk(req.params.id)
+      .then(user => {
+        user.update({
+          name,
+          introduction
+        }).then(user => {
+          return res.redirect(`/users/self/${user.id}`)
+        })
+      })
   },
 
   getUserSetting: (req, res) => {
