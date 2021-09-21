@@ -60,6 +60,13 @@ html, body{
   opacity: 0.85;
 }
 
+.user-cover-modal{
+  width: 596px; 
+  height: 200px; 
+  position:relate;
+  opacity: 0.85;
+}
+
 .avatar-camera{
   width: 20px; 
   height: 20px; 
