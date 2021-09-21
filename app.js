@@ -1,10 +1,12 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
-const helpers = require('./_helpers')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
+const methodOverride = require('method-override')
 const passport = require('./config/passport')
+const helpers = require('./_helpers')
+
 
 const app = express()
 const port = 3000
@@ -26,6 +28,7 @@ app.use((req, res, next) => {
   res.locals.user = helpers.getUser(req)
   next()
 })
+app.use(methodOverride('_method'))
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 

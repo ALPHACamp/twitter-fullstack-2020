@@ -28,6 +28,6 @@ router.get('/self/like/:id', authenticated, userController.getUserLike)
 
 // user's setting
 router.get('/setting/:id', authenticated, userController.getUserSetting)
-router.post('/setting/:id', authenticated, userController.putUserSetting)
+router.put('/setting/:id', authenticated, userController.putUserSetting)
 
 module.exports = router
