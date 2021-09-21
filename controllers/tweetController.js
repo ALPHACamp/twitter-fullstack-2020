@@ -13,7 +13,7 @@ const tweetController = {
       Tweet.findAndCountAll({
         raw: true,
         nest: true,
-        include: [User],
+        include: [User,  Reply],
         order: [
           ['createdAt', 'DESC'], // Sorts by createdAt in descending order
         ],
@@ -107,13 +107,16 @@ const tweetController = {
     try {
       const tweet = await Tweet.findByPk(
         req.params.id, {
-        include: [User]
+        include: [
+          User,
+          {model:Reply, include: [User]}
+        ],
+        order: [['Replies', 'createdAt', 'DESC']]
       })
+      console.log('tweet:',tweet)
       return res.render('tweet', { tweet: tweet.toJSON() })
     } catch (e) {
       console.log(e.message)
-
-
     }
   },
 }

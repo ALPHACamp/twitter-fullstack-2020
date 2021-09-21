@@ -3,7 +3,9 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const Reply = db.Reply
 const Followship = db.Followship
+const helpers = require('../_helpers')
 
 const userController = {
   signUpPage: (req, res) => {
@@ -59,9 +61,33 @@ const userController = {
     res.redirect('/signin')
   },
 
-  getUserProfile:(req, res)=>{
-    return res.render('userProfile')
-  },
+  // getUserTweets:async(req, res)=>{
+  //   const currentUser = helpers.getUser(req)
+  //   const tweets = await Tweet.findAll({
+  //     where: {UserId:currentUser.id},
+  //     include: [User, Reply],
+  //     order: [['createdAt', 'DESC']]
+  //   })
+  //   return res.render('userSelf',{ tweets })
+  // },
+
+  // getUserSelfReply: async (req ,res) =>{
+  //   const currentUser = helpers.getUser(req)
+  //   const replies = await Reply.findAll({
+  //     raw: true,
+  //     nest: true,
+  //     where: {UserId:currentUser.id},
+  //     include: [User,{model: Tweet, include: [User]}],
+  //     order: [['createdAt', 'DESC']]
+  //   })
+  //   const tweets = await Tweet.findAll({
+  //     where: {UserId:currentUser.id},
+  //     include: [User, Reply],
+  //     order: [['createdAt', 'DESC']]
+  //   })
+  //   return res.render('userSelfReply',{replies, tweets})
+  // },
+
   getSetting:(req, res)=>{
     return res.render('setting')
   },
@@ -80,7 +106,7 @@ const userController = {
 
   getUserTweets: (req, res) => {
     const id = req.params.id
-    const loginUserId = helper.getUser(req).id
+    const loginUserId = helpers.getUser(req).id
     const whereQuery = {}
 
     // 類似餐廳與類別的關係
