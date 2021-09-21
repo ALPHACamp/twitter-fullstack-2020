@@ -71,8 +71,31 @@ const tweetController = {
       console.warn(err)
     }   
   },
-  getTweet: (req, res) => {
 
+  getTweet: async (req, res) => {
+    try {
+      const tweet = await Tweet.findByPk(req.params.tweetId, {
+        include: [
+          { model: Reply, include: [User] },
+          User,
+          Like
+        ]
+      })
+      const tweetJson = tweet.toJSON()
+      console.log(tweetJson)
+      tweetJson.amPm = dayjs(`${tweetJson.createdAt}`).format('A') === 'PM' ? '下午' : '上午'
+      tweetJson.hourMinute = dayjs(`${tweetJson.createdAt}`).format('HH:mm')
+      tweetJson.year = dayjs(`${tweetJson.createdAt}`).format('YYYY')
+      tweetJson.month = dayjs(`${tweetJson.createdAt}`).format('M')
+      tweetJson.day = dayjs(`${tweetJson.createdAt}`).format('D')
+      tweetJson.isLiked = req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweetJson.id)
+      const tweetReplies = tweetJson.Replies.map(reply => ({
+        ...reply
+      }))
+      res.render('tweet', { tweetReplies, tweet: tweetJson })
+    } catch(err) {
+      console.warn(err)
+    }
   }, 
   postReplies: async (req, res) => {
     try {
@@ -92,11 +115,33 @@ const tweetController = {
     }
     
   },
-  addLike: (req, res) => {
 
+  addLike: async (req, res) => {
+    try {
+      await Like.create({
+        UserId: req.user.id,
+        TweetId: req.params.tweetId
+      })
+      console.log('addLike')
+      return res.json({status: 'success', message: 'add likes'})
+    } catch(err) {
+      console.warn(err)
+    }
   }, 
-  removeLike: (req, res) =>{
-
+  removeLike: async (req, res) =>{
+    try {
+      const like = await Like.findOne({
+        where: {
+          UserId: req.user.id,
+          TweetId: req.params.tweetId
+        }
+      })
+      console.log('removeLike')
+      await like.destroy()
+      return res.json({ status: 'success', message: 'remove likes' })
+    } catch(err) {
+      console.warn(err)
+    }
   }
 }
 
