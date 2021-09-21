@@ -9,7 +9,6 @@ const adminController = {
   signIn: (req, res) => {
     if (!req.user.role) {
       req.flash('error_messages', '帳號或密碼錯誤')
-
       res.redirect('/admin/signin')
     } else {
       req.flash('success_messages', '成功登入後台！')
@@ -17,7 +16,7 @@ const adminController = {
     }
   },
   logOut: (req, res) => {
-    req.flash('success_messages', '成功登入！')
+    req.flash('success_messages', '成功登出！')
     req.logOut()
     res.redirect('admin/signin')
   },

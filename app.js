@@ -21,7 +21,7 @@ const methodOverride = require('method-override')
 
 // const exhbs = require('express-handlebars')
 // const bodyParser = require('body-parser')
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: true }))
 // setup passport
 app.use(passport.initialize())
 app.use(passport.session())
@@ -50,7 +50,6 @@ app.use(express.static('public'))
 
 app.use(methodOverride('_method'))
 
-//app.get('/', (req, res) => res.render('admin/signin'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes')(app)

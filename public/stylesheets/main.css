@@ -22,6 +22,14 @@ p {
   margin: 0;
 }
 
+::placeholder {
+  color: #657786;
+  font-size: 0.5em;
+  Font-family:"Noto Sans TC";
+  Font-style: normal;
+  font-weight: 700;
+  text-align: top;
+}
 
 .common-button{
   background-color: #FF6600!important;
@@ -242,8 +250,6 @@ max-width: 600px;
 
 .tweet-followfhip .follow-btn{
 
-  
- 
 Font-family: Noto Sans TC;
 font-weight: 700;
 Font-style:normal;

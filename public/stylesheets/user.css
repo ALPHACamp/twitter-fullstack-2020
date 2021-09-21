@@ -186,3 +186,21 @@
   color: #657786;
   margin-top: 2px;
 }
+
+.user-setting {
+  max-width: 600px;
+  border-width: 0px 0px 0px 1px;
+  border-style: solid;
+  border-color: #e6ecf0;
+  padding: 0;
+}
+
+.user-setting .home-word {
+  color: #1c1c1c;
+  font-size: 1.1rem;
+  font-weight: bold;
+} 
+
+
+
+
