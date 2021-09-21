@@ -1,72 +1,43 @@
 'use strict'
 const bcrypt = require('bcryptjs')
 const faker = require('faker')
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkInsert('Users', [{
-      account: 'account0',
-      name: 'root',
+    const admin = {
+      id: 1,
+      account: 'root@example.com',
+      name: 'Admin',
       email: 'root@example.com',
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      isAdmin: true,
+      role: "admin",
+      avatar: 'https://loremflickr.com/320/240/peoplerandom=100',
+      cover: 'https://loremflickr.com/320/240/viewrandom=100',
+      followingCount: 0,
+      followerCount: 0,
       createdAt: new Date(),
       updatedAt: new Date()
-    }, {
-      account: 'account1',
-      name: faker.name.findName(),
-      email: 'user1@example.com',
+    }
+      
+    const users = Array.from({ length: 5}).map((item, i) => ({
+      id: i + 2,
+      account: `account${i + 1}`,
+      name: `user${i + 1}`,
+      email: faker.internet.email(),
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      isAdmin: false,
-      avatar: `https://randomuser.me/api/portraits/women/${Math.round(Math.random() * 100)}.jpg`,
-      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
+      role: "user",
+      avatar: `https://loremflickr.com/320/240/people?random=${i}`,
+      cover: `https://loremflickr.com/320/240/view?random=${i}`,
       description: faker.lorem.text(),
+      followingCount: 0,
+      followerCount: 0,
       createdAt: new Date(),
       updatedAt: new Date()
-    }, {
-      account: 'account2',
-      name: faker.name.findName(),
-      email: 'user2@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      isAdmin: false,
-      avatar: `https://randomuser.me/api/portraits/women/${Math.round(Math.random() * 100)}.jpg`,
-      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
-      description: faker.lorem.text(),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      account: 'account3',
-      name: faker.name.findName(),
-      email: 'user3@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      isAdmin: false,
-      avatar: `https://randomuser.me/api/portraits/women/${Math.round(Math.random() * 100)}.jpg`,
-      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
-      description: faker.lorem.text(),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      account: 'account4',
-      name: faker.name.findName(),
-      email: 'user4@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      isAdmin: false,
-      avatar: `https://randomuser.me/api/portraits/men/${Math.round(Math.random() * 100)}.jpg`,
-      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
-      description: faker.lorem.text(),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }, {
-      account: 'account5',
-      name: faker.name.findName(),
-      email: 'user5@example.com',
-      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
-      isAdmin: false,
-      avatar: `https://randomuser.me/api/portraits/men/${Math.round(Math.random() * 100)}.jpg`,
-      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
-      description: faker.lorem.text(),
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }], {})
+    }))
+
+    users.push(admin)
+
+    await queryInterface.bulkInsert('Users', users, {})
   },
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Users', null, {})
