@@ -32,6 +32,9 @@ module.exports = {
       introduction: {
         type: Sequelize.STRING(150)
       },
+      cover: {
+        type: Sequelize.STRING
+      },
       role: {
         type: Sequelize.STRING
       },

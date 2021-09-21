@@ -11,7 +11,7 @@ module.exports = (app, passport) => {
         return next()
       }
     }
-    res.redirect('/admin/login')
+    res.redirect('/signin')
   }
   const authenticatedAdmin = (req, res, next) => {
     if (helpers.ensureAuthenticated(req)) {
@@ -20,7 +20,7 @@ module.exports = (app, passport) => {
       }
       return res.redirect('/')
     }
-    res.redirect('/signin')
+    res.redirect('/admin/signin')
   }
 
   app.get('/', authenticatedGeneral, (req, res) => res.redirect('/tweets'))
