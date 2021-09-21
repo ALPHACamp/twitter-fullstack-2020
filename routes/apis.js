@@ -38,5 +38,8 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/users/:user_id/followings', authenticated, userController.getUserFollowings)
 // router.post('/followships/:user_id', authenticated,  userController.addFollowing)
 
+// //使用者新增一則貼文
+router.post('/tweets', tweetController.postTweets)
+
 
 module.exports = router

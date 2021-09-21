@@ -3,6 +3,7 @@ const db = require('../models')
 const tweet = require('../models/tweet')
 const { Op } = require("sequelize")
 const { sequelize } = require('../models')
+const tweetService = require('../services/tweetService')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -55,7 +56,8 @@ const tweetController = {
           isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
           // isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
         }))
-        return res.render('index', {
+
+        return res.status(200).render('index', {
           tweets,
           topUsers,
           currentUser
@@ -65,19 +67,16 @@ const tweetController = {
 
   //新增一則貼文(要改api)
   postTweets: (req, res) => {
-    if (!req.body.description) {
-      req.flash('error_messages', "請輸入貼文內容")
-      return res.redirect('/tweets')
-    }
-    return Tweet.create({
-      UserId: req.user.id,
-      description: req.body.description
+    tweetService.postTweets(req, res, (data) => {
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
+      }
+      req.flash('success_messages', data['message'])
+      res.redirect('back')
     })
-      .then((tweet) => {
-        req.flash('success_messages', 'tweet was successfully created')
-        res.redirect('back')
-      })
   },
+
   //顯示特定貼文(要改api)
   getTweet: (req, res) => {
     const currentUser = helpers.getUser(req)
