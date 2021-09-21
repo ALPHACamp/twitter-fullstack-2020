@@ -33,9 +33,9 @@
       </div>
       <div  class="tweet-like" id="tweet-like">
         {{#if tweet.isLiked}}
-        <i class="unlike-icon fas fa-heart" data-id="{{tweet.id}}"></i>
+        <i class="unlike-icon fas fa-heart" data-id="{{tweet.id}}" data-url="{{baseURL}}"></i>
         {{else}}
-        <i class="like-icon far fa-heart" data-id="{{tweet.id}}"></i>
+        <i class="like-icon far fa-heart" data-id="{{tweet.id}}" data-url="{{baseURL}}"></i>
         {{/if}}
       </div>
     </div>

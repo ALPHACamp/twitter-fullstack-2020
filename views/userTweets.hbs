@@ -1,6 +1,6 @@
 <div class="row">
   {{> homeNavBar}}
-  <div class="tweets col d-flex flex-column mx-4 user-tweets">
+  <div class="tweets col d-flex flex-column mx-4 user-tweets tweet-like-axios">
     <div class="p-2 d-flex flex-row">
       <a href="/tweets">
         <i class="fas fa-arrow-left fa-lg mx-3 my-3"></i></a>
@@ -28,7 +28,7 @@
       </div>
       {{#ifEqual user.id id}}
       <div class="edit-profile" id="edit-profile">
-        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn" data-id="{{id}}" data-bs-toggle="modal" data-bs-target="#userModal"> 
+        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn" data-id="{{id}}" data-url="{{baseURL}}" data-bs-toggle="modal" data-bs-target="#userModal"> 
         編輯個人資料
       </button>
       </div>
@@ -64,17 +64,14 @@
           <div class="me-5">
             <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
           </div>
-          <div id="tweet-like">
+          <div>
             {{#if this.isLiked}}
             <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
             {{else}}
             <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
             {{/if}}
-            <span class="like-number ms-2" id="tweet-like-count">{{this.likeLength}}</span>
+            <span class="like-number ms-2">{{this.likeLength}}</span>
           </div>
-          {{!-- <div class="col-2">
-            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;{{this.likeLength}}</i>
-          </div> --}}
         </div>
       </div>
     </div>
@@ -85,5 +82,5 @@
 {{> userProfileModal}}
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="/javascripts/tweetLike.js"></script>
+<script src="/javascripts/tweetsLike.js"></script>
 <script src="/javascripts/userModal.js"></script>
