@@ -4,7 +4,8 @@ const { Op } = require('sequelize')
 const { thousandComma } = require('../config/handlebars-helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = 'bc129ea404ff01c'
-
+const helpers = require('../_helpers')
+// const { raw } = require('body-parser') - alan check
 
 const userController = {
     signUpPage: (req, res) => {
@@ -57,7 +58,9 @@ const userController = {
 
     signIn: (req, res) => {
         req.flash('success_messages', '成功登入！')
-        res.redirect('/tweets')
+        //res.redirect('/tweets')
+        // 測試 follower功能，做完要改回上面 
+        res.redirect('/users/:id/followers')
     },
 
     logout: (req, res) => {
@@ -66,8 +69,49 @@ const userController = {
         res.redirect('/signin')
     },
 
-    getTweets: (req, res) => {
-        return res.render('setting')
+    getTweets: (req, res, next) => {
+        User.findAll({
+            raw: true, nest: true, include: [
+                { model: User, as: 'Followers' },
+            ]
+        })
+            .then(users => {
+                console.log(users[0].Followers)
+                return res.render('tweet', { users: users })
+            })
+            .catch(next)
+
+    },
+
+    addFollowing: (req, res, next) => {
+        if (Number(req.user.id) === Number(req.params.userId)) {
+            req.flash('error_messages', '不可跟隨自己！')
+            return res.redirect('back')
+        }
+        Followship.create({
+            followerId: helpers.getUser(req).id,
+            followingId: req.params.userId
+        })
+            .then((followship) => {
+                return res.redirect('back')
+            })
+            .catch(next)
+    },
+
+    removeFollowing: (req, res, next) => {
+        return Followship.findOne({
+            where: {
+                followerId: helpers.getUser(req).id,
+                followingId: req.params.userId
+            }
+        })
+            .then((followship) => {
+                followship.destroy()
+                    .then((followship) => {
+                        return res.redirect('back')
+                    })
+            })
+            .catch(next)
     },
     // 把 鈴鐺 isNoticed 改為 0 或 1 - 阿金
     toggleNotice: (req, res) => {
@@ -270,7 +314,206 @@ const userController = {
         } catch (error) {
             console.warn(error)
         }
+    },
+    // 1st 版本
+    // getFollowers: (req, res, next) => {
+    //     const id = helpers.getUser(req).id
+    //     User
+    //         .findAll({
+    //             raw: true,
+    //             nest: true,
+    //             include: [
+    //                 {
+    //                     model: User,
+    //                     as: 'Followings',
+    //                     where: { id: id },
+    //                     attributes: [],
+    //                 },
+
+    //             ],
+    //             order: [['Followings', Followship, 'createdAt', 'DESC']]
+    //         }).then((users) => {
+    //             console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    //             console.log(users)
+
+    //         })
+
+
+    //     User.findAll({
+    //         include: [
+    //             { model: User, as: 'Followers' },
+    //             // 撈出所有 User (有id在'followingId'FK的會有Followers)
+    //             // User.Followers: 追蹤 User 的人
+    //             { model: User, as: 'Followings' },
+    //             // User.Followings: User 追蹤的人
+    //         ],
+    //     })
+    //         .then(users => {
+    //             // users 為一陣列
+    //             users = users.map(user => ({
+    //                 // 整理 users 資料，展開的是第二層 dataValues 裡面的物件
+    //                 ...user.dataValues,
+    //                 // 計算追蹤者人數，id在'followingId'，表示被追蹤
+    //                 FollowerCount: user.Followers.length,
+    //                 // 判斷目前登入使用者是否已追蹤該 User 物件
+    //                 isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+    //                 // 由req.user(passport中Followers)判斷目前登入使用者已被該 User 物件追蹤
+    //                 isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+    //             }))
+    //             // users 陣列要用 FollowerCount 來排序，再取跟隨者 (followers) 數量排列前 10 的使用者推薦名單
+    //             const Top10Users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+    //             return res.render('follower', { users: users, id: id, Top10Users: Top10Users })
+    //         })
+    //         .catch(next)
+
+    // },
+
+    // 1st 版本
+    // getFollowings: (req, res, next) => {
+    //     const id = helpers.getUser(req).id
+    //     User.findAll({
+    //         include: [
+    //             { model: User, as: 'Followers' },
+    //             { model: User, as: 'Followings' },
+    //         ],
+    //     })
+    //         .then(users => {
+    //             // users 為一陣列
+    //             users = users.map(user => ({
+    //                 // 整理 users 資料，展開的是第二層 dataValues 裡面的物件
+    //                 ...user.dataValues,
+    //                 // 計算追蹤者人數，id在'followingId'，表示被追蹤
+    //                 FollowerCount: user.Followers.length,
+    //                 // 判斷目前登入使用者是否已追蹤該 User 物件
+    //                 isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+    //                 // 由req.user(passport中Followers)判斷目前登入使用者已被該 User 物件追蹤
+    //                 isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+    //             }))
+    //             const Top10Users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+    //             return res.render('following', { users: users, id: id, Top10Users: Top10Users })
+    //         })
+    //         .catch(next)
+
+    // },
+
+    getFollowers: async (req, res) => {
+        const id = helpers.getUser(req).id
+
+        let followers = await User.findAll({
+            raw: true,
+            nest: true,
+            include: [
+                {
+                    model: User,
+                    as: 'Followings',
+                    where: { id: id },
+                    attributes: [],
+                },
+
+            ],
+            order: [['Followings', Followship, 'createdAt', 'DESC']]
+        })
+
+        followers = followers.map(follower => ({
+            id: follower.id,
+            email: follower.email,
+            name: follower.name,
+            avatar: follower.avatar,
+            account: follower.account,
+            cover: follower.cover,
+            introduction: follower.introduction,
+            // 判斷目前登入使用者是否已追蹤該 User 物件
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(follower.id),
+            // 由req.user(passport中Followers)判斷目前登入使用者已被該 User 物件追蹤
+            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(follower.id),
+        }))
+
+
+        let Top10Users = await User.findAll({
+            include: [
+                { model: User, as: 'Followers' },
+                // 撈出所有 User (有id在'followingId'FK的會有Followers)
+                // User.Followers: 追蹤 User 的人
+                { model: User, as: 'Followings' },
+                // User.Followings: User 追蹤的人
+            ],
+        })
+
+        Top10Users = Top10Users.map(user => ({
+            // 整理 users 資料，展開的是第二層 dataValues 裡面的物件
+            ...user.dataValues,
+            // 計算追蹤者人數，id在'followingId'，表示被追蹤
+            FollowerCount: user.Followers.length,
+            // 判斷目前登入使用者是否已追蹤該 User 物件
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+            // 由req.user(passport中Followers)判斷目前登入使用者已被該 User 物件追蹤
+            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+        }))
+        // users 陣列要用 FollowerCount 來排序，再取跟隨者 (followers) 數量排列前 10 的使用者推薦名單
+        Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+        return res.render('follower', { followers: followers, id: id, Top10Users: Top10Users })
+
+    },
+
+    getFollowings: async (req, res) => {
+        const id = helpers.getUser(req).id
+
+        let followings = await User.findAll({
+            raw: true,
+            nest: true,
+            include: [
+                {
+                    model: User,
+                    as: 'Followers',
+                    where: { id: id },
+                    attributes: [],
+                },
+
+            ],
+            order: [['Followers', Followship, 'createdAt', 'DESC']]
+        })
+
+        followings = followings.map(following => ({
+            id: following.id,
+            email: following.email,
+            name: following.name,
+            avatar: following.avatar,
+            account: following.account,
+            cover: following.cover,
+            introduction: following.introduction,
+            // 判斷目前登入使用者是否已追蹤該 User 物件
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(following.id),
+            // 由req.user(passport中Followers)判斷目前登入使用者已被該 User 物件追蹤
+            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(following.id),
+        }))
+
+
+        let Top10Users = await User.findAll({
+            include: [
+                { model: User, as: 'Followers' },
+                // 撈出所有 User (有id在'followingId'FK的會有Followers)
+                // User.Followers: 追蹤 User 的人
+                { model: User, as: 'Followings' },
+                // User.Followings: User 追蹤的人
+            ],
+        })
+
+        Top10Users = Top10Users.map(user => ({
+            // 整理 users 資料，展開的是第二層 dataValues 裡面的物件
+            ...user.dataValues,
+            // 計算追蹤者人數，id在'followingId'，表示被追蹤
+            FollowerCount: user.Followers.length,
+            // 判斷目前登入使用者是否已追蹤該 User 物件
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+            // 由req.user(passport中Followers)判斷目前登入使用者已被該 User 物件追蹤
+            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+        }))
+        // users 陣列要用 FollowerCount 來排序，再取跟隨者 (followers) 數量排列前 10 的使用者推薦名單
+        Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
+        return res.render('following', { followings: followings, id: id, Top10Users: Top10Users })
+
     }
 }
 
 module.exports = userController
+

@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     Tweet.hasMany(models.Reply)
     Tweet.hasMany(models.Like)
     Tweet.belongsTo(models.User)
-    //加入關聯 - 阿金
     Tweet.belongsToMany(models.User, {
       through: models.Like,
       foreignKey: 'TweetId',

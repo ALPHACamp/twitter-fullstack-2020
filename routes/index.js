@@ -47,10 +47,10 @@ module.exports = (app, passport) => {
     app.get('/signin', userController.signInPage)
     app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
     app.get('/signout', userController.logout)
-    //setting - 阿金
+    //setting
     app.get('/setting', authenticatedUser, userController.getSetting)
     app.put('/setting', authenticatedUser, userController.putSetting)
-    //個人資料路由 - 阿金
+    //個人資料路由
     app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
     app.get('/users/:id', authenticatedUser, userController.getProfile)
     app.put('/users/:id/edit', authenticatedUser, upload.fields([{
@@ -79,5 +79,10 @@ module.exports = (app, passport) => {
     app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
     app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+
+    app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
+    app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
+    app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
+    app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
 
 }

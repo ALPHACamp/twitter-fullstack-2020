@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const session = require('express-session') 
 const passport = require('./config/passport')
+const methodOverride = require('method-override') // 載入 method-override
 const app = express()
 const port = 3000
 
@@ -43,6 +44,8 @@ app.use((req, res, next) => {
     res.locals.user = helpers.getUser(req)
     next()
 })
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

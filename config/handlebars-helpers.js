@@ -25,4 +25,12 @@ module.exports = {
     }
     return result
   },
+  momentDetailTime: function (a) {
+    moment.locale('zh-tw')
+    return moment(a).format('a h:mm')
+  },
+  momentDetailDate: function (a) {
+    moment.locale('zh-tw')
+    return moment(a).format("LL")
+  }
 }
