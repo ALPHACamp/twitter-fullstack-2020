@@ -1,6 +1,6 @@
 <div class="row">
   {{> homeNavBar}}
-  <div class="tweets col d-flex flex-column mx-4 user-tweets tweet-like-axios">
+  <div class="tweets col d-flex flex-column mx-4 user-tweets tweet-like-axios tweet-reply-axios">
     <div class="p-2 d-flex flex-row">
       <a href="/tweets">
         <i class="fas fa-arrow-left fa-lg mx-3 my-3"></i></a>
@@ -63,13 +63,19 @@
           <span class="time"><b>•</b>&nbsp;{{moment this.Tweet.createdAt}}</span>
         </div>
         <p class="content">{{this.Tweet.description}}</p>
-        <div>
-          {{#if this.isLiked}}
-          <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
-          {{else}}
-          <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
-          {{/if}}
-          <span class="like-number ms-2">{{this.likeLength}}</span>
+        <div class="d-flex">
+          <div class="me-5">
+            <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal" data-id="{{this.id}}"
+              data-url="{{baseURL}}">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
+          </div>
+          <div>
+            {{#if this.isLiked}}
+            <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+            {{else}}
+            <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+            {{/if}}
+            <span class="like-number ms-2">{{this.likeLength}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -80,6 +86,10 @@
 </div>
 {{> userProfileModal}}
 
+<!-- tweet reply Modal -->
+{{> tweetReplyModal}}
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="/javascripts/tweetsLike.js"></script>
+<script src="/javascripts/tweetsReply.js"></script>
 <script src="/javascripts/userModal.js"></script>
