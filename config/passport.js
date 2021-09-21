@@ -1,9 +1,8 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
-const db = require('../models')
-const User = db.User
-const Tweet = db.Tweet
+const { User, Tweet } = require('../models')
+const { Op } = require('sequelize')
 
 // setup passport strategy
 passport.use(new LocalStrategy(
@@ -36,8 +35,8 @@ passport.deserializeUser((id, cb) => {
       { model: Tweet, as: 'LikedTweet' }
     ]
   }).then(user => {
-    user = user.toJSON()
-    return cb(null, user)
+    user = user.toJSON() 
+    return cb(null, user) 
   })
 })
 
