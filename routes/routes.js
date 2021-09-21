@@ -53,6 +53,9 @@ router.get('/logout', loginController.logOut)
 router.get('/admin/signin', adminController.signInPage)
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }),adminController.signIn)
 
+router.get('/users/:userid/setting', authenticated, userController.getSetting)
+router.post('/users/:userid/setting', authenticated, userController.editSetting)
+  
 //routes for follow
 router.get('/following', authenticated, userController.getFollowings)
 router.get('/follower', authenticated, userController.getFollowers)

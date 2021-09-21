@@ -1,0 +1,43 @@
+<div class="row" style="height: 1200px;">
+  {{> homeNavBar}}
+
+  <div class="user-setting col d-flex flex-column mx-4">
+
+    {{!-------------------- Navbar --------------------}}
+    <div class="d-flex" style="border-width: 0px 0px 1px 0px; border-style: solid;
+  border-color: #e6ecf0; width: 1145px; height:45px;">
+      <div class="m-2">
+        <div class="home-word">帳戶設定</div>
+      </div>
+    </div>
+
+    {{!-------------------- 資料欄 --------------------}}
+    <div class="container album py-2" style="width: 100%;">
+      <form class="form-signin" action="/users/:userid/setting" method="POST" style="width: 100%;">
+        <div class="py-3">
+          <input type="text" name="account" class="signpage py-3 " style="width: 550px; height: 52px;" placeholder="帳號"
+            required autofocus>
+        </div>
+        <div class="py-3">
+          <input type="text" name="name" class="signpage py-3 " style="width: 550px; height: 52px;" placeholder="名稱"
+            required autofocus>
+        </div>
+        <div class="py-3">
+          <input type="text" name="email" class="signpage py-3 " style="width: 550px; height: 52px;" placeholder="Email"
+            required autofocus>
+        </div>
+        <div class="py-3">
+          <input type="password" name="password" class="signpage py-3 " style="width: 550px; height: 52px;" placeholder="密碼"
+            required>
+        </div>
+        <div class="py-3">
+          <input type="password" name="passwordCheck" class="signpage py-3 " style="width: 550px; height: 52px;"
+            placeholder="密碼確認" required>
+        </div>
+        <br />
+        <button class="btn btn-block text-light py-2" style="border-radius: 40px; background-color:#FF6600 ;float:right"
+          type="submit">儲存</button>
+      </form>
+    </div>
+  </div>
+</div>

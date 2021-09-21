@@ -50,8 +50,14 @@ const userController = {
       res.redirect('/tweets')
     }
   },
-  getSetting: (req, res) => {},
-  editSetting: (req, res) => {},
+  getSetting: (req, res) => {
+    res.render('setting')
+  },
+
+  editSetting: (req, res) => {
+    
+  },
+
   getReplies: async (req, res) => {
     try {
       const userId = req.params.userId
@@ -158,7 +164,7 @@ const userController = {
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
       }))
 
-      helpers.removeUser(user, userself.id)//移除使用者自身資訊
+      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
       popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       return res.render('following', { popularUser, userself })
@@ -188,7 +194,7 @@ const userController = {
         FollowerCount: user.Followers.length, // 計算追蹤者人數
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
       }))
-      helpers.removeUser(user, userself.id)//移除使用者自身資訊
+      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
       popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       const followers = await Followship.findAll({
