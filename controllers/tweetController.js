@@ -6,8 +6,6 @@ const Followship = db.Followship
 
 const helpers = require('../_helpers')
 
-const maxDescLen = 50
-
 const tweetController = {
   // 首頁
   getTweets: (req, res) => {
@@ -17,8 +15,8 @@ const tweetController = {
         nest: true,
         include: [User],
         order: [
-          ['createdAt', 'DESC'], // Sorts by createdAt in ascending order
-        ]
+          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
+        ],
       }),
       User.findAndCountAll({
         include: [
@@ -26,6 +24,7 @@ const tweetController = {
         ]
       })
     ]).then(([tweets, users]) => {
+
       // 列出 追隨數前十名的使用者
       const topUsers =
         users.rows.map(user => ({
@@ -68,15 +67,6 @@ const tweetController = {
     // })
 
     // console.log(tweets)
-
-    // if (helpers.getUser(req).isAdmin) {
-    //   tweets.map(tweet => {
-    //     tweet.description = tweet.description.length <= 50 ? tweet.description : tweet.description.substring(0, maxDescLen) + "..."
-    //   })
-    // }
-    // const renderPage = helpers.getUser(req).isAdmin ? 'admin/admin_main' : 'tweets'
-    // return res.render(renderPage, { tweets })
-
   },
   postTweet: async (req, res) => {
     let { description } = req.body
