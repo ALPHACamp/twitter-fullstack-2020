@@ -1,3 +1,4 @@
+const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const { urlencoded } = require("express");
 
@@ -13,7 +14,10 @@ const getTestUser = function (req) {
 
 const userController = {
   signInPage: (req, res) => {
-    return res.render("login");
+    return res.render("signin");
+  },
+  signIn: (req, res) => {
+    //put some sign in strategy here
   },
 
   registerPage: (req, res) => {
