@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       password: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING(150),
       },
 
       avatar: {
