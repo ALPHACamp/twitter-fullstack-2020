@@ -17,16 +17,16 @@ const tweetController = {
           { model: User, as: 'Followings' },
         ]
       })
-      let user = []
+      let popularUser = []
 
-      user = users.map(user => ({ // 整理 users 資料
+      popularUser = users.map(user => ({ // 整理 users 資料
         ...user.dataValues,
         FollowerCount: user.Followers.length,// 計算追蹤者人數
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id),// 判斷目前登入使用者是否已追蹤該 User 物件
       }))
 
-      helpers.removeUser(user, userself.id)//移除使用者自身資訊
-      popularUser = user.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       const tweets = await Tweet.findAll({
         include: [

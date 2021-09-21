@@ -4,6 +4,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 
 const userController = {
@@ -39,10 +40,35 @@ const userController = {
         likeLength: tweet.Likes.length
       }))
 
+
+      const userself = req.user
+      const users = await User.findAll({// 撈出所有 User 與 followers 資料
+        order: [['createdAt', 'DESC']],
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+      let popularUser = []
+
+      popularUser = users.map(user => ({
+        // 整理 users 資料
+        ...user.dataValues,
+        FollowerCount: user.Followers.length, // 計算追蹤者人數
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
+      }))
+
+      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+
+
+
       res.render('userTweets', {
         user: user.toJSON(),
         tweets,
-        id
+        id,
+        popularUser,
+        userself
       })
     } catch (err) {
       console.log(err)
@@ -50,12 +76,46 @@ const userController = {
       res.redirect('/tweets')
     }
   },
-  getSetting: (req, res) => {
-    res.render('setting')
+  getSetting:async (req, res) => {
+    try {
+       User.findByPk(req.user.id, { raw: true }).then(user => {
+       res.render('setting', { userdata: user })
+    })
+    } catch (error) {
+      console.log(err)
+      console.log('getSetting err')
+    }
   },
 
-  editSetting: (req, res) => {
-    
+  editSetting:async (req, res) => {
+    try {
+      const userId = req.user.id
+      if (req.body.passwordCheck !== req.body.password) {
+        req.flash('error_messages', '兩次密碼輸入不同！')
+        return res.redirect('back')
+      } else {
+        console.log('======================================')
+        console.log(req.user.id)
+        console.log('======================================')
+
+        User.findByPk(userId)
+          .then((user) => {
+            user.update({
+              account:req.body.account,
+              name: req.body.name,
+              email:req.body.email,
+              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+            })
+              .then(() => {
+                req.flash('success_messages', '成功修改帳戶資料')
+                res.redirect('back')
+              })
+          })
+      }
+    } catch (error) {
+      console.log(err)
+      console.log('getSetting err')
+    }
   },
 
   getReplies: async (req, res) => {
