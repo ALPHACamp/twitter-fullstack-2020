@@ -11,7 +11,7 @@ const userController = {
     try {
       const userId = req.params.userId
       const id = helpers.getUser(req).id
-      const user = await User.findOne({
+      const profileUser = await User.findOne({
         where: { id: userId, role: 0 },
         include: [
           { model: User, as: 'Followers' },
@@ -19,13 +19,13 @@ const userController = {
           { model: Tweet, attributes: ['id'] }
         ]
       })
-      user.dataValues.introduction =
-        user.dataValues.introduction < 50
-          ? user.dataValues.introduction
-          : user.dataValues.introduction.substring(0, 50) + '...'
-      user.dataValues.followerLength = user.Followers.length
-      user.dataValues.followingLength = user.Followings.length
-      user.dataValues.tweetLength = user.Tweets.length
+      profileUser.dataValues.introduction =
+        profileUser.dataValues.introduction < 50
+          ? profileUser.dataValues.introduction
+          : profileUser.dataValues.introduction.substring(0, 50) + '...'
+      profileUser.dataValues.followerLength = profileUser.Followers.length
+      profileUser.dataValues.followingLength = profileUser.Followings.length
+      profileUser.dataValues.tweetLength = profileUser.Tweets.length
 
       const tweetsRaw = await Tweet.findAll({
         where: { UserId: userId },
@@ -40,7 +40,7 @@ const userController = {
       }))
 
       res.render('userTweets', {
-        user: user.toJSON(),
+        profileUser: profileUser.toJSON(),
         tweets,
         id
       })
@@ -56,7 +56,7 @@ const userController = {
     try {
       const userId = req.params.userId
       const id = helpers.getUser(req).id
-      const user = await User.findOne({
+      const profileUser = await User.findOne({
         where: { id: userId, role: 0 },
         include: [
           { model: User, as: 'Followers' },
@@ -64,13 +64,13 @@ const userController = {
           { model: Tweet, attributes: ['id'] }
         ]
       })
-      user.dataValues.introduction =
-        user.dataValues.introduction < 50
-          ? user.dataValues.introduction
-          : user.dataValues.introduction.substring(0, 50) + '...'
-      user.dataValues.followerLength = user.Followers.length
-      user.dataValues.followingLength = user.Followings.length
-      user.dataValues.tweetLength = user.Tweets.length
+      profileUser.dataValues.introduction =
+        profileUser.dataValues.introduction < 50
+          ? profileUser.dataValues.introduction
+          : profileUser.dataValues.introduction.substring(0, 50) + '...'
+      profileUser.dataValues.followerLength = profileUser.Followers.length
+      profileUser.dataValues.followingLength = profileUser.Followings.length
+      profileUser.dataValues.tweetLength = profileUser.Tweets.length
 
       const replies = await Reply.findAll({
         where: { UserId: userId },
@@ -93,7 +93,7 @@ const userController = {
     try {
       const userId = req.params.userId
       const id = helpers.getUser(req).id
-      const user = await User.findOne({
+      const profileUser = await User.findOne({
         where: { id: userId, role: 0 },
         include: [
           { model: User, as: 'Followers' },
@@ -101,16 +101,17 @@ const userController = {
           { model: Tweet, attributes: ['id'] }
         ]
       })
-      user.dataValues.introduction =
-        user.dataValues.introduction < 50
-          ? user.dataValues.introduction
-          : user.dataValues.introduction.substring(0, 50) + '...'
-      user.dataValues.followerLength = user.Followers.length
-      user.dataValues.followingLength = user.Followings.length
-      user.dataValues.tweetLength = user.Tweets.length
+      profileUser.dataValues.introduction =
+        profileUser.dataValues.introduction < 50
+          ? profileUser.dataValues.introduction
+          : profileUser.dataValues.introduction.substring(0, 50) + '...'
+      profileUser.dataValues.followerLength = profileUser.Followers.length
+      profileUser.dataValues.followingLength = profileUser.Followings.length
+      profileUser.dataValues.tweetLength = profileUser.Tweets.length
 
       const likedTweetsRaw = await Like.findAll({
         where: { UserId: userId },
+        order: [['createdAt', 'DESC']],
         include: [
           {
             model: Tweet,
@@ -120,7 +121,6 @@ const userController = {
               { model: Like, attributes: ['id'] },
               { model: Reply, attributes: ['id'] }
             ],
-            order: [['createdAt', 'DESC']]
           }
         ]
       })
@@ -136,11 +136,12 @@ const userController = {
       console.log(err)
     }
   },
-  
+
   getFollowings: async (req, res) => {
     try {
       const userself = req.user
-      const users = await User.findAll({// 撈出所有 User 與 followers 資料
+      const users = await User.findAll({
+        // 撈出所有 User 與 followers 資料
         order: [['createdAt', 'DESC']],
         include: [
           { model: User, as: 'Followers' },
@@ -156,12 +157,11 @@ const userController = {
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
       }))
 
-      helpers.removeUser(user, userself.id)//移除使用者自身資訊
-      user = user.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      helpers.removeUser(user, userself.id) //移除使用者自身資訊
+      user = user.sort((a, b) => b.FollowerCount - a.FollowerCount) // 依追蹤者人數排序清單
 
       return res.render('following', { user, userself })
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err)
       console.log('getUserFollowers err')
       return res.redirect('back')
@@ -171,7 +171,8 @@ const userController = {
   getFollowers: async (req, res) => {
     try {
       const userself = req.user
-      const users = await User.findAll({// 撈出所有 User 與 followers 資料
+      const users = await User.findAll({
+        // 撈出所有 User 與 followers 資料
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
@@ -186,8 +187,8 @@ const userController = {
         FollowerCount: user.Followers.length, // 計算追蹤者人數
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
       }))
-      helpers.removeUser(user, userself.id)//移除使用者自身資訊
-      user = user.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      helpers.removeUser(user, userself.id) //移除使用者自身資訊
+      user = user.sort((a, b) => b.FollowerCount - a.FollowerCount) // 依追蹤者人數排序清單
 
       const followers = await Followship.findAll({
         //依追蹤時間排序追蹤者
@@ -212,7 +213,6 @@ const userController = {
           isFollowed
         }
       })
-
 
       Promise.all(Data).then(data => {
         return res.render('follower', { user, data, userself })
