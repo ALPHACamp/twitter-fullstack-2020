@@ -26,7 +26,7 @@ const authenticatedAdmin = (req, res, next) => {
   } else {
     req.flash('error_messages', '帳號或密碼輸入錯誤')
   }
-  res.redirect('/admin/signin')
+  res.redirect('/signin')
 }
 
 
