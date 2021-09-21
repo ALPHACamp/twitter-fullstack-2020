@@ -1,7 +1,7 @@
-<div class="container album py-5" style="width: 35%;font-family:
+<div class="container album py-5" style="max-width: 540px;font-family:
 Noto Sans TC;">
   <form class="form-signin" action="/signin" method="POST" style="width: 100%;">
-    <div class="text-center mb-4">
+    <div class="text-center mb-2">
       <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd"
           d="M29.2746 23.8533C29.2746 23.8533 23.6745 32.9337 19.0831 32.9337C11.0523 32.9337 18.5365 15.635 24.3936 15.635C28.4807 15.635 29.2746 23.8533 29.2746 23.8533Z"
@@ -18,12 +18,12 @@ Noto Sans TC;">
       </svg>
     </div>
     <div class="text-center mb-4">
-      <h1 class="h3 mb-3 font-weight-normal font-weight-bold">登入 Alphitter</h1>
+      <p class="mb-3 alphitter-signin">登入 Alphitter</p>
     </div>
-    <div class="form-label-group py-3">
+    <div class="form-label-group py-3 signin-form">
       <input type="text" name="email" class="form-control py-3 " style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="帳號" required autofocus>
     </div>
-    <div class="form-label-group py-3"> 
+    <div class="form-label-group py-3 signin-form"> 
       <input type="password" name="password" class=" signpage form-control py-3" placeholder="密碼" required>
     </div>
     <br />
@@ -31,15 +31,15 @@ Noto Sans TC;">
       <button class="btn btn-block text-light form-control py-2" style="border-radius: 40px; background-color:#FF6600"
         type="submit">登入</button>
     </div>
-    <div>
-      <div style="width:65px;height:20px;float:right;">
-        <p><a class="font-weight-bolder" href="/admin/signin">後台登入</a></p>
+    <div class="d-flex justify-content-end adminSign-signUp">
+      <div>
+        <p><a href="/admin/signin">後台登入</a></p>
       </div>
-      <div style="width:30px;height:50px;float:right;color:blue">
-        <p class="font-weight-bolder">or</p>
+      <div class="mx-1">
+        <p>•</p>
       </div>
-      <div style="width:110px;height:20px;float:right;">
-        <p><a class="font-weight-bolder" href="/signup">註冊Alphitter</a></p>
+      <div style="">
+        <p><a href="/signup">註冊Alphitter</a></p>
       </div>
     </div>
   </form>
