@@ -126,11 +126,10 @@ const adminController = {
       })
     ]).then(([users, tweets]) => {
 
-      const usersData =
+      let usersData =
         users.map(user => ({
           ...user.dataValues,
           tweetCount: user.Tweets.length,
-          // tweetCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).length,
           likeCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).reduce((accumulator, currentValue) => {
             // console.log("===================")
             // console.log("tweetid:", currentValue.id)
@@ -152,6 +151,7 @@ const adminController = {
           // }, 0)
         }))
       console.log(usersData)
+      usersData = usersData.sort((a, b) => b.tweetCount - a.tweetCount)
       res.render('admin/users', { users: usersData })
     })
   }
