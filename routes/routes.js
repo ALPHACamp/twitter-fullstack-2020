@@ -26,11 +26,6 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/admin/signin')
 }
 
-// 如果使用者訪問首頁，就導向 /restaurants 的頁面
-router.get('/', authenticated, (req, res) => {
-  res.redirect('/tweets')
-})
-
 // tweets相關路由
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.get('/tweets/:tweetId/replies', authenticated, tweetController.getTweet)
@@ -99,5 +94,8 @@ router.get('/users/:userId/likes', authenticated, userController.getLikes)
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+
+// 如果使用者訪問首頁，就導向 /restaurants 的頁面
+router.get('/', authenticated, (req, res) => { res.redirect('/tweets') })
 
 module.exports = router
