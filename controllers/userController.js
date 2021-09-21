@@ -5,6 +5,9 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
+const fs = require('fs')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 
 const userController = {
@@ -189,16 +192,60 @@ const userController = {
   },
 
   putUserEdit: (req, res) => {
-    const { name, introduction } = req.body
-    User.findByPk(req.params.id)
-      .then(user => {
-        user.update({
-          name,
-          introduction
-        }).then(user => {
-          return res.redirect(`/users/self/${user.id}`)
+    const { files } = req
+    const imgurUploadLink = []
+
+    if (files) {
+      const getUploadLink = new Promise((resolve, reject) => {
+        const fileTempPath = []
+        fileTempPath.push(files.avatar[0].path, files.cover[0].path)
+        fileTempPath.forEach(link => {
+          imgur.setClientID(IMGUR_CLIENT_ID)
+          imgur.upload(link, (err, img) => {
+            console.log('inside:', img.data.link)
+            imgurUploadLink.push(img.data.link)
+          })
         })
+        console.log('outside:', imgurUploadLink)
+        return resolve(imgurUploadLink)
       })
+
+      async function editedUploadLink() {
+        try {
+          const imgurUploadLinkFinal = await getUploadLink
+          console.log('await:', imgurUploadLinkFinal)
+          return imgurUploadLinkFinal
+        } catch (err) {
+          console.warn(err)
+        }
+      }
+      User.findByPk(req.params.id)
+        .then(user => {
+          const uploadImg = editedUploadLink()
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: uploadImg[0],
+            cover: uploadImg[1]
+          }).then(user => {
+            req.flash('success_messages', 'profile was successfully to update')
+            res.redirect(`/users/self/${user.id}`)
+          })
+        })
+    } else {
+      return User.findByPk(req.params.id)
+        .then(user => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            cover: user.cover,
+            avatar: user.avatar
+          }).then(user => {
+            req.flash('success_messages', 'profile was successfully to update')
+            res.redirect(`/users/self/${user.id}`)
+          })
+        })
+    }
   },
 
   getUserSetting: (req, res) => {

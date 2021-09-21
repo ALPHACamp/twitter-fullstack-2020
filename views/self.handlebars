@@ -12,9 +12,8 @@
       </div>
     </div>
 
-    <img src="{{user.cover}}" style="position:absolute z-index:-1;" class="" alt="...">
-    <img src="{{user.avatar}}" style="width: 9rem; position:absolute; top: 20rem; left: 1rem;" class="rounded-circle"
-      alt="...">
+    <img src="{{user.cover}}" style="position:relate; height: 200px" class="" alt="...">
+    <img src="{{user.avatar}}" class="rounded-circle user-avatar" alt="...">
     <div class="d-flex flex-row-reverse m-2">
       <button type="button" class="btn btn-orange-white rounded-pill" data-bs-toggle="modal" data-bs-target="#userModal"
         data-bs-whatever="@getbootstrap">編輯個人資料</button>
@@ -51,7 +50,7 @@
     <div class="card p-3">
       <div class="d-flex">
         <div>
-          <img src="{{../user.avatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
+          <img src="{{../user.avatar}}" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
         </div>
         <div class="col-md-8">
           <div class="userInfo d-flex">
@@ -73,12 +72,11 @@
 <!-- Profile Modal -->
 <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="/users/self/edit/{{user.id}}?_method=PUT" method="POST">
+    <form action="/users/self/edit/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
       <div class="modal-content" style="width: 598px;">
         <div class="modal-header">
           <div class="d-flex align-items-center">
-            <button type="button" style="color:#FF6600;" class="btn-close ms-0 btn-userModal" data-bs-dismiss="modal"
-              aria-label="Close"></button>
+            <i class="fas fa-times modal-close" data-bs-dismiss="modal" aria-label="Close"></i>
             <h5 class="modal-title ms-5 fontWeight700" id="exampleModalLabel">編輯個人資料</h5>
           </div>
           <button type="submit" class="btn btn-white-orange rounded-pill" style="width: 66px;">儲存</button>
@@ -87,11 +85,19 @@
 
         <div class="">
           <div class="mb-3">
-            <img src="{{user.cover}}" width="596px" class="mx-0 px-0" alt="...">
-            <img src="{{user.avatar}}" style="width: 120px; position:absolute; top: 20rem; left: 1rem;"
-              class="rounded-circle" alt="...">
+            <img src="{{user.cover}}" class="mx-0 px-0" style="width: 596px; height: 200px; position:relate;" alt="...">
+            <label for="modal_cover">
+              <input type="file" id="modal_cover" name="cover" style="display: none;">
+              <i class="fas fa-camera cover-camera"></i>
+            </label>
+            <i class="fas fa-times cover-close"></i>
+            <img src="{{user.avatar}}" class="rounded-circle user-avatar-modal" alt="...">
+            <label for="modal_avatar">
+              <input type="file" id="modal_avatar" name="avatar" style="display: none;">
+              <i class="fas fa-camera avatar-camera"></i>
+            </label>
           </div>
-          <div class="mt-5 mx-3" style="background-color: #F5F8FA;">
+          <div class="mx-3" style="background-color: #F5F8FA; margin-top: 5rem;">
             <label for="userName" class="col-form-label fontWeight500 ms-3" style="color:#657786;">名稱</label>
             <input type="text" class="form-control editInput ms-1" id="userName" name="name" maxlength="50"
               onkeyup="nameWordCount()" value="{{user.name}}">
