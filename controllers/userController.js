@@ -114,16 +114,20 @@ const userController = {
                 include: [{ model: User, as: 'Followers' }]
             })
         ])
+        console.log('-----------------------------')
+        console.log('user.toJSON().Tweets : ', user.toJSON())
+        // const a = user.toJSON().Tweets.map( (r) => { ...r.dataValues })
+        // console.log('-----------------------------')
+        // console.log('a : ', a)\
+
         const isUser = users.some(i => i.id === Number(req.params.id))
         if (!isUser) return res.redirect('back')
-        console.log('users:', user)
         const UserId = req.user.id
         const followerscount = user.Followers.length
         const followingscount = user.Followings.length
         const tweetCount = user.Tweets.length
         const isFollowed = req.user.Followings.some(d => d.id === user.id)
         const repiledTweet = user.toJSON().Replies.map(result => result)
-
         followship = followship.map(followships => ({
             ...followships.dataValues,
             FollowerCount: followships.Followers.length,
@@ -141,7 +145,6 @@ const userController = {
             followship,
             isFollowed,
             UserId,
-            // isLiked: tweets.isLiked
         })
     },
     putProfile: async (req, res) => {

@@ -148,19 +148,21 @@
                     <p class="fw-bold">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
-                    {{#if this.isLiked }}
+
+                    {{#ifCond this.likeCount 0 }}
                     <form action="/tweets/{{this.id}}/unlike" method="POST">
                       <button type="submit" class="btn" style="width: 60px; height: 30px">
-                        <i class="fas fa-heart" style="color: red;"> {{ this.likeCount }}</i>
+                        <i class="far fa-heart" style="color: red;"> {{ this.likeCount }}</i>
                       </button>
                     </form>
                     {{else}}
                     <form action="/tweets/{{this.id}}/like" method="POST">
                       <button type="submit" class="btn" style="width: 60px; height: 30px">
-                        <i class="far fa-heart" style="color: red;"></i>
+                        <i class="fas fa-heart" style="color: red;">{{ this.likeCount }}</i>
                       </button>
                     </form>
-                    {{/if}}
+                    {{/ifCond}}
+
                     {{#if this.replyCount}}
                     <button type="submit" class="btn" style="width: 60px; height: 30px" data-toggle="modal"
                       data-target="#replyModal">
