@@ -1,4 +1,23 @@
-<div class='register'>
+{{! <form class="form-login" action="/admin/signin" method="POST" style="width: 100%;">
+  <div class="text-center mb-4">
+    <h1 class="h3 mb-3 font-weight-normal">Alphitter後台登入</h1>
+  </div>
+  <div class="form-label-group">
+    <label for="inputAccount">帳號</label>
+    <input type="text" name="account" class="form-control" required autofocus>
+  </div>
+  <div class="form-label-group">
+    <label for="inputPassword">密碼</label>
+    <input type="password" name="password" class="form-control" required>
+  </div>
+  <br />
+  <button class="btn btn-lg btn-primary btn-block" type="submit">登入</button>
+  <div class="text-center mb-4">
+    <p><a href="/signup">註冊</a></p>
+  </div>
+</form> }}
+
+<div class='login'>
   <div class='logo'><svg
       width='50'
       height='50'
@@ -32,52 +51,27 @@
       ></path>
     </svg>
   </div>
+
   <form
     class='form-signin'
-    action='/register'
+    action='/admin/signin'
     method='POST'
     style='width: 100%;'
   >
     <div class='text-center mb-4'>
-      <h1 class='h3 mb-3 font-weight-normal'>建立你的帳號</h1>
+      <h1 class='h3 mb-3 font-weight-normal'>後台登入</h1>
     </div>
     <div class='form-label-group'>
-      <label for='inputName'>
-        <input
-          type='text'
-          name='name'
-          class='form-control'
-          placeholder='Name'
-          required
-          autofocus
-        />
-        <span>帳號</span>
-      </label>
-    </div>
-    <div class='form-label-group'>
-      <label for='inputEmail'></label>
+      <label for='inputAccount'></label>
       <input
         type='text'
-        name='email'
+        name='account'
         class='form-control'
         placeholder='Email'
         required
         autofocus
       />
-      <span>名稱</span>
-    </div>
-    <div class='form-label-group'>
-      <label for='inputEmail'></label>
-      <input
-        type='text'
-        name='email'
-        class='form-control'
-        placeholder='Email'
-        required
-        autofocus
-      />
-      <span>Email</span>
-
+      <span>帳號</span>
     </div>
     <div class='form-label-group'>
       <label for='inputPassword'></label>
@@ -89,24 +83,12 @@
         required
       />
       <span>密碼</span>
-
-    </div>
-    <div class='form-label-group'>
-      <label for='inputPasswordCheck'></label>
-      <input
-        type='password'
-        name='passwordCheck'
-        class='form-control'
-        placeholder='Password Check'
-        required
-      />
-      <span>密碼確認</span>
-
     </div>
     <br />
-    <button class='btn btn-lg btn-primary btn-block' type='submit'>註冊</button>
+    <button class='btn btn-lg btn-primary btn-block' type='submit'>登入</button>
     <div class='text-center mb-4'>
-      <p><a href='/login' style='text-decoration:underline;'>取消</a></p>
+      <p><a href='/signin'>前台登入</a></p>
     </div>
   </form>
+
 </div>

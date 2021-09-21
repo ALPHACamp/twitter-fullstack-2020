@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
       email: DataTypes.STRING,
       isAdmin: DataTypes.BOOLEAN,
       password: DataTypes.STRING,
-      introduction: DataTypes.STRING,
       cover: DataTypes.STRING,
-      avatar: DataTypes.STRING,
+      introduction: DataTypes.STRING,
+      avatar: DataTypes.STRING
     },
     {}
   )
@@ -21,12 +21,12 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(models.User, {
       through: models.Followship,
       foreignKey: 'followingId',
-      as: 'Followers',
+      as: 'Followers'
     })
     User.belongsToMany(models.User, {
       through: models.Followship,
       foreignKey: 'FollowerId',
-      as: 'followings',
+      as: 'followings'
     })
   }
   return User
