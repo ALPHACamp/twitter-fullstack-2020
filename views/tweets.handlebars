@@ -24,7 +24,7 @@
               <span class="h5 menu-text setting">設定</span>
             </a>
           </li>
-          <li class="nav-item px-2" id="data-panel">
+          <li class="nav-item px-2">
             <button type="button" class="reply-btn btn btn-tomato rounded-pill mt-3" style="width: 100%; border-radius: 30px 30px 30px 30px;" data-toggle="modal" data-target="#tweetModal" data-id="hhhh">
               <span class='tweet-btn'>推文</span>
             </button>
@@ -56,7 +56,7 @@
             </div>
             <div class="position-absolute" style="z-index: 5; right: 6px; bottom: 0;">
               <span class="text-muted px-2" style="font-size: 0.98em;"></span>
-              <button type="submit" class="tweet-btn btn btn-tomato" style="border-radius: 30px 30px 30px 30px;">推文</button>
+              <button type="submit" class="tweet-btn btn btn-tomanto" style="border-radius: 30px 30px 30px 30px;">推文</button>
             </div>
           </div>
         </form>
@@ -81,7 +81,7 @@
               <div class="col-12 mt-1" onclick="javascript:location.href='/tweets/{{this.id}}'">
                 <p class="fw-bold" >{{this.description}}</p>
               </div>
-              <div class="col-12 d-flex align-items-center" id="data-panel">
+              <div class="col-12 d-flex align-items-center">
                 <button type="button" class="reply-btn btn btn-outline-light" data-toggle="modal" data-target="#replyModal" data-id="{{this.id}}">
                   <i class="far fa-comment" style="color: navy;width:12px;height:12px;"></i>
                 </button>
@@ -107,6 +107,66 @@
                 {{/if}}
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <!--回覆 modal-->
+      {{!-- Modal reply--}}
+      <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="d-flex align-items-center">
+                <button type="button" class="btn btn-outline-light a-tomato" data-dismiss="modal" aria-label="Close">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="modal-body">
+              <div class="row align-items-start mb-1 px-3 ">
+                <div class="card-image col-1 d-flex justify-content-center align-items-center">
+                  <img src="{{this.User.avatar}}" class="rounded-circle mr-2" style="width: 50px; height: 50px;" alt="大頭貼">
+                </div>
+                <div class="col-11 row">
+                  <div class="col-12 d-inline-flex justify-content-between align-items-center">
+                    <div style="height: 22px; line-height: 22px">
+                      <span class="" style="font-size: 15px; font-weight: bold;">{{this.User.name}}</span>
+                      <span class="" style="color: #657786; font-size: 15px;font-weight: 500;">@{{this.User.account}}．{{moment this.createdAt}}</span>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <p class="" style="font-size: 15px;font-weight: 400;">{{this.description}}</p>
+                  </div>
+                  <div class="col-12 inline-flex mt-2">
+                    <span style="font-size: 10px">回覆給</span>
+                    <span style="color: #FF6600; font-size: 10px">@{{this.User.account}}</span>
+                  </div>
+                </div>
+              </div>
+              <p class="position-absolute vertical-line" style="z-index: 3;left: -13px; top: 70px;"></p>
+      
+              <div class="row">
+                <form action="/tweets/{{this.id}}/replies" method="POST" class="mt-2 ">
+                  <div class="position-relative" style="margin-left:20px; padding: 75px 0;">
+                    <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
+                      <img src="{{../user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;"
+                        alt="大頭貼" />
+                    </div>
+                    <div class="position-absolute" style="z-index: 0; width: 430px; top:-5px; left:-10px;">
+                      <textarea class="mt-1 bd" id="comment" name="comment" rows="3" placeholder="推你的回覆" maxlength="140"
+                        style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
+                        required></textarea>
+                      <input type="hidden" name="TweetId" value="{{this.id}}">
+                    </div>
+                    <div class="position-absolute" style="z-index: 5; right: -460px; bottom: 0;">
+                      <button type="submit" class="tweet-btn btn btn-tomato"
+                        style="font-size:18px;font-weight:500; border-radius: 30px 30px 30px 30px;">回覆</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+      
           </div>
         </div>
       </div>
@@ -197,65 +257,6 @@
   </div>
 </div>
 
-<!--回覆 modal-->
-{{!-- Modal reply--}}
-<div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="d-flex align-items-center">
-          <button type="button" class="btn btn-outline-light a-tomato" data-dismiss="modal" aria-label="Close">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-      </div>
-      <div class="modal-body">
-        <div class="row align-items-start mb-1 px-3 ">
-          <div class="card-image col-1 d-flex justify-content-center align-items-center">
-            <img src="{{user.avatar}}" class="rounded-circle mr-2" style="width: 50px; height: 50px;" alt="大頭貼">
-          </div>
-          <div class="col-11 row">
-            <div class="col-12 d-inline-flex justify-content-between align-items-center">
-              <div style="height: 22px; line-height: 22px">
-                <span class="" style="font-size: 15px; font-weight: bold;">{{this.User.name}}</span>
-                <span class="" style="color: #657786; font-size: 15px;font-weight: 500;">@account．moment</span>
-                <span>@@@@@@@@@@{{tweet.id}}</span>
-              </div>
-            </div>
-            <div class="col-12">
-              <p class="" style="font-size: 15px;font-weight: 400;">{{this.description}}</p>
-            </div>
-            <div class="col-12 inline-flex mt-2">
-              <span style="font-size: 10px">回覆給</span>
-              <span style="color: #FF6600; font-size: 10px">@{{this.User.account}}</span>
-            </div>
-          </div>
-        </div>
-        <p class="position-absolute vertical-line" style="z-index: 3;left: -13px; top: 70px;"></p>
-      
-        <div class="row">
-          <form action="/tweets/{{this.id}}/replies" method="POST" class="mt-2 ">
-            <div class="position-relative" style="margin-left:20px; padding: 75px 0;">
-              <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
-                <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;" alt="大頭貼" />
-              </div>
-              <div class="position-absolute" style="z-index: 0; width: 430px; top:-5px; left:-10px;">
-                <textarea class="mt-1 bd" id="comment" name="comment" rows="3" placeholder="推你的回覆" maxlength="140"
-                  style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
-                  required></textarea>
-                <input type="hidden" name="TweetId" value="{{this.id}}">
-              </div>
-              <div class="position-absolute" style="z-index: 5; right: -460px; bottom: 0;">
-                <button type="submit" class="tweet-btn btn btn-tomato"
-                  style="font-size:18px;font-weight:500; border-radius: 30px 30px 30px 30px;">回覆</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-</div>
+
 
 

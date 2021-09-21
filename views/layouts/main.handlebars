@@ -15,9 +15,18 @@
 </head>
 
 <body>
-  {{!--Flash Message開頭 --}}
   <main role="main">
-    <div class="album bg-white"> 
+    <div class="album bg-white">
+      {{!--error Message開頭 阿金 --}}
+      {{#if errors}}
+      {{#each errors}}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{this.msg}}</strong>
+      </div>
+      {{/each}}
+      {{/if}}
+      {{!--error Message開頭 --}}
+      {{!--Flash Message開頭 --}}
       {{#if success_messages}}
       <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
         {{success_messages}}

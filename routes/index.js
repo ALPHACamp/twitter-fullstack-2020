@@ -4,6 +4,9 @@ const tweetController = require('../controllers/tweetController')
 const helpers = require('../_helpers')
 const replyController = require('../controllers/replyController')
 
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+
 module.exports = (app, passport) => {
     const authenticated = (req, res, next) => {
         if (helpers.ensureAuthenticated(req)) {
@@ -53,6 +56,19 @@ module.exports = (app, passport) => {
     //在前台按一則推文喜歡,取消喜歡
     app.post('/tweets/:TweetId/like', authenticatedUser, userController.addLike)
     app.post('/tweets/:TweetId/unlike', userController.removeLike)
+
+    //個人資料路由
+    app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
+    app.get('/users/:id', authenticatedUser, userController.getProfile)
+    app.put('/users/:id/edit', authenticatedUser, upload.fields([{
+        name: 'cover', maxCount: 1
+    }, {
+        name: 'avatar', maxCount: 1
+    }]), userController.putProfile)
+
+    //setting - 阿金
+    app.get('/setting', authenticatedUser, userController.getSetting)
+    app.put('/setting', authenticatedUser, userController.putSetting)
 
     app.get('/signup', userController.signUpPage)
     app.post('/signup', userController.signUp)
