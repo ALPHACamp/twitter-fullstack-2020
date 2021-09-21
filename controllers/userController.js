@@ -36,7 +36,8 @@ const userController = {
       const tweets = tweetsRaw.map(tweet => ({
         ...tweet.dataValues,
         replyLength: tweet.Replies.length,
-        likeLength: tweet.Likes.length
+        likeLength: tweet.Likes.length,
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
 
       res.render('userTweets', {

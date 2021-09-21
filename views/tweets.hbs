@@ -66,9 +66,9 @@
   const baseURL = 'http://localhost:3000'
   let tweetModal
   tweets.addEventListener('click', function onIconClicked(event) {
-    tweetId = event.target.dataset.id
+    const tweetId = event.target.dataset.id
     if (event.target.matches('.reply-icon')) {
-      axios.get(`${baseURL}/api/tweets/${tweetId}/replies`)
+      axios.get(`${baseUrl}/api/tweets/${tweetId}/replies`)
         .then(tweet => {
           tweetModal = tweet.data.tweetModal
           tweetReplyModalAvatar.innerHTML = `

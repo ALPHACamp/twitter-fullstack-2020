@@ -63,11 +63,11 @@ const tweetController = {
       const { description } = req.body
       if (!description) {
         req.flash('error_messages', '內文不可空白')
-        return res.json({ status: 'error', message: '內文不可空白' })
+        return res.redirect('/tweets')
       }
       if (description.length > 140) {
         req.flash('error_messages', '內文不可超過140字')
-        return res.json({ status: 'error', message: '內文不可超過140字' })
+        return res.redirect('/tweets')
       }
       const tweet = await Tweet.create({
         description,

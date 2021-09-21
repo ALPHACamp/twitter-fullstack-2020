@@ -71,41 +71,4 @@
 {{> tweetReplyModal}}
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-  const tweetLike = document.querySelector('#tweet-like')
-  const tweetLikeCount = document.querySelector('#tweet-like-count')
-  const baseURL = 'http://localhost:3000'
-
-  tweetLike.addEventListener('click', function onIconClicked(event) {
-    tweetId = event.target.dataset.id
-    if (event.target.matches('.like-icon')) {
-      console.log(event.target)
-      axios.post(`${baseURL}/tweets/${tweetId}/like`)
-        .then(message => {
-          console.log('post like路由通囉且回傳囉', message)
-          event.target.classList.toggle("like-icon")
-          event.target.classList.toggle("unlike-icon")
-          event.target.classList.toggle("fas")
-          event.target.classList.toggle("far")
-          let likePlus = Number(tweetLikeCount.innerText)
-          likePlus += 1
-          tweetLikeCount.innerText = likePlus
-        })
-    }
-
-    if (event.target.matches('.unlike-icon')) {
-      console.log(event.target)
-      axios.post(`${baseURL}/tweets/${tweetId}/unlike?_method=DELETE`)
-        .then(message => {
-          console.log('post unlike路由通囉且回傳囉', message)
-          event.target.classList.toggle("like-icon")
-          event.target.classList.toggle("unlike-icon")
-          event.target.classList.toggle("fas")
-          event.target.classList.toggle("far")
-          let likePlus = Number(tweetLikeCount.innerText)
-          likePlus -= 1
-          tweetLikeCount.innerText = likePlus
-        })
-    }
-  })
-</script>
+<script src="/javascripts/tweetLike.js"></script>

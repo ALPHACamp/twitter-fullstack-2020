@@ -60,13 +60,21 @@
           <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
         </div>
         <p class="content">{{this.description}}</p>
-        <div class="row">
-          <div class="col-2">
+        <div class="d-flex">
+          <div class="me-5">
             <i class="reply-icon far fa-comment">&nbsp;&nbsp;&nbsp;{{this.replyLength}}</i>
           </div>
-          <div class="col-2">
-            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;{{this.likeLength}}</i>
+          <div id="tweet-like">
+            {{#if this.isLiked}}
+            <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+            {{else}}
+            <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+            {{/if}}
+            <span class="like-number ms-2" id="tweet-like-count">{{this.likeLength}}</span>
           </div>
+          {{!-- <div class="col-2">
+            <i class="like-icon far fa-heart">&nbsp;&nbsp;&nbsp;{{this.likeLength}}</i>
+          </div> --}}
         </div>
       </div>
     </div>
@@ -76,4 +84,6 @@
 </div>
 {{> userProfileModal}}
 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="/javascripts/tweetLike.js"></script>
 <script src="/javascripts/userModal.js"></script>

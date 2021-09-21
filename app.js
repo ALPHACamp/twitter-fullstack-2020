@@ -12,6 +12,7 @@ if (process.env.NODE_ENV !== 'production') {
 } //有用到process.env.PORT的資料變數要放下面
 
 const port = process.env.PORT //把PORT=3000放入.env
+const baseURL = process.env.BASE_URL
 const passport = require('./config/passport')
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
@@ -38,6 +39,8 @@ app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
   res.locals.user = req.user
+  res.locals.baseURL = baseURL
+  console.log('res.locals.baseURL', res.locals.baseURL)
   next()
 })
 
