@@ -22,12 +22,11 @@
   <!--start::post-->
   <div class="mainpost-messageboard">
     <div class="post-card1">
-      <div class="avatar profile-avatar"><img
-          src="{{tweet.User.avatar}}"
-          alt="avatar-img" /></div>
+      <div class="avatar profile-avatar"><img src="{{tweet.User.avatar}}" alt="avatar-img" /></div>
     </div>
     <div class="post-card2">
-      <h5 class="d-inline-block post-title">{{tweet.User.name}}&nbsp;<br /><span class="post-sub-info mainpost-sm">{{tweet.User.account}}
+      <h5 class="d-inline-block post-title">{{tweet.User.name}}&nbsp;<br /><span
+          class="post-sub-info mainpost-sm">{{tweet.User.account}}
           &#x2027;
           {{createdTimeFromNow}}</span></h5>
       <p class="mainpost-x">{{tweet.description}}</p>
@@ -53,20 +52,17 @@
 <div class="profilepage-messageboard d-f flex-column">
   <div class="profilepage-banner"><img src="https://i.ytimg.com/vi/w_8ddLqNTuo/maxresdefault.jpg" />
     <div class="profilepage-card1">
-      <div class="avatar profilepage-avatar"><img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQT5cCP8TaZvRFktb9AaXmCsShcNhbzXxJtBw&amp;usqp=CAU"
-          alt="avatar-img" /></div>
+      <div class="avatar profilepage-avatar"><img src="{{profile.avatar}}" alt="avatar-img" /></div>
     </div>
   </div>
   <div class="mainpost-messageboard">
     <div class="profilepage-card2">
       <div class="upper-right">
         <p>
-        <div class="btn-outline-orange" data-bs-toggle="modal"
-        data-bs-target="#profileModel" id="myInput">編輯個人檔案</div>
+        <div class="btn-outline-orange" data-bs-toggle="modal" data-bs-target="#profileModel" id="myInput">編輯個人檔案</div>
 
 
-          <!-- 訊息按鈕與鈴鐺按鈕 將fill的class拿掉就會變成框線按鈕
+        <!-- 訊息按鈕與鈴鐺按鈕 將fill的class拿掉就會變成框線按鈕
         <div class="icon-btn fill d-inline-block">
           <svg width="19" height="17" viewBox="0 0 19 17" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -98,12 +94,11 @@
 
       </div>
 
-      <h5 class="d-inline-block post-title mb-1">Illyasviel von Einzbern&nbsp;</h5>
-      <p class="post-sub-info mainpost-sm">@善良的小女孩</p>
-      <p >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Ea, vel.</p>
-      <p class="mainpost-sm reply-like-text"><b>34個<span class="post-sub-info">&nbsp;跟隨中</span>
-          808位<span class="post-sub-info">&nbsp;跟隨者</span></b></p>
+      <h5 class="d-inline-block post-title mb-1">{{profile.name}}&nbsp;</h5>
+      <p class="post-sub-info mainpost-sm">{{profile.account}}</p>
+      <p>{{profile.introduction}}</p>
+      <p class="mainpost-sm reply-like-text"><b>{{followingsCount}}個<span class="post-sub-info">&nbsp;跟隨中</span>
+          {{followersCount}}位<span class="post-sub-info">&nbsp;跟隨者</span></b></p>
       <ul class="nav profilepage-tags mt-2">
         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">推文</a></li>
         <li class="nav-item"><a class="nav-link" href="#">推文與回覆</a></li>

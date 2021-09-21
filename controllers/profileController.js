@@ -1,14 +1,23 @@
 const db = require('../models')
+const { Op } = require("sequelize");
 const moment = require('moment')
 const { Reply, User, Tweet, Like, Followship } = db
 
 const profileController = {
   getPosts: async (req, res) => {
     try {
-      console.log(req.params.id)
+      const Profile = await User.findByPk(req.params.id, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+      })
+      const followersCount = Profile.Followers.length
+      const followingsCount = Profile.Followings.length
+
       const rawTweets = await Tweet.findAll({
         where: { UserId: req.params.id },
-        include: [Reply, User,
+        include: [Reply,
           { model: User, as: 'LikedUsers' }],
         order: [['createdAt', 'DESC']],
         limit: 20
@@ -21,19 +30,24 @@ const profileController = {
         LikedUsers: data.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt),
         createdAt: moment(data.createdAt).fromNow()
       }))
+
+      const tweetCount = Tweets.length
+
       const rawUsers = await User.findAll({
         include: [
-          { model: User, as: 'Followers' }
+          { model: User, as: 'Followers' },
         ],
+        where: { id: { [Op.not]: req.params.id } }
       })
-      let Users = await rawUsers.map(data => ({
+      const Users = await rawUsers.map(data => ({
         ...data.dataValues,
         FollowerCount: data.Followers.length,
-      }))
-      Users = Users.sort((a, b) => b.FollowerCount - a.FollowerCount)
+      })).sort((a, b) => b.FollowerCount - a.FollowerCount)
+
+      // Users = Users
       const TopUsers = Users.slice(0, 10)
-      return res.json({ Tweets, TopUsers })
-      return res.render("profile", { tweets: Tweets, users: TopUsers });
+      // return res.json({ Tweets, TopUsers, Profile, tweetCount, followersCount, followingsCount })
+      return res.render("profile", { tweets: Tweets, users: TopUsers, profile: Profile, tweetCount, followersCount, followingsCount });
     } catch (error) {
       console.log(error)
     }
