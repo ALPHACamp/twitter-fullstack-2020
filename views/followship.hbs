@@ -30,7 +30,7 @@
               <button type="submit" class="btn-orange btn-short upper-right">正在跟隨</button>
             </form>
             {{else}}
-            <form class="ms-auto" action="/followships/{{ this.id }}?_method=POST" method="POST">
+            <form class="ms-auto" action="/followships/{{ this.id }}" method="POST">
               <button type="submit" class="btn-outline-orange btn-short upper-right">跟隨</button>
             </form>
             {{/if}}

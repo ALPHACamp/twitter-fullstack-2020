@@ -33,6 +33,12 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 
+//set method-override
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
+
 app.use(express.static("public"));
 const routes = require("./routes");
 app.use(routes);

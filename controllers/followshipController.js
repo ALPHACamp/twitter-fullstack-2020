@@ -35,7 +35,7 @@ const followshipController = {
           attributes: listAttributes,
           include: {
             model: User,
-            as: "Followings",
+            as: "Followers",
             attributes: ["id"],
           },
         },
@@ -44,7 +44,7 @@ const followshipController = {
       .then((user) => {
         user = user.toJSON();
         user.Followers.forEach((follower) => {
-          const arr = follower.Followings.map((el) => el.id);
+          const arr = follower.Followers.map((el) => el.id);
           if (arr.indexOf(user.id) > 0) follower.isFollowed = true;
           else follower.isFollowed = false;
           follower.updatedAtFormated = moment(follower.updatedAt).fromNow();
@@ -99,14 +99,20 @@ const followshipController = {
 
   addFollowing: (req, res) => {
     const user = dummyuser;
-    if(user.id === req.params.id) return console.error('Cannot follow yourself')
+    if(user.id === req.params.id){
+      console.error('Cannot follow yourself')
+      return res.redirect("back")
+    } 
     return Followship.findOrCreate({
       where: {
-        followerId: user.id,
-        followingId: req.params.id
+        followerId: Number(user.id),
+        followingId: Number(req.params.id)
       }
     })
-      .then(() => res.redirect("back"))
+      .then(() => {
+        console.log('create followerId:%s, followingId%s', user.id, req.params.id)
+        res.redirect("back")
+      })
       .catch(error => res.status(400).json(error));
   },
 
