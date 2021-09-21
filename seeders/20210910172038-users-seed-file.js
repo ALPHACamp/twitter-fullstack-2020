@@ -18,7 +18,7 @@ module.exports = {
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       avatar: `https://randomuser.me/api/portraits/women/${Math.round(Math.random() * 100)}.jpg`,
-      cover: 'https://api.thecatapi.com/v1/images/search',
+      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
       description: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -29,7 +29,7 @@ module.exports = {
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       avatar: `https://randomuser.me/api/portraits/women/${Math.round(Math.random() * 100)}.jpg`,
-      cover: 'https://api.thecatapi.com/v1/images/search',
+      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
       description: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -40,7 +40,7 @@ module.exports = {
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       avatar: `https://randomuser.me/api/portraits/women/${Math.round(Math.random() * 100)}.jpg`,
-      cover: 'https://api.thecatapi.com/v1/images/search',
+      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
       description: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -51,7 +51,7 @@ module.exports = {
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       avatar: `https://randomuser.me/api/portraits/men/${Math.round(Math.random() * 100)}.jpg`,
-      cover: 'https://api.thecatapi.com/v1/images/search',
+      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
       description: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -62,7 +62,7 @@ module.exports = {
       password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
       isAdmin: false,
       avatar: `https://randomuser.me/api/portraits/men/${Math.round(Math.random() * 100)}.jpg`,
-      cover: 'https://api.thecatapi.com/v1/images/search',
+      cover: `https://loremflickr.com/320/240/landscape/?lock=${Math.random() * 100}`,
       description: faker.lorem.text(),
       createdAt: new Date(),
       updatedAt: new Date()
