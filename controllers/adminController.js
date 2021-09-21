@@ -31,6 +31,11 @@ const adminController = {
     deleteTweet: (req, res, next) => {
         Tweet.findByPk(req.params.id)
             .then(tweet => {
+                //test
+                console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+                console.log(tweet)
+                console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+                //test尾
                 tweet.destroy()
             })
             .then(() => {
