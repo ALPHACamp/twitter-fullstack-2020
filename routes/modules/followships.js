@@ -5,12 +5,7 @@ const router = express.Router();
 const db = require("../../models");
 const { User, Tweet, Reply, Followship, Like } = db;
 
-router.get("/profile/:userId/followers", followshipController.getFollowers);
-router.get("/profile/:userId/followings", followshipController.getFollowings);
-router.post("/followers/:userFollowedId", followshipController.postFollowers);
-router.delete(
-  "/followers/:userFollowedId",
-  followshipController.deleteFollowers
-);
+router.post("/:id", followshipController.addFollowing);
+router.delete("/:id", followshipController.deleteFollowing);
 
 module.exports = router;

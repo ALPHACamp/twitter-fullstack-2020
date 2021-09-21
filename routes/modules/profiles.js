@@ -1,5 +1,6 @@
 // This modules is for posts and comments (tablename: twitter and reply)
 const express = require("express");
+const followshipController = require("../../controllers/followshipController");
 const userController = require("../../controllers/userController");
 const router = express.Router();
 
@@ -15,12 +16,8 @@ router.get("/:userId/comments", (req, res) => {
 router.get("/:userId/likes", (req, res) => {
   return res.render("index");
 });
-router.get("/:userId/followers", (req, res) => {
-  return res.render("followship");
-});
-router.get("/:userId/followings", (req, res) => {
-  return res.render("followship");
-});
+router.get("/:userId/followers", followshipController.getFollowers);
+router.get("/:userId/followings", followshipController.getFollowings);
 router.put("/:userId", (req, res) => {
   return res.redirect("back");
 });

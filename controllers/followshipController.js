@@ -17,8 +17,13 @@ const followshipController = {
   getFollowers: (req, res) => {
     const user = dummyuser;
     const listAttributes = [
-      "id", "name", "account", "introduction", "updatedAt", "avatar" 
-    ]
+      "id",
+      "name",
+      "account",
+      "introduction",
+      "updatedAt",
+      "avatar",
+    ];
 
     User.findByPk(user.id, {
       attributes: ["id", "name"],
@@ -31,21 +36,26 @@ const followshipController = {
           include: {
             model: User,
             as: "Followings",
-            attributes: ["id"]
-          }
-        }
+            attributes: ["id"],
+          },
+        },
       ],
-    }).then((user) => {
-      user = user.toJSON();
-      user.Followers.forEach((follower) => {
-        const arr = follower.Followings.map((el) => el.id);
-        if (arr.indexOf(user.id) > 0) follower.isFollowed = true;
-        else follower.isFollowed = false;
-        follower.updatedAtFormated = moment(follower.updatedAt).fromNow();
-      });
-      
-      user.tweetCount = user.Tweets.length;
-      return res.render("followship", { tagA: true, user, followers:user.Followers });
+    })
+      .then((user) => {
+        user = user.toJSON();
+        user.Followers.forEach((follower) => {
+          const arr = follower.Followings.map((el) => el.id);
+          if (arr.indexOf(user.id) > 0) follower.isFollowed = true;
+          else follower.isFollowed = false;
+          follower.updatedAtFormated = moment(follower.updatedAt).fromNow();
+        });
+
+        user.tweetCount = user.Tweets.length;
+        return res.render("followship", {
+          tagA: true,
+          user,
+          followers: user.Followers,
+        });
       })
       .catch((error) => res.status(400).json(error));
   },
@@ -53,8 +63,13 @@ const followshipController = {
   getFollowings: (req, res) => {
     const user = dummyuser;
     const listAttributes = [
-      "id", "name", "account", "introduction", "updatedAt", "avatar" 
-    ]
+      "id",
+      "name",
+      "account",
+      "introduction",
+      "updatedAt",
+      "avatar",
+    ];
 
     User.findByPk(user.id, {
       attributes: ["id", "name"],
@@ -63,45 +78,44 @@ const followshipController = {
         {
           model: User,
           as: "Followings",
-          attributes: listAttributes
-        }
+          attributes: listAttributes,
+        },
       ],
-    }).then((user) => {
-      user = user.toJSON();
-      user.Followings.forEach((following) => {
-        following.updatedAtFormated = moment(following.updatedAt).fromNow();
-      });      
-      user.tweetCount = user.Tweets.length;
-      return res.render("followship", { tagB: true, user, followings:user.Followings });
-      })
-      .catch((error) => res.status(400).json(error));
-  },
-
-  postFollowers: (req, res) => {
-    const user = dummyuser;
-    return Followship.create({
-      FollowerId: user.id,
-      FollowingId: req.params.id,
     })
-      .then((followship) => {
-        console.log("created followship: ", followship);
-        return res.redirect("back");
+      .then((user) => {
+        user = user.toJSON();
+        user.Followings.forEach((following) => {
+          following.updatedAtFormated = moment(following.updatedAt).fromNow();
+        });
+        user.tweetCount = user.Tweets.length;
+        return res.render("followship", {
+          tagB: true,
+          user,
+          followings: user.Followings,
+        });
       })
       .catch((error) => res.status(400).json(error));
   },
 
-  deleteFollowers: (req, res) => {
+  addFollowing: (req, res) => {
     const user = dummyuser;
-    return Followship.findOne({
-      where: { FollowerId: user.id, FollowingId: req.params.id },
-    }).then(() => {
-      Followship.destroy()
-        .then((followship) => {
-          console.log("destroyed followship: ", followship);
-          return res.redirect("back");
-        })
-        .catch((error) => res.status(404).json(error));
-    });
+    if(user.id === req.params.id) return console.error('Cannot follow yourself')
+    return Followship.findOrCreate({
+      where: {
+        followerId: user.id,
+        followingId: req.params.id
+      }
+    })
+      .then(() => res.redirect("back"))
+      .catch(error => res.status(400).json(error));
+  },
+
+  deleteFollowing: (req, res) => {
+    const user = dummyuser;
+    return Followship.destroy({
+      where: { followerId: user.id, followingId: req.params.id },
+    }).then(() => res.redirect("back"))
+      .catch(error => res.status(400).json(error));
   },
 };
 
