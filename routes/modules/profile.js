@@ -6,7 +6,6 @@ const db = require("../../models");
 const { User, Tweet, Reply } = db;
 
 router.get("/:id/posts", profileController.getPosts)
-// router.get("/:id", profileController.getPost)
-// router.post("/posts", profileController.postTweet)
+router.get("/:id/comments", profileController.getComments)
 
 module.exports = router;
