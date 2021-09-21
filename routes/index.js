@@ -8,8 +8,10 @@ const replyController = require('../controllers/replyController.js')
 const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req) && (!helpers.getUser(req).role !== "admin")) {
-    return next()
+  if (helpers.ensureAuthenticated(req)) {
+    if (!helpers.getUser(req).role !== "admin") {
+      return next()
+    } 
   } else {
     req.flash('error_messages', '帳號或密碼輸入錯誤')
   }
@@ -17,8 +19,10 @@ const authenticated = (req, res, next) => {
 }
 
 const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req) && (helpers.getUser(req).role === "admin")) {
-    return next()
+  if (helpers.ensureAuthenticated(req)) {
+    if (!helpers.getUser(req).role !== "admin") {
+      return next()
+    }
   } else {
     req.flash('error_messages', '帳號或密碼輸入錯誤')
   }

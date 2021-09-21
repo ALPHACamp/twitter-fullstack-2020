@@ -49,14 +49,18 @@
                   </p>
                   <p class="text-secondary color-gray mb-1 lh-1">@{{this.account}}
                   </p>
-                  <div class="dataInfo d-flex justify-content-center">
-                    <div class="tweetInfo d-flex justify-content-between" style="width: 45%;">
+                  <div class="dataInfo d-flex flex-column align-items-center">
+                    <div class="tweetInfo d-flex justify-content-around" style="width: 55%;">
                       <div>
                         <span><i class="far fa-comment color-gray"></i></span> {{this.tweetCount}}
                       </div>
                       <div>
                         <span><i class="far fa-heart color-gray"></i></span> {{this.likeCount}}
                       </div>
+                    </div>
+                    <div class="followshipInfo d-flex justify-content-around" style="width: 85%;">
+                      <div> {{this.followingCount}}個跟隨中 </div>
+                      <div> {{this.followerCount}}位追隨者 </div>
                     </div>
                   </div>
                 </div>
