@@ -117,7 +117,7 @@ const adminController = {
           { model: User, as: 'Followers' },
           Tweet
         ],
-        where: { isAdmin: false }
+        where: { role: 'user' || null }
       }),
       Tweet.findAll({
         raw: true,
