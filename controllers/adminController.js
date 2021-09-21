@@ -10,7 +10,7 @@ const maxDescLen = 50
 const adminController = {
   // 載入登入頁
   signInPage: (req, res) => {
-    return res.render('admin/signin')
+    return res.render('signin')
   },
 
   // 登入跳轉
