@@ -12,22 +12,90 @@ const Followship = db.Followship
 
 
 const imgur = require('imgur-node-api')
-const { fakeServer } = require('sinon')
-const followship = require('../models/followship')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 let userService = {
-  postTweets: (req, res, callback) => {
-    if (!req.body.description) {
-      return callback({ status: 'error', message: "請輸入貼文內容" })
-    }
-    return Tweet.create({
-      UserId: helpers.getUser(req).id,
-      description: req.body.description
+  renderUserEdit: (req, res, callback) => {
+    const currentUser = helpers.getUser(req)
+    return User.findOne({
+      where: { id: req.params.user_id },
+      include: [
+        { model: Tweet },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
     })
-      .then((tweet) => {
-        callback({ status: 'success', message: 'tweet was successfully created' })
+      .then((user) => {
+        console.log(user)
+        //取得某使用者的個人資料
+        const viewUser = Object.assign({}, {
+          id: user.id,
+          name: user.name,
+          introduction: user.introduction,
+          cover: user.cover,
+          avatar: user.avatar,
+        })
+        callback({ viewUser })
       })
+      .catch(err => console.log(err))
+  },
+
+  putUserEdit: async (req, res, callback) => {
+    const { name, introduction } = req.body
+    if (!name) {
+      return callback({ status: 'error', message: "暱稱不能空白！" })
+    }
+    if (name.length > 50 || introduction.length > 160) {
+      return callback({ status: 'error', message: "字數超出上限！" })
+    }
+    // const file = Object.assign({}, req.files)
+    const { files } = req
+    const isCoverDelete = req.body.isDelete
+    const user = await User.findByPk(req.params.user_id)
+
+    // if (files) {
+    //files會有[Object: null prototype] {}
+    imgur.setClientID(IMGUR_CLIENT_ID)
+    if (files.avatar && files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        imgur.upload(files.cover[0].path, async (err, covImg) => {
+          await user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            avatar: avaImg.data.link,
+            cover: isCoverDelete ? '' : covImg.data.link
+          })
+          callback({ status: 'success', message: 'user profile was successfully updated!' })
+        })
+      }
+      )
+    } else if (files.avatar && !files.cover) {
+      imgur.upload(files.avatar[0].path, async (err, avaImg) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          avatar: avaImg.data.link,
+          cover: isCoverDelete ? '' : user.cover
+        })
+        callback({ status: 'success', message: 'user profile was successfully updated!' })
+      })
+    } else if (!files.avatar && files.cover) {
+      imgur.upload(files.cover[0].path, async (err, covImg) => {
+        await user.update({
+          name: req.body.name,
+          introduction: req.body.introduction,
+          cover: isCoverDelete ? '' : covImg.data.link,
+        })
+        callback({ status: 'success', message: 'user profile was successfully updated!' })
+      })
+    } else {
+      await user.update({
+        name: req.body.name,
+        introduction: req.body.introduction,
+        cover: isCoverDelete ? '' : user.cover
+      })
+      callback({ status: 'success', message: 'user profile was successfully updated!' })
+    }
   },
 
   getUserTweets: (req, res, callback) => {

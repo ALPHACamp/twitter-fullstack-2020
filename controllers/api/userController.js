@@ -15,6 +15,20 @@ let userController = {
     userService.getUserTweets(req, res, (data) => {
       return res.status(200).json(data)
     })
+  },
+
+  //for test
+  renderUserEdit: (req, res) => {
+    userService.renderUserEdit(req, res, (data) => {
+      return res.status(200).json(data)
+    })
+  },
+
+  //for test
+  putUserEdit: (req, res) => {
+    userService.putUserEdit(req, res, (data) => {
+      return res.status(200).json(data)
+    })
   }
 }
 
