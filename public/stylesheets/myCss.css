@@ -78,6 +78,7 @@
 
 .userCard {
   border-radius:10px;
+  height: 350px;
 }
 
 .userCard > .userCover {
@@ -86,7 +87,9 @@
 }
 
  .userAvatar  {
-   transform: translate(0,-50px);
+   /* transform: translate(0,-50px); */
+   margin-top: -50px;
+   margin-bottom: 50px;
 }
 
 .userCardBody  {
