@@ -38,7 +38,7 @@ app.listen(port, () => console.log(`Example app listening on http://localhost:${
 
 // const routes = require('./routes')
 // app.use(routes)
-require('./routes')(app, passport)
+require('./routes')(app)
 
 
 module.exports = app
