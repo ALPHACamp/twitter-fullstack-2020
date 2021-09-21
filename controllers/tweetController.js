@@ -7,17 +7,12 @@ const Reply = db.Reply
 
 const tweetController = {
   getTweets: (req, res) => {
-    const a = req.body.TweetId
-    console.log(a)
     return Promise.all([
       User.findAll({
-        raw: true,
-        nest: true,
-        where: {
-          isAdmin: false,
-          id: req.params.id
-        },
-        include: [{ model: User, as: 'Followers' }]
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       }),
       Tweet.findAndCountAll({
         raw: true,
@@ -25,29 +20,30 @@ const tweetController = {
         order: [['createdAt', 'DESC']],
         include: [User]
       }),
-      // Tweet.findByPk(req.body.TweetId, {
-      //   include: [
-      //     User,
-      //     {model: Reply, include: User}
-      //   ]
-      // })
-    ]).then(([followship, tweets, tweet]) => {
-      // const array = tweets.rows.map(d => d)
-      // const result = array.filter(t => Number(t.id) === Number(req.body.TweetId))
+      Tweet.findByPk(req.body.TweetId, {
+        include: [
+          User,
+          {model: Reply, include: User}
+        ]
+      })
+    ]).then(([users, tweets, tweet]) => {
+      users = users.map(user => ({
+            ...user.dataValues,
+            FollowerCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+        }))
       tweets = tweets.rows.map(r => ({
         ...r,
         description: r.description.substring(0,50),
         isLiked: req.user.LikedTweet.map(d => d.id).includes(r.id),
       }))
-      // console.log(`這是req.body${req.body.TweetId}`)
-      // console.log(tweet)
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       return res.render('tweets', {
         tweets: tweets,
-        // tweet: result
-        // tweet: tweet
+        tweet: tweet,
+        users: users
       })
-
-
     })
   },
   postTweet: (req, res) => {
@@ -71,18 +67,34 @@ const tweetController = {
         })
   },
   getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [
-        User,
-        { model: Reply, include: User },
-        { model: User, as: 'LikedbyUser'}
-      ],
-      order: [[Reply, 'createdAt', 'DESC']]
-    }).then((tweet) => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
+        include: [
+          User,
+          { model: Reply, include: User },
+          { model: User, as: 'LikedbyUser'}
+        ],
+        order: [[Reply, 'createdAt', 'DESC']]
+      }),
+      User.findAll({
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ]).then(([tweet, users]) => {
+      users = users.map(user => ({
+            ...user.dataValues,
+            FollowerCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+        }))
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       const isLiked = tweet.LikedbyUser.map(d => d.id).includes(req.user.id)
       return res.render('tweet', {
         tweet: tweet.toJSON(),
-        isLiked: isLiked
+        isLiked: isLiked,
+        users: users
       })
     })
 

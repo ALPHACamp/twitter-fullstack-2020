@@ -17,5 +17,5 @@ module.exports = {
   momentDetailDate: function (a) {
     moment.locale('zh-tw')
     return moment(a).format("LL")
-  }
+  },
 }
