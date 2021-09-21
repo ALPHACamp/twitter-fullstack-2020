@@ -1,0 +1,130 @@
+<div class="container-fluid" id="tweets">
+    <div class="row flex-nowrap justify-content-between mr-3">
+
+        <div class="col-auto col-lg-3">
+            <a class="d-flex ml-5 py-3 pl-4" href="/">
+                <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
+            </a>
+            <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
+                <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
+                    <li class="nav-item px-2 py-1">
+                        <a class="nav-link align-middle text-dark " href="/admin/tweets">
+                            <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
+                            <span class="h5 menu-text home a-tomato">推文清單</span>
+                        </a>
+                    </li>
+                    <li class="nav-item px-2 py-1">
+                        <a class="nav-link align-middle text-dark h-tomato" href="/admin/users">
+                            <i class="far fa-user" style="font-size: 1.2em;"></i>
+                            <span class="h5 menu-text user">使用者列表</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-9 mt-2">
+            <div class="card-header">
+                推文清單
+            </div>
+
+            {{!-- {{#each tweets}}
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-center mr-2">
+                        <img src={{this.avatar}} style="width: 150px" alt="">
+                    </div>
+
+                    <div>
+                        <span>{{this.name}}</span>@
+                        <span>@{{this.acount}}</span>
+                        <span>.</span>
+                        <span>{{this.updatedAt}}</span>
+                        <div>
+                            <span>{{this.description}}</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <form action="/admin/tweets/:{{this.id}}
+?_method=DELETE" method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-link">X</button>
+                        </form>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            {{/each}} --}}
+
+            {{#each tweets}}
+            <div class="card col-12 hovercard d-flex flex-row">
+                <div class="card-body col-12">
+                    <div class="row  mb-1 p-2">
+                        <div class="col-1 d-flex justify-content-center align-items-start">
+                            <a href="/users/{{this.UserId}}">
+                                <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px; height: 50px"
+                                    alt="avatar">
+                            </a>
+                        </div>
+                        <div class="col-11 row">
+                            <div class="col-12 d-inline-flex justify-content-between align-items-center">
+                                <div style="height: 22px; font-size: 15px;">
+                                    <a href="/users/{{this.UserId}}"
+                                        class="text-dark font-weight-bold">{{this.User.name}}</a>
+                                    <span style="color: #657786;">@{{this.User.account}}．{{moment
+                                        this.createdAt}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-1" onclick="javascript:location.href='/tweets/{{this.id}}'">
+                                <p class="fw-bold">{{this.description}}</p>
+                            </div>
+                            <div class="col-12 d-flex align-items-center">
+                                <button type="button" class="btn btn-outline-light" data-toggle="modal"
+                                    data-target="#replyModal" data-bs-toggle="modal">
+                                    <i class="far fa-comment" style="color: navy;width:12px;height:12px;"></i>
+                                </button>
+                                <input type="hidden" name="TweetId" value="{{this.id}}">
+                                <span
+                                    style="display:inline-block;margin-left:20px;margin-right:33px;">{{this.replyCount}}</span>
+
+
+
+                                {{#if this.isLiked}}
+                                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                                    <button type="submit" class="btn btn-outline-light">
+                                        <i class="fas fa-heart" style="color: red;width:12px;height:12px;"></i>
+                                    </button>
+                                    <span style="display:inline-block;margin-left:20px;">{{this.likeCount}}</span>
+                                </form>
+                                {{else}}
+                                <form action="/tweets/{{this.id}}/like" method="POST">
+                                    <button type="submit" class="btn btn-outline-light">
+                                        <i class="far fa-heart" style="color: red; width: 12px; height: 12px;"></i>
+                                    </button>
+                                    <span style="display:inline-block;margin-left:20px;">{{this.likeCount}}</span>
+                                </form>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-link">X</button>
+                    </form>
+                </div>
+            </div>
+            {{/each}}
+
+        </div>
+
+    </div>
+    <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
+        <a href="/admin/logout" class="d-flex">
+            <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
+            <span class="h5 logout-text">登出</span>
+        </a>
+    </div>
+</div>

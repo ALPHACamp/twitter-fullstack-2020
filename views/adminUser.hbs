@@ -1,0 +1,78 @@
+<div class="container-fluid" id="tweets">
+    <div class="row flex-nowrap justify-content-between mr-3">
+
+        <div class="col-auto col-lg-3">
+            <a class="d-flex ml-5 py-3 pl-4" href="/">
+                <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
+            </a>
+            <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
+                <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
+                    <li class="nav-item px-2 py-1">
+                        <a class="nav-link align-middle text-dark " href="/admin/tweets">
+                            <i class="fas fa-home " style="font-size: 1.2em;"></i>
+                            <span class="h5 menu-text home a-tomato">推文清單</span>
+                        </a>
+                    </li>
+                    <li class="nav-item px-2 py-1">
+                        <a class="nav-link align-middle text-dark h-tomato" href="/admin/users">
+                            <i class="far fa-user a-tomato" style="font-size: 1.2em;"></i>
+                            <span class="h5 menu-text user">使用者列表</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        {{!-- 27-60找別人的--}}
+        <div class="col-9 mt-3">
+
+            <div class="card-header">
+                使用者列表
+            </div>
+
+            <div class="d-flex flex-row">
+                <div class="row">
+                    {{#each users}}
+                    <div class="d-flex felx-column col-3">
+                        <div>
+                            <div class="card my-3 rounded-4 shadow">
+                                <div class="position-relative">
+                                    <img src={{this.cover}} class="position-absolute rounded-3"
+                                        style="width: 100%; z-index:0;" alt="background">
+                                    <img src={{this.avatar}} class="position-absolute rounded-circle mt-4"
+                                        style="width: 70px; height: 70px; left: 33%; top: 60px; border: white 3px solid; z-index: 1"
+                                        alt="face">
+                                </div>
+                                <div class="card-body bg-light" style="padding-top: 88%;">
+                                    <h5 class="card-title text-center text-dark" style="font-weight: 900;">
+                                    </h5>
+                                    <h5 class="card-title text-center"
+                                        style="color: #6c757d; font-size: 0.95em; font-weight: 500">{{this.name}}@</h5>
+                                    <div class="text-center mt-3 text-dark">
+                                        <i class="far fa-comment"></i>
+                                        <span>{{this.tweetCount}}</span>
+                                        <i class="far fa-heart"></i>
+                                        <span>{{this.tweetLikeCount}}</span>
+                                    </div>
+                                    <div class="text-center mt-2 text-dark">
+                                        <span><strong>{{this.followingCount}}個</strong>跟隨中</span>
+                                        <span><strong>{{this.followerCount}}位</strong>跟隨者</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
+        <a href="/signout" class="d-flex">
+            <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
+            <span class="h5 logout-text">登出</span>
+        </a>
+    </div>
+</div>
