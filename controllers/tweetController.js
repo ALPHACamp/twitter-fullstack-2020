@@ -77,10 +77,9 @@ const tweetController = {
   postReplies: async (req, res) => {
     try {
       const { comment } = req.body
-      //console.log(comment)
       if (!comment) {
         req.flash('error_messages', '內文不可空白')
-        return res.json({ status: 'error', message: '內文不可空白' })
+        return res.redirect('back')
       }
       const reply = await Reply.create({
         comment,

@@ -1,12 +1,24 @@
 <div class="home-nav-bar col mt-2">
   <a href="/">
-    <img src="https://static.accupass.com/org/2008250550226683301600.jpg" alt="alpha simple twitter" title="alpha simple twitter"
-      class="rounded-circle" width="50px" height="50px">
+    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M29.2746 23.8533C29.2746 23.8533 23.6745 32.9337 19.0831 32.9337C11.0523 32.9337 18.5365 15.635 24.3936 15.635C28.4807 15.635 29.2746 23.8533 29.2746 23.8533Z"
+        fill="#FF6600" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M35.9293 35.273C34.3339 36.9706 32.3649 38.2733 30.1784 39.0777C27.9918 39.8821 25.648 40.1661 23.3326 39.9072C21.0172 39.6483 18.7939 38.8536 16.8392 37.5861C14.8844 36.3186 13.2519 34.6133 12.071 32.6052C13.3986 34.4109 15.6504 35.6146 18.8523 35.6146C26.74 35.6146 31.2175 29.4851 31.2175 29.4851C31.2175 29.4851 31.6047 34.3295 35.9195 35.273H35.9293Z"
+        fill="#FF6600" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M38.2917 18.0588C39.4723 20.3145 40.0586 22.8337 39.9954 25.3787C39.9322 27.9238 39.2215 30.4108 37.9305 32.6051C36.9094 32.0323 36.1544 31.0811 35.8284 29.9568L34.1168 24.8293L38.2917 18.0588Z"
+        fill="#FF6600" />
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M25.0024 10.013C28.7639 10.0105 32.3885 11.4241 35.1548 13.9725L32.3141 18.5566C31.2858 15.8823 29.1968 13.2047 25.1325 13.2047C16.8088 13.2047 10.6392 22.2916 10.6392 27.9884C10.6374 28.7252 10.7315 29.459 10.9191 30.1715C10.0867 27.9044 9.81404 25.4699 10.1243 23.0749C10.4345 20.6798 11.3185 18.3951 12.7011 16.4148C14.0837 14.4345 15.924 12.8173 18.0656 11.7004C20.2073 10.5836 22.5869 10.0003 25.0024 10V10.013Z"
+        fill="#FF6600" />
+    </svg>
   </a>
   <div class="navigation d-flex flex-column mt-5">
-    <p><a href="/"><i class="fas fa-home me-2 mb-3"></i> 首頁</a></p>
-    <p><a href="/users/{{user.id}}/tweets"><i class="far fa-user me-2 mb-3"></i> 個人資料</a></p>
-    <p><a href="/users/{{user.id}}/setting"><i class="fas fa-cog me-2 mb-3"></i> 設定</a></p>
+    <p><a href="/"><i class="fas fa-home me-2 mb-4"></i> 首頁</a></p>
+    <p><a href="/users/{{user.id}}/tweets"><i class="far fa-user me-2 mb-4"></i> 個人資料</a></p>
+    <p><a href="/users/{{user.id}}/setting"><i class="fas fa-cog me-2 mb-4"></i> 設定</a></p>
     <button type="button" class="btn rounded-pill fw-bolder common-button" data-bs-toggle="modal" data-bs-target="#tweetModal">
       推文
     </button>
@@ -16,44 +28,14 @@
 </div>
 
 <!-- tweet Modal -->
-<div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content tweet-modal-content">
-      <div class="tweet-modal-head">
-        <button type="button" class="btn-close tweet-modal-close-btn" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="tweet-modal-body d-flex">
-        <div class="tweet-modal-img">
-          <img class="rounded-circle" src="{{user.avatar}}" alt="avatar" title="avatar" width="50px"
-            height="50px">
-        </div>
-        <div class="w-100">
-          <form class="needs-validation" action="/tweets" method="POST" novalidate>
-          <textarea class="form-control tweet-modal-textarea w-100" id="description" name="description"
-          rows="9" placeholder="有什麼新鮮事？" maxlength="140" required></textarea>
-          <div class="tweet-modal-textarea-feedback invalid-feedback">
-            內文不可以空白
-          </div>
-            {{!-- <input type="hidden" name="restaurantId" value="{{restaurant.id}}" /> --}}
-            <button type="submit" class="btn rounded-pill fw-bolder common-button tweet-modal-tweet-btn"
-            onclick="return(confirm('確認推文了嗎？'))" >
-              推文
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{{> tweetModal}}
 
 <script>
     (function () {
       'use strict'
 
-      // Fetch all the forms we want to apply custom Bootstrap validation styles to
       const forms = document.querySelectorAll('.needs-validation')
 
-      // Loop over them and prevent submission
       Array.prototype.slice.call(forms)
         .forEach(function (form) {
           form.addEventListener('submit', function (event) {

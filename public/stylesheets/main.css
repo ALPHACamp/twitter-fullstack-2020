@@ -275,6 +275,7 @@ line-height :15px;
   width: 15px;
   height: 15px;
   color: #FF6600;
+  box-shadow: none!important;
 }
 
 .tweet-modal-body{
@@ -290,6 +291,7 @@ line-height :15px;
   color: #9197A3;
   font-weight: 700;
   resize: none;
+  box-shadow: none!important;
 }
 
 .tweet-modal-tweet-btn{

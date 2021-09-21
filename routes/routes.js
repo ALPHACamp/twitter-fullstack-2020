@@ -22,7 +22,6 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/admin/signin')
 }
 
-
 // tweets相關路由
 router.get('/tweets', authenticated, tweetController.getTweets)
 router.get('/tweets/:tweetId/replies', authenticated, tweetController.getTweet)

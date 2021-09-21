@@ -17,9 +17,10 @@ const session = require('express-session')
 const db = require('./models')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
-const moment = require('moment')
+// const moment = require('moment')
 
-const bodyParser = require('body-parser')
+// const exhbs = require('express-handlebars')
+// const bodyParser = require('body-parser')
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 // setup passport
 app.use(passport.initialize())
@@ -52,6 +53,6 @@ app.use(methodOverride('_method'))
 //app.get('/', (req, res) => res.render('admin/signin'))
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
 module.exports = app
