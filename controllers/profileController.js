@@ -6,6 +6,7 @@ const { Reply, User, Tweet, Like, Followship } = db
 const profileController = {
   getPosts: async (req, res) => {
     try {
+      const isPost = true
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: 'Followers' },
@@ -45,7 +46,7 @@ const profileController = {
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
       // return res.json({ Tweets, TopUsers, Profile, tweetCount, followersCount, followingsCount })
-      return res.render("profile", { tweets: Tweets, users: TopUsers, profile: Profile, tweetCount, followersCount, followingsCount });
+      return res.render("profile", {isPost, users: TopUsers, tweets: Tweets,  profile: Profile, tweetCount, followersCount, followingsCount });
     } catch (error) {
       console.log(error)
     }
@@ -53,6 +54,8 @@ const profileController = {
 
   getComments: async (req, res) => {
     try {
+      //前端處理判定
+      const isComment = true
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: 'Followers' },
@@ -92,7 +95,7 @@ const profileController = {
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
       // return res.json({ Tweets, TopUsers, Profile, tweetCount, followersCount, followingsCount })
-      return res.render("profile", { tweets: Tweets, users: TopUsers, profile: Profile, tweetCount, followersCount, followingsCount });
+      return res.render("profile", { isComment, tweets: Tweets, users: TopUsers, profile: Profile, tweetCount, followersCount, followingsCount });
     } catch (error) {
       console.log(error)
     }

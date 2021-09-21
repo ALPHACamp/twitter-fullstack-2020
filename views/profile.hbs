@@ -16,21 +16,64 @@
     <div class="col flex-direction-column">
       <!--start::list of 推文-->
       {{#each tweets}}
+      {{#if ../isPost}}
       <div class="post">
         <div class="post-card1">
           <div class="avatar profile-avatar"><img src="{{../profile.avatar}}" alt="avatar-img" /></div>
         </div>
         <div class="post-card2">
-          <h5 class="d-inline-block">{{../profile.name}}&nbsp;<span class="post-sub-info">{{../profile.account}} &#x2027;
+          <h5 class="d-inline-block">{{../profile.name}}&nbsp;<span class="post-sub-info">{{../profile.account}}
+              &#x2027;
               {{this.createdAt}}</span></h5>
           <p>{{this.description}}</p>
           <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>{{ReplyCount}}</span><span
               class="post-icon-block"><i class="bi bi-heart"></i>{{LikedCount}}</span></p>
         </div>
       </div>
+      {{/if}}
+      <!--end::list of 推文-->
+      <!--start::comment-->
+      {{#if ../isComment}}
+      <div class="col-12 flex-direction-column">
+        <div class="post">
+          <div class="post-card1">
+            <div class="avatar profile-avatar"><img
+                src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+                alt="avatar-img" /></div>
+          </div>
+          <div class="post-card2">
+            <h5 class="d-inline-block profile-nav-header post-title">Post Title&nbsp;<span class="post-sub-info">@Apple
+                &#x2027; 5minutes</span></h5>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p><span class="post-sub-info">回覆 <span
+                class="orange-text">@Apple</span></span>
+            <p>Great~</p>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+      <!--start::comment-->
+      <!--start::list of 喜歡的內容-->
+      {{#if ../isLikePost}}
+      <div class="post">
+        <div class="post-card1">
+          <div class="avatar profile-avatar"><img
+              src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+              alt="avatar-img" /></div>
+        </div>
+        <div class="post-card2">
+          <h5 class="d-inline-block">Post Title&nbsp;<span class="post-sub-info">@Apple &#x2027; 5minutes</span></h5>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+          <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>75</span><span
+              class="post-icon-block"><span style="color: #E0245E;"><i class="bi bi-heart-fill"></i>15</span></span></p>
+          </p>
+        </div>
+      </div>
+      {{/if}}
+      <!--end::list of 推文-->
       {{/each}}
       <!--end::list of 推文-->
-     
+
     </div>
   </div>
 
