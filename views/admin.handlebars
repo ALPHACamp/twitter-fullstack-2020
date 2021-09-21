@@ -36,7 +36,7 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <li class="page-item">
-      <a class="page-link" href="/admins?page={{prev}}" aria-label="Previous">
+      <a class="page-link" href="/admins/tweets?page={{prev}}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -44,10 +44,10 @@
     {{#ifCond this ../page}}
     <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
     {{else}}
-    <li class="page-item"><a class="page-link" href="/admins?page={{this}}">{{this}}</a></li>
+    <li class="page-item"><a class="page-link" href="/admins/tweets?page={{this}}">{{this}}</a></li>
     {{/ifCond}}
     {{/each}}
-    <li class="page-item"><a class="page-link" href="/admins?page={{next}}" aria-label="Next">
+    <li class="page-item"><a class="page-link" href="/admins/tweets?page={{next}}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>

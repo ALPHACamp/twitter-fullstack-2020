@@ -13,7 +13,7 @@ const adminController = {
   },
 
   postLogin: (req, res) => {
-    res.redirect('/admins')
+    res.redirect('/admins/tweets')
   },
 
   logout: (req, res) => {
@@ -22,7 +22,7 @@ const adminController = {
     res.redirect('/admins/login')
   },
 
-  getAdmin: (req, res) => {
+  getTweets: (req, res) => {
     let offset = 0
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit
@@ -61,7 +61,7 @@ const adminController = {
       .then(tweet => {
         tweet.destroy()
           .then(() => {
-            res.redirect('/admins')
+            res.redirect('/admins/tweets')
           })
       })
   }
