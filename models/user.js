@@ -9,7 +9,9 @@ module.exports = (sequelize, DataTypes) => {
     cover: DataTypes.STRING,
     role: DataTypes.STRING,
     isAdmin: DataTypes.STRING,
+    //加入 isNoticed 欄位
     isNoticed: DataTypes.BOOLEAN,
+    //補加入 introduction 欄位
     introduction: DataTypes.STRING
   }, {});
   User.associate = function (models) {
@@ -26,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followerId',
       as: 'Followings'
     })
+    // 加入關聯 - 阿金
     User.belongsToMany(models.Tweet, {
       through: models.Like,
       foreignKey: 'UserId',

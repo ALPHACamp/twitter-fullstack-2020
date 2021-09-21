@@ -29,6 +29,7 @@ passport.serializeUser((user, cb) => {
 })
 passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
+    // 加入關聯 - 阿金
     include: [
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' },

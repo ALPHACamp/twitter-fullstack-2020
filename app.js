@@ -1,6 +1,7 @@
 const express = require('express')
 const helpers = require('./_helpers')
 const handlebars = require('express-handlebars')
+//引用method-override
 const methodOverride = require('method-override')
 const db = require('./models')
 const bodyParser = require('body-parser')
@@ -25,6 +26,7 @@ app.engine('handlebars', handlebars({
 })) // Handlebars 註冊樣板引擎
 app.set('view engine', 'handlebars') // 設定Handlebars 做為樣板引擎
 app.use(express.static('public'))
+//使用methodOverride
 app.use(methodOverride('_method'))
 // setup session 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))

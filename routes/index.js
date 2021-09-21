@@ -47,8 +47,10 @@ module.exports = (app, passport) => {
     app.get('/signin', userController.signInPage)
     app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
     app.get('/signout', userController.logout)
-
-    //個人資料路由
+    //setting - 阿金
+    app.get('/setting', authenticatedUser, userController.getSetting)
+    app.put('/setting', authenticatedUser, userController.putSetting)
+    //個人資料路由 - 阿金
     app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
     app.get('/users/:id', authenticatedUser, userController.getProfile)
     app.put('/users/:id/edit', authenticatedUser, upload.fields([{

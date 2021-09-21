@@ -3,7 +3,7 @@ const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
 const { thousandComma } = require('../config/handlebars-helpers')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID ='bc129ea404ff01c'
+const IMGUR_CLIENT_ID = 'bc129ea404ff01c'
 
 
 const userController = {
@@ -69,6 +69,7 @@ const userController = {
     getTweets: (req, res) => {
         return res.render('setting')
     },
+    // 把 鈴鐺 isNoticed 改為 0 或 1 - 阿金
     toggleNotice: (req, res) => {
         if (req.user.id === Number(req.params.id)) return res.redirect('back')
         return User.findByPk(req.params.id, {
@@ -86,6 +87,7 @@ const userController = {
                     })
             })
     },
+    //拿取 個人資料頁面 - 阿金
     getProfile: async (req, res) => {
         let [users, user, followship] = await Promise.all([
             User.findAll({ where: { isAdmin: 'user' }, raw: true, nest: true, attributes: ['id'] }),
@@ -114,19 +116,14 @@ const userController = {
         ])
         const isUser = users.some(i => i.id === Number(req.params.id))
         if (!isUser) return res.redirect('back')
-
+        console.log('users:', user)
         const UserId = req.user.id
         const followerscount = user.Followers.length
         const followingscount = user.Followings.length
         const tweetCount = user.Tweets.length
         const isFollowed = req.user.Followings.some(d => d.id === user.id)
         const repiledTweet = user.toJSON().Replies.map(result => result)
-        console.log('user:__________')
-        console.log(user)
-        // const tweets = user.Tweet.map(r => ({
-        //     ...r,
-        //     isLiked: req.user.LikeTweet.map(d => d.id).includes(r.id)
-        // }))
+
         followship = followship.map(followships => ({
             ...followships.dataValues,
             FollowerCount: followships.Followers.length,
@@ -218,6 +215,59 @@ const userController = {
                     })
             })
     },
+    //setting - 阿金
+    getSetting: (req, res) => {
+        return User.findByPk(req.user.id).then(theuser => {
+            theuser = theuser.toJSON()
+            const { name, account, email } = theuser
+            return res.render('setting', { name, account, email })
+        })
+    },
+    putSetting: async (req, res) => {
+        const { name, account, email, password, checkPassword } = req.body
+        let errors = []
+        if (!name || !account || !email) {
+            errors.push({ msg: '帳號/名稱/Email 不可空白。' })
+        }
+        if (password !== checkPassword) {
+            errors.push({ msg: '密碼及確認密碼不一致！' })
+        }
+        if (errors.length) {
+            return res.render('setting', {
+                errors, name, account, email, password, checkPassword
+            })
+        }
+        try {
+            const [a, e] = await Promise.all([User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ account: account }, { account: { [Op.notLike]: req.user.account } }] } }), User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ email }, { email: { [Op.notLike]: req.user.email } }] } })])
+            errors = []
+            if (a) {
+                errors.push({ msg: '此帳號已有人使用。' })
+            }
+            if (e) {
+                errors.push({ msg: '此Email已有人使用。' })
+            }
+            if (a || e) {
+                console.log(errors)
+                return res.render('setting', { errors, name, account, email, password, checkPassword })
+            }
+            const user = await User.findByPk(req.user.id)
+            if (password === "") {
+                await user.update({
+                    name, account, email,
+                })
+                req.flash('success_messages', '成功更新個人資料設定！')
+                return res.redirect(`users/${req.user.id}`)
+            } else {
+                await user.update({
+                    name, account, email,
+                    password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+                })
+                return res.redirect(`users/${req.user.id}`)
+            }
+        } catch (error) {
+            console.warn(error)
+        }
+    }
 }
 
 module.exports = userController
