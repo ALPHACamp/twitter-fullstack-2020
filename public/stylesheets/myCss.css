@@ -7,6 +7,11 @@
   grid-template-columns:1.5fr 6.5fr 3fr;
 }
 
+.adminGrid{ 
+  display:grid;
+  grid-template-columns:1.5fr 9.5fr;
+}
+
 .fixed{
   position:fixed;
 }
@@ -15,6 +20,9 @@
   color: #FF6600;
 }
 
+.color-gray{
+  color: #657786;
+}
 
 #ac-logo{
   width: 50px;
@@ -24,10 +32,6 @@
 }
 .orange{
   background-color:#FF6600;
-}
-
-.text-orange{
-  color:#FF6600;
 }
 
 .round{
@@ -41,12 +45,10 @@
   background-color:#F5F8FA;
 }
 
-
 .followButton{
   border-color: #FF6600;
   color: #FF6600;
 }
-
 
 .userProfileImg{
   width: 150px;
@@ -71,4 +73,27 @@
   outline: none;   /*去掉有甚麼新鮮事的外框*/
   width: 400px;
   min-height: 150px;
+}
+
+.userCard {
+  border-radius:10px;
+}
+
+.userCard > .userCover {
+   height:140px;
+   border-radius: 10px 10px 0px 0px;
+}
+
+ .userAvatar  {
+   transform: translate(0,-50px);
+}
+
+.userCardBody  {
+   transform: translate(0,-50px);
+}
+
+.userAvatar > .avatar {
+   width: 100px;
+   border: 5px solid white;
+
 }

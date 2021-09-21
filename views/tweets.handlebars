@@ -1,4 +1,6 @@
-<!-- Modal -->
+
+
+<!-- 新推文Modal -->
 <div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -43,7 +45,7 @@
           <div class="icon d-flex align-items-center">
             <i class="fas fa-users"></i>
           </div>
-          <a href="/userProfile" class="btn sidebarItem">
+          <a href="/users/{{user.id}}/tweets" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">個人資料</span>
           </a>
         </div>
@@ -109,16 +111,16 @@
                 {{moment this.createdAt}}
               </a>
             </div>
-            <a href="/tweet/{{this.id}}" class="tweetContent m-2 btn">
+            <a href="/tweets/{{this.id}}" class="tweetContent m-2 btn">
               <p>{{this.description}}</p>
             </a>
-            <div class="row d-flex flex-nowrap mb-2">
-              <div class="comment col-lg-2 d-flex">
-                <span class="commentIcon me-3">
+          <div class="d-flex mb-2">
+              <a href="/tweets/{{this.id}}" class="comment d-flex me-2 btn">
+                <span class="commentIcon me-2">
                   <i class="far fa-comment"></i>
                 </span>
-                <span class="commentAmount">20</span>
-              </div>
+                <span class="commentAmount">{{this.Replies.length}}</span>
+              </a>
               <div clss="like col-lg-2 d-flex">
                 <span class="likeIcon me-2">
                   {{#if this.data.isLiked}}
