@@ -68,23 +68,12 @@ body {
 }
 
 
-/* following.hbs follower.hbs */
-.follower-head .nav-tabs .nav-link {
-  color: lightgray;
-  font-weight: 600;
-  border: none;
-}
-.follower-head .nav-tabs .nav-link.active {
-  color: #ff6600;
-  border: none;
-  border-bottom: 1px solid #ff6600;
-}
 
 .bd {
   outline: 2px solid red;
 }
 
-/* public.hbs */
+
 
 /* userprofile */
 .btn-outline-tomato {
@@ -98,7 +87,7 @@ body {
 }
 
 
-/* followingship.hbs followership.hbs */
+
 
 /* userprofile.hbs */
 .avatar-holder {
@@ -167,68 +156,4 @@ body {
   color: #ff6600;
   border: none;
   border-bottom: 1px solid #ff6600;
-}
-
-.NoticeAni a {
-  position: relative;
-  display: block;
-  color: white;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
-  text-align: center;
-  line-height: 50px;
-  border-radius: 50%;
-  transition: 0.6s;
-}
-
-.NoticeAni ::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  border-radius: 50%;
-  background: #fff;
-  transition: 0.6s;
-  transform: scale(0.8);
-  z-index: -1;
-}
-
-.NoticeAni :hover::before {
-  box-shadow: 0 0 14px 2px #ff6600;
-  transform: scale(1.05);
-}
-
-.Noticed {
-  display: block;
-  text-align: center;
-  margin-bottom: 10px;
-  width: 45px;
-  height: 45px;
-  font-size: 20px;
-  line-height: 60px;
-  border-radius: 50%;
-  transition: 0.6s;
-  position: static;
-  border-radius: 50%;
-  background: #fff;
-  transform: scale(0.8);
-  z-index: 1;
-  box-shadow: 0 0 14px 2px #ff6600;
-}
-
-/* Public */
-.msgblockleft {
-  border-radius: 50rem 50rem 50rem 0;
-  background-color: #eee;
-  padding: 0.4rem 0.6rem;
-}
-
-.msgblockright {
-  border-radius: 50rem 50rem 0 50rem;
-  background-color: tomato;
-  color: white;
-  padding: 0.4rem 0.6rem;
 }
