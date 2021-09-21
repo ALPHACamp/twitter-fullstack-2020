@@ -14,6 +14,8 @@ const tweetController = {
   //顯示所有貼文
   getTweets: (req, res) => {
     const currentUser = helpers.getUser(req)
+    const currentUserId = currentUser.id
+    console.log(currentUser)
     return Promise.all([
       Tweet.findAll({
         include: [
@@ -75,7 +77,7 @@ const tweetController = {
     })
       .then((tweet) => {
         req.flash('success_messages', 'tweet was successfully created')
-        res.redirect('back')
+        res.redirect('/tweets')
       })
   },
   //顯示特定貼文(要改api)
@@ -122,10 +124,11 @@ const tweetController = {
   //回覆特定貼文
   createReply: (req, res) => {
     const currentUser = helpers.getUser(req)
+    const currentUserId = currentUser.id
     return Reply.create({
       comment: req.body.comment,
       TweetId: req.body.TweetId,
-      UserId: currentUser.id
+      UserId: currentUserId
     })
       .then((reply) => {
         res.redirect('back')
@@ -163,7 +166,7 @@ const tweetController = {
     return Like.findOne({
       where: {
         UserId: currentUserId,
-        TweetId: req.params.id
+        TweetId: req.params.user_id
       }
     })
       .then(like => {

@@ -30,8 +30,9 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 //TODO:搜尋條件待加入使用者關聯資料語法 i.e.{ model: User, as: 'Followers' }
-passport.deserializeUser((id, cb) => {
-  User.findByPk(id, {
+passport.deserializeUser(async(id, cb) => {
+ try{
+    await User.findByPk(id, {
     include: [
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' },
@@ -42,6 +43,10 @@ passport.deserializeUser((id, cb) => {
       user = user.toJSON()
       return cb(null, user)
     })
+ } catch(error){
+    console.log(error)
+    res.render('new', {Error})}
+ 
 })
 
 module.exports = passport
