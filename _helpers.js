@@ -3,7 +3,7 @@ function ensureAuthenticated(req) {
 }
 
 function getUser(req) {
-  return req.user;
+  return testmerge;
 }
 
 module.exports = {

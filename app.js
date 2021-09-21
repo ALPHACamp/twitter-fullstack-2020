@@ -12,7 +12,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const session = require('express-session') 
 const passport = require('./config/passport')
-const methodOverride = require('method-override') // 載入 method-override
 const app = express()
 const port = 3000
 
