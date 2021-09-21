@@ -275,7 +275,7 @@ body {
 #main-content .post {
   background: #FFFFFF;
   margin-bottom:10px;
-  weight: 600px;
+  width: 600px;
   height: 120px;
   position: relative;
 }
