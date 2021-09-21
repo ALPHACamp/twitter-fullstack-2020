@@ -206,3 +206,511 @@
   text-decoration-line: underline;
   color: #0099ff;
 }
+
+/* tweet */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.wrap {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+#sidebar-left {
+  margin-right: 30px;
+  padding-right: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#main-content {
+  border: 1px solid #E6ECF0;
+  width: 600px;
+  background: #E6ECF0;
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* main */
+#main-content .header {
+  background: #FFFFFF;
+  padding-left: 15px;
+  border-bottom: 1px solid #E6ECF0;
+  height: 55px;
+  display: flex;
+  justify-content: start;
+  align-items : center; 
+}
+
+#main-content .header a .iconBack:hover {
+  fill:#FF6600;
+}
+
+#main-content .header .headerItem{
+  margin-right:44px;
+}
+
+#main-content .header .headerItem span{
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1C1C1C;
+}
+
+#main-content .post {
+  background: #FFFFFF;
+  margin-bottom:10px;
+  weight: 600px;
+  height: 120px;
+  position: relative;
+}
+
+#main-content .post .postItem {
+  margin: 0px 0px 0px 15px ;
+  padding-top: 10px;
+  display:flex;
+  align-items:center;
+}
+
+#main-content .post .postItem .avatar {
+  margin-right: 10px;
+  border-radius:50%;
+}
+
+#main-content .post .tweetButton {
+  position: absolute;
+  width: 66px;
+  height: 38px;
+  right: 15px;
+  bottom: 10px;
+  cursor: pointer;
+  border:none;
+  background: #FF6600;
+  border-radius: 100px;
+  
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+#main-content .tweet-body {
+  width: 600px;
+  display: flex;
+  flex-direction:column;
+}
+
+#main-content .tweet-body .card-tweets {
+  width:600px;
+  margin-bottom: 1px;
+  min-height:136px;
+  display:flex;
+  background: #FFFFFF;
+}
+
+#main-content .tweet-body .card-tweets .card-avatar {
+  margin: 13px 10px 0px 15px;
+  border-radius:50%;
+}
+
+#main-content .tweet-body .card-tweets .card-warp {
+  padding-top: 10px;
+  display:flex;
+  flex-direction:column;
+}
+
+#main-content .tweet-body .card-tweets .card-header {
+  margin-bottom: 6px;
+}
+
+#main-content .tweet-body .card-tweets .card-header .card-name {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  color: #1C1C1C;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin-right: 5px;
+}
+
+#main-content .tweet-body .card-tweets .card-header .card-account {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+}
+
+#main-content .tweet-body .card-tweets .card-content {
+ margin-bottom: 14px; 
+ width: 510px;
+}
+
+#main-content .tweet-body .card-tweets .card-footer  {
+  width: 510px;
+  display: flex;
+  align-items: center;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: #657786;
+}
+
+#main-content .tweet-body .card-tweets .card-footer svg {
+  fill: #657786;
+}
+
+#main-content .tweet-body .card-tweets .card-footer .icon-reply {
+  margin-right: 51px;
+  display: flex;
+  align-items: center;
+}
+
+#main-content .tweet-body .card-tweets .card-footer .icon-reply .reply-count,
+#main-content .tweet-body .card-tweets .card-footer .icon-like .like-count
+{
+  margin-right: 11px;
+}
+
+#main-content .tweet-body .card-tweets .card-footer .icon-reply:hover .reply-count{
+  color: #FF6600;
+  fill: #FF6600;
+}
+
+#main-content .tweet-body .card-tweets .card-footer .icon-like:hover .like-count{
+  color: #FF6600;
+  fill: #FF6600;
+}
+
+#main-content .tweet-body .card-tweets .card-footer .icon-like{
+  display: flex;
+  align-items: center;
+}
+
+#main-content .post .postItem .postPlaceholder {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #9197A3;
+}
+
+/* navBar left */
+#sidebar-left .logout:hover .iconLogout {
+  color: #FF6600;
+  fill: #FF6600;
+}
+
+#sidebar-left .logout .iconLogout {
+  margin-right: 23px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1C1C1C;
+  text-decoration:none;
+}
+
+#sidebar-left .navigation .logo svg {
+  margin-bottom:30px;
+
+}
+
+
+#sidebar-left .navigation {
+  width: 180px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+#sidebar-left .logout {
+  display: flex;
+  align-items: center;
+  width: auto;
+  height: auto;
+  position: fixed;
+  bottom: 0;
+}
+
+
+#sidebar-left .navigation .item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+#sidebar-left .navigation .item:hover .iconIndex, 
+#sidebar-left .navigation .item:hover .iconUser,
+#sidebar-left .navigation .item:hover .iconCog{
+  color: #FF6600;
+  fill: #FF6600;
+}
+
+#sidebar-left .navigation .item span {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+#sidebar-left .navigation .item a {
+  text-decoration: none;
+  margin: 0px 20px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;
+  color: #1C1C1C;
+}
+
+svg {
+  fill: black;
+}
+
+.navigation .item .tweetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 210px;
+  height: 38px;
+  left: 0px;
+  top: 10px;
+  border:none;
+  background: #FF6600;
+  border-radius: 100px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+#sidebar-right .popular {
+  margin: 15px 0px 0px 30px;
+  width: 350px;
+  height: 756px;
+  background: #E6ECF0;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 15px;
+  z-index: -1;
+  overflow:hidden;
+}
+
+#sidebar-right .popular .popular-top {
+  position: absolute;
+  width: 350px;
+  height: 80px;
+  background: #F5F8FA;
+}
+
+#sidebar-right .popular .title {
+  margin: 10px 0px 9px 15px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1C1C1C;
+/*   background: #F5F8FA; */
+  z-index:1;
+}
+
+#sidebar-right .popular .card-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+#sidebar-right .popular .card-wrapper .card {
+  border-top:1px solid #E6ECF0;;
+  position: relative;
+  width: 350px;
+  height: 70px;
+  display: flex; 
+  background: #F5F8FA;
+}
+
+#sidebar-right .popular .card-wrapper .card .avatar {
+  margin: 10px 10px 0px 15px;
+  border-radius: 50%;
+}
+
+#sidebar-right .popular .card-wrapper .card .people {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#sidebar-right .popular .card-wrapper .card .people .name {
+  margin: 18px 0px 3px 0px;  
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #1C1C1C;
+}
+
+#sidebar-right .popular .card-wrapper .card .people .account {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #657786;
+}
+
+#sidebar-right .popular .card-wrapper .card .followed {
+  position: absolute;
+  width: 90px;
+  height: 35px;
+  right: 15px;
+  top: 17px;
+  background: #FF6600;
+  border: 1px solid #FF6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+/*   文字 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #FFFFFF;
+}
+
+#sidebar-right .popular .card-wrapper .card .follow {
+  position: absolute;
+  width: 60px;
+  height: 35px;
+  right: 15px;
+  top: 17px;
+  border: 1px solid #FF6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+  background:rgba(0,0,0,0);
+/*   文字 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #FF6600;
+}
+
+/* modal */
+
+
+ .details-modal {
+	 background: #fff;
+	 border-radius: 0.5em;
+	 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+	 left: 50%;
+	 max-width: 90%;
+	 pointer-events: none;
+	 position: absolute;
+	 top: 50%;
+	 transform: translate(-50%, -50%);
+	 width: 30em;
+	 text-align: left;
+	 max-height: 90vh;
+	 display: flex;
+	 flex-direction: column;
+}
+ .details-modal .details-modal-close {
+	 align-items: center;
+	 color: #111827;
+	 display: flex;
+	 height: 4.5em;
+	 justify-content: center;
+	 pointer-events: none;
+	 position: absolute;
+	 right: 0;
+	 top: 0;
+	 width: 4.5em;
+}
+ .details-modal .details-modal-close svg {
+	 display: block;
+}
+ .details-modal .details-modal-title {
+	 color: #111827;
+	 padding: 1.5em 2em;
+	 pointer-events: all;
+	 position: relative;
+	 width: calc(100% - 4.5em);
+}
+ .details-modal .details-modal-title h1 {
+	 font-size: 1.25rem;
+	 font-weight: 600;
+	 line-height: normal;
+}
+ .details-modal .details-modal-content {
+	 border-top: 1px solid #e0e0e0;
+	 padding: 2em;
+	 pointer-events: all;
+	 overflow: auto;
+}
+ .details-modal-overlay {
+	 transition: opacity 0.2s ease-out;
+	 pointer-events: none;
+	 background: rgba(15, 23, 42, 0.8);
+	 position: fixed;
+	 opacity: 0;
+	 bottom: 0;
+	 right: 0;
+	 left: 0;
+	 top: 0;
+}
+ details[open] .details-modal-overlay {
+	 pointer-events: all;
+	 opacity: 0.5;
+}
+ details summary {
+	 list-style: none;
+}
+ details summary:focus {
+	 outline: none;
+}
+ details summary::-webkit-details-marker {
+	 display: none;
+}
+
+ 
+

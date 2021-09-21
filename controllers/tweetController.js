@@ -1,6 +1,6 @@
 const tweetController = {
   getTweets: (req, res) => {
-    return res.render('register')
+    return res.render('tweet')
   },
 }
 
