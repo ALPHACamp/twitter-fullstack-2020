@@ -11,7 +11,7 @@ const Tweet = db.Tweet
 passport.use(new LocalStrategy(
   // customize user field
   {
-    usernameField: 'email',
+    usernameField: 'account',
     passwordField: 'password',
     passReqToCallback: true
   },
