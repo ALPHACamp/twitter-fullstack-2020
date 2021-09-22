@@ -13,6 +13,7 @@ const userController = {
   getUserTweets: async (req, res) => {
     try {
       const userId = req.params.userId
+
       const popularUser = await userService.getPopular(req, res)
       const profileUser = await userService.getProfileUser(req, res)
 

@@ -44,10 +44,11 @@ const userService = {
           { model: Tweet, attributes: ['id'] }
         ]
       })
-      profileUser.introduction =
-        profileUser.introduction.length < 50
+      if (profileUser.introduction) {
+         profileUser.introduction = profileUser.introduction.length < 50
           ? profileUser.introduction
           : profileUser.introduction.substring(0, 50) + '...'
+      }
       profileUser.followerLength = profileUser.Followers.length
       profileUser.followingLength = profileUser.Followings.length
       profileUser.tweetLength = profileUser.Tweets.length
