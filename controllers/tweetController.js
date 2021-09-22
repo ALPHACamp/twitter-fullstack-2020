@@ -9,6 +9,7 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
+
 const tweetController = {
   //貼文相關
   //顯示所有貼文
@@ -151,26 +152,26 @@ const tweetController = {
   //Like & Unlike
   //喜歡特定貼文
   addLike: async(req, res) => {
-    try {
-    const currentUserId = helpers.getUser(req).id
-    console.log(req.params.id)
-    await Like.create({
+    try{
+      const currentUserId = helpers.getUser(req).id
+      await Like.create({
       UserId: currentUserId,
       TweetId: req.params.id
     })
-      .then((like) => {
-        return res.redirect('back')
+    .then((like) => {
+        return res.redirect('/tweets')
       })
     } catch (error){
     console.log(error)
-    res.render('new', {Error})}
+    res.render('/index', {Error})}
+    
   },
-  
+
   //取消喜歡特定貼文
   removeLike: async(req, res) => {
     try{
     const currentUserId = helpers.getUser(req).id
-    console.log(req.params)
+    // console.log(req.params)
     await Like.findOne({
       where: {
         UserId: currentUserId,
@@ -185,7 +186,7 @@ const tweetController = {
       })
     } catch (error){
     console.log(error)
-    res.render('new', {Error})}
+    res.render('/index', {Error})}
   
   }
 
