@@ -48,7 +48,7 @@ const userController = {
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
-        ]
+        ],
       })
       let popularUser = []
 
@@ -60,6 +60,7 @@ const userController = {
       }))
 
       helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      helpers.removeadmin(popularUser)//移除admin資訊
       popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
 
@@ -95,10 +96,6 @@ const userController = {
         req.flash('error_messages', '兩次密碼輸入不同！')
         return res.redirect('back')
       } else {
-        console.log('======================================')
-        console.log(req.user.id)
-        console.log('======================================')
-
         User.findByPk(userId)
           .then((user) => {
             user.update({
@@ -227,6 +224,7 @@ const userController = {
       }))
 
       helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      helpers.removeadmin(popularUser)//移除admin資訊
       popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       return res.render('following', { popularUser, userself })
@@ -257,6 +255,7 @@ const userController = {
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
       }))
       helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      helpers.removeadmin(popularUser)//移除admin資訊
       popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       const followers = await Followship.findAll({

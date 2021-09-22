@@ -26,6 +26,7 @@ const tweetController = {
       }))
 
       helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
+      helpers.removeadmin(popularUser)//移除admin資訊
       popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
 
       const tweets = await Tweet.findAll({
