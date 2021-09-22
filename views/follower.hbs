@@ -6,11 +6,11 @@
     {{!-------------------- 姓名欄 --------------------}}
     <div class="d-flex">
       <div class="p-3">
-        <a href=" /users/{{user.id}}/tweets"><i class="fas fa-arrow-left me-2 mb-3" style="color: #1C1C1C;"></i></a>
+        <a href=" /users/{{currentUserFollowers.id}}/tweets"><i class="fas fa-arrow-left me-2 mb-3" style="color: #1C1C1C;"></i></a>
       </div>
       <div class="p-2">
-        <div class="home-word">{{user.name}}</div>
-        <div class="count">25推文</div>
+        <div class="home-word">{{currentUserFollowers.name}}</div>
+        <div class="count">{{currentUserFollowers.Tweets.length}}&nbsp;推文</div>
       </div>
     </div>
 
@@ -19,52 +19,56 @@
       <ul class="nav">
         <li class="nav-item">
           <a class="nav-link active font-weight-bold" style="color:#FF6600; border-bottom:3px #FF6600 solid;"
-            href="#">跟隨者</a>
+            href="/users/{{currentUserFollowers.id}}/followers">跟隨者</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary font-weight-bold" href="/users/{{user.id}}/followings">正在跟隨</a>
+          <a class="nav-link text-secondary font-weight-bold" href="/users/{{currentUserFollowers.id}}/followings">正在跟隨</a>
         </li>
       </ul>
     </div>
 
     {{!-------------------- 追蹤者欄 --------------------}}
 
-    {{#each data}}
+    {{#each followersUser}}
 
     <div class=" d-flex">
       <div class="" style="display:flex;justify-content: center;">
-        <a href="/users/{{this.user.id}}/tweets">
-          <img src="{{this.user.avatar}}" alt="..." class="rounded-circle m-2" style="width: 50px; height:50px;">
+        <a href="/users/{{this.id}}/tweets">
+          <img src="{{this.avatar}}" alt="avatar" class="rounded-circle m-2" style="width: 50px; height:50px;">
         </a>
       </div>
       <div class="col-md-10 " style="padding-left: 0px; width: 530px;">
         <div style="display: flex; justify-content:space-between">
           <div>
 
-            <a href="/users/{{this.user.id}}/tweets">
-              <div class="follow-name">{{this.user.name}}</div>
+            <a href="/users/{{this.id}}/tweets">
+              <div class="follow-name">{{this.name}}</div>
               <div class="follow-account m-0">@{{this.account}}</div>
             </a>
 
           </div>
-          {{#if this.isFollowed }}
-          <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
-            <button type="submit" class="rounded-pill fw-bolder m-2 common-button" style="width:90px; height:25px; border:none">
-              正在跟隨
-            </button>
-          </form>
+          {{#ifNotEqual this.id ../user.id}}
+          {{#if this.isFollowed}}
+          <div class="follow-btn">
+            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="rounded-pill fw-bolder m-2 common-button"
+                style="width:90px; height:25px; border:none">正在跟隨</button>
+            </form>
+          </div>
           {{else}}
-          <form action="/followships/{{this.user.id}}" method="POST">
-            <button type="submit" class="btn rounded-pill fw-bolder m-2 unfollow-button-follower " style="width:70px; height:25px;">
-              跟隨
-            </button>
-          </form>
+          <div class="follow-btn">
+            <form action="/followships/{{this.id}}" method="POST">
+              <button type="submit" class="btn rounded-pill fw-bolder m-2 unfollow-button-follower "
+                style="width:70px; height:25px;">跟隨</button>
+            </form>
+          </div>
           {{/if}}
+          {{/ifNotEqual}}
         </div>
         <div class="m-1"
           style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow: ellipsis; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px">
           <p>
-            {{this.user.introduction}}
+            {{this.introduction}}
           </p>
         </div>
       </div>
