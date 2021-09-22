@@ -211,7 +211,8 @@ const userController = {
           return res.redirect(`/users/self/${user.id}`)
         })
       })
-  }
+  },
+
 }
 
 module.exports = userController
