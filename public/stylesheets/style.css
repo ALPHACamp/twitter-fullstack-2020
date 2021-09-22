@@ -400,7 +400,6 @@ body {
   align-items: center;
 }
 
-#main-content .tweet-body .card-tweets .card-footer .icon-reply .reply-count,
 #main-content .tweet-body .card-tweets .card-footer .icon-like .like-count {
   cursor: pointer;
   font-family: Noto Sans TC;
@@ -416,7 +415,25 @@ body {
   .tweet-body
   .card-tweets
   .card-footer
+  .icon-reply
+  .postModal
+  .reply-count {
+  cursor: pointer;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: #657786;
+  margin-right: 11px;
+}
+
+#main-content
+  .tweet-body
+  .card-tweets
+  .card-footer
   .icon-reply:hover
+  .postModal
   .reply-count {
   color: #ff6600;
   fill: #ff6600;
@@ -435,6 +452,10 @@ body {
 #main-content .tweet-body .card-tweets .card-footer .icon-like {
   display: flex;
   align-items: center;
+}
+
+#main-content .tweet-body .card-tweets .card-footer .icon-reply .postModal {
+  all: initial;
 }
 
 #main-content .post .postItem .postPlaceholder {
@@ -744,88 +765,16 @@ svg {
   color: #ff6600;
 }
 
-/* modal */
-
-.details-modal {
-  background: #fff;
-  border-radius: 0.5em;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  left: 50%;
-  max-width: 90%;
-  pointer-events: none;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 30em;
-  text-align: left;
-  max-height: 90vh;
-  display: flex;
-  flex-direction: column;
-}
-.details-modal .details-modal-close {
-  align-items: center;
-  color: #111827;
-  display: flex;
-  height: 4.5em;
-  justify-content: center;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 4.5em;
-}
-.details-modal .details-modal-close svg {
-  display: block;
-}
-.details-modal .details-modal-title {
-  color: #111827;
-  padding: 1.5em 2em;
-  pointer-events: all;
-  position: relative;
-  width: calc(100% - 4.5em);
-}
-.details-modal .details-modal-title h1 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  line-height: normal;
-}
-.details-modal .details-modal-content {
-  border-top: 1px solid #e0e0e0;
-  padding: 2em;
-  pointer-events: all;
-  overflow: auto;
-}
-.details-modal-overlay {
-  transition: opacity 0.2s ease-out;
-  pointer-events: none;
-  background: rgba(15, 23, 42, 0.8);
-  position: fixed;
-  opacity: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  top: 0;
-}
-details[open] .details-modal-overlay {
-  pointer-events: all;
-  opacity: 0.5;
-}
-details summary {
-  list-style: none;
-}
-details summary:focus {
-  outline: none;
-}
-details summary::-webkit-details-marker {
-  display: none;
-}
-
 /* reply page */
 #main-content .post {
   padding: 15px 15px 0px 15px;
   display: flex;
   flex-direction: column;
   background: #ffffff;
+}
+
+#main-content .post .modal-content {
+  width: 600px;
 }
 
 #main-content .post .postHead {
@@ -931,6 +880,154 @@ details summary::-webkit-details-marker {
   font-size: 15px;
   line-height: 22px;
   color: #657786;
+}
+
+/* tweet-body reply modal */
+.icon-reply .reply-modal-body {
+  all: initial;
+  padding: 18px 15px 0px 15px;
+  display: flex;
+  height: 100%;
+}
+
+.icon-reply .reply-modal-body .reply-modal-avatar-item {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icon-reply .reply-modal-body .poster-avatar {
+  border-radius: 50%;
+}
+
+.icon-reply .reply-modal-body .vertical-line {
+  width: 2px;
+  height: 100%;
+  margin: 5px 0px 10px 0px;
+  background: #ccd6dd;
+}
+
+.icon-reply .reply-content-warp {
+  margin-left: 10px;
+}
+
+.icon-reply .reply-modal-body .reply-name {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  color: #1c1c1c;
+}
+
+.icon-reply .reply-modal-body .reply-account {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+}
+
+.icon-reply .reply-modal-body .card-reply-to .replyItem {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  color: #657786;
+}
+
+.icon-reply .reply-modal-body .card-reply-to .replyReceiver {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 22px;
+  color: #ff6600;
+}
+
+.icon-reply .reply-modal-body .reply-content {
+  margin: 5px 0px 10px 0px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 22px;
+  color: #1c1c1c;
+}
+
+.icon-reply .modal-footer {
+  border: none;
+  padding: 0px 15px 0px 15px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+.icon-reply .modal-content {
+  border-radius: 14px;
+  width: 600px;
+  min-height: 450px;
+}
+
+.icon-reply .modal-body {
+  padding: 0px;
+  display: flex;
+}
+
+.icon-reply .modal-footer .reply-tweet-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-reply .form-control {
+  all: initial;
+  min-height: 26px;
+  width: 510px;
+}
+
+.icon-reply .replier-modal-body {
+  display: flex;
+}
+
+.icon-reply .replier-modal-body .form-group {
+  padding: 5px 0px 0px 5px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bolder;
+  font-size: 18px;
+  line-height: 26px;
+  color: #9197a3;
+}
+
+.icon-reply .replier-avatar img {
+  border-radius: 100%;
+}
+
+.icon-reply .post-submit-button {
+  position: absolute;
+  padding: auto;
+  width: 66px;
+  height: 38px;
+  right: 15px;
+  bottom: 15px;
+  cursor: pointer;
+  border: none;
+  background: #ff6600;
+  border-radius: 100px;
+}
+
+.icon-reply .post-submit-button span {
+  cursor: pointer;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+  color: #ffffff;
 }
 
 #main-content
