@@ -21,7 +21,9 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser.role) { return next() }
+    if (helpers.getUser.role) {
+      return next()
+    }
   }
   res.redirect('/admin/signin')
 }
@@ -48,20 +50,41 @@ router.get('/signup', loginController.signUpPage)
 router.post('/signup', loginController.signUp)
 
 router.get('/signin', loginController.signInPage)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true}),
-loginController.signIn)
+router.post(
+  '/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/signin',
+    failureFlash: true
+  }),
+  loginController.signIn
+)
 
 router.get('/logout', loginController.logOut)
 
 router.get('/admin/signin', adminController.signInPage)
-router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }),adminController.signIn)
+router.post(
+  '/admin/signin',
+  passport.authenticate('local', {
+    failureRedirect: '/admin/signin',
+    failureFlash: true
+  }),
+  adminController.signIn
+)
 
 router.get('/users/:userId/setting', authenticated, userController.getSetting)
 router.put('/users/:userId/setting', authenticated, userController.editSetting)
-  
+
 //routes for follow
-router.get('/following', authenticated, userController.getFollowings)
-router.get('/follower', authenticated, userController.getFollowers)
+router.get(
+  '/users/:userId/followings',
+  authenticated,
+  userController.getFollowings
+)
+router.get(
+  '/users/:userId/followers',
+  authenticated,
+  userController.getFollowers
+)
 router.post(
   '/followships/:userId',
   authenticated,
@@ -83,10 +106,16 @@ router.get('/users/:userId/likes', authenticated, userController.getLikes)
 
 // Admin
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
-router.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
+router.delete(
+  '/admin/tweets/:tweetId',
+  authenticatedAdmin,
+  adminController.deleteTweet
+)
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 
 // 如果使用者訪問首頁，就導向 /tweets 的頁面
-router.get('/', authenticated, (req, res) => { res.redirect('/tweets') })
+router.get('/', authenticated, (req, res) => {
+  res.redirect('/tweets')
+})
 
 module.exports = router

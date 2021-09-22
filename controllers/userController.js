@@ -7,26 +7,14 @@ const Like = db.Like
 const bcrypt = require('bcryptjs')
 const helpers = require('../_helpers')
 
+const userService = require('../services/userService')
+
 const userController = {
   getUserTweets: async (req, res) => {
     try {
       const userId = req.params.userId
-      const id = helpers.getUser(req).id
-      const user = await User.findOne({
-        where: { id: userId, role: 0 },
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-          { model: Tweet, attributes: ['id'] }
-        ]
-      })
-      user.dataValues.introduction =
-        user.dataValues.introduction < 50
-          ? user.dataValues.introduction
-          : user.dataValues.introduction.substring(0, 50) + '...'
-      user.dataValues.followerLength = user.Followers.length
-      user.dataValues.followingLength = user.Followings.length
-      user.dataValues.tweetLength = user.Tweets.length
+      const popularUser = await userService.getPopular(req, res)
+      const profileUser = await userService.getProfileUser(req, res)
 
       const tweetsRaw = await Tweet.findAll({
         where: { UserId: userId },
@@ -38,77 +26,53 @@ const userController = {
         ...tweet.dataValues,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
+          tweet.id
+        )
       }))
 
-
-      const userself = req.user
-      const users = await User.findAll({// 撈出所有 User 與 followers 資料
-        order: [['createdAt', 'DESC']],
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ],
-      })
-      let popularUser = []
-
-      popularUser = users.map(user => ({
-        // 整理 users 資料
-        ...user.dataValues,
-        FollowerCount: user.Followers.length, // 計算追蹤者人數
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
-      }))
-
-      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
-      helpers.removeadmin(popularUser)//移除admin資訊
-      popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
-
-
-
-      res.render('userTweets', {
-        user: user.toJSON(),
-        tweets,
-        id,
-        popularUser,
-        userself
-      })
+      res.render('userTweets', { profileUser, popularUser, tweets })
     } catch (err) {
       console.log(err)
-      req.flash('error_messages', '該使用者不存在')
-      res.redirect('/tweets')
+      // req.flash('error_messages', '該使用者不存在')
+      // res.redirect('/tweets')
     }
   },
-  getSetting:async (req, res) => {
+  getSetting: async (req, res) => {
     try {
-       User.findByPk(req.user.id, { raw: true }).then(user => {
-       res.render('setting', { userdata: user })
-    })
+      User.findByPk(req.user.id, { raw: true }).then(user => {
+        res.render('setting', { userdata: user })
+      })
     } catch (error) {
       console.log(err)
       console.log('getSetting err')
     }
   },
 
-  editSetting:async (req, res) => {
+  editSetting: async (req, res) => {
     try {
       const userId = req.user.id
       if (req.body.passwordCheck !== req.body.password) {
         req.flash('error_messages', '兩次密碼輸入不同！')
         return res.redirect('back')
       } else {
-        User.findByPk(userId)
-          .then((user) => {
-            user.update({
-              account:req.body.account,
+        User.findByPk(userId).then(user => {
+          user
+            .update({
+              account: req.body.account,
               name: req.body.name,
-              email:req.body.email,
-              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+              email: req.body.email,
+              password: bcrypt.hashSync(
+                req.body.password,
+                bcrypt.genSaltSync(10),
+                null
+              )
             })
-              .then(() => {
-                req.flash('success_messages', '成功修改帳戶資料')
-                res.redirect('back')
-              })
-          })
+            .then(() => {
+              req.flash('success_messages', '成功修改帳戶資料')
+              res.redirect('back')
+            })
+        })
       }
     } catch (error) {
       console.log(err)
@@ -119,22 +83,8 @@ const userController = {
   getReplies: async (req, res) => {
     try {
       const userId = req.params.userId
-      const id = helpers.getUser(req).id
-      const user = await User.findOne({
-        where: { id: userId, role: 0 },
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-          { model: Tweet, attributes: ['id'] }
-        ]
-      })
-      user.dataValues.introduction =
-        user.dataValues.introduction < 50
-          ? user.dataValues.introduction
-          : user.dataValues.introduction.substring(0, 50) + '...'
-      user.dataValues.followerLength = user.Followers.length
-      user.dataValues.followingLength = user.Followings.length
-      user.dataValues.tweetLength = user.Tweets.length
+      const popularUser = await userService.getPopular(req, res)
+      const profileUser = await userService.getProfileUser(req, res)
 
       const replies = await Reply.findAll({
         where: { UserId: userId },
@@ -148,9 +98,7 @@ const userController = {
         order: [['createdAt', 'DESC']]
       })
 
-      
-
-      res.render('userReply', { user: user.toJSON(), replies, id })
+      res.render('userReply', { profileUser, popularUser, replies })
     } catch (err) {
       console.log(err)
     }
@@ -158,56 +106,41 @@ const userController = {
   getLikes: async (req, res) => {
     try {
       const userId = req.params.userId
-      const id = helpers.getUser(req).id
-      const user = await User.findOne({
-        where: { id: userId, role: 0 },
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' },
-          { model: Tweet, attributes: ['id'] }
-        ]
-      })
-      user.dataValues.introduction =
-        user.dataValues.introduction < 50
-          ? user.dataValues.introduction
-          : user.dataValues.introduction.substring(0, 50) + '...'
-      user.dataValues.followerLength = user.Followers.length
-      user.dataValues.followingLength = user.Followings.length
-      user.dataValues.tweetLength = user.Tweets.length
+      const popularUser = await userService.getPopular(req, res)
+      const profileUser = await userService.getProfileUser(req, res)
 
       const likedTweetsRaw = await Like.findAll({
         where: { UserId: userId },
+        order: [['createdAt', 'DESC']],
         include: [
           {
             model: Tweet,
             attributes: ['description', 'createdAt', 'id'],
-            include: [
-              User,
-              { model: Like, attributes: ['id'] },
-              { model: Reply, attributes: ['id'] }
-            ],
-            order: [['createdAt', 'DESC']]
+            include: [User, Like, Reply]
           }
         ]
       })
-      console.log('likedTweetsRaw', likedTweetsRaw[0])
+
       const likedTweets = likedTweetsRaw.map(like => ({
         ...like.dataValues,
         replyLength: like.Tweet.Replies.length,
         likeLength: like.Tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(like.Tweet.id)
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
+          like.Tweet.id
+        )
       }))
 
-      res.render('userLike', { user: user.toJSON(), likedTweets, id })
+      res.render('userLike', { profileUser, popularUser, likedTweets })
     } catch (err) {
       console.log(err)
     }
   },
-  
+
   getFollowings: async (req, res) => {
     try {
-      const userself = req.user
-      const users = await User.findAll({// 撈出所有 User 與 followers 資料
+      const userself = req.user 
+      const users = await User.findAll({
+        // 撈出所有 User 與 followers 資料
         order: [['createdAt', 'DESC']],
         include: [
           { model: User, as: 'Followers' },
@@ -223,13 +156,13 @@ const userController = {
         isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
       }))
 
-      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
-      helpers.removeadmin(popularUser)//移除admin資訊
-      popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      helpers.removeUser(popularUser, userself.id) //移除使用者自身資訊
+      popularUser = popularUser.sort(
+        (a, b) => b.FollowerCount - a.FollowerCount
+      ) // 依追蹤者人數排序清單
 
       return res.render('following', { popularUser, userself })
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err)
       console.log('getUserFollowers err')
       return res.redirect('back')
@@ -238,25 +171,9 @@ const userController = {
 
   getFollowers: async (req, res) => {
     try {
-      const userself = req.user
-      const users = await User.findAll({// 撈出所有 User 與 followers 資料
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
-      })
-
-      let popularUser = []
-
-      popularUser = users.map(user => ({
-        // 整理 users 資料
-        ...user.dataValues,
-        FollowerCount: user.Followers.length, // 計算追蹤者人數
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
-      }))
-      helpers.removeUser(popularUser, userself.id)//移除使用者自身資訊
-      helpers.removeadmin(popularUser)//移除admin資訊
-      popularUser = popularUser.sort((a, b) => b.FollowerCount - a.FollowerCount)// 依追蹤者人數排序清單
+      // userId 為當前profile頁面的user的id
+      const userId = req.params.userId
+      const popularUser = await userService.getPopular(req, res)
 
       const followers = await Followship.findAll({
         //依追蹤時間排序追蹤者
@@ -281,7 +198,6 @@ const userController = {
           isFollowed
         }
       })
-
 
       Promise.all(Data).then(data => {
         return res.render('follower', { popularUser, data, userself })
