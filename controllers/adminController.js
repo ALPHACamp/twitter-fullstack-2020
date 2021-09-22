@@ -20,22 +20,9 @@ const adminController = {
         res.redirect('/admin/signin')
     },
 
-    // getTweets: (req, res, next) => {
-    //     Tweet.findAll({ raw: true, nest: true })
-    //         .then(tweets => {
-    //             return res.render('adminTweet', { tweets: tweets })
-    //         })
-    //         .catch(next)
-    // },
-
     deleteTweet: (req, res, next) => {
         Tweet.findByPk(req.params.id)
             .then(tweet => {
-                //test
-                console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-                console.log(tweet)
-                console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-                //test尾
                 tweet.destroy()
             })
             .then(() => {
@@ -91,16 +78,14 @@ const adminController = {
             tweets = tweets.rows.map(r => ({
                 ...r,
                 description: r.description.substring(0, 50),
-                isLiked: req.user.LikedTweet.map(d => d.id).includes(r.id),
+                isLiked: helpers.getUser(req).LikedTweet.map(d => d.id).includes(r.id),
             }))
             return res.render('adminTweet', {
                 tweets: tweets,
             })
-
         })
             .catch(next)
-    },
-
+    }
 }
 
 module.exports = adminController
