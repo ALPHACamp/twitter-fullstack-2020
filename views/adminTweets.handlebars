@@ -1,0 +1,55 @@
+<div class="container mb-5">
+
+  <div class="row list-title border">
+    <p class="fw-bold my-1 ms-2" style="font-family: 'Noto Sans TC', sans-serif;">推文清單</p>
+  </div>
+  {{#each tweets}}
+  <div class="row border">
+    <div class="row my-0">
+      <div class="col-2 d-flex justify-content-center align-items-center">
+        <img src="{{ this.avatar}}" class="rounded-circle" style="width: 65px;">
+      </div>
+      <div class="col-9">
+        <p class="fw-bold mt-2 mb-1"
+          style="font-family: 'Noto Sans TC', sans-serif;font-size: 18px;white-space: nowrap;display: inline-block;">
+          {{ this.name }}
+        </p>
+        <p style="display: inline-block;font-size: 18px;color: #657786">
+          @{{ this.account }}・3 小時
+        </p>
+        <p style="font-size: 15px;">
+          {{ this.content }}
+        </p>
+      </div>
+      <div class="col-1">
+        <form action="/admins/tweets/{{ this.id }}?_method=DELETE" method="POST">
+          <a href="">
+            <button type="submit" class="btn-close" aria-label="Close"></button>
+          </a>
+        </form>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="/admins/tweets?page={{prev}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {{#each totalPage}}
+    {{#ifCond this ../page}}
+    <li class="page-item active"><a class="page-link" href="#">{{this}}</a></li>
+    {{else}}
+    <li class="page-item"><a class="page-link" href="/admins/tweets?page={{this}}">{{this}}</a></li>
+    {{/ifCond}}
+    {{/each}}
+    <li class="page-item"><a class="page-link" href="/admins/tweets?page={{next}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
