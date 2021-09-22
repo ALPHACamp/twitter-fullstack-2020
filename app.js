@@ -5,7 +5,6 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
-const passport = require('./config/passport')
 const axios = require('axios');
 
 
@@ -14,6 +13,8 @@ const port = 3000
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+//變更順序以引入變數
+const passport = require('./config/passport')
 
 app.engine('hbs', exhbs({ defaultLayout: 'main',helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
 app.set('view engine', 'hbs')
@@ -21,6 +22,7 @@ app.set('view engine', 'hbs')
 app.use('/upload', express.static(__dirname + '/upload'))
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())

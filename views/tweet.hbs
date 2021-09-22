@@ -121,7 +121,7 @@
             {{!-- 測試like功能用的超醜按鈕 --}}
             
           {{#if like}}
-            <form action="/tweets/{{tweet.id}}/like?_method=DELETE" method="POST">
+            <form action="/tweets/{{tweet.id}}/unlike" method="POST">
               <button class="btn" type="submit"><i class="fas fa-heart" style="color:#E0245E"></i></button>
             </form>
           {{else}}

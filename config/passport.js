@@ -30,8 +30,9 @@ passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
 //TODO:搜尋條件待加入使用者關聯資料語法 i.e.{ model: User, as: 'Followers' }
-passport.deserializeUser((id, cb) => {
-  User.findByPk(id, {
+passport.deserializeUser(async(id, cb) => {
+ try{
+    await User.findByPk(id, {
     include: [
       { model: User, as: 'Followers' },
       { model: User, as: 'Followings' },
@@ -42,6 +43,34 @@ passport.deserializeUser((id, cb) => {
       user = user.toJSON()
       return cb(null, user)
     })
+ } catch(error){
+    console.log(error)
+    res.render('new', {Error})}
+ 
 })
+
+// JWT
+const jwt = require('jsonwebtoken')
+const passportJWT = require('passport-jwt')
+const ExtractJwt = passportJWT.ExtractJwt
+const JwtStrategy = passportJWT.Strategy
+
+let jwtOptions = {}
+jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
+jwtOptions.secretOrKey = process.env.JWT_SECRET
+
+let strategy = new JwtStrategy(jwtOptions, function (jwt_payload, next) {
+  User.findByPk(jwt_payload.id, {
+    include: [
+      { model: User, as: 'Followers' },
+      { model: User, as: 'Followings' },
+      { model: Tweet, as: 'LikedTweets' },
+    ]
+  }).then(user => {
+    if (!user) return next(null, false)
+    return next(null, user)
+  })
+})
+passport.use(strategy)
 
 module.exports = passport

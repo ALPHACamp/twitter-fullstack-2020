@@ -40,25 +40,25 @@ const authenticatedAdmin = (req, res, next) => {
 // //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
 // //使用者顯示主頁面
 // router.get('/current_user', userController.getCurrentUser)
+
 //如果使用者訪問首頁，就導向 /restaurants 的頁面
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 
-
 // //使用者顯示特定使用者頁面(使用者所有貼文)
-router.get('/users/:user_id/tweets', authenticated, userController.getUserTweets)
+router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 // //使用者所有喜歡貼文
-router.get('/users/:user_id/likes', authenticated, userController.getUserLikes)
+router.get('/users/:id/likes', authenticated, userController.getUserLikes)
 // //使用者所有回覆
-router.get('/users/:user_id/replied', authenticated, userController.getUserReplied)
+router.get('/users/:id/replied', authenticated, userController.getUserReplied)
 // //使用者追蹤清單
-router.get('/users/:user_id/followings', authenticated, userController.getUserFollowings)
+router.get('/users/:id/followings', authenticated, userController.getUserFollowings)
 // //使用者粉絲清單(被追蹤)
-router.get('/users/:user_id/followers', authenticated, userController.getUserFollowers)
+router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
 
 // //追蹤使用者 (row 45)
-router.post('/followships/:user_id', authenticated, userController.addFollowing)
+router.post('/followships/:id', authenticated, userController.addFollowing)
 // //取消追蹤使用者 (row 46)
-router.delete('/followships/:user_id', authenticated, userController.removeFollowing)
+router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
 TODO:// 貼文相關
 //顯示所有貼文(要改api)
@@ -72,7 +72,7 @@ router.get('/tweets/:id', authenticated, tweetController.getTweet)
 
 // 回文相關
 // //顯示特定貼文回覆 (row40)
-router.get('/tweets/:id/replies', authenticated, tweetController.getTweetReplies)
+router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 // //回覆特定貼文 (row 36)
 router.post('/tweets/:id', authenticated, tweetController.createReply)
 //------------擴充功能--------------//
@@ -92,7 +92,7 @@ router.post('/tweets/:id', authenticated, tweetController.createReply)
 // //喜歡特定貼文
 router.post('/tweets/:id/like', authenticated, tweetController.addLike)
 // //取消喜歡特定貼文
-router.delete('/tweets/:id/like', tweetController.removeLike)
+router.post('/tweets/:id/unlike', tweetController.removeLike)
 
 // //管理者登入(後台登入)
 router.get('/admin/signin', adminController.signinPage)
@@ -115,11 +115,11 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 //-----------名稱勿再改動------------
 // //使用者編輯帳號設定(setting) (row 21-22)
-router.get('/users/:user_id/setting', authenticated, userController.getUserSetting)
-router.put('/users/:user_id/setting', authenticated, userController.putUserSetting)
+router.get('/users/:id/setting', authenticated, userController.getUserSetting)
+router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 
 // //使用者編輯個人資料(edit) (row 22-23)
-router.put('/users/:user_id/edit', authenticated, multipleUpload, userController.putUserEdit)
+router.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserEdit)
 //--------------------------------------
 // //註冊
 router.get('/signup', userController.signUpPage)
