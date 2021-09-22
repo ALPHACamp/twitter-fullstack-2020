@@ -5,8 +5,9 @@ const Reply = db.Reply
 const User = db.User
 const Like = db.Like
 const helpers = require('../_helpers')
-
+const dayjs = require('dayjs')
 const userService = require('../services/userService')
+
 
 const tweetController = {
   getTweets: async (req, res) => {
@@ -17,7 +18,6 @@ const tweetController = {
         include: [Reply, User, Like],
         order: [['createdAt', 'DESC']]
       })
-      //console.log('get tweets:', tweets[1].dataValues.User.name)
       const reorganizationTweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         userName: tweet.User.name,
@@ -25,13 +25,10 @@ const tweetController = {
         userAvatar: tweet.User.avatar,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
-          tweet.id
-        )
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
-      //console.log('mapping tweet:', reorganizationTweets)
-      return res.render('tweets', { reorganizationTweets, popularUser })
-    } catch (err) {
+      return res.render('tweets', { reorganizationTweets, popularUser, userself })
+    } catch(err) {
       console.warn(err)
     }
   },
@@ -63,8 +60,8 @@ const tweetController = {
         include: [{ model: Reply, include: [User] }, User, Like]
       })
       const tweetJson = tweet.toJSON()
-      tweetJson.amPm =
-        dayjs(`${tweetJson.createdAt}`).format('A') === 'PM' ? '下午' : '上午'
+      
+      tweetJson.amPm = dayjs(`${tweetJson.createdAt}`).format('A') === 'PM' ? '下午' : '上午'
       tweetJson.hourMinute = dayjs(`${tweetJson.createdAt}`).format('HH:mm')
       tweetJson.year = dayjs(`${tweetJson.createdAt}`).format('YYYY')
       tweetJson.month = dayjs(`${tweetJson.createdAt}`).format('M')
@@ -104,9 +101,8 @@ const tweetController = {
         UserId: req.user.id,
         TweetId: req.params.tweetId
       })
-      console.log('addLike')
-      return res.json({ status: 'success', message: 'add likes' })
-    } catch (err) {
+      return res.json({status: 'success', message: 'add likes'})
+    } catch(err) {
       console.warn(err)
     }
   },
@@ -118,7 +114,6 @@ const tweetController = {
           TweetId: req.params.tweetId
         }
       })
-      console.log('removeLike')
       await like.destroy()
       return res.json({ status: 'success', message: 'remove likes' })
     } catch (err) {

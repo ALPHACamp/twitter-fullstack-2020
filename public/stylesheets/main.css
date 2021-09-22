@@ -25,31 +25,31 @@ p {
 ::placeholder {
   color: #657786;
   font-size: 0.5em;
-  Font-family:"Noto Sans TC";
-  Font-style: normal;
+  font-family: "Noto Sans TC";
+  font-style: normal;
   font-weight: 700;
   text-align: top;
 }
 
-.common-button{
-  background-color: #FF6600!important;
-  color: #FFFFFF!important;
+.common-button {
+  background-color: #ff6600 !important;
+  color: #ffffff !important;
 }
 
-.unfollow-button{
+.unfollow-button {
   margin: auto;
-  color: #FF6600!important;
-  border-color:#FF6600;
+  color: #ff6600 !important;
+  border-color: #ff6600;
 }
 
-.unfollow-button-follower{
-  color: #FF6600!important;
-  border-color:#FF6600;
-  background-color: #FFFFFF!important;
+.unfollow-button-follower {
+  color: #ff6600 !important;
+  border-color: #ff6600;
+  background-color: #ffffff !important;
   line-height: 12px;
 }
 
-.for-center{
+.for-center {
   width: 90%;
 }
 
@@ -62,14 +62,14 @@ p {
   cursor: pointer;
 }
 
-.unlike-icon{
-  color: #E0245E;
+.unlike-icon {
+  color: #e0245e;
   cursor: pointer;
 }
 
 /* 以下是各別各組css */
 /* tweets區 */
-.home-nav-bar{
+.home-nav-bar {
   max-width: 235px;
   position: relative;
 }
@@ -101,7 +101,7 @@ p {
   color: #1c1c1c;
   font-size: 1.1rem;
   font-weight: bold;
-} 
+}
 
 .tweets .input-block {
   border-width: 1px 0px 10px 0px;
@@ -200,109 +200,126 @@ p {
   font-weight: bold;
 }
 
-
-
-
 /*=============== tweet-followfhip ===============*/
 
-.tweet-followfhip{
-max-width: 600px;
+.tweet-followfhip {
+  max-width: 600px;
   border-width: 0px 1px 0px 1px;
   border-style: solid;
-  border-color: #E6ECF0;
+  border-color: #e6ecf0;
   padding: 0;
 }
 
-.tweet-followfhip .home-word{
-  color: #1C1C1C;
+.tweet-followfhip .home-word {
+  color: #1c1c1c;
   font-size: 19px;
-  font-weight: 700;
-} 
-
-.tweet-followfhip .count{
-  color: #657786;
-  font-size: 13px;
-  Font-family: Noto Sans TC;
-  Font-style: Medium;
   font-weight: 700;
 }
 
-.tweet-followfhip .follow-name{
-  color: #1C1C1C;
+.tweet-followfhip .count {
+  color: #657786;
+  font-size: 13px;
+  font-family: Noto Sans TC;
+  font-style: Medium;
+  font-weight: 700;
+}
+
+.tweet-followfhip .follow-name {
+  color: #1c1c1c;
   font-size: 15px;
   font-weight: 700;
-} 
+}
 
-.tweet-followfhip .follow-account{
+.tweet-followfhip .follow-account {
   color: #657786;
   font-size: 15px;
-  Font-family: Noto Sans TC;
-  Font-style: Medium;
+  font-family: Noto Sans TC;
+  font-style: Medium;
   font-weight: 500;
-} 
+}
 
-.tweet-followfhip .following{
+.tweet-followfhip .following {
   border-width: 1px 0px 1px 0px;
   border-style: solid;
-  border-color: #E6ECF0;
+  border-color: #e6ecf0;
   height: 100px;
-} 
+}
 
-.tweet-followfhip .follow-btn{
-
-Font-family: Noto Sans TC;
-font-weight: 700;
-Font-style:normal;
-size:15px;
-line-height :15px;
+.tweet-followfhip .follow-btn {
+  font-family: Noto Sans TC;
+  font-weight: 700;
+  font-style: normal;
+  size: 15px;
+  line-height: 15px;
 }
 
 /*====================== tweet modal區 ======================*/
 
-.tweet-modal-content{
+.tweet-modal-content {
   border-radius: 14px;
   width: 600px;
 }
 
-.tweet-modal-head{
+.tweet-modal-head {
   border-width: 0px 0px 1px 0px;
   border-style: solid;
-  border-color: #E6ECF0;
+  border-color: #e6ecf0;
 }
 
-.tweet-modal-close-btn{
+.tweet-modal-close-btn {
   padding: 19.5px;
   width: 15px;
   height: 15px;
-  color: #FF6600;
-  box-shadow: none!important;
+  color: #ff6600;
+  box-shadow: none !important;
 }
 
-.tweet-modal-body{
+.tweet-modal-body {
   min-height: 245px;
   padding: 15px;
 }
 
-.tweet-modal-textarea{
+.tweet-modal-textarea {
   border: none;
   outline: none;
   padding: 12px 15px 0px 15px;
   font-size: 1.1rem;
-  color: #9197A3;
+  color: #9197a3;
   font-weight: 700;
   resize: none;
-  box-shadow: none!important;
+  box-shadow: none !important;
 }
 
-.tweet-modal-tweet-btn{
+.tweet-modal-textarea::placeholder {
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 26px;
+  color: #9197a3;
+}
+
+.tweet-modal-tweet-btn {
   position: absolute;
   bottom: 15px;
   right: 15px;
 }
 
-.tweet-modal-textarea-feedback{
+.tweet-modal-textarea-feedback {
   text-align: end;
   padding-right: 65px;
+}
+
+.textarea-feedback-word-limit{
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+.warn{
+  color:  #FC5A5A;
+}
+
+.warn::after{
+  color:  #FC5A5A;
+  content: '字數不能超過140字'
 }
 
 /*=============== 後台 ===============*/
@@ -339,7 +356,7 @@ line-height :15px;
 }
 
 .user-back .user-detail {
-  padding-right: 0
+  padding-right: 0;
 }
 
 .users-back .card {
@@ -348,7 +365,7 @@ line-height :15px;
 }
 
 .users-back .cover-container,
-.users-back  .card-cover-img{
+.users-back .card-cover-img {
   height: 140px;
   background: #c4c4c4;
   border-top-right-radius: 10px;
@@ -390,7 +407,7 @@ line-height :15px;
 /*=============== 登入、註冊頁面 ===============*/
 
 .signpage {
-  background-color:#F5F8FA;
-  border:none;
+  background-color: #f5f8fa;
+  border: none;
   border-bottom: 2px solid #657786;
 }
