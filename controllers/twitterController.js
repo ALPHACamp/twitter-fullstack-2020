@@ -20,7 +20,7 @@ const twitterController = {
         tweetLikesCount: row.Likes.length,
       }))
       return res.render('twitter', {
-        tweets: tweetData
+        tweets: tweetData,
       })
     })
   }
