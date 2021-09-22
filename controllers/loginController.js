@@ -42,7 +42,7 @@ const loginController = {
         account,
         name,
         email,
-        password,
+        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
         role
       }).then(() => {
         req.flash('success_messages', '成功註冊帳號！')
