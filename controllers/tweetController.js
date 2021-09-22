@@ -1,4 +1,3 @@
-const dayjs = require('dayjs')
 const db = require('../models')
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -27,7 +26,7 @@ const tweetController = {
         likeLength: tweet.Likes.length,
         isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
-      return res.render('tweets', { reorganizationTweets, popularUser, userself })
+      return res.render('tweets', { reorganizationTweets, popularUser, })
     } catch(err) {
       console.warn(err)
     }

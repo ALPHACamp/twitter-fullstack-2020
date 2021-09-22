@@ -21,7 +21,9 @@ const authenticated = (req, res, next) => {
 }
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser.role) {
+    console.log('================')
+    console.log('authenticatedAdmin通過導入判斷role')
+    if (helpers.getUser(req).role) {
       return next()
     }
   }
