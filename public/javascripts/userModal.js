@@ -1,4 +1,3 @@
-const profileEdit = document.querySelector('#edit-profile')
 const userCoverInput = document.querySelector('#user-cover-block')
 const userAvatarInput = document.querySelector('#user-avatar-edit')
 const userNameInput = document.querySelector('#user-name-input')
@@ -6,7 +5,7 @@ const userInfoInput = document.querySelector('#user-intro-input')
 const messageNameCount = document.querySelector('#count_message_name')
 const messageIntroCount = document.querySelector('#count_message_info')
 // const baseURL = 'http://localhost:3000'
-async function getUserProfile(id, baseURL) {
+async function getUserProfile (userId, baseURL) {
   try {
     const dataRaw = await axios.get(`${baseURL}/api/users/${userId}`)
     const userData = dataRaw.data.user
@@ -36,10 +35,14 @@ userInfoInput.addEventListener('keyup', function countCharacters (event) {
   messageIntroCount.innerHTML = `${userInfoInput.value.length}/160`
 })
 
-profileEdit.addEventListener('click', function onIconClicked (event) {
-  if (event.target.matches('#edit-profile-btn')) {
-    const baseURL = event.target.dataset.url
-    userId = event.target.dataset.id
-    getUserProfile(userId, baseURL)
-  }
-})
+if (document.querySelector('#edit-profile')) {
+  const profileEdit = document.querySelector('#edit-profile')
+  profileEdit.addEventListener('click', function onIconClicked (event) {
+    if (event.target.matches('#edit-profile-btn')) {
+      const baseURL = event.target.dataset.url
+      userId = event.target.dataset.id
+      console.log(userId)
+      getUserProfile(userId, baseURL)
+    }
+  })
+}
