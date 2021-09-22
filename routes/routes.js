@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
+const passport = require('../config/passport')
 const helpers = require('../_helpers')
 
 const adminController = require('../controllers/adminController')
@@ -15,7 +15,6 @@ const authenticated = (req, res, next) => {
       return next()
     }
   }
-  req.flash('error_messages', '沒有訪問該頁面的權限，請登入前台')　　//跳不出字
   res.redirect('/signin')
 }
 const authenticatedAdmin = (req, res, next) => {
@@ -24,7 +23,6 @@ const authenticatedAdmin = (req, res, next) => {
       return next()
     }
   }
-  req.flash('error_messages', '沒有訪問該頁面的權限，請登入後台')    //跳不出字
   res.redirect('/admin/signin')
 }
 

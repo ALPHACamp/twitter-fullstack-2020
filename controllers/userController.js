@@ -13,6 +13,7 @@ const userController = {
   getUserTweets: async (req, res) => {
     try {
       const userId = req.params.userId
+
       const popularUser = await userService.getPopular(req, res)
       const profileUser = await userService.getProfileUser(req, res)
 
@@ -139,7 +140,7 @@ const userController = {
   getFollowings: async (req, res) => {
     try {
       const popularUser = await userService.getPopular(req, res)
-      
+
       const followers = await Followship.findAll({
         //依追蹤時間排序追蹤中User
         raw: true,
@@ -166,7 +167,6 @@ const userController = {
       Promise.all(Data).then(data => {
         return res.render('following', { popularUser, data })
       })
-
     } catch (err) {
       console.log(err)
       console.log('getUserFollowers err')

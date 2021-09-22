@@ -20,9 +20,11 @@
           <h6 class="user-acc-name mb-0">@{{profileUser.account}}</h6>
           <p class="user-intro my-1">
             {{profileUser.introduction}}
-          <p class="user-followship"><a href="/users/{{profileUser.id}}/followings"><strong>{{profileUser.followingLength}}個</strong></a>
-            跟隨中&nbsp;&nbsp;&nbsp;&nbsp;<a
-              href="/users/{{profileUser.id}}/followers"><strong>{{profileUser.followerLength}}位</strong></a>跟隨者
+          <p class="user-followship">
+            <a href="/users/{{profileUser.id}}/followings"><strong>{{profileUser.followingLength}}個</strong>
+            跟隨中</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a
+              href="/users/{{profileUser.id}}/followers"><strong>{{profileUser.followerLength}}位</strong>跟隨者</a>
             <p />
         </div>
       </div>
@@ -64,18 +66,24 @@
     </div>
     {{#each replies}}
     <div class="tweets-article d-flex">
-      <div class="">
+      <div>
+        <a href="/users/{{this.UserId}}/tweets">
         <img class="rounded-circle" src="{{../profileUser.avatar}}" alt="avatar" title="avatar"
           width="50px" height="50px">
+          </a>
       </div>
       <div class="d-flex flex-column tweet-article">
         <div>
+          <a href="/users/{{this.UserId}}/tweets">
           <span class="name">{{../profileUser.name}}</span>
           <span class="account">&nbsp;@{{../profileUser.account}}</span>
+          </a>
           <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
         </div>
         <span class="reply-user">回覆<a href="/users/{{this.Tweet.User.id}}/tweets">&nbsp;@{{this.Tweet.User.account}}</a></span>
-        <p class="content">{{this.comment}}</p>
+        <p class="content">
+          <a href="/tweets/{{this.Tweet.id}}/replies">{{this.comment}}</a>
+          </p>
       </div>
     </div>
     {{/each}}
