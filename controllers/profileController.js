@@ -58,7 +58,6 @@ const profileController = {
   },
 
   getComments: async (req, res) => {
-    // .sort((a, b) => b.createdAt - a.createdAt)
     try {
       //前端處理判定
       const isComment = true
@@ -107,30 +106,32 @@ const profileController = {
       //get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
+          Tweet,
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ],
       })
 
-      // get selfTweet
-      const rawTweets = await Tweet.findAll({
+      // get LIkeDTweet
+      const rawLikedTweets = await Like.findAll({
         where: { UserId: req.params.id },
-        include: [Reply,
-          { model: User, as: 'LikedUsers' }],
+        include: [
+          {
+            model: Tweet, include: [Like, Reply, User]
+          }
+        ],
         order: [['createdAt', 'DESC']],
       })
-      const Tweets = await rawTweets.map(data => ({
+      const LikedTweets = await rawLikedTweets.map(data => ({
         ...data.dataValues,
-        ReplyCount: data.Replies.length,
-        LikedCount: data.LikedUsers.length,
-        Replies: data.Replies.sort((a, b) => b.createdAt - a.createdAt),
-        LikedUsers: data.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt),
+        ReplyCount: data.Tweet.Replies.length,
+        LikedCount: data.Tweet.Likes.length,
       }))
 
       // get Count
       const followersCount = Profile.Followers.length
       const followingsCount = Profile.Followings.length
-      const tweetsCount = Tweets.length
+      const tweetsCount = Profile.Tweets.length
 
       // get Top10User
       const rawUsers = await User.findAll({
@@ -145,8 +146,8 @@ const profileController = {
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
 
-      return res.json({ Tweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
-      // return res.render("profile", { isPost, users: TopUsers, tweets: Tweets, profile: Profile, tweetsCount, followersCount, followingsCount });
+      // return res.json({ tweets:LikedTweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
+      return res.render("profile", { isLikedPosts, users: TopUsers, tweets: LikedTweets, profile: Profile, tweetsCount, followersCount, followingsCount });
     } catch (error) {
       console.log(error)
     }

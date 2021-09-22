@@ -56,19 +56,19 @@
       <!--start::comment-->
       <!--start::list of 喜歡的內容-->
       {{#if isLikedPosts}}
-      {{#each}}
+      {{#each tweets}}
       <div class="post">
         <div class="post-card1">
-          <div class="avatar profile-avatar"><img
-              src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-              alt="avatar-img" /></div>
+          <div class="avatar profile-avatar"><img src="{{this.Tweet.User.avatar}}" alt="avatar-img" /></div>
         </div>
         <div class="post-card2">
-          <h5 class="d-inline-block">Post Title&nbsp;<span class="post-sub-info">@Apple &#x2027; 5minutes</span></h5>
+          <h5 class="d-inline-block">{{this.Tweet.User.name}}&nbsp;<span class="post-sub-info">@{{this.Tweet.User.account}} &#x2027;
+              {{moment this.createdAt}}</span></h5>
           <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-          <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>75</span><span
-              class="post-icon-block"><span style="color: #E0245E;"><i class="bi bi-heart-fill"></i>15</span></span></p>
+            {{this.Tweet.description}}
+          <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>{{this.ReplyCount}}</span><span
+              class="post-icon-block"><span style="color: #E0245E;"><i
+                  class="bi bi-heart-fill"></i>{{this.LikedCount}}</span></span></p>
           </p>
         </div>
       </div>
