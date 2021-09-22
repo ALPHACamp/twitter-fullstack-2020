@@ -8,19 +8,19 @@
       <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
         <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
           <li class="nav-item px-2 py-1">
-            <a class="nav-link align-middle text-dark " href="">
+            <a class="nav-link align-middle text-dark " href="/tweets">
               <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text home a-tomato">首頁</span>
             </a>
           </li>
           <li class="nav-item px-2 py-1">
-            <a class="nav-link align-middle text-dark h-tomato" href="">
+            <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}">
               <i class="far fa-user" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text user">個人資料</span>
             </a>
           </li>
           <li class="nav-item px-2 py-1">
-            <a class="nav-link align-middle text-dark h-tomato" href="">
+            <a class="nav-link align-middle text-dark h-tomato" href="/setting">
               <i class="fas fa-cog" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text setting">設定</span>
             </a>
@@ -45,8 +45,8 @@
         </a>
         <a href="/"
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark text-decoration-none">
-          <span class="h5 fw-bold" style="line-height: 15px;">使用者名稱</span>
-          <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">1000 推文數</span>
+          <span class="h5 fw-bold" style="line-height: 15px;">{{user.name}}</span>
+          <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">{{tweetCount}} 推文數</span>
         </a>
       </div>
 

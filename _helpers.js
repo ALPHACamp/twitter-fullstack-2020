@@ -1,9 +1,10 @@
+
 function ensureAuthenticated(req) {
   return req.isAuthenticated();
 }
 
 function getUser(req) {
-  return testmerge;
+  return req.user;
 }
 
 module.exports = {

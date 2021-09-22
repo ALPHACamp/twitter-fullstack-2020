@@ -104,8 +104,14 @@
           <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if
             users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
             project practice{{/if}}</p>
-          <span class="fw-bold">{{followingscount}} 個</span><span class="text-muted">跟隨中</span>
-          　<span class="fw-bold">{{followerscount}} 個</span><span class="text-muted">跟隨者</span>
+          <a href="/users/{{users.id}}/followers">
+            <span class="fw-bold">{{followingscount}} 個</span><span class="text-muted">跟隨中</span>
+          </a>
+          <a href="/users/{{users.id}}/followings">
+            <span class="fw-bold">{{followerscount}} 個</span><span class="text-muted">跟隨者</span>
+          </a>
+          
+          　
         </div>
       </div>
 
@@ -128,8 +134,7 @@
           <ul class="list-group list-group-flush">
             {{#each users.Tweets}}
             <li class="list-group-item">
-              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard"
-                >
+              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard" onclick="javascript:location.href='/tweets/{{this.id}}'">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{../users.id}}" class="p-1">
                     <img src="{{../users.avatar}}" alt="A user" width="60" height="60" class="rounded-circle" />
@@ -148,36 +153,51 @@
                     <p class="fw-bold">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
-
-                    {{#ifCond this.likeCount 0 }}
+                    {{!-- {{#if this.isLiked }}
                     <form action="/tweets/{{this.id}}/unlike" method="POST">
                       <button type="submit" class="btn" style="width: 60px; height: 30px">
-                        <i class="far fa-heart" style="color: red;"> {{ this.likeCount }}</i>
+                        <i class="fas fa-heart" style="color: red;"> {{ this.likeCount }}</i>
                       </button>
                     </form>
                     {{else}}
                     <form action="/tweets/{{this.id}}/like" method="POST">
                       <button type="submit" class="btn" style="width: 60px; height: 30px">
-                        <i class="fas fa-heart" style="color: red;">{{ this.likeCount }}</i>
+                        <i class="far fa-heart" style="color: red;"></i>
                       </button>
                     </form>
-                    {{/ifCond}}
-
-                    {{#if this.replyCount}}
-                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-toggle="modal"
-                      data-target="#replyModal">
+                    {{/if}} --}}
+                    {{!-- {{#if this.replyCount}}
+                    <button type="" class="" style="width: 60px; height: 30px">
                       <i class="fas fa-comment"> {{ this.replyCount }}</i>
                     </button>
                     {{else}}
-                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-toggle="modal"
-                      data-target="#replyModal">
+                    <button type="" class="" style="width: 60px; height: 30px">
                       <i class="far fa-comment"> {{ this.replyCount }}</i>
                     </button>
+                    {{/if}} --}}
+                    {{#ifCond this.likeCount 0 }}
+                      <span style="width: 60px;">
+                        <i class="far fa-heart" style="color: red;">{{ this.likeCount }}</i>
+                      </span>
+                    {{else}}
+                    <span style="width: 60px;">
+                      <i class="fas fa-heart" style="color: red;">{{ this.likeCount }}</i>
+                    </span>
+                    {{/ifCond}}
+                    {{#if this.replyCount}}
+                    <span style="width: 50px;">
+                      <i class="fas fa-comment"> {{ this.replyCount }}</i>
+                    </span>
+                    {{else}}
+                      <span style="width: 50px;">
+                        <i class="far fa-comment"> {{ this.replyCount }}</i>
+                      </span>
                     {{/if}}
                   </div>
                 </div>
               </div>
             </li>
+           
             {{/each}}
           </ul>
         </div>
@@ -225,8 +245,7 @@
           <ul class="list-group list-group-flush">
             {{#each users.LikedTweet}}
             <li class="list-group-item">
-              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard"
-                >
+              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{this.UserId}}" class="p-1">
                     <img src="{{this.User.avatar}}" alt="" width="60" height="60" class="rounded-circle" />
@@ -244,13 +263,13 @@
                     <p class="fw-bold">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
-                    <form action="/tweets/{{this.id}}/unlike" method="POST">
+                    {{!-- <form action="/tweets/{{this.id}}/unlike" method="POST">
                       <button type="submit" class="btn" style="width: 60px; height: 30px">
-                        <i class="fas fa-heart" style="color: red;"> {{ this.likes }}</i>
+                        <i class="fas fa-heart" style="color: red;"> {{ this.likeCount }}</i>
                       </button>
-                    </form>
+                    </form> --}}
 
-                    {{#if this.replyCount}}
+                    {{!-- {{#if this.replyCount}}
                     <button type="submit" class="btn" style="width: 60px; height: 30px" data-toggle="modal"
                       data-target="#replyModal">
                       <i class="fas fa-comment"> {{ this.replyCount }}</i>
@@ -260,7 +279,19 @@
                       data-target="#replyModal">
                       <i class="far fa-comment"> {{ this.replyCount }}</i>
                     </button>
-                    {{/if}}
+                    {{/if}} --}}
+                    <span style="width: 50px;">
+                      <i class="fas fa-heart" style="color: red;"> {{ this.likeCount }}</i>
+                    </span>
+                    {{#if this.replyCount}}
+                    <span style="width: 50px;">
+                      <i class="fas fa-comment"> {{ this.replyCount }}</i>
+                    </span>
+                    {{else}}
+                    <span style="width: 50px;">
+                      <i class="far fa-comment"> {{ this.replyCount }}</i>
+                    </span>
+                    {{/if}} 
                   </div>
                 </div>
               </div>
@@ -377,57 +408,3 @@
   </div>
 </div>
 
-  {{!-- Modal reply--}}
-  <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="btn-close" style="left: 0;" data-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
-            <div class="card-image col-1 d-flex justify-content-center align-items-center">
-              <img src="{{tweet.User.avatar}}" class="rounded-circle p-2" style="width: 60px; height: 60px;"
-                alt="12313213131313123213121111312111212121312321321321" />
-            </div>
-            <div class="col-11 row px-md-2 px-4">
-              <div class="col-12 d-inline-flex justify-content-between align-items-center">
-                <div style="height: 22px; line-height: 22px">
-                  <span class=' h5 fw-bold'>{{tweet.User.name}}</span>
-                  <span class="ps-1" style="color: #6c757d; font-size: 0.875em">@{{tweet.User.account}}．{{moment
-                    tweet.createdAt}}</span>
-                </div>
-              </div>
-              <div class="col-12 mt-2">
-                <p class="fw-bold text-dark" style="font-size: 0.8em">{{tweet.description}}</p>
-              </div>
-              <div class="col-12 mt-2">
-                <p style="color: tomato; font-size: 0.8em">回覆給 @{{tweet.User.account}}</p>
-              </div>
-            </div>
-          </div>
-          <hr>
-          <div class="row ps-3 bg-white">
-            <form action="/tweets/{{repiledTweet.id}}/replies" method="POST" class="mt-2 ">
-              <div class="position-relative" style="padding: 75px 0;">
-                <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
-                  <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;"
-                    alt="A user" />
-                </div>
-                <div class="position-absolute" style="z-index: 0; width: 430px; top:-5px; left:-5px;">
-                  <textarea class="mt-1 bd" id="content" name="content" rows="3" placeholder="推你的回覆" maxlength="140"
-                    style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
-                    required></textarea>
-                  <input type="hidden" name="TweetId" value="{{repiledTweet.id}}" />
-                </div>
-                <div class="position-absolute" style="z-index: 5; right: 6px; bottom: -5px;">
-                  <span class="text-muted px-2" style="font-size: 0.98em;"></span>
-                  <button type="submit" class="btn btn-tomato fw-bold rounded-pill">回覆</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
