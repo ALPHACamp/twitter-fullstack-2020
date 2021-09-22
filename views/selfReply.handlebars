@@ -25,10 +25,10 @@
     </div>
 
     <div class="d-flex mx-3">
-      <a href="/user/self/following" class="btn ps-0">
+      <a href="/users/self/following/{{user.id}}" class="btn ps-0">
         <span class="fontWeight500">{{followerCount}}個</span><span style="color:#657786;">跟隨中</span>
       </a>
-      <a href="/user/self/follower" class="btn">
+      <a href="/users/self/follower/{{user.id}}" class="btn">
         <span class="fontWeight500">{{followingCount}}位</span><span style="color:#657786;">跟隨者</span>
       </a>
     </div>

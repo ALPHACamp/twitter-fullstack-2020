@@ -296,6 +296,49 @@ const userController = {
     }
   },
 
+  getUserFollower: (req, res) => {
+    const whereQuery = {}
+    whereQuery.userId = Number(req.params.id)
+
+    Tweet.findAndCountAll({
+      include: [User],
+      where: whereQuery
+    }).then(result => {
+      const totalTweet = result.rows.length
+
+      User.findAll({
+        include: [
+          { model: User, as: 'followers' }
+        ]
+      }).then(user => {
+        console.log(user)
+      })
+
+      Followship.findAndCountAll({
+        raw: true,
+        nest: true
+      }).then(result => {
+        const followers = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
+
+        console.log(followers)
+
+        User.findByPk(req.params.id)
+          .then(user => {
+            return res.render('selfFollower', {
+              user: user.toJSON(),
+              totalTweet: totalTweet,
+              followers: followers
+            })
+          })
+      })
+    })
+  },
+
+  getUserFollowing: (req, res) => {
+
+    res.render('selfFollowing')
+  },
+
   getUserSetting: (req, res) => {
     const id = req.user.id
 
