@@ -102,10 +102,12 @@
       <ul class="nav profilepage-tags mt-2">
         <li class="nav-item">
           <a class="nav-link {{#if isPost }}active {{/if}}" type="submit" aria-current="page"
-            href="/profile/{{profile.id}}/posts">推文</a></li>
+            href="/profile/{{profile.id}}/posts">推文</a>
+        </li>
         <li class="nav-item"><a class="nav-link {{#if isComment }}active {{/if}}"
             href="/profile/{{profile.id}}/comments">推文與回覆</a></li>
-        <li class="nav-item"><a class="nav-link {{#if isLikePost }}active {{/if}}" href="/profile/{{profile.id}}/likes">喜歡的內容</a></li>
+        <li class="nav-item"><a class="nav-link {{#if isLikePost }}active {{/if}}"
+            href="/profile/{{profile.id}}/likedPosts">喜歡的內容</a></li>
       </ul>
     </div>
   </div>

@@ -55,7 +55,8 @@
       {{/if}}
       <!--start::comment-->
       <!--start::list of 喜歡的內容-->
-      {{#if ../isLikePost}}
+      {{#if isLikedPosts}}
+      {{#each}}
       <div class="post">
         <div class="post-card1">
           <div class="avatar profile-avatar"><img
@@ -71,6 +72,7 @@
           </p>
         </div>
       </div>
+      {{/each}}
       {{/if}}
       <!--end::list of 推文-->
 
