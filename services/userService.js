@@ -45,7 +45,7 @@ const userService = {
         ]
       })
       profileUser.introduction =
-        profileUser.introduction < 50
+        profileUser.introduction.length < 50
           ? profileUser.introduction
           : profileUser.introduction.substring(0, 50) + '...'
       profileUser.followerLength = profileUser.Followers.length
@@ -53,6 +53,7 @@ const userService = {
       profileUser.tweetLength = profileUser.Tweets.length
       profileUser.isFollowed = req.user.Followings.map(d => d.id).includes(
         Number(userId))
+
       return profileUser
     } catch (err) {
       console.log(err)

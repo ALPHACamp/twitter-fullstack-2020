@@ -70,7 +70,8 @@
 }
 
 
-.user-tweets .edit-profile {
+.user-tweets .edit-profile,
+.user-tweets .follow-feature {
   margin: 10px 10px 0 0;
 }
 

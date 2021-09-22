@@ -28,11 +28,25 @@
       </div>
       {{#ifEqual profileUser.id user.id}}
       <div class="edit-profile" id="edit-profile">
-        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn" data-id="{{user.id}}" data-url="{{baseURL}}"
-          data-bs-toggle="modal" data-bs-target="#userModal">
+        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn" data-id="{{user.id}}"
+          data-url="{{baseURL}}" data-bs-toggle="modal" data-bs-target="#userModal">
           編輯個人資料
         </button>
       </div>
+      {{else}}
+      {{#if profileUser.isFollowed }}
+      <div class="follow-feature">
+        <form action="/followships/{{profileUser.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn rounded-pill fw-bolder common-button">正在跟隨</button>
+        </form>
+      </div>
+      {{else}}
+      <div class="follow-feature">
+        <form action="/followships/{{profileUser.id}}" method="POST">
+          <button type="submit" class="btn rounded-pill fw-bolder unfollow-button">跟隨</button>
+        </form>
+      </div>
+      {{/if}}
       {{/ifEqual}}
     </div>
     <div class="px-2 pt-3 mt-0 d-flex flex-row user-nav">
@@ -60,7 +74,7 @@
           <span class="account">&nbsp;@{{../profileUser.account}}</span>
           <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
         </div>
-        <span class="reply-user">回覆<a href="/user/{{this.Tweet.User.id}}/tweets">&nbsp;@{{this.Tweet.User.account}}</a></span>
+        <span class="reply-user">回覆<a href="/users/{{this.Tweet.User.id}}/tweets">&nbsp;@{{this.Tweet.User.account}}</a></span>
         <p class="content">{{this.comment}}</p>
       </div>
     </div>
