@@ -5,30 +5,30 @@
       <a href="/tweets">
         <i class="fas fa-arrow-left fa-lg mx-3 my-3"></i></a>
       <div class="ms-3">
-        <p class="home-word">{{user.name}}</p>
-        <p class="twi-count"> {{user.tweetLength}}推文</p>
+        <p class="home-word">{{profileUser.name}}</p>
+        <p class="twi-count"> {{profileUser.tweetLength}}推文</p>
       </div>
     </div>
     <div class="cover-block">
-      <img src="{{user.cover}}" alt="cover" height="100%" width="100%" onerror='this.style.display = "none"'>
+      <img src="{{profileUser.cover}}" alt="cover" height="100%" width="100%" onerror='this.style.display = "none"'>
     </div>
     <div class="user-info-block d-flex justify-content-between">
       <div class="user-info ms-3">
-        <img class="user-img" src="{{user.avatar}}" width="120" height="120" alt="Card image cap">
+        <img class="user-img" src="{{profileUser.avatar}}" width="120" height="120" alt="Card image cap">
         <div class="user-detail">
-          <h5 class="user-name mb-0">{{user.name}}</h5>
-          <h6 class="user-acc-name mb-0">@{{user.account}}</h6>
+          <h5 class="user-name mb-0">{{profileUser.name}}</h5>
+          <h6 class="user-acc-name mb-0">@{{profileUser.account}}</h6>
           <p class="user-intro my-1">
-            {{user.introduction}}
-          <p class="user-followship"><a href="/users/{{user.id}}/followings"><strong>{{user.followingLength}}個</strong></a>
+            {{profileUser.introduction}}
+          <p class="user-followship"><a href="/users/{{profileUser.id}}/followings"><strong>{{profileUser.followingLength}}個</strong></a>
             跟隨中&nbsp;&nbsp;&nbsp;&nbsp;<a
-              href="/users/{{user.id}}/followers"><strong>{{user.followerLength}}位</strong></a>跟隨者
+              href="/users/{{profileUser.id}}/followers"><strong>{{profileUser.followerLength}}位</strong></a>跟隨者
             <p />
         </div>
       </div>
-      {{#ifEqual user.id id}}
+      {{#ifEqual profileUser.id user.id}}
       <div class="edit-profile" id="edit-profile">
-        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn" data-id="{{id}}" data-url="{{baseURL}}"
+        <button type="button" class="btn btn-outline-warning edit-profile-btn" id="edit-profile-btn" data-id="{{user.id}}" data-url="{{baseURL}}"
           data-bs-toggle="modal" data-bs-target="#userModal">
           編輯個人資料
         </button>
@@ -38,13 +38,13 @@
     <div class="px-2 pt-3 mt-0 d-flex flex-row user-nav">
       <ul class="nav nav-tabs">
         <li class="nav-item current-nav">
-          <a class="nav-link" aria-current="page" href="/users/{{user.id}}/tweets">推文</a>
+          <a class="nav-link" aria-current="page" href="/users/{{profileUser.id}}/tweets">推文</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/users/{{user.id}}/replies">推文與回覆</a>
+          <a class="nav-link" href="/users/{{profileUser.id}}/replies">推文與回覆</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/users/{{user.id}}/likes">喜歡的內容</a>
+          <a class="nav-link active" href="/users/{{profileUser.id}}/likes">喜歡的內容</a>
         </li>
       </ul>
     </div>
