@@ -11,22 +11,20 @@ const userController = require('../controllers/userController')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    console.log('================')
-    console.log('authenticated通過 next()')
-    return next()
+    if (!helpers.getUser(req).role) {
+      return next()
+    }
   }
-  console.log('================')
-  console.log('authenticated未通過導入/signin')
+  req.flash('error_messages', '沒有訪問該頁面的權限，請登入前台')　　//跳不出字
   res.redirect('/signin')
 }
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    console.log('================')
-    console.log('authenticatedAdmin通過導入判斷role')
     if (helpers.getUser(req).role) {
       return next()
     }
   }
+  req.flash('error_messages', '沒有訪問該頁面的權限，請登入後台')    //跳不出字
   res.redirect('/admin/signin')
 }
 
