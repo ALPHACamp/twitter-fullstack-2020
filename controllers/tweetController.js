@@ -105,12 +105,14 @@ const tweetController = {
   addLike: async (req, res) => {
     try {
       const currentUserId = helpers.getUser(req).id
-      await Like.create({
-        UserId: currentUserId,
-        TweetId: req.params.id
-      })
-        .then((like) => {
-          return res.redirect('back')
+        await Like.findOrCreate({
+              where: {
+                UserId: currentUserId,
+                TweetId: req.params.id
+              }
+            })
+          .then((like) => {
+            return res.redirect('back')
         })
     } catch (error) {
       console.log(error)
