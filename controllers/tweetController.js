@@ -10,12 +10,12 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
+
 const tweetController = {
   //貼文相關
   //顯示所有貼文
   getTweets: (req, res) => {
     const currentUser = helpers.getUser(req)
-    console.log(req.body)
     return Promise.all([
       Tweet.findAll({
         include: [
@@ -121,10 +121,11 @@ const tweetController = {
   //回覆特定貼文
   createReply: (req, res) => {
     const currentUser = helpers.getUser(req)
+    const currentUserId = currentUser.id
     return Reply.create({
       comment: req.body.comment,
       TweetId: req.body.TweetId,
-      UserId: currentUser.id
+      UserId: currentUserId
     })
       .then((reply) => {
         res.redirect('back')
@@ -146,20 +147,28 @@ const tweetController = {
 
   //Like & Unlike
   //喜歡特定貼文
-  addLike: (req, res) => {
-    const currentUserId = helpers.getUser(req).id
-    return Like.create({
+  addLike: async(req, res) => {
+    try{
+      const currentUserId = helpers.getUser(req).id
+      await Like.create({
       UserId: currentUserId,
       TweetId: req.params.id
     })
-      .then((like) => {
+    .then((like) => {
         return res.redirect('back')
       })
+    } catch (error){
+    console.log(error)
+    res.render('/index', {Error})}
+    
   },
+
   //取消喜歡特定貼文
-  removeLike: (req, res) => {
+  removeLike: async(req, res) => {
+    try{
     const currentUserId = helpers.getUser(req).id
-    return Like.findOne({
+    // console.log(req.params)
+    await Like.findOne({
       where: {
         UserId: currentUserId,
         TweetId: req.params.id
@@ -171,6 +180,10 @@ const tweetController = {
             return res.redirect('back')
           })
       })
+    } catch (error){
+    console.log(error)
+    res.render('/index', {Error})}
+  
   }
 
 }

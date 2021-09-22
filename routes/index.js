@@ -1,4 +1,4 @@
-let routes = require('./routes');
+let routes = require('./routes')
 let apis = require('./apis')
 
 module.exports = (app) => {
