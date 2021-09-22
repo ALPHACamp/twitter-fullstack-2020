@@ -28,24 +28,28 @@
     </div>
 
     {{!-------------------- 追蹤者欄 --------------------}}
-    {{#each popularUser}}
-    {{#if this.isFollowed }}
+    {{#each data}}
+
     <div class="following d-flex">
       <div class="" style="display:flex;justify-content: center;">
+
         <a href="/users/{{this.id}}/tweets">
           <img src="{{this.avatar}}" alt="..." class="rounded-circle m-2" style="width: 50px; height:50px;">
         </a>
+
       </div>
       <div class="col-md-10" style="padding-left: 0px; width: 530px;">
         <div style="display: flex; justify-content:space-between">
           <div>
+
             <a href="/users/{{this.id}}/tweets">
               <div class="follow-name">{{this.name}}</div>
               <div class="follow-account m-0">@{{this.account}}</div>
             </a>
+
           </div>
           <div class="follow-btn ">
-            <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
               <button type="submit" class="rounded-pill fw-bolder m-2 common-button" style="width:90px; height:25px; border:none">
                 正在跟隨
               </button>
@@ -55,12 +59,11 @@
         <div class="m-1"
           style="word-wrap:break-word; word-break:normal; overflow: hidden; text-overflow: ellipsis; display: -webkit-box;-webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 500px">
           <p>
-            {{this.introduction}}
+            {{this.user.introduction}}
           </p>
         </div>
       </div>
     </div>
-    {{/if}}
     {{/each}}
   </div>
 

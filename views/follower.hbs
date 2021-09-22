@@ -40,10 +40,12 @@
       <div class="col-md-10 " style="padding-left: 0px; width: 530px;">
         <div style="display: flex; justify-content:space-between">
           <div>
+
             <a href="/users/{{this.user.id}}/tweets">
               <div class="follow-name">{{this.user.name}}</div>
               <div class="follow-account m-0">@{{this.account}}</div>
             </a>
+
           </div>
           {{#if this.isFollowed }}
           <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
