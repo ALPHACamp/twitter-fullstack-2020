@@ -33,7 +33,6 @@ body {
 
 
 
-
 .a-tomato {
   color: #FF6600;
 ;
@@ -86,8 +85,7 @@ body {
   border-color: tomato;
 }
 
-
-
+/* followingship.hbs followership.hbs */
 
 /* userprofile.hbs */
 .avatar-holder {
@@ -156,4 +154,25 @@ body {
   color: #ff6600;
   border: none;
   border-bottom: 1px solid #ff6600;
+}
+
+
+.NoticeAni :hover::before {
+  box-shadow: 0 0 14px 2px #ff6600;
+  transform: scale(1.05);
+}
+
+
+/* Public */
+.msgblockleft {
+  border-radius: 50rem 50rem 50rem 0;
+  background-color: #eee;
+  padding: 0.4rem 0.6rem;
+}
+
+.msgblockright {
+  border-radius: 50rem 50rem 0 50rem;
+  background-color: tomato;
+  color: white;
+  padding: 0.4rem 0.6rem;
 }

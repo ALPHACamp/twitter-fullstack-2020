@@ -16,20 +16,20 @@ const replyController = {
       req.flash('error_messages', '回覆內容超過140字數限制')
       return res.redirect('back')
     }
-      return Reply.create({
-        UserId: req.user.id,
-        TweetId: req.body.TweetId,
-        comment: req.body.comment,
+    return Reply.create({
+      UserId: req.user.id,
+      TweetId: req.body.TweetId,
+      comment: req.body.comment,
+    })
+      .then(() => {
+        return Tweet.findByPk(req.body.TweetId).then((tweet) => {
+          return tweet.increment('replyCount')
+        })
       })
-        .then(() => {
-          return Tweet.findByPk(req.body.TweetId).then((tweet) => {
-            return tweet.increment('replyCount')
-          })
-        })
-        .then(() => {
-          req.flash('success_messages', '成功回覆推文')
-          res.redirect(`/tweets/${req.body.TweetId}`)
-        })
+      .then(() => {
+        req.flash('success_messages', '成功回覆推文')
+        res.redirect(`/tweets/${req.body.TweetId}`)
+      })
   },
 
 }

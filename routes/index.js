@@ -14,7 +14,6 @@ module.exports = (app, passport) => {
         }
         res.redirect('/signin')
     }
-
     const authenticatedAdmin = (req, res, next) => {
         if (helpers.ensureAuthenticated(req)) {
             if (helpers.getUser(req).role === 'admin') {
@@ -24,9 +23,7 @@ module.exports = (app, passport) => {
             return res.redirect('/admin/signin')
         }
         res.redirect('/admin/signin')
-
     }
-
     const authenticatedUser = (req, res, next) => {
         if (helpers.ensureAuthenticated(req)) {
             if (helpers.getUser(req).role !== 'admin') { return next() }
@@ -35,12 +32,11 @@ module.exports = (app, passport) => {
         }
         res.redirect('/signin')
     }
-
-    const authenticatedUserTweets = (req, res, next) => {
-        if ((req.url === "/tweets") & (helpers.getUser(req).role === 'admin')) {
-            return res.redirect('/admin/tweets')
-        } return next()
-    }
+    // const authenticatedUserTweets = (req, res, next) => {
+    //     if ((req.url === "/tweets") & (helpers.getUser(req).role === 'admin')) {
+    //         return res.redirect('/admin/tweets')
+    //     } return next()
+    // }
 
     //如果使用者訪問首頁，就導向 /restaurants 的頁面
     app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
@@ -49,14 +45,18 @@ module.exports = (app, passport) => {
     app.post('/tweets', tweetController.postTweet)
     //在前台瀏覽推文詳細資料
     app.get('/tweets/:id',authenticatedUser, tweetController.getTweet)
-
-    //在前台回覆一則推文
-    app.post('/tweets/:id/replies', authenticatedUser, replyController.postReply)
-
     //在前台按一則推文喜歡,取消喜歡
     app.post('/tweets/:TweetId/like', authenticatedUser, userController.addLike)
     app.post('/tweets/:TweetId/unlike', userController.removeLike)
 
+    app.get('/signup', userController.signUpPage)
+    app.post('/signup', userController.signUp)
+    app.get('/signin', userController.signInPage)
+    app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+    app.get('/signout', userController.logout)
+    //setting
+    app.get('/setting', authenticatedUser, userController.getSetting)
+    app.put('/setting', authenticatedUser, userController.putSetting)
     //個人資料路由
     app.get('/users/noti/:id', authenticatedUser, userController.toggleNotice)
     app.get('/users/:id', authenticatedUser, userController.getProfile)
@@ -66,23 +66,23 @@ module.exports = (app, passport) => {
         name: 'avatar', maxCount: 1
     }]), userController.putProfile)
 
-    //setting - 阿金
-    app.get('/setting', authenticatedUser, userController.getSetting)
-    app.put('/setting', authenticatedUser, userController.putSetting)
+    //tweets 路由
+    app.get('/tweets', authenticatedUser, tweetController.getTweets)
+    app.post('/tweets', tweetController.postTweet)
+    //在前台回覆一則推文
+    app.post('/tweets/:id/replies', authenticatedUser, replyController.postReply)
+    // app.get('/tweets', authenticatedUserTweets, authenticatedUser, userController.getTweets)
 
-    app.get('/signup', userController.signUpPage)
-    app.post('/signup', userController.signUp)
-    app.get('/signin', userController.signInPage)
-    app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
-    app.get('/signout', userController.logout)
-
-    app.get('/tweets', authenticatedUserTweets, authenticatedUser, userController.getTweets)
-   
     app.get('/admin/signin', adminController.signInPage)
     app.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.signIn)
     app.get('/admin/logout', adminController.logout)
     app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
     app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
     app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
+
+    app.post('/followships/:userId', authenticatedUser, userController.addFollowing)
+    app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
+    app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
+    app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
 
 }

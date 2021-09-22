@@ -28,17 +28,16 @@
                 推文清單
             </div>
 
+            {{!-- {{#each tweets}}
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="d-flex align-center mr-2">
-                        <img src="https://uploads-ssl.webflow.com/60d29cc33f302e62731cf0e1/60d29cc33f302ede181cf183_AC%20nav%20logo.png"
-                            style="width: 150px" alt="">
+                        <img src={{this.avatar}} style="width: 150px" alt="">
                     </div>
 
-                    {{#each tweets}}
                     <div>
-                        <span>{{this.id}}</span>@
-                        <span>@location</span>
+                        <span>{{this.name}}</span>@
+                        <span>@{{this.acount}}</span>
                         <span>.</span>
                         <span>{{this.updatedAt}}</span>
                         <div>
@@ -54,8 +53,71 @@
                     </div>
                 </div>
                 <hr>
-                {{/each}}
             </div>
+            {{/each}} --}}
+
+            {{#each tweets}}
+            <div class="card col-12 hovercard d-flex flex-row">
+                <div class="card-body col-12">
+                    <div class="row  mb-1 p-2">
+                        <div class="col-1 d-flex justify-content-center align-items-start">
+                            <a href="/users/{{this.UserId}}">
+                                <img src="{{this.User.avatar}}" class="rounded-circle" style="width: 50px; height: 50px"
+                                    alt="avatar">
+                            </a>
+                        </div>
+                        <div class="col-11 row">
+                            <div class="col-12 d-inline-flex justify-content-between align-items-center">
+                                <div style="height: 22px; font-size: 15px;">
+                                    <a href="/users/{{this.UserId}}"
+                                        class="text-dark font-weight-bold">{{this.User.name}}</a>
+                                    <span style="color: #657786;">@{{this.User.account}}．{{moment
+                                        this.createdAt}}</span>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-1" onclick="javascript:location.href='/tweets/{{this.id}}'">
+                                <p class="fw-bold">{{this.description}}</p>
+                            </div>
+                            <div class="col-12 d-flex align-items-center">
+                                <button type="button" class="btn btn-outline-light" data-toggle="modal"
+                                    data-target="#replyModal" data-bs-toggle="modal">
+                                    <i class="far fa-comment" style="color: navy;width:12px;height:12px;"></i>
+                                </button>
+                                <input type="hidden" name="TweetId" value="{{this.id}}">
+                                <span
+                                    style="display:inline-block;margin-left:20px;margin-right:33px;">{{this.replyCount}}</span>
+
+
+
+                                {{#if this.isLiked}}
+                                <form action="/tweets/{{this.id}}/unlike" method="POST">
+                                    <button type="submit" class="btn btn-outline-light">
+                                        <i class="fas fa-heart" style="color: red;width:12px;height:12px;"></i>
+                                    </button>
+                                    <span style="display:inline-block;margin-left:20px;">{{this.likeCount}}</span>
+                                </form>
+                                {{else}}
+                                <form action="/tweets/{{this.id}}/like" method="POST">
+                                    <button type="submit" class="btn btn-outline-light">
+                                        <i class="far fa-heart" style="color: red; width: 12px; height: 12px;"></i>
+                                    </button>
+                                    <span style="display:inline-block;margin-left:20px;">{{this.likeCount}}</span>
+                                </form>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div>
+                    <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-link">X</button>
+                    </form>
+                </div>
+            </div>
+            {{/each}}
+
         </div>
 
     </div>

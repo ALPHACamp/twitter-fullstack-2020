@@ -17,7 +17,7 @@
 <body>
   <main role="main">
     <div class="album bg-white">
-      {{!--error Message開頭 阿金 --}}
+      {{!--error Message開頭 --}}
       {{#if errors}}
       {{#each errors}}
       <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -37,10 +37,103 @@
         {{error_messages}}
       </div>
       {{/if}}
+
       {{{body}}}
+
     </div>
   </main>
   {{!--Flash Message結尾--}}
+
+  {{!-- Modal tweet--}}
+  <div class="modal fade" id="tweetModal" tabindex="-1" aria-labelledby="tweetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn a-tomato" data-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <form action="/tweets" method="post">
+          <div class="modal-body">
+            <div class="position-relative" style="padding: 85px 0;">
+              <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
+                <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 60px; height: 60px;"
+                  alt="A user" />
+              </div>
+              <div class="position-absolute" style="z-index: 0; width:465px; top:0px;">
+                <textarea class="nowcount4 mt-1 bd" id="description" name="description" rows="3" placeholder="有什麼新鮮事？"
+                  maxlength="140"
+                  style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
+                  required></textarea>
+              </div>
+              <div class="position-absolute" style="z-index: 5; right: 6px; bottom: -5px;">
+                <span class="text-muted px-2 now4" style="font-size: 0.98em;"></span>
+                <button type="submit" class="btn btn-tomato fw-bold rounded-pill">推文</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {{!-- Modal reply--}}
+  <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="replyModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="btn-close" style="left: 0;" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
+            <div class="card-image col-1 d-flex justify-content-center align-items-center">
+              <img src="{{tweet.User.avatar}}" class="rounded-circle p-2" style="width: 60px; height: 60px;"
+                alt="12313213131313123213121111312111212121312321321321" />
+            </div>
+            <div class="col-11 row px-md-2 px-4">
+              <div class="col-12 d-inline-flex justify-content-between align-items-center">
+                <div style="height: 22px; line-height: 22px">
+                  <span class=' h5 fw-bold'>{{tweet.User.name}}</span>
+                  <span class="ps-1" style="color: #6c757d; font-size: 0.875em">@{{tweet.User.account}}．{{moment
+                    tweet.createdAt}}</span>
+                </div>
+              </div>
+              <div class="col-12 mt-2">
+                <p class="fw-bold text-dark" style="font-size: 0.8em">{{tweet.description}}</p>
+              </div>
+              <div class="col-12 mt-2">
+                <p style="color: tomato; font-size: 0.8em">回覆給 @{{tweet.User.account}}</p>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row ps-3 bg-white">
+            <form action="/replies" method="POST" class="mt-2 ">
+              <div class="position-relative" style="padding: 75px 0;">
+                <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
+                  <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;"
+                    alt="A user" />
+                </div>
+                <div class="position-absolute" style="z-index: 0; width: 430px; top:-5px; left:-5px;">
+                  <textarea class="mt-1 bd" id="content" name="content" rows="3" placeholder="推你的回覆" maxlength="140"
+                    style="width:inherit; border:none; outline: none; padding-left: 58px; padding-top: 17px; padding-bottom: 50px; font-size:1.1em;"
+                    required></textarea>
+                  <input type="hidden" name="TweetId" value="{{tweet.id}}" />
+                </div>
+                <div class="position-absolute" style="z-index: 5; right: 6px; bottom: -5px;">
+                  <span class="text-muted px-2" style="font-size: 0.98em;"></span>
+                  <button type="submit" class="btn btn-tomato fw-bold rounded-pill">回覆</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 <script src="/javascript/index.js"></script>
 <script src="/index.js"></script>

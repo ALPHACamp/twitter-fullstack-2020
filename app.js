@@ -6,18 +6,14 @@ const methodOverride = require('method-override')
 const db = require('./models')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash') //  自訂訊息並存到 session 裡
+//使用.env
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const session = require('express-session') 
 const passport = require('./config/passport')
 const app = express()
 const port = 3000
-
-
-app.engine('hbs', handlebars({
-  defaultLayout: 'main',
-  extname: '.hbs'
-})) 
-app.set('view engine', 'hbs') 
-app.use(express.static('public'))
 
 
 // use helpers.getUser(req) to replace req.user
@@ -31,6 +27,8 @@ app.engine('handlebars', handlebars({
 app.set('view engine', 'handlebars') // 設定Handlebars 做為樣板引擎
 
 app.use(express.static('public'))
+//使用methodOverride
+app.use(methodOverride('_method'))
 // setup session 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 // 初始化 Passport
@@ -48,6 +46,8 @@ app.use((req, res, next) => {
     res.locals.user = helpers.getUser(req)
     next()
 })
+// 設定每一筆請求都會透過 methodOverride 進行前置處理
+app.use(methodOverride('_method'))
 
 app.get('/follower', (req, res) => res.render('follower'))
 

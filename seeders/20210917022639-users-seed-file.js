@@ -22,7 +22,7 @@ users.unshift({
   account: 'root',
   cover: 'https://loremflickr.com/250/240/Landscape/?random=1',
   introduction: faker.lorem.text(),
-  role: 'user',
+  role: 'admin',
   isAdmin: true,
   createdAt: new Date(),
   updatedAt: new Date()

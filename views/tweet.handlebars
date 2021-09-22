@@ -65,7 +65,7 @@
                 {{/ifCond}} --}}
               </div>
             </div>
-            
+
           </div>
         </div>
         <div class="row col-12 mt-1">
@@ -81,7 +81,7 @@
             <span class="mr-2" style="color:#657786;">回覆</span>
             <span class="" style="font-size: 19px; font-weight: bold;">{{tweet.likeCount}}</span>
             <span style="color:#657786;">喜歡次數</span>
-          </div> 
+          </div>
         </div>
         <hr>
         <div class="row col-12" style="height:25px;">
@@ -115,13 +115,13 @@
                   <a href="/users/{{this.UserId}}" class="text-dark" style="font-size: 15px; font-weight:700; text-decoration:none;">{{this.User.name}}</a>
                   <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{this.User.account}}．{{moment this.createdAt}}</span>
                 </div>
-                  {{!-- {{#ifCond this.User.id ../user.id}}
-                  <form action="/replies/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
-                    <button type="submit" class="btn">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </form>
-                  {{/ifCond}} --}}
+                {{!-- {{#ifCond this.User.id ../user.id}}
+                <form action="/replies/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
+                  <button type="submit" class="btn">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </form>
+                {{/ifCond}} --}}
                 <div style="height: 22px; line-height: 22px">
                   <span style="color: #657786; font-size: 15px;line-height: 20px;">回覆</span>
                   <span style="color: #FF6600; font-size: 15px;line-height: 20px;">@{{../tweet.User.account}}</span>
@@ -249,7 +249,3 @@
     </div>
   </div>
 </div>
-
-
-
-

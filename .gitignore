@@ -85,3 +85,12 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+# temp
+temp/
+
+# upload
+upload/
+
+# IMGUR_CLIENT_ID
+# IMGUR_CLIENT_ID=bc129ea404ff01c

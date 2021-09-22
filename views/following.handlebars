@@ -8,19 +8,19 @@
       <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
         <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
           <li class="nav-item px-2 py-1">
-            <a class="nav-link align-middle text-dark " href="">
+            <a class="nav-link align-middle text-dark " href="/tweets">
               <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text home a-tomato">首頁</span>
             </a>
           </li>
           <li class="nav-item px-2 py-1">
-            <a class="nav-link align-middle text-dark h-tomato" href="">
+            <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}">
               <i class="far fa-user" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text user">個人資料</span>
             </a>
           </li>
           <li class="nav-item px-2 py-1">
-            <a class="nav-link align-middle text-dark h-tomato" href="">
+            <a class="nav-link align-middle text-dark h-tomato" href="/setting">
               <i class="fas fa-cog" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text setting">設定</span>
             </a>
@@ -45,20 +45,20 @@
         </a>
         <a href="/"
           class="col-auto d-flex flex-column align-items-start justify-content-center link-dark text-decoration-none">
-          <span class="h5 fw-bold" style="line-height: 15px;">使用者名稱</span>
-          <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">1000 推文數</span>
+          <span class="h5 fw-bold" style="line-height: 15px;">{{user.name}}</span>
+          <span style="color: #6c757d; font-size: 0.95em; line-height: 15px">{{tweetCount}} 推文數</span>
         </a>
       </div>
-      <div class='follower-head col-12 row'>
-        <ul class='nav nav-tabs' id='myTab' role='tablist'>
+
+      <div class="follower-head col-12 row mt-3">
+        <ul class='nav nav-tabs' id='myTab' role='tablist' style="border-bottom: none;margin-bottom:-4px;">
           <li class='nav-item'>
-            <a class='nav-link active' id='message-tab' href='/users/{{id}}/followers' role='tab' aria-controls='home'
-              aria-selected='true'>跟隨者</a>
+            <a class='nav-link' id='message-tab' href='/users/{{id}}/followers' role='tab'
+              aria-controls='home' aria-selected='true'>跟隨者</a>
           </li>
           <li class='nav-item'>
-
-            <a class='nav-link' id='profile-tab' href='/users/{{id}}/followings' role='tab' aria-controls='profile'
-              aria-selected='false'>正在跟隨</a>
+            <a class='nav-link active' id='profile-tab'  href='/users/{{id}}/followings' role='tab'
+              aria-controls='profile' aria-selected='false'>正在跟隨</a>
           </li>
         </ul>
       </div>
@@ -67,7 +67,8 @@
         <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
           <ul class='list-group list-group-flush border-bottom'>
 
-            {{#each followers}}
+           {{#each followings}}
+            {{#if this.isFollowed}}
             <li class='list-group-item'>
               <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
                 <div class='col-1 d-flex justify-content-center align-items-center'>
@@ -97,7 +98,7 @@
                 </div>
               </div>
             </li>
-
+            {{/if}}
             {{/each}}
 
           </ul>
@@ -109,8 +110,7 @@
     <div class="col-auto col-md-3 col-lg-3">
       <div class="card d-none d-md-flex flex-column mt-1 p-2 px-3" style="border: none;">
         <ul class="list-group-flush">
-          <li class="list-group-item bg-light" style="font-size: 18px; font-weight: bold; border: none;">
-            Popular</li>
+          <li class="list-group-item bg-light" style="font-size: 18px; font-weight: bold; border: none;">Popular</li>
 
           <!--第一個跟隨者-->
           <li class="list-group-item bg-light" style="border-left: none;border-right: none">
@@ -144,7 +144,7 @@
           </li>
 
           <!--seeder開頭-->
-          {{#each Top10Users}}
+          {{#each Top10Users  }}
           <li class="list-group-item bg-light" style="border-left: none;border-right: none">
             <div class="row justify-content-around align-items-center">
               <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">

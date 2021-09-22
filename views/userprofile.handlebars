@@ -57,7 +57,8 @@
             style="height:100%;width:100%;object-fit:cover">
         </div>
         <div class="avatar-holder">
-          <img src="{{users.avatar}}" class="rounded-circle" alt="user_Aavtor" height="130px" width="130px">
+          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}
+" class="rounded-circle" alt="user_Aavtor" height="130px" width="130px">
         </div>
       </div>
       <div class="card-body col-12 d-flex justify-content-end">
@@ -104,8 +105,14 @@
           <p class="my-2" style="font-size: 0.96em; line-height: 25px">{{#if
             users.introduction}}{{users.introduction}}{{else}}Lorem example text example text for AC simple twitter
             project practice{{/if}}</p>
-          <span class="fw-bold">{{followingscount}} 個</span><span class="text-muted">跟隨中</span>
-          　<span class="fw-bold">{{followerscount}} 個</span><span class="text-muted">跟隨者</span>
+          <a href="/users/{{users.id}}/followers">
+            <span class="fw-bold">{{followingscount}} 個</span><span class="text-muted">跟隨中</span>
+          </a>
+          <a href="/users/{{users.id}}/followings">
+            <span class="fw-bold">{{followerscount}} 個</span><span class="text-muted">跟隨者</span>
+          </a>
+          
+          　
         </div>
       </div>
 
