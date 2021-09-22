@@ -8,58 +8,61 @@
       <div class="row justify-content-start">
         <div class="col1"><i class="bi bi-arrow-left nav-bold"></i></div>
         <div class="col2">
-          <p class="nav-bold">Ilia</p><small>25推文</small>
+          <p class="nav-bold">{{user.name}}</p><small>{{user.tweetCount}}推文</small>
         </div>
       </div>
     </div>
     <ul class="nav followship-tags">
-        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">跟隨者</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">正在跟隨</a></li>
-      </ul>
+      <li class="nav-item"><a class="nav-link {{#if tagA}}active{{/if}}" href="/profiles/{{ user.id }}/followers">跟隨者</a></li>
+      <li class="nav-item"><a class="nav-link {{#if tagB}}active{{/if}}" href="/profiles/{{ user.id }}/followings">正在跟隨</a></li>
+    </ul>
     <div class="col flex-direction-column">
+      {{#each followers}}
       <!--start::跟隨者-->
       <div class="col-12 flex-direction-column">
         <div class="post">
           <div class="post-card1">
-            <div class="avatar profile-avatar"><img
-                src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-                alt="avatar-img" /></div>
+            <div class="avatar profile-avatar"><img src="{{this.avatar}}" alt="avatar-img" /></div>
           </div>
           <div class="post-card2">
-            
-            <form class="ms-auto" action="?_method=POST" method="POST">
+            {{#if this.isFollowed}}
+            <form class="ms-auto" action="/followships/{{ this.id }}?_method=DELETE" method="POST">
+              <button type="submit" class="btn-orange btn-short upper-right">正在跟隨</button>
+            </form>
+            {{else}}
+            <form class="ms-auto" action="/followships/{{ this.id }}" method="POST">
               <button type="submit" class="btn-outline-orange btn-short upper-right">跟隨</button>
             </form>
-            <!--正在跟隨按鈕
-            <form class="ms-auto" action="?_method=DELETE" method="POST">
-              <button type="submit" class="btn-orange btn-short upper-right">正在跟隨</button>
-            </form>-->
-            <h5 class="d-inline-block profile-nav-header post-title">Post Title&nbsp;<span class="post-sub-info">@Apple
-                &#x2027; 5minutes</span></h5>
-            <p>Lorem ipsum dolor sit, amet consecores quam adipisci nulla veniam id sed modi consequatur, voluptatibus nesciunt.
+            {{/if}}
+            <h5 class="d-inline-block profile-nav-header post-title">{{this.name}}&nbsp;<span
+                class="post-sub-info">{{this.account}}
+                &#x2027; {{this.updatedAtFormated}}</span></h5>
+            <p>{{this.introduction}}</p>
           </div>
         </div>
       </div>
       <!--start::跟隨者-->
+      {{/each}}
+      {{#each followings}}
       <!--start::正在跟隨-->
       <div class="col-12 flex-direction-column">
         <div class="post">
           <div class="post-card1">
-            <div class="avatar profile-avatar"><img
-                src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-                alt="avatar-img" /></div>
+            <div class="avatar profile-avatar"><img src="{{this.avatar}}" alt="avatar-img" /></div>
           </div>
           <div class="post-card2">
-            <form class="ms-auto" action="?_method=DELETE" method="POST">
+            <form class="ms-auto" action="/followships/{{ this.id }}?_method=DELETE" method="POST">
               <button type="submit" class="btn-orange btn-short upper-right">正在跟隨</button>
             </form>
-            <h5 class="d-inline-block profile-nav-header post-title">Post Title&nbsp;<span class="post-sub-info">@Apple
-                &#x2027; 5minutes</span></h5>
-            <p>Tsectetur adipisicing elit. Dolorem dolores quam adipisci nulla veniam id sed modi consequatur, vociunt.
+            <h5 class="d-inline-block profile-nav-header post-title">{{this.name}}&nbsp;<span
+                class="post-sub-info">{{this.account}}
+                &#x2027; {{this.updatedAtFormated}}</span></h5>
+            <p>{{this.introduction}}</p>
           </div>
         </div>
       </div>
       <!--end::正在跟隨-->
+      {{/each}}
     </div>
   </div>
 

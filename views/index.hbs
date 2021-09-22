@@ -25,9 +25,16 @@
                 <a href="/posts/{{this.id}}">
           <p class="post-text" >{{this.description}}</p>
           </a>
-          <p class="post-sub-info"><span class="post-icon-block"><i
-                class="bi bi-chat"></i>{{this.ReplyCount}}</span><span class="post-icon-block"><i
-                class="bi bi-heart"></i>{{this.LikedCount}}</span></p>
+          <p class="post-sub-info">
+              <span class="post-icon-block">
+                <i class="bi bi-chat"></i>{{this.ReplyCount}}
+              </span
+              ><span class="post-icon-block">                
+                  <form action="posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">
+                  <button type="submit" class="bi bi-heart btn"></button>{{this.LikedCount}}
+                  </form>
+              </span>      
+          </p>
         </div>
       </div>
       {{/each}}
