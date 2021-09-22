@@ -161,7 +161,7 @@ let userService = {
         isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
         isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
       }))
-      callback({ data, viewUser, currentUser, topUsers })
+      return callback({ data, viewUser, currentUser, topUsers })
     })
       .catch(err => console.log(err))
   },
