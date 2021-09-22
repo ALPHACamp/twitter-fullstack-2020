@@ -73,7 +73,7 @@ router.get('/tweets/:id', authenticated, tweetController.getTweet)
 // //顯示特定貼文回覆 (row40)
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
 // //回覆特定貼文 (row 36)
-router.post('/tweets/:id', authenticated, tweetController.createReply)
+router.post('/tweets/:id/replies', authenticated, tweetController.createReply)
 //------------擴充功能--------------//
 // 編輯貼文回覆 (row 37-38)
 // router.get('/replies/:id/edit', tweetController.getReplyPage)

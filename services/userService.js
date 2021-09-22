@@ -153,8 +153,8 @@ const userService = {
       const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
       const topUsers = normalUsers.map(user => ({
         id: user.FollowingLinks.id,
-        name: user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name,
-        account: user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account,
+        name: user.FollowingLinks.name ? (user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name) : 'noName',
+        account: user.FollowingLinks.account ? (user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account) : 'noAccount',
         avatar: user.FollowingLinks.avatar,
         followersCount: user.count,
         isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
