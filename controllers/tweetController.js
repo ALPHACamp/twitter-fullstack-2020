@@ -10,8 +10,11 @@ const tweetController = {
   // 首頁
   getTweets: (req, res) => {
     return Promise.all([
-      Tweet.findAll({
-        include: [User, Reply],
+
+      Tweet.findAndCountAll({
+        // raw: true,
+        // nest: true,
+        include: [User,  Reply],
         order: [
           ['createdAt', 'DESC'], // Sorts by createdAt in descending order
         ]
@@ -26,6 +29,7 @@ const tweetController = {
       }),
     ]).then(([tweets, users]) => {
       // 列出 追隨數前十名的使用者
+      // console.log("我是tweets.rows:",tweets.rows)
       const topUsers =
         users.map(user => ({
           ...user.dataValues,
@@ -37,6 +41,7 @@ const tweetController = {
 
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
+        id : tweet.id,  //拿到tweet的id
         likedCount: req.user.LikedTweets.length,
         description: tweet.description,
         createdAt: tweet.createdAt,

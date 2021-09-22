@@ -37,17 +37,17 @@ module.exports = (app, passport) => {
   app.get('/tweets', authenticated, tweetController.getTweets)
 
   // Like - Tweet
-  app.post('/like/:tweetId', authenticated, userController.addLike)
-  app.delete('/like/:tweetId', authenticated, userController.removeLike)
+  // app.post('/like/:tweetId', authenticated, userController.addLike)
+  // app.delete('/like/:tweetId', authenticated, userController.removeLike)
 
-  app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
-  app.get('/user/self/reply', authenticated, userController.getReplyTweets)
+  app.get('/user/:id/replies', authenticated, userController.getUserSelfReply)
+  app.get('/user/:id/tweets', authenticated, userController.getUserTweets)
   app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
 
   // 追蹤
-  app.post('/following/:userId', authenticated, userController.addFollowing)
-  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  // app.post('/following/:userId', authenticated, userController.addFollowing)
+  // app.delete('/following/:userId', authenticated, userController.removeFollowing)
 
   // 註冊
   app.get('/signup', userController.signUpPage)
