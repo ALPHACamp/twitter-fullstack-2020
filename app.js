@@ -7,11 +7,12 @@ const methodOverride = require('method-override')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const app = express()
 
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 } //有用到process.env.PORT的資料變數要放下面
 
-const port = process.env.PORT //把PORT=3000放入.env
+const PORT = process.env.PORT //把PORT=3000放入.env
 const baseURL = process.env.BASE_URL
 const passport = require('./config/passport')
 
@@ -44,7 +45,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
 console.log('=============')
 console.log('進入app.js')

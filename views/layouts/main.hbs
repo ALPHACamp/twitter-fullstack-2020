@@ -27,11 +27,17 @@
     <div class="alert alert-success text-center" role="alert" style="margin: 30px 0 ;">
       {{success_messages}}
     </div>
+    
     {{/if}}
     {{#if error_messages}}
-    <div class="alert alert-danger  text-center" role="alert" style="margin: 30px 0 ;">
-      {{error_messages}}
+    {{#each error_messages}}
+    <div class="alert alert-danger text-center alert-dismissible fade show" role="alert">
+      {{ this.message }}
     </div>
+    {{/each}}
+    {{!-- <div class="alert alert-danger  text-center" role="alert" style="margin: 30px 0 ;">
+      {{error_messages}}
+    </div> --}}
     {{/if}}
 
     <div class="for-center mx-auto">

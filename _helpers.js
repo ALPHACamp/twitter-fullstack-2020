@@ -18,15 +18,13 @@ function removeUser(Array, id) {
   Array.splice(Array.findIndex(x => x.id === id), 1)
 }
 
-// function getUsersAndFollowships(req, res) {
- 
-
-//   return user
-// }
+function removeadmin(Array) {
+  Array.splice(Array.findIndex(x => x.role = true), 1)
+}
 
 module.exports = {
   ensureAuthenticated,
   getUser,
   removeUser,
-  //getUsersAndFollowships,
+  removeadmin,
 };
