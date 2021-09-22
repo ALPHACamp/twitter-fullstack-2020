@@ -14,7 +14,7 @@ const Followship = db.Followship
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
-let userService = {
+const userService = {
   renderUserEdit: (req, res, callback) => {
     const currentUser = helpers.getUser(req)
     return User.findOne({
@@ -26,7 +26,6 @@ let userService = {
       ]
     })
       .then((user) => {
-        // console.log(user)
         //取得某使用者的個人資料
         const viewUser = Object.assign({}, {
           id: user.id,
