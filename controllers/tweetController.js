@@ -36,7 +36,6 @@ const tweetController = {
         ],
         order: [['createdAt', 'DESC']]
       })
-      //console.log('get tweets:', tweets[1].dataValues.User.name)
       const reorganizationTweets = tweets.map(tweet => ({
         ...tweet.dataValues,
         userName: tweet.User.name,
@@ -46,7 +45,6 @@ const tweetController = {
         likeLength: tweet.Likes.length,
         isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
-      //console.log('mapping tweet:', reorganizationTweets)
       return res.render('tweets', { reorganizationTweets, popularUser, userself })
     } catch(err) {
       console.warn(err)
@@ -83,7 +81,7 @@ const tweetController = {
         ]
       })
       const tweetJson = tweet.toJSON()
-      console.log(tweetJson)
+      
       tweetJson.amPm = dayjs(`${tweetJson.createdAt}`).format('A') === 'PM' ? '下午' : '上午'
       tweetJson.hourMinute = dayjs(`${tweetJson.createdAt}`).format('HH:mm')
       tweetJson.year = dayjs(`${tweetJson.createdAt}`).format('YYYY')
@@ -123,7 +121,6 @@ const tweetController = {
         UserId: req.user.id,
         TweetId: req.params.tweetId
       })
-      console.log('addLike')
       return res.json({status: 'success', message: 'add likes'})
     } catch(err) {
       console.warn(err)
@@ -137,7 +134,6 @@ const tweetController = {
           TweetId: req.params.tweetId
         }
       })
-      console.log('removeLike')
       await like.destroy()
       return res.json({ status: 'success', message: 'remove likes' })
     } catch(err) {

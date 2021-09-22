@@ -34,7 +34,7 @@
         <div class="w-100" id="tweet-reply-modal-reply">
           <form class="needs-validation" action="/tweets/{{tweet.id}}/replies" method="POST" novalidate>
             <textarea class="form-control tweet-modal-textarea w-100" id="comment" name="comment" rows="9"
-              placeholder="推你的回覆" required></textarea>
+              placeholder="推你的回覆" minlength="1" required></textarea>
             <div class="tweet-modal-textarea-feedback invalid-feedback">
               內文不可以空白
             </div>
@@ -48,3 +48,25 @@
     </div>
   </div>
 </div>
+
+<script>
+  (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
