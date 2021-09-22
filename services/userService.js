@@ -26,15 +26,16 @@ const userService = {
       ]
     })
       .then((user) => {
-        //取得某使用者的個人資料
-        const viewUser = Object.assign({}, {
+        if (currentUser.id !== user.id) {
+          return callback({ status: 'error', message: "無法編輯其他使用者資料！" })
+        }
+        callback({
           id: user.id,
           name: user.name,
           introduction: user.introduction,
           cover: user.cover,
           avatar: user.avatar,
         })
-        callback({ viewUser })
       })
       .catch(err => console.log(err))
   },
@@ -42,18 +43,17 @@ const userService = {
   putUserEdit: async (req, res, callback) => {
     const { name, introduction } = req.body
     if (!name) {
-      return callback({ status: 'error', message: "暱稱不能空白！" })
+      return callback({ status: 'error', message: "請輸入名稱！" })
+    } else if (name.length > 50) {
+      return callback({ status: 'error', message: "名稱長度不能超過 50 字！" })
     }
-    if (name.length > 50 || introduction.length > 160) {
-      return callback({ status: 'error', message: "字數超出上限！" })
-    }
-    // const file = Object.assign({}, req.files)
-    const { files } = req
+    // const { files } = req
+    // if (files) {
+    //files會有[Object: null prototype] {}
+    const files = Object.assign({}, req.files)
     const isCoverDelete = req.body.isDelete
     const user = await User.findByPk(req.params.id)
 
-    // if (files) {
-    //files會有[Object: null prototype] {}
     imgur.setClientID(IMGUR_CLIENT_ID)
     if (files.avatar && files.cover) {
       imgur.upload(files.avatar[0].path, async (err, avaImg) => {
@@ -160,7 +160,7 @@ const userService = {
         isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
         isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
       }))
-      callback({ data, viewUser, currentUser, topUsers })
+      return callback({ data, viewUser, currentUser, topUsers })
     })
       .catch(err => console.log(err))
   },
