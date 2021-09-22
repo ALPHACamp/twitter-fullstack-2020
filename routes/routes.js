@@ -14,6 +14,7 @@ const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role !== 'admin') {
+      console.log('123')
       return next()
     }
     if (helpers.getUser(req).role === 'admin') {
@@ -37,7 +38,6 @@ const authenticatedAdmin = (req, res, next) => {
 }
 
 
-// //TODO: 功能完成後可解除對應的註解(若VIEW還沒完成先連到signup測試)
 // //使用者顯示主頁面
 // router.get('/current_user', userController.getCurrentUser)
 
@@ -55,12 +55,11 @@ router.get('/users/:id/followings', authenticated, userController.getUserFollowi
 // //使用者粉絲清單(被追蹤)
 router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
 
-// //追蹤使用者 (row 45)
+//追蹤使用者
 router.post('/followships/:id', authenticated, userController.addFollowing)
-// //取消追蹤使用者 (row 46)
+//取消追蹤使用者
 router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
-TODO:// 貼文相關
 //顯示所有貼文(要改api)
 router.get('/tweets', authenticated, tweetController.getTweets)
 

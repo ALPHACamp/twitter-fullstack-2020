@@ -478,46 +478,16 @@ const userController = {
   },
 
   addFollowing: async (req, res) => {
-    try {
-      const followerId = helpers.getUser(req).id
-      const followingId = Number(req.params.id)
-      const user = await User.findByPk(followerId)
-      const targetUser = await User.findByPk(followingId)
-      const followship = await Followship.findOne({
-        where: {
-          [Op.and]: [
-            { followerId },
-            { followingId }
-          ]
-        }
-      })
-
-
-      if (!user || !targetUser) {
-        req.flash('error_messages', '無效使用者')
-        return res.status(400).redirect('/tweets')
+    console.log('456')
+    userService.addFollowing(req, res, data => {
+      console.log('789')
+      if (data['status'] === 'error') {
+        req.flash('error_messages', data['message'])
+        return res.redirect('back')
       }
-
-      if (followerId === followingId) {
-        req.flash('error_messages', '無法追蹤自己')
-        return res.status(400).redirect('/tweets')
-      }
-
-      if (followship) {
-        req.flash('error_messages', '不得重複追蹤')
-        return res.status(400).redirect('back')
-      } else {
-        await Followship.create({
-          followerId,
-          followingId
-        })
-        req.flash('success_messages', '成功追蹤')
-        return res.status(200).redirect('back')
-      }
-    }
-    catch (err) {
-      console.log(err)
-    }
+      req.flash('success_messages', data['message'])
+      res.redirect('back')
+    })
   },
 
   removeFollowing: (req, res) => {

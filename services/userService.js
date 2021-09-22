@@ -164,6 +164,47 @@ const userService = {
     })
       .catch(err => console.log(err))
   },
+
+  addFollowing: async (req, res, callback) => {
+    try {
+      console.log('1')
+      const followerId = helpers.getUser(req).id
+      const followingId = Number(req.params.id)
+      const targetUser = await User.findByPk(followingId)
+      const followship = await Followship.findOne({
+        where: {
+          [Op.and]: [
+            { followerId },
+            { followingId }
+          ]
+        }
+      })
+  console.log('2')
+      if (!targetUser) {
+        console.log('3')
+        return callback({ status: 'error', message: '無效對象' })
+      }
+
+      if (followerId === followingId) {
+    console.log('4')
+        return callback({ status: 'error', message: '無法追蹤自己' })
+      }
+
+      if (followship) {
+        console.log('5')
+        return callback({ status: 'error', message: '不得重複追蹤' })
+      } else {
+        await Followship.create({
+          followerId,
+          followingId
+        })
+        return callback({ status: 'success', message:'成功追蹤'})
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
 }
 
 module.exports = userService
