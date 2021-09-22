@@ -13,10 +13,10 @@ const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
 // module.exports = (router, passport) => {
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === "normal") {
+    if (helpers.getUser(req).role !== 'admin') {
       return next()
     }
-    if (helpers.getUser(req).role === "admin") {
+    if (helpers.getUser(req).role === 'admin') {
       req.flash('error_messages', '管理者無法使用前台頁面')
       return res.redirect('/admin/tweets')
     }

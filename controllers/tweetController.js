@@ -15,54 +15,9 @@ const tweetController = {
   //貼文相關
   //顯示所有貼文
   getTweets: (req, res) => {
-    const currentUser = helpers.getUser(req)
-    return Promise.all([
-      Tweet.findAll({
-        include: [
-          { model: User, attributes: ['id', 'name', 'avatar', 'account'] },
-          { model: Like },
-          { model: Reply }
-        ],
-        order: [['createdAt', 'DESC']],
-      }),
-      Followship.findAll({
-        attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
-        include: [
-          { model: User, as: 'FollowingLinks' } //self-referential super-many-to-many
-        ],
-        group: ['followingId'],
-        order: [[sequelize.col('count'), 'DESC']],
-        limit: 10, raw: true, nest: true
-      })
-
-    ])
-      .then(([tweets, users]) => {
-        tweets = tweets.map(r => ({
-          ...r.dataValues,
-          User: r.User.dataValues,
-          isLiked: currentUser.LikedTweets.map(d => d.id).includes(r.id),
-          Likes: r.Likes.length,
-          Replies: r.Replies.length,
-        }))
-
-        //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
-        const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
-        const topUsers = normalUsers.map(user => ({
-          id: user.FollowingLinks.id,
-          name: user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name,
-          account: user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account,
-          avatar: user.FollowingLinks.avatar,
-          followersCount: user.count,
-          isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
-          // isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
-        }))
-
-        return res.status(200).render('index', {
-          tweets,
-          topUsers,
-          currentUser
-        })
-      })
+    tweetService.getTweets(req, res, data => {
+      return res.render('index', data)
+    })
   },
 
   //新增一則貼文(要改api)
@@ -147,45 +102,47 @@ const tweetController = {
 
   //Like & Unlike
   //喜歡特定貼文
-  addLike: async(req, res) => {
-    try{
+  addLike: async (req, res) => {
+    try {
       const currentUserId = helpers.getUser(req).id
-      await Like.findOrCreate({
-      where: {
-        UserId: currentUserId,
-        TweetId: req.params.id
-      }
-    })
-    .then((like) => {
-        return res.redirect('back')
-      })
-    } catch (error){
-    console.log(error)
-    res.render('/index', {Error})}
-    
+        await Like.findOrCreate({
+              where: {
+                UserId: currentUserId,
+                TweetId: req.params.id
+              }
+            })
+          .then((like) => {
+            return res.redirect('back')
+        })
+    } catch (error) {
+      console.log(error)
+      res.render('/index', { Error })
+    }
+
   },
 
   //取消喜歡特定貼文
-  removeLike: async(req, res) => {
-    try{
-    const currentUserId = helpers.getUser(req).id
-    // console.log(req.params)
-    await Like.findOne({
-      where: {
-        UserId: currentUserId,
-        TweetId: req.params.id
-      }
-    })
-      .then(like => {
-        like.destroy()
-          .then(tweet => {
-            return res.redirect('back')
-          })
+  removeLike: async (req, res) => {
+    try {
+      const currentUserId = helpers.getUser(req).id
+      // console.log(req.params)
+      await Like.findOne({
+        where: {
+          UserId: currentUserId,
+          TweetId: req.params.id
+        }
       })
-    } catch (error){
-    console.log(error)
-    res.render('/index', {Error})}
-  
+        .then(like => {
+          like.destroy()
+            .then(tweet => {
+              return res.redirect('back')
+            })
+        })
+    } catch (error) {
+      console.log(error)
+      res.render('/index', { Error })
+    }
+
   }
 
 }
