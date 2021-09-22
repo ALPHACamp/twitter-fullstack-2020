@@ -4,6 +4,7 @@ const passport = require('../config/passport')
 const helpers = require('../_helpers')
 
 const twitterController = require('../controllers/twitterController.js')
+const userController = require('../controllers/userController')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
