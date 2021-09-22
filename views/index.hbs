@@ -2,7 +2,7 @@
   <div class="col">
     {{>columnLeft}}
   </div>
-
+  {{>modalPost}}
   {{>modalIndex}}
   <div class="profile-container">
     <div class="profile-nav">
@@ -22,19 +22,26 @@
           <h5 class="d-inline-block post-title">{{this.User.name}}&nbsp;<span
               class="post-sub-info">{{this.User.account}} ‧
               {{this.createdAt}}</span></h5>
-                <a href="/posts/{{this.id}}">
-          <p class="post-text" >{{this.description}}</p>
+          <a href="/posts/{{this.id}}">
+            <p class="post-text">{{this.description}}</p>
           </a>
-          <p class="post-sub-info">
-              <span class="post-icon-block">
+          <h3 class="post-sub-info">
+            <span class="post-icon-block">
+              <button id="myInput" data-bs-toggle="modal" data-bs-target="#postModel" class="heart-button btn">
                 <i class="bi bi-chat"></i>{{this.ReplyCount}}
-              </span
-              ><span class="post-icon-block">                
-                  <form action="posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">
-                  <button type="submit" class="bi bi-heart btn"></button>{{this.LikedCount}}
-                  </form>
-              </span>      
-          </p>
+                </button>
+            </span><span class="post-icon-block">
+              
+              <form action="posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">
+                
+                {{#if this.isLiked}}
+                 <button type="submit" class="bi bi-heart-fill btn"></button><span class="likedText">{{this.LikedCount}}</span>
+                 {{else}}
+                <button type="submit" class="bi bi-heart btn"></button>{{this.LikedCount}}
+                {{/if}}
+              </form>
+            </span>
+          </h3>
         </div>
       </div>
       {{/each}}
