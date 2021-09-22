@@ -10,6 +10,7 @@ const loginController = {
 
   signUp: (req, res) => {
     const { account, name, email, password, passwordCheck } = req.body
+    const role = false
     const error_messages = []
     //加入多種錯誤訊息
     if (password !== passwordCheck) { error_messages.push({ message: '密碼與確認密碼不相符！' }) }
@@ -41,7 +42,8 @@ const loginController = {
         account,
         name,
         email,
-        password
+        password,
+        role
       }).then(() => {
         req.flash('success_messages', '成功註冊帳號！')
         return res.redirect('/signin')
