@@ -38,6 +38,20 @@
           編輯個人資料
         </button>
       </div>
+      {{else}}
+      {{#if profileUser.isFollowed }}
+      <div class="follow-feature">
+      <form action="/followships/{{profileUser.id}}?_method=DELETE" method="POST">
+        <button type="submit" class="btn rounded-pill fw-bolder common-button">正在跟隨</button>
+      </form>
+      </div>
+      {{else}}
+      <div class="follow-feature">
+        <form action="/followships/{{profileUser.id}}" method="POST">
+        <button type="submit" class="btn rounded-pill fw-bolder unfollow-button">跟隨</button>
+      </form>
+      </div>
+      {{/if}}
       {{/ifEqual}}
     </div>
     <div class="px-2 pt-3 mt-0 d-flex flex-row user-nav">
