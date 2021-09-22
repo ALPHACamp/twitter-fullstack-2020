@@ -13,7 +13,7 @@ const app = express();
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine(".hbs", handlebars({ extname: ".hbs", defaultLayout: "main", handlebars: allowInsecurePrototypeAccess(Handlebars) }));
+app.engine(".hbs", handlebars({ extname: ".hbs", defaultLayout: "main", helpers: require('./config/handlebars-helpers'), handlebars: allowInsecurePrototypeAccess(Handlebars) }));
 app.set("view engine", ".hbs");
 
 app.use(express.static("public"));
