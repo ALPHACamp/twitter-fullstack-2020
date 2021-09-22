@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== 'production') {
 const session = require('express-session') 
 const passport = require('./config/passport')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({ 

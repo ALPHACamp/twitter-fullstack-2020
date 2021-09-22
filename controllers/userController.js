@@ -3,7 +3,7 @@ const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
 const { thousandComma } = require('../config/handlebars-helpers')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = 'bc129ea404ff01c'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const helpers = require('../_helpers')
 
 const userController = {
@@ -111,7 +111,7 @@ const userController = {
     toggleNotice: (req, res) => {
         if (helpers.getUser(req).id === Number(req.params.id)) return res.redirect('back')
         return User.findByPk(req.params.id, {
-            where: { isAdmin: 'user' }
+            where: { role: 'user' }
         })
             .then(user => {
                 user.update({ isNoticed: !user.isNoticed })
@@ -128,9 +128,9 @@ const userController = {
     
     getProfile: async (req, res) => {
         let [users, user, followship] = await Promise.all([
-            User.findAll({ where: { isAdmin: 'user' }, raw: true, nest: true, attributes: ['id'] }),
+            User.findAll({ where: { role: 'user' }, raw: true, nest: true, attributes: ['id'] }),
             User.findByPk(req.params.id, {
-                where: { isAdmin: 'user' },
+                where: { role: 'user' },
                 include: [
                     Tweet,
                     { model: Reply, include: { model: Tweet, include: [User] } },
