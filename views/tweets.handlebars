@@ -35,7 +35,7 @@
       <div class="buttonList mt-5">
         <div class="navItem index d-flex mb-4 ">
           <div class="icon d-flex align-items-center color-orange">
-            <i class="fas fa-tweets my-auto"></i>
+            <i class="fas fa-home my-auto"></i>
           </div>
           <a href="/tweets" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">首頁</span>
@@ -45,7 +45,7 @@
           <div class="icon d-flex align-items-center">
             <i class="fas fa-users"></i>
           </div>
-          <a href="/users/{{user.id}}/tweets" class="btn sidebarItem">
+          <a href="/user/{{user.id}}/tweets" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">個人資料</span>
           </a>
         </div>
@@ -100,16 +100,16 @@
       {{#each tweets}}
       <div class="tweet border">
         <div class="d-flex">
-          <span class="avatar m-2">
+          <a href="/user/{{this.User.id}}/tweets" class="avatar m-2 btn">
             <img src="{{noImage this.user.avatar.url}}" alt="" class="rounded-circle userImage">
-          </span>
+          </a>
           <div class="">
             <div class="d-flex">
-              <div class="name m-2">{{this.userName}}</div>
-              <div class="tag m-2">@{{this.userAccount}}</div>
-              <a class="time m-2" title="{{momentFormat this.createdAt}}" href="/tweets/{{this.id}}">
+              <a href="/user/{{this.User.id}}/tweets" class="name m-2 btn">{{this.userName}}</a>
+              <div class="tag m-2 mt-2 pt-1">@{{this.userAccount}}</div>
+              <div class="time m-2 mt-2 pt-1" title="{{momentFormat this.createdAt}}">
                 {{moment this.createdAt}}
-              </a>
+              </div>
             </div>
             <a href="/tweets/{{this.id}}" class="tweetContent m-2 btn">
               <p>{{this.description}}</p>
@@ -152,12 +152,12 @@
         <div class="popularUser d-flex border-bottom justify-content-between">
           <div class="user d-flex">
             <div class="avatar m-2">
-              <a href="/users/{{this.id}}">
+              <a href="/user/{{this.id}}/tweets">
                 <img src="{{noImage this.image}}" alt="" class="rounded-circle userImage">
               </a>
             </div>
             <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}</div>
+              <a href="/user/{{this.id}}/tweets" class="name mt-1 ms-1 fw-bolder btn">{{this.name}}</a>
               <div class="account ms-1">{{this.account}}</div>
             </div>
           </div>
