@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+/* bootstrap預設樣式清除 */
+span {
+  all: initial;
+}
 
 /* 註冊 */
 .register {
@@ -32,7 +36,7 @@
   flex-direction: column;
 }
 
-.register .form-label-group {
+.register .signupForm {
   position: relative;
   width: 540px;
   height: 52px;
@@ -40,6 +44,7 @@
 }
 
 .register label {
+  all: initial;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -113,7 +118,6 @@
 }
 
 .login .logo {
-  /*   border: 5px #ffac55 solid; */
   text-align: center;
   margin-bottom: 20px;
 }
@@ -134,7 +138,7 @@
   flex-direction: column;
 }
 
-.login .form-label-group {
+.login .signInForm {
   position: relative;
   width: 540px;
   height: 52px;
@@ -142,6 +146,7 @@
 }
 
 .login label {
+  all: initial;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -208,7 +213,8 @@
 }
 
 /* tweet */
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -218,7 +224,6 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-
 }
 
 .wrap {
@@ -236,60 +241,60 @@ body {
 }
 
 #main-content {
-  border: 1px solid #E6ECF0;
+  all: initial;
+  border: 1px solid #e6ecf0;
   width: 600px;
-  background: #E6ECF0;
+  background: #e6ecf0;
   display: flex;
   flex-direction: column;
 }
 
-
 /* main */
 #main-content .header {
-  background: #FFFFFF;
+  background: #ffffff;
   padding-left: 15px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   height: 55px;
   display: flex;
   justify-content: start;
-  align-items : center; 
+  align-items: center;
 }
 
 #main-content .header a .iconBack:hover {
-  fill:#FF6600;
+  fill: #ff6600;
 }
 
-#main-content .header .headerItem{
-  margin-right:44px;
+#main-content .header .headerItem {
+  margin-right: 44px;
 }
 
-#main-content .header .headerItem span{
+#main-content .header .headerItem span {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 26px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 #main-content .post {
-  background: #FFFFFF;
-  margin-bottom:10px;
+  background: #ffffff;
+  margin-bottom: 10px;
   width: 600px;
   height: 120px;
   position: relative;
 }
 
 #main-content .post .postItem {
-  margin: 0px 0px 0px 15px ;
+  margin: 0px 0px 0px 15px;
   padding-top: 10px;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
 }
 
 #main-content .post .postItem .avatar {
   margin-right: 10px;
-  border-radius:50%;
+  border-radius: 50%;
 }
 
 #main-content .post .tweetButton {
@@ -299,44 +304,45 @@ body {
   right: 15px;
   bottom: 10px;
   cursor: pointer;
-  border:none;
-  background: #FF6600;
+  border: none;
+  background: #ff6600;
   border-radius: 100px;
-  
+
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 #main-content .tweet-body {
   width: 600px;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
 }
 
 #main-content .tweet-body .card-tweets {
-  width:600px;
+  width: 600px;
   margin-bottom: 1px;
-  min-height:136px;
-  display:flex;
-  background: #FFFFFF;
+  min-height: 136px;
+  display: flex;
+  background: #ffffff;
 }
 
 #main-content .tweet-body .card-tweets .card-avatar {
   margin: 13px 10px 0px 15px;
-  border-radius:50%;
+  border-radius: 50%;
 }
 
 #main-content .tweet-body .card-tweets .card-warp {
   padding-top: 10px;
-  display:flex;
-  flex-direction:column;
+  display: flex;
+  flex-direction: column;
 }
 
 #main-content .tweet-body .card-tweets .card-header {
+  all: initial;
   margin-bottom: 6px;
 }
 
@@ -346,7 +352,7 @@ body {
   font-weight: bold;
   font-size: 15px;
   line-height: 22px;
-  color: #1C1C1C;
+  color: #1c1c1c;
   flex: none;
   order: 0;
   flex-grow: 0;
@@ -366,11 +372,13 @@ body {
 }
 
 #main-content .tweet-body .card-tweets .card-content {
- margin-bottom: 14px; 
- width: 510px;
+  margin-bottom: 14px;
+  width: 510px;
 }
 
-#main-content .tweet-body .card-tweets .card-footer  {
+#main-content .tweet-body .card-tweets .card-footer {
+  all: initial;
+  padding-bottom: 14px;
   width: 510px;
   display: flex;
   align-items: center;
@@ -393,22 +401,38 @@ body {
 }
 
 #main-content .tweet-body .card-tweets .card-footer .icon-reply .reply-count,
-#main-content .tweet-body .card-tweets .card-footer .icon-like .like-count
-{
+#main-content .tweet-body .card-tweets .card-footer .icon-like .like-count {
+  cursor: pointer;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 13px;
+  color: #657786;
   margin-right: 11px;
 }
 
-#main-content .tweet-body .card-tweets .card-footer .icon-reply:hover .reply-count{
-  color: #FF6600;
-  fill: #FF6600;
+#main-content
+  .tweet-body
+  .card-tweets
+  .card-footer
+  .icon-reply:hover
+  .reply-count {
+  color: #ff6600;
+  fill: #ff6600;
 }
 
-#main-content .tweet-body .card-tweets .card-footer .icon-like:hover .like-count{
-  color: #FF6600;
-  fill: #FF6600;
+#main-content
+  .tweet-body
+  .card-tweets
+  .card-footer
+  .icon-like:hover
+  .like-count {
+  color: #ff6600;
+  fill: #ff6600;
 }
 
-#main-content .tweet-body .card-tweets .card-footer .icon-like{
+#main-content .tweet-body .card-tweets .card-footer .icon-like {
   display: flex;
   align-items: center;
 }
@@ -419,13 +443,94 @@ body {
   font-weight: bold;
   font-size: 18px;
   line-height: 26px;
-  color: #9197A3;
+  color: #9197a3;
+}
+
+/* postModal */
+#main-content .post .postModal {
+  cursor: pointer;
+  position: absolute;
+  top: 72px;
+  right: 15px;
+  bottom: 10px;
+  width: 66px;
+  height: 38px;
+  background: #ff6600;
+  outline: none;
+  border: none;
+  border-radius: 100px;
+}
+
+#main-content .post .postModal span {
+  all: initial;
+  cursor: pointer;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+  color: #ffffff;
+}
+
+#main-content .post .modal-header .post-close-button {
+  all: initial;
+  cursor: pointer;
+}
+
+#main-content .post .post-close-icon {
+  cursor: pointer;
+  fill: #1c1c1c;
+}
+
+#main-content .post .modal-header .post-close-button:hover .post-close-icon {
+  fill: #ff6600;
+}
+
+#main-content .post .modal-content {
+  border-radius: 14px;
+  margin-top: 54px;
+}
+
+#main-content .post .modal-content .modal-body {
+  display: flex;
+}
+
+#main-content .post .modal-content .modal-body img {
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+#main-content .post .modal-content .modal-body textarea {
+  all: initial;
+  margin-top: 15px;
+  border: none;
+  width: auto;
+}
+
+#main-content .post .modal-content .modal-footer {
+  border: none;
+}
+
+#main-content .post .modal-content .modal-footer .post-submit-button {
+  position: absolute;
+  width: 66px;
+  height: 38px;
+  right: 15px;
+  bottom: 15px;
+  cursor: pointer;
+  border: none;
+  background: #ff6600;
+  border-radius: 100px;
+}
+
+#main-content .post .modal-content .modal-footer .post-submit-button span {
+  color: #ffffff;
 }
 
 /* navBar left */
 #sidebar-left .logout:hover .iconLogout {
-  color: #FF6600;
-  fill: #FF6600;
+  color: #ff6600;
+  stroke: #ff6600;
 }
 
 #sidebar-left .logout .iconLogout {
@@ -435,15 +540,15 @@ body {
   font-weight: bold;
   font-size: 18px;
   line-height: 26px;
-  color: #1C1C1C;
-  text-decoration:none;
+  color: #1c1c1c;
+  fill: none;
+  stroke: black;
+  text-decoration: none;
 }
 
 #sidebar-left .navigation .logo svg {
-  margin-bottom:30px;
-
+  margin-bottom: 30px;
 }
-
 
 #sidebar-left .navigation {
   width: 180px;
@@ -456,6 +561,7 @@ body {
 }
 
 #sidebar-left .logout {
+  cursor: pointer;
   display: flex;
   align-items: center;
   width: auto;
@@ -464,7 +570,6 @@ body {
   bottom: 0;
 }
 
-
 #sidebar-left .navigation .item {
   display: flex;
   flex-direction: row;
@@ -472,11 +577,11 @@ body {
   margin-bottom: 30px;
 }
 
-#sidebar-left .navigation .item:hover .iconIndex, 
+#sidebar-left .navigation .item:hover .iconIndex,
 #sidebar-left .navigation .item:hover .iconUser,
-#sidebar-left .navigation .item:hover .iconCog{
-  color: #FF6600;
-  fill: #FF6600;
+#sidebar-left .navigation .item:hover .iconCog {
+  color: #ff6600;
+  fill: #ff6600;
 }
 
 #sidebar-left .navigation .item span {
@@ -493,7 +598,7 @@ body {
   font-weight: bold;
   font-size: 18px;
   line-height: 20px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 svg {
@@ -508,22 +613,23 @@ svg {
   height: 38px;
   left: 0px;
   top: 10px;
-  border:none;
-  background: #FF6600;
+  cursor: pointer;
+  border: none;
+  background: #ff6600;
   border-radius: 100px;
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 #sidebar-right .popular {
   margin: 15px 0px 0px 30px;
   width: 350px;
   height: 756px;
-  background: #E6ECF0;
+  background: #e6ecf0;
   border-radius: 14px;
   display: flex;
   flex-direction: column;
@@ -531,14 +637,14 @@ svg {
   position: sticky;
   top: 15px;
   z-index: -1;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 #sidebar-right .popular .popular-top {
   position: absolute;
   width: 350px;
   height: 80px;
-  background: #F5F8FA;
+  background: #f5f8fa;
 }
 
 #sidebar-right .popular .title {
@@ -548,9 +654,9 @@ svg {
   font-weight: bold;
   font-size: 18px;
   line-height: 26px;
-  color: #1C1C1C;
-/*   background: #F5F8FA; */
-  z-index:1;
+  color: #1c1c1c;
+  /*   background: #F5F8FA; */
+  z-index: 1;
 }
 
 #sidebar-right .popular .card-wrapper {
@@ -559,12 +665,13 @@ svg {
 }
 
 #sidebar-right .popular .card-wrapper .card {
-  border-top:1px solid #E6ECF0;;
+  all: initial;
+  border-top: 1px solid #e6ecf0;
   position: relative;
   width: 350px;
   height: 70px;
-  display: flex; 
-  background: #F5F8FA;
+  display: flex;
+  background: #f5f8fa;
 }
 
 #sidebar-right .popular .card-wrapper .card .avatar {
@@ -579,13 +686,13 @@ svg {
 }
 
 #sidebar-right .popular .card-wrapper .card .people .name {
-  margin: 18px 0px 3px 0px;  
+  margin: 18px 0px 3px 0px;
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 15px;
   line-height: 15px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 #sidebar-right .popular .card-wrapper .card .people .account {
@@ -603,17 +710,18 @@ svg {
   height: 35px;
   right: 15px;
   top: 17px;
-  background: #FF6600;
-  border: 1px solid #FF6600;
+  background: #ff6600;
+  cursor: pointer;
+  border: 1px solid #ff6600;
   box-sizing: border-box;
   border-radius: 100px;
-/*   文字 */
+  /*   文字 */
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 15px;
   line-height: 15px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 #sidebar-right .popular .card-wrapper .card .follow {
@@ -622,95 +730,219 @@ svg {
   height: 35px;
   right: 15px;
   top: 17px;
-  border: 1px solid #FF6600;
+  cursor: pointer;
+  border: 1px solid #ff6600;
   box-sizing: border-box;
   border-radius: 100px;
-  background:rgba(0,0,0,0);
-/*   文字 */
+  background: rgba(0, 0, 0, 0);
+  /*   文字 */
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 15px;
   line-height: 15px;
-  color: #FF6600;
+  color: #ff6600;
 }
 
 /* modal */
 
+.details-modal {
+  background: #fff;
+  border-radius: 0.5em;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  left: 50%;
+  max-width: 90%;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30em;
+  text-align: left;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+}
+.details-modal .details-modal-close {
+  align-items: center;
+  color: #111827;
+  display: flex;
+  height: 4.5em;
+  justify-content: center;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 4.5em;
+}
+.details-modal .details-modal-close svg {
+  display: block;
+}
+.details-modal .details-modal-title {
+  color: #111827;
+  padding: 1.5em 2em;
+  pointer-events: all;
+  position: relative;
+  width: calc(100% - 4.5em);
+}
+.details-modal .details-modal-title h1 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: normal;
+}
+.details-modal .details-modal-content {
+  border-top: 1px solid #e0e0e0;
+  padding: 2em;
+  pointer-events: all;
+  overflow: auto;
+}
+.details-modal-overlay {
+  transition: opacity 0.2s ease-out;
+  pointer-events: none;
+  background: rgba(15, 23, 42, 0.8);
+  position: fixed;
+  opacity: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+details[open] .details-modal-overlay {
+  pointer-events: all;
+  opacity: 0.5;
+}
+details summary {
+  list-style: none;
+}
+details summary:focus {
+  outline: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
 
- .details-modal {
-	 background: #fff;
-	 border-radius: 0.5em;
-	 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-	 left: 50%;
-	 max-width: 90%;
-	 pointer-events: none;
-	 position: absolute;
-	 top: 50%;
-	 transform: translate(-50%, -50%);
-	 width: 30em;
-	 text-align: left;
-	 max-height: 90vh;
-	 display: flex;
-	 flex-direction: column;
-}
- .details-modal .details-modal-close {
-	 align-items: center;
-	 color: #111827;
-	 display: flex;
-	 height: 4.5em;
-	 justify-content: center;
-	 pointer-events: none;
-	 position: absolute;
-	 right: 0;
-	 top: 0;
-	 width: 4.5em;
-}
- .details-modal .details-modal-close svg {
-	 display: block;
-}
- .details-modal .details-modal-title {
-	 color: #111827;
-	 padding: 1.5em 2em;
-	 pointer-events: all;
-	 position: relative;
-	 width: calc(100% - 4.5em);
-}
- .details-modal .details-modal-title h1 {
-	 font-size: 1.25rem;
-	 font-weight: 600;
-	 line-height: normal;
-}
- .details-modal .details-modal-content {
-	 border-top: 1px solid #e0e0e0;
-	 padding: 2em;
-	 pointer-events: all;
-	 overflow: auto;
-}
- .details-modal-overlay {
-	 transition: opacity 0.2s ease-out;
-	 pointer-events: none;
-	 background: rgba(15, 23, 42, 0.8);
-	 position: fixed;
-	 opacity: 0;
-	 bottom: 0;
-	 right: 0;
-	 left: 0;
-	 top: 0;
-}
- details[open] .details-modal-overlay {
-	 pointer-events: all;
-	 opacity: 0.5;
-}
- details summary {
-	 list-style: none;
-}
- details summary:focus {
-	 outline: none;
-}
- details summary::-webkit-details-marker {
-	 display: none;
+/* reply page */
+#main-content .post {
+  padding: 15px 15px 0px 15px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
 }
 
- 
+#main-content .post .postHead {
+  display: flex;
+}
 
+#main-content .post .postHead .postAvatar {
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+#main-content .post .postHead .headItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#main-content .post .postContent p {
+  padding-right: 75px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 23px;
+  line-height: 34px;
+  color: #1c1c1c;
+}
+
+#main-content .post .postContent .postItem {
+  margin-bottom: 15px;
+}
+
+#main-content .post .postContent .postItem .postDate {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+}
+
+#main-content .post .postFooter {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid #e6ecf0;
+}
+
+#main-content .post .postFooter .number {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 28px;
+  color: #000000;
+}
+
+#main-content .post .postFooter .string {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 28px;
+  color: #657786;
+  margin-right: 20px;
+}
+
+#main-content .post .postFeedback {
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-top: 1px solid #e6ecf0;
+}
+
+#main-content .post .postFeedback .icon-reply {
+  margin-right: 155px;
+  cursor: pointer;
+}
+
+#main-content .post .postFeedback .icon-reply:hover .iconReply {
+  fill: #ff6600;
+}
+
+#main-content .post .postFeedback .icon-reply .iconReply {
+  fill: #657786;
+}
+
+#main-content .post .postFeedback .icon-like:hover .iconLike {
+  fill: #ff6600;
+}
+
+#main-content .post .postFeedback .icon-like .iconLike {
+  fill: #657786;
+  cursor: pointer;
+}
+
+#main-content .tweet-body .card-tweets .card-warp .card-reply-for {
+  margin-bottom: 5px;
+}
+
+#main-content .tweet-body .card-tweets .card-warp .card-reply-for .replyItem {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+}
+
+#main-content
+  .tweet-body
+  .card-tweets
+  .card-warp
+  .card-reply-for
+  .replyReceiver {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #ff6600;
+}
