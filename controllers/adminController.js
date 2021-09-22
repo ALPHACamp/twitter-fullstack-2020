@@ -1,6 +1,8 @@
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
+const Like = db.Like
+const Reply = db.Reply
 
 const adminController = {
   signInPage: (req, res) => {
@@ -52,6 +54,9 @@ const adminController = {
       const id = req.params.tweetId
 
       await Tweet.destroy({ where: { id } })
+      // likes, replies 都要刪 才能防止ghost data
+      await Like.destroy({ where: { tweetId: id } })
+      await Reply.destroy({ where: { tweetId: id } })
       return res.redirect('back')
     } catch (err) {
       console.log(err)
