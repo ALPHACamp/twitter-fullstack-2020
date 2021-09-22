@@ -4,7 +4,6 @@ const Tweet = db.Tweet
 const User = db.User
 const Reply = db.Reply
 
-
 const tweetController = {
   getTweets: (req, res) => {
     return Promise.all([
@@ -36,7 +35,7 @@ const tweetController = {
       tweets = tweets.rows.map(r => ({
         ...r,
         description: r.description.substring(0,50),
-        isLiked: req.user.LikedTweet.map(d => d.id).includes(r.id),
+        isLiked: helpers.getUser(req).LikedTweet.map(d => d.id).includes(r.id),
       }))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       return res.render('tweets', {
@@ -46,6 +45,7 @@ const tweetController = {
       })
     })
   },
+
   postTweet: (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '推文內容不存在')
@@ -66,6 +66,7 @@ const tweetController = {
           res.redirect('/tweets') 
         })
   },
+
   getTweet: (req, res) => {
     return Promise.all([
       Tweet.findByPk(req.params.id, {
@@ -90,14 +91,13 @@ const tweetController = {
             isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
         }))
       users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(req.user.id)
+      const isLiked = tweet.LikedbyUser.map(d => d.id).includes(helpers.getUser(req).id)
       return res.render('tweet', {
         tweet: tweet.toJSON(),
         isLiked: isLiked,
         users: users
       })
     })
-
   }
 }
 

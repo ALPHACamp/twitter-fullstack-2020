@@ -56,13 +56,6 @@
               </div>
               <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{tweet.User.account}}</span>
               <div>
-                {{!-- {{#ifCond user.id tweet.UserId}}
-                <form action="/tweets/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
-                  <button type="submit" class="btn">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </form>
-                {{/ifCond}} --}}
               </div>
             </div>
 
@@ -115,13 +108,6 @@
                   <a href="/users/{{this.UserId}}" class="text-dark" style="font-size: 15px; font-weight:700; text-decoration:none;">{{this.User.name}}</a>
                   <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{this.User.account}}．{{moment this.createdAt}}</span>
                 </div>
-                {{!-- {{#ifCond this.User.id ../user.id}}
-                <form action="/replies/{{this.id}}?_method=DELETE" method="post" onsubmit="return deleteConfirm()">
-                  <button type="submit" class="btn">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </form>
-                {{/ifCond}} --}}
                 <div style="height: 22px; line-height: 22px">
                   <span style="color: #657786; font-size: 15px;line-height: 20px;">回覆</span>
                   <span style="color: #FF6600; font-size: 15px;line-height: 20px;">@{{../tweet.User.account}}</span>
@@ -142,7 +128,6 @@
       <div class="card d-none d-md-flex flex-column mt-1" style="border: none;">
         <ul class="list-group-flush">
           <li class="list-group-item bg-light" style="font-size: 18px; font-weight: bold; border: none;">Popular</li>
-          <!--第二個跟隨者-->
           {{#each users}}
           <li class="list-group-item bg-light" style="border-left: none;border-right: none">
             <div class="row justify-content-around align-items-center">
@@ -218,7 +203,7 @@
             </div>
             <div class="col-12 inline-flex mt-2">
               <span style="font-size: 10px">回覆給</span>
-              <span style="color: #FF6600; font-size: 10px">@{{user.account}}</span>
+              <span style="color: #FF6600; font-size: 10px">@{{tweet.User.account}}</span>
             </div>
           </div>
         </div>

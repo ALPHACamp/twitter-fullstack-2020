@@ -153,28 +153,7 @@
                     <p class="fw-bold">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
-                    {{!-- {{#if this.isLiked }}
-                    <form action="/tweets/{{this.id}}/unlike" method="POST">
-                      <button type="submit" class="btn" style="width: 60px; height: 30px">
-                        <i class="fas fa-heart" style="color: red;"> {{ this.likeCount }}</i>
-                      </button>
-                    </form>
-                    {{else}}
-                    <form action="/tweets/{{this.id}}/like" method="POST">
-                      <button type="submit" class="btn" style="width: 60px; height: 30px">
-                        <i class="far fa-heart" style="color: red;"></i>
-                      </button>
-                    </form>
-                    {{/if}} --}}
-                    {{!-- {{#if this.replyCount}}
-                    <button type="" class="" style="width: 60px; height: 30px">
-                      <i class="fas fa-comment"> {{ this.replyCount }}</i>
-                    </button>
-                    {{else}}
-                    <button type="" class="" style="width: 60px; height: 30px">
-                      <i class="far fa-comment"> {{ this.replyCount }}</i>
-                    </button>
-                    {{/if}} --}}
+                   
                     {{#ifCond this.likeCount 0 }}
                       <span style="width: 60px;">
                         <i class="far fa-heart" style="color: red;">{{ this.likeCount }}</i>
@@ -263,23 +242,7 @@
                     <p class="fw-bold">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
-                    {{!-- <form action="/tweets/{{this.id}}/unlike" method="POST">
-                      <button type="submit" class="btn" style="width: 60px; height: 30px">
-                        <i class="fas fa-heart" style="color: red;"> {{ this.likeCount }}</i>
-                      </button>
-                    </form> --}}
-
-                    {{!-- {{#if this.replyCount}}
-                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-toggle="modal"
-                      data-target="#replyModal">
-                      <i class="fas fa-comment"> {{ this.replyCount }}</i>
-                    </button>
-                    {{else}}
-                    <button type="submit" class="btn" style="width: 60px; height: 30px" data-toggle="modal"
-                      data-target="#replyModal">
-                      <i class="far fa-comment"> {{ this.replyCount }}</i>
-                    </button>
-                    {{/if}} --}}
+                  
                     <span style="width: 50px;">
                       <i class="fas fa-heart" style="color: red;"> {{ this.likeCount }}</i>
                     </span>

@@ -126,7 +126,7 @@
             <div class="modal-body">
               <div class="row align-items-start mb-1 px-3 ">
                 <div class="card-image col-1 d-flex justify-content-center align-items-center">
-                  <img src="{{this.User.avatar}}" class="rounded-circle mr-2" style="width: 50px; height: 50px;" alt="大頭貼">
+                  <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle mr-2" style="width: 50px; height: 50px;" alt="大頭貼">
                 </div>
                 <div class="col-11 row">
                   <div class="col-12 d-inline-flex justify-content-between align-items-center">
@@ -150,7 +150,7 @@
                 <form action="/tweets/{{this.id}}/replies" method="POST" class="mt-2 ">
                   <div class="position-relative" style="margin-left:20px; padding: 75px 0;">
                     <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
-                      <img src="{{../user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;"
+                      <img src="{{#if ../user.avatar}}{{../user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;"
                         alt="大頭貼" />
                     </div>
                     <div class="position-absolute" style="z-index: 0; width: 430px; top:-5px; left:-10px;">
@@ -179,7 +179,6 @@
       <div class="card d-none d-md-flex flex-column mt-1" style="border: none;" >
         <ul class="list-group-flush">
           <li class="list-group-item bg-light" style="font-size: 18px; font-weight: bold; border: none;">Popular</li>
-          <!--第二個跟隨者-->
           {{#each users}}
           <li class="list-group-item bg-light" style="border-left: none;border-right: none">
             <div class="row justify-content-around align-items-center">

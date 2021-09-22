@@ -17,7 +17,7 @@ const replyController = {
       return res.redirect('back')
     }
     return Reply.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.body.TweetId,
       comment: req.body.comment,
     })
@@ -30,8 +30,7 @@ const replyController = {
         req.flash('success_messages', '成功回覆推文')
         res.redirect(`/tweets/${req.body.TweetId}`)
       })
-  },
-
+  }
 }
 
 module.exports = replyController
