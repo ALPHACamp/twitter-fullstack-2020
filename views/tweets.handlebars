@@ -148,6 +148,7 @@
         <h5 class="fw-bolder">Popular</h5>
       </div>
       {{#each users}}
+      {{#ifCondNot this.id ../theUser}}
       <div class="popularList border-top">
         <div class="popularUser d-flex border-bottom justify-content-between">
           <div class="user d-flex">
@@ -157,12 +158,13 @@
               </a>
             </div>
             <div class="information">
-              <a href="/user/{{this.id}}/tweets" class="name mt-1 ms-1 fw-bolder btn">{{this.name}}</a>
+              <a href="/user/{{this.id}}/tweets" class="name mt-3 ms-1 fw-bolder btn">{{this.name}} </a>
+              <span>{{#if this.isFollowed }} 追隨中 {{/if}}</span>
               <div class="account ms-1">{{this.account}}</div>
             </div>
           </div>
           <div class="round m-3">
-            {{#if isFollowing }}
+            {{#ifCond ../this.UserId ../this.Follower }}
             <form action="/following/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn orange text-white round">取消跟隨</button>
             </form>
@@ -170,10 +172,11 @@
             <form action="/following/{{this.id}}" method="POST">
               <button type="submit" class="btn followButton round">跟隨</button>
             </form>
-            {{/if}}
+            {{/ifCond}}
           </div>
         </div>
-        {{/each}}
+      {{/ifCondNot}}
+      {{/each}}
 
       </div>
     </div>
