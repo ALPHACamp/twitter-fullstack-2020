@@ -3,6 +3,8 @@ const router = express.Router()
 const passport = require('../config/passport')
 const helpers = require('../_helpers')
 const userController = require('../controllers/userController')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 
 const authenticated = (req, res, next) => {
@@ -22,12 +24,15 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/users/
 router.get('/logout', userController.logout)
 
 //user's profile
+router.put('/self/edit/:id', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putUserEdit)
 router.get('/self/:id', authenticated, userController.getUser)
 router.get('/self/reply/:id', authenticated, userController.getUserReply)
 router.get('/self/like/:id', authenticated, userController.getUserLike)
 
+
 // user's setting
 router.get('/setting/:id', authenticated, userController.getUserSetting)
-router.post('/setting/:id', authenticated, userController.putUserSetting)
+router.put('/setting/:id', authenticated, userController.putUserSetting)
 
 module.exports = router
+

@@ -38,3 +38,58 @@ html, body{
   border-bottom: 2px solid #FF6600 !important;
 }
 
+.editInput{
+  background-color: #F5F8FA;
+  border: 0px;
+  border-radius: 0px 0px 4px 4px;
+  border-bottom: 2px solid #657786;
+}
+
+.user-avatar{
+  width: 140px;
+  height: 140px;
+  position:absolute;top: 12rem; left: 1rem;
+  border: 4px solid white;
+}
+
+.user-avatar-modal{
+  width: 120px; 
+  height: 120px; 
+  position:absolute; top: 13rem; left: 1rem;
+  border: 4px solid white;
+  opacity: 0.85;
+}
+
+.user-cover-modal{
+  width: 596px; 
+  height: 200px; 
+  position:relate;
+  opacity: 0.85;
+}
+
+.avatar-camera{
+  width: 20px; 
+  height: 20px; 
+  position:absolute; top: 16.5rem; left: 4.2rem;
+  color: white;
+}
+
+.cover-camera{
+  width: 20px; 
+  height: 20px; 
+  position:absolute; top: 10rem; left: 15rem;
+  color: white;
+}
+
+.cover-close{
+  width: 15px;
+  height: 15px;
+  position:absolute; top: 10rem; left: 20rem;
+  color: white;
+}
+
+.modal-close{
+  width: 15px; 
+  height: 15px; 
+  color: #FF6600;
+}

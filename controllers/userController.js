@@ -5,7 +5,9 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
-
+const fs = require('fs')
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 
 const userController = {
@@ -82,8 +84,12 @@ const userController = {
 
         User.findByPk(req.params.id)
           .then(user => {
+            const nameWordCount = user.dataValues.name.length
+            const introWordCount = user.dataValues.introduction.length
             return res.render('self', {
               user: user.toJSON(),
+              nameWordCount: nameWordCount,
+              introWordCount: introWordCount,
               totalTweet: totalTweet,
               tweet: data,
               followerCount: followerCount.length,
@@ -124,8 +130,12 @@ const userController = {
 
           User.findByPk(req.params.id)
             .then(user => {
+              const nameWordCount = user.dataValues.name.length
+              const introWordCount = user.dataValues.introduction.length
               return res.render('selfReply', {
                 user: user.toJSON(),
+                nameWordCount: nameWordCount,
+                introWordCount: introWordCount,
                 totalTweet: totalTweet,
                 Reply: data,
                 followerCount: followerCount.length,
@@ -148,7 +158,6 @@ const userController = {
       where: whereQuery,
       order: [['createdAt', 'DESC']],
     }).then(result => {
-      console.log(result.rows[0].dataValues.Tweet)
       const data = result.rows.map(r => ({
         ...r.dataValues,
         content: r.dataValues.Tweet.dataValues.content,
@@ -173,8 +182,12 @@ const userController = {
 
           User.findByPk(req.params.id)
             .then(user => {
+              const nameWordCount = user.dataValues.name.length
+              const introWordCount = user.dataValues.introduction.length
               return res.render('selfLike', {
                 user: user.toJSON(),
+                nameWordCount: nameWordCount,
+                introWordCount: introWordCount,
                 totalTweet: totalTweet,
                 Like: data,
                 followerCount: followerCount.length,
@@ -184,6 +197,103 @@ const userController = {
         })
       })
     })
+  },
+
+  putUserEdit: (req, res) => {
+    const { files } = req
+    const fileCountsArr = Object.keys(files)
+    const fileCounts = fileCountsArr.length
+
+    const getUploadLink = (link) => {
+      return new Promise((resolve, reject) => {
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        imgur.upload(link, (err, img) => {
+          return resolve(img.data.link)
+        })
+      })
+    }
+
+    if (fileCounts > 0) {
+      const tempLink = []
+      let image = ''
+      if (files.avatar) {
+        tempLink.push(files.avatar[0].path)
+        image = 'avatar'
+        editedUploadLink(tempLink, image)
+      } else if (files.cover) {
+        tempLink.push(files.cover[0].path)
+        image = 'cover'
+        editedUploadLink(tempLink, image)
+      } else {
+        tempLink.push(files.avatar[0].path, files.cover[0].path)
+        image = 'both'
+        editedUploadLink(tempLink, image)
+      }
+
+      async function editedUploadLink(tempLink, image) {
+        try {
+          const uploadImgs = await Promise.all(tempLink.map(async (link) => {
+            const result = await getUploadLink(link)
+            return result
+          }))
+          if (image === 'both') {
+            User.findByPk(req.params.id)
+              .then(user => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  avatar: uploadImgs[0],
+                  cover: uploadImgs[1]
+                }).then(user => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/self/${user.id}`)
+                })
+              })
+          } else if (image === 'avatar') {
+            User.findByPk(req.params.id)
+              .then(user => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  avatar: uploadImgs[0],
+                  cover: user.cover
+                }).then(user => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/self/${user.id}`)
+                })
+              })
+          } else if (image === 'cover') {
+            User.findByPk(req.params.id)
+              .then(user => {
+                user.update({
+                  name: req.body.name,
+                  introduction: req.body.introduction,
+                  avatar: user.avatar,
+                  cover: uploadImgs[0]
+                }).then(user => {
+                  req.flash('success_messages', 'profile was successfully to update')
+                  res.redirect(`/users/self/${user.id}`)
+                })
+              })
+          }
+        } catch (err) {
+          console.warn(err)
+        }
+      }
+    } else {
+      return User.findByPk(req.params.id)
+        .then(user => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            cover: user.cover,
+            avatar: user.avatar
+          }).then(user => {
+            req.flash('success_messages', 'profile was successfully to update')
+            res.redirect(`/users/self/${user.id}`)
+          })
+        })
+    }
   },
 
   getUserSetting: (req, res) => {
