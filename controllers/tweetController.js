@@ -4,7 +4,7 @@ const Reply = db.Reply
 const User = db.User
 const Like = db.Like
 const helpers = require('../_helpers')
-
+const dayjs = require('dayjs')
 
 const tweetController = {
   getTweets: async (req, res) => {
@@ -43,7 +43,8 @@ const tweetController = {
         userAccount: tweet.User.account,
         userAvatar: tweet.User.avatar,
         replyLength: tweet.Replies.length,
-        likeLength: tweet.Likes.length
+        likeLength: tweet.Likes.length,
+        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweet.id)
       }))
       //console.log('mapping tweet:', reorganizationTweets)
       return res.render('tweets', { reorganizationTweets, popularUser, userself })
