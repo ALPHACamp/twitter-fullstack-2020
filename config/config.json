@@ -5,7 +5,7 @@
     "database": "ac_twitter_workspace",
     "host": "127.0.0.1",
     "dialect": "mysql",
-    // "operatorsAliases": false
+    "operatorsAliases": false
   },
   "test": {
     "username": "root",
@@ -19,6 +19,7 @@
       "use_env_variable": "DATABASE_URL",
       "dialect": "postgres",
       "protocol": "postgres",
+      "operatorsAliases": false,
       "dialectOptions": {
         "ssl": {
           "rejectUnauthorized": false
