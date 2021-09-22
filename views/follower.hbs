@@ -6,7 +6,7 @@
     {{!-------------------- 姓名欄 --------------------}}
     <div class="d-flex">
       <div class="p-3">
-        <a href="#"><i class="fas fa-arrow-left me-2 mb-3" style="color: #1C1C1C;"></i></a>
+        <a href=" /users/{{user.id}}/tweets"><i class="fas fa-arrow-left me-2 mb-3" style="color: #1C1C1C;"></i></a>
       </div>
       <div class="p-2">
         <div class="home-word">{{userself.name}}</div>
@@ -22,7 +22,7 @@
             href="#">跟隨者</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-secondary font-weight-bold" href="/following">正在跟隨</a>
+          <a class="nav-link text-secondary font-weight-bold" href="/users/{{user.id}}/followings">正在跟隨</a>
         </li>
       </ul>
     </div>
