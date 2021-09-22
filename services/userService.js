@@ -41,11 +41,10 @@ const userService = {
 
   putUserEdit: async (req, res, callback) => {
     const { name, introduction } = req.body
-    if (!name) {
-      return callback({ status: 'error', message: "暱稱不能空白！" })
-    }
-    if (name.length > 50 || introduction.length > 160) {
-      return callback({ status: 'error', message: "字數超出上限！" })
+    if (!name || !introduction) {
+      return callback({ status: 'error', message: "表單內容不符合條件！" })
+    } else if (name.length > 50 || introduction.length > 160) {
+      return callback({ status: 'error', message: "表單內容不符合條件！" })
     }
     // const file = Object.assign({}, req.files)
     const { files } = req
