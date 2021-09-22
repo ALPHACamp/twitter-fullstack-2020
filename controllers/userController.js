@@ -5,6 +5,7 @@ const { thousandComma } = require('../config/handlebars-helpers')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = 'bc129ea404ff01c'
 const helpers = require('../_helpers')
+
 // const { raw } = require('body-parser') - alan check
 
 const userController = {
@@ -58,9 +59,7 @@ const userController = {
 
     signIn: (req, res) => {
         req.flash('success_messages', '成功登入！')
-        //res.redirect('/tweets')
-        // 測試 follower功能，做完要改回上面 
-        res.redirect('/users/:id/followers')
+        res.redirect('/tweets')
     },
 
     logout: (req, res) => {
@@ -230,38 +229,6 @@ const userController = {
             console.warn(error)
         }
     },
-    addLike: (req, res) => {
-        return Like.create({
-            UserId: req.user.id,
-            TweetId: req.params.TweetId
-        })
-            .then(() => {
-                return Tweet.findByPk(req.params.TweetId)
-                    .then((tweet) => {
-                        return tweet.increment('likeCount')
-                    })
-            })
-            .then(() => {
-                return res.redirect('back')
-            })
-    },
-    removeLike: (req, res) => {
-        return Like.findOne({
-            where: {
-                UserId: req.user.id,
-                TweetId: req.params.TweetId
-            }
-        })
-            .then((like) => {
-                like.destroy()
-                    .then(() => {
-                        return Tweet.findByPk(req.params.TweetId).then((tweet) => {
-                            tweet.decrement('likeCount')
-                            res.redirect('back')
-                        })
-                    })
-            })
-    },
     //setting - 阿金
     getSetting: (req, res) => {
         return User.findByPk(req.user.id).then(theuser => {
@@ -398,7 +365,11 @@ const userController = {
 
     getFollowers: async (req, res) => {
         const id = helpers.getUser(req).id
-
+        let user = await User.findByPk(req.params.id, {
+                include: [
+                    Tweet
+                ]
+            })
         let followers = await User.findAll({
             raw: true,
             nest: true,
@@ -413,7 +384,7 @@ const userController = {
             ],
             order: [['Followings', Followship, 'createdAt', 'DESC']]
         })
-
+        const tweetCount = user.Tweets.length
         followers = followers.map(follower => ({
             id: follower.id,
             email: follower.email,
@@ -451,13 +422,49 @@ const userController = {
         }))
         // users 陣列要用 FollowerCount 來排序，再取跟隨者 (followers) 數量排列前 10 的使用者推薦名單
         Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-        return res.render('follower', { followers: followers, id: id, Top10Users: Top10Users })
+        return res.render('follower', { followers: followers, id: id, Top10Users: Top10Users, tweetCount: thousandComma(tweetCount) })
 
     },
-
+    //MUSH新增
+    addLike: (req, res) => {
+        return Like.create({
+            UserId: req.user.id,
+            TweetId: req.params.TweetId
+        })
+            .then(() => {
+                return Tweet.findByPk(req.params.TweetId)
+                    .then((tweet) => {
+                        return tweet.increment('likeCount')
+                    })
+            })
+            .then(() => {
+                return res.redirect('back')
+            })
+    },
+    removeLike: (req, res) => {
+        return Like.findOne({
+            where: {
+                UserId: req.user.id,
+                TweetId: req.params.TweetId
+            }
+        })
+            .then((like) => {
+                like.destroy()
+                    .then(() => {
+                        return Tweet.findByPk(req.params.TweetId).then((tweet) => {
+                            tweet.decrement('likeCount')
+                            res.redirect('back')
+                        })
+                    })
+            })
+    },
     getFollowings: async (req, res) => {
         const id = helpers.getUser(req).id
-
+        let user = await User.findByPk(req.params.id, {
+                include: [
+                    Tweet
+                ]
+            })
         let followings = await User.findAll({
             raw: true,
             nest: true,
@@ -472,7 +479,7 @@ const userController = {
             ],
             order: [['Followers', Followship, 'createdAt', 'DESC']]
         })
-
+        const tweetCount = user.Tweets.length
         followings = followings.map(following => ({
             id: following.id,
             email: following.email,
@@ -510,7 +517,8 @@ const userController = {
         }))
         // users 陣列要用 FollowerCount 來排序，再取跟隨者 (followers) 數量排列前 10 的使用者推薦名單
         Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
-        return res.render('following', { followings: followings, id: id, Top10Users: Top10Users })
+        return res.render('following', { followings: followings, id: id, Top10Users: Top10Users, tweetCount: thousandComma(tweetCount) })
+
 
     }
 }

@@ -25,6 +25,7 @@ app.engine('handlebars', handlebars({
   helpers: require('./config/handlebars-helpers')
 })) // Handlebars 註冊樣板引擎
 app.set('view engine', 'handlebars') // 設定Handlebars 做為樣板引擎
+
 app.use(express.static('public'))
 //使用methodOverride
 app.use(methodOverride('_method'))
@@ -36,6 +37,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 // setup flash
 app.use(flash())
+//使用methodOverride
+app.use(methodOverride('_method'))
 // 把 req.flash 放到 res.locals 裡面
 app.use((req, res, next) => {
     res.locals.success_messages = req.flash('success_messages')
@@ -45,6 +48,8 @@ app.use((req, res, next) => {
 })
 // 設定每一筆請求都會透過 methodOverride 進行前置處理
 app.use(methodOverride('_method'))
+
+app.get('/follower', (req, res) => res.render('follower'))
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

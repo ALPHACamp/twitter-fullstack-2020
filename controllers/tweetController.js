@@ -2,77 +2,99 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const Tweet = db.Tweet
 const User = db.User
-
+const Reply = db.Reply
 
 
 const tweetController = {
   getTweets: (req, res) => {
     return Promise.all([
       User.findAll({
-        raw: true,
-        nest: true,
-        where: {
-          isAdmin: false,
-          id: req.params.id
-        },
-        include: [{ model: User, as: 'Followers' }]
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
       }),
       Tweet.findAndCountAll({
         raw: true,
         nest: true,
         order: [['createdAt', 'DESC']],
         include: [User]
+      }),
+      Tweet.findByPk(req.body.TweetId, {
+        include: [
+          User,
+          {model: Reply, include: User}
+        ]
       })
-    ]).then(([followship, tweets]) => {
+    ]).then(([users, tweets, tweet]) => {
+      users = users.map(user => ({
+            ...user.dataValues,
+            FollowerCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+        }))
       tweets = tweets.rows.map(r => ({
         ...r,
-        description: r.description.substring(0, 50),
+        description: r.description.substring(0,50),
+        isLiked: req.user.LikedTweet.map(d => d.id).includes(r.id),
       }))
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       return res.render('tweets', {
-        tweets: tweets
+        tweets: tweets,
+        tweet: tweet,
+        users: users
       })
-
     })
   },
   postTweet: (req, res) => {
     if (!req.body.description) {
       req.flash('error_messages', '推文內容不存在')
-      console.log('推文內容不存在')
       return res.redirect('/tweets')
     } else if (req.body.description.trim().length === 0) {
       req.flash('error_messages', '請輸入推文內容!')
-      console.log('請輸入推文內容')
       return res.redirect('/tweets')
     } else if (req.body.description.length > 140) {
       req.flash('error_messages', '推文超過140字數限制')
-      console.log('推文超過140字數限制')
       return res.redirect('/tweets')
     }
-    return Tweet.create({
-      UserId: helpers.getUser(req).id,
-      description: req.body.description,
-    })
-      .then((tweet) => {
-        req.flash('success_messages', '成功發布推文')
-        console.log(`這是內容:${req.body.description}`)
-        console.log(req.body.description.length)
-        res.redirect('/tweets')
-
+      return Tweet.create({
+        UserId: helpers.getUser(req).id,
+        description: req.body.description,
       })
+        .then((tweet) => {
+          req.flash('success_messages', '成功發布推文')
+          res.redirect('/tweets') 
+        })
   },
   getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
-      include: [
-        User,
-        { model: Reply, include: User },
-        { model: User, as: 'LikedbyUser' }
-      ],
-      order: [[Reply, 'createdAt', 'DESC']]
-    }).then((tweet) => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
+        include: [
+          User,
+          { model: Reply, include: User },
+          { model: User, as: 'LikedbyUser'}
+        ],
+        order: [[Reply, 'createdAt', 'DESC']]
+      }),
+      User.findAll({
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ]
+      })
+    ]).then(([tweet, users]) => {
+      users = users.map(user => ({
+            ...user.dataValues,
+            FollowerCount: user.Followers.length,
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id),
+            isFollowing: helpers.getUser(req).Followers.map(d => d.id).includes(user.id),
+        }))
+      users = users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
       const isLiked = tweet.LikedbyUser.map(d => d.id).includes(req.user.id)
       return res.render('tweet', {
         tweet: tweet.toJSON(),
-        isLiked: isLiked
+        isLiked: isLiked,
+        users: users
       })
     })
 
