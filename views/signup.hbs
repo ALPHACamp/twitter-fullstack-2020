@@ -20,19 +20,19 @@
       <p class="mb-3 alphitter-signin">建立你的帳號</p>
     </div>
     <div class="form-label-group py-3 signin-form">
-      <input type="text" name="email" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="帳號" required autofocus>
+      <input type="text" name="account" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="帳號" value="{{this.account}}" required autofocus>
     </div>
     <div class="form-label-group py-3 signin-form">
-      <input type="text" name="name" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px" placeholder="名稱" required autofocus>
+      <input type="text" name="name" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px" placeholder="名稱" value="{{this.name}}" required autofocus>
     </div>
     <div class="form-label-group py-3 signin-form">
-      <input type="text" name="email" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="Email" required autofocus>
+      <input type="text" name="email" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="Email" value="{{this.email}}" required autofocus>
     </div>
     <div class="form-label-group py-3 signin-form">
-      <input type="password" name="password" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="密碼" required>
+      <input type="password" name="password" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="密碼" value="{{this.password}}"required>
     </div>
     <div class="form-label-group py-3 signin-form">
-      <input type="password" name="passwordCheck" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="密碼確認" required>
+      <input type="password" name="passwordCheck" class="form-control py-3" style="background-color:#F5F8FA; border-bottom: 2px solid #657786; border-top:0px; border-left:0px; border-right:0px;" placeholder="密碼確認" value="{{this.passwordCheck}}"required>
     </div>
     <br />
     <button class="btn btn-block text-light form-control py-2" style="border-radius: 40px; background-color:#FF6600"

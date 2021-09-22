@@ -6,46 +6,52 @@ const loginController = {
 
   signUpPage: (req, res) => {
     return res.render('signup')
-  }, 
+  },
 
   signUp: (req, res) => {
-    if (req.body.passwordCheck !== req.body.password) {
-      req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/signup')
-    } else {
-      // confirm unique user
-      User.findOne({ where: { email: req.body.email } }).then(user => {
-        if (user) {
-          req.flash('error_messages', '信箱重複！')
-          return res.redirect('/signup')
-        } else {
-          User.findOne({ where: { account: req.body.account } }).then(user => {
-            if (user) {
-              req.flash('error_messages', '帳號重複！')
-              return res.redirect('/signup')
-            } else {
-              User.create({
-                account: req.body.account,
-                name: req.body.name,
-                avatar: `https://loremflickr.com/320/240/selfie?random=${Math.random() * 100}`,
-                email: req.body.email,
-                password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-                role: false
-              }).then(user => {
-                req.flash('success_messages', '成功註冊帳號！')
-                return res.redirect('/signin')
-              })
-            }
+    const { account, name, email, password, passwordCheck } = req.body
+    const error_messages = []
+    //加入多種錯誤訊息
+    if (password !== passwordCheck) { error_messages.push({ message: '密碼與確認密碼不相符！' }) }
 
-          })
-        }
+    if (error_messages.length) {
+      return res.render('signup', {
+        error_messages,
+        account,
+        name,
+        email,
+        password,
+        passwordCheck
       })
     }
+
+    User.findOne({ where: { email }}).then(user => {
+      if (user) {
+        error_messages.push({ message: '這個 Email 已經註冊過了。' })
+        return res.render('signup', {
+          error_messages,
+          account,
+          name,
+          email,
+          password,
+          passwordCheck,
+        })
+      }
+      return User.create({
+        account,
+        name,
+        email,
+        password
+      }).then(() => {
+        req.flash('success_messages', '成功註冊帳號！')
+        return res.redirect('/signin')
+      })
+    })
   },
 
   signInPage: (req, res) => {
     return res.render('signin')
-  }, 
+  },
 
   signIn: (req, res) => {
     if (req.user.role) {
