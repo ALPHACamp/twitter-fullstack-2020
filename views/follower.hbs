@@ -39,7 +39,7 @@
         <div style="display: flex; justify-content:space-between">
           <div>
             <div class="follow-name">{{this.user.name}}</div>
-            <div class="follow-account m-0">@{{this.account}}</div>
+            <div class="follow-account m-0">@{{this.user.account}}</div>
           </div>
           {{#if this.isFollowed }}
           <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">

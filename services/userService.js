@@ -18,6 +18,14 @@ const userService = {
         ]
       })
 
+      // const followships = await Followship.findAll({
+      //   where: { followerId: userself.id },
+      //   order: [['createdAt', 'DESC']],
+      //   include: [
+      //     { model: User }
+      //   ]
+      // })
+
       let popularUser = []
       popularUser = users.map(user => ({
         ...user.dataValues,
@@ -53,7 +61,7 @@ const userService = {
       profileUser.followerLength = profileUser.Followers.length
       profileUser.followingLength = profileUser.Followings.length
       profileUser.tweetLength = profileUser.Tweets.length
-      
+
       return profileUser
     } catch (err) {
       console.log(err)
