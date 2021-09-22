@@ -150,11 +150,10 @@ const userController = {
                 ],
             }),
             User.findAll({
-                where: {
-                    isAdmin: 'user',
-                    id: { [Op.ne]: req.user.id }
-                },
-                include: [{ model: User, as: 'Followers' }]
+                include: [
+                    { model: User, as: 'Followers' },
+                    { model: User, as: 'Followings' }
+                ]
             })
         ])
         console.log('-----------------------------')
@@ -174,10 +173,10 @@ const userController = {
         followship = followship.map(followships => ({
             ...followships.dataValues,
             FollowerCount: followships.Followers.length,
-            isFollowed: req.user.Followings.some(d => d.id === followships.id),
+            isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes (followships.id),
             isMainuser: req.user.id === Number(req.params.id)
         }))
-        followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount)
+        followship = followship.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
 
         return res.render('userprofile', {
             users: user.toJSON(),
@@ -428,7 +427,7 @@ const userController = {
     //MUSH新增
     addLike: (req, res) => {
         return Like.create({
-            UserId: req.user.id,
+            UserId: helpers.getUser(req).id,
             TweetId: req.params.TweetId
         })
             .then(() => {
@@ -444,7 +443,7 @@ const userController = {
     removeLike: (req, res) => {
         return Like.findOne({
             where: {
-                UserId: req.user.id,
+                UserId: helpers.getUser(req).id,
                 TweetId: req.params.TweetId
             }
         })

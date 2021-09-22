@@ -44,8 +44,7 @@
           <div class="col-12 position-relative" style="margin-bottom: 15px; padding: 70px 0;">
             <div class="position-absolute" style="z-index: 5; top: 0px;">
               <img
-                src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}
-"
+                src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
                 class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;" alt="avatar">
             </div>
             <div class="position-absolute"
@@ -186,7 +185,7 @@
             <div class="row justify-content-around align-items-center">
               <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
                 <a href="/users/{{this.id}}">
-                  <img src={{this.avatar}} alt="" width="50" height="50" class="rounded-circle">
+                  <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt="" width="50" height="50" class="rounded-circle">
                 </a>
               </div>
           
@@ -241,7 +240,7 @@
         <div class="modal-body">
           <div class="position-relative" style="padding: 85px 0;">
             <div class="position-absolute" style="z-index: 5; left: -5px; top: 0px;">
-              <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;" alt="avatar">
+              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;" alt="avatar">
             </div>
             <div class="position-absolute" style="z-index: 0; width:465px; top:0px;">
               <textarea class="mt-1" id="description" name="description" rows="4" placeholder="有什麼新鮮事？"
