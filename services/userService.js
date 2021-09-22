@@ -53,7 +53,9 @@ const userService = {
       profileUser.followerLength = profileUser.Followers.length
       profileUser.followingLength = profileUser.Followings.length
       profileUser.tweetLength = profileUser.Tweets.length
-      
+      profileUser.isFollowed = req.user.Followings.map(d => d.id).includes(
+        Number(userId))
+
       return profileUser
     } catch (err) {
       console.log(err)
