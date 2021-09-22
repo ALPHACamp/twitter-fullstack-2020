@@ -10,7 +10,8 @@ router.get("/signin", userController.signInPage);
 router.post("/signin", userController.signIn);
 router.post("/signup", userController.signup);
 router.get("/", (req, res) => {
-  return res.redirect("profiles/:id/main");
+  // 先寫死等使用者出來
+  return res.redirect("profiles/2/main");
 });
 
 module.exports = router;

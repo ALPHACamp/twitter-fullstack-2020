@@ -9,6 +9,13 @@ const Like = db.Like
 const tweetController = {
   getPosts: async (req, res) => {
     try {
+      const Profile = await User.findByPk(req.params.userId, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+      })
+      console.log(req.params.userId)
       const rawTweets = await Tweet.findAll({
         include: [Reply, User,
           { model: User, as: 'LikedUsers' }],
@@ -34,8 +41,8 @@ const tweetController = {
       }))
       Users = Users.sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
-      // return res.json(TopUsers)
-      return res.render("index", { tweets: Tweets, users: TopUsers });
+      // return res.json(Profile)
+      return res.render("index", { tweets: Tweets, users: TopUsers, profile: Profile });
     } catch (error) {
       console.log(error)
     }

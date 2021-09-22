@@ -1,16 +1,16 @@
 const db = require('../models')
 const { Op } = require("sequelize");
 const moment = require('moment')
-const { Reply, User, Tweet, Like, Followship } = db
+const { Reply, User, Tweet, Like, } = db
 
 const profileController = {
   getPosts: async (req, res) => {
     try {
       // 前端判斷
       const isPost = true
-
+      
       //get selfInformation
-      const Profile = await User.findByPk(req.params.id, {
+      const Profile = await User.findByPk(req.params.userId, {
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
@@ -19,7 +19,7 @@ const profileController = {
 
       // get selfTweet
       const rawTweets = await Tweet.findAll({
-        where: { UserId: req.params.id },
+        where: { UserId: req.params.userId },
         include: [Reply,
           { model: User, as: 'LikedUsers' }],
         order: [['createdAt', 'DESC']],
@@ -42,15 +42,15 @@ const profileController = {
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.params.id } }
+        where: { id: { [Op.not]: req.params.userId } }
       })
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,
         FollowerCount: data.Followers.length,
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
-
-      // return res.json({ Tweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
+      // tweetsCount, followersCount, followingsCount
+      // return res.json({ Tweets, TopUsers, Profile, })
       return res.render("profile", { isPost, users: TopUsers, tweets: Tweets, profile: Profile, tweetsCount, followersCount, followingsCount });
     } catch (error) {
       console.log(error)
@@ -61,7 +61,7 @@ const profileController = {
     try {
       //前端處理判定
       const isComment = true
-      const Profile = await User.findByPk(req.params.id, {
+      const Profile = await User.findByPk(req.params.userId, {
         include: [
           Tweet,
           {
@@ -83,7 +83,7 @@ const profileController = {
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.params.id } }
+        where: { id: { [Op.not]: req.params.userId } }
       })
 
       const Users = await rawUsers.map(data => ({
@@ -104,7 +104,7 @@ const profileController = {
       const isLikedPosts = true
 
       //get selfInformation
-      const Profile = await User.findByPk(req.params.id, {
+      const Profile = await User.findByPk(req.params.userId, {
         include: [
           Tweet,
           { model: User, as: 'Followers' },
@@ -114,7 +114,7 @@ const profileController = {
 
       // get LIkeDTweet
       const rawLikedTweets = await Like.findAll({
-        where: { UserId: req.params.id },
+        where: { UserId: req.params.userId },
         include: [
           {
             model: Tweet, include: [Like, Reply, User]
@@ -138,7 +138,7 @@ const profileController = {
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.params.id } }
+        where: { id: { [Op.not]: req.params.userId } }
       })
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const passport = require("../config/passport");
 const usersRouter = require("./modules/users");
-const profileRouter = require("./modules/profiles");
+const profilesRouter = require("./modules/profiles");
 const adminRouter = require("./modules/admin");
 const postsRouter = require("./modules/posts");
 const followshipRouter = require("./modules/followships");
@@ -51,7 +51,7 @@ const authenticatedAdmin = (req, res, next) => {
 router.use("/users", usersRouter);
 router.use("/admin", adminRouter);
 router.use("/posts", postsRouter);
-router.use("/profile", profileRouter);
+router.use("/profiles", profilesRouter);
 router.use("/followships", followshipRouter);
 router.use("/", homeRouter);
 
