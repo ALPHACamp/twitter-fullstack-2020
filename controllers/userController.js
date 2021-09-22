@@ -49,7 +49,7 @@ const userController = {
           password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         }).then(user => {
           req.flash('success_messages', 'Your account had been successfully registered!')
-          return res.redirect('/signin')
+          return res.redirect('/tweets')
         })
       })
   },
