@@ -10,21 +10,12 @@ const userService = {
       const userself = req.user
       const users = await User.findAll({
         where: { role: 0 },
-        limit: 10,
         order: [['createdAt', 'DESC']],
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ]
       })
-
-      // const followships = await Followship.findAll({
-      //   where: { followerId: userself.id },
-      //   order: [['createdAt', 'DESC']],
-      //   include: [
-      //     { model: User }
-      //   ]
-      // })
 
       let popularUser = []
       popularUser = users.map(user => ({
@@ -34,10 +25,9 @@ const userService = {
       }))
 
       helpers.removeUser(popularUser, userself.id)
-      popularUser = popularUser.sort(
-        (a, b) => b.FollowerCount - a.FollowerCount
-      )
-
+      popularUser = popularUser.sort( (a, b) => b.FollowerCount - a.FollowerCount)
+      popularUser = popularUser.slice(0,10)
+      
       return popularUser
     } catch (err) {
       console.log(err)
@@ -61,7 +51,8 @@ const userService = {
       profileUser.followerLength = profileUser.Followers.length
       profileUser.followingLength = profileUser.Followings.length
       profileUser.tweetLength = profileUser.Tweets.length
-
+      profileUser.isFollowed = req.user.Followings.map(d => d.id).includes(
+        Number(userId))
       return profileUser
     } catch (err) {
       console.log(err)
