@@ -10,7 +10,7 @@ const maxDescLen = 50
 const adminController = {
   // 載入登入頁
   signInPage: (req, res) => {
-    return res.render('admin/signin')
+    return res.render('signin')
   },
 
   // 登入跳轉
@@ -114,10 +114,11 @@ const adminController = {
     Promise.all([
       User.findAll({
         include: [
-          { model: User, as: 'Followers' },
-          Tweet
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
         ],
-        where: { role: 'user' || null }
+        where: { role: "user" }
       }),
       Tweet.findAll({
         raw: true,
@@ -126,17 +127,18 @@ const adminController = {
       })
     ]).then(([users, tweets]) => {
 
-      const usersData =
+      let usersData =
         users.map(user => ({
           ...user.dataValues,
+          followersCount: user.Followers.length,
+          followingsCount: user.Followings.length,
           tweetCount: user.Tweets.length,
-          // tweetCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).length,
           likeCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).reduce((accumulator, currentValue) => {
             // console.log("===================")
             // console.log("tweetid:", currentValue.id)
             // console.log("accumulator:", accumulator)
             // console.log("currentlikes:", currentValue.Likes)
-            let addCount = currentValue.Likes.UserId ? 1 : 0
+            const addCount = currentValue.Likes.UserId ? 1 : 0
             // console.log("currentValue:", addCount)
             // console.log("return:", accumulator + addCount)
             return accumulator + addCount
@@ -151,7 +153,8 @@ const adminController = {
           //   return accumulator + currentValue.dataValues.Likes.length
           // }, 0)
         }))
-      console.log(usersData)
+      // console.log(usersData)
+      usersData = usersData.sort((a, b) => b.tweetCount - a.tweetCount)
       res.render('admin/users', { users: usersData })
     })
   }
