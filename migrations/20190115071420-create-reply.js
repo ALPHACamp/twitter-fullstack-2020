@@ -6,29 +6,28 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       UserId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       TweetId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER
       },
       comment: {
-        allowNull: false,
-        type: Sequelize.STRING(140),
+        type: Sequelize.STRING(140)
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE
+      }
     })
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Replies')
-  },
+  }
 }

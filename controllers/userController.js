@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt-nodejs')
-const db = require('../models')
-const User = db.User
+const helpers = require('../_helpers')
+const { User, Tweet, Reply, Followship, Like } = require('../models')
 
 let userController = {
   signupPage: (req, res) => {
@@ -57,29 +57,16 @@ let userController = {
     res.redirect('/signin')
   },
 
-  userSetting: (req, res) => {
-    res.render('/setting')
-  },
-  putUserSetting: (req, res) => {
-    if (req.body.passwordCheck !== req.body.password) {
-      req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/setting')
-    } else {
-      User.findOne({ where: { account: req.body.account } }).then((user) => {
-        if (user && req.body.account !== user.account) {
-          req.flash('error_messages', '此帳號已有人使用！')
-          return res.redirect('/setting')
-        }
+  getUserTweets: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: Tweet,
+      order: [[Tweet, 'createdAt', 'DESC']]
+    }).then((user) => {
+      const users = user.toJSON()
+      return res.render('user/userTweets', {
+        users: users
       })
-      return User.findByPk(req.params.id).then((user) => {
-        user.update({
-          account: req.body.account,
-          name: req.body.name,
-          email: req.body.email,
-          password: req.body.password
-        })
-      })
-    }
+    })
   }
 }
 
