@@ -30,10 +30,9 @@
               <button id="myInput" data-bs-toggle="modal" data-bs-target="#postModel" class="heart-button btn">
                 <i class="bi bi-chat"></i>{{this.ReplyCount}}
                 </button>
-            </span><span class="post-icon-block">
-              
-              <form action="posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">
-                
+            </span>
+            <span class="post-icon-block">              
+              <form action="posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                
                 {{#if this.isLiked}}
                  <button type="submit" class="bi bi-heart-fill btn"></button><span class="likedText">{{this.LikedCount}}</span>
                  {{else}}

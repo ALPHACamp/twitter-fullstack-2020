@@ -23,14 +23,7 @@ if (process.env.NODE_ENV === "test") {
 
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
-app.engine(
-  ".hbs",
-  handlebars({
-    extname: ".hbs",
-    defaultLayout: "main",
-    handlebars: allowInsecurePrototypeAccess(Handlebars),
-  })
-);
+app.engine(".hbs", handlebars({ extname: ".hbs", defaultLayout: "main", helpers: require('./config/handlebars-helpers'), handlebars: allowInsecurePrototypeAccess(Handlebars) }));
 app.set("view engine", ".hbs");
 
 //set method-override

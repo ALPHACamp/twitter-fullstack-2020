@@ -8,6 +8,13 @@ const tweetController = {
   getPosts: async (req, res) => {
     const user = dummyuser;
     try {
+      const Profile = await User.findByPk(req.params.userId, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' }
+        ],
+      })
+      console.log(req.params.userId)
       const rawTweets = await Tweet.findAll({
         include: [Reply, User, { model: User, as: "LikedUsers" }],
         order: [["createdAt", "DESC"]],
@@ -39,7 +46,7 @@ const tweetController = {
         });
       });
       // return res.json(TopUsers)
-      return res.render("index", { tweets: Tweets, users: TopUsers });
+      return res.render("index", { tweets: Tweets, users: TopUsers, profile: Profile });
     } catch (error) {
       console.log(error);
     }

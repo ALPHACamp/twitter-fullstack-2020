@@ -5,7 +5,7 @@ const likeController = require("../../controllers/likeController");
 const router = express.Router();
 const db = require("../../models")
 
-router.get("/" , tweetController.getPosts)
+router.get("/:id/main" , tweetController.getPosts)
 router.get("/:id", tweetController.getPost)
 router.post("/posts", tweetController.postTweet)
 router.put("/:id/like", likeController.changeLike)
