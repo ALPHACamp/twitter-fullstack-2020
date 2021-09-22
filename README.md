@@ -17,7 +17,9 @@
 
         npm install
 4. 安裝MySQL並按照config.json新增development用DB
-   - ac_twitter_workspace
+
+
+        ac_twitter_workspace
 5. 透過Sequelize cli建立table
 
 
@@ -30,12 +32,15 @@
 
 7. 參照.env.example檔案建立.env檔案並設定環境參數
 
+8. 建立遠端分支(或使用git fetch origin加上git checkout -b twitterMainApi)
 
-8. 啟動伺服器
+        git checkout -b twitterMainApi
+9. 啟動伺服器
+
 
 
         npm run dev
-9. 看到以下字樣代表成功啟動並監聽server
+10. 看到以下字樣代表成功啟動並監聽server
 
 
         Example app listening on http://localhost:3000
