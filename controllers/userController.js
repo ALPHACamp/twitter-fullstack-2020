@@ -3,7 +3,7 @@ const { User, Tweet, Reply, Followship, Like } = require('../models')
 const { Op } = require('sequelize')
 const { thousandComma } = require('../config/handlebars-helpers')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = 'bc129ea404ff01c'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const helpers = require('../_helpers')
 
 // const { raw } = require('body-parser') - alan check
@@ -428,7 +428,7 @@ const userController = {
     //MUSH新增
     addLike: (req, res) => {
         return Like.create({
-            UserId: req.user.id,
+            UserId: helpers.getUser(req).id,
             TweetId: req.params.TweetId
         })
             .then(() => {
@@ -444,7 +444,7 @@ const userController = {
     removeLike: (req, res) => {
         return Like.findOne({
             where: {
-                UserId: req.user.id,
+                UserId: helpers.getUser(req).id,
                 TweetId: req.params.TweetId
             }
         })
@@ -518,8 +518,6 @@ const userController = {
         // users 陣列要用 FollowerCount 來排序，再取跟隨者 (followers) 數量排列前 10 的使用者推薦名單
         Top10Users = Top10Users.sort((a, b) => b.FollowerCount - a.FollowerCount).slice(0, 10)
         return res.render('following', { followings: followings, id: id, Top10Users: Top10Users, tweetCount: thousandComma(tweetCount) })
-
-
     }
 }
 
