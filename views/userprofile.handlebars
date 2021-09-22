@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" id="tweets">
   <div class="row flex-nowrap ps-xl-2 justify-content-around">
     {{!-- Home bar --}}
     <div class="col-auto col-lg-3">
@@ -9,14 +9,14 @@
         <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
           <li class="nav-item px-2 py-1">
             <a class="nav-link align-middle text-dark " href="/tweets">
-              <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
+              <i class="fas fa-home" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text home a-tomato">首頁</span>
             </a>
           </li>
           <li class="nav-item px-2 py-1">
             <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}">
-              <i class="far fa-user" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text user">個人資料</span>
+              <i class="far fa-user a-tomato" style="font-size: 1.2em;"></i>
+              <span class="h5 menu-text user a-tomato" style="color: #FF6600;">個人資料</span>
             </a>
           </li>
           <li class="nav-item px-2 py-1">
@@ -345,7 +345,7 @@
       </div>
     </div>
     <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
-      <a href="/signout" class="d-flex">
+      <a href="/signout" class="d-flex" style="text-decoration:none;">
         <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
         <span class="h5 logout-text">登出</span>
       </a>
