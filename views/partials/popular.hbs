@@ -8,7 +8,7 @@
       <img class="rounded-circle" src="{{this.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
       </a>
     </div>
-    <div class="col-2 d-flex align-items-center">
+    <div class="col-6 d-flex align-items-center">
       <a href="/users/{{this.id}}/tweets">
         <p class="popular-name">&nbsp;&nbsp;{{this.name}}<br />&nbsp;&nbsp;<span
         class="popular-account">@{{this.account}}</span></p>
@@ -16,7 +16,7 @@
       
     </div>
 
-    <div class="follow-btn col-8 ">
+    <div class="follow-btn col-4 ">
       {{#if this.isFollowed }}
       <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
       <button type="submit" class="btn rounded-pill fw-bolder common-button">正在跟隨</button>
