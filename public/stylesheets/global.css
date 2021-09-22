@@ -1,0 +1,10 @@
+.heart-form {
+  display: inline-block;
+  font-size: 13px;
+}
+.post-icon-block .bi-heart-fill {
+  color: #e0245e;
+}
+.post-icon-block .likedText {
+  color: #e0245e;
+}

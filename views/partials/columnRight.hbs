@@ -1,0 +1,30 @@
+<div class="right_column">
+  <header class="followers_title">Popular</header>
+
+  <div class="followers">
+    {{#each users}}
+    <hr>
+    <div class="follower">
+      <a class="follower_photo_box" href="#">
+        <img class="follower_photo" src="{{this.avatar}}" alt="follower_photo">
+      </a>
+      <div class="follower_name_account">
+        <p class="follower_name">{{this.name}}</p>
+        <p class="follower_account">{{this.account}}</p>
+      </div>
+      {{!-- {{#if isFollowing}} --}}
+      <form action="?_method=DELETE" method="POST"></form>
+      <div class="follow_button_box ms-auto">
+        <button type="submit" class="follow_button">正在跟隨</button>
+      </div>
+      </form>
+
+
+      {{!-- {{else}} --}}
+      {{!-- <form class="ms-auto" action="" method="POST"><button type="submit" class="unfollow_button">跟隨</button>
+      </form> --}}
+      {{!-- {{/if}} --}}
+    </div>
+    {{/each}}
+  </div>
+</div>

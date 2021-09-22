@@ -20,8 +20,14 @@ module.exports = {
       avatar: {
         type: Sequelize.STRING
       },
+      account: {
+        type: Sequelize.TEXT
+      },
       introduction: {
         type: Sequelize.TEXT
+      },
+      cover: {
+        type: Sequelize.STRING
       },
       role: {
         type: Sequelize.STRING

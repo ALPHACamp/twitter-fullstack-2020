@@ -1,0 +1,179 @@
+.body {
+  width: 1440px;
+  height: 1200px;
+}
+
+/* leftColumn */
+.left_column {
+  width: 235px;
+  height: 1196px;
+  margin-left: 113px;
+  margin-top: 4px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav_items {
+  height: 1146px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav_item {
+  width: 235px;
+  height: 58px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none;
+  color: #1c1c1c;
+
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.nav_item:hover {
+  color: #ff6600;
+}
+
+.icon_index {
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  margin-right: 20px;
+}
+
+.btn_reply {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background: #ff6600;
+  border-radius: 100px;
+
+  margin-top: 10px;
+  width: 210px;
+  height: 38px;
+
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+  color: rgb(255, 255, 255);
+}
+
+.logout_item {
+  margin-top: auto;
+}
+
+/* rightColumn */
+
+.right_column {
+  width: 350px;
+  background: #f5f8fa;
+  border-radius: 14px;
+}
+.followers_title {
+  margin-top: 10px;
+  padding: 10px 0px 10px 15px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+}
+hr {
+  border-style: solid;
+  margin: 0px;
+  height: 1px;
+  width: 350px;
+  opacity: 0px;
+  background: #e6ecf0;
+}
+.followers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px;
+}
+.follower {
+  display: flex;
+  align-items: center;
+  width: 350px;
+  height: 61px;
+  padding: 0px 15px;
+}
+
+.follower_photo {
+  background: #c4c4c4;
+  border-radius: 99rem;
+  width: 50px;
+  height: 50px;
+}
+.follower_name_account {
+  padding-left: 10px;
+}
+
+.follower_name {
+  margin: 0;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #1c1c1c;
+}
+.follower_account {
+  margin: 0;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #657786;
+}
+.follow_button {
+  padding: 10px 15px;
+
+  background: #ff6600;
+  border: 1px solid #ff6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #ffffff;
+}
+.unfollow_button {
+  border: 1px solid #ff6600;
+  background: #f5f8fa;
+  border-radius: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 15px;
+
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  /* identical to box height, or 100% */
+  color: #ff6600;
+}
