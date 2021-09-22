@@ -7,7 +7,7 @@
       <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">      
         <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
           <li class="nav-item px-2 py-1">
-            <a class="nav-link align-middle text-dark " href="/tweets">
+            <a class="nav-link align-middle text-dark" href="/tweets">
               <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text home a-tomato" style="color: #FF6600;">首頁</span>
             </a>
@@ -25,7 +25,7 @@
             </a>
           </li>
           <li class="nav-item px-2">
-            <button type="button" class="reply-btn btn btn-tomato rounded-pill mt-3" style="width: 100%; border-radius: 30px 30px 30px 30px;" data-toggle="modal" data-target="#tweetModal" data-id="hhhh">
+            <button type="button" class="reply-btn btn btn-tomato rounded-pill mt-3" style="width: 100%; border-radius: 30px 30px 30px 30px;" data-toggle="modal" data-target="#tweetModal">
               <span class='tweet-btn'>推文</span>
             </button>
             
@@ -44,8 +44,7 @@
           <div class="col-12 position-relative" style="margin-bottom: 15px; padding: 70px 0;">
             <div class="position-absolute" style="z-index: 5; top: 0px;">
               <img
-                src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}
-"
+                src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
                 class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;" alt="avatar">
             </div>
             <div class="position-absolute"
@@ -57,7 +56,7 @@
             </div>
             <div class="position-absolute" style="z-index: 5; right: 6px; bottom: 0;">
               <span class="text-muted px-2" style="font-size: 0.98em;"></span>
-              <button type="submit" class="tweet-btn btn btn-tomanto" style="border-radius: 30px 30px 30px 30px;">推文</button>
+              <button type="submit" class="tweet-btn btn btn-tomato" style="border-radius: 30px 30px 30px 30px;">推文</button>
             </div>
           </div>
         </form>
@@ -127,7 +126,7 @@
             <div class="modal-body">
               <div class="row align-items-start mb-1 px-3 ">
                 <div class="card-image col-1 d-flex justify-content-center align-items-center">
-                  <img src="{{this.User.avatar}}" class="rounded-circle mr-2" style="width: 50px; height: 50px;" alt="大頭貼">
+                  <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle mr-2" style="width: 50px; height: 50px;" alt="大頭貼">
                 </div>
                 <div class="col-11 row">
                   <div class="col-12 d-inline-flex justify-content-between align-items-center">
@@ -151,7 +150,7 @@
                 <form action="/tweets/{{this.id}}/replies" method="POST" class="mt-2 ">
                   <div class="position-relative" style="margin-left:20px; padding: 75px 0;">
                     <div class="position-absolute" style="z-index: 5; left: -10px; top: 0px;">
-                      <img src="{{../user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;"
+                      <img src="{{#if ../user.avatar}}{{../user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;"
                         alt="大頭貼" />
                     </div>
                     <div class="position-absolute" style="z-index: 0; width: 430px; top:-5px; left:-10px;">
@@ -180,13 +179,12 @@
       <div class="card d-none d-md-flex flex-column mt-1" style="border: none;" >
         <ul class="list-group-flush">
           <li class="list-group-item bg-light" style="font-size: 18px; font-weight: bold; border: none;">Popular</li>
-          <!--第二個跟隨者-->
           {{#each users}}
           <li class="list-group-item bg-light" style="border-left: none;border-right: none">
             <div class="row justify-content-around align-items-center">
               <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
                 <a href="/users/{{this.id}}">
-                  <img src={{this.avatar}} alt="" width="50" height="50" class="rounded-circle">
+                  <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt="" width="50" height="50" class="rounded-circle">
                 </a>
               </div>
           
@@ -218,7 +216,7 @@
     </div>
   </div>
   <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
-    <a href="/signout" class="d-flex">
+    <a href="/signout" class="d-flex" style="text-decoration:none;">
       <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
       <span class="h5 logout-text">登出</span>
     </a>
@@ -241,7 +239,7 @@
         <div class="modal-body">
           <div class="position-relative" style="padding: 85px 0;">
             <div class="position-absolute" style="z-index: 5; left: -5px; top: 0px;">
-              <img src="{{user.avatar}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;" alt="avatar">
+              <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle p-1 mt-1 " style="width: 50px; height: 50px;" alt="avatar">
             </div>
             <div class="position-absolute" style="z-index: 0; width:465px; top:0px;">
               <textarea class="mt-1" id="description" name="description" rows="4" placeholder="有什麼新鮮事？"
@@ -250,7 +248,7 @@
                 required></textarea>
             </div>
             <div class="position-absolute" style="z-index: 5; right: 6px; bottom: -5px;">
-              <button type="submit" class="btn btn-tomato" style="font-weight: bold; border-radius: 30px 30px 30px 30px;">推文</button>
+              <button type="submit" class="btn btn-tomato" style="border-radius: 30px 30px 30px 30px;">推文</button>
             </div>
           </div>
         </div>

@@ -15,10 +15,6 @@ const passport = require('./config/passport')
 const app = express()
 const port = 3000
 
-
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({ 
   defaultLayout: 'main',
