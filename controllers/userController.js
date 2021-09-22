@@ -125,11 +125,6 @@ const userController = {
         ]
       })
 
-      console.log('================here======================')
-      console.log(typeof likedTweetsRaw)
-      console.log('likedTweetsRaw', likedTweetsRaw[0])
-      console.log('likedTweetsRaw', likedTweetsRaw[0].Tweet.Replies.length)
-      console.log('================here======================')
       const likedTweets = likedTweetsRaw.map(like => ({
         ...like.dataValues,
         replyLength: like.Tweet.Replies.length,
@@ -147,7 +142,7 @@ const userController = {
 
   getFollowings: async (req, res) => {
     try {
-      const userself = req.user
+      const userself = req.user 
       const users = await User.findAll({
         // 撈出所有 User 與 followers 資料
         order: [['createdAt', 'DESC']],
@@ -180,27 +175,9 @@ const userController = {
 
   getFollowers: async (req, res) => {
     try {
-      const userself = req.user
-      const users = await User.findAll({
-        // 撈出所有 User 與 followers 資料
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
-      })
-
-      let popularUser = []
-
-      popularUser = users.map(user => ({
-        // 整理 users 資料
-        ...user.dataValues,
-        FollowerCount: user.Followers.length, // 計算追蹤者人數
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
-      }))
-      helpers.removeUser(popularUser, userself.id) //移除使用者自身資訊
-      popularUser = popularUser.sort(
-        (a, b) => b.FollowerCount - a.FollowerCount
-      ) // 依追蹤者人數排序清單
+      // userId 為當前profile頁面的user的id
+      const userId = req.params.userId
+      const popularUser = await userService.getPopular(req, res)
 
       const followers = await Followship.findAll({
         //依追蹤時間排序追蹤者

@@ -1,3 +1,4 @@
+const dayjs = require('dayjs')
 const db = require('../models')
 const Tweet = db.Tweet
 const Reply = db.Reply
@@ -5,30 +6,12 @@ const User = db.User
 const Like = db.Like
 const helpers = require('../_helpers')
 
+const userService = require('../services/userService')
+
 const tweetController = {
   getTweets: async (req, res) => {
     try {
-      const userself = req.user
-      const users = await User.findAll({
-        // 撈出所有 User 與 followers 資料
-        order: [['createdAt', 'DESC']],
-        where: { role: 0 },
-        include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
-        ]
-      })
-      let popularUser = []
-
-      user = users.map(user => ({
-        // 整理 users 資料
-        ...user.dataValues,
-        FollowerCount: user.Followers.length, // 計算追蹤者人數
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
-      }))
-
-      helpers.removeUser(user, userself.id) //移除使用者自身資訊
-      user = user.sort((a, b) => b.FollowerCount - a.FollowerCount) // 依追蹤者人數排序清單
+      const popularUser = await userService.getPopular(req, res)
 
       const tweets = await Tweet.findAll({
         include: [Reply, User, Like],
@@ -47,7 +30,7 @@ const tweetController = {
         )
       }))
       //console.log('mapping tweet:', reorganizationTweets)
-      return res.render('tweets', { reorganizationTweets, user, userself })
+      return res.render('tweets', { reorganizationTweets, popularUser })
     } catch (err) {
       console.warn(err)
     }
@@ -74,6 +57,8 @@ const tweetController = {
   },
   getTweet: async (req, res) => {
     try {
+      const popularUser = await userService.getPopular(req, res)
+
       const tweet = await Tweet.findByPk(req.params.tweetId, {
         include: [{ model: Reply, include: [User] }, User, Like]
       })
@@ -90,37 +75,12 @@ const tweetController = {
       const tweetReplies = tweetJson.Replies.map(reply => ({
         ...reply
       }))
-      res.render('tweet', { tweetReplies, tweet: tweetJson })
+
+      res.render('tweet', { tweetReplies, tweet: tweetJson, popularUser })
     } catch (err) {
       console.warn(err)
     }
   },
-
-  getTweet: async (req, res) => {
-    try {
-      const tweet = await Tweet.findByPk(req.params.tweetId, {
-        include: [
-          { model: Reply, include: [User] },
-          User,
-          Like
-        ]
-      })
-      const tweetJson = tweet.toJSON()
-      console.log(tweetJson)
-      tweetJson.amPm = dayjs(`${tweetJson.createdAt}`).format('A') === 'PM' ? '下午' : '上午'
-      tweetJson.hourMinute = dayjs(`${tweetJson.createdAt}`).format('HH:mm')
-      tweetJson.year = dayjs(`${tweetJson.createdAt}`).format('YYYY')
-      tweetJson.month = dayjs(`${tweetJson.createdAt}`).format('M')
-      tweetJson.day = dayjs(`${tweetJson.createdAt}`).format('D')
-      tweetJson.isLiked = req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(tweetJson.id)
-      const tweetReplies = tweetJson.Replies.map(reply => ({
-        ...reply
-      }))
-      res.render('tweet', { tweetReplies, tweet: tweetJson })
-    } catch(err) {
-      console.warn(err)
-    }
-  }, 
   postReplies: async (req, res) => {
     try {
       const { comment } = req.body
@@ -145,12 +105,12 @@ const tweetController = {
         TweetId: req.params.tweetId
       })
       console.log('addLike')
-      return res.json({status: 'success', message: 'add likes'})
-    } catch(err) {
+      return res.json({ status: 'success', message: 'add likes' })
+    } catch (err) {
       console.warn(err)
     }
-  }, 
-  removeLike: async (req, res) =>{
+  },
+  removeLike: async (req, res) => {
     try {
       const like = await Like.findOne({
         where: {
@@ -161,7 +121,7 @@ const tweetController = {
       console.log('removeLike')
       await like.destroy()
       return res.json({ status: 'success', message: 'remove likes' })
-    } catch(err) {
+    } catch (err) {
       console.warn(err)
     }
   }
