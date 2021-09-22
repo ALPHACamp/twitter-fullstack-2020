@@ -24,6 +24,9 @@ const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
 // router.get('/users/:id/followings', authenticated, userController.getUserFollowings)
 // router.post('/followships/:user_id', authenticated,  userController.addFollowing)
 
+//顯示所有貼文
+router.get('/tweets', authenticated, tweetController.getTweets)
+
 // //使用者新增一則貼文
 router.post('/tweets', authenticated, tweetController.postTweets)
 

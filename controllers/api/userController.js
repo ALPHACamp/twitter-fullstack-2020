@@ -18,7 +18,7 @@ const userService = require('../../services/userService.js')
 const { Op } = require("sequelize")
 const sequelize = require('sequelize')
 
-let userController = {
+const userController = {
   signIn: (req, res) => {
     // 檢查必要資料
     if (!req.body.account || !req.body.password) {
@@ -45,7 +45,7 @@ let userController = {
         }
       })
     })
-    
+
 
 
   },
@@ -69,7 +69,8 @@ let userController = {
     userService.putUserEdit(req, res, (data) => {
       return res.status(200).json(data)
     })
-  }
+  },
+
 }
 
 module.exports = userController
