@@ -139,11 +139,34 @@ const userController = {
   getFollowings: async (req, res) => {
     try {
       const popularUser = await userService.getPopular(req, res)
-      followerUser = popularUser.sort(
-        (a, b) => b.FollowerCount - a.FollowerCount
-      )
+      
+      const followers = await Followship.findAll({
+        //依追蹤時間排序追蹤中User
+        raw: true,
+        nest: true,
+        where: {
+          followerId: req.user.id
+        },
+        order: [['createdAt', 'DESC']]
+      })
 
-      return res.render('following', { popularUser })
+      let Data = []
+
+      Data = followers.map(async (item, index) => {
+        // 整理 followers 資料
+        let user = await User.findByPk(item.followingId)
+        user = user.dataValues
+        //isFollowed = req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
+        return {
+          ...item.user,
+          user,
+          isFollowed
+        }
+      })
+      Promise.all(Data).then(data => {
+        return res.render('following', { popularUser, data })
+      })
+
     } catch (err) {
       console.log(err)
       console.log('getUserFollowers err')
@@ -154,7 +177,6 @@ const userController = {
   getFollowers: async (req, res) => {
     try {
       // userId 為當前profile頁面的user的id
-      const userId = req.params.userId
       const popularUser = await userService.getPopular(req, res)
 
       const followers = await Followship.findAll({
