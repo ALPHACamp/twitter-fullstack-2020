@@ -140,33 +140,28 @@ const userController = {
   getFollowings: async (req, res) => {
     try {
       const popularUser = await userService.getPopular(req, res)
-
-      const followers = await Followship.findAll({
-        //依追蹤時間排序追蹤中User
-        raw: true,
-        nest: true,
-        where: {
-          followerId: req.user.id
-        },
-        order: [['createdAt', 'DESC']]
+      
+      const followings = await User.findByPk(req.params.userId, {
+        include: [
+          { model: User, as: 'Followings' },
+          { model: Tweet, attributes: ['id'] }
+        ]
       })
+      const currentUserFollowings = followings.toJSON()
 
-      let Data = []
+      let followingsUser = currentUserFollowings.Followings.map(item => ({
+        id: item.id,
+        name: item.name,
+        account: item.account,
+        avatar: item.avatar,
+        introduction: item.introduction,
+        followshipId: item.Followship.id,  //做follow排序
+        isFollowed: req.user.Followings.map(d => d.id).includes(item.id)
+      }))
+      followingsUser = followingsUser.sort((a, b) => b.followshipId - a.followshipId)
+      
+      return res.render('following', { popularUser, currentUserFollowings, followingsUser })
 
-      Data = followers.map(async (item, index) => {
-        // 整理 followers 資料
-        let user = await User.findByPk(item.followingId)
-        user = user.dataValues
-        //isFollowed = req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
-        return {
-          ...item.user,
-          user,
-          isFollowed
-        }
-      })
-      Promise.all(Data).then(data => {
-        return res.render('following', { popularUser, data })
-      })
     } catch (err) {
       console.log(err)
       console.log('getUserFollowers err')
@@ -179,33 +174,27 @@ const userController = {
       // userId 為當前profile頁面的user的id
       const popularUser = await userService.getPopular(req, res)
 
-      const followers = await Followship.findAll({
-        //依追蹤時間排序追蹤者
-        raw: true,
-        nest: true,
-        where: {
-          followingId: req.user.id
-        },
-        order: [['createdAt', 'DESC']]
+      const followers = await User.findByPk(req.params.userId, {
+        include: [
+          { model: User, as: 'Followers' },
+          { model: Tweet, attributes: ['id'] }
+        ]
       })
+      const currentUserFollowers = followers.toJSON()
 
-      let Data = []
+      let followersUser = currentUserFollowers.Followers.map(item => ({
+        id: item.id,
+        name: item.name,
+        account: item.account,
+        avatar: item.avatar,
+        introduction: item.introduction,
+        followshipId: item.Followship.id,  //做follow排序
+        isFollowed: req.user.Followings.map(d => d.id).includes(item.id)
+      }))
+      followersUser = followersUser.sort((a, b) => b.followshipId - a.followshipId)
+      
+      return res.render('follower', { popularUser, currentUserFollowers, followersUser })
 
-      Data = followers.map(async (item, index) => {
-        // 整理 followers 資料
-        let user = await User.findByPk(item.followerId)
-        user = user.dataValues
-        isFollowed = req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
-        return {
-          ...item.user,
-          user,
-          isFollowed
-        }
-      })
-
-      Promise.all(Data).then(data => {
-        return res.render('follower', { popularUser, data })
-      })
     } catch (err) {
       console.log(err)
       console.log('getUserFollowers err')
