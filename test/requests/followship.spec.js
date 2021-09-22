@@ -25,6 +25,7 @@ describe('# followship request', () => {
       })
 
       it('can not follow self', (done) => {
+        console.log('2222')
         request(app)
           .post('/followships')
           .send('id=1')
@@ -36,6 +37,7 @@ describe('# followship request', () => {
                 { model: db.User, as: 'Followers' },
                 { model: db.User, as: 'Followings' } 
               ]}).then(user => {
+                console.log('user',user)
               user.Followings.length.should.equal(0)
               return done();
             })

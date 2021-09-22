@@ -26,7 +26,8 @@ const authenticated = (req, res, next) => {
 }
 
 // router.get('/users/:id/followings', authenticated, userController.getUserFollowings)
-// router.post('/followships/:user_id', authenticated,  userController.addFollowing)
+//追蹤使用者
+router.post('/followships/:id', authenticated, userController.addFollowing)
 
 //顯示所有貼文
 router.get('/tweets', authenticated, tweetController.getTweets)
@@ -34,7 +35,7 @@ router.get('/tweets', authenticated, tweetController.getTweets)
 // //使用者新增一則貼文
 router.post('/tweets', authenticated, tweetController.postTweets)
 
-// //使用者顯示特定使用者頁面(使用者所有貼文)
+//使用者顯示特定使用者頁面(使用者所有貼文)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 
 //render edit page (modal)
