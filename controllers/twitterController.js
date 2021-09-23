@@ -56,25 +56,5 @@ const twitterController = {
   },
 }
 
-// getRestaurant: (req, res) => {
-//   return Restaurant.findByPk(req.params.id, {
-//     include: [
-//       Category,
-//       { model: User, as: 'FavoritedUsers' },
-//       { model: User, as: 'LikedUsers' },
-//       { model: Comment, include: [User] }
-//     ]
-//   }).then(async restaurant => {
-//     const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
-//     const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
-//     restaurant.viewCount = await restaurant.increment('viewCount')
-//     restaurant.save()
-//     return res.render('restaurant', {
-//       restaurant: restaurant.toJSON(),
-//       isFavorited: isFavorited,
-//       isLiked: isLiked
-//     })
-//   })
-// },
 
 module.exports = twitterController
