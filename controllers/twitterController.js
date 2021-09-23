@@ -42,18 +42,19 @@ const twitterController = {
       const whereQuery = {}
       whereQuery.tweetId = Number(req.params.id)
       Reply.findAndCountAll({
+        order: [['createdAt', 'DESC']],
         include: [
           User
         ],
         where: whereQuery,
       }).then(reply => {
-        const replyUser = reply.rows
+        const replies = reply.rows
         return res.render('replyList', {
           tweet: tweet,
           tweetUser: tweetUser,
           tweetRepliesCount: tweetRepliesCount,
           tweetLikesCount: tweetLikesCount,
-          replyUser: replyUser,
+          replies: replies,
         })
       })
     })
