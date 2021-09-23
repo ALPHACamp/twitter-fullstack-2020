@@ -49,7 +49,6 @@
       </div>
     </div>
 
-    {{!-- <div class="headerDivider"></div> --}}
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title d-flex align-items-center">
@@ -144,7 +143,6 @@
                 <a href="/users/{{this.User.id}}/tweets" class="text-muted">
                 <div class="user-name">{{this.User.name}}</div>
                 </a>
-                {{!-- //TODO:時間回傳格式要改 --}}
                 <div class="account-time ml-2">@{{this.User.account}}．{{fromNow this.createdAt}}</div>
               </div>
               <div class="reply">
@@ -165,16 +163,12 @@
         {{/each}}
 
         {{!-- 回覆結束 --}}
-
-
-
       </div>
-
     </div>
 
 
 
-    {{!-- <div class="headerDivider"></div> --}}
+
     {{!-- 右側欄位 --}}
 <div class="right-side col-md-3">
   <div class="popular mt-2" style="padding:auto;">
@@ -182,7 +176,6 @@
       Popular
     </div>
     <ul class="list-group">
-      {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
       {{!-- 跟隨中使用者開始 --}}
       {{#each topUsers}}
       <li class="list-group-item">
@@ -207,7 +200,9 @@
               <button type="submit" class="btn follow-button">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+            <form action="/followships" method="POST" style="display: contents;">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit"
                 class="btn unfollow-button"> 跟隨 </button></form>
             {{/if}}
             {{/if}}

@@ -56,7 +56,6 @@ const tweetService = {
     }))
 
     //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
-    //排除admin
     const normalUsers = users.filter(d => d.FollowingLinks.role !== 'admin')
     const topUsers = normalUsers.map(user => ({
       id: user.FollowingLinks.id,

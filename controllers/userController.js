@@ -21,7 +21,7 @@ const userController = {
       req.flash('error_messages', '表單內容不符合條件！')
       return res.redirect('/signup')
     }
-    //註冊時，account 和 email 不能與其他人重覆
+
     User.findAll({
       raw: true, nest: true,
       where: { [Op.or]: [{ email }, { account }] }
@@ -48,7 +48,6 @@ const userController = {
   },
 
   getUserSetting: (req, res) => {
-    //檢查使用者是否在編輯自己的資料
     if (req.params.id !== String(helpers.getUser(req).id)) {
       req.flash('error_messages', '無法編輯其他使用者的資料')
       return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
@@ -60,7 +59,6 @@ const userController = {
       .catch(err => console.log(err))
   },
 
-  //API
   putUserEdit: (req, res) => {
     userService.putUserEdit(req, res, (data) => {
       if (data['status'] === 'error') {
@@ -73,78 +71,10 @@ const userController = {
     })
   },
 
-  //before API (完後可刪)
-  // putUserEdit: async (req, res) => {
-  //   const { name, introduction } = req.body
-  //   if (!name) {
-  //     req.flash('error_messages', '暱稱不能空白！')
-  //     return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
-  //   }
-  //   if (name.length > 50 || introduction.length > 160) {
-  //     req.flash('error_messages', '字數超出上限！')
-  //     return res.redirect(`/users/${helpers.getUser(req).id}/edit`)
-  //   }
-
-  //   // const file = Object.assign({}, req.files)
-  //   const { files } = req
-  //   const isCoverDelete = req.body.isDelete
-  //   const user = await User.findByPk(req.params.user_id)
-
-  //   // if (files) {
-  //   //files會有[Object: null prototype] {}
-  //   imgur.setClientID(IMGUR_CLIENT_ID)
-  //   if (files.avatar && files.cover) {
-  //     imgur.upload(files.avatar[0].path, async (err, avaImg) => {
-  //       imgur.upload(files.cover[0].path, async (err, covImg) => {
-  //         await user.update({
-  //           name: req.body.name,
-  //           introduction: req.body.introduction,
-  //           avatar: avaImg.data.link,
-  //           cover: isCoverDelete ? '' : covImg.data.link
-  //         })
-  //         req.flash('success_messages', 'user profile was successfully updated!')
-  //         return res.redirect('back')
-  //       })
-  //     }
-  //     )
-  //   } else if (files.avatar && !files.cover) {
-  //     imgur.upload(files.avatar[0].path, async (err, avaImg) => {
-  //       await user.update({
-  //         name: req.body.name,
-  //         introduction: req.body.introduction,
-  //         avatar: avaImg.data.link,
-  //         cover: isCoverDelete ? '' : user.cover
-  //       })
-  //       req.flash('success_messages', 'user profile was successfully updated!')
-  //       return res.redirect('back')
-  //     })
-  //   } else if (!files.avatar && files.cover) {
-  //     imgur.upload(files.cover[0].path, async (err, covImg) => {
-  //       await user.update({
-  //         name: req.body.name,
-  //         introduction: req.body.introduction,
-  //         cover: isCoverDelete ? '' : covImg.data.link,
-  //       })
-  //       req.flash('success_messages', 'user profile was successfully updated!')
-  //       return res.redirect('back')
-  //     })
-  //   } else {
-  //     await user.update({
-  //       name: req.body.name,
-  //       introduction: req.body.introduction,
-  //       cover: isCoverDelete ? '' : user.cover
-  //     })
-  //     req.flash('success_messages', 'user profile was successfully updated!')
-  //     return res.redirect('back')
-  //   }
-  // },
-
-  // //new get Tweets API
   getUserTweets: (req, res) => {
     userService.getUserTweets(req, res, (data) => {
       return res.render('tweets', data)
     })
-
   },
 
   getUserReplied: (req, res) => {
@@ -176,7 +106,6 @@ const userController = {
         limit: 10, raw: true, nest: true
       }),
     ]).then(([replies, user, users]) => {
-      //整理某使用者的所有回覆
       const data = replies.map(reply => ({
         comment: reply.comment,
         tweetId: reply.TweetId,
@@ -199,7 +128,7 @@ const userController = {
         isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
-      const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
+      const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')
       const topUsers = normalUsers.map(user => ({
         id: user.FollowingLinks.id,
         name: user.FollowingLinks.name ? (user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name) : 'noName',
@@ -286,12 +215,10 @@ const userController = {
 
   putUserSetting: (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
-    //後端驗證表單內容
     if (account.length < 5 || !name || name.length > 50 || !email || checkPassword !== password) {
       req.flash('error_messages', '表單內容不符合條件！')
       return res.redirect(`/users/${helpers.getUser(req).id}/setting`)
     }
-    //編輯時，account 和 email 不能與其他人重覆
     User.findAll({
       raw: true, nest: true,
       where: {
@@ -374,15 +301,7 @@ const userController = {
       const viewUser = Object.assign({}, {
         id: user.id,
         name: user.name,
-        // account: user.account,
-        // introduction: user.introduction,
-        // cover: user.cover,
-        // avatar: user.avatar,
         tweetsCount: user.Tweets.length,
-        // followingsCount: user.Followings.length,
-        // followersCount: user.Followers.length,
-        // isFollowed: currentUser.Followers.map((d) => d.id).includes(user.id),
-        // isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
       const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
@@ -439,18 +358,10 @@ const userController = {
       const viewUser = Object.assign({}, {
         id: user.id,
         name: user.name,
-        // account: user.account,
-        // introduction: user.introduction,
-        // cover: user.cover,
-        // avatar: user.avatar,
         tweetsCount: user.Tweets.length,
-        // followingsCount: user.Followings.length,
-        // followersCount: user.Followers.length,
-        // isFollowed: currentUser.Followings.map((d) => d.id).includes(user.id),
-        // isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
-      const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')//排除admin
+      const normalUsers = users.filter(d => d.FollowingLinks.role === 'normal')
       const topUsers = normalUsers.map(user => ({
         id: user.FollowingLinks.id,
         name: user.FollowingLinks.name ? (user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name) : 'noName',
@@ -474,7 +385,9 @@ const userController = {
     userService.addFollowing(req, res, data => {
       if (data['status'] === 'error') {
         req.flash('error_messages', data['message'])
-        return res.redirect('back')
+        return res.status(200).json({
+          data
+        })
       }
       req.flash('success_messages', data['message'])
       res.redirect('back')
@@ -485,26 +398,12 @@ const userController = {
     const currentUserId = helpers.getUser(req).id
     return Followship.destroy({
       where: {
-        followerId: helpers.getUser(req).id,
+        followerId: currentUserId,
         followingId: req.params.id
       }
     }).then(() => {
       return res.redirect('back')
     })
-
-    // return Followship.findOne({
-    //   where: {
-    //     followerId: req.user.id,
-    //     followingId: req.params.id
-    //   }
-    // })
-    //   .then(followship => {
-    //     console.log('------------')
-    //     followship.destroy()
-    //       .then(() => {
-    //         return res.redirect('back')
-    //       })
-    //   })
   }
 }
 

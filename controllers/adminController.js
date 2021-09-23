@@ -8,7 +8,6 @@ const { Op } = require("sequelize")
 const sequelize = require('sequelize')
 
 const adminController = {
-  //登入登出
   signinPage: (req, res) => {
     return res.render('admin/adminSignIn')
   },
@@ -22,8 +21,6 @@ const adminController = {
     res.redirect('/admin/signin')
   },
 
-  //貼文相關
-  //顯示所有貼文
   getTweets: (req, res) => {
     return Tweet.findAll({
       raw: true,
@@ -42,7 +39,7 @@ const adminController = {
         return res.render('admin/adminTweets', { tweet: tweet })
       })
   },
-  //刪除貼文
+
   deleteTweets: (req, res) => {
     return Tweet.findByPk(req.params.id)
       .then((tweet) => {
@@ -53,7 +50,6 @@ const adminController = {
       })
   },
 
-  //使用者清單
   getUsers: (req, res) => {
     return Promise.all([
       User.findAll({
@@ -64,7 +60,7 @@ const adminController = {
           { model: User, as: 'Followings' }
         ],
       }),
-      Tweet.findAll({ //分開查詢，加快效率
+      Tweet.findAll({
         attributes: ['userId', [sequelize.fn('COUNT', sequelize.col('userId')), 'tweetCount']],
         group: ['userId'],
         raw: true, nest: true,
@@ -85,7 +81,6 @@ const adminController = {
         const usersSorted = usersList.sort((a, b) => b.tweetCount - a.tweetCount)
         res.render('admin/adminUsers', { users: usersSorted })
       })
-
   }
 }
 

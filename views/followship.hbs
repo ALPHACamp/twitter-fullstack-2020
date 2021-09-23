@@ -126,8 +126,9 @@
                 </div>
               </form>
               {{else}}
-              <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+              <form action="/followships" method="POST" style="display: contents;">
                 <div class="followship-button">
+                  <input type="hidden" name="id" value="{{this.id}}">
                   <button type="submit" class="btn unfollow-button"> 跟隨 </button>
                 </div>
               </form>
@@ -201,8 +202,9 @@
                     </div>
                   </form>
                   {{else}}
-                  <form action="/followships/{{this.id}}" method="POST" style="display: contents;">
+                  <form action="/followships" method="POST" style="display: contents;">
                     <div class="followship-button">
+                      <input type="hidden" name="id" value="{{this.id}}">
                       <button type="submit" class="btn unfollow-button"> 跟隨 </button>
                     </div>
                   </form>
@@ -238,7 +240,6 @@
               Popular
             </div>
             <ul class="list-group">
-              {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
               {{!-- 跟隨中使用者開始 --}}
               {{#each topUsers}}
               <li class="list-group-item">
@@ -263,7 +264,9 @@
                       <button type="submit" class="btn follow-button">正在跟隨</button>
                     </form>
                     {{else}}
-                    <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button
+                    <form action="/followships" method="POST" style="display: contents;">
+                    <input type="hidden" name="id" value="{{this.id}}">
+                    <button
                         type="submit" class="btn unfollow-button"> 跟隨 </button></form>
                     {{/if}}
                     {{/if}}

@@ -36,7 +36,6 @@ describe('# followship request', () => {
                 { model: db.User, as: 'Followers' },
                 { model: db.User, as: 'Followings' } 
               ]}).then(user => {
-                console.log('user',user)
               user.Followings.length.should.equal(0)
               return done();
             })
