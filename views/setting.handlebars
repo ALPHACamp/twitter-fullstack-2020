@@ -1,42 +1,44 @@
-<div class='register'>
+<div class='setting-main-content'>
+  <div class='header'>
+    <div class='headerItem'><span>帳戶設定</span></div>
+  </div>
+  <div class='register'>
 
-  <form class='form-signin' action='/users/:userId/setting' method='POST' style='width: 100%;'>
-    <div class='text-center mb-4'>
-      <h1 class='h3 mb-3 font-weight-normal'>建立你的帳號</h1>
-    </div>
-    <div class='signupForm'>
-      <label for='inputAccount'>
-        <input type='text' name='account' class='form-control' placeholder='帳號' required autofocus />
-        <span>帳號</span>
-      </label>
-    </div>
-    <div class='signupForm'>
-      <label for='inputName'></label>
-      <input type='text' name='name' class='form-control' placeholder='名稱' required autofocus />
-      <span>名稱</span>
-    </div>
-    <div class='signupForm'>
-      <label for='inputEmail'></label>
-      <input type='text' name='email' class='form-control' placeholder='Email' required autofocus />
-      <span>Email</span>
+    <form class='form-signin' action='/register' method='POST' style='width: 100%;'>
+      <div class='form-label-group'>
+        <label for='inputName'>
+          <input type='text' name='name' class='form-control' placeholder='Name' required autofocus />
+          <span>帳號</span>
+        </label>
+      </div>
+      <div class='form-label-group'>
+        <label for='inputEmail'></label>
+        <input type='text' name='email' class='form-control' placeholder='Email' required autofocus />
+        <span>名稱</span>
+      </div>
+      <div class='form-label-group'>
+        <label for='inputEmail'></label>
+        <input type='text' name='email' class='form-control' placeholder='Email' required autofocus />
+        <span>Email</span>
 
-    </div>
-    <div class='signupForm'>
-      <label for='password'></label>
-      <input type='password' name='password' class='form-control' placeholder='密碼' required />
-      <span>密碼</span>
+      </div>
+      <div class='form-label-group'>
+        <label for='inputPassword'></label>
+        <input type='password' name='password' class='form-control' placeholder='Password' required />
+        <span>密碼</span>
 
-    </div>
-    <div class='signupForm'>
-      <label for='checkPassword'></label>
-      <input type='password' name='checkPassword' class='form-control' placeholder='密碼確認' required />
-      <span>密碼確認</span>
+      </div>
+      <div class='form-label-group'>
+        <label for='inputPasswordCheck'></label>
+        <input type='password' name='passwordCheck' class='form-control' placeholder='Password Check' required />
+        <span>密碼確認</span>
 
-    </div>
-    <br />
-    <button class='btn btn-lg btn-primary btn-block' type='submit'>註冊</button>
-    <div class='text-center mb-4'>
-      <p><a href='/signin' style='text-decoration:underline;'>取消</a></p>
-    </div>
-  </form>
+      </div>
+      <br />
+      <div class='setting-save-button'>
+        <button class='btn btn-lg btn-primary btn-block' type='submit'>儲存</button>
+      </div>
+
+    </form>
+  </div>
 </div>
