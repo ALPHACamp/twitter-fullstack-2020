@@ -90,15 +90,17 @@
           <button type="submit" class="btn-orange">正在跟隨</button>
         </form> -->
         </p>
-
-
       </div>
 
       <h5 class="d-inline-block post-title mb-1">{{profile.name}}&nbsp;</h5>
       <p class="post-sub-info mainpost-sm">{{profile.account}}</p>
       <p>{{profile.introduction}}</p>
-      <p class="mainpost-sm reply-like-text"><b>{{followingsCount}}個<span class="post-sub-info">&nbsp;跟隨中</span>
-          {{followersCount}}位<span class="post-sub-info">&nbsp;跟隨者</span></b></p>
+      <p class="mainpost-sm reply-like-text">
+        <a href="/profiles/{{profile.id}}/followings"><b>{{followingsCount}}個</b></a>
+        <span class="post-sub-info">&nbsp;跟隨中</span>
+        <a href="/profiles/{{profile.id}}/followers"><b>{{followersCount}}位</b></a>
+        <span class="post-sub-info">&nbsp;跟隨者</span>
+      </p>
       <ul class="nav profilepage-tags mt-2">
         <li class="nav-item">
           <a class="nav-link {{#if isPost }}active {{/if}}" type="submit" aria-current="page"
