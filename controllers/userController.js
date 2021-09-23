@@ -125,12 +125,15 @@ const userController = {
       const data = result.rows.map(r => ({
         ...r.dataValues,
         content: r.dataValues.content,
+        replyTweetId: r.dataValues.Tweet.id,
+        replyUserId: r.dataValues.Tweet.dataValues.User.id,
         replyUserAccount: r.dataValues.Tweet.dataValues.User.account
       }))
       Tweet.findAndCountAll({
         where: whereQuery,
       }).then(result => {
         const totalTweet = result.rows.length
+
 
         Followship.findAndCountAll({
           raw: true,
@@ -177,16 +180,21 @@ const userController = {
       where: whereQuery,
       order: [['createdAt', 'DESC']],
     }).then(result => {
+      console.log(result.rows[0].id)
       const data = result.rows.map(r => ({
         ...r.dataValues,
+        tweetId: r.dataValues.Tweet.dataValues.id,
         content: r.dataValues.Tweet.dataValues.content,
-        createdAt: r.dataValues.Tweet.dataValues.creatAt,
+        createdAt: r.dataValues.createdAt,
+        likeUserId: r.dataValues.Tweet.dataValues.User.id,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
         likeAvatar: r.dataValues.Tweet.dataValues.User.avatar,
         likeUserName: r.dataValues.Tweet.dataValues.User.name,
         likeUserAccount: r.dataValues.Tweet.dataValues.User.account,
         replyCount: r.dataValues.Tweet.dataValues.Replies.length,
         likeCount: r.dataValues.Tweet.dataValues.Likes.length
       }))
+      console.log(data)
       Tweet.findAndCountAll({
         where: whereQuery,
       }).then(result => {
@@ -422,7 +430,8 @@ const userController = {
         ...r.dataValues,
         content: r.dataValues.content,
         replyCount: r.dataValues.Replies.length,
-        likeCount: r.dataValues.Likes.length
+        likeCount: r.dataValues.Likes.length,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
       }))
 
       Followship.findAndCountAll({
