@@ -61,38 +61,32 @@ const userController = {
     res.redirect('/signin')
   },
 
-  getUserTweets:async(req, res)=>{
-    // const currentUser = helpers.getUser(req)
-    const tweets = await Tweet.findAll({
-      where: {UserId: req.params.id},
-      include: [User, Reply],
-      order: [['createdAt', 'DESC']]
-    })
-    const tweetUser = await User.findByPk(
-        req.params.id
-    )
-    return res.render('userSelf',{ tweets , tweetUser:tweetUser.toJSON()})
-  },
+  // getUserTweets:async(req, res)=>{
+  //   const currentUser = helpers.getUser(req)
+  //   const tweets = await Tweet.findAll({
+  //     where: {UserId:currentUser.id},
+  //     include: [User, Reply],
+  //     order: [['createdAt', 'DESC']]
+  //   })
+  //   return res.render('userSelf',{ tweets })
+  // },
 
-  getUserSelfReply: async (req ,res) =>{
-    
-    const replies = await Reply.findAll({
-      raw: true,
-      nest: true,
-      where: {UserId: req.params.id},
-      include: [User,{model: Tweet, include: [User]}],
-      order: [['createdAt', 'DESC']]
-    })
-    const tweets = await Tweet.findAll({
-      where: {UserId: req.params.id},
-      include: [User, Reply],
-      order: [['createdAt', 'DESC']]
-    })
-    const tweetUser = await User.findByPk(
-        req.params.id
-    )
-    return res.render('userSelfReply',{replies, tweets, tweetUser})
-  },
+  // getUserSelfReply: async (req ,res) =>{
+  //   const currentUser = helpers.getUser(req)
+  //   const replies = await Reply.findAll({
+  //     raw: true,
+  //     nest: true,
+  //     where: {UserId:currentUser.id},
+  //     include: [User,{model: Tweet, include: [User]}],
+  //     order: [['createdAt', 'DESC']]
+  //   })
+  //   const tweets = await Tweet.findAll({
+  //     where: {UserId:currentUser.id},
+  //     include: [User, Reply],
+  //     order: [['createdAt', 'DESC']]
+  //   })
+  //   return res.render('userSelfReply',{replies, tweets})
+  // },
 
   getSetting: (req, res) => {
     return res.render('setting')
@@ -148,51 +142,51 @@ const userController = {
 
   // 尋找回覆過且正在追隨的使用者推文
   // 不需要認證使用者
-  // getReplyTweets: (req, res) => {
-  //   const id = req.params.id
-  //   const whereQuery = {}
+  getReplyTweets: (req, res) => {
+    const id = req.params.id
+    const whereQuery = {}
 
-  //   if (req.query.tweetId) {
-  //     tweetId = Number(req.query.userId)
-  //     whereQuery.userId = tweetId
-  //   }
+    if (req.query.tweetId) {
+      tweetId = Number(req.query.userId)
+      whereQuery.userId = tweetId
+    }
 
-  //   // 顯示回覆過的推文
-  //   Reply.findAll({
-  //     include: tweet,
-  //     where: { UserId: id }
-  //   })
-  //     .then((result) => {
-  //       // 回覆過的推文數量
-  //       const replyNum = result.count
-  //       const replyTweets = result.rows
-  //       const data = replyTweets.map(r => ({
-  //         ...r.dataValues
-  //       }))
+    // 顯示回覆過的推文
+    Reply.findAll({
+      include: tweet,
+      where: { UserId: id }
+    })
+      .then((result) => {
+        // 回覆過的推文數量
+        const replyNum = result.count
+        const replyTweets = result.rows
+        const data = replyTweets.map(r => ({
+          ...r.dataValues
+        }))
 
-  //       tweet.findAll({
-  //         raw: true,
-  //         nest: true,
-  //         where: whereQuery
-  //       }).then(() => {
-  //         User.findByPk(id)
-  //           .then((user) => {
-  //             const userProfile = user.toJSON()
-  //             return res.render('user', {
-  //               data,
-  //               tweets: data,
-  //               userProfile,
-  //               loginUserId,
-  //               replyNum,
-  //             })
-  //           }).catch(err => console.log(err))
-  //       })
+        tweet.findAll({
+          raw: true,
+          nest: true,
+          where: whereQuery
+        }).then(() => {
+          User.findByPk(id)
+            .then((user) => {
+              const userProfile = user.toJSON()
+              return res.render('user', {
+                data,
+                tweets: data,
+                userProfile,
+                loginUserId,
+                replyNum,
+              })
+            }).catch(err => console.log(err))
+        })
 
-  //       // TODO 2.顯示喜歡的內容
+        // TODO 2.顯示喜歡的內容
 
-  //     })
-  //     .catch(err => console.log(err))
-  // },
+      })
+      .catch(err => console.log(err))
+  },
 
   // Like
   addLike: (req, res) => {

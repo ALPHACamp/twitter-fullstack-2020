@@ -11,11 +11,8 @@ const tweetController = {
   // 首頁
   getTweets: (req, res) => {
     return Promise.all([
-
       Tweet.findAll({
-        // raw: true,
-        // nest: true,
-        include: [User,  Reply],
+        include: [User, Reply],
         order: [
           ['createdAt', 'DESC'], // Sorts by createdAt in descending order
         ]
