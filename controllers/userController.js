@@ -63,37 +63,44 @@ const userController = {
   },
 
 
-  getUserTweets:async(req, res)=>{
+  getUserTweets: async (req, res) => {
     // const currentUser = helpers.getUser(req)
     const tweets = await Tweet.findAll({
-      where: {UserId: req.params.id},
+      where: { UserId: req.params.id },
       include: [User, Reply],
       order: [['createdAt', 'DESC']]
     })
+    const followersCount = await Followship.count({
+      where: { followingId: req.params.id }
+    })
+    const followingsCount = await Followship.count({
+      where: { followerId: req.params.id }
+    })
     const tweetUser = await User.findByPk(
-        req.params.id
+      req.params.id
     )
-    return res.render('userSelf',{ tweets , tweetUser:tweetUser.toJSON()})
+
+    return res.render('userSelf', { tweets, tweetUser: tweetUser.toJSON(), followersCount, followingsCount })
   },
 
-  getUserSelfReply: async (req ,res) =>{
-    
+  getUserSelfReply: async (req, res) => {
+
     const replies = await Reply.findAll({
       raw: true,
       nest: true,
-      where: {UserId: req.params.id},
-      include: [User,{model: Tweet, include: [User]}],
+      where: { UserId: req.params.id },
+      include: [User, { model: Tweet, include: [User] }],
       order: [['createdAt', 'DESC']]
     })
     const tweets = await Tweet.findAll({
-      where: {UserId: req.params.id},
+      where: { UserId: req.params.id },
       include: [User, Reply],
       order: [['createdAt', 'DESC']]
     })
     const tweetUser = await User.findByPk(
-        req.params.id
+      req.params.id
     )
-    return res.render('userSelfReply',{replies, tweets, tweetUser})
+    return res.render('userSelfReply', { replies, tweets, tweetUser })
   },
 
   getSetting: (req, res) => {
