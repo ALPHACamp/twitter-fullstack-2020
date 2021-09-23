@@ -23,7 +23,7 @@ module.exports = {
 
     const data1 = reply1.map((d, i) => ({
       UserId: d,
-      TweetId: i + 1,
+      TweetId: i * 10 + 5,
       comment: faker.lorem.sentence(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -32,7 +32,7 @@ module.exports = {
 
     const data2 = reply2.map((d, i) => ({
       UserId: d,
-      TweetId: i + 1,
+      TweetId: i * 10 + 5,
       comment: faker.lorem.sentence(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -41,7 +41,7 @@ module.exports = {
 
     const data3 = reply3.map((d, i) => ({
       UserId: d,
-      TweetId: i + 1,
+      TweetId: i * 10 + 5,
       comment: faker.lorem.sentence(),
       createdAt: new Date(),
       updatedAt: new Date()
