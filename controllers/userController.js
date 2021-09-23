@@ -139,13 +139,13 @@ const userController = {
   getFollowings: async (req, res) => {
     try {
       const popularUser = await userService.getPopular(req, res)
-      
+      const getProfileUser = await userService.getProfileUser(req, res)
       const followers = await Followship.findAll({
         //依追蹤時間排序追蹤中User
         raw: true,
         nest: true,
         where: {
-          followerId: req.user.id
+          followerId: getProfileUser.id
         },
         order: [['createdAt', 'DESC']]
       })
@@ -156,7 +156,7 @@ const userController = {
         // 整理 followers 資料
         let user = await User.findByPk(item.followingId)
         user = user.dataValues
-        //isFollowed = req.user.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
+        isFollowed = req.params.Followings.map(d => d.id).includes(user.id) // 判斷目前登入使用者是否已追蹤該 User 物件
         return {
           ...item.user,
           user,
@@ -164,7 +164,7 @@ const userController = {
         }
       })
       Promise.all(Data).then(data => {
-        return res.render('following', { popularUser, data })
+        return res.render('following', { popularUser, data, getProfileUser })
       })
 
     } catch (err) {

@@ -6,10 +6,10 @@
     {{!-------------------- 姓名欄 --------------------}}
     <div class="d-flex">
       <div class="p-3">
-        <a href=" /users/{{user.id}}/tweets"><i class="fas fa-arrow-left me-2 mb-3" style="color: #1C1C1C;"></i></a>
+        <a href=" /users/{{req.params.id}}/tweets"><i class="fas fa-arrow-left me-2 mb-3" style="color: #1C1C1C;"></i></a>
       </div>
       <div class="p-2">
-        <div class="home-word">{{user.name}}</div>
+        <div class="home-word">{{req.params.name}}</div>
         <div class="count">25推文</div>
       </div>
     </div>
@@ -33,8 +33,8 @@
     <div class="following d-flex">
       <div class="" style="display:flex;justify-content: center;">
 
-        <a href="/users/{{this.id}}/tweets">
-          <img src="{{this.avatar}}" alt="..." class="rounded-circle m-2" style="width: 50px; height:50px;">
+        <a href="/users/{{this.user.id}}/tweets">
+          <img src="{{this.user.avatar}}" alt="..." class="rounded-circle m-2" style="width: 50px; height:50px;">
         </a>
 
       </div>
@@ -42,9 +42,9 @@
         <div style="display: flex; justify-content:space-between">
           <div>
 
-            <a href="/users/{{this.id}}/tweets">
-              <div class="follow-name">{{this.name}}</div>
-              <div class="follow-account m-0">@{{this.account}}</div>
+            <a href="/users/{{this.user.id}}/tweets">
+              <div class="follow-name">{{this.user.name}}</div>
+              <div class="follow-account m-0">@{{this.user.account}}</div>
             </a>
 
           </div>
