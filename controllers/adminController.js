@@ -9,7 +9,7 @@ const adminController = {
     return res.render('admin/signin')
   },
   signIn: (req, res) => {
-    if (!req.user.role) {
+    if (req.user.role === 'user') {
       req.flash('error_messages', '帳號或密碼錯誤')
       res.redirect('/admin/signin')
     } else {
@@ -55,8 +55,8 @@ const adminController = {
 
       await Tweet.destroy({ where: { id } })
       // likes, replies 都要刪 才能防止ghost data
-      await Like.destroy({ where: { tweetId: id } })
-      await Reply.destroy({ where: { tweetId: id } })
+      await Like.destroy({ where: { TweetId: id } })
+      await Reply.destroy({ where: { TweetId: id } })
       return res.redirect('back')
     } catch (err) {
       console.log(err)

@@ -5,8 +5,6 @@ const helpers = require('./_helpers')
 
 
 function ensureAuthenticated(req) {
-  console.log('================')
-  console.log('進入req.isAuthenticated()')
   return req.isAuthenticated();
 }
 
@@ -19,7 +17,7 @@ function removeUser(Array, id) {
 }
 
 function removeadmin(Array) {
-  Array.splice(Array.findIndex(x => x.role = true), 1)
+  Array.splice(Array.findIndex(x => x.role = 'admin'), 1)
 }
 
 module.exports = {

@@ -41,14 +41,10 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
   res.locals.user = req.user
   res.locals.baseURL = baseURL
-  console.log('res.locals.baseURL', res.locals.baseURL)
   next()
 })
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
-
-console.log('=============')
-console.log('進入app.js')
 
 require('./routes')(app)
 
