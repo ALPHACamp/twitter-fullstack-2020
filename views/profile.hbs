@@ -2,6 +2,8 @@
   <div class="col">
     {{>columnLeft}}
   </div>
+  {{>modalPost}}
+  {{>modalIndex}}
   {{>modalProfile}}
   <div class="profile-container">
     <div class="mainpost-nav">
@@ -66,10 +68,21 @@
               {{moment this.createdAt}}</span></h5>
           <p>
             {{this.Tweet.description}}
-          <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>{{this.ReplyCount}}</span><span
-              class="post-icon-block"><span style="color: #E0245E;"><i
-                  class="bi bi-heart-fill"></i>{{this.LikedCount}}</span></span></p>
           </p>
+
+          <h3 class="post-sub-info">
+            <span class="post-icon-block">
+              <button id="myInput" data-bs-toggle="modal" data-bs-target="#postModel" class="heart-button btn">
+                <i class="bi bi-chat"></i>{{this.ReplyCount}}
+                </button>
+            </span>
+            <span class="post-icon-block">              
+              <form action="posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                
+                 <button type="submit" class="bi bi-heart-fill btn"></button><span class="likedText">{{this.LikedCount}}</span>
+              </form>
+            </span>
+          </h3>
+
         </div>
       </div>
       {{/each}}
