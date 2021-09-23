@@ -20,4 +20,7 @@ router.post('/', authenticated, twitterController.postTwitter)
 router.get('/:id/replyList', authenticated, twitterController.getTwitter)
 router.post('/:id/replyList', authenticated, twitterController.postReply)
 
+router.post('/:id/like', authenticated, twitterController.like)
+router.delete('/:id/unlike', authenticated, twitterController.unlike)
+
 module.exports = router
