@@ -1,0 +1,45 @@
+<div class="container d-flex flex-column align-items-center">
+
+  <div class="card" style="width: 38rem;">
+
+    <div class="d-flex align-items-center">
+      <a href="/" class="btn">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <div class="d-flex flex-column ms-4">
+        <h5 class="mb-0 mt-2 fontWeight900">{{user.name}}</h5>
+        <p class="mt-0 mb-2" style="color:#657786;">{{totalTweet}} 推文</p>
+      </div>
+    </div>
+
+    <ul class="nav nav-tabs mt-4">
+      <li class="nav-item">
+        <a class="nav-link fontWeight700" href="/users/self/follower/{{user.id}}">跟隨者</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link fontWeight700 active" href="#">正在跟隨</a>
+      </li>
+    </ul>
+
+
+    {{#each followers}}
+    <div class="card p-2">
+      <div class="d-flex">
+        <div>
+          <img src="" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
+        </div>
+        <div class="col-md-8">
+          <div class="userInfo" style="width: 540px;">
+            <div class="d-flex justify-content-between">
+              <h6 class="fontWeight700 me-2 mb-1">Name</h6>
+              <a href="#" class="btn btn-white-orange rounded-pill p-0" style="width: 90px; height: 25px;">正在跟隨</a>
+            </div>
+            <h6 class="fontWeight500 mb-1" style="color:#657786;">@account</h6>
+          </div>
+          <p class="card-text fontWeight500">content</p>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</div>

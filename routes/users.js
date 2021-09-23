@@ -28,6 +28,8 @@ router.put('/self/edit/:id', authenticated, upload.fields([{ name: 'avatar', max
 router.get('/self/:id', authenticated, userController.getUser)
 router.get('/self/reply/:id', authenticated, userController.getUserReply)
 router.get('/self/like/:id', authenticated, userController.getUserLike)
+router.get('/self/follower/:id', authenticated, userController.getUserFollower)
+router.get('/self/following/:id', authenticated, userController.getUserFollowing)
 
 
 // user's setting
@@ -35,4 +37,3 @@ router.get('/setting/:id', authenticated, userController.getUserSetting)
 router.put('/setting/:id', authenticated, userController.putUserSetting)
 
 module.exports = router
-
