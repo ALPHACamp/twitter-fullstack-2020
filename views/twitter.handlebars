@@ -42,9 +42,19 @@
         </p>
         <div class="d-flex">
           <div>
-            <button type="button" class="btn">
-              <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
-            </button>
+            {{#if this.isLiked }}
+            <form action="/twitters/{{ this.id }}/unlike?_method=DELETE" method="POST">
+              <button type="submit" class="btn">
+                <i class="fas fa-heart"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
+              </button>
+            </form>
+            {{else}}
+            <form action="/twitters/{{ this.id }}/like" method="POST">
+              <button type="submit" class="btn">
+                <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
+              </button>
+            </form>
+            {{/if}}
           </div>
           <div>
             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#replyModal"
