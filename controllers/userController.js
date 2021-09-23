@@ -62,7 +62,7 @@ const userController = {
   },
 
 
-  getUserTweets:async(req, res)=>{
+  getUserTweets: async (req, res) => {
     // const currentUser = helpers.getUser(req)
     const tweets = await Tweet.findAll({
       where: {UserId: req.params.id},
@@ -72,7 +72,11 @@ const userController = {
     const tweetUser = await User.findByPk(
         req.params.id
     )
-    return res.render('userSelf',{ tweets , tweetUser:tweetUser.toJSON()})
+    return res.render('userSelf',{ 
+      tweets, 
+      tweetUser,
+      theUser : req.user.id
+    })
   },
 
   getUserSelfReply: async (req ,res) =>{
@@ -109,6 +113,21 @@ const userController = {
     })
     req.flash('success_messages', 'user was successfully to update')
     res.redirect('/tweets')
+  },
+
+  putUserProfile: async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    console.log(user)
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!")
+
+    user.update({
+      name: req.body.name,
+      avatar: req.body.avatar,
+      cover: req.body.cover,
+      description: req.body.description
+    })
+    req.flash('success_messages', 'Your profile was successfully to update')
+    res.redirect('back')
   },
 
   // getUserTweets: (req, res) => {
