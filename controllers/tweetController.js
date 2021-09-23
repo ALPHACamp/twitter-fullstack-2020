@@ -123,7 +123,6 @@ const tweetController = {
         TweetId: req.params.tweetId
       })
       return res.redirect('back')
-
     } catch (err) {
       console.log(err)
       res.status(302);
