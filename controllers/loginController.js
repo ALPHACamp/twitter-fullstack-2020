@@ -9,7 +9,6 @@ const loginController = {
 
   signUp: async (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
-    const role = false
     const error_messages = []
     //加入多種錯誤訊息
     if (password !== checkPassword) {
@@ -35,14 +34,8 @@ const loginController = {
         account,
         name,
         email,
-        password: bcrypt.hashSync(req.body.password,bcrypt.genSaltSync(10), null),
-        checkPassword,
-        role,
-        avatar:
-          'https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg'
-      }).then(() => {
-        req.flash('success_messages', '成功註冊帳號！')
-        return res.redirect('/signin')
+        password,
+        checkPassword
       })
     }
 
@@ -55,7 +48,6 @@ const loginController = {
         bcrypt.genSaltSync(10),
         null
       ),
-      role,
       avatar:
         'https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg'
     })
