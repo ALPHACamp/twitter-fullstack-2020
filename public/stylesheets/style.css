@@ -1161,3 +1161,221 @@ svg {
   color: #ffffff;
   cursor:inherit;
 }
+
+/* admin-navbar-left */
+#admin-sidebar-left {
+  margin-right: 30px;
+  padding-right: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+#admin-sidebar-left .navigation .logo svg {
+  margin-bottom:30px;
+  cursor:pointer;
+
+}
+
+
+#admin-sidebar-left .navigation {
+  width: 180px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+#admin-sidebar-left .logout {
+  display: flex;
+  align-items: center;
+  width: auto;
+  height: auto;
+  position: fixed;
+  bottom: 0;
+}
+
+
+#admin-sidebar-left .navigation .item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  margin-bottom: 30px;
+}
+
+#admin-sidebar-left .navigation .item:hover .iconIndex, 
+#admin-sidebar-left .navigation .item:hover .iconUser,
+#admin-sidebar-left .navigation .item:hover .iconCog{
+  color: #FF6600;
+  fill: #FF6600;
+}
+
+#admin-sidebar-left .navigation .item span {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+}
+
+#admin-sidebar-left .navigation .item a {
+  text-decoration: none;
+  margin: 0px 20px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 20px;
+  color: #1C1C1C;
+}
+
+svg {
+  fill: black;
+}
+
+.admin-sidebar-left .navigation .item .tweetButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 210px;
+  height: 38px;
+  left: 0px;
+  top: 10px;
+  border:none;
+  background: #FF6600;
+  border-radius: 100px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+#admin-sidebar-left .logout .iconLogout {
+  margin-right: 23px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1C1C1C;
+  fill: none;
+  stroke: black ;
+  text-decoration:none;
+}
+
+#admin-sidebar-left .logout:hover .iconLogout {
+  color: #FF6600;
+  stroke: #FF6600;
+}
+
+/* AdminTweetList */
+.admin-tweet-main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-tweet-main-content .header {
+  background: #ffffff;
+  padding-left: 15px;
+  height: 55px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #e6ecf0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.admin-tweet-main-content .header .headerItem span {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1c1c1c;
+}
+
+.admin-tweet-main-content .content-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-tweet-main-content .tweet-item {
+  display: flex;
+  flex-direction: row;
+  padding: 18px 0px 12px 15px;
+  border-bottom: 1px solid #e6ecf0;
+  box-sizing: border-box;
+}
+
+.admin-tweet-main-content .item-avatar img {
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.admin-tweet-main-content .item-body {
+  flex: 1;
+}
+
+.admin-tweet-main-content .item-header {
+  position: relative;
+  display: flex;
+}
+
+.admin-tweet-main-content .item-name {
+  margin-right: 5px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  color: #1c1c1c;
+}
+
+.admin-tweet-main-content .item-account {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+}
+
+.admin-tweet-main-content .item-delete-icon {
+  position: absolute;
+  box-sizing: border-box;
+  right: 19px;
+  cursor: pointer;
+}
+
+.admin-tweet-main-content .item-delete-icon svg {
+  fill: #657786;
+}
+
+.admin-tweet-main-content .item-delete-icon:hover svg {
+  fill: #ff6600;
+}
+
+.admin-tweet-main-content .item-content {
+  margin-top: 5px;
+}
+
+.admin-tweet-main-content .item-content span {
+  all: initial;
+  outline: none;
+  width: 500px;
+  /*   限制顯示寬度 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  /*   文字樣式 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #1c1c1c;
+}
