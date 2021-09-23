@@ -82,7 +82,9 @@
       </div>
     </div>
     <div class="cover">
-      <img src="https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2020/11/07/20201107-092915_U13380_M651499_4ac4.jpg?itok=6KFZde7p" alt="" class="userBackgroundImg">
+      <img
+        src="https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2020/11/07/20201107-092915_U13380_M651499_4ac4.jpg?itok=6KFZde7p"
+        alt="" class="userBackgroundImg">
     </div>
     <span class="avatar m-2">
       <img src="{{noImage tweetUser.avatar}}" alt="" class="rounded-circle userProfileImg">
@@ -100,12 +102,14 @@
     </div>
     <div class="d-flex m-3">
       <div class="replies me-5 d-flex">
-        <div class="repliesAmount fw-bolder me-2">34</div>
-        <div>個跟隨中</div>
+        <a class="repliesAmount fw-bolder me-2" href="/users/{{tweetUser.id}}/followings"
+          style="text-decoration: none; color:black">{{followingsCount}}
+          個<span class="color-gray">跟隨中</span></a>
       </div>
       <div class="likes d-flex">
-        <div class="likesAmount fw-bolder me-2">59</div>
-        <div>位跟隨者</div>
+        <a class="likesAmount fw-bolder me-2" href="/users/{{tweetUser.id}}/followers"
+          style="text-decoration: none; color:black">{{followersCount}}
+          位<span class="color-gray">跟隨者</span></a>
       </div>
     </div>
     <ul class="nav nav-tabs">
@@ -152,44 +156,46 @@
       </div>
     </div>
     {{/each}}
-    
+
   </div>
-  <div class="">
+
+  <div class="topUser">
     <div class="popularArea fixed mt-4 border">
       <div class="title m-3">
         <h5 class="fw-bolder">Popular</h5>
       </div>
+      {{#each topUsers}}
+      {{#ifCondNot this.id ../theUser}}
       <div class="popularList border-top">
         <div class="popularUser d-flex border-bottom justify-content-between">
           <div class="user d-flex">
             <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+              <a href="/users/{{this.id}}">
+                <img src="{{noImage this.avatar}}" alt="" class="rounded-circle userImage">
+              </a>
             </div>
             <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">Pizza Hut</div>
-              <div class="account ms-1">@Pizza Hut</div>
+              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}
+              </div>
+              <div class="account ms-1">{{this.account}}</div>
             </div>
           </div>
           <div class="round m-3">
-            <button class="orange btn text-white round">正在跟隨</button>
+            {{#if this.isFollowed}}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn orange text-white round">取消跟隨</button>
+            </form>
+            {{else}}
+            <form action="/following/{{this.id}}" method="POST">
+              <button type="submit" class="btn followButton round">跟隨</button>
+            </form>
+            {{/if}}
           </div>
         </div>
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">McDonald's</div>
-              <div class="account ms-1">@McDonald's</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="btn followButton round">跟隨</button>
-          </div>
-        </div>
-      </div>
+        {{/ifCondNot}}
+        {{/each}}
 
+      </div>
     </div>
   </div>
 </div>
