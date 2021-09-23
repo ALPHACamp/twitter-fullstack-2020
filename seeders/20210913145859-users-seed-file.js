@@ -14,7 +14,7 @@ module.exports = {
         name: faker.name.findName(),
         avatar: `https://loremflickr.com/320/240/selfie?lock=${i}`,
         introduction: faker.lorem.text().substring(0, 160),
-        role: false,
+        role: 'user',
         cover: `https://loremflickr.com/400/300/landscape?lock=${i}`,
         createdAt: new Date(),
         updatedAt: new Date()
