@@ -18,5 +18,6 @@ router.get('/', authenticated, twitterController.getTwitters)
 router.post('/', authenticated, twitterController.postTwitter)
 
 router.get('/:id/replyList', authenticated, twitterController.getTwitter)
+router.post('/:id/replyList', authenticated, twitterController.postReply)
 
 module.exports = router

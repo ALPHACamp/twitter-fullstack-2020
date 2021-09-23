@@ -22,7 +22,7 @@ function followships(userIds) {
   let followingCount = 4
   userIds.forEach(userId => {
     let currentFollowing = (Number(userId) + 1)
-    for (let i = followingCount; i >= 0; i--) {
+    for (let i = followingCount; i > 0; i--) {
       const followship = {
         followerId: userId,
         followingId: currentFollowing,

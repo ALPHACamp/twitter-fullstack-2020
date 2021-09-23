@@ -16,6 +16,7 @@ const twitterController = {
         tweetUserAvatar: row.User.dataValues.avatar,
         tweetUserName: row.User.dataValues.name,
         tweetUserAccount: row.User.dataValues.account,
+        tweetId: row.id,
         tweetContent: row.content,
         tweetRepliesCount: row.Replies.length,
         tweetLikesCount: row.Likes.length,
@@ -71,7 +72,18 @@ const twitterController = {
       })
     }
   },
+  postReply: (req, res) => {
 
+    return Reply.create({
+      UserId: req.user.id,
+      TweetId: req.params.id,
+      content: req.body.text,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }).then((reply) => {
+      res.redirect('back')
+    })
+  },
 }
 
 
