@@ -19,12 +19,7 @@ const userController = {
     const id = helpers.getUser(req).id
     if (Number(userId) !== Number(id)) {
       req.flash('error_messages', '只能更改自己的profile')
-<<<<<<< HEAD
       return res.status(200).json({ status: 'error' })
-=======
-      res.status(302)
-      res.redirect('back')
->>>>>>> origin/master
     }
     try {
       const user = await User.findByPk(id, {
@@ -53,14 +48,6 @@ const userController = {
     userUpload.name = req.body.name
     userUpload.intro = req.body.intro
 
-<<<<<<< HEAD
-=======
-    if (Number(userId) !== Number(id)) {
-      req.flash('error_messages', '只能更改自己的profile')
-      res.status(302)
-      res.redirect('/tweets')
-    }
->>>>>>> origin/master
     try {
       const tweetsRaw = await Tweet.findAll({
         where: { UserId: userId },
@@ -110,13 +97,8 @@ const userController = {
         cover: userUpload.cover ? userUpload.cover.data.link : user.cover,
         avatar: userUpload.avatar ? userUpload.avatar.data.link : user.avatar
       })
-<<<<<<< HEAD
 
       return res.render('userTweets', { profileUser, popularUser, tweets })
-=======
-      res.status(200)
-      return res.redirect(`/users/${id}/tweets`)
->>>>>>> origin/master
     } catch (err) {
       console.log(err)
       console.log('editUser err')
