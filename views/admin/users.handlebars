@@ -39,7 +39,7 @@
           <div class="row">
             {{#each users}}
             <div class="col-3">
-              <div class="card userCard mb-2">
+              <div class="card userCard my-2">
                 <img src="{{this.cover}}" class="card-img-top userCover">
                 <div class="userAvatar mx-auto">
                   <img src=" {{this.avatar}}" class="avatar rounded-circle">
@@ -49,13 +49,27 @@
                   </p>
                   <p class="text-secondary color-gray mb-1 lh-1">@{{this.account}}
                   </p>
-                  <div class="dataInfo d-flex justify-content-center">
+                  <div class="dataInfo d-flex justify-content-center m-3">
                     <div class="tweetInfo d-flex justify-content-between" style="width: 45%;">
                       <div>
                         <span><i class="far fa-comment color-gray"></i></span> {{this.tweetCount}}
                       </div>
                       <div>
                         <span><i class="far fa-heart color-gray"></i></span> {{this.likeCount}}
+                      </div>
+                    </div>
+                    <div class="followshipInfo d-flex justify-content-around" style="width: 85%;">
+                      <div> {{this.followingCount}}個跟隨中 </div>
+                      <div> {{this.followerCount}}位追隨者 </div>
+                    </div>
+                  </div>
+                  <div class="dataInfo d-flex justify-content-center m-3">
+                    <div class="tweetInfo d-flex justify-content-between" style="width:85%">
+                      <div>
+                        {{this.followingsCount}}個<span class="color-gray">跟隨中</span>
+                      </div>
+                      <div>
+                        {{this.followersCount}}位<span class="color-gray">追隨者</span>
                       </div>
                     </div>
                   </div>
