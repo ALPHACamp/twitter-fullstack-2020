@@ -78,13 +78,23 @@
           <li class="d-flex flex-row list-group-item" style="background-color: #E6ECF0; width: 350px;">
             <img src="{{this.avatar}}" style="width: 50px; height: 50px; " class="rounded-circle m-2" alt="...">
             <div class="d-flex flex-column align-items-center m-2 me-auto">
-              <div class="fw-bold">{{this.name}}</div>
-              @{{this.account}}
+              <a href="/users/other/{{this.id}}" style="color:#1C1C1C; text-decoration:none;">
+                <div class="fw-bold">{{this.name}}</div>
+                @{{this.account}}
+              </a>
             </div>
             {{#if this.isFollowed}}
-            <a href="#" class="btn btn-white-orange rounded-pill m-3" style="height: 35px; font-size: 15px">正在跟隨</a>
+            <form action="/twitters/{{ this.id }}/unlike?_method=DELETE" method="POST">
+              <button type="submit" class="btn btn-white-orange rounded-pill m-3" style="height: 35px; font-size: 15px">
+                正在跟隨
+              </button>
+            </form>
             {{else}}
-            <a href="#" class="btn btn-orange-white rounded-pill m-3" style="height: 35px; font-size: 15px">跟隨</a>
+            <form action="/twitters/{{ this.id }}/like" method="POST">
+              <button type="submit" class="btn btn-orange-white rounded-pill m-3" style="height: 35px; font-size: 15px">
+                跟隨
+              </button>
+            </form>
             {{/if}}
           </li>
           {{/each}}
