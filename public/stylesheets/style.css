@@ -1155,7 +1155,7 @@ svg {
   line-height: 26px;
   text-align: center;
   color: #ffffff;
-  cursor:inherit;
+  cursor: inherit;
 }
 
 /* admin-navbar-left */
@@ -1168,11 +1168,9 @@ svg {
 }
 
 #admin-sidebar-left .navigation .logo svg {
-  margin-bottom:30px;
-  cursor:pointer;
-
+  margin-bottom: 30px;
+  cursor: pointer;
 }
-
 
 #admin-sidebar-left .navigation {
   width: 180px;
@@ -1193,7 +1191,6 @@ svg {
   bottom: 0;
 }
 
-
 #admin-sidebar-left .navigation .item {
   display: flex;
   flex-direction: row;
@@ -1201,11 +1198,11 @@ svg {
   margin-bottom: 30px;
 }
 
-#admin-sidebar-left .navigation .item:hover .iconIndex, 
+#admin-sidebar-left .navigation .item:hover .iconIndex,
 #admin-sidebar-left .navigation .item:hover .iconUser,
-#admin-sidebar-left .navigation .item:hover .iconCog{
-  color: #FF6600;
-  fill: #FF6600;
+#admin-sidebar-left .navigation .item:hover .iconCog {
+  color: #ff6600;
+  fill: #ff6600;
 }
 
 #admin-sidebar-left .navigation .item span {
@@ -1222,7 +1219,7 @@ svg {
   font-weight: bold;
   font-size: 18px;
   line-height: 20px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 svg {
@@ -1237,15 +1234,15 @@ svg {
   height: 38px;
   left: 0px;
   top: 10px;
-  border:none;
-  background: #FF6600;
+  border: none;
+  background: #ff6600;
   border-radius: 100px;
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 #admin-sidebar-left .logout .iconLogout {
@@ -1255,15 +1252,15 @@ svg {
   font-weight: bold;
   font-size: 18px;
   line-height: 26px;
-  color: #1C1C1C;
+  color: #1c1c1c;
   fill: none;
-  stroke: black ;
-  text-decoration:none;
+  stroke: black;
+  text-decoration: none;
 }
 
 #admin-sidebar-left .logout:hover .iconLogout {
-  color: #FF6600;
-  stroke: #FF6600;
+  color: #ff6600;
+  stroke: #ff6600;
 }
 
 /* AdminTweetList */
@@ -1374,4 +1371,39 @@ svg {
   font-size: 15px;
   line-height: 22px;
   color: #1c1c1c;
+}
+
+/* messagebox */
+.message-box span {
+  all: initial;
+  margin-right: 16px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 28px;
+  color: #000000;
+}
+
+.message-box {
+  margin-bottom: 30px;
+  min-width: 394px;
+  min-height: 96px;
+  display: inline-block;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04),
+    0px 4px 16px rgba(51, 51, 51, 0.08);
+  border-radius: 8px;
+}
+
+.message-box .wrap {
+  all: initial;
+  margin: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.message-box .content {
+  all: initial;
 }
