@@ -24,18 +24,20 @@
             </div>
             <div class="profile-textarea-container">
               <textarea
-                name="profile-textarea"
+                name="description"
                 class="form-control form-control-lg"
                 id="post"
                 placeholder="有什麼新鮮事?"
                 rows="3"
+                maxlength="140"
+                required
               ></textarea>
             </div>
-            <div class="btn btn-twitter">
-              <span>
-                推文
-              </span>
-            </div>
+            <form action="posts/add" method="POST">
+              <bottom type="submit" class="btn btn-twitter">
+                <span>推文</span></bottom>
+            </form>
+
           </div>
         </div>
       </div>
