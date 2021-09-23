@@ -7,7 +7,7 @@
 
 
 個人資料頁
-![image](picture or gif url)
+![image](https://github.com/0Trevor-Lin0/twitter-fullstack-2020/blob/master/picture/Twitter%E5%80%8B%E4%BA%BA%E8%A9%B3%E7%B4%B0%E9%A0%81.png)
 
 ## Features - 產品功能
 
