@@ -18,13 +18,17 @@ const likeController = {
   changeLike: (req, res) => {
     const user = dummyuser;
     const tweetId = req.params.id
-    return Like.find({
+    return Like.findOne({
       where: {
         UserId: Number(user.id),
         TweetId: Number(tweetId)
       }})
       .then((like) => {
-        if(like) return Like.destroy()
+        if(like) return Like.destroy({
+          where: {
+            UserId: Number(user.id),
+            TweetId: Number(tweetId)
+          }})
         else return Like.create({
           UserId: Number(user.id),
           TweetId: Number(tweetId)         
