@@ -5,8 +5,8 @@ const db = require('./models')
 const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
+const methodOverride = require('method-override')
 const passport = require('./config/passport')
-
 
 const app = express()
 const port = 3000
@@ -18,6 +18,7 @@ app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+app.use(methodOverride('_method'))
 app.use(express.static('public'))
 
 app.use((req, res, next) => {
@@ -32,6 +33,6 @@ app.use((req, res, next) => {
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
 module.exports = app

@@ -60,6 +60,12 @@ let userController = {
   userSetting: (req, res) => {
     res.render('/setting')
   },
+
+
+  getUserSetting: (req,res) => {
+
+  },
+
   putUserSetting: (req, res) => {
     if (req.body.passwordCheck !== req.body.password) {
       req.flash('error_messages', '兩次密碼輸入不同！')
