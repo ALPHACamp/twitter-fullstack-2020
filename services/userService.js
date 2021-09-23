@@ -167,7 +167,6 @@ const userService = {
 
   addFollowing: async (req, res, callback) => {
     try {
-      console.log('1')
       const followerId = helpers.getUser(req).id
       const followingId = Number(req.params.id)
       const targetUser = await User.findByPk(followingId)
@@ -179,19 +178,15 @@ const userService = {
           ]
         }
       })
-  console.log('2')
       if (!targetUser) {
-        console.log('3')
         return callback({ status: 'error', message: '無效對象' })
       }
 
       if (followerId === followingId) {
-    console.log('4')
         return callback({ status: 'error', message: '無法追蹤自己' })
       }
 
       if (followship) {
-        console.log('5')
         return callback({ status: 'error', message: '不得重複追蹤' })
       } else {
         await Followship.create({

@@ -88,10 +88,8 @@
           {{tweet.description}}
         </div>
 
-        {{!-- //TODO:時間格式要調整 --}}
         <div class="time">
           <p>{{date tweet.createdAt}}</p>
-          {{!-- should be:上午10:05．2020年6月10日 --}}
         </div>
 
         <hr>
@@ -103,7 +101,6 @@
           </div>
           <div class="reply d-flex">
             <div class="number">{{tweet.Likes.length}}</div>
-            {{!-- //TODO:待回傳LIKE數 --}}
             <div class="text">喜歡次數</div>
           </div>
         </div>
@@ -116,9 +113,6 @@
             <i class="far fa-comment"></i>
           </div>
 
-          {{!-- //TODO:要分實心空心 --}}
-          
-            {{!-- 測試like功能用的超醜按鈕 --}}
             
           {{#if like}}
             <form action="/tweets/{{tweet.id}}/unlike" method="POST">
@@ -129,7 +123,6 @@
               <button class="btn" type="submit"><i class="far fa-heart"></i></button>
             </form>
           {{/if}}
-            {{!-- 測試like功能用的超醜按鈕 --}}
           
 
 

@@ -10,12 +10,6 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
-
-const imgur = require('imgur-node-api')
-// const { fakeServer } = require('sinon')
-// const followship = require('../models/followship')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
-
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signUp')
@@ -35,7 +29,6 @@ const userController = {
       .then(users => {
         if (users.some(item => item.account === account)) {
           req.flash('error_messages', '註冊失敗，account 已重覆註冊！')
-          //64656
           return res.redirect('/signup')
         }
         if (users.some(item => item.email === email)) {
@@ -478,9 +471,7 @@ const userController = {
   },
 
   addFollowing: async (req, res) => {
-    console.log('456')
     userService.addFollowing(req, res, data => {
-      console.log('789')
       if (data['status'] === 'error') {
         req.flash('error_messages', data['message'])
         return res.redirect('back')

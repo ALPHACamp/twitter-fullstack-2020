@@ -5,8 +5,8 @@ module.exports = {
     //隨機建立20組followship (Condition:5位使用者)
     const followship = Array.from({ length: 20 }).map((d, i) =>
     ({
-      followerId: Math.floor(Math.random() * 6) * 10 + 5,
-      followingId: Math.floor(Math.random() * 6) * 10 + 5,
+      followerId: Math.floor(Math.random() * 5) * 10 + 15,
+      followingId: Math.floor(Math.random() * 5) * 10 + 15,
       createdAt: new Date(),
       updatedAt: new Date()
     }))

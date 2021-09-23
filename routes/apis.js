@@ -45,7 +45,7 @@ router.get('/users/:id', authenticated, userController.renderUserEdit)
 router.post('/users/:id', authenticated, userController.putUserEdit)
 
 // JWT signin
-router.post('/signin', userController.signIn)
+// router.post('/signin', userController.signIn)
 
 
 module.exports = router

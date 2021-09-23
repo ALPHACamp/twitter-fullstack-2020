@@ -25,7 +25,6 @@ describe('# followship request', () => {
       })
 
       it('can not follow self', (done) => {
-        console.log('2222')
         request(app)
           .post('/followships')
           .send('id=1')
