@@ -35,21 +35,28 @@ const userController = {
           : false
       }))
 
-      res.render('userTweets', { profileUser, popularUser, tweets })
+      res.render('userTweets', {status: (200), profileUser, popularUser, tweets })
     } catch (err) {
       console.log(err)
-      // req.flash('error_messages', '該使用者不存在')
-      // res.redirect('/tweets')
+      res.status(302)
+      console.log('getUserTweets err')
+      req.flash('error_messages', '讀取使用者貼文失敗')
+      return res.redirect('/')
+      
     }
   },
   getSetting: async (req, res) => {
     try {
       User.findByPk(helpers.getUser(req).id, { raw: true }).then(user => {
         res.render('setting', { userdata: user })
+
       })
     } catch (error) {
       console.log(err)
+      res.status(302)
       console.log('getSetting err')
+      req.flash('error_messages', '讀取設定頁面失敗')
+      return res.redirect('back')
     }
   },
 
@@ -62,41 +69,20 @@ const userController = {
 
       if (checkPassword !== password) {
         error_messages.push({ message: '密碼與確認密碼不符！' })
-        return res.render('setting', {
-          status: 'error',
-          error_messages,
-          userdata: user,
-        })
       }
-
       // 確認沒有相同帳號的使用者
       let sameUser = await User.findOne({ where: { account } })
       if (sameUser && sameUser.dataValues.id !== userId) {
         error_messages.push({ message: '此帳號已註冊。' })
-        return res.render('setting', {
-          status: 'error',
-          error_messages,
-          userdata: user,
-        })
       }
       // 確認沒有相同 email 的使用者
       sameUser = await User.findOne({ where: { email } })
       if (sameUser && sameUser.dataValues.id !== userId) {
         error_messages.push({ message: '此 Email 已經存在。' })
-        return res.render('setting', {
-          status: 'error',
-          error_messages,
-          userdata: user,
-        })
       }
 
       if (error_messages.length) {
-        return res.render('setting', {
-          error_messages,
-          account,
-          userdata: user,
-        })
-      }
+        return res.render('setting', {status: (302), error_messages, account, userdata: user,})}
 
       await User.findByPk(userId).then(user => {
         user.update({
@@ -109,8 +95,10 @@ const userController = {
       })
     } catch (err) {
       console.log(err)
+      res.status(302);
       console.log('editSetting err')
-      next(err)
+      req.flash('error_messages', '帳戶更動失敗')
+      return res.redirect('back')
     }
   },
 
@@ -132,9 +120,13 @@ const userController = {
         order: [['createdAt', 'DESC']]
       })
 
-      res.render('userReply', { profileUser, popularUser, replies })
+      res.render('userReply', {status: (200), profileUser, popularUser, replies })
     } catch (err) {
       console.log(err)
+      res.status(302);
+      console.log('getReplies err')
+      req.flash('error_messages', '讀取回覆失敗')
+      return res.redirect('back')
     }
   },
   getLikes: async (req, res) => {
@@ -165,9 +157,13 @@ const userController = {
           .includes(like.Tweet.id) 
       }))
 
-      res.render('userLike', { profileUser, popularUser, likedTweets })
+      res.render('userLike', { status: (200), profileUser, popularUser, likedTweets })
     } catch (err) {
       console.log(err)
+      res.status(302);
+      console.log('getLikes err')
+      req.flash('error_messages', '點擊失敗')
+      return res.redirect('back')
     }
   },
 
@@ -204,7 +200,9 @@ const userController = {
       })
     } catch (err) {
       console.log(err)
-      console.log('getUserFollowers err')
+      res.status(302);
+      console.log('getUserFollowings err')
+      req.flash('error_messages', '獲取追蹤中使用者失敗')
       return res.redirect('back')
     }
   },
@@ -243,7 +241,9 @@ const userController = {
       })
     } catch (err) {
       console.log(err)
+      res.status(302);
       console.log('getUserFollowers err')
+      req.flash('error_messages', '獲取追蹤者失敗')
       return res.redirect('back')
     }
   }
