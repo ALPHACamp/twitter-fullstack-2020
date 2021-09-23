@@ -10,5 +10,11 @@ module.exports = {
 
   moment: function (a) {
     return moment(a).fromNow()
-  }
+  },
+
+  IfUrl: function(a, options){
+    if(!((a === "/admin/signin") && (a === "/signin")) ) {
+      return options.fn(this)
+    }
+  },
 }
