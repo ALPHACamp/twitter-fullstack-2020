@@ -30,6 +30,8 @@ router.get('/self/reply/:id', authenticated, userController.getUserReply)
 router.get('/self/like/:id', authenticated, userController.getUserLike)
 router.get('/self/follower/:id', authenticated, userController.getUserFollower)
 router.get('/self/following/:id', authenticated, userController.getUserFollowing)
+router.get('/other/:id', authenticated, userController.getOtherUser)
+router.get('/otherTwitter/:id', authenticated, userController.getOtherUser)
 
 
 // user's setting
