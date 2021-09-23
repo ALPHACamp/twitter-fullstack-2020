@@ -25,5 +25,9 @@ module.exports = {
   constainsAdmin: function (a) {
     const word = 'admin'
     return a.includes(word)
+  },
+  renderFollower: function (a) {
+    const word = 'follower'
+    return a.includes(word)
   }
 }

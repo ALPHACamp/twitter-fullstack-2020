@@ -1,5 +1,6 @@
 // TODO controller
 const bcrypt = require('bcryptjs')
+const { raw } = require('body-parser')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
@@ -64,39 +65,59 @@ const userController = {
 
   getUserTweets: async (req, res) => {
     // const currentUser = helpers.getUser(req)
-    const tweets = await Tweet.findAll({
-      where: {UserId: req.params.id},
-      include: [User, Reply],
-      order: [['createdAt', 'DESC']]
-    })
-    const tweetUser = await User.findByPk(
+    return Promise.all([
+      Tweet.findAll({
+        where: { UserId: req.params.id },
+        include: [User, Reply],
+        order: [['createdAt', 'DESC']]
+      }),
+      Followship.count({
+        where: { followingId: req.params.id }
+      }),
+      Followship.count({
+        where: { followerId: req.params.id }
+      }),
+      User.findByPk(
         req.params.id
-    )
-    return res.render('userSelf',{ 
-      tweets, 
-      tweetUser,
-      theUser : req.user.id
+      ),
+      User.findAll({
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ],
+        where: { role: "user" }
+      }),
+    ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
+      const topUsers =
+        users.map(user => ({
+          ...user.dataValues,
+          followerCount: user.Followers.length,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, 10)
+      return res.render('userSelf', { tweets, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id })
     })
   },
 
-  getUserSelfReply: async (req ,res) =>{
-    
+  getUserSelfReply: async (req, res) => {
+
     const replies = await Reply.findAll({
       raw: true,
       nest: true,
-      where: {UserId: req.params.id},
-      include: [User,{model: Tweet, include: [User]}],
+      where: { UserId: req.params.id },
+      include: [User, { model: Tweet, include: [User] }],
       order: [['createdAt', 'DESC']]
     })
     const tweets = await Tweet.findAll({
-      where: {UserId: req.params.id},
+      where: { UserId: req.params.id },
       include: [User, Reply],
       order: [['createdAt', 'DESC']]
     })
     const tweetUser = await User.findByPk(
-        req.params.id
+      req.params.id
     )
-    return res.render('userSelfReply',{replies, tweets, tweetUser})
+    return res.render('userSelfReply', { replies, tweets, tweetUser })
   },
 
   getSetting: (req, res) => {
@@ -282,6 +303,74 @@ const userController = {
             return res.redirect('back')
           })
       })
+  },
+
+  getFollowers: (req, res) => {
+    return Promise.all([
+      Followship.findAll({
+        where: { followingId: req.params.id },
+        order: [
+          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
+        ],
+        nest: true,
+        raw: true
+      }),
+      User.findAll({
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ],
+        where: { role: "user" },
+      })
+    ]).then(([followers, usersdata]) => {
+      const users = usersdata.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+      }))
+
+      const data = followers.map(d => ({
+        ...users.find(element => Number(element.id) === Number(d.followerId))
+      }))
+
+      const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
+      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "follower" })
+    })
+  },
+
+  getFollowings: (req, res) => {
+    return Promise.all([
+      Followship.findAll({
+        where: { followerId: req.params.id },
+        order: [
+          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
+        ],
+        nest: true,
+        raw: true
+      }),
+      User.findAll({
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ],
+        where: { role: "user" },
+      })
+    ]).then(([followings, usersdata]) => {
+      const users = usersdata.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+      }))
+
+      const data = followings.map(d => ({
+        ...users.find(element => Number(element.id) === Number(d.followingId))
+      }))
+
+      const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
+      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "following" })
+    })
   }
 }
 
