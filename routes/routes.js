@@ -26,9 +26,12 @@ const authenticated = (req, res, next) => {
 
 const authenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === "admin") { return next() }
-    req.flash('error_messages', '請確認使用者身分')
-    return res.redirect('/admin/signin')
+    if (helpers.getUser(req).role === "admin") {
+      return next()
+    } else {
+      req.flash('error_messages', '請確認使用者身分')
+      return res.redirect('/admin/signin')
+    }
   }
   req.flash('error_messages', '請先登入')
   res.redirect('/admin/signin')
@@ -48,9 +51,9 @@ router.get('/users/:id/followings', authenticated, userController.getUserFollowi
 router.get('/users/:id/followers', authenticated, userController.getUserFollowers)
 
 //追蹤使用者
-router.post('/followships',authenticated, userController.addFollowing)
+router.post('/followships', authenticated, userController.addFollowing)
 //取消追蹤使用者
-router.delete('/followships/:id',authenticated, userController.removeFollowing)
+router.delete('/followships/:id', authenticated, userController.removeFollowing)
 
 //顯示所有貼文(要改api)
 router.get('/tweets', authenticated, tweetController.getTweets)
@@ -82,7 +85,7 @@ router.post('/tweets/:id/replies', authenticated, tweetController.createReply)
 //喜歡特定貼文
 router.post('/tweets/:id/like', authenticated, tweetController.addLike)
 //取消喜歡特定貼文
-router.post('/tweets/:id/unlike', authenticated,tweetController.removeLike)
+router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 
 //管理者登入(後台登入)
 router.get('/admin/signin', adminController.signinPage)
@@ -91,11 +94,11 @@ router.post('/admin/signin', passport.authenticate('local', {
   failureFlash: true
 }), adminController.signin)
 //後台登出
-router.get('/admin/logout', authenticatedAdmin,adminController.logout)
+router.get('/admin/logout', authenticatedAdmin, adminController.logout)
 //管理者顯示所有貼文
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 //管理者刪除貼文
-router.delete('/admin/tweets/:id', authenticatedAdmin,adminController.deleteTweets)
+router.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweets)
 //管理者顯示所有使用者
 router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 

@@ -40,7 +40,6 @@ passport.deserializeUser(async (id, cb) => {
         return cb(null, user)
       })
   } catch (error) {
-    console.log(error)
     res.render('new', { Error })
   }
 })

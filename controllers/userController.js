@@ -383,9 +383,7 @@ const userController = {
 
   addFollowing: async (req, res) => {
     userService.addFollowing(req, res, data => {
-      console.log(data['status'])
       if (data['status'] === 'error') {
-        console.log('到這')
         req.flash('error_messages', data['message'])
         return res.status(200).json({
           data
