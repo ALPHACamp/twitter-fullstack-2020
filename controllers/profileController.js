@@ -8,7 +8,7 @@ const profileController = {
     try {
       // 前端判斷
       const isPost = true
-      
+
       //get selfInformation
       const Profile = await User.findByPk(req.params.userId, {
         include: [

@@ -6,7 +6,7 @@
   <div class="profile-container">
     <div class="mainpost-nav">
       <div class="row justify-content-start">
-        <div class="col1"><i class="bi bi-arrow-left nav-bold"></i></div>
+        <div class="col1"><a href="/"><i class="bi bi-arrow-left nav-bold"></i></a></div>
         <div class="col2">
           <p class="nav-bold">{{profile.name}}</p><small>{{tweetsCount}}推文</small>
         </div>
@@ -19,13 +19,19 @@
       {{#each tweets}}
       <div class="post">
         <div class="post-card1">
-          <div class="avatar profile-avatar"><img src="{{../profile.avatar}}" alt="avatar-img" /></div>
+          <div class="avatar profile-avatar">
+            <a href="/profiles/{{../profile.id}}/posts">
+              <img src="{{../profile.avatar}}" alt="avatar-img" />
+            </a>
+          </div>
         </div>
         <div class="post-card2">
           <h5 class="d-inline-block">{{../profile.name}}&nbsp;<span class="post-sub-info">{{../profile.account}}
               &#x2027;
               {{moment this.createdAt}}</span></h5>
-          <p>{{this.description}}</p>
+          <a href="/posts/{{this.id}}">
+            <p>{{this.description}}</p>
+          </a>
           <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>{{ReplyCount}}</span><span
               class="post-icon-block"><i class="bi bi-heart"></i>{{LikedCount}}</span></p>
         </div>
@@ -39,14 +45,23 @@
       <div class="col-12 flex-direction-column">
         <div class="post">
           <div class="post-card1">
-            <div class="avatar profile-avatar"><img src="{{../profile.avatar}}" alt="avatar-img" /></div>
+            <div class="avatar profile-avatar">
+              <a href="/profiles/{{../profile.id}}/posts">
+                <img src="{{../profile.avatar}}" alt="avatar-img" />
+              </a>
+            </div>
           </div>
           <div class="post-card2">
             <h5 class="d-inline-block profile-nav-header post-title">{{../profile.name}}&nbsp;<span
                 class="post-sub-info">{{../profile.account}}
                 &#x2027; {{moment this.createdAt}}</span></h5>
+            <a href="/posts/{{this.TweetId}}">
+              <p>{{this.Tweet.description}}</p>
+            </a>
             {{!-- <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p> --}}
-            <span class="post-sub-info">回覆 <span class="orange-text">{{this.Tweet.User.account}}</span></span>
+            <span class="post-sub-info">回覆
+              <span class="orange-text">{{this.Tweet.User.account}}</span>
+            </span>
             <p>{{this.comment}}</p>
           </div>
         </div>
@@ -59,17 +74,31 @@
       {{#each tweets}}
       <div class="post">
         <div class="post-card1">
-          <div class="avatar profile-avatar"><img src="{{this.Tweet.User.avatar}}" alt="avatar-img" /></div>
+          <div class="avatar profile-avatar">
+            <a href="/profiles/{{this.Tweet.User.id}}/posts">
+              <img src="{{this.Tweet.User.avatar}}" alt="avatar-img" />
+            </a>
+          </div>
         </div>
         <div class="post-card2">
-          <h5 class="d-inline-block">{{this.Tweet.User.name}}&nbsp;<span class="post-sub-info">@{{this.Tweet.User.account}} &#x2027;
+          <h5 class="d-inline-block">{{this.Tweet.User.name}}&nbsp;<span
+              class="post-sub-info">{{this.Tweet.User.account}} &#x2027;
               {{moment this.createdAt}}</span></h5>
-          <p>
-            {{this.Tweet.description}}
-          <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>{{this.ReplyCount}}</span><span
-              class="post-icon-block"><span style="color: #E0245E;"><i
-                  class="bi bi-heart-fill"></i>{{this.LikedCount}}</span></span></p>
+
+          <a href="/posts/{{this.Tweet.id}}">
+            <p>{{this.Tweet.description}}</p>
+          </a>
+          <p class="post-sub-info">
+            <span class="post-icon-block">
+              <i class="bi bi-chat"></i>{{this.ReplyCount}}
+            </span>
+            <span class="post-icon-block">
+              <span style="color: #E0245E;">
+                <i class="bi bi-heart-fill"></i>{{this.LikedCount}}
+              </span>
+            </span>
           </p>
+
         </div>
       </div>
       {{/each}}
