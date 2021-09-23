@@ -34,7 +34,7 @@ const adminController = {
           User: r.User,
           id: r.id,
           updatedAt: r.updatedAt,
-          description: r.description.substring(0, 50),
+          description: r.description.length > 50 ? r.description.substring(0, 50) + '...' : r.description,
         }))
         return res.render('admin/adminTweets', { tweet: tweet })
       })
