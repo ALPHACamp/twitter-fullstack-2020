@@ -61,6 +61,7 @@ const userController = {
     res.redirect('/signin')
   },
 
+
   getUserTweets:async(req, res)=>{
     // const currentUser = helpers.getUser(req)
     const tweets = await Tweet.findAll({
@@ -146,8 +147,8 @@ const userController = {
   //     }).catch(err => console.log(err))
   // },
 
-  // 尋找回覆過且正在追隨的使用者推文
-  // 不需要認證使用者
+  // // 尋找回覆過且正在追隨的使用者推文
+  // // 不需要認證使用者
   // getReplyTweets: (req, res) => {
   //   const id = req.params.id
   //   const whereQuery = {}

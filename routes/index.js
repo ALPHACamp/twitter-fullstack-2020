@@ -36,7 +36,7 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
 
-  //Like - Tweet
+  // Like - Tweet
   app.post('/like/:tweetId', authenticated, userController.addLike)
   app.delete('/like/:tweetId', authenticated, userController.removeLike)
 
@@ -46,8 +46,8 @@ module.exports = (app, passport) => {
   app.put('/users/:id/setting', authenticated, userController.putUser)
 
   // 追蹤
-  // app.post('/following/:userId', authenticated, userController.addFollowing)
-  // app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.post('/following/:userId', authenticated, userController.addFollowing)
+  app.delete('/following/:userId', authenticated, userController.removeFollowing)
 
   // 註冊
   app.get('/signup', userController.signUpPage)

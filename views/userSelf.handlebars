@@ -7,7 +7,7 @@
         <form action="/tweets" method="POST">
           <div class="d-flex">
             <a href="" class="avatar m-2">
-              <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+              <img src="{{noImage user.avatar}}" alt="" class="rounded-circle userImage">
             </a>
             <textarea class="whathtNew" id="description" name="description" placeholder="有甚麼新鮮事?" maxlength="140"
               required></textarea>
@@ -85,7 +85,7 @@
       <img src="https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2020/11/07/20201107-092915_U13380_M651499_4ac4.jpg?itok=6KFZde7p" alt="" class="userBackgroundImg">
     </div>
     <span class="avatar m-2">
-      <img src="{{noImage tweetUser.image}}" alt="" class="rounded-circle userProfileImg">
+      <img src="{{noImage tweetUser.avatar}}" alt="" class="rounded-circle userProfileImg">
     </span>
     <div class="profileInformation mt-5 pt-2 ms-2">
       <div class="name m-1 fw-bolder mt-2">
@@ -123,7 +123,7 @@
     <div class="teeet border">
       <div class="d-flex">
         <span class="avatar m-2">
-          <img src="{{noImage this.User.avatar.url}}" alt="" class="rounded-circle userImage">
+          <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
         </span>
         <div class="">
           <div class="d-flex">
