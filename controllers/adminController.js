@@ -114,10 +114,11 @@ const adminController = {
     Promise.all([
       User.findAll({
         include: [
-          { model: User, as: 'Followers' },
-          Tweet
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
         ],
-        where: { isAdmin: false }
+        where: { role: "user" }
       }),
       Tweet.findAll({
         raw: true,
@@ -129,13 +130,15 @@ const adminController = {
       let usersData =
         users.map(user => ({
           ...user.dataValues,
+          followersCount: user.Followers.length,
+          followingsCount: user.Followings.length,
           tweetCount: user.Tweets.length,
           likeCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).reduce((accumulator, currentValue) => {
             // console.log("===================")
             // console.log("tweetid:", currentValue.id)
             // console.log("accumulator:", accumulator)
             // console.log("currentlikes:", currentValue.Likes)
-            let addCount = currentValue.Likes.UserId ? 1 : 0
+            const addCount = currentValue.Likes.UserId ? 1 : 0
             // console.log("currentValue:", addCount)
             // console.log("return:", accumulator + addCount)
             return accumulator + addCount
@@ -150,7 +153,7 @@ const adminController = {
           //   return accumulator + currentValue.dataValues.Likes.length
           // }, 0)
         }))
-      console.log(usersData)
+      // console.log(usersData)
       usersData = usersData.sort((a, b) => b.tweetCount - a.tweetCount)
       res.render('admin/users', { users: usersData })
     })

@@ -28,7 +28,8 @@
   width: 50px;
 }
 .userImage{
-  width: 60px;
+  width: 50px;
+  height: 50px;
 }
 .orange{
   background-color:#FF6600;
@@ -78,6 +79,7 @@
 
 .userCard {
   border-radius:10px;
+  height: 350px;
 }
 
 .userCard > .userCover {
@@ -86,7 +88,9 @@
 }
 
  .userAvatar  {
-   transform: translate(0,-50px);
+   /* transform: translate(0,-50px); */
+   margin-top: -50px;
+   margin-bottom: 50px;
 }
 
 .userCardBody  {

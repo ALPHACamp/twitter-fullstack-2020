@@ -10,32 +10,32 @@ const tweetController = {
   // 首頁
   getTweets: (req, res) => {
     return Promise.all([
-      Tweet.findAndCountAll({
-        raw: true,
-        nest: true,
-        include: [User,  Reply],
+      Tweet.findAll({
+        include: [User, Reply],
         order: [
           ['createdAt', 'DESC'], // Sorts by createdAt in descending order
-        ],
-      }),
-      User.findAndCountAll({
-        include: [
-          { model: User, as: 'Followers' }
         ]
-      })
+      }),
+      User.findAll({
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ],
+        where: { role: "user" }
+      }),
     ]).then(([tweets, users]) => {
-
       // 列出 追隨數前十名的使用者
       const topUsers =
-        users.rows.map(user => ({
+        users.map(user => ({
           ...user.dataValues,
-          FollowedCount: user.Followers.length,
-          isFollowed: req.user.Followers.map(d => d.id).includes(user.id)
+          followerCount: user.Followers.length,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
         }))
-          .sort((a, b) => b.FollowedCount - a.FollowedCount)
+          .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
 
-      const data = tweets.rows.map(tweet => ({
+      const data = tweets.map(tweet => ({
         ...tweet.dataValues,
         likedCount: req.user.LikedTweets.length,
         description: tweet.description,
@@ -44,30 +44,15 @@ const tweetController = {
         userAccount: tweet.User.account,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
       }))
-      User.findAll({
-        raw: true,
-        nest: true,
-        include: [Tweet]
+
+      return res.render('tweets', {
+        tweets: data,
+        users: topUsers,
+        theUser: helpers.getUser(req).id
       })
-        .then((user) => {
-          return res.render('tweets', {
-            tweets: data,
-            users: topUsers
-          })
-        })
     })
-
-    // const tweets = await Tweet.findAll({
-    //   raw: true,
-    //   nest: true,
-    //   include: [User],
-    //   order: [
-    //     ['createdAt', 'DESC'], // Sorts by createdAt in ascending order
-    //   ],
-    // })
-
-    // console.log(tweets)
   },
+
   postTweet: async (req, res) => {
     let { description } = req.body
     if (!description.trim()) {
@@ -109,11 +94,11 @@ const tweetController = {
         req.params.id, {
         include: [
           User,
-          {model:Reply, include: [User]}
+          { model: Reply, include: [User] }
         ],
         order: [['Replies', 'createdAt', 'DESC']]
       })
-      console.log('tweet:',tweet)
+      console.log('tweet:', tweet)
       return res.render('tweet', { tweet: tweet.toJSON() })
     } catch (e) {
       console.log(e.message)

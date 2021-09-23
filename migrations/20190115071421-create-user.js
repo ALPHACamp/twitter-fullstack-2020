@@ -29,8 +29,8 @@ module.exports = {
       description: {
         type: Sequelize.TEXT
       },
-      isAdmin: {
-        type: Sequelize.BOOLEAN
+      role: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

@@ -9,9 +9,11 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     cover: DataTypes.STRING,
     description: DataTypes.TEXT,
-    isAdmin: DataTypes.BOOLEAN,
+    role: DataTypes.STRING,
     createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
+    updatedAt: DataTypes.DATE,
+    followingCount: DataTypes.INTEGER,
+    followerCount: DataTypes.INTEGER
   }, {})
   User.associate = function (models) {
     // associations can be defined here
@@ -22,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'LikedTweets'
     }),
-    User.hasMany(models.Like)
+      User.hasMany(models.Like)
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followerId',
@@ -33,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'followingId',
       as: 'Followers'
     })
-    
+
   }
   return User
 };

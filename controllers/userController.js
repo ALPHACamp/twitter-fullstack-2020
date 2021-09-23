@@ -13,7 +13,7 @@ const userController = {
   },
 
   signUp: (req, res) => {
-    const { account,name, email, password, checkPassword } = req.body
+    const { account, name, email, password, checkPassword } = req.body
     if (!account || !name || !email || !password || !checkPassword) {
       req.flash('error_messages', '所有欄位都是必填');
       return res.redirect('/signup')
@@ -24,12 +24,12 @@ const userController = {
       return res.redirect('/signup')
     }
     // confirm unique user
-    User.findOne({ where: [{ email } , { account }]}).then(user => {
+    User.findOne({ where: [{ email }, { account }] }).then(user => {
       if (user) {
-        if(user.email === email){
+        if (user.email === email) {
           req.flash('error_messages', '信箱重複！')
         }
-        if(user.account === account){
+        if (user.account === account) {
           req.flash('error_messages', '信箱重複！')
         }
         return res.redirect('/signup')
@@ -88,20 +88,20 @@ const userController = {
   //   return res.render('userSelfReply',{replies, tweets})
   // },
 
-  getSetting:(req, res)=>{
+  getSetting: (req, res) => {
     return res.render('setting')
   },
-  putUser: async (req,res) =>{
+  putUser: async (req, res) => {
     const user = await User.findByPk(req.params.id)
-    
+
     user.update({
-        account:req.body.account,
-        name:req.body.name,
-        email:req.body.email,
-        password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
+      account: req.body.account,
+      name: req.body.name,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
     })
-     req.flash('success_messages', 'user was successfully to update')
-     res.redirect('/tweets')
+    req.flash('success_messages', 'user was successfully to update')
+    res.redirect('/tweets')
   },
 
   getUserTweets: (req, res) => {
@@ -212,14 +212,35 @@ const userController = {
           })
       })
   },
+
+  // Followship
   addFollowing: (req, res) => {
-    return Followship.create({
-      followerId: req.user.id,
-      followingId: req.params.userId
-    })
-      .then(() => {
+    const followerId = req.user.id
+    const followingId = req.params.userId
+
+    // 確認不能追蹤自己
+    if (followerId === followingId) {
+      req.flash('error_messages', 'You can\'t follow yourself!')
+      res.render('/tweets')
+    }
+
+    // 確認該筆追蹤尚未存在於followship中，若不存在才創建新紀錄
+    Followship.findAll({
+      where: {
+        followerId, followingId
+      }
+    }).then(followship => {
+      if (followship.length) {
+        req.flash('error_messages', 'You already followed this user')
+        return res.render('/tweets')
+      } else {
+        Followship.create({
+          followerId,
+          followingId
+        })
         return res.redirect('back')
-      })
+      }
+    })
   },
 
   removeFollowing: (req, res) => {
@@ -231,7 +252,7 @@ const userController = {
     })
       .then((followship) => {
         followship.destroy()
-          .then(() => {
+          .then((followship) => {
             return res.redirect('back')
           })
       })
