@@ -82,6 +82,7 @@ const tweetController = {
   },
 
   addLike: async (req, res) => {
+    console.log('addlike')
     try {
       const currentUserId = helpers.getUser(req).id
         await Like.findOrCreate({

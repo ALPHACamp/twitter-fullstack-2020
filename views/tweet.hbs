@@ -200,7 +200,9 @@
               <button type="submit" class="btn follow-button">正在跟隨</button>
             </form>
             {{else}}
-            <form action="/followships/{{this.id}}" method="POST" style="display: contents;"><button type="submit"
+            <form action="/followships" method="POST" style="display: contents;">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit"
                 class="btn unfollow-button"> 跟隨 </button></form>
             {{/if}}
             {{/if}}

@@ -383,9 +383,17 @@ const userController = {
 
   addFollowing: async (req, res) => {
     userService.addFollowing(req, res, data => {
+      console.log(data['status'])
       if (data['status'] === 'error') {
+        console.log('到這')
         req.flash('error_messages', data['message'])
-        return res.redirect('back')
+        return res.status(200).json({
+          data
+        })
+        // req.flash('error_messages', data['message'])
+        // return res.redirect('back')
+        //  console.log('====error')
+        // return res.redirect('back')
       }
       req.flash('success_messages', data['message'])
       res.redirect('back')
@@ -396,7 +404,7 @@ const userController = {
     const currentUserId = helpers.getUser(req).id
     return Followship.destroy({
       where: {
-        followerId: helpers.getUser(req).id,
+        followerId: currentUserId,
         followingId: req.params.id
       }
     }).then(() => {
