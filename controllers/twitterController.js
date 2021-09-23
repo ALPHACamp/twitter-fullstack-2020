@@ -12,6 +12,7 @@ const twitterController = {
     }).then(tweets => {
       const tweetData = tweets.rows.map(row => ({
         ...row.dataValues,
+        tweetUserId: row.User.dataValues.id,
         tweetUserAvatar: row.User.dataValues.avatar,
         tweetUserName: row.User.dataValues.name,
         tweetUserAccount: row.User.dataValues.account,
