@@ -3,8 +3,8 @@ const faker = require('faker')
 const bcrypt = require('bcryptjs')
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    //隨機建立 5 個一般使用者
-    let amount = 5
+    //固定一位使用者及隨機建立 4 個一般使用者
+    let amount = 4
     let data = []
     data.push({
       id: 5,
@@ -18,13 +18,25 @@ module.exports = {
       cover: 'https://i.pinimg.com/originals/59/35/5f/59355f751c1e3698cc6360b1a7390094.jpg',
       createdAt: new Date(),
       updatedAt: new Date()
+    },{
+      id: 15,
+      account: 'user1',
+      email: 'user1@example.com',
+      password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
+      role: 'normal',
+      name: 'user',
+      introduction: 'Hello there! I\'m user. There will come a time when you believe everything is finished. That will be the beginning.',
+      avatar: 'http://pic.616pic.com/ys_b_img/00/08/10/cwqWnfsDXU.jpg',
+      cover: 'http://img1.how01.com/imgs/bb/8c/4/1b7f0006b47ee1eec676.jpg',
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     )
     
       while (amount--) {
 
         data.push({
-          id: 15 + 10 * amount,
+          id: 25 + 10 * amount,
           account: faker.internet.userName(),
           email: faker.internet.email(),
           password: bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null),
