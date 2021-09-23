@@ -151,6 +151,7 @@ const userController = {
           like.Tweet.id
         )
       }))
+      console.log('likedTweets', likedTweets)
 
       res.render('userLike', { status: (200), profileUser, popularUser, likedTweets })
     } catch (err) {

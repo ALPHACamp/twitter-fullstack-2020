@@ -18,28 +18,29 @@ const loginController = {
   signUp: async (req, res) => {
     try {
       const { account, name, email, password, checkPassword } = req.body
-      const error_messages = []
+
+      let errorMessages = []
+
       //加入多種錯誤訊息
+      if (!name || !email || !password || !checkPassword || !account) {
+        errorMessages.push({ message: '所有欄位都是必填。' })
+      }
+
       if (password !== checkPassword) {
-        error_messages.push({ message: '密碼與確認密碼不相符！' })
+        errorMessages.push({ message: '密碼與確認密碼不相符！' })
       }
 
-      if (error_messages.length) {
-        return res.render('signup', {
-          error_messages,
-          account,
-          name,
-          email,
-          password,
-          checkPassword
-        })
+      const userEmail = await User.findOne({ where: { email } })
+      const userAccount = await User.findOne({ where: { account } })
+      if (userEmail) {
+        errorMessages.push({ message: '這個 Email 已經註冊過了。' })
       }
-
-      const user = await User.findOne({ where: { email } })
-      if (user) {
-        error_messages.push({ message: '這個 Email 已經註冊過了。' })
+      if (userAccount) {
+        errorMessages.push({ message: '這個 Account 已經註冊過了。' })
+      }
+      if (errorMessages.length) {
         return res.render('signup', {
-          error_messages,
+          errorMessages,
           account,
           name,
           email,
@@ -62,13 +63,13 @@ const loginController = {
       })
 
       req.flash('success_messages', '成功註冊帳號！')
-      res.status(200);
+      res.status(200)
       res.redirect('/signin')
     } catch (err) {
       console.log(err)
-      res.status(500);
-      console.log('getReplies err')
-      req.flash('error_messages','註冊失敗')
+      res.status(302);
+      console.log('signUp err')
+      req.flash('error_messages', '註冊失敗')
       return res.redirect('back')
     }
   },

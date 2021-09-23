@@ -6,6 +6,7 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const app = express()
+const helpers = require('./_helpers')
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -39,7 +40,7 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = req.user
+  res.locals.user = helpers.getUser(req)
   res.locals.baseURL = baseURL
   next()
 })
