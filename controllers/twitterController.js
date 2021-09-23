@@ -3,6 +3,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
+const Followship = db.Followship
 
 const twitterController = {
   getTwitters: (req, res) => {
@@ -94,7 +95,6 @@ const twitterController = {
         return res.redirect('back')
       })
   },
-
   unlike: (req, res) => {
     return Like.findOne({
       where: {
@@ -108,7 +108,30 @@ const twitterController = {
             return res.redirect('back')
           })
       })
-  }
+  },
+  following: (req, res) => {
+    return Followship.create({
+      followerId: req.user.id,
+      followingId: req.params.id
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+  },
+  unfollowing: (req, res) => {
+    return Followship.findOne({
+      where: {
+        followerId: req.user.id,
+        followingId: req.params.id
+      }
+    })
+      .then(Followship => {
+        Followship.destroy()
+          .then(() => {
+            return res.redirect('back')
+          })
+      })
+  },
 }
 
 
