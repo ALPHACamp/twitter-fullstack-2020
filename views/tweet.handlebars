@@ -6,7 +6,7 @@
       <div class="createTweet border">
         <div class="d-flex">
           <a href="" class="avatar m-2">
-            <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+            <img src="{{noImage user.avatar}}" alt="" class="rounded-circle userImage">
           </a>
           <textarea class="whathtNew" id="description" name="description" placeholder="有甚麼新鮮事?"></textarea>
         </div>
@@ -81,7 +81,7 @@
       <div class="buttonList mt-5">
         <div class="navItem index d-flex mb-4 ">
           <div class="icon d-flex align-items-center color-orange">
-            <i class="fas fa-tweets my-auto"></i>
+            <i class="fas fa-home my-auto"></i>
           </div>
           <a href="/tweets" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">首頁</span>
@@ -91,7 +91,7 @@
           <div class="icon d-flex align-items-center">
             <i class="fas fa-users"></i>
           </div>
-          <a href="/users/{{user.id}}/tweets" class="btn sidebarItem">
+          <a href="/user/{{user.id}}/tweets" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">個人資料</span>
           </a>
         </div>
@@ -132,11 +132,11 @@
     </div>
     <div class="tweet border">
       <div class="d-flex">
-        <span class="avatar m-2">
-          <img src="{{noImage tweet.avatar}}" alt="" class="rounded-circle userImage">
-        </span>
+        <a href="/user/{{tweet.User.id}}/tweets" class="avatar m-2">
+          <img src="{{noImage tweet.User.avatar}}" alt="" class="rounded-circle userImage">
+        </a>
         <div class="name ">
-          <p class="text-secondary m-0 mt-3 fw-bolder">{{tweet.User.name}}</p>
+          <a href="/user/{{tweet.User.id}}/tweets" class="text-secondary m-0 mt-1 fw-bolder btn">{{tweet.User.name}}</a>
           <p class="text-secondary m-0">@{{tweet.User.account}}</p>
         </div>
       </div>
@@ -173,14 +173,14 @@
     <div class="commentsList">
       {{#each tweet.Replies}}
         <div class="comment d-flex border">
-          <div class="avatar m-3">
-            <img src="{{noImage tweet.reply.avatar}}" alt="" class="rounded-circle userImage">
-          </div>
+          <a href="/user/{{this.User.id}}/tweets" class="avatar m-3">
+            <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+          </a>
           <div>
             <div class="d-flex">
-              <div class="name m-1 fw-bolder">{{this.User.name}}</div>
-              <div class="account m-1">@{{this.User.account}}</div>
-              <div class="timefrom m-1">{{moment this.createdAt}}</div>
+              <a href="/user/{{this.User.id}}/tweets" class="name m-1 fw-bolder btn">{{this.User.name}}</a>
+              <div class="account m-1 mt-2">@{{this.User.account}}</div>
+              <div class="timefrom  m-1 mt-2">{{moment this.createdAt}}</div>
             </div>
             <div>
               <div class="d-flex">
