@@ -84,13 +84,13 @@
               </a>
             </div>
             {{#if this.isFollowed}}
-            <form action="/twitters/{{ this.id }}/unlike?_method=DELETE" method="POST">
+            <form action="/twitters/{{ this.id }}/unfollowing?_method=DELETE" method="POST">
               <button type="submit" class="btn btn-white-orange rounded-pill m-3" style="height: 35px; font-size: 15px">
                 正在跟隨
               </button>
             </form>
             {{else}}
-            <form action="/twitters/{{ this.id }}/like" method="POST">
+            <form action="/twitters/{{ this.id }}/following" method="POST">
               <button type="submit" class="btn btn-orange-white rounded-pill m-3" style="height: 35px; font-size: 15px">
                 跟隨
               </button>
