@@ -110,3 +110,11 @@ html, body{
   border-radius: 20px 20px 0 0;
   position: relative;
 }
+
+.circle{
+  width: 35px;
+  height: 35px;
+  color: #FF6600;
+  border: 1px solid #FF6600;
+  border-radius: 20px 20px 20px 20px;
+}

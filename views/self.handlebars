@@ -14,10 +14,13 @@
 
     <img src="{{user.cover}}" style="position:relate; height: 200px" class="" alt="...">
     <img src="{{user.avatar}}" class="rounded-circle user-avatar" alt="...">
+
     <div class="d-flex flex-row-reverse m-2">
       <button type="button" class="btn btn-orange-white rounded-pill" data-bs-toggle="modal" data-bs-target="#userModal"
         data-bs-whatever="@getbootstrap">編輯個人資料</button>
     </div>
+
+
     <div class="card-body">
       <h5 class="card-title fontWeight900">{{user.name}}</h5>
       <h6 style="color:#657786;">@{{user.account}}</h6>
@@ -120,6 +123,7 @@
 </div>
 
 <script>
+
   function nameWordCount() {
     const wordCounts = document.getElementById('userName').value.length
     document.getElementById('nameWordCount').innerHTML = `${wordCounts}/50`
@@ -129,4 +133,6 @@
     const wordCounts = document.getElementById('introText').value.length
     document.getElementById('introWordCount').innerHTML = `${wordCounts}/160`
   }
+  })
+
 </script>
