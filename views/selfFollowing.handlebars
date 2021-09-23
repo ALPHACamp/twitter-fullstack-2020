@@ -22,21 +22,21 @@
     </ul>
 
 
-    {{#each followers}}
+    {{#each tweets}}
     <div class="card p-2">
       <div class="d-flex">
         <div>
-          <img src="" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
+          <img src="{{ this.User.avatar }}" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
         </div>
         <div class="col-md-8">
           <div class="userInfo" style="width: 540px;">
             <div class="d-flex justify-content-between">
-              <h6 class="fontWeight700 me-2 mb-1">Name</h6>
+              <h6 class="fontWeight700 me-2 mb-1">{{ this.User.name }}</h6>
               <a href="#" class="btn btn-white-orange rounded-pill p-0" style="width: 90px; height: 25px;">正在跟隨</a>
             </div>
-            <h6 class="fontWeight500 mb-1" style="color:#657786;">@account</h6>
+            <h6 class="fontWeight500 mb-1" style="color:#657786;">@{{ this.User.account }}</h6>
           </div>
-          <p class="card-text fontWeight500">content</p>
+          <p class="card-text fontWeight500">{{ this.content}}</p>
         </div>
       </div>
     </div>
