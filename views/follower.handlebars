@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" id="tweets">
     <div class="row flex-nowrap ps-xl-2 justify-content-around">
         {{!-- Home bar --}}
         <div class="col-auto col-lg-3">
@@ -9,8 +9,8 @@
                 <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
                     <li class="nav-item px-2 py-1">
                         <a class="nav-link align-middle text-dark " href="/tweets">
-                            <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
-                            <span class="h5 menu-text home a-tomato">首頁</span>
+                            <i class="fas fa-home" style="font-size: 1.2em;"></i>
+                            <span class="h5 menu-text home">首頁</span>
                         </a>
                     </li>
                     <li class="nav-item px-2 py-1">
@@ -38,7 +38,7 @@
 
         {{!-- Middle Main bar --}}
         <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
-            <div class="card-header col-12 row m-0">
+            <div class="card-header col-12 row m-0 align-items-start" style="max-height: 55px;">
                 <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
                     class="col-auto d-flex align-items-center">
                     <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
@@ -49,24 +49,21 @@
                     <span class="text-dark" style="color: #657786; font-size: 13px; line-height: 15px">{{tweetCount}} 推文數</span>
                 </a>
             </div>
-            <div class='follower-head col-12 row'>
+            <div class='follower-head col-12 row mt-0 position-absolute' style="z-index: 5; left: 15px; top: 100px;">
                 <ul class='nav nav-tabs' id='myTab' role='tablist'>
                     <li class='nav-item'>
                         <a class='nav-link active' id='message-tab' href='/users/{{id}}/followers' role='tab'
                             aria-controls='home' aria-selected='true'>跟隨者</a>
                     </li>
                     <li class='nav-item'>
-
                         <a class='nav-link' id='profile-tab' href='/users/{{id}}/followings' role='tab'
                             aria-controls='profile' aria-selected='false'>正在跟隨</a>
                     </li>
                 </ul>
             </div>
-
-            <div class='tab-content'>
+            <div class='tab-content position-absolute' style="z-index: 5; left: 30px; top: 150px;">
                 <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
                     <ul class='list-group list-group-flush border-bottom'>
-
                         {{#each followers}}  
                         <li class='list-group-item'>
                             <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
@@ -85,10 +82,8 @@
                                 <div class='col-4 ps-3 d-flex justify-content-center align-items-center'>
 
                                     {{#if this.isFollowed}}
-                                    <form action='/followships/{{this.id}}?_method=DELETE' method='POST'
-                                        style='display: contents;'>
-                                        <button type='submit' class='btn btn-tomato fw-bold'
-                                            name='{{user.id}}' style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
+                                    <form action='/followships/{{this.id}}?_method=DELETE' method='POST' style='display: contents;'>
+                                        <button type='submit' class='btn btn-tomato fw-bold' name='{{user.id}}' style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
                                     </form>
                                     {{else}}
                                     <form action='/followships/{{this.id}}' method='POST' style='display: contents;'>

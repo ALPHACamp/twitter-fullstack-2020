@@ -39,12 +39,12 @@
 
     {{!-- Middle Main bar --}}
     <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
-      <div class="card-header col-12 row m-0">
+      <div class="card-header col-12 row m-0" style="max-height: 55px;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;" class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
         <a href="/"
-          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark" style="text-decoration: none;">
+          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark">
           <span class="h5" style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
           <span style="color: #657786; font-size: 0.95em; font-size: 13px; line-height: 15px">{{tweetCount}} 推文</span>
         </a>
@@ -63,7 +63,7 @@
         {{#ifCond users.id UserId}}
         <!-- Button trigger modal -->
         <button type="submit" class="btn btn-outline-tomato fw-bold"
-          style="border-radius: 30px 30px 30px 30px; height: 40px;" data-toggle="modal" data-target="#profileModal">編輯個人資料</button>
+          style="border-radius: 30px 30px 30px 30px; height: 40px; font-weight: 700;" data-toggle="modal" data-target="#profileModal">編輯個人資料</button>
         {{else}}
         <div class="NoticeAni">
           <a href="" class="m-1" style="color:tomato;">
@@ -84,8 +84,8 @@
         {{/if}}
         {{#if isFollowed}}
         <form action="/followships/{{users.id}}?_method=DELETE" method="POST"
-          style="margin-left: 10px; border-radius: 30px 30px 30px 30px;" class="text-center">
-          <button type="submit" class="btn btn-tomato rounded-pill" name="{{users.id}}">正在跟隨</button>
+          style="margin-left: 10px;" class="text-center">
+          <button type="submit" class="btn btn-tomato rounded-pill" style="border-radius: 30px 30px 30px 30px;" name="{{users.id}}">正在跟隨</button>
         </form>
         {{else}}
         <form action="/followships/{{users.id}}" method="POST">
@@ -149,7 +149,7 @@
 
                   </div>
                   <div class="col-12 mt-1" onclick="location.href='/tweets/{{this.id}}'">
-                    <p class="fw-bold">{{this.description}}</p>
+                    <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
                    
@@ -200,12 +200,12 @@
                     </div>
                   </div>
                   <div class="card-text col-12" style="margin-top:1vw">
-                    <a href="/tweets/{{this.Tweet.id}}" class="text-decoration-none">
+                    <a href="/tweets/{{this.Tweet.id}}" style="text-decoration: none;">
                       <p class="mt-2" style="color: tomato; font-size: 0.875em">回覆@{{this.Tweet.User.name}}</p>
                     </a>
                   </div>
                   <div class="col-12 mt-1">
-                    <p class="fw-bold">{{this.Tweet.description}}</p>
+                    <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.Tweet.description}}</p>
                   </div>
                   <div class="col-12">
                     <p class="fw-bold">{{this.content}}</p>
@@ -238,7 +238,7 @@
                     </div>
                   </div>
                   <div class="col-12 mt-1" onclick="location.href='/tweets/{{this.id}}'">
-                    <p class="fw-bold">{{this.description}}</p>
+                    <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
                   
