@@ -68,17 +68,42 @@
     <div class="card p-3">
       <div class="d-flex">
         <div>
-          <img src="{{this.likeAvatar}}" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
+          <a href="/users/self/{{this.likeUserId}}" style="text-decoration: none;">
+            <img src="{{this.likeAvatar}}" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
+          </a>
         </div>
         <div class="col-md-8">
           <div class="userInfo d-flex">
-            <h6 class="fontWeight700 me-2">{{this.likeUserName}}</h6>
-            <h6 class="fontWeight500" style="color:#657786;">@{{this.likeUserAccount}}</h6>
+            <a href="/users/self/{{this.likeUserId}}" style="text-decoration: none; color:black;">
+              <h6 class="fontWeight700 me-2">{{this.likeUserName}}</h6>
+            </a>
+            <a href="/users/self/{{this.likeUserId}}" style="text-decoration: none;">
+              <h6 class="fontWeight500" style="color:#657786;">@{{this.likeUserAccount}}</h6>
+            </a>
             <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
           </div>
-          <p class="card-text fontWeight500">{{this.content}}</p>
-          <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.replyCount}}</span>
-          <i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.likeCount}}</span>
+          <a href="/twitters/{{this.tweetId}}/replyList" style="text-decoration: none; color:black;">
+            <p class="card-text fontWeight500">{{this.content}}</p>
+          </a>
+          <div class="d-flex align-items-center">
+            <a href="/twitters/{{this.tweetId}}/replyList" style="text-decoration: none;">
+              <i class="far fa-comment me-3" style="color: #657786"></i><span class="fontWeight500 me-5" style="color:
+              #657786">{{this.replyCount}}</span>
+            </a>
+            {{#if this.isLiked }}
+            <form action="/twitters/{{ this.tweetId }}/unlike?_method=DELETE" method="POST">
+              <button type="submit" class="btn" style="color: #657786">
+                <i class="fas fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span>
+              </button>
+            </form>
+            {{else}}
+            <form action="/twitters/{{ this.tweetId }}/like" method="POST">
+              <button type="submit" class="btn" style="color: #657786">
+                <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span>
+              </button>
+            </form>
+          </div>
+          {{/if}}
         </div>
       </div>
     </div>
