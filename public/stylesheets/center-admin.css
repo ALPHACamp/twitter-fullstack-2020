@@ -27,9 +27,16 @@
   width: 533px;
   font-size: 15px;
 }
+.cards-wrapper {
+  width: calc(100vw - 400px);
+  flex-wrap: wrap;
+  border: none;
+}
 .card-wrapper {
+  flex: 0 0 245px;
   width: 245px;
   border: none;
+  margin: 0;
 }
 .card.adminUsers {
   position: relative;
