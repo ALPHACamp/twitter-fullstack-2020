@@ -109,6 +109,7 @@ const tweetController = {
   },
   removeLike: async (req, res) => {
     try {
+      console.log('in removeLike controller')
       await Like.destroy({
         where: {
           UserId: req.user.id,

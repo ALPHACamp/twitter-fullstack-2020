@@ -86,7 +86,7 @@ router.get(
   userController.getFollowers
 )
 router.post(
-  '/followships/:userId',
+  '/followships',
   authenticated,
   followshipController.addFollowing
 )
