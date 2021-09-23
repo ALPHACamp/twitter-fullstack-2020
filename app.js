@@ -41,7 +41,6 @@ app.use((req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
   res.locals.user = req.user
   res.locals.baseURL = baseURL
-  console.log('res.locals.baseURL', res.locals.baseURL)
   next()
 })
 

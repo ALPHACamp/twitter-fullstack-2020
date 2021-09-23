@@ -8,9 +8,16 @@ const followshipController = {
 
   addFollowing: async (req, res) => {
     try {
+      console.log('into addFollowing')
+      console.log('req.user.id', typeof Number(req.user.id))
+      console.log('req.body.id', typeof Number(req.body.id))
+      if (Number(req.user.id) === Number(req.body.id)) {
+        req.flash('error_messages', '使用者不可以追蹤自己')
+        return res.redirect('back')
+      }
       const followship = await Followship.create({
         followerId: req.user.id,
-        followingId: req.params.userId
+        followingId: req.body.id
       })
 
       return res.redirect('back')
