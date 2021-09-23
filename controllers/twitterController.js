@@ -20,6 +20,7 @@ const twitterController = {
         tweetContent: row.content,
         tweetRepliesCount: row.Replies.length,
         tweetLikesCount: row.Likes.length,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(row.id)
       }))
       return res.render('twitter', {
         tweets: tweetData,
@@ -84,6 +85,30 @@ const twitterController = {
       res.redirect('back')
     })
   },
+  like: (req, res) => {
+    return Like.create({
+      UserId: req.user.id,
+      TweetId: req.params.id
+    })
+      .then(() => {
+        return res.redirect('back')
+      })
+  },
+
+  unlike: (req, res) => {
+    return Like.findOne({
+      where: {
+        UserId: req.user.id,
+        TweetId: req.params.id
+      }
+    })
+      .then(like => {
+        like.destroy()
+          .then(() => {
+            return res.redirect('back')
+          })
+      })
+  }
 }
 
 
