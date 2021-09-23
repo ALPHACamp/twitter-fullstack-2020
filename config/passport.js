@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local')
 const bcrypt = require('bcrypt-nodejs')
 const db = require('../models')
 const User = db.User
+const Tweet = db.Tweet
 
 passport.use(new LocalStrategy(
   {
@@ -28,6 +29,7 @@ passport.deserializeUser((id, cb) => {
     include: [
       { model: User, as: 'followers' },
       { model: User, as: 'followings' },
+      { model: Tweet, as: 'LikedTweets' }
     ]
   }).then(user => {
     user = user.toJSON()
