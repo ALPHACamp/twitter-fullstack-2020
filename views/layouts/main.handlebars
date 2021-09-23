@@ -38,8 +38,10 @@
               <i class="fas fa-cog fs-5"> 設定 </i>
             </a>
           </li>
-          <li class="nav-item m-2" style="width: 235px; font-size: 18px; font-family: 'Noto Sans TC'">
-            <a href="#" class="btn btn-white-orange rounded-pill" style="width: 235px">推文</a>
+          <li class="nav-item m-2">
+            <button type="button" class="btn btn-white-orange rounded-pill" data-bs-toggle="modal"
+              data-bs-target="#twitterModal" data-bs-whatever="@getbootstrap"
+              style="width: 235px; font-size: 18px; font-family: 'Noto Sans TC'">推文</button>
           </li>
         </ul>
       </div>
@@ -53,6 +55,16 @@
     </div>
 
     <div class="body" style="width: 600px;">
+      {{#if success_messages}}
+      <div class="alert alert-success" role="alert" style="margin: 30px 0 ;">
+        {{success_messages}}
+      </div>
+      {{/if}}
+      {{#if error_messages}}
+      <div class="alert alert-danger" role="alert" style="margin: 30px 0 ;">
+        {{error_messages}}
+      </div>
+      {{/if}}
       {{{body}}}
     </div>
 
@@ -78,6 +90,38 @@
           {{/each}}
         </ul>
       </div>
+    </div>
+  </div>
+
+  <!-- Twitter Modal -->
+  <div class="modal fade" id="twitterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="/twitters" method="POST">
+        <div class="modal-content" style="width: 600px;">
+          <div class="modal-header">
+            <div class="d-flex align-items-center">
+              <i class="fas fa-times modal-close" data-bs-dismiss="modal" aria-label="Close"></i>
+            </div>
+          </div>
+
+          <div class="divider" style="background-color: #E6ECF0; height: 1px;"></div>
+
+          <div class="border border-1 border-box"
+            style="background-color: #FFFFFF; border-color: #E6ECF0; height: 300px;">
+            <div class="d-flex flex-row" style="width: 500px">
+              <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4;"
+                class="rounded-circle m-2" alt="...">
+              <div class="" style="width: 480px; height: 230px; border-color: #FFFFFF; font-size: 18px;">
+                <textarea class="form-control" placeholder="有什麼新鮮事?" id="text" name="text" rows="7"
+                  aria-label="With textarea" required></textarea>
+              </div>
+            </div>
+            <div class="d-flex flex-row-reverse me-2">
+              <button type="submit" class="btn btn-white-orange rounded-pill" style="width: 66px;">推文</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
