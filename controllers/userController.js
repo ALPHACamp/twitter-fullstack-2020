@@ -57,7 +57,7 @@ const userController = {
         req.flash('error_messages', '兩次密碼輸入不同！')
         return res.redirect('back')
       }
-
+      
       await User.findByPk(userId).then(user => {
         user.update({
           account: req.body.account,
