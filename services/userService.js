@@ -9,7 +9,7 @@ const userService = {
     try {
       const userself = req.user
       const users = await User.findAll({
-        where: { role: 0 },
+        where: { role: 'user' },
         order: [['createdAt', 'DESC']],
         include: [
           { model: User, as: 'Followers' },

@@ -12,19 +12,18 @@ const followshipController = {
         followerId: req.user.id,
         followingId: req.params.userId
       })
-
+      res.status(200)
       return res.redirect('back')
-
     } catch (err) {
       console.log(err)
       console.log('addFollowing err')
+      req.flash('error_messages', '追蹤失敗！')
+      res.status(302)
       return res.redirect('back')
     }
-
   },
 
-  removeFollowing: async (req, res) => { //照點擊順序移除??
-
+  removeFollowing: async (req, res) => {
     try {
       await Followship.destroy({
         where: {
@@ -32,15 +31,15 @@ const followshipController = {
           followingId: req.params.userId
         }
       })
-
+      res.status(200)
       return res.redirect('back')
-      
     } catch {
       console.log(err)
       console.log('removeFollowing err')
+      req.flash('error_messages', '取消追蹤失敗！')
+      res.status(302)
       return res.redirect('back')
     }
-
   }
 }
 
