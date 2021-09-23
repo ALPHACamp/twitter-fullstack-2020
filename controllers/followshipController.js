@@ -9,9 +9,6 @@ const followshipController = {
 
   addFollowing: async (req, res) => {
     try {
-      console.log('into addFollowing')
-      console.log('helpers.getUser(req).id', typeof Number(helpers.getUser(req).id))
-      console.log('req.body.id', typeof Number(req.body.id))
       if (Number(helpers.getUser(req).id) === Number(req.body.id)) {
         req.flash('error_messages', '使用者不可以追蹤自己')
         return res.redirect('back')

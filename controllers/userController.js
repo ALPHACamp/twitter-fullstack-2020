@@ -20,18 +20,19 @@ const userController = {
       const tweetsRaw = await Tweet.findAll({
         where: { UserId: userId },
         include: [Reply, Like],
-        order: [['createdAt', 'DESC']],
-        required: true
+        order: [['createdAt', 'DESC']]
       })
 
       const tweets = tweetsRaw.map(tweet => ({
         ...tweet.dataValues,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length,
-        isLiked: helpers
-          .getUser(req)
-          .LikedTweets.map(likeTweet => likeTweet.id)
-          .includes(tweet.id)
+        isLiked: helpers.getUser(req).LikedTweets
+          ? helpers
+              .getUser(req)
+              .LikedTweets.map(likeTweet => likeTweet.id)
+              .includes(tweet.id)
+          : false
       }))
 
       res.render('userTweets', { profileUser, popularUser, tweets })
@@ -131,9 +132,8 @@ const userController = {
         isLiked: helpers
           .getUser(req)
           .LikedTweets.map(likeTweet => likeTweet.id)
-          .includes(like.Tweet.id)
+          .includes(like.Tweet.id) 
       }))
-      console.log('likedTweets', likedTweets)
 
       res.render('userLike', { profileUser, popularUser, likedTweets })
     } catch (err) {
@@ -149,7 +149,8 @@ const userController = {
         include: [
           { model: User, as: 'Followings' },
           { model: Tweet, attributes: ['id'] }
-        ]
+        ],
+        order: [['createdAt', 'DESC']]
       })
       const currentUserFollowings = followings.toJSON()
 
@@ -165,9 +166,6 @@ const userController = {
           .Followings.map(d => d.id)
           .includes(item.id)
       }))
-      followingsUser = followingsUser.sort(
-        (a, b) => b.followshipId - a.followshipId
-      )
 
       return res.render('following', {
         popularUser,
@@ -190,7 +188,8 @@ const userController = {
         include: [
           { model: User, as: 'Followers' },
           { model: Tweet, attributes: ['id'] }
-        ]
+        ],
+        order: [['createdAt', 'DESC']]
       })
       const currentUserFollowers = followers.toJSON()
 
@@ -206,9 +205,6 @@ const userController = {
           .Followings.map(d => d.id)
           .includes(item.id)
       }))
-      followersUser = followersUser.sort(
-        (a, b) => b.followshipId - a.followshipId
-      )
 
       return res.render('follower', {
         popularUser,

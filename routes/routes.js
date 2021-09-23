@@ -11,6 +11,9 @@ const userController = require('../controllers/userController')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).role === 'admin') {
+      return res.redirect('/admin/tweets')
+    }
     return next()
   }
   res.redirect('/signin')
@@ -82,7 +85,7 @@ router.get(
   userController.getFollowers
 )
 router.post(
-  '/followships',
+  '/followships/:userId',
   authenticated,
   followshipController.addFollowing
 )

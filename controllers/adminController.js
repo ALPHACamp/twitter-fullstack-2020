@@ -43,7 +43,6 @@ const adminController = {
             ? data.description
             : data.description.substring(0, 50) + '...'
       }))
-      console.log(tweets[0])
       return res.render('admin/tweets', { tweets })
     } catch (err) {
       console.log(err)
