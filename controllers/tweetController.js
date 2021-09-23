@@ -14,7 +14,6 @@ const tweetController = {
           { model: User, as: 'Followings' }
         ],
       })
-      console.log(req.params.userId)
       const rawTweets = await Tweet.findAll({
         include: [Reply, User, { model: User, as: "LikedUsers" }],
         order: [["createdAt", "DESC"]],
