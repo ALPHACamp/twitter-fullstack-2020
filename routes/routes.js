@@ -37,7 +37,7 @@ router.post(
   tweetController.postReplies
 )
 router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
-router.delete(
+router.post(
   '/tweets/:tweetId/unlike',
   authenticated,
   tweetController.removeLike
