@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt-nodejs')
 const helpers = require('../_helpers')
 const db = require('../models')
 const { User, Tweet, Reply, Followship, Like } = db
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
@@ -71,85 +73,79 @@ const userController = {
       })
     })
   },
-  editUser: (req, res) => {
-    if (helpers.getUser(req).id !== Number(req.params.id)) {
-      return res.json({ status: 'error' })
-    } else {
-      User.findByPk(req.params.id).then((user) => {
-        return res.json({ name: user.name })
+
+  editAccount: (req, res) => {
+    return res.render('setting')
+  },
+
+  putAccount: async (req, res) => {
+    const id = req.params.id
+    const { email: currentEmail, account: currentAccount } =
+      helpers.getUser(req)
+    const { account, name, email, password, passwordCheck } = req.body
+
+    const error = []
+    let newEmail = ''
+    let newAccount = ''
+
+    if (currentEmail === email) {
+      newEmail = currentEmail
+    }
+    if (currentAccount === account) {
+      newAccount = currentAccount
+    }
+    if (password !== passwordCheck) {
+      error.push({ message: '兩次密碼輸入不同！' })
+    }
+
+    if (currentEmail !== email) {
+      await User.findOne({ where: { email } }).then((user) => {
+        if (user) {
+          error.push({ message: '信箱已經被註冊' })
+        } else {
+          newEmail = email
+        }
       })
     }
-  },
 
-  userSetting: (req, res) => {
-    res.render('/setting')
-  },
+    if (currentAccount !== account) {
+      await User.findOne({ where: { account } }).then((user) => {
+        if (user) {
+          error.push({ message: '帳號已存在' })
+        } else {
+          newAccount = account
+        }
+      })
+    }
 
-  putUserSetting: async (req, res) => {
-    const id = req.params.id
-    const { name, introduction } = req.body
-    const { files } = req
-    try {
-      if (files) {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        const { cover, avatar } = files
-        if (cover) {
-          await imgur.upload(cover[0].path, (err, img) => {
-            return User.findByPk(id)
-              .then((user) => {
-                user
-                  .update({
-                    name,
-                    introduction,
-                    cover: img.data.link
-                  })
-                  .them((user) => {
-                    req.flash(
-                      'success_messages',
-                      'user was successfully updated'
-                    )
-                    return res.redirect('back')
-                  })
-              })
-              .catch((error) => console.log(error))
-          })
-        }
-        if (avatar) {
-          await imgur.upload(avatar[0].path, (err, img) => {
-            return User.findByPk(id)
-              .then((user) => {
-                user
-                  .update({
-                    name,
-                    introduction,
-                    avatar: img.data.link
-                  })
-                  .then(() => {
-                    req.flash(
-                      'success_messages',
-                      'user was successfully updated'
-                    )
-                    return res.redirect('back')
-                  })
-                  .catch((error) => console.log(error))
-              })
-              .catch((error) => console.log(error))
-          })
-        }
-      } else {
-        const user = await User.findByPk(id)
-        user
-          .update({
+    if (error.length !== 0) {
+      return res.render('setting', { error })
+    }
+
+    if (!password) {
+      return User.findByPk(id)
+        .then((user) =>
+          user.update({ name, email: newEmail, account: newAccount })
+        )
+        .then(() => {
+          const success = []
+          success.push({ message: '成功更新帳號資訊!' })
+          return res.render('setting', { success })
+        })
+    } else {
+      return User.findByPk(id)
+        .then((user) =>
+          user.update({
             name,
-            introduction
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+            email: newEmail,
+            account: newAccount
           })
-          .then((user) => {
-            req.flash('success_messages', 'user was successfully updated')
-            return res.redirect('back')
-          })
-      }
-    } catch (error) {
-      console.log(error)
+        )
+        .then(() => {
+          req.flash('success_messages', '成功更新帳號資訊!')
+          res.redirect('/tweets')
+        })
     }
   }
 }
