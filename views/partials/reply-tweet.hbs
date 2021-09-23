@@ -1,0 +1,102 @@
+<div class="modal-dialog" role="document">
+  <div class="modal-content">
+
+    <button type="button" class="btn close" data-dismiss="modal" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <hr>
+
+    <div class="reply-tweet">
+      <div class="reply-modal-tweet">
+        <div class="mt-2 ml-2" style="padding:0">
+          <div>
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <img class="modal-avatar user-pic" src="{{tweet.User.avatar}}" alt="">
+            </a>
+          </div>
+          <div class="headerDivider"></div>
+        </div>
+
+        <div class="mt-2" style="flex-grow: 1; position:relative">
+          <div class="account-info d-flex" style="flex:auto">
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <div class="user-name modal-name">{{tweet.User.name}}</div>
+            </a>
+            <div class="account-time modal-info ml-2">@{{tweet.User.account}}．3小時</div>
+          </div>
+
+
+
+          <div class="modal-description post-text d-flex" style="flex:auto">
+            {{tweet.description}}
+          </div>
+
+          <div class="reply" style="margin-left:10px;">
+            <div class="reply-text">回覆給</div>
+            <a href="/users/{{tweet.User.id}}/tweets">
+              <div class="reply-account">@{{tweet.User.account}}</div>
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <form action="/tweets/{{tweet.id}}/replies" method="POST">
+      <div class="type-area">
+        <div class="user-pic ml-2">
+          <a href="/users/{{currentUser.id}}/tweets">
+            <img src="{{currentUser.avatar}}" alt="">
+          </a>
+        </div>
+
+        <div class="type-text form-group">
+          <input type="hidden" name="TweetId" value="{{tweet.id}}" />
+          <textarea class="form-control new-post-content" name="comment" id="comment" placeholder="推你的回覆" rows="5"
+            maxlength="140"></textarea>
+          <div class="invalid-feedback" id="reply-tweet">
+            內容不可空白
+          </div>
+        </div>
+      </div>
+
+      <div class="add-button">
+        <button type="submit" class="btn button" id="reply">回覆
+        </button>
+      </div>
+
+
+
+
+    </form>
+  </div>
+</div>
+
+
+<script>
+  const submitBtn = document.querySelector('#reply')
+  const comment = document.querySelector('#comment')
+
+  comment.addEventListener('input', function check(event) {
+    if (comment.value.length < 1) {
+      comment.classList.add("is-invalid")
+    }
+    if (comment.value.length > 1) {
+      comment.classList.remove("is-invalid")
+    }
+  })
+
+  submitBtn.addEventListener('click', function check(event) {
+    if (comment.value.length < 1) {
+      comment.classList.add("is-invalid")
+    }
+    if (comment.value.length > 1) {
+      comment.classList.remove("is-invalid")
+    }
+  })
+
+
+
+
+</script>

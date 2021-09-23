@@ -1,0 +1,87 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12 justify-content-center" style="margin:0; ; padding:0">
+    <div class="left-side  col-md-2">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+
+      <div style="text-align: left">
+        <ul class="list-group">
+          <a href="/admin/tweets">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-home mr-4"></i>推文清單</div>
+            </li>
+          </a>
+
+          <a href="/admin/users">
+            <li class="list-group-item  active">
+              <div class="d-flex"><i class="fas fa-user mr-4"></i>使用者列表</div>
+            </li>
+          </a>
+        </ul>
+
+        <a href="/admin/logout">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="right-side col-md-10" style="padding:0">
+      <div class="text-title">使用者列表</div>
+      <hr>
+      <div class="container">
+        <div class="row" id="data-panel">
+          {{#each users}}
+          <div class="card" id="601">
+            <img src="{{this.cover}}" alt="" class="show-modal card-img-top">
+            <div class="card-body">
+              <div class="name-photo">
+                <div class="avatar">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
+                    <img src="{{this.avatar}}" alt="" class="show-modal">
+                  </button>
+                </div>
+                <div class="name">
+                  {{this.name}}
+                </div>
+                <div class="account">
+                  @{{this.account}}
+                </div>
+              </div>
+              <div class="like-reply">
+                <i class="far fa-comment"></i> {{this.replyCount}}
+                <i class="far fa-heart ml-2"></i> {{this.likeCount}}
+              </div>
+              <div class="follow d-flex">
+                <div class="followship d-flex">
+                  <div class="follow-title">
+                    {{this.followerCount}}個
+                  </div>
+                  <div class="follow-body">
+                    跟隨中
+                  </div>
+                  <div class="follow-title ml-2">
+                    {{this.followingCount}}位
+                  </div>
+                  <div class="follow-body">
+                    跟隨者
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
