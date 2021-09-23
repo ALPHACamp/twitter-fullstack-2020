@@ -12,7 +12,7 @@ const chooseAvatar = document.querySelector('#upload_avatar')
 async function getUserProfile (userId, baseURL) {
   try {
     const dataRaw = await axios.get(`${baseURL}/api/users/${userId}`)
-    const userData = dataRaw.data.user
+    const userData = dataRaw.data
 
     userData.cover
       ? (userCoverInput.style.backgroundImage = `url('${userData.cover}')`)
@@ -45,7 +45,6 @@ function getImgData (fileName, previewArea) {
 userNameInput.addEventListener('keyup', function countCharacters (event) {
   messageNameCount.innerHTML = `${userNameInput.value.length}/50`
 })
-
 
 userInfoInput.addEventListener('keyup', function countCharacters (event) {
   messageIntroCount.innerHTML = `${userInfoInput.value.length}/160`

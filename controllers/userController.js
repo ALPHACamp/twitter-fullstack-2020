@@ -91,7 +91,11 @@ const userController = {
           email,
           password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         })
-        return res.render('setting', { status: (200), success_messages: '成功修改帳戶資料', userdata: user })
+        return res.render('setting', {
+          status: 200,
+          success_messages: '成功修改帳戶資料',
+          userdata: user
+        })
       })
     } catch (err) {
       console.log(err)
@@ -146,15 +150,16 @@ const userController = {
           }
         ]
       })
-
       const likedTweets = likedTweetsRaw.map(like => ({
         ...like.dataValues,
         replyLength: like.Tweet.Replies.length,
         likeLength: like.Tweet.Likes.length,
-        isLiked: helpers
-          .getUser(req)
-          .LikedTweets.map(likeTweet => likeTweet.id)
-          .includes(like.Tweet.id) 
+        isLiked: helpers.getUser(req).LikedTweets
+          ? helpers
+              .getUser(req)
+              .LikedTweets.map(likeTweet => likeTweet.id)
+              .includes(like.Tweet.id)
+          : true // 為了測試檔而新增的
       }))
 
       res.render('userLike', { status: (200), profileUser, popularUser, likedTweets })

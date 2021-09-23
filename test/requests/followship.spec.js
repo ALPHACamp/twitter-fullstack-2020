@@ -11,23 +11,19 @@ describe('# followship request', () => {
   context('#create', () => {
     describe('when user1 wants to follow user2', () => {
       before(async () => {
-        console.log('剛進入 before when user1 wants to follow user2 ')
         this.ensureAuthenticated = sinon.stub(
           helpers, 'ensureAuthenticated'
         ).returns(true);
         this.getUser = sinon.stub(
           helpers, 'getUser'
         ).returns({ id: 1, Followings: [] });
-        console.log('執行完helper before when user1 wants to follow user2 ')
         await db.User.destroy({ where: {}, truncate: true })
         await db.Followship.destroy({ where: {}, truncate: true })
         await db.User.create({})
         await db.User.create({})
-        console.log('執行完 all await before when user1 wants to follow user2 ')
       })
 
       it('can not follow self', (done) => {
-        console.log('剛進入in it can not follow self')
         request(app)
           .post('/followships')
           .send('id=1')
@@ -35,7 +31,6 @@ describe('# followship request', () => {
           .expect(200)
           .end(function (err, res) {
             if (err) return done(err);
-            console.log('執行完路由功能in it can not follow self')
             db.User.findByPk(1, {
               include: [
                 { model: db.User, as: 'Followers' },
@@ -43,7 +38,6 @@ describe('# followship request', () => {
               ]
             }).then(user => {
               user.Followings.length.should.equal(0)
-              console.log('in it can not follow self before done')
               return done();
             })
           });

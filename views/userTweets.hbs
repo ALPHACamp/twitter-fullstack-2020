@@ -43,7 +43,8 @@
       </div>
       {{else}}
       <div class="follow-feature">
-        <form action="/followships/{{profileUser.id}}" method="POST">
+      <form action="/followships" method="POST">
+        <input type="hidden" name="id" value="{{profileUser.id}}">
         <button type="submit" class="btn rounded-pill fw-bolder unfollow-button">跟隨</button>
       </form>
       </div>

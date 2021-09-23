@@ -18,7 +18,7 @@ const adminController = {
     }
   },
   signIn: (req, res) => {
-    if (helpers.getUser(req).role === 'user') {
+    if (helpers.getUser(req).role !== 'admin') {
       req.flash('error_messages', '帳號或密碼錯誤')
       res.redirect('/admin/signin')
     } else {
@@ -28,18 +28,9 @@ const adminController = {
 
   },
   logOut: (req, res) => {
-    try {
-      req.flash('success_messages', '後台登出成功！')
-      req.logOut()
-      res.status(200)
-      res.redirect('admin/signin')
-    } catch (err) {
-      console.log(err)
-      console.log('logOut err')
-      req.flash('error_messages', '後台登出失敗！')
-      res.status(302)
-      return res.redirect('back')
-    }
+    req.flash('success_messages', '成功登出！')
+    req.logOut()
+    res.redirect('/admin/signin')
   },
   getTweets: async (req, res) => {
     try {
