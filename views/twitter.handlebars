@@ -54,7 +54,7 @@
               {{#if this.isLiked }}
               <form action="/twitters/{{ this.id }}/unlike?_method=DELETE" method="POST">
                 <button type="submit" class="btn">
-                  <i class="fas fa-heart"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
+                  <i class="fas fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
                 </button>
               </form>
               {{else}}

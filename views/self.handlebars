@@ -63,10 +63,23 @@
           </div>
           <p class="card-text fontWeight500">{{this.content}}</p>
 
-          <a href="/twitters/{{this.id}}/replyList" style="text-decoration: none; color: 
-          #657786"><i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span></a>
-          <a href="/twitters/{{this.id}}/replyList" style="text-decoration: none; color: 
+          <div class="d-flex align-items-center">
+            {{#if this.isLiked }}
+            <form action="/twitters/{{ this.id }}/unlike?_method=DELETE" method="POST">
+              <button type="submit" class="btn" style="color: #657786">
+                <i class="fas fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span>
+              </button>
+            </form>
+            {{else}}
+            <form action="/twitters/{{ this.id }}/like" method="POST">
+              <button type="submit" class="btn" style="color: #657786">
+                <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span>
+              </button>
+            </form>
+            {{/if}}
+            <a href="/twitters/{{this.id}}/replyList" style="text-decoration: none; color: 
           #657786"><i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.replyCount}}</span></a>
+          </div>
         </div>
       </div>
     </div>
