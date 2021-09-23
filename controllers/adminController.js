@@ -10,8 +10,6 @@ const adminController = {
     try {
       return res.render('admin/signin', { status: (200) })
     } catch (err) {
-      console.log(err)
-      console.log('signInPage err')
       req.flash('error_messages', '後台頁面讀取失敗！')
       res.status(302)
       return res.redirect('back')
@@ -55,8 +53,6 @@ const adminController = {
       return res.render('admin/tweets', { tweets })
 
     } catch (err) {
-      console.log(err)
-      console.log('getTweets err')
       req.flash('error_messages', '獲取推文失敗！')
       res.status(302)
       return res.redirect('back')
@@ -75,8 +71,6 @@ const adminController = {
       req.flash('success_messages', '刪除推文成功！')
       return res.redirect('back')
     } catch (err) {
-      console.log(err)
-      console.log('deleteTweet err')
       req.flash('error_messages', '刪除推文失敗！')
       res.status(302)
       return res.redirect('back')
@@ -105,8 +99,6 @@ const adminController = {
 
       return res.render('admin/users', { status:(200), users })
     } catch (err) {
-      console.log(err)
-      console.log('getUsers err')
       req.flash('error_messages', '讀取使用者失敗！')
       res.status(302)
       return res.redirect('back')

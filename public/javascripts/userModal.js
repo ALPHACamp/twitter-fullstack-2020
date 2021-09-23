@@ -27,7 +27,7 @@ async function getUserProfile (userId, baseURL) {
     messageNameCount.innerHTML = `${userData.name.length}/50`
     messageIntroCount.innerHTML = `${userData.introduction.length}/160`
   } catch (err) {
-    console.log(err)
+    return res.redirect('back')
   }
 }
 

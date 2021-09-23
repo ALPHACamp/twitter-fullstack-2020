@@ -13,8 +13,6 @@ const tweetController = {
       tweetModal.createdAt = moment(tweetModal.createdAt).fromNow()
       res.json({ tweetModal })
     } catch(err) {
-      console.log(err)
-      console.log('getModalTweet err')
       req.flash('error_messages', '讀取貼文失敗！')
       res.status(302)
       return res.redirect('back')

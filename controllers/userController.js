@@ -37,9 +37,7 @@ const userController = {
 
       res.render('userTweets', {status: (200), profileUser, popularUser, tweets })
     } catch (err) {
-      console.log(err)
       res.status(302)
-      console.log('getUserTweets err')
       req.flash('error_messages', '讀取使用者貼文失敗')
       return res.redirect('/')
       
@@ -52,9 +50,7 @@ const userController = {
 
       })
     } catch (error) {
-      console.log(err)
       res.status(302)
-      console.log('getSetting err')
       req.flash('error_messages', '讀取設定頁面失敗')
       return res.redirect('back')
     }
@@ -98,9 +94,7 @@ const userController = {
         })
       })
     } catch (err) {
-      console.log(err)
       res.status(302);
-      console.log('editSetting err')
       req.flash('error_messages', '帳戶更動失敗')
       return res.redirect('back')
     }
@@ -126,9 +120,7 @@ const userController = {
 
       res.render('userReply', {status: (200), profileUser, popularUser, replies })
     } catch (err) {
-      console.log(err)
       res.status(302);
-      console.log('getReplies err')
       req.flash('error_messages', '讀取回覆失敗')
       return res.redirect('back')
     }
@@ -164,9 +156,7 @@ const userController = {
 
       res.render('userLike', { status: (200), profileUser, popularUser, likedTweets })
     } catch (err) {
-      console.log(err)
       res.status(302);
-      console.log('getLikes err')
       req.flash('error_messages', '點擊失敗')
       return res.redirect('back')
     }
@@ -204,9 +194,7 @@ const userController = {
         followingsUser
       })
     } catch (err) {
-      console.log(err)
       res.status(302);
-      console.log('getUserFollowings err')
       req.flash('error_messages', '獲取追蹤中使用者失敗')
       return res.redirect('back')
     }
@@ -245,9 +233,7 @@ const userController = {
         followersUser
       })
     } catch (err) {
-      console.log(err)
       res.status(302);
-      console.log('getUserFollowers err')
       req.flash('error_messages', '獲取追蹤者失敗')
       return res.redirect('back')
     }
