@@ -62,8 +62,11 @@
             <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
           </div>
           <p class="card-text fontWeight500">{{this.content}}</p>
-          <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span>
-          <i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.replyCount}}</span>
+
+          <a href="/twitters/{{this.id}}/replyList" style="text-decoration: none; color: 
+          #657786"><i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.likeCount}}</span></a>
+          <a href="/twitters/{{this.id}}/replyList" style="text-decoration: none; color: 
+          #657786"><i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.replyCount}}</span></a>
         </div>
       </div>
     </div>
