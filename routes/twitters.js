@@ -15,6 +15,8 @@ const authenticated = (req, res, next) => {
 
 
 router.get('/', authenticated, twitterController.getTwitters)
+router.post('/', authenticated, twitterController.postTwitter)
+
 router.get('/:id/replyList', authenticated, twitterController.getTwitter)
 
 module.exports = router
