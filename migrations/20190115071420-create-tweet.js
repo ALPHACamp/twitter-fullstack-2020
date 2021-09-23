@@ -6,14 +6,12 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       UserId: {
-        allowNull: false,
         type: Sequelize.INTEGER
       },
       content: {
-        allowNull: false,
         type: Sequelize.TEXT
       },
       likeCount: {
