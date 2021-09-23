@@ -23,7 +23,7 @@ function getUsers(req) {
           followerCount: user.followers.length,
           isFollowed: req.user.followings.map(d => d.id).includes(user.id)
         }))
-        users = users.sort((a, b) => b.followerCount - a.followerCount)
+        users = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
         resolve(users)
       })
     })
