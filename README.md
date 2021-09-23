@@ -38,27 +38,42 @@ git clone https://github.com/alan78814/twitter-fullstack-2020.git
 ```
 cd twitter-fullstack-2020
 ```
-3.安裝 npm 套件
+3.環境變數設定
+將根目錄.env.example檔案中列為SKIP的部分替換為相關ID與金鑰內容,再把.env.example檔案名稱修改為.env 
+
+4.建立資料庫
+開啟 MySQL workbench，再連線至本地資料庫，輸入以下建立資料庫 
+
+```
+drop database if exists ac_twitter_workspace;
+create database ac_twitter_workspace;
+use ac_twitter_workspace;
+
+drop database if exists ac_twitter_workspace_test;
+create database ac_twitter_workspace_test;
+use ac_twitter_workspace_test;
+```
+5.安裝 npm 套件
 ```
 npm install
 ```
-4.db:migrate 設定
+6.db:migrate 設定
 ```
 npx sequelize db:migrate 
 ```
-5.加入種子資料
+7.加入種子資料
 ```
 npx sequelize db:seed:all 
 ```
-6.啟動專案
+8.啟動專案
 ```
 npm run dev
 ```
-7.使用
+9.使用
 終端機出現下列訊息" "Example app listening on port 3000!"
 可開啟瀏覽器輸入 http://localhost:3000 使用
 
-8.預設使用者 Seed User
+10.預設使用者 Seed User
 加入種子資料後，可使用下列預設帳號/密碼進行登入
 - account: user1
 - account: user2
