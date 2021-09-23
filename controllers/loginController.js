@@ -8,9 +8,7 @@ const loginController = {
     try {
       return res.render('signup', { status: (200) })
     } catch (err) {
-      console.log(err)
       res.status(302);
-      console.log('signUpPage err')
       req.flash('error_messages', '讀取註冊頁面失敗')
       return res.redirect('back')
     }
@@ -67,9 +65,7 @@ const loginController = {
       res.status(200)
       res.redirect('/signin')
     } catch (err) {
-      console.log(err)
       res.status(302);
-      console.log('signUp err')
       req.flash('error_messages', '註冊失敗')
       return res.redirect('back')
     }
@@ -79,8 +75,6 @@ const loginController = {
     try {
       return res.render('signin', { status: (200) })
     } catch (err) {
-      console.log(err)
-      console.log('signInPage err')
       req.flash('error_messages', '讀取登入頁面失敗')
       res.status(302);
       return res.redirect('back')
@@ -105,8 +99,6 @@ const loginController = {
       res.status(200);
       res.redirect('/signin')
     } catch (err) {
-      console.log(err)
-      console.log('logOut err')
       req.flash('error_messages', '登出失敗！')
       res.status(302);
       return res.redirect('/')

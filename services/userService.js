@@ -34,7 +34,7 @@ const userService = {
 
       return popularUser
     } catch (err) {
-      console.log(err)
+      return res.redirect('back')
     }
   },
   getProfileUser: async (req, res) => {
@@ -64,7 +64,7 @@ const userService = {
 
       return profileUser
     } catch (err) {
-      console.log(err)
+      return res.redirect('back')
     }
   }
 }

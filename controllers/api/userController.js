@@ -30,8 +30,6 @@ const userController = {
 
       return res.status(200).json({ cover, avatar, name, introduction })
     } catch (err) {
-      console.log(err)
-      console.log('getUser err')
       req.flash('error_messages', '獲取使用者失敗！')
       res.status(302)
       return res.redirect('back')
@@ -100,8 +98,6 @@ const userController = {
 
       return res.render('userTweets', { profileUser, popularUser, tweets })
     } catch (err) {
-      console.log(err)
-      console.log('editUser err')
       req.flash('error_messages', '更新失敗！')
       res.status(302)
       return res.redirect('back')
