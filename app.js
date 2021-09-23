@@ -8,12 +8,24 @@ const session = require('express-session')
 const methodOverride = require('method-override')
 const passport = require('./config/passport')
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const app = express()
 const port = 3000
 
-app.engine('handlebars', handlebars({ defaultLayout: 'main' }))
+app.engine(
+  'handlebars',
+  handlebars({
+    defaultLayout: 'main',
+    helpers: require('./config/handlebars-helpers')
+  })
+)
 app.set('view engine', 'handlebars')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
+app.use('/upload', express.static(__dirname + '/upload'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 app.use(passport.initialize())
 app.use(passport.session())

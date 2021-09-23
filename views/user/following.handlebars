@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="wrapper d-flex align-items-stretch">
+    <div class="center-content d-flex" id="tweet-content">
+      <div class="head  justify-content-between ">
+        <a href="javascript:history.back()" style="color: black;">
+          <div class="head-content d-flex">
+            <i class="fas fa-arrow-left ml-2 mt-3"></i>
+            <div class="head-content-user-info">
+              <h5 class="tweet-title-user">{{results.name}}</h5>
+              <div class="title-description-user">{{results.Tweets.length}} tweets</div>
+            </div>
+          </div>
+        </a>
+        <div class="user-selection-bar">
+          <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link " href="/users/{{results.id}}/followers">followers</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/users/{{results.id}}/followings">followings</a>
+            </li>
+          </ul>
+        </div>
+        {{#each results.Followings}}
+        <div class="tweet-content-box" style="margin-bottom:5px">
+          <div class="tweet-content-left">
+            <a href="/users/{{this.id}}/tweets">
+              <img class="ml-2 mt-2" src={{this.avatar}}
+                   style="background: #C4C4C4; border-radius: 100%; width: 50px; height: 50px">
+            </a>
+          </div>
+          <div class="tweet-content-right" style="width: 100%">
+            <div style="display: flex; justify-content: space-between">
+              <div class="tweet-content-username">
+                <a href="/users/{{this.id}}/tweets" class="user-name">{{this.name}}</a>
+                <span class="user-account">@{{this.account}}</span>
+              </div>
+              <div style="margin-top: 5px; margin-right: 5px">
+                {{#ifCond ../user.id this.id}}
+                {{else}}
+                {{#if this.isFollowed}}
+                <form action="/follow/{{this.id}}?_method=DELETE" method="POST">
+                  <button class="unfollow-button">following</button>
+                </form>
+                {{else}}
+                <form action="/follow/{{this.id}}" method="POST">
+                  <button class="follow-button" name="id" value="{{this.id}}">follow</button>
+                </form>
+                {{/if}}
+                {{/ifCond}}
+              </div>
+            </div>
+            <div class="tweet-content-info" style="margin-top: 5px">
+              <span class="tweet-content-description">{{this.introduction}}</span><br>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>

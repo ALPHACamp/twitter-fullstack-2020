@@ -1058,36 +1058,32 @@ svg {
 }
 
 .setting-main-content .header {
-  background: #FFFFFF;
+  background: #ffffff;
   padding-left: 15px;
   height: 55px;
   box-sizing: border-box;
-  border-bottom:1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
 
-
-
 .setting-main-content .header a .iconBack:hover {
-  fill:#FF6600;
+  fill: #ff6600;
 }
 
-.setting-main-content .header .headerItem{
-  margin-right:44px;
+.setting-main-content .header .headerItem {
+  margin-right: 44px;
 }
 
-.setting-main-content .header .headerItem span{
+.setting-main-content .header .headerItem span {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 26px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
-
-
 
 .setting-main-content .register form {
   max-width: 540px;

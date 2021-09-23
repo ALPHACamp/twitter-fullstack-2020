@@ -10,9 +10,5 @@ module.exports = {
 
   moment: function (a) {
     return moment(a).fromNow()
-  },
-
-  elseif: function (){
-    
   }
 }
