@@ -297,46 +297,77 @@ const userController = {
   },
 
   getUserFollower: (req, res) => {
-    const whereQuery = {}
-    whereQuery.userId = Number(req.params.id)
-
-    Tweet.findAndCountAll({
-      include: [User],
-      where: whereQuery
-    }).then(result => {
-      const totalTweet = result.rows.length
-
-      User.findAll({
-        include: [
-          { model: User, as: 'followers' }
-        ]
-      }).then(user => {
-        console.log(user)
+    return Followship.findAll({
+      raw: true,
+      nest: true,
+      where: { followingId: req.user.id }
+    }).then(followships => {
+      const followerUsers = []
+      followships.forEach(followship => {
+        if (followship.followerId) {
+          followerUsers.push(followship.followerId)
+        }
       })
 
-      Followship.findAndCountAll({
+      // get user's following
+      Followship.findAll({
         raw: true,
-        nest: true
-      }).then(result => {
-        const followers = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
-
-        console.log(followers)
-
-        User.findByPk(req.params.id)
-          .then(user => {
-            return res.render('selfFollower', {
-              user: user.toJSON(),
-              totalTweet: totalTweet,
-              followers: followers
-            })
+        nest: true,
+        where: { followerId: req.user.id }
+      }).then(data => {
+        const followingUsers = []
+        data.forEach(d => {
+          followingUsers.push(d.followingId)
+        })
+        // get user follower's tweets
+        Tweet.findAll({
+          raw: true,
+          nest: true,
+          include: [User]
+        }).then(data => {
+          const tweets = []
+          data.forEach(d => {
+            if (followerUsers.includes(d.UserId)) {
+              tweets.push(d)
+            }
           })
+          tweetsData = tweets.map(tweet => ({
+            ...tweet,
+            isMainUserFollowing: followingUsers.includes(tweet.UserId)
+          }))
+          return res.render('selfFollower', { tweetsData })
+        })
       })
     })
   },
 
   getUserFollowing: (req, res) => {
+    return Followship.findAll({
+      raw: true,
+      nest: true,
+      where: { followerId: req.user.id }
+    }).then(followships => {
+      const followingUsers = []
+      followships.forEach(followship => {
+        if (followship.followingId) {
+          followingUsers.push(followship.followingId)
+        }
+      })
 
-    res.render('selfFollowing')
+      Tweet.findAll({
+        raw: true,
+        nest: true,
+        include: [User]
+      }).then(data => {
+        const tweets = []
+        data.forEach(d => {
+          if (followingUsers.includes(d.UserId)) {
+            tweets.push(d)
+          }
+        })
+        return res.render('selfFollowing', { tweets })
+      })
+    })
   },
 
   getUserSetting: (req, res) => {
