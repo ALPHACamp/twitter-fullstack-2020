@@ -10,15 +10,19 @@ const loginController = {
 
   signUp: async (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
-    const error_messages = []
+    let errorMessages = []
     //加入多種錯誤訊息
-    if (password !== checkPassword) {
-      error_messages.push({ message: '密碼與確認密碼不相符！' })
+    if (!name || !email || !password || !checkPassword || !account) {
+      errorMessages.push({ message: '所有欄位都是必填。' })
     }
 
-    if (error_messages.length) {
+    if (password !== checkPassword) {
+      errorMessages.push({ message: '密碼與確認密碼不相符！' })
+    }
+
+    if (errorMessages.length) {
       return res.render('signup', {
-        error_messages,
+        errorMessages,
         account,
         name,
         email,
@@ -27,11 +31,17 @@ const loginController = {
       })
     }
 
-    const user = await User.findOne({ where: { email } })
-    if (user) {
-      error_messages.push({ message: '這個 Email 已經註冊過了。' })
+    const userEmail = await User.findOne({ where: { email } })
+    const userAccount = await User.findOne({ where: { account } })
+    if (userEmail) {
+      errorMessages.push({ message: '這個 Email 已經註冊過了。' }) 
+    }
+    if (userAccount) {
+      errorMessages.push({ message: '這個 Account 已經註冊過了。' })
+    }
+    if (errorMessages.length) {
       return res.render('signup', {
-        error_messages,
+        errorMessages,
         account,
         name,
         email,

@@ -9,6 +9,7 @@ const {
 } = require('@handlebars/allow-prototype-access')
 const helpers = require('./_helpers')
 const app = express()
+const helpers = require('./_helpers')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
