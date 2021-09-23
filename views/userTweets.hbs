@@ -21,13 +21,9 @@
           <p class="user-intro my-1">
             {{profileUser.introduction}}
           <p class="user-followship">
-            <strong>{{profileUser.followingLength}}個
-            <a href="/users/{{profileUser.id}}/followings">跟隨中</a>
-            </strong>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <strong>{{profileUser.followerLength}}位
-              <a href="/users/{{profileUser.id}}/followers">跟隨者</a>
-            </strong>
+            <a href="/users/{{profileUser.id}}/followings"><strong>{{profileUser.followingLength}}個</strong>
+              跟隨中</a>&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="/users/{{profileUser.id}}/followers"><strong>{{profileUser.followerLength}}位</strong>跟隨者</a>
             <p />
         </div>
       </div>
@@ -69,17 +65,23 @@
     </div>
     {{#each tweets}}
     <div class="tweets-article d-flex">
-      <div class="">
+      <div>
+        <a href="/users/{{this.UserId}}/tweets">
         <img class="rounded-circle" src="{{../profileUser.avatar}}" alt="avatar" title="avatar" width="50px"
           height="50px">
+          </a>
       </div>
       <div class="d-flex flex-column tweet-article">
         <div>
+          <a href="/users/{{this.UserId}}/tweets">
           <span class="name">{{../profileUser.name}}</span>
           <span class="account">&nbsp;@{{../profileUser.account}}</span>
+          </a>
           <span class="time"><b>•</b>&nbsp;{{moment this.createdAt}}</span>
         </div>
-        <p class="content">{{this.description}}</p>
+        <p class="content">
+          <a href="/tweets/{{this.id}}/replies">{{this.description}}</a>
+          </p>
         <div class="d-flex">
           <div class="me-5">
             <i class="reply-icon far fa-comment" data-bs-toggle="modal" data-bs-target="#tweetReplyModal"

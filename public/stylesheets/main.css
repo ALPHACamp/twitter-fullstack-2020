@@ -156,6 +156,16 @@ p {
   font-weight: 500;
 }
 
+.tweets-article .reply-to {
+  font-size: 1rem;
+}
+
+
+.tweets-article .reply-account a {
+  color:#ff6600;
+  font-size: 1rem;
+}
+
 .popular {
   max-width: 350px;
   background: #f5f8fa;
@@ -184,21 +194,27 @@ p {
 .popular .follow-btn {
   text-align: right;
   margin: auto;
+  padding: 0;
+}
+
+.popular .follow-btn form {
+  max-width: 90px;
 }
 
 .popular .popular-name {
   line-height: 18px;
   color: #1c1c1c;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .popular .popular-account {
   line-height: 18px;
   color: #657786;
   font-size: 1rem;
-  font-weight: bold;
+  font-weight: 700;
 }
+
 
 /*=============== tweet-followfhip ===============*/
 
