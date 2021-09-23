@@ -49,7 +49,7 @@
           ></path>
         </svg>
       </span>
-      <a class='iconIndex' href=''>首頁</a>
+      <a class='iconIndex' href='/tweets'>首頁</a>
     </div>
     <div class='item'>
       <span><svg
@@ -66,7 +66,7 @@
         </svg>
 
       </span>
-      <a href='' class='iconUser'>個人資料</a>
+      <a href='/users/{{user.id}}/tweets' class='iconUser'>個人資料</a>
     </div>
     <div class='item'>
       <span><svg
@@ -86,7 +86,7 @@
         </svg>
 
       </span>
-      <a href='/users/:userId/setting' class='iconCog'>設定</a>
+      <a href='/users/setting/{{user.id}}' class='iconCog'>設定</a>
     </div>
     <div class='item'>
       <button class='tweetButton' type='submit'>推文</button>

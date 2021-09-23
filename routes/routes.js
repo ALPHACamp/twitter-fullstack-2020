@@ -16,7 +16,7 @@ router.post(
   '/admin/signin',
   passport.authenticate('local', {
     failureRedirect: '/admin/signin',
-    failureFlash: true
+    failureFlash: true,
   }),
   adminController.signin
 )
@@ -32,10 +32,11 @@ router.post(
   '/signin',
   passport.authenticate('local', {
     failureRedirect: '/signin',
-    failureFlash: true
+    failureFlash: true,
   }),
   userController.signin
 )
+
 router.get(
   '/users/setting/:id',
   auth.authenticatedGeneral,
