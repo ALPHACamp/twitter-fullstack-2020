@@ -11,11 +11,7 @@ const userController = require('../controllers/userController')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'user') {
-      return next()
-    } else if (helpers.getUser(req).role === 'admin') {
-      return res.redirect('/admin/tweets')
-    }
+    return next()
   }
   res.redirect('/signin')
 }

@@ -1,6 +1,7 @@
 const db = require('../models')
 const bcrypt = require('bcryptjs')
 const User = db.User
+const helpers = require('../_helpers')
 
 const loginController = {
   signUpPage: (req, res) => {
@@ -9,7 +10,6 @@ const loginController = {
 
   signUp: async (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
-    const role = false
     const error_messages = []
     //加入多種錯誤訊息
     if (password !== checkPassword) {
@@ -49,7 +49,6 @@ const loginController = {
         bcrypt.genSaltSync(10),
         null
       ),
-      role,
       avatar:
         'https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg'
     })
@@ -63,7 +62,7 @@ const loginController = {
   },
 
   signIn: (req, res) => {
-    if (req.user.role === 'admin') {
+    if (helpers.getUser(req).role === 'admin') {
       req.flash('error_messages', '帳號或密碼錯誤')
       res.redirect('/signin')
     } else {

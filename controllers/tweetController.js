@@ -23,9 +23,10 @@ const tweetController = {
         userAvatar: tweet.User.avatar,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
-          tweet.id
-        )
+        isLiked: helpers
+          .getUser(req)
+          .LikedTweets.map(likeTweet => likeTweet.id)
+          .includes(tweet.id)
       }))
       return res.render('tweets', { reorganizationTweets, popularUser })
     } catch (err) {
@@ -45,7 +46,7 @@ const tweetController = {
       }
       const tweet = await Tweet.create({
         description,
-        UserId: req.user.id
+        UserId: helpers.getUser(req).id
       })
       return res.redirect('/tweets')
     } catch (err) {
@@ -67,9 +68,10 @@ const tweetController = {
       tweetJson.year = dayjs(`${tweetJson.createdAt}`).format('YYYY')
       tweetJson.month = dayjs(`${tweetJson.createdAt}`).format('M')
       tweetJson.day = dayjs(`${tweetJson.createdAt}`).format('D')
-      tweetJson.isLiked = req.user.LikedTweets.map(
-        likeTweet => likeTweet.id
-      ).includes(tweetJson.id)
+      tweetJson.isLiked = helpers
+        .getUser(req)
+        .LikedTweets.map(likeTweet => likeTweet.id)
+        .includes(tweetJson.id)
       const tweetReplies = tweetJson.Replies.map(reply => ({
         ...reply
       }))
@@ -88,7 +90,7 @@ const tweetController = {
       }
       const reply = await Reply.create({
         comment,
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId
       })
       return res.redirect(`/tweets/${req.params.tweetId}/replies`)
@@ -99,7 +101,7 @@ const tweetController = {
   addLike: async (req, res) => {
     try {
       await Like.create({
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId
       })
       return res.json({ status: 'success', message: 'add likes' })
@@ -111,7 +113,7 @@ const tweetController = {
     try {
       await Like.destroy({
         where: {
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           TweetId: req.params.tweetId
         }
       })

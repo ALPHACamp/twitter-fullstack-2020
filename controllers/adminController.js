@@ -3,13 +3,14 @@ const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
+const helpers = require('../_helpers')
 
 const adminController = {
   signInPage: (req, res) => {
     return res.render('admin/signin')
   },
   signIn: (req, res) => {
-    if (req.user.role === 'user') {
+    if (helpers.getUser(req).role === 'user') {
       req.flash('error_messages', '帳號或密碼錯誤')
       res.redirect('/admin/signin')
     } else {

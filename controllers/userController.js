@@ -20,16 +20,18 @@ const userController = {
       const tweetsRaw = await Tweet.findAll({
         where: { UserId: userId },
         include: [Reply, Like],
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
+        required: true
       })
 
       const tweets = tweetsRaw.map(tweet => ({
         ...tweet.dataValues,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
-          tweet.id
-        )
+        isLiked: helpers
+          .getUser(req)
+          .LikedTweets.map(likeTweet => likeTweet.id)
+          .includes(tweet.id)
       }))
 
       res.render('userTweets', { profileUser, popularUser, tweets })
@@ -41,7 +43,7 @@ const userController = {
   },
   getSetting: async (req, res) => {
     try {
-      User.findByPk(req.user.id, { raw: true }).then(user => {
+      User.findByPk(helpers.getUser(req).id, { raw: true }).then(user => {
         res.render('setting', { userdata: user })
       })
     } catch (error) {
@@ -52,7 +54,7 @@ const userController = {
 
   editSetting: async (req, res) => {
     try {
-      const userId = req.user.id
+      const userId = helpers.getUser(req).id
       if (req.body.passwordCheck !== req.body.password) {
         req.flash('error_messages', '兩次密碼輸入不同！')
         return res.redirect('back')
@@ -126,9 +128,10 @@ const userController = {
         ...like.dataValues,
         replyLength: like.Tweet.Replies.length,
         likeLength: like.Tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
-          like.Tweet.id
-        )
+        isLiked: helpers
+          .getUser(req)
+          .LikedTweets.map(likeTweet => likeTweet.id)
+          .includes(like.Tweet.id)
       }))
 
       res.render('userLike', { profileUser, popularUser, likedTweets })
@@ -140,7 +143,7 @@ const userController = {
   getFollowings: async (req, res) => {
     try {
       const popularUser = await userService.getPopular(req, res)
-      
+
       const followings = await User.findByPk(req.params.userId, {
         include: [
           { model: User, as: 'Followings' },
@@ -155,13 +158,21 @@ const userController = {
         account: item.account,
         avatar: item.avatar,
         introduction: item.introduction,
-        followshipId: item.Followship.id,  //做follow排序
-        isFollowed: req.user.Followings.map(d => d.id).includes(item.id)
+        followshipId: item.Followship.id, //做follow排序
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map(d => d.id)
+          .includes(item.id)
       }))
-      followingsUser = followingsUser.sort((a, b) => b.followshipId - a.followshipId)
-      
-      return res.render('following', { popularUser, currentUserFollowings, followingsUser })
+      followingsUser = followingsUser.sort(
+        (a, b) => b.followshipId - a.followshipId
+      )
 
+      return res.render('following', {
+        popularUser,
+        currentUserFollowings,
+        followingsUser
+      })
     } catch (err) {
       console.log(err)
       console.log('getUserFollowers err')
@@ -188,13 +199,21 @@ const userController = {
         account: item.account,
         avatar: item.avatar,
         introduction: item.introduction,
-        followshipId: item.Followship.id,  //做follow排序
-        isFollowed: req.user.Followings.map(d => d.id).includes(item.id)
+        followshipId: item.Followship.id, //做follow排序
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map(d => d.id)
+          .includes(item.id)
       }))
-      followersUser = followersUser.sort((a, b) => b.followshipId - a.followshipId)
-      
-      return res.render('follower', { popularUser, currentUserFollowers, followersUser })
+      followersUser = followersUser.sort(
+        (a, b) => b.followshipId - a.followshipId
+      )
 
+      return res.render('follower', {
+        popularUser,
+        currentUserFollowers,
+        followersUser
+      })
     } catch (err) {
       console.log(err)
       console.log('getUserFollowers err')

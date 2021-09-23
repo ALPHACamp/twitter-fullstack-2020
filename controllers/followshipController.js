@@ -9,7 +9,7 @@ const followshipController = {
   addFollowing: async (req, res) => {
     try {
       const followship = await Followship.create({
-        followerId: req.user.id,
+        followerId: helpers.getUser(req).id,
         followingId: req.params.userId
       })
 
@@ -28,7 +28,7 @@ const followshipController = {
     try {
       await Followship.destroy({
         where: {
-          followerId: req.user.id,
+          followerId: helpers.getUser(req).id,
           followingId: req.params.userId
         }
       })
