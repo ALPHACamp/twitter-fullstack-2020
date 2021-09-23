@@ -2,7 +2,7 @@
 
 <script>
   function getUserData() {
-    axios.get('{{ BASE_URL }}/api/users/{{user.id}}')
+    axios.get('https://twitter-simply-demo.herokuapp.com/api/users/{{user.id}}')
       .then(res => {
       name.value = res.data.name
       introduction.value = res.data.introduction
