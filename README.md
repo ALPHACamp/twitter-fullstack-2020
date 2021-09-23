@@ -1,5 +1,14 @@
 # twitter-fullstack-2020
 
+# 測試帳號
+## 前台
+帳號:user1
+密碼:12345678
+
+## 後台
+帳號:root123
+密碼:12345678
+
 # README
 
 ## 安裝步驟
@@ -32,9 +41,9 @@
 
 7. 參照.env.example檔案建立.env檔案並設定環境參數
 
-8. 建立遠端分支(或使用git fetch origin加上git checkout -b twitterMainApi)
+8. 建立遠端分支
 
-        git checkout -b twitterMainApi
+        git checkout -b master
 9. 啟動伺服器
 
 
