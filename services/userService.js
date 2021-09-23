@@ -95,6 +95,7 @@ const userService = {
   },
 
   getUserTweets: (req, res, callback) => {
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
     const currentUser = helpers.getUser(req)
     return Promise.all([
       Tweet.findAll({
@@ -157,7 +158,7 @@ const userService = {
         isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
         isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
       }))
-      return callback({ data, viewUser, currentUser, topUsers })
+      return callback({ data, viewUser, currentUser, topUsers, BASE_URL })
     })
       .catch(err => console.log(err))
   },

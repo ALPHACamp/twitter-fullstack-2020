@@ -78,6 +78,7 @@ const userController = {
   },
 
   getUserReplied: (req, res) => {
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
     const currentUser = helpers.getUser(req)
     return Promise.all([
       Reply.findAll({
@@ -138,11 +139,12 @@ const userController = {
         isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
         isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
       }))
-      return res.render('replied', { data, viewUser, currentUser, topUsers })
+      return res.render('replied', { data, viewUser, currentUser, topUsers, BASE_URL })
     })
   },
 
   getUserLikes: (req, res) => {
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
     const currentUser = helpers.getUser(req)
     return Promise.all([
       Like.findAll({
@@ -208,7 +210,7 @@ const userController = {
         isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
         isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
       }))
-      return res.render('likes', { data, viewUser, currentUser, topUsers })
+      return res.render('likes', { data, viewUser, currentUser, topUsers, BASE_URL })
     })
       .catch(err => console.log(err))
   },

@@ -13,10 +13,13 @@ const port = process.env.PORT || 3000
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
+
+
 //變更順序以引入變數
 const passport = require('./config/passport')
 
-app.engine('hbs', exhbs({ defaultLayout: 'main',helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
+app.engine('hbs', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
 app.set('view engine', 'hbs')
 
 app.use('/upload', express.static(__dirname + '/upload'))
