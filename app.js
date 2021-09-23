@@ -4,10 +4,11 @@ const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
 const methodOverride = require('method-override')
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
-const app = express()
+const {
+  allowInsecurePrototypeAccess
+} = require('@handlebars/allow-prototype-access')
 const helpers = require('./_helpers')
-
+const app = express()
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()

@@ -1,6 +1,7 @@
 const db = require('../models')
 const bcrypt = require('bcryptjs')
 const User = db.User
+const helpers = require('../_helpers')
 
 const loginController = {
   signUpPage: async (req, res) => {
@@ -87,22 +88,13 @@ const loginController = {
   },
 
   signIn: (req, res) => {
-    try {
-      if (req.user.role === 'admin') {
-        req.flash('error_messages', '帳號或密碼錯誤')
-        res.status(302);
-        res.redirect('/signin')
-      } else {
-        req.flash('success_messages', '成功登入！')
-        res.status(200);
-        res.redirect('/tweets')
-      }
-    } catch (err) {
-      console.log(err)
-      console.log('signIn err')
-      req.flash('error_messages', '登入失敗')
-      res.status(302);
-      return res.redirect('back')
+    if (helpers.getUser(req).role === 'admin') {
+      req.flash('error_messages', '帳號或密碼錯誤')
+      res.redirect('/signin')
+    } else {
+      req.flash('success_messages', '成功登入！')
+      res.redirect('/tweets')
+
     }
   },
 

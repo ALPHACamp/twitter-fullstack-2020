@@ -3,6 +3,7 @@ const User = db.User
 const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
+const helpers = require('../_helpers')
 
 const adminController = {
   signInPage: (req, res) => {
@@ -17,22 +18,12 @@ const adminController = {
     }
   },
   signIn: (req, res) => {
-    try {
-      if (req.user.role === 'user') {
-        req.flash('error_messages', '帳號或密碼錯誤')
-        res.status(200)
-        res.redirect('/admin/signin')
-      } else {
-        req.flash('success_messages', '成功登入後台！')
-        res.status(200)
-        res.redirect('/admin/tweets')
-      }
-    } catch (err) {
-      console.log(err)
-      console.log('signIn err')
-      req.flash('error_messages', '後台登入失敗！')
-      res.status(302)
-      return res.redirect('back')
+    if (helpers.getUser(req).role === 'user') {
+      req.flash('error_messages', '帳號或密碼錯誤')
+      res.redirect('/admin/signin')
+    } else {
+      req.flash('success_messages', '成功登入後台！')
+      res.redirect('/admin/tweets')
     }
 
   },
@@ -70,8 +61,8 @@ const adminController = {
             ? data.description
             : data.description.substring(0, 50) + '...'
       }))
-      console.log(tweets[0])
-      return res.render('admin/tweets', {status:(200) ,tweets })
+      return res.render('admin/tweets', { tweets })
+
     } catch (err) {
       console.log(err)
       console.log('getTweets err')

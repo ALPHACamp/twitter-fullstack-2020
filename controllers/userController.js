@@ -27,9 +27,12 @@ const userController = {
         ...tweet.dataValues,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
-          tweet.id
-        )
+        isLiked: helpers.getUser(req).LikedTweets
+          ? helpers
+              .getUser(req)
+              .LikedTweets.map(likeTweet => likeTweet.id)
+              .includes(tweet.id)
+          : false
       }))
 
       res.render('userTweets', {status: (200), profileUser, popularUser, tweets })
@@ -44,8 +47,9 @@ const userController = {
   },
   getSetting: async (req, res) => {
     try {
-      User.findByPk(req.user.id, { raw: true }).then(user => {
-        res.render('setting', {status: (200), userdata: user })
+      User.findByPk(helpers.getUser(req).id, { raw: true }).then(user => {
+        res.render('setting', { userdata: user })
+
       })
     } catch (error) {
       console.log(err)
@@ -147,11 +151,11 @@ const userController = {
         ...like.dataValues,
         replyLength: like.Tweet.Replies.length,
         likeLength: like.Tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
-          like.Tweet.id
-        )
+        isLiked: helpers
+          .getUser(req)
+          .LikedTweets.map(likeTweet => likeTweet.id)
+          .includes(like.Tweet.id) 
       }))
-      console.log('likedTweets', likedTweets)
 
       res.render('userLike', { status: (200), profileUser, popularUser, likedTweets })
     } catch (err) {
@@ -171,7 +175,8 @@ const userController = {
         include: [
           { model: User, as: 'Followings' },
           { model: Tweet, attributes: ['id'] }
-        ]
+        ],
+        order: [['createdAt', 'DESC']]
       })
       const currentUserFollowings = followings.toJSON()
 
@@ -181,13 +186,18 @@ const userController = {
         account: item.account,
         avatar: item.avatar,
         introduction: item.introduction,
-        followshipId: item.Followship.id,  //做follow排序
-        isFollowed: req.user.Followings.map(d => d.id).includes(item.id)
+        followshipId: item.Followship.id, //做follow排序
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map(d => d.id)
+          .includes(item.id)
       }))
-      followingsUser = followingsUser.sort((a, b) => b.followshipId - a.followshipId)
 
-      return res.render('following', { status: (200), popularUser, currentUserFollowings, followingsUser })
-
+      return res.render('following', {
+        popularUser,
+        currentUserFollowings,
+        followingsUser
+      })
     } catch (err) {
       console.log(err)
       res.status(302);
@@ -206,7 +216,8 @@ const userController = {
         include: [
           { model: User, as: 'Followers' },
           { model: Tweet, attributes: ['id'] }
-        ]
+        ],
+        order: [['createdAt', 'DESC']]
       })
       const currentUserFollowers = followers.toJSON()
 
@@ -216,13 +227,18 @@ const userController = {
         account: item.account,
         avatar: item.avatar,
         introduction: item.introduction,
-        followshipId: item.Followship.id,  //做follow排序
-        isFollowed: req.user.Followings.map(d => d.id).includes(item.id)
+        followshipId: item.Followship.id, //做follow排序
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map(d => d.id)
+          .includes(item.id)
       }))
-      followersUser = followersUser.sort((a, b) => b.followshipId - a.followshipId)
 
-      return res.render('follower', { status: (200), popularUser, currentUserFollowers, followersUser })
-
+      return res.render('follower', {
+        popularUser,
+        currentUserFollowers,
+        followersUser
+      })
     } catch (err) {
       console.log(err)
       res.status(302);

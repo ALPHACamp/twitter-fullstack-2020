@@ -23,9 +23,10 @@ const tweetController = {
         userAvatar: tweet.User.avatar,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length,
-        isLiked: req.user.LikedTweets.map(likeTweet => likeTweet.id).includes(
-          tweet.id
-        )
+        isLiked: helpers
+          .getUser(req)
+          .LikedTweets.map(likeTweet => likeTweet.id)
+          .includes(tweet.id)
       }))
       return res.render('tweets', {status: (200), reorganizationTweets, popularUser })
     } catch (err) {
@@ -49,7 +50,7 @@ const tweetController = {
       }
       const tweet = await Tweet.create({
         description,
-        UserId: req.user.id
+        UserId: helpers.getUser(req).id
       })
       res.status(200)
       return res.redirect('/tweets')
@@ -76,9 +77,10 @@ const tweetController = {
       tweetJson.year = dayjs(`${tweetJson.createdAt}`).format('YYYY')
       tweetJson.month = dayjs(`${tweetJson.createdAt}`).format('M')
       tweetJson.day = dayjs(`${tweetJson.createdAt}`).format('D')
-      tweetJson.isLiked = req.user.LikedTweets.map(
-        likeTweet => likeTweet.id
-      ).includes(tweetJson.id)
+      tweetJson.isLiked = helpers
+        .getUser(req)
+        .LikedTweets.map(likeTweet => likeTweet.id)
+        .includes(tweetJson.id)
       const tweetReplies = tweetJson.Replies.map(reply => ({
         ...reply
       }))
@@ -101,7 +103,7 @@ const tweetController = {
       }
       const reply = await Reply.create({
         comment,
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId
       })
       res.status(200)
@@ -117,10 +119,11 @@ const tweetController = {
   addLike: async (req, res) => {
     try {
       await Like.create({
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId
       })
-      return res.json({ status:(200), message: 'add likes' })
+      return res.redirect('back')
+
     } catch (err) {
       console.log(err)
       res.status(302);
@@ -131,14 +134,14 @@ const tweetController = {
   },
   removeLike: async (req, res) => {
     try {
-      console.log('in removeLike controller')
-      await Like.destroy({
-        where: {
-          UserId: req.user.id,
-          TweetId: req.params.tweetId
-        }
-      })
-      return res.json({status: (200),  message: 'remove likes' })
+      const UserId = helpers.getUser(req).id
+      const TweetId = Number(req.params.tweetId)
+      console.log(UserId, TweetId)
+
+      await Like.destroy({ where: { UserId, TweetId } })
+
+      return res.redirect('back')
+
     } catch (err) {
       console.log(err)
       res.status(302);
