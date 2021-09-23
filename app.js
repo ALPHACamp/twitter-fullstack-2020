@@ -46,9 +46,6 @@ app.use((req, res, next) => {
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
 
-console.log('=============')
-console.log('進入app.js')
-
 require('./routes')(app)
 
 module.exports = app

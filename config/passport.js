@@ -16,8 +16,6 @@ passport.use(
     },
     // authenticate user
     (req, account, password, cb) => {
-      console.log('================')
-      console.log('進入passport authenticate user')
       User.findOne({ where: { account } }).then(user => {
         if (!user)
           return cb(
@@ -35,13 +33,9 @@ passport.use(
 
 // serialize and deserialize user
 passport.serializeUser((user, cb) => {
-  console.log('================')
-  console.log('正在進行serialize')
   cb(null, user.id)
 })
 passport.deserializeUser((id, cb) => {
-  console.log('================')
-  console.log('正在進行deserialize')
   User.findByPk(id, {
     include: [
       { model: User, as: 'Followers' },
