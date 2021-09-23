@@ -30,9 +30,13 @@ const tweetController = {
               .includes(tweet.id)
           : false
       }))
-      return res.render('tweets', { reorganizationTweets, popularUser })
+      return res.render('tweets', {status: (200), reorganizationTweets, popularUser })
     } catch (err) {
-      console.warn(err)
+      console.log(err)
+      res.status(302);
+      console.log('getTweets err')
+      req.flash('error_messages', '讀取貼文串失敗！')
+      return res.redirect('back')
     }
   },
   addTweet: async (req, res) => {
@@ -50,9 +54,14 @@ const tweetController = {
         description,
         UserId: helpers.getUser(req).id
       })
+      res.status(200)
       return res.redirect('/tweets')
     } catch (err) {
-      console.warn(err)
+      console.log(err)
+      res.status(302);
+      console.log('addTweet err')
+      req.flash('error_messages', '新增留言失敗！')
+      return res.redirect('back')
     }
   },
   getTweet: async (req, res) => {
@@ -79,9 +88,13 @@ const tweetController = {
         ...reply
       }))
 
-      res.render('tweet', { tweetReplies, tweet: tweetJson, popularUser })
+      res.render('tweet', {status: (200), tweetReplies, tweet: tweetJson, popularUser })
     } catch (err) {
-      console.warn(err)
+      console.log(err)
+      res.status(302);
+      console.log('getTweet err')
+      req.flash('error_messages', '讀取貼文失敗')
+      return res.redirect('back')
     }
   },
   postReplies: async (req, res) => {
@@ -96,9 +109,14 @@ const tweetController = {
         UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId
       })
+      res.status(200)
       return res.redirect(`/tweets/${req.params.tweetId}/replies`)
     } catch (err) {
-      console.warn(err)
+      console.log(err)
+      res.status(302)
+      console.log('PostReplies err')
+      req.flash('error_messages', '留言失敗')
+      return res.redirect('back')
     }
   },
   addLike: async (req, res) => {
@@ -109,19 +127,29 @@ const tweetController = {
       })
       return res.redirect('back')
     } catch (err) {
-      console.warn(err)
+      console.log(err)
+      res.status(302);
+      console.log('addLike err')
+      req.flash('error_messages', '點擊失敗')
+      return res.redirect('back')
     }
   },
   removeLike: async (req, res) => {
     try {
+      console.log('in removeLike controller')
       const UserId = helpers.getUser(req).id
       const TweetId = Number(req.params.tweetId)
 
       await Like.destroy({ where: { UserId, TweetId } })
 
       return res.redirect('back')
+
     } catch (err) {
-      console.warn(err)
+      console.log(err)
+      res.status(302);
+      console.log('removeLike err')
+      req.flash('error_messages', '點擊失敗')
+      return res.redirect('back')
     }
   }
 }

@@ -41,7 +41,7 @@ const userService = {
     try {
       const userId = req.params.userId
       let profileUser = await User.findOne({
-        where: { id: userId, role: 0 },
+        where: { id: userId, role: 'user' },
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
