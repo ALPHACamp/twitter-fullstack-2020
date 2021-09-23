@@ -4,11 +4,21 @@ const helpers = require('../_helpers')
 
 const twitterController = require('../controllers/twitterController.js')
 
+// const authenticated = (req, res, next) => {
+//   if (helpers.ensureAuthenticated(req)) {
+//     return next()
+//   }
+//   res.redirect('/users/signup')
+// }
+
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    return next()
+    if (!helpers.getUser(req).isAdmin) {
+      return next()
+    }
+    req.flash('error_messages', '管理員請由後台登入')
   }
-  res.redirect('/users/login')
+  res.redirect('/admins/login')
 }
 
 

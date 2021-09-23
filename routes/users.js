@@ -9,9 +9,12 @@ const upload = multer({ dest: 'temp/' })
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    return next()
+    if (!helpers.getUser(req).isAdmin) {
+      return next()
+    }
+    req.flash('error_messages', '管理員請由後台登入')
   }
-  res.redirect('/users/signup')
+  res.redirect('/admins/login')
 }
 
 // user register
