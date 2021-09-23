@@ -23,6 +23,46 @@
   </div>
 </div>
 
+{{!-- User Profile Update --}}
+{{!-- <div class="modal fade" id="userProfileSetting" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="d-flex">
+        <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="d-flex justify-content-end">
+        <div class="round m-3">
+          <button type="submit" class="orange btn text-white round">儲存</button>
+        </div>
+      </div>
+      </div>
+      <div class="createTweet border">
+        <form action="/users/:id/profile" method="POST">
+          <div class="d-flex">
+            <div class="cover">
+              <img src="{{noImage user.cover}}" alt="" class="userBackgroundImg">
+              <input type="file" class="form-control-file" id="cover" name="cover">
+            </div>
+            <a href="" class="avatar m-2">
+              <img src="{{user.image}}" alt="" class="rounded-circle userAvatar">
+              <input type="file" class="form-control-file" id="avatar" name="avatar">
+            </a>
+            
+            <div class="form-label-group">
+              <label for="inputName">名稱</label>
+              <input type="text" name="name" class="form-control" placeholder="name" maxlength="50" required autofocus>
+            </div>
+            <div class="form-label-group">
+              <label for="inputDescription">自我介紹</label>
+              <textarea class="description" name="description" placeholder="" maxlength="160" required></textarea>
+            </div>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
+</div> --}}
+
 <div class="row grid">
   <div>
     <nav class="userSidebar fixed">
@@ -110,6 +150,12 @@
         <div>位跟隨者</div>
       </div>
     </div>
+    {{#ifCond theUser this.id}}
+    <div class="d-grid gap-2 col-9 round">
+      <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+        data-bs-target="#userProfileSetting">編輯個人資料</button>
+    </div>
+    {{/ifCond}}
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/tweets">推文</a>

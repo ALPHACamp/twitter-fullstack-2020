@@ -110,41 +110,41 @@ const userController = {
     res.redirect('/tweets')
   },
 
-  // getUserTweets: (req, res) => {
-  //   const id = req.params.id
-  //   const loginUserId = helpers.getUser(req).id
-  //   const whereQuery = {}
+  getUserTweets: (req, res) => {
+    const id = req.params.id
+    const loginUserId = helpers.getUser(req).id
+    const whereQuery = {}
 
-  //   // 類似餐廳與類別的關係
-  //   // 多個餐廳屬於一種類別: 多個推文屬於一個使用者
-  //   if (req.query.tweetId) {
-  //     tweetId = Number(req.query.userId)
-  //     whereQuery.userId = tweetId
-  //   }
+    // 類似餐廳與類別的關係
+    // 多個餐廳屬於一種類別: 多個推文屬於一個使用者
+    if (req.query.tweetId) {
+      tweetId = Number(req.query.userId)
+      whereQuery.userId = tweetId
+    }
 
-  //   // 顯示個人資料及推文
-  //   Tweet.findAndCountAll({
-  //     raw: true,
-  //     nest: true,
-  //     where: { UserId: id }
-  //   })
-  //     .then((result) => {
-  //       const data = result.rows.map(r => ({
-  //         ...r.dataValues
-  //       }))
-  //       User.findByPk(id)
-  //         .then((user) => {
-  //           const userProfile = user.toJSON()
-  //           return res.render('user', {
-  //             data,
-  //             tweets: data,
-  //             userProfile,
-  //             loginUserId,
-  //             replyNum,
-  //           })
-  //         }).catch(err => console.log(err))
-  //     }).catch(err => console.log(err))
-  // },
+    // 顯示個人資料及推文
+    Tweet.findAndCountAll({
+      raw: true,
+      nest: true,
+      where: { UserId: id }
+    })
+      .then((result) => {
+        const data = result.rows.map(r => ({
+          ...r.dataValues
+        }))
+        User.findByPk(id)
+          .then((user) => {
+            const userProfile = user.toJSON()
+            return res.render('user', {
+              data,
+              tweets: data,
+              userProfile,
+              loginUserId,
+              replyNum,
+            })
+          }).catch(err => console.log(err))
+      }).catch(err => console.log(err))
+  },
 
   // 尋找回覆過且正在追隨的使用者推文
   // 不需要認證使用者
