@@ -2,19 +2,23 @@
   <div class="col">
     {{>columnLeft}}
   </div>
-
+   {{>modalIndex}}
   <div class="profile-container">
     <div class="mainpost-nav">
       <div class="row justify-content-start">
-        <div class="col1"><i class="bi bi-arrow-left nav-bold"></i></div>
+        <div class="col1">
+          <a href="javascript:history.back()"><i class="bi bi-arrow-left nav-bold"></i></a>
+        </div>
         <div class="col2">
           <p class="nav-bold">{{user.name}}</p><small>{{user.tweetCount}}推文</small>
         </div>
       </div>
     </div>
     <ul class="nav followship-tags">
-      <li class="nav-item"><a class="nav-link {{#if tagA}}active{{/if}}" href="/profiles/{{ user.id }}/followers">跟隨者</a></li>
-      <li class="nav-item"><a class="nav-link {{#if tagB}}active{{/if}}" href="/profiles/{{ user.id }}/followings">正在跟隨</a></li>
+      <li class="nav-item"><a class="nav-link {{#if tagA}}active{{/if}}"
+          href="/profiles/{{ user.id }}/followers">跟隨者</a></li>
+      <li class="nav-item"><a class="nav-link {{#if tagB}}active{{/if}}"
+          href="/profiles/{{ user.id }}/followings">正在跟隨</a></li>
     </ul>
     <div class="col flex-direction-column">
       {{#each followers}}

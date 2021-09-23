@@ -1,4 +1,4 @@
-<div class="modal fade" id="exampleModel" tabindex="-1">
+<div class="modal fade" id="indexModel" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -7,7 +7,9 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
-        ><i class="bi bi-x-lg"></i></button>
+        >
+          <i class="bi bi-x-lg"></i>
+        </button>
       </div>
       <div class="modal-body">
         <div class="profile-container">
@@ -20,26 +22,24 @@
                 />
               </div>
             </div>
-
             <div class="profile-textarea-container">
               <textarea
-                name="profile-textarea"
+                name="description"
                 class="form-control form-control-lg"
                 id="post"
                 placeholder="有什麼新鮮事?"
                 rows="3"
+                maxlength="140"
+                required
               ></textarea>
             </div>
-            <div
-              class="btn btn-twitter"
-              id="myInput"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModel"
-            >
-              <span>推文</span></div>
+            <form action="posts/add" method="POST">
+              <bottom type="submit" class="btn btn-twitter">
+                <span>推文</span></bottom>
+            </form>
+
           </div>
         </div>
-
       </div>
     </div>
   </div>

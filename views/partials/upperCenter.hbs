@@ -3,8 +3,7 @@
   <!--start::index profile-->
   <div class="profile-avatar-container">
     <div class="avatar profile-avatar">
-      <img src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
-        alt="avatar-img" />
+      <img src="{{profile.avatar}}" alt="avatar-img" />
     </div>
   </div>
 
@@ -12,7 +11,7 @@
     <textarea name="profile-textarea" class="form-control form-control-lg" id="post" placeholder="有什麼新鮮事?"
       rows="3"></textarea>
   </div>
-  <div class="btn btn-twitter" id="myInput" data-bs-toggle="modal" data-bs-target="#exampleModel"><span>推文</span>
+  <div class="btn btn-twitter"><span>推文</span>
   </div>
 </div>
 <!--end::index profile-->
@@ -48,9 +47,9 @@
 <!--end::post-->
 {{/if}}
 {{#if ppChoice}}
-<!--start::index-->
+<!--start::profile-index-->
 <div class="profilepage-messageboard d-f flex-column">
-  <div class="profilepage-banner"><img src="https://i.ytimg.com/vi/w_8ddLqNTuo/maxresdefault.jpg" />
+  <div class="profilepage-banner"><img src="{{profile.cover}}" />
     <div class="profilepage-card1">
       <div class="avatar profilepage-avatar"><img src="{{profile.avatar}}" alt="avatar-img" /></div>
     </div>
@@ -90,15 +89,17 @@
           <button type="submit" class="btn-orange">正在跟隨</button>
         </form> -->
         </p>
-
-
       </div>
 
       <h5 class="d-inline-block post-title mb-1">{{profile.name}}&nbsp;</h5>
       <p class="post-sub-info mainpost-sm">{{profile.account}}</p>
       <p>{{profile.introduction}}</p>
-      <p class="mainpost-sm reply-like-text"><b>{{followingsCount}}個<span class="post-sub-info">&nbsp;跟隨中</span>
-          {{followersCount}}位<span class="post-sub-info">&nbsp;跟隨者</span></b></p>
+      <p class="mainpost-sm reply-like-text">
+        <a href="/profiles/{{profile.id}}/followings"><b>{{followingsCount}}個</b></a>
+        <span class="post-sub-info">&nbsp;跟隨中</span>
+        <a href="/profiles/{{profile.id}}/followers"><b>{{followersCount}}位</b></a>
+        <span class="post-sub-info">&nbsp;跟隨者</span>
+      </p>
       <ul class="nav profilepage-tags mt-2">
         <li class="nav-item">
           <a class="nav-link {{#if isPost }}active {{/if}}" type="submit" aria-current="page"

@@ -34,11 +34,11 @@ const followshipController = {
         user.tweetCount = user.Tweets.length
         user.Followers.forEach((follower) => {
           const arr = follower.Followers.map((el) => el.id);
-          if (arr.indexOf(user.id) > 0) follower.isFollowed = true
+          if (arr.indexOf(user.id) > -1) follower.isFollowed = true
           else follower.isFollowed = false
           follower.updatedAtFormated = moment(follower.updatedAt).fromNow()
         })        
-        return res.render("followship", { tagA: true, user, followers: user.followers });
+        return res.render("followship", { tagA: true, user, followers: user.Followers });
       })
       .catch((error) => res.status(400).json(error));
   },
@@ -61,7 +61,7 @@ const followshipController = {
           following.updatedAtFormated = moment(following.updatedAt).fromNow();
         });
         user.tweetCount = user.Tweets.length;
-        return res.render("followship", { tagB: true, user, followings: user.followings });
+        return res.render("followship", { tagB: true, user, followings: user.Followings });
       })
       .catch((error) => res.status(400).json(error));
   },
@@ -78,8 +78,7 @@ const followshipController = {
         followingId: Number(req.params.id)
       }
     })
-      .then(() => {
-        console.log('create followerId:%s, followingId%s', user.id, req.params.id)
+      .then((data) => {
         res.redirect("back")
       })
       .catch(error => res.status(400).json(error));

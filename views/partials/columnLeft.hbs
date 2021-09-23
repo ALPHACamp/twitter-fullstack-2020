@@ -16,23 +16,30 @@
     </div>
     {{else}} --}}
     <div class="navigation">
-      <a class="nav_item" href="/profiles/{{profile.id}}/posts">
+      <a class="nav_item" href="/profiles/{{profile.id}}/main">
         <i class="fas fa-home icon_index"></i>首頁
       </a>
-      <a class="nav_item" href="#">
+      <a class="nav_item" href="/profiles/{{profile.id}}/posts">
         <i class="far fa-user icon_index"></i>個人資料
       </a>
       <a class="nav_item" href="#">
-        <i class="bi bi-gear icon_index"></i>設定
+        <i class="bi bi-gear icon_index"></i>
+        設定
       </a>
-      <form action="">
-        <div class="tweet_item" href="#">
-          <button class="btn_reply">推文</button>
-        </div>
-      </form>
+      <div class="tweet_item" href="#">
+        <button
+          class="btn_reply btn"
+          id="myInput"
+          data-bs-toggle="modal"
+          data-bs-target="#indexModel"
+        >
+          推文
+        </button>
+      </div>
     </div>
     {{!-- {{/if}} --}}
     <div class="logout_item">
+
       <a class="nav_item" href="/users/signout">
         <i class="bi bi-box-arrow-in-left icon_index"></i>登出
       </a>
