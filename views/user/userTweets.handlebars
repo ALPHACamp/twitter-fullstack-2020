@@ -1,0 +1,10 @@
+<br /><br />
+<h3>所有tweets：</h3>
+{{#each users.Tweets}}
+<blockquote class="blockquote mb-0">
+  <h4><a href="/users/{{../user.id}}/tweets">{{../user.name}}</a></h4>
+  <p>{{this.description}}</p>
+  <footer class="blockquote-footer">{{moment this.createdAt}}</footer>
+</blockquote>
+<hr />
+{{/each}}

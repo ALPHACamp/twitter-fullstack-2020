@@ -1,0 +1,19 @@
+<form action="/api/users/{{user.id}}?_method=PUT" method="POST">
+  <div class="col-8">
+    <h5><strong>編輯個人資料</strong></h5>
+  </div>
+  <div>
+    <button type="submit" class="btn rounded-pill" style="background-color: #FF6600; color:white">
+      儲存
+    </button>
+  </div>
+  <div>
+    <span class="mt-3">名稱</span><br>
+    <textarea type="text" name="name" id="name" cols="55" rows="1">{{users.name}}</textarea>
+  </div>
+  <div>
+    <span class="mt-3">自我介紹</span><br>
+    <textarea type="text" name="introduction" id="introduction" cols="55" rows="4"
+              class="border-bottom form-control" >{{users.introduction}}</textarea>
+  </div>
+</form>

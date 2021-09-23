@@ -1,8 +1,11 @@
 const bcrypt = require('bcrypt-nodejs')
+const helpers = require('../_helpers')
 const db = require('../models')
-const User = db.User
+const { User, Tweet, Reply, Followship, Like } = db
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
-let userController = {
+const userController = {
   signupPage: (req, res) => {
     return res.render('signup')
   },
@@ -30,7 +33,7 @@ let userController = {
                   req.body.password,
                   bcrypt.genSaltSync(10),
                   null
-                ),
+                )
               }).then((user) => {
                 req.flash('success_messages', '成功註冊帳號！')
                 return res.redirect('/signin')
@@ -57,36 +60,98 @@ let userController = {
     res.redirect('/signin')
   },
 
+  getUserTweets: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: Tweet,
+      order: [[Tweet, 'createdAt', 'DESC']]
+    }).then((user) => {
+      const users = user.toJSON()
+      return res.render('user/userTweets', {
+        users: users
+      })
+    })
+  },
+  editUser: (req, res) => {
+    if (helpers.getUser(req).id !== Number(req.params.id)) {
+      return res.json({ status: 'error' })
+    } else {
+      User.findByPk(req.params.id).then((user) => {
+        return res.json({ name: user.name })
+      })
+    }
+  },
+
   userSetting: (req, res) => {
     res.render('/setting')
   },
 
-
-  getUserSetting: (req,res) => {
-
-  },
-
-  putUserSetting: (req, res) => {
-    if (req.body.passwordCheck !== req.body.password) {
-      req.flash('error_messages', '兩次密碼輸入不同！')
-      return res.redirect('/setting')
-    } else {
-      User.findOne({ where: { account: req.body.account } }).then((user) => {
-        if (user && req.body.account !== user.account) {
-          req.flash('error_messages', '此帳號已有人使用！')
-          return res.redirect('/setting')
+  putUserSetting: async (req, res) => {
+    const id = req.params.id
+    const { name, introduction } = req.body
+    const { files } = req
+    try {
+      if (files) {
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        const { cover, avatar } = files
+        if (cover) {
+          await imgur.upload(cover[0].path, (err, img) => {
+            return User.findByPk(id)
+              .then((user) => {
+                user
+                  .update({
+                    name,
+                    introduction,
+                    cover: img.data.link
+                  })
+                  .them((user) => {
+                    req.flash(
+                      'success_messages',
+                      'user was successfully updated'
+                    )
+                    return res.redirect('back')
+                  })
+              })
+              .catch((error) => console.log(error))
+          })
         }
-      })
-      return User.findByPk(req.params.id).then((user) => {
-        user.update({
-          account: req.body.account,
-          name: req.body.name,
-          email: req.body.email,
-          password: req.body.password,
-        })
-      })
+        if (avatar) {
+          await imgur.upload(avatar[0].path, (err, img) => {
+            return User.findByPk(id)
+              .then((user) => {
+                user
+                  .update({
+                    name,
+                    introduction,
+                    avatar: img.data.link
+                  })
+                  .then(() => {
+                    req.flash(
+                      'success_messages',
+                      'user was successfully updated'
+                    )
+                    return res.redirect('back')
+                  })
+                  .catch((error) => console.log(error))
+              })
+              .catch((error) => console.log(error))
+          })
+        }
+      } else {
+        const user = await User.findByPk(id)
+        user
+          .update({
+            name,
+            introduction
+          })
+          .then((user) => {
+            req.flash('success_messages', 'user was successfully updated')
+            return res.redirect('back')
+          })
+      }
+    } catch (error) {
+      console.log(error)
     }
-  },
+  }
 }
 
 module.exports = userController
