@@ -102,7 +102,7 @@ const tweetController = {
         UserId: req.user.id,
         TweetId: req.params.tweetId
       })
-      return res.json({ status: 'success', message: 'add likes' })
+      return res.redirect('back')
     } catch (err) {
       console.warn(err)
     }
@@ -116,7 +116,7 @@ const tweetController = {
           TweetId: req.params.tweetId
         }
       })
-      return res.json({ status: 'success', message: 'remove likes' })
+      return res.redirect('back')
     } catch (err) {
       console.warn(err)
     }

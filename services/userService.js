@@ -9,7 +9,7 @@ const userService = {
     try {
       const userself = req.user
       const users = await User.findAll({
-        where: { role: 0 },
+        where: { role: 'user' },
         order: [['createdAt', 'DESC']],
         include: [
           { model: User, as: 'Followers' },
@@ -37,7 +37,7 @@ const userService = {
     try {
       const userId = req.params.userId
       let profileUser = await User.findOne({
-        where: { id: userId, role: 0 },
+        where: { id: userId, role: 'user' },
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' },
