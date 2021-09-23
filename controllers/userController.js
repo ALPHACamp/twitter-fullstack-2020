@@ -64,12 +64,32 @@ const userController = {
 
   getUserTweets: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: Tweet,
+      include: [
+        {
+          model: Tweet,
+          include: [Reply, { model: User, as: 'LikedUsers' }]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
       order: [[Tweet, 'createdAt', 'DESC']]
     }).then((user) => {
-      const users = user.toJSON()
+      const thisUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+
+      thisUser.Tweets.forEach((tweet) => {
+        tweet.isLiked = tweet.LikedUsers.map((d) => d.id).includes(
+          currentUserId
+        )
+      })
+      thisUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.map((item) => item.id)
+        .includes(user.id)
+
       return res.render('user/userTweets', {
-        users: users
+        users: thisUser,
+        currentUserId: currentUserId
       })
     })
   },
@@ -147,6 +167,163 @@ const userController = {
           res.redirect('/tweets')
         })
     }
+  },
+
+  getUserFollowers: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet, { model: User, as: 'Followers' }]
+    }).then((user) => {
+      user.update({ followerCount: user.Followers.length })
+      const results = user.toJSON()
+      results.Followers = user.Followers.map((user) => ({
+        ...user.dataValues,
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map((d) => d.id)
+          .includes(user.id)
+      }))
+      results.tweetCount = user.Tweets.length
+      results.Followers.sort(
+        (a, b) => b.Followship.createdAt - a.Followship.createdAt
+      )
+      return res.render('user/follower', {
+        results
+      })
+    })
+  },
+  getUserFollowings: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [Tweet, { model: User, as: 'Followings' }]
+    }).then((user) => {
+      user.update({ followingCount: user.Followings.length })
+      const results = user.toJSON()
+      results.Followings = user.Followings.map((user) => ({
+        ...user.dataValues,
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map((d) => d.id)
+          .includes(user.id)
+      }))
+      results.tweetCount = user.Tweets.length
+      results.Followings.sort(
+        (a, b) => b.Followship.createdAt - a.Followship.createdAt
+      )
+      return res.render('user/following', {
+        results
+      })
+    })
+  },
+
+  follow: (req, res) => {
+    const followTargetId = req.body.id
+    const currentUserId = helpers.getUser(req).id
+    if (Number(followTargetId) === currentUserId) {
+      req.flash('error_messages', '不能追蹤自己！')
+      return res.render('error')
+    } else {
+      return Followship.create({
+        followerId: currentUserId,
+        followingId: followTargetId
+      }).then(() => {
+        return res.redirect('back')
+      })
+    }
+  },
+
+  unFollow: (req, res) => {
+    const followTargetId = req.params.id
+    const currentUserId = helpers.getUser(req).id
+    return Followship.findOne({
+      where: {
+        followerId: currentUserId,
+        followingId: followTargetId
+      }
+    })
+      .then((favorite) => {
+        favorite.destroy().then(() => {
+          return res.redirect('back')
+        })
+      })
+      .catch((error) => {
+        console.log(error)
+        res.render('error', { message: 'error' })
+      })
+  },
+
+  getUserLikes: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        {
+          model: Like,
+          include: [
+            {
+              model: Tweet,
+              include: [Reply, Like, User]
+            }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
+      order: [[Like, 'createdAt', 'DESC']]
+    }).then((user) => {
+      const thisUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+
+      thisUser.Likes.forEach((tweet) => {
+        tweet.isLiked = tweet.Tweet.Likes.map((d) => d.UserId).includes(
+          currentUserId
+        )
+      })
+      thisUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.map((item) => item.id)
+        .includes(thisUser.id)
+
+      return res.render('user/like', {
+        users: thisUser,
+        currentUserId: currentUserId
+      })
+    })
+  },
+
+  getUserReplies: (req, res) => {
+    return User.findByPk(req.params.id, {
+      include: [
+        Tweet,
+        {
+          model: Reply,
+          include: [
+            {
+              model: Tweet,
+              include: [Reply, Like, User]
+            }
+          ]
+        },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ],
+      order: [[Reply, 'createdAt', 'DESC']]
+    }).then((user) => {
+      const thisUser = user.toJSON()
+      const currentUserId = helpers.getUser(req).id
+
+      thisUser.Replies.forEach((tweet) => {
+        tweet.isLiked = tweet.Tweet.Likes.map((d) => d.UserId).includes(
+          currentUserId
+        )
+      })
+      thisUser.isFollowed = helpers
+        .getUser(req)
+        .Followings.map((item) => item.id)
+        .includes(thisUser.id)
+
+      return res.render('user/reply', {
+        users: thisUser,
+        currentUserId: currentUserId
+      })
+    })
   }
 }
 

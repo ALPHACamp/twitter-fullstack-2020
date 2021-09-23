@@ -7,7 +7,7 @@ const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 let userController = {
-  userProfile: (req, res) => {
+  getUser: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.id)) {
       return res.json({ status: 'error' })
     } else {
@@ -17,7 +17,7 @@ let userController = {
     }
   },
 
-  postUserProfile: async (req, res) => {
+  putUser: async (req, res) => {
     const { files } = req
     const { name, introduction } = req.body
     const { cover, avatar } = req.files

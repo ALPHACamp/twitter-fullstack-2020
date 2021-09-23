@@ -8,7 +8,7 @@ const upload = multer({ dest: 'temp/' })
 router.get('/admin/restaurants')
 
 // edit api/users
-router.get('users/:id/', auth.authenticatedGeneral, userController.userProfile)
+router.get('users/:id/', auth.authenticatedGeneral, userController.getUser)
 router.post(
   '/users/:id',
   auth.authenticatedGeneral,
@@ -16,7 +16,7 @@ router.post(
     { name: 'avatar', maxCount: 1 },
     { name: 'cover', maxCount: 1 }
   ]),
-  userController.postUserProfile
+  userController.putUser
 )
 
 module.exports = router

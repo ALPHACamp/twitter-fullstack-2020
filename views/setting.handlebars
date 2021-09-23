@@ -6,19 +6,19 @@
 
     <form class='form-signin' action='/users/setting/{{user.id}}?_method=PUT' method='POST' style='width: 100%;'>
       <div class='form-label-group'>
+        <label for='inputAccount'></label>
+        <input type='text' name='account' class='form-control' placeholder="{{$user.account}}" value="{{user.account}}" required autofocus />
+        <span>帳號</span>
+      </div>
+      <div class='form-label-group'>
         <label for='inputName'>
-          <input type='text' name='name' class='form-control' placeholder='Name' required autofocus />
-          <span>帳號</span>
+          <input type='text' name='name' class='form-control' placeholder="{{$user.name}}" value="{{user.name}}"required autofocus />
+          <span>名稱</span>
         </label>
       </div>
       <div class='form-label-group'>
-        <label for='inputAccount'></label>
-        <input type='text' name='account' class='form-control' placeholder='account' required autofocus />
-        <span>名稱</span>
-      </div>
-      <div class='form-label-group'>
         <label for='inputEmail'></label>
-        <input type='text' name='email' class='form-control' placeholder='Email' required autofocus />
+        <input type='text' name='email' class='form-control' placeholder="{{$user.email}}" value="{{user.email}}" required autofocus />
         <span>Email</span>
 
       </div>

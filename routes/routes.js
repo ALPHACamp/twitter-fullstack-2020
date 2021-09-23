@@ -7,6 +7,7 @@ const tweetController = require('../controllers/tweetController.js')
 const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
 const multer = require('multer')
+const { getUserLikes } = require('../controllers/userController.js')
 const upload = multer({ dest: 'temp/' })
 
 //Admin
@@ -52,10 +53,26 @@ router.get(
   auth.authenticatedGeneral,
   userController.getUserTweets
 )
-router.get('/users/:id/replies', auth.authenticatedGeneral)
-router.get('/users/:id/likes', auth.authenticatedGeneral)
-router.get('/users/:id/following', auth.authenticatedGeneral)
-router.get('/users/:id/follower', auth.authenticatedGeneral)
+router.get(
+  '/users/:id/replies',
+  auth.authenticatedGeneral,
+  userController.getUserReplies
+)
+router.get(
+  '/users/:id/likes',
+  auth.authenticatedGeneral,
+  userController.getUserLikes
+)
+router.get(
+  '/users/:id/followings',
+  auth.authenticatedGeneral,
+  userController.getUserFollowings
+)
+router.get(
+  '/users/:id/followers',
+  auth.authenticatedGeneral,
+  userController.getUserFollowers
+)
 
 // Tweets
 router.get('/', auth.authenticatedGeneral, (req, res) =>
@@ -67,8 +84,8 @@ router.get('/tweets/:id/replies', auth.authenticatedGeneral)
 router.post('/tweets/:id/replies', auth.authenticatedGeneral)
 
 // FollowerShip
-router.post('/follow/:id', auth.authenticatedGeneral)
-router.delete('/follow/:id', auth.authenticatedGeneral)
+router.post('/follow/:id', auth.authenticatedGeneral, userController.follow)
+router.delete('/follow/:id', auth.authenticatedGeneral, userController.unFollow)
 router.get('follow/top', auth.authenticatedGeneral)
 
 // Like
