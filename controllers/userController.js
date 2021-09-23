@@ -292,10 +292,13 @@ const userController = {
       }),
     ]).then(([user, users]) => {
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
-      const usersFollowings = user.Followings.map(d => ({
+      const usersFollowing = user.Followings.map(d => ({
         ...d.dataValues,
+        followTime:  d.Followship.createdAt,
         isFollowed: currentUser.Followings.map((d) => d.id).includes(d.dataValues.id)
       }))
+
+      const usersFollowings = usersFollowing.sort((a, b) => b.followTime - a.followTime)
 
       let noFollowing = usersFollowings.length === 0 ? true : false
 
@@ -348,11 +351,14 @@ const userController = {
       }),
     ]).then(([user, users]) => {
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
-      const usersFollowers = user.Followers.map(d => ({
+      const usersFollower = user.Followers.map(d => ({
         ...d.dataValues,
+        followTime: d.Followship.createdAt,
         isFollowed: currentUser.Followings.map((d) => d.id).includes(d.dataValues.id),
         ...d.Followship,
       }))
+
+      const usersFollowers = usersFollower.sort((a, b) => b.followTime - a.followTime)
 
       let noFollower = usersFollowers.length === 0 ? true : false
 
