@@ -10,68 +10,66 @@
   </header>
 
   <div class="border border-1 border-box"
-    style="background-color: #FFFFFF; border-color: #E6ECF0; height: 385px; width:600px; font-family: 'Noto Sans TC';">
+    style="background-color: #FFFFFF; border-color: #E6ECF0; width:600px; font-family: 'Noto Sans TC';">
     <div class="d-flex flex-row">
-      <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
+      <img src="{{tweetUser.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
         class="rounded-circle m-2" alt="...">
       <div>
-        <h6 class="fontWeight700 mt-2">{{user.name}}</h6>
-        <h6 class="fontWeight500" style="color:#657786;">@{{user.account}}</h6>
+        <h6 class="fontWeight700 mt-2">{{tweetUser.name}}</h6>
+        <h6 class="fontWeight500" style="color:#657786;">@{{tweetUser.account}}</h6>
       </div>
     </div>
-    <div class="fontWeight500 m-2"
-      style="width: 510px; height: 136px;font-size: 23px; line-height: 34px; font-color: #1C1C1C;">
+    <div class="fontWeight500 m-2" style="width: 510px; font-size: 23px; line-height: 34px; font-color: #1C1C1C;">
       <p class="card-text fontWeight500">
-        Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor. Voluptate exercitation
-        incididunt
-        aliquip deserunt reprehenderit elit laborum.
+        {{tweet.content}}
       </p>
     </div>
     <div class="fontWeight500 m-2"
       style="width: 192; height: 22;font-size: 15px; line-height: 21.72px; font-color: #657786;">
-      {{momentTweetTime user.createdAt }}
+      {{momentTweetTime tweet.createdAt }}
     </div>
 
     <div class="divider my-3 m-auto" style="background-color: #E6ECF0; height: 1px; width: 570px">
     </div>
 
     <div class="m-2 d-flex" style="height: 28px;font-size: 19px; line-height: 27.51px; font-color: #000000;">
-      <span class="fontWeight500 me-5">34 回覆</span>
-      <span class="fontWeight500 me-5">808 喜歡次數</span>
+      <span class="fontWeight500 me-5">{{tweetRepliesCount}} 回覆</span>
+      <span class="fontWeight500 me-5">{{tweetLikesCount}} 喜歡次數</span>
     </div>
 
-    <div class="divider my-3 m-auto" style="background-color: #E6ECF0; height: 1px; width: 570px">
+    <div class="divider mt-3 m-auto" style="background-color: #E6ECF0; height: 1px; width: 570px">
     </div>
 
-    <div>
+    <div class="my-3">
       <i class="far fa-lg fa-comment ms-4 me-5"></i>
       <i class="far fa-lg fa-heart ms-5"></i>
     </div>
   </div>
 
-  <div class="divider" style="background-color: #E6ECF0; height: 1px; width: 600px">
-  </div>
+  <div class="divider" style="background-color: #E6ECF0; height: 1px; width: 600px"></div>
 
+  {{#each replyUser}}
   <div class="card p-3" style=" font-family: 'Noto Sans TC'; width: 600px">
     <div class="d-flex">
       <div>
-        <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
-          class="rounded-circle m-2" alt="...">
+        <img src="{{this.dataValues.User.dataValues.avatar}}"
+          style="width: 50px; height: 50px; background-color: #C4C4C4; " class="rounded-circle m-2" alt="...">
       </div>
 
       <div class="col-md-8">
         <div class="userInfo d-flex">
-          <h6 class="fontWeight700 me-2">{{user.name}}</h6>
-          <h6 class="fontWeight500" style="color:#657786;">@{{user.account}}</h6>
-          <h6 class="fontWeight500" style="color:#657786;">‧{{moment user.createdAt}}</h6>
+          <h6 class="fontWeight700 me-2">{{this.dataValues.User.dataValues.name}}</h6>
+          <h6 class="fontWeight500" style="color:#657786;">@{{this.dataValues.User.dataValues.account}}</h6>
+          <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.dataValues.createdAt}}</h6>
         </div>
         <div class="d-flex" style="color:#657786;">
-          回覆 <div class="ms-2" style="color: #FF6600;"> @{{user.account}}</div>
+          回覆 <div class="ms-2" style="color: #FF6600;"> @{{../tweetUser.account}}</div>
         </div>
         <p class="mt-1" class="card-text fontWeight500">
-          Great~
+          {{this.dataValues.content}}
         </p>
       </div>
     </div>
   </div>
+  {{/each}}
 </div>

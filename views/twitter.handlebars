@@ -27,7 +27,6 @@
       <div>
         <img src="{{this.tweetUserAvatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
       </div>
-
       <div class="col-md-8">
         <div class="userInfo d-flex">
           <h6 class="fontWeight700 me-2">{{this.tweetUserName}}</h6>
@@ -37,8 +36,16 @@
         <p class="card-text fontWeight500">
           {{this.tweetContent}}
         </p>
-        <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
-        <i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.tweetRepliesCount}}</span>
+        <div class="d-flex">
+          <div>
+            <a href="/twitters/{{this.id}}/replyList" style="color:#1C1C1C; text-decoration:none;">
+              <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
+            </a>
+          </div>
+          <div>
+            <i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.tweetRepliesCount}}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
