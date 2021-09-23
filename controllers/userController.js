@@ -75,7 +75,8 @@ const userController = {
         ...r.dataValues,
         content: r.dataValues.content,
         replyCount: r.dataValues.Replies.length,
-        likeCount: r.dataValues.Likes.length
+        likeCount: r.dataValues.Likes.length,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
       }))
 
       Followship.findAndCountAll({
