@@ -47,9 +47,6 @@ const userService = {
     } else if (name.length > 50) {
       return callback({ status: 'error', message: "名稱長度不能超過 50 字！" })
     }
-    // const { files } = req
-    // if (files) {
-    //files會有[Object: null prototype] {}
     const files = Object.assign({}, req.files)
     const isCoverDelete = req.body.isDelete
     const user = await User.findByPk(req.params.id)

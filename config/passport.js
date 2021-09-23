@@ -4,10 +4,6 @@ const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
-const Reply = db.Reply
-
-// FIXME:use helpers.getUser(req) to replace req.user
-// FIXME:use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 passport.use(new LocalStrategy(
   {
@@ -47,7 +43,6 @@ passport.deserializeUser(async (id, cb) => {
     console.log(error)
     res.render('new', { Error })
   }
-
 })
 
 // JWT

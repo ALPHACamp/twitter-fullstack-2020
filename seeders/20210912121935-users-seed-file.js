@@ -34,7 +34,6 @@ module.exports = {
     )
     
       while (amount--) {
-
         data.push({
           id: 25 + 10 * amount,
           account: faker.internet.userName(),

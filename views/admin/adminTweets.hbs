@@ -35,14 +35,10 @@
       </div>
     </div>
 
-    {{!-- <div class="headerDivider"></div> --}}
-
     <div class="right-side col-md-10" style="padding:0">
       <div class="text-title">推文清單</div>
       <hr>
 
-      {{!-- TODO:貼文依照時間排序 --}}
-      {{!-- 貼文1開始 --}}
       {{#each tweet}}
       <div class="tweet">
         <div class="d-flex" style="padding:0; margin:0; max-width: 60vw">
@@ -60,7 +56,6 @@
                 {{this.description}}
               </div>
             </div>
-            {{!-- 刪除 --}}
             <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST">
               <div class="close-button">
                 <button type="submit" class="btn close" aria-label="Close">
@@ -73,7 +68,6 @@
         </div>
       </div>
       <hr>
-      {{!-- 貼文1結束 --}}
       {{/each}}
 
     </div>

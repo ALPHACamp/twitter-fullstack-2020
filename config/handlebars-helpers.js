@@ -1,7 +1,6 @@
 const moment = require('moment')
 
 module.exports = {
-  //...
   fromNow: function (a) {
     return moment(a).locale('zh-tw').fromNow()
   },

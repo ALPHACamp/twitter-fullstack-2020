@@ -79,8 +79,6 @@
         </div>
       </form>
       <hr style="border: 5px solid #E6ECF0; margin:0">
-
-      {{!-- //TODO:依照時間排序，時間/讚數/留言數待傳入，點大頭貼會進入使用者頁面 --}}
       {{!-- 貼文開始 --}}
       {{#each tweets}}
       <div class="tweet col-md-12">
@@ -162,7 +160,6 @@
       {{/each}}
     </div>
 
-    {{!-- TODO:topUser Controller昨完引入資料 --}}
     {{!-- 右側欄位 --}}
     <div class="right-side col-md-3">
       <div class="popular mt-2" style="padding:auto;">
@@ -170,7 +167,6 @@
           Popular
         </div>
         <ul class="list-group">
-          {{!-- //TODO: 需判斷追隨中或未追隨(按鈕名稱為follow-button和unfollow-button) --}}
           {{!-- 跟隨中使用者開始 --}}
           {{#each topUsers}}
           <li class="list-group-item">

@@ -35,26 +35,17 @@
       </div>
     </div>
 
-
     <div class="right-side col-md-10" style="padding:0">
       <div class="text-title">使用者列表</div>
       <hr>
-
       <div class="container">
         <div class="row" id="data-panel">
-
-          {{!--
-          TODO:按照推文數排序 --}}
           {{#each users}}
-          {{!-- 卡片開始 --}}
           <div class="card" id="601">
             <img src="{{this.cover}}" alt="" class="show-modal card-img-top">
-
             <div class="card-body">
-
               <div class="name-photo">
                 <div class="avatar">
-                  {{!-- TODO:顯示使用者自我介紹 --}}
                   <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal">
                     <img src="{{this.avatar}}" alt="" class="show-modal">
                   </button>
@@ -66,13 +57,10 @@
                   @{{this.account}}
                 </div>
               </div>
-              {{!--
-              TODO:留言數/讚數/追蹤者/追隨者待補 --}}
               <div class="like-reply">
                 <i class="far fa-comment"></i> {{this.replyCount}}
                 <i class="far fa-heart ml-2"></i> {{this.likeCount}}
               </div>
-
               <div class="follow d-flex">
                 <div class="followship d-flex">
                   <div class="follow-title">
@@ -81,7 +69,6 @@
                   <div class="follow-body">
                     跟隨中
                   </div>
-
                   <div class="follow-title ml-2">
                     {{this.followingCount}}位
                   </div>
@@ -89,21 +76,12 @@
                     跟隨者
                   </div>
                 </div>
-
               </div>
             </div>
-
-
           </div>
-          {{!-- 卡片結束 --}}
           {{/each}}
-
-
         </div>
       </div>
-
-
-
     </div>
   </div>
 </div>

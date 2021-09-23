@@ -1,15 +1,8 @@
 const helpers = require('../_helpers')
 const express = require('express')
 const router = express.Router()
-const passport = require('../config/passport')
 const userController = require('../controllers/api/userController')
 const tweetController = require('../controllers/api/tweetController')
-// const authenticated = passport.authenticate('jwt', { session: false })
-
-const multer = require('multer')
-const upload = multer({ dest: 'temp/' })
-const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
-
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -25,14 +18,13 @@ const authenticated = (req, res, next) => {
   res.redirect('/signin')
 }
 
-// router.get('/users/:id/followings', authenticated, userController.getUserFollowings)
 //追蹤使用者
 router.post('/followships/:id', authenticated, userController.addFollowing)
 
 //顯示所有貼文
 router.get('/tweets', authenticated, tweetController.getTweets)
 
-// //使用者新增一則貼文
+//使用者新增一則貼文
 router.post('/tweets', authenticated, tweetController.postTweets)
 
 //使用者顯示特定使用者頁面(使用者所有貼文)
@@ -43,9 +35,5 @@ router.get('/users/:id', authenticated, userController.renderUserEdit)
 
 //update edit page (modal)
 router.post('/users/:id', authenticated, userController.putUserEdit)
-
-// JWT signin
-// router.post('/signin', userController.signIn)
-
 
 module.exports = router
