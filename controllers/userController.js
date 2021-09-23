@@ -300,7 +300,8 @@ const userController = {
     return Followship.findAll({
       raw: true,
       nest: true,
-      where: { followingId: req.user.id }
+      where: { followingId: req.user.id },
+      oder: ['createdAt', 'DESC']
     }).then(followships => {
       const followerUsers = []
       followships.forEach(followship => {
@@ -345,7 +346,8 @@ const userController = {
     return Followship.findAll({
       raw: true,
       nest: true,
-      where: { followerId: req.user.id }
+      where: { followerId: req.user.id },
+      oder: ['createdAt', 'DESC']
     }).then(followships => {
       const followingUsers = []
       followships.forEach(followship => {
