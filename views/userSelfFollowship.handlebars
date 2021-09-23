@@ -96,42 +96,44 @@
     {{/each}}
 
   </div>
-  <div class="">
+  <div class="topUser">
     <div class="popularArea fixed mt-4 border">
       <div class="title m-3">
         <h5 class="fw-bolder">Popular</h5>
       </div>
+      {{#each topUsers}}
+      {{#ifCondNot this.id ../theUser}}
       <div class="popularList border-top">
         <div class="popularUser d-flex border-bottom justify-content-between">
           <div class="user d-flex">
             <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+              <a href="/users/{{this.id}}">
+                <img src="{{noImage this.avatar}}" alt="" class="rounded-circle userImage">
+              </a>
             </div>
             <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">Pizza Hut</div>
-              <div class="account ms-1">@Pizza Hut</div>
+              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}
+              </div>
+              <div class="account ms-1">{{this.account}}</div>
             </div>
           </div>
           <div class="round m-3">
-            <button class="orange btn text-white round">正在跟隨</button>
+            {{#if this.isFollowed}}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn orange text-white round">取消跟隨</button>
+            </form>
+            {{else}}
+            <form action="/following/{{this.id}}" method="POST">
+              <button type="submit" class="btn followButton round">跟隨</button>
+            </form>
+            {{/if}}
           </div>
         </div>
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">McDonald's</div>
-              <div class="account ms-1">@McDonald's</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="btn followButton round">跟隨</button>
-          </div>
-        </div>
-      </div>
+        {{/ifCondNot}}
+        {{/each}}
 
+      </div>
     </div>
+
   </div>
 </div>

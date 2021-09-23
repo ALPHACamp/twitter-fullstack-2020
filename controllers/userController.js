@@ -270,14 +270,26 @@ const userController = {
         raw: true
       }),
       User.findAll({
-        nest: true,
-        raw: true
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ],
+        where: { role: "user" },
       })
-    ]).then(([followers, users]) => {
+    ]).then(([followers, usersdata]) => {
+      const users = usersdata.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+      }))
+
       const data = followers.map(d => ({
         ...users.find(element => Number(element.id) === Number(d.followerId))
       }))
-      res.render('userSelfFollowship', { data, renderType: "follower" })
+
+      const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
+      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "follower" })
     })
   },
 
@@ -292,14 +304,26 @@ const userController = {
         raw: true
       }),
       User.findAll({
-        nest: true,
-        raw: true
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ],
+        where: { role: "user" },
       })
-    ]).then(([followings, users]) => {
+    ]).then(([followings, usersdata]) => {
+      const users = usersdata.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+      }))
+
       const data = followings.map(d => ({
         ...users.find(element => Number(element.id) === Number(d.followingId))
       }))
-      res.render('userSelfFollowship', { data, renderType: "followings" })
+
+      const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
+      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "following" })
     })
   }
 }
