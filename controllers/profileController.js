@@ -3,6 +3,7 @@ const { Op } = require("sequelize");
 const moment = require('moment')
 const { Reply, User, Tweet, Like, } = db
 
+
 const profileController = {
   getPosts: async (req, res) => {
     try {
@@ -102,7 +103,6 @@ const profileController = {
     try {
       // 前端判斷
       const isLikedPosts = true
-
       //get selfInformation
       const Profile = await User.findByPk(req.params.userId, {
         include: [
@@ -138,15 +138,19 @@ const profileController = {
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.params.userId } }
+        where: {
+          id: { [Op.not]: req.params.userId },
+          role: { [Op.not]: 'admin' }
+        },
       })
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,
         FollowerCount: data.Followers.length,
+        // isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
 
-      // return res.json({ tweets:LikedTweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
+      // return res.json({ tweets: LikedTweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
       return res.render("profile", { isLikedPosts, users: TopUsers, tweets: LikedTweets, profile: Profile, tweetsCount, followersCount, followingsCount });
     } catch (error) {
       console.log(error)
