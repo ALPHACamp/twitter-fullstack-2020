@@ -28,7 +28,15 @@
     <div class="card p-3">
       <div class="d-flex">
         <div>
-          <img src="{{this.tweetUserAvatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
+          {{#ifCond this.tweetUserId ../user.id}}
+          <a href="users/self/{{../user.id}}">
+            <img src="{{this.tweetUserAvatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
+          </a>
+          {{else}}
+          <a href="users/other/{{this.tweetUserId}}">
+            <img src="{{this.tweetUserAvatar}}" style="width: 3rem" class="rounded-circle me-3" alt="...">
+          </a>
+          {{/ifCond}}
         </div>
         <div class="col-md-8">
           <div class="userInfo d-flex">
