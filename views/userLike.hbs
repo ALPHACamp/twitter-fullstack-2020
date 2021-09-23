@@ -43,7 +43,8 @@
       </div>
       {{else}}
       <div class="follow-feature">
-        <form action="/followships/{{profileUser.id}}" method="POST">
+        <form action="/followships" method="POST">
+          <input type="hidden" name="id" value="{{profileUser.id}}">
           <button type="submit" class="btn rounded-pill fw-bolder unfollow-button">跟隨</button>
         </form>
       </div>
@@ -89,9 +90,9 @@
           </div>
           <div>
             {{#if this.isLiked}}
-            <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+            <i class="unlike-icon fas fa-heart" data-id="{{this.Tweet.id}}" data-url="{{baseURL}}"></i>
             {{else}}
-            <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+            <i class="like-icon far fa-heart" data-id="{{this.Tweet.id}}" data-url="{{baseURL}}"></i>
             {{/if}}
             <span class="like-number ms-2">{{this.likeLength}}</span>
           </div>

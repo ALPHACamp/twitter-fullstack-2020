@@ -23,10 +23,12 @@ const tweetController = {
         userAvatar: tweet.User.avatar,
         replyLength: tweet.Replies.length,
         likeLength: tweet.Likes.length,
-        isLiked: helpers
-          .getUser(req)
-          .LikedTweets.map(likeTweet => likeTweet.id)
-          .includes(tweet.id)
+        isLiked: helpers.getUser(req).LikedTweets
+          ? helpers
+              .getUser(req)
+              .LikedTweets.map(likeTweet => likeTweet.id)
+              .includes(tweet.id)
+          : false
       }))
       return res.render('tweets', { reorganizationTweets, popularUser })
     } catch (err) {
@@ -56,7 +58,6 @@ const tweetController = {
   getTweet: async (req, res) => {
     try {
       const popularUser = await userService.getPopular(req, res)
-
       const tweet = await Tweet.findByPk(req.params.tweetId, {
         include: [{ model: Reply, include: [User] }, User, Like]
       })
@@ -68,10 +69,12 @@ const tweetController = {
       tweetJson.year = dayjs(`${tweetJson.createdAt}`).format('YYYY')
       tweetJson.month = dayjs(`${tweetJson.createdAt}`).format('M')
       tweetJson.day = dayjs(`${tweetJson.createdAt}`).format('D')
-      tweetJson.isLiked = helpers
-        .getUser(req)
-        .LikedTweets.map(likeTweet => likeTweet.id)
-        .includes(tweetJson.id)
+      tweetJson.isLiked = helpers.getUser(req).LikedTweets
+        ? helpers
+            .getUser(req)
+            .LikedTweets.map(likeTweet => likeTweet.id)
+            .includes(tweetJson.id)
+        : false
       const tweetReplies = tweetJson.Replies.map(reply => ({
         ...reply
       }))
@@ -113,7 +116,6 @@ const tweetController = {
     try {
       const UserId = helpers.getUser(req).id
       const TweetId = Number(req.params.tweetId)
-      console.log(UserId, TweetId)
 
       await Like.destroy({ where: { UserId, TweetId } })
 

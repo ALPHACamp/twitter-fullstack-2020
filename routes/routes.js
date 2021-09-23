@@ -37,7 +37,7 @@ router.post(
   tweetController.postReplies
 )
 router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
-router.delete(
+router.post(
   '/tweets/:tweetId/unlike',
   authenticated,
   tweetController.removeLike
@@ -84,11 +84,7 @@ router.get(
   authenticated,
   userController.getFollowers
 )
-router.post(
-  '/followships/:userId',
-  authenticated,
-  followshipController.addFollowing
-)
+router.post('/followships', authenticated, followshipController.addFollowing)
 router.delete(
   '/followships/:userId',
   authenticated,

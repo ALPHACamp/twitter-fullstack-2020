@@ -20,7 +20,7 @@ tweetLike.addEventListener('click', function onIconClicked(event) {
 
   if (event.target.matches('.unlike-icon')) {
     console.log('click unlike-icon')
-    axios.post(`${baseURL}/tweets/${tweetId}/unlike?_method=DELETE`)
+    axios.post(`${baseURL}/tweets/${tweetId}/unlike`)
       .then(message => {
         event.target.classList.toggle("like-icon")
         event.target.classList.toggle("unlike-icon")
