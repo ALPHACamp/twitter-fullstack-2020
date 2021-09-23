@@ -10,11 +10,11 @@ const tweetController = {
     try {
       const Profile = await User.findByPk(req.params.userId, {
         include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
+          { model: User, as: "Followers" },
+          { model: User, as: "Followings" },
         ],
-      })
-      console.log(req.params.userId)
+      });
+      console.log(req.params.userId);
       const rawTweets = await Tweet.findAll({
         include: [Reply, User, { model: User, as: "LikedUsers" }],
         order: [["createdAt", "DESC"]],
@@ -46,15 +46,20 @@ const tweetController = {
         });
       });
       // return res.json(TopUsers)
-      return res.render("index", { tweets: Tweets, users: TopUsers, profile: Profile });
+      return res.render("index", {
+        tweets: Tweets,
+        users: TopUsers,
+        profile: Profile,
+      });
     } catch (error) {
       console.log(error);
     }
   },
 
   getPost: async (req, res) => {
+    const user = dummyuser;
     try {
-      const tweet = await Tweet.findByPk(req.params.id, {
+      let tweet = await Tweet.findByPk(req.params.id, {
         include: [
           User,
           { model: User, as: "LikedUsers" },
@@ -78,7 +83,11 @@ const tweetController = {
       }));
       Users = Users.sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
-
+      //add isLike property dynamically
+      tweet = tweet.toJSON();
+      tweet.LikedUsers.forEach((likedUser) => {
+        if (Number(likedUser.id) === Number(user.id)) tweet.isLiked = true;
+      });
       // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers, createdTimeFromNow, createdTimeByReply})
       return res.render("post", {
         tweet,
@@ -106,9 +115,10 @@ const tweetController = {
     } else {
       return Tweet.create({
         UserId: user.id,
-        description
-      }).then(() => {
-        return res.redirect("/tweets");
+        description,
+      }).then((tweet) => {
+        // console.log("成功發送推文", tweet.toJSON());
+        return res.redirect(`/posts/${user.id}/main`);
       });
     }
   },

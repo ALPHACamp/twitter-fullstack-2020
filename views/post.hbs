@@ -11,8 +11,9 @@
     <div class="mainpost-wrapper d-f flex-column">
     {{>upperCenter postChoice=true}}
     <!--start::comment-->
-    {{# each tweet.Replies}}
+   
     <div class="col-12 flex-direction-column posts-container">
+     {{# each tweet.Replies}}
       <div class="post">
         <div class="post-card1">
           <div class="avatar profile-avatar"><img
@@ -25,8 +26,9 @@
           <p>{{this.comment}}~</p>
         </div>
       </div>
+      {{/each}}
     </div>
-    {{/each}}
+   
     <!--start::comment-->
   </div>
   <div class="col">

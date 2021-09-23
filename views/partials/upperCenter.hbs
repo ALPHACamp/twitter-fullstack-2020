@@ -7,13 +7,19 @@
         alt="avatar-img" />
     </div>
   </div>
-
-  <div class="profile-textarea-container">
-    <textarea name="profile-textarea" class="form-control form-control-lg" id="post" placeholder="有什麼新鮮事?"
-      rows="3"></textarea>
-  </div>
-  <div class="btn btn-twitter"><span>推文</span>
-  </div>
+  <form action="/posts/add" method="POST">
+    <div class="profile-textarea-container">
+      <textarea 
+        name="description" 
+        class="form-control form-control-lg" 
+        id="post" placeholder="有什麼新鮮事?"
+        rows="3" maxlength="140" required
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-twitter">
+      <span>推文</span>
+    </button>
+  </form>
 </div>
 <!--end::index profile-->
 {{/if}}
@@ -38,10 +44,23 @@
       <p class="mainpost-md reply-like-text"><b>{{ReplyCount}}</b>&nbsp;回覆
         <b>{{LikedCount}}</b>&nbsp;喜歡次數
       </p>
+
+
+
     </div>
-    <p class="mainpost-sub-info mt-3"><span class="mainpost-icon-block"><i class="bi bi-chat" data-bs-toggle="modal"
-          data-bs-target="#exampleModel" id="myInput"></i></span><span class="mainpost-icon-block"><i
-          class="bi bi-heart"></i></span></p>
+    <h3 class="mainpost-sub-info my-3">
+      <span class="mainpost-icon-block">
+        <i class="bi bi-chat" data-bs-toggle="modal" data-bs-target="#postModel" id="myInput">
+        </i>
+      </span>
+      <form action="/posts/{{tweet.id}}/like?_method=PUT" method="POST" class="mainpost-icon-block">
+        {{#if tweet.isLiked}}
+        <button type="submit" class="bi bi-heart-fill btn"></button>
+        {{else}}
+        <button type="submit" class="bi bi-heart btn"></button>
+        {{/if}}
+      </form>
+    </h3>
   </div>
 </div>
 </div>
