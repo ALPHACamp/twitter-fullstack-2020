@@ -9,8 +9,8 @@ router.get("/", (req, res) => {
   return res.send("index");
 });
 
-router.get("/posts", adminController.getPosts)
-router.delete('/posts/:id', adminController.deletePost)
+router.get("/tweets", adminController.getPosts)
+router.delete('/tweets/:id', adminController.deletePost)
 router.get("/users", adminController.getUsers)
 
 module.exports = router;
