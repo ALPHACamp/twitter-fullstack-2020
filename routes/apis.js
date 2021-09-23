@@ -15,14 +15,6 @@ const authenticated = (req, res, next) => {
   return res.redirect('/signin')
 }
 
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role) return next()
-    return res.redirect('/')
-  }
-  return res.redirect('/signin')
-}
-
 router.get(
   '/tweets/:tweetId/replies',
   authenticated,
