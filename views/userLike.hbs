@@ -89,9 +89,17 @@
           </div>
           <div>
             {{#if this.isLiked}}
-            <i class="unlike-icon fas fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+            <form style="display: inline-block;" action="/tweets/{{this.Tweet.id}}/unlike" method="POST">
+              <button type="submit" style="border:0; background-color:none; background: none;">
+                <i class="fas fa-heart" style="color: #e0245e; cursor: pointer;"></i>
+              </button>
+            </form>
             {{else}}
-            <i class="like-icon far fa-heart" data-id="{{this.id}}" data-url="{{baseURL}}"></i>
+            <form style="display: inline-block;" action="/tweets/{{this.Tweet.id}}/like" method="POST">
+              <button type="submit" style="border: 0; background-color:none; background: none;" >
+                <i class="far fa-heart" style="color: #657786; cursor: pointer;"></i>
+              </button>
+            </form>
             {{/if}}
             <span class="like-number ms-2">{{this.likeLength}}</span>
           </div>

@@ -133,9 +133,10 @@ const tweetController = {
   },
   removeLike: async (req, res) => {
     try {
+      console.log('in removeLike controller')
       const UserId = helpers.getUser(req).id
       const TweetId = Number(req.params.tweetId)
-      console.log(UserId, TweetId)
+      console.log('看看數字還是字串', typeof UserId, typeof TweetId)
 
       await Like.destroy({ where: { UserId, TweetId } })
 
