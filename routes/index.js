@@ -49,6 +49,8 @@ module.exports = (app, passport) => {
   // 追蹤
   app.post('/following/:userId', authenticated, userController.addFollowing)
   app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.get('/users/:id/followers', authenticated, userController.getFollowers)
+  app.get('/users/:id/followings', authenticated, userController.getFollowings)
 
   // 註冊
   app.get('/signup', userController.signUpPage)

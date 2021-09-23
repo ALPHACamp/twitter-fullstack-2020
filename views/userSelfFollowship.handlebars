@@ -1,0 +1,138 @@
+<div class="row grid">
+  <div>
+    <nav class="userSidebar fixed">
+      <div class="logo">
+        <img src="https://i.imgur.com/ZUJriDp.png" alt="" id="ac-logo">
+      </div>
+      <div class="buttonList mt-5">
+        <div class="navItem index d-flex mb-4 ">
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-home my-auto"></i>
+          </div>
+          <a href="/tweets" class="btn sidebarItem">
+            <span class="fs-5 fw-bolder">首頁</span>
+          </a>
+        </div>
+        <div class="navItem userProfile d-flex mb-4 ">
+          <div class="icon d-flex align-items-center color-orange">
+            <i class="fas fa-users"></i>
+          </div>
+          <a href="/users/{{user.id}}/tweets" class="btn sidebarItem">
+            <span class="fs-5 fw-bolder">個人資料</span>
+          </a>
+        </div>
+        <div class="navItem setting d-flex mb-4">
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-cog"></i>
+          </div>
+          <a href="/setting" class="btn sidebarItem">
+            <span class="sidebar-item fs-5 fw-bolder">設定</span>
+          </a>
+        </div>
+      </div>
+      <div class="d-grid gap-2 col-9 round">
+        <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+          data-bs-target="#newTwitModal">推文</button>
+      </div>
+      <div class="logout d-flex">
+        <div class="logoutLogo me-3 d-flex align-items-center">
+          <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <a href="/logout" class="btn">
+          <span class="fs-5 fw-bolder">登出</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="userFollowshipSection">
+    <div class="title border d-flex">
+      <a href="/tweets" class="arrow me-3 d-flex align-items-center btn">
+        <i class="fas fa-arrow-left fs-4"></i>
+      </a>
+      <div>
+        <h4 class="fw-bolder m-0">{{user.name}}</h4>
+        <p class="m-0">{{tweets.length}}推文</p>
+      </div>
+    </div>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link text-secondary {{#if (renderFollower renderType)}}active{{/if}}"
+          href="/users/{{user.id}}/followers">跟隨者</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary {{#if (renderFollower renderType)}}{{else}}active{{/if}}"
+          href="/users/{{user.id}}/followings">正在跟隨</a>
+      </li>
+    </ul>
+    {{#each data}}
+    <div class="tweet border">
+      <div class="d-flex">
+        <span class="avatar m-2 col-1">
+          <img src="{{noImage this.avatar}}" class="rounded-circle userImage">
+        </span>
+        <div class="col-10">
+          <div class="d-flex justify-content-between align-top mt-2">
+            <div class="followerInfo">
+              <p class="name fw-bold lh-1 mb-1">{{this.name}}</p>
+              <p class="tag text-secondary lh-1">@{{this.account}}</p>
+            </div>
+
+            <div class="Followship round">
+              {{#if (renderFollower ../renderType)}}
+              <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+                <button type="submit" class="btn orange text-white round">取消跟隨</button>
+              </form>
+              {{else}}
+              <button type="submit" class="btn orange text-white round">正在跟隨</button>
+              {{/if}}
+            </div>
+          </div>
+
+          <p>{{this.description}}</p>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+  </div>
+  <div class="topUser">
+    <div class="popularArea fixed mt-4 border">
+      <div class="title m-3">
+        <h5 class="fw-bolder">Popular</h5>
+      </div>
+      {{#each topUsers}}
+      {{#ifCondNot this.id ../theUser}}
+      <div class="popularList border-top">
+        <div class="popularUser d-flex border-bottom justify-content-between">
+          <div class="user d-flex">
+            <div class="avatar m-2">
+              <a href="/users/{{this.id}}">
+                <img src="{{noImage this.avatar}}" alt="" class="rounded-circle userImage">
+              </a>
+            </div>
+            <div class="information">
+              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}
+              </div>
+              <div class="account ms-1">{{this.account}}</div>
+            </div>
+          </div>
+          <div class="round m-3">
+            {{#if this.isFollowed}}
+            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn orange text-white round">取消跟隨</button>
+            </form>
+            {{else}}
+            <form action="/following/{{this.id}}" method="POST">
+              <button type="submit" class="btn followButton round">跟隨</button>
+            </form>
+            {{/if}}
+          </div>
+        </div>
+        {{/ifCondNot}}
+        {{/each}}
+
+      </div>
+    </div>
+  </div>
+</div>
