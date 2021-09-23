@@ -85,10 +85,10 @@ router.get(
   userController.getFollowers
 )
 router.post(
-  '/followships/:userId',
+  '/followships',  
   authenticated,
   followshipController.addFollowing
-)
+)  //與delete follow傳入值的方法不同
 router.delete(
   '/followships/:userId',
   authenticated,
