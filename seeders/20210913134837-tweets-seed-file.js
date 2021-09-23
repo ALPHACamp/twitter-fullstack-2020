@@ -10,7 +10,7 @@ module.exports = {
     Array.from({ length: posts }).map((d, i) => {
       const data = Array.from({ length: users }).map((d, i) =>
       ({
-        UserId: i + 2,
+        UserId: i * 10 + 5,
         description: faker.lorem.paragraph(Math.floor(Math.random() * 3) + 1),
         createdAt: new Date(),
         updatedAt: new Date()
