@@ -1,8 +1,11 @@
 const bcrypt = require('bcrypt-nodejs')
 const helpers = require('../_helpers')
-const { User, Tweet, Reply, Followship, Like } = require('../models')
+const db = require('../models')
+const { User, Tweet, Reply, Followship, Like } = db
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
-let userController = {
+const userController = {
   signupPage: (req, res) => {
     return res.render('signup')
   },
@@ -67,6 +70,83 @@ let userController = {
         users: users
       })
     })
+  },
+  editUser: (req, res) => {
+    if (helpers.getUser(req).id !== Number(req.params.id)) {
+      return res.json({ status: 'error' })
+    } else {
+      User.findByPk(req.params.id).then((user) => {
+        return res.json({ name: user.name })
+      })
+    }
+  },
+
+  putUser: async (req, res) => {
+    const id = req.params.id
+    const { name, introduction } = req.body
+    const { files } = req
+    try {
+      if (files) {
+        imgur.setClientID(IMGUR_CLIENT_ID)
+        const { cover, avatar } = files
+        if (cover) {
+          await imgur.upload(cover[0].path, (err, img) => {
+            return User.findByPk(id)
+              .then((user) => {
+                user
+                  .update({
+                    name,
+                    introduction,
+                    cover: img.data.link
+                  })
+                  .them((user) => {
+                    req.flash(
+                      'success_messages',
+                      'user was successfully updated'
+                    )
+                    return res.redirect('back')
+                  })
+              })
+              .catch((error) => console.log(error))
+          })
+        }
+        if (avatar) {
+          await imgur.upload(avatar[0].path, (err, img) => {
+            return User.findByPk(id)
+              .then((user) => {
+                user
+                  .update({
+                    name,
+                    introduction,
+                    avatar: img.data.link
+                  })
+                  .then(() => {
+                    req.flash(
+                      'success_messages',
+                      'user was successfully updated'
+                    )
+                    return res.redirect('back')
+                  })
+                  .catch((error) => console.log(error))
+              })
+              .catch((error) => console.log(error))
+          })
+        }
+      } else {
+        const user = await User.findByPk(id)
+        user
+          .update({
+            name,
+            introduction
+          })
+          .then((user) => {
+            req.flash('success_messages', 'user was successfully updated')
+            return res.redirect('back')
+          })
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

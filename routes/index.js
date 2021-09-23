@@ -1,5 +1,7 @@
 const helpers = require('../_helpers')
 const auth = require('../config/auth')
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
 
 const tweetController = require('../controllers/tweetController.js')
 const userController = require('../controllers/userController.js')
@@ -38,6 +40,8 @@ module.exports = (app, passport) => {
     auth.authenticatedGeneral,
     userController.getUserTweets
   )
+  app.get('/api/users/:id', auth.authenticatedGeneral, userController.editUser)
+  app.put('/api/users/:id', auth.authenticatedGeneral, userController.putUser)
   // app.put('/users/:id', authenticatedGeneral, userController.putUser)
   // app.get('/users/:id/tweets', authenticatedGeneral, userController.getTweets)
 }
