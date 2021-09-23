@@ -12,7 +12,7 @@ module.exports = {
     for (let i = 1; i < totalTweets + 1; i++) {
       const nums = new Set()
       while (nums.size !== 3) {
-        nums.add(Math.floor(Math.random() * totalUsers) + 2)
+        nums.add(Math.floor(Math.random() * totalUsers) + 1)
       }
       commentedUsers.push(...nums)
     }
@@ -22,8 +22,8 @@ module.exports = {
     const reply3 = commentedUsers.filter((v, i) => i % 3 === 2)
 
     const data1 = reply1.map((d, i) => ({
-      UserId: d,
-      TweetId: i + 1,
+      UserId: d * 10 + 5,
+      TweetId: i * 10 + 5,
       comment: faker.lorem.sentence(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -31,8 +31,8 @@ module.exports = {
     result.push(...data1)
 
     const data2 = reply2.map((d, i) => ({
-      UserId: d,
-      TweetId: i + 1,
+      UserId: d * 10 + 5,
+      TweetId: i * 10 + 5,
       comment: faker.lorem.sentence(),
       createdAt: new Date(),
       updatedAt: new Date()
@@ -40,8 +40,8 @@ module.exports = {
     result.push(...data2)
 
     const data3 = reply3.map((d, i) => ({
-      UserId: d,
-      TweetId: i + 1,
+      UserId: d * 10 + 5,
+      TweetId: i * 10 + 5,
       comment: faker.lorem.sentence(),
       createdAt: new Date(),
       updatedAt: new Date()
