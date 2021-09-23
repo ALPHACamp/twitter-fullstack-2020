@@ -260,11 +260,9 @@ const userController = {
   },
 
   getFollowers: (req, res) => {
-    console.log(req.params.id)
     return Promise.all([
       Followship.findAll({
         where: { followingId: req.params.id },
-        // include: [User],
         order: [
           ['createdAt', 'DESC'], // Sorts by createdAt in descending order
         ],
@@ -276,13 +274,32 @@ const userController = {
         raw: true
       })
     ]).then(([followers, users]) => {
-      // console.log(followers)
-      // users.find(element => element.id === follower.followerId)
       const data = followers.map(d => ({
         ...users.find(element => Number(element.id) === Number(d.followerId))
       }))
-      console.log(data)
-      res.render('userSelfFollowers', { followers: data })
+      res.render('userSelfFollowship', { data, renderType: "follower" })
+    })
+  },
+
+  getFollowings: (req, res) => {
+    return Promise.all([
+      Followship.findAll({
+        where: { followerId: req.params.id },
+        order: [
+          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
+        ],
+        nest: true,
+        raw: true
+      }),
+      User.findAll({
+        nest: true,
+        raw: true
+      })
+    ]).then(([followings, users]) => {
+      const data = followings.map(d => ({
+        ...users.find(element => Number(element.id) === Number(d.followingId))
+      }))
+      res.render('userSelfFollowship', { data, renderType: "followings" })
     })
   }
 }
