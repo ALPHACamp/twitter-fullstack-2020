@@ -10,7 +10,9 @@ const loginController = {
 
   signUp: async (req, res) => {
     const { account, name, email, password, checkPassword } = req.body
+
     let errorMessages = []
+
     //加入多種錯誤訊息
     if (!name || !email || !password || !checkPassword || !account) {
       errorMessages.push({ message: '所有欄位都是必填。' })

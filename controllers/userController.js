@@ -53,34 +53,64 @@ const userController = {
     }
   },
 
-  editSetting: async (req, res) => {
+  editSetting: async (req, res, next) => {
     try {
-      const userId = helpers.getUser(req).id
-      if (req.body.passwordCheck !== req.body.password) {
-        req.flash('error_messages', '兩次密碼輸入不同！')
-        return res.redirect('back')
-      } else {
-        User.findByPk(userId).then(user => {
-          user
-            .update({
-              account: req.body.account,
-              name: req.body.name,
-              email: req.body.email,
-              password: bcrypt.hashSync(
-                req.body.password,
-                bcrypt.genSaltSync(10),
-                null
-              )
-            })
-            .then(() => {
-              req.flash('success_messages', '成功修改帳戶資料')
-              res.redirect('back')
-            })
+      const user = req.user
+      const userId = req.user.id
+      const { name, account, email, password, checkPassword } = req.body
+      const error_messages = []
+
+      if (checkPassword !== password) {
+        error_messages.push({ message: '密碼與確認密碼不符！' })
+        return res.render('setting', {
+          status: 'error',
+          error_messages,
+          userdata: user,
         })
       }
-    } catch (error) {
+
+      // 確認沒有相同帳號的使用者
+      let sameUser = await User.findOne({ where: { account } })
+      if (sameUser && sameUser.dataValues.id !== userId) {
+        error_messages.push({ message: '此帳號已註冊。' })
+        return res.render('setting', {
+          status: 'error',
+          error_messages,
+          userdata: user,
+        })
+      }
+      // 確認沒有相同 email 的使用者
+      sameUser = await User.findOne({ where: { email } })
+      if (sameUser && sameUser.dataValues.id !== userId) {
+        error_messages.push({ message: '此 Email 已經存在。' })
+        return res.render('setting', {
+          status: 'error',
+          error_messages,
+          userdata: user,
+        })
+      }
+
+      if (error_messages.length) {
+        return res.render('setting', {
+          error_messages,
+          account,
+          userdata: user,
+        })
+      }
+
+      await User.findByPk(userId).then(user => {
+        user.update({
+          account,
+          name,
+          email,
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+        })
+        return res.render('setting', { status: (200), success_messages: '成功修改帳戶資料', userdata: user })
+      })
+    } catch (err) {
       console.log(err)
-      console.log('getSetting err')
+      console.log('editSetting err')
+      next(err)
     }
   },
 
