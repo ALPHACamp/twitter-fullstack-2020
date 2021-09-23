@@ -3,7 +3,9 @@ port = process.env.PORT || 3000;
 host = process.env.BASE_URL || "http://localhost";
 const session = require("express-session");
 const db = require("./models");
-const usePassport = require("./config/passport");
+const methodOverride = require("method-override");
+const usePassport = require('./config/passport')
+const routes = require("./routes");
 const {
   allowInsecurePrototypeAccess,
 } = require("@handlebars/allow-prototype-access");
@@ -26,14 +28,17 @@ if (process.env.NODE_ENV === "test") {
 app.engine(".hbs", handlebars({ extname: ".hbs", defaultLayout: "main", helpers: require('./config/handlebars-helpers'), handlebars: allowInsecurePrototypeAccess(Handlebars) }));
 app.set("view engine", ".hbs");
 
-//set method-override
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
-
 app.use(express.static("public"));
-const routes = require("./routes");
+app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+usePassport(app)
+// app.use((req, res, next) => {
+//   res.locals.user = helpers.getUser(req)
+//   next()
+// })
+
 app.use(routes);
 app.listen(port, () =>
   console.log(`simple-twitter app listening at ${host}:${port}`)

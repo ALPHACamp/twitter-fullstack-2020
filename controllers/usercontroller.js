@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const db = require('../models')
 const { User } = db
 
+
 //for test only
 const helpers = require("../_helpers.js");
 const getTestUser = function (req) {
@@ -17,10 +18,6 @@ const userController = {
   signInPage: (req, res) => {
     return res.render("signin");
   },
-  signIn: (req, res) => {
-    //put some sign in strategy here
-  },
-
   signupPage: (req, res) => {
     return res.render("signup");
   },
