@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" id="tweets">
   <div class="row flex-nowrap ps-xl-2 justify-content-around">
     {{!-- Home bar --}}
     <div class="col-auto col-lg-3">
@@ -9,8 +9,8 @@
         <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
           <li class="nav-item px-2 py-1">
             <a class="nav-link align-middle text-dark " href="/tweets">
-              <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text home a-tomato">首頁</span>
+              <i class="fas fa-home" style="font-size: 1.2em;"></i>
+              <span class="h5 menu-text home" >首頁</span>
             </a>
           </li>
           <li class="nav-item px-2 py-1">
@@ -38,7 +38,7 @@
 
     {{!-- Middle Main bar --}}
     <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
-      <div class="card-header col-12 row m-0">
+      <div class="card-header col-12 row m-0 align-items-start" style="max-height: 55px;">
         <a href="javascript:history.back()" style="color: #000000; text-decoration: none;" class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
@@ -49,7 +49,7 @@
         </a>
       </div>
 
-      <div class="follower-head col-12 row mt-3">
+      <div class="follower-head col-12 row mt-3 position-absolute" style="z-index: 5; left: 15px; top: 90px;">
         <ul class='nav nav-tabs' id='myTab' role='tablist' style="border-bottom: none;margin-bottom:-4px;">
           <li class='nav-item'>
             <a class='nav-link' id='message-tab' href='/users/{{id}}/followers' role='tab'
@@ -62,7 +62,7 @@
         </ul>
       </div>
 
-      <div class='tab-content'>
+      <div class='tab-content position-absolute' style="z-index: 5; left: 30px; top: 150px;">
         <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
           <ul class='list-group list-group-flush border-bottom'>
 
