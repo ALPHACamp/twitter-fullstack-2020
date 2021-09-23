@@ -30,7 +30,7 @@ let userController = {
                   req.body.password,
                   bcrypt.genSaltSync(10),
                   null
-                )
+                ),
               }).then((user) => {
                 req.flash('success_messages', '成功註冊帳號！')
                 return res.redirect('/signin')
@@ -76,11 +76,11 @@ let userController = {
           account: req.body.account,
           name: req.body.name,
           email: req.body.email,
-          password: req.body.password
+          password: req.body.password,
         })
       })
     }
-  }
+  },
 }
 
 module.exports = userController
