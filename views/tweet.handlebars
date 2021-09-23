@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="row col-9 col-lg-6 col-md-7 col-sm-8 bg-white">
-      <div class="card-header col-12 row m-0 bg-white">
+      <div class="card-header col-12 row m-0 bg-white" style="max-height: 55px;">
         <a href="javascript:history.back()" style="text-decoration:none; color: #000000; height: 30px;"
           class="col-1 d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 18px;"></i>
@@ -42,7 +42,7 @@
         <span class="col-auto" style="font-size: 18px; font-weight:bold; height: 30px;">推文</span>
         </a>
       </div>
-      <div class="card-body col-12 m-0">
+      <div class="card-body col-12 m-0 position-absolute" style="z-index: 5; left: 10px; top: 50px;">
         <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
           <div class="col-1 d-flex justify-content-center align-items-center">
             <a href="/users/{{tweet.UserId}}">
@@ -52,7 +52,7 @@
           <div class="col-11 row px-0">
             <div class="col-12 flex-column justify-content-center align-items-start">
               <div style="height: 15px; line-height: 22px;">
-                <a href="/users/{{tweet.UserId}}" class="text-dark" style="font-size: 15px; font-weight:700; text-decoration:none;">{{tweet.User.name}}</a>
+                <a href="/users/{{tweet.UserId}}" class="text-dark" style="font-size: 15px; font-weight:700;">{{tweet.User.name}}</a>
               </div>
               <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{tweet.User.account}}</span>
               <div>
