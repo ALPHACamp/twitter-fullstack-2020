@@ -1,5 +1,18 @@
 <link rel="stylesheet" href="/stylesheets/showPage.css">
 
+<script>
+  function getUserData() {
+    axios.get('http://localhost:3000/api/users/{{user.id}}')
+      .then(res => {
+        name.value = res.data.name
+        introduction.value = res.data.introduction
+        avatar.setAttribute("src", res.data.avatar)
+        cover.setAttribute("src", res.data.cover)
+      }
+      )
+  }
+</script>
+
 {{!-- 包一層div讓內部有依據照比例縮 --}}
 <div class="wrap d-flex">
   <div class="row col-md-12  justify-content-center" style="margin:0">
@@ -84,8 +97,10 @@
 
         {{#if viewUser.isSelf}}
         <div class="edit-button">
-          <button type="submit" class="btn unfollow-button edit-user" data-toggle="modal"
-            data-target="#edit-user">編輯個人資料</button>
+
+          <button type="submit" class="btn unfollow-button edit-user" id="editUserBtn" data-toggle="modal"
+            data-target="#edit-user" onclick="getUserData()">編輯個人資料</button>
+
           {{else}}
           {{#if viewUser.isFollowed }}
           <div class="edit-button-other">
@@ -102,9 +117,9 @@
                 <div class="mail"><i class="far fa-envelope"></i></div>
                 <div class="notification"><i class="far fa-bell"></i></div>
                 <form action="/followships" method="POST" style="display: contents;">
-                <input type="hidden" name="id" value="{{this.id}}">
-                <button
-                    type="submit" class="btn unfollow-button"> 跟隨 </button></form>
+                  <input type="hidden" name="id" value="{{this.id}}">
+                  <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+                </form>
               </div>
               {{/if}}
               {{/if}}
@@ -262,9 +277,9 @@
                   </form>
                   {{else}}
                   <form action="/followships" method="POST" style="display: contents;">
-                  <input type="hidden" name="id" value="{{this.id}}">
-                  <button type="submit"
-                      class="btn unfollow-button"> 跟隨 </button></form>
+                    <input type="hidden" name="id" value="{{this.id}}">
+                    <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+                  </form>
                   {{/if}}
                   {{/if}}
                 </div>
@@ -329,4 +344,7 @@
           event.preventDefault()
         }
       })
+
+
+
     </script>

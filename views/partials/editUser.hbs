@@ -18,7 +18,7 @@
     <hr>
 
     <div class="cover">
-      <img src="{{currentUser.cover}}" id="cover" alt="">
+      <img src="" id="cover" alt="">
     </div>
 
 
@@ -40,7 +40,7 @@
 
     <div class="user-info">
       <div class="avatar">
-        <img src="{{currentUser.avatar}}" alt="" id="avatar">
+        <img src="" alt="" id="avatar">
       </div>
 
       <div class="edit-avatar">
@@ -58,7 +58,7 @@
 
       <div>
         <div class="edit-name-title">名稱</div>
-        <input type="text" name="name" id="name" class="form-control" aria-label="name" value="{{currentUser.name}}">
+        <input type="text" name="name" id="name" class="form-control" aria-label="name" >
         <div class="invalid-feedback name">
         </div>
         <div class="count-down">
@@ -70,7 +70,7 @@
       <div>
         <div class="edit-introduction-title">自我介紹</div>
         <textarea type="text" name="introduction" id="introduction" class="form-control" aria-label="name"
-          rows="6">{{currentUser.introduction}}</textarea>
+          rows="6"></textarea>
         <div class="invalid-feedback" id="introduction">
         </div>
         <div class="count-down introduction">
@@ -96,6 +96,8 @@
   const editUserBtn = document.querySelector('.edit-user')
   const saveBtn = document.querySelector('#save-button')
   const deleteCover = document.querySelector('#edit-delete')
+  const avatar = document.querySelector('#avatar')
+  const cover = document.querySelector('#cover')
 
 
   editUserBtn.addEventListener('click', function countInitial(event) {

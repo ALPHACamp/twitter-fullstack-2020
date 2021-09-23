@@ -388,10 +388,6 @@ const userController = {
         return res.status(200).json({
           data
         })
-        // req.flash('error_messages', data['message'])
-        // return res.redirect('back')
-        //  console.log('====error')
-        // return res.redirect('back')
       }
       req.flash('success_messages', data['message'])
       res.redirect('back')
