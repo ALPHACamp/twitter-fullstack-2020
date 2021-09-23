@@ -1,0 +1,270 @@
+<!-- Modal -->
+<div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button type="button" class="btn-close m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="createTweet border">
+        <form action="/tweets" method="POST">
+          <div class="d-flex">
+            <a href="" class="avatar m-2">
+              <img src="{{noImage user.avatar}}" alt="" class="rounded-circle userImage">
+            </a>
+            <textarea class="whathtNew" id="description" name="description" placeholder="有甚麼新鮮事?" maxlength="140"
+              required></textarea>
+          </div>
+          <div class="d-flex justify-content-end">
+            <div class="round m-3">
+              <button type="submit" class="orange btn text-white round">推文</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- User Profile Update --}}
+<div class="modal fade bd" id="userProfileSetting" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/users/{{user.id}}/edit?_method=PUT" method="post" enctype="multipart/form-data">
+
+        <div class="modal-header">
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn a-tomato" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+            <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
+          </div>
+          <button type="submit" class="badge btn btn-tomato rounded-pill fw-bold" style="font-size: 1.1em;">儲存</button>
+        </div>
+
+        <div class="modal-body row">
+          <div class="col-12 m-0 p-0 position-relative mb-5">
+            <div class="bg-holder" style="height: 170px;">
+              <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+                style="height:100%;width:100%;object-fit:cover">
+            </div>
+
+            <label for="cover" class="btn cover-uploader">
+              <input class="d-none" type="file" id="cover" name="cover" accept="image/*">
+              <i class="fas fa-camera" style="font-size: 1.5em; color: white"></i>
+            </label>
+
+            <div class="avatar-holder">
+              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+                class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
+            </div>
+
+            <label for="avatar" class="btn avator-uploader">
+              <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*">
+              <i class="fas fa-camera" style="color: white;"></i>
+            </label>
+
+          </div>
+
+          <div class="col-12 mb-3 mt-2">
+            <label for="name" class="fw-bold"
+              style="margin-bottom: -30px; margin-left: 8px; font-size: 1.1em">名稱</label>
+            <input type="text" class="form-control pt-4 nowcount1" id="name" name="name" maxlength="50"
+              style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em"
+              aria-describedby="nameHelp" value="{{users.name}}" />
+            <p class="text-end text-muted now1" style="font-size: 0.98em;"></p>
+          </div>
+          <div class="col-12 mb-3 mt-2">
+            <label for="description" class="fw-bold" style="margin-left: 8px; font-size: 1.1em;">自我介紹</label>
+            <textarea class="form-control nowcount2" id="description" name="description"
+              style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em;"
+              maxlength="160" aria-describedby="descriptionHelp">{{user.description}}</textarea>
+            <p class="text-end text-muted now2" style="font-size: 0.98em;"></p>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="row grid">
+  <div>
+    <nav class="userSidebar fixed">
+      <div class="logo">
+        <img src="https://i.imgur.com/ZUJriDp.png" alt="" id="ac-logo">
+      </div>
+      <div class="buttonList mt-5">
+        <div class="navItem index d-flex mb-4 ">
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-home my-auto"></i>
+          </div>
+          <a href="/tweets" class="btn sidebarItem">
+            <span class="fs-5 fw-bolder">首頁</span>
+          </a>
+        </div>
+        <div class="navItem userProfile d-flex mb-4 ">
+          <div class="icon d-flex align-items-center {{#ifCond user.id tweetUser.id}}color-orange{{/ifCond}}">
+            <i class="fas fa-users"></i>
+          </div>
+          <a href="/user/{{user.id}}/tweets" class="btn sidebarItem">
+            <span class="fs-5 fw-bolder">個人資料</span>
+          </a>
+        </div>
+        <div class="navItem setting d-flex mb-4">
+          <div class="icon d-flex align-items-center">
+            <i class="fas fa-cog"></i>
+          </div>
+          <a href="/setting" class="btn sidebarItem">
+            <span class="sidebar-item fs-5 fw-bolder">設定</span>
+          </a>
+        </div>
+      </div>
+      <div class="d-grid gap-2 col-9 round">
+        <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+          data-bs-target="#newTwitModal">推文</button>
+      </div>
+      <div class="logout d-flex">
+        <div class="logoutLogo me-3 d-flex align-items-center">
+          <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <a href="/logout" class="btn">
+          <span class="fs-5 fw-bolder">登出</span>
+        </a>
+      </div>
+    </nav>
+  </div>
+
+  <div class="userProfileSection ">
+    {{>message}}
+    <div class="title border d-flex">
+      <a href="/tweets" class="arrow me-3 d-flex align-items-center btn">
+        <i class="fas fa-arrow-left fs-4"></i>
+      </a>
+      <div>
+        <h4 class="fw-bolder m-0">{{tweetUser.name}}</h4>
+        <p class="m-0">{{tweets.length}}推文</p>
+      </div>
+    </div>
+    
+    <div class="cover">
+      <img
+        src="{{#if users.cover}}{{users.cover}}{{else}}{{noImage user.cover}}{{/if}}"
+        alt="..." class="userBackgroundImg">
+    </div>
+
+    <span class="avatar m-2">
+      <img src="{{noImage tweetUser.avatar}}" alt="" class="rounded-circle userProfileImg">
+    </span>
+
+    <div class="profileInformation mt-5 pt-2 ms-2">
+      <div class="name m-1 fw-bolder mt-2">
+        <h5> {{tweetUser.name}}</h5>
+      </div>
+      <div class="account m-1">@{{tweetUser.account}}</div>
+      <div class="m-2">
+        <p>{{tweetUser.description}}</p>
+      </div>
+    </div>
+
+    <div class="d-flex">
+    </div>
+    <div class="d-flex m-3">
+      <div class="replies me-5 d-flex">
+        <div class="repliesAmount fw-bolder me-2">{{tweetUser.followingCount}}</div>
+        <div>個跟隨中</div>
+      </div>
+      <div class="likes d-flex">
+        <div class="likesAmount fw-bolder me-2">{{tweetUser.followerCount}}</div>
+        <div>位跟隨者</div>
+      </div>
+    </div>
+    {{#ifCond user.id tweetUser.id}}
+    <div class="d-grid gap-2 col-9 round">
+      <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+        data-bs-target="#userProfileSetting">編輯個人資料</button>
+    </div>
+    {{#if isFollowed}}
+    <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">
+      <button type="submit" class="btn btn-tomato rounded-pill" name="{{user.id}}">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships/{{user.id}}" method="POST">
+      <button type="submit" class="btn btn-outline-tomato rounded-pill" name="{{user.id}}"
+        style="margin-left: 10px;">跟隨</button>
+    </form>
+    {{/if}}
+    {{/ifCond}}
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/tweets">推文</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary active" href="/user{{tweetUser.id}}/replies">推文與回覆</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-secondary" href="/=">喜歡的內容</a>
+      </li>
+    </ul>
+    {{#each replies}}
+    <div class="comment d-flex border">
+      <div class="avatar m-3">
+        <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+      </div>
+      <div>
+        <div class="d-flex">
+          <div class="name m-1 fw-bolder">{{this.User.name}}</div>
+          <div class="account m-1">@{{this.User.account}}</div>
+          <div class="timefrom m-1">{{moment this.createdAt}}</div>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div class="m-1">回覆</div>
+            <div class="m-1 color-orange">@{{this.Tweet.User.name}}</div>
+          </div>
+          <div>
+            <p>{{this.comment}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+  </div>
+  <div class="">
+    <div class="popularArea fixed mt-4 border">
+      <div class="title m-3">
+        <h5 class="fw-bolder">Popular</h5>
+      </div>
+      <div class="popularList border-top">
+        <div class="popularUser d-flex border-bottom justify-content-between">
+          <div class="user d-flex">
+            <div class="avatar m-2">
+              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+            </div>
+            <div class="information">
+              <div class="name mt-3 ms-1 fw-bolder">Pizza Hut</div>
+              <div class="account ms-1">@Pizza Hut</div>
+            </div>
+          </div>
+          <div class="round m-3">
+            <button class="orange btn text-white round">正在跟隨</button>
+          </div>
+        </div>
+        <div class="popularUser d-flex border-bottom justify-content-between">
+          <div class="user d-flex">
+            <div class="avatar m-2">
+              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
+            </div>
+            <div class="information">
+              <div class="name mt-3 ms-1 fw-bolder">McDonald's</div>
+              <div class="account ms-1">@McDonald's</div>
+            </div>
+          </div>
+          <div class="round m-3">
+            <button class="btn followButton round">跟隨</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

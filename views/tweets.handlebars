@@ -1,4 +1,4 @@
-<!-- Modal -->
+<!-- 新推文Modal -->
 <div class="modal fade" id="newTwitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -7,7 +7,7 @@
         <form action="/tweets" method="POST">
           <div class="d-flex">
             <a href="" class="avatar m-2">
-              <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+              <img src="{{noImage user.avatar}}" alt="" class="rounded-circle userImage">
             </a>
             <textarea class="whathtNew" id="description" name="description" placeholder="有甚麼新鮮事?" maxlength="140"
               required></textarea>
@@ -33,7 +33,7 @@
       <div class="buttonList mt-5">
         <div class="navItem index d-flex mb-4 ">
           <div class="icon d-flex align-items-center color-orange">
-            <i class="fas fa-tweets my-auto"></i>
+            <i class="fas fa-home my-auto"></i>
           </div>
           <a href="/tweets" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">首頁</span>
@@ -43,7 +43,7 @@
           <div class="icon d-flex align-items-center">
             <i class="fas fa-users"></i>
           </div>
-          <a href="/userProfile" class="btn sidebarItem">
+          <a href="/user/{{user.id}}/tweets" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">個人資料</span>
           </a>
         </div>
@@ -71,8 +71,7 @@
     </nav>
   </div>
 
-
-  <div class=" mainSection ">
+  <div class="mainSection ">
     {{>message}}
     <div class="title border">
       <h5 class="fw-bolder m-3">首頁</h5>
@@ -80,7 +79,7 @@
     <div class="createTweet border">
       <div class="d-flex">
         <a href="" class="avatar m-2">
-          <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">
+          <img src="{{noImage user.avatar}}" alt="" class="rounded-circle userImage">
         </a>
         <div class="d-flex align-items-center">
           <button type="button" class="btn text-secondary" data-bs-toggle="modal"
@@ -98,40 +97,44 @@
       {{#each tweets}}
       <div class="tweet border">
         <div class="d-flex">
-          <span class="avatar m-2">
-            <img src="{{noImage this.user.avatar.url}}" alt="" class="rounded-circle userImage">
-          </span>
+          <a href="/user/{{this.User.id}}/tweets" class="avatar m-2">
+            <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+          </a>
           <div class="">
             <div class="d-flex">
-              <div class="name m-2">{{this.userName}}</div>
-              <div class="tag m-2">@{{this.userAccount}}</div>
-              <a class="time m-2" title="{{momentFormat this.createdAt}}" href="/tweets/{{this.id}}">
+              <a href="/user/{{this.User.id}}/tweets" class="name m-2 btn">{{this.userName}}</a>
+              <div class="tag m-2 mt-2 pt-1">@{{this.userAccount}}</div>
+              <div class="time m-2 mt-2 pt-1" title="{{momentFormat this.createdAt}}" >
                 {{moment this.createdAt}}
-              </a>
+              </div>
             </div>
-            <a href="/tweet/{{this.id}}" class="tweetContent m-2 btn">
+            <a href="/tweets/{{this.id}}" class="tweetContent m-2 btn">
               <p>{{this.description}}</p>
             </a>
-            <div class="row d-flex flex-nowrap mb-2">
-              <div class="comment col-lg-2 d-flex">
-                <span class="commentIcon me-3">
+            <div class="d-flex mb-2 align-items-center">
+              <a href="/tweets/{{this.id}}" class="comment d-flex me-2 btn">
+                <span class="commentIcon me-2">
                   <i class="far fa-comment"></i>
                 </span>
-                <span class="commentAmount">20</span>
-              </div>
+                <span class="commentAmount">{{this.Replies.length}}</span>
+              </a>
               <div clss="like col-lg-2 d-flex">
                 <span class="likeIcon me-2">
                   {{#if this.data.isLiked}}
-                  <form action="/like/{{this.id}}" method="POST">
-                    <i class="far fa-heart" type="submit"></i>
+                  <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                    <button  type="submit" class="btn">
+                      <i class="fas fa-heart"></i>
+                    </button>
                   </form>
                   {{else}}
-                  <form action="/like/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
-                    <i class="fas fa-heart "></i>
+                  <form action="/like/{{this.id}}" method="POST" style="display: contents;">
+                    <button type="submit" class="btn">
+                      <i class="far fa-heart"></i>
+                    </button>
                   </form>
                   {{/if}}
                 </span>
-                <span class="likeAmount">{{this.likedCount}}</span>
+                <span class="likeAmount">{{this.likeCount}}</span>
               </div>
             </div>
           </div>
@@ -140,27 +143,30 @@
       {{/each}}
     </div>
   </div>
-  <div class="">
+
+  <div class="topUser">
     <div class="popularArea fixed mt-4 border">
       <div class="title m-3">
         <h5 class="fw-bolder">Popular</h5>
       </div>
       {{#each users}}
+      {{#ifCondNot this.id ../theUser}}
       <div class="popularList border-top">
         <div class="popularUser d-flex border-bottom justify-content-between">
           <div class="user d-flex">
             <div class="avatar m-2">
-              <a href="/users/{{this.id}}">
-                <img src="{{noImage this.image}}" alt="" class="rounded-circle userImage">
+              <a href="/user/{{this.id}}/tweets">
+                <img src="{{noImage this.avatar}}" alt="" class="rounded-circle userImage">
               </a>
             </div>
             <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}</div>
+              <a href="/user/{{this.id}}/tweets" class="name mt-2 ms-1 fw-bolder btn">{{this.name}}
+              </a>
               <div class="account ms-1">{{this.account}}</div>
             </div>
           </div>
           <div class="round m-3">
-            {{#if isFollowing }}
+            {{#if this.isFollowed}}
             <form action="/following/{{this.id}}?_method=DELETE" method="POST">
               <button type="submit" class="btn orange text-white round">取消跟隨</button>
             </form>
@@ -171,6 +177,7 @@
             {{/if}}
           </div>
         </div>
+        {{/ifCondNot}}
         {{/each}}
 
       </div>

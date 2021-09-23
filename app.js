@@ -8,7 +8,7 @@ const methodOverride = require('method-override')
 const helpers = require('./_helpers');
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 // use helpers.getUser(req) to replace req.user
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
@@ -39,6 +39,7 @@ app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
   res.locals.user = req.user
+  res.locals.url = req.url
   next()
 })
 
