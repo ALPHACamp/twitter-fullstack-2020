@@ -65,22 +65,39 @@ const userController = {
 
   getUserTweets: async (req, res) => {
     // const currentUser = helpers.getUser(req)
-    const tweets = await Tweet.findAll({
-      where: { UserId: req.params.id },
-      include: [User, Reply],
-      order: [['createdAt', 'DESC']]
+    return Promise.all([
+      Tweet.findAll({
+        where: { UserId: req.params.id },
+        include: [User, Reply],
+        order: [['createdAt', 'DESC']]
+      }),
+      Followship.count({
+        where: { followingId: req.params.id }
+      }),
+      Followship.count({
+        where: { followerId: req.params.id }
+      }),
+      User.findByPk(
+        req.params.id
+      ),
+      User.findAll({
+        include: [
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ],
+        where: { role: "user" }
+      }),
+    ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
+      const topUsers =
+        users.map(user => ({
+          ...user.dataValues,
+          followerCount: user.Followers.length,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        }))
+          .sort((a, b) => b.followerCount - a.followerCount)
+          .slice(0, 10)
+      return res.render('userSelf', { tweets, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id })
     })
-    const followersCount = await Followship.count({
-      where: { followingId: req.params.id }
-    })
-    const followingsCount = await Followship.count({
-      where: { followerId: req.params.id }
-    })
-    const tweetUser = await User.findByPk(
-      req.params.id
-    )
-
-    return res.render('userSelf', { tweets, tweetUser: tweetUser.toJSON(), followersCount, followingsCount })
   },
 
   getUserSelfReply: async (req, res) => {
