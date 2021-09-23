@@ -63,7 +63,6 @@ const tweetController = {
           isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
           isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
         }))
-        console.log(currentUser.LikedTweets)
         return res.render('tweet', {
           tweet: tweet.toJSON(),
           currentUser: helpers.getUser(req),
@@ -126,7 +125,6 @@ const tweetController = {
   removeLike: async (req, res) => {
     try {
       const currentUserId = helpers.getUser(req).id
-      // console.log(req.params)
       await Like.findOne({
         where: {
           UserId: currentUserId,

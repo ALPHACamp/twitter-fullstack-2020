@@ -10,11 +10,9 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
 
-// module.exports = (router, passport) => {
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role !== 'admin') {
-      console.log('123')
       return next()
     }
     if (helpers.getUser(req).role === 'admin') {
