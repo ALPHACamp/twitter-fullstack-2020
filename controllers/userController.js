@@ -1,5 +1,6 @@
 // TODO controller
 const bcrypt = require('bcryptjs')
+const { raw } = require('body-parser')
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
@@ -256,6 +257,33 @@ const userController = {
             return res.redirect('back')
           })
       })
+  },
+
+  getFollowers: (req, res) => {
+    console.log(req.params.id)
+    return Promise.all([
+      Followship.findAll({
+        where: { followingId: req.params.id },
+        // include: [User],
+        order: [
+          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
+        ],
+        nest: true,
+        raw: true
+      }),
+      User.findAll({
+        nest: true,
+        raw: true
+      })
+    ]).then(([followers, users]) => {
+      // console.log(followers)
+      // users.find(element => element.id === follower.followerId)
+      const data = followers.map(d => ({
+        ...users.find(element => Number(element.id) === Number(d.followerId))
+      }))
+      console.log(data)
+      res.render('userSelfFollowers', { followers: data })
+    })
   }
 }
 
