@@ -4,6 +4,10 @@ const userNameInput = document.querySelector('#user-name-input')
 const userInfoInput = document.querySelector('#user-intro-input')
 const messageNameCount = document.querySelector('#count_message_name')
 const messageIntroCount = document.querySelector('#count_message_info')
+const chooseCover = document.querySelector('#upload_cover')
+const removeCover = document.querySelector('#edit-btn-group')
+const chooseAvatar = document.querySelector('#upload_avatar')
+
 // const baseURL = 'http://localhost:3000'
 async function getUserProfile (userId, baseURL) {
   try {
@@ -27,9 +31,21 @@ async function getUserProfile (userId, baseURL) {
   }
 }
 
+function getImgData (fileName, previewArea) {
+  const files = fileName.files[0]
+  if (files) {
+    const fileReader = new FileReader()
+    fileReader.readAsDataURL(files)
+    fileReader.addEventListener('load', function () {
+      previewArea.style.backgroundImage = `url('${this.result}')`
+    })
+  }
+}
+
 userNameInput.addEventListener('keyup', function countCharacters (event) {
   messageNameCount.innerHTML = `${userNameInput.value.length}/50`
 })
+
 
 userInfoInput.addEventListener('keyup', function countCharacters (event) {
   messageIntroCount.innerHTML = `${userInfoInput.value.length}/160`
@@ -41,8 +57,23 @@ if (document.querySelector('#edit-profile')) {
     if (event.target.matches('#edit-profile-btn')) {
       const baseURL = event.target.dataset.url
       userId = event.target.dataset.id
-      console.log(userId)
       getUserProfile(userId, baseURL)
     }
   })
 }
+
+chooseCover.addEventListener('change', function () {
+  getImgData(chooseCover, userCoverInput)
+})
+
+removeCover.addEventListener('click', function (event) {
+  if (event.target.matches('.fa-times')) {
+    chooseCover.value = ''
+    userCoverInput.style.backgroundImage = ''
+    userCoverInput.style.backgroundColor = '#999999'
+  }
+})
+
+chooseAvatar.addEventListener('change', function () {
+  getImgData(chooseAvatar, userAvatarInput)
+})

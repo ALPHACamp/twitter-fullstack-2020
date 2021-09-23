@@ -126,12 +126,12 @@
 
 .user-modal-content .user-cover-block {
   height: 200px;
-  background-position: 50% 50%;
-  background-size: 100% auto;
+  background-size: 600px 200px;
+  background-repeat: no-repeat;
   opacity: 50%;
 }
 
-.user-modal-content .upload-icon {
+.user-modal-content .fas{
   cursor: pointer;
 }
 
@@ -147,7 +147,8 @@
 .user-modal-content .user-avatar-edit {
   position: absolute;
   top: 125px;
-  background-size: 100% auto;
+  background-size: cover;
+  background-repeat: no-repeat;
   border: 4px solid #ffffff;
   border-radius: 50%;
   box-sizing: border-box;
