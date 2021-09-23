@@ -32,6 +32,7 @@ passport.deserializeUser((id, cb) => {
       { model: Tweet, as: 'LikedTweets' }
     ]
   }).then(user => {
+    console.log(user)
     user = user.toJSON()
     return cb(null, user)
   })

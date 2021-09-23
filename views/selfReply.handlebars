@@ -11,13 +11,26 @@
         <p class="mt-0 mb-2" style="color:#657786;">{{totalTweet}} 推文</p>
       </div>
     </div>
-
     <img src="{{user.cover}}" style="position:relate; height: 200px" class="" alt="...">
     <img src="{{user.avatar}}" class="rounded-circle user-avatar" alt="...">
+    {{#if isLoginUser}}
     <div class="d-flex flex-row-reverse m-2">
       <button type="button" class="btn btn-orange-white rounded-pill" data-bs-toggle="modal" data-bs-target="#userModal"
         data-bs-whatever="@getbootstrap">編輯個人資料</button>
     </div>
+    {{else}}
+    <div class="d-flex flex-row-reverse align-items-center m-2">
+      {{#if this.isMainUserFollowing }}
+      <a href="#" class="btn btn-white-orange rounded-pill p-1" style="width: 90px; height: 35px;;">正在跟隨</a>
+      {{else}}
+      <a href="#" class="btn btn-orange-white rounded-pill p-1" style="width: 90px; height: 35px;;">跟隨</a>
+      {{/if}}
+      <i class="far fa-bell circle d-flex align-items-center justify-content-center me-2"></i>
+      <a href="mailto:{{user.email}}" style="text-decoration:none;"><i
+          class=" far fa-envelope circle d-flex align-items-center justify-content-center me-2"></i></a>
+    </div>
+    {{/if}}
+
     <div class="card-body">
       <h5 class="card-title fontWeight900">{{user.name}}</h5>
       <h6 style="color:#657786;">@{{user.account}}</h6>
@@ -35,7 +48,11 @@
 
     <ul class="nav nav-tabs mt-4">
       <li class="nav-item">
+        {{#if isLoginUser}}
         <a class="nav-link fontWeight700" href="/users/self/{{user.id}}">推文</a>
+        {{else}}
+        <a class="nav-link fontWeight700" href="/users/otherTwitter/{{user.id}}">推文</a>
+        {{/if}}
       </li>
       <li class="nav-item">
         <a class="nav-link fontWeight700 active" href="#">推文與回覆</a>
