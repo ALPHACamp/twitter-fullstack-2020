@@ -35,9 +35,9 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('/tweets'))
   app.get('/tweets', authenticated, tweetController.getTweets)
 
-  // Like - Tweet
-  // app.post('/like/:tweetId', authenticated, userController.addLike)
-  // app.delete('/like/:tweetId', authenticated, userController.removeLike)
+  //Like - Tweet
+  app.post('/like/:tweetId', authenticated, userController.addLike)
+  app.delete('/like/:tweetId', authenticated, userController.removeLike)
 
   app.get('/user/:id/replies', authenticated, userController.getUserSelfReply)
   app.get('/user/:id/tweets', authenticated, userController.getUserTweets)
