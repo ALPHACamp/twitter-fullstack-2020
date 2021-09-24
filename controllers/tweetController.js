@@ -2,11 +2,10 @@ const db = require("../models");
 const { Tweet, User, Reply, Like } = db;
 const moment = require("moment");
 //for development
-const { dummyuser } = require("../dummyuser.json");
+
 
 const tweetController = {
   getPosts: async (req, res) => {
-    const user = dummyuser;
     try {
       const Profile = await User.findByPk(req.user.id, {
         include: [
@@ -51,12 +50,11 @@ const tweetController = {
         profile: Profile,
       });
     } catch (error) {
-      console.log(error);
+      res.status(400).json(error)
     }
   },
 
   getPost: async (req, res) => {
-    const user = dummyuser;
     try {
       let tweet = await Tweet.findByPk(req.params.id, {
         include: [
@@ -85,7 +83,7 @@ const tweetController = {
       //add isLike property dynamically
       tweet = tweet.toJSON();
       tweet.LikedUsers.forEach((likedUser) => {
-        if (Number(likedUser.id) === Number(user.id)) tweet.isLiked = true;
+        if (Number(likedUser.id) === Number(req.user.id)) tweet.isLiked = true;
       });
       // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers, createdTimeFromNow, createdTimeByReply})
       return res.render("post", {
@@ -95,14 +93,13 @@ const tweetController = {
         users: TopUsers,
         createdTimeFromNow,
         createdTimeByReply,
-      });
+      })
     } catch (error) {
-      return console.log(error);
+      res.status(400).json(error)
     }
   },
 
   postTweet: (req, res) => {
-    const user = dummyuser;
     const { description } = req.body;
     if (!description) {
       //req.flash('error_message', '你並未輸入任何文字')
@@ -113,12 +110,13 @@ const tweetController = {
       return res.redirect("back");
     } else {
       return Tweet.create({
-        UserId: user.id,
+        UserId: req.user.id,
         description,
       }).then((tweet) => {
         // console.log("成功發送推文", tweet.toJSON());
-        return res.redirect(`/posts/${user.id}/main`);
-      });
+        res.redirect('/tweets');
+      })
+        .catch(error => res.status(400).json(error));
     }
   },
 };

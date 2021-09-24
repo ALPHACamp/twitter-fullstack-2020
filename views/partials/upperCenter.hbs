@@ -6,7 +6,7 @@
       <img src="{{profile.avatar}}" alt="avatar-img" />
     </div>
   </div>
-  <form action="/tweets/add" method="POST">
+  <form action="/tweets" method="POST">
     <div class="profile-textarea-container">
       <textarea name="description" class="form-control form-control-lg" id="post" placeholder="有什麼新鮮事?" rows="3"
         maxlength="140" required></textarea>
@@ -48,7 +48,7 @@
         <i class="bi bi-chat" data-bs-toggle="modal" data-bs-target="#postModel" id="myInput">
         </i>
       </span>
-      <form action="/posts/{{tweet.id}}/like?_method=PUT" method="POST" class="mainpost-icon-block">
+      <form action="/tweets/{{tweet.id}}/like?_method=PUT" method="POST" class="mainpost-icon-block">
         {{#if tweet.isLiked}}
         <button type="submit" class="bi bi-heart-fill btn"></button>
         {{else}}

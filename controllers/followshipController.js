@@ -37,7 +37,7 @@ const followshipController = {
           if (arr.indexOf(user.id) > -1) follower.isFollowed = true
           else follower.isFollowed = false
           follower.updatedAtFormated = moment(follower.updatedAt).fromNow()
-        })        
+        })
         return res.render("followship", { tagA: true, user, followers: user.Followers });
       })
       .catch((error) => res.status(400).json(error));
@@ -54,7 +54,8 @@ const followshipController = {
           as: "Followings",
           attributes: listAttributes,
         },
-      ],})
+      ],
+    })
       .then((user) => {
         user = user.toJSON();
         user.Followings.forEach((following) => {
@@ -68,10 +69,10 @@ const followshipController = {
 
   addFollowing: (req, res) => {
     const user = dummyuser;
-    if(user.id === req.params.id){
+    if (user.id === req.params.id) {
       console.error('Cannot follow yourself')
       return res.redirect("back")
-    } 
+    }
     return Followship.findOrCreate({
       where: {
         followerId: Number(user.id),
