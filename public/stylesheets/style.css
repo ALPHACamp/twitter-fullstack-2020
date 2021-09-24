@@ -883,36 +883,37 @@ svg {
 }
 
 /* tweet-body reply modal */
-.icon-reply .reply-modal-body {
+.reply-modal-body {
   all: initial;
   padding: 18px 15px 0px 15px;
   display: flex;
   height: 100%;
 }
 
-.icon-reply .reply-modal-body .reply-modal-avatar-item {
+.reply-modal-body .reply-modal-avatar-item {
   height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.icon-reply .reply-modal-body .poster-avatar {
+.reply-modal-body .poster-avatar {
   border-radius: 50%;
+  /* height: 50px; */
 }
 
-.icon-reply .reply-modal-body .vertical-line {
+.reply-modal-body .vertical-line {
   width: 2px;
   height: 100%;
   margin: 5px 0px 10px 0px;
   background: #ccd6dd;
 }
 
-.icon-reply .reply-content-warp {
+.reply-content-warp {
   margin-left: 10px;
 }
 
-.icon-reply .reply-modal-body .reply-name {
+.reply-modal-body .reply-name {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
@@ -921,7 +922,7 @@ svg {
   color: #1c1c1c;
 }
 
-.icon-reply .reply-modal-body .reply-account {
+.reply-modal-body .reply-account {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: 500;
@@ -930,7 +931,7 @@ svg {
   color: #657786;
 }
 
-.icon-reply .reply-modal-body .card-reply-to .replyItem {
+.reply-modal-body .card-reply-to .replyItem {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: 500;
@@ -939,7 +940,7 @@ svg {
   color: #657786;
 }
 
-.icon-reply .reply-modal-body .card-reply-to .replyReceiver {
+.reply-modal-body .card-reply-to .replyReceiver {
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: 500;
@@ -948,7 +949,7 @@ svg {
   color: #ff6600;
 }
 
-.icon-reply .reply-modal-body .reply-content {
+.reply-modal-body .reply-content {
   margin: 5px 0px 10px 0px;
   font-family: Noto Sans TC;
   font-style: normal;
@@ -958,7 +959,7 @@ svg {
   color: #1c1c1c;
 }
 
-.icon-reply .modal-footer {
+.modal-footer {
   border: none;
   padding: 0px 15px 0px 15px;
   display: flex;
@@ -966,35 +967,43 @@ svg {
   justify-content: start;
 }
 
-.icon-reply .modal-content {
+.modal-content {
   margin-top: 54px;
   border-radius: 14px;
   width: 600px;
   min-height: 450px;
 }
 
-.icon-reply .modal-body {
+.modal-body {
   padding: 0px;
   display: flex;
 }
 
-.icon-reply .modal-footer .reply-tweet-body {
+.modal-footer .reply-tweet-body {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.icon-reply .form-control {
+.form-control {
   all: initial;
   min-height: 26px;
   width: 510px;
 }
 
-.icon-reply .replier-modal-body {
+.replier-modal-body {
   display: flex;
 }
 
-.icon-reply .replier-modal-body .form-group {
+.replier-modal-body .modal-footer .modal_error_messages {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 15px;
+  color: #fc5a5a;
+}
+.replier-modal-body .form-group {
   padding: 5px 0px 0px 5px;
   font-family: Noto Sans TC;
   font-style: normal;
@@ -1004,11 +1013,11 @@ svg {
   color: #9197a3;
 }
 
-.icon-reply .replier-avatar img {
+.replier-avatar img {
   border-radius: 100%;
 }
 
-.icon-reply .post-submit-button {
+.post-submit-button {
   position: absolute;
   padding: auto;
   width: 66px;
@@ -1021,7 +1030,7 @@ svg {
   border-radius: 100px;
 }
 
-.icon-reply .post-submit-button span {
+.post-submit-button span {
   cursor: pointer;
   font-family: Noto Sans TC;
   font-style: normal;

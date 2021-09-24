@@ -60,11 +60,11 @@
               </span>
             </div>
           </div>
-          <form action='' method='POST'>
+          <form action='/tweets' method='POST'>
             <div class='modal-body'>
               <img
-                src='https://randomuser.me/api/portraits/women/17.jpg'
-                alt=''
+                src='{{user.avatar}}'
+                alt='avatar'
                 width='50'
                 height='50'
               />
@@ -73,8 +73,8 @@
                 <textarea
                   type='text'
                   class='form-control col-xs-12'
-                  id='category'
-                  name='category'
+                  id='userInput'
+                  name='description'
                   placeholder='有什麼新鮮事?'
                   required
                 ></textarea>
@@ -112,13 +112,13 @@
         </div>
         <div class='card-footer'>
           <div class='icon-reply'>
-
+            {{!-- 其它貼文回覆modal --}}
             <!-- Button trigger modal -->
             <button
               type='button'
               class='postModal'
               data-toggle='modal'
-              data-target='#reply-to-id1'
+              data-target='#replyTweet{{this.id}}'
             >
               <span>
                 <svg
@@ -136,11 +136,34 @@
               </span>
               <span class='reply-count'>{{this.replyCount}}</span>
             </button>
+        </div>
+          <div class='icon-like'>
+            <span>
+              <svg
+                class='like-count'
+                width='15'
+                height='15'
+                viewBox='0 0 15 15'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M7.5 13.5239H7.49125C5.87687 13.4939 1.21875 9.28514 1.21875 5.29889C1.21875 3.38389 2.79687 1.70264 4.59562 1.70264C6.02687 1.70264 6.98937 2.69014 7.49937 3.40889C8.00812 2.69139 8.97062 1.70264 10.4025 1.70264C12.2025 1.70264 13.78 3.38389 13.78 5.29951C13.78 9.28451 9.12125 13.4933 7.50687 13.5226H7.5V13.5239ZM4.59625 2.64076C3.29625 2.64076 2.15687 3.88326 2.15687 5.30014C2.15687 8.88764 6.55312 12.5476 7.50062 12.5864C8.44937 12.5476 12.8444 8.88826 12.8444 5.30014C12.8444 3.88326 11.705 2.64076 10.405 2.64076C8.825 2.64076 7.9425 4.47576 7.935 4.49389C7.79125 4.84514 7.2125 4.84514 7.06812 4.49389C7.05937 4.47514 6.1775 2.64076 4.59687 2.64076H4.59625Z'
+                ></path>
+              </svg>
+            </span>
+            <span class='like-count'>{{this.likeCount}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <!-- Modal -->
+
+{{!-- 其它貼文回覆modal --}}
+<!-- Modal -->
             <div
               class='modal fade'
-              id='reply-to-id1'
+              id='replyTweet{{this.id}}'
               data-backdrop='static'
               data-keyboard='false'
               tabindex='-1'
@@ -177,8 +200,8 @@
                     <div class='reply-modal-avatar-item'>
                       <img
                         class='poster-avatar'
-                        src='https://randomuser.me/api/portraits/women/17.jpg'
-                        alt=''
+                        src='{{this.User.avatar}}'
+                        alt='avatar'
                         width='50'
                         height='50'
                       />
@@ -187,28 +210,28 @@
 
                     <div class='reply-content-warp'>
                       <div class='reply-header'>
-                        <span class='reply-name'>Apple</span>
-                        <span class='reply-account'>@apple •３小時</span>
+                        <span class='reply-name'>{{this.User.name}}</span>
+                        <span class='reply-account'>@{{this.User.account}} • {{moment this.User.createAt}}</span>
                         <div class='reply-content'>
                           <span>
-                            回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章回覆文章
+                            {{this.description}}
                           </span>
                         </div>
                       </div>
                       <div class='card-reply-to'>
                         <span class='replyItem'>回覆</span>
-                        <span class='replyReceiver'>@apple</span>
+                        <span class='replyReceiver'>@{{this.User.account}}</span>
                       </div>
                     </div>
                   </div>
 
                   <div class='modal-footer'>
                     <div class='reply-tweet-body'>
-                      <form action='' method='POST'>
+                      <form action='/tweets/{{this.id}}/replies' method='POST'>
                         <div class='replier-modal-body'>
                           <div class='replier-avatar'>
                             <img
-                              src='https://randomuser.me/api/portraits/women/20.jpg'
+                              src='{{../user.avatar}}'
                               alt=''
                               width='50'
                               height='50'
@@ -220,7 +243,7 @@
                               type='text'
                               class='form-control'
                               id='reply-tweets'
-                              name='reply-tweets'
+                              name='comment'
                               placeholder='推你的回覆'
                               required
                             ></textarea>
@@ -228,6 +251,7 @@
 
                         </div>
                         <div class='modal-footer'>
+                          {{> message}}
                           <button type='submit' class='post-submit-button'>
                             <span class='replier-footer-button'>回覆</span>
                           </button>
@@ -238,32 +262,11 @@
                 </div>
               </div>
             </div>
-
-          </div>
-          <div class='icon-like'>
-            <span>
-              <svg
-                class='like-count'
-                width='15'
-                height='15'
-                viewBox='0 0 15 15'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
-              >
-                <path
-                  d='M7.5 13.5239H7.49125C5.87687 13.4939 1.21875 9.28514 1.21875 5.29889C1.21875 3.38389 2.79687 1.70264 4.59562 1.70264C6.02687 1.70264 6.98937 2.69014 7.49937 3.40889C8.00812 2.69139 8.97062 1.70264 10.4025 1.70264C12.2025 1.70264 13.78 3.38389 13.78 5.29951C13.78 9.28451 9.12125 13.4933 7.50687 13.5226H7.5V13.5239ZM4.59625 2.64076C3.29625 2.64076 2.15687 3.88326 2.15687 5.30014C2.15687 8.88764 6.55312 12.5476 7.50062 12.5864C8.44937 12.5476 12.8444 8.88826 12.8444 5.30014C12.8444 3.88326 11.705 2.64076 10.405 2.64076C8.825 2.64076 7.9425 4.47576 7.935 4.49389C7.79125 4.84514 7.2125 4.84514 7.06812 4.49389C7.05937 4.47514 6.1775 2.64076 4.59687 2.64076H4.59625Z'
-                ></path>
-              </svg>
-            </span>
-            <span class='like-count'>{{this.likeCount}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
     {{/each}}
   </div>
 </div>
 
+{{!-- side-bar-right --}}
 <div id='sidebar-right'>
   <div class='popular'>
     <div class='title'>Popular</div>
@@ -300,3 +303,4 @@
     </div>
   </div>
 </div>
+

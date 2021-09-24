@@ -80,9 +80,17 @@ router.get('/', auth.authenticatedGeneral, (req, res) =>
   res.redirect('/tweets')
 )
 router.get('/tweets', auth.authenticatedGeneral, tweetController.getTweets)
-router.post('/tweets', auth.authenticatedGeneral)
-router.get('/tweets/:id/replies', auth.authenticatedGeneral)
-router.post('/tweets/:id/replies', auth.authenticatedGeneral)
+router.post('/tweets', auth.authenticatedGeneral, tweetController.postTweet)
+router.get(
+  '/tweets/:tweetId/replies',
+  auth.authenticatedGeneral,
+  tweetController.getReplyPage
+)
+router.post(
+  '/tweets/:tweetId/replies',
+  auth.authenticatedGeneral,
+  tweetController.postReply
+)
 
 // FollowerShip
 router.post('/follow/:id', auth.authenticatedGeneral, userController.follow)
