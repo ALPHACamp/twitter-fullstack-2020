@@ -60,8 +60,9 @@ app.get('/chat', (req, res) => {
 
 //test chat
 io.on('connection', (socket) => {
+  console.log('進入聊天室')
   socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
+    io.emit('chat message', msg);
   });
 });
 
