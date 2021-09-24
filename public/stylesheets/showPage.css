@@ -1626,3 +1626,17 @@ height:56px;
   font-weight: bold;
 }
 
+.online-user {
+  display: flex;
+  align-items: center;
+  width: 390px;
+  height: 66px;
+  margin:0;
+  /* border: 2px solid red; */
+}
+
+.online-user .avatar{
+  margin-left: 15px;
+border: 2px solid red
+
+}

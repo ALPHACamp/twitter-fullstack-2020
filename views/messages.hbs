@@ -1,0 +1,141 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12  justify-content-center" style="margin:0">
+    {{!-- 左側欄位 --}}
+    <div class="left-side col-md-2">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+
+      <div style="text-align: left">
+        <ul class="list-group">
+
+          <a href="/tweets">
+            <li class="list-group-item active">
+              <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+            </li>
+          </a>
+
+
+          <a href="/users/{{user.id}}/tweets">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
+            </li>
+          </a>
+
+          <a href="/users/{{user.id}}/setting">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
+            </li>
+          </a>
+        </ul>
+
+        <div class="">
+          <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+          </button>
+        </div>
+
+
+        <a href="/logout">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    {{!-- 中間主欄位 --}}
+    <div class="middle-side col-md-4" style="padding:0; height:100%;">
+      <div class="text-title">上線使用者(數量)</div>
+
+      <hr style="margin:0; padding:0">
+      
+      <ul class="list-group">
+        {{!-- 使用者開始 --}}
+        <li class="online-user list-group-item">
+            <div class="avatar">
+              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+              avatar</div>
+            <div>name @account</div>
+        </li>
+        <hr style="margin:0; padding:0">
+
+        {{!-- <li class="list-group-item">A second item</li>
+        <li class="list-group-item">A third item</li>
+        <li class="list-group-item">A fourth item</li>
+        <li class="list-group-item">And a fifth one</li> --}}
+        {{!-- 使用者結束 --}}
+      </ul>
+
+      
+
+    </div>
+
+    {{!-- 右側欄位 --}}
+    <div class="right-side col-md-6">
+      <div class="popular mt-2" style="padding:auto;">
+        <div class="popular-title mt-2">
+          Popular
+        </div>
+        <ul class="list-group">
+          {{!-- 跟隨中使用者開始 --}}
+          {{#each topUsers}}
+          <li class="list-group-item">
+            <div class="d-flex col-md-12" style="padding:0">
+              <div class="popular-user-pic">
+                <a href="/users/{{this.id}}/tweets" class="text-muted">
+                  <img class="user-pic" src="{{this.avatar}}" alt="">
+                </a>
+              </div>
+              <div class="name-account">
+                <a href="/users/{{this.id}}/tweets" class="text-muted">
+                  <div class="name">{{this.name}}</div>
+                </a>
+                <div class="account">@{{this.account}}</div>
+              </div>
+              <div class="button">
+
+                {{#if isSelf}}
+                {{else}}
+                {{#if isFollowed }}
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
+                  <button type="submit" class="btn follow-button">正在跟隨</button>
+                </form>
+                {{else}}
+                <form action="/followships" method="POST" style="display: contents">
+                  <input type="hidden" name="id" value="{{this.id}}">
+                  <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+                </form>
+                {{/if}}
+                {{/if}}
+              </div>
+            </div>
+          </li>
+          {{/each}}
+          {{!-- 使用者結束 --}}
+
+        </ul>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{{!-- add-tweet Modal --}}
+<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+
+  {{> add-tweet currentUser=currentUser}}
+
+</div>
+{{!-- add-tweet Modal --}}
