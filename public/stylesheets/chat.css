@@ -1,6 +1,10 @@
+.chat-room {
+  height: 100%;
+}
+
 .chats {
   max-width: 600px;
-  height: 800px;
+  height: 850px;
   border-width: 0px 1px 1px 1px;
   border-style: solid;
   border-color: #e6ecf0;
@@ -9,7 +13,7 @@
 
 .chat-users {
   max-width: 600px;
-  height: 800px;
+  height: 850px;
   border-left: solid 1px #e6ecf0;
   border-bottom: solid 1px #e6ecf0;
   padding: 0;
@@ -48,12 +52,17 @@
   font-weight: 500;
 }
 
+.chats .chat-scroll {
+  height: 760px;
+  overflow-y: auto;
+}
+
 .chats .chat-messages {
-  height: 700px;
+  min-height: 100%
 }
 
 
-.chats .user-name-status {
+.chats .name-status {
   color: #87949e;
   font-size: 1rem;
   font-weight: 700;
@@ -62,7 +71,7 @@
 }
 
 .other-chat, 
-.my-chat {
+.my-chat .chat-content {
   width: 80%;
 }
 
@@ -82,4 +91,43 @@
   color: #ffffff;
 
   
+}
+
+#chat-form {
+  border-top: solid 1px #e6ecf0 ;
+  border-bottom: solid 1px #e6ecf0;
+  padding: 0.25rem;
+  height: 3rem;
+  box-sizing: border-box;
+  backdrop-filter: blur(10px);
+}
+
+
+#chat-form .send-btn {
+  max-width: 24px;
+  width: 10%;
+  outline: none;
+  color: #ffffff;
+  cursor: pointer;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  margin-left:8px;
+  font: inherit;
+  outline: inherit;
+}
+
+.chats input {
+  border: none;
+  background-color: #e6ecf0;
+  padding: 0.2rem 1rem 0.3rem 1rem;
+  flex-grow: 1;
+  border-radius: 2rem;
+  margin: 0.25rem;
+  width:90%;
+}
+
+.chats input:focus {
+  outline: none;
 }
