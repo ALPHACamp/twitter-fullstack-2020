@@ -42,7 +42,9 @@ app.get('/api/message', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
 });
 
 app.use((req, res, next) => {
