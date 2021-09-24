@@ -73,7 +73,7 @@ const userController = {
       const totalTweet = result.rows.length
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        content: r.dataValues.content,
+        description: r.dataValues.description,
         replyCount: r.dataValues.Replies.length,
         likeCount: r.dataValues.Likes.length,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
@@ -124,7 +124,7 @@ const userController = {
     }).then(result => {
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        content: r.dataValues.content,
+        comment: r.dataValues.comment,
         replyTweetId: r.dataValues.Tweet.id,
         replyUserId: r.dataValues.Tweet.dataValues.User.id,
         replyUserAccount: r.dataValues.Tweet.dataValues.User.account
@@ -184,7 +184,7 @@ const userController = {
       const data = result.rows.map(r => ({
         ...r.dataValues,
         tweetId: r.dataValues.Tweet.dataValues.id,
-        content: r.dataValues.Tweet.dataValues.content,
+        description: r.dataValues.Tweet.dataValues.description,
         createdAt: r.dataValues.createdAt,
         likeUserId: r.dataValues.Tweet.dataValues.User.id,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
@@ -428,7 +428,7 @@ const userController = {
       const totalTweet = result.rows.length
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        content: r.dataValues.content,
+        description: r.dataValues.description,
         replyCount: r.dataValues.Replies.length,
         likeCount: r.dataValues.Likes.length,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)

@@ -18,7 +18,7 @@ const tweetController = {
         tweetUserName: row.User.dataValues.name,
         tweetUserAccount: row.User.dataValues.account,
         tweetId: row.id,
-        tweetContent: row.content,
+        tweetDescription: row.description,
         tweetRepliesCount: row.Replies.length,
         tweetLikesCount: row.Likes.length,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(row.id)
@@ -67,7 +67,7 @@ const tweetController = {
     else {
       return Tweet.create({
         UserId: req.user.id,
-        content: req.body.text,
+        description: req.body.text,
         createdAt: new Date(),
         updatedAt: new Date()
       }).then((tweet) => {
@@ -80,7 +80,7 @@ const tweetController = {
     return Reply.create({
       UserId: req.user.id,
       TweetId: req.params.id,
-      content: req.body.text,
+      comment: req.body.text,
       createdAt: new Date(),
       updatedAt: new Date()
     }).then((reply) => {
