@@ -16,8 +16,8 @@ router.post('/signin', passport.authenticate('local', {
 router.post("/signup", userController.signup);
 
 router.get("/admin/signin", adminController.signInPage)
-router.post('/admin/signin',  passport.authenticate('local', { 
-    failureRedirect: '/admin/signin' 
-  }), adminController.signIn);
+router.post('/admin/signin', passport.authenticate('local', {
+  failureRedirect: '/admin/signin'
+}), adminController.signIn);
 
 module.exports = router;

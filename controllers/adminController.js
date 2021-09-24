@@ -1,6 +1,15 @@
 const db = require('../models')
 const { Reply, User, Tweet, Like, } = db
 
+const helpers = require("../_helpers.js");
+const getTestUser = function (req) {
+  if (process.env.NODE_ENV === "test") {
+    return helpers.getUser(req);
+  } else {
+    return req.user;
+  }
+};
+
 const listAttributes = [
   "id", "name", "account", "introduction", "avatar",
 ];
@@ -12,6 +21,7 @@ const adminController = {
 
   signIn: (req, res) => {
     if (req.user.role === 'admin') {
+      console.log('signIn')
       return res.redirect('/admin/tweets');
     }
     // req.flash('error_messages', '沒有權限');

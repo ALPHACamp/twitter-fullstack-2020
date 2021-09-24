@@ -9,5 +9,6 @@ const { User, Tweet, Reply } = db;
 router.get("/tweets", adminController.getPosts)
 router.delete('/tweets/:id', adminController.deletePost)
 router.get("/users", adminController.getUsers)
+router.get('/signout', adminController.signOut)
 
 module.exports = router;

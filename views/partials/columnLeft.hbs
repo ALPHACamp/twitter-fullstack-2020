@@ -1,5 +1,5 @@
 <div class="left_column">
-  
+
   <a class="logo" href="#">
     <div class="icon">
       <img src="https://i.imgur.com/KqqLlPU.png?1" alt="AlphaCamp Logo" />
@@ -35,10 +35,15 @@
     </div>
     {{/ifCond}}
     <div class="logout_item">
-
+      {{#ifCond isadmin admin}}
+      <a class="nav_item" href="/admin/signout">
+        <i class="bi bi-box-arrow-in-left icon_index"></i>登出
+      </a>
+      {{else}}
       <a class="nav_item" href="/users/signout">
         <i class="bi bi-box-arrow-in-left icon_index"></i>登出
       </a>
+      {{/ifCond}}
     </div>
   </nav>
 </div>
