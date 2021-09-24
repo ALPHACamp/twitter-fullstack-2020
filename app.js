@@ -10,11 +10,10 @@ const {
 const helpers = require('./_helpers')
 const app = express()
 
-//test chat
+//user to chat feature
 const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
+const server = http.createServer(app);  //用在server.listener&帶入參數
+const socketChat = require('./config/socketChat')  
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -53,23 +52,17 @@ app.use((req, res, next) => {
   next()
 })
 
+server.listen(PORT, () => console.log(`Example app listening on http://localhost:${PORT}!`))
+
+
+require('./routes')(app)
+
 //Test 聊天室
 app.get('/chat', (req, res) => {
   res.render('chat');
 });
 
-//test chat
-io.on('connection', (socket) => {
-  console.log('進入聊天室')
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
-});
-
-server.listen(PORT, () => console.log(`Example app listening on http://localhost:${PORT}!`))
-
-
-
-require('./routes')(app)
+socketChat.Server(server) //server參數傳遞給io instance使用 建立通道
+socketChat.connect()  //與前端通道連線
 
 module.exports = app
