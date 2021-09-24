@@ -16,9 +16,9 @@
     </div>
     <ul class="nav followship-tags">
       <li class="nav-item"><a class="nav-link {{#if tagA}}active{{/if}}"
-          href="/profiles/{{ user.id }}/followers">跟隨者</a></li>
+          href="/users/{{ user.id }}/followers">跟隨者</a></li>
       <li class="nav-item"><a class="nav-link {{#if tagB}}active{{/if}}"
-          href="/profiles/{{ user.id }}/followings">正在跟隨</a></li>
+          href="/users/{{ user.id }}/followings">正在跟隨</a></li>
     </ul>
     <div class="col flex-direction-column">
       {{#each followers}}

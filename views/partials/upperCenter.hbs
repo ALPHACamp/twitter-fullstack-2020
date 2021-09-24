@@ -110,20 +110,20 @@
       <p class="post-sub-info mainpost-sm">{{profile.account}}</p>
       <p>{{profile.introduction}}</p>
       <p class="mainpost-sm reply-like-text">
-        <a href="/profiles/{{profile.id}}/followings"><b>{{followingsCount}}個</b></a>
+        <a href="/users/{{profile.id}}/followings"><b>{{followingsCount}}個</b></a>
         <span class="post-sub-info">&nbsp;跟隨中</span>
-        <a href="/profiles/{{profile.id}}/followers"><b>{{followersCount}}位</b></a>
+        <a href="/users/{{profile.id}}/followers"><b>{{followersCount}}位</b></a>
         <span class="post-sub-info">&nbsp;跟隨者</span>
       </p>
       <ul class="nav profilepage-tags mt-2">
         <li class="nav-item">
           <a class="nav-link {{#if isPost }}active {{/if}}" type="submit" aria-current="page"
-            href="/profiles/{{profile.id}}/posts">推文</a>
+            href="/users/{{profile.id}}/tweets">推文</a>
         </li>
         <li class="nav-item"><a class="nav-link {{#if isComment }}active {{/if}}"
-            href="/profiles/{{profile.id}}/comments">推文與回覆</a></li>
+            href="/users/{{profile.id}}/comments">推文與回覆</a></li>
         <li class="nav-item"><a class="nav-link {{#if isLikedPosts }}active {{/if}}"
-            href="/profiles/{{profile.id}}/likedPosts">喜歡的內容</a></li>
+            href="/users/{{profile.id}}/likedPosts">喜歡的內容</a></li>
       </ul>
     </div>
   </div>

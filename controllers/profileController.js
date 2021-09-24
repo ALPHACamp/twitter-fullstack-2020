@@ -9,18 +9,16 @@ const profileController = {
     try {
       // 前端判斷
       const isPost = true
-
       //get selfInformation
-      const Profile = await User.findByPk(req.params.userId, {
+      const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ],
       })
-
       // get selfTweet
       const rawTweets = await Tweet.findAll({
-        where: { UserId: req.params.userId },
+        where: { UserId: req.params.id },
         include: [Reply,
           { model: User, as: 'LikedUsers' }],
         order: [['createdAt', 'DESC']],
@@ -43,7 +41,7 @@ const profileController = {
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.params.userId } }
+        where: { id: { [Op.not]: req.user.id } }
       })
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,
