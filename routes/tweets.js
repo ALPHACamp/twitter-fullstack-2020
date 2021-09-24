@@ -27,8 +27,6 @@ const authenticated = (req, res, next) => {
   res.redirect('/users/login')
 }
 
-router.get('/', isAuthenticatedAdmin, adminController.getTweets)
-
 router.get('/', authenticated, tweetController.getTweets)
 router.post('/', authenticated, tweetController.postTweet)
 
