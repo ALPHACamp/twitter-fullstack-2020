@@ -143,21 +143,21 @@
       <div class="text-title">公開聊天室</div>
       <hr style="max-width: 673px;">
       <div class="chat">
-        <ul class="list-group">
+        <ul class="list-group" id="messages">
           {{!-- 上線 --}}
-          <li class="list-group-item">
+          {{!-- <li class="list-group-item">
             <div class="log">
               Esther Howard 上線
             </div>
-          </li>
+          </li> --}}
           {{!-- 上線 --}}
 
           {{!-- 離線 --}}
-          <li class="list-group-item">
+          {{!-- <li class="list-group-item">
             <div class="log">
               Ralph Edwards 離線
             </div>
-          </li>
+          </li> --}}
           {{!-- 離線 --}}
 
           {{!-- 他人訊息 --}}
@@ -181,7 +181,7 @@
           {{!-- 他人訊息 --}}
 
           {{!-- 自己的訊息 --}}
-          <li class="list-group-item">
+          <li class="list-group-item-myself">
             <div class="user-information">
               <div class="current-user">
                 <div class="text-area">
@@ -189,11 +189,9 @@
                 </div>
               </div>
               <div class="time">下午4:21</div>
-          
             </div>
           </li>
           {{!-- 自己的訊息 --}}
-
         </ul>
       </div>
 
@@ -202,9 +200,9 @@
       {{!-- 輸入欄位 --}}
       <div class="type-area">
         {{!-- //TODO:要改API傳 --}}
-        <form action="" method="POST" style="display: contents;">
+        <form action="" method="" id="form" style="display: contents;">
           <div class="input-area">
-            <input type="text" class="input-chat" placeholder="輸入訊息...">
+            <input type="text" class="input-chat" id="input" placeholder="輸入訊息...">
           </div>
           <div class="send-chat">
             <button class="btn">
@@ -228,3 +226,69 @@
 
 </div>
 {{!-- add-tweet Modal --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  var socket = io();
+
+  var messages = document.getElementById('messages');
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+
+  form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (input.value) {
+          var item = document.createElement('li');
+          let rawHTML = "";
+          item.classList.add('list-group-item-myself')
+          rawHTML += `<div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text"> ${input.value}</div>
+                </div>
+              </div>
+              <div class="time">下午4:21</div>
+            </div>`
+          item.innerHTML = rawHTML;
+          messages.appendChild(item);
+          const senderId =  socket.id
+          console.log('input', senderId)
+          socket.emit('chat message', input.value, senderId);
+          input.value = ''
+        }
+      })
+
+
+  socket.on('chat message', function (msg, senderId) {
+    if(socket.id !== senderId){
+      var item = document.createElement('li');
+      let rawHTML = "";
+      item.classList.add('list-group-item')
+      rawHTML += `
+            <div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+                  </a>
+                </div>
+
+                <div class="text-area">
+                  <div class="text"> ${msg}</div>
+                </div>
+              </div>
+              <div class="time">下午4:21</div>
+            </div>`
+      item.innerHTML = rawHTML;
+      messages.appendChild(item);
+      scrollWindow();
+      }
+  });
+
+  function scrollWindow() {
+    let h = document.querySelector('.chat');
+    h.scrollTo(0, h.scrollHeight);
+  }
+
+
+</script>

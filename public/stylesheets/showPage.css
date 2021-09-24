@@ -181,13 +181,29 @@ color: #0099FF;
   background-color: WHITE;
   color:black;
   border: none;
-  margin-top: 25px;
+  margin-top: 20px;
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 26px;
   text-align: left;
+}
+
+.list-group-item-myself{
+  position: relative;
+  padding:0;
+  background-color: WHITE;
+  color:black;
+  border: none;
+  margin-top: 0px;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  display: flex;
+  justify-content: end;
 }
 
 .list-group-item i {
@@ -1750,8 +1766,8 @@ color: rgba(0, 0, 0, 0.4);
   min-width: 673px;
   overflow:scroll;
   overflow-x: hidden;
-  display: table-cell;
-  vertical-align: bottom;
+  /* display: table-cell;
+  vertical-align: bottom; */
 }
 
 .chat .list-group{
@@ -1761,7 +1777,7 @@ color: rgba(0, 0, 0, 0.4);
 .chat .list-group-item {
   /* position: absolute; */
   /* bottom:0px; */
- 
+ position: relative;
   text-align: center;
   margin:0px;
 }
@@ -1839,8 +1855,8 @@ color: #657786;
 .user-information{
   margin-top: 20px;
   margin-right: 15px;
-    position: absolute;
-    right:0;
+  position: relative;
+  
   max-width: 400px;
 }
 
