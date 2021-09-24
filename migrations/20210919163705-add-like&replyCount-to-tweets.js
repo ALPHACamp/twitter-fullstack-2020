@@ -3,11 +3,11 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return Promise.all([
-      queryInterface.addColumn('Users', 'followingCount', {
+      queryInterface.addColumn('Tweets', 'likeCount', {
         type: Sequelize.INTEGER,
         defaultValue: 0
       }),
-      queryInterface.addColumn('Users', 'followerCount', {
+      queryInterface.addColumn('Tweets', 'replyCount', {
         type: Sequelize.INTEGER,
         defaultValue: 0
       }),
@@ -16,8 +16,8 @@ module.exports = {
 
   down: (queryInterface, Sequelize) => {
     return Promise.all([
-      queryInterface.removeColumn('Users', 'followingCount'),
-      queryInterface.removeColumn('Users', 'followerCount')
+      queryInterface.removeColumn('Tweets', 'likeCount'),
+      queryInterface.removeColumn('Tweets', 'replyCount')
     ])
   }
 }
