@@ -19,7 +19,7 @@ const authenticated = (req, res, next) => {
 
 //user's profile
 router.put('/self/edit/:id', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putUserEdit)
-router.get('/users/:id/tweets', authenticated, userController.getUser)
+router.get('/:id/tweets', authenticated, userController.getUser)
 router.get('/self/reply/:id', authenticated, userController.getUserReply)
 router.get('/self/like/:id', authenticated, userController.getUserLike)
 router.get('/self/follower/:id', authenticated, userController.getUserFollower)

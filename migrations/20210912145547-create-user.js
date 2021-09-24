@@ -9,7 +9,6 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       account: {
-        defaultValue: '123',
         type: Sequelize.STRING
       },
       name: {

@@ -32,7 +32,7 @@ router.get('/:id/replyList', authenticated, tweetController.getTweet)
 router.post('/:id/replyList', authenticated, tweetController.postReply)
 
 router.post('/:id/like', authenticated, tweetController.like)
-router.delete('/:id/unlike', authenticated, tweetController.unlike)
+router.post('/:id/unlike', authenticated, tweetController.unlike)
 
 router.post('/:id/following', authenticated, tweetController.following)
 router.delete('/:id/unfollowing', authenticated, tweetController.unfollowing)
