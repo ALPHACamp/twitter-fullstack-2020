@@ -23,6 +23,69 @@
   </div>
 </div>
 
+{{!-- User Profile Update --}}
+<div class="modal fade bd" id="userProfileSetting" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form action="/users/{{user.id}}/edit?_method=PUT" method="post" enctype="multipart/form-data">
+
+        <div class="modal-header">
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn a-tomato" data-bs-dismiss="modal" aria-label="Close">
+              <i class="fas fa-times"></i>
+            </button>
+            <span class="modal-title h5 fw-bold ps-3" id="ModalLabel">編輯個人資料</span>
+          </div>
+          <button type="submit" class="badge btn btn-tomato rounded-pill fw-bold" style="font-size: 1.1em;">儲存</button>
+        </div>
+
+        <div class="modal-body row">
+          <div class="col-12 m-0 p-0 position-relative mb-5">
+            <div class="bg-holder" style="height: 170px;">
+              <img src="{{#if users.cover}}{{users.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                class="card-img-top" alt="..." class="img-fluid" id="bgImage"
+                style="height:100%;width:100%;object-fit:cover">
+            </div>
+
+            <label for="cover" class="btn cover-uploader">
+              <input class="d-none" type="file" id="cover" name="cover" accept="image/*">
+              <i class="fas fa-camera" style="font-size: 1.5em; color: white"></i>
+            </label>
+
+            <div class="avatar-holder">
+              <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/300/300/avator{{/if}}"
+                class="rounded-circle" alt="user_Aavtor" height="80px" width="80px">
+            </div>
+
+            <label for="avatar" class="btn avator-uploader">
+              <input class="d-none" type="file" id="avatar" name="avatar" accept="image/*">
+              <i class="fas fa-camera" style="color: white;"></i>
+            </label>
+
+          </div>
+
+          <div class="col-12 mb-3 mt-2">
+            <label for="name" class="fw-bold"
+              style="margin-bottom: -30px; margin-left: 8px; font-size: 1.1em">名稱</label>
+            <input type="text" class="form-control pt-4 nowcount1" id="name" name="name" maxlength="50"
+              style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em"
+              aria-describedby="nameHelp" value="{{users.name}}" />
+            <p class="text-end text-muted now1" style="font-size: 0.98em;"></p>
+          </div>
+          <div class="col-12 mb-3 mt-2">
+            <label for="description" class="fw-bold" style="margin-left: 8px; font-size: 1.1em;">自我介紹</label>
+            <textarea class="form-control nowcount2" id="description" name="description"
+              style="border:none; border-bottom:2px solid rgb(75, 82, 85);outline: none;background-color:#f4f8fb; font-size:1.1em;"
+              maxlength="160" aria-describedby="descriptionHelp">{{user.description}}</textarea>
+            <p class="text-end text-muted now2" style="font-size: 0.98em;"></p>
+          </div>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div class="row grid">
   <div>
     <nav class="userSidebar fixed">
@@ -81,14 +144,17 @@
         <p class="m-0">{{tweets.length}}推文</p>
       </div>
     </div>
+    
     <div class="cover">
       <img
-        src="https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2020/11/07/20201107-092915_U13380_M651499_4ac4.jpg?itok=6KFZde7p"
-        alt="" class="userBackgroundImg">
+        src="{{#if users.cover}}{{users.cover}}{{else}}{{noImage user.cover}}{{/if}}"
+        alt="..." class="userBackgroundImg">
     </div>
+
     <span class="avatar m-2">
       <img src="{{noImage tweetUser.avatar}}" alt="" class="rounded-circle userProfileImg">
     </span>
+
     <div class="profileInformation mt-5 pt-2 ms-2">
       <div class="name m-1 fw-bolder mt-2">
         <h5> {{tweetUser.name}}</h5>
@@ -98,18 +164,35 @@
         <p>{{tweetUser.description}}</p>
       </div>
     </div>
+
     <div class="d-flex">
     </div>
     <div class="d-flex m-3">
       <div class="replies me-5 d-flex">
-        <div class="repliesAmount fw-bolder me-2">34</div>
+        <div class="repliesAmount fw-bolder me-2">{{tweetUser.followingCount}}</div>
         <div>個跟隨中</div>
       </div>
       <div class="likes d-flex">
-        <div class="likesAmount fw-bolder me-2">59</div>
+        <div class="likesAmount fw-bolder me-2">{{tweetUser.followerCount}}</div>
         <div>位跟隨者</div>
       </div>
     </div>
+    {{#ifCond user.id tweetUser.id}}
+    <div class="d-grid gap-2 col-9 round">
+      <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
+        data-bs-target="#userProfileSetting">編輯個人資料</button>
+    </div>
+    {{#if isFollowed}}
+    <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">
+      <button type="submit" class="btn btn-tomato rounded-pill" name="{{user.id}}">正在跟隨</button>
+    </form>
+    {{else}}
+    <form action="/followships/{{user.id}}" method="POST">
+      <button type="submit" class="btn btn-outline-tomato rounded-pill" name="{{user.id}}"
+        style="margin-left: 10px;">跟隨</button>
+    </form>
+    {{/if}}
+    {{/ifCond}}
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/tweets">推文</a>

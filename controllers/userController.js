@@ -1,4 +1,6 @@
-// TODO controller
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const bcrypt = require('bcryptjs')
 const { raw } = require('body-parser')
 const db = require('../models')
@@ -177,6 +179,28 @@ const userController = {
     })
     req.flash('success_messages', 'user was successfully to update')
     res.redirect('/tweets')
+  },
+
+  putUserProfile: async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    console.log(user)
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!")
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(file.path, (err, img) => {
+        user.update({
+          name: req.body.name,
+          avatar: file ? img.data.link : user.avatar,
+          cover: file ? img.data.link : user.cover,
+          description: req.body.description
+        })
+      }).then((user) => {
+        req.flash('success_messages', 'Your profile was successfully to update')
+        res.redirect('back')
+      })
+    }
   },
 
   // getUserTweets: (req, res) => {
