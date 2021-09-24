@@ -160,38 +160,44 @@
           </li> --}}
           {{!-- 離線 --}}
 
+        {{#each msg}}
+          
+          {{#if selfMsg}}
+          {{!-- 自己的訊息 --}}
+          <li class="list-group-item-myself">
+            <div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text"> {{this.content}}</div>
+                </div>
+              </div>
+              <div class="time">{{fromNow this.createdAt}}</div>
+            </div>
+          </li>
+          {{!-- 自己的訊息 --}}
+          {{else}}
           {{!-- 他人訊息 --}}
-          {{!-- <li class="list-group-item">
+          <li class="list-group-item">
             <div class="information">
               <div class="other-user">
                 <div class="avatar">
                   <a href="">
-                    <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+                    <img src="{{this.User.avatar}}" alt="">
                   </a>
                 </div>
-
+          
                 <div class="text-area">
-                  <div class="text"> 訊息打在Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</div>
+                  <div class="text"> {{this.content}}</div>
                 </div>
               </div>
-              <div class="time">下午4:21</div>
-
+              <div class="time">{{fromNow this.createdAt}}</div>
+          
             </div>
-          </li> --}}
+          </li>
           {{!-- 他人訊息 --}}
+          {{/if}}
+        {{/each}}
 
-          {{!-- 自己的訊息 --}}
-          {{!-- <li class="list-group-item-myself">
-            <div class="user-information">
-              <div class="current-user">
-                <div class="text-area">
-                  <div class="text"> 自己的訊息打在Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</div>
-                </div>
-              </div>
-              <div class="time">下午4:21</div>
-            </div>
-          </li> --}}
-          {{!-- 自己的訊息 --}}
         </ul>
       </div>
 
