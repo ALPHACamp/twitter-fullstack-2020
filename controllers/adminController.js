@@ -15,13 +15,13 @@ const adminController = {
   },
 
   postLogin: (req, res) => {
-    res.redirect('/admins/tweets')
+    res.redirect('/admin/tweets')
   },
 
   logout: (req, res) => {
     req.flash('success_messages', '登出成功')
     req.logout()
-    res.redirect('/admins/login')
+    res.redirect('/admin/signin')
   },
 
   getTweets: (req, res) => {
@@ -63,7 +63,7 @@ const adminController = {
       .then(tweet => {
         tweet.destroy()
           .then(() => {
-            res.redirect('/admins/tweets')
+            res.redirect('/admin/tweets')
           })
       })
   },
