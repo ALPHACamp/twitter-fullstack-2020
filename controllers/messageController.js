@@ -12,15 +12,22 @@ const User = db.User
 const messageController = {
   renderPage: (req, res) => {
     const currentUser = helpers.getUser(req)
-    // console.log(currentUser)
+    console.log(currentUser.id)
     Message.findAll({
       include:[{model:User, attributes:['id', 'avatar', 'name', 'account']}],
-      order: [['createdAt', 'DESC']],
-      raw: true, nest: true
-    }).then(msg => {
-      console.log(msg)
+      order: [['createdAt', 'ASC']],
+      // raw: true, nest: true
     })
-    return res.render('message', {currentUser})
+    .then(msg => {
+      msg = msg.map(d => ({
+        ...d.dataValues,
+        User: d.User.dataValues,
+        selfMsg: Boolean(d.UserId === currentUser.id)
+      }))
+      // console.log('New=====',msg)
+      return res.render('public-chat', {currentUser})
+    })
+    
   },
   sendMsg: (user) => {
     return Message.create({
