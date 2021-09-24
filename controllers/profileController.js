@@ -9,18 +9,16 @@ const profileController = {
     try {
       // 前端判斷
       const isPost = true
-
       //get selfInformation
-      const Profile = await User.findByPk(req.params.userId, {
+      const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
         ],
       })
-
       // get selfTweet
       const rawTweets = await Tweet.findAll({
-        where: { UserId: req.params.userId },
+        where: { UserId: req.params.id },
         include: [Reply,
           { model: User, as: 'LikedUsers' }],
         order: [['createdAt', 'DESC']],
@@ -43,7 +41,7 @@ const profileController = {
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.params.userId } }
+        where: { id: { [Op.not]: req.user.id } }
       })
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,
@@ -62,7 +60,7 @@ const profileController = {
     try {
       //前端處理判定
       const isComment = true
-      const Profile = await User.findByPk(req.params.userId, {
+      const Profile = await User.findByPk(req.params.id, {
         include: [
           Tweet,
           {
@@ -84,7 +82,7 @@ const profileController = {
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.params.userId } }
+        where: { id: { [Op.not]: req.user.id } }
       })
 
       const Users = await rawUsers.map(data => ({
@@ -104,7 +102,7 @@ const profileController = {
       // 前端判斷
       const isLikedPosts = true
       //get selfInformation
-      const Profile = await User.findByPk(req.params.userId, {
+      const Profile = await User.findByPk(req.params.id, {
         include: [
           Tweet,
           { model: User, as: 'Followers' },
@@ -114,7 +112,7 @@ const profileController = {
 
       // get LIkeDTweet
       const rawLikedTweets = await Like.findAll({
-        where: { UserId: req.params.userId },
+        where: { UserId: req.params.id },
         include: [
           {
             model: Tweet, include: [Like, Reply, User]
@@ -139,17 +137,17 @@ const profileController = {
           { model: User, as: 'Followers' },
         ],
         where: {
-          id: { [Op.not]: req.params.userId },
+          id: { [Op.not]: req.user.id },
           role: { [Op.not]: 'admin' }
         },
       })
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,
         FollowerCount: data.Followers.length,
-        // isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
+        isFollowed: req.user.Followers.map(d => d.id).includes(req.user.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
-
+      console.log(Users)
       // return res.json({ tweets: LikedTweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
       return res.render("profile", { isLikedPosts, users: TopUsers, tweets: LikedTweets, profile: Profile, tweetsCount, followersCount, followingsCount });
     } catch (error) {

@@ -4,6 +4,7 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
 
+
 module.exports = (app) => {
   // 初始化 Passport 模組
   app.use(passport.initialize());
@@ -52,11 +53,15 @@ module.exports = (app) => {
     done(null, user.id);
   });
   passport.deserializeUser((id, done) => {
-    User.findById(id)
-      .then(user => {
-        user = user.toJSON()
-        return done(null, user)
-      })
-      .catch((err) => done(err, null));
+    User.findByPk(id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
+      user = user.toJSON()
+      return done(null, user)
+    })
+    .catch((err) => done(err, null));
   });
 };

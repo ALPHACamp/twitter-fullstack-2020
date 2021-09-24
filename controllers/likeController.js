@@ -2,9 +2,6 @@ const db = require("../models");
 const { User, Tweet, Reply, Like, Followship, sequelize } = db;
 const moment = require("moment");
 
-//for development
-const { dummyuser } = require("../dummyuser.json");
-
 //for test only
 const helpers = require("../_helpers.js");
 const getTestUser = function (req) {
@@ -16,21 +13,20 @@ const getTestUser = function (req) {
 const likeController = {
 
   changeLike: (req, res) => {
-    const user = dummyuser;
     const tweetId = req.params.id
     return Like.findOne({
       where: {
-        UserId: Number(user.id),
+        UserId: Number(req.user.id),
         TweetId: Number(tweetId)
       }})
       .then((like) => {
         if(like) return Like.destroy({
           where: {
-            UserId: Number(user.id),
+            UserId: Number(req.user.id),
             TweetId: Number(tweetId)
           }})
         else return Like.create({
-          UserId: Number(user.id),
+          UserId: Number(req.user.id),
           TweetId: Number(tweetId)         
         })})
       .then(() => res.redirect('back'))
