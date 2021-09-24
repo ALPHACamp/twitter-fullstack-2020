@@ -2,6 +2,11 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Tweet = sequelize.define('Tweet', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     description: DataTypes.TEXT,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,
