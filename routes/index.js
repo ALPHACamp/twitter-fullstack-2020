@@ -43,14 +43,14 @@ const authenticatedAdmin = (req, res, next) => {
 
 router.use("/users", authenticated, usersRouter);
 router.use("/admin", authenticatedAdmin, adminRouter);
-router.use("/posts", authenticated, postsRouter);
+router.use("/tweets", authenticated, postsRouter);
 router.use("/profiles", authenticated, profilesRouter);
 router.use("/followships", authenticated, followshipRouter);
 router.use("/", homeRouter);
 
 // router.use("/users", usersRouter);
 // router.use("/admin", adminRouter);
-// router.use("/posts", postsRouter);
+// router.use("/tweets", postsRouter);
 // router.use("/profiles", profilesRouter);
 // router.use("/followships", followshipRouter);
 // router.use("/", homeRouter);

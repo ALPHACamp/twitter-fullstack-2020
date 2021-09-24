@@ -24,7 +24,7 @@
           <h5 class="d-inline-block post-title">{{this.User.name}}&nbsp;<span
               class="post-sub-info">{{this.User.account}} ‧
               {{this.createdAt}}</span></h5>
-          <a href="/posts/{{this.id}}">
+          <a href="/tweets/{{this.id}}">
             <p class="post-text">{{this.description}}</p>
           </a>
           <h3 class="post-sub-info">
@@ -34,7 +34,7 @@
                 </button>
             </span>
             <span class="post-icon-block">              
-              <form action="/posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                
+              <form action="/tweets/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                
                 {{#if this.isLiked}}
                  <button type="submit" class="bi bi-heart-fill btn"></button><span class="likedText">{{this.LikedCount}}</span>
                  {{else}}

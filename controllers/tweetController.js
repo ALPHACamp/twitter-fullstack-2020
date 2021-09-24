@@ -8,7 +8,7 @@ const tweetController = {
   getPosts: async (req, res) => {
     const user = dummyuser;
     try {
-      const Profile = await User.findByPk(req.params.userId, {
+      const Profile = await User.findByPk(req.user.id, {
         include: [
           { model: User, as: "Followers" },
           { model: User, as: "Followings" },
@@ -41,7 +41,7 @@ const tweetController = {
       //add isLike property dynamically
       Tweets.forEach((Tweet) => {
         Tweet.LikedUsers.forEach((likedUser) => {
-          if (Number(likedUser.id) === Number(user.id)) Tweet.isLiked = true;
+          if (Number(likedUser.id) === Number(req.user.id)) Tweet.isLiked = true;
         });
       });
       // return res.json(TopUsers)

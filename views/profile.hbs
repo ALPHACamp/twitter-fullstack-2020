@@ -31,7 +31,7 @@
           <h5 class="d-inline-block">{{../profile.name}}&nbsp;<span class="post-sub-info">{{../profile.account}}
               &#x2027;
               {{moment this.createdAt}}</span></h5>
-          <a href="/posts/{{this.id}}">
+          <a href="/tweets/{{this.id}}">
             <p>{{this.description}}</p>
           </a>
           <p class="post-sub-info"><span class="post-icon-block"><i class="bi bi-chat"></i>{{ReplyCount}}</span><span
@@ -57,7 +57,7 @@
             <h5 class="d-inline-block profile-nav-header post-title">{{../profile.name}}&nbsp;<span
                 class="post-sub-info">{{../profile.account}}
                 &#x2027; {{moment this.createdAt}}</span></h5>
-            <a href="/posts/{{this.TweetId}}">
+            <a href="/tweets/{{this.TweetId}}">
               <p>{{this.Tweet.description}}</p>
             </a>
             {{!-- <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p> --}}
@@ -87,7 +87,7 @@
               class="post-sub-info">{{this.Tweet.User.account}} &#x2027;
               {{moment this.createdAt}}</span></h5>
 
-          <a href="/posts/{{this.Tweet.id}}">
+          <a href="/tweets/{{this.Tweet.id}}">
             <p>{{this.Tweet.description}}</p>
           </a>
           <p class="post-sub-info">
