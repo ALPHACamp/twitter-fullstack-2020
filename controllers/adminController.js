@@ -1,5 +1,9 @@
 const db = require('../models')
-const { Reply, User, Tweet, Like, Followship } = db
+const { Reply, User, Tweet, Like, } = db
+
+const listAttributes = [
+  "id", "name", "account", "introduction", "avatar",
+];
 
 const adminController = {
   signInPage: (req, res) => {
@@ -22,13 +26,16 @@ const adminController = {
 
   getPosts: (req, res) => {
     return Tweet.findAll({
-      include: User,
+      include: [
+        { model: User, Attributes: listAttributes }
+      ],
       order: [['createdAt', 'DESC']]
     }).then(tweets => {
       const data = tweets.map(t => ({
         ...t.dataValues,
         description: t.description.substring(0, 50),
       }))
+
       // return res.json(data)
       return res.render('admin/tweets', { tweet: data, isadmin: req.user.role })
     })
@@ -47,10 +54,13 @@ const adminController = {
 
   getUsers: (req, res) => {
     return User.findAll({
+      Attributes: ['id', 'name', 'account', 'cover', 'avatar'],
       include: [
-        Reply, Tweet, Like,
-        { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' }
+        { model: Reply, Attributes: ['id'] },
+        { model: Tweet, Attributes: ['id'] },
+        { model: Like, Attributes: ['id'] },
+        { model: User, as: 'Followers', Attributes: ['id'] },
+        { model: User, as: 'Followings', Attributes: ['id'] }
       ]
     }).then(users => {
       const data = users.map(data => ({
@@ -63,7 +73,7 @@ const adminController = {
       }))
       data.sort((a, b) => b.TweetCount - a.TweetCount)
       // return res.json(data)
-      return res.render('admin/users', { user: data, isadmin: req.user.role})
+      return res.render('admin/users', { user: data, isadmin: req.user.role })
     })
       .catch((error) => res.status(400).json(error));
   }
