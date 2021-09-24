@@ -48,63 +48,9 @@ const adminController = {
   deleteTweet: async (req, res) => {
     const TweetID = req.params.id
 
-    // await Like.findAll({
-    //   raw: true,
-    //   nest: true,
-    //   where: { TweetID }
-    // }).then(likes => {
-    //   console.log("===============")
-    //   console.log("likes before:", likes)
-    // })
-
-    // await Reply.findAll({
-    //   raw: true,
-    //   nest: true,
-    //   where: { TweetID }
-    // }).then(replies => {
-    //   console.log("===============")
-    //   console.log("reply before:", replies)
-    // })
-
-    // await Tweet.findAll({
-    //   raw: true,
-    //   nest: true,
-    //   where: { id: TweetID }
-    // }).then(tweets => {
-    //   console.log("===============")
-    //   console.log("tweet before:", tweets)
-    // })
-
     await Like.destroy({ where: { TweetID } })
     await Reply.destroy({ where: { TweetID } })
     await Tweet.destroy({ where: { id: TweetID } })
-
-    // await Like.findAll({
-    //   raw: true,
-    //   nest: true,
-    //   where: { TweetID }
-    // }).then(likes => {
-    //   console.log("===============")
-    //   console.log("likes after:", likes)
-    // })
-
-    // await Reply.findAll({
-    //   raw: true,
-    //   nest: true,
-    //   where: { TweetID }
-    // }).then(replies => {
-    //   console.log("===============")
-    //   console.log("reply after:", replies)
-    // })
-
-    // await Tweet.findAll({
-    //   raw: true,
-    //   nest: true,
-    //   where: { id: TweetID }
-    // }).then(tweets => {
-    //   console.log("===============")
-    //   console.log("tweet after:", tweets)
-    // })
 
     res.redirect('/admin/tweets')
   },
@@ -134,31 +80,15 @@ const adminController = {
           followingsCount: user.Followings.length,
           tweetCount: user.Tweets.length,
           likeCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).reduce((accumulator, currentValue) => {
-            // console.log("===================")
-            // console.log("tweetid:", currentValue.id)
-            // console.log("accumulator:", accumulator)
-            // console.log("currentlikes:", currentValue.Likes)
             const addCount = currentValue.Likes.UserId ? 1 : 0
-            // console.log("currentValue:", addCount)
-            // console.log("return:", accumulator + addCount)
             return accumulator + addCount
           }, 0)
-          // likeCount: user.Tweets.reduce((accumulator, currentValue) => {
-          //   console.log("===================")
-          //   console.log("tweetid:", currentValue.dataValues.id)
-          //   console.log("accumulator:", accumulator)
-          //   console.log("currentlikes:", currentValue.dataValues.Likes)
-          //   console.log("currentValue:", currentValue.dataValues.Likes.length)
-          //   console.log("return:", accumulator + currentValue.dataValues.Likes.length)
-          //   return accumulator + currentValue.dataValues.Likes.length
-          // }, 0)
         }))
-      // console.log(usersData)
+
       usersData = usersData.sort((a, b) => b.tweetCount - a.tweetCount)
       res.render('admin/users', { users: usersData })
     })
   }
 }
-
 
 module.exports = adminController
