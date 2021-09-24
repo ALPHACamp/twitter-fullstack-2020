@@ -1,1 +1,146 @@
-<h5>hi</h5>
+<div class='container-fluid' id="tweets">
+  <div class='row flex-nowrap justify-content-between mr-3'>
+    <div class="col-auto col-lg-3">
+      <a class="d-flex ml-5 py-3 pl-4" href="/">
+        <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
+      </a>
+      <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
+        <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
+          <li class="nav-item py-1">
+            <a class="nav-link align-middle text-dark" href="/tweets">
+              <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
+              <span class="h5 menu-text home a-tomato" style="color: #FF6600;">首頁</span>
+            </a>
+          </li>
+    
+          <li class="nav-item py-1">
+            <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+              <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+              <span class="h5 menu-text public">公開聊天室</span>
+            </a>
+          </li>
+    
+          <li class="nav-item py-1">
+            <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}">
+              <i class="far fa-user" style="font-size: 1.2em;"></i>
+              <span class="h5 menu-text user">個人資料</span>
+            </a>
+          </li>
+          <li class="nav-item py-1">
+            <a class="nav-link align-middle text-dark h-tomato" href="/setting">
+              <i class="fas fa-cog" style="font-size: 1.2em;"></i>
+              <span class="h5 menu-text setting">設定</span>
+            </a>
+          </li>
+          <li class="nav-item px-2">
+            <button type="button" class="reply-btn btn btn-tomato rounded-pill mt-3"
+              style="width: 100%; border-radius: 30px 30px 30px 30px;" data-toggle="modal" data-target="#tweetModal">
+              <span class='tweet-btn'>推文</span>
+            </button>
+    
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-auto col-lg-3 col-md-2">
+      <div class="card d-none d-md-flex flex-column vh-100 position-fixed">
+        <ul class="list-group " style="width: 24vw;">
+          <li class="list-group-item" style="border-left: none;border-right: none;font-weight: bold; font-size: 18px;">上線使用者(<span
+              id="onlineCount">0</span>)
+          </li>
+          <p id="id" class="d-none">{{user.id}}</p>
+          <p id="avatar" class="d-none">{{user.avatar}}</p>
+          <h5 id='name' class="d-none">{{user.name}}</h5>
+        </ul>
+        <ul id="publicPeople" class="list-group overflow-auto" style="width: 24vw;">
+          <li class="list-group-item" style="border: none;">
+            <div id="onlinePeople">
+              {{!-- 第一個上線者 --}}
+              
+              <div class="row justify-content-start align-items-center px-2 py-1 rounded hovercard"
+                style="border: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 3px;" onclick="location.href='/users/{{id}}'">
+                <div class="col-2 d-flex justify-content-center align-items-center" id="onlineUsers">
+                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/22c22e57910025.59e8689468e11.jpg" width="50" height="50" class="rounded-circle">
+                </div>
+                <div class="col-6 d-flex" style="height: 60px;">
+                  <h5 style="line-height: 60px; font-size: 15px; font-weight: bold;">name</h5>
+                  <p class="text-muted ps-2" style="font-size: 15px; line-height: 60px; font-weight: 500; color:#657786;">
+                    @account</p>
+                </div>
+              </div>
+              <div class="row justify-content-start align-items-center px-2 py-1 rounded hovercard"
+                style="border: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 3px;" onclick="location.href='/users/{{id}}'">
+                <div class="col-2 d-flex justify-content-center align-items-center" id="onlineUsers">
+                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/22c22e57910025.59e8689468e11.jpg" width="50"
+                    height="50" class="rounded-circle">
+                </div>
+                {{!-- 第二個上線者 --}}
+                <div class="col-6 d-flex" style="height: 60px;">
+                  <h5 style="line-height: 60px; font-size: 15px; font-weight: bold;">name</h5>
+                  <p class="text-muted ps-2" style="font-size: 15px; line-height: 60px; font-weight: 500; color:#657786;">
+                    @account</p>
+                </div>
+              </div>
+
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class='col-8 col-lg-7 col-md-8 col-sm-6' style="border-right: 0px;">
+      <div class="card d-md-flex flex-column vh-100" style="border:none;">
+        <li class="list-group-item" style="font-weight: bold; font-size: 18px;">
+          公開聊天室
+        </li>
+        <ul id="publicboard" class="list-group overflow-auto">
+          <li class="list-group-item" style="border-bottom:none">
+
+            
+            <div id='board' class="rounded-3">
+              <!--左邊訊息-->
+              <div class="d-flex row">
+                <div class="col-1 d-flex justify-content-center">
+                  <a href="/users/{{id}}" class="p-1">
+                    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/22c22e57910025.59e8689468e11.jpg"
+                      class="rounded-circle" style="width: 40px; height: 40px" alt="avatar" />
+                  </a>
+                </div>
+                <div class="col-11 pl-0 mt-3">
+                  <div>
+                    <p class="d-inline msgblockleft">左邊訊息</p>
+                  </div>
+                  <p class="text-muted mx-0" style="font-size: 13px; padding-left: 1px; margin-top: 6px;line-height: 13px;">下午4:21</p>
+                </div>
+              </div>
+              <!--左邊訊息-->
+
+              <!--右邊訊息-->
+              <div class=" d-flex flex-row-reverse">
+                <div class="col-3 flex-column">
+                  <div>
+                    <p class="d-inline msgblockright ">
+                      右邊訊息</p>
+                  </div>
+                  <p class="text-muted mx-0 bd-highlight" style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">
+                    幾秒前</p>
+                </div>
+                <!--右邊訊息結束-->
+              </div>
+            </div>                      
+          </li>
+        </ul>
+        <li class="list-group-item col-11 mr" id="msgInputBtn">
+          <div class="input-group">
+            <input type="text" id='message' class="form-control bg-light" placeholder="請輸入訊息..."
+              aria-label="msgInput" aria-describedby="basic-addon1">
+            <button type="submit" id='send' class="btn btn-tomato " >
+              <i class="fas fa-paper-plane"></i></button>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+</div>
+<script src='/javascripts/public.js'></script>
