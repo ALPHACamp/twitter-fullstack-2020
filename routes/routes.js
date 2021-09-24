@@ -5,7 +5,7 @@ const passport = require('../config/passport')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
-// const messageController = require('../controllers/messageController')
+const messageController = require('../controllers/messageController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -117,6 +117,9 @@ router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 
 //使用者編輯個人資料(edit)
 router.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserEdit)
+
+//即時通訊
+router.get('/message', messageController.renderPage);
 
 //註冊
 router.get('/signup', userController.signUpPage)
