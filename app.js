@@ -43,13 +43,23 @@ app.use(methodOverride('_method'))
 // socket.on('chat message', (msg, senderId) => {
 //   io.emit('chat message', msg, senderId);
 // });
+// io.on('send user', (socket,userName) => {
+//   socket.broadcast.emit('new user msg', userName)
+// })
+
+
 io.on('connection', (socket) => {
-  
-  socket.on('chat message', (msg, userId, avatar) => { 
-    const user = {id: userId, msg: msg,}
-    messageController.sendMsg(user)
-    io.emit('chat message', msg, userId, avatar);
+  socket.on('send user', function(currentName) {
+    
+    socket.broadcast.emit('new user msg', currentName)
+
+    socket.on('chat message', (msg, currentId, currentAvatar) => {
+      console.log('接收',currentId)
+      const user = { id: currentId, msg: msg }
+      messageController.sendMsg(user)
+      io.emit('chat message', msg, currentId, currentAvatar);
     });
+  })
 });
 
 app.use((req, res, next) => {
