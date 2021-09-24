@@ -1,20 +1,21 @@
 <div class="left_column">
-  <a class="logo" href="/tweets">
+  
+  <a class="logo" href="#">
     <div class="icon">
       <img src="https://i.imgur.com/KqqLlPU.png?1" alt="AlphaCamp Logo" />
     </div>
   </a>
   <nav class="nav_items">
-    {{!-- {{#ifCond User.role admin }}
+    {{#ifCond isadmin admin }}
     <div class="navigation">
-      <a class="nav_item" href="#">
+      <a class="nav_item" href="/admin/tweets">
         <i class="fas fa-home icon_index"></i>推文清單
       </a>
-      <a class="nav_item" href="#">
+      <a class="nav_item" href="/admin/users">
         <i class="far fa-user icon_index"></i>使用者列表
       </a>
     </div>
-    {{else}} --}}
+    {{else}}
     <div class="navigation">
       <a class="nav_item" href="/tweets">
         <i class="fas fa-home icon_index"></i>首頁
@@ -32,7 +33,7 @@
         </button>
       </div>
     </div>
-    {{!-- {{/if}} --}}
+    {{/ifCond}}
     <div class="logout_item">
 
       <a class="nav_item" href="/users/signout">

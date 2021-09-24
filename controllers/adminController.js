@@ -2,6 +2,24 @@ const db = require('../models')
 const { Reply, User, Tweet, Like, Followship } = db
 
 const adminController = {
+  signInPage: (req, res) => {
+    return res.render("admin/signin");
+  },
+
+  signIn: (req, res) => {
+    if (req.user.role === 'admin') {
+      return res.redirect('/admin/tweets');
+    }
+    // req.flash('error_messages', '沒有權限');
+    req.logout();
+    return res.redirect('/signin');
+  },
+  signOut: (req, res) => {
+    //  req.flash('success_messages', '登出成功！')
+    req.logout()
+    res.redirect('/signin')
+  },
+
   getPosts: (req, res) => {
     return Tweet.findAll({
       include: User,
@@ -12,7 +30,7 @@ const adminController = {
         description: t.description.substring(0, 50),
       }))
       // return res.json(data)
-      return res.render('admin/tweets', { tweet: data })
+      return res.render('admin/tweets', { tweet: data, isadmin: req.user.role })
     })
       .catch((error) => res.status(400).json(error));
   },
@@ -45,7 +63,7 @@ const adminController = {
       }))
       data.sort((a, b) => b.TweetCount - a.TweetCount)
       // return res.json(data)
-      return res.render('admin/users', { user: data })
+      return res.render('admin/users', { user: data, isadmin: req.user.role})
     })
       .catch((error) => res.status(400).json(error));
   }

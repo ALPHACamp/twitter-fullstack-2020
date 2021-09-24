@@ -5,9 +5,6 @@ const router = express.Router();
 const db = require("../../models");
 const { User, Tweet, Reply } = db;
 
-router.get("/", (req, res) => {
-  return res.send("index");
-});
 
 router.get("/tweets", adminController.getPosts)
 router.delete('/tweets/:id', adminController.deletePost)
