@@ -87,6 +87,7 @@ const tweetController = {
       });
       // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers, createdTimeFromNow, createdTimeByReply})
       return res.render("post", {
+        profile: req.user,
         tweet,
         ReplyCount,
         LikedCount,

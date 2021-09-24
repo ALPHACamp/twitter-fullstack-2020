@@ -19,7 +19,7 @@ const listAttributes = [
 const followshipController = {
   getFollowers: (req, res) => {
     const user = dummyuser
-    User.findByPk(user.id, {
+    User.findByPk(req.user.id, {
       attributes: ["id", "name"],
       include: [
         { model: Tweet, attributes: ["id"] },
@@ -38,14 +38,14 @@ const followshipController = {
           else follower.isFollowed = false
           follower.updatedAtFormated = moment(follower.updatedAt).fromNow()
         })
-        return res.render("followship", { tagA: true, user, followers: user.Followers });
+        return res.render("followship", { tagA: true, profile: user, followers: user.Followers });
       })
       .catch((error) => res.status(400).json(error));
   },
 
   getFollowings: (req, res) => {
     const user = dummyuser
-    User.findByPk(user.id, {
+    User.findByPk(req.user.id, {
       attributes: ["id", "name"],
       include: [
         { model: Tweet, attributes: ["id"] },
@@ -62,7 +62,7 @@ const followshipController = {
           following.updatedAtFormated = moment(following.updatedAt).fromNow();
         });
         user.tweetCount = user.Tweets.length;
-        return res.render("followship", { tagB: true, user, followings: user.Followings });
+        return res.render("followship", { tagB: true, profile: user, followings: user.Followings });
       })
       .catch((error) => res.status(400).json(error));
   },
@@ -75,7 +75,7 @@ const followshipController = {
     }
     return Followship.findOrCreate({
       where: {
-        followerId: Number(user.id),
+        followerId: Number(req.user.id),
         followingId: Number(req.params.id)
       }
     })
@@ -88,7 +88,7 @@ const followshipController = {
   deleteFollowing: (req, res) => {
     const user = dummyuser;
     return Followship.destroy({
-      where: { followerId: user.id, followingId: req.params.id },
+      where: { followerId: req.user.id, followingId: req.params.id },
     }).then(() => res.redirect("back"))
       .catch(error => res.status(400).json(error));
   },
