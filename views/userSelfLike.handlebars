@@ -115,31 +115,51 @@
         <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/tweets">推文</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary active" href="/user/{{tweetUser.id}}/replies">推文與回覆</a>
+        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/replies">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/likes">喜歡的內容</a>
+        <a class="nav-link text-secondary active" href="/user/{{tweetUser.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
-    {{#each replies}}
+    {{#each data}}
     <div class="comment d-flex border">
       <div class="avatar m-3">
-        <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+        <img src="{{noImage this.avatar}}" alt="" class="rounded-circle userImage">
       </div>
       <div>
         <div class="d-flex">
-          <div class="name m-1 fw-bolder">{{this.User.name}}</div>
-          <div class="account m-1">@{{this.User.account}}</div>
+          <div class="name m-1 fw-bolder">{{this.name}}</div>
+          <div class="account m-1">@{{this.account}}</div>
           <div class="timefrom m-1">{{moment this.createdAt}}</div>
         </div>
         <div>
-          <div class="d-flex">
-            <div class="m-1">回覆</div>
-            <div class="m-1 color-orange">@{{this.Tweet.User.name}}</div>
-          </div>
           <div>
-            <p>{{this.comment}}</p>
+            <p>{{this.description}}</p>
           </div>
+        </div>
+        <div class="d-flex mb-2">
+          <a href="/tweets/{{this.id}}" class="comment d-flex me-2 btn">
+            <span class="commentIcon me-2">
+              <i class="far fa-comment"></i>
+            </span>
+            <span class="commentAmount">{{this.RepliesLength}}</span>
+          </a>
+          <a href="" class="like d-flex btn">
+            {{#if this.isLiked}}
+            <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+              <button type="submit" class="btn">
+                <i class="fas fa-heart"></i>
+              </button>
+            </form>
+            {{else}}
+            <form action="/like/{{this.id}}" method="POST">
+              <button type="submit" class="btn">
+                <i class="far fa-heart"></i>
+              </button>
+            </form>
+            {{/if}}
+            <span class="likeAmount">{{this.LikedUsersLength}}</span>
+          </a>
         </div>
       </div>
     </div>

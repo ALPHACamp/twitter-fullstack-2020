@@ -116,7 +116,7 @@
         <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/replies">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/=">喜歡的內容</a>
+        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
     {{#each tweets}}
@@ -141,12 +141,24 @@
               </span>
               <span class="commentAmount">{{this.Replies.length}}</span>
             </a>
-            <a href="" class="like d-flex btn">
-              <span class="likeIcon me-1">
-                <i class="far fa-heart "></i>
+            <div class="like d-flex">
+              <span class="likeIcon me-2">
+                {{#if isLiked}}
+                <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                  <button type="submit" class="btn">
+                    <i class="fas fa-heart"></i>
+                  </button>
+                </form>
+                {{else}}
+                <form action="/like/{{this.id}}" method="POST">
+                  <button type="submit" class="btn">
+                    <i class="far fa-heart"></i>
+                  </button>
+                </form>
+                {{/if}}
               </span>
-              <span class="likeAmount">30</span>
-            </a>
+              <span class="likeAmount mt-1">{{this.likedUsers.length}}</span>
+            </div>
           </div>
         </div>
       </div>

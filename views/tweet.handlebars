@@ -154,7 +154,7 @@
           <div>回覆</div>
         </div>
         <div class="likes d-flex">
-          <div class="likesAmount fw-bolder me-2">808</div>
+          <div class="likesAmount fw-bolder me-2">{{tweet.LikedUsers.length}}</div>
           <div>喜歡次數</div>
         </div>
       </div>
@@ -165,9 +165,19 @@
           <i class="far fa-comment fs-3 text-secondary"></i>
         </button>
         
-        <div class="likeIcon btn">
-          <i class="far fa-heart fs-3 text-secondary"></i>
-        </div>
+        {{#if isLiked}}
+        <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
+          <button type="submit" class="btn">
+            <i class="fas fa-heart fs-3 "></i>
+          </button>
+        </form>
+        {{else}}
+        <form action="/like/{{tweet.id}}" method="POST">
+          <button type="submit" class="btn">
+            <i class="far fa-heart fs-3"></i>
+          </button>
+        </form>
+        {{/if}}
       </div>
     </div>
     <div class="commentsList">
