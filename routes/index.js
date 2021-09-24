@@ -4,7 +4,7 @@ const router = express.Router();
 const passport = require("../config/passport");
 const usersRouter = require("./modules/users");
 const adminRouter = require("./modules/admin");
-const postsRouter = require("./modules/posts");
+const tweetsRouter = require("./modules/tweets");
 const followshipRouter = require("./modules/followships");
 const homeRouter = require("./modules/home");
 const helpers = require("../_helpers");
@@ -40,17 +40,12 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect("/signin");
 };
 
-router.use("/users", authenticated, usersRouter);
+// router.use("/users", authenticated, usersRouter);
+
+router.use("/users", usersRouter);
 router.use("/admin", authenticatedAdmin, adminRouter);
-router.use("/tweets", authenticated, postsRouter);
+router.use("/tweets", authenticated, tweetsRouter);
 router.use("/followships", authenticated, followshipRouter);
 router.use("/", homeRouter);
-
-// router.use("/users", usersRouter);
-// router.use("/admin", adminRouter);
-// router.use("/tweets", postsRouter);
-// router.use("/profiles", profilesRouter);
-// router.use("/followships", followshipRouter);
-// router.use("/", homeRouter);
 
 module.exports = router;

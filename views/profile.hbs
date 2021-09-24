@@ -95,9 +95,9 @@
               <i class="bi bi-chat"></i>{{this.ReplyCount}}
             </span>
             <span class="post-icon-block">
-              <span style="color: #E0245E;">
-                <i class="bi bi-heart-fill"></i>{{this.LikedCount}}
-              </span>
+              <form action="/tweets/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                
+                 <button type="submit" class="bi bi-heart-fill btn"></button><span class="likedText">{{this.LikedCount}}</span>
+              </form>
             </span>
           </p>
 

@@ -1,13 +1,20 @@
 const db = require("../models");
 const { Op } = require("sequelize");
 const moment = require("moment");
-const { Reply, User, Tweet, Like } = db;
+const { Reply, User, Tweet, Like, Followship } = db;
+//for test only
+const helpers = require("../_helpers.js");
+const getTestUser = function (req) {
+  if (process.env.NODE_ENV === "test") {
+    return helpers.getUser(req);
+  } else {
+    return req.user;
+  }
+};
 
 const profileController = {
   getPosts: async (req, res) => {
-    const user = getTestUser(req)
-      ? getTestUser(req)
-      : console.log("user is null, please check");
+    const user = getTestUser(req);
     try {
       // 前端判斷
       const isPost = true;
@@ -33,6 +40,12 @@ const profileController = {
           (a, b) => b.Like.createdAt - a.Like.createdAt
         ),
       }));
+      const followship = await Followship.findOne({
+        where: {
+          followerId: Number(user.id),
+          followingId: Number(req.params.id),
+        },
+      });
 
       // get Count
       const followersCount = Profile.Followers.length;
@@ -52,6 +65,7 @@ const profileController = {
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
       const isSelf = Number(req.params.userId) === Number(user.id);
+      console.dir(followship.toJSON());
       // tweetsCount, followersCount, followingsCount
       // return res.json({ Tweets, TopUsers, Profile, })
       return res.render("profile", {
@@ -63,6 +77,8 @@ const profileController = {
         tweetsCount,
         followersCount,
         followingsCount,
+        // isFollowed: Boolean(followship),
+        // notification: Boolean(followship.notification),
       });
     } catch (error) {
       console.log(error);

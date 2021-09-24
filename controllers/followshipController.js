@@ -18,8 +18,8 @@ const listAttributes = [
 
 const followshipController = {
   getFollowers: (req, res) => {
-    const user = dummyuser
-    User.findByPk(req.user.id, {
+    const user = getTestUser(req);
+    User.findByPk(user.id, {
       attributes: ["id", "name"],
       include: [
         { model: Tweet, attributes: ["id"] },
@@ -44,8 +44,8 @@ const followshipController = {
   },
 
   getFollowings: (req, res) => {
-    const user = dummyuser
-    User.findByPk(req.user.id, {
+    const user = getTestUser(req);
+    User.findByPk(user.id, {
       attributes: ["id", "name"],
       include: [
         { model: Tweet, attributes: ["id"] },
@@ -68,16 +68,14 @@ const followshipController = {
   },
 
   addFollowing: (req, res) => {
-    const user = dummyuser;
+    const user = getTestUser(req);
     if (user.id === req.params.id) {
       console.error('Cannot follow yourself')
       return res.redirect("back")
     }
     return Followship.findOrCreate({
       where: {
-        followerId: Number(req.user.id),
-        followingId: Number(req.params.id)
-      }
+        followerId: Number(user.id),
     })
       .then((data) => {
         res.redirect("back")
@@ -86,11 +84,12 @@ const followshipController = {
   },
 
   deleteFollowing: (req, res) => {
-    const user = dummyuser;
+    const user = getTestUser(req);
     return Followship.destroy({
-      where: { followerId: req.user.id, followingId: req.params.id },
-    }).then(() => res.redirect("back"))
-      .catch(error => res.status(400).json(error))
+      where: { followerId: user.id, followingId: req.params.id },
+    })
+      .then(() => res.redirect("back"))
+      .catch((error) => res.status(400).json(error));
   },
   putNotification: (req, res) => {
 

@@ -3,11 +3,22 @@ const { Tweet, User, Reply, Like } = db;
 const moment = require("moment");
 //for development
 
+//設定在測試模式下，使用 helper 作為 user 來源
+const helpers = require("../_helpers.js");
+const getTestUser = function (req) {
+  if (process.env.NODE_ENV === "test") {
+    return helpers.getUser(req);
+  } else {
+    return req.user;
+  }
+};
 
 const tweetController = {
   getPosts: async (req, res) => {
+    // const user = getTestUser(req);
+    const user = { id: 2 };
     try {
-      const Profile = await User.findByPk(req.user.id, {
+      const Profile = await User.findByPk(user.id, {
         include: [
           { model: User, as: "Followers" },
           { model: User, as: "Followings" },
@@ -40,7 +51,7 @@ const tweetController = {
       //add isLike property dynamically
       Tweets.forEach((Tweet) => {
         Tweet.LikedUsers.forEach((likedUser) => {
-          if (Number(likedUser.id) === Number(req.user.id)) Tweet.isLiked = true;
+          if (Number(likedUser.id) === Number(user.id)) Tweet.isLiked = true;
         });
       });
       // return res.json(TopUsers)
@@ -50,11 +61,12 @@ const tweetController = {
         profile: Profile,
       });
     } catch (error) {
-      res.status(400).json(error)
+      res.status(400).json(error);
     }
   },
 
   getPost: async (req, res) => {
+    const user = getTestUser(req);
     try {
       let tweet = await Tweet.findByPk(req.params.id, {
         include: [
@@ -83,24 +95,25 @@ const tweetController = {
       //add isLike property dynamically
       tweet = tweet.toJSON();
       tweet.LikedUsers.forEach((likedUser) => {
-        if (Number(likedUser.id) === Number(req.user.id)) tweet.isLiked = true;
+        if (Number(likedUser.id) === Number(user.id)) tweet.isLiked = true;
       });
       // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers, createdTimeFromNow, createdTimeByReply})
       return res.render("post", {
-        profile: req.user,
+        profile: user,
         tweet,
         ReplyCount,
         LikedCount,
         users: TopUsers,
         createdTimeFromNow,
         createdTimeByReply,
-      })
+      });
     } catch (error) {
-      res.status(400).json(error)
+      res.status(400).json(error);
     }
   },
 
   postTweet: (req, res) => {
+    const user = getTestUser(req);
     const { description } = req.body;
     if (!description) {
       //req.flash('error_message', '你並未輸入任何文字')
@@ -111,13 +124,9 @@ const tweetController = {
       return res.redirect("back");
     } else {
       return Tweet.create({
-        UserId: req.user.id,
+        UserId: user.id,
         description,
-      }).then((tweet) => {
-        // console.log("成功發送推文", tweet.toJSON());
-        res.redirect('/tweets');
-      })
-        .catch(error => res.status(400).json(error));
+      }).catch((error) => res.status(400).json(error));
     }
   },
 };
