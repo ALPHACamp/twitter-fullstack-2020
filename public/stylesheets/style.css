@@ -286,8 +286,6 @@ body {
 }
 
 #main-content .post .postItem {
-  margin: 0px 0px 0px 15px;
-  padding-top: 10px;
   display: flex;
   align-items: center;
 }
@@ -336,6 +334,7 @@ body {
 }
 
 #main-content .tweet-body .card-tweets .card-warp {
+  position: relative;
   padding-top: 10px;
   display: flex;
   flex-direction: column;
@@ -378,7 +377,8 @@ body {
 
 #main-content .tweet-body .card-tweets .card-footer {
   all: initial;
-  padding-bottom: 14px;
+  position: absolute;
+  bottom: 14px;
   width: 510px;
   display: flex;
   align-items: center;

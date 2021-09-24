@@ -5,8 +5,6 @@ const userController = require('../controllers/api/userController.js')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
-router.get('/admin/restaurants')
-
 // edit api/users
 router.get('users/:id/', auth.authenticatedGeneral, userController.getUser)
 router.post(
