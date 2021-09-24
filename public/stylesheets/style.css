@@ -186,3 +186,8 @@ body {
   color: white;
   padding: 0.4rem 0.6rem;
 }
+
+/* adminTweet adminUser */
+.h-delete:hover {
+  box-shadow: 0 0 1rem rgba(255, 104, 78, 0.15);
+}

@@ -2,7 +2,7 @@
     <div class="row flex-nowrap justify-content-between mr-3">
 
         <div class="col-auto col-lg-3">
-            <a class="d-flex ml-5 py-3 pl-4" href="/">
+            <a class="d-flex ml-5 py-3 pl-4" href="/" style="text-decoration: none;">
                 <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
             </a>
             <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
@@ -39,7 +39,7 @@
                                 <div class="position-relative">
                                     <img src="{{#if this.cover}}{{this.cover}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="position-absolute rounded-3"
                                         style="width: 100%; z-index:0;" alt="background">
-                                    <img src={{this.avatar}}"" class="position-absolute rounded-circle mt-4"
+                                    <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="position-absolute rounded-circle mt-4"
                                         style="width: 70px; height: 70px; left: 33%; top: 60px; border: white 3px solid; z-index: 1"
                                         alt="face">
                                 </div>
