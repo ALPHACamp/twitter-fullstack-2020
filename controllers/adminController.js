@@ -10,25 +10,42 @@ const adminController = {
     try {
       return res.render('admin/signin', { status: (200) })
     } catch (err) {
+      console.log('adminsignInPage err')
       req.flash('error_messages', '後台頁面讀取失敗！')
       res.status(302)
       return res.redirect('back')
     }
   },
   signIn: (req, res) => {
-    if (helpers.getUser(req).role !== 'admin') {
-      req.flash('error_messages', '帳號或密碼錯誤')
-      res.redirect('/admin/signin')
-    } else {
+    try {
+      if (helpers.getUser(req).role == 'admin') {
       req.flash('success_messages', '成功登入後台！')
       res.redirect('/admin/tweets')
+    } else {
+      req.flash('error_messages', '帳號或密碼錯誤')
+      res.redirect('/admin/signin')
     }
+    }catch(err){
+      console.log('adminsignIn err')
+      req.flash('error_messages', '後台登入失敗！')
+      res.status(302)
+      return res.redirect('back')
+    }
+    
 
   },
   logOut: (req, res) => {
-    req.flash('success_messages', '成功登出！')
+    try{
+      req.flash('success_messages', '成功登出！')
     req.logOut()
     res.redirect('/admin/signin')
+    }catch(err){
+      console.log('adminlogOut err')
+      req.flash('error_messages', '後台登出失敗！')
+      res.status(302)
+      return res.redirect('back')
+    }
+    
   },
   getTweets: async (req, res) => {
     try {
@@ -53,6 +70,7 @@ const adminController = {
       return res.render('admin/tweets', { tweets })
 
     } catch (err) {
+      console.log('admingetTweets err')
       req.flash('error_messages', '獲取推文失敗！')
       res.status(302)
       return res.redirect('back')
@@ -71,6 +89,7 @@ const adminController = {
       req.flash('success_messages', '刪除推文成功！')
       return res.redirect('back')
     } catch (err) {
+      console.log('deleteTweet err')
       req.flash('error_messages', '刪除推文失敗！')
       res.status(302)
       return res.redirect('back')
@@ -97,8 +116,9 @@ const adminController = {
       }))
       users.sort((a, b) => b.tweetCount - a.tweetCount)
 
-      return res.render('admin/users', { status:(200), users })
+      return res.render('admin/users', { status: (200), users })
     } catch (err) {
+      console.log('admingetUsers err')
       req.flash('error_messages', '讀取使用者失敗！')
       res.status(302)
       return res.redirect('back')

@@ -9,6 +9,7 @@ const loginController = {
       return res.render('signup', { status: (200) })
     } catch (err) {
       res.status(302);
+      console.log('signUpPage err')
       req.flash('error_messages', '讀取註冊頁面失敗')
       return res.redirect('back')
     }
@@ -66,6 +67,7 @@ const loginController = {
       res.redirect('/signin')
     } catch (err) {
       res.status(302);
+      console.log('signUp err')
       req.flash('error_messages', '註冊失敗')
       return res.redirect('back')
     }
@@ -75,21 +77,29 @@ const loginController = {
     try {
       return res.render('signin', { status: (200) })
     } catch (err) {
-      req.flash('error_messages', '讀取登入頁面失敗')
       res.status(302);
+      console.log('signInPage err')
+      req.flash('error_messages', '讀取登入頁面失敗')
       return res.redirect('back')
     }
   },
 
   signIn: (req, res) => {
-    if (helpers.getUser(req).role === 'admin') {
+    try{
+      if (helpers.getUser(req).role === 'admin') {
       req.flash('error_messages', '帳號或密碼錯誤')
       res.redirect('/signin')
     } else {
       req.flash('success_messages', '成功登入！')
       res.redirect('/tweets')
-
     }
+    }catch(err){
+      res.status(302);
+      console.log('signIn err')
+      req.flash('error_messages', '登入失敗')
+      return res.redirect('back')
+    }
+    
   },
 
   logOut: (req, res) => {
@@ -99,6 +109,7 @@ const loginController = {
       res.status(200);
       res.redirect('/signin')
     } catch (err) {
+      console.log('logOut err')
       req.flash('error_messages', '登出失敗！')
       res.status(302);
       return res.redirect('/')
