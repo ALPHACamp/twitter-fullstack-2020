@@ -3,6 +3,7 @@ const adminController = require('../controllers/adminController')
 const tweetController = require('../controllers/tweetController')
 const helpers = require('../_helpers')
 const replyController = require('../controllers/replyController')
+const messageController = require('../controllers/messageController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -72,5 +73,7 @@ module.exports = (app, passport) => {
     app.delete('/followships/:userId', authenticatedUser, userController.removeFollowing)
     app.get('/users/:id/followers', authenticatedUser, userController.getFollowers)
     app.get('/users/:id/followings', authenticatedUser, userController.getFollowings)
+
+    app.get('/messages/public', authenticatedUser, messageController.getPublic)
 
 }
