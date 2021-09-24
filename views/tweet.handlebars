@@ -6,7 +6,7 @@
   </header>
 
   <div class="border border-1 border-box" style="background-color: #FFFFFF; border-color: #E6ECF0; height: 120px;">
-    <form action="/twitters" method="POST">
+    <form action="/tweets" method="POST">
       <div class="d-flex flex-row" style="width: 500px">
         <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4;"
           class="rounded-circle m-2" alt="...">
@@ -45,20 +45,20 @@
             <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
           </div>
           <p class="card-text fontWeight500">
-            <a href="/twitters/{{this.id}}/replyList" style="color:#1C1C1C; text-decoration:none;">
+            <a href="/tweets/{{this.id}}/replyList" style="color:#1C1C1C; text-decoration:none;">
               {{this.tweetContent}}
             </a>
           </p>
           <div class="d-flex">
             <div>
               {{#if this.isLiked }}
-              <form action="/twitters/{{ this.id }}/unlike?_method=DELETE" method="POST">
+              <form action="/tweets/{{ this.id }}/unlike?_method=DELETE" method="POST">
                 <button type="submit" class="btn">
                   <i class="fas fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
                 </button>
               </form>
               {{else}}
-              <form action="/twitters/{{ this.id }}/like" method="POST">
+              <form action="/tweets/{{ this.id }}/like" method="POST">
                 <button type="submit" class="btn">
                   <i class="far fa-heart me-3"></i><span class="fontWeight500 me-5">{{this.tweetLikesCount}}</span>
                 </button>

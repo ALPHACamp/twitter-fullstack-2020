@@ -5,8 +5,8 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
-const twitterController = {
-  getTwitters: (req, res) => {
+const tweetController = {
+  getTweets: (req, res) => {
     Tweet.findAndCountAll({
       order: [['createdAt', 'DESC']],
       include: [User, Reply, Like]
@@ -23,12 +23,12 @@ const twitterController = {
         tweetLikesCount: row.Likes.length,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(row.id)
       }))
-      return res.render('twitter', {
+      return res.render('tweet', {
         tweets: tweetData,
       })
     })
   },
-  getTwitter: (req, res) => {
+  getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
       include: [
         Reply,
@@ -59,7 +59,7 @@ const twitterController = {
       })
     })
   },
-  postTwitter: (req, res) => {
+  postTweet: (req, res) => {
     if (req.body.text.length > 140) {
       req.flash('error_messages', '推文字數限制在 140 以內！')
       res.redirect('back')
@@ -71,7 +71,7 @@ const twitterController = {
         createdAt: new Date(),
         updatedAt: new Date()
       }).then((tweet) => {
-        res.redirect('twitters')
+        res.redirect('tweet')
       })
     }
   },
@@ -136,4 +136,4 @@ const twitterController = {
 }
 
 
-module.exports = twitterController
+module.exports = tweetController

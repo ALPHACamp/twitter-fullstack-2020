@@ -16,12 +16,12 @@
     <img src="{{otherUser.avatar}}" class="rounded-circle user-avatar" alt="...">
     <div class="d-flex flex-row-reverse align-items-center m-2">
       {{#if this.isMainUserFollowing }}
-      <form action="/twitters/{{ otherUser.id }}/unfollowing?_method=DELETE" method="POST">
+      <form action="/tweets/{{ otherUser.id }}/unfollowing?_method=DELETE" method="POST">
         <button type="submit" class="btn btn-white-orange rounded-pill p-1"
           style="width: 90px; height: 35px;;">正在跟隨</button>
       </form>
       {{else}}
-      <form action="/twitters/{{ otherUser.id }}/following" method="POST">
+      <form action="/tweets/{{ otherUser.id }}/following" method="POST">
         <button type="submit" class="btn btn-orange-white rounded-pill p-1"
           style="width: 90px; height: 35px;;">跟隨</button>
       </form>
@@ -87,7 +87,7 @@
             <i class="far fa-heart me-3" style="color:#657786;"></i><span class="fontWeight500 me-5"
               style="color:#657786;">{{this.likeCount}}</span>
             {{/if}}
-            <a href="/twitters/{{this.id}}/replyList" style="text-decoration: none; color: 
+            <a href="/tweets/{{this.id}}/replyList" style="text-decoration: none; color: 
                     #657786"><i class="far fa-comment me-3"></i><span
                 class="fontWeight500">{{this.replyCount}}</span></a>
           </div>
