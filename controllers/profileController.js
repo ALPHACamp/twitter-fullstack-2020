@@ -3,32 +3,43 @@ const { Op } = require("sequelize");
 const moment = require('moment')
 const { Reply, User, Tweet, Like, } = db
 
+//for test only
+const helpers = require("../_helpers.js");
+const tweetController = require('./tweetController');
+const getTestUser = function (req) {
+  if (process.env.NODE_ENV === "test") {
+    return helpers.getUser(req);
+  } else { return req.user }
+};
+const listAttributes = [
+  "id", "name", "account", "avatar",
+];
 
 const profileController = {
-  getPosts: async (req, res) => {
+  getPosts: async (req, res, done) => {
     try {
       // 前端判斷
       const isPost = true
       //get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
+          { model: User, as: 'Followers', attributes: ["id"] },
+          { model: User, as: 'Followings', attributes: ["id"] }
         ],
       })
       // get selfTweet
       const rawTweets = await Tweet.findAll({
         where: { UserId: req.params.id },
-        include: [Reply,
-          { model: User, as: 'LikedUsers' }],
+        include: [
+          { model: Reply, attributes: ["id"] },
+          { model: Like, attributes: ["id"] }
+        ],
         order: [['createdAt', 'DESC']],
       })
       const Tweets = await rawTweets.map(data => ({
         ...data.dataValues,
         ReplyCount: data.Replies.length,
-        LikedCount: data.LikedUsers.length,
-        Replies: data.Replies.sort((a, b) => b.createdAt - a.createdAt),
-        LikedUsers: data.LikedUsers.sort((a, b) => b.Like.createdAt - a.Like.createdAt),
+        LikedCount: data.Likes.length,
       }))
 
       // get Count
@@ -38,8 +49,9 @@ const profileController = {
 
       // get TopUser
       const rawUsers = await User.findAll({
+        attributes: listAttributes,
         include: [
-          { model: User, as: 'Followers' },
+          { model: User, as: 'Followers', attributes: ['id'] },
         ],
         where: {
           id: { [Op.not]: req.user.id },
@@ -56,21 +68,30 @@ const profileController = {
       // tweetsCount, followersCount, followingsCount
       // return res.json({ Tweets, TopUsers, Profile, })
       return res.render("profile", { isPost, users: TopUsers, tweets: Tweets, profile: Profile, tweetsCount, followersCount, followingsCount });
+      done()
     } catch (error) {
-      console.log(error)
+      res.status(400).json(error)
     }
   },
 
-  getComments: async (req, res) => {
+  getComments: async (req, res, done) => {
     try {
       //前端處理判定
       const isComment = true
+      //get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
-          Tweet,
+          { model: Tweet, attributes: ['id'] },
           {
             model: Reply,
-            include: [{ model: Tweet, include: [User] }]
+            include: [{
+              model: Tweet,
+              include: [{
+                model: User,
+                attributes: ['id', 'account']
+              }],
+              attributes: ['id', 'description']
+            }]
           },
           { model: User, as: 'Followers' },
           { model: User, as: 'Followings' }
@@ -84,8 +105,9 @@ const profileController = {
 
       // get TopUser
       const rawUsers = await User.findAll({
+        attributes: listAttributes,
         include: [
-          { model: User, as: 'Followers' },
+          { model: User, as: 'Followers', attributes: ['id'] },
         ],
         where: {
           id: { [Op.not]: req.user.id },
@@ -98,24 +120,24 @@ const profileController = {
         isFollowed: req.user.Followings.map(d => d.id).includes(data.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
-      
-      // return res.json({ Profile, tweetsCount, followersCount, followingsCount })
+
+      // return res.json({ Profile })
       return res.render("profile", { isComment, users: TopUsers, profile: Profile, tweetsCount, followersCount, followingsCount });
     } catch (error) {
-      console.log(error)
+      res.status(400).json(error)
     }
   },
 
-  getLikedPosts: async (req, res) => {
+  getLikedPosts: async (req, res, done) => {
     try {
       // 前端判斷
       const isLikedPosts = true
       //get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
-          Tweet,
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
+          { model: Tweet, attributes: ['id'] },
+          { model: User, as: 'Followers', attributes: ["id"] },
+          { model: User, as: 'Followings', attributes: ["id"] }
         ],
       })
 
@@ -124,7 +146,11 @@ const profileController = {
         where: { UserId: req.params.id },
         include: [
           {
-            model: Tweet, include: [Like, Reply, User]
+            model: Tweet, include: [
+              { model: Like, attributes: ['id'] },
+              { model: Reply, attributes: ['id'] },
+              { model: User, attributes: listAttributes }
+            ]
           }
         ],
         order: [['createdAt', 'DESC']],
@@ -142,8 +168,9 @@ const profileController = {
 
       // get Top10User
       const rawUsers = await User.findAll({
+        attributes: listAttributes,
         include: [
-          { model: User, as: 'Followers' },
+          { model: User, as: 'Followers', attributes: ['id'] },
         ],
         where: {
           id: { [Op.not]: req.user.id },
@@ -157,10 +184,11 @@ const profileController = {
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
 
-      // return res.json({ tweets: LikedTweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
+      // return res.json({ tweets: LikedTweets })
       return res.render("profile", { isLikedPosts, users: TopUsers, tweets: LikedTweets, profile: Profile, tweetsCount, followersCount, followingsCount });
+      done()
     } catch (error) {
-      console.log(error)
+      res.status(400).json(error)
     }
   },
 }
