@@ -40,12 +40,13 @@
     {{!-- Middle Main bar --}}
     <div class="row col-9 col-lg-6 col-md-7 col-sm-8 py-2">
       <div class="card-header col-12 row m-0" style="max-height: 55px;">
-        <a href="javascript:history.back()" style="color: #000000; text-decoration: none;" class="col-auto d-flex align-items-center">
+        <a href="javascript:history.back()" style="color: #000000; text-decoration: none;"
+          class="col-auto d-flex align-items-center">
           <i class="fas fa-arrow-left" style="font-size: 1.8em;"></i>
         </a>
-        <a href="/"
-          class="col-auto d-flex flex-column align-items-start justify-content-center link-dark">
-          <span class="h5" style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
+        <a href="/" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark">
+          <span class="h5"
+            style="line-height: 15px; color: #000000; font-size: 19px; font-weight: 700;">{{users.name}}</span>
           <span style="color: #657786; font-size: 0.95em; font-size: 13px; line-height: 15px">{{tweetCount}} 推文</span>
         </a>
       </div>
@@ -56,14 +57,16 @@
             style="height:100%;width:100%;object-fit:cover">
         </div>
         <div class="avatar-holder">
-          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle" alt="user_Aavtor" height="130px" width="130px">
+          <img src="{{#if users.avatar}}{{users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+            class="rounded-circle" alt="user_Aavtor" height="130px" width="130px">
         </div>
       </div>
       <div class="card-body col-12 d-flex justify-content-end">
         {{#ifCond users.id UserId}}
         <!-- Button trigger modal -->
         <button type="submit" class="btn btn-outline-tomato fw-bold"
-          style="border-radius: 30px 30px 30px 30px; height: 40px; font-weight: 700;" data-toggle="modal" data-target="#profileModal">編輯個人資料</button>
+          style="border-radius: 30px 30px 30px 30px; height: 40px; font-weight: 700;" data-toggle="modal"
+          data-target="#profileModal">編輯個人資料</button>
         {{else}}
         <div class="NoticeAni">
           <a href="" class="m-1" style="color:tomato;">
@@ -83,9 +86,10 @@
         </div>
         {{/if}}
         {{#if isFollowed}}
-        <form action="/followships/{{users.id}}?_method=DELETE" method="POST"
-          style="margin-left: 10px;" class="text-center">
-          <button type="submit" class="btn btn-tomato rounded-pill" style="border-radius: 30px 30px 30px 30px;" name="{{users.id}}">正在跟隨</button>
+        <form action="/followships/{{users.id}}?_method=DELETE" method="POST" style="margin-left: 10px;"
+          class="text-center">
+          <button type="submit" class="btn btn-tomato rounded-pill" style="border-radius: 30px 30px 30px 30px;"
+            name="{{users.id}}">正在跟隨</button>
         </form>
         {{else}}
         <form action="/followships/{{users.id}}" method="POST">
@@ -109,7 +113,7 @@
           <a href="/users/{{users.id}}/followings" style="text-decoration:none;">
             <span class="fw-bold text-dark">{{followerscount}} 個</span><span class="text-muted">跟隨者</span>
           </a>
-          
+
           　
         </div>
       </div>
@@ -133,10 +137,13 @@
           <ul class="list-group list-group-flush">
             {{#each users.Tweets}}
             <li class="list-group-item">
-              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard" onclick="javascript:location.href='/tweets/{{this.id}}'">
+              <div class="row justify-content-around align-items-start mb-1 p-2 bg-white hovercard"
+                onclick="javascript:location.href='/tweets/{{this.id}}'">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{../users.id}}" class="p-1">
-                    <img src="{{#if ../users.avatar}}{{../users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt="A user" width="60" height="60" class="rounded-circle" />
+                    <img
+                      src="{{#if ../users.avatar}}{{../users.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                      alt="A user" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
                 <div class="col-11 row px-md-2 px-4">
@@ -152,11 +159,11 @@
                     <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
-                   
+
                     {{#ifCond this.likeCount 0 }}
-                      <span style="width: 60px;">
-                        <i class="far fa-heart" style="color: red;">{{ this.likeCount }}</i>
-                      </span>
+                    <span style="width: 60px;">
+                      <i class="far fa-heart" style="color: red;">{{ this.likeCount }}</i>
+                    </span>
                     {{else}}
                     <span style="width: 60px;">
                       <i class="fas fa-heart" style="color: red;">{{ this.likeCount }}</i>
@@ -167,15 +174,15 @@
                       <i class="fas fa-comment"> {{ this.replyCount }}</i>
                     </span>
                     {{else}}
-                      <span style="width: 50px;">
-                        <i class="far fa-comment"> {{ this.replyCount }}</i>
-                      </span>
+                    <span style="width: 50px;">
+                      <i class="far fa-comment"> {{ this.replyCount }}</i>
+                    </span>
                     {{/if}}
                   </div>
                 </div>
               </div>
             </li>
-           
+
             {{/each}}
           </ul>
         </div>
@@ -187,7 +194,9 @@
               <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
                 <div class="col-1 d-flex justify-content-center align-items-center">
                   <a href="/users/{{this.Tweet.User.id}}" class="p-1">
-                    <img src="{{#if this.Tweet.User.avatar}}{{this.Tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt="" width="60" height="60" class="rounded-circle" />
+                    <img
+                      src="{{#if this.Tweet.User.avatar}}{{this.Tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                      alt="" width="60" height="60" class="rounded-circle" />
                   </a>
                 </div>
                 <div class="col-11 row px-md-2 px-4">
@@ -205,7 +214,8 @@
                     </a>
                   </div>
                   <div class="col-12 mt-1">
-                    <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.Tweet.description}}</p>
+                    <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.Tweet.description}}
+                    </p>
                   </div>
                   <div class="col-12">
                     <p class="fw-bold">{{this.content}}</p>
@@ -241,7 +251,7 @@
                     <p class="fw-bold" style="max-width: 600px; overflow-wrap: break-word;">{{this.description}}</p>
                   </div>
                   <div class="col-12 d-flex align-items-center justify-content-start ">
-                  
+
                     <span style="width: 50px;">
                       <i class="fas fa-heart" style="color: red;"> {{ this.likeCount }}</i>
                     </span>
@@ -253,7 +263,7 @@
                     <span style="width: 50px;">
                       <i class="far fa-comment"> {{ this.replyCount }}</i>
                     </span>
-                    {{/if}} 
+                    {{/if}}
                   </div>
                 </div>
               </div>
@@ -273,7 +283,8 @@
             <div class="row justify-content-around align-items-center">
               <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
                 <a href="/users/{{this.id}}">
-                  <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt="" width="50" height="50" class="rounded-circle">
+                  <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                    alt="" width="50" height="50" class="rounded-circle">
                 </a>
               </div>
 
@@ -365,4 +376,3 @@
     </div>
   </div>
 </div>
-

@@ -45,8 +45,10 @@
                 </a>
                 <a href="/" class="col-auto d-flex flex-column align-items-start justify-content-center link-dark"
                     style="text-decoration: none;">
-                    <span class="h5 text-dark" style="line-height: 15px; font-size: 19px; font-weight: 900;">{{user.name}}</span>
-                    <span class="text-dark" style="color: #657786; font-size: 13px; line-height: 15px">{{tweetCount}} 推文數</span>
+                    <span class="h5 text-dark"
+                        style="line-height: 15px; font-size: 19px; font-weight: 900;">{{user.name}}</span>
+                    <span class="text-dark" style="color: #657786; font-size: 13px; line-height: 15px">{{tweetCount}}
+                        推文數</span>
                 </a>
             </div>
             <div class='follower-head col-12 row mt-0 position-absolute' style="z-index: 5; left: 15px; top: 100px;">
@@ -64,13 +66,13 @@
             <div class='tab-content position-absolute' style="z-index: 5; left: 30px; top: 150px;">
                 <div class='tab-pane active' id='follower' role='tabpanel' aria-labelledby='home-tab'>
                     <ul class='list-group list-group-flush border-bottom'>
-                        {{#each followers}}  
+                        {{#each followers}}
                         <li class='list-group-item'>
                             <div class='row justify-content-around align-items-start mb-1 p-2 bg-white'>
                                 <div class='col-1 d-flex justify-content-center align-items-center'>
                                     <a href='/users/{{this.id}}' class='p-1'>
-                                        <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt='A user' width='75' height='75'
-                                            class='rounded-circle' />
+                                        <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                                            alt='A user' width='75' height='75' class='rounded-circle' />
                                     </a>
                                 </div>
                                 <div class='col-7 pt-3 d-flex flex-column align-items-start' style='padding-left: 2em;'>
@@ -82,20 +84,22 @@
                                 <div class='col-4 ps-3 d-flex justify-content-center align-items-center'>
 
                                     {{#if this.isFollowed}}
-                                    <form action='/followships/{{this.id}}?_method=DELETE' method='POST' style='display: contents;'>
-                                        <button type='submit' class='btn btn-tomato fw-bold' name='{{user.id}}' style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
+                                    <form action='/followships/{{this.id}}?_method=DELETE' method='POST'
+                                        style='display: contents;'>
+                                        <button type='submit' class='btn btn-tomato fw-bold' name='{{user.id}}'
+                                            style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>正在跟隨</button>
                                     </form>
                                     {{else}}
                                     <form action='/followships/{{this.id}}' method='POST' style='display: contents;'>
-                                        <button type='submit' class='btn btn-outline-tomato fw-bold'
-                                            name='{{user.id}}' style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>跟隨</button>
+                                        <button type='submit' class='btn btn-outline-tomato fw-bold' name='{{user.id}}'
+                                            style='font-size: 0.95em;border-radius: 30px 30px 30px 30px;'>跟隨</button>
                                     </form>
                                     {{/if}}
 
                                 </div>
                             </div>
                         </li>
-                        
+
                         {{/each}}
 
                     </ul>
@@ -117,7 +121,8 @@
                             <div class="col-2 d-flex justify-content-center align-items-center"
                                 style="padding-left: 20px;">
                                 <a href="/users/{{this.id}}">
-                                    <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt="" width="50" height="50" class="rounded-circle">
+                                    <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                                        alt="" width="50" height="50" class="rounded-circle">
                                 </a>
                             </div>
 
