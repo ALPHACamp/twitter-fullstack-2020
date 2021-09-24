@@ -33,6 +33,7 @@ const tweetController = {
       return res.render('tweets', {status: (200), reorganizationTweets, popularUser })
     } catch (err) {
       res.status(302);
+      console.log('getTweets err')
       req.flash('error_messages', '讀取貼文串失敗！')
       return res.redirect('back')
     }
@@ -56,6 +57,7 @@ const tweetController = {
       return res.redirect('/tweets')
     } catch (err) {
       res.status(302);
+      console.log('addTweet err')
       req.flash('error_messages', '新增留言失敗！')
       return res.redirect('back')
     }
@@ -87,6 +89,7 @@ const tweetController = {
       res.render('tweet', {status: (200), tweetReplies, tweet: tweetJson, popularUser })
     } catch (err) {
       res.status(302);
+      console.log('getTweet err')
       req.flash('error_messages', '讀取貼文失敗')
       return res.redirect('back')
     }
@@ -107,6 +110,7 @@ const tweetController = {
       return res.redirect(`/tweets/${req.params.tweetId}/replies`)
     } catch (err) {
       res.status(302)
+      console.log('postReplies err')
       req.flash('error_messages', '留言失敗')
       return res.redirect('back')
     }
@@ -120,6 +124,7 @@ const tweetController = {
       return res.redirect('back')
     } catch (err) {
       res.status(302);
+      console.log('addLike err')
       req.flash('error_messages', '點擊失敗')
       return res.redirect('back')
     }
@@ -135,6 +140,7 @@ const tweetController = {
 
     } catch (err) {
       res.status(302);
+      console.log('removeLike err')
       req.flash('error_messages', '點擊失敗')
       return res.redirect('back')
     }
