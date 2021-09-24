@@ -14,7 +14,7 @@ const authenticated = (req, res, next) => {
     }
     req.flash('error_messages', '管理員請由後台登入')
   }
-  res.redirect('/admins/login')
+  res.redirect('/users/login')
 }
 
 // user register
