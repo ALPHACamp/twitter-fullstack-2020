@@ -5,10 +5,12 @@ const passport = require('../config/passport')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
+// const messageController = require('../controllers/messageController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
+
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -37,8 +39,10 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/admin/signin')
 }
 
+
+
 //如果使用者訪問首頁，就導向 /tweets 的頁面
-router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+// router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 //使用者顯示特定使用者頁面(使用者所有貼文)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 //使用者所有喜歡貼文
