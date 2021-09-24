@@ -56,11 +56,40 @@
       background: #efefef;
     }
   </style>
-
+<div><h2 id= "userId">{{currentUser.id}}</h2></div>
 
 <ul id="messages"></ul>
 <form id="form" action="">
   <input id="input" autocomplete="off" /><button>Send</button>
 </form>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  var socket = io();
 
+  var messages = document.getElementById('messages');
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (input.value) {
+      let user = document.getElementById("userId")
+      let userId = user.innerHTML;
+      socket.emit('chat message', input.value, userId);
+      input.value = '';
+    }
+  });
+
+  socket.on('chat message', function () {
+    var item = document.createElement('li');
+    
+    item.textContent = msg;
+    
+    console.log(userId)
+    
+    socket.emit('chat message', dataValue);
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+</script>
