@@ -1,5 +1,5 @@
 <div class="left_column">
-  <a class="logo" href="/">
+  <a class="logo" href="/tweets">
     <div class="icon">
       <img src="https://i.imgur.com/KqqLlPU.png?1" alt="AlphaCamp Logo" />
     </div>
@@ -16,10 +16,10 @@
     </div>
     {{else}} --}}
     <div class="navigation">
-      <a class="nav_item" href="/profiles/{{profile.id}}/main">
+      <a class="nav_item" href="/tweets">
         <i class="fas fa-home icon_index"></i>首頁
       </a>
-      <a class="nav_item" href="/profiles/{{profile.id}}/posts">
+      <a class="nav_item" href="/users/{{profile.id}}/tweets">
         <i class="far fa-user icon_index"></i>個人資料
       </a>
       <a class="nav_item" href="#">
@@ -27,21 +27,16 @@
         設定
       </a>
       <div class="tweet_item" href="#">
-        <button
-          class="btn_reply btn"
-          id="myInput"
-          data-bs-toggle="modal"
-          data-bs-target="#indexModel"
-        >
+        <button class="btn_reply btn" id="myInput" data-bs-toggle="modal" data-bs-target="#indexModel">
           推文
         </button>
       </div>
     </div>
     {{!-- {{/if}} --}}
     <div class="logout_item">
-      <a class="nav_item" href="#">
-        <i class="bi bi-box-arrow-in-left icon_index"></i>
-        登出
+
+      <a class="nav_item" href="/users/signout">
+        <i class="bi bi-box-arrow-in-left icon_index"></i>登出
       </a>
     </div>
   </nav>

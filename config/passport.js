@@ -1,7 +1,9 @@
-const User = require("../models/user");
+const db = require('../models')
+const User = db.User
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const LocalStrategy = require("passport-local").Strategy;
+
 
 module.exports = (app) => {
   // 初始化 Passport 模組
@@ -11,12 +13,12 @@ module.exports = (app) => {
   passport.use(
     new LocalStrategy(
       {
-        usernameField: "email", //Form傳進來的變數如果不是預設的name，就設定別名
-        passReqToCallback: true,
+        usernameField: "email",
+        passwordField: 'password',//Form傳進來的變數如果不是預設的name，就 設定別名
       },
-      (req, email, password, done) => {
+      (username, password, done) => {
         //傳進來的變數
-        User.findOne({ user_email: email })
+        User.findOne({ where: { email: username } })
           .then((user) => {
             if (!user) {
               console.log("email does not exist");
@@ -33,13 +35,13 @@ module.exports = (app) => {
                   false,
                   console.log("warning_msg", "Email或密碼錯誤。")
                 );
-              } else {
+              } 
                 return done(
                   null,
                   user,
                   console.log("success_msg", "已成功登入。")
                 );
-              }
+              
             });
           })
           .catch((err) => done(err, false));
@@ -51,9 +53,15 @@ module.exports = (app) => {
     done(null, user.id);
   });
   passport.deserializeUser((id, done) => {
-    User.findById(id)
-      .lean()
-      .then((user) => done(null, user))
-      .catch((err) => done(err, null));
+    User.findByPk(id, {
+      include: [
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
+      ]
+    }).then(user => {
+      user = user.toJSON()
+      return done(null, user)
+    })
+    .catch((err) => done(err, null));
   });
 };
