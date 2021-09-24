@@ -15,21 +15,63 @@
         <ul class="list-group">
 
           <a href="/tweets">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas  fa-fw fa-home mr-4"></i>
+                首頁
+              </div>
+            </li>
+          </a>
+
+          <a href="">
             <li class="list-group-item active">
-              <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+              <div class="d-flex">
+                <i class="fas fa-fw fa-fh fa-bell mr-4">
+                  {{!-- 若有通知 --}}
+                  <span class="bubble">1</span>
+                  {{!-- 若有通知 --}}
+                </i>
+                通知
+              </div>
+            </li>
+          </a>
+
+          <a href="">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas  fa-fw  fa-fh fa-comments mr-4">
+                  {{!-- 若有通知 --}}
+                  <span class="bubble">10</span>
+                  {{!-- 若有通知 --}}
+                </i>
+                公開聊天室
+              </div>
             </li>
           </a>
 
 
+          <a href="">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas fa-fw fa-fh fa-envelope mr-4">
+                  {{!-- 若有通知 --}}
+                  <span class="bubble">100</span>
+                  {{!-- 若有通知 --}}
+                </i>
+                私人訊息
+              </div>
+            </li>
+          </a>
+
           <a href="/users/{{user.id}}/tweets">
             <li class="list-group-item">
-              <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
+              <div class="d-flex"><i class="fas  fa-fw fa-user mr-4"></i>個人資料</div>
             </li>
           </a>
 
           <a href="/users/{{user.id}}/setting">
             <li class="list-group-item">
-              <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
+              <div class="d-flex"><i class="fas  fa-fw fa-cog mr-4"></i>設定</div>
             </li>
           </a>
         </ul>
@@ -51,37 +93,60 @@
     </div>
 
     {{!-- 中間主欄位 --}}
-    <div class="middle-side col-md-4" style="padding:0; height:100%;">
-      <div class="text-title">上線使用者(數量)</div>
-
+    <div class="middle-side col-md-5" style="padding:0; height:100%;">
+      <div class="text-title d-flex align-items-center">
+        <div class="name-info">
+          <div class="title-name">
+            通知
+          </div>
+        </div>
+      </div>
       <hr style="margin:0; padding:0">
-      
-      <ul class="list-group">
-        {{!-- 使用者開始 --}}
-        <li class="online-user list-group-item">
-            <div class="avatar">
-              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
-              avatar</div>
-            <div>name @account</div>
-        </li>
-        <hr style="margin:0; padding:0">
 
-        {{!-- <li class="list-group-item">A second item</li>
-        <li class="list-group-item">A third item</li>
-        <li class="list-group-item">A fourth item</li>
-        <li class="list-group-item">And a fifth one</li> --}}
-        {{!-- 使用者結束 --}}
-      </ul>
+      {{!-- 含內容的通知 --}}
+      <div class="notification-content">
+        <div class="avatar">
+          <a href="">
+            <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+          </a>
+        </div>
+        <div class="notification-title">
+          "使用者"/"你的貼文"有新的"推文通知"/"新的回覆"
+        </div>
+        <div class="notification-text">
+          內容12312312312312312312332131231231211111111111111111111111111111111111111111111111111111111111
+        </div>
+      </div>
+      <hr>
+      {{!-- 含內容的通知 --}}
 
-      
+      {{!-- 不含內容的通知 --}}
+      <div class="notification-nocontent">
+        <div class="avatar">
+          <a href="">
+            <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+          </a>
+        </div>
+        <div class="notification-title">
+          "使用者"/"你的貼文"有新的"推文通知"/"新的回覆"
+        </div>
+      </div>
+      <hr>
+      {{!-- 不含內容的通知 --}}
 
+
+
+      {{!-- 回覆結束 --}}
     </div>
 
+
+
+
     {{!-- 右側欄位 --}}
-    <div class="right-side col-md-6">
+    <div class="right-side col-md-3">
       <div class="popular mt-2" style="padding:auto;">
         <div class="popular-title mt-2">
-          Popular
+          跟隨誰
         </div>
         <ul class="list-group">
           {{!-- 跟隨中使用者開始 --}}
@@ -108,7 +173,7 @@
                   <button type="submit" class="btn follow-button">正在跟隨</button>
                 </form>
                 {{else}}
-                <form action="/followships" method="POST" style="display: contents">
+                <form action="/followships" method="POST" style="display: contents;">
                   <input type="hidden" name="id" value="{{this.id}}">
                   <button type="submit" class="btn unfollow-button"> 跟隨 </button>
                 </form>
@@ -118,6 +183,14 @@
             </div>
           </li>
           {{/each}}
+
+          <li  class="list-group-item">
+            <a href="">
+            <div class="show-more">
+              顯示更多
+            </div>
+            </a>
+          </li>
           {{!-- 使用者結束 --}}
 
         </ul>
@@ -126,11 +199,11 @@
 
 
     </div>
+
+
+
   </div>
 </div>
-
-
-
 
 {{!-- add-tweet Modal --}}
 <div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
