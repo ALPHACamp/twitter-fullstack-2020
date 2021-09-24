@@ -15,6 +15,11 @@ const passport = require('./config/passport')
 const app = express()
 const port = process.env.PORT || 3000
 
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({
   defaultLayout: 'main',
@@ -47,8 +52,21 @@ app.use(methodOverride('_method'))
 
 app.get('/follower', (req, res) => res.render('follower'))
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.get('/messages/public', (req, res) => {
+  res.render('publicChat.handlebars')
+
+});
+
+
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    io.emit('chat message', msg);
+  });
+});
+
+server.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
 require('./routes')(app, passport) // 把 passport 傳入 routes
+
 
 module.exports = app
