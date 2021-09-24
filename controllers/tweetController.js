@@ -2,6 +2,7 @@ const db = require('../models')
 const Tweet = db.Tweet
 const Reply = db.Reply
 const User = db.User
+const Like = db.Like
 const Followship = db.Followship
 
 const helpers = require('../_helpers')
@@ -11,7 +12,9 @@ const tweetController = {
   getTweets: (req, res) => {
     return Promise.all([
       Tweet.findAll({
-        include: [User, Reply],
+        include: [User, Reply, 
+          { model: User, as: 'LikedUsers' }
+        ],
         order: [
           ['createdAt', 'DESC'], // Sorts by createdAt in descending order
         ]
@@ -25,6 +28,7 @@ const tweetController = {
         where: { role: "user" }
       }),
     ]).then(([tweets, users]) => {
+      // console.log('我是req.user',req.user)
       // 列出 追隨數前十名的使用者
       const topUsers =
         users.map(user => ({
@@ -34,7 +38,6 @@ const tweetController = {
         }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
-
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
         likedCount: req.user.LikedTweets.length,
@@ -42,7 +45,8 @@ const tweetController = {
         createdAt: tweet.createdAt,
         userName: tweet.User.name,
         userAccount: tweet.User.account,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id), // 推文是否被喜歡過
+        likedUsers: tweet.LikedUsers
       }))
 
       return res.render('tweets', {
@@ -94,12 +98,14 @@ const tweetController = {
         req.params.id, {
         include: [
           User,
-          { model: Reply, include: [User] }
+          { model: Reply, include: [User] },
+          { model: User, as: 'LikedUsers' }
         ],
         order: [['Replies', 'createdAt', 'DESC']]
       })
-      console.log('tweet:', tweet)
-      return res.render('tweet', { tweet: tweet.toJSON() })
+      // console.log('我是req.user.LikedTweets:', req.user.LikedTweets)
+      const isLiked = req.user.LikedTweets.map(d => d.id).includes(tweet.id) 
+      return res.render('tweet', { tweet: tweet.toJSON(), isLiked})
     } catch (e) {
       console.log(e.message)
     }
