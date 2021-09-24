@@ -10,7 +10,7 @@ const followshipController = {
         req.flash('error_messages', '使用者不可以追蹤自己')
         return res.redirect(200, 'back')
       }
-      const followship = await Followship.create({
+      await Followship.create({
         followerId: helpers.getUser(req).id,
         followingId: req.body.id
       })
