@@ -5,7 +5,7 @@ const passport = require('../config/passport')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
-// const messageController = require('../controllers/messageController')
+const messageController = require('../controllers/messageController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -42,7 +42,7 @@ const authenticatedAdmin = (req, res, next) => {
 
 
 //如果使用者訪問首頁，就導向 /tweets 的頁面
-// router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 //使用者顯示特定使用者頁面(使用者所有貼文)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 //使用者所有喜歡貼文
@@ -90,6 +90,9 @@ router.post('/tweets/:id/replies', authenticated, tweetController.createReply)
 router.post('/tweets/:id/like', authenticated, tweetController.addLike)
 //取消喜歡特定貼文
 router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
+
+//socket.io chat
+router.get('/messages', authenticated, messageController.sendMsg)
 
 //管理者登入(後台登入)
 router.get('/admin/signin', adminController.signinPage)

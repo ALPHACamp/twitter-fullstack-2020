@@ -10,7 +10,7 @@ const axios = require('axios');
 const http = require('http')
 const server = http.createServer(app)
 const { Server } = require("socket.io");
-const io = new Server(server, { cors: {origin: "*"}});
+const io = new Server(server, { cors: { origin: "*" } });
 
 
 const port = process.env.PORT || 3000
@@ -22,6 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 //變更順序以引入變數
 const passport = require('./config/passport')
+// const user = require('./models/user')
 
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
@@ -37,15 +38,21 @@ app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
 
-app.get('/api/message', (req, res) => {
-  return res.render('message')
-});
 
 io.on('connection', (socket) => {
+  //User connected
+  console.log('new user connected from app.js')
+
+  //User sending messages
   socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-  });
-});
+    io.emit('chat message', msg)
+  })
+
+  //User disconnected
+  socket.on('disconnect', () => {
+    console.log('Disconnect from server, from app.js')
+  })
+})
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
