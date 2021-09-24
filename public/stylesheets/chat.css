@@ -1,0 +1,85 @@
+.chats {
+  max-width: 600px;
+  height: 800px;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  border-color: #e6ecf0;
+  padding: 0;
+}
+
+.chat-users {
+  max-width: 600px;
+  height: 800px;
+  border-left: solid 1px #e6ecf0;
+  border-bottom: solid 1px #e6ecf0;
+  padding: 0;
+}
+
+.chat-users .home-word-box,
+.chats .home-word-box {
+  border-bottom: solid 1px #e6ecf0;
+
+}
+
+.chat-users .home-word,
+.chats .home-word {
+  color: #1c1c1c;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.chat-users .chat-user {
+  padding: 10px 15px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #e6ecf0;
+}
+
+.chat-user .name {
+  color: #1c1c1c;
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+.chat-user .account {
+  color: #657786;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.chats .chat-messages {
+  height: 700px;
+}
+
+
+.chats .user-name-status {
+  color: #87949e;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: #e5e5ee;
+  border-radius: 20px;
+}
+
+.other-chat, 
+.my-chat {
+  width: 80%;
+}
+
+.other-chat .chat-content {
+  background-color: #e5e5ee;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-right-radius: 25px;
+
+}
+
+.my-chat .chat-content {
+  background-color: #ff6600;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 25px;
+  color: #ffffff;
+
+  
+}

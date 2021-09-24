@@ -18,3 +18,6 @@ const authenticated = (req, res, next) => {
 //add follow 與 delete follow傳入值的方法不同
 router.post('/', authenticated, followshipController.addFollowing) 
 router.delete('/:userId',authenticated,followshipController.removeFollowing)
+
+
+module.exports = router
