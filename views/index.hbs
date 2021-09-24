@@ -34,7 +34,7 @@
                 </button>
             </span>
             <span class="post-icon-block">              
-              <form action="posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                
+              <form action="/posts/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                
                 {{#if this.isLiked}}
                  <button type="submit" class="bi bi-heart-fill btn"></button><span class="likedText">{{this.LikedCount}}</span>
                  {{else}}

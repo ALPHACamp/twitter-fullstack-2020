@@ -95,13 +95,21 @@ html {
   width: 180px;
   display: inline-block;
 }
-.profile-container .mainpost-sub-info .mainpost-icon-block i {
+form.mainpost-icon-block {
+  margin-bottom: 0;
+  height: 23px;
+}
+.profile-container .mainpost-sub-info .mainpost-icon-block i,
+.profile-container .mainpost-sub-info .mainpost-icon-block button {
   display: inline-block;
   margin-right: 5px;
   color: #657786;
   cursor: pointer;
+  font-size: 23px;
 }
-
+.profile-container .mainpost-sub-info .mainpost-icon-block button {
+  padding: 0;
+}
 .posts-container {
   margin-top: 10px;
 }

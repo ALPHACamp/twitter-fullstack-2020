@@ -2,7 +2,11 @@
   display: inline-block;
   font-size: 13px;
 }
-.post-icon-block .bi-heart-fill {
+.post-icon-block .bi-heart-fill,
+.profile-container
+  .mainpost-sub-info
+  .mainpost-icon-block
+  button.bi-heart-fill {
   color: #e0245e;
 }
 .post-icon-block .likedText {
