@@ -6,6 +6,7 @@ const { Reply, User, Tweet, Like, } = db
 
 const profileController = {
   getPosts: async (req, res) => {
+    const user = getTestUser(req) ? getTestUser(req) :console.log('user is null, please check')
     try {
       // 前端判斷
       const isPost = true
@@ -50,15 +51,20 @@ const profileController = {
         FollowerCount: data.Followers.length,
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
+      const isSelf = Number(req.params.userId)===Number(user.id)
       // tweetsCount, followersCount, followingsCount
       // return res.json({ Tweets, TopUsers, Profile, })
-      return res.render("profile", { isPost, users: TopUsers, tweets: Tweets, profile: Profile, tweetsCount, followersCount, followingsCount });
+      return res.render("profile", { 
+        isPost, isSelf, users: TopUsers, tweets: Tweets, 
+        profile: Profile, tweetsCount, followersCount, followingsCount 
+      });
     } catch (error) {
       console.log(error)
     }
   },
 
   getComments: async (req, res) => {
+    const user = getTestUser(req) ? getTestUser(req) :console.log('user is null, please check')
     try {
       //前端處理判定
       const isComment = true
@@ -92,14 +98,16 @@ const profileController = {
         FollowerCount: data.Followers.length,
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
+      const isSelf = Number(req.params.userId)===Number(user.id)
       // return res.json({ Profile, tweetsCount, followersCount, followingsCount })
-      return res.render("profile", { isComment, users: TopUsers, profile: Profile, tweetsCount, followersCount, followingsCount });
+      return res.render("profile", { isComment, isSelf, users: TopUsers, profile: Profile, tweetsCount, followersCount, followingsCount });
     } catch (error) {
       console.log(error)
     }
   },
 
   getLikedPosts: async (req, res) => {
+    const user = getTestUser(req) ? getTestUser(req) :console.log('user is null, please check')
     try {
       // 前端判斷
       const isLikedPosts = true
@@ -149,9 +157,12 @@ const profileController = {
         // isFollowed: req.user.Followings.map(d => d.id).includes(user.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
-
+      const isSelf = Number(req.params.userId)===Number(user.id)
       // return res.json({ tweets: LikedTweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
-      return res.render("profile", { isLikedPosts, users: TopUsers, tweets: LikedTweets, profile: Profile, tweetsCount, followersCount, followingsCount });
+      return res.render("profile", { 
+        isLikedPosts, isSelf, users: TopUsers, tweets: LikedTweets, 
+        profile: Profile, tweetsCount, followersCount, followingsCount 
+      });
     } catch (error) {
       console.log(error)
     }

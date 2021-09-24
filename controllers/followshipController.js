@@ -40,7 +40,7 @@ const followshipController = {
         })        
         return res.render("followship", { tagA: true, user, followers: user.Followers });
       })
-      .catch((error) => res.status(400).json(error));
+      .catch((error) => res.status(400).json(error))
   },
 
   getFollowings: (req, res) => {
@@ -63,7 +63,7 @@ const followshipController = {
         user.tweetCount = user.Tweets.length;
         return res.render("followship", { tagB: true, user, followings: user.Followings });
       })
-      .catch((error) => res.status(400).json(error));
+      .catch((error) => res.status(400).json(error))
   },
 
   addFollowing: (req, res) => {
@@ -81,7 +81,7 @@ const followshipController = {
       .then((data) => {
         res.redirect("back")
       })
-      .catch(error => res.status(400).json(error));
+      .catch(error => res.status(400).json(error))
   },
 
   deleteFollowing: (req, res) => {
@@ -89,8 +89,24 @@ const followshipController = {
     return Followship.destroy({
       where: { followerId: user.id, followingId: req.params.id },
     }).then(() => res.redirect("back"))
-      .catch(error => res.status(400).json(error));
+      .catch(error => res.status(400).json(error))
   },
+  putNotification: (req, res) => {
+
+    return Followship.findOne({where: {
+      followerId: Number(user.id),
+      followingId: Number(req.params.userId)
+    }}).then(followship => {
+      if (!followship) {
+        console.error('You cannot get notification for someone you don\'t follow')     
+      }else {
+        followship.notification = !notification
+      }
+      return res.redirect('back')
+    })
+  }
 };
+
+
 
 module.exports = followshipController;

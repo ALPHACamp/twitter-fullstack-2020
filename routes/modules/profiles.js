@@ -16,11 +16,6 @@ router.get("/:userId/followings", followshipController.getFollowings);
 router.put("/:userId", (req, res) => {
   return res.redirect("back");
 });
-router.post("/:userId/notification", (req, res) => {
-  return res.redirect("back");
-});
-router.delete("/:userId/notification", (req, res) => {
-  return res.redirect("back");
-});
+router.put("/:userId/notification", followshipController.putNotification);
 
 module.exports = router;
