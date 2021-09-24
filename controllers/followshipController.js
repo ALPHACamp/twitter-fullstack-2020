@@ -10,12 +10,13 @@ const followshipController = {
         req.flash('error_messages', '使用者不可以追蹤自己')
         return res.redirect(200, 'back')
       }
-      const followship = await Followship.create({
+      await Followship.create({
         followerId: helpers.getUser(req).id,
         followingId: req.body.id
       })
       return res.redirect('back')
     } catch (err) {
+      console.log('addFollowing err')
       req.flash('error_messages', '追蹤失敗！')
       res.status(302)
       return res.redirect('back')
@@ -33,6 +34,7 @@ const followshipController = {
       res.status(200)
       return res.redirect('back')
     } catch {
+      console.log('removeFollowing err')
       req.flash('error_messages', '取消追蹤失敗！')
       res.status(302)
       return res.redirect('back')
