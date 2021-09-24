@@ -6,12 +6,10 @@ const tweetController = require('../controllers/tweetController.js')
 const adminController = require('../controllers/adminController')
 
 const isAuthenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
+  if (!helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).isAdmin) {
-      console.log(helpers.getUser(req))
       return next()
     }
-    console.log(helpers.getUser(req))
     req.flash('error_messages', '只有管理員可登入後台')
   }
   res.redirect('/admin/signin')
