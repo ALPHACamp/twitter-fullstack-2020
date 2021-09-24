@@ -10,6 +10,13 @@ const {
 const helpers = require('./_helpers')
 const app = express()
 
+//test chat
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 } //有用到process.env.PORT的資料變數要放下面
@@ -46,7 +53,21 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(PORT, () => console.log(`Example app listening on http://localhost:${PORT}!`))
+//Test 聊天室
+app.get('/chat', (req, res) => {
+  res.render('chat');
+});
+
+//test chat
+io.on('connection', (socket) => {
+  socket.on('chat message', (msg) => {
+    console.log('message: ' + msg);
+  });
+});
+
+server.listen(PORT, () => console.log(`Example app listening on http://localhost:${PORT}!`))
+
+
 
 require('./routes')(app)
 
