@@ -7,6 +7,7 @@ const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
 const Reply = db.Reply
+const Like = db.Like
 const Followship = db.Followship
 const helpers = require('../_helpers')
 
@@ -70,7 +71,7 @@ const userController = {
     return Promise.all([
       Tweet.findAll({
         where: { UserId: req.params.id },
-        include: [User, Reply],
+        include: [User, Reply,{ model: User, as: 'LikedUsers' }],
         order: [['createdAt', 'DESC']]
       }),
       Followship.count({
@@ -90,6 +91,11 @@ const userController = {
         where: { role: "user" }
       }),
     ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
+      const data = tweets.map(tweet =>({
+        ...tweet.dataValues,
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
+      }))
+
       const topUsers =
         users.map(user => ({
           ...user.dataValues,
@@ -98,7 +104,8 @@ const userController = {
         }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
-      return res.render('userSelf', { tweets, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id })
+      // console.log('我是data',data)
+      return res.render('userSelf', { tweets :data, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id})
     })
   },
 
@@ -120,6 +127,42 @@ const userController = {
       req.params.id
     )
     return res.render('userSelfReply', { replies, tweets, tweetUser })
+  },
+
+  getUserSelfLike: async (req ,res) =>{
+    
+    const likes = await Like.findAll({
+      where: {UserId: req.params.id},
+      include: [User, {model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }]}],
+      order: [['createdAt', 'DESC']]
+    })
+     const tweets = await Tweet.findAll({
+      where: {UserId: req.params.id},
+      include: [User, Reply],
+      order: [['createdAt', 'DESC']]
+    })
+     const tweetUser = await User.findByPk(
+        req.params.id
+    )
+    const data = likes.map(like =>({
+      id: like.Tweet.id,
+      avatar: like.Tweet.User.avatar,
+      name: like.Tweet.User.name,
+      account: like.Tweet.User.account,
+      createdAt: like.Tweet.createdAt,
+      description: like.Tweet.description,
+      RepliesLength: like.Tweet.Replies.length,
+      LikedUsersLength: like.Tweet.LikedUsers.length,
+      isLiked : req.user.LikedTweets.map(d => d.id).includes(like.Tweet.id) 
+    }))
+    // const isLiked = req.user.LikedTweets.map(d => d.id).includes(tweet.id) 
+    console.log(data)
+    return res.render('userSelfLike',{ data, tweets, tweetUser})
+    // const tweets = await Tweet.findAll({
+    //   where: {UserId: req.params.id},
+    //   include: [User, Reply],
+    //   order: [['createdAt', 'DESC']]
+    // })
   },
 
   getSetting: (req, res) => {
