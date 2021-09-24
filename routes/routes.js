@@ -119,7 +119,7 @@ router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 router.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserEdit)
 
 //即時通訊
-router.get('/message', messageController.renderPage);
+router.get('/message', authenticated, messageController.renderPage);
 
 //註冊
 router.get('/signup', userController.signUpPage)
