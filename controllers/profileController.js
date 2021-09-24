@@ -36,18 +36,23 @@ const profileController = {
       const followingsCount = Profile.Followings.length
       const tweetsCount = Tweets.length
 
-      // get Top10User
+      // get TopUser
       const rawUsers = await User.findAll({
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.user.id } }
+        where: {
+          id: { [Op.not]: req.user.id },
+          role: { [Op.not]: 'admin' }
+        },
       })
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,
         FollowerCount: data.Followers.length,
+        isFollowed: req.user.Followings.map(d => d.id).includes(data.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
+
       // tweetsCount, followersCount, followingsCount
       // return res.json({ Tweets, TopUsers, Profile, })
       return res.render("profile", { isPost, users: TopUsers, tweets: Tweets, profile: Profile, tweetsCount, followersCount, followingsCount });
@@ -77,19 +82,23 @@ const profileController = {
       const followersCount = Profile.Followers.length
       const followingsCount = Profile.Followings.length
 
-      //get Top10User
+      // get TopUser
       const rawUsers = await User.findAll({
         include: [
           { model: User, as: 'Followers' },
         ],
-        where: { id: { [Op.not]: req.user.id } }
+        where: {
+          id: { [Op.not]: req.user.id },
+          role: { [Op.not]: 'admin' }
+        },
       })
-
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,
         FollowerCount: data.Followers.length,
+        isFollowed: req.user.Followings.map(d => d.id).includes(data.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
+      
       // return res.json({ Profile, tweetsCount, followersCount, followingsCount })
       return res.render("profile", { isComment, users: TopUsers, profile: Profile, tweetsCount, followersCount, followingsCount });
     } catch (error) {
@@ -144,10 +153,10 @@ const profileController = {
       const Users = await rawUsers.map(data => ({
         ...data.dataValues,
         FollowerCount: data.Followers.length,
-        isFollowed: req.user.Followers.map(d => d.id).includes(req.user.id),
+        isFollowed: req.user.Followings.map(d => d.id).includes(data.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
-      console.log(Users)
+
       // return res.json({ tweets: LikedTweets, TopUsers, Profile, tweetsCount, followersCount, followingsCount })
       return res.render("profile", { isLikedPosts, users: TopUsers, tweets: LikedTweets, profile: Profile, tweetsCount, followersCount, followingsCount });
     } catch (error) {
