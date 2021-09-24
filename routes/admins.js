@@ -4,6 +4,7 @@ const passport = require('../config/passport')
 const helpers = require('../_helpers')
 
 const adminController = require('../controllers/adminController')
+const tweetController = require('../controllers/tweetController')
 
 const isAuthenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
