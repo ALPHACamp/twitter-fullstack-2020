@@ -1,56 +1,61 @@
-<form class="form-login mt-5" action="#" method="POST" style="width: 100%;" novalidate>
-<div class="container">
-    <div class="text-center my-4">
-      <h1 class="h3 mb-3 font-weight-normal">帳號設定</h1>
-    </div>
-    
-    <div class="row justify-content-center">
-      <div class="form-floating col-4 mb-4">
-        <input type="email" class="form-control" id="floatingAccount" placeholder="@Will" style="background-color: #F5F8FA;"
-          required autofocus>
-        <label for="floatingAccount">帳號</label>
-        <div class="invalid-feedback">請輸入帳號</div>
+<div class="row">
+  <div class="col-3">
+    {{>columnLeft}}
+  </div>
+  <div class="col-9 d-flex" style="border-left: 1px solid #E6ECF0; margin:0%;padding:0%;">
+    <form class="form-login mt-3" action="#" method="POST" style="width: 100%;" novalidate>
+      <div class="text-start" style="border-bottom:1px solid #E6ECF0; height: 40px;">
+        <h1 class="h3 font-weight-normal" style="margin-left: 20px; font-size:19px; margin-top: 10px;">帳號設定</h1>
       </div>
-    </div>
-    
-    <div class="row justify-content-center">
-      <div class="form-floating col-4 mb-4">
-        <input type="text" class="form-control" id="floatingName" placeholder="name" style="background-color: #F5F8FA;"
-          maxlength="50" required autofocus>
-        <label for="floatingName">名稱</label>
-        <div class="invalid-feedback">請輸入名稱，最多50字</div>
+
+      <div class="row justify-content-start">
+        <div class="form-floating col-4 mb-3">
+          <input type="email" class="form-control" name="account" id="floatingAccount" placeholder="@Will" value="{{ user.account }}"
+            style="background-color: #F5F8FA; margin-left:10px;" required autofocus>
+          <label for="floatingAccount" style="margin-left:22px; margin-top:6px">帳號</label>
+          <div class="invalid-feedback">請輸入帳號</div>
+        </div>
       </div>
-    </div>
-    
-    <div class="row justify-content-center">
-      <div class="form-floating col-4 mb-4">
-        <input type="Email" class="form-control" id="floatingEmail" placeholder="name@example.com"
-          style="background-color: #F5F8FA;" required autofocus>
-        <label for="floatingEmail">Email</label>
-        <div class="invalid-feedback">請輸入Email</div>
+
+      <div class="row justify-content-start">
+        <div class="form-floating col-4 mb-3">
+          <input type="text" class="form-control" name="name" id="floatingName" placeholder="name" value="{{ user.name }}"
+            style="background-color: #F5F8FA; margin-left:10px;" maxlength="50" required autofocus>
+          <label for="floatingName" style="margin-left:22px; margin-top:6px">名稱</label>
+          <div class="invalid-feedback">請輸入名稱，最多50字</div>
+        </div>
       </div>
-    </div>
-    
-    <div class="row justify-content-center">
-      <div class="form-floating col-4 mb-4">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="******"
-          style="background-color: #F5F8FA;" required>
-        <label for="floatingPassword">密碼</label>
-        <div class="invalid-feedback">請輸入密碼</div>
+
+      <div class="row justify-content-start">
+        <div class="form-floating col-4 mb-3">
+          <input type="Email" class="form-control" name="email" id="floatingEmail" placeholder="name@example.com" value={{ user.email }}
+            style="background-color: #F5F8FA; margin-left:10px;" required autofocus>
+          <label for="floatingEmail" style="margin-left:22px; margin-top:6px">Email</label>
+          <div class="invalid-feedback">請輸入Email</div>
+        </div>
       </div>
-    </div>
-    
-    <div class="row justify-content-center">
-      <div class="form-floating col-4 mb-4">
-        <input type="password" class="form-control" id="floatingConfirmPassword" placeholder="******"
-          style="background-color: #F5F8FA;" required>
-        <label for="floatingConfirmPassword">確認密碼</label>
-        <div class="invalid-feedback">和密碼不符</div>
+
+      <div class="row justify-content-start">
+        <div class="form-floating col-4 mb-3">
+          <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="******"
+            style="background-color: #F5F8FA; margin-left:10px;" required>
+          <label for="floatingPassword" style="margin-left:22px; margin-top:6px">密碼</label>
+          <div class="invalid-feedback">請輸入密碼</div>
+        </div>
       </div>
-    </div>
-    
-    <div class="col-4 mx-auto text-end">
-      <button class="btn rounded-pill" type="submit" style="color:white; background-color:#FF6600">儲存</button>
-    </div>
-</div>
-</form>
+
+      <div class="row justify-content-start">
+        <div class="form-floating col-4 mb-3">
+          <input type="password" class="form-control" name="confirmPassword" id="floatingConfirmPassword" placeholder="******"
+            style="background-color: #F5F8FA; margin-left:10px;" required>
+          <label for="floatingConfirmPassword" style="margin-left:22px; margin-top:6px">確認密碼</label>
+          <div class="invalid-feedback">和密碼不符</div>
+        </div>
+      </div>
+      <div class="col-4 text-end mb-3">
+        <button class="btn rounded-pill" type="submit" style="color:white; background-color:#FF6600">儲存</button>
+      </div>
+
+
+  </div>
+  </form>

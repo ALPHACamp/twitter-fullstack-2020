@@ -14,7 +14,7 @@ router.get("/:id/comments", profileController.getComments);
 router.get("/:id/likes", profileController.getLikedPosts);
 router.get("/:id/followers", followshipController.getFollowers);
 router.get("/:id/followings", followshipController.getFollowings);
-// router.get("/:id/edit")  測試需求路由,不過測試檔名稱怪怪的
+router.get("/:id/edit",userController.getUserSetting)  
 // router.post("/:id/edit")
 
 router.put("/:userId", (req, res) => {

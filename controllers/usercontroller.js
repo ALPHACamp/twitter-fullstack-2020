@@ -21,7 +21,6 @@ const userController = {
   signupPage: (req, res) => {
     return res.render("signup");
   },
-
   signup: (req, res) => {
     if (req.body.confirmPassword !== req.body.password) {
       console.log('兩次密碼輸入不同！')
@@ -60,6 +59,14 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
+  getUserSetting: (req, res) => {
+    const user = getTestUser(req)
+    console.log(user)
+    return res.render('setting', {user})
+  },
+ 
+    
+  
 };
 
 module.exports = userController;
