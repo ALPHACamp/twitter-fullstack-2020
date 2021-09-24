@@ -84,10 +84,16 @@
 }
 
 .tweet-icon .reply-icon,
-.tweet-icon .unlike-icon,
 .tweet-icon .like-icon
 {
   color: #657786;
   cursor: pointer;
   font-size: 25px;
 }
+
+.tweet-icon .unlike-icon{
+  color: #e0245e;
+  cursor: pointer;
+  font-size: 25px;
+}
+

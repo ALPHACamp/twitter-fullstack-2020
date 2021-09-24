@@ -7,8 +7,6 @@ const Like = db.Like
 
 const helpers = require('../../_helpers')
 
-const fs = require('fs')
-const user = require('../../models/user')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const userService = require('../../services/userService')
@@ -96,6 +94,16 @@ const userController = {
         avatar: userUpload.avatar ? userUpload.avatar.data.link : user.avatar
       })
 
+      profileUser.name = userUpload.name
+      profileUser.introduction = userUpload.intro
+      profileUser.cover = userUpload.cover
+        ? userUpload.cover.data.link
+        : user.cover
+      profileUser.avatar = userUpload.avatar
+        ? userUpload.avatar.data.link
+        : user.avatar
+
+      // 此處選擇不redirect是為了符合測試檔中規定回傳status code 200 (不行302) 而進行的調整
       return res.render('userTweets', { profileUser, popularUser, tweets })
     } catch (err) {
       req.flash('error_messages', '更新失敗！')
