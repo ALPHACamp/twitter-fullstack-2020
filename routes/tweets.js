@@ -3,13 +3,19 @@ const router = express.Router()
 const helpers = require('../_helpers')
 
 const tweetController = require('../controllers/tweetController.js')
+const adminController = require('../controllers/adminController')
 
-// const authenticated = (req, res, next) => {
-//   if (helpers.ensureAuthenticated(req)) {
-//     return next()
-//   }
-//   res.redirect('/users/signup')
-// }
+const isAuthenticatedAdmin = (req, res, next) => {
+  if (helpers.ensureAuthenticated(req)) {
+    if (helpers.getUser(req).isAdmin) {
+      console.log(helpers.getUser(req))
+      return next()
+    }
+    console.log(helpers.getUser(req))
+    req.flash('error_messages', '只有管理員可登入後台')
+  }
+  res.redirect('/admin/signin')
+}
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -20,6 +26,8 @@ const authenticated = (req, res, next) => {
   }
   res.redirect('/users/login')
 }
+
+router.get('/', isAuthenticatedAdmin, adminController.getTweets)
 
 router.get('/', authenticated, tweetController.getTweets)
 router.post('/', authenticated, tweetController.postTweet)
