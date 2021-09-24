@@ -21,7 +21,7 @@ const tweetController = {
         tweetDescription: row.description,
         tweetRepliesCount: row.Replies.length,
         tweetLikesCount: row.Likes.length,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(row.id)
+        isLiked: req.user.LikedTweets.map(d => d.id).includes(row.id),
       }))
       return res.render('tweet', {
         tweets: tweetData,
@@ -62,16 +62,17 @@ const tweetController = {
   postTweet: (req, res) => {
     if (req.body.text.length > 140) {
       req.flash('error_messages', '推文字數限制在 140 以內！')
-      res.redirect('back')
+      return res.redirect('/tweets')
     }
     else {
-      return Tweet.create({
+      Tweet.create({
         UserId: req.user.id,
         description: req.body.text,
         createdAt: new Date(),
         updatedAt: new Date()
       }).then((tweet) => {
-        res.redirect('tweet')
+        res.status(200)
+        return res.redirect('/tweets')
       })
     }
   },

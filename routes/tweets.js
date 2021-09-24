@@ -22,7 +22,7 @@ const authenticated = (req, res, next) => {
     }
     req.flash('error_messages', '管理員請由後台登入')
   }
-  res.redirect('/users/login')
+  res.redirect('/signin')
 }
 
 router.get('/', authenticated, tweetController.getTweets)

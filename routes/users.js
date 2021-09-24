@@ -14,21 +14,12 @@ const authenticated = (req, res, next) => {
     }
     req.flash('error_messages', '管理員請由後台登入')
   }
-  res.redirect('/users/login')
+  res.redirect('/signin')
 }
-
-// user register
-router.get('/signup', userController.getSignup)
-router.post('/signup', userController.postSignup)
-
-// user login
-router.get('/login', userController.getLogin)
-router.post('/login', passport.authenticate('local', { failureRedirect: '/users/login', failureFlash: true }), userController.postLogin)
-router.get('/logout', userController.logout)
 
 //user's profile
 router.put('/self/edit/:id', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putUserEdit)
-router.get('/self/:id', authenticated, userController.getUser)
+router.get('/users/:id/tweets', authenticated, userController.getUser)
 router.get('/self/reply/:id', authenticated, userController.getUserReply)
 router.get('/self/like/:id', authenticated, userController.getUserLike)
 router.get('/self/follower/:id', authenticated, userController.getUserFollower)

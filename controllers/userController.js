@@ -15,15 +15,15 @@ const userController = {
   },
 
   postSignup: (req, res) => {
-    if (req.body.password !== req.body.confirmPassword) {
+    if (req.body.password !== req.body.checkPassword) {
       req.flash('error_messages', '兩次密碼輸入不符！')
-      res.redirect('/users/signup')
+      res.redirect('/signup')
     } else {
       User.findOne({ where: { email: req.body.email } })
         .then(user => {
           if (user) {
             req.flash('error_messages', '此信箱已註冊過！')
-            res.redirect('/users/signup')
+            res.redirect('/signup')
           } else {
             User.create({
               account: req.body.account,
@@ -32,7 +32,7 @@ const userController = {
               password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
             }).then(user => {
               req.flash('success_messages', '註冊成功！')
-              return res.redirect('/users/login')
+              return res.redirect('/signin')
             })
           }
         })
@@ -50,7 +50,7 @@ const userController = {
   logout: (req, res) => {
     req.flash('success_messages', '登出成功')
     req.logout()
-    res.redirect('/users/login')
+    res.redirect('/signin')
   },
 
   getUser: (req, res) => {
@@ -90,6 +90,7 @@ const userController = {
           .then(user => {
             const nameWordCount = user.dataValues.name.length
             const introWordCount = user.dataValues.introduction.length
+            res.status(200)
             return res.render('self', {
               user: user.toJSON(),
               nameWordCount: nameWordCount,
