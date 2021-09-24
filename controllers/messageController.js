@@ -11,7 +11,8 @@ const Message = db.Message
 const messageController = {
   renderPage: (req, res) => {
     const currentUser = helpers.getUser(req)
-    return res.render('message', currentUser)
+    console.log(currentUser.id)
+    return res.render('message', {currentUser})
   },
   sendMsg: (user) => {
     console.log(user.id.toString())

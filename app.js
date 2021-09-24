@@ -42,7 +42,7 @@ app.use(methodOverride('_method'))
 
 io.on('connection', (socket) => {
   
-  socket.on('chat message', (msg) => {
+  socket.on('chat message', (msg) => { 
     const user = {id: socket.id,msg: msg,}
     messageController.sendMsg(user)
     io.emit('chat message', msg);
