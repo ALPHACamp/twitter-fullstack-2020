@@ -22,6 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 //變更順序以引入變數
 const passport = require('./config/passport')
+const messageController = require('./controllers/messageController')
 
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
@@ -37,15 +38,18 @@ app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
 
-app.get('/api/message', (req, res) => {
-  return res.render('message')
-});
 
+// console.log(socket.id)
+// socket.on('chat message', (msg, senderId) => {
+//   io.emit('chat message', msg, senderId);
+// });
 io.on('connection', (socket) => {
-  console.log(socket.id)
-  socket.on('chat message', (msg, senderId) => {
-    io.emit('chat message', msg, senderId);
-  });
+  
+  socket.on('chat message', (msg, userId, avatar) => { 
+    const user = {id: userId, msg: msg,}
+    messageController.sendMsg(user)
+    io.emit('chat message', msg, userId, avatar);
+    });
 });
 
 app.use((req, res, next) => {
