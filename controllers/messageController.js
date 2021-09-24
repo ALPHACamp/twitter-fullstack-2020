@@ -11,14 +11,13 @@ const Message = db.Message
 const messageController = {
   renderPage: (req, res) => {
     const currentUser = helpers.getUser(req)
-    console.log(currentUser.id)
     return res.render('message', {currentUser})
   },
   sendMsg: (user) => {
-    console.log(user.id.toString())
+    console.log('yo====',user.id)
     console.log(user.msg)
     return Message.create({
-      userId: 56,
+      userId: user.id,
       content: user.msg
     })
   }

@@ -56,7 +56,7 @@
       background: #efefef;
     }
   </style>
-<div><h2>HIHI{{currentUser.id}}</h2></div>
+<div><h2 id= "userId">{{currentUser.id}}</h2></div>
 
 <ul id="messages"></ul>
 <form id="form" action="">
@@ -74,14 +74,21 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (input.value) {
-      socket.emit('chat message', input.value);
+      let user = document.getElementById("userId")
+      let userId = user.innerHTML;
+      socket.emit('chat message', input.value, userId);
       input.value = '';
     }
   });
 
-  socket.on('chat message', function (msg) {
+  socket.on('chat message', function () {
     var item = document.createElement('li');
+    
     item.textContent = msg;
+    
+    console.log(userId)
+    
+    socket.emit('chat message', dataValue);
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
   });
