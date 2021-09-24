@@ -2,7 +2,7 @@
   <header class="border border-1 border-box "
     style="background-color: #FFFFFF; border-color: #E6ECF0; height: 55px; width: 600px">
     <div class="m-2 d-flex" style="font-size: 18px; font-family: 'Noto Sans TC'; font-color: #1C1C1C">
-      <a href="/twitters" class="" style="width: 17px; height: 14px;">
+      <a href="/tweets" class="" style="width: 17px; height: 14px;">
         <i class="fas fa-arrow-left" style="color: black"></i>
       </a>
       <p class="fw-bold lh-base ms-4"> 推文 </p>
@@ -82,7 +82,7 @@
 <!-- Reply Modal -->
 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="/twitters/{{tweet.id}}/replyList" method="POST">
+    <form action="/tweets/{{tweet.id}}/replyList" method="POST">
       <div class="modal-content" style="width: 602px;">
         <div class="modal-header">
           <div class="d-flex align-items-center">

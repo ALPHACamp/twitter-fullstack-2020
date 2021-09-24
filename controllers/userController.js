@@ -44,7 +44,7 @@ const userController = {
   },
 
   postLogin: (req, res) => {
-    res.redirect('/twitters')
+    res.redirect('/tweets')
   },
 
   logout: (req, res) => {
