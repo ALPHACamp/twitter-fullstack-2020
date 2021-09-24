@@ -2,6 +2,11 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Reply = sequelize.define('Reply', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     comment: DataTypes.TEXT,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE,

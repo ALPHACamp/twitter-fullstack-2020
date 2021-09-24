@@ -6,11 +6,11 @@ module.exports = {
     let usersPosts = [] // 推文容器
 
     const users = Array.from({ length: 5 }).map((item, i) => ({
-      UserId: i + 2
+      UserId: (i + 1) * 10 + 5
     })) // {...UserId(2, 3, 4, 5, 6)}
 
     users.forEach((user, userIndex) => {
-      // 每個使用者產生十則推文，每則推文回覆數為三、喜歡數為零
+      // 每個使用者產生十則推文，每則推文回覆數為三、喜歡數為零(user, userIndex) = (2, )
       const posts = Array.from({ length: 10 }).map((post, postIndex) => ({
         id: userIndex * 10 + (postIndex + 1),
         UserId: user.UserId,

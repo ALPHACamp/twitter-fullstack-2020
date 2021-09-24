@@ -2,6 +2,11 @@
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     account: DataTypes.STRING,
     name: DataTypes.STRING,
     email: DataTypes.STRING,
@@ -19,12 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     User.hasMany(models.Reply)
     User.hasMany(models.Tweet)
-    User.belongsToMany(models.Tweet, {
-      through: models.Like,
-      foreignKey: 'UserId',
-      as: 'LikedTweets'
-    }),
-      User.hasMany(models.Like)
+    User.hasMany(models.Like)
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followerId',

@@ -40,10 +40,12 @@ module.exports = (app, passport) => {
   app.post('/like/:tweetId', authenticated, userController.addLike)
   app.delete('/like/:tweetId', authenticated, userController.removeLike)
 
+  app.get('/user/:id/likes', authenticated, userController.getUserSelfLike)
   app.get('/user/:id/replies', authenticated, userController.getUserSelfReply)
   app.get('/user/:id/tweets', authenticated, userController.getUserTweets)
   app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
+  app.put('/users/:id/edit', authenticated, userController.putUserProfile)
 
   // 追蹤
   app.post('/following/:userId', authenticated, userController.addFollowing)
@@ -81,9 +83,9 @@ module.exports = (app, passport) => {
 
   //後台 - 首頁
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
-  // // 後台 - 使用者列表
+  // 後台 - 使用者列表
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
-  // // 後台 - 推文清單
+  // 後台 - 推文清單
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 }
