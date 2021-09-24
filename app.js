@@ -10,6 +10,12 @@ const {
 const helpers = require('./_helpers')
 const app = express()
 
+//user to chat feature
+const http = require('http');
+const server = http.createServer(app);  //用在server.listener&帶入參數
+const socketChat = require('./config/socketChat')  
+
+
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 } //有用到process.env.PORT的資料變數要放下面
@@ -46,8 +52,17 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(PORT, () => console.log(`Example app listening on http://localhost:${PORT}!`))
+server.listen(PORT, () => console.log(`Example app listening on http://localhost:${PORT}!`))
+
 
 require('./routes')(app)
+
+//Test 聊天室
+app.get('/chat', (req, res) => {
+  res.render('chat');
+});
+
+socketChat.Server(server) //server參數傳遞給io instance使用 建立通道
+socketChat.connect()  //與前端通道連線
 
 module.exports = app
