@@ -323,7 +323,7 @@ const userController = {
     // 確認不能追蹤自己
     if (Number(followerId) === Number(followingId)) {
       req.flash('error_messages', 'You can\'t follow yourself!')
-      return res.redirect('/tweets')
+      return res.end()
     }
 
     // 確認該筆追蹤尚未存在於followship中，若不存在才創建新紀錄
