@@ -33,7 +33,7 @@ const messageController = {
       UserId: user.id,
       content: user.msg,
       roomName,
-      fromId: viewUserId
+      toId: viewUserId
     })
   },
 
@@ -72,8 +72,8 @@ const messageController = {
       where: { UserId: currentId },
       include: [User],
       // attributes: [[sequelize.fn('COUNT', sequelize.col('createdAt')), 'tweetCount']],
-      order: [[sequelize.fn('MAX', 'createdAt'), 'ASC']],
-      group: ['fromId'],
+      // order: [[sequelize.fn('MAX', 'createdAt'), 'ASC']],
+      group: ['toId'],
       raw:true,
       nest:true
     })
