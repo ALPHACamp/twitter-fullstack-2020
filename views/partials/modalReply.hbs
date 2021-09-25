@@ -13,18 +13,18 @@
         <div class="post border-bottom-0">
           <div class="post-card1 connected">
             <div class="avatar profile-avatar"><img
-                src="https://d5nunyagcicgy.cloudfront.net/external_assets/hero_examples/hair_beach_v391182663/original.jpeg"
+                src={{tweet.User.avatar}}
                 alt="avatar-img"
               /></div>
           </div>
           <div class="post-card2">
-            <h5 class="d-inline-block post-title">Post Title&nbsp;<span
+            <h5 class="d-inline-block post-title">{{tweet.User.name}}&nbsp;<span
                 class="post-sub-info"
-              >@Apple &#x2027; 5minutes</span></h5>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p><span
-              class="post-sub-info"
-            >回覆 <span class="orange-text">@Apple</span></span>
-            <p>Great~</p>
+              >@{{tweet.User.account}}
+                &#x2027;
+                {{moment tweet.createdAt}}</span></h5>
+            <p>{{tweet.description}}</p><span class="post-sub-info">回覆給
+              <span class="orange-text">{{tweet.User.name}}</span></span>
           </div>
         </div>
         <div class="profile-container connected border-start-0">
@@ -38,23 +38,22 @@
                 />
               </div>
             </div>
-
-            <div class="profile-textarea-container border-start-0 connected">
-              <textarea
-                name="profile-textarea"
-                class="form-control form-control-lg"
-                id="post"
-                placeholder="推你的回覆"
-                rows="3"
-              ></textarea>
-            </div>
-            <div
-              class="btn btn-twitter"
-              id="myInput"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModel"
-            >
-              <span>回覆</span></div>
+            <form action="/tweets/{{tweet.id}}/replies" method="POST">
+              <div class="profile-textarea-container border-start-0 connected">
+                <textarea
+                  name="comment"
+                  class="form-control form-control-lg"
+                  id="post"
+                  placeholder="推你的回覆"
+                  rows="3"
+                  maxlength="140"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-twitter">
+                <span>回覆</span>
+              </button>
+            </form>
           </div>
         </div>
 

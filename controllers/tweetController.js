@@ -148,5 +148,30 @@ const tweetController = {
         .catch((error) => res.status(400).json(error));
     }
   },
+
+  postReply: (req, res) => {
+    const user = getTestUser(req);
+    const { comment } = req.body;
+    if (!comment) {
+      //req.flash('error_message', '你並未輸入任何文字')
+      return res.redirect("back");
+    }
+    if (comment.length > 140) {
+      //req.flash('error_message', '字數不可超過140字')
+      return res.redirect("back");
+    } else {
+      return Reply.create({
+        UserId: user.id,
+        TweetId: req.params.id,
+        comment,
+      })
+        .then((reply) => {
+          // console.log("成功發送評論", reply.toJSON());
+          res.redirect("back");
+        })
+        .catch((error) => res.status(400).json(error));
+    }
+  },
 };
+
 module.exports = tweetController;
