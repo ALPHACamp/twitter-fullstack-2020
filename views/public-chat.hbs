@@ -97,7 +97,7 @@
 
       <hr style="margin:0; padding:0">
 
-      <ul class="list-group">
+      <ul class="list-group" id="onlineUser">
         {{!-- 使用者A開始 --}}
         <li class="online-user list-group-item">
           <div class="avatar">
@@ -256,6 +256,28 @@
             </div>`
     item.innerHTML = rawHTML;
     messages.appendChild(item);
+
+    const onlineUser = document.querySelector('#onlineUser')
+    var item2 = document.createElement('li');
+    let onlineHTML = "";
+    item2.classList.add('list-group')
+    onlineHTML += `<li class="online-user list-group-item">
+      <div class="avatar">
+        <a href="">
+          <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+        <div class="name-account">
+          <a href="" class="d-flex">
+            <div class="name">Apple</div>
+            <div class="account">@apple</div>
+          </a>
+        </div>
+        </li>
+      <hr style="margin:0; padding:0">`
+    item2.innerHTML = onlineHTML
+    onlineUser.appendChild(item2);
+
     scrollWindow();
   })
 
@@ -318,6 +340,19 @@
     scrollWindow();
   }
   });
+
+  //下線通知
+  socket.on('user offline', function (currentName) {
+    var item = document.createElement('li');
+    let rawHTML = "";
+    item.classList.add('list-group-item')
+    rawHTML += `<div class="log">
+              ${currentName} 已下線
+            </div>`
+    item.innerHTML = rawHTML;
+    messages.appendChild(item);
+    scrollWindow();
+  })
 
   function scrollWindow() {
     let h = document.querySelector('.chat');

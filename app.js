@@ -10,7 +10,7 @@ const axios = require('axios');
 const http = require('http')
 const server = http.createServer(app)
 const { Server } = require("socket.io");
-const io = new Server(server, { cors: {origin: "*"}});
+const io = new Server(server, { cors: { origin: "*" } });
 
 
 const port = process.env.PORT || 3000
@@ -47,27 +47,30 @@ app.use(methodOverride('_method'))
 //   socket.broadcast.emit('new user msg', userName)
 // })
 
-
+// const onlineUsersList = [{}, {}]
 io.on('connection', (socket) => {
-
   socket.on('send user', function(currentName) { 
+  // onlineUsersList[socket.id] = currentName
     socket.broadcast.emit('new user msg', currentName)
 
     socket.on('chat message', (msg, currentId, currentAvatar) => {
-      console.log('接收',currentId)
+      console.log('接收', currentId)
       const user = { id: currentId, msg: msg }
       messageController.sendMsg(user)
       io.emit('chat message', msg, currentId, currentAvatar);
     });
   });
 
+  socket.on('disconnect', () => {
+      socket.broadcast.emit('user offline', currentName)
+    })
+  
    socket.on('jOIN ROOM', (roomName, cb) => {
      socket.join(roomName);
      cb(message[roomName])
 
     socket.on('private-chat' )
    })
-
 });
 
 app.use((req, res, next) => {
