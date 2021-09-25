@@ -269,6 +269,7 @@
     if (input.value) {
       var item = document.createElement('li');
       let rawHTML = "";
+      let time = new Date().toLocaleTimeString();
       item.classList.add('list-group-item-myself')
       rawHTML += `<div class="user-information">
               <div class="current-user">
@@ -276,7 +277,7 @@
                   <div class="text"> ${input.value}</div>
                 </div>
               </div>
-              <div class="time">下午4:21</div>
+              <div class="time">${time}</div>
             </div>`
       item.innerHTML = rawHTML;
       messages.appendChild(item);
@@ -321,6 +322,5 @@
     let h = document.querySelector('.chat');
     h.scrollTo(0, h.scrollHeight);
   }
-
 
 </script>
