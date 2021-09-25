@@ -59,9 +59,13 @@ app.get('/messages/public', (req, res) => {
 
 
 io.on('connection', (socket) => {
+  //有登入
+  console.log('a user connected')
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
+    console.log(msg)
   });
+  //
 });
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
