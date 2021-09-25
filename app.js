@@ -49,7 +49,7 @@ app.use(methodOverride('_method'))
 
 
 io.on('connection', (socket) => {
-
+  
   socket.on('send user', function(currentName) { 
     socket.broadcast.emit('new user msg', currentName)
 
@@ -61,14 +61,25 @@ io.on('connection', (socket) => {
     });
   });
 
-   socket.on('jOIN ROOM', (roomName, cb) => {
-     socket.join(roomName);
-     cb(message[roomName])
+  //私人聊天
+  socket.on('join room', (userList) => {
+    console.log('============',socket.id)
+    socket.join(userList);
+    console.log('this=======',userList)
+  //  cb(message[roomName])
 
-    socket.on('private-chat' )
-   })
+  socket.on('private-chat', ( ) => {
+    
+    io.emit('private-chat');
+  })
+})
 
 });
+
+
+
+
+
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')

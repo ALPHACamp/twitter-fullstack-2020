@@ -198,7 +198,7 @@
             <div class="user-information">
               <div class="current-user">
                 <div class="text-area">
-                  <div class="text"> 自己的訊息打在Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</div>
+                  <div class="text"> {{userList}}</div>
                 </div>
               </div>
               <div class="time">下午4:21</div>
@@ -215,9 +215,9 @@
       {{!-- 輸入欄位 --}}
       <div class="type-area">
         {{!-- //TODO:要改API傳 --}}
-        <form action="" method="POST" style="display: contents;">
+        <form action="" method="" style="display: contents;">
           <div class="input-area">
-            <input type="text" class="input-chat" placeholder="輸入訊息...">
+            <input type="text" class="input-chat" id="input" placeholder="輸入訊息...">
           </div>
           <div class="send-chat">
             <button class="btn">
@@ -243,20 +243,22 @@
 {{!-- add-tweet Modal --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+
 <script>
   var socket = io();
 
   var messages = document.getElementById('messages');
   var form = document.getElementById('form');
   var input = document.getElementById('input');
+  
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
-    const currentName = "{{currentUser.name}}"
-    const currentAccount = "{{ currentUser.account }}"
-    socket.emit('send user', currentName, currentAccount)
+    let userList = [{{userList}}]
+    socket.emit('join room', userList)
+    console.log(userList)
   })
-
+ 
 
   //本人送出訊息
   form.addEventListener('submit', function (e) {
@@ -278,7 +280,7 @@
       messages.appendChild(item);
       const currentAvatar = "{{ currentUser.avatar }}"
       const currentId = "{{ currentUser.id }}"
-      socket.emit('chat message', input.value, currentId, currentAvatar);
+      socket.emit('private-chat', input.value, currentId, currentAvatar);
       input.value = ''
     }
   })
@@ -299,7 +301,7 @@
   })
 
   //接收他人送出訊息
-  {{!-- socket.on('chat message', function (msg, currentId, currentAvatar) {
+  {{!-- socket.on('private-chat', function (msg, currentId, currentAvatar) {
     const userId = {{ currentUser.id }
   }
     console.log('現在使用者', userId)

@@ -123,7 +123,7 @@ router.put('/users/:id/edit', authenticated, multipleUpload, userController.putU
 router.get('/message', authenticated, messageController.publicPage);
 
 //即時通訊(私人聊天)
-router.get('/message/:id', messageController.privatePage)
+router.get('/message/:id', authenticated, messageController.privatePage)
 
 //註冊
 router.get('/signup', userController.signUpPage)
