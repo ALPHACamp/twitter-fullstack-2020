@@ -16,7 +16,7 @@ router.post(
   '/admin/signin',
   passport.authenticate('local', {
     failureRedirect: '/admin/signin',
-    failureFlash: true,
+    failureFlash: true
   }),
   adminController.signin
 )
@@ -32,7 +32,7 @@ router.post(
   '/signin',
   passport.authenticate('local', {
     failureRedirect: '/signin',
-    failureFlash: true,
+    failureFlash: true
   }),
   userController.signin
 )
@@ -93,13 +93,21 @@ router.post(
 )
 
 // FollowerShip
-router.post('/follow/:id', auth.authenticatedGeneral, userController.follow)
-router.delete('/follow/:id', auth.authenticatedGeneral, userController.unFollow)
+router.post('/followships', auth.authenticatedGeneral, userController.follow)
+router.delete(
+  '/followships/:id',
+  auth.authenticatedGeneral,
+  userController.unFollow
+)
 router.get('follow/top', auth.authenticatedGeneral)
 
 // Like
-router.post('/tweets/:id/like', auth.authenticatedGeneral)
-router.delete('/tweets/:id/like', auth.authenticatedGeneral)
+router.post('/tweets/:id/like', auth.authenticatedGeneral, tweetController.like)
+router.delete(
+  '/tweets/:id/like',
+  auth.authenticatedGeneral,
+  tweetController.unLike
+)
 
 //登出
 router.get('/logout', userController.logout)

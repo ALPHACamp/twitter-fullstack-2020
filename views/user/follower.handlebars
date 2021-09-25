@@ -39,11 +39,11 @@
                 {{#ifCond ../user.id this.id}}
                 {{else}}
                 {{#if this.isFollowed}}
-                <form action="/follow/{{this.id}}?_method=DELETE" method="POST">
+                <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
                   <button class="unfollow-button">following</button>
                 </form>
                 {{else}}
-                <form action="/follow/{{this.id}}" method="POST">
+                <form action="/followships" method="POST">
                   <button class="follow-button" name="id" value="{{this.id}}">follow</button>
                 </form>
                 {{/if}}

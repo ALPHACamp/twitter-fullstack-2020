@@ -9,10 +9,14 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 let userController = {
   getUser: (req, res) => {
     if (helpers.getUser(req).id !== Number(req.params.id)) {
-      return res.json({ status: 'error' })
+      req.flash('error_messages', '不能更改別人的資料！')
+      return res.status(200).json({ status: 'error' })
     } else {
-      User.findByPk(req.params.id).then((user) => {
-        return res.json({ name: user.name })
+      User.findByPk(req.params.id, {
+        attributes: ['cover', 'avatar', 'name', 'introduction']
+      }).then((user) => {
+        const { cover, avatar, name, introduction } = user
+        return res.status(200).json({ cover, avatar, name, introduction })
       })
     }
   },
