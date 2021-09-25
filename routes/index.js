@@ -42,7 +42,7 @@ const authenticatedAdmin = (req, res, next) => {
 
 // router.use("/users", authenticated, usersRouter);
 
-router.use("/users", usersRouter);
+router.use("/users", authenticated, usersRouter);
 router.use("/admin", authenticatedAdmin, adminRouter);
 router.use("/tweets", authenticated, tweetsRouter);
 router.use("/followships", authenticated, followshipRouter);

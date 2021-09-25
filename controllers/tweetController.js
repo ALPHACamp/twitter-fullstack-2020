@@ -14,20 +14,19 @@ const getTestUser = function (req) {
   }
 };
 
-const listAttributes = [ "id", "name", "account", "avatar" ];
+const listAttributes = ["id", "name", "account", "avatar"];
 const tweetController = {
   getPosts: async (req, res) => {
-    // const user = getTestUser(req);
-    const user = { id: 2 };
+    const user = getTestUser(req);
     try {
       const Profile = await User.findByPk(req.user.id, {
-        attributes: ['id', 'avatar']
+        attributes: ["id", "avatar"],
       });
       const rawTweets = await Tweet.findAll({
         include: [
           { model: User, attributes: listAttributes },
-          { model: Reply, attributes: ['id'] },
-          { model: User, as: "LikedUsers", attributes: ["id"] }
+          { model: Reply, attributes: ["id"] },
+          { model: User, as: "LikedUsers", attributes: ["id"] },
         ],
         order: [["createdAt", "DESC"]],
         limit: 20,
@@ -42,20 +41,20 @@ const tweetController = {
       // get TopUser
       const rawUsers = await User.findAll({
         attributes: listAttributes,
-        include: [
-          { model: User, as: 'Followers', attributes: ['id'] },
-        ],
+        include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
           id: { [Op.not]: req.user.id },
-          role: { [Op.not]: 'admin' }
+          role: { [Op.not]: "admin" },
         },
-      })
-      const Users = await rawUsers.map(data => ({
-        ...data.dataValues,
-        FollowerCount: data.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(data.id),
-      })).sort((a, b) => b.FollowerCount - a.FollowerCount)
-      const TopUsers = Users.slice(0, 10)
+      });
+      const Users = await rawUsers
+        .map((data) => ({
+          ...data.dataValues,
+          FollowerCount: data.Followers.length,
+          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+        }))
+        .sort((a, b) => b.FollowerCount - a.FollowerCount);
+      const TopUsers = Users.slice(0, 10);
 
       // add isLike property dynamically
       Tweets.forEach((Tweet) => {
@@ -94,20 +93,20 @@ const tweetController = {
       // get TopUser
       const rawUsers = await User.findAll({
         attributes: listAttributes,
-        include: [
-          { model: User, as: 'Followers', attributes: ['id'] },
-        ],
+        include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
           id: { [Op.not]: req.user.id },
-          role: { [Op.not]: 'admin' }
+          role: { [Op.not]: "admin" },
         },
-      })
-      const Users = await rawUsers.map(data => ({
-        ...data.dataValues,
-        FollowerCount: data.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(data.id),
-      })).sort((a, b) => b.FollowerCount - a.FollowerCount)
-      const TopUsers = Users.slice(0, 10)
+      });
+      const Users = await rawUsers
+        .map((data) => ({
+          ...data.dataValues,
+          FollowerCount: data.Followers.length,
+          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+        }))
+        .sort((a, b) => b.FollowerCount - a.FollowerCount);
+      const TopUsers = Users.slice(0, 10);
 
       //add isLike property dynamically
       tweet = tweet.toJSON();
@@ -121,7 +120,7 @@ const tweetController = {
         ReplyCount,
         LikedCount,
         users: TopUsers,
-      })
+      });
     } catch (error) {
       res.status(400).json(error);
     }
@@ -141,11 +140,12 @@ const tweetController = {
       return Tweet.create({
         UserId: user.id,
         description,
-      }).then((tweet) => {
-        // console.log("成功發送推文", tweet.toJSON());
-        res.redirect('back');
       })
-        .catch(error => res.status(400).json(error));
+        .then((tweet) => {
+          // console.log("成功發送推文", tweet.toJSON());
+          res.redirect("back");
+        })
+        .catch((error) => res.status(400).json(error));
     }
   },
 };
