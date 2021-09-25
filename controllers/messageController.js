@@ -12,7 +12,7 @@ const User = db.User
 const messageController = {
   publicPage: (req, res) => {
     const currentUser = helpers.getUser(req)
-    console.log(currentUser.id)
+    // console.log(currentUser.id)
     Message.findAll({
       include: [{ model: User, attributes: ['id', 'avatar', 'name', 'account'] }],
       order: [['createdAt', 'ASC']],
@@ -29,24 +29,24 @@ const messageController = {
       })
 
   },
-  sendMsg: (user) => {
+  sendMsg: (user, roomName) => {
     return Message.create({
       UserId: user.id,
-      content: user.msg
+      content: user.msg,
+      roomName
     })
   },
 
   privatePage:(req, res) => {
     const currentUser = helpers.getUser(req)
-    const currentUserId = helpers.getUser(req).id
-    const viewUserId = req.params.id
+    const currentUserId = String(helpers.getUser(req).id)
+    const viewUserId = String(req.params.id)
     // console.log(currentUser.id)
     // console.log(viewUserId)
-    let userList = []
-    userList.push(currentUserId.toString(),viewUserId)
+    let roomName = `${currentUserId}-${viewUserId}`
+    // userList.push(currentUserId.toString()"="viewUserId)
     // console.log(userList) 
-    
-    res.render('private-chat', { userList, currentUser})
+    res.render('private-chat', { roomName, currentUser})
   },
   // savePrivateMsg: (user) => {
 

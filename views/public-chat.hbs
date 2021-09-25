@@ -234,7 +234,6 @@
   var messages = document.getElementById('messages');
   var form = document.getElementById('form');
   var input = document.getElementById('input');
-  const onlineUser = []
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
@@ -359,6 +358,7 @@
     scrollWindow();
   })
 
+  //捲至最底
   function scrollWindow() {
     let h = document.querySelector('.chat');
     h.scrollTo(0, h.scrollHeight);

@@ -23,6 +23,8 @@ if (process.env.NODE_ENV !== 'production') {
 //變更順序以引入變數
 const passport = require('./config/passport')
 const messageController = require('./controllers/messageController')
+const { sendMsg } = require('./controllers/messageController')
+const { join } = require('path')
 
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
@@ -37,15 +39,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
 app.use(methodOverride('_method'))
-
-
-// console.log(socket.id)
-// socket.on('chat message', (msg, senderId) => {
-//   io.emit('chat message', msg, senderId);
-// });
-// io.on('send user', (socket,userName) => {
-//   socket.broadcast.emit('new user msg', userName)
-// })
 
 let onlineUser = []
 io.on('connection', (socket) => {
@@ -75,15 +68,18 @@ io.on('connection', (socket) => {
   });
 
   //私人聊天
-  socket.on('join room', (userList) => {
-    // console.log('============',socket.id)
-    socket.join(userList);
-    // console.log('this=======',userList)
-    //  cb(message[roomName])
-
-    socket.on('private-chat', (msg) => {
-      console.log("===========", msg)
-      io.in(userList).emit('private-chat', msg);
+  socket.on('join private room', (roomName) => {
+    socket.join(roomName);
+    console.log('join===========',roomName)
+    
+    io.on('private-chat', (msg, currentId, currentAvatar) => {
+      // console.log(socket)
+      // console.log("===========", msg)
+      //存進資料庫
+      const user = { id: currentId, msg: msg }
+      messageController.sendMsg(user, roomName)
+      console.log('傳進私人聊天室===========', roomName)
+      socket.emit('private chat message', msg, currentId, currentAvatar);
     })
   })
 
