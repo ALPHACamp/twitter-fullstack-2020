@@ -242,3 +242,96 @@
 </div>
 {{!-- add-tweet Modal --}}
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  var socket = io();
+
+  var messages = document.getElementById('messages');
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+
+  //登入傳當前使用者資料
+  window.addEventListener('load', function sendUser() {
+    const currentName = "{{currentUser.name}}"
+    const currentAccount = "{{ currentUser.account }}"
+    socket.emit('send user', currentName, currentAccount)
+  })
+
+
+  //本人送出訊息
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (input.value) {
+      var item = document.createElement('li');
+      let rawHTML = "";
+      let time = new Date().toLocaleTimeString();
+      item.classList.add('list-group-item-myself')
+      rawHTML += `<div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text"> ${input.value}</div>
+                </div>
+              </div>
+              <div class="time">${time}</div>
+            </div>`
+      item.innerHTML = rawHTML;
+      messages.appendChild(item);
+      const currentAvatar = "{{ currentUser.avatar }}"
+      const currentId = "{{ currentUser.id }}"
+      socket.emit('chat message', input.value, currentId, currentAvatar);
+      input.value = ''
+    }
+  })
+
+{{!-- =============以下未開============ --}}
+
+  //登入通知
+  socket.on('new user msg', function (currentName) {
+    var item = document.createElement('li');
+    let rawHTML = "";
+    item.classList.add('list-group-item')
+    rawHTML += `<div class="log">
+            ${currentName} 上線
+          </div>`
+    item.innerHTML = rawHTML;
+    messages.appendChild(item);
+    scrollWindow();
+  })
+
+  //接收他人送出訊息
+  {{!-- socket.on('chat message', function (msg, currentId, currentAvatar) {
+    const userId = {{ currentUser.id }
+  }
+    console.log('現在使用者', userId)
+    console.log('訊息使用者', currentId)
+    if (Number(userId) !== Number(currentId)) {
+    var item = document.createElement('li');
+    let rawHTML = "";
+    item.classList.add('list-group-item')
+    rawHTML += `
+            <div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="${currentAvatar}" alt="">
+                  </a>
+                </div>
+
+                <div class="text-area">
+                  <div class="text"> ${msg}</div>
+                </div>
+              </div>
+              <div class="time">下午4:21</div>
+            </div>`
+    item.innerHTML = rawHTML;
+    messages.appendChild(item);
+    scrollWindow();
+  }
+  }); --}}
+
+  function scrollWindow() {
+    let h = document.querySelector('.chat');
+    h.scrollTo(0, h.scrollHeight);
+  }
+
+</script>
