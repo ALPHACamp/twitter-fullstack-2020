@@ -6,7 +6,7 @@ const chatController = {
   getChat: async (req, res) => {
     try {
       const currentUser = await User.findByPk(helpers.getUser(req).id)
-      res.render('chat', { currentUser })
+      res.render('chat', { currentUser: currentUser.toJSON()})
     } catch (err) {
       console.warn(err)
     }

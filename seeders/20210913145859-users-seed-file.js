@@ -16,6 +16,7 @@ module.exports = {
         introduction: faker.lorem.text().substring(0, 160),
         role: 'user',
         cover: `https://loremflickr.com/400/300/landscape?lock=${i}`,
+        publicRoom: false,
         createdAt: new Date(),
         updatedAt: new Date()
       }))

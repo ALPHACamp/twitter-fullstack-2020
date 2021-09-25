@@ -4,7 +4,8 @@
     <div class="home-word-box p-2">
       <span class="home-word" id="online">上線使用者(0)</span>
     </div>
-    <div class="chat-user align-middle">
+    {{!-- 下面靠dom操作 --}}
+    {{!-- <div class="chat-user align-middle">
       <img class="rounded-circle" src="{{currentUser.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
       <span class="name">{{currentUser.name}}</span>
       <span class="account">&nbsp;@{{currentUser.account}}</span>
@@ -32,7 +33,7 @@
         alt="avatar" title="avatar" width="50px" height="50px">
       <span class="name">Apple</span>
       <span class="account">&nbsp;@apple</span>
-    </div>
+    </div> --}}
   </div>
   <div class="chats col-6 me-5">
     <div class="home-word-box p-2">
@@ -81,15 +82,39 @@
   document.addEventListener("DOMContentLoaded", () => {
 
     const socket = io();
-
     const online = document.getElementById("online");
     const messages = document.querySelector('.chat-messages');
     const form = document.querySelector('#chat-form');
     const input = document.getElementById('input');
     const scrollable = document.querySelector('.chat-scroll')
+    const chatUsers = document.querySelector('.chat-users')
 
     let max_record = 7;
+    //trevor的 test
+    const currentUserId = `{{currentUser.id}}`
 
+    socket.on('connect', function () {
+      console.log('前端頁面參數測試', currentUserId)
+      socket.emit('userIn', currentUserId )
+    })
+    socket.on('publicRoomUsers', (publicRoomUsers) => {
+      console.log('前台拿到的publicRoomUsers', publicRoomUsers)
+      chatUsers.innerHTML = `
+      <div class="home-word-box p-2">
+      <span class="home-word" id="online">上線使用者(${publicRoomUsers.length})交換囉</span>
+      </div>
+      `
+      publicRoomUsers.forEach(publicRoomUser => {
+        chatUsers.innerHTML += `
+        <div class="chat-user align-middle">
+        <img class="rounded-circle" src="${publicRoomUser.avatar}" alt="avatar" title="avatar" width="50px" height="50px">
+        <span class="name">${publicRoomUser.name}</span>
+        <span class="account">&nbsp;@${publicRoomUser.account}</span>
+        </div>
+        `
+      })
+    })
+    // ========================================
     socket.on("online", function (amount) {
       online.innerText = '上線使用者' + '(' + amount + ')';
     });
