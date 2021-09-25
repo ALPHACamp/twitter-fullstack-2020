@@ -30,7 +30,6 @@ module.exports = {
         type: Sequelize.TEXT
       },
       role: {
-        defaultValue: 'user',
         type: Sequelize.STRING
       },
       createdAt: {
