@@ -103,3 +103,14 @@
    border: 5px solid white;
 
 }
+
+.modal-backdrop {
+  top: auto;
+}
+
+.editAvatar > .userAvatar {
+  margin-top: -50px;
+  margin-bottom: 50px;
+  margin-left: 20px;
+  width: 130px;
+}
