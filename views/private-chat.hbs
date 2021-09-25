@@ -166,8 +166,8 @@
     {{!-- 右側欄位 --}}
     <div class="right-side col-md-5" style="padding:0; height:100%;">
       <div class="chat-text-title">
-        <div class="name">Apple</div>
-        <div class="account">{{ viewUserId }}</div>
+        <div class="name">{{viewUser.name}}</div>
+        <div class="account">{{ viewUser.account }}</div>
       </div>
       <hr style="max-width: 673px;">
       <div class="chat">
@@ -319,7 +319,7 @@
       const currentId = "{{ currentUser.id }}"
       const currentAccount = "{{ currentUser.account }}"
       const currentName = "{{ currentUser.name }}"
-      const viewUserId = "{{ viewUserId }}"
+      const viewUserId = "{{ viewUser.id }}"
       socket.emit('private-chat', input.value, currentId, currentAvatar, viewUserId);
       socket.emit('msg-inbox', input.value, currentId, currentAvatar, currentAccount, currentName, viewUserId)
       input.value = ''

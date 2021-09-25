@@ -43,21 +43,31 @@ const messageController = {
     const viewUserId = Number(req.params.id)
     let roomName = currentUserId > viewUserId ? `${viewUserId}-${currentUserId}` : `${currentUserId}-${viewUserId}`
 
-    return Message.findAll({
+    return Promise.all([
+      //搜尋全部歷史訊息
+      Message.findAll({
       where: { roomName: roomName },
       include: [{ model: User, attributes: ['id', 'avatar', 'name', 'account'] }],
       order: [['createdAt', 'ASC']],
-    })
+    }),
+      //接收訊者的資料
+      User.findOne({
+        where:{id:viewUserId},
+        attributes:['id', 'name', 'avatar', 'account']
+      })
+    ])
+    
       // userList.push(currentUserId.toString()"="viewUserId)
       // console.log(userList) 
-      .then(msg => {
+      .then(([msg, viewUser]) => {
+        viewUser = viewUser.toJSON()
         msg = msg.map(d => ({
           ...d.dataValues,
           User: d.User.dataValues,
           selfMsg: Boolean(d.UserId === currentUser.id)
         }))
-        console.log('私人訊息篩選====', msg)
-        return res.render('private-chat', { roomName, currentUser, msg, viewUserId })
+        // console.log('私人訊息篩選====', msg[0])
+        return res.render('private-chat', { roomName, currentUser, msg, viewUser })
       })
   },
 
@@ -67,7 +77,7 @@ const messageController = {
     // console.log('DBcurrentId', currentUserId)
     // console.log('DBviewUserId', viewUserId)
     // let roomName = currentUserId > viewUserId ? `${viewUserId}-${currentUserId}` : `${currentUserId}-${viewUserId}`
-    console.log('資料庫前條件', currentId)
+    // console.log('資料庫前條件', currentId)
     return Message.findAll({
       where: { UserId: currentId },
       include: [User],
