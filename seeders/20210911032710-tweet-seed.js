@@ -24,7 +24,7 @@ function userTweets(userIds) {
     for (let i = 0; i < 10; i++) {
       const userTweet = {
         UserId: userId,
-        content: faker.lorem.text(),
+        description: faker.lorem.text(),
         createdAt: new Date(),
         updatedAt: new Date()
       }

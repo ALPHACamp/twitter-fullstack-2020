@@ -37,7 +37,7 @@ function tweetReplies(userIds, tweetIds) {
       const tweetReply = {
         UserId: userIds[eachUserId],
         TweetId: tweetId,
-        content: faker.lorem.sentence(),
+        comment: faker.lorem.sentence(),
         createdAt: new Date(),
         updatedAt: new Date()
       }

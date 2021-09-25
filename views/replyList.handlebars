@@ -21,7 +21,7 @@
     </div>
     <div class="m-2" style=" font-size: 23px; font-color: #1C1C1C; line-height: 34px;">
       <p class="card-text fontWeight500">
-        {{tweet.content}}
+        {{tweet.description}}
       </p>
     </div>
     <div class=" fontWeight500 m-2"
@@ -69,7 +69,7 @@
           回覆 <div class="ms-2" style="color: #FF6600;"> @{{../tweetUser.account}}</div>
         </div>
         <p class="mt-1" class="card-text fontWeight500">
-          {{this.dataValues.content}}
+          {{this.dataValues.comment}}
         </p>
       </div>
     </div>
@@ -104,7 +104,7 @@
           <div class="fontWeight500 m-2 "
             style="width: 510px; font-size: 23px; line-height: 34px; font-color: #1C1C1C;">
             <p class="card-text fontWeight500">
-              {{tweet.content}}
+              {{tweet.description}}
             </p>
           </div>
           <div class="d-flex" style="color:#657786;">
@@ -116,7 +116,7 @@
               <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4;"
                 class="rounded-circle m-2" alt="...">
               <div class="" style="width: 480px;  font-size: 18px;">
-                <textarea class="form-control" placeholder="推你的回覆" id="text" name="text" rows="5"
+                <textarea class="form-control" placeholder="推你的回覆" id="description" name="description" rows="5"
                   aria-label="With textarea" required></textarea>
               </div>
             </div>

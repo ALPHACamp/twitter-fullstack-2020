@@ -42,7 +42,7 @@ const adminController = {
 
       const data = result.rows.map(t => ({
         ...t.dataValues,
-        content: t.dataValues.content.substring(0, 50),
+        description: t.dataValues.description.substring(0, 50),
         avatar: t.User.avatar,
         account: t.User.account,
         name: t.User.name
@@ -81,7 +81,7 @@ const adminController = {
         user4: users[3].id,
         user5: users[4].id
       }
-    
+
       Followship.findAll({
         raw: true,
         nest: true

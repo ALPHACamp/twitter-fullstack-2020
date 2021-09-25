@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
     },
     UserId: DataTypes.INTEGER,
-    TweetId: DataTypes.INTEGER
+    TweetId: DataTypes.INTEGER,
   }, {});
   Like.associate = function (models) {
     Like.belongsTo(models.User)
