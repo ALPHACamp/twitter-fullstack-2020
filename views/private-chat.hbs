@@ -95,12 +95,12 @@
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-3" style="padding:0; height:100%;">
       <div class="d-flex justify-content-between" style=" margin: auto 15px;">
-      <div class="text-title">訊息</div>
-      <div  class="text-icon">
-        <a href="">
-        <i class="fas fa-envelope-open-text"></i>
-        </a>
-      </div>
+        <div class="text-title">訊息</div>
+        <div class="text-icon">
+          <a href="">
+            <i class="fas fa-envelope-open-text"></i>
+          </a>
+        </div>
       </div>
 
       <hr style="margin:0; padding:0">
@@ -109,54 +109,54 @@
         {{!-- 訊息A開始 --}}
         <li class="message list-group-item">
           <div class="avatar">
+            <a href="/messages/25">
+              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+          <div class="name-account-message">
+            <div class="name-account">
+              <a href="">
+                <div class="name">Apple</div>
+                <div class="account">@apple</div>
+              </a>
+              <div class="time">
+                5秒前
+              </div>
+            </div>
+            <div class="message">
+              訊息在這
+            </div>
+          </div>
+
+        </li>
+        <hr style="margin:0; padding:0">
+        {{!-- 訊息A結束 --}}
+
+        {{!-- 訊息B開始 --}}
+        <li class="message list-group-item">
+          <div class="avatar">
             <a href="">
               <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
             </a>
           </div>
           <div class="name-account-message">
-          <div class="name-account">
-            <a href="">
-              <div class="name">Apple</div>
-              <div class="account">@apple</div>
-            </a>
+            <div class="name-account">
+              <a href="">
+                <div class="name">Apple</div>
+                <div class="account">@apple</div>
+              </a>
               <div class="time">
                 5秒前
               </div>
-          </div>
-          <div class="message">
-            訊息在這
-          </div>
-          </div>
-       
-        </li>
-        <hr style="margin:0; padding:0">
-        {{!-- 訊息A結束 --}}
-
-      {{!-- 訊息B開始 --}}
-      <li class="message list-group-item">
-        <div class="avatar">
-          <a href="">
-            <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
-          </a>
-        </div>
-        <div class="name-account-message">
-          <div class="name-account">
-            <a href="">
-              <div class="name">Apple</div>
-              <div class="account">@apple</div>
-            </a>
-            <div class="time">
-              5秒前
+            </div>
+            <div class="message">
+              訊息在這
             </div>
           </div>
-          <div class="message">
-            訊息在這
-          </div>
-        </div>
-      
-      </li>
-      <hr style="margin:0; padding:0">
-      {{!-- 訊息B結束 --}}
+
+        </li>
+        <hr style="margin:0; padding:0">
+        {{!-- 訊息B結束 --}}
       </ul>
 
 
@@ -172,7 +172,7 @@
       <hr style="max-width: 673px;">
       <div class="chat">
         <ul class="list-group" id="messages">
-    
+
           {{!-- 他人訊息 --}}
           <li class="list-group-item">
             <div class="information">
@@ -182,36 +182,36 @@
                     <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
                   </a>
                 </div>
-    
+
                 <div class="text-area">
                   <div class="text"> 訊息打在Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</div>
                 </div>
               </div>
               <div class="time">下午4:21</div>
-    
+
             </div>
           </li>
           {{!-- 他人訊息 --}}
-    
+
           {{!-- 自己的訊息 --}}
           <li class="list-group-item-myself">
             <div class="user-information">
               <div class="current-user">
                 <div class="text-area">
-                  <div class="text"> {{userList}}</div>
+                  <div class="text"> {{roomName}}</div>
                 </div>
               </div>
               <div class="time">下午4:21</div>
-    
+
             </div>
           </li>
           {{!-- 自己的訊息 --}}
-    
+
         </ul>
       </div>
-    
+
       <hr style="max-width: 673px;">
-    
+
       {{!-- 輸入欄位 --}}
       <div class="type-area">
         {{!-- //TODO:要改API傳 --}}
@@ -226,7 +226,7 @@
           </div>
         </form>
       </div>
-    
+
     </div>
   </div>
 </div>
@@ -250,37 +250,75 @@
   var messages = document.getElementById('messages');
   var form = document.getElementById('form');
   var input = document.getElementById('input');
-  
+
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
-    let userList = [{{userList}}]
-    socket.emit('join room', userList)
+    let roomName = "{{ roomName }}"
+    socket.emit('join private room', roomName)
+    scrollWindow();
   })
- 
 
   //本人送出訊息
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+  form.addEventListener('submit', function () {
+    let roomName = "{{ roomName }}"
     if (input.value) {
       var item = document.createElement('li');
       let rawHTML = "";
       let time = new Date().toLocaleTimeString();
-      item.classList.add('list-group-item-myself')
+      item.classList.add("list-group-item-myself")
+      let msg = input.value
       rawHTML += `<div class="user-information">
               <div class="current-user">
                 <div class="text-area">
-                  <div class="text"> ${input.value}</div>
+                  <div class="text">${msg}</div>
                 </div>
               </div>
               <div class="time">${time}</div>
             </div>`
       item.innerHTML = rawHTML;
-      messages.appendChild(item);     
-      socket.emit('private-chat', input.value);
+      messages.appendChild(item);
+      scrollWindow();
+      const currentAvatar = "{{ currentUser.avatar }}"
+      const currentId = "{{ currentUser.id }}"
+      io.to(roomName).emit('private-chat', input.value, currentId, currentAvatar);
       input.value = ''
     }
   })
 
+  //接收他人送出訊息
+  socket.on('private chat message', function (msg, currentId, currentAvatar) {
+    const userId = "{{ currentUser.id }}"
+    if (Number(userId) !== Number(currentId)) {
+      var item = document.createElement('li');
+      let rawHTML = "";
+      let time = new Date().toLocaleTimeString()
+      item.classList.add('list-group-item')
+      rawHTML += `<div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="${currentAvatar}" alt="">
+                  </a>
+                </div>
+                <div class="text-area">
+                  <div class="text"> 
+                    ${msg}
+                    </div>
+                </div>
+              </div>
+              <div class="time">${time}</div>
+            </div>`
+      item.innerHTML = rawHTML;
+      messages.appendChild(item);
+      scrollWindow();
+    }
+  });
+
+  //捲至最底
+  function scrollWindow() {
+    let h = document.querySelector('.chat');
+    h.scrollTo(0, h.scrollHeight);
+  }
 
 </script>
