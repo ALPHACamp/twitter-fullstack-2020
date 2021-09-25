@@ -74,25 +74,6 @@ const tweetController = {
     res.redirect('/tweets')
   },
   getTweet: async (req, res) => {
-    // return Tweet.findByPk(req.params.id, {
-    //   include: [
-    //     ,
-    //     // { model: User, as: 'Followers' },
-    //     // { model: User, as: 'LikedUsers' },
-    //     // { model: Reply, include: [User] }
-    //   ]
-    // })
-    //   // .then(tweet => tweet.increment('viewCounts'))
-    //   .then(tweet => {
-    //     // const isFollowed = tweet.Followers.map(d => d.id).includes(req.user.id)
-    //     // const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
-    //     return res.render('tweet', {
-    //       tweet: tweet.toJSON(),
-    //       // isFollowed,
-    //       // isLiked
-    //     })
-    //   })
-    // console.log(req.params.id)
     try {
       const tweet = await Tweet.findByPk(
         req.params.id, {
@@ -103,8 +84,8 @@ const tweetController = {
         ],
         order: [['Replies', 'createdAt', 'DESC']]
       })
-      // console.log('我是req.user.LikedTweets:', req.user.LikedTweets)
-      const isLiked = req.user.LikedTweets.map(d => d.id).includes(tweet.id) 
+
+      const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id) 
       return res.render('tweet', { tweet: tweet.toJSON(), isLiked})
     } catch (e) {
       console.log(e.message)
