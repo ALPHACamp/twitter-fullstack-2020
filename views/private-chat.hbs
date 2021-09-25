@@ -36,7 +36,7 @@
             </li>
           </a>
 
-          <a href="">
+          <a href="/messages">
             <li class="list-group-item">
               <div class="d-flex">
                 <i class="fas  fa-fw  fa-fh fa-comments mr-4">
@@ -50,7 +50,7 @@
           </a>
 
 
-          <a href="">
+          <a href="/messages/{{user.id}}">
             <li class="list-group-item active">
               <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-envelope mr-4">
@@ -93,7 +93,7 @@
     </div>
 
     {{!-- 中間主欄位 --}}
-    <div class="middle-side col-md-4" style="padding:0; height:100%;">
+    <div class="middle-side col-md-3" style="padding:0; height:100%;">
       <div class="d-flex justify-content-between" style=" margin: auto 15px;">
       <div class="text-title">訊息</div>
       <div  class="text-icon">
@@ -164,7 +164,7 @@
     </div>
 
     {{!-- 右側欄位 --}}
-    <div class="right-side col-md-6" style="padding:0; height:100%;">
+    <div class="right-side col-md-5" style="padding:0; height:100%;">
       <div class="chat-text-title">
         <div class="name">Apple</div>
         <div class="account">@apple</div>
@@ -172,7 +172,7 @@
       <hr style="max-width: 673px;">
       <div class="chat">
         <ul class="list-group">
-
+    
           {{!-- 他人訊息 --}}
           <li class="list-group-item">
             <div class="information">
@@ -182,19 +182,19 @@
                     <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
                   </a>
                 </div>
-
+    
                 <div class="text-area">
                   <div class="text"> 訊息打在Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</div>
                 </div>
               </div>
               <div class="time">下午4:21</div>
-
+    
             </div>
           </li>
           {{!-- 他人訊息 --}}
-
+    
           {{!-- 自己的訊息 --}}
-          <li class="list-group-item">
+          <li class="list-group-item-myself">
             <div class="user-information">
               <div class="current-user">
                 <div class="text-area">
@@ -202,16 +202,16 @@
                 </div>
               </div>
               <div class="time">下午4:21</div>
-
+    
             </div>
           </li>
           {{!-- 自己的訊息 --}}
-
+    
         </ul>
       </div>
-
+    
       <hr style="max-width: 673px;">
-
+    
       {{!-- 輸入欄位 --}}
       <div class="type-area">
         {{!-- //TODO:要改API傳 --}}
@@ -226,7 +226,7 @@
           </div>
         </form>
       </div>
-
+    
     </div>
   </div>
 </div>
@@ -329,7 +329,7 @@
     messages.appendChild(item);
     scrollWindow();
   }
-  }); --}}
+  }) --}}
 
   function scrollWindow() {
     let h = document.querySelector('.chat');
