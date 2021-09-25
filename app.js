@@ -72,21 +72,35 @@ io.on('connection', (socket) => {
     socket.join(roomName);
     console.log('join===========', roomName)
 
+<<<<<<< HEAD
     io.on('private-chat', (msg, currentId, currentAvatar) => {
+=======
+    socket.on('private-chat', (msg, currentId, currentAvatar) => {
+>>>>>>> 691506f07a7aadfc676d3dccb857f3b264cfc7b6
       // console.log(socket)
-      // console.log("===========", msg)
+      console.log("回傳成功===========", msg)
       //存進資料庫
       const user = { id: currentId, msg: msg }
       messageController.sendMsg(user, roomName)
       console.log('傳進私人聊天室===========', roomName)
-      socket.emit('private chat message', msg, currentId, currentAvatar);
+      socket.to(roomName).emit('private chat message', msg, currentId, currentAvatar);
     })
   })
 
-  // socket.on('onlineUser', () => {
-  //   console.log('OnlineUser', onlineUser)
-  //   socket.broadcast.emit('online user', onlineUser)
-  // })
+  //私人通知
+  let msgInbox = []
+  socket.on('msg-inbox', (msg, currentId, currentAvatar, currentAccount, currentName) => {
+    const lastestMsg = { currentAvatar, currentAccount, currentName, msg }
+    //從資料庫抓改使用者所有接收訊息 by使用者篩選各一筆
+    msgInbox.map(d => d.currentAccount).includes(lastestMsg.currentAccount)
+    if (msgInbox.currentAccount) {
+      //假如有資料，刪掉舊的再加入陣列
+
+    }
+    //沒資料，直接加入陣列
+
+  })
+
 
 });
 

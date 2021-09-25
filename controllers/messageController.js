@@ -12,11 +12,10 @@ const User = db.User
 const messageController = {
   publicPage: (req, res) => {
     const currentUser = helpers.getUser(req)
-    // console.log(currentUser.id)
     Message.findAll({
+      where: { roomName: null },
       include: [{ model: User, attributes: ['id', 'avatar', 'name', 'account'] }],
       order: [['createdAt', 'ASC']],
-      // raw: true, nest: true
     })
       .then(msg => {
         msg = msg.map(d => ({
@@ -24,7 +23,6 @@ const messageController = {
           User: d.User.dataValues,
           selfMsg: Boolean(d.UserId === currentUser.id)
         }))
-        // console.log('New=====', msg)
         return res.render('public-chat', { currentUser, msg })
       })
 
@@ -39,6 +37,7 @@ const messageController = {
 
   privatePage: (req, res) => {
     const currentUser = helpers.getUser(req)
+<<<<<<< HEAD
     const currentUserId = String(helpers.getUser(req).id)
     const viewUserId = String(req.params.id)
     // console.log(currentUser.id)
@@ -47,7 +46,39 @@ const messageController = {
     // userList.push(currentUserId.toString()"="viewUserId)
     // console.log(userList) 
     res.render('private-chat', { roomName, currentUser })
+=======
+    const currentUserId = Number(helpers.getUser(req).id)
+    const viewUserId = Number(req.params.id)
+    let roomName = currentUserId > viewUserId ? `${viewUserId}-${currentUserId}` :`${currentUserId}-${viewUserId}`
+
+    return Message.findAll({
+      where: { roomName: roomName },
+      include: [{ model: User, attributes: ['id', 'avatar', 'name', 'account'] }],
+      order: [['createdAt', 'ASC']],
+    })
+      // userList.push(currentUserId.toString()"="viewUserId)
+      // console.log(userList) 
+      .then(msg => {
+        msg = msg.map(d => ({
+          ...d.dataValues,
+          User: d.User.dataValues,
+          selfMsg: Boolean(d.UserId === currentUser.id)
+        }))
+        // console.log('私人訊息篩選====', msg)
+        return res.render('private-chat', { roomName, currentUser, msg })
+      })
+>>>>>>> 691506f07a7aadfc676d3dccb857f3b264cfc7b6
   },
+
+  getPrivateInbox: (req ,res) => {
+    const currentUser = helpers.getUser(req)
+    const currentUserId = Number(helpers.getUser(req).id)
+    const viewUserId = Number(req.params.id)
+    return Message.find
+
+
+  }
+
   // savePrivateMsg: (user) => {
 
   //   return Message.create({

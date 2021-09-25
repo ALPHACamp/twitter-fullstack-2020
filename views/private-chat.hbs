@@ -93,7 +93,7 @@
     </div>
 
     {{!-- 中間主欄位 --}}
-    <div class="middle-side col-md-3" style="padding:0; height:100%;">
+    <div class="middle-side col-md-4" style="padding:0; height:100%;">
       <div class="d-flex justify-content-between" style=" margin: auto 15px;">
         <div class="text-title">訊息</div>
         <div class="text-icon">
@@ -173,8 +173,43 @@
       <div class="chat">
         <ul class="list-group" id="messages">
 
+          {{#each msg}}
+          
+          {{#if selfMsg}}
+          {{!-- 自己的訊息 --}}
+          <li class="list-group-item-myself">
+            <div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text">{{this.content}}</div>
+                </div>
+              </div>
+              <div class="time">{{time this.createdAt}}</div>
+            </div>
+          </li>
+          {{!-- 自己的訊息 --}}
+          {{else}}
           {{!-- 他人訊息 --}}
           <li class="list-group-item">
+            <div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="{{this.User.avatar}}" alt="">
+                  </a>
+                </div>
+                <div class="text-area">
+                  <div class="text">{{this.content}}</div>
+                </div>
+              </div>
+              <div class="time">{{time this.createdAt}}</div>
+          </li>
+          {{!-- 他人訊息 --}}
+          {{/if}}
+          {{/each}}
+
+          {{!-- 他人訊息 --}}
+          {{!-- <li class="list-group-item">
             <div class="information">
               <div class="other-user">
                 <div class="avatar">
@@ -190,11 +225,11 @@
               <div class="time">下午4:21</div>
 
             </div>
-          </li>
+          </li> --}}
           {{!-- 他人訊息 --}}
 
           {{!-- 自己的訊息 --}}
-          <li class="list-group-item-myself">
+          {{!-- <li class="list-group-item-myself">
             <div class="user-information">
               <div class="current-user">
                 <div class="text-area">
@@ -204,7 +239,7 @@
               <div class="time">下午4:21</div>
 
             </div>
-          </li>
+          </li> --}}
           {{!-- 自己的訊息 --}}
 
         </ul>
@@ -281,7 +316,10 @@
       scrollWindow();
       const currentAvatar = "{{ currentUser.avatar }}"
       const currentId = "{{ currentUser.id }}"
-      io.to(roomName).emit('private-chat', input.value, currentId, currentAvatar);
+      const currentAccount = "{{ currentUser.account }}"
+       const currentName = "{{ currentUser.name }}"
+      socket.emit('private-chat', input.value, currentId, currentAvatar);
+      socket.emit('msg-inbox', input.value, currentId, currentAvatar, currentAccount, currentName )
       input.value = ''
     }
   })
