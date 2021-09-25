@@ -39,7 +39,7 @@
     <div class="home-word-box p-2">
       <span class="home-word">公開聊天室</span>
     </div>
-    <div class="chat-scroll">
+    <div class="chat-scroll" id="chat-scroll">
       <div class="chat-messages d-flex flex-column justify-content-end p-2" id="chat-messages">
         <div class="user-name-status text-center my-2">
           <div class="name-status d-inline-flex py-1 px-3">
@@ -81,28 +81,29 @@
 <script>
   document.addEventListener("DOMContentLoaded", () => {
 
-    var online = document.getElementById("online");
     const socket = io();
 
+    const online = document.getElementById("online");
     const messages = document.querySelector('.chat-messages');
     const form = document.querySelector('#chat-form');
     const input = document.getElementById('input');
     const scrollable = document.querySelector('.chat-scroll')
 
+    let max_record = 7;
 
     socket.on("online", function (amount) {
       online.innerText = '上線使用者' + '(' + amount + ')';
     });
 
+    //socket.on("chatRecord", function (msgs) {
+    //  for (let i = 0; i < msgs.length; i++) {
+    //    (function () {
+    //      addMsgToBox(msgs[i]);
+    //    })();
+    //  }
+    //});
 
-
-
-
-
-
-
-
-
+    socket.on("chat message", addMsgToBox);
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -112,17 +113,27 @@
       }
     });
 
-    socket.on('chat message', function (msg) {
+
+    function addMsgToBox(msg) {
       let newBubble = document.createElement('div')
+
       newBubble.className = 'my-chat d-flex justify-content-end my-2 justify-content-end'
       newBubble.innerHTML = `<div class="chat-content">
         <p class="p-3">${msg}</p>
       </div>`
       messages.appendChild(newBubble);
       scrollable.scrollTo(0, scrollable.scrollHeight)
-    });
 
+      if (messages.children.length > max_record) {
+        rmMsgFromBox();
+      }
+    }
 
+    // 移除多餘的訊息
+    function rmMsgFromBox() {
+      var childs = messages.children;
+      childs[0].remove();
+    }
 
 
 
