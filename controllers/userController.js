@@ -93,7 +93,7 @@ const userController = {
     ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
       const data = tweets.map(tweet =>({
         ...tweet.dataValues,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id), // 推文是否被喜歡過
       }))
 
       const topUsers =
@@ -153,7 +153,7 @@ const userController = {
       description: like.Tweet.description,
       RepliesLength: like.Tweet.Replies.length,
       LikedUsersLength: like.Tweet.LikedUsers.length,
-      isLiked : req.user.LikedTweets.map(d => d.id).includes(like.Tweet.id) 
+      isLiked : req.user.LikedTweets.map(d => d.id).includes(like.TweetId) 
     }))
     // const isLiked = req.user.LikedTweets.map(d => d.id).includes(tweet.id) 
     console.log(data)
