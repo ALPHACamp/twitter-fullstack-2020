@@ -317,13 +317,13 @@ const userController = {
 
   // Followship
   addFollowing: (req, res) => {
-    const followerId = req.user.id
-    const followingId = req.params.userId
+    const followerId = helpers.getUser(req).id
+    const followingId = req.body.id
 
     // 確認不能追蹤自己
-    if (followerId === followingId) {
+    if (Number(followerId) === Number(followingId)) {
       req.flash('error_messages', 'You can\'t follow yourself!')
-      res.render('/tweets')
+      return res.redirect('/tweets')
     }
 
     // 確認該筆追蹤尚未存在於followship中，若不存在才創建新紀錄
@@ -334,7 +334,7 @@ const userController = {
     }).then(followship => {
       if (followship.length) {
         req.flash('error_messages', 'You already followed this user')
-        return res.render('/tweets')
+        return res.redirect('/tweets')
       } else {
         Followship.create({
           followerId,
@@ -348,7 +348,7 @@ const userController = {
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
-        followerId: req.user.id,
+        followerId: helpers.getUser(req).id,
         followingId: req.params.userId
       }
     })
