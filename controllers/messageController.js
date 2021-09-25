@@ -38,17 +38,25 @@ const messageController = {
 
   privatePage:(req, res) => {
     const currentUser = helpers.getUser(req)
+    const currentUserId = helpers.getUser(req).id
     const viewUserId = req.params.id
-    console.log(currentUser)
-    console.log(viewUserId)
-    Message.findAll({
-     
-    })
-    .then( msg => {
-      res.render('private-chat', {currentUser})
-    })
+    // console.log(currentUser.id)
+    // console.log(viewUserId)
+    let userList = []
+    userList.push(currentUserId.toString(),viewUserId)
+    // console.log(userList) 
     
-  }
+    res.render('private-chat', { userList, currentUser})
+  },
+  // savePrivateMsg: (user) => {
+
+  //   return Message.create({
+  //     UserId: user.id,
+  //     content: user.msg,
+  //     roomName
+  //   })
+  // },
+
 
 }
 

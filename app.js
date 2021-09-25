@@ -47,31 +47,57 @@ app.use(methodOverride('_method'))
 //   socket.broadcast.emit('new user msg', userName)
 // })
 
-
+let onlineUser = []
 io.on('connection', (socket) => {
-  socket.on('send user', function (currentName) {
-    socket.broadcast.emit('new user msg', currentName)
+  socket.on('send user', function (currentName, currentAccount, currentAvatar) {
+    socket.broadcast.emit('new user msg', currentName, currentAccount, currentAvatar)
+    onlineUser.push({ currentName, currentAccount, currentAvatar })
 
     socket.on('chat message', (msg, currentId, currentAvatar) => {
-      console.log('接收', currentId)
       const user = { id: currentId, msg: msg }
       messageController.sendMsg(user)
       io.emit('chat message', msg, currentId, currentAvatar);
     });
-    socket.on('disconnect', () => {
-      socket.broadcast.emit('user offline', currentName)
+
+    socket.on('onlineUser', () => {
+      io.emit('online user', onlineUser)
     })
 
+    socket.on('disconnect', () => {
+       //移除使用者名單
+      const remove = { currentName, currentAccount, currentAvatar}
+      onlineUser = onlineUser.filter(item => {
+        return item.currentAccount !== remove.currentAccount
+      })
+      socket.broadcast.emit('user offline', currentName)
+      io.emit('online user', onlineUser)
+    })
   });
 
+  //私人聊天
+  socket.on('join room', (userList) => {
+    // console.log('============',socket.id)
+    socket.join(userList);
+    // console.log('this=======',userList)
+    //  cb(message[roomName])
 
-  socket.on('jOIN ROOM', (roomName, cb) => {
-    socket.join(roomName);
-    cb(message[roomName])
-
-    socket.on('private-chat')
+    socket.on('private-chat', (msg) => {
+      console.log("===========", msg)
+      io.in(userList).emit('private-chat', msg);
+    })
   })
+
+  // socket.on('onlineUser', () => {
+  //   console.log('OnlineUser', onlineUser)
+  //   socket.broadcast.emit('online user', onlineUser)
+  // })
+
 });
+
+
+
+
+
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
