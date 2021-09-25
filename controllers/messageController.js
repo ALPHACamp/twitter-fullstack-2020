@@ -46,9 +46,16 @@ const messageController = {
     userList.push(currentUserId.toString(),viewUserId)
     // console.log(userList) 
     
-    res.render('private-chat', { userList, currentUser })
+    res.render('private-chat', { userList, currentUser})
   },
+  // savePrivateMsg: (user) => {
 
+  //   return Message.create({
+  //     UserId: user.id,
+  //     content: user.msg,
+  //     roomName
+  //   })
+  // },
 
 
 }

@@ -68,14 +68,14 @@ io.on('connection', (socket) => {
     
 //私人聊天
   socket.on('join room', (userList) => {
-    console.log('============',socket.id)
+    // console.log('============',socket.id)
     socket.join(userList);
-    console.log('this=======',userList)
+    // console.log('this=======',userList)
   //  cb(message[roomName])
 
-  socket.on('private-chat', ( ) => {
-    
-    io.emit('private-chat');
+  socket.on('private-chat', (msg) => {
+    console.log("===========", msg)
+    io.in(userList).emit('private-chat', msg);
   })
 })
 
