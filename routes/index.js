@@ -13,10 +13,11 @@ const authenticated = (req, res, next) => {
       return next()
     }
     else {
-      req.flash('error_messages', '帳號或密碼輸入錯誤')
+      req.flash('error_messages', '此帳號無前台權限')
+      return res.redirect('/admin/tweets')
     }
   }
-  res.redirect('/signin')
+  return res.redirect('/signin')
 }
 
 const authenticatedAdmin = (req, res, next) => {
@@ -27,7 +28,7 @@ const authenticatedAdmin = (req, res, next) => {
   } else {
     req.flash('error_messages', '帳號或密碼輸入錯誤')
   }
-  res.redirect('/admin/signin')
+  return res.redirect('/admin/signin')
 }
 
 
