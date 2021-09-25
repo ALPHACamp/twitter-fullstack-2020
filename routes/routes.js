@@ -99,7 +99,7 @@ router.delete(
   auth.authenticatedGeneral,
   userController.unFollow
 )
-router.get('follow/top', auth.authenticatedGeneral)
+router.get('followships/top', auth.authenticatedGeneral)
 
 // Like
 router.post('/tweets/:id/like', auth.authenticatedGeneral, tweetController.like)
