@@ -31,6 +31,10 @@ a .user-name {
   color: #000000;
 }
 
+.mail a{
+  color:#fF6600;
+}
+
 textarea {
 width:100%;
 overflow-wrap: break-word;

@@ -36,7 +36,7 @@
             </li>
           </a>
 
-          <a href="/message">
+          <a href="/messages">
             <li class="list-group-item   active">
               <div class="d-flex">
                 <i class="fas  fa-fw  fa-fh fa-comments mr-4">
@@ -50,7 +50,7 @@
           </a>
 
 
-          <a href="">
+          <a href="/messages/{{user.id}}">
             <li class="list-group-item">
               <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-envelope mr-4">
@@ -92,129 +92,128 @@
       </div>
     </div>
     {{!-- 中間主欄位 --}}
-        <div class="middle-side col-md-3" style="padding:0; height:100%;">
-          <div class="text-title">上線使用者(數量)</div>
-        
-          <hr style="margin:0; padding:0">
-        
-          <ul class="list-group">
-            {{!-- 使用者A開始 --}}
-            <li class="online-user list-group-item">
-              <div class="avatar">
-                <a href="">
-                  <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
-                </a>
-              </div>
-              <div class="name-account">
-                <a href="" class="d-flex">
-                  <div class="name">Apple</div>
-                  <div class="account">@apple</div>
-                </a>
-              </div>
-            </li>
-            <hr style="margin:0; padding:0">
-            {{!-- 使用者A結束 --}}
-        
-            {{!-- 使用者B開始 --}}
-            <li class="online-user list-group-item">
-              <div class="avatar">
-                <a href="">
-                  <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
-                </a>
-              </div>
-              <div class="name-account">
-                <a href="" class="d-flex">
-                  <div class="name">Apple</div>
-                  <div class="account">@apple</div>
-                </a>
-              </div>
-            </li>
-            <hr style="margin:0; padding:0">
-            {{!-- 使用者B結束 --}}
-          </ul>
-        
-        
-        
-        </div>
+    <div class="middle-side col-md-3" style="padding:0; height:100%;">
+      <div class="text-title">上線使用者(數量)</div>
+
+      <hr style="margin:0; padding:0">
+
+      <ul class="list-group">
+        {{!-- 使用者A開始 --}}
+        <li class="online-user list-group-item">
+          <div class="avatar">
+            <a href="">
+              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+          <div class="name-account">
+            <a href="" class="d-flex">
+              <div class="name">Apple</div>
+              <div class="account">@apple</div>
+            </a>
+          </div>
+        </li>
+        <hr style="margin:0; padding:0">
+        {{!-- 使用者A結束 --}}
+
+        {{!-- 使用者B開始 --}}
+        <li class="online-user list-group-item">
+          <div class="avatar">
+            <a href="">
+              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+          <div class="name-account">
+            <a href="" class="d-flex">
+              <div class="name">Apple</div>
+              <div class="account">@apple</div>
+            </a>
+          </div>
+        </li>
+        <hr style="margin:0; padding:0">
+        {{!-- 使用者B結束 --}}
+      </ul>
+
+
+
+    </div>
 
     {{!-- 右側欄位 --}}
-  <div class="right-side col-md-5" style="padding:0; height:100%;">
-    <div class="text-title">公開聊天室</div>
-    <div class="chat">
-      <ul class="list-group" id="messages">
-        {{!-- 上線 --}}
-        {{!-- <li class="list-group-item">
-          <div class="log">
-            Esther Howard 上線
-          </div>
-        </li> --}}
-        {{!-- 上線 --}}
-  
-        {{!-- 離線 --}}
-        {{!-- <li class="list-group-item">
-          <div class="log">
-            Ralph Edwards 離線
-          </div>
-        </li> --}}
-        {{!-- 離線 --}}
-  
-        {{#each msg}}
-  
-        {{#if selfMsg}}
-        {{!-- 自己的訊息 --}}
-        <li class="list-group-item-myself">
-          <div class="user-information">
-            <div class="current-user">
-              <div class="text-area">
-                <div class="text">{{this.content}}</div>
-              </div>
+    <div class="right-side col-md-5" style="padding:0; height:100%;">
+      <div class="text-title">公開聊天室</div>
+      <div class="chat">
+        <ul class="list-group" id="messages">
+          {{!-- 上線 --}}
+          {{!-- <li class="list-group-item">
+            <div class="log">
+              Esther Howard 上線
             </div>
-            <div class="time">{{fromNow this.createdAt}}</div>
-          </div>
-        </li>
-        {{!-- 自己的訊息 --}}
-        {{else}}
-        {{!-- 他人訊息 --}}
-        <li class="list-group-item">
-          <div class="information">
-            <div class="other-user">
-              <div class="avatar">
-                <a href="">
-                  <img src="{{this.User.avatar}}" alt="">
-                </a>
-              </div>
-              <div class="text-area">
-                <div class="text">{{this.content}}</div>
-              </div>
+          </li> --}}
+          {{!-- 上線 --}}
+
+          {{!-- 離線 --}}
+          {{!-- <li class="list-group-item">
+            <div class="log">
+              Ralph Edwards 離線
             </div>
-            <div class="time">{{fromNow this.createdAt}}</div>
-  
+          </li> --}}
+          {{!-- 離線 --}}
+
+          {{#each msg}}
+
+          {{#if selfMsg}}
+          {{!-- 自己的訊息 --}}
+          <li class="list-group-item-myself">
+            <div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text">{{this.content}}</div>
+                </div>
+              </div>
+              <div class="time">{{time this.createdAt}}</div>
+            </div>
+          </li>
+          {{!-- 自己的訊息 --}}
+          {{else}}
+          {{!-- 他人訊息 --}}
+          <li class="list-group-item">
+            <div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="{{this.User.avatar}}" alt="">
+                  </a>
+                </div>
+                <div class="text-area">
+                  <div class="text">{{this.content}}</div>
+                </div>
+                <div class="time">{{time this.createdAt}}</div>
+
+              </div>
+          </li>
+          {{!-- 他人訊息 --}}
+          {{/if}}
+          {{/each}}
+
+        </ul>
+      </div>
+
+
+      {{!-- 輸入欄位 --}}
+      <div class="type-area">
+        {{!-- //TODO:要改API傳 --}}
+        <form action="" method="" id="form" style="display: contents;">
+          <div class="input-area">
+            <input type="text" class="input-chat" id="input" placeholder="輸入訊息..." ng-trim="false">
           </div>
-        </li>
-        {{!-- 他人訊息 --}}
-        {{/if}}
-        {{/each}}
-  
-      </ul>
+          <div class="send-chat">
+            <button class="btn">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
     </div>
-  
-  
-    {{!-- 輸入欄位 --}}
-    <div class="type-area">
-      {{!-- //TODO:要改API傳 --}}
-      <form action="" method="" id="form" style="display: contents;">
-        <div class="input-area">
-          <input type="text" class="input-chat" id="input" placeholder="輸入訊息..." ng-trim="false">
-        </div>
-        <div class="send-chat">
-          <button class="btn">
-            <i class="fas fa-paper-plane"></i>
-          </button>
-        </div>
-      </form>
-    </div>
-  
-  </div>
   </div>
 </div>
 
