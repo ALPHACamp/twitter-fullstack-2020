@@ -7,19 +7,20 @@ const db = require("../../models");
 const { User, Tweet, Reply } = db;
 const passport = require('passport')
 
-router.get("/", (req,res)=> {
+router.get("/", (req, res) => {
   res.redirect('/signin')
-} )
+})
 router.get("/signup", userController.signupPage);
 router.get("/signin", userController.signInPage);
 router.post('/signin', passport.authenticate('local', {
   successRedirect: '/tweets',
-  failureRedirect: '/singin'
+  failureRedirect: '/signin'
 }))
 router.post("/signup", userController.signup);
 
 router.get("/admin/signin", adminController.signInPage)
 router.post('/admin/signin', passport.authenticate('local', {
+  successRedirect: '/admin/tweets',
   failureRedirect: '/admin/signin'
 }), adminController.signIn);
 

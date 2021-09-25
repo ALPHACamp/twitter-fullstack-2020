@@ -40,7 +40,7 @@ const userController = {
                 } else {
                   User.create({
                     name: req.body.name,
-                    account: "@" + req.body.account,
+                    account: req.body.account,
                     role: "user",
                     email: req.body.email,
                     password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
@@ -61,10 +61,10 @@ const userController = {
   },
   getUserSetting: (req, res) => {
     const user = getTestUser(req)
-    return res.render('setting', {user})
+    return res.render('setting', { user })
   },
   editUserSetting: (req, res) => {
-    if(req.body.confirmPassword !== req.body.password) {
+    if (req.body.confirmPassword !== req.body.password) {
       console.log('兩次密碼不同')
       return res.redirect('back')
     } else {
@@ -91,8 +91,8 @@ const userController = {
         })
     }
   }
-    
-  
+
+
 };
 
 module.exports = userController;
