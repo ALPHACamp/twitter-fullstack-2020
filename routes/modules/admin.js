@@ -1,18 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('../../config/passport')
-const helpers = require('../../_helpers')
-
+const { authenticatedAdmin } = require('../../middleware/auth')
 const adminController = require('../../controllers/adminController')
-
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') {
-      return next()
-    }
-  }
-  res.redirect('/signin')
-}
 
 router.get('/signin', adminController.signInPage)
 router.post('/signin',passport.authenticate('local', {
