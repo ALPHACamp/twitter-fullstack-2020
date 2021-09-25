@@ -12,9 +12,11 @@ const {
 const Handlebars = require("handlebars");
 const handlebars = require("express-handlebars");
 const helpers = require("./_helpers");
-
 const app = express();
-
+console.log(process.env)
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 // 設定在測試環境下使用 helpers.getUser(req) 作為 req.user
 if (process.env.NODE_ENV === "test") {
   app.use((req, res, next) => {
@@ -33,6 +35,7 @@ app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+app.use('/upload', express.static(__dirname + '/upload'))
 usePassport(app)
 // app.use((req, res, next) => {
 //   res.locals.user = helpers.getUser(req)
