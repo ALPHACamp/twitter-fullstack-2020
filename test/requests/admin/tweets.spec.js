@@ -64,7 +64,6 @@ describe('# Admin::Tweet request', () => {
           .get('/admin/tweets')
           .expect(200)
           .end(function (err, res) {
-            console.log(res.text)
             if (err) return done(err);
             res.text.should.include('Tweet1')
             done();
