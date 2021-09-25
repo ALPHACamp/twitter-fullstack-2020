@@ -43,7 +43,7 @@
                   <button class="unfollow-button">following</button>
                 </form>
                 {{else}}
-                <form action="/follow/{{this.id}}" method="POST">
+                <form action="/follow" method="POST">
                   <button class="follow-button" name="id" value="{{this.id}}">follow</button>
                 </form>
                 {{/if}}

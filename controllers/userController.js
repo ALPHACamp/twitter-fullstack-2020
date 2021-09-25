@@ -190,7 +190,7 @@ const userController = {
       results.Followers.sort(
         (a, b) => b.Followship.createdAt - a.Followship.createdAt
       )
-      return res.render('user/follower', {
+      return res.render('follower', {
         results,
       })
     })
@@ -212,7 +212,7 @@ const userController = {
       results.Followings.sort(
         (a, b) => b.Followship.createdAt - a.Followship.createdAt
       )
-      return res.render('user/following', {
+      return res.render('following', {
         results,
       })
     })
@@ -223,7 +223,7 @@ const userController = {
     const currentUserId = helpers.getUser(req).id
     if (Number(followTargetId) === currentUserId) {
       req.flash('error_messages', '不能追蹤自己！')
-      return res.render('error')
+      return res.redirect(200,'back')
     } else {
       return Followship.create({
         followerId: currentUserId,

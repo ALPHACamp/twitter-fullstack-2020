@@ -241,8 +241,15 @@ body {
 }
 
 #main-content {
-  all: initial;
+  /* all: initial;
   border: 1px solid #e6ecf0;
+  width: 600px;
+  background: #e6ecf0;
+  display: flex;
+  flex-direction: column; */
+
+  position: relative;
+  padding: 0px 1px 1px 1px;
   width: 600px;
   background: #e6ecf0;
   display: flex;
@@ -315,14 +322,11 @@ body {
 }
 
 #main-content .tweet-body {
-  width: 600px;
   display: flex;
   flex-direction: column;
 }
 
 #main-content .tweet-body .card-tweets {
-  width: 600px;
-  margin-bottom: 1px;
   min-height: 136px;
   display: flex;
   background: #ffffff;
@@ -341,8 +345,11 @@ body {
 }
 
 #main-content .tweet-body .card-tweets .card-header {
-  all: initial;
-  margin-bottom: 6px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: none;
 }
 
 #main-content .tweet-body .card-tweets .card-header .card-name {
@@ -646,6 +653,9 @@ svg {
   color: #ffffff;
 }
 
+#sidebar-right {
+}
+
 #sidebar-right .popular {
   margin: 15px 0px 0px 30px;
   width: 350px;
@@ -654,7 +664,6 @@ svg {
   border-radius: 14px;
   display: flex;
   flex-direction: column;
-  position: -webkit-sticky;
   position: sticky;
   top: 15px;
   z-index: -1;
@@ -683,6 +692,7 @@ svg {
 #sidebar-right .popular .card-wrapper {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 #sidebar-right .popular .card-wrapper .card {
@@ -1415,4 +1425,143 @@ svg {
 
 .message-box .content {
   all: initial;
+}
+
+/* follower & following */
+
+/*  推文顯示 */
+
+#main-content .header .tweet-count {
+  margin: 0;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 13px;
+  line-height: 19px;
+  color: #657786;
+}
+
+#main-content .follower-tag {
+  all: initial;
+  display: flex;
+  background: #ffffff;
+  border-bottom: 1px solid #e6ecf0;
+}
+
+#main-content .follower-tag .follower,
+#main-content .follower-tag .following {
+  all: initial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 54px;
+  cursor: pointer;
+}
+
+#main-content .follower-tag .follower:hover .follower-word {
+  color: #ff6600;
+}
+
+#main-content .follower-tag .following:hover .following-word {
+  color: #ff6600;
+}
+
+#main-content .follower-tag .follower.active .follower-word {
+  color: #ff6600;
+}
+
+#main-content .follower-tag .following.active .following-word {
+  color: #ff6600;
+}
+
+#main-content .follower-tag .follower.active {
+  border-bottom: 2px solid #ff6600;
+}
+
+#main-content .follower-tag .following.active {
+  border-bottom: 2px solid #ff6600;
+}
+
+#main-content .follower-tag .follower .follower-word,
+#main-content .follower-tag .following .following-word {
+  cursor: pointer;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  text-align: center;
+  color: #657786;
+}
+
+/* 卡片區塊 */
+#main-content .tweet-body .card-tweets .card-warp .card-reply-for {
+  margin-bottom: 5px;
+}
+
+#main-content .tweet-body .card-tweets .card-warp .card-reply-for .replyItem {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+}
+
+#main-content
+  .tweet-body
+  .card-tweets
+  .card-warp
+  .card-reply-for
+  .replyReceiver {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #ff6600;
+}
+
+#main-content .tweet-body .card-tweets .follow-button {
+  position: absolute;
+  right: 15px;
+}
+
+#main-content .follow-button .following-button {
+  cursor: pointer;
+  outline: none;
+  width: 90px;
+  height: 25px;
+  padding: 5px 0px;
+  background: #ff6600;
+  border: 1px solid #ff6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+  /*   文字 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #ffffff;
+}
+
+#main-content .follow-button .tofollow-button {
+  cursor: pointer;
+  outline: none;
+  width: 60px;
+  height: 25px;
+  padding: 5px 0px;
+  background: #ffffff;
+  border: 1px solid #ff6600;
+  box-sizing: border-box;
+  border-radius: 100px;
+  /*   文字 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #ff6600;
 }
