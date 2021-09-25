@@ -82,28 +82,36 @@
   document.addEventListener("DOMContentLoaded", () => {
 
     const socket = io();
-
     const online = document.getElementById("online");
     const messages = document.querySelector('.chat-messages');
     const form = document.querySelector('#chat-form');
     const input = document.getElementById('input');
     const scrollable = document.querySelector('.chat-scroll')
+    //const {id, name, account, avatar} = userData
 
+    const userId = `{{ userData.id }}`
+    const userName = `{{ userData.name }}`
+    const userAccount = `{{ userData.account }}`
+    const userAvatar = `{{ userData.avatar }}`
     let max_record = 7;
+
+    //發送前端使用者資料到後端
+    socket.emit('login', { userId, userName, userAccount, userAvatar });
+
 
     socket.on("online", function (amount) {
       online.innerText = '上線使用者' + '(' + amount + ')';
     });
 
-    //socket.on("chatRecord", function (msgs) {
-    //  for (let i = 0; i < msgs.length; i++) {
-    //    (function () {
-    //      addMsgToBox(msgs[i]);
-    //    })();
-    //  }
-    //});
-
     socket.on("chat message", addMsgToBox);
+
+
+
+
+
+
+
+
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -112,6 +120,14 @@
         input.value = '';
       }
     });
+
+
+
+
+
+
+
+
 
 
     function addMsgToBox(msg) {
