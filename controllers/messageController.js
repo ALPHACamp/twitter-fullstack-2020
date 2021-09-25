@@ -24,7 +24,7 @@ const messageController = {
         User: d.User.dataValues,
         selfMsg: Boolean(d.UserId === currentUser.id)
       }))
-      // console.log('New=====',msg)
+      console.log('New=====',msg)
       return res.render('public-chat', {currentUser, msg})
     })
     
@@ -37,7 +37,17 @@ const messageController = {
   },
 
   privatePage:(req, res) => {
-    return res.render('private-chat')
+    const currentUser = helpers.getUser(req)
+    const viewUserId = req.params.id
+    console.log(currentUser)
+    console.log(viewUserId)
+    Message.findAll({
+     
+    })
+    .then( msg => {
+      res.render('private-chat', {currentUser})
+    })
+    
   }
 
 }
