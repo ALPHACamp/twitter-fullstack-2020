@@ -1761,11 +1761,13 @@ color: rgba(0, 0, 0, 0.4);
 
 .chat {
   position: relative;
-  width:673px;
+  width:100%;
+  max-width: 673px;
   height: 90vh;
-  min-width: 673px;
   overflow:scroll;
   overflow-x: hidden;
+  border-top: 1px solid #E6ECF0;
+  border-bottom: 1px solid #E6ECF0;
   /* display: table-cell;
   vertical-align: bottom; */
 }
@@ -1863,24 +1865,31 @@ color: #657786;
 .current-user {
   background: #ff6600;
   border-radius: 25px 25px 0px 25px;
-  text-align: left;
   padding: 10px 15px;
-  word-break: break-all;
   font-family: Noto Sans TC;
 font-style: normal;
 font-weight: normal;
 font-size: 15px;
 line-height: 20px;
 color: #FFFFFF;
-width:auto; display:inline-block !important; display:inline
+width:auto; 
+display:inline-block; 
+/* display:inline; */
+ position: relative;
+  /* display: flex;
+  justify-content: flex-start; */
+  max-width: 400px;
 }
 
 .current-user .text-area{
- width:auto; display:inline-block !important; display:inline
+ width:auto; 
+word-break: break-all;
+ display:inline-block; 
 }
 
 .current-user .text{
-  white-space:pre;
+  white-space:break-spaces;
+    text-align: left;
 }
 
 .user-information .time {
