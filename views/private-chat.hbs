@@ -320,7 +320,7 @@
       const currentName = "{{ currentUser.name }}"
       const viewUserId = "{{ viewUserId }}"
       socket.emit('private-chat', input.value, currentId, currentAvatar, viewUserId);
-      socket.emit('msg-inbox', input.value, currentId, currentAvatar, currentAccount, currentName,)
+      socket.emit('msg-inbox', input.value, currentId, currentAvatar, currentAccount, currentName, viewUserId)
       input.value = ''
     }
   })

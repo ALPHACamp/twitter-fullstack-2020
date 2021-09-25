@@ -83,15 +83,19 @@ io.on('connection', (socket) => {
   })
 
   //私人通知
-  let msgInbox = []
-  socket.on('msg-inbox', (msg, currentId, currentAvatar, currentAccount, currentName) => {
+  socket.on('msg-inbox', async (msg, currentId, currentAvatar, currentAccount, currentName, viewUserId) => {
+    console.log('currentId',currentId)
+    console.log('viewUserId', viewUserId)
     const lastestMsg = { currentAvatar, currentAccount, currentName, msg }
     //從資料庫抓改使用者所有接收訊息 by使用者篩選各一筆
-    msgInbox.map(d => d.currentAccount).includes(lastestMsg.currentAccount)
-    if (msgInbox.currentAccount) {
+    // let roomName = currentId > viewUserId ? `${viewUserId}-${currentId}` : `${currentId}-${viewUserId}`
+    const msgInbox = await messageController.getPrivateInbox(currentId)
+    console.log('app',msgInbox)
+    // msgInbox.map(d => d.currentAccount).includes(lastestMsg.currentAccount)
+    // if (msgInbox.currentAccount) {
       //假如有資料，刪掉舊的再加入陣列
 
-    }
+    // }
     //沒資料，直接加入陣列
 
   })

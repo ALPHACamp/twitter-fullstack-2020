@@ -8,6 +8,7 @@ const io = new Server(server, { cors: { origin: "*" } });
 const db = require('../models')
 const Message = db.Message
 const User = db.User
+const { sequelize } = require('../models')
 
 const messageController = {
   publicPage: (req, res) => {
@@ -60,13 +61,25 @@ const messageController = {
       })
   },
 
-  getPrivateInbox: (req, res) => {
-    const currentUser = helpers.getUser(req)
-    const currentUserId = Number(helpers.getUser(req).id)
-    const viewUserId = Number(req.params.id)
-    return Message.find
-
-
+  getPrivateInbox: (currentId, res, cb) => {
+  // const currentUserId = Number(currentId)
+  // const viewUserId = Number(viewUserId)
+    // console.log('DBcurrentId', currentUserId)
+    // console.log('DBviewUserId', viewUserId)
+    // let roomName = currentUserId > viewUserId ? `${viewUserId}-${currentUserId}` : `${currentUserId}-${viewUserId}`
+    console.log('資料庫前條件', currentId)
+    return Message.findAll({
+      where: { UserId: currentId },
+      include: [User],
+      // attributes: [[sequelize.fn('COUNT', sequelize.col('createdAt')), 'tweetCount']],
+      order: [[sequelize.fn('MAX', 'createdAt'), 'ASC']],
+      group: ['fromId'],
+      raw:true,
+      nest:true
+    })
+    .then(msg => {
+      return console.log('資料庫找完', msg)
+    }) 
   }
 
   // savePrivateMsg: (user) => {
