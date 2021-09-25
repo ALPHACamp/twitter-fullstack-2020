@@ -50,8 +50,8 @@ module.exports = (app, passport) => {
   app.put('/users/:id/edit', authenticated, userController.putUserProfile)
 
   // 追蹤
-  app.post('/following/:userId', authenticated, userController.addFollowing)
-  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.post('/followships/', authenticated, userController.addFollowing)
+  app.delete('/followships/:userId', authenticated, userController.removeFollowing)
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
 

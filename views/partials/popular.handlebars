@@ -4,7 +4,7 @@
       <h5 class="fw-bolder">Popular</h5>
     </div>
     {{#each users}}
-    
+
     <div class="popularList border-top">
       <div class="popularUser d-flex border-bottom justify-content-between">
         <div class="user d-flex">
@@ -21,17 +21,18 @@
         </div>
         <div class="round m-3">
           {{#if this.isFollowed}}
-          <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
             <button type="submit" class="btn orange text-white round">取消跟隨</button>
           </form>
           {{else}}
-          <form action="/following/{{this.id}}" method="POST">
+          <form action="/followships/" method="POST">
+            <input type="hidden" name="id" value={{this.id}}>
             <button type="submit" class="btn followButton round">跟隨</button>
           </form>
           {{/if}}
         </div>
       </div>
-      
+
       {{/each}}
 
     </div>
