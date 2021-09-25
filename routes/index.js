@@ -25,12 +25,13 @@ const authenticatedAdmin = (req, res, next) => {
     if (helpers.getUser(req).role === "admin") {
       return next()
     }
-  } else {
-    req.flash('error_messages', '帳號或密碼輸入錯誤')
+    else {
+      req.flash('error_messages', '帳號或密碼輸入錯誤')
+      return res.redirect('/signin')
+    }
   }
-  return res.redirect('/admin/signin')
+  return res.redirect('/signin')
 }
-
 
 module.exports = (app, passport) => {
   // 前台
