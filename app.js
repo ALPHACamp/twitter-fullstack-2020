@@ -57,11 +57,6 @@ server.listen(PORT, () => console.log(`Example app listening on http://localhost
 
 require('./routes')(app)
 
-//Test 聊天室
-app.get('/chat', (req, res) => {
-  res.render('chat');
-});
-
 socketChat.Server(server) //server參數傳遞給io instance使用 建立通道
 socketChat.connect()  //與前端通道連線
 

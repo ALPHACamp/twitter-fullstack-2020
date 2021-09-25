@@ -1,85 +1,105 @@
-<style>
-  body {
-    margin: 0;
-    padding-bottom: 3rem;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  }
+<div class="row chat-room">
+  {{> homeNavBar}}
+  <div class="chat-users col d-flex flex-column ms-4">
+    <div class="home-word-box p-2">
+      <span class="home-word">上線使用者(5)</span>
+    </div>
+    <div class="chat-user align-middle">
+          <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg" alt="avatar" title="avatar" width="50px" height="50px">
+            <span class="name">Apple</span>
+            <span class="account">&nbsp;@apple</span>
+    </div>
+    <div class="chat-user align-middle">
+      <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+        alt="avatar" title="avatar" width="50px" height="50px">
+      <span class="name">Apple</span>
+      <span class="account">&nbsp;@apple</span>
+    </div>
+    <div class="chat-user align-middle">
+      <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+        alt="avatar" title="avatar" width="50px" height="50px">
+      <span class="name">Apple</span>
+      <span class="account">&nbsp;@apple</span>
+    </div>
+    <div class="chat-user align-middle">
+      <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+        alt="avatar" title="avatar" width="50px" height="50px">
+      <span class="name">Apple</span>
+      <span class="account">&nbsp;@apple</span>
+    </div>
+    <div class="chat-user align-middle">
+      <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+        alt="avatar" title="avatar" width="50px" height="50px">
+      <span class="name">Apple</span>
+      <span class="account">&nbsp;@apple</span>
+    </div>
+  </div>
+  <div class="chats col-6 me-5">
+    <div class="home-word-box p-2">
+      <span class="home-word">公開聊天室</span>
+    </div>
+    <div class="chat-scroll" >
+      <div class="chat-messages d-flex flex-column justify-content-end p-2" id="chat-messages">
+        <div class="user-name-status text-center my-2">
+          <div class="name-status d-inline-flex py-1 px-3">
+            <p>Apple 上線</p>  
+          </div>
+        </div>
+        <div class="other-chat d-inline-flex align-items-end my-2">
+          <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+            alt="avatar" title="avatar" width="50px" height="50px">
+          <div class="chat-content ms-3">
+            <p class='p-3'>這是對方的對話窗範本~我至少要打到這個對話框的70%!要看他換行看看才知道格式有沒有對喔</p>
+          </div>
+        </div>
+        <div class="my-chat d-flex justify-content-end my-2 justify-content-end">
+          <div class="chat-content">
+            <p class="p-3">這是使用者自己的對話窗範本哈哈哈～我在回覆喔好好笑喔好好笑喔要打到第二行不然看不出兩個版本的差異啦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form id="chat-form" action="">
+      <input id="input" autocomplete="off" />
+      <button class="send-btn" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M21.13 11.358L3.614 2.10798C3.324 1.95598 2.974 2.00598 2.741 2.23398C2.511 2.45998 2.448 2.81098 2.591 3.10198L6.953 12.022L2.591 20.942C2.448 21.234 2.511 21.585 2.741 21.81C2.886 21.95 3.074 22.022 3.264 22.022C3.384 22.022 3.504 21.994 3.614 21.935L21.131 12.685C21.376 12.555 21.531 12.299 21.531 12.021C21.531 11.743 21.376 11.489 21.131 11.359L21.13 11.358ZM4.948 4.50998L17.752 11.272H8.255L4.948 4.51198V4.50998ZM8.255 12.77H17.753L4.948 19.535L8.255 12.772V12.77Z"
+          fill="#FF6600" />
+      </svg></button >
+      
+    </form>
+  
+  </div>
+  
+</div>
 
-  #form {
-    background: rgba(0, 0, 0, 0.15);
-    padding: 0.25rem;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    display: flex;
-    height: 3rem;
-    box-sizing: border-box;
-    backdrop-filter: blur(10px);
-  }
 
-  #input {
-    border: none;
-    padding: 0 1rem;
-    flex-grow: 1;
-    border-radius: 2rem;
-    margin: 0.25rem;
-  }
-
-  #input:focus {
-    outline: none;
-  }
-
-  #form>button {
-    background: #333;
-    border: none;
-    padding: 0 1rem;
-    margin: 0.25rem;
-    border-radius: 3px;
-    outline: none;
-    color: #fff;
-  }
-
-  #messages {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  #messages>li {
-    padding: 0.5rem 1rem;
-  }
-
-  #messages>li:nth-child(odd) {
-    background: #efefef;
-  }
-</style>
-
-<ul id="messages"></ul>
-<form id="form" action="">
-  <input id="input" autocomplete="off" /><button>Send</button>
-</form>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io();
+  const socket = io();
 
-  var messages = document.getElementById('messages');
-  var form = document.getElementById('form');
-  var input = document.getElementById('input');
+  const messages = document.querySelector('.chat-messages');
+  const form = document.querySelector('#chat-form');
+  const input = document.getElementById('input');
+  const scrollable = document.querySelector('.chat-scroll')
 
-  form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      if (input.value) {
-        socket.emit('chat message', input.value);
-        input.value = '';
-      }
+ form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (input.value) {
+      socket.emit('chat message', input.value);
+      input.value = '';
+    }
+  });
+
+  socket.on('chat message', function (msg) {
+    let newBubble = document.createElement('div')
+    newBubble.className = 'my-chat d-flex justify-content-end my-2 justify-content-end'
+    newBubble.innerHTML = `<div class="chat-content">
+        <p class="p-3">${msg}</p>
+      </div>`
+    messages.appendChild(newBubble);
+    scrollable.scrollTo(0, scrollable.scrollHeight)
     });
 
-    socket.on('chat message', function (msg) {
-        var item = document.createElement('li');
-        item.textContent = msg;
-        messages.appendChild(item);
-        {{!-- window.scrollTo(0, document.body.scrollHeight); --}}
-      });
 </script>
