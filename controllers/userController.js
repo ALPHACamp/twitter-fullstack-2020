@@ -371,8 +371,17 @@ const userController = {
           { model: User, as: 'Followers' }
         ],
         where: { role: "user" },
+      }),
+      User.findOne({
+        where: { id: req.params.id },
+        nest: true,
+        raw: true
+      }),
+      Tweet.count({
+        where: { Userid: req.params.id }
       })
-    ]).then(([followers, usersdata]) => {
+    ]).then(([followers, usersdata, tweetUser, tweetCount]) => {
+      console.log(tweetUser)
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
@@ -384,7 +393,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "follower" })
+      res.render('userFollowship', { data, topUsers, theUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "follower" })
     })
   },
 
@@ -405,8 +414,18 @@ const userController = {
           { model: User, as: 'Followers' }
         ],
         where: { role: "user" },
+      }),
+      User.findOne({
+        where: { id: req.params.id },
+        nest: true,
+        raw: true
+      }),
+      Tweet.count({
+        where: { Userid: req.params.id }
       })
-    ]).then(([followings, usersdata]) => {
+    ]).then(([followings, usersdata, tweetUser, tweetCount]) => {
+
+      console.log("==========================", tweetUser)
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
@@ -418,7 +437,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "following" })
+      res.render('userFollowship', { data, topUsers, theUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "following" })
     })
   }
 }
