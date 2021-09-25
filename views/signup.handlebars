@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-center mt-2">
-  <form action="/users/signup" method="POST" style="width: 500px;">
+  <form action="/signup" method="POST" style="width: 500px;">
     <div class="text-center mb-4">
       <p class="fw-bold" style="font-family: 'Noto Sans TC', sans-serif;">建立你的帳號</p>
     </div>
@@ -34,14 +34,14 @@
     <div class="form-group">
       <p class="mb-0 rounded-top"
         style="background-color: #F5F8FA; font-size: 10px;font-family: 'Noto Sans TC', sans-serif;">確認密碼</p>
-      <input class="border-0 rounded-0" type="password" name="confirmPassword" class="form-control"
-        style="background-color: #F5F8FA; width: 500px;" value="{{ confirmPassword }}">
+      <input class="border-0 rounded-0" type="password" name="checkPassword" class="form-control"
+        style="background-color: #F5F8FA; width: 500px;" value="{{ checkPassword }}">
       <hr class="mt-0">
     </div>
     <button class="btn btn-block rounded-pill" style="background-color: #FF6600; width: 500px; color:white"
       type="submit">註冊</button>
     <div class="text-center mt-2">
-      <a href="/users/login">取消</a>
+      <a href="/signin">取消</a>
     </div>
   </form>
 </div>

@@ -4,9 +4,10 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
+const helpers = require('../_helpers')
 
-const twitterController = {
-  getTwitters: (req, res) => {
+const tweetController = {
+  getTweets: (req, res) => {
     Tweet.findAndCountAll({
       order: [['createdAt', 'DESC']],
       include: [User, Reply, Like]
@@ -18,17 +19,18 @@ const twitterController = {
         tweetUserName: row.User.dataValues.name,
         tweetUserAccount: row.User.dataValues.account,
         tweetId: row.id,
-        tweetContent: row.content,
+        tweetDescription: row.description,
         tweetRepliesCount: row.Replies.length,
         tweetLikesCount: row.Likes.length,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(row.id)
+        isLiked: helpers.getUser(req).LikedTweets ?
+          helpers.getUser(req).LikedTweets.map(d => d.id).includes(row.id) : false
       }))
-      return res.render('twitter', {
+      return res.render('tweet', {
         tweets: tweetData,
       })
     })
   },
-  getTwitter: (req, res) => {
+  getTweet: (req, res) => {
     return Tweet.findByPk(req.params.id, {
       include: [
         Reply,
@@ -59,19 +61,20 @@ const twitterController = {
       })
     })
   },
-  postTwitter: (req, res) => {
-    if (req.body.text.length > 140) {
+  postTweet: (req, res) => {
+    if (req.body.description.length > 140) {
       req.flash('error_messages', '推文字數限制在 140 以內！')
-      res.redirect('back')
+      return res.redirect('/tweets')
     }
     else {
-      return Tweet.create({
-        UserId: req.user.id,
-        content: req.body.text,
+      Tweet.create({
+        UserId: helpers.getUser(req).id,
+        description: req.body.description,
         createdAt: new Date(),
         updatedAt: new Date()
       }).then((tweet) => {
-        res.redirect('twitters')
+        res.status(200)
+        return res.redirect('/tweets')
       })
     }
   },
@@ -80,7 +83,7 @@ const twitterController = {
     return Reply.create({
       UserId: req.user.id,
       TweetId: req.params.id,
-      content: req.body.text,
+      comment: req.body.comment,
       createdAt: new Date(),
       updatedAt: new Date()
     }).then((reply) => {
@@ -89,7 +92,7 @@ const twitterController = {
   },
   like: (req, res) => {
     return Like.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.id
     })
       .then(() => {
@@ -97,18 +100,15 @@ const twitterController = {
       })
   },
   unlike: (req, res) => {
-    return Like.findOne({
+    Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.id
       }
+    }).then(like => {
+      like.destroy()
+      return res.redirect('back')
     })
-      .then(like => {
-        like.destroy()
-          .then(() => {
-            return res.redirect('back')
-          })
-      })
   },
   following: (req, res) => {
     return Followship.create({
@@ -136,4 +136,4 @@ const twitterController = {
 }
 
 
-module.exports = twitterController
+module.exports = tweetController

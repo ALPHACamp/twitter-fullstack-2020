@@ -4,6 +4,7 @@ const passport = require('../config/passport')
 const helpers = require('../_helpers')
 
 const adminController = require('../controllers/adminController')
+const tweetController = require('../controllers/tweetController')
 
 const isAuthenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -14,13 +15,13 @@ const isAuthenticatedAdmin = (req, res, next) => {
     console.log(helpers.getUser(req))
     req.flash('error_messages', '只有管理員可登入後台')
   }
-  res.redirect('/admins/login')
+  res.redirect('/admin/signin')
 }
 
 
 // admin login & logout
-router.get('/login', adminController.getLogin)
-router.post('/login', passport.authenticate('local', { failureRedirect: '/users/login', failureFlash: true }), adminController.postLogin)
+router.get('/signin', adminController.getLogin)
+router.post('/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), adminController.postLogin)
 router.get('/logout', adminController.logout)
 
 router.get('/tweets', isAuthenticatedAdmin, adminController.getTweets)

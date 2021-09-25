@@ -15,15 +15,15 @@ const userController = {
   },
 
   postSignup: (req, res) => {
-    if (req.body.password !== req.body.confirmPassword) {
+    if (req.body.password !== req.body.checkPassword) {
       req.flash('error_messages', '兩次密碼輸入不符！')
-      res.redirect('/users/signup')
+      res.redirect('/signup')
     } else {
       User.findOne({ where: { email: req.body.email } })
         .then(user => {
           if (user) {
             req.flash('error_messages', '此信箱已註冊過！')
-            res.redirect('/users/signup')
+            res.redirect('/signup')
           } else {
             User.create({
               account: req.body.account,
@@ -32,7 +32,7 @@ const userController = {
               password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
             }).then(user => {
               req.flash('success_messages', '註冊成功！')
-              return res.redirect('/users/login')
+              return res.redirect('/signin')
             })
           }
         })
@@ -44,13 +44,13 @@ const userController = {
   },
 
   postLogin: (req, res) => {
-    res.redirect('/twitters')
+    res.redirect('/tweets')
   },
 
   logout: (req, res) => {
     req.flash('success_messages', '登出成功')
     req.logout()
-    res.redirect('/users/login')
+    res.redirect('/signin')
   },
 
   getUser: (req, res) => {
@@ -73,7 +73,7 @@ const userController = {
       const totalTweet = result.rows.length
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        content: r.dataValues.content,
+        description: r.dataValues.description,
         replyCount: r.dataValues.Replies.length,
         likeCount: r.dataValues.Likes.length,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
@@ -90,6 +90,7 @@ const userController = {
           .then(user => {
             const nameWordCount = user.dataValues.name.length
             const introWordCount = user.dataValues.introduction.length
+            res.status(200)
             return res.render('self', {
               user: user.toJSON(),
               nameWordCount: nameWordCount,
@@ -124,7 +125,7 @@ const userController = {
     }).then(result => {
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        content: r.dataValues.content,
+        comment: r.dataValues.comment,
         replyTweetId: r.dataValues.Tweet.id,
         replyUserId: r.dataValues.Tweet.dataValues.User.id,
         replyUserAccount: r.dataValues.Tweet.dataValues.User.account
@@ -184,7 +185,7 @@ const userController = {
       const data = result.rows.map(r => ({
         ...r.dataValues,
         tweetId: r.dataValues.Tweet.dataValues.id,
-        content: r.dataValues.Tweet.dataValues.content,
+        description: r.dataValues.Tweet.dataValues.description,
         createdAt: r.dataValues.createdAt,
         likeUserId: r.dataValues.Tweet.dataValues.User.id,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
@@ -428,7 +429,7 @@ const userController = {
       const totalTweet = result.rows.length
       const data = result.rows.map(r => ({
         ...r.dataValues,
-        content: r.dataValues.content,
+        description: r.dataValues.description,
         replyCount: r.dataValues.Replies.length,
         likeCount: r.dataValues.Likes.length,
         isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
