@@ -91,6 +91,7 @@ const profileController = {
   },
 
   getComments: async (req, res, done) => {
+    const user = getTestUser(req);
     try {
       //前端處理判定
       const isComment = true;
@@ -118,6 +119,13 @@ const profileController = {
         ],
         order: [["createdAt", "DESC"]],
       });
+      // get followship
+      let followship = await Followship.findOne({
+        where: {
+          followerId: Number(user.id),
+          followingId: Number(req.params.id),
+        },
+      });
 
       const tweetsCount = Profile.Tweets.length;
       const followersCount = Profile.Followers.length;
@@ -128,7 +136,7 @@ const profileController = {
         attributes: listAttributes,
         include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
-          id: { [Op.not]: req.user.id },
+          id: { [Op.not]: user.id },
           role: { [Op.not]: "admin" },
         },
       });
@@ -136,7 +144,7 @@ const profileController = {
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -149,6 +157,8 @@ const profileController = {
         tweetsCount,
         followersCount,
         followingsCount,
+        isFollowed: Boolean(followship),
+        notification: Boolean(followship ? followship.notification : false),
       });
     } catch (error) {
       res.status(400).json(error);
@@ -156,6 +166,7 @@ const profileController = {
   },
 
   getLikedPosts: async (req, res, done) => {
+    const user = getTestUser(req);
     try {
       // 前端判斷
       const isLikedPosts = true;
@@ -194,6 +205,14 @@ const profileController = {
       const followingsCount = Profile.Followings.length;
       const tweetsCount = Profile.Tweets.length;
 
+      // get followship
+      let followship = await Followship.findOne({
+        where: {
+          followerId: Number(user.id),
+          followingId: Number(req.params.id),
+        },
+      });
+
       // get Top10User
       const rawUsers = await User.findAll({
         attributes: listAttributes,
@@ -222,6 +241,8 @@ const profileController = {
         tweetsCount,
         followersCount,
         followingsCount,
+        isFollowed: Boolean(followship),
+        notification: Boolean(followship ? followship.notification : false),
       });
       done();
     } catch (error) {
