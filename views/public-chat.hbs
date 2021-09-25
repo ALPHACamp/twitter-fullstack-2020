@@ -93,13 +93,13 @@
     </div>
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-3" style="padding:0; height:100%;">
-      <div class="text-title">上線使用者(數量)</div>
+      <div class="text-title" id="user-count">上線使用者</div>
 
       <hr style="margin:0; padding:0">
 
-      <ul class="list-group" id="onlineUser">
+      <ul class="list-group" id="onlineUserList">
         {{!-- 使用者A開始 --}}
-        <li class="online-user list-group-item">
+        {{!-- <li class="online-user list-group-item">
           <div class="avatar">
             <a href="">
               <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
@@ -112,11 +112,11 @@
             </a>
           </div>
         </li>
-        <hr style="margin:0; padding:0">
+        <hr style="margin:0; padding:0"> --}}
         {{!-- 使用者A結束 --}}
 
         {{!-- 使用者B開始 --}}
-        <li class="online-user list-group-item">
+        {{!-- <li class="online-user list-group-item">
           <div class="avatar">
             <a href="">
               <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
@@ -129,7 +129,7 @@
             </a>
           </div>
         </li>
-        <hr style="margin:0; padding:0">
+        <hr style="margin:0; padding:0"> --}}
         {{!-- 使用者B結束 --}}
       </ul>
 
@@ -186,9 +186,8 @@
                 <div class="text-area">
                   <div class="text">{{this.content}}</div>
                 </div>
-                <div class="time">{{time this.createdAt}}</div>
-
               </div>
+              <div class="time">{{time this.createdAt}}</div>
           </li>
           {{!-- 他人訊息 --}}
           {{/if}}
@@ -235,19 +234,20 @@
   var messages = document.getElementById('messages');
   var form = document.getElementById('form');
   var input = document.getElementById('input');
+  const onlineUser = []
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
     const currentName = "{{currentUser.name}}"
+    const currentAvatar = "{{currentUser.avatar}}"
     const currentAccount = "{{ currentUser.account }}"
-    socket.emit('send user', currentName, currentAccount)
+    socket.emit('send user', currentName, currentAccount, currentAvatar)
+    socket.emit('onlineUser')
     scrollWindow();
-
   })
 
-
   //登入通知
-  socket.on('new user msg', function (currentName) {
+  socket.on('new user msg', function (currentName, currentAccount, currentAvatar) {
     var item = document.createElement('li');
     let rawHTML = "";
     item.classList.add('list-group-item')
@@ -256,30 +256,38 @@
             </div>`
     item.innerHTML = rawHTML;
     messages.appendChild(item);
+    scrollWindow();
+  })
 
-    const onlineUser = document.querySelector('#onlineUser')
-    var item2 = document.createElement('li');
+  //線上使用者更新
+  socket.on('online user', function (onlineUser) {
+    const userCount = document.querySelector('#user-count')
+    userCount.innerHTML = `上線使用者(${onlineUser.length})`
+    const onlineUserList = document.querySelector('#onlineUserList')
     let onlineHTML = "";
+    onlineUserList.innerHTML = onlineHTML
+    const item2 = document.createElement('li');
     item2.classList.add('list-group')
-    onlineHTML += `<li class="online-user list-group-item">
+    for (let i = 0; i < onlineUser.length; i++) {
+      onlineHTML += `<li class="online-user list-group-item">
       <div class="avatar">
         <a href="">
-          <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+          <img src=${onlineUser[i].currentAvatar} alt="">
             </a>
           </div>
         <div class="name-account">
           <a href="" class="d-flex">
-            <div class="name">Apple</div>
-            <div class="account">@apple</div>
+            <div class="name">${onlineUser[i].currentName}</div>
+            <div class="account">@${onlineUser[i].currentAccount}</div>
           </a>
         </div>
         </li>
       <hr style="margin:0; padding:0">`
+    }
     item2.innerHTML = onlineHTML
-    onlineUser.appendChild(item2);
-
-    scrollWindow();
+    onlineUserList.appendChild(item2);
   })
+
 
 
   //本人送出訊息
@@ -291,7 +299,6 @@
       let time = new Date().toLocaleTimeString();
       item.classList.add("list-group-item-myself")
       let msg = input.value
-      console.log('input', msg)
       rawHTML += `<div class="user-information">
               <div class="current-user">
                 <div class="text-area">
@@ -312,15 +319,13 @@
 
   //接收他人送出訊息
   socket.on('chat message', function (msg, currentId, currentAvatar) {
-    const userId = {{ currentUser.id }}
-    console.log('現在使用者', userId)
-    console.log('訊息使用者', currentId)
+    const userId = "{{ currentUser.id }}"
     if (Number(userId) !== Number(currentId)) {
-    var item = document.createElement('li');
-    let rawHTML = "";
-    let time = new Date().toLocaleTimeString()
-    item.classList.add('list-group-item')
-    rawHTML += `<div class="information">
+      var item = document.createElement('li');
+      let rawHTML = "";
+      let time = new Date().toLocaleTimeString()
+      item.classList.add('list-group-item')
+      rawHTML += `<div class="information">
               <div class="other-user">
                 <div class="avatar">
                   <a href="">
@@ -335,10 +340,10 @@
               </div>
               <div class="time">${time}</div>
             </div>`
-    item.innerHTML = rawHTML;
-    messages.appendChild(item);
-    scrollWindow();
-  }
+      item.innerHTML = rawHTML;
+      messages.appendChild(item);
+      scrollWindow();
+    }
   });
 
   //下線通知
