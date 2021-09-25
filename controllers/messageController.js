@@ -8,6 +8,10 @@ const io = new Server(server, { cors: { origin: "*" } });
 const db = require('../models')
 const Message = db.Message
 const User = db.User
+const Followship = db.Followship
+const Tweet = db.Tweet
+const Like = db.Like
+const Reply = db.Reply
 const { sequelize } = require('../models');
 const { render } = require('../app');
 
@@ -93,8 +97,37 @@ const messageController = {
     }) 
   },
 
- subscribe: (req, res) => {
-  res.render('notification')
+ subscribe: async(req, res) => {
+  const currentUser = helpers.getUser(req)
+  try{
+  //中間資料大戰
+
+  //追蹤者
+    const users = await Followship.findAll({
+      attributes: ['followingId', [sequelize.fn('COUNT', sequelize.col('followingId')), 'count']],
+      include: [
+        { model: User, as: 'FollowingLinks' }, //self-referential super-many-to-many
+      ],
+      group: ['followingId'],
+      order: [[sequelize.col('count'), 'DESC']],
+      limit: 10, raw: true, nest: true
+    })
+
+    //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
+    const normalUsers = users.filter(d => d.FollowingLinks.role !== 'admin')
+    const topUsers = normalUsers.map(user => ({
+      id: user.FollowingLinks.id,
+      name: user.FollowingLinks.name ? (user.FollowingLinks.name.length > 12 ? user.FollowingLinks.name.substring(0, 12) + '...' : user.FollowingLinks.name) : 'noName',
+      account: user.FollowingLinks.account ? (user.FollowingLinks.account.length > 12 ? user.FollowingLinks.account.substring(0, 12) + '...' : user.FollowingLinks.account) : 'noAccount',
+      avatar: user.FollowingLinks.avatar,
+      followersCount: user.count,
+      isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
+      isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
+    }))
+
+    return res.render('notification', { topUsers, currentUser })
+  }catch{error => {console.log(error)}}
+
  }
 }
 
