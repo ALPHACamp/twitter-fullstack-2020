@@ -13,7 +13,7 @@ const tweetController = {
   getTweets: (req, res) => {
     return Promise.all([
       Tweet.findAll({
-        include: [User, Reply, 
+        include: [User, Reply,
           { model: User, as: 'LikedUsers' }
         ],
         order: [
@@ -29,19 +29,12 @@ const tweetController = {
         where: { role: "user" }
       }),
     ]).then(([tweets, users]) => {
-      
-      const topUsers =
-        users.map(user => ({
-          ...user.dataValues,
-          followerCount: user.dataValues.followerCount,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
-        }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-          .slice(0, 10)
+
+      const topUsers = helpers.getTopUsers(req, users)
 
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
-        id : tweet.id,  //拿到tweet的id
+        id: tweet.id,  //拿到tweet的id
         description: tweet.description,
         createdAt: tweet.createdAt,
         userName: tweet.User.name,
@@ -51,7 +44,7 @@ const tweetController = {
 
       return res.render('tweets', {
         tweets: data,
-        users: topUsers,
+        topUsers,
         theUser: helpers.getUser(req).id
       })
     })
@@ -104,8 +97,8 @@ const tweetController = {
         order: [['Replies', 'createdAt', 'DESC']]
       })
       // console.log('我是req.user.LikedTweets:', req.user.LikedTweets)
-      const isLiked = req.user.LikedTweets.map(d => d.id).includes(tweet.id) 
-      return res.render('tweet', { tweet: tweet.toJSON(), isLiked})
+      const isLiked = req.user.LikedTweets.map(d => d.id).includes(tweet.id)
+      return res.render('tweet', { tweet: tweet.toJSON(), isLiked })
     } catch (e) {
       console.log(e.message)
     }

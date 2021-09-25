@@ -85,6 +85,7 @@ const userController = {
       ),
       User.findAll({
         include: [
+          Tweet,
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }
         ],
@@ -96,15 +97,8 @@ const userController = {
         isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id), // 推文是否被喜歡過
       }))
 
-      const topUsers =
-        users.map(user => ({
-          ...user.dataValues,
-          followerCount: user.Followers.length,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
-        }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-          .slice(0, 10)
-      // console.log('我是data',data)
+      const topUsers = helpers.getTopUsers(req, users)
+
       return res.render('userSelf', { tweets: data, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id })
     })
   },
