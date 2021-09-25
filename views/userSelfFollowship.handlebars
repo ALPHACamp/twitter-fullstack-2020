@@ -79,13 +79,20 @@
             </div>
 
             <div class="Followship round">
-              {{#if (renderFollower ../renderType)}}
-              <form action="/following/{{this.id}}?_method=DELETE" method="POST">
+
+              {{#ifCondNot this.id ../theUser}}
+              {{#if this.isFollowed}}
+              <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
                 <button type="submit" class="btn orange text-white round">取消跟隨</button>
               </form>
               {{else}}
-              <button type="submit" class="btn orange text-white round">正在跟隨</button>
+              <form action="/followships/" method="POST">
+                <input type="hidden" name="id" value={{this.id}}>
+                <button type="submit" class="btn followButton round">跟隨</button>
+              </form>
               {{/if}}
+              {{/ifCondNot}}
+
             </div>
           </div>
 
@@ -96,43 +103,6 @@
     {{/each}}
 
   </div>
-  <div class="topUser">
-    <div class="popularArea fixed mt-4 border">
-      <div class="title m-3">
-        <h5 class="fw-bolder">Popular</h5>
-      </div>
-      {{#each topUsers}}
-      {{#ifCondNot this.id ../theUser}}
-      <div class="popularList border-top">
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <a href="/users/{{this.id}}">
-                <img src="{{noImage this.avatar}}" alt="" class="rounded-circle userImage">
-              </a>
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">{{this.name}}
-              </div>
-              <div class="account ms-1">{{this.account}}</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            {{#if this.isFollowed}}
-            <form action="/following/{{this.id}}?_method=DELETE" method="POST">
-              <button type="submit" class="btn orange text-white round">取消跟隨</button>
-            </form>
-            {{else}}
-            <form action="/following/{{this.id}}" method="POST">
-              <button type="submit" class="btn followButton round">跟隨</button>
-            </form>
-            {{/if}}
-          </div>
-        </div>
-        {{/ifCondNot}}
-        {{/each}}
+  {{>popular}}
 
-      </div>
-    </div>
-  </div>
 </div>
