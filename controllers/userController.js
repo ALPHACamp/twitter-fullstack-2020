@@ -165,7 +165,7 @@ const userController = {
 
   getUserLike: (req, res) => {
     let loginUser = false
-    if (res.locals.user.id !== Number(req.params.id)) {
+    if (helpers.getUser(req).id !== Number(req.params.id)) {
       loginUser = false
     } else {
       loginUser = true
@@ -187,14 +187,14 @@ const userController = {
         description: r.dataValues.Tweet.dataValues.description,
         createdAt: r.dataValues.createdAt,
         likeUserId: r.dataValues.Tweet.dataValues.User.id,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id),
+        isLiked: helpers.getUser(req).LikedTweets ?
+          helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.id) : false,
         likeAvatar: r.dataValues.Tweet.dataValues.User.avatar,
         likeUserName: r.dataValues.Tweet.dataValues.User.name,
         likeUserAccount: r.dataValues.Tweet.dataValues.User.account,
         replyCount: r.dataValues.Tweet.dataValues.Replies.length,
         likeCount: r.dataValues.Tweet.dataValues.Likes.length
       }))
-      console.log(data)
       Tweet.findAndCountAll({
         where: whereQuery,
       }).then(result => {
@@ -209,8 +209,12 @@ const userController = {
 
           User.findByPk(req.params.id)
             .then(user => {
-              const nameWordCount = user.dataValues.name.length
-              const introWordCount = user.dataValues.introduction.length
+              let nameWordCount = ''
+              let introWordCount = ''
+              if (user.dataValues.introduction) {
+                nameWordCount = user.dataValues.name.length
+                introWordCount = user.dataValues.introduction.length
+              }
               return res.render('selfLike', {
                 user: user.toJSON(),
                 nameWordCount: nameWordCount,
