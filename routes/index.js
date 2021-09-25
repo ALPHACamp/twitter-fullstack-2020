@@ -9,12 +9,11 @@ const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (!(helpers.getUser(req).role === "admin")) { 
-      req.flash('error_messages', '管理員請由後台登入')
+    if (!(helpers.getUser(req).role === "admin")) {
       return next()
     }
     else {
-      req.flash('error_messages', '此帳號無前台權限')
+      req.flash('error_messages', '此帳號無前台權限，跳轉至後台')
       return res.redirect('/admin/tweets')
     }
   }
