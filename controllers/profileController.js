@@ -45,9 +45,10 @@ const profileController = {
       let followship = await Followship.findOne({
         where: {
           followerId: Number(user.id),
-          followingId: Number(req.params.id),
-        },
+          followingId: Number(req.params.id)
+        }
       });
+
       // get Count
       const followersCount = Profile.Followers.length;
       const followingsCount = Profile.Followings.length;
@@ -85,8 +86,8 @@ const profileController = {
       });
       done();
     } catch (error) {
-      res.status(400).json(error);
       console.log(error);
+      res.status(400).json(error);
     }
   },
 
@@ -151,6 +152,7 @@ const profileController = {
         followingsCount,
       });
     } catch (error) {
+      console.log(error)
       res.status(400).json(error);
     }
   },
@@ -211,7 +213,7 @@ const profileController = {
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
-      const isSelf = Number(req.params.userId) === Number(user.id);
+      const isSelf = Number(req.params.userId) === Number(req.user.id);
       // return res.json({ tweets: LikedTweets })
       return res.render("profile", {
         isLikedPosts,
@@ -223,8 +225,8 @@ const profileController = {
         followersCount,
         followingsCount,
       });
-      done();
     } catch (error) {
+      console.log(error)
       res.status(400).json(error);
     }
   },
