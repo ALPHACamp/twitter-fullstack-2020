@@ -166,42 +166,5 @@
     {{/each}}
 
   </div>
-  <div class="">
-    <div class="popularArea fixed mt-4 border">
-      <div class="title m-3">
-        <h5 class="fw-bolder">Popular</h5>
-      </div>
-      <div class="popularList border-top">
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">Pizza Hut</div>
-              <div class="account ms-1">@Pizza Hut</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="orange btn text-white round">正在跟隨</button>
-          </div>
-        </div>
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">McDonald's</div>
-              <div class="account ms-1">@McDonald's</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="btn followButton round">跟隨</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  {{>popular}}
 </div>

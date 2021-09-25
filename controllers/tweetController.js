@@ -42,14 +42,11 @@ const tweetController = {
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
         id : tweet.id,  //拿到tweet的id
-        // likeCount: req.user.LikedTweets.length,
         description: tweet.description,
         createdAt: tweet.createdAt,
         userName: tweet.User.name,
         userAccount: tweet.User.account,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id), // 推文是否被喜歡過
-        likedUsers: tweet.LikedUsers
-
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id),
       }))
 
       return res.render('tweets', {
