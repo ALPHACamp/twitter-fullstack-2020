@@ -6,10 +6,10 @@ const followshipController = require('../controllers/followshipController.js')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (!helpers.getUser(req).role === 'admin') {
-      return next()
+    if (helpers.getUser(req).role === 'admin') {
+      req.flash('error_messages', '管理員請由後台登入')
     }
-    req.flash('error_messages', '管理員請由後台登入')
+    return next()
   }
   res.redirect('/signin')
 }

@@ -5,25 +5,16 @@ const helpers = require('../_helpers')
 const tweetController = require('../controllers/tweetController.js')
 const adminController = require('../controllers/adminController')
 
-const isAuthenticatedAdmin = (req, res, next) => {
-  if (!helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') {
-      return next()
-    }
-    req.flash('error_messages', '只有管理員可登入後台')
-  }
-  res.redirect('/admin/signin')
-}
-
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (!helpers.getUser(req).role === 'admin') {
-      return next()
+    if (helpers.getUser(req).role === 'admin') {
+      return res.redirect('/admin/tweets')
     }
-    req.flash('error_messages', '管理員請由後台登入')
+    return next()
   }
   res.redirect('/signin')
 }
+
 
 router.get('/', authenticated, tweetController.getTweets)
 router.post('/', authenticated, tweetController.postTweet)
