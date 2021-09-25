@@ -1,4 +1,9 @@
 const { Server } = require("socket.io")
+const records = require('../public/javascripts/records');
+
+// 加入線上人數計數
+let onlineCount = 0;
+
 
 module.exports = {
   Server(server) {
@@ -7,11 +12,27 @@ module.exports = {
   connect() {
     io.on('connection', (socket) => {
       console.log('進入聊天室')
+
+      
+      onlineCount++;// 有連線發生時增加人數
+      
+      io.emit("online", onlineCount);   // 發送人數給網頁
+      socket.emit("maxRecord", records.getMax());   // 新增記錄最大值，用來讓前端網頁知道要放多少筆
+      socket.emit("chatRecord", records.get());     // 新增發送紀錄
+
+      socket.on("greet", () => {
+        socket.emit("greet", onlineCount);
+      });
+
       socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
       });
+
       socket.on('disconnect', () => {
         console.log('Bye~');  // 顯示 bye~
+        
+        onlineCount = (onlineCount < 0) ? 0 : onlineCount -= 1;// 使用者離線，扣人
+        io.emit("online", onlineCount);
       });
     });
   }

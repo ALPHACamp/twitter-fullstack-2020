@@ -2,12 +2,13 @@
   {{> homeNavBar}}
   <div class="chat-users col d-flex flex-column ms-4">
     <div class="home-word-box p-2">
-      <span class="home-word">上線使用者(5)</span>
+      <span class="home-word" id="online">上線使用者(0)</span>
     </div>
     <div class="chat-user align-middle">
-          <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg" alt="avatar" title="avatar" width="50px" height="50px">
-            <span class="name">Apple</span>
-            <span class="account">&nbsp;@apple</span>
+      <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+        alt="avatar" title="avatar" width="50px" height="50px">
+      <span class="name">Apple</span>
+      <span class="account">&nbsp;@apple</span>
     </div>
     <div class="chat-user align-middle">
       <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
@@ -38,11 +39,11 @@
     <div class="home-word-box p-2">
       <span class="home-word">公開聊天室</span>
     </div>
-    <div class="chat-scroll" >
+    <div class="chat-scroll">
       <div class="chat-messages d-flex flex-column justify-content-end p-2" id="chat-messages">
         <div class="user-name-status text-center my-2">
           <div class="name-status d-inline-flex py-1 px-3">
-            <p>Apple 上線</p>  
+            <p>Apple 上線</p>
           </div>
         </div>
         <div class="other-chat d-inline-flex align-items-end my-2">
@@ -61,45 +62,70 @@
     </div>
     <form id="chat-form" action="">
       <input id="input" autocomplete="off" />
-      <button class="send-btn" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M21.13 11.358L3.614 2.10798C3.324 1.95598 2.974 2.00598 2.741 2.23398C2.511 2.45998 2.448 2.81098 2.591 3.10198L6.953 12.022L2.591 20.942C2.448 21.234 2.511 21.585 2.741 21.81C2.886 21.95 3.074 22.022 3.264 22.022C3.384 22.022 3.504 21.994 3.614 21.935L21.131 12.685C21.376 12.555 21.531 12.299 21.531 12.021C21.531 11.743 21.376 11.489 21.131 11.359L21.13 11.358ZM4.948 4.50998L17.752 11.272H8.255L4.948 4.51198V4.50998ZM8.255 12.77H17.753L4.948 19.535L8.255 12.772V12.77Z"
-          fill="#FF6600" />
-      </svg></button >
-      
+      <button class="send-btn" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M21.13 11.358L3.614 2.10798C3.324 1.95598 2.974 2.00598 2.741 2.23398C2.511 2.45998 2.448 2.81098 2.591 3.10198L6.953 12.022L2.591 20.942C2.448 21.234 2.511 21.585 2.741 21.81C2.886 21.95 3.074 22.022 3.264 22.022C3.384 22.022 3.504 21.994 3.614 21.935L21.131 12.685C21.376 12.555 21.531 12.299 21.531 12.021C21.531 11.743 21.376 11.489 21.131 11.359L21.13 11.358ZM4.948 4.50998L17.752 11.272H8.255L4.948 4.51198V4.50998ZM8.255 12.77H17.753L4.948 19.535L8.255 12.772V12.77Z"
+            fill="#FF6600" />
+        </svg></button>
+
     </form>
-  
+
   </div>
-  
+
 </div>
 
 
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  const socket = io();
+  document.addEventListener("DOMContentLoaded", () => {
 
-  const messages = document.querySelector('.chat-messages');
-  const form = document.querySelector('#chat-form');
-  const input = document.getElementById('input');
-  const scrollable = document.querySelector('.chat-scroll')
+    var online = document.getElementById("online");
+    const socket = io();
 
- form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (input.value) {
-      socket.emit('chat message', input.value);
-      input.value = '';
-    }
-  });
+    const messages = document.querySelector('.chat-messages');
+    const form = document.querySelector('#chat-form');
+    const input = document.getElementById('input');
+    const scrollable = document.querySelector('.chat-scroll')
 
-  socket.on('chat message', function (msg) {
-    let newBubble = document.createElement('div')
-    newBubble.className = 'my-chat d-flex justify-content-end my-2 justify-content-end'
-    newBubble.innerHTML = `<div class="chat-content">
+
+    socket.on("online", function (amount) {
+      online.innerText = '上線使用者' + '(' + amount + ')';
+    });
+
+
+
+
+
+
+
+
+
+
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (input.value) {
+        socket.emit('chat message', input.value);
+        input.value = '';
+      }
+    });
+
+    socket.on('chat message', function (msg) {
+      let newBubble = document.createElement('div')
+      newBubble.className = 'my-chat d-flex justify-content-end my-2 justify-content-end'
+      newBubble.innerHTML = `<div class="chat-content">
         <p class="p-3">${msg}</p>
       </div>`
-    messages.appendChild(newBubble);
-    scrollable.scrollTo(0, scrollable.scrollHeight)
+      messages.appendChild(newBubble);
+      scrollable.scrollTo(0, scrollable.scrollHeight)
     });
+
+
+
+
+
+  });
 
 </script>
