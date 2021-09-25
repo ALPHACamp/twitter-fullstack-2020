@@ -22,25 +22,25 @@
     </ul>
 
 
-    {{#each tweetsData}}
+    {{#each followersData}}
     <div class="card p-2">
       <div class="d-flex">
         <div>
-          <img src="{{ this.User.avatar }}" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
+          <img src="{{ this.followerAvatar }}" style="width: 3rem; height: 3rem;" class="rounded-circle me-3" alt="...">
         </div>
         <div class="col-md-8">
           <div class="userInfo" style="width: 540px;">
             <div class="d-flex justify-content-between">
-              <h6 class="fontWeight700 me-2 mb-1">{{ this.User.name}}</h6>
-              {{#if this.isMainUserFollowing }}
+              <h6 class="fontWeight700 me-2 mb-1">{{ this.followerName}}</h6>
+              {{#if this.isFollowed }}
               <a href="#" class="btn btn-white-orange rounded-pill p-0" style="width: 90px; height: 25px;">正在跟隨</a>
               {{else}}
               <a href="#" class="btn btn-orange-white rounded-pill p-0" style="width: 90px; height: 25px;">跟隨</a>
               {{/if}}
             </div>
-            <h6 class="fontWeight500 mb-1" style="color:#657786;">@{{ this.User.account }}</h6>
+            <h6 class="fontWeight500 mb-1" style="color:#657786;">@{{ this.followerAccount }}</h6>
           </div>
-          <p class="card-text fontWeight500">{{ this.description }}</p>
+          <p class="card-text fontWeight500">{{ this.followerIntroduction }}</p>
         </div>
       </div>
     </div>

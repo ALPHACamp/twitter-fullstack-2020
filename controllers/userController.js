@@ -181,7 +181,6 @@ const userController = {
       where: whereQuery,
       order: [['createdAt', 'DESC']],
     }).then(result => {
-      console.log(result.rows[0].id)
       const data = result.rows.map(r => ({
         ...r.dataValues,
         tweetId: r.dataValues.Tweet.dataValues.id,
@@ -331,70 +330,38 @@ const userController = {
   // },
 
   getUserFollower: (req, res) => {
-    Followship.findAll({
-      raw: true,
-      nest: true,
-      where: { followingId: helpers.getUser(req).id },
+    User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'followers' },],
       oder: ['createdAt', 'DESC']
-    }).then(followships => {
-      const followerUsers = []
-      followships.forEach(followship => {
-        if (followship.followerId) {
-          followerUsers.push(followship.followerId)
-        }
-      })
-
-      // get user's following
-      Followship.findAll({
-        raw: true,
-        nest: true,
-        where: { followerId: helpers.getUser(req).id }
-      }).then(data => {
-        const followingUsers = []
-        data.forEach(d => {
-          followingUsers.push(d.followingId)
-        })
-        // get user follower's tweets
-        Tweet.findAll({
-          raw: true,
-          nest: true,
-          include: [User]
-        }).then(data => {
-          const tweets = []
-          data.forEach(d => {
-            if (followerUsers.includes(d.UserId)) {
-              tweets.push(d)
-            }
-          })
-          tweetsData = tweets.map(tweet => ({
-            ...tweet,
-            isMainUserFollowing: followingUsers.includes(tweet.UserId)
-          }))
-          // console.log(res.text)
-          return res.render('selfFollower', { tweetsData })
-        })
-      })
+    }).then(followers => {
+      const followersData = followers.dataValues.followers.map(follower => ({
+        ...follower,
+        followerAvatar: follower.avatar,
+        followerName: follower.name,
+        followerAccount: follower.account,
+        followerIntroduction: follower.introduction,
+        isFollowed: helpers.getUser(req).followings ?
+          helpers.getUser(req).followings.map(d => d.id).includes(follower.id) : false
+      }))
+      return res.render('selfFollower', { followersData })
     })
   },
 
   getUserFollowing: (req, res) => {
-    Followship.findAll({
-      raw: true,
-      nest: true,
-      include: [
-        { model: User, as: 'Followings' },
-      ],
-      where: { followerId: helpers.getUser(req).id },
+    User.findByPk(req.params.id, {
+      include: [{ model: User, as: 'followings' },],
       oder: ['createdAt', 'DESC']
-    }).then(followships => {
-      const followingUsers = []
-      followships.forEach(followship => {
-        if (followship.followingId) {
-          followingUsers.push(followship.followingId)
-        }
-      })
-      console.log(followingUsers)
-      return res.render('selfFollowing', { followingUsers })
+    }).then(followings => {
+      const followingsData = followings.dataValues.followings.map(following => ({
+        ...following,
+        followingAvatar: following.avatar,
+        followingName: following.name,
+        followingAccount: following.account,
+        followingIntroduction: following.introduction,
+        isFollowed: helpers.getUser(req).followings ?
+          helpers.getUser(req).followings.map(d => d.id).includes(following.id) : false
+      }))
+      return res.render('selfFollowing', { followingsData })
     })
   },
 
