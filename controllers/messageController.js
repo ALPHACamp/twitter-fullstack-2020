@@ -37,7 +37,7 @@ const messageController = {
     })
   },
 
-  privatePage:(req, res) => {
+  privatePage: (req, res) => {
     const currentUser = helpers.getUser(req)
     const currentUserId = String(helpers.getUser(req).id)
     const viewUserId = String(req.params.id)
@@ -46,7 +46,7 @@ const messageController = {
     let roomName = `${currentUserId}-${viewUserId}`
     // userList.push(currentUserId.toString()"="viewUserId)
     // console.log(userList) 
-    res.render('private-chat', { roomName, currentUser})
+    res.render('private-chat', { roomName, currentUser })
   },
   // savePrivateMsg: (user) => {
 

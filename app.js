@@ -57,8 +57,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-       //移除使用者名單
-      const remove = { currentName, currentAccount, currentAvatar}
+      //移除使用者名單
+      const remove = { currentName, currentAccount, currentAvatar }
       onlineUser = onlineUser.filter(item => {
         return item.currentAccount !== remove.currentAccount
       })
@@ -70,8 +70,8 @@ io.on('connection', (socket) => {
   //私人聊天
   socket.on('join private room', (roomName) => {
     socket.join(roomName);
-    console.log('join===========',roomName)
-    
+    console.log('join===========', roomName)
+
     io.on('private-chat', (msg, currentId, currentAvatar) => {
       // console.log(socket)
       // console.log("===========", msg)
