@@ -28,24 +28,24 @@ const tweetController = {
         where: { role: "user" }
       }),
     ]).then(([tweets, users]) => {
-      // console.log('我是req.user',req.user)
+      // console.log('我是helpers.getUser(req)',helpers.getUser(req))
       // 列出 追隨數前十名的使用者
       const topUsers =
         users.map(user => ({
           ...user.dataValues,
           followerCount: user.Followers.length,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
         }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
-        likedCount: req.user.LikedTweets.length,
+        likedCount: helpers.getUser(req).LikedTweets.length,
         description: tweet.description,
         createdAt: tweet.createdAt,
         userName: tweet.User.name,
         userAccount: tweet.User.account,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id), // 推文是否被喜歡過
+        isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id), // 推文是否被喜歡過
         likedUsers: tweet.LikedUsers
       }))
 
@@ -84,8 +84,8 @@ const tweetController = {
     // })
     //   // .then(tweet => tweet.increment('viewCounts'))
     //   .then(tweet => {
-    //     // const isFollowed = tweet.Followers.map(d => d.id).includes(req.user.id)
-    //     // const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id)
+    //     // const isFollowed = tweet.Followers.map(d => d.id).includes(helpers.getUser(req).id)
+    //     // const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
     //     return res.render('tweet', {
     //       tweet: tweet.toJSON(),
     //       // isFollowed,
@@ -103,8 +103,8 @@ const tweetController = {
         ],
         order: [['Replies', 'createdAt', 'DESC']]
       })
-      // console.log('我是req.user.LikedTweets:', req.user.LikedTweets)
-      const isLiked = req.user.LikedTweets.map(d => d.id).includes(tweet.id) 
+      // console.log('我是helpers.getUser(req).LikedTweets:', helpers.getUser(req).LikedTweets)
+      const isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id) 
       return res.render('tweet', { tweet: tweet.toJSON(), isLiked})
     } catch (e) {
       console.log(e.message)

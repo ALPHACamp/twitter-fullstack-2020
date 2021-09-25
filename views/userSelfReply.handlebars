@@ -42,7 +42,7 @@
           <div class="icon d-flex align-items-center {{#ifCond user.id tweetUser.id}}color-orange{{/ifCond}}">
             <i class="fas fa-users"></i>
           </div>
-          <a href="/user/{{user.id}}/tweets" class="btn sidebarItem">
+          <a href="/users/{{user.id}}/tweets" class="btn sidebarItem">
             <span class="fs-5 fw-bolder">個人資料</span>
           </a>
         </div>
@@ -112,13 +112,13 @@
     </div>
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/tweets">推文</a>
+        <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/tweets">推文</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary active" href="/user/{{tweetUser.id}}/replies">推文與回覆</a>
+        <a class="nav-link text-secondary active" href="/users/{{tweetUser.id}}/replies">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/likes">喜歡的內容</a>
+        <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
     {{#each replies}}

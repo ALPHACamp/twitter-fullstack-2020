@@ -40,9 +40,9 @@ module.exports = (app, passport) => {
   app.post('/like/:tweetId', authenticated, userController.addLike)
   app.delete('/like/:tweetId', authenticated, userController.removeLike)
 
-  app.get('/user/:id/likes', authenticated, userController.getUserSelfLike)
-  app.get('/user/:id/replies', authenticated, userController.getUserSelfReply)
-  app.get('/user/:id/tweets', authenticated, userController.getUserTweets)
+  app.get('/users/:id/likes', authenticated, userController.getUserSelfLike)
+  app.get('/users/:id/replies', authenticated, userController.getUserSelfReply)
+  app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
   app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
 
@@ -67,7 +67,7 @@ module.exports = (app, passport) => {
 
   app.post('/tweets', tweetController.postTweet)
   //取得特定貼文資料
-  app.get('/tweets/:id', tweetController.getTweet)
+  app.get('/tweets/:id/replies', tweetController.getTweet)
   //Reply回覆
   app.post('/replies', authenticated, replyController.postReply)
 

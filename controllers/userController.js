@@ -91,14 +91,14 @@ const userController = {
     ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
       const data = tweets.map(tweet =>({
         ...tweet.dataValues,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
+        isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
       }))
 
       const topUsers =
         users.map(user => ({
           ...user.dataValues,
           followerCount: user.Followers.length,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
         }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
@@ -151,9 +151,9 @@ const userController = {
       description: like.Tweet.description,
       RepliesLength: like.Tweet.Replies.length,
       LikedUsersLength: like.Tweet.LikedUsers.length,
-      isLiked : req.user.LikedTweets.map(d => d.id).includes(like.Tweet.id) 
+      isLiked : helpers.getUser(req).LikedTweets.map(d => d.id).includes(like.Tweet.id) 
     }))
-    // const isLiked = req.user.LikedTweets.map(d => d.id).includes(tweet.id) 
+    // const isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id) 
     console.log(data)
     return res.render('userSelfLike',{ data, tweets, tweetUser})
     // const tweets = await Tweet.findAll({
@@ -266,7 +266,7 @@ const userController = {
   // Like
   addLike: (req, res) => {
     return Like.create({
-      UserId: req.user.id,
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.tweetId
     })
       .then(() => {
@@ -276,7 +276,7 @@ const userController = {
   removeLike: (req, res) => {
     return Like.findOne({
       where: {
-        UserId: req.user.id,
+        UserId: helpers.getUser(req).id,
         TweetId: req.params.tweetId
       }
     })
@@ -290,7 +290,7 @@ const userController = {
 
   // Followship
   addFollowing: (req, res) => {
-    const followerId = req.user.id
+    const followerId = helpers.getUser(req).id
     const followingId = req.params.userId
 
     // 確認不能追蹤自己
@@ -321,7 +321,7 @@ const userController = {
   removeFollowing: (req, res) => {
     return Followship.findOne({
       where: {
-        followerId: req.user.id,
+        followerId: helpers.getUser(req).id,
         followingId: req.params.userId
       }
     })
@@ -355,7 +355,7 @@ const userController = {
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
       }))
 
       const data = followers.map(d => ({
@@ -389,7 +389,7 @@ const userController = {
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
       }))
 
       const data = followings.map(d => ({
