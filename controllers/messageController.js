@@ -10,7 +10,7 @@ const Message = db.Message
 const User = db.User
 
 const messageController = {
-  renderPage: (req, res) => {
+  publicPage: (req, res) => {
     const currentUser = helpers.getUser(req)
     console.log(currentUser.id)
     Message.findAll({
@@ -34,8 +34,21 @@ const messageController = {
       UserId: user.id,
       content: user.msg
     })
-  }
+  },
 
+  privatePage:(req, res) => {
+    const currentUser = helpers.getUser(req)
+    const viewUserId = req.params.id
+    console.log(currentUser)
+    console.log(viewUserId)
+    Message.findAll({
+     
+    })
+    .then( msg => {
+      res.render('private-chat', {currentUser})
+    })
+    
+  }
 
 }
 

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/stylesheets/showPage.css">
 
-{{!-- 包一層div讓內部有依據照比例縮 --}}
+
 <div class="wrap d-flex">
   <div class="row col-md-12  justify-content-center" style="margin:0">
     {{!-- 左側欄位 --}}
@@ -36,8 +36,8 @@
             </li>
           </a>
 
-          <a href="">
-            <li class="list-group-item active">
+          <a href="/messages">
+            <li class="list-group-item   active">
               <div class="d-flex">
                 <i class="fas  fa-fw  fa-fh fa-comments mr-4">
                   {{!-- 若有通知 --}}
@@ -50,7 +50,7 @@
           </a>
 
 
-          <a href="">
+          <a href="/messages/{{user.id}}">
             <li class="list-group-item">
               <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-envelope mr-4">
@@ -91,9 +91,8 @@
 
       </div>
     </div>
-
     {{!-- 中間主欄位 --}}
-    <div class="middle-side col-md-4" style="padding:0; height:100%;">
+    <div class="middle-side col-md-3" style="padding:0; height:100%;">
       <div class="text-title">上線使用者(數量)</div>
 
       <hr style="margin:0; padding:0">
@@ -139,9 +138,8 @@
     </div>
 
     {{!-- 右側欄位 --}}
-    <div class="right-side col-md-6" style="padding:0; height:100%;">
+    <div class="right-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title">公開聊天室</div>
-      <hr style="max-width: 673px;">
       <div class="chat">
         <ul class="list-group" id="messages">
           {{!-- 上線 --}}
@@ -168,10 +166,10 @@
             <div class="user-information">
               <div class="current-user">
                 <div class="text-area">
-                  <div class="text"> {{this.content}}</div>
+                  <div class="text">{{this.content}}</div>
                 </div>
               </div>
-              <div class="time">{{fromNow this.createdAt}}</div>
+              <div class="time">{{time this.createdAt}}</div>
             </div>
           </li>
           {{!-- 自己的訊息 --}}
@@ -185,14 +183,12 @@
                     <img src="{{this.User.avatar}}" alt="">
                   </a>
                 </div>
-
                 <div class="text-area">
-                  <div class="text"> {{this.content}}</div>
+                  <div class="text">{{this.content}}</div>
                 </div>
-              </div>
-              <div class="time">{{fromNow this.createdAt}}</div>
+                <div class="time">{{time this.createdAt}}</div>
 
-            </div>
+              </div>
           </li>
           {{!-- 他人訊息 --}}
           {{/if}}
@@ -201,14 +197,13 @@
         </ul>
       </div>
 
-      <hr style="max-width: 673px;">
 
       {{!-- 輸入欄位 --}}
       <div class="type-area">
         {{!-- //TODO:要改API傳 --}}
         <form action="" method="" id="form" style="display: contents;">
           <div class="input-area">
-            <input type="text" class="input-chat" id="input" placeholder="輸入訊息...">
+            <input type="text" class="input-chat" id="input" placeholder="輸入訊息..." ng-trim="false">
           </div>
           <div class="send-chat">
             <button class="btn">
@@ -246,6 +241,8 @@
     const currentName = "{{currentUser.name}}"
     const currentAccount = "{{ currentUser.account }}"
     socket.emit('send user', currentName, currentAccount)
+    scrollWindow();
+
   })
 
 
@@ -292,17 +289,20 @@
       var item = document.createElement('li');
       let rawHTML = "";
       let time = new Date().toLocaleTimeString();
-      item.classList.add('list-group-item-myself')
+      item.classList.add("list-group-item-myself")
+      let msg = input.value
+      console.log('input', msg)
       rawHTML += `<div class="user-information">
               <div class="current-user">
                 <div class="text-area">
-                  <div class="text"> ${input.value}</div>
+                  <div class="text">${msg}</div>
                 </div>
               </div>
               <div class="time">${time}</div>
             </div>`
       item.innerHTML = rawHTML;
       messages.appendChild(item);
+      scrollWindow();
       const currentAvatar = "{{ currentUser.avatar }}"
       const currentId = "{{ currentUser.id }}"
       socket.emit('chat message', input.value, currentId, currentAvatar);
@@ -318,21 +318,22 @@
     if (Number(userId) !== Number(currentId)) {
     var item = document.createElement('li');
     let rawHTML = "";
+    let time = new Date().toLocaleTimeString()
     item.classList.add('list-group-item')
-    rawHTML += `
-            <div class="information">
+    rawHTML += `<div class="information">
               <div class="other-user">
                 <div class="avatar">
                   <a href="">
                     <img src="${currentAvatar}" alt="">
                   </a>
                 </div>
-
                 <div class="text-area">
-                  <div class="text"> ${msg}</div>
+                  <div class="text"> 
+                    ${msg}
+                    </div>
                 </div>
               </div>
-              <div class="time">下午4:21</div>
+              <div class="time">${time}</div>
             </div>`
     item.innerHTML = rawHTML;
     messages.appendChild(item);

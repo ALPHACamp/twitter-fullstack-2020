@@ -4,8 +4,7 @@
 <div class="wrap d-flex">
   <div class="row col-md-12  justify-content-center" style="margin:0">
     {{!-- 左側欄位 --}}
-
-
+    {{!-- 左側欄位 --}}
     <div class="left-side col-md-2">
       <div class="setting-logo">
         <img
@@ -17,21 +16,63 @@
         <ul class="list-group">
 
           <a href="/tweets">
-            <li class="list-group-item active">
-              <div class="d-flex justify-content-space-between"><i class="fas fa-home mr-4"></i>首頁</div>
+            <li class="list-group-item  active">
+              <div class="d-flex">
+                <i class="fas  fa-fw fa-home mr-4"></i>
+                首頁
+              </div>
+            </li>
+          </a>
+
+          <a href="">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas fa-fw fa-fh fa-bell mr-4">
+                  {{!-- 若有通知 --}}
+                  <span class="bubble">1</span>
+                  {{!-- 若有通知 --}}
+                </i>
+                通知
+              </div>
+            </li>
+          </a>
+
+          <a href="/messages">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas  fa-fw  fa-fh fa-comments mr-4">
+                  {{!-- 若有通知 --}}
+                  <span class="bubble">10</span>
+                  {{!-- 若有通知 --}}
+                </i>
+                公開聊天室
+              </div>
             </li>
           </a>
 
 
+          <a href="/messages/{{user.id}}">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas fa-fw fa-fh fa-envelope mr-4">
+                  {{!-- 若有通知 --}}
+                  <span class="bubble">100</span>
+                  {{!-- 若有通知 --}}
+                </i>
+                私人訊息
+              </div>
+            </li>
+          </a>
+
           <a href="/users/{{user.id}}/tweets">
             <li class="list-group-item">
-              <div class="d-flex"><i class="fas fa-user mr-4"></i>個人資料</div>
+              <div class="d-flex"><i class="fas  fa-fw fa-user mr-4"></i>個人資料</div>
             </li>
           </a>
 
           <a href="/users/{{user.id}}/setting">
             <li class="list-group-item">
-              <div class="d-flex"><i class="fas fa-cog mr-4"></i>設定</div>
+              <div class="d-flex"><i class="fas  fa-fw fa-cog mr-4"></i>設定</div>
             </li>
           </a>
         </ul>
@@ -51,7 +92,6 @@
 
       </div>
     </div>
-
     {{!-- 中間主欄位 --}}
     <div class="middle-side col-md-5" style="padding:0; height:100%;">
       <div class="text-title">首頁</div>
@@ -192,7 +232,7 @@
                 </form>
                 {{else}}
                 <form action="/followships" method="POST" style="display: contents">
-                <input type="hidden" name="id" value="{{this.id}}">
+                  <input type="hidden" name="id" value="{{this.id}}">
                   <button type="submit" class="btn unfollow-button"> 跟隨 </button>
                 </form>
                 {{/if}}

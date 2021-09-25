@@ -119,8 +119,11 @@ router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 //使用者編輯個人資料(edit)
 router.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserEdit)
 
-//即時通訊
-router.get('/message', authenticated, messageController.renderPage);
+//即時通訊(公開聊天)
+router.get('/messages', authenticated, messageController.publicPage);
+
+//即時通訊(私人聊天)
+router.get('/messages/:id', messageController.privatePage)
 
 //註冊
 router.get('/signup', userController.signUpPage)

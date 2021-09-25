@@ -49,9 +49,8 @@ app.use(methodOverride('_method'))
 
 // const onlineUsersList = [{}, {}]
 io.on('connection', (socket) => {
-  socket.on('send user', function (currentName) {
-    // onlineUsersList[socket.id] = currentName
-
+  socket.on('send user', function(currentName) { 
+  // onlineUsersList[socket.id] = currentName
     socket.broadcast.emit('new user msg', currentName)
 
     socket.on('chat message', (msg, currentId, currentAvatar) => {
@@ -60,11 +59,18 @@ io.on('connection', (socket) => {
       messageController.sendMsg(user)
       io.emit('chat message', msg, currentId, currentAvatar);
     });
+  });
 
-    socket.on('disconnect', () => {
+  socket.on('disconnect', () => {
       socket.broadcast.emit('user offline', currentName)
     })
-  })
+  
+   socket.on('jOIN ROOM', (roomName, cb) => {
+     socket.join(roomName);
+     cb(message[roomName])
+
+    socket.on('private-chat' )
+   })
 });
 
 app.use((req, res, next) => {
