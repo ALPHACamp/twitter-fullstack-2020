@@ -8,7 +8,8 @@ const io = new Server(server, { cors: { origin: "*" } });
 const db = require('../models')
 const Message = db.Message
 const User = db.User
-const { sequelize } = require('../models')
+const { sequelize } = require('../models');
+const { render } = require('../app');
 
 const messageController = {
   publicPage: (req, res) => {
@@ -90,18 +91,11 @@ const messageController = {
     .then(msg => {
       return console.log('資料庫找完', msg)
     }) 
-  }
+  },
 
-  // savePrivateMsg: (user) => {
-
-  //   return Message.create({
-  //     UserId: user.id,
-  //     content: user.msg,
-  //     roomName
-  //   })
-  // },
-
-
+ subscribe: (req, res) => {
+  res.render('notification')
+ }
 }
 
 module.exports = messageController

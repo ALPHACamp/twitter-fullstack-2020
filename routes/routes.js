@@ -125,6 +125,9 @@ router.get('/messages', authenticated, messageController.publicPage);
 //即時通訊(私人聊天)
 router.get('/messages/:id', authenticated, messageController.privatePage)
 
+//訂閱通知頁面
+router.get('/subscribe/:id', authenticated, messageController.subscribe)
+
 //註冊
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
