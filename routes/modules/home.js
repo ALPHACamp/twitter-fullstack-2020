@@ -7,6 +7,8 @@ const db = require("../../models");
 const { User, Tweet, Reply } = db;
 const passport = require('passport')
 
+
+
 router.get("/", (req, res) => {
   res.redirect('/signin')
 })
@@ -23,5 +25,6 @@ router.post('/admin/signin', passport.authenticate('local', {
   successRedirect: '/admin/tweets',
   failureRedirect: '/admin/signin'
 }), adminController.signIn);
+
 
 module.exports = router;

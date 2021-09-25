@@ -88,3 +88,5 @@ note.md
 
 # DynamoDB Local files
 .dynamodb/
+temp/
+upload/
