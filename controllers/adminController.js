@@ -57,35 +57,25 @@ const adminController = {
 
   // 列出所有使用者
   getUsers: (req, res) => {
-    Promise.all([
-      User.findAll({
-        include: [
-          Tweet,
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ],
-        where: { role: "user" }
-      }),
-      Tweet.findAll({
-        raw: true,
-        nest: true,
-        include: [Like]
-      })
-    ]).then(([users, tweets]) => {
-
-      let usersData =
+    User.findAll({
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' },
+        Tweet
+      ],
+      where: { role: "user" }
+    }).then(users => {
+      const usersData =
         users.map(user => ({
           ...user.dataValues,
           followersCount: user.Followers.length,
           followingsCount: user.Followings.length,
           tweetCount: user.Tweets.length,
-          likeCount: tweets.filter(tweet => tweet.UserId === user.dataValues.id).reduce((accumulator, currentValue) => {
-            const addCount = currentValue.Likes.UserId ? 1 : 0
-            return accumulator + addCount
+          likeCount: user.Tweets.reduce((accumulator, currentValue) => {
+            return accumulator + currentValue.likeCount
           }, 0)
-        }))
+        })).sort((a, b) => b.tweetCount - a.tweetCount)
 
-      usersData = usersData.sort((a, b) => b.tweetCount - a.tweetCount)
       res.render('admin/users', { users: usersData })
     })
   }
