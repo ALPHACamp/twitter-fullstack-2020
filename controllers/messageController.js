@@ -37,16 +37,6 @@ const messageController = {
 
   privatePage: (req, res) => {
     const currentUser = helpers.getUser(req)
-<<<<<<< HEAD
-    const currentUserId = String(helpers.getUser(req).id)
-    const viewUserId = String(req.params.id)
-    // console.log(currentUser.id)
-    // console.log(viewUserId)
-    let roomName = `${currentUserId}-${viewUserId}`
-    // userList.push(currentUserId.toString()"="viewUserId)
-    // console.log(userList) 
-    res.render('private-chat', { roomName, currentUser })
-=======
     const currentUserId = Number(helpers.getUser(req).id)
     const viewUserId = Number(req.params.id)
     let roomName = currentUserId > viewUserId ? `${viewUserId}-${currentUserId}` :`${currentUserId}-${viewUserId}`
@@ -67,7 +57,6 @@ const messageController = {
         // console.log('私人訊息篩選====', msg)
         return res.render('private-chat', { roomName, currentUser, msg })
       })
->>>>>>> 691506f07a7aadfc676d3dccb857f3b264cfc7b6
   },
 
   getPrivateInbox: (req ,res) => {
