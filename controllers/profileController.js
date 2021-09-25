@@ -2,6 +2,8 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const moment = require("moment");
 const { Reply, User, Tweet, Like, Followship } = db;
+const multer = require('multer')
+const fs = require('fs')
 
 //for test only
 const helpers = require("../_helpers");
@@ -230,6 +232,96 @@ const profileController = {
       res.status(400).json(error);
     }
   },
+  // editPage: async (req, res) => {
+  //   const { name, introduction, avatar, cover } = req.body
+  //   const errors = []
+  //   if (!name || !introduction) {
+  //    // errors.push({ message: '名稱或自我介紹欄位，不可空白' })
+  //   }
+  //   if (name.length > 50) {
+  //    // errors.push({ message: '名稱必須在50字符以內' })
+  //   }
+  //   if (introduction.length > 160) {
+  //    // errors.push({ message: '自我介紹，必須在160字符以內' })
+  //   }
+  //   if (errors.length > 0) {
+  //     return res.render('edit', { name, introduction, avatar, cover })
+  //   }
+  //   const images = {}
+  //   const { files } = req
+  //   const uploadImg = path => {
+  //     return new Promise((resolve, reject) => {
+  //       imgur.upload(path, (err, img) => {
+  //         if (err) {
+  //           return reject(err)
+  //         }
+  //         resolve(img)
+  //       })
+  //     })
+  //   }
+  //   const userId = req.user.id
+  //   if (files) {
+  //     // const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID.toString()
+  //     // imgur.setClientID(IMGUR_CLIENT_ID)
+  //     for (const key in files) {
+  //       images[key] = await uploadImg(files[key][0].path)
+  //     }
+  //   }
+  //   const user = await User.findByPk(userId)
+  //   await user.update({
+  //     name: name,
+  //     introduction: introduction,
+  //     cover: images.cover ? images.cover.data.link : user.cover,
+  //     avatar: images.avatar ? images.avatar.data.link : user.avatar
+  //   })
+  //   // req.flash('success_msg', '您的個人資訊已更新')
+  //   return res.redirect(`/users/${user.id}`)
+  // },
+
+  editPage: (req, res) => {
+    console.log('----------------------do I in? -----------------------------')
+    const { file } = req
+
+    if (!req.body.name) {
+      console.log('--------noName--------------')
+      // req.flash('error_messages', "name didn't exist")
+      return res.redirect('back')
+    }
+    if (file) {
+      console.log('---------ifFile-----------')
+      fs.readFile(file.path, (err, data) => {
+        if (err) console.log('Error: ', err)
+        fs.writeFile(`upload/${file.originalname}`, data, () => {
+          return User.findByPk(req.user.id)
+            .then((user) => {
+              user.update({
+                name: req.body.name,
+                introduction: req.body.introduction,
+                cover: file ? `/upload/${file.originalname}` : user.cover,
+                avatar: file ? `/upload/${file.originalname}` : user.avatar
+              }).then((user) => {
+                // req.flash('success_messages', 'restaurant was successfully to update')
+                res.redirect(`/users/${req.user.id}/tweets`)
+              })
+            })
+        })
+      })
+    } else {
+      console.log('---------noFile-----------')
+      return User.findByPk(req.user.id)
+        .then((user) => {
+          user.update({
+            name: req.body.name,
+            introduction: req.body.introduction,
+            cover: user.cover,
+            avatar: user.avatar
+          }).then((user) => {
+            // req.flash('success_messages', 'restaurant was successfully to update')
+            res.redirect(`/users/${req.user.id}/tweets`)
+          })
+        })
+    }
+  }
 };
 
 module.exports = profileController;
