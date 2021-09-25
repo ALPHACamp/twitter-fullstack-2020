@@ -7,7 +7,7 @@ const Like = db.Like
 const Followship = db.Followship
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
-
+const helpers = require('../_helpers')
 
 const userController = {
   getSignup: (req, res) => {
@@ -54,12 +54,8 @@ const userController = {
   },
 
   getUser: (req, res) => {
-    if (res.locals.user.id !== Number(req.params.id)) {
-      req.flash('error_messages', "you can't enter other's profile!")
-      return res.redirect('back')
-    }
     const whereQuery = {}
-    whereQuery.userId = res.locals.user.id
+    whereQuery.userId = req.params.id
 
     Tweet.findAndCountAll({
       include: [
@@ -76,7 +72,8 @@ const userController = {
         description: r.dataValues.description,
         replyCount: r.dataValues.Replies.length,
         likeCount: r.dataValues.Likes.length,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
+        isLiked: helpers.getUser(req).LikedTweets ?
+          helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.id) : false
       }))
 
       Followship.findAndCountAll({
@@ -86,11 +83,14 @@ const userController = {
         const followerCount = result.rows.filter(followerUser => followerUser.followerId === res.locals.user.id)
         const followingCount = result.rows.filter(followingUser => followingUser.followingId === res.locals.user.id)
 
-        User.findByPk(res.locals.user.id)
+        User.findByPk(req.params.id)
           .then(user => {
-            const nameWordCount = user.dataValues.name.length
-            const introWordCount = user.dataValues.introduction.length
-            res.status(200)
+            let nameWordCount = ''
+            let introWordCount = ''
+            if (user.dataValues.introduction) {
+              nameWordCount = user.dataValues.name.length
+              introWordCount = user.dataValues.introduction.length
+            }
             return res.render('self', {
               user: user.toJSON(),
               nameWordCount: nameWordCount,
@@ -228,113 +228,113 @@ const userController = {
     })
   },
 
-  putUserEdit: (req, res) => {
-    if (res.locals.user.id !== Number(req.params.id)) {
-      req.flash('error_messages', "you can't enter other's profile!")
-      return res.redirect('back')
-    }
+  // putUserEdit: (req, res) => {
+  //   if (helpers.getUser(req).id !== Number(req.params.id)) {
+  //     req.flash('error_messages', "you can't enter other's profile!")
+  //     return res.redirect('back')
+  //   }
 
-    const { files } = req
-    const fileCountsArr = Object.keys(files)
-    const fileCounts = fileCountsArr.length
+  //   const { files } = req
+  //   const fileCountsArr = Object.keys(files)
+  //   const fileCounts = fileCountsArr.length
 
-    const getUploadLink = (link) => {
-      return new Promise((resolve, reject) => {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        imgur.upload(link, (err, img) => {
-          return resolve(img.data.link)
-        })
-      })
-    }
+  //   const getUploadLink = (link) => {
+  //     return new Promise((resolve, reject) => {
+  //       imgur.setClientID(IMGUR_CLIENT_ID)
+  //       imgur.upload(link, (err, img) => {
+  //         return resolve(img.data.link)
+  //       })
+  //     })
+  //   }
 
-    if (fileCounts > 0) {
-      const tempLink = []
-      let image = ''
-      if (files.avatar) {
-        tempLink.push(files.avatar[0].path)
-        image = 'avatar'
-        editedUploadLink(tempLink, image)
-      } else if (files.cover) {
-        tempLink.push(files.cover[0].path)
-        image = 'cover'
-        editedUploadLink(tempLink, image)
-      } else {
-        tempLink.push(files.avatar[0].path, files.cover[0].path)
-        image = 'both'
-        editedUploadLink(tempLink, image)
-      }
+  //   if (fileCounts > 0) {
+  //     const tempLink = []
+  //     let image = ''
+  //     if (files.avatar) {
+  //       tempLink.push(files.avatar[0].path)
+  //       image = 'avatar'
+  //       editedUploadLink(tempLink, image)
+  //     } else if (files.cover) {
+  //       tempLink.push(files.cover[0].path)
+  //       image = 'cover'
+  //       editedUploadLink(tempLink, image)
+  //     } else {
+  //       tempLink.push(files.avatar[0].path, files.cover[0].path)
+  //       image = 'both'
+  //       editedUploadLink(tempLink, image)
+  //     }
 
-      async function editedUploadLink(tempLink, image) {
-        try {
-          const uploadImgs = await Promise.all(tempLink.map(async (link) => {
-            const result = await getUploadLink(link)
-            return result
-          }))
-          if (image === 'both') {
-            User.findByPk(req.params.id)
-              .then(user => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: uploadImgs[0],
-                  cover: uploadImgs[1]
-                }).then(user => {
-                  req.flash('success_messages', 'profile was successfully to update')
-                  res.redirect(`/users/self/${user.id}`)
-                })
-              })
-          } else if (image === 'avatar') {
-            User.findByPk(req.params.id)
-              .then(user => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: uploadImgs[0],
-                  cover: user.cover
-                }).then(user => {
-                  req.flash('success_messages', 'profile was successfully to update')
-                  res.redirect(`/users/self/${user.id}`)
-                })
-              })
-          } else if (image === 'cover') {
-            User.findByPk(req.params.id)
-              .then(user => {
-                user.update({
-                  name: req.body.name,
-                  introduction: req.body.introduction,
-                  avatar: user.avatar,
-                  cover: uploadImgs[0]
-                }).then(user => {
-                  req.flash('success_messages', 'profile was successfully to update')
-                  res.redirect(`/users/self/${user.id}`)
-                })
-              })
-          }
-        } catch (err) {
-          console.warn(err)
-        }
-      }
-    } else {
-      return User.findByPk(req.params.id)
-        .then(user => {
-          user.update({
-            name: req.body.name,
-            introduction: req.body.introduction,
-            cover: user.cover,
-            avatar: user.avatar
-          }).then(user => {
-            req.flash('success_messages', 'profile was successfully to update')
-            res.redirect(`/users/self/${user.id}`)
-          })
-        })
-    }
-  },
+  //     async function editedUploadLink(tempLink, image) {
+  //       try {
+  //         const uploadImgs = await Promise.all(tempLink.map(async (link) => {
+  //           const result = await getUploadLink(link)
+  //           return result
+  //         }))
+  //         if (image === 'both') {
+  //           User.findByPk(req.params.id)
+  //             .then(user => {
+  //               user.update({
+  //                 name: req.body.name,
+  //                 introduction: req.body.introduction,
+  //                 avatar: uploadImgs[0],
+  //                 cover: uploadImgs[1]
+  //               }).then(user => {
+  //                 req.flash('success_messages', 'profile was successfully to update')
+  //                 res.redirect(`/users/self/${user.id}`)
+  //               })
+  //             })
+  //         } else if (image === 'avatar') {
+  //           User.findByPk(req.params.id)
+  //             .then(user => {
+  //               user.update({
+  //                 name: req.body.name,
+  //                 introduction: req.body.introduction,
+  //                 avatar: uploadImgs[0],
+  //                 cover: user.cover
+  //               }).then(user => {
+  //                 req.flash('success_messages', 'profile was successfully to update')
+  //                 res.redirect(`/users/self/${user.id}`)
+  //               })
+  //             })
+  //         } else if (image === 'cover') {
+  //           User.findByPk(req.params.id)
+  //             .then(user => {
+  //               user.update({
+  //                 name: req.body.name,
+  //                 introduction: req.body.introduction,
+  //                 avatar: user.avatar,
+  //                 cover: uploadImgs[0]
+  //               }).then(user => {
+  //                 req.flash('success_messages', 'profile was successfully to update')
+  //                 res.redirect(`/users/self/${user.id}`)
+  //               })
+  //             })
+  //         }
+  //       } catch (err) {
+  //         console.warn(err)
+  //       }
+  //     }
+  //   } else {
+  //     return User.findByPk(req.params.id)
+  //       .then(user => {
+  //         user.update({
+  //           name: req.body.name,
+  //           introduction: req.body.introduction,
+  //           cover: user.cover,
+  //           avatar: user.avatar
+  //         }).then(user => {
+  //           req.flash('success_messages', 'profile was successfully to update')
+  //           res.redirect(`/users/self/${user.id}`)
+  //         })
+  //       })
+  //   }
+  // },
 
   getUserFollower: (req, res) => {
-    return Followship.findAll({
+    Followship.findAll({
       raw: true,
       nest: true,
-      where: { followingId: req.user.id },
+      where: { followingId: helpers.getUser(req).id },
       oder: ['createdAt', 'DESC']
     }).then(followships => {
       const followerUsers = []
@@ -348,7 +348,7 @@ const userController = {
       Followship.findAll({
         raw: true,
         nest: true,
-        where: { followerId: req.user.id }
+        where: { followerId: helpers.getUser(req).id }
       }).then(data => {
         const followingUsers = []
         data.forEach(d => {
@@ -370,6 +370,7 @@ const userController = {
             ...tweet,
             isMainUserFollowing: followingUsers.includes(tweet.UserId)
           }))
+          // console.log(res.text)
           return res.render('selfFollower', { tweetsData })
         })
       })
@@ -377,10 +378,13 @@ const userController = {
   },
 
   getUserFollowing: (req, res) => {
-    return Followship.findAll({
+    Followship.findAll({
       raw: true,
       nest: true,
-      where: { followerId: req.user.id },
+      include: [
+        { model: User, as: 'Followings' },
+      ],
+      where: { followerId: helpers.getUser(req).id },
       oder: ['createdAt', 'DESC']
     }).then(followships => {
       const followingUsers = []
@@ -389,20 +393,8 @@ const userController = {
           followingUsers.push(followship.followingId)
         }
       })
-
-      Tweet.findAll({
-        raw: true,
-        nest: true,
-        include: [User]
-      }).then(data => {
-        const tweets = []
-        data.forEach(d => {
-          if (followingUsers.includes(d.UserId)) {
-            tweets.push(d)
-          }
-        })
-        return res.render('selfFollowing', { tweets })
-      })
+      console.log(followingUsers)
+      return res.render('selfFollowing', { followingUsers })
     })
   },
 

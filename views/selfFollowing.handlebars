@@ -14,15 +14,14 @@
 
     <ul class="nav nav-tabs mt-4">
       <li class="nav-item">
-        <a class="nav-link fontWeight700" href="/users/self/follower/{{user.id}}">跟隨者</a>
+        <a class="nav-link fontWeight700" href="/users/{{user.id}}/followers">跟隨者</a>
       </li>
       <li class="nav-item">
         <a class="nav-link fontWeight700 active" href="#">正在跟隨</a>
       </li>
     </ul>
 
-
-    {{#each tweets}}
+    {{#each tweets }}
     <div class="card p-2">
       <div class="d-flex">
         <div>
@@ -31,7 +30,7 @@
         <div class="col-md-8">
           <div class="userInfo" style="width: 540px;">
             <div class="d-flex justify-content-between">
-              <h6 class="fontWeight700 me-2 mb-1">{{ this.User.name }}</h6>
+              <h6 class="fontWeight700 me-2 mb-1">{{ this.User.name }} User2 </h6>
               <a href="#" class="btn btn-white-orange rounded-pill p-0" style="width: 90px; height: 25px;">正在跟隨</a>
             </div>
             <h6 class="fontWeight500 mb-1" style="color:#657786;">@{{ this.User.account }}</h6>

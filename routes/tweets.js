@@ -34,7 +34,7 @@ router.post('/:id/replyList', authenticated, tweetController.postReply)
 router.post('/:id/like', authenticated, tweetController.like)
 router.post('/:id/unlike', authenticated, tweetController.unlike)
 
-router.post('/:id/following', authenticated, tweetController.following)
-router.delete('/:id/unfollowing', authenticated, tweetController.unfollowing)
+router.post('/:id/followings', authenticated, tweetController.following)
+router.delete('/:id/unfollowings', authenticated, tweetController.unfollowing)
 
 module.exports = router

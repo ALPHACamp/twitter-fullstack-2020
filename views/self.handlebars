@@ -17,7 +17,11 @@
 
     <div class="d-flex flex-row-reverse m-2">
       <button type="button" class="btn btn-orange-white rounded-pill" data-bs-toggle="modal" data-bs-target="#userModal"
-        data-bs-whatever="@getbootstrap">編輯個人資料</button>
+        data-bs-whatever="@getbootstrap">
+        <a href="/api/users/{{user.id}}">
+          編輯個人資料
+        </a>
+      </button>
     </div>
 
 
@@ -28,10 +32,10 @@
     </div>
 
     <div class="d-flex mx-3">
-      <a href="/users/self/following/{{user.id}}" class="btn ps-0">
+      <a href="/users/{{user.id}}/followings" class="btn ps-0">
         <span class="fontWeight500">{{followerCount}}個</span><span style="color:#657786;">跟隨中</span>
       </a>
-      <a href="/users/self/follower/{{user.id}}" class="btn">
+      <a href="/users/{{user.id}}/followers" class="btn">
         <span class="fontWeight500">{{followingCount}}位</span><span style="color:#657786;">跟隨者</span>
       </a>
     </div>
@@ -97,7 +101,7 @@
 <!-- Profile Modal -->
 <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form action="/users/self/edit/{{user.id}}?_method=PUT" method="POST" enctype="multipart/form-data">
+    <form action="/api/users/{{user.id}}?_method=POST" method="POST" enctype="multipart/form-data">
       <div class="modal-content" style="width: 598px;">
         <div class="modal-header">
           <div class="d-flex align-items-center">
