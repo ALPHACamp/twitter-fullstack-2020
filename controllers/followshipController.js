@@ -164,6 +164,7 @@ const followshipController = {
         );
       } else {
         followship.notification = !notification;
+        followship.save();
       }
       return res.redirect("back");
     });

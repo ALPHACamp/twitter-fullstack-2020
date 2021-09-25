@@ -7,7 +7,9 @@ const db = require("../../models");
 //因題目需求 此路徑已全更改為/tweets/
 router.get("/", tweetController.getPosts);
 router.get("/:id", tweetController.getPost);
-router.post("/", tweetController.postTweet); //有做修改： /posts ==> /add (這樣整個路由會變成 /posts/add，比較符合Restful)
+router.post("/", tweetController.postTweet);
 router.put("/:id/like", likeController.changeLike);
+router.get("/:id/replies", tweetController.postReply);
+router.post("/:id/replies", tweetController.postReply);
 
 module.exports = router;

@@ -19,9 +19,6 @@ router.get("/:id/followings", followshipController.getFollowings);
 // router.post("/:id/edit",userController.editUserSetting)
 router.put('/:id/edit', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), profileController.putUserpage)
 
-router.put("/:userId", (req, res) => {
-  return res.redirect("back");
-});
 router.put("/:userId/notification", followshipController.putNotification);
 
 module.exports = router;
