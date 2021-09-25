@@ -2,8 +2,8 @@
   <div class="col">
     {{>columnLeft}}
   </div>
-  {{>modalIndex}}
-  {{>modalPost}}
+  {{>modalTweet}}
+  {{>modalReply}}
   <div class="profile-container">
     <div class="mainpost-nav">
       <h3>
@@ -14,7 +14,8 @@
 
     </div>
     <div class="mainpost-wrapper d-f flex-column">
-      {{>upperCenter postChoice=true}}
+      
+      {{>viewTweetBox}}
       <!--start::comment-->
       {{# each tweet.Replies}}
       <div class="col-12 flex-direction-column posts-container">

@@ -1,4 +1,4 @@
-const db = require('../models')
+const db = require("../models");
 const { Op } = require("sequelize");
 const moment = require('moment')
 const { Reply, User, Tweet, Like, } = db
@@ -19,14 +19,14 @@ const profileController = {
   getPosts: async (req, res, done) => {
     try {
       // 前端判斷
-      const isPost = true
+      const isPost = true;
       //get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: 'Followers', attributes: ["id"] },
           { model: User, as: 'Followings', attributes: ["id"] }
         ],
-      })
+      });
       // get selfTweet
       const rawTweets = await Tweet.findAll({
         where: { UserId: req.params.id },
@@ -41,11 +41,15 @@ const profileController = {
         ReplyCount: data.Replies.length,
         LikedCount: data.Likes.length,
       }))
+      const followship = await Followship.findOne({
+        where: {
+          followerId: Number(user.id),
+          followingId: Number(req.params.id) }});
 
       // get Count
-      const followersCount = Profile.Followers.length
-      const followingsCount = Profile.Followings.length
-      const tweetsCount = Tweets.length
+      const followersCount = Profile.Followers.length;
+      const followingsCount = Profile.Followings.length;
+      const tweetsCount = Tweets.length;
 
       // get TopUser
       const rawUsers = await User.findAll({
@@ -64,10 +68,13 @@ const profileController = {
         isFollowed: req.user.Followings.map(d => d.id).includes(data.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
-
+      const isSelf = Number(req.params.userId) === Number(user.id);
+      console.dir(followship.toJSON());
       // tweetsCount, followersCount, followingsCount
       // return res.json({ Tweets, TopUsers, Profile, })
-      return res.render("profile", { isPost, users: TopUsers, tweets: Tweets, profile: Profile, tweetsCount, followersCount, followingsCount });
+      return res.render("profile", { 
+        isPost, isSelf, users: TopUsers, tweets: Tweets, profile: Profile, 
+        tweetsCount, followersCount, followingsCount });
       done()
     } catch (error) {
       res.status(400).json(error)
@@ -93,15 +100,15 @@ const profileController = {
               attributes: ['id', 'description']
             }]
           },
-          { model: User, as: 'Followers' },
-          { model: User, as: 'Followings' }
+          { model: User, as: "Followers" },
+          { model: User, as: "Followings" },
         ],
-        order: [['createdAt', 'DESC']]
-      })
+        order: [["createdAt", "DESC"]],
+      });
 
-      const tweetsCount = Profile.Tweets.length
-      const followersCount = Profile.Followers.length
-      const followingsCount = Profile.Followings.length
+      const tweetsCount = Profile.Tweets.length;
+      const followersCount = Profile.Followers.length;
+      const followingsCount = Profile.Followings.length;
 
       // get TopUser
       const rawUsers = await User.findAll({
@@ -131,7 +138,7 @@ const profileController = {
   getLikedPosts: async (req, res, done) => {
     try {
       // 前端判斷
-      const isLikedPosts = true
+      const isLikedPosts = true;
       //get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
@@ -139,7 +146,7 @@ const profileController = {
           { model: User, as: 'Followers', attributes: ["id"] },
           { model: User, as: 'Followings', attributes: ["id"] }
         ],
-      })
+      });
 
       // get LIkeDTweet
       const rawLikedTweets = await Like.findAll({
@@ -153,18 +160,18 @@ const profileController = {
             ]
           }
         ],
-        order: [['createdAt', 'DESC']],
-      })
-      const LikedTweets = await rawLikedTweets.map(data => ({
+        order: [["createdAt", "DESC"]],
+      });
+      const LikedTweets = await rawLikedTweets.map((data) => ({
         ...data.dataValues,
         ReplyCount: data.Tweet.Replies.length,
         LikedCount: data.Tweet.Likes.length,
-      }))
+      }));
 
       // get Count
-      const followersCount = Profile.Followers.length
-      const followingsCount = Profile.Followings.length
-      const tweetsCount = Profile.Tweets.length
+      const followersCount = Profile.Followers.length;
+      const followingsCount = Profile.Followings.length;
+      const tweetsCount = Profile.Tweets.length;
 
       // get Top10User
       const rawUsers = await User.findAll({
@@ -174,7 +181,7 @@ const profileController = {
         ],
         where: {
           id: { [Op.not]: req.user.id },
-          role: { [Op.not]: 'admin' }
+          role: { [Op.not]: "admin" },
         },
       })
       const Users = await rawUsers.map(data => ({
@@ -183,14 +190,14 @@ const profileController = {
         isFollowed: req.user.Followings.map(d => d.id).includes(data.id),
       })).sort((a, b) => b.FollowerCount - a.FollowerCount)
       const TopUsers = Users.slice(0, 10)
-
+      const isSelf = Number(req.params.userId) === Number(user.id);
       // return res.json({ tweets: LikedTweets })
-      return res.render("profile", { isLikedPosts, users: TopUsers, tweets: LikedTweets, profile: Profile, tweetsCount, followersCount, followingsCount });
+      return res.render("profile", { isLikedPosts, isSelf, users: TopUsers, tweets: LikedTweets, profile: Profile, tweetsCount, followersCount, followingsCount });
       done()
     } catch (error) {
       res.status(400).json(error)
     }
   },
-}
+};
 
-module.exports = profileController
+module.exports = profileController;
