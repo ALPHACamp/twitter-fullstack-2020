@@ -17,9 +17,6 @@ module.exports = {
       io.emit("online", onlineCount);   // 發送人數給網頁
       //socket.emit("chatRecord", records.get()) // 新增發送紀錄
 
-      socket.on("greet", () => {
-        socket.emit("greet", onlineCount);
-      });
 
       socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
