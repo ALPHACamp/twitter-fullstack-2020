@@ -79,9 +79,8 @@ const tweetController = {
     }
   },
   postReply: (req, res) => {
-
-    return Reply.create({
-      UserId: req.user.id,
+    Reply.create({
+      UserId: helpers.getUser(req).id,
       TweetId: req.params.id,
       comment: req.body.comment,
       createdAt: new Date(),
@@ -107,31 +106,10 @@ const tweetController = {
       }
     }).then(like => {
       like.destroy()
-      return res.redirect('back')
+        .then(() => {
+          return res.redirect('back')
+        })
     })
-  },
-  following: (req, res) => {
-    return Followship.create({
-      followerId: req.user.id,
-      followingId: req.params.id
-    })
-      .then(() => {
-        return res.redirect('back')
-      })
-  },
-  unfollowing: (req, res) => {
-    return Followship.findOne({
-      where: {
-        followerId: req.user.id,
-        followingId: req.params.id
-      }
-    })
-      .then(Followship => {
-        Followship.destroy()
-          .then(() => {
-            return res.redirect('back')
-          })
-      })
   },
 }
 
