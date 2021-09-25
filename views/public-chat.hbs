@@ -98,7 +98,7 @@
 
       <hr style="margin:0; padding:0">
 
-      <ul class="list-group">
+      <ul class="list-group" id="onlineUser">
         {{!-- 使用者A開始 --}}
         <li class="online-user list-group-item">
           <div class="avatar">
@@ -160,8 +160,8 @@
           </li> --}}
           {{!-- 離線 --}}
 
-        {{#each msg}}
-          
+          {{#each msg}}
+
           {{#if selfMsg}}
           {{!-- 自己的訊息 --}}
           <li class="list-group-item-myself">
@@ -185,18 +185,18 @@
                     <img src="{{this.User.avatar}}" alt="">
                   </a>
                 </div>
-          
+
                 <div class="text-area">
                   <div class="text"> {{this.content}}</div>
                 </div>
               </div>
               <div class="time">{{fromNow this.createdAt}}</div>
-          
+
             </div>
           </li>
           {{!-- 他人訊息 --}}
           {{/if}}
-        {{/each}}
+          {{/each}}
 
         </ul>
       </div>
@@ -259,6 +259,28 @@
             </div>`
     item.innerHTML = rawHTML;
     messages.appendChild(item);
+
+    const onlineUser = document.querySelector('#onlineUser')
+    var item2 = document.createElement('li');
+    let onlineHTML = "";
+    item2.classList.add('list-group')
+    onlineHTML += `<li class="online-user list-group-item">
+      <div class="avatar">
+        <a href="">
+          <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+        <div class="name-account">
+          <a href="" class="d-flex">
+            <div class="name">Apple</div>
+            <div class="account">@apple</div>
+          </a>
+        </div>
+        </li>
+      <hr style="margin:0; padding:0">`
+    item2.innerHTML = onlineHTML
+    onlineUser.appendChild(item2);
+
     scrollWindow();
   })
 
@@ -281,12 +303,12 @@
             </div>`
       item.innerHTML = rawHTML;
       messages.appendChild(item);
-          const currentAvatar = "{{ currentUser.avatar }}"
+      const currentAvatar = "{{ currentUser.avatar }}"
       const currentId = "{{ currentUser.id }}"
-          socket.emit('chat message', input.value, currentId, currentAvatar);
-  input.value = ''
-        }
-      })
+      socket.emit('chat message', input.value, currentId, currentAvatar);
+      input.value = ''
+    }
+  })
 
   //接收他人送出訊息
   socket.on('chat message', function (msg, currentId, currentAvatar) {
@@ -317,6 +339,19 @@
     scrollWindow();
   }
   });
+
+  //下線通知
+  socket.on('user offline', function (currentName) {
+    var item = document.createElement('li');
+    let rawHTML = "";
+    item.classList.add('list-group-item')
+    rawHTML += `<div class="log">
+              ${currentName} 已下線
+            </div>`
+    item.innerHTML = rawHTML;
+    messages.appendChild(item);
+    scrollWindow();
+  })
 
   function scrollWindow() {
     let h = document.querySelector('.chat');

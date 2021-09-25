@@ -23,6 +23,7 @@ if (process.env.NODE_ENV !== 'production') {
 //變更順序以引入變數
 const passport = require('./config/passport')
 const messageController = require('./controllers/messageController')
+const { disconnect } = require('process')
 
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
@@ -49,16 +50,20 @@ app.use(methodOverride('_method'))
 
 
 io.on('connection', (socket) => {
-  socket.on('send user', function(currentName) {
-    
+  socket.on('send user', function (currentName) {
+
     socket.broadcast.emit('new user msg', currentName)
 
     socket.on('chat message', (msg, currentId, currentAvatar) => {
-      console.log('接收',currentId)
+      console.log('接收', currentId)
       const user = { id: currentId, msg: msg }
       messageController.sendMsg(user)
       io.emit('chat message', msg, currentId, currentAvatar);
     });
+
+    socket.on('disconnect', () => {
+      socket.broadcast.emit('user offline', currentName)
+    })
   })
 });
 
