@@ -43,8 +43,18 @@ module.exports = {
       });
 
 
-      socket.on('chat message', (msg) => {
-        io.emit('chat message', msg);
+
+      // 公開聊天室的行為
+      socket.on('chat message', (userMsg) => {
+        if (userMsg.behavior === 'enter-public'){
+          // 廣播上線資訊給大家
+          io.emit('chat message', userMsg)
+        }
+
+        if (userMsg.behavior === 'public-chat'){
+          // 廣播新訊息給大家
+          io.emit('chat message', userMsg);
+        }
       });
 
       socket.on('disconnect', () => {
