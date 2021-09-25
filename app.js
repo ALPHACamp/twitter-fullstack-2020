@@ -23,7 +23,6 @@ if (process.env.NODE_ENV !== 'production') {
 //變更順序以引入變數
 const passport = require('./config/passport')
 const messageController = require('./controllers/messageController')
-const { disconnect } = require('process')
 
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
