@@ -19,6 +19,36 @@ module.exports = {
   },
   connect() {
     io.on('connection', (socket) => {
+      console.log('有人公開進入聊天室囉！')
+      socket.on("userIn", async (currentUserId) => {
+        try {
+          //運用socket儲存值
+          socket.currentUserId = currentUserId
+          const currentUser = await User.findByPk(currentUserId)
+          await currentUser.update({publicRoom: true})
+          const publicRoomUsers = await User.findAll({
+            raw: true,
+            nest: true,
+            where: { publicRoom: 1 }
+          })
+          io.emit('publicRoomUsers', publicRoomUsers)
+        } catch (err) {
+          console.log(err)
+        }
+      })
+      socket.on('disconnect', async () => {
+        console.log('socket.currentUserId', socket.currentUserId)
+        const offUser = await User.findByPk(socket.currentUserId)
+        // 將使用者判定離線存入資料庫
+        await offUser.update({ publicRoom: 0 })
+        const publicRoomUsers = await User.findAll({
+          raw: true,
+          nest: true,
+          where: { publicRoom: 1 }
+        })
+        io.emit('publicRoomUsers', publicRoomUsers)
+      })
+      
       console.log('進入聊天室')
       console.log('客戶端成功連線服務器: ' + socket.id)
 

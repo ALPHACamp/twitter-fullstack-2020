@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         unique: true
       },
-      cover: DataTypes.STRING
+      cover: DataTypes.STRING,
+      publicRoom: DataTypes.BOOLEAN
     },
     {}
   )
