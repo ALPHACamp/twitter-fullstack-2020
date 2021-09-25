@@ -24,7 +24,7 @@ const messageController = {
         User: d.User.dataValues,
         selfMsg: Boolean(d.UserId === currentUser.id)
       }))
-      console.log('New=====',msg)
+      // console.log('New=====',msg)
       return res.render('public-chat', {currentUser, msg})
     })
     

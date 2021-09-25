@@ -9,6 +9,10 @@ module.exports = {
     return moment(a).locale('zh-tw').format('a h:mm．LL')
   },
 
+  time: function(a) {
+    return moment(a).locale('zh-tw').format('a h:mm')
+  },
+
   ifCond: function (a, b, options) {
     if (a === b) {
       return options.fn(this)
