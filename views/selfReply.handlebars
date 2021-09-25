@@ -38,10 +38,10 @@
     </div>
 
     <div class="d-flex mx-3">
-      <a href="/users/self/following/{{user.id}}" class="btn ps-0">
+      <a href="/users/{{user.id}}/followings" class="btn ps-0">
         <span class="fontWeight500">{{followerCount}}個</span><span style="color:#657786;">跟隨中</span>
       </a>
-      <a href="/users/self/follower/{{user.id}}" class="btn">
+      <a href="/users/{{user.id}}/followers" class="btn">
         <span class="fontWeight500">{{followingCount}}位</span><span style="color:#657786;">跟隨者</span>
       </a>
     </div>
@@ -58,7 +58,7 @@
         <a class="nav-link fontWeight700 active" href="#">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link fontWeight700" href="/users/self/like/{{user.id}}">喜歡的內容</a>
+        <a class="nav-link fontWeight700" href="/users/{{user.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
 
@@ -86,7 +86,7 @@
               <h6 class="fontWeight500" style="color:#FF6600;">@{{this.replyUserAccount}}</h6>
             </a>
           </div>
-          <a href="/tweets/{{this.replyTweetId}}/replyList" style="text-decoration: none; color:black;">
+          <a href="/tweets/{{this.replyTweetId}}/replies" style="text-decoration: none; color:black;">
             <p class="card-text fontWeight500">{{this.content}}</p>
           </a>
         </div>

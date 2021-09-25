@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
 const helpers = require('../_helpers')
-const userController = require('../controllers/userController')
+const userController = require('../controllers/api/userController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
@@ -17,16 +17,8 @@ const authenticated = (req, res, next) => {
   res.redirect('/signin')
 }
 
-
-router.get('/', (req, res) => res.redirect('/tweets'))
-
-// user register
-router.get('/signup', userController.getSignup)
-router.post('/signup', userController.postSignup)
-
-// user login
-router.get('/signin', userController.getLogin)
-router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.postLogin)
-router.get('/logout', userController.logout)
+//user's profile
+router.get('/users/:id', authenticated, userController.getUser)
+router.post('/users/:id', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.putUserEdit)
 
 module.exports = router

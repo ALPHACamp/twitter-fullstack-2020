@@ -8,7 +8,10 @@ module.exports = (sequelize, DataTypes) => {
     avatar: DataTypes.STRING,
     cover: DataTypes.STRING,
     introduction: DataTypes.TEXT,
-    isAdmin: DataTypes.BOOLEAN,
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'user'
+    },
   }, {});
   User.associate = function (models) {
     User.hasMany(models.Reply)
@@ -22,12 +25,12 @@ module.exports = (sequelize, DataTypes) => {
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followingId',
-      as: 'followers'
+      as: 'Followers'
     })
     User.belongsToMany(User, {
       through: models.Followship,
       foreignKey: 'followerId',
-      as: 'followings'
+      as: 'Followings'
     })
   };
   return User;
