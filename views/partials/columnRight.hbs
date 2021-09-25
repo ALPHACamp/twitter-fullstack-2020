@@ -3,29 +3,47 @@
 
   <div class="followers">
     {{#each users}}
-    <hr>
-    <div class="follower">
-      <a class="follower_photo_box" href="/users/{{this.id}}/tweets">
-        <img class="follower_photo" src="{{this.avatar}}" alt="follower_photo">
-      </a>
-      <div class="follower_name_account">
-        <p class="follower_name">{{this.name}}</p>
-        <p class="follower_account">{{this.account}}</p>
+      <hr />
+      <div class="follower">
+        <a class="follower_photo_box" href="/users/{{this.id}}/tweets">
+          <img
+            class="follower_photo"
+            src="{{this.avatar}}"
+            alt="follower_photo"
+          />
+        </a>
+        <div class="follower_name_account">
+          <p class="follower_name">{{this.name}}</p>
+          <p class="follower_account">{{this.account}}</p>
+        </div>
+
+        <div class="ms-auto my-auto">
+          {{#if this.isFollowed}}
+            <form
+              class="ms-auto my-auto"
+              action="/followships/{{this.id}}?_method=DELETE"
+              method="POST"
+            >
+              <button
+                type="submit"
+                class="btn-orange btn-short"
+              >正在跟隨</button>
+            </form>
+          {{else}}
+            <form
+              class="ms-auto my-auto"
+              action="/followships/{{this.id}}"
+              method="POST"
+            >
+              <button
+                type="submit"
+                class="btn-outline-orange btn-short"
+              >跟隨</button>
+            </form>
+          {{/if}}
+        </div>
+
       </div>
-      
-      <div class="ms-auto my-auto">
-      {{#if this.isFollowed}}
-        <form class="ms-auto my-auto" action="/followships/{{ this.id }}?_method=DELETE" method="POST">
-          <button type="submit" class="follow_button">正在跟隨</button>
-        </form>
-      {{else}}
-        <form class="ms-auto my-auto" action="/followships/{{ this.id }}" method="POST">
-        <button type="submit" class="unfollow_button">跟隨</button>
-        </form>
-      {{/if}}
-      </div>
-      
-    </div>
     {{/each}}
   </div>
 </div>
