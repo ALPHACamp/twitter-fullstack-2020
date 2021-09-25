@@ -71,7 +71,7 @@ const adminController = {
 
   getUsers: (req, res) => {
     return User.findAll({
-      where: { isAdmin: 'false' },
+      where: { role: 'user' },
       include: [Like, Reply]
     }).then(users => {
       // get user id

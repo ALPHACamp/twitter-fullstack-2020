@@ -8,7 +8,7 @@ const getUserId = new Promise((resolve, reject) => {
   User.findAll({
     raw: true,
     nest: true,
-    where: { isAdmin: 0 }
+    where: { role: 'user' }
   })
     .then(users => {
       const userIds = []

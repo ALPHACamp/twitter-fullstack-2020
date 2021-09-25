@@ -29,9 +29,9 @@ module.exports = {
       introduction: {
         type: Sequelize.TEXT
       },
-      isAdmin: {
-        defaultValue: false,
-        type: Sequelize.BOOLEAN
+      role: {
+        defaultValue: 'user',
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

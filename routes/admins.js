@@ -8,7 +8,7 @@ const tweetController = require('../controllers/tweetController')
 
 const isAuthenticatedAdmin = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).role === 'admin') {
       return next()
     }
     req.flash('error_messages', '只有管理員可登入後台')
