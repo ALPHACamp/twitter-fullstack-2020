@@ -7,7 +7,7 @@ const adminController = require('../controllers/adminController')
 
 const isAuthenticatedAdmin = (req, res, next) => {
   if (!helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).isAdmin) {
+    if (helpers.getUser(req).role === 'admin') {
       return next()
     }
     req.flash('error_messages', '只有管理員可登入後台')
@@ -17,7 +17,7 @@ const isAuthenticatedAdmin = (req, res, next) => {
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (!helpers.getUser(req).isAdmin) {
+    if (!helpers.getUser(req).role === 'admin') {
       return next()
     }
     req.flash('error_messages', '管理員請由後台登入')
