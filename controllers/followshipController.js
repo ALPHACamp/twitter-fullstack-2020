@@ -15,21 +15,22 @@ const listAttributes = [
 
 const followshipController = {
   getFollowers: (req, res) => {
+    const user = getTestUser(req)
     User.findByPk(req.params.id, {
       attributes: ["id", "name"],
       include: [
         { model: Tweet, attributes: ["id"] },
         { model: User, as: "Followers", attributes: listAttributes,
           include: { model: User, as: "Followers", attributes: ["id"] }}]})
-      .then((user) => {
-        user = user.toJSON()
-        user.tweetCount = user.Tweets.length
-        user.Followers.forEach((follower) => {
+      .then((profile) => {
+        profile = profile.toJSON()
+        profile.tweetCount = profile.Tweets.length
+        profile.Followers.forEach((follower) => {
           const arr = follower.Followers.map((el) => el.id);
-          if (arr.indexOf(user.id) > -1) follower.isFollowed = true
+          if (arr.indexOf(profile.id) > -1) follower.isFollowed = true
           else follower.isFollowed = false
           follower.updatedAtFormated = moment(follower.updatedAt).fromNow()})
-        return res.render("followship", { tagA: true, profile: user, followers: user.Followers });})
+        return res.render("followship", { tagA: true, profile, followers: profile.Followers });})
       .catch((error) => res.status(400).json(error))
   },
 
@@ -58,7 +59,10 @@ const followshipController = {
       return res.redirect("back")
     }
     return Followship.findOrCreate({
-      where: { followerId: Number(user.id) }})
+      where: { 
+        followerId: Number(user.id), 
+        followingId: Number(req.params.id)
+      }})
       .then((data) => { res.redirect("back") })
       .catch(error => res.status(400).json(error))
   },

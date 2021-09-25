@@ -12,19 +12,19 @@
         <p class="follower_name">{{this.name}}</p>
         <p class="follower_account">{{this.account}}</p>
       </div>
-      {{#if this.isFollowed}}
+      
       <div class="ms-auto my-auto">
+      {{#if this.isFollowed}}
         <form class="ms-auto my-auto" action="/followships/{{ this.id }}?_method=DELETE" method="POST">
           <button type="submit" class="follow_button">正在跟隨</button>
         </form>
-      </div>
       {{else}}
-      <div class="ms-auto my-auto">
-        <form class="ms-auto my-auto" action="/followships/{{ this.id }}" method="POST"><button type="submit"
-            class="unfollow_button">跟隨</button>
+        <form class="ms-auto my-auto" action="/followships/{{ this.id }}" method="POST">
+        <button type="submit" class="unfollow_button">跟隨</button>
         </form>
-      </div>
       {{/if}}
+      </div>
+      
     </div>
     {{/each}}
   </div>
