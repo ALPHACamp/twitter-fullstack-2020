@@ -13,12 +13,9 @@ router.get("/:id/comments", profileController.getComments);
 router.get("/:id/likes", profileController.getLikedPosts);
 router.get("/:id/followers", followshipController.getFollowers);
 router.get("/:id/followings", followshipController.getFollowings);
-router.get("/:id/edit", userController.getUserSetting)  
-router.post("/:id/edit",userController.editUserSetting)
+router.get("/:id/edit", userController.getUserSetting);
+router.post("/:id/edit", userController.editUserSetting);
 
-router.put("/:userId", (req, res) => {
-  return res.redirect("back");
-});
 router.put("/:userId/notification", followshipController.putNotification);
 
 module.exports = router;

@@ -41,6 +41,7 @@ const profileController = {
         ...data.dataValues,
         ReplyCount: data.Replies.length,
         LikedCount: data.Likes.length,
+        isLiked: data.Likes.map((data) => data.id).includes(user.id),
       }));
       let followship = await Followship.findOne({
         where: {
