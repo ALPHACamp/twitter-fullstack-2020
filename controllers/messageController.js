@@ -43,13 +43,13 @@ const messageController = {
     // console.log(currentUser.id)
     // console.log(viewUserId)
     let userList = []
-    userList.push(currentUserId.toString(), viewUserId)
+    userList.push(currentUserId.toString(),viewUserId)
     // console.log(userList) 
     
     res.render('private-chat', { userList, currentUser })
-   
-    
-  }
+  },
+
+
 
 }
 
