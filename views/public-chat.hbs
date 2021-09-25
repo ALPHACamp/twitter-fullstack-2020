@@ -28,7 +28,7 @@
               <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-bell mr-4">
                   {{!-- 若有通知 --}}
-                  <span class="bubble">1</span>
+                  {{!-- <span class="bubble">1</span> --}}
                   {{!-- 若有通知 --}}
                 </i>
                 通知
@@ -41,7 +41,7 @@
               <div class="d-flex">
                 <i class="fas  fa-fw  fa-fh fa-comments mr-4">
                   {{!-- 若有通知 --}}
-                  <span class="bubble">10</span>
+                  {{!-- <span class="bubble">10</span> --}}
                   {{!-- 若有通知 --}}
                 </i>
                 公開聊天室
@@ -55,7 +55,7 @@
               <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-envelope mr-4">
                   {{!-- 若有通知 --}}
-                  <span class="bubble">100</span>
+                  {{!-- <span class="bubble">100</span> --}}
                   {{!-- 若有通知 --}}
                 </i>
                 私人訊息
@@ -215,7 +215,7 @@
     </div>
   </div>
 </div>
-
+  <input type="hidden" value= "{{currentUser.id}}">
 
 
 
@@ -237,16 +237,17 @@
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
+    const currentId = "{{currentUser.id}}"
     const currentName = "{{currentUser.name}}"
     const currentAvatar = "{{currentUser.avatar}}"
     const currentAccount = "{{ currentUser.account }}"
-    socket.emit('send user', currentName, currentAccount, currentAvatar)
+    socket.emit('send user', currentName, currentAccount, currentAvatar, currentId)
     socket.emit('onlineUser')
     scrollWindow();
   })
 
   //登入通知
-  socket.on('new user msg', function (currentName, currentAccount, currentAvatar) {
+  socket.on('new user msg', function (currentName, currentAccount, currentAvatar, currentId) {
     var item = document.createElement('li');
     let rawHTML = "";
     item.classList.add('list-group-item')
@@ -269,17 +270,17 @@
     item2.classList.add('list-group')
     for (let i = 0; i < onlineUser.length; i++) {
       onlineHTML += `<li class="online-user list-group-item">
-      <div class="avatar">
-        <a href="">
-          <img src=${onlineUser[i].currentAvatar} alt="">
-            </a>
-          </div>
+      <a href="/messages/${onlineUser[i].currentId}">  
+        <div class="avatar">
+          <img src=${onlineUser[i].currentAvatar} alt=""> 
+        </div>
         <div class="name-account">
           <a href="" class="d-flex">
             <div class="name">${onlineUser[i].currentName}</div>
             <div class="account">@${onlineUser[i].currentAccount}</div>
           </a>
         </div>
+      </a>
         </li>
       <hr style="margin:0; padding:0">`
     }
