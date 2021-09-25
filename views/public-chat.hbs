@@ -271,14 +271,15 @@
       let rawHTML = "";
       let time = new Date().toLocaleTimeString();
       item.classList.add('list-group-item-myself')
+      console.log('input', input.value)
       rawHTML += `<div class="user-information">
-              <div class="current-user">
-                <div class="text-area">
-                  <div class="text"> ${input.value}</div>
+                <div class="current-user">
+                  <div class="text-area">
+                    <div class="text">${input.value}</div>
+                  </div>
                 </div>
-              </div>
-              <div class="time">${time}</div>
-            </div>`
+                <div class="time">${time}</div>
+              </div>`
       item.innerHTML = rawHTML;
       messages.appendChild(item);
           const currentAvatar = "{{ currentUser.avatar }}"
@@ -296,21 +297,20 @@
     if (Number(userId) !== Number(currentId)) {
     var item = document.createElement('li');
     let rawHTML = "";
+    let time = new Date().toLocaleTimeString()
     item.classList.add('list-group-item')
-    rawHTML += `
-            <div class="information">
+    rawHTML += `<div class="information">
               <div class="other-user">
                 <div class="avatar">
                   <a href="">
                     <img src="${currentAvatar}" alt="">
                   </a>
                 </div>
-
                 <div class="text-area">
                   <div class="text"> ${msg}</div>
                 </div>
               </div>
-              <div class="time">下午4:21</div>
+              <div class="time">${time}</div>
             </div>`
     item.innerHTML = rawHTML;
     messages.appendChild(item);
