@@ -2,7 +2,6 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../models");
-const { User, Tweet, Reply } = db;
 const userController = require("../../controllers/userController");
 const followshipController = require("../../controllers/followshipController");
 const profileController = require("../../controllers/profileController");

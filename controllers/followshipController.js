@@ -2,33 +2,25 @@ const db = require("../models")
 const { User, Tweet, Followship } = db;
 const moment = require("moment")
 
-//for development
-const { dummyuser } = require("../dummyuser.json")
-
 //for test only
 const helpers = require("../_helpers.js")
 const getTestUser = function (req) {
   if (process.env.NODE_ENV === "test") {
     return helpers.getUser(req);
-  } else { return req.user }
-};
+  } else { return req.user }}
+
 const listAttributes = [
   "id", "name", "account", "introduction", "updatedAt", "avatar",
 ];
 
 const followshipController = {
   getFollowers: (req, res) => {
-    const user = getTestUser(req);
-    User.findByPk(user.id, {
+    User.findByPk(req.params.id, {
       attributes: ["id", "name"],
       include: [
         { model: Tweet, attributes: ["id"] },
-        {
-          model: User, as: "Followers", attributes: listAttributes,
-          include: { model: User, as: "Followers", attributes: ["id"], },
-        },
-      ],
-    })
+        { model: User, as: "Followers", attributes: listAttributes,
+          include: { model: User, as: "Followers", attributes: ["id"] }}]})
       .then((user) => {
         user = user.toJSON()
         user.tweetCount = user.Tweets.length
@@ -36,34 +28,26 @@ const followshipController = {
           const arr = follower.Followers.map((el) => el.id);
           if (arr.indexOf(user.id) > -1) follower.isFollowed = true
           else follower.isFollowed = false
-          follower.updatedAtFormated = moment(follower.updatedAt).fromNow()
-        })
-        return res.render("followship", { tagA: true, profile: user, followers: user.Followers });
-      })
+          follower.updatedAtFormated = moment(follower.updatedAt).fromNow()})
+        return res.render("followship", { tagA: true, profile: user, followers: user.Followers });})
       .catch((error) => res.status(400).json(error))
   },
 
   getFollowings: (req, res) => {
     const user = getTestUser(req);
-    User.findByPk(user.id, {
+    User.findByPk(req.params.id, {
       attributes: ["id", "name"],
       include: [
         { model: Tweet, attributes: ["id"] },
-        {
-          model: User,
+        { model: User,
           as: "Followings",
-          attributes: listAttributes,
-        },
-      ],
-    })
+          attributes: listAttributes }]})
       .then((user) => {
         user = user.toJSON();
         user.Followings.forEach((following) => {
-          following.updatedAtFormated = moment(following.updatedAt).fromNow();
-        });
+          following.updatedAtFormated = moment(following.updatedAt).fromNow();});
         user.tweetCount = user.Tweets.length;
-        return res.render("followship", { tagB: true, profile: user, followings: user.Followings });
-      })
+        return res.render("followship", { tagB: true, profile: user, followings: user.Followings });})
       .catch((error) => res.status(400).json(error))
   },
 
@@ -74,37 +58,29 @@ const followshipController = {
       return res.redirect("back")
     }
     return Followship.findOrCreate({
-      where: {
-        followerId: Number(user.id),
-    })
-      .then((data) => {
-        res.redirect("back")
-      })
+      where: { followerId: Number(user.id) }})
+      .then((data) => { res.redirect("back") })
       .catch(error => res.status(400).json(error))
   },
 
   deleteFollowing: (req, res) => {
     const user = getTestUser(req);
     return Followship.destroy({
-      where: { followerId: user.id, followingId: req.params.id },
-    })
+      where: { followerId: user.id, followingId: req.params.id }})
       .then(() => res.redirect("back"))
       .catch((error) => res.status(400).json(error));
   },
   putNotification: (req, res) => {
-
+    const user = getTestUser(req);
     return Followship.findOne({where: {
       followerId: Number(user.id),
-      followingId: Number(req.params.userId)
-    }}).then(followship => {
+      followingId: Number(req.params.userId)}})
+      .then(followship => {
       if (!followship) {
         console.error('You cannot get notification for someone you don\'t follow')     
-      }else {
-        followship.notification = !notification
-      }
+      }else { followship.notification = !notification }
       return res.redirect('back')
-    })
-  }
+    })}
 };
 
 

@@ -14,9 +14,7 @@ const getTestUser = function (req) {
   }
 };
 
-const listAttributes = [
-  "id", "name", "account", "avatar",
-];
+const listAttributes = [ "id", "name", "account", "avatar" ];
 const tweetController = {
   getPosts: async (req, res) => {
     // const user = getTestUser(req);

@@ -2,8 +2,8 @@
   <div class="col">
     {{>columnLeft}}
   </div>
-  {{>modalPost}}
-  {{>modalIndex}}
+  {{>modalReply}}
+  {{>modalTweet}}
   {{>modalProfile}}
   <div class="profile-container">
     <div class="mainpost-nav">
@@ -14,7 +14,11 @@
         </div>
       </div>
     </div>
-    {{>upperCenter ppChoice=true}}
+    {{#if isSelf}}
+      {{>viewSelfProfile}}
+    {{else}}
+      {{>viewOtherProfile}}
+    {{/if}}
     <div class="col flex-direction-column">
       <!--start::list of 推文-->
       {{#if isPost}}
