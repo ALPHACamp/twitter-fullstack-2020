@@ -56,7 +56,7 @@ const messageController = {
           User: d.User.dataValues,
           selfMsg: Boolean(d.UserId === currentUser.id)
         }))
-        // console.log('私人訊息篩選====', msg)
+        console.log('私人訊息篩選====', msg)
         return res.render('private-chat', { roomName, currentUser, msg, viewUserId })
       })
   },

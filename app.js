@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
       messageController.sendMsg(user, roomName, viewUserId)
       console.log('傳進私人聊天室===========', roomName)
       socket.to(roomName).emit('private chat message', msg, currentId, currentAvatar);
+      socket.broadcast.to(roomName).emit('noteHer');
     })
   })
 

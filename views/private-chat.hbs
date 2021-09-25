@@ -52,11 +52,11 @@
 
           <a href="/messages/{{user.id}}">
             <li class="list-group-item active">
-              <div class="d-flex">
-                <i class="fas fa-fw fa-fh fa-envelope mr-4">
-                  {{!-- 若有通知 --}}
-                  <span class="bubble">100</span>
-                  {{!-- 若有通知 --}}
+              <div class="d-flex" >
+                <i class="fas fa-fw fa-fh fa-envelope mr-4 note-her" id="priNote">
+         {{!-- 若有通知 --}}
+                  {{!-- 應該在這 --}}
+         {{!-- 若有通知 --}}
                 </i>
                 私人訊息
               </div>
@@ -167,7 +167,7 @@
     <div class="right-side col-md-5" style="padding:0; height:100%;">
       <div class="chat-text-title">
         <div class="name">Apple</div>
-        <div class="account">@apple</div>
+        <div class="account">{{ viewUserId }}</div>
       </div>
       <hr style="max-width: 673px;">
       <div class="chat">
@@ -285,7 +285,8 @@
   var messages = document.getElementById('messages');
   var form = document.getElementById('form');
   var input = document.getElementById('input');
-
+  const priNote = document.getElementById("priNote");
+  let redDot = 0
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
@@ -353,6 +354,20 @@
       scrollWindow();
     }
   });
+
+  //接收私人訊息小紅燈通知
+  socket.on('noteHer', function(){
+    var item = document.createElement('span');
+    let rawHTML = "";
+    redDot += 1
+    item.classList.add('bubble')
+    rawHTML += 
+    `${redDot}`
+    item.innerHTML = rawHTML;
+    priNote.appendChild(item);
+    scrollWindow();
+  })
+
 
   //捲至最底
   function scrollWindow() {
