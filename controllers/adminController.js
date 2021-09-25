@@ -29,7 +29,7 @@ const adminController = {
     if (req.query.page) {
       offset = (req.query.page - 1) * pageLimit
     }
-    return Tweet.findAndCountAll({
+    Tweet.findAndCountAll({
       include: [User],
       offset,
       limit: pageLimit
@@ -42,7 +42,8 @@ const adminController = {
 
       const data = result.rows.map(t => ({
         ...t.dataValues,
-        description: t.dataValues.description.substring(0, 50),
+        description: t.dataValues.description ?
+          t.dataValues.description.substring(0, 50) : false,
         avatar: t.User.avatar,
         account: t.User.account,
         name: t.User.name
