@@ -12,17 +12,17 @@ const helpers = require("../_helpers");
 const authenticated = (req, res, next) => {
   if (process.env.NODE_ENV === "test") {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'user') {
-        return next()
+      if (helpers.getUser(req).role === "user") {
+        return next();
       }
-      return res.redirect("/admin/tweets")
+      return res.redirect("/admin/tweets");
     }
   } else {
     if (req.isAuthenticated()) {
-      if (req.user.role === 'user') {
+      if (req.user.role === "user") {
         return next();
       }
-      return res.redirect("/admin/tweets")
+      return res.redirect("/admin/tweets");
     }
   }
   res.redirect("/signin");
@@ -31,22 +31,21 @@ const authenticated = (req, res, next) => {
 const authenticatedAdmin = (req, res, next) => {
   if (process.env.NODE_ENV === "test") {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).role === 'admin') {
+      if (helpers.getUser(req).role === "admin") {
         return next();
       }
       return res.redirect("/tweets");
     }
   } else {
     if (req.isAuthenticated()) {
-      if (req.user.role === 'admin') {
+      if (req.user.role === "admin") {
         return next();
       }
       return res.redirect("/tweets");
     }
     res.redirect("/admin/signin");
-  };
-}
-
+  }
+};
 
 router.use("/", homeRouter);
 router.use("/users", authenticated, usersRouter);
