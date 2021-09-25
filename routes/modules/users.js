@@ -2,8 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../models");
-const { User, Tweet, Reply } = db;
-const userController = require("../../controllers/userController")
+const userController = require("../../controllers/userController");
 const followshipController = require("../../controllers/followshipController");
 const profileController = require("../../controllers/profileController");
 
@@ -20,12 +19,6 @@ router.post("/:id/edit",userController.editUserSetting)
 router.put("/:userId", (req, res) => {
   return res.redirect("back");
 });
-router.post("/:userId/notification", (req, res) => {
-  return res.redirect("back");
-});
-router.delete("/:userId/notification", (req, res) => {
-  return res.redirect("back");
-});
-
+router.put("/:userId/notification", followshipController.putNotification);
 
 module.exports = router;

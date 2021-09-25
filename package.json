@@ -17,6 +17,7 @@
     "@handlebars/allow-prototype-access": "^1.0.5",
     "@heroku/buildpack-registry": "^1.0.1",
     "async-file": "^2.0.2",
+    "bcrypt-nodejs": "^0.0.3",
     "bcryptjs": "^2.4.3",
     "chai": "^4.3.4",
     "cli-ux": "^4.9.3",
