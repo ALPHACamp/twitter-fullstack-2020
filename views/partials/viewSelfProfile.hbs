@@ -1,0 +1,39 @@
+<!--start::profile-index-->
+<div class="profilepage-messageboard d-f flex-column">
+  <div class="profilepage-banner"><img src="{{profile.cover}}" />
+    <div class="profilepage-card1">
+      <div class="avatar profilepage-avatar"><img src="{{profile.avatar}}" alt="avatar-img" /></div>
+    </div>
+  </div>
+  <div class="mainpost-messageboard">
+    <div class="profilepage-card2">
+      <!-- 編輯個人頁面 按鈕 -->
+      <div class="upper-right">
+        <p>
+        <div class="btn-outline-orange" data-bs-toggle="modal" data-bs-target="#profileModel" id="myInput">編輯個人檔案</div>
+        </p>
+      </div>
+
+      <h5 class="d-inline-block post-title mb-1">{{profile.name}}&nbsp;</h5>
+      <p class="post-sub-info mainpost-sm">{{profile.account}}</p>
+      <p>{{profile.introduction}}</p>
+      <p class="mainpost-sm reply-like-text">
+        <a href="/users/{{profile.id}}/followings"><b>{{followingsCount}}個</b></a>
+        <span class="post-sub-info">&nbsp;跟隨中</span>
+        <a href="/users/{{profile.id}}/followers"><b>{{followersCount}}位</b></a>
+        <span class="post-sub-info">&nbsp;跟隨者</span>
+      </p>
+      <ul class="nav profilepage-tags mt-2">
+        <li class="nav-item">
+          <a class="nav-link {{#if isPost }}active {{/if}}" type="submit" aria-current="page"
+            href="/users/{{profile.id}}/tweets">推文</a>
+        </li>
+        <li class="nav-item"><a class="nav-link {{#if isComment }}active {{/if}}"
+            href="/users/{{profile.id}}/comments">推文與回覆</a></li>
+        <li class="nav-item"><a class="nav-link {{#if isLikedPosts }}active {{/if}}"
+            href="/users/{{profile.id}}/likes">喜歡的內容</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--end::index-->

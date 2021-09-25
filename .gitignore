@@ -83,5 +83,10 @@ typings/
 # FuseBox cache
 .fusebox/
 
+# Personal note
+note.md
+
 # DynamoDB Local files
 .dynamodb/
+temp/
+upload/

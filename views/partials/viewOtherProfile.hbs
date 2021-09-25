@@ -1,0 +1,58 @@
+<!--start::profile-index-->
+<div class="profilepage-messageboard d-f flex-column">
+  <div class="profilepage-banner"><img src="{{profile.cover}}" />
+    <div class="profilepage-card1">
+      <div class="avatar profilepage-avatar"><img src="{{profile.avatar}}" alt="avatar-img" /></div>
+    </div>
+  </div>
+  <div class="mainpost-messageboard">
+    <div class="profilepage-card2">
+      <div class="upper-right">
+        <p>        
+        {{#if isFollowed}}
+        <!-- Email 按鈕 -->
+        <div class="icon-btn fill d-inline-block">          
+          <svg width="19" height="17" viewBox="0 0 19 17" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M15.8438 0.640625H3.15625C1.82888 0.640625 0.75 1.72038 0.75 3.04862V13.9817C0.75 15.31 1.82888 16.3906 3.15625 16.3906H15.8438C17.1711 16.3906 18.25 15.31 18.25 13.9817V3.04862C18.25 1.72038 17.1711 0.640625 15.8438 0.640625ZM3.15625 1.95313H15.8438C16.4475 1.95313 16.9375 2.44313 16.9375 3.04688V3.67162L9.89375 8.36775C9.65487 8.52525 9.346 8.527 9.10625 8.366L2.0625 3.67162V3.04688C2.0625 2.44313 2.5525 1.95313 3.15625 1.95313ZM15.8438 15.0764H3.15625C2.5525 15.0764 2.0625 14.5864 2.0625 13.9826V5.20988L8.3975 9.43612C8.73263 9.66012 9.11675 9.77213 9.5 9.77213C9.885 9.77213 10.2674 9.66013 10.6025 9.437L16.9375 5.21075V13.98C16.9375 14.5838 16.4475 15.0738 15.8438 15.0738V15.0764Z" />
+          </svg>
+        </div>
+        
+        <!-- 小鈴鐺 按鈕 -->
+          {{>notificationBtns}}           
+                
+        <!-- 正在跟隨 按鈕 -->
+        <form class="ms-auto" action="?_method=DELETE" method="POST">
+          <button type="submit" class="btn-orange">正在跟隨</button>
+        </form>
+        {{else}}
+        <form class="ms-auto" action="?_method=POST" method="POST">
+          <button type="submit" class="btn-outline-orange">跟隨</button>
+        </form>
+        {{/if}}
+        </p>
+      </div>
+
+      <h5 class="d-inline-block post-title mb-1">{{profile.name}}&nbsp;</h5>
+      <p class="post-sub-info mainpost-sm">{{profile.account}}</p>
+      <p>{{profile.introduction}}</p>
+      <p class="mainpost-sm reply-like-text">
+        <a href="/users/{{profile.id}}/followings"><b>{{followingsCount}}個</b></a>
+        <span class="post-sub-info">&nbsp;跟隨中</span>
+        <a href="/users/{{profile.id}}/followers"><b>{{followersCount}}位</b></a>
+        <span class="post-sub-info">&nbsp;跟隨者</span>
+      </p>
+      <ul class="nav profilepage-tags mt-2">
+        <li class="nav-item">
+          <a class="nav-link {{#if isPost }}active {{/if}}" type="submit" aria-current="page"
+            href="/users/{{profile.id}}/tweets">推文</a>
+        </li>
+        <li class="nav-item"><a class="nav-link {{#if isComment }}active {{/if}}"
+            href="/users/{{profile.id}}/comments">推文與回覆</a></li>
+        <li class="nav-item"><a class="nav-link {{#if isLikedPosts }}active {{/if}}"
+            href="/users/{{profile.id}}/likes">喜歡的內容</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!--end::index-->

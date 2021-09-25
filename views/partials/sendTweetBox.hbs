@@ -1,0 +1,25 @@
+<div class="profile-messageboard">
+  <!--start::index profile-->
+  <div class="profile-avatar-container">
+    <a class="avatar profile-avatar" href="/users/{{profile.id}}/tweets">
+      <img src="{{profile.avatar}}" alt="avatar-img" />
+    </a>
+  </div>
+  <form action="/tweets" method="POST">
+    <div class="profile-textarea-container">
+      <textarea
+        name="description"
+        class="form-control form-control-lg"
+        id="post"
+        placeholder="有什麼新鮮事?"
+        rows="3"
+        maxlength="140"
+        required
+      ></textarea>
+    </div>
+    <button type="submit" class="btn btn-twitter">
+      <span>推文</span>
+    </button>
+  </form>
+  <!--end::index profile-->
+</div>
