@@ -12,11 +12,17 @@ const helpers = require("../_helpers");
 const authenticated = (req, res, next) => {
   if (process.env.NODE_ENV === "test") {
     if (helpers.ensureAuthenticated(req)) {
-      return next();
+      if (helpers.getUser(req).role === "user") {
+        return next();
+      }
+      return res.redirect("/admin/tweets");
     }
   } else {
     if (req.isAuthenticated()) {
-      return next();
+      if (req.user.role === "user") {
+        return next();
+      }
+      return res.redirect("/admin/tweets");
     }
   }
   res.redirect("/signin");
@@ -25,27 +31,26 @@ const authenticated = (req, res, next) => {
 const authenticatedAdmin = (req, res, next) => {
   if (process.env.NODE_ENV === "test") {
     if (helpers.ensureAuthenticated(req)) {
-      if (helpers.getUser(req).isAdmin) {
+      if (helpers.getUser(req).role === "admin") {
         return next();
       }
-      return res.redirect("/");
+      return res.redirect("/tweets");
     }
-  }
-  if (req.isAuthenticated()) {
-    if (req.user.isAdmin) {
-      return next();
+  } else {
+    if (req.isAuthenticated()) {
+      if (req.user.role === "admin") {
+        return next();
+      }
+      return res.redirect("/tweets");
     }
-    return res.redirect("/");
+    res.redirect("/admin/signin");
   }
-  res.redirect("/signin");
 };
 
-// router.use("/users", authenticated, usersRouter);
-
+router.use("/", homeRouter);
 router.use("/users", authenticated, usersRouter);
 router.use("/admin", authenticatedAdmin, adminRouter);
 router.use("/tweets", authenticated, tweetsRouter);
 router.use("/followships", authenticated, followshipRouter);
-router.use("/", homeRouter);
 
 module.exports = router;
