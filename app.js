@@ -57,8 +57,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-       //移除使用者名單
-      const remove = { currentName, currentAccount, currentAvatar}
+      //移除使用者名單
+      const remove = { currentName, currentAccount, currentAvatar }
       onlineUser = onlineUser.filter(item => {
         return item.currentAccount !== remove.currentAccount
       })
@@ -70,8 +70,8 @@ io.on('connection', (socket) => {
   //私人聊天
   socket.on('join private room', (roomName) => {
     socket.join(roomName);
-    console.log('join===========',roomName)
-    
+    console.log('join===========', roomName)
+
     socket.on('private-chat', (msg, currentId, currentAvatar) => {
       // console.log(socket)
       console.log("回傳成功===========", msg)
@@ -84,14 +84,18 @@ io.on('connection', (socket) => {
   })
 
   //私人通知
-  // let msgInbox = []
-  // socket.on('msg-inbox', (msg, currentId, currentAvatar, currentAccount, currentName) => {
-  //   const lastestMsg = { currentAvatar, currentAccount, currentName,msg}
-  //   if (msgInbox.includes) {
+  let msgInbox = []
+  socket.on('msg-inbox', (msg, currentId, currentAvatar, currentAccount, currentName) => {
+    const lastestMsg = { currentAvatar, currentAccount, currentName, msg }
+    //從資料庫抓改使用者所有接收訊息 by使用者篩選各一筆
+    msgInbox.map(d => d.currentAccount).includes(lastestMsg.currentAccount)
+    if (msgInbox.currentAccount) {
+      //假如有資料，刪掉舊的再加入陣列
 
-  //   }
+    }
+    //沒資料，直接加入陣列
 
-  // })
+  })
 
 
 });

@@ -58,6 +58,16 @@ const messageController = {
         return res.render('private-chat', { roomName, currentUser, msg })
       })
   },
+
+  getPrivateInbox: (req ,res) => {
+    const currentUser = helpers.getUser(req)
+    const currentUserId = Number(helpers.getUser(req).id)
+    const viewUserId = Number(req.params.id)
+    return Message.find
+
+
+  }
+
   // savePrivateMsg: (user) => {
 
   //   return Message.create({
