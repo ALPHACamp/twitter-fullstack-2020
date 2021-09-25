@@ -160,15 +160,15 @@
           </li> --}}
           {{!-- 離線 --}}
 
-        {{#each msg}}
-          
+          {{#each msg}}
+
           {{#if selfMsg}}
           {{!-- 自己的訊息 --}}
           <li class="list-group-item-myself">
             <div class="user-information">
               <div class="current-user">
                 <div class="text-area">
-                  <div class="text"> {{this.content}}</div>
+                  <div class="text">{{this.content}}</div>
                 </div>
               </div>
               <div class="time">{{fromNow this.createdAt}}</div>
@@ -185,18 +185,17 @@
                     <img src="{{this.User.avatar}}" alt="">
                   </a>
                 </div>
-          
                 <div class="text-area">
-                  <div class="text"> {{this.content}}</div>
+                  <div class="text">{{this.content}}</div>
                 </div>
               </div>
               <div class="time">{{fromNow this.createdAt}}</div>
-          
+
             </div>
           </li>
           {{!-- 他人訊息 --}}
           {{/if}}
-        {{/each}}
+          {{/each}}
 
         </ul>
       </div>
@@ -208,7 +207,7 @@
         {{!-- //TODO:要改API傳 --}}
         <form action="" method="" id="form" style="display: contents;">
           <div class="input-area">
-            <input type="text" class="input-chat" id="input" placeholder="輸入訊息...">
+            <input type="text" class="input-chat" id="input" placeholder="輸入訊息..." ng-trim="false">
           </div>
           <div class="send-chat">
             <button class="btn">
@@ -246,6 +245,7 @@
     const currentName = "{{currentUser.name}}"
     const currentAccount = "{{ currentUser.account }}"
     socket.emit('send user', currentName, currentAccount)
+    scrollWindow();
   })
 
 
@@ -270,24 +270,26 @@
       var item = document.createElement('li');
       let rawHTML = "";
       let time = new Date().toLocaleTimeString();
-      item.classList.add('list-group-item-myself')
-      console.log('input', input.value)
+      item.classList.add("list-group-item-myself")
+      let msg = input.value
+      console.log('input', msg)
       rawHTML += `<div class="user-information">
-                <div class="current-user">
-                  <div class="text-area">
-                    <div class="text">${input.value}</div>
-                  </div>
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text">${msg}</div>
                 </div>
-                <div class="time">${time}</div>
-              </div>`
+              </div>
+              <div class="time">${time}</div>
+            </div>`
       item.innerHTML = rawHTML;
       messages.appendChild(item);
-          const currentAvatar = "{{ currentUser.avatar }}"
+      scrollWindow();
+      const currentAvatar = "{{ currentUser.avatar }}"
       const currentId = "{{ currentUser.id }}"
-          socket.emit('chat message', input.value, currentId, currentAvatar);
-  input.value = ''
-        }
-      })
+      socket.emit('chat message', input.value, currentId, currentAvatar);
+      input.value = ''
+    }
+  })
 
   //接收他人送出訊息
   socket.on('chat message', function (msg, currentId, currentAvatar) {
@@ -307,7 +309,9 @@
                   </a>
                 </div>
                 <div class="text-area">
-                  <div class="text"> ${msg}</div>
+                  <div class="text"> 
+                    ${msg}
+                    </div>
                 </div>
               </div>
               <div class="time">${time}</div>

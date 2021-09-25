@@ -1856,7 +1856,7 @@ color: #657786;
   margin-top: 20px;
   margin-right: 15px;
   position: relative;
-  
+  text-align: right;
   max-width: 400px;
 }
 
@@ -1872,6 +1872,15 @@ font-weight: normal;
 font-size: 15px;
 line-height: 20px;
 color: #FFFFFF;
+width:auto; display:inline-block !important; display:inline
+}
+
+.current-user .text-area{
+ width:auto; display:inline-block !important; display:inline
+}
+
+.current-user .text{
+  white-space:pre;
 }
 
 .user-information .time {
