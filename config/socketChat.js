@@ -7,6 +7,9 @@ module.exports = {
   connect() {
     io.on('connection', (socket) => {
       console.log('進入聊天室')
+      socket.on("greet", () => {
+        socket.emit("greet", `Hi! user.`);
+      })
       socket.on('chat message', (msg) => {
         io.emit('chat message', msg);
       });

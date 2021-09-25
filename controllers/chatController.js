@@ -1,12 +1,15 @@
 const db = require('../models')
 const helpers = require('../_helpers')
-
+const User = db.User
 
 const chatController = {
-  getChat: (req, res) => {
-
-
-    res.render('chat')
+  getChat: async (req, res) => {
+    try {
+      const currentUser = await User.findByPk(helpers.getUser(req).id)
+      res.render('chat', { currentUser })
+    } catch (err) {
+      console.warn(err)
+    }
   }
 
 
