@@ -14,14 +14,14 @@ function getUsers(req) {
     return new Promise((resolve, reject) => {
       User.findAll({
         include: [
-          { model: User, as: 'followers' },
-          { model: User, as: 'followings' },
+          { model: User, as: 'Followers' },
+          { model: User, as: 'Followings' },
         ]
       }).then(users => {
         users = users.map(user => ({
           ...user.dataValues,
-          followerCount: user.followers.length,
-          isFollowed: req.user.followings.map(d => d.id).includes(user.id)
+          followerCount: user.Followers.length,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
         }))
         users = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
         resolve(users)

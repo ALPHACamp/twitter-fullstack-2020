@@ -28,13 +28,10 @@ const authenticated = (req, res, next) => {
 router.get('/', authenticated, tweetController.getTweets)
 router.post('/', authenticated, tweetController.postTweet)
 
-router.get('/:id/replyList', authenticated, tweetController.getTweet)
-router.post('/:id/replyList', authenticated, tweetController.postReply)
+router.get('/:id/replies', authenticated, tweetController.getTweet)
+router.post('/:id/replies', authenticated, tweetController.postReply)
 
 router.post('/:id/like', authenticated, tweetController.like)
 router.post('/:id/unlike', authenticated, tweetController.unlike)
-
-router.post('/:id/followings', authenticated, tweetController.following)
-router.delete('/:id/unfollowings', authenticated, tweetController.unfollowing)
 
 module.exports = router

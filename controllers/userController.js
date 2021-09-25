@@ -335,17 +335,17 @@ const userController = {
 
   getUserFollower: (req, res) => {
     User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'followers' },],
+      include: [{ model: User, as: 'Followers' },],
       oder: ['createdAt', 'DESC']
     }).then(followers => {
-      const followersData = followers.dataValues.followers.map(follower => ({
+      const followersData = followers.dataValues.Followers.map(follower => ({
         ...follower,
         followerAvatar: follower.avatar,
         followerName: follower.name,
         followerAccount: follower.account,
         followerIntroduction: follower.introduction,
-        isFollowed: helpers.getUser(req).followings ?
-          helpers.getUser(req).followings.map(d => d.id).includes(follower.id) : false
+        isFollowed: helpers.getUser(req).Followings ?
+          helpers.getUser(req).Followings.map(d => d.id).includes(follower.id) : false
       }))
       return res.render('selfFollower', { followersData })
     })
@@ -353,17 +353,17 @@ const userController = {
 
   getUserFollowing: (req, res) => {
     User.findByPk(req.params.id, {
-      include: [{ model: User, as: 'followings' },],
+      include: [{ model: User, as: 'Followings' },],
       oder: ['createdAt', 'DESC']
     }).then(followings => {
-      const followingsData = followings.dataValues.followings.map(following => ({
+      const followingsData = followings.dataValues.Followings.map(following => ({
         ...following,
         followingAvatar: following.avatar,
         followingName: following.name,
         followingAccount: following.account,
         followingIntroduction: following.introduction,
-        isFollowed: helpers.getUser(req).followings ?
-          helpers.getUser(req).followings.map(d => d.id).includes(following.id) : false
+        isFollowed: helpers.getUser(req).Followings ?
+          helpers.getUser(req).Followings.map(d => d.id).includes(following.id) : false
       }))
       return res.render('selfFollowing', { followingsData })
     })
