@@ -48,9 +48,10 @@ app.use(methodOverride('_method'))
 //   socket.broadcast.emit('new user msg', userName)
 // })
 
-
+// const onlineUsersList = [{}, {}]
 io.on('connection', (socket) => {
   socket.on('send user', function (currentName) {
+    // onlineUsersList[socket.id] = currentName
 
     socket.broadcast.emit('new user msg', currentName)
 
