@@ -93,7 +93,7 @@
     </div>
 
     {{!-- 中間主欄位 --}}
-    <div class="middle-side col-md-3" style="padding:0; height:100%;">
+    <div class="middle-side col-md-4" style="padding:0; height:100%;">
       <div class="d-flex justify-content-between" style=" margin: auto 15px;">
         <div class="text-title">訊息</div>
         <div class="text-icon">
@@ -316,7 +316,10 @@
       scrollWindow();
       const currentAvatar = "{{ currentUser.avatar }}"
       const currentId = "{{ currentUser.id }}"
+      const currentAccount = "{{ currentUser.account }}"
+       const currentName = "{{ currentUser.name }}"
       socket.emit('private-chat', input.value, currentId, currentAvatar);
+      socket.emit('msg-inbox', input.value, currentId, currentAvatar, currentAccount, currentName )
       input.value = ''
     }
   })

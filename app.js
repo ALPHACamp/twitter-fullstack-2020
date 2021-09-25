@@ -83,10 +83,16 @@ io.on('connection', (socket) => {
     })
   })
 
-  // socket.on('onlineUser', () => {
-  //   console.log('OnlineUser', onlineUser)
-  //   socket.broadcast.emit('online user', onlineUser)
+  //私人通知
+  // let msgInbox = []
+  // socket.on('msg-inbox', (msg, currentId, currentAvatar, currentAccount, currentName) => {
+  //   const lastestMsg = { currentAvatar, currentAccount, currentName,msg}
+  //   if (msgInbox.includes) {
+
+  //   }
+
   // })
+
 
 });
 
