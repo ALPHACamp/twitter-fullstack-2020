@@ -12,9 +12,11 @@ const {
 const Handlebars = require("handlebars");
 const handlebars = require("express-handlebars");
 const helpers = require("./_helpers");
-
 const app = express();
-
+console.log(process.env)
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 // 設定在測試環境下使用 helpers.getUser(req) 作為 req.user
 if (process.env.NODE_ENV === "test") {
   app.use((req, res, next) => {

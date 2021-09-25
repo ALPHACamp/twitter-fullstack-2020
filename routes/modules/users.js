@@ -17,7 +17,7 @@ router.get("/:id/followers", followshipController.getFollowers);
 router.get("/:id/followings", followshipController.getFollowings);
 // router.get("/:id/edit", userController.getUserSetting)  
 // router.post("/:id/edit",userController.editUserSetting)
-router.put('/:id/edit', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), profileController.editPage)
+router.put('/:id/edit', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), profileController.putUserpage)
 
 router.put("/:userId", (req, res) => {
   return res.redirect("back");
