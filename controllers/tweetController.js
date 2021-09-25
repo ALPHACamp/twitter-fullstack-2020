@@ -107,7 +107,9 @@ const tweetController = {
       }
     }).then(like => {
       like.destroy()
-      return res.redirect('back')
+        .then(() => {
+          return res.redirect('back')
+        })
     })
   },
   following: (req, res) => {
