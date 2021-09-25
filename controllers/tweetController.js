@@ -1,4 +1,5 @@
 const db = require('../models')
+const user = require('../models/user')
 const Tweet = db.Tweet
 const Reply = db.Reply
 const User = db.User
@@ -28,25 +29,24 @@ const tweetController = {
         where: { role: "user" }
       }),
     ]).then(([tweets, users]) => {
-      // console.log('我是helpers.getUser(req)',helpers.getUser(req))
-      // 列出 追隨數前十名的使用者
+      
       const topUsers =
         users.map(user => ({
           ...user.dataValues,
-          followerCount: user.Followers.length,
-          isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+          followerCount: user.dataValues.followerCount,
+          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
         }))
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
+
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
-        likedCount: helpers.getUser(req).LikedTweets.length,
+        id : tweet.id,  //拿到tweet的id
         description: tweet.description,
         createdAt: tweet.createdAt,
         userName: tweet.User.name,
         userAccount: tweet.User.account,
-        isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id), // 推文是否被喜歡過
-        likedUsers: tweet.LikedUsers
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id),
       }))
 
       return res.render('tweets', {
@@ -103,8 +103,8 @@ const tweetController = {
         ],
         order: [['Replies', 'createdAt', 'DESC']]
       })
-      // console.log('我是helpers.getUser(req).LikedTweets:', helpers.getUser(req).LikedTweets)
-      const isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id) 
+      // console.log('我是helpers.getUser(req)', helpers.getUser(req))
+      const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
       return res.render('tweet', { tweet: tweet.toJSON(), isLiked})
     } catch (e) {
       console.log(e.message)

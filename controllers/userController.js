@@ -1,4 +1,6 @@
-// TODO controller
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const bcrypt = require('bcryptjs')
 const { raw } = require('body-parser')
 const db = require('../models')
@@ -69,7 +71,7 @@ const userController = {
     return Promise.all([
       Tweet.findAll({
         where: { UserId: req.params.id },
-        include: [User, Reply,{ model: User, as: 'LikedUsers' }],
+        include: [User, Reply, { model: User, as: 'LikedUsers' }],
         order: [['createdAt', 'DESC']]
       }),
       Followship.count({
@@ -89,9 +91,9 @@ const userController = {
         where: { role: "user" }
       }),
     ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
-      const data = tweets.map(tweet =>({
+      const data = tweets.map(tweet => ({
         ...tweet.dataValues,
-        isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id) // 推文是否被喜歡過
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id), // 推文是否被喜歡過
       }))
 
       const topUsers =
@@ -103,7 +105,7 @@ const userController = {
           .sort((a, b) => b.followerCount - a.followerCount)
           .slice(0, 10)
       // console.log('我是data',data)
-      return res.render('userSelf', { tweets :data, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id})
+      return res.render('userSelf', { tweets: data, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id })
     })
   },
 
@@ -127,22 +129,22 @@ const userController = {
     return res.render('userSelfReply', { replies, tweets, tweetUser })
   },
 
-  getUserSelfLike: async (req ,res) =>{
-    
+  getUserSelfLike: async (req, res) => {
+
     const likes = await Like.findAll({
-      where: {UserId: req.params.id},
-      include: [User, {model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }]}],
+      where: { UserId: req.params.id },
+      include: [User, { model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }] }],
       order: [['createdAt', 'DESC']]
     })
-     const tweets = await Tweet.findAll({
-      where: {UserId: req.params.id},
+    const tweets = await Tweet.findAll({
+      where: { UserId: req.params.id },
       include: [User, Reply],
       order: [['createdAt', 'DESC']]
     })
-     const tweetUser = await User.findByPk(
-        req.params.id
+    const tweetUser = await User.findByPk(
+      req.params.id
     )
-    const data = likes.map(like =>({
+    const data = likes.map(like => ({
       id: like.Tweet.id,
       avatar: like.Tweet.User.avatar,
       name: like.Tweet.User.name,
@@ -151,11 +153,11 @@ const userController = {
       description: like.Tweet.description,
       RepliesLength: like.Tweet.Replies.length,
       LikedUsersLength: like.Tweet.LikedUsers.length,
-      isLiked : helpers.getUser(req).LikedTweets.map(d => d.id).includes(like.Tweet.id) 
+      isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(like.TweetId)
     }))
     // const isLiked = helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.id) 
     console.log(data)
-    return res.render('userSelfLike',{ data, tweets, tweetUser})
+    return res.render('userSelfLike', { data, tweets, tweetUser })
     // const tweets = await Tweet.findAll({
     //   where: {UserId: req.params.id},
     //   include: [User, Reply],
@@ -177,6 +179,28 @@ const userController = {
     })
     req.flash('success_messages', 'user was successfully to update')
     res.redirect('/tweets')
+  },
+
+  putUserProfile: async (req, res) => {
+    const user = await User.findByPk(req.params.id)
+    console.log(user)
+    console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~!")
+
+    const { file } = req
+    if (file) {
+      imgur.setClientID(IMGUR_CLIENT_ID);
+      imgur.upload(file.path, (err, img) => {
+        user.update({
+          name: req.body.name,
+          avatar: file ? img.data.link : user.avatar,
+          cover: file ? img.data.link : user.cover,
+          description: req.body.description
+        })
+      }).then((user) => {
+        req.flash('success_messages', 'Your profile was successfully to update')
+        res.redirect('back')
+      })
+    }
   },
 
   // getUserTweets: (req, res) => {
@@ -265,38 +289,42 @@ const userController = {
 
   // Like
   addLike: (req, res) => {
-    return Like.create({
-      UserId: helpers.getUser(req).id,
-      TweetId: req.params.tweetId
-    })
-      .then(() => {
+    console.log('req.params',req.params)
+    Tweet.findByPk(req.params.tweetId)
+      .then(tweet => {
+        tweet.increment('likeCount', { by: 1 })
+        Like.create({
+          UserId: helpers.getUser(req).id,
+          TweetId: req.params.tweetId
+        })
+      }).then(() => {
         return res.redirect('back')
       })
   },
   removeLike: (req, res) => {
-    return Like.findOne({
-      where: {
-        UserId: helpers.getUser(req).id,
-        TweetId: req.params.tweetId
-      }
-    })
-      .then((Like) => {
-        Like.destroy()
-          .then(() => {
-            return res.redirect('back')
-          })
+    Tweet.findByPk(req.params.tweetId)
+      .then(tweet => {
+        tweet.decrement('likeCount', { by: 1 })
+        Like.destroy({
+          where: {
+            UserId: helpers.getUser(req).id,
+            TweetId: req.params.tweetId
+          }
+        })
+      }).then(() => {
+        return res.redirect('back')
       })
   },
 
   // Followship
   addFollowing: (req, res) => {
     const followerId = helpers.getUser(req).id
-    const followingId = req.params.userId
+    const followingId = req.body.id
 
     // 確認不能追蹤自己
-    if (followerId === followingId) {
+    if (Number(followerId) === Number(followingId)) {
       req.flash('error_messages', 'You can\'t follow yourself!')
-      res.render('/tweets')
+      return res.redirect('/tweets')
     }
 
     // 確認該筆追蹤尚未存在於followship中，若不存在才創建新紀錄
@@ -307,7 +335,7 @@ const userController = {
     }).then(followship => {
       if (followship.length) {
         req.flash('error_messages', 'You already followed this user')
-        return res.render('/tweets')
+        return res.redirect('/tweets')
       } else {
         Followship.create({
           followerId,

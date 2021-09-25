@@ -1,0 +1,40 @@
+<div class="topUser">
+  <div class="popularArea fixed mt-4 border">
+    <div class="title m-3">
+      <h5 class="fw-bolder">Popular</h5>
+    </div>
+    {{#each users}}
+
+    <div class="popularList border-top">
+      <div class="popularUser d-flex border-bottom justify-content-between">
+        <div class="user d-flex">
+          <div class="avatar m-2">
+            <a href="/user/{{this.id}}/tweets">
+              <img src="{{noImage this.avatar}}" alt="" class="rounded-circle userImage">
+            </a>
+          </div>
+          <div class="information">
+            <a href="/user/{{this.id}}/tweets" class="name mt-2 ms-1 fw-bolder btn">{{this.name}}
+            </a>
+            <div class="account ms-1">{{this.account}}</div>
+          </div>
+        </div>
+        <div class="round m-3">
+          {{#if this.isFollowed}}
+          <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+            <button type="submit" class="btn orange text-white round">取消跟隨</button>
+          </form>
+          {{else}}
+          <form action="/followships/" method="POST">
+            <input type="hidden" name="id" value={{this.id}}>
+            <button type="submit" class="btn followButton round">跟隨</button>
+          </form>
+          {{/if}}
+        </div>
+      </div>
+
+      {{/each}}
+
+    </div>
+  </div>
+</div>

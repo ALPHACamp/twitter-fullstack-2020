@@ -5,7 +5,7 @@ const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const admin = {
-      id: 1,
+      id: 5,
       account: 'root@example.com',
       name: 'Admin',
       email: 'root@example.com',
@@ -19,8 +19,8 @@ module.exports = {
       updatedAt: new Date()
     }
       
-    const users = Array.from({ length: 5}).map((item, i) => ({
-      id: i + 2,
+    const users = Array.from({ length: 5 }).map((item, i) => ({
+      id: (i + 1) * 10 + 5,
       account: `account${i + 1}`,
       name: `user${i + 1}`,
       email: faker.internet.email(),

@@ -9,14 +9,15 @@ const passport = require('../config/passport')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role !== "admin") {
+    if (!(helpers.getUser(req).role === "admin")) {
       return next()
     }
     else {
-      req.flash('error_messages', '帳號或密碼輸入錯誤')
+      req.flash('error_messages', '此帳號無前台權限，跳轉至後台')
+      return res.redirect('/admin/tweets')
     }
   }
-  res.redirect('/signin')
+  return res.redirect('/signin')
 }
 
 const authenticatedAdmin = (req, res, next) => {
@@ -24,12 +25,13 @@ const authenticatedAdmin = (req, res, next) => {
     if (helpers.getUser(req).role === "admin") {
       return next()
     }
-  } else {
-    req.flash('error_messages', '帳號或密碼輸入錯誤')
+    else {
+      req.flash('error_messages', '帳號或密碼輸入錯誤')
+      return res.redirect('/signin')
+    }
   }
-  res.redirect('/admin/signin')
+  return res.redirect('/signin')
 }
-
 
 module.exports = (app, passport) => {
   // 前台
@@ -45,10 +47,11 @@ module.exports = (app, passport) => {
   app.get('/users/:id/tweets', authenticated, userController.getUserTweets)
   app.get('/setting', authenticated, userController.getSetting)
   app.put('/users/:id/setting', authenticated, userController.putUser)
+  app.put('/users/:id/edit', authenticated, userController.putUserProfile)
 
   // 追蹤
-  app.post('/following/:userId', authenticated, userController.addFollowing)
-  app.delete('/following/:userId', authenticated, userController.removeFollowing)
+  app.post('/followships/', authenticated, userController.addFollowing)
+  app.delete('/followships/:userId', authenticated, userController.removeFollowing)
   app.get('/users/:id/followers', authenticated, userController.getFollowers)
   app.get('/users/:id/followings', authenticated, userController.getFollowings)
 
@@ -69,7 +72,7 @@ module.exports = (app, passport) => {
   //取得特定貼文資料
   app.get('/tweets/:id/replies', tweetController.getTweet)
   //Reply回覆
-  app.post('/replies', authenticated, replyController.postReply)
+  app.post('/tweets/:id/replies', authenticated, replyController.postReply)
 
 
   // 後台登入及登出
@@ -82,9 +85,9 @@ module.exports = (app, passport) => {
 
   //後台 - 首頁
   app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
-  // // 後台 - 使用者列表
+  // 後台 - 使用者列表
   app.get('/admin/users', authenticatedAdmin, adminController.getUsers)
-  // // 後台 - 推文清單
+  // 後台 - 推文清單
   app.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
   app.delete('/admin/tweets/:id', authenticatedAdmin, adminController.deleteTweet)
 }
