@@ -171,7 +171,7 @@
       </div>
       <hr style="max-width: 673px;">
       <div class="chat">
-        <ul class="list-group">
+        <ul class="list-group" id="messages">
     
           {{!-- 他人訊息 --}}
           <li class="list-group-item">
@@ -198,7 +198,7 @@
             <div class="user-information">
               <div class="current-user">
                 <div class="text-area">
-                  <div class="text"> 自己的訊息打在Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</div>
+                  <div class="text"> {{userList}}</div>
                 </div>
               </div>
               <div class="time">下午4:21</div>
@@ -215,9 +215,9 @@
       {{!-- 輸入欄位 --}}
       <div class="type-area">
         {{!-- //TODO:要改API傳 --}}
-        <form action="" method="POST" style="display: contents;">
+        <form action="" method="" id="form" style="display: contents;">
           <div class="input-area">
-            <input type="text" class="input-chat" placeholder="輸入訊息...">
+            <input type="text" class="input-chat" id="input" placeholder="輸入訊息...">
           </div>
           <div class="send-chat">
             <button class="btn">
@@ -243,20 +243,21 @@
 {{!-- add-tweet Modal --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+
 <script>
   var socket = io();
 
   var messages = document.getElementById('messages');
   var form = document.getElementById('form');
   var input = document.getElementById('input');
+  
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
-    const currentName = "{{currentUser.name}}"
-    const currentAccount = "{{ currentUser.account }}"
-    socket.emit('send user', currentName, currentAccount)
+    let userList = [{{userList}}]
+    socket.emit('join room', userList)
   })
-
+ 
 
   //本人送出訊息
   form.addEventListener('submit', function (e) {
@@ -275,62 +276,11 @@
               <div class="time">${time}</div>
             </div>`
       item.innerHTML = rawHTML;
-      messages.appendChild(item);
-      const currentAvatar = "{{ currentUser.avatar }}"
-      const currentId = "{{ currentUser.id }}"
-      socket.emit('chat message', input.value, currentId, currentAvatar);
+      messages.appendChild(item);     
+      socket.emit('private-chat', input.value);
       input.value = ''
     }
   })
 
-{{!-- =============以下未開============ --}}
-
-  //登入通知
-  socket.on('new user msg', function (currentName) {
-    var item = document.createElement('li');
-    let rawHTML = "";
-    item.classList.add('list-group-item')
-    rawHTML += `<div class="log">
-            ${currentName} 上線
-          </div>`
-    item.innerHTML = rawHTML;
-    messages.appendChild(item);
-    scrollWindow();
-  })
-
-  //接收他人送出訊息
-  {{!-- socket.on('chat message', function (msg, currentId, currentAvatar) {
-    const userId = {{ currentUser.id }}
-    console.log('現在使用者', userId)
-    console.log('訊息使用者', currentId)
-    if (Number(userId) !== Number(currentId)) {
-    var item = document.createElement('li');
-    let rawHTML = "";
-    item.classList.add('list-group-item')
-    rawHTML += `
-            <div class="information">
-              <div class="other-user">
-                <div class="avatar">
-                  <a href="">
-                    <img src="${currentAvatar}" alt="">
-                  </a>
-                </div>
-
-                <div class="text-area">
-                  <div class="text"> ${msg}</div>
-                </div>
-              </div>
-              <div class="time">下午4:21</div>
-            </div>`
-    item.innerHTML = rawHTML;
-    messages.appendChild(item);
-    scrollWindow();
-  }
-  }) --}}
-
-  function scrollWindow() {
-    let h = document.querySelector('.chat');
-    h.scrollTo(0, h.scrollHeight);
-  }
 
 </script>

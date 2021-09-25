@@ -74,14 +74,17 @@ io.on('connection', (socket) => {
     })
   });
 
-  socket.on('jOIN ROOM', (roomName, cb) => {
-    socket.join(roomName);
-    cb(message[roomName])
-    socket.on('private-chat')
-  })
+  //私人聊天
+  socket.on('join room', (userList) => {
+    // console.log('============',socket.id)
+    socket.join(userList);
+    // console.log('this=======',userList)
+    //  cb(message[roomName])
 
-  socket.on('leave', () => {
-    socket.emit('remove user')
+    socket.on('private-chat', (msg) => {
+      console.log("===========", msg)
+      io.in(userList).emit('private-chat', msg);
+    })
   })
 
   // socket.on('onlineUser', () => {
@@ -90,6 +93,11 @@ io.on('connection', (socket) => {
   // })
 
 });
+
+
+
+
+
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
