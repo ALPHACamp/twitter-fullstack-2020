@@ -92,9 +92,6 @@ router.post('/tweets/:id/like', authenticated, tweetController.addLike)
 //取消喜歡特定貼文
 router.post('/tweets/:id/unlike', authenticated, tweetController.removeLike)
 
-//socket.io chat
-router.get('/messages', authenticated, messageController.sendMsg)
-
 //管理者登入(後台登入)
 router.get('/admin/signin', adminController.signinPage)
 router.post('/admin/signin', passport.authenticate('local', {

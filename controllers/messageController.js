@@ -19,15 +19,12 @@ const messageController = {
       // raw: true, nest: true
     })
       .then(msg => {
-        console.log(msg)
-        if (msg.length > 0) {
-          msg = msg.map(d => ({
-            ...d.dataValues,
-            User: d.User.dataValues,
-            selfMsg: Boolean(d.UserId === currentUser.id)
-          }))
-          console.log('New=====', msg)
-        }
+        msg = msg.map(d => ({
+          ...d.dataValues,
+          User: d.User.dataValues,
+          selfMsg: Boolean(d.UserId === currentUser.id)
+        }))
+        // console.log('New=====', msg)
         return res.render('public-chat', { currentUser, msg })
       })
 
