@@ -57,7 +57,9 @@
     }
   </style>
 <div><h2 id= "userId">{{currentUser.id}}</h2></div>
-
+{{#each msg}}
+  <h2>{{this.User.name}}say:{{this.content}}</h2>
+{{/each}}
 <ul id="messages"></ul>
 <form id="form" action="">
   <input id="input" autocomplete="off" /><button>Send</button>
