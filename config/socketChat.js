@@ -22,18 +22,31 @@ module.exports = {
       console.log('有人公開進入聊天室囉！')
       socket.on("userIn", async (currentUserId) => {
         try {
+          //運用socket儲存值
+          socket.currentUserId = currentUserId
           const currentUser = await User.findByPk(currentUserId)
           await currentUser.update({publicRoom: true})
-          socket.currentUserId = currentUserId //暫存本user的id
           const publicRoomUsers = await User.findAll({
             raw: true,
             nest: true,
             where: { publicRoom: 1 }
           })
-          socket.emit('publicRoomUsers', publicRoomUsers)
+          io.emit('publicRoomUsers', publicRoomUsers)
         } catch (err) {
           console.log(err)
         }
+      })
+      socket.on('disconnect', async () => {
+        console.log('socket.currentUserId', socket.currentUserId)
+        const offUser = await User.findByPk(socket.currentUserId)
+        // 將使用者判定離線存入資料庫
+        await offUser.update({ publicRoom: 0 })
+        const publicRoomUsers = await User.findAll({
+          raw: true,
+          nest: true,
+          where: { publicRoom: 1 }
+        })
+        io.emit('publicRoomUsers', publicRoomUsers)
       })
       
       console.log('進入聊天室')
@@ -49,7 +62,7 @@ module.exports = {
         onlineUsers.push(userdata)
         // userdata.socketId = socket.id
         userId = userdata.userId
-        
+
         const set = new Set()
         // 若 user.id 沒出現過 set 中, 將 user.id 推入 set 中, 後續若有重複 user.id, 會被 filter 略過
         onlineUsers = onlineUsers.filter(user =>

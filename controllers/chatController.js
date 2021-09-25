@@ -1,8 +1,7 @@
 const db = require('../models')
 const User = db.User
-
 const helpers = require('../_helpers')
-const User = db.User
+
 
 const chatController = {
   getChat: async (req, res) => {

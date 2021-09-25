@@ -93,9 +93,8 @@
     const userName = `{{ userData.name }}`
     const userAccount = `{{ userData.account }}`
     const userAvatar = `{{ userData.avatar }}`
-    let max_record = 7;
     //trevor的 test
-    const currentUserId = `{{currentUser.id}}`
+    const currentUserId = `{{userData.id}}`
 
     socket.on('connect', function () {
       console.log('前端頁面參數測試', currentUserId)
@@ -105,7 +104,7 @@
       console.log('前台拿到的publicRoomUsers', publicRoomUsers)
       chatUsers.innerHTML = `
       <div class="home-word-box p-2">
-      <span class="home-word" id="online">上線使用者(${publicRoomUsers.length})交換囉</span>
+      <span class="home-word" id="online">上線使用者(${publicRoomUsers.length})</span>
       </div>
       `
       publicRoomUsers.forEach(publicRoomUser => {
@@ -124,19 +123,11 @@
     socket.emit('login', { userId, userName, userAccount, userAvatar });
 
 
-    socket.on("online", function (amount) {
+    {{!-- socket.on("online", function (amount) {
       online.innerText = '上線使用者' + '(' + amount + ')';
-    });
+    }); --}}
 
     socket.on("chat message", addMsgToBox);
-
-
-
-
-
-
-
-
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -145,15 +136,6 @@
         input.value = '';
       }
     });
-
-
-
-
-
-
-
-
-
 
     function addMsgToBox(msg) {
       let newBubble = document.createElement('div')
@@ -164,19 +146,7 @@
       </div>`
       messages.appendChild(newBubble);
       scrollable.scrollTo(0, scrollable.scrollHeight)
-
-      if (messages.children.length > max_record) {
-        rmMsgFromBox();
-      }
     }
-
-    // 移除多餘的訊息
-    function rmMsgFromBox() {
-      var childs = messages.children;
-      childs[0].remove();
-    }
-
-
 
   });
 
