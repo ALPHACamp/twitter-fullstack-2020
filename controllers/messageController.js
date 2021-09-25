@@ -1,36 +1,41 @@
-// const express = require('express')
-// const app = express()
-// const http = require('http');
-// const server = http.createServer(app);
-// const { Server } = require("socket.io");
-// const io = new Server(server, { cors: { origin: "*" } });
-
-
+const helpers = require('../_helpers')
+const express = require('express')
+const app = express()
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server, { cors: {origin: "*"}});
+const db = require('../models')
+const Message = db.Message
+const User = db.User
 
 const messageController = {
-  sendMsg: (req, res) => {
+  renderPage: (req, res) => {
+    const currentUser = helpers.getUser(req)
+    console.log(currentUser.id)
+    Message.findAll({
+      include:[{model:User, attributes:['id', 'avatar', 'name', 'account']}],
+      order: [['createdAt', 'ASC']],
+      // raw: true, nest: true
+    })
+    .then(msg => {
+      msg = msg.map(d => ({
+        ...d.dataValues,
+        User: d.User.dataValues,
+        selfMsg: Boolean(d.UserId === currentUser.id)
+      }))
+      // console.log('New=====',msg)
+      return res.render('public-chat', {currentUser, msg})
+    })
     
-    console.log('ji')
-    // io.on('connection', (socket) => {
-    //   console.log('new user connected2')
-    //   socket.on('chat message', (msg) => {
-    //     io.emit('chat message', msg);
-    //   });
-    // });
-
-
-    // socket.on('connect', (msg) => {
-    // console.log('connected to sever')
-    // io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' });
-    // This will emit the event to all connected sockets
-    // io.emit('chat message', msg)
-    // console.log('message: ' + msg)
-    // })
-
-
-    return res.render('message')
-
   },
+  sendMsg: (user) => {
+    return Message.create({
+      UserId: user.id,
+      content: user.msg
+    })
+  }
+
 
 }
 

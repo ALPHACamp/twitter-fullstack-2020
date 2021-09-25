@@ -22,7 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 //變更順序以引入變數
 const passport = require('./config/passport')
-// const user = require('./models/user')
+const messageController = require('./controllers/messageController')
 
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
@@ -39,20 +39,28 @@ app.use(flash())
 app.use(methodOverride('_method'))
 
 
+// console.log(socket.id)
+// socket.on('chat message', (msg, senderId) => {
+//   io.emit('chat message', msg, senderId);
+// });
+// io.on('send user', (socket,userName) => {
+//   socket.broadcast.emit('new user msg', userName)
+// })
+
+
 io.on('connection', (socket) => {
-  //User connected
-  console.log('new user connected from app.js')
+  socket.on('send user', function(currentName) {
+    
+    socket.broadcast.emit('new user msg', currentName)
 
-  //User sending messages
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg)
+    socket.on('chat message', (msg, currentId, currentAvatar) => {
+      console.log('接收',currentId)
+      const user = { id: currentId, msg: msg }
+      messageController.sendMsg(user)
+      io.emit('chat message', msg, currentId, currentAvatar);
+    });
   })
-
-  //User disconnected
-  socket.on('disconnect', () => {
-    console.log('Disconnect from server, from app.js')
-  })
-})
+});
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')

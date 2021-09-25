@@ -50,18 +50,47 @@
     padding: 0.5rem 1rem;
   }
 
+<<<<<<< HEAD
   #messages>li:nth-child(odd) {
     background: #efefef;
   }
 </style>
 
 
+=======
+    #messages>li:nth-child(odd) {
+      background: #efefef;
+    }
+  </style>
+<div><h2 id= "userId">{{currentUser.id}}</h2></div>
+{{#each msg}}
+  <h2>{{this.User.name}}say:{{this.content}}</h2>
+{{/each}}
+>>>>>>> 51ea0f87138a4fab0b3f4ac93569a8308613b6f5
 <ul id="messages"></ul>
 <form id="form" action="">
   <input id="input" autocomplete="off" /><button>Send</button>
 </form>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  var socket = io();
 
+  var messages = document.getElementById('messages');
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (input.value) {
+      let user = document.getElementById("userId")
+      let userId = user.innerHTML;
+      socket.emit('chat message', input.value, userId);
+      input.value = '';
+    }
+  });
+
+<<<<<<< HEAD
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
 <script>
   var socket = io();
@@ -93,3 +122,17 @@
     console.log('Disconnect from server, from message.hbs')
   })
 </script>
+=======
+  socket.on('chat message', function () {
+    var item = document.createElement('li');
+    
+    item.textContent = msg;
+    
+    console.log(userId)
+    
+    socket.emit('chat message', dataValue);
+    messages.appendChild(item);
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+</script>
+>>>>>>> 51ea0f87138a4fab0b3f4ac93569a8308613b6f5

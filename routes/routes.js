@@ -42,7 +42,8 @@ const authenticatedAdmin = (req, res, next) => {
 
 
 //如果使用者訪問首頁，就導向 /tweets 的頁面
-router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
+router.get('/', authenticated, (req, res) => res.render('public-chat', { currentUser: req.user }))
+// router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 //使用者顯示特定使用者頁面(使用者所有貼文)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
 //使用者所有喜歡貼文
@@ -120,6 +121,9 @@ router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 
 //使用者編輯個人資料(edit)
 router.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserEdit)
+
+//即時通訊
+router.get('/message', authenticated, messageController.renderPage);
 
 //註冊
 router.get('/signup', userController.signUpPage)
