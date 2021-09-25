@@ -174,7 +174,7 @@
         <ul class="list-group" id="messages">
 
           {{#each msg}}
-          
+
           {{#if selfMsg}}
           {{!-- 自己的訊息 --}}
           <li class="list-group-item-myself">
@@ -317,9 +317,10 @@
       const currentAvatar = "{{ currentUser.avatar }}"
       const currentId = "{{ currentUser.id }}"
       const currentAccount = "{{ currentUser.account }}"
-       const currentName = "{{ currentUser.name }}"
-      socket.emit('private-chat', input.value, currentId, currentAvatar);
-      socket.emit('msg-inbox', input.value, currentId, currentAvatar, currentAccount, currentName )
+      const currentName = "{{ currentUser.name }}"
+      const viewUserId = "{{ viewUserId }}"
+      socket.emit('private-chat', input.value, currentId, currentAvatar, viewUserId);
+      socket.emit('msg-inbox', input.value, currentId, currentAvatar, currentAccount, currentName,)
       input.value = ''
     }
   })

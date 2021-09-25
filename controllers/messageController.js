@@ -27,11 +27,12 @@ const messageController = {
       })
 
   },
-  sendMsg: (user, roomName) => {
+  sendMsg: (user, roomName, viewUserId) => {
     return Message.create({
       UserId: user.id,
       content: user.msg,
-      roomName
+      roomName,
+      fromId: viewUserId
     })
   },
 
@@ -39,7 +40,7 @@ const messageController = {
     const currentUser = helpers.getUser(req)
     const currentUserId = Number(helpers.getUser(req).id)
     const viewUserId = Number(req.params.id)
-    let roomName = currentUserId > viewUserId ? `${viewUserId}-${currentUserId}` :`${currentUserId}-${viewUserId}`
+    let roomName = currentUserId > viewUserId ? `${viewUserId}-${currentUserId}` : `${currentUserId}-${viewUserId}`
 
     return Message.findAll({
       where: { roomName: roomName },
@@ -55,11 +56,11 @@ const messageController = {
           selfMsg: Boolean(d.UserId === currentUser.id)
         }))
         // console.log('私人訊息篩選====', msg)
-        return res.render('private-chat', { roomName, currentUser, msg })
+        return res.render('private-chat', { roomName, currentUser, msg, viewUserId })
       })
   },
 
-  getPrivateInbox: (req ,res) => {
+  getPrivateInbox: (req, res) => {
     const currentUser = helpers.getUser(req)
     const currentUserId = Number(helpers.getUser(req).id)
     const viewUserId = Number(req.params.id)

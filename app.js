@@ -72,12 +72,11 @@ io.on('connection', (socket) => {
     socket.join(roomName);
     console.log('join===========', roomName)
 
-    socket.on('private-chat', (msg, currentId, currentAvatar) => {
-      // console.log(socket)
+    socket.on('private-chat', (msg, currentId, currentAvatar, viewUserId) => {
       console.log("回傳成功===========", msg)
       //存進資料庫
       const user = { id: currentId, msg: msg }
-      messageController.sendMsg(user, roomName)
+      messageController.sendMsg(user, roomName, viewUserId)
       console.log('傳進私人聊天室===========', roomName)
       socket.to(roomName).emit('private chat message', msg, currentId, currentAvatar);
     })
