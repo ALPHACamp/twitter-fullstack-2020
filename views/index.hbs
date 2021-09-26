@@ -2,7 +2,6 @@
   <div class="col">
     {{>columnLeft}}
   </div>
-  {{>modalReply}}
   {{>modalTweet}}
   <div class="profile-container">
     <div class="profile-nav">
@@ -13,6 +12,7 @@
       <!--start::list of post-->
       {{#each tweets}}
       <div class="post">
+        {{>modalReply modalId=@index profile=../profile tweet=this}}
         <div class="post-card1">
           <div class="avatar profile-avatar">
             <a href="/users/{{this.User.id}}/tweets">
@@ -29,7 +29,9 @@
           </a>
           <h3 class="post-sub-info">
             <span class="post-icon-block">
-                <i class="bi bi-chat"id="replyInput" data-bs-toggle="modal" data-bs-target="#replyModel"></i>{{this.ReplyCount}}
+                <i class="bi bi-chat btn" data-bs-toggle="modal"
+                  id="replyInput{{@index}}" data-bs-target="#replyModel{{@index}}">
+                </i>{{this.ReplyCount}}
             </span>
             <span class="post-icon-block">              
               <form action="/tweets/{{this.id}}/like?_method=PUT" method="POST" class="heart-form">                

@@ -2,14 +2,13 @@ const db = require("../models");
 const { Op } = require("sequelize");
 const moment = require("moment");
 const { Reply, User, Tweet, Like, Followship } = db;
-const multer = require('multer')
-const fs = require('fs')
-const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const multer = require("multer");
+const fs = require("fs");
+const imgur = require("imgur-node-api");
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 //for test only
 const helpers = require("../_helpers");
-const tweetController = require("./tweetController");
 const getTestUser = function (req) {
   if (process.env.NODE_ENV === "test") {
     return helpers.getUser(req);
@@ -26,6 +25,11 @@ const profileController = {
       // 前端判斷
       const isPost = true;
       //get selfInformation
+      const myProfile = await User.findByPk(user.id, {
+        attributes: ["avatar"],
+        raw: true,
+      });
+      //get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: "Followers", attributes: ["id"] },
@@ -37,7 +41,7 @@ const profileController = {
         where: { UserId: req.params.id },
         include: [
           { model: Reply, attributes: ["id"] },
-          { model: Like, attributes: ["id"] },
+          { model: Like, attributes: ["id", "UserId"] },
         ],
         order: [["createdAt", "DESC"]],
       });
@@ -45,15 +49,16 @@ const profileController = {
         ...data.dataValues,
         ReplyCount: data.Replies.length,
         LikedCount: data.Likes.length,
-        isLiked: data.Likes.map((data) => data.id).includes(user.id),
+        isLiked: data.Likes.map((data) => Number(data.UserId)).includes(
+          Number(user.id)
+        ),
       }));
       let followship = await Followship.findOne({
         where: {
           followerId: Number(user.id),
-          followingId: Number(req.params.id)
-        }
+          followingId: Number(req.params.id),
+        },
       });
-
       // get Count
       const followersCount = Profile.Followers.length;
       const followingsCount = Profile.Followings.length;
@@ -80,6 +85,7 @@ const profileController = {
       return res.render("profile", {
         isPost,
         isSelf,
+        myProfile,
         users: TopUsers,
         tweets: Tweets,
         profile: Profile,
@@ -167,7 +173,7 @@ const profileController = {
         notification: Boolean(followship ? followship.notification : false),
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(400).json(error);
     }
   },
@@ -178,6 +184,11 @@ const profileController = {
       // 前端判斷
       const isLikedPosts = true;
       //get selfInformation
+      const myProfile = await User.findByPk(user.id, {
+        attributes: ["avatar"],
+        raw: true,
+      });
+      //get userInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: Tweet, attributes: ["id"] },
@@ -242,6 +253,7 @@ const profileController = {
       return res.render("profile", {
         isLikedPosts,
         isSelf,
+        myProfile,
         users: TopUsers,
         tweets: LikedTweets,
         profile: Profile,
@@ -252,14 +264,14 @@ const profileController = {
         notification: Boolean(followship ? followship.notification : false),
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
       res.status(400).json(error);
     }
   },
-  
+
   putUserpage: async (req, res) => {
-    const { name, introduction, avatar, cover } = req.body
-    const errors = []
+    const { name, introduction, avatar, cover } = req.body;
+    const errors = [];
     if (!name || !introduction) {
       // errors.push({ message: '名稱或自我介紹欄位，不可空白' })
     }
@@ -270,39 +282,38 @@ const profileController = {
       // errors.push({ message: '自我介紹，必須在160字符以內' })
     }
     if (errors.length > 0) {
-      return res.render('edit', { name, introduction, avatar, cover })
+      return res.render("edit", { name, introduction, avatar, cover });
     }
-    const images = {}
-    const { files } = req
-    const uploadImg = path => {
+    const images = {};
+    const { files } = req;
+    const uploadImg = (path) => {
       return new Promise((resolve, reject) => {
         imgur.upload(path, (err, img) => {
           if (err) {
-            return reject(err)
+            return reject(err);
           }
-          resolve(img)
-        })
-      })
-    }
-    const userId = req.user.id
+          resolve(img);
+        });
+      });
+    };
+    const userId = req.user.id;
     if (files) {
       imgur.setClientID(IMGUR_CLIENT_ID);
       for (const key in files) {
-        images[key] = await uploadImg(files[key][0].path)
+        images[key] = await uploadImg(files[key][0].path);
       }
     }
-    const user = await User.findByPk(userId)
+    const user = await User.findByPk(userId);
     await user.update({
       name: name,
       introduction: introduction,
       cover: images.cover ? images.cover.data.link : user.cover,
-      avatar: images.avatar ? images.avatar.data.link : user.avatar
-    })
+      avatar: images.avatar ? images.avatar.data.link : user.avatar,
+    });
 
     // req.flash('success_msg', '您的個人資訊已更新')
-    return res.redirect(`/users/${req.user.id}/tweets`)
+    return res.redirect(`/users/${req.user.id}/tweets`);
   },
-
 };
 
 module.exports = profileController;

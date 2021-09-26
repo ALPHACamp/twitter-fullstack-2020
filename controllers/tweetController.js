@@ -19,7 +19,7 @@ const tweetController = {
   getPosts: async (req, res) => {
     const user = getTestUser(req);
     try {
-      const Profile = await User.findByPk(req.user.id, {
+      const Profile = await User.findByPk(user.id, {
         attributes: ["id", "avatar"],
       });
       const rawTweets = await Tweet.findAll({
@@ -76,6 +76,11 @@ const tweetController = {
   getPost: async (req, res) => {
     const user = getTestUser(req);
     try {
+      //get selfInformation
+      const myProfile = await User.findByPk(user.id, {
+        attributes: ["avatar"],
+        raw: true,
+      });
       let tweet = await Tweet.findByPk(req.params.id, {
         include: [
           { model: User, attributes: listAttributes },
@@ -115,7 +120,7 @@ const tweetController = {
       });
       // return res.json({ tweet, ReplyCount, LikedCount, user: TopUsers,})
       return res.render("post", {
-        profile: user,
+        profile: myProfile,
         tweet,
         ReplyCount,
         LikedCount,
