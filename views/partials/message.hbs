@@ -1,12 +1,12 @@
 {{#if success_messages}}
 <div class="mx-auto col-4 mb-4 alert alert-success alert-dismissible fade show" role="alert" style="margin: 30px 0 ;">
-  {{success_messages}}
+  <strong>{{success_messages}}</strong>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/if}}
 {{#if error_messages}}
 <div class="mx-auto col-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert" style="margin: 30px 0 ;">
-  {{error_messages}}
+  <strong>{{error_messages}}</strong>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/if}}
@@ -14,8 +14,12 @@
 {{#if errors}}
 {{#each errors}}
 <div class="mx-auto col-4 mb-4 alert alert-danger alert-dismissible fade show" role="alert" style="margin: 30px 0 ;">
-  {{ this.message }}
+  <strong>{{ this.message }}</strong>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {{/each}}
+
+{{/if}}
+{{#if tweet_message}}
+<div class="validate-text">{{tweet_message}}</div>
 {{/if}}

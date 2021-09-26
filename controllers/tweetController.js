@@ -135,11 +135,11 @@ const tweetController = {
     const user = getTestUser(req);
     const { description } = req.body;
     if (!description) {
-      //req.flash('error_message', '你並未輸入任何文字')
+      req.flash('tweet_message', '你並未輸入任何文字')
       return res.redirect("back");
     }
     if (description.length > 140) {
-      //req.flash('error_message', '字數不可超過140字')
+      req.flash('tweet_message', '字數不可超過140字')
       return res.redirect("back");
     } else {
       return Tweet.create({

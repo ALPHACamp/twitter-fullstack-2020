@@ -22,3 +22,13 @@
   background: #e6ecf0;
   padding: 0;
 }
+.validate-text {
+  position: absolute;
+  bottom: 15px;
+  right: 0px;
+  font-weight: bold;
+  color: #ff6600;
+}
+.modal-body .validate-text {
+  right: 94px;
+}

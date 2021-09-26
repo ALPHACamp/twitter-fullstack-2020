@@ -24,12 +24,12 @@ const adminController = {
       console.log('signIn')
       return res.redirect('/admin/tweets');
     }
-    // req.flash('error_messages', '沒有權限');
+    req.flash('error_messages', '沒有權限');
     req.logout();
     return res.redirect('/signin');
   },
   signOut: (req, res) => {
-    //  req.flash('success_messages', '登出成功！')
+    req.flash('success_messages', '登出成功！')
     req.logout()
     res.redirect('/signin')
   },
