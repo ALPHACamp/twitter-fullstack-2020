@@ -94,22 +94,29 @@
     {{!-- tweets區 --}}
     {{#each tweets}}
     <div class='card-tweets'>
-      <a href="/users/{{this.User.id}}/tweets">
+      
+      <div>
+        <a href="/users/{{this.User.id}}/tweets">
         <img
         class='card-avatar'
         src='{{this.User.avatar}}'
         alt='avatar'
         width='50'
-        height='50'
-      /></a>
+        height='50'/>
+        </a>
+      </div>
+
       <div class='card-warp'>
+      <a href="/tweets/{{this.id}}/replies">
         <div class='card-header'>
-          <span class='card-name'>{{this.User.name}}</span>
-          <span class='card-account'>{{this.User.account}} • {{moment this.createdAt}}</span>
+          <div class='card-name'>{{this.User.name}}</div>
+          <div class='card-account'>{{this.User.account}} • {{moment this.createdAt}}</div>
         </div>
         <div class='card-content'>
           {{this.description}}
         </div>
+        </a>
+
         <div class='card-footer'>
           <div class='icon-reply'>
             {{!-- 其它貼文回覆modal --}}

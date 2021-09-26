@@ -138,7 +138,7 @@ const tweetController = {
       .catch((err) => res.send(err))
   },
   postReply: (req, res) => {
-    const tweetId = Number(req.params.tweetId)    
+    const tweetId = Number(req.params.tweetId)
     const comment = req.body.comment
     if (!comment.length) {
       req.flash('modal_error_messages', '請新增內容後再推你的回覆。')

@@ -4,6 +4,16 @@
 }
 
 /* bootstrap預設樣式清除 */
+a {
+  all: initial;
+  cursor: pointer;
+}
+
+a:hover {
+  all: initial;
+  cursor: pointer;
+}
+
 span {
   all: initial;
 }
@@ -287,7 +297,7 @@ body {
 #main-content .post {
   background: #ffffff;
   margin-bottom: 10px;
-  width: 600px;
+  width: auto;
   height: 120px;
   position: relative;
 }
@@ -660,14 +670,14 @@ svg {
   margin: 15px 0px 0px 30px;
   width: 350px;
   height: 756px;
-  background: #e6ecf0;
+  background: #E6ECF0;
   border-radius: 14px;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 15px;
   z-index: -1;
-  overflow: hidden;
+  overflow:hidden;
 }
 
 #sidebar-right .popular .popular-top {
@@ -777,6 +787,7 @@ svg {
 
 /* reply page */
 #main-content .post {
+  width: auto;
   padding: 15px 15px 0px 15px;
   display: flex;
   flex-direction: column;

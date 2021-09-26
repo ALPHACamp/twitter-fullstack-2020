@@ -323,7 +323,7 @@ const userController = {
         .Followings.map((item) => item.id)
         .includes(thisUser.id)
 
-      return res.render('user/reply', {
+      return res.render('reply', {
         users: thisUser,
         currentUserId: currentUserId,
       })
