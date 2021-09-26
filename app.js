@@ -89,8 +89,8 @@ io.on('connection', (socket) => {
     // })
   })
  
-  
-
+  //
+  // socket.on('somefollowship')
 
 });
 
