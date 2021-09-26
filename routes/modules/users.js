@@ -15,10 +15,10 @@ router.get("/:id/comments", profileController.getComments);
 router.get("/:id/likes", profileController.getLikedPosts);
 router.get("/:id/followers", followshipController.getFollowers);
 router.get("/:id/followings", followshipController.getFollowings);
-// router.get("/:id/edit", userController.getUserSetting)  
-// router.post("/:id/edit",userController.editUserSetting)
-router.put('/:id/edit', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), profileController.putUserpage)
+router.get("/:id/edit", userController.getUserSetting)  
+router.post("/:id/edit",userController.editUserSetting)
+// router.put('/:id/edit', upload.fields([{ name: 'cover', maxCount: 1 }, { name: 'avatar', maxCount: 1 }]), profileController.putUserpage)
 
-router.put("/:userId/notification", followshipController.putNotification);
+router.put("/:id/notification", followshipController.putNotification);
 
 module.exports = router;

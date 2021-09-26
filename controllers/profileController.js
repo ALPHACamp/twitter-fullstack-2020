@@ -8,14 +8,8 @@ const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 //for test only
-const helpers = require("../_helpers");
-const getTestUser = function (req) {
-  if (process.env.NODE_ENV === "test") {
-    return helpers.getUser(req);
-  } else {
-    return req.user;
-  }
-};
+const { getTestUser } = require("./util.service");
+
 const listAttributes = ["id", "name", "account", "avatar"];
 
 const profileController = {
@@ -78,7 +72,7 @@ const profileController = {
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -237,7 +231,7 @@ const profileController = {
         attributes: listAttributes,
         include: [{ model: User, as: "Followers", attributes: ["id"] }],
         where: {
-          id: { [Op.not]: req.user.id },
+          id: { [Op.not]: user.id },
           role: { [Op.not]: "admin" },
         },
       });
@@ -245,11 +239,11 @@ const profileController = {
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
-      const isSelf = Number(req.params.userId) === Number(req.user.id);
+      const isSelf = Number(req.params.id) === Number(user.id);
       // return res.json({ tweets: LikedTweets })
       return res.render("profile", {
         isLikedPosts,
@@ -297,23 +291,23 @@ const profileController = {
         });
       });
     };
-    const userId = req.user.id;
+    const user = getTestUser(req);
     if (files) {
       imgur.setClientID(IMGUR_CLIENT_ID);
       for (const key in files) {
         images[key] = await uploadImg(files[key][0].path);
       }
     }
-    const user = await User.findByPk(userId);
-    await user.update({
+    const profile = await User.findByPk(user.id);
+    await profile.update({
       name: name,
       introduction: introduction,
-      cover: images.cover ? images.cover.data.link : user.cover,
-      avatar: images.avatar ? images.avatar.data.link : user.avatar,
+      cover: images.cover ? images.cover.data.link : profile.cover,
+      avatar: images.avatar ? images.avatar.data.link : profile.avatar,
     });
 
     // req.flash('success_msg', '您的個人資訊已更新')
-    return res.redirect(`/users/${req.user.id}/tweets`);
+    return res.redirect(`/users/${user.id}/tweets`);
   },
 };
 

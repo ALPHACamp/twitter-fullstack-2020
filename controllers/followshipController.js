@@ -155,7 +155,7 @@ const followshipController = {
     return Followship.findOne({
       where: {
         followerId: Number(user.id),
-        followingId: Number(req.params.userId),
+        followingId: Number(req.params.id),
       },
     }).then((followship) => {
       if (!followship) {
