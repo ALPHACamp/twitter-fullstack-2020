@@ -88,7 +88,11 @@ io.on('connection', (socket) => {
     //   io.emit('renderMsgBox', msgInbox)
     // })
   })
-
+ 
+  //有人推文
+  socket.on('somebodySendTweet', (tweet) => {
+    console.log("有人寫了===========", tweet)
+  })
 
 
 

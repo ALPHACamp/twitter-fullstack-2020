@@ -8,6 +8,13 @@ const helpers = require('../_helpers')
 const { Op } = require("sequelize")
 const sequelize = require('sequelize')
 
+const express = require('express')
+const app = express()
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server, { cors: { origin: "*" } });
+
 const tweetService = {
   postTweets: (req, res, callback) => {
     if (!req.body.description) {
