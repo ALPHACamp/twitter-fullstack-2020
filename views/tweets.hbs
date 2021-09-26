@@ -146,7 +146,7 @@
             data-target="#edit-user" onclick="getUserData()">編輯個人資料</button>
 
           {{else}}
-          {{#if viewUser.isFollowed }}
+          
           <div class="edit-button-other">
             <div class="other-user-icon">
               <div class="mail">
@@ -155,36 +155,37 @@
                 </i>
                 </a>
                 </div>
+    {{!-- 訂閱區 --}}
               <div class="notification">
-                <form action="/subscribe/{{viewUser.id}}" method="POST">
-                <input type="hidden" name="id" value="{{viewUser.id}}">
-                <button type="submit" class="btn get-notification">
-                  <i class="fas fa-bell"></i>
-                  </button>
-                </form>
-              </div>
-              <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
-                <button type="submit" class="btn follow-button">正在跟隨</button>
-              </form>
-            </div>
-            {{else}}
-            <div class="edit-button-other">
-              <div class="other-user-icon">
-                <div class="mail"><a href="/messages/{{viewUser.id}}"><i class="far fa-envelope"></i></a></div>
-                <div class="notification">
+                {{#if viewUser.isSub}}
+                  <form action="/subscribe/{{viewUser.id}}?_method=DELETE" method="POST">
+                    <input type="hidden" name="id" value="{{viewUser.id}}">
+                    <button type="submit" class="btn get-notification">
+                      <i class="fas fa-bell"></i>
+                    </button>
+                  </form>
+                {{else}}
                   <form action="/subscribe/{{viewUser.id}}" method="POST">
                     <input type="hidden" name="id" value="{{viewUser.id}}">
                     <button type="submit" class="btn dont-notification">
                       <i class="far fa-bell"></i>
                     </button>
                   </form>
-                </div>
-                <form action="/followships" method="POST" style="display: contents;">
-                  <input type="hidden" name="id" value="{{viewUser.id}}">
-                  <button type="submit" class="btn unfollow-button"> 跟隨 </button>
-                </form>
+                {{/if}}
               </div>
+{{!-- 追蹤區 --}}
+            {{#if viewUser.isFollowed }}
+              <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
+                <button type="submit" class="btn follow-button">正在跟隨</button>
+              </form>
+                {{else}}
+              <form action="/followships" method="POST" style="display: contents;">
+                <input type="hidden" name="id" value="{{viewUser.id}}">
+                <button type="submit" class="btn unfollow-button"> 跟隨 </button>
+              </form>
               {{/if}}
+            </div>
+                               
               {{/if}}
             </div>
           </div>

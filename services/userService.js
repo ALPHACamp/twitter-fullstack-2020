@@ -9,6 +9,7 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
+const Subscribe = db.Subscribe
 
 
 const imgur = require('imgur-node-api')
@@ -97,6 +98,7 @@ const userService = {
   getUserTweets: (req, res, callback) => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
     const currentUser = helpers.getUser(req)
+    console.log("viewUser===",req.params.id)
     return Promise.all([
       Tweet.findAll({
         where: { UserId: req.params.id },
@@ -123,7 +125,17 @@ const userService = {
         order: [[sequelize.col('count'), 'DESC']],
         limit: 10, raw: true, nest: true
       }),
-    ]).then(([tweets, user, users]) => {
+      Subscribe.findAll({
+      where: {fansId:currentUser.id},
+       include:[{ 
+        model: User, 
+        as: 'fansLinks',
+        attributes: ['id']
+       }],
+      raw: true, nest: true
+    })
+    ]).then(([tweets, user, users, sub]) => {
+      console.log(sub[0])
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
       const data = tweets.map(tweet => ({
         id: tweet.id,
@@ -145,6 +157,7 @@ const userService = {
         followingsCount: user.Followings.length,
         followersCount: user.Followers.length,
         isFollowed: currentUser.Followings.map((d) => d.id).includes(user.id),
+        isSub:sub.map((d) => d.fansLinks.id).includes(user.id),
         isSelf: Boolean(user.id === currentUser.id)
       })
       //B. 右側欄位: 取得篩選過的使用者 & 依 followers 數量排列前 10 的使用者推薦名單(排除追蹤者為零者)
@@ -158,6 +171,7 @@ const userService = {
         isFollowed: currentUser.Followings.map((d) => d.id).includes(user.FollowingLinks.id),
         isSelf: Boolean(user.FollowingLinks.id === currentUser.id),
       }))
+      console.log(viewUser)
       return callback({ data, viewUser, currentUser, topUsers, BASE_URL })
     })
       .catch(err => console.log(err))
