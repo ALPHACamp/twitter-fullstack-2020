@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
 const helpers = require('../_helpers')
+
+const tweetController = require('../controllers/api/tweetController')
 const userController = require('../controllers/api/userController')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -16,6 +18,9 @@ const authenticated = (req, res, next) => {
   }
   res.redirect('/signin')
 }
+
+//twitter's modal
+router.get('/tweets/:id/replies', authenticated, tweetController.getTweetModal)
 
 //user's profile
 router.get('/users/:id', authenticated, userController.getUser)

@@ -12,8 +12,10 @@
   <div class="border border-1 border-box card"
     style="background-color: #FFFFFF; border-color: #E6ECF0; width:600px; font-family: 'Noto Sans TC';">
     <div class="d-flex flex-row">
-      <img src="{{tweetUser.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
-        class="rounded-circle m-2" alt="...">
+      <a href="/users/{{tweetUser.id}}/tweets">
+        <img src="{{tweetUser.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4; "
+          class="rounded-circle m-2" alt="...">
+      </a>
       <div>
         <h6 class="fontWeight700 mt-2">{{tweetUser.name}}</h6>
         <h6 class="fontWeight500" style="color:#657786;">@{{tweetUser.account}}</h6>
@@ -44,8 +46,20 @@
       <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#replyModal"
         data-bs-whatever="@getbootstrap">
         <i class="far fa-lg fa-comment ms-4 me-5"></i>
+        {{#if this.isLiked }}
+        <form action="/tweets/{{tweet.id}}/unlike?_method=POST" method="POST">
+          <button type="submit" class="btn">
+            <i class="fas fa-heart me-3"></i>
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/like" method="POST">
+          <button type="submit" class="btn">
+            <i class="far fa-lg fa-heart me-3"></i>
+          </button>
+        </form>
+        {{/if}}
       </button>
-      <i class="far fa-lg fa-heart ms-5"></i>
     </div>
   </div>
 
@@ -55,8 +69,10 @@
   <div class="card p-3" style=" font-family: 'Noto Sans TC'; width: 600px">
     <div class="d-flex">
       <div>
-        <img src="{{this.dataValues.User.dataValues.avatar}}"
-          style="width: 50px; height: 50px; background-color: #C4C4C4; " class="rounded-circle m-2" alt="...">
+        <a href="/users/{{this.dataValues.User.dataValues.id}}/tweets">
+          <img src="{{this.dataValues.User.dataValues.avatar}}"
+            style="width: 50px; height: 50px; background-color: #C4C4C4; " class="rounded-circle m-2" alt="...">
+        </a>
       </div>
 
       <div class="col-md-8">
@@ -116,7 +132,7 @@
               <img src="{{user.avatar}}" style="width: 50px; height: 50px; background-color: #C4C4C4;"
                 class="rounded-circle m-2" alt="...">
               <div class="" style="width: 480px;  font-size: 18px;">
-                <textarea class="form-control" placeholder="推你的回覆" id="description" name="description" rows="5"
+                <textarea class="form-control" placeholder="推你的回覆" id="comment" name="comment" rows="5"
                   aria-label="With textarea" required></textarea>
               </div>
             </div>

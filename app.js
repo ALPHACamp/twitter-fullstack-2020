@@ -13,7 +13,8 @@ const helpers = require('./_helpers')
 
 const app = express()
 const port = process.env.PORT || 3000
-const baseURL = process.env.BASE_URL
+const baseURL = process.env.BASE_URL || 'http://localhost:3000'
+
 
 app.engine('handlebars', handlebars({
   defaultLayout: 'main',
