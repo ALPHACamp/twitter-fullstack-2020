@@ -78,7 +78,7 @@ const profileController = {
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -161,10 +161,11 @@ const profileController = {
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
-
+      const isSelf = Number(req.params.id) === Number(user.id);
       // return res.json({ Profile })
       return res.render("profile", {
         isComment,
+        isSelf,
         users: TopUsers,
         profile: Profile,
         tweetsCount,
@@ -245,11 +246,11 @@ const profileController = {
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
-      const isSelf = Number(req.params.userId) === Number(req.user.id);
+      const isSelf = Number(req.params.id) === Number(user.id);
       // return res.json({ tweets: LikedTweets })
       return res.render("profile", {
         isLikedPosts,
