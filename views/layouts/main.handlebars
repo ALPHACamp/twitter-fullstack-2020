@@ -76,15 +76,9 @@
           </li>
           {{#each users}}
           <li class="d-flex flex-row list-group-item" style="background-color: #E6ECF0; width: 350px;">
-            {{#ifCond this.id ../user.id}}
-            <a href="/users/self/{{../user.id}}">
+            <a href="/users/{{this.id}}/tweets">
               <img src="{{this.avatar}}" style="width: 50px; height: 50px; " class="rounded-circle m-2" alt="...">
             </a>
-            {{else}}
-            <a href="/users/other/{{this.id}}">
-              <img src="{{this.avatar}}" style="width: 50px; height: 50px; " class="rounded-circle m-2" alt="...">
-            </a>
-            {{/ifCond}}
             <div class="d-flex flex-column align-items-center m-2 me-auto">
               <div class="fw-bold">{{this.name}}</div>
               @{{this.account}}
