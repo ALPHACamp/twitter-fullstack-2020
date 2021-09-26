@@ -8,15 +8,15 @@
         <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
           <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark" href="/tweets">
-              <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text home a-tomato" style="color: #FF6600;">首頁</span>
+              <i class="fas fa-home " style="font-size: 1.2em;"></i>
+              <span class="h5 menu-text home a-tomato" >首頁</span>
             </a>
           </li>
 
           <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
-              <i class="far fa-envelope" style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text public">公開聊天室</span>
+              <i class="far fa-envelope" style="font-size: 1.2em; color: #FF6600"></i>
+              <span class="h5 menu-text public" style="color: #FF6600">公開聊天室</span>
             </a>
           </li>
 
@@ -80,7 +80,7 @@
                   <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/22c22e57910025.59e8689468e11.jpg"
                     width="50" height="50" class="rounded-circle">
                 </div>
-                
+
                 <div class="col-6 d-flex" style="height: 60px;">
                   <h5 style="line-height: 60px; font-size: 15px; font-weight: bold;">name</h5>
                   <p class="text-muted ps-2"
@@ -105,40 +105,47 @@
 
 
             <div id='board' class="rounded-3">
-              <!--左邊訊息-->
-              <div class="d-flex row">
-                <div class="col-1 d-flex justify-content-center">
-                  <a href="/users/{{id}}" class="p-1">
-                    <img
-                      src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/22c22e57910025.59e8689468e11.jpg"
-                      class="rounded-circle" style="width: 40px; height: 40px" alt="avatar" />
-                  </a>
-                </div>
-                <div class="col-11 pl-0 mt-3">
-                  <div>
-                    <p class="d-inline msgblockleft">左邊訊息</p>
-                  </div>
-                  <p class="text-muted mx-0"
-                    style="font-size: 13px; padding-left: 1px; margin-top: 6px;line-height: 13px;">下午4:21</p>
-                </div>
-              </div>
-              <!--左邊訊息-->
 
+              {{!-- each msg--}}
+
+              {{#each allMsg}}
+              {{#ifCond ../user.id this.UserId}}
               <!--右邊訊息-->
               <div class=" d-flex flex-row-reverse">
                 <div class="col-3 flex-column">
                   <div>
                     <p class="d-inline msgblockright ">
-                      右邊訊息</p>
+                      {{this.content}}</p>
                   </div>
                   <p class="text-muted mx-0 bd-highlight"
                     style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">
-                    幾秒前</p>
+                    {{moment this.createdAt}}</p>
                 </div>
                 <!--右邊訊息結束-->
-                <!--alan加-->
-                <div id="messages"></div>
               </div>
+              <!--右邊訊息-->
+              {{ else }}
+              <!--左邊訊息-->
+              <div class="d-flex row">
+                <div class="col-1 d-flex justify-content-center">
+                  <a href="/users/{{id}}" class="p-1">
+                    <img src='{{this.User.avatar}}' class="rounded-circle" style="width: 40px; height: 40px"
+                      alt="avatar" />
+                  </a>
+                </div>
+                <div class="col-11 pl-0 mt-3">
+                  <div>
+                    <p class="d-inline msgblockleft">{{this.content}}</p>
+                  </div>
+                  <p class="text-muted mx-0"
+                    style="font-size: 13px; padding-left: 1px; margin-top: 6px;line-height: 13px;">{{moment
+                    this.createdAt}}</p>
+                </div>
+              </div>
+              <!--左邊訊息-->
+              {{/ifCond}}
+              {{/each}}
+              {{!-- each msg--}}
             </div>
           </li>
         </ul>
@@ -146,43 +153,13 @@
           <div class="input-group">
 
             <div class="input-group">
-              <form id="form" action="">
-                <input id="input" autocomplete="off"  class="form-control bg-light" placeholder="請輸入訊息..."
+              <form id="form" action="" class="d-flex">
+                <input id="input" autocomplete="off" class="form-control bg-light" placeholder="請輸入訊息..."
                   aria-label="msgInput" aria-describedby="basic-addon1">
-                <button class="btn btn-tomato ">
+                <button class="btn btn-tomato position-absolute" style="right: 2px;">
                   <i class="fas fa-paper-plane"></i></button>
 
                 <script src="/socket.io/socket.io.js"></script>
-                {{!-- <script>
-                  (function() {
-                    
-                    var socket = io({ 'timeout': 5000, 'connect timeout': 5000 });
-
-                    
-                    if (socket !== undefined) {
-                      console.log('Connected to socket...')
-                    }
-                    var messages = document.getElementById('messages');
-                    var form = document.getElementById('form');
-                    var input = document.getElementById('input');
-
-                    form.addEventListener('submit', function (e) {
-                      e.preventDefault();
-                      if (input.value) {
-                        socket.emit('chat message', input.value);
-                        input.value = '';
-                      }
-                    });
-
-                    socket.on('chat message', function (msg) {
-                      var item = document.createElement('div');
-                      item.textContent = msg;
-                      messages.appendChild(item);
-                      window.scrollTo(0, document.body.scrollHeight);
-                    });
-                  })();
-                  
-                </script> --}}
 
               </form>
             </div>
@@ -196,6 +173,12 @@
         </li>
       </div>
     </div>
+  </div>
+  <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
+    <a href="/signout" class="d-flex" style="text-decoration:none;">
+      <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
+      <span class="h5 logout-text">登出</span>
+    </a>
   </div>
 </div>
 <script src='/javascripts/public.js'></script>

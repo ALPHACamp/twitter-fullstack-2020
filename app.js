@@ -62,11 +62,6 @@ app.use(methodOverride('_method'))
 
 app.get('/follower', (req, res) => res.render('follower'))
 
-app.get('/messages/public', (req, res) => {
-  res.render('publicChat.handlebars')
-
-});
-
 io.use((socket, next) => {
   sessionMiddleware(socket.request, socket.request.res, next)
 })
