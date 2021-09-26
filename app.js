@@ -1,6 +1,10 @@
 const express = require("express");
 port = process.env.PORT || 3000;
 host = process.env.BASE_URL || "http://localhost";
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const session = require("express-session");
 const db = require("./models");
 const methodOverride = require("method-override");
@@ -15,9 +19,6 @@ const helpers = require("./_helpers");
 const flash = require('connect-flash') 
 const app = express();
 
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
 
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 

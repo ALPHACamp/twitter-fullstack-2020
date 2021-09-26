@@ -20,11 +20,11 @@ const adminController = {
   },
 
   signIn: (req, res) => {
-    if (req.user.role === 'admin') {
-      console.log('signIn')
+    const user = getTestUser(req);
+    if (user.role === 'admin') {
       return res.redirect('/admin/tweets');
     }
-    req.flash('error_messages', '沒有權限');
+    // req.flash('error_messages', '沒有權限');
     req.logout();
     return res.redirect('/signin');
   },
@@ -35,6 +35,7 @@ const adminController = {
   },
 
   getPosts: (req, res) => {
+    const user = getTestUser(req);
     return Tweet.findAll({
       include: [
         { model: User, Attributes: listAttributes }
@@ -47,7 +48,7 @@ const adminController = {
       }))
 
       // return res.json(data)
-      return res.render('admin/tweets', { tweet: data, isadmin: req.user.role })
+      return res.render('admin/tweets', { tweet: data, isadmin: user.role })
     })
       .catch((error) => res.status(400).json(error));
   },
@@ -63,6 +64,7 @@ const adminController = {
   },
 
   getUsers: (req, res) => {
+    const user = getTestUser(req);
     return User.findAll({
       Attributes: ['id', 'name', 'account', 'cover', 'avatar'],
       include: [
@@ -83,7 +85,7 @@ const adminController = {
       }))
       data.sort((a, b) => b.TweetCount - a.TweetCount)
       // return res.json(data)
-      return res.render('admin/users', { user: data, isadmin: req.user.role })
+      return res.render('admin/users', { user: data, isadmin: user.role })
     })
       .catch((error) => res.status(400).json(error));
   }
