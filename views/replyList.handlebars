@@ -44,8 +44,20 @@
       <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#replyModal"
         data-bs-whatever="@getbootstrap">
         <i class="far fa-lg fa-comment ms-4 me-5"></i>
+        {{#if this.isLiked }}
+        <form action="/tweets/{{tweet.id}}/unlike?_method=POST" method="POST">
+          <button type="submit" class="btn">
+            <i class="fas fa-heart me-3"></i>
+          </button>
+        </form>
+        {{else}}
+        <form action="/tweets/{{tweet.id}}/like" method="POST">
+          <button type="submit" class="btn">
+            <i class="far fa-lg fa-heart me-3"></i>
+          </button>
+        </form>
+        {{/if}}
       </button>
-      <i class="far fa-lg fa-heart ms-5"></i>
     </div>
   </div>
 

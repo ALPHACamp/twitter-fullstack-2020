@@ -41,6 +41,8 @@ const tweetController = {
       const tweetUser = tweet.dataValues.User.dataValues
       const tweetRepliesCount = tweet.dataValues.Replies.length
       const tweetLikesCount = tweet.dataValues.Likes.length
+      const isLiked = helpers.getUser(req).LikedTweets ?
+        helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.dataValues.id) : false
       const whereQuery = {}
       whereQuery.tweetId = Number(req.params.id)
       Reply.findAndCountAll({
@@ -56,6 +58,7 @@ const tweetController = {
           tweetUser: tweetUser,
           tweetRepliesCount: tweetRepliesCount,
           tweetLikesCount: tweetLikesCount,
+          isLiked: isLiked,
           replies: replies,
         })
       })

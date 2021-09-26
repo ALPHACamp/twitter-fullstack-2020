@@ -45,7 +45,8 @@
             <h6 class="fontWeight500" style="color:#657786;">‧{{moment this.createdAt}}</h6>
           </div>
           <p class="card-text fontWeight500">
-            <a href="/tweets/{{this.id}}/replies" style="color:#1C1C1C; text-decoration:none;">
+
+            <a href="/tweets/{{ this.id }}/replies" style="color:#1C1C1C; text-decoration:none;">
               {{this.tweetDescription}}
             </a>
           </p>
@@ -66,10 +67,16 @@
               {{/if}}
             </div>
             <div>
-              <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#replyModal"
-                data-bs-whatever="@getbootstrap">
-                <i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.tweetRepliesCount}}</span>
-              </button>
+
+
+              <form action="/tweets/{{ this.id }}/replies">
+                <button type="submit" class="btn" data-bs-toggle="modal" data-bs-target="#replyModal"
+                  data-bs-whatever="@getbootstrap" onclick="">
+                  <i class="far fa-comment me-3"></i><span class="fontWeight500">{{this.tweetRepliesCount}}</span>
+                </button>
+              </form>
+
+
             </div>
           </div>
         </div>
