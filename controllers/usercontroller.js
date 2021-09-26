@@ -81,7 +81,7 @@ const userController = {
   },
   getUserSetting: (req, res) => {
     const user = getTestUser(req)
-    return res.render('setting', { user })
+    return res.render('setting', { profile: user })
   },
   editUserSetting: (req, res) => {
     if (req.body.checkPassword !== req.body.password) {

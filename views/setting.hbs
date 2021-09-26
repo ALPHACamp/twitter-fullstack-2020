@@ -3,14 +3,14 @@
     {{>columnLeft}}
   </div>
   <div class="col-9 d-flex" style="border-left: 1px solid #E6ECF0; margin:0%;padding:0%;">
-    <form class="form-login mt-3" action="/users/{{user.id}}/edit" method="POST" style="width: 100%;">
+    <form class="form-login mt-3" action="/profiles/{{profile.id}}/edit" method="POST" style="width: 100%;">
       <div class="text-start" style="border-bottom:1px solid #E6ECF0; height: 40px;">
         <h1 class="h3 font-weight-normal" style="margin-left: 20px; font-size:19px; margin-top: 10px;">帳號設定</h1>
       </div>
 
       <div class="row justify-content-start">
         <div class="form-floating col-4 mb-3">
-          <input type="text" class="form-control" name="account" id="floatingAccount" placeholder="@Will" value="{{ user.account }}"
+          <input type="text" class="form-control" name="account" id="floatingAccount" placeholder="@Will" value="{{ profile.account }}"
             style="background-color: #F5F8FA; margin-left:10px;" required autofocus>
           <label for="floatingAccount" style="margin-left:22px; margin-top:6px">帳號</label>
           <div class="invalid-feedback">請輸入帳號</div>
@@ -19,7 +19,7 @@
 
       <div class="row justify-content-start">
         <div class="form-floating col-4 mb-3">
-          <input type="text" class="form-control" name="name" id="floatingName" placeholder="name" value="{{ user.name }}"
+          <input type="text" class="form-control" name="name" id="floatingName" placeholder="name" value="{{ profile.name }}"
             style="background-color: #F5F8FA; margin-left:10px;" maxlength="50" required autofocus>
           <label for="floatingName" style="margin-left:22px; margin-top:6px">名稱</label>
           <div class="invalid-feedback">請輸入名稱，最多50字</div>
@@ -28,7 +28,7 @@
 
       <div class="row justify-content-start">
         <div class="form-floating col-4 mb-3">
-          <input type="email" class="form-control" name="email" id="floatingEmail" placeholder="name@example.com" value={{ user.email }}
+          <input type="email" class="form-control" name="email" id="floatingEmail" placeholder="name@example.com" value={{ profile.email }}
             style="background-color: #F5F8FA; margin-left:10px;" required autofocus>
           <label for="floatingEmail" style="margin-left:22px; margin-top:6px">Email</label>
           <div class="invalid-feedback">請輸入Email</div>
