@@ -6,21 +6,21 @@
 
   <div class="userProfileSection ">
     {{>message}}
-    
+
     {{>userProfile}}
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/tweets">推文</a>
+        <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/tweets">推文</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/replies">推文與回覆</a>
+        <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/replies">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary active" href="/user/{{tweetUser.id}}/likes">喜歡的內容</a>
+        <a class="nav-link text-secondary active" href="/users/{{tweetUser.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
-    
-    
+
+
     {{#each data}}
     <div class="comment d-flex border">
       <div class="avatar m-3">
@@ -66,14 +66,14 @@
     {{/each}}
 
   </div>
-  
+
   <div class="topUser">
     <div class="popularArea fixed mt-4 border">
       <div class="title m-3">
         <h5 class="fw-bolder">Popular</h5>
       </div>
       {{>popular}}
-      </div>
     </div>
   </div>
+</div>
 </div>

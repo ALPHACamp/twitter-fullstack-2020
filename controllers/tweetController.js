@@ -39,7 +39,7 @@ const tweetController = {
         createdAt: tweet.createdAt,
         userName: tweet.User.name,
         userAccount: tweet.User.account,
-        isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id),
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
       }))
 
       return res.render('tweets', {
@@ -78,8 +78,8 @@ const tweetController = {
         order: [['Replies', 'createdAt', 'DESC']]
       })
 
-      const isLiked = tweet.LikedUsers.map(d => d.id).includes(req.user.id) 
-      return res.render('tweet', { tweet: tweet.toJSON(), isLiked})
+      const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+      return res.render('tweet', { tweet: tweet.toJSON(), isLiked })
 
     } catch (e) {
       console.log(e.message)

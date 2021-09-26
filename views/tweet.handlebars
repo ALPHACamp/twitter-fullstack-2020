@@ -1,4 +1,3 @@
-
 {{>newTweet}}
 
 <!-- Modal -->
@@ -65,11 +64,12 @@
     </div>
     <div class="tweet border">
       <div class="d-flex">
-        <a href="/user/{{tweet.User.id}}/tweets" class="avatar m-2">
+        <a href="/users/{{tweet.User.id}}/tweets" class="avatar m-2">
           <img src="{{noImage tweet.User.avatar}}" alt="" class="rounded-circle userImage">
         </a>
         <div class="name ">
-          <a href="/user/{{tweet.User.id}}/tweets" class="text-secondary m-0 mt-1 fw-bolder btn">{{tweet.User.name}}</a>
+          <a href="/users/{{tweet.User.id}}/tweets"
+            class="text-secondary m-0 mt-1 fw-bolder btn">{{tweet.User.name}}</a>
           <p class="text-secondary m-0">@{{tweet.User.account}}</p>
         </div>
       </div>
@@ -116,12 +116,12 @@
     <div class="commentsList">
       {{#each tweet.Replies}}
       <div class="comment d-flex border">
-        <a href="/user/{{this.User.id}}/tweets" class="avatar m-3">
+        <a href="/users/{{this.User.id}}/tweets" class="avatar m-3">
           <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
         </a>
         <div>
           <div class="d-flex">
-            <a href="/user/{{this.User.id}}/tweets" class="name m-1 fw-bolder btn">{{this.User.name}}</a>
+            <a href="/users/{{this.User.id}}/tweets" class="name m-1 fw-bolder btn">{{this.User.name}}</a>
             <div class="account m-1 mt-2">@{{this.User.account}}</div>
             <div class="timefrom  m-1 mt-2">{{moment this.createdAt}}</div>
           </div>

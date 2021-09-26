@@ -6,18 +6,18 @@
 
   <div class="userProfileSection ">
     {{>message}}
-    
+
     {{>userProfile}}
-    
+
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link text-secondary active" href="/user/{{tweetUser.id}}/tweets">推文</a>
+        <a class="nav-link text-secondary active" href="/users/{{tweetUser.id}}/tweets">推文</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/replies">推文與回覆</a>
+        <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/replies">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/likes">喜歡的內容</a>
+        <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
 
@@ -68,9 +68,9 @@
     {{/each}}
 
   </div>
-  
+
   {{>popular}}
-      
+
 </div>
 
 <div class="modal fade" id="userProfileSetting" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">

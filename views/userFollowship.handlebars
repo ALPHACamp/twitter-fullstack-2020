@@ -24,14 +24,14 @@
     {{#each data}}
     <div class="tweet border">
       <div class="d-flex">
-        <a href="/user/{{this.id}}/tweets">
+        <a href="/users/{{this.id}}/tweets">
           <span class="avatar m-2 col-1">
             <img src="{{noImage this.avatar}}" class="rounded-circle userImage">
           </span></a>
         <div class="col-10">
           <div class="d-flex justify-content-between align-top mt-2">
             <div class="followerInfo">
-              <a href="/user/{{this.id}}/tweets" style="text-decoration: none;">
+              <a href="/users/{{this.id}}/tweets" style="text-decoration: none;">
                 <p class="name fw-bold lh-1 mb-1" style="color:black;">{{this.name}}</p>
                 <p class="tag text-secondary lh-1">@{{this.account}}</p>
               </a>

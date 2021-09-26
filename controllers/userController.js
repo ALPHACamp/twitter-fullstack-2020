@@ -28,18 +28,18 @@ const userController = {
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect('/signup')
     }
-    
+
     User.findAll({ where: { [Op.or]: [{ email }, { account }] } }).then(users => {
       if (users.some(item => item.account === account)) {
         req.flash('error_messages', '此帳號已有人使用！')
         return res.redirect('/signup')
-      } 
-      
+      }
+
       if (users.some(item => item.email === email)) {
         req.flash('error_messages', '此信箱已有人使用！')
         return res.redirect('/signup')
       }
-      
+
       User.create({
         account: account,
         name: name,
@@ -49,7 +49,7 @@ const userController = {
         req.flash('success_messages', '成功註冊帳號！')
         return res.redirect('/signin')
       })
-      
+
     })
   },
   signInPage: (req, res) => {
@@ -96,7 +96,7 @@ const userController = {
     ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
-        isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id), // 推文是否被喜歡過
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id), // 推文是否被喜歡過
       }))
 
       const topUsers = helpers.getTopUsers(req, users)
@@ -133,7 +133,7 @@ const userController = {
     const topUsers = await users.map(user => ({
       ...user.dataValues,
       followerCount: user.Followers.length,
-      isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+      isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     }))
       .sort((a, b) => b.followerCount - a.followerCount)
       .slice(0, 10)
@@ -145,7 +145,7 @@ const userController = {
       where: { followerId: req.params.id }
     })
 
-    return res.render('userSelfReply', { users, replies, tweets, tweetUser, followersCount, followingsCount, topUsers})
+    return res.render('userSelfReply', { users, replies, tweets, tweetUser, followersCount, followingsCount, topUsers })
   },
 
   getUserSelfLike: async (req, res) => {
@@ -173,14 +173,14 @@ const userController = {
       description: like.Tweet.description,
       RepliesLength: like.Tweet.Replies.length,
       LikedUsersLength: like.Tweet.LikedUsers.length,
-      isLiked: req.user.LikedTweets.map(d => d.id).includes(like.TweetId)
+      isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(like.TweetId)
     }))
 
     const topUsers =
       users.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
         .sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
@@ -189,7 +189,7 @@ const userController = {
   },
 
   getUserSetting: (req, res) => {
-    return res.render('setting', {renderType: "user" })
+    return res.render('setting', { renderType: "user" })
   },
   putUserSetting: async (req, res) => {
     const user = await User.findByPk(req.params.id)
@@ -208,17 +208,17 @@ const userController = {
     const user = await User.findByPk(req.params.id)
     const { name, description } = req.body
     const files = Object.assign({}, req.files)
-    
+
     if (!name.trim('')) {
       return req.flash('error_messages', '請輸入有效名稱！')
     } else if (name.trim('').length > 50) {
       return req.flash('error_messages', '名稱不得超過50字！')
-    } 
-    
+    }
+
     if (description.length > 160) {
       return req.flash('error_messages', '自我介紹不得超過160字！')
     }
-    
+
     imgur.setClientID(IMGUR_CLIENT_ID)
 
     if (files.avatar && files.cover) {
@@ -262,7 +262,7 @@ const userController = {
       req.flash('success_messages', 'Your profile was successfully updated!')
       res.redirect('back')
     }
-    
+
   },
 
   // Like
@@ -271,7 +271,7 @@ const userController = {
       .then(tweet => {
         tweet.increment('likeCount', { by: 1 })
         Like.create({
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           TweetId: req.params.tweetId
         })
       }).then(() => {
@@ -284,7 +284,7 @@ const userController = {
         tweet.decrement('likeCount', { by: 1 })
         Like.destroy({
           where: {
-            UserId: req.user.id,
+            UserId: helpers.getUser(req).id,
             TweetId: req.params.tweetId
           }
         })
@@ -369,7 +369,7 @@ const userController = {
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
       }))
 
       const data = followers.map(d => ({
@@ -413,7 +413,7 @@ const userController = {
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
       }))
 
       const data = followings.map(d => ({
