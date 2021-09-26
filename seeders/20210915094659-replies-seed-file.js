@@ -3,14 +3,14 @@ const faker = require('faker')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('Replies',
-      Array.from({ length: 180 }).map((d, i) =>
+      Array.from({ length: 150 }).map((d, i) =>
       ({
         // comment: faker.lorem.text().substring(0, 20),
         comment: faker.lorem.text().substring(0, 140),
         createdAt: new Date(),
         updatedAt: new Date(),
-        tweetId: Math.ceil((i + 1) / 3),
-        userId: i + 1 - Math.floor(i / 6) * 6,
+        tweetId: Math.ceil((i + 1) / 5),
+        userId: i + 2 - Math.floor(i / 5) * 5,
       }),
       ), {})
   },

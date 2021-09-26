@@ -15,17 +15,17 @@ module.exports = (app) => {
       {
         usernameField: "account",
         passwordField: 'password',//Form傳進來的變數如果不是預設的name，就 設定別名
+        passReqToCallback: true,
       },
-      (username, password, done) => {
+      (req, username, password, done) => {
         //傳進來的變數
         User.findOne({ where: { account: username } })
           .then((user) => {
             if (!user) {
-              console.log("account does not exist");
               return done(
                 null,
                 false,
-                console.log("warning_msg", "帳號還沒有註冊喔，請先註冊。")
+                req.flash("error_messages", "帳號還沒有註冊喔，請先註冊。")
               );
             }
             return bcrypt.compare(password, user.password).then((isMatch) => {
@@ -33,15 +33,14 @@ module.exports = (app) => {
                 return done(
                   null,
                   false,
-                  console.log("warning_msg", "Email或密碼錯誤。")
+                  req.flash("error_messages", "Email或密碼錯誤。")
                 );
-              } 
-                return done(
-                  null,
-                  user,
-                  console.log("success_msg", "已成功登入。")
-                );
-              
+              }
+              return done(
+                null,
+                user,
+              );
+
             });
           })
           .catch((err) => done(err, false));
@@ -62,6 +61,6 @@ module.exports = (app) => {
       user = user.toJSON()
       return done(null, user)
     })
-    .catch((err) => done(err, null));
+      .catch((err) => done(err, null));
   });
 };
