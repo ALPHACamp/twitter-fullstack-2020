@@ -85,13 +85,13 @@ const userController = {
   },
   editUserSetting: (req, res) => {
     if (req.body.checkPassword !== req.body.password) {
-      console.log('兩次密碼不同')
+      req.flash('error_messages', '兩次密碼不同')
       return res.redirect('back')
     } else {
       User.findOne({ where: { email: req.body.email } })
         .then(userEmail => {
           if (userEmail) {
-            console.log('此信箱已被使用')
+            req.flash('error_messages', '此信箱已被使用')
             res.redirect('/tweets')
           } else {
             User.findByPk(req.params.id)

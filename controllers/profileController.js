@@ -13,7 +13,7 @@ const { getTestUser } = require("./util.service");
 const listAttributes = ["id", "name", "account", "avatar"];
 
 const profileController = {
-  getPosts: async (req, res, done) => {
+  getPosts: async (req, res) => {
     const user = getTestUser(req);
     try {
       // 前端判斷
@@ -90,14 +90,13 @@ const profileController = {
         isFollowed: Boolean(followship),
         notification: Boolean(followship ? followship.notification : false),
       });
-      done();
     } catch (error) {
       console.log(error);
       res.status(400).json(error);
     }
   },
 
-  getComments: async (req, res, done) => {
+  getComments: async (req, res) => {
     const user = getTestUser(req);
     try {
       //前端處理判定
@@ -173,7 +172,7 @@ const profileController = {
     }
   },
 
-  getLikedPosts: async (req, res, done) => {
+  getLikedPosts: async (req, res) => {
     const user = getTestUser(req);
     try {
       // 前端判斷
@@ -268,13 +267,13 @@ const profileController = {
     const { name, introduction, avatar, cover } = req.body;
     const errors = [];
     if (!name || !introduction) {
-      // errors.push({ message: '名稱或自我介紹欄位，不可空白' })
+      errors.push({ message: '名稱或自我介紹欄位，不可空白' })
     }
     if (name.length > 50) {
-      // errors.push({ message: '名稱必須在50字符以內' })
+      errors.push({ message: '名稱必須在50字符以內' })
     }
     if (introduction.length > 160) {
-      // errors.push({ message: '自我介紹，必須在160字符以內' })
+      errors.push({ message: '自我介紹，必須在160字符以內' })
     }
     if (errors.length > 0) {
       return res.render("edit", { name, introduction, avatar, cover });
@@ -306,7 +305,7 @@ const profileController = {
       avatar: images.avatar ? images.avatar.data.link : profile.avatar,
     });
 
-    // req.flash('success_msg', '您的個人資訊已更新')
+    req.flash('success_msg', '您的個人資訊已更新')
     return res.redirect(`/users/${user.id}/tweets`);
   },
 };
