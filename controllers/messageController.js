@@ -48,29 +48,17 @@ const messageController = {
 
 
   sendPrivateMsg: async (user, roomName, viewUserId) => {
-    const room = await Room.findOrCreate({ where: { userId: user.id, toId: viewUserId } })
-    console.log(room)
     return Message.create({
-      roomId: room.id,
+      roomId: Number(roomName),
       content: user.msg,
+      sendId: Number(user.id)
     })
-    },
+  },
 
   privatePage: async (req, res) => {
     const currentUser = helpers.getUser(req)
     const viewUserId = Number(req.params.id)
-
-    //搜尋全部歷史訊息
-    const msgs = await Room.findAll({
-      where: {
-        [Op.or]:
-          [{ userId: currentUser.id, toId: viewUserId },
-          { userId: viewUserId, toId: currentUser.id }]
-      },
-      include: [Message],
-    })
-    console.log('msgs', msgs)
-
+    let roomName = ''
     //接收訊者的資料
     const viewUser = await User.findOne({
       where: { id: viewUserId },
@@ -78,12 +66,77 @@ const messageController = {
       raw: true,
       nest: true
     })
-    msg = await msgs.map(d => ({
-      ...d.dataValues,
-      // User: d.User.dataValues,
-      selfMsg: Boolean(d.UserId === currentUser.id)
-    }))
-    return res.render('private-chat', { currentUser, msg, viewUserId, viewUser })
+
+    //判斷roomId
+    if (currentUser.id !== viewUserId) {
+      //確認房間有無存在
+      const room = await Room.findOne({
+        where: {
+          [Op.or]: [
+            { userId: currentUser.id, toId: viewUserId },
+            { userId: viewUserId, toId: currentUser.id },
+          ]
+        },
+        raw: true,
+        nest: true
+      })
+      if (!room) {
+        //沒房間
+        const newRoom = await Room.create({
+          userId: currentUser.id, toId: viewUserId
+        })
+        //展開資料
+        roomName = newRoom.id
+      } else {
+        roomName = room.id
+      }
+
+      //找所有跟使用者相關的聊天室
+      // const allRoom = await Room.findAll({
+      //   where: {
+      //     [Op.or]: [
+      //       { userId: currentUser.id, toId: viewUserId },
+      //       { userId: viewUserId, toId: currentUser.id },
+      //     ]
+      //   },
+      //   attributes: ['id'],
+      //   raw: true,
+      //   nest: true
+      // })
+      // const roomId = allRoom.map(d => d.id)
+
+
+      //搜尋全部歷史訊息
+      const msgs = await Message.findAll({
+        where: {
+          RoomId: roomName
+        },
+        // where: {
+        //   RoomId: {
+        //     [Op.or]: [roomId[0], roomId[1], roomName]
+        //   }
+        // },
+        include: [Room],
+        raw: true,
+        nest: true
+      })
+
+      
+      const msg = msgs.map(d => ({
+        ...d,
+        selfMsg: d.sendId === currentUser.id ? true : false
+      }))
+      const randomUserId = Number(15 + 10 * ((Math.floor(Math.random() * 4) + 1)))
+
+      return res.render('private-chat', { currentUser, viewUserId, randomUserId, roomName, msg, viewUser })
+
+
+      // return res.render('private-chat', { currentUser, viewUserId,msg, viewUser })
+    }
+
+    const randomUserId = Number(15 + 10 * ((Math.floor(Math.random() * 4) + 1)))
+
+    return res.render('private-chat', { currentUser, viewUserId, randomUserId, viewUser })
   },
 
   // getPrivateInbox: async (currentId, res, cb) => {

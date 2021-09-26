@@ -2,9 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const Message = sequelize.define('Message', {
     content: DataTypes.STRING,
-    roomId: DataTypes.INTEGER
+    roomId: DataTypes.INTEGER,
+    sendId: DataTypes.INTEGER,
   }, {});
-  Message.associate = function(models) {
+  Message.associate = function (models) {
     Message.belongsTo(models.Room)
 
     // Message.belongsTo(models.User, { foreignKey: 'userId', as: 'messageReceiveLinks' });

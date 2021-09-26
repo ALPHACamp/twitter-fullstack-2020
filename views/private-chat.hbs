@@ -107,7 +107,7 @@
       <div class="d-flex justify-content-between" style=" margin: auto 15px;">
         <div class="text-title">訊息</div>
         <div class="text-icon">
-          <a href="">
+          <a href="/messages/{{randomUserId}}">
             <i class="fas fa-envelope-open-text"></i>
           </a>
         </div>
@@ -175,6 +175,11 @@
     {{!-- 右側欄位 --}}
     {{#ifCond currentUser.id viewUserId}}
     <div class="right-side col-md-5" style="padding:0; height:100%;">
+      <div class="chat-information">
+      點擊左側訊息欄或<a href="/messages/{{randomUserId}}">
+        <i class="fas fa-envelope-open-text"></i>
+      </a>開始隨機聊天
+      </div>
     </div>
     {{else}}
     <div class="right-side col-md-5" style="padding:0; height:100%;">
@@ -208,14 +213,14 @@
               <div class="other-user">
                 <div class="avatar">
                   <a href="">
-                    <img src="{{this.User.avatar}}" alt="">
+                    <img src="{{../viewUser.avatar}}" alt="">
                   </a>
                 </div>
                 <div class="text-area">
                   <div class="text">{{this.content}}</div>
                 </div>
               </div>
-              <div class="time">{{time this.createdAt}}</div>
+              <div class="time">{{time this.Messages.createdAt}}</div>
           </li>
           {{!-- 他人訊息 --}}
           {{/if}}
@@ -305,7 +310,7 @@
 
 
   //使用者最後訊息更新
-  socket.on('renderMsgBox', function (msgInBox) {
+  {{!-- socket.on('renderMsgBox', function (msgInBox) {
     const msgList = document.querySelector('#msgList')
     let msgHTML = ""
     let time = new Date().toLocaleTimeString()
@@ -338,12 +343,12 @@
     item.innerHTML = msgHTML;
     msgList.appendChild(item);
   })
-
+ --}}
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
     //使用roomdId
-    let roomName = "{{ msg.id }}"
+    let roomName = "{{ roomName }}"
     socket.emit('join private room', roomName)
     const currentId = "{{currentUser.id}}"
     socket.emit('msg-inbox', currentId)
@@ -353,7 +358,7 @@
   //本人送出訊息
   form.addEventListener('submit', function (e) {
     e.preventDefault()
-    let roomName = "{{  msg.id  }}"
+    let roomName = "{{  roomName  }}"
     if (input.value) {
       var item = document.createElement('li');
       let rawHTML = "";

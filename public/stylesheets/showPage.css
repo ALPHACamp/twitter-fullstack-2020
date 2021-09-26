@@ -2121,3 +2121,17 @@ font-size: 15px;
 line-height: 22px;
 color: #FF6600;
 }
+
+.chat-information {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    height: 1200px;
+    font-size: 30px;
+    color: #FF6600;
+}
+
+.chat-information a {
+  color: #FF6600;
+}
