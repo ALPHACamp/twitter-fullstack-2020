@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'UserId',
       as: 'LikedTweet'
     })
+    User.hasMany(models.PublicMsg)
   };
   return User;
 };
