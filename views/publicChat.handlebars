@@ -9,7 +9,7 @@
           <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark" href="/tweets">
               <i class="fas fa-home " style="font-size: 1.2em;"></i>
-              <span class="h5 menu-text home a-tomato" >首頁</span>
+              <span class="h5 menu-text home a-tomato">首頁</span>
             </a>
           </li>
 
@@ -40,6 +40,7 @@
 
           </li>
         </ul>
+
       </div>
     </div>
 
@@ -56,39 +57,6 @@
         <ul id="publicPeople" class="list-group overflow-auto" style="width: 24vw;">
           <li class="list-group-item" style="border: none;">
             <div id="onlinePeople">
-              {{!-- 第一個上線者 id="onlinePeople"--}}
-
-              <div class="row justify-content-start align-items-center px-2 py-1 rounded hovercard"
-                style="border: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 3px;"
-                onclick="location.href='/users/{{id}}'">
-                <div class="col-2 d-flex justify-content-center align-items-center" id="onlineUsers">
-                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/22c22e57910025.59e8689468e11.jpg"
-                    width="50" height="50" class="rounded-circle">
-                </div>
-                <div class="col-6 d-flex" style="height: 60px;">
-                  <h5 style="line-height: 60px; font-size: 15px; font-weight: bold;">name</h5>
-                  <p class="text-muted ps-2"
-                    style="font-size: 15px; line-height: 60px; font-weight: 500; color:#657786;">
-                    @account</p>
-                </div>
-              </div>
-              {{!-- 第二個上線者 --}}
-              <div class="row justify-content-start align-items-center px-2 py-1 rounded hovercard"
-                style="border: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 3px;"
-                onclick="location.href='/users/{{id}}'">
-                <div class="col-2 d-flex justify-content-center align-items-center" id="onlineUsers">
-                  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/22c22e57910025.59e8689468e11.jpg"
-                    width="50" height="50" class="rounded-circle">
-                </div>
-
-                <div class="col-6 d-flex" style="height: 60px;">
-                  <h5 style="line-height: 60px; font-size: 15px; font-weight: bold;">name</h5>
-                  <p class="text-muted ps-2"
-                    style="font-size: 15px; line-height: 60px; font-weight: 500; color:#657786;">
-                    @account</p>
-                </div>
-              </div>
-
             </div>
           </li>
         </ul>
@@ -153,28 +121,27 @@
           <div class="input-group">
 
             <div class="input-group">
-              <form id="form" action="" class="d-flex">
-                <input id="input" autocomplete="off" class="form-control bg-light" placeholder="請輸入訊息..."
-                  aria-label="msgInput" aria-describedby="basic-addon1">
-                <button class="btn btn-tomato position-absolute" style="right: 2px;">
-                  <i class="fas fa-paper-plane"></i></button>
+              <form id="form" action="" class="d-flex" style="width: 100%;">
+                <div class="input-group mb-3">
 
-                <script src="/socket.io/socket.io.js"></script>
+                  <input id="input" type="text" class="form-control bg-light" placeholder="請輸入訊息..."
+                    aria-label="msgInput" aria-describedby="button-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-tomato" id="button-addon2"><i class="fas fa-paper-plane"></i></button>
 
+                  </div>
+                  <script src="/socket.io/socket.io.js"></script>
+
+
+                </div>
               </form>
             </div>
-
-            {{!-- <form id="form" action="">
-              <input id="input" autocomplete="off" /><button>Send</button>
-            </form> --}}
-
-
           </div>
         </li>
       </div>
     </div>
   </div>
-  <div class="d-flex fixed-bottom mb-3 ml-5 px-3">
+  <div class="d-flex fixed-bottom mb-3 ml-5 px-3 col-lg-1 col-md-1 col-1 col-sm-1">
     <a href="/signout" class="d-flex" style="text-decoration:none;">
       <i class="fas fa-sign-out-alt" style="color: #000000; font-size: 1.2em;"></i>
       <span class="h5 logout-text">登出</span>
