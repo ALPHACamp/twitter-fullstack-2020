@@ -11,6 +11,9 @@ const helpers = require('../../_helpers')
 
 const tweetController = {
   getTweetModal: (req, res) => {
+    console.log('test in apiController')
     return res.render('tweet')
   }
 }
+
+module.exports = tweetController
