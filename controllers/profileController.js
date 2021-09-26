@@ -26,7 +26,7 @@ const profileController = {
       const isPost = true;
       //get selfInformation
       const myProfile = await User.findByPk(user.id, {
-        attributes: ["avatar"],
+        attributes: ["id", "avatar"],
         raw: true,
       });
       //get selfInformation
@@ -166,6 +166,7 @@ const profileController = {
       return res.render("profile", {
         isComment,
         isSelf,
+        myProfile: user,
         users: TopUsers,
         profile: Profile,
         tweetsCount,
@@ -187,7 +188,7 @@ const profileController = {
       const isLikedPosts = true;
       //get selfInformation
       const myProfile = await User.findByPk(user.id, {
-        attributes: ["avatar"],
+        attributes: ["id", "avatar"],
         raw: true,
       });
       //get userInformation
@@ -216,8 +217,8 @@ const profileController = {
       });
       const LikedTweets = await rawLikedTweets.map((data) => ({
         ...data.dataValues,
-        ReplyCount: data.Tweet.Replies.length,
-        LikedCount: data.Tweet.Likes.length,
+        ReplyCount: data.Tweet ? data.Tweet.Replies.length : 0,
+        LikedCount: data.Tweet ? data.Tweet.Likes.length : 0,
       }));
 
       // get Count
