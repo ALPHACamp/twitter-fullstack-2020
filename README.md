@@ -3,14 +3,17 @@
 :link:[線上體驗](https://simple-twitter-alphitter.herokuapp.com/)
 
 ## 專案畫面
-首頁
+####首頁
 ![image](/public/img/AC-Simple-Twitter-localhost.png)
 <!-- ![image](https://github.com/0Trevor-Lin0/twitter-fullstack-2020/blob/master/picture/Twitter%E9%A6%96%E9%A0%81.png) -->
 
 
-個人資料詳細頁面
+####個人資料詳細頁面
 ![image](/public/img/AC-Simple-Twitter-userPage.png)
 <!-- ![image](https://github.com/0Trevor-Lin0/twitter-fullstack-2020/blob/master/picture/Twitter%E5%80%8B%E4%BA%BA%E8%A9%B3%E7%B4%B0%E9%A0%81.png) -->
+
+####公開聊天室
+![image](/public/img/AC-Simple-Twitter-publicChat.png)
 
 ## Features - 產品功能
 
