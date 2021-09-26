@@ -168,7 +168,6 @@ const userController = {
     const tweetUser = await User.findByPk(
       req.params.id
     )
-
     const data = likes.map(like => ({
       id: like.Tweet.id,
       avatar: like.Tweet.User.avatar,
@@ -178,7 +177,7 @@ const userController = {
       description: like.Tweet.description,
       RepliesLength: like.Tweet.Replies.length,
       LikedUsersLength: like.Tweet.LikedUsers.length,
-      isLiked: helpers.getUser(req).LikedTweets.map(d => d.id).includes(like.TweetId)
+      isLiked: like.Tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
     }))
 
     const topUsers =
@@ -190,7 +189,14 @@ const userController = {
         .sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
 
-    return res.render('userSelfLike', { data, tweets, tweetUser, topUsers })
+    const followersCount = await Followship.count({
+      where: { followingId: req.params.id }
+    })
+    const followingsCount = await Followship.count({
+      where: { followerId: req.params.id }
+    })
+
+    return res.render('userSelfLike', { data, tweets, tweetUser,followersCount, followingsCount, topUsers })
   },
 
   getUserSetting: (req, res) => {
@@ -272,7 +278,6 @@ const userController = {
 
   // Like
   addLike: (req, res) => {
-    console.log('req.params',req.params)
     Tweet.findByPk(req.params.tweetId)
       .then(tweet => {
         tweet.increment('likeCount', { by: 1 })
