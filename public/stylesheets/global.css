@@ -12,3 +12,13 @@
 .post-icon-block .likedText {
   color: #e0245e;
 }
+.profile-container {
+  position: relative;
+  top: -1px;
+  margin: 0;
+  height: 100%;
+  width: 600px;
+  max-width: 600px;
+  background: #e6ecf0;
+  padding: 0;
+}

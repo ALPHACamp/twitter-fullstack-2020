@@ -1,7 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col">
     {{>columnLeft}}
-  </div>
    {{>modalTweet}}
   <div class="profile-container">
     <div class="mainpost-nav">
@@ -39,7 +37,7 @@
             </form>
             {{/if}}
             <h5 class="d-inline-block profile-nav-header post-title">{{this.name}}&nbsp;<span
-                class="post-sub-info">{{this.account}}
+                class="post-sub-info">@{{this.account}}
                 &#x2027; {{this.updatedAtFormated}}</span></h5>
             <p>{{this.introduction}}</p>
           </div>
@@ -59,7 +57,7 @@
               <button type="submit" class="btn-orange btn-short upper-right">正在跟隨</button>
             </form>
             <h5 class="d-inline-block profile-nav-header post-title">{{this.name}}&nbsp;<span
-                class="post-sub-info">{{this.account}}
+                class="post-sub-info">@{{this.account}}
                 &#x2027; {{this.updatedAtFormated}}</span></h5>
             <p>{{this.introduction}}</p>
           </div>
@@ -69,8 +67,5 @@
       {{/each}}
     </div>
   </div>
-
-  <div class="col">
     {{>columnRight}}
-  </div>
 </div>

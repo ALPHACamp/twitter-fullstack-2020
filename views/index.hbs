@@ -1,7 +1,5 @@
-<div class="row justify-content-center">
-  <div class="col">
-    {{>columnLeft}}
-  </div>
+<div class="row justify-content-start">
+  {{>columnLeft}}
   {{>modalTweet}}
   <div class="profile-container">
     <div class="profile-nav">
@@ -22,7 +20,7 @@
         </div>
         <div class="post-card2">
           <h5 class="d-inline-block post-title">{{this.User.name}}&nbsp;<span
-              class="post-sub-info">{{this.User.account}} ‧
+              class="post-sub-info">@{{this.User.account}} ‧
               {{this.createdAt}}</span></h5>
           <a href="/tweets/{{this.id}}">
             <p class="post-text">{{this.description}}</p>
@@ -49,8 +47,5 @@
       <!--end::list of post-->
     </div>
   </div>
-
-  <div class="col">
-    {{>columnRight}}
-  </div>
+  {{>columnRight}}
 </div>
