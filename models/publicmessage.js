@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   PublicMessage.associate = function(models) {
     // associations can be defined here
-    Message.belongsTo(models.User)
+    PublicMessage.belongsTo(models.User)
   };
   return PublicMessage;
 };

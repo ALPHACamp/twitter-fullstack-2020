@@ -342,7 +342,8 @@
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
-    let roomName = "{{ roomName }}"
+    //使用roomdId
+    let roomName = "{{ msg.id }}"
     socket.emit('join private room', roomName)
     const currentId = "{{currentUser.id}}"
     socket.emit('msg-inbox', currentId)
@@ -352,7 +353,7 @@
   //本人送出訊息
   form.addEventListener('submit', function (e) {
     e.preventDefault()
-    let roomName = "{{ roomName }}"
+    let roomName = "{{  msg.id  }}"
     if (input.value) {
       var item = document.createElement('li');
       let rawHTML = "";

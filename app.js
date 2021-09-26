@@ -77,16 +77,16 @@ io.on('connection', (socket) => {
     socket.on('private-chat', (msg, currentId, currentAvatar, viewUserId) => {
       //存進資料庫
       const user = { id: currentId, msg: msg }
-      messageController.sendMsg(user, roomName, viewUserId)
+      messageController.sendPrivateMsg(user, roomName, viewUserId)
       socket.to(roomName).emit('private chat message', msg, currentId, currentAvatar);
       socket.broadcast.to(roomName).emit('noteHer');
     })
 
     //每位使用者最後訊息
-    socket.on('msg-inbox', async (currentId) => {
-      const msgInbox = await messageControllerApi.getPrivateInbox(currentId)
-      io.emit('renderMsgBox', msgInbox)
-    })
+    // socket.on('msg-inbox', async (currentId) => {
+    //   const msgInbox = await messageControllerApi.getPrivateInbox(currentId)
+    //   io.emit('renderMsgBox', msgInbox)
+    // })
   })
 
 
