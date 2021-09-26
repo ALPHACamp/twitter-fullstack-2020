@@ -38,6 +38,6 @@ router.get('/users/:id', authenticated, userController.renderUserEdit)
 router.post('/users/:id', authenticated, userController.putUserEdit)
 
 //即時通訊(回傳最新訊息資料)
-router.get('/messages/:id', authenticated, messageController.getPrivateInbox)
+// router.get('/messages/:id', authenticated, messageController.getPrivateInbox)
 
 module.exports = router

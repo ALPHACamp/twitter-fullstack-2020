@@ -91,94 +91,58 @@ const messageController = {
         roomName = room.id
       }
 
-      //找所有跟使用者相關的聊天室
-      // const allRoom = await Room.findAll({
-      //   where: {
-      //     [Op.or]: [
-      //       { userId: currentUser.id, toId: viewUserId },
-      //       { userId: viewUserId, toId: currentUser.id },
-      //     ]
-      //   },
-      //   attributes: ['id'],
-      //   raw: true,
-      //   nest: true
-      // })
-      // const roomId = allRoom.map(d => d.id)
-
-
       //搜尋全部歷史訊息
       const msgs = await Message.findAll({
         where: {
           RoomId: roomName
         },
-        // where: {
-        //   RoomId: {
-        //     [Op.or]: [roomId[0], roomId[1], roomName]
-        //   }
-        // },
         include: [Room],
         raw: true,
         nest: true
       })
 
-      
       const msg = msgs.map(d => ({
         ...d,
         selfMsg: d.sendId === currentUser.id ? true : false
       }))
       const randomUserId = Number(15 + 10 * ((Math.floor(Math.random() * 4) + 1)))
-
       return res.render('private-chat', { currentUser, viewUserId, randomUserId, roomName, msg, viewUser })
-
-
-      // return res.render('private-chat', { currentUser, viewUserId,msg, viewUser })
     }
 
-    const randomUserId = Number(15 + 10 * ((Math.floor(Math.random() * 4) + 1)))
 
+    const randomUserId = Number(15 + 10 * ((Math.floor(Math.random() * 4) + 1)))
     return res.render('private-chat', { currentUser, viewUserId, randomUserId, viewUser })
   },
 
-  // getPrivateInbox: async (currentId, res, cb) => {
-  //   console.log('資料庫前條件', currentId)
-  //   const currentUser = await User.findOne({
-  //     where: { id: currentId},
-  //     raw:true,
-  //     nest:true
-  //   })
-  //   const datas = await Message.findAll({
-  //     where: {
-  //       roomName: {
-  //         [Op.not]: null
-  //       }
-  //     },
-  //     include: [
-  //       { model: User, attributes: ['id', 'avatar', 'name', 'account'] },
-  //       { model: User, as: 'toIdUser', attributes: ['id','avatar', 'name', 'account'] }
-  //     ],
-  //     // order: sequelize.query('select from Message order by createdAt desc', {
-  //     //   type: sequelize.QueryTypes.SELECT
-  //     // }),
-  //     group: ['roomName'],
-  //     raw: true,
-  //     nest: true
-  //   })
-  //   console.log('rawData', datas)
+  getPrivateInbox: async (currentId, res, cb) => {
+    // const test = await Room.findAll({
+    //   where: {
+    //     [Op.or]: [
+    //       { userId: currentUser.id },
+    //       { toId: currentUser.id },
+    //     ]
+    //   },
+    //   include: [{ model: Message, attributes: {include: [[sequelize.fn('MAX', sequelize.col('createdAt'))]]} }]
+    // })
+    const test = await Message.findAll({
+      attributes: ['content', 'roomId', [sequelize.fn('max', sequelize.col('createdAt')), 'msgTime']],
+      // include: [Room],
+      group: ['roomId'],
+      order: [[sequelize.col('msgTime'), 'DESC']],
+      raw: true,
+      nest: true
+    })
 
-  //   const data = await datas.map(d => ({
-  //     ...d,
-  //     content: d.content.length > 12 ? d.content.substring(0, 12) + '...' : d.content,
-  //     showUserName: d.toIdUser.id === currentUser.id ? d.User.id : d.toIdUser.id,
-  //     showUserAccount: d.toIdUser.id === currentUser.id ? d.User.account : d.toIdUser.account ,
-  //     showUserAvatar: d.toIdUser.id === currentUser.id ? d.User.avatar : d.toIdUser.avatar ,
-  //   }))
-  //   console.log('整理前', data)
-  //   const msg = await data.filter(d => {
-  //     return (Number(d.toId) === Number(currentUser.id) || Number(d.UserId) === Number(currentUser.id))
-  //   })
-  //   console.log('整理後', msg)
-  //   return msg
-  // },
+    const user = await User.findAll({
+      raw:true,
+      nest:true
+    })
+
+    console.log('測試結果===', user)
+    return test
+
+  }
+  ,
 
 
   // subscribe: async (req, res) => {

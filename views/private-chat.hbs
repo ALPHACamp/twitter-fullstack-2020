@@ -310,7 +310,7 @@
 
 
   //使用者最後訊息更新
-  {{!-- socket.on('renderMsgBox', function (msgInBox) {
+  socket.on('renderMsgBox', function (msgInBox) {
     const msgList = document.querySelector('#msgList')
     let msgHTML = ""
     let time = new Date().toLocaleTimeString()
@@ -319,15 +319,15 @@
     item.classList.add('list-group')
     for (let i = 0; i < msgInBox.length; i++) {
       msgHTML += `
-       <a href="/messages/${msgInBox[i].toId}">
+       <a href="/messages/">
       <li class="message list-group-item">
           <div class="avatar">
-              <img src="${msgInBox[i].showUserAvatar}" alt="">
+              <img src="" alt="">
           </div>
           <div class="name-account-message col-md-12">
             <div class="name-account col-md-12">
-                <div class="name">${msgInBox[i].showUserName}</div>
-                <div class="account">@${msgInBox[i].showUserAccount}</div>
+                <div class="name">名字放這</div>
+                <div class="account">@帳號</div>
               <div class="time">
                 ${time}
               </div>
@@ -343,7 +343,7 @@
     item.innerHTML = msgHTML;
     msgList.appendChild(item);
   })
- --}}
+
 
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
