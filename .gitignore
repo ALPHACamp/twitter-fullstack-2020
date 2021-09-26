@@ -90,3 +90,7 @@ note.md
 .dynamodb/
 temp/
 upload/
+
+# Image for default user avatar and cover
+!upload/noImage-banner.jpg 
+!upload/noImage-head.jpg

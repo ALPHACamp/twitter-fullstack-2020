@@ -22,7 +22,7 @@ module.exports = {
       },
       avatar: {
         type: Sequelize.STRING,
-        defaultValue: "/public/assets/noImage-banner.jpg",
+        defaultValue: "/upload/noImage-head.jpg",
       },
       account: {
         type: Sequelize.TEXT,
@@ -32,7 +32,7 @@ module.exports = {
       },
       cover: {
         type: Sequelize.STRING,
-        defaultValue: "/public/assets/noImage-banner.jpg",
+        defaultValue: "/upload/noImage-banner.jpg",
       },
       role: {
         type: Sequelize.STRING,
