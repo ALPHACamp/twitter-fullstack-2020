@@ -23,6 +23,7 @@ if (process.env.NODE_ENV !== 'production') {
 //變更順序以引入變數
 const passport = require('./config/passport')
 const messageController = require('./controllers/messageController')
+const messageControllerApi = require('./controllers/api/messageController')
 const { sendMsg } = require('./controllers/messageController')
 const { join } = require('path')
 
@@ -52,9 +53,6 @@ io.on('connection', (socket) => {
       io.emit('chat message', msg, currentId, currentAvatar);
     });
 
-    socket.on('onlineUser', () => {
-      io.emit('online user', onlineUser)
-    })
 
     socket.on('disconnect', () => {
       //移除使用者名單
@@ -66,6 +64,11 @@ io.on('connection', (socket) => {
       io.emit('online user', onlineUser)
     })
   });
+
+
+  socket.on('onlineUser', () => {
+    io.emit('online user', onlineUser)
+  })
 
   //私人聊天
   socket.on('join private room', (roomName) => {
@@ -81,7 +84,7 @@ io.on('connection', (socket) => {
 
     //每位使用者最後訊息
     socket.on('msg-inbox', async (currentId) => {
-      const msgInbox = await messageController.getPrivateInbox(currentId)
+      const msgInbox = await messageControllerApi.getPrivateInbox(currentId)
       // console.log('msg',msgInbox)
       io.emit('renderMsgBox', msgInbox)
     })

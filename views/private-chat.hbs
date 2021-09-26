@@ -1,5 +1,15 @@
 <link rel="stylesheet" href="/stylesheets/showPage.css">
 
+<script>
+  function getUserData() {
+    axios.get('{{ BASE_URL }}/api/messages/{{currentUser.id}}')
+      .then(res => {
+        console.log(res.data)
+      }
+      )
+  }
+</script>
+
 {{!-- 包一層div讓內部有依據照比例縮 --}}
 <div class="wrap d-flex">
   <div class="row col-md-12  justify-content-center" style="margin:0">
@@ -50,26 +60,26 @@
           </a>
 
 
-          <a href="/messages/{{user.id}}">
+          <a href="/messages/{{currentUser.id}}">
             <li class="list-group-item active">
-              <div class="d-flex" >
+              <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-envelope mr-4 note-her" id="priNote">
-         {{!-- 若有通知 --}}
+                  {{!-- 若有通知 --}}
                   {{!-- 應該在這 --}}
-         {{!-- 若有通知 --}}
+                  {{!-- 若有通知 --}}
                 </i>
                 私人訊息
               </div>
             </li>
           </a>
 
-          <a href="/users/{{user.id}}/tweets">
+          <a href="/users/{{currentUser.id}}/tweets">
             <li class="list-group-item">
               <div class="d-flex"><i class="fas  fa-fw fa-user mr-4"></i>個人資料</div>
             </li>
           </a>
 
-          <a href="/users/{{user.id}}/setting">
+          <a href="/users/{{currentUser.id}}/setting">
             <li class="list-group-item">
               <div class="d-flex"><i class="fas  fa-fw fa-cog mr-4"></i>設定</div>
             </li>
@@ -307,12 +317,12 @@
        <a href="/messages/${msgInBox[i].toId}">
       <li class="message list-group-item">
           <div class="avatar">
-              <img src="${msgInBox[i].User.avatar}" alt="">
+              <img src="${msgInBox[i].showUserAvatar}" alt="">
           </div>
           <div class="name-account-message col-md-12">
             <div class="name-account col-md-12">
-                <div class="name">${msgInBox[i].User.name}</div>
-                <div class="account">@${msgInBox[i].User.account}</div>
+                <div class="name">${msgInBox[i].showUserName}</div>
+                <div class="account">@${msgInBox[i].showUserAccount}</div>
               <div class="time">
                 ${time}
               </div>
@@ -333,15 +343,16 @@
   //登入傳當前使用者資料
   window.addEventListener('load', function sendUser() {
     let roomName = "{{ roomName }}"
-    const currentId = "{{ user.id }}"
     socket.emit('join private room', roomName)
+    const currentId = "{{currentUser.id}}"
     socket.emit('msg-inbox', currentId)
-    console.log('123')
+    getUserData()
     scrollWindow();
   })
 
   //本人送出訊息
-  form.addEventListener('submit', function () {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault()
     let roomName = "{{ roomName }}"
     if (input.value) {
       var item = document.createElement('li');
@@ -400,13 +411,13 @@
   });
 
   //接收私人訊息小紅燈通知
-  socket.on('noteHer', function(){
+  socket.on('noteHer', function () {
     var item = document.createElement('span');
     let rawHTML = "";
     redDot += 1
     item.classList.add('bubble')
-    rawHTML += 
-    `${redDot}`
+    rawHTML +=
+      `${redDot}`
     item.innerHTML = rawHTML;
     priNote.appendChild(item);
     scrollWindow();

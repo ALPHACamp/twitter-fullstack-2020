@@ -289,7 +289,8 @@
 
 
   //本人送出訊息
-  form.addEventListener('submit', function () {
+  form.addEventListener('submit', function (e) {
+    e.preventDefault()
     if (input.value) {
       var item = document.createElement('li');
       let rawHTML = "";

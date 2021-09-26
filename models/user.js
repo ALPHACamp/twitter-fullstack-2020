@@ -24,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     //self-referential super-many-to-many
     User.hasMany(models.Followship, { as: 'FollowerLinks', foreignKey: 'followerId' });
     User.hasMany(models.Followship, { as: 'FollowingLinks', foreignKey: 'followingId' });
+    //self-referential super-many-to-many
+    User.hasMany(models.Message, { as: 'toIdUser', foreignKey: 'toId' });
 
     User.belongsToMany(User, {
       through: models.Followship,

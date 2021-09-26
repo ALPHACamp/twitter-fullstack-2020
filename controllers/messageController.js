@@ -100,36 +100,46 @@ const messageController = {
     return res.render('private-chat', { roomName, currentUser, msg, viewUserId, viewUser })
   },
 
-  getPrivateInbox: async (currentId, res, cb) => {
-    console.log('資料庫前條件', currentId)
-    const toId = currentId
-    const datas = await Message.findAll({
-      include: [
-        { model: User, attributes: ['id', 'avatar', 'name', 'account'] },
-      ],
-      // order: sequelize.query('select from Message order by createdAt desc', {
-      //   type: sequelize.QueryTypes.SELECT
-      // }),
-      group: ['roomName'],
-      raw: true,
-      nest: true
-    })
-    console.log('rawData', datas)
+  // getPrivateInbox: async (currentId, res, cb) => {
+  //   console.log('資料庫前條件', currentId)
+  //   const currentUser = await User.findOne({
+  //     where: { id: currentId},
+  //     raw:true,
+  //     nest:true
+  //   })
+  //   const datas = await Message.findAll({
+  //     where: {
+  //       roomName: {
+  //         [Op.not]: null
+  //       }
+  //     },
+  //     include: [
+  //       { model: User, attributes: ['id', 'avatar', 'name', 'account'] },
+  //       { model: User, as: 'toIdUser', attributes: ['id','avatar', 'name', 'account'] }
+  //     ],
+  //     // order: sequelize.query('select from Message order by createdAt desc', {
+  //     //   type: sequelize.QueryTypes.SELECT
+  //     // }),
+  //     group: ['roomName'],
+  //     raw: true,
+  //     nest: true
+  //   })
+  //   console.log('rawData', datas)
 
-    const data = await datas.map(d => ({
-      ...d,
-      content: d.content.length > 12 ? d.content.substring(0, 12) + '...' : d.content,
-      // toUserName:,
-      // toUserAccount:,
-      // toUserAvatar: ,
-    }))
-    console.log('整理前', data)
-    const msg = await data.filter(d => {
-      return (Number(d.toId) === Number(toId) || Number(d.UserId) === Number(toId))
-    })
-    console.log('整理後', msg)
-    return msg
-  },
+  //   const data = await datas.map(d => ({
+  //     ...d,
+  //     content: d.content.length > 12 ? d.content.substring(0, 12) + '...' : d.content,
+  //     showUserName: d.toIdUser.id === currentUser.id ? d.User.id : d.toIdUser.id,
+  //     showUserAccount: d.toIdUser.id === currentUser.id ? d.User.account : d.toIdUser.account ,
+  //     showUserAvatar: d.toIdUser.id === currentUser.id ? d.User.avatar : d.toIdUser.avatar ,
+  //   }))
+  //   console.log('整理前', data)
+  //   const msg = await data.filter(d => {
+  //     return (Number(d.toId) === Number(currentUser.id) || Number(d.UserId) === Number(currentUser.id))
+  //   })
+  //   console.log('整理後', msg)
+  //   return msg
+  // },
 
 
   subscribe: async (req, res) => {

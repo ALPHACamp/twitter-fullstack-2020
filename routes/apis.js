@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/api/userController')
 const tweetController = require('../controllers/api/tweetController')
+const messageController = require('../controllers/api/messageController')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -35,5 +36,8 @@ router.get('/users/:id', authenticated, userController.renderUserEdit)
 
 //update edit page (modal)
 router.post('/users/:id', authenticated, userController.putUserEdit)
+
+//即時通訊(回傳最新訊息資料)
+router.get('/messages/:id', authenticated, messageController.getPrivateInbox)
 
 module.exports = router
