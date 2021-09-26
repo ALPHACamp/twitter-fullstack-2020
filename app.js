@@ -35,7 +35,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
-app.use(session({ secret: "secret", resave: false, saveUninitialized: false }));
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use("/upload", express.static(__dirname + "/upload"));
 usePassport(app);
 app.use((req, res, next) => {
