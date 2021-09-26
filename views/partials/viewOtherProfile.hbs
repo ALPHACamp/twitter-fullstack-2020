@@ -19,7 +19,7 @@
         </div>
         
         <!-- 小鈴鐺 按鈕 -->
-          {{>notificationBtns}}           
+          {{>notificationBtns profile=profile}}           
                 
         <!-- 正在跟隨 按鈕 -->
         <form class="ms-auto" action="/followships/{{profile.id}}?_method=DELETE" method="POST">

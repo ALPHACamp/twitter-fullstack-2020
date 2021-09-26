@@ -163,7 +163,7 @@ const followshipController = {
           "You cannot get notification for someone you don't follow"
         );
       } else {
-        followship.notification = !notification;
+        followship.notification = !followship.notification;
         followship.save();
       }
       return res.redirect("back");

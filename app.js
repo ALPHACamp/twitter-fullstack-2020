@@ -34,6 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
+const flash = require("connect-flash");
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -43,7 +44,15 @@ app.use(
 );
 app.use("/upload", express.static(__dirname + "/upload"));
 usePassport(app);
+app.use(flash());
 app.use((req, res, next) => {
+  res.locals.user = helpers.getUser(req);
+  next();
+});
+app.use((req, res, next) => {
+  res.locals.success_messages = req.flash("success_messages");
+  res.locals.error_messages = req.flash("error_messages");
+  res.locals.tweet_message = req.flash("tweet_message");
   res.locals.user = helpers.getUser(req);
   next();
 });
