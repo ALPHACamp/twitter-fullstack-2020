@@ -45,7 +45,7 @@ const tweetController = {
       return res.render('tweets', {
         tweets: data,
         topUsers,
-        theUser: helpers.getUser(req).id
+        currentUser: helpers.getUser(req).id
       })
     })
   },

@@ -12,6 +12,8 @@ const Like = db.Like
 const Followship = db.Followship
 const helpers = require('../_helpers')
 
+const userService = require('../services/userService')
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -68,41 +70,9 @@ const userController = {
   },
 
 
-  getUserTweets: async (req, res) => {
-    // const currentUser = helpers.getUser(req)
-    return Promise.all([
-      Tweet.findAll({
-        where: { UserId: req.params.id },
-        include: [User, Reply, { model: User, as: 'LikedUsers' }],
-        order: [['createdAt', 'DESC']]
-      }),
-      Followship.count({
-        where: { followingId: req.params.id }
-      }),
-      Followship.count({
-        where: { followerId: req.params.id }
-      }),
-      User.findByPk(
-        req.params.id
-      ),
-      User.findAll({
-        include: [
-          Tweet,
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ],
-        where: { role: "user" }
-      }),
-    ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
-      const data = tweets.map(tweet => ({
-        ...tweet.dataValues,
-        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id), // 推文是否被喜歡過
-      }))
-
-      const topUsers = helpers.getTopUsers(req, users)
-
-      return res.render('userSelf', { tweets: data, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id })
-
+  getUserTweets: (req, res) => {
+    userService.getUserTweets(req, res, (data) => {
+      return res.render('tweets', data)
     })
   },
 
@@ -377,7 +347,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userFollowship', { data, topUsers, theUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "follower" })
+      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "follower" })
     })
   },
 
@@ -421,7 +391,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userFollowship', { data, topUsers, theUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "following" })
+      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "following" })
     })
   }
 }
