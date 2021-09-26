@@ -269,19 +269,17 @@
     const item2 = document.createElement('li')
     item2.classList.add('list-group')
     for (let i = 0; i < onlineUser.length; i++) {
-      onlineHTML += `<li class="online-user list-group-item">
-      <a href="/messages/${onlineUser[i].currentId}">  
+      onlineHTML += `<a href="/messages/${onlineUser[i].currentId}">
+      <li class="online-user list-group-item">
         <div class="avatar">
           <img src=${onlineUser[i].currentAvatar} alt=""> 
         </div>
-        <div class="name-account">
-          <a href="" class="d-flex">
+        <div class="name-account d-flex">
             <div class="name">${onlineUser[i].currentName}</div>
             <div class="account">@${onlineUser[i].currentAccount}</div>
-          </a>
         </div>
-      </a>
         </li>
+        </a>
       <hr style="margin:0; padding:0">`
     }
     item2.innerHTML = onlineHTML

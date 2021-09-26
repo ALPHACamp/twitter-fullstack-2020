@@ -121,7 +121,7 @@
                 <div class="mail"><a href="/messages/{{viewUser.id}}"><i class="far fa-envelope"></i></a></div>
                 <div class="notification"><i class="far fa-bell"></i></div>
                 <form action="/followships" method="POST" style="display: contents;">
-                  <input type="hidden" name="id" value="{{this.id}}">
+                  <input type="hidden" name="id" value="{{viewUser.id}}">
                   <button type="submit" class="btn unfollow-button"> 跟隨 </button>
                 </form>
               </div>
