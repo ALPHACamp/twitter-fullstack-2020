@@ -89,7 +89,7 @@ const tweetController = {
       createdAt: new Date(),
       updatedAt: new Date()
     }).then((reply) => {
-      res.redirect('back')
+      res.redirect(`/tweets/${req.params.id}/replies`)
     })
   },
   like: (req, res) => {

@@ -11,8 +11,14 @@ const helpers = require('../../_helpers')
 
 const tweetController = {
   getTweetModal: (req, res) => {
-    console.log('test in apiController')
-    return res.render('tweet')
+    Tweet.findByPk(req.params.id, {
+      raw: true,
+      nest: true,
+      include: [User]
+    }).then(tweetModal => {
+      const user = helpers.getUser(req)
+      return res.json({ tweetModal, user })
+    })
   }
 }
 
