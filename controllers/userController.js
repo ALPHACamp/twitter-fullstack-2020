@@ -201,6 +201,8 @@ const userController = {
       where: whereQuery,
       order: [['createdAt', 'DESC']],
     }).then(result => {
+      console.log(result.rows[0].dataValues.tweetId)
+      console.log(helpers.getUser(req).LikedTweets)
       const data = result.rows.map(r => ({
         ...r.dataValues,
         tweetId: r.dataValues.Tweet.dataValues.id,
@@ -208,7 +210,7 @@ const userController = {
         createdAt: r.dataValues.createdAt,
         likeUserId: r.dataValues.Tweet.dataValues.User.id,
         isLiked: helpers.getUser(req).LikedTweets ?
-          helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.id) : false,
+          helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.tweetId) : false,
         likeAvatar: r.dataValues.Tweet.dataValues.User.avatar,
         likeUserName: r.dataValues.Tweet.dataValues.User.name,
         likeUserAccount: r.dataValues.Tweet.dataValues.User.account,

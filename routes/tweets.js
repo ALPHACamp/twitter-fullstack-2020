@@ -7,9 +7,9 @@ const tweetController = require('../controllers/tweetController.js')
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (helpers.getUser(req).role === 'user') {
-      return next()
+      req.flash('error_messages', '管理員請由後台登入')
     }
-    req.flash('error_messages', '管理員請由後台登入')
+    return next()
   }
   res.redirect('/signin')
 }
