@@ -85,6 +85,7 @@ const userController = {
       ),
       User.findAll({
         include: [
+          Tweet,
           { model: User, as: 'Followings' },
           { model: User, as: 'Followers' }
         ],
@@ -96,23 +97,10 @@ const userController = {
         isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id), // 推文是否被喜歡過
       }))
 
-      const topUsers =
-        users.map(user => ({
-          ...user.dataValues,
-          followerCount: user.Followers.length,
-          isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
-        }))
-          .sort((a, b) => b.followerCount - a.followerCount)
-          .slice(0, 10)
+      const topUsers = helpers.getTopUsers(req, users)
 
-      return res.render('userSelf', {
-        tweets: data,
-        tweetUser: tweetUser.toJSON(),
-        followersCount,
-        followingsCount,
-        topUsers,
-        theUser: helpers.getUser(req).id
-      })
+      return res.render('userSelf', { tweets: data, tweetUser: tweetUser.toJSON(), followersCount, followingsCount, topUsers, theUser: helpers.getUser(req).id })
+
     })
   },
 
@@ -311,7 +299,7 @@ const userController = {
     // 確認不能追蹤自己
     if (Number(followerId) === Number(followingId)) {
       req.flash('error_messages', 'You can\'t follow yourself!')
-      return res.redirect('/tweets')
+      return res.end()
     }
 
     // 確認該筆追蹤尚未存在於followship中，若不存在才創建新紀錄
@@ -365,8 +353,17 @@ const userController = {
           { model: User, as: 'Followers' }
         ],
         where: { role: "user" },
+      }),
+      User.findOne({
+        where: { id: req.params.id },
+        nest: true,
+        raw: true
+      }),
+      Tweet.count({
+        where: { Userid: req.params.id }
       })
-    ]).then(([followers, usersdata]) => {
+    ]).then(([followers, usersdata, tweetUser, tweetCount]) => {
+      console.log(tweetUser)
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
@@ -378,7 +375,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "follower" })
+      res.render('userFollowship', { data, topUsers, theUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "follower" })
     })
   },
 
@@ -399,8 +396,18 @@ const userController = {
           { model: User, as: 'Followers' }
         ],
         where: { role: "user" },
+      }),
+      User.findOne({
+        where: { id: req.params.id },
+        nest: true,
+        raw: true
+      }),
+      Tweet.count({
+        where: { Userid: req.params.id }
       })
-    ]).then(([followings, usersdata]) => {
+    ]).then(([followings, usersdata, tweetUser, tweetCount]) => {
+
+      console.log("==========================", tweetUser)
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
@@ -412,7 +419,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userSelfFollowship', { data, topUsers, theUser: helpers.getUser(req).id, renderType: "following" })
+      res.render('userFollowship', { data, topUsers, theUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "following" })
     })
   }
 }
