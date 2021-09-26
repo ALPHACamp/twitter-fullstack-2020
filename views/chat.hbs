@@ -59,9 +59,9 @@
         behavior: 'enter-public',
       }
       // 往chat message 丟一份我的資料
-      socket.emit('chat message', userMsg)
+      {{!-- socket.emit('chat message', userMsg) --}}
       // 通知server此id上線
-      socket.emit('userIn', userId )
+      socket.emit('userIn', userMsg )
     })
     socket.on('publicRoomUsers', (publicRoomUsers) => {
       chatUsers.innerHTML = `

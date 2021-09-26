@@ -21,11 +21,11 @@ module.exports = {
   connect() {
     io.on('connection', (socket) => {
       console.log('有人進入公開聊天室囉！')
-      socket.on("userIn", async (userId) => {
+      socket.on("userIn", async (userMsg) => {
         try {
           //運用socket儲存值
-          socket.currentUserId = userId
-          const currentUser = await User.findByPk(userId)
+          socket.currentUserId = userMsg.senderId
+          const currentUser = await User.findByPk(userMsg.senderId)
           await currentUser.update({publicRoom: true})
           const publicRoomUsers = await User.findAll({
             raw: true,
@@ -38,8 +38,12 @@ module.exports = {
             order: [['createdAt']],
             include: [User]
           })     
-          io.emit(`historyPublicChats-${userId}`, historyPublicChats)
+          io.emit(`historyPublicChats-${userMsg.senderId}`, historyPublicChats)
           io.emit('publicRoomUsers', publicRoomUsers)
+          if (userMsg.behavior === 'enter-public') {
+            // 廣播上線資訊給大家
+            io.emit('chat message', userMsg)
+          }
         } catch (err) {
           console.log(err)
         }
@@ -86,10 +90,10 @@ module.exports = {
       // 公開聊天室的行為
       socket.on('chat message', async (userMsg) => {
         try {
-          if (userMsg.behavior === 'enter-public') {
-            // 廣播上線資訊給大家
-            io.emit('chat message', userMsg)
-          }
+          // if (userMsg.behavior === 'enter-public') {
+          //   // 廣播上線資訊給大家
+          //   io.emit('chat message', userMsg)
+          // }
 
           if (userMsg.behavior === 'public-chat') {
             await PublicChat.create({
