@@ -3,17 +3,10 @@ const bcrypt = require("bcryptjs");
 const db = require('../models')
 const { Op } = require("sequelize");
 const { User } = db
+const { getTestUser } = require("./util.service");
 
 
 //for test only
-const helpers = require("../_helpers.js");
-const getTestUser = function (req) {
-  if (process.env.NODE_ENV === "test") {
-    return helpers.getUser(req);
-  } else {
-    return req.user;
-  }
-};
 
 const userController = {
   signInPage: (req, res) => {
@@ -23,12 +16,12 @@ const userController = {
     return res.render("signup");
   },
   signup: (req, res) => {
-    const { name, email, account, password, confirmPassword } = req.body
+    const { name, email, account, password, checkPassword } = req.body
     const errors = []
-    if (!name || !email || !account || !password || !confirmPassword) {
+    if (!name || !email || !account || !password || !checkPassword) {
       errors.push({ message: '所有欄位都是必填。' })
     }
-    if (confirmPassword !== password) {
+    if (checkPassword !== password) {
       errors.push({ message: '兩次密碼輸入不同！' })
     }
     if (errors.length) {
@@ -39,11 +32,12 @@ const userController = {
         account,
       })
     }
-    User.findOne({ where: {
-      [Op.or]:[{ email }, { account }]
-    }})
+    User.findOne({
+      where: {
+        [Op.or]: [{ email }, { account }]
+      }
+    })
       .then(user => {
-        console.log(user)
         if (user) {
           console.log(email)
           if (user.email === email) {
@@ -67,11 +61,11 @@ const userController = {
           }
         } else {
           User.create({
-            name: req.body.name,
-            account: req.body.account,
+            name: name,
+            account: account,
             role: "user",
-            email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
+            email: email,
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
           }).then(user => {
             req.flash('success_messages', '成功註冊帳號！')
             return res.redirect('/signin')
@@ -90,7 +84,7 @@ const userController = {
     return res.render('setting', { user })
   },
   editUserSetting: (req, res) => {
-    if (req.body.confirmPassword !== req.body.password) {
+    if (req.body.checkPassword !== req.body.password) {
       console.log('兩次密碼不同')
       return res.redirect('back')
     } else {
@@ -117,7 +111,6 @@ const userController = {
         })
     }
   }
-
 
 };
 
