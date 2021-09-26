@@ -58,8 +58,6 @@
         senderAvatar: userAvatar,
         behavior: 'enter-public',
       }
-      // 往chat message 丟一份我的資料
-      {{!-- socket.emit('chat message', userMsg) --}}
       // 通知server此id上線
       socket.emit('userIn', userMsg )
     })
@@ -95,24 +93,22 @@
       // 如果這則訊息的說話者是我
       historyPublicChats.forEach(userMsg => {
         if (userMsg.UserId.toString() === userId) {
-          let newBubble = document.createElement('div')
-
-          newBubble.className = 'my-chat d-flex justify-content-end my-2 justify-content-end'
-          newBubble.innerHTML = `<div class="chat-content">
-          <p class="p-3">${userMsg.message}</p>
-        </div>`
-          messages.appendChild(newBubble);
+          messages.innerHTML += `<div class="my-chat d-flex justify-content-end mt-2 justify-content-end">
+          <div class="chat-content">
+            <p class="p-3">${userMsg.message}</p>
+          </div>
+        </div>
+        <p class="my-chat-time">${userMsg.createdAt}</p>`
         } else {
           // 如果這則訊息的說話者是別人
-          let newBubble = document.createElement('div')
-
-          newBubble.className = 'other-chat d-inline-flex align-items-end my-2'
-          newBubble.innerHTML = `<img class="rounded-circle" src="${userMsg.User.avatar}"
-                alt="avatar" title="avatar" width="50px" height="50px">
-                <div class="chat-content ms-3">
-                  <p class='p-3'>${userMsg.message}</p>
-                </div>`
-          messages.appendChild(newBubble);
+           messages.innerHTML += `<div class="other-chat d-inline-flex align-items-end mt-2">
+          <img class="rounded-circle" src="${userMsg.User.avatar}"
+            alt="avatar" title="avatar" width="50px" height="50px">
+          <div class="chat-content ms-3">
+            <p class='p-3'>${userMsg.message}</p>
+          </div>
+        </div>
+        <p class="other-chat-time">${userMsg.createdAt}</p>`
         }
       })
       scrollable.scrollTo(0, scrollable.scrollHeight)

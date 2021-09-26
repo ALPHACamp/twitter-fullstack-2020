@@ -60,11 +60,14 @@
   margin: 0 5px;
 }
 
-.chat-user .account {
+.chat-user .account,
+.chat-user .msg-preview,
+.chat-user .time {
   color: #657786;
   font-size: 1rem;
   font-weight: 500;
 }
+
 
 
 
