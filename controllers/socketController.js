@@ -2,7 +2,10 @@ let onlineUsers = []
 let onlineCounts = 0
 let onlineUserPop = ''
 const db = require('../models') 
-const User = db.User
+const User = db.User 
+const PublicMsg = db.PublicMsg
+const moment = require('moment')
+
 module.exports = (io) => {
   io.on('connection', (socket) => {
     //有登入
@@ -25,20 +28,23 @@ module.exports = (io) => {
       io.emit('onlineCounts', onlineCounts)
       io.emit('onlineUserPop', onlineUserPop)
       
-
-      
-      onlineUsers
-      // let onlineUsers = onlineUsers.find(item => item.id === idFromSession)
-      
     })
     console.log('a user connected')
-    socket.on('chat message', (msg) => {
-      io.emit('chat message', msg);
-      console.log(msg)
+
+    //來自client 的事件名稱 chat message
+    socket.on('chat message', async(data) => {
+      await PublicMsg.create({
+        UserId: data.id,
+        content: data.msg
+      })
+      data['time'] = moment().fromNow()
+      //要對所有 Client 廣播的事件名稱 chat message
+      io.emit('chat message', data);
     });
     //沒登入
     socket.on('disconnect', () => {
       console.log('user disconnected')
+      
     })
   })
 }

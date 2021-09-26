@@ -5,6 +5,13 @@ const onlineCounts = document.getElementById('onlineCounts')
 const publicPeople = document.getElementById('publicPeople')
 const board = document.getElementById('board')
 const publicboard = document.getElementById('publicboard')
+var input = document.getElementById('input');
+var form = document.getElementById('form');
+var messages = document.getElementById('messages');
+const username = document.getElementById('name')
+const id = document.getElementById('id')
+const avatar = document.getElementById('avatar')
+
 //check for connection
 if (socket !== undefined) {
     console.log('Connected to socket...')
@@ -42,26 +49,67 @@ socket.on('onlineCounts', (counts) => {
 //監聽來自server端的事件名稱 onlineUserPop
 socket.on('onlineUserPop', (userPop) => {
   let onlineUserPop = document.createElement('ul')
-  onlineUserPop.classList.add('list-group', 'd-flex', 'flex-column', 'align-items-center')
+  onlineUserPop.classList.add('list-group', 'd-flex', 'flex-column', 'align-items-center','onlineUserPop')
   onlineUserPop.innerHTML = `
-      <li class="list-group-item mt-2 btn-sm" style="background-color:lightgray;border-radius: 30px 30px 30px 30px;">${userPop} 上線了</li>
+      <li class="list-group-item mt-2 btn-sm center" style="background-color:#E5E5E5;border-radius: 30px 30px 30px 30px; padding: 3px; font-size: 15px; color: #657786;">${userPop} 上線了</li>
     `
   board.appendChild(onlineUserPop)
   publicboard.scrollTo(0, publicboard.scrollHeight)
 })
 
-var messages = document.getElementById('messages');
-var form = document.getElementById('form');
-var input = document.getElementById('input');
+//點擊事件
 form.addEventListener('submit', function (e) {
   e.preventDefault();
   if (input.value) {
-    socket.emit('chat message', input.value);
+    socket.emit('chat message', { id: Number(id.textContent), avatar: avatar.textContent, user: username.textContent, msg: input.value });
     input.value = '';
   }
 });
 
-socket.on('chat message', function (msg) {
+//來自client 的事件名稱 chat message
+socket.on('chat message', (data) => {
+  let newMsg = document.createElement('div')
+  console.log(data.id === Number(id.textContent))
+  if (data.id === Number(id.textContent)) {  //自己的msg
+    newMsg.innerHTML = 
+    `
+    <div class=" d-flex flex-row-reverse">
+                <div class="col-3 flex-column">
+                  <div>
+                    <p class="d-inline msgblockright ">
+                      ${data.msg}</p>
+                  </div>
+                  <p class="text-muted mx-0 bd-highlight"
+                    style="font-size: 0.675em; padding-left: 0.3rem; margin-top: 0.3rem;">
+                    ${data.time}</p>
+                </div>
+                <!--右邊訊息結束-->
+              </div>
+    `
+    board.appendChild(newMsg)
+  } else {     //其他人的msg
+    newMsg.innerHTML = 
+    `
+    <div class="d-flex row">
+                <div class="col-1 d-flex justify-content-center">
+                  <a href="/users/${data.id}" class="p-1">
+                    <img
+                      src="${data.avatar}"
+                      class="rounded-circle" style="width: 40px; height: 40px" alt="avatar" />
+                  </a>
+                </div>
+                <div class="col-11 pl-0 mt-3">
+                  <div>
+                    <p class="d-inline msgblockleft">${data.msg}</p>
+                  </div>
+                  <p class="text-muted mx-0"
+                    style="font-size: 13px; padding-left: 1px; margin-top: 6px;line-height: 13px;">${data.time}</p>
+                </div>
+              </div>
+    `
+    board.appendChild(newMsg)
+  }
+  publicboard.scrollTo(0, publicboard.scrollHeight)
   var item = document.createElement('div');
   item.textContent = msg;
   messages.appendChild(item);

@@ -2,7 +2,10 @@
 
 const messageController = {
    getPublic: (req, res) => {
-     res.render('publicChat')
+     user = req.user
+     res.render('publicChat', {
+       user
+     })
    }
 }
 
