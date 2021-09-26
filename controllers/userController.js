@@ -440,9 +440,10 @@ const userController = {
           account,
           name,
           email,
-          password
+          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
         }).then(user => {
           return res.redirect(`/users/self/${user.id}`)
+          return res.redirect(`/users/${user.id}/tweets`)
         })
       })
   },
