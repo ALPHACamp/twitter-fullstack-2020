@@ -1,0 +1,58 @@
+<div class="title border d-flex">
+  <a href="/tweets" class="arrow me-3 d-flex align-items-center btn">
+    <i class="fas fa-arrow-left fs-4"></i>
+  </a>
+  <div>
+    <h4 class="fw-bolder m-0">{{tweetUser.name}}</h4>
+    <p class="m-0">{{tweets.length}}推文</p>
+  </div>
+</div>
+<div class="cover">
+  <img src="{{tweetUser.cover}}" alt="" class="userBackgroundImg">
+</div>
+<span class="avatar m-2">
+  <img src="{{tweetUser.avatar}}" alt="" class="rounded-circle userProfileImg">
+</span>
+<div class="profileInformation mt-5 pt-2 ms-2">
+  <div class="d-flex justify-content-end">
+    {{#ifCond user.id tweetUser.id}}
+    <div class="d-grid gap-2 col-2 round">
+      <button type="button" class="orange btn text-white round" data-bs-toggle="modal" data-bs-dismiss="backdrop"
+        data-bs-target="#userProfileSetting">編輯個人資料</button>
+    </div>
+    {{#if isFollowed}}
+    <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">
+      <button type="submit" class="btn btn-tomato rounded-pill" name="{{user.id}}">正在跟隨</button>
+    </form>
+    {{else}}
+    {{#ifCondNot user.id tweetUser.id}}
+    <form action="/followships/{{user.id}}" method="POST">
+      <button type="submit" class="btn btn-outline-tomato rounded-pill" name="{{user.id}}"
+        style="margin-left: 10px;">跟隨</button>
+    </form>
+    {{/ifCondNot}}
+    {{/if}}
+    {{/ifCond}}
+  </div>
+  <div class="name m-1 fw-bolder mt-2">
+    <h5> {{tweetUser.name}}</h5>
+  </div>
+  <div class="account m-1">@{{tweetUser.account}}</div>
+  <div class="m-2">
+    <p>{{tweetUser.description}}</p>
+  </div>
+</div>
+<div class="d-flex">
+</div>
+<div class="d-flex m-3">
+  <div class="replies me-5 d-flex">
+    <a class="repliesAmount fw-bolder me-2" href="/users/{{tweetUser.id}}/followings"
+      style="text-decoration: none; color:black">{{followingsCount}}
+      個<span class="color-gray">跟隨中</span></a>
+  </div>
+  <div class="likes d-flex">
+    <a class="likesAmount fw-bolder me-2" href="/users/{{tweetUser.id}}/followers"
+      style="text-decoration: none; color:black">{{followersCount}}
+      位<span class="color-gray">跟隨者</span></a>
+  </div>
+</div>

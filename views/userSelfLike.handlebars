@@ -72,44 +72,8 @@
 
   <div class="userProfileSection ">
     {{>message}}
-    <div class="title border d-flex">
-      <a href="/tweets" class="arrow me-3 d-flex align-items-center btn">
-        <i class="fas fa-arrow-left fs-4"></i>
-      </a>
-      <div>
-        <h4 class="fw-bolder m-0">{{tweetUser.name}}</h4>
-        <p class="m-0">{{tweets.length}}推文</p>
-      </div>
-    </div>
-    <div class="cover">
-      <img
-        src="https://image.cache.storm.mg/styles/smg-800x533-fp/s3/media/image/2020/11/07/20201107-092915_U13380_M651499_4ac4.jpg?itok=6KFZde7p"
-        alt="" class="userBackgroundImg">
-    </div>
-    <span class="avatar m-2">
-      <img src="{{noImage tweetUser.avatar}}" alt="" class="rounded-circle userProfileImg">
-    </span>
-    <div class="profileInformation mt-5 pt-2 ms-2">
-      <div class="name m-1 fw-bolder mt-2">
-        <h5> {{tweetUser.name}}</h5>
-      </div>
-      <div class="account m-1">@{{tweetUser.account}}</div>
-      <div class="m-2">
-        <p>{{tweetUser.description}}</p>
-      </div>
-    </div>
-    <div class="d-flex">
-    </div>
-    <div class="d-flex m-3">
-      <div class="replies me-5 d-flex">
-        <div class="repliesAmount fw-bolder me-2">34</div>
-        <div>個跟隨中</div>
-      </div>
-      <div class="likes d-flex">
-        <div class="likesAmount fw-bolder me-2">59</div>
-        <div>位跟隨者</div>
-      </div>
-    </div>
+    
+    {{>userProfile}}
     <ul class="nav nav-tabs">
       <li class="nav-item">
         <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/tweets">推文</a>
@@ -121,6 +85,8 @@
         <a class="nav-link text-secondary active" href="/users/{{tweetUser.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
+    
+    
     {{#each data}}
     <div class="comment d-flex border">
       <div class="avatar m-3">
@@ -166,5 +132,14 @@
     {{/each}}
 
   </div>
-  {{>popular}}
+  
+  <div class="topUser">
+    <div class="popularArea fixed mt-4 border">
+      <div class="title m-3">
+        <h5 class="fw-bolder">Popular</h5>
+      </div>
+      {{>popular}}
+      </div>
+    </div>
+  </div>
 </div>

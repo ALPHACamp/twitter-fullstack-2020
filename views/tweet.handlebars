@@ -161,10 +161,10 @@
     </div>
     <div class="border">
       <div class="d-flex">
-        <button type="button" class="btn commentIcon me-5" data-bs-toggle="modal"data-bs-target="#newReplyModal">
+        <button type="button" class="btn commentIcon me-5" data-bs-toggle="modal" data-bs-target="#newReplyModal">
           <i class="far fa-comment fs-3 text-secondary"></i>
         </button>
-        
+
         {{#if isLiked}}
         <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
           <button type="submit" class="btn">
@@ -182,68 +182,29 @@
     </div>
     <div class="commentsList">
       {{#each tweet.Replies}}
-        <div class="comment d-flex border">
-          <a href="/users/{{this.User.id}}/tweets" class="avatar m-3">
-            <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
-          </a>
+      <div class="comment d-flex border">
+        <a href="/users/{{this.User.id}}/tweets" class="avatar m-3">
+          <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
+        </a>
+        <div>
+          <div class="d-flex">
+            <a href="/users/{{this.User.id}}/tweets" class="name m-1 fw-bolder btn">{{this.User.name}}</a>
+            <div class="account m-1 mt-2">@{{this.User.account}}</div>
+            <div class="timefrom  m-1 mt-2">{{moment this.createdAt}}</div>
+          </div>
           <div>
             <div class="d-flex">
-              <a href="/users/{{this.User.id}}/tweets" class="name m-1 fw-bolder btn">{{this.User.name}}</a>
-              <div class="account m-1 mt-2">@{{this.User.account}}</div>
-              <div class="timefrom  m-1 mt-2">{{moment this.createdAt}}</div>
+              <div class="m-1">回覆</div>
+              <div class="m-1 color-orange">@{{../tweet.User.account}}</div>
             </div>
             <div>
-              <div class="d-flex">
-                <div class="m-1">回覆</div>
-                <div class="m-1 color-orange">@{{../tweet.User.account}}</div>
-              </div>
-              <div>
-                <p>{{this.comment}}</p>
-              </div>
+              <p>{{this.comment}}</p>
             </div>
           </div>
         </div>
+      </div>
       {{/each}}
     </div>
-
-
   </div>
-  <div class="">
-    <div class="popularArea mt-4 border">
-      <div class="title m-3">
-        <h5 class="fw-bolder">Popular</h5>
-      </div>
-      <div class="popularList border-top">
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">Pizza Hut</div>
-              <div class="account ms-1">@Pizza Hut</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="orange btn text-white round">正在跟隨</button>
-          </div>
-        </div>
-        <div class="popularUser d-flex border-bottom justify-content-between">
-          <div class="user d-flex">
-            <div class="avatar m-2">
-              <img src="https://i.imgur.com/bGxaaO6.png" alt="" class="rounded-circle userImage">
-            </div>
-            <div class="information">
-              <div class="name mt-3 ms-1 fw-bolder">McDonald's</div>
-              <div class="account ms-1">@McDonald's</div>
-            </div>
-          </div>
-          <div class="round m-3">
-            <button class="btn followButton round">跟隨</button>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
+  {{>popular}}
 </div>
