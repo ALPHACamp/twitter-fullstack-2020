@@ -122,7 +122,7 @@
       {{!-- 含內容的通知 --}}
     {{/each}}
       {{!-- 不含內容的通知 --}}
-      <div class="notification-nocontent">
+      <div class="notification-nocontent" id="form">
         <div class="avatar">
           <a href="">
             <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
@@ -213,3 +213,16 @@
 
 </div>
 {{!-- add-tweet Modal --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  var socket = io();
+
+  var form = document.getElementById('form');
+
+//有人推文
+  {{!-- socket.on('somebodySendTweet', (tweet) => {
+    console.log("有人寫了===========", tweet)
+  }) --}}
+
+</script>

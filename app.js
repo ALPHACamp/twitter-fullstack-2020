@@ -89,15 +89,10 @@ io.on('connection', (socket) => {
     // })
   })
  
-  //有人推文
-  socket.on('somebodySendTweet', (tweet) => {
-    console.log("有人寫了===========", tweet)
-  })
-
+  
 
 
 });
-
 
 
 

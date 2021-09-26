@@ -9,11 +9,13 @@ const { Op } = require("sequelize")
 const sequelize = require('sequelize')
 
 const express = require('express')
-const app = express()
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server, { cors: { origin: "*" } });
+// const app = express()
+// const http = require('http');
+// const server = http.createServer(app);
+// const { Server } = require("socket.io");
+// const io = new Server(server, { cors: { origin: "*" } });
+// const port = 3001
+
 
 const tweetService = {
   postTweets: (req, res, callback) => {
@@ -28,6 +30,10 @@ const tweetService = {
       description: req.body.description
     })
       .then((tweet) => {
+        // io.on('connection', (socket) => {
+        //   console.log('QQ')
+        //  socket.emit('somebodySendTweet', "tweet")
+        // })
         callback({ status: 'success', message: 'tweet was successfully created' })
       })
   },
@@ -80,6 +86,9 @@ const tweetService = {
       currentUser
     })
   },
+ 
 }
 
 module.exports = tweetService
+
+// server.listen(port)
