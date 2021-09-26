@@ -12,6 +12,7 @@ const {
 const Handlebars = require("handlebars");
 const handlebars = require("express-handlebars");
 const helpers = require("./_helpers");
+const flash = require('connect-flash') 
 const app = express();
 
 if (process.env.NODE_ENV !== "production") {
@@ -30,7 +31,6 @@ app.engine(
   })
 );
 app.set("view engine", ".hbs");
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
@@ -38,7 +38,10 @@ app.use(express.static("public"));
 app.use(session({ secret: "secret", resave: false, saveUninitialized: false }));
 app.use("/upload", express.static(__dirname + "/upload"));
 usePassport(app);
+app.use(flash())
 app.use((req, res, next) => {
+  res.locals.success_messages = req.flash('success_messages');
+  res.locals.error_messages = req.flash('error_messages');
   res.locals.user = helpers.getUser(req);
   next();
 });
