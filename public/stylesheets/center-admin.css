@@ -28,7 +28,9 @@
   font-size: 15px;
 }
 .cards-wrapper {
-  width: calc(100vw - 400px);
+  width: 100%;
+  margin: 0;
+  flex-direction: row;
   flex-wrap: wrap;
   border: none;
 }
@@ -122,7 +124,12 @@
   margin-left: 15px;
   background-color: #fff;
 }
-.container-fluid .profile-container.white-bg {
+.profile-container.white-bg {
+  position: relative;
+  flex: 1 0 981px;
+  width: calc(100vw - 380px);
+  display: flex;
+  flex-direction: column;
   border-left: 1px solid #e6ecf0;
   min-height: 100vh;
 }

@@ -15,16 +15,6 @@ a {
   color: #1c1c1c;
 }
 
-.profile-container {
-  position: relative;
-  top: -1px;
-  margin: 0 auto;
-  height: 100%;
-  width: 600px;
-  max-width: 600px;
-  background: #e6ecf0;
-  padding: 0;
-}
 .profile-container > * {
   border: 1px solid #e6ecf0;
 }

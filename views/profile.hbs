@@ -1,7 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col">
     {{>columnLeft}}
-  </div>
 
   {{>modalTweet}}
   {{>modalProfile}}
@@ -84,7 +82,7 @@
             </a>
             {{!-- <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p> --}}
             <span class="post-sub-info">回覆
-              <span class="orange-text">{{this.Tweet.User.account}}</span>
+              <span class="orange-text">@{{this.Tweet.User.account}}</span>
             </span>
             <p>{{this.comment}}</p>
           </div>
@@ -107,7 +105,7 @@
         </div>
         <div class="post-card2">
           <h5 class="d-inline-block">{{this.Tweet.User.name}}&nbsp;<span
-              class="post-sub-info">{{this.Tweet.User.account}} &#x2027;
+              class="post-sub-info">@{{this.Tweet.User.account}} &#x2027;
               {{moment this.createdAt}}</span></h5>
 
           <a href="/tweets/{{this.Tweet.id}}">
@@ -132,13 +130,7 @@
       {{/each}}
       {{/if}}
       <!--end::list of 推文-->
-
-      <!--end::list of 推文-->
-
     </div>
   </div>
-
-  <div class="col">
     {{>columnRight}}
-  </div>
 </div>

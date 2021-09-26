@@ -1,7 +1,5 @@
 <div class="row justify-content-center">
-  <div class="col">
   {{>columnLeft}}
-  </div> 
   {{>modalTweet}}
   {{>modalReply}}
   <div class="profile-container">
@@ -26,9 +24,9 @@
           </div>
           <div class="post-card2">
             <h5 class="d-inline-block profile-nav-header post-title">{{this.User.name}}&nbsp;
-              <span class="post-sub-info">{{this.User.account}} &#x2027; {{moment this.createdAt}}</span>
+              <span class="post-sub-info">@{{this.User.account}} &#x2027; {{moment this.createdAt}}</span>
             </h5>
-            <span class="post-sub-info">回覆 <span class="orange-text">{{../tweet.User.account}}</span></span>
+            <span class="post-sub-info">回覆 <span class="orange-text">@{{../tweet.User.account}}</span></span>
             <p>{{this.comment}}~</p>
           </div>
         </div>
@@ -37,9 +35,7 @@
       </div>        
     </div> 
   </div>
-  <div class="col">
   {{>columnRight}}
-  </div>
 
 </div>
 
