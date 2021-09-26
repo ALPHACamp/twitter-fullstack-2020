@@ -14,29 +14,49 @@ const userController = {
     return res.render('signup', { layout: 'userMain' })
   },
 
-  postSignup: (req, res) => {
+  postSignup: async (req, res) => {
+    const { name, account, email, password, checkPassword } = req.body
+    const error = []
     if (req.body.password !== req.body.checkPassword) {
       req.flash('error_messages', '兩次密碼輸入不符！')
       res.redirect('/signup')
-    } else {
-      User.findOne({ where: { email: req.body.email } })
-        .then(user => {
-          if (user) {
-            req.flash('error_messages', '此信箱已註冊過！')
-            res.redirect('/signup')
-          } else {
-            User.create({
-              account: req.body.account,
-              name: req.body.name,
-              email: req.body.email,
-              password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null)
-            }).then(user => {
-              req.flash('success_messages', '註冊成功！')
-              return res.redirect('/signin')
-            })
-          }
-        })
     }
+    const userEmail = await User.findOne({ where: { email: req.body.email } })
+    const userAccount = await User.findOne({ where: { account: req.body.account } })
+    if (userEmail) {
+      error.push({ message: '此Email已註冊過' })
+      return res.render('signup', {
+        layout: 'userMain',
+        error,
+        account,
+        name,
+        email,
+        password,
+        checkPassword
+      })
+    }
+    if (userAccount) {
+      error.push({ message: '此Account已註冊過' })
+      return res.render('signup', {
+        layout: 'userMain',
+        error,
+        account,
+        name,
+        email,
+        password,
+        checkPassword
+      })
+    }
+
+    await User.create({
+      account,
+      name,
+      email,
+      password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+    }).then(() => {
+      req.flash('success_messages', '註冊成功')
+      res.redirect('/signin')
+    })
   },
 
   getLogin: (req, res) => {
