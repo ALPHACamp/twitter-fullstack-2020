@@ -70,6 +70,18 @@
   border-radius: 20px;
 }
 
+.chats .other-chat-time {
+  margin: 2px 0px 5px 65px;
+  color: #657786;
+}
+
+.chats .my-chat-time {
+  margin: 2px 2px 5px 0px;
+  color: #657786;
+  text-align: end;
+}
+
+
 .other-chat, 
 .my-chat .chat-content {
   width: 80%;
