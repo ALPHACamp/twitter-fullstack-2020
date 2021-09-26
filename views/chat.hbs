@@ -5,17 +5,6 @@
       <span class="home-word" id="online">上線使用者(0)</span>
     </div>
     {{!-- 下面靠dom操作 --}}
-    {{!-- <div class="chat-user align-middle">
-      <img class="rounded-circle" src="{{currentUser.avatar}}" alt="avatar" title="avatar" width="50px" height="50px">
-      <span class="name">{{currentUser.name}}</span>
-      <span class="account">&nbsp;@{{currentUser.account}}</span>
-    </div>
-    <div class="chat-user align-middle">
-      <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
-        alt="avatar" title="avatar" width="50px" height="50px">
-      <span class="name">Apple</span>
-      <span class="account">&nbsp;@apple</span>
-    </div> --}}
   </div>
   <div class="chats col-6 me-5">
     <div class="home-word-box p-2">
@@ -23,25 +12,7 @@
     </div>
     <div class="chat-scroll" id="chat-scroll">
       <div class="chat-messages d-flex flex-column justify-content-end p-2" id="chat-messages">
-        <div class="user-name-status text-center my-2">
-          <div class="name-status d-inline-flex py-1 px-3">
-            <p>Apple 上線</p>
-          </div>
-        </div>
-        <div class="other-chat d-inline-flex align-items-end mt-2">
-          <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
-            alt="avatar" title="avatar" width="50px" height="50px">
-          <div class="chat-content ms-3">
-            <p class='p-3'>這是對方的對話窗範本~我至少要打到這個對話框的70%!要看他換行看看才知道格式有沒有對喔</p>
-          </div>
-        </div>
-        <p class="other-chat-time">下午6:09</p>
-        <div class="my-chat d-flex justify-content-end mt-2 justify-content-end">
-          <div class="chat-content">
-            <p class="p-3">這是使用者自己的對話窗範本哈哈哈～我在回覆喔好好笑喔好好笑喔要打到第二行不然看不出兩個版本的差異啦</p>
-          </div>
-        </div>
-        <p class="my-chat-time">下午6:09</p>
+        {{!-- 加入動態訊息 --}}
       </div>
     </div>
     <form id="chat-form" action="">
@@ -77,15 +48,22 @@
     const userName = `{{ userData.name }}`
     const userAccount = `{{ userData.account }}`
     const userAvatar = `{{ userData.avatar }}`
-    //trevor的 test
-    const currentUserId = `{{userData.id}}`
 
+    // 知道connect上後
+    //online offline人數與名單顯示
     socket.on('connect', function () {
-      console.log('前端頁面參數測試', currentUserId)
-      socket.emit('userIn', currentUserId )
+      let userMsg = {
+        senderId: userId,
+        senderName: userName,
+        senderAvatar: userAvatar,
+        behavior: 'enter-public',
+      }
+      // 往chat message 丟一份我的資料
+      {{!-- socket.emit('chat message', userMsg) --}}
+      // 通知server此id上線
+      socket.emit('userIn', userMsg )
     })
     socket.on('publicRoomUsers', (publicRoomUsers) => {
-      console.log('前台拿到的publicRoomUsers', publicRoomUsers)
       chatUsers.innerHTML = `
       <div class="home-word-box p-2">
       <span class="home-word" id="online">上線使用者(${publicRoomUsers.length})</span>
@@ -94,9 +72,11 @@
       publicRoomUsers.forEach(publicRoomUser => {
         chatUsers.innerHTML += `
         <div class="chat-user align-middle">
+        <a href="/users/${publicRoomUser.id}/tweets">
         <img class="rounded-circle" src="${publicRoomUser.avatar}" alt="avatar" title="avatar" width="50px" height="50px">
         <span class="name">${publicRoomUser.name}</span>
         <span class="account">&nbsp;@${publicRoomUser.account}</span>
+        </a>
         </div>
         `
       })
@@ -104,27 +84,39 @@
     // ========================================
 
     //發送前端使用者資料到後端
-    socket.emit('login', { userId, userName, userAccount, userAvatar });
+    socket.emit('login', { userId, userName, userAccount, userAvatar })
 
-
-    {{!-- socket.on("online", function (amount) {
-      online.innerText = '上線使用者' + '(' + amount + ')';
-    }); --}}
-
-    // 知道connect上後
-    socket.on('connect', () => {
-      let userMsg = {
-        senderId: userId,
-        senderName: userName,
-        senderAvatar: userAvatar,
-        behavior: 'enter-public',
-      }
-      // 往chat message 丟一份我的資料
-      socket.emit('chat message', userMsg);
-    })
 
     // 收來自chat message的廣播
     socket.on("chat message", addMsgToBox);
+    socket.on(`historyPublicChats-${userId}`, addHistoryMsgToBox);
+
+    function addHistoryMsgToBox(historyPublicChats) {
+      // 如果這則訊息的說話者是我
+      historyPublicChats.forEach(userMsg => {
+        if (userMsg.UserId.toString() === userId) {
+          let newBubble = document.createElement('div')
+
+          newBubble.className = 'my-chat d-flex justify-content-end my-2 justify-content-end'
+          newBubble.innerHTML = `<div class="chat-content">
+          <p class="p-3">${userMsg.message}</p>
+        </div>`
+          messages.appendChild(newBubble);
+        } else {
+          // 如果這則訊息的說話者是別人
+          let newBubble = document.createElement('div')
+
+          newBubble.className = 'other-chat d-inline-flex align-items-end my-2'
+          newBubble.innerHTML = `<img class="rounded-circle" src="${userMsg.User.avatar}"
+                alt="avatar" title="avatar" width="50px" height="50px">
+                <div class="chat-content ms-3">
+                  <p class='p-3'>${userMsg.message}</p>
+                </div>`
+          messages.appendChild(newBubble);
+        }
+      })
+      scrollable.scrollTo(0, scrollable.scrollHeight)
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
