@@ -7,6 +7,10 @@ const replyController = require('../controllers/replyController.js')
 
 const passport = require('../config/passport')
 
+const multer = require('multer')
+const upload = multer({ dest: 'temp/' })
+const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
+
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (!(helpers.getUser(req).role === "admin")) {
@@ -45,9 +49,9 @@ module.exports = (app, passport) => {
   app.get('/user/:id/likes', authenticated, userController.getUserSelfLike)
   app.get('/user/:id/replies', authenticated, userController.getUserSelfReply)
   app.get('/user/:id/tweets', authenticated, userController.getUserTweets)
-  app.get('/setting', authenticated, userController.getSetting)
-  app.put('/users/:id/setting', authenticated, userController.putUser)
-  app.put('/users/:id/edit', authenticated, userController.putUserProfile)
+  app.get('/setting', authenticated, userController.getUserSetting)
+  app.put('/users/:id/setting', authenticated, userController.putUserSetting)
+  app.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserProfile)
 
   // 追蹤
   app.post('/followships/', authenticated, userController.addFollowing)
