@@ -7,7 +7,7 @@ module.exports = {
         return next()
       }
     }
-    res.redirect('/signin')
+    res.redirect('/admin/signin')
   },
 
   authenticated: (req, res, next) => {
