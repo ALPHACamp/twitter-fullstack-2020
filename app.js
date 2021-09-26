@@ -15,10 +15,19 @@ const passport = require('./config/passport')
 const app = express()
 const port = process.env.PORT || 3000
 
+
+
 const http = require('http');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+
+
+const sessionMiddleware = session({
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false
+})
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.engine('handlebars', handlebars({
@@ -31,7 +40,8 @@ app.use(express.static('public'))
 //使用methodOverride
 app.use(methodOverride('_method'))
 // setup session 
-app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
+
+app.use(sessionMiddleware)
 // 初始化 Passport
 app.use(passport.initialize())
 // 啟動 session 功能，要放在 session() 之後
@@ -57,16 +67,13 @@ app.get('/messages/public', (req, res) => {
 
 });
 
+io.use((socket, next) => {
+  sessionMiddleware(socket.request, socket.request.res, next)
+})
 
-io.on('connection', (socket) => {
-  //有登入
-  console.log('a user connected')
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
-    console.log(msg)
-  });
-  //
-});
+require('./controllers/socketController')(io)
+
+
 
 server.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
