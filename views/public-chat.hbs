@@ -10,10 +10,10 @@
           src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
           alt="" style="max-width: 30px;max-height: 30px;">
       </div>
-
+    
       <div style="text-align: left">
         <ul class="list-group">
-
+    
           <a href="/tweets">
             <li class="list-group-item">
               <div class="d-flex">
@@ -22,8 +22,8 @@
               </div>
             </li>
           </a>
-
-          <a href="">
+    
+          <a href="/subscribe/{{user.id}}">
             <li class="list-group-item">
               <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-bell mr-4">
@@ -35,9 +35,9 @@
               </div>
             </li>
           </a>
-
+    
           <a href="/messages">
-            <li class="list-group-item   active">
+            <li class="list-group-item active">
               <div class="d-flex">
                 <i class="fas  fa-fw  fa-fh fa-comments mr-4">
                   {{!-- 若有通知 --}}
@@ -48,47 +48,47 @@
               </div>
             </li>
           </a>
-
-
+    
+    
           <a href="/messages/{{user.id}}">
             <li class="list-group-item">
               <div class="d-flex">
-                <i class="fas fa-fw fa-fh fa-envelope mr-4">
+                <i class="fas fa-fw fa-fh fa-envelope mr-4" id="priNote">
                   {{!-- 若有通知 --}}
-                  {{!-- <span class="bubble">100</span> --}}
+                  {{!-- 應該在這 --}}
                   {{!-- 若有通知 --}}
                 </i>
                 私人訊息
               </div>
             </li>
           </a>
-
+    
           <a href="/users/{{user.id}}/tweets">
             <li class="list-group-item">
               <div class="d-flex"><i class="fas  fa-fw fa-user mr-4"></i>個人資料</div>
             </li>
           </a>
-
+    
           <a href="/users/{{user.id}}/setting">
             <li class="list-group-item">
               <div class="d-flex"><i class="fas  fa-fw fa-cog mr-4"></i>設定</div>
             </li>
           </a>
         </ul>
-
+    
         <div class="">
           <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
           </button>
         </div>
-
-
+    
+    
         <a href="/logout">
           <div class="logout-button">
             <i class="fas fa-arrow-alt-circle-left"></i>
             登出
           </div>
         </a>
-
+    
       </div>
     </div>
     {{!-- 中間主欄位 --}}

@@ -78,7 +78,6 @@ io.on('connection', (socket) => {
       //存進資料庫
       const user = { id: currentId, msg: msg }
       messageController.sendPrivateMsg(user, roomName, viewUserId)
-      console.log('roomName', roomName)
       socket.to(roomName).emit('private chat message', msg, currentId, currentAvatar);
       socket.broadcast.to(roomName).emit('noteHer');
     })
@@ -86,16 +85,14 @@ io.on('connection', (socket) => {
     //每位使用者最後訊息
     socket.on('msg-inbox' ,async (currentId) => {
       const msgInbox = await messageController.getPrivateInbox(currentId)
-      // console.log('msgInbox回傳值',msgInbox)
       io.emit('renderMsgBox', msgInbox)
     })
   })
-
-
+ 
+  
 
 
 });
-
 
 
 
