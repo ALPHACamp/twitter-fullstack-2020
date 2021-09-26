@@ -1,4 +1,4 @@
-<div class="modal fade" id="replyModel{{modalId}}" tabindex="-1">
+<div class="modal fade" id="replyModelForProfile{{modalId}}" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -13,18 +13,20 @@
         <div class="post border-bottom-0">
           <div class="post-card1 connected">
             <div class="avatar profile-avatar"><img
-                src={{tweet.User.avatar}}
+                src={{posterProfile.avatar}}
                 alt="avatar-img"
               /></div>
           </div>
           <div class="post-card2">
-            <h5 class="d-inline-block post-title">{{tweet.User.name}}&nbsp;<span
+            <h5
+              class="d-inline-block post-title"
+            >{{posterProfile.name}}&nbsp;<span
                 class="post-sub-info"
-              >@{{tweet.User.account}}
+              >@{{posterProfile.account}}
                 &#x2027;
-                {{moment tweet.createdAt}}</span></h5>
-            <p>{{tweet.description}}</p><span class="post-sub-info">回覆給
-              <span class="orange-text">{{tweet.User.name}}</span></span>
+                {{moment this.createdAt}}</span></h5>
+            <p>{{this.description}}</p><span class="post-sub-info">回覆給
+              <span class="orange-text">{{posterProfile.name}}</span></span>
           </div>
         </div>
         <div class="profile-container connected border-start-0">
@@ -32,10 +34,10 @@
           <div class="profile-messageboard border-top-0">
             <div class="profile-avatar-container">
               <div class="avatar profile-avatar">
-                <img src="{{profile.avatar}}" alt="avatar-img" />
+                <img src="{{myProfile.avatar}}" alt="avatar-img" />
               </div>
             </div>
-            <form action="/tweets/{{tweet.id}}/replies" method="POST">
+            <form action="/tweets/{{this.id}}/replies" method="POST">
               <div class="profile-textarea-container border-start-0 connected">
                 <textarea
                   name="comment"
