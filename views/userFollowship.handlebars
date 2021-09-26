@@ -1,49 +1,5 @@
 <div class="row grid">
-  <div>
-    <nav class="userSidebar fixed">
-      <div class="logo">
-        <img src="https://i.imgur.com/ZUJriDp.png" alt="" id="ac-logo">
-      </div>
-      <div class="buttonList mt-5">
-        <div class="navItem index d-flex mb-4 ">
-          <div class="icon d-flex align-items-center">
-            <i class="fas fa-home my-auto"></i>
-          </div>
-          <a href="/tweets" class="btn sidebarItem">
-            <span class="fs-5 fw-bolder">首頁</span>
-          </a>
-        </div>
-        <div class="navItem userProfile d-flex mb-4 ">
-          <div class="icon d-flex align-items-center color-orange">
-            <i class="fas fa-users"></i>
-          </div>
-          <a href="/users/{{user.id}}/tweets" class="btn sidebarItem">
-            <span class="fs-5 fw-bolder">個人資料</span>
-          </a>
-        </div>
-        <div class="navItem setting d-flex mb-4">
-          <div class="icon d-flex align-items-center">
-            <i class="fas fa-cog"></i>
-          </div>
-          <a href="/setting" class="btn sidebarItem">
-            <span class="sidebar-item fs-5 fw-bolder">設定</span>
-          </a>
-        </div>
-      </div>
-      <div class="d-grid gap-2 col-9 round">
-        <button type="button" class="orange btn text-white round" data-bs-toggle="modal"
-          data-bs-target="#newTwitModal">推文</button>
-      </div>
-      <div class="logout d-flex">
-        <div class="logoutLogo me-3 d-flex align-items-center">
-          <i class="fas fa-sign-out-alt"></i>
-        </div>
-        <a href="/logout" class="btn">
-          <span class="fs-5 fw-bolder">登出</span>
-        </a>
-      </div>
-    </nav>
-  </div>
+  {{>leftSidebar}}
 
   <div class="userFollowshipSection">
     <div class="title border d-flex">

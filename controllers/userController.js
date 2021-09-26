@@ -3,6 +3,7 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const bcrypt = require('bcryptjs')
 const { raw } = require('body-parser')
+const { Op } = require("sequelize")
 const db = require('../models')
 const User = db.User
 const Tweet = db.Tweet
@@ -22,32 +23,33 @@ const userController = {
       req.flash('error_messages', '所有欄位都是必填');
       return res.redirect('/signup')
     }
+
     if (password !== checkPassword) {
-      // req.flash('error_messages', '兩次密碼輸入不同！')
       req.flash('error_messages', '兩次密碼輸入不一致');
       return res.redirect('/signup')
     }
-    // confirm unique user
-    User.findOne({ where: [{ email }, { account }] }).then(user => {
-      if (user) {
-        if (user.email === email) {
-          req.flash('error_messages', '信箱重複！')
-        }
-        if (user.account === account) {
-          req.flash('error_messages', '信箱重複！')
-        }
+    
+    User.findAll({ where: { [Op.or]: [{ email }, { account }] } }).then(users => {
+      if (users.some(item => item.account === account)) {
+        req.flash('error_messages', '此帳號已有人使用！')
         return res.redirect('/signup')
-      } else {
-        User.create({
-          account: account,
-          name: name,
-          email: email,
-          password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
-        }).then(user => {
-          req.flash('success_messages', '成功註冊帳號！')
-          return res.redirect('/signin')
-        })
+      } 
+      
+      if (users.some(item => item.email === email)) {
+        req.flash('error_messages', '此信箱已有人使用！')
+        return res.redirect('/signup')
       }
+      
+      User.create({
+        account: account,
+        name: name,
+        email: email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10), null)
+      }).then(() => {
+        req.flash('success_messages', '成功註冊帳號！')
+        return res.redirect('/signin')
+      })
+      
     })
   },
   signInPage: (req, res) => {
@@ -187,7 +189,7 @@ const userController = {
   },
 
   getUserSetting: (req, res) => {
-    return res.render('setting')
+    return res.render('setting', {renderType: "user" })
   },
   putUserSetting: async (req, res) => {
     const user = await User.findByPk(req.params.id)
