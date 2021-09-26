@@ -13,12 +13,13 @@ router.get("/", (req, res) => {
   res.redirect('/signin')
 })
 router.get("/signup", userController.signupPage);
+router.post("/signup", userController.signup);
+
 router.get("/signin", userController.signInPage);
 router.post('/signin', passport.authenticate('local', {
   successRedirect: '/tweets',
   failureRedirect: '/signin'
 }))
-router.post("/signup", userController.signup);
 
 router.get("/admin/signin", adminController.signInPage)
 router.post('/admin/signin', passport.authenticate('local', {
