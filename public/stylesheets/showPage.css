@@ -916,10 +916,26 @@ color:#fF6600;
 transform: translate(0%,-50%);
 padding:0 5px;
 border-radius: 50%;
-border: 1px solid #fF6600;
+/* border: 1px solid #fF6600; */
 color:#fF6600;
 margin: 0 10px;
 }
+
+ .get-notification{
+   background: #fF6600;
+   color: #ffffff;
+       border-radius: 50%;
+    border: 1px solid #fF6600;
+    padding: 0 5px;
+ }
+
+  .dont-notification{
+   background: #FFFFFF;
+   color: #fF6600;
+       border-radius: 50%;
+    border: 1px solid #fF6600;
+    padding: 0 5px;
+ }
 
 
 
