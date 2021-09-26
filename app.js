@@ -13,6 +13,7 @@ const helpers = require('./_helpers')
 
 const app = express()
 const port = process.env.PORT || 3000
+const baseURL = process.env.BASE_URL
 
 app.engine('handlebars', handlebars({
   defaultLayout: 'main',
@@ -32,6 +33,7 @@ app.use(async (req, res, next) => {
   res.locals.error_messages = req.flash('error_messages')
   res.locals.user = helpers.getUser(req)
   res.locals.users = await helpers.getUsers(req)
+  res.locals.baseURL = baseURL
   next()
 })
 

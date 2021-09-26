@@ -18,13 +18,11 @@ const authenticated = (req, res, next) => {
 }
 
 //user's profile
-router.get('/:id/tweets', authenticated, userController.getUser)
-router.get('/self/reply/:id', authenticated, userController.getUserReply)
+router.get('/:id/tweets', authenticated, userController.getUserTweets)
+router.get('/:id/replies', authenticated, userController.getUserReply)
 router.get('/:id/likes', authenticated, userController.getUserLike)
 router.get('/:id/followers', authenticated, userController.getUserFollower)
 router.get('/:id/followings', authenticated, userController.getUserFollowing)
-router.get('/other/:id', authenticated, userController.getOtherUser)
-router.get('/otherTwitter/:id', authenticated, userController.getOtherUser)
 
 
 // user's setting
