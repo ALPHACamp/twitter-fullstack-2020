@@ -73,9 +73,14 @@ const userController = {
     res.redirect('/signin')
   },
 
-  getUser: (req, res) => {
+  getUserTweets: (req, res) => {
     const whereQuery = {}
     whereQuery.userId = req.params.id
+    let loginUser = false
+
+    if (helpers.getUser(req).id === Number(req.params.id)) {
+      loginUser = true
+    }
 
     Tweet.findAndCountAll({
       include: [
@@ -111,14 +116,17 @@ const userController = {
               nameWordCount = user.dataValues.name.length
               introWordCount = user.dataValues.introduction.length
             }
-            return res.render('self', {
+            return res.render('selfTweets', {
               user: user.toJSON(),
               nameWordCount: nameWordCount,
               introWordCount: introWordCount,
               totalTweet: totalTweet,
               tweet: data,
               followerCount: followerCount.length,
-              followingCount: followingCount.length
+              followingCount: followingCount.length,
+              isLoginUser: loginUser,
+              isFollowed: helpers.getUser(req).Followings ?
+                helpers.getUser(req).Followings.map(d => d.id).includes(user.id) : false
             })
           })
       })
@@ -127,9 +135,7 @@ const userController = {
 
   getUserReply: (req, res) => {
     let loginUser = false
-    if (res.locals.user.id !== Number(req.params.id)) {
-      loginUser = false
-    } else {
+    if (helpers.getUser(req).id === Number(req.params.id)) {
       loginUser = true
     }
 
@@ -214,7 +220,8 @@ const userController = {
         description: r.dataValues.Tweet.dataValues.description,
         createdAt: r.dataValues.createdAt,
         likeUserId: r.dataValues.Tweet.dataValues.User.id,
-        isLiked: currentUserLikes.map(d => d.TweetId).includes(r.TweetId),
+        isLiked: helpers.getUser(req).LikedTweets ?
+          helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.TweetId) : false,
         likeAvatar: r.dataValues.Tweet.dataValues.User.avatar,
         likeUserName: r.dataValues.Tweet.dataValues.User.name,
         likeUserAccount: r.dataValues.Tweet.dataValues.User.account,
@@ -393,57 +400,6 @@ const userController = {
           helpers.getUser(req).Followings.map(d => d.id).includes(following.id) : false
       }))
       return res.render('selfFollowing', { followingsData })
-    })
-  },
-
-  getOtherUser: (req, res) => {
-    let loginUser = false
-    if (res.locals.user.id !== Number(req.params.id)) {
-      loginUser = false
-    } else {
-      loginUser = true
-    }
-
-    const whereQuery = {}
-    whereQuery.userId = Number(req.params.id)
-
-    Tweet.findAndCountAll({
-      include: [
-        User,
-        Reply,
-        Like
-      ],
-      where: whereQuery,
-      order: [['createdAt', 'DESC']],
-    }).then(result => {
-      const totalTweet = result.rows.length
-      const data = result.rows.map(r => ({
-        ...r.dataValues,
-        description: r.dataValues.description,
-        replyCount: r.dataValues.Replies.length,
-        likeCount: r.dataValues.Likes.length,
-        isLiked: req.user.LikedTweets.map(d => d.id).includes(r.id)
-      }))
-
-      Followship.findAndCountAll({
-        raw: true,
-        nest: true,
-      }).then(result => {
-        const followerCount = result.rows.filter(followerUser => followerUser.followerId === Number(req.params.id))
-        const followingCount = result.rows.filter(followingUser => followingUser.followingId === Number(req.params.id))
-
-        User.findByPk(req.params.id)
-          .then(user => {
-            return res.render('other', {
-              otherUser: user.toJSON(),
-              totalTweet: totalTweet,
-              tweet: data,
-              followerCount: followerCount.length,
-              followingCount: followingCount.length,
-              isLoginUser: loginUser
-            })
-          })
-      })
     })
   },
 

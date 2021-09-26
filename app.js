@@ -15,6 +15,7 @@ const app = express()
 const port = process.env.PORT || 3000
 const baseURL = process.env.BASE_URL || 'http://localhost:3000'
 
+
 app.engine('handlebars', handlebars({
   defaultLayout: 'main',
   helpers: require('./config/handlebars-helpers')
