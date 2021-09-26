@@ -346,7 +346,6 @@
     socket.emit('join private room', roomName)
     const currentId = "{{currentUser.id}}"
     socket.emit('msg-inbox', currentId)
-    getUserData()
     scrollWindow();
   })
 

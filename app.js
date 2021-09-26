@@ -85,7 +85,6 @@ io.on('connection', (socket) => {
     //每位使用者最後訊息
     socket.on('msg-inbox', async (currentId) => {
       const msgInbox = await messageControllerApi.getPrivateInbox(currentId)
-      // console.log('msg',msgInbox)
       io.emit('renderMsgBox', msgInbox)
     })
   })
