@@ -59,6 +59,7 @@ const profileController = {
           followingId: Number(req.params.id),
         },
       });
+
       // get Count
       const followersCount = Profile.Followers.length;
       const followingsCount = Profile.Followings.length;
