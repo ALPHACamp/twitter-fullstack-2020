@@ -1,9 +1,5 @@
 const db = require('../models')
-const Tweet = db.Tweet
-const User = db.User
-const Reply = db.Reply
-const Like = db.Like
-// const Secondreply = db.Secondreply
+const { Tweet, User, Reply, Like } = db
 const helpers = require('../_helpers')
 
 const tweetController = {
@@ -20,6 +16,25 @@ const tweetController = {
           )
         }))
         res.render('tweets', { tweets })
+      })
+      .catch((err) => console.log(err))
+  },
+  getTweet: (req, res) => {
+    return Tweet.findByPk(req.params.id, {
+      include: [
+        User,
+        { model: User, as: 'LikedUsers' },
+        { model: Reply, include: [User] }
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
+    })
+      .then((tweet) => {
+        res.render('tweet', {
+          tweet: tweet.toJSON(),
+          isLiked: tweet.LikedUsers.map((d) => d.id).includes(
+            helpers.getUser(req).id
+          )
+        })
       })
       .catch((err) => console.log(err))
   },
@@ -71,36 +86,25 @@ const tweetController = {
         res.render('error', { message: 'error !' })
       })
   },
-  getReplyPage: async (req, res) => {
-    try {
-      const userId = req.params.userId
-      const popularUser = await userService.getPopular(req, res)
-      const profileUser = await userService.getProfileUser(req, res)
-
-      const replies = await Reply.findAll({
-        where: { UserId: userId },
-        include: [
-          {
-            model: Tweet,
-            attributes: ['id'],
-            include: [{ model: User, attributes: ['id', 'account'] }]
-          }
-        ],
-        order: [['createdAt', 'DESC']]
+  getReplyPage: (req, res) => {
+    const id = req.params.id
+    return Tweet.findByPk(id, {
+      include: [
+        User,
+        { model: User, as: 'LikedUsers' },
+        { model: Reply, include: [User] }
+      ],
+      order: [['Replies', 'createdAt', 'DESC']]
+    })
+      .then((tweet) => {
+        res.render('tweet', {
+          tweet: tweet.toJSON(),
+          isLiked: tweet.LikedUsers.map((d) => d.id).includes(
+            helpers.getUser(req).id
+          )
+        })
       })
-
-      res.render('user/reply', {
-        status: 200,
-        profileUser,
-        popularUser,
-        replies
-      })
-    } catch (err) {
-      res.status(302)
-      console.log('getReplies err')
-      req.flash('error_messages', '讀取回覆失敗')
-      return res.redirect('back')
-    }
+      .catch((err) => console.log(err))
   },
   postReply: (req, res) => {
     if (req.body.comment.length > 140) {
@@ -118,36 +122,6 @@ const tweetController = {
     }).then(() => {
       res.redirect('back')
     })
-  },
-  like: (req, res) => {
-    return Like.create({
-      UserId: helpers.getUser(req).id,
-      TweetId: req.params.id
-    })
-      .then(() => {
-        return res.redirect('back')
-      })
-      .catch((error) => {
-        console.log(error)
-        res.render('error', { message: 'error !' })
-      })
-  },
-  unLike: (req, res) => {
-    return Like.findOne({
-      where: {
-        UserId: helpers.getUser(req).id,
-        TweetId: req.params.id
-      }
-    })
-      .then((like) => {
-        like.destroy().then(() => {
-          return res.redirect('back')
-        })
-      })
-      .catch((error) => {
-        console.log(error)
-        res.render('error', { message: 'error !' })
-      })
   }
 }
 

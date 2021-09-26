@@ -2,13 +2,9 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../config/auth')
 const passport = require('../config/passport')
-const helpers = require('../_helpers')
 const tweetController = require('../controllers/tweetController.js')
 const userController = require('../controllers/userController.js')
 const adminController = require('../controllers/adminController.js')
-const multer = require('multer')
-const { getUserLikes } = require('../controllers/userController.js')
-const upload = multer({ dest: 'temp/' })
 
 //Admin
 router.get('/admin/signin', adminController.signinPage)
@@ -80,14 +76,15 @@ router.get('/', auth.authenticatedGeneral, (req, res) =>
   res.redirect('/tweets')
 )
 router.get('/tweets', auth.authenticatedGeneral, tweetController.getTweets)
+router.get('/tweets/:id/', auth.authenticatedGeneral, tweetController.getTweet)
 router.post('/tweets', auth.authenticatedGeneral, tweetController.postTweet)
 router.get(
-  '/tweets/:tweetId/replies',
+  '/tweets/:id/replies',
   auth.authenticatedGeneral,
   tweetController.getReplyPage
 )
 router.post(
-  '/tweets/:tweetId/replies',
+  '/tweets/:id/replies',
   auth.authenticatedGeneral,
   tweetController.postReply
 )
@@ -103,8 +100,8 @@ router.get('followships/top', auth.authenticatedGeneral)
 
 // Like
 router.post('/tweets/:id/like', auth.authenticatedGeneral, tweetController.like)
-router.delete(
-  '/tweets/:id/like',
+router.post(
+  '/tweets/:id/unlike',
   auth.authenticatedGeneral,
   tweetController.unLike
 )

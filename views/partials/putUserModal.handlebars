@@ -1,0 +1,58 @@
+<!-- Modal -->
+<div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="user-modal-Label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content user-modal-content">
+      <form action="/api/users/{{user.id}}" method="POST" enctype="multipart/form-data">
+        <div class="modal-header user-modal-header d-flex flex-row">
+          <div class="header">
+            <button type="button" class="btn-close user-modal-close-btn ms-1 me-3" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            <span class="modal-title" id="user-modal-Label">編輯個人資料</span>
+          </div>
+          <button type="submit" class="btn btn-info user-profile-modal-btn ms-auto px-3 py-1">儲存</button>
+        </div>
+        <div class="modal-body p-0">
+          <div class="user-cover-block" id="user-cover-block">
+            <div class="edit-btn-group d-flex  justify-content-center align-items-center" id="edit-btn-group">
+              <label class="upload-icon">
+                <input id="upload_cover" name="cover" style="display:none;" accept="image/*" type="file">
+                <i class="fas fa-camera fa-inverse fa-2x"></i>
+              </label>
+              <i class="fas fa-times fa-inverse fa-2x ms-5"></i>
+            </div>
+
+          </div>
+          <div class="user-info-block">
+            <div class="user-avatar-edit ms-3 d-flex  justify-content-center align-items-center" id="user-avatar-edit">
+              <label class="upload-icon">
+                <input id="upload_avatar" name="avatar" style="display:none;" type="file">
+                <i class="fas fa-camera fa-inverse fa-2x"></i>
+              </label>
+            </div>
+            <div class="user-info-edit">
+              <div class="user-input">
+                <label for="userNameInput">名稱</label>
+                <input type="text" class="form-control user-name-edit" id="user-name-input" name="name" minlength="5"
+                       maxlength="50" required>
+              </div>
+              <div class="count_message mb-5 d-flex flex-row-reverse">
+                <p id="count_message_name">0/50</p>
+              </div>
+
+              <div class="user-input">
+                <label for="userInfoInput">自我介紹</label>
+                <textarea class="form-control user-intro-edit p-2" placeholder="" id="user-intro-input" name="intro"
+                          maxlength="160" style="height: 120px"></textarea>
+              </div>
+              <div class="count_message mb-5 d-flex flex-row-reverse">
+                <p id="count_message_info">0/160</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
