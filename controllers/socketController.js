@@ -29,8 +29,6 @@ module.exports = (io) => {
       io.emit('onlineUserPop', onlineUserPop)
       
     })
-    console.log('a user connected')
-
     //來自client 的事件名稱 chat message
     socket.on('chat message', async(data) => {
       await PublicMsg.create({
@@ -51,7 +49,6 @@ module.exports = (io) => {
       io.emit('onlineCounts', onlineCounts)
       io.emit('onlineUsers', onlineUsers)
       io.emit('outlineUserPop', onlineUserPop)
-
     })
   })
 }

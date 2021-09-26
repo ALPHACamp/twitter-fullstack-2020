@@ -20,6 +20,7 @@ socket.emit('login')
 
 //監聽來自server端的事件名稱 onlineUsers
 socket.on('onlineUsers', (onlineUsers) => {
+  onlinePeople.innerHTML = ''
   let rawHtml = ''
   onlineUsers.forEach(data => {
     rawHtml = `
