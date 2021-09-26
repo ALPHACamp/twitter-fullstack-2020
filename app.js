@@ -1,6 +1,4 @@
 const express = require("express");
-port = process.env.PORT || 3000;
-host = process.env.BASE_URL || "http://localhost";
 const session = require("express-session");
 const db = require("./models");
 const methodOverride = require("method-override");
@@ -18,7 +16,8 @@ const app = express();
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-
+port = process.env.PORT;
+host = process.env.BASE_URL;
 // use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
 
 app.engine(
@@ -35,7 +34,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride("_method"));
 app.use(express.static("public"));
-app.use(session({ secret: "secret", resave: false, saveUninitialized: false }));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use("/upload", express.static(__dirname + "/upload"));
 usePassport(app);
 app.use(flash())
