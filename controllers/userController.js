@@ -71,12 +71,13 @@ const userController = {
 
 
   getUserTweets: (req, res) => {
-    userService.getUserTweets(req, res, (data) => {
-      return res.render('tweets', data)
+    userService.getUserTweets(req, res, data => {
+      return res.render('userSelf', data)
     })
   },
 
   getUserSelfReply: async (req, res) => {
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
     const users = await User.findAll({
       include: [
         { model: User, as: 'Followings' },
@@ -119,7 +120,7 @@ const userController = {
   },
 
   getUserSelfLike: async (req, res) => {
-
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
     const likes = await Like.findAll({
       where: { UserId: req.params.id },
       include: [User, { model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }] }],
