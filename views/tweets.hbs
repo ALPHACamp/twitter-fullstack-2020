@@ -106,7 +106,11 @@
           <div class="edit-button-other">
             <div class="other-user-icon">
               <div class="mail"><a href="/messages/{{viewUser.id}}"><i class="far fa-envelope"></i></a></div>
-              <div class="notification"><i class="far fa-bell"></i></div>
+              <div class="notification">
+                <form action="/subscribe/{{viewUser.id}}" method="POST">
+                  <button type="submit" class="btn follow-button"><i class="far fa-bell"></i></button>
+                </form>
+              </div>
               <form action="/followships/{{viewUser.id}}?_method=DELETE" method="POST" style="display: contents;">
                 <button type="submit" class="btn follow-button">正在跟隨</button>
               </form>

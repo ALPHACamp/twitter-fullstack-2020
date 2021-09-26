@@ -42,9 +42,9 @@ app.use(methodOverride('_method'))
 
 let onlineUser = []
 io.on('connection', (socket) => {
-  socket.on('send user', function (currentName, currentAccount, currentAvatar) {
-    socket.broadcast.emit('new user msg', currentName, currentAccount, currentAvatar)
-    onlineUser.push({ currentName, currentAccount, currentAvatar })
+  socket.on('send user', function (currentName, currentAccount, currentAvatar, currentId) {
+    socket.broadcast.emit('new user msg', currentName, currentAccount, currentAvatar, currentId)
+    onlineUser.push({ currentName, currentAccount, currentAvatar, currentId})
 
     socket.on('chat message', (msg, currentId, currentAvatar) => {
       const user = { id: currentId, msg: msg }
@@ -79,6 +79,7 @@ io.on('connection', (socket) => {
       messageController.sendMsg(user, roomName, viewUserId)
       console.log('傳進私人聊天室===========', roomName)
       socket.to(roomName).emit('private chat message', msg, currentId, currentAvatar);
+      socket.broadcast.to(roomName).emit('noteHer');
     })
   })
 
