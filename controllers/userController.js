@@ -183,13 +183,19 @@ const userController = {
     })
   },
 
-  getUserLike: (req, res) => {
+  getUserLike: async (req, res) => {
     let loginUser = false
     if (helpers.getUser(req).id !== Number(req.params.id)) {
       loginUser = false
     } else {
       loginUser = true
     }
+
+    const currentUser = await User.findByPk(req.params.id, {
+      include: [Like]
+    })
+    const currentUserLikes = currentUser.dataValues.Likes
+    console.log('currentUser', currentUserLikes)
 
     const whereQuery = {}
     whereQuery.userId = Number(req.params.id)
@@ -201,22 +207,21 @@ const userController = {
       where: whereQuery,
       order: [['createdAt', 'DESC']],
     }).then(result => {
-      console.log(result.rows[0].dataValues.tweetId)
-      console.log(helpers.getUser(req).LikedTweets)
       const data = result.rows.map(r => ({
         ...r.dataValues,
+        ...currentUserLikes.dataValues,
         tweetId: r.dataValues.Tweet.dataValues.id,
         description: r.dataValues.Tweet.dataValues.description,
         createdAt: r.dataValues.createdAt,
         likeUserId: r.dataValues.Tweet.dataValues.User.id,
-        isLiked: helpers.getUser(req).LikedTweets ?
-          helpers.getUser(req).LikedTweets.map(d => d.id).includes(r.tweetId) : false,
+        isLiked: currentUserLikes.map(d => d.TweetId).includes(r.TweetId),
         likeAvatar: r.dataValues.Tweet.dataValues.User.avatar,
         likeUserName: r.dataValues.Tweet.dataValues.User.name,
         likeUserAccount: r.dataValues.Tweet.dataValues.User.account,
         replyCount: r.dataValues.Tweet.dataValues.Replies.length,
         likeCount: r.dataValues.Tweet.dataValues.Likes.length
       }))
+      console.log('data', data)
       Tweet.findAndCountAll({
         where: whereQuery,
       }).then(result => {
