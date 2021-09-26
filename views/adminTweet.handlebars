@@ -2,7 +2,7 @@
     <div class="row flex-nowrap justify-content-between mr-3">
 
         <div class="col-auto col-lg-3">
-            <a class="d-flex ml-5 py-3 pl-4" href="/">
+            <a class="d-flex ml-5 py-3 pl-4" href="/" style="text-decoration: none;">
                 <i class="fab fa-twitter-square" style="font-size: 2.5em; color: #FF6600;"></i>
             </a>
             <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
@@ -34,8 +34,8 @@
                     <div class="row  mb-1 p-2">
                         <div class="col-1 d-flex justify-content-center align-items-start">
                             <a href="/users/{{this.UserId}}">
-                                <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle" style="width: 50px; height: 50px"
-                                    alt="avatar">
+                                <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                                    class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
                             </a>
                         </div>
                         <div class="col-11 row">
@@ -84,7 +84,7 @@
 
                 <div>
                     <form action="/admin/tweets/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-                        <button type="submit" class="btn btn-link">X</button>
+                        <button type="submit" class="btn btn-link h-delete" style="text-decoration: none; color: #657786;">X</button>
                     </form>
                 </div>
             </div>

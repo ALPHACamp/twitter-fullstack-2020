@@ -6,19 +6,25 @@
       </a>
       <div class="d-flex flex-column align-items-start ml-5 px-3 pt-2 min-vh-100">
         <ul class="nav flex-column nav-pills pr-5" id="menu" style="width: 100%;">
-          <li class="nav-item px-2 py-1">
+          <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark " href="/tweets">
               <i class="fas fa-home a-tomato" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text home a-tomato" style="color: #FF6600;">首頁</span>
             </a>
           </li>
-          <li class="nav-item px-2 py-1">
+          <li class="nav-item py-1">
+            <a class="nav-link align-middle text-dark h-tomato" href="/messages/public">
+              <i class="far fa-envelope" style="font-size: 1.2em;"></i>
+              <span class="h5 menu-text public">公開聊天室</span>
+            </a>
+          </li>
+          <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark h-tomato" href="/users/{{user.id}}">
               <i class="far fa-user" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text user">個人資料</span>
             </a>
           </li>
-          <li class="nav-item px-2 py-1">
+          <li class="nav-item py-1">
             <a class="nav-link align-middle text-dark h-tomato" href="/setting">
               <i class="fas fa-cog" style="font-size: 1.2em;"></i>
               <span class="h5 menu-text setting">設定</span>
@@ -46,13 +52,16 @@
         <div class="row justify-content-around align-items-start mb-1 p-2 bg-white">
           <div class="col-1 d-flex justify-content-center align-items-center">
             <a href="/users/{{tweet.UserId}}">
-              <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+              <img
+                src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
             </a>
           </div>
           <div class="col-11 row px-0">
             <div class="col-12 flex-column justify-content-center align-items-start">
               <div style="height: 15px; line-height: 22px;">
-                <a href="/users/{{tweet.UserId}}" class="text-dark" style="font-size: 15px; font-weight:700;">{{tweet.User.name}}</a>
+                <a href="/users/{{tweet.UserId}}" class="text-dark"
+                  style="font-size: 15px; font-weight:700;">{{tweet.User.name}}</a>
               </div>
               <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{tweet.User.account}}</span>
               <div>
@@ -65,7 +74,8 @@
           <p class="mt-1" style="font-weight: 500; font-size: 23px; line-height: 34px;">{{tweet.description}}</p>
         </div>
         <div class="row col-12">
-          <span style="font-size: 15px; font-weight:500;color:#657786;">{{momentDetailTime this.createdAt}}．{{momentDetailDate this.createdAt}}</span>
+          <span style="font-size: 15px; font-weight:500;color:#657786;">{{momentDetailTime
+            this.createdAt}}．{{momentDetailDate this.createdAt}}</span>
         </div>
         <hr>
         <div class="row col-12">
@@ -78,42 +88,46 @@
         </div>
         <hr>
         <div class="row col-12" style="height:25px;">
-            <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#replyModal" style="margin-right: 85px;">
-              <i class="far fa-comment" style="color: navy;width:25px;height:18px;"></i>
+          <button type="button" class="btn btn-outline-light" data-toggle="modal" data-target="#replyModal"
+            style="margin-right: 85px;">
+            <i class="far fa-comment" style="color: navy;width:25px;height:18px;"></i>
+          </button>
+          {{#if isLiked}}
+          <form action="/tweets/{{tweet.id}}/unlike" method="POST">
+            <button type="submit" class="btn btn-outline-light">
+              <i class="fas fa-heart" style="color: red;width:25px;height:18px;"></i>
             </button>
-            {{#if isLiked}}
-            <form action="/tweets/{{tweet.id}}/unlike" method="POST">
-              <button type="submit" class="btn btn-outline-light">
-                <i class="fas fa-heart" style="color: red;width:25px;height:18px;"></i>
-              </button>
-            </form>
-            {{else}}
-            <form action="/tweets/{{tweet.id}}/like" method="POST">
-              <button type="submit" class="btn btn-outline-light">
-                <i class="far fa-heart" style="color: red; width: 25px; height: 18px;"></i>
-              </button>
-            </form>
-            {{/if}}
-          </div>
+          </form>
+          {{else}}
+          <form action="/tweets/{{tweet.id}}/like" method="POST">
+            <button type="submit" class="btn btn-outline-light">
+              <i class="far fa-heart" style="color: red; width: 25px; height: 18px;"></i>
+            </button>
+          </form>
+          {{/if}}
+        </div>
         <hr>
         <div class="card-body p-0">
           {{#each tweet.Replies}}
-          <div class="row justify-content-around align-items-start px-2" style="margin-top: -10px; margin-bottom: -20px;">
+          <div class="row justify-content-around align-items-start px-2"
+            style="margin-top: -10px; margin-bottom: -20px;">
             <div class="col-1 d-flex justify-content-center align-items-center">
-              <img src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
+              <img
+                src="{{#if this.User.avatar}}{{this.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                class="rounded-circle" style="width: 50px; height: 50px" alt="avatar">
             </div>
             <div class="col-11 row px-md-2 px-4 pt-1">
-              <div class="col-12 flex-column">
-                <div style="height: 22px; line-height: 22px">
+              <div class="col-12 flex-column row">
+                <div class="" style="height: 22px; line-height: 22px">
                   <a href="/users/{{this.UserId}}" class="text-dark" style="font-size: 15px; font-weight:700; text-decoration:none;">{{this.User.name}}</a>
                   <span style="color: #657786; font-size: 15px;line-height: 22px;">@{{this.User.account}}．{{moment this.createdAt}}</span>
                 </div>
-                <div style="height: 22px; line-height: 22px">
+                <div class="" style="height: 22px; line-height: 22px;">
                   <span style="color: #657786; font-size: 15px;line-height: 20px;">回覆</span>
                   <span style="color: #FF6600; font-size: 15px;line-height: 20px;">@{{../tweet.User.account}}</span>
                 </div>
                 <div class="" style="font-size:15px;font-weight:400;">
-                  <p class="" style="max-width: 600px; overflow-wrap: break-word;">{{this.comment}}</p>
+                  <p class="" style="max-width: 500px; overflow-wrap: break-word;">{{this.comment}}</p>
                 </div>
               </div>
             </div>
@@ -133,17 +147,18 @@
             <div class="row justify-content-around align-items-center">
               <div class="col-2 d-flex justify-content-center align-items-center" style="padding-left: 20px;">
                 <a href="/users/{{this.id}}">
-                  <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" alt="" width="50" height="50" class="rounded-circle">
+                  <img src="{{#if this.avatar}}{{this.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                    alt="" width="50" height="50" class="rounded-circle">
                 </a>
               </div>
-          
+
               <div class="col-6 pt-3 d-flex flex-column align-items-start">
-                <h5 style="line-height: 18px;">{{this.name}}</h5>
-                <p class="text-muted" style="line-height: 16px;">@{{this.account}}</p>
+                <h5 style="line-height: 18px;width:inherit;">{{this.name}}</h5>
+                <p class="text-muted" style="line-height: 16px;width:inherit;">@{{this.account}}</p>
               </div>
-          
+
               <div class="col-4 d-flex justify-content-center">
-          
+
                 {{#if this.isFollowed}}
                 <form action="/followships/{{this.id}}?_method=DELETE" method="POST" style="display: contents;">
                   <button type="submit" class="btn btn-tomato" name="{{user.id}}"
@@ -155,7 +170,7 @@
                     style="font-size: 15px; border-radius: 30px 30px 30px 30px;font-weight: bold;">跟隨</button>
                 </form>
                 {{/if}}
-          
+
               </div>
             </div>
           </li>
@@ -188,14 +203,17 @@
       <div class="modal-body">
         <div class="row align-items-start mb-1 px-3 ">
           <div class="card-image col-1 d-flex justify-content-center align-items-center">
-            <img src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}" class="rounded-circle mr-2"
-              style="width: 50px; height: 50px;" alt="大頭貼">
+            <img
+              src="{{#if tweet.User.avatar}}{{tweet.User.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+              class="rounded-circle mr-2" style="width: 50px; height: 50px;" alt="大頭貼">
           </div>
           <div class="col-11 row">
             <div class="col-12 d-inline-flex justify-content-between align-items-center">
               <div style="height: 22px; line-height: 22px">
                 <span class="" style="font-size: 15px; font-weight: bold;">{{tweet.User.name}}</span>
-                <span class="" style="color: #657786; font-size: 15px;font-weight: 500;">@{{tweet.User.account}}．{{moment tweet.createdAt}}</span>
+                <span class=""
+                  style="color: #657786; font-size: 15px;font-weight: 500;">@{{tweet.User.account}}．{{moment
+                  tweet.createdAt}}</span>
               </div>
             </div>
             <div class="col-12">
@@ -213,8 +231,7 @@
           <form action="/tweets/{{tweet.id}}/replies" method="POST" class="mt-2 ">
             <div class="position-relative" style="margin-left:20px; padding: 75px 0;">
               <div class="position-absolute" style="z-index: 5; left: -12px; top: 0px;">
-                <img
-                  src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
+                <img src="{{#if user.avatar}}{{user.avatar}}{{else}}https://loremflickr.com/800/550/landscape{{/if}}"
                   class="rounded-circle mt-1" style="width: 50px; height: 50px;" alt="大頭貼" />
               </div>
               <div class="position-absolute" style="z-index: 0; width: 430px; top:-5px; left:-10px;">

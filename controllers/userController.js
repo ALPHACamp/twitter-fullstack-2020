@@ -243,7 +243,18 @@ const userController = {
             })
         }
         try {
-            const [a, e] = await Promise.all([User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ account: account }, { account: { [Op.notLike]: helpers.getUser(req).account } }] } }), User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ email }, { email: { [Op.notLike]: helpers.getUser(req).email } }] } })])
+            const [a, e] = await Promise.all([
+                User.findOne({ 
+                    raw: true, 
+                    nest: true, 
+                    where: { 
+                        [Op.and]: [
+                            { account: account }, 
+                            { account: { [Op.notLike]: helpers.getUser(req).account } }
+                        ] 
+                    } 
+                }), 
+                User.findOne({ raw: true, nest: true, where: { [Op.and]: [{ email }, { email: { [Op.notLike]: helpers.getUser(req).email } }] } })])
             errors = []
             if (a) {
                 errors.push({ msg: '此帳號已有人使用。' })
