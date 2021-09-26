@@ -12,8 +12,10 @@ const Followship = db.Followship
 const Tweet = db.Tweet
 const Like = db.Like
 const Reply = db.Reply
+const Subscribe = db.Subscribe
 const { sequelize } = require('../models');
 const { render } = require('../app');
+const { Op } = require("sequelize")
 
 const messageController = {
   publicPage: (req, res) => {
@@ -101,6 +103,7 @@ const messageController = {
   const currentUser = helpers.getUser(req)
   try{
   //中間資料大戰
+    
 
   //追蹤者
     const users = await Followship.findAll({
@@ -128,7 +131,51 @@ const messageController = {
     return res.render('notification', { topUsers, currentUser })
   }catch{error => {console.log(error)}}
 
+ },
+
+ subscription: async(req, res) => {
+   try {
+      const fansId = helpers.getUser(req).id
+      const InfluencerId = Number(req.params.id)
+      const targetUser = await User.findByPk(InfluencerId)
+      const subscription = await Subscribe.findOne({
+        where: {
+          [Op.and]: [
+            { fansId },
+            { InfluencerId }
+          ]
+        }
+      })
+
+      if (fansId === InfluencerId) {
+
+       req.flash('error_messages', '無法訂閱自己' )
+       return res.redirect('back')
+      }
+
+      if (!targetUser) {
+        req.flash('error_messages', '無效對象' )
+        return res.redirect('back')
+      }
+
+      if (subscription) {
+        req.flash('error_messages', '不得重複訂閱' )
+        return res.redirect('back')
+
+      } else {
+        await Subscribe.create({
+          fansId,
+          InfluencerId
+        })
+        req.flash('success_messages', '成功訂閱')
+        return res.redirect('back')
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
  }
+
 }
 
 module.exports = messageController
