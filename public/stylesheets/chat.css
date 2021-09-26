@@ -19,11 +19,19 @@
   padding: 0;
 }
 
+.chat-users .home-word-box-private,
+.chats .home-word-box-private,
 .chat-users .home-word-box,
 .chats .home-word-box {
   border-bottom: solid 1px #e6ecf0;
 
 }
+
+.chat-users .home-word-box-private,
+.chats .home-word-box-private {
+  height: 65px;
+}
+
 
 .chat-users .home-word,
 .chats .home-word {
@@ -39,6 +47,12 @@
   border-color: #e6ecf0;
 }
 
+.chat-user-list .selected,
+.chat-users .user-private:hover{
+  border-right: 3px solid #ff6600;
+  cursor: pointer;
+}
+
 .chat-user .name {
   color: #1c1c1c;
   font-size: 1rem;
@@ -51,6 +65,9 @@
   font-size: 1rem;
   font-weight: 500;
 }
+
+
+
 
 .chats .chat-scroll {
   height: 760px;
