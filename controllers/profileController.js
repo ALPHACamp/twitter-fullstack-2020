@@ -26,7 +26,7 @@ const profileController = {
       const isPost = true;
       //get selfInformation
       const myProfile = await User.findByPk(user.id, {
-        attributes: ["avatar"],
+        attributes: ["id", "avatar"],
         raw: true,
       });
       //get selfInformation
@@ -78,7 +78,7 @@ const profileController = {
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
@@ -161,10 +161,12 @@ const profileController = {
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
-
+      const isSelf = Number(req.params.id) === Number(user.id);
       // return res.json({ Profile })
       return res.render("profile", {
         isComment,
+        isSelf,
+        myProfile: user,
         users: TopUsers,
         profile: Profile,
         tweetsCount,
@@ -186,7 +188,7 @@ const profileController = {
       const isLikedPosts = true;
       //get selfInformation
       const myProfile = await User.findByPk(user.id, {
-        attributes: ["avatar"],
+        attributes: ["id", "avatar"],
         raw: true,
       });
       //get userInformation
@@ -215,8 +217,8 @@ const profileController = {
       });
       const LikedTweets = await rawLikedTweets.map((data) => ({
         ...data.dataValues,
-        ReplyCount: data.Tweet.Replies.length,
-        LikedCount: data.Tweet.Likes.length,
+        ReplyCount: data.Tweet ? data.Tweet.Replies.length : 0,
+        LikedCount: data.Tweet ? data.Tweet.Likes.length : 0,
       }));
 
       // get Count
@@ -245,11 +247,11 @@ const profileController = {
         .map((data) => ({
           ...data.dataValues,
           FollowerCount: data.Followers.length,
-          isFollowed: req.user.Followings.map((d) => d.id).includes(data.id),
+          isFollowed: user.Followings.map((d) => d.id).includes(data.id),
         }))
         .sort((a, b) => b.FollowerCount - a.FollowerCount);
       const TopUsers = Users.slice(0, 10);
-      const isSelf = Number(req.params.userId) === Number(req.user.id);
+      const isSelf = Number(req.params.id) === Number(user.id);
       // return res.json({ tweets: LikedTweets })
       return res.render("profile", {
         isLikedPosts,
