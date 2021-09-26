@@ -63,6 +63,7 @@
       // 通知server此id上線
       socket.emit('userIn', userMsg )
     })
+    
     socket.on('publicRoomUsers', (publicRoomUsers) => {
       chatUsers.innerHTML = `
       <div class="home-word-box p-2">
