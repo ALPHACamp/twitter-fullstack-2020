@@ -4,6 +4,7 @@ const { authenticated } = require('../../middleware/auth')
 const chatController = require('../../controllers/chatController')
 
 router.get('/' , authenticated, chatController.getChat)
+router.get('/private', authenticated, chatController.getPrivateChat)
 
 
 

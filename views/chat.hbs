@@ -122,7 +122,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       if (input.value) {
-        let userMsg = {
+        const userMsg = {
           senderId: userId,
           senderName: userName,
           senderAvatar: userAvatar,
@@ -138,37 +138,32 @@
     function addMsgToBox(userMsg) {
       // 使用者上線公開聊天室提示
       if(userMsg.behavior === 'enter-public') {
-        console.log('IN IN')
-        let newBubble = document.createElement('div')
-        newBubble.className = 'ser-name-status text-center my-2'
-        newBubble.innerHTML = `<div class="name-status d-inline-flex py-1 px-3">
+        messages.innerHTML += `<div class="user-name-status text-center my-2">
+          <div class="name-status d-inline-flex py-1 px-3">
             <p>${userMsg.senderName}上線</p>
-          </div>`
-        messages.appendChild(newBubble);
+          </div>
+        </div>`
       }
       // 使用者在公開聊天室說話
       if (userMsg.behavior === 'public-chat') {
-        console.log('IN MSG')
         // 如果這則訊息的說話者是我
         if (userMsg.senderId.toString() === userId) {
-          let newBubble = document.createElement('div')
-
-          newBubble.className = 'my-chat d-flex justify-content-end my-2 justify-content-end'
-            newBubble.innerHTML = `<div class="chat-content">
-          <p class="p-3">${userMsg.senderMsg}</p>
-        </div>`
-          messages.appendChild(newBubble);
+          messages.innerHTML += `<div class="my-chat d-flex justify-content-end mt-2 justify-content-end">
+          <div class="chat-content">
+            <p class="p-3">${userMsg.senderMsg}</p>
+          </div>
+        </div>
+        <p class="my-chat-time">${userMsg.createdAt}</p>`
         } else {
         // 如果這則訊息的說話者是別人
-          let newBubble = document.createElement('div')
-
-          newBubble.className = 'other-chat d-inline-flex align-items-end my-2'
-          newBubble.innerHTML = `<img class="rounded-circle" src="${userMsg.senderAvatar}"
-                alt="avatar" title="avatar" width="50px" height="50px">
-                <div class="chat-content ms-3">
-                  <p class='p-3'>${userMsg.senderMsg}</p>
-                </div>`
-          messages.appendChild(newBubble);
+          messages.innerHTML +=`<div class="other-chat d-inline-flex align-items-end mt-2">
+          <img class="rounded-circle" src="${userMsg.senderAvatar}"
+            alt="avatar" title="avatar" width="50px" height="50px">
+          <div class="chat-content ms-3">
+            <p class='p-3'>${userMsg.senderMsg}</p>
+          </div>
+        </div>
+        <p class="other-chat-time">${userMsg.createdAt}</p>`
         }
       }
       scrollable.scrollTo(0, scrollable.scrollHeight)

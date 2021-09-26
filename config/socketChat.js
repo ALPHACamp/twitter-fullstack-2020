@@ -1,15 +1,24 @@
 const express = require('express')
 const app = express()
-const { Server } = require("socket.io")
+const { Server } = require('socket.io')
 const db = require('../models')
 const User = db.User
 const PublicChat = db.PublicChat
 const helpers = require('../_helpers')
+const dayjs = require('dayjs')
 
 
+
+
+function timeConvert (time) {
+  const amPm = dayjs(time).format('A') === 'PM' ? '下午' : '上午'
+  const hourMinute = dayjs(time).format('HH:mm')
+  const formatTime = amPm + hourMinute
+  return formatTime
+}
 
 module.exports = {
-  Server(server) {
+  Server (server) {
     io = new Server(server)
   },
   connect() {
@@ -69,6 +78,8 @@ module.exports = {
               UserId: userMsg.senderId,
               message: userMsg.senderMsg
             })
+            // 設置時間格式
+            userMsg.createdAt = timeConvert(userMsg.createdAt)
             // 廣播新訊息給大家
             io.emit('chat message', userMsg);
           }

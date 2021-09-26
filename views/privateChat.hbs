@@ -1,0 +1,131 @@
+<div class="row chat-room">
+  {{> homeNavBar}}
+  <div class="chat-users col d-flex flex-column ms-4">
+      <div class="home-word-box-private px-2 py-3 d-flex justify-content-between">
+        <span class="home-word ms-1">訊息</span>
+        <i class="far fa-envelope fa-lg my-auto me-3"></i>
+      </div>
+    {{!-- 帶userId進去 data-receiver--}}
+    <div class="chat-user-list">
+      <div class="chat-user user-private align-middle d-flex" data-receiver=""> 
+        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg" alt="avatar" title="avatar" width="50px" height="50px">
+          <div class="info ms-2">
+            <span class="name">Apple Pie</span>
+            <span class="account">@helloApplePie</span>
+            <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
+          </div>
+          <div class="time ms-auto">
+            <span class="time">9月26號</span>
+          </div>
+      </div>
+      <div class="chat-user user-private align-middle d-flex" data-receiver="">
+        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+          alt="avatar" title="avatar" width="50px" height="50px">
+        <div class="info ms-2">
+          <span class="name">Apple Pie</span>
+          <span class="account">@helloApplePie</span>
+          <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
+        </div>
+        <div class="time ms-auto">
+          <span class="time">9月26號</span>
+        </div>
+      </div>
+      <div class="chat-user user-private align-middle d-flex" data-receiver="">
+        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+          alt="avatar" title="avatar" width="50px" height="50px">
+        <div class="info ms-2">
+          <span class="name">Apple Pie</span>
+          <span class="account">@helloApplePie</span>
+          <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
+        </div>
+        <div class="time ms-auto">
+          <span class="time">9月26號</span>
+        </div>
+      </div>
+      <div class="chat-user user-private align-middle d-flex" data-receiver="">
+        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+          alt="avatar" title="avatar" width="50px" height="50px">
+        <div class="info ms-2">
+          <span class="name">Apple Pie</span>
+          <span class="account">@helloApplePie</span>
+          <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
+        </div>
+        <div class="time ms-auto">
+          <span class="time">9月26號</span>
+        </div>
+      </div>
+      <div class="chat-user user-private align-middle d-flex" data-receiver="">
+        <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+          alt="avatar" title="avatar" width="50px" height="50px">
+        <div class="info ms-2">
+          <span class="name">Apple Pie</span>
+          <span class="account">@helloApplePie</span>
+          <p class="ms-1 mt-1">最後的內容擷取大概15-20char...</p>
+        </div>
+        <div class="time ms-auto">
+          <span class="time">9月26號</span>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+  <div class="chats col-6 me-5">
+    <div class="home-word-box-private p-2">
+      <p class="home-word ms-2">ApplePie</p>
+      <p class="home-account ms-2">@applepie</p>
+    </div>
+    <div class="chat-scroll" id="chat-scroll">
+      <div class="chat-messages d-flex flex-column justify-content-end p-2" id="chat-messages">
+        <div class="other-chat d-inline-flex align-items-end my-2">
+          <img class="rounded-circle" src="https://icon-library.com/images/default-user-icon/default-user-icon-17.jpg"
+            alt="avatar" title="avatar" width="50px" height="50px">
+          <div class="chat-content ms-3">
+            <p class='p-3'>這是對方的對話窗範本~我至少要打到這個對話框的70%!要看他換行看看才知道格式有沒有對喔</p>
+          </div>
+        </div>
+        <div class="my-chat d-flex justify-content-end my-2 justify-content-end">
+          <div class="chat-content">
+            <p class="p-3">這是使用者自己的對話窗範本哈哈哈～我在回覆喔好好笑喔好好笑喔要打到第二行不然看不出兩個版本的差異啦</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form id="chat-form" action="">
+      <input id="input" autocomplete="off" />
+      <button class="send-btn" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M21.13 11.358L3.614 2.10798C3.324 1.95598 2.974 2.00598 2.741 2.23398C2.511 2.45998 2.448 2.81098 2.591 3.10198L6.953 12.022L2.591 20.942C2.448 21.234 2.511 21.585 2.741 21.81C2.886 21.95 3.074 22.022 3.264 22.022C3.384 22.022 3.504 21.994 3.614 21.935L21.131 12.685C21.376 12.555 21.531 12.299 21.531 12.021C21.531 11.743 21.376 11.489 21.131 11.359L21.13 11.358ZM4.948 4.50998L17.752 11.272H8.255L4.948 4.51198V4.50998ZM8.255 12.77H17.753L4.948 19.535L8.255 12.772V12.77Z"
+            fill="#FF6600" />
+        </svg></button>
+
+    </form>
+
+  </div>
+
+</div>
+<script>
+const userList = document.querySelector('.chat-user-list') 
+const users = document.querySelector('.chat-user')
+
+
+userList.addEventListener('click', function(event) {
+  if (event.target.closest('.chat-user')){
+   if (event.classList.contains("selected")) {
+      event.classList.remove("selected");
+    }
+    else {
+      for (const child of userList.children) {
+        child.classList.remove("selected");
+      }
+      event.classList.add("selected");
+    }
+  }
+}) 
+
+
+
+
+
+</script>

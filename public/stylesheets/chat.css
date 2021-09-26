@@ -19,11 +19,19 @@
   padding: 0;
 }
 
+.chat-users .home-word-box-private,
+.chats .home-word-box-private,
 .chat-users .home-word-box,
 .chats .home-word-box {
   border-bottom: solid 1px #e6ecf0;
 
 }
+
+.chat-users .home-word-box-private,
+.chats .home-word-box-private {
+  height: 65px;
+}
+
 
 .chat-users .home-word,
 .chats .home-word {
@@ -39,6 +47,12 @@
   border-color: #e6ecf0;
 }
 
+.chat-user-list .selected,
+.chat-users .user-private:hover{
+  border-right: 3px solid #ff6600;
+  cursor: pointer;
+}
+
 .chat-user .name {
   color: #1c1c1c;
   font-size: 1rem;
@@ -51,6 +65,9 @@
   font-size: 1rem;
   font-weight: 500;
 }
+
+
+
 
 .chats .chat-scroll {
   height: 760px;
@@ -69,6 +86,18 @@
   background-color: #e5e5ee;
   border-radius: 20px;
 }
+
+.chats .other-chat-time {
+  margin: 2px 0px 5px 65px;
+  color: #657786;
+}
+
+.chats .my-chat-time {
+  margin: 2px 2px 5px 0px;
+  color: #657786;
+  text-align: end;
+}
+
 
 .other-chat, 
 .my-chat .chat-content {
