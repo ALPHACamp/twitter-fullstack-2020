@@ -304,6 +304,10 @@
   border-bottom: 2px solid #657786;
   border-radius: 4px 4px 0 0;
 }
+.modal-content .profile-container .profile-textarea-container {
+  margin-top: 7px;
+  height: 200px;
+}
 textarea.modal-input {
   resize: none;
 }

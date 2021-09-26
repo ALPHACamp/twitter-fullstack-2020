@@ -16,15 +16,13 @@
           <div class="profile-messageboard">
             <div class="profile-avatar-container">
               <div class="avatar profile-avatar">
-                <img
-                  src="{{profile.avatar}}"
-                  alt="avatar-img"
-                />
+                <img src="{{profile.avatar}}" alt="avatar-img" />
               </div>
             </div>
             <form action="/tweets" method="POST">
               {{>message}}
               <div class="profile-textarea-container">
+
                 <textarea
                   name="description"
                   class="form-control form-control-lg"

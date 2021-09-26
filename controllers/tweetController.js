@@ -78,7 +78,7 @@ const tweetController = {
     try {
       //get selfInformation
       const myProfile = await User.findByPk(user.id, {
-        attributes: ["avatar"],
+        attributes: ["id", "avatar"],
         raw: true,
       });
       let tweet = await Tweet.findByPk(req.params.id, {
