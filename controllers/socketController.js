@@ -44,7 +44,14 @@ module.exports = (io) => {
     //沒登入
     socket.on('disconnect', () => {
       console.log('user disconnected')
-      
+      const sessionUserId = socket.request.session.passport ? socket.request.session.passport.user : null
+      onlineUsers = onlineUsers.filter((item) => item.id !== sessionUserId)
+      onlineCounts = onlineUsers.length
+      //要對所有 Client 廣播的事件名稱 onlineCount onlineUsers outlineUserPop
+      io.emit('onlineCounts', onlineCounts)
+      io.emit('onlineUsers', onlineUsers)
+      io.emit('outlineUserPop', onlineUserPop)
+
     })
   })
 }

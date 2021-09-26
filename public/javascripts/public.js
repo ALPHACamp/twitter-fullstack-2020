@@ -21,7 +21,8 @@ socket.emit('login')
 //監聽來自server端的事件名稱 onlineUsers
 socket.on('onlineUsers', (onlineUsers) => {
   onlineUsers.forEach(data => {
-    const rawHtml = `
+    let rawHtml = ''
+    rawHtml = `
       <div class="row justify-content-start align-items-center px-2 py-1 rounded hovercard"
                 style="border: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 3px;"
                 onclick="location.href='/users/${data.id}'">
@@ -66,7 +67,7 @@ form.addEventListener('submit', function (e) {
   }
 });
 
-//來自client 的事件名稱 chat message
+//來自server 的事件名稱 chat message
 socket.on('chat message', (data) => {
   let newMsg = document.createElement('div')
   console.log(data.id === Number(id.textContent))
@@ -114,4 +115,15 @@ socket.on('chat message', (data) => {
   item.textContent = msg;
   messages.appendChild(item);
   window.scrollTo(0, document.body.scrollHeight);
-});                  
+});   
+
+//來自server 的事件名稱 onlineCounts onlineUsers--這兩個有做了，做 outlineUserPop
+socket.on('outlineUserPop', (userPop) => {
+  let outlineUserPop = document.createElement('ul')
+  outlineUserPop.classList.add('list-group', 'd-flex', 'flex-column', 'align-items-center','outlineUserPop')
+  outlineUserPop.innerHTML = `
+      <li class="list-group-item mt-2 btn-sm center" style="background-color:#E5E5E5;border-radius: 30px 30px 30px 30px; padding: 3px; font-size: 15px; color: #657786;">${userPop} 離線了</li>
+    `
+  board.appendChild(outlineUserPop)
+  publicboard.scrollTo(0, publicboard.scrollHeight)
+})
