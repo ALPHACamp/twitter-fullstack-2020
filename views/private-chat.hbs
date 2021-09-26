@@ -1,0 +1,438 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+<script>
+  function getUserData() {
+    axios.get('{{ BASE_URL }}/api/messages/{{currentUser.id}}')
+      .then(res => {
+        console.log(res.data)
+      }
+      )
+  }
+</script>
+
+{{!-- 包一層div讓內部有依據照比例縮 --}}
+<div class="wrap d-flex">
+  <div class="row col-md-12  justify-content-center" style="margin:0">
+    {{!-- 左側欄位 --}}
+<div class="left-side col-md-2">
+  <div class="setting-logo">
+    <img
+      src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+      alt="" style="max-width: 30px;max-height: 30px;">
+  </div>
+
+  <div style="text-align: left">
+    <ul class="list-group">
+
+      <a href="/tweets">
+        <li class="list-group-item">
+          <div class="d-flex">
+            <i class="fas  fa-fw fa-home mr-4"></i>
+            首頁
+          </div>
+        </li>
+      </a>
+
+      <a href="/subscribe/{{user.id}}">
+        <li class="list-group-item">
+          <div class="d-flex">
+            <i class="fas fa-fw fa-fh fa-bell mr-4">
+              {{!-- 若有通知 --}}
+              {{!-- <span class="bubble">1</span> --}}
+              {{!-- 若有通知 --}}
+            </i>
+            通知
+          </div>
+        </li>
+      </a>
+
+      <a href="/messages">
+        <li class="list-group-item">
+          <div class="d-flex">
+            <i class="fas  fa-fw  fa-fh fa-comments mr-4">
+              {{!-- 若有通知 --}}
+              {{!-- <span class="bubble">10</span> --}}
+              {{!-- 若有通知 --}}
+            </i>
+            公開聊天室
+          </div>
+        </li>
+      </a>
+
+
+      <a href="/messages/{{user.id}}">
+        <li class="list-group-item active">
+          <div class="d-flex">
+            <i class="fas fa-fw fa-fh fa-envelope mr-4" id="priNote">
+              {{!-- 若有通知 --}}
+              {{!-- 應該在這 --}}
+              {{!-- 若有通知 --}}
+            </i>
+            私人訊息
+          </div>
+        </li>
+      </a>
+
+      <a href="/users/{{user.id}}/tweets">
+        <li class="list-group-item">
+          <div class="d-flex"><i class="fas  fa-fw fa-user mr-4"></i>個人資料</div>
+        </li>
+      </a>
+
+      <a href="/users/{{user.id}}/setting">
+        <li class="list-group-item">
+          <div class="d-flex"><i class="fas  fa-fw fa-cog mr-4"></i>設定</div>
+        </li>
+      </a>
+    </ul>
+
+    <div class="">
+      <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+      </button>
+    </div>
+
+
+    <a href="/logout">
+      <div class="logout-button">
+        <i class="fas fa-arrow-alt-circle-left"></i>
+        登出
+      </div>
+    </a>
+
+  </div>
+</div>
+
+    {{!-- 中間主欄位 --}}
+    <div class="middle-side col-md-4" style="padding:0; height:100%;">
+      <div class="d-flex justify-content-between" style=" margin: auto 15px;">
+        <div class="text-title">訊息</div>
+        <div class="text-icon">
+          <a href="/messages/{{randomUserId}}">
+            <i class="fas fa-envelope-open-text"></i>
+          </a>
+        </div>
+      </div>
+
+      <hr style="margin:0; padding:0">
+
+      <ul class="list-group" id="msgList">
+        {{!-- 訊息A開始 --}}
+        {{!-- <li class="message list-group-item">
+          <div class="avatar">
+            <a href="/messages/25">
+              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+          <div class="name-account-message">
+            <div class="name-account">
+              <a href="">
+                <div class="name">Apple</div>
+                <div class="account">@apple</div>
+              </a>
+              <div class="time">
+                5秒前
+              </div>
+            </div>
+            <div class="message">
+              訊息在這
+            </div>
+          </div>
+        </li>
+        <hr style="margin:0; padding:0"> --}}
+        {{!-- 訊息A結束 --}}
+
+        {{!-- 訊息B開始 --}}
+        {{!-- <li class="message list-group-item">
+          <div class="avatar">
+            <a href="">
+              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+          <div class="name-account-message">
+            <div class="name-account">
+              <a href="">
+                <div class="name">Apple</div>
+                <div class="account">@apple</div>
+              </a>
+              <div class="time">
+                5秒前
+              </div>
+            </div>
+            <div class="message">
+              訊息在這
+            </div>
+          </div>
+
+        </li>
+        <hr style="margin:0; padding:0"> --}}
+        {{!-- 訊息B結束 --}}
+      </ul>
+
+
+
+    </div>
+
+    {{!-- 右側欄位 --}}
+    {{#ifCond currentUser.id viewUserId}}
+    <div class="right-side col-md-5" style="padding:0; height:100%;">
+      <div class="chat-information">
+      點擊左側訊息欄或<a href="/messages/{{randomUserId}}">
+        <i class="fas fa-envelope-open-text"></i>
+      </a>開始隨機聊天
+      </div>
+    </div>
+    {{else}}
+    <div class="right-side col-md-5" style="padding:0; height:100%;">
+      <div class="chat-text-title">
+        <div class="name">{{viewUser.name}}</div>
+        <div class="account">@{{viewUser.account}}</div>
+      </div>
+      <hr style="max-width: 673px;">
+      <div class="chat">
+        <ul class="list-group" id="messages">
+
+          {{#each msg}}
+
+          {{#if selfMsg}}
+          {{!-- 自己的訊息 --}}
+          <li class="list-group-item-myself">
+            <div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text">{{this.content}}</div>
+                </div>
+              </div>
+              <div class="time">{{time this.createdAt}}</div>
+            </div>
+          </li>
+          {{!-- 自己的訊息 --}}
+          {{else}}
+          {{!-- 他人訊息 --}}
+          <li class="list-group-item">
+            <div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="{{../viewUser.avatar}}" alt="">
+                  </a>
+                </div>
+                <div class="text-area">
+                  <div class="text">{{this.content}}</div>
+                </div>
+              </div>
+              <div class="time">{{time this.Messages.createdAt}}</div>
+          </li>
+          {{!-- 他人訊息 --}}
+          {{/if}}
+          {{/each}}
+
+          {{!-- 他人訊息 --}}
+          {{!-- <li class="list-group-item">
+            <div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+                  </a>
+                </div>
+
+                <div class="text-area">
+                  <div class="text"> 訊息打在Hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</div>
+                </div>
+              </div>
+              <div class="time">下午4:21</div>
+
+            </div>
+          </li> --}}
+          {{!-- 他人訊息 --}}
+
+          {{!-- 自己的訊息 --}}
+          {{!-- <li class="list-group-item-myself">
+            <div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text"> {{roomName}}</div>
+                </div>
+              </div>
+              <div class="time">下午4:21</div>
+
+            </div>
+          </li> --}}
+          {{!-- 自己的訊息 --}}
+
+        </ul>
+      </div>
+
+      <hr style="max-width: 673px;">
+
+      {{!-- 輸入欄位 --}}
+      <div class="type-area">
+        {{!-- //TODO:要改API傳 --}}
+        <form action="" method="" id="form" style="display: contents;">
+          <div class="input-area">
+            <input type="text" class="input-chat" id="input" placeholder="輸入訊息...">
+          </div>
+          <div class="send-chat">
+            <button class="btn">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+    {{/ifCond}}
+
+  </div>
+</div>
+
+
+
+
+{{!-- add-tweet Modal --}}
+<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+
+  {{> add-tweet currentUser=currentUser}}
+
+</div>
+{{!-- add-tweet Modal --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+
+<script>
+  var socket = io();
+
+  var messages = document.getElementById('messages');
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+  const priNote = document.getElementById("priNote");
+  let redDot = 0
+
+
+  //使用者最後訊息更新
+  socket.on('renderMsgBox', function (msgInBox) {
+    const msgList = document.querySelector('#msgList')
+    let msgHTML = ""
+    let time = new Date().toLocaleTimeString()
+    msgList.innerHTML = msgHTML
+    const item = document.createElement('li')
+    item.classList.add('list-group')
+    for (let i = 0; i < msgInBox.length; i++) {
+      msgHTML += `
+       <a href="/messages/${msgInBox[i].userId}">
+      <li class="message list-group-item">
+          <div class="avatar">
+              <img src="${msgInBox[i].userAvatar}" alt="">
+          </div>
+          <div class="name-account-message col-md-12">
+            <div class="name-account col-md-12">
+                <div class="name">${msgInBox[i].userName}</div>
+                <div class="account">@${msgInBox[i].userAccount}</div>
+              <div class="time">
+                ${time}
+              </div>
+            </div>
+            <div class="message">
+              ${msgInBox[i].content}
+            </div>
+          </div>
+        </li>
+         </a>
+        <hr style="margin:0; padding:0">`
+    }
+    item.innerHTML = msgHTML;
+    msgList.appendChild(item);
+  })
+
+
+  //登入傳當前使用者資料
+  window.addEventListener('load', function sendUser() {
+    //使用roomdId
+    let roomName = "{{ roomName }}"
+    socket.emit('join private room', roomName)
+    const currentId = "{{currentUser.id}}"
+    socket.emit('msg-inbox', currentId)
+    scrollWindow();
+  })
+
+  //本人送出訊息
+  form.addEventListener('submit', function (e) {
+    e.preventDefault()
+    let roomName = "{{  roomName  }}"
+    if (input.value) {
+      var item = document.createElement('li');
+      let rawHTML = "";
+      let time = new Date().toLocaleTimeString();
+      item.classList.add("list-group-item-myself")
+      let msg = input.value
+      rawHTML += `<div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text">${msg}</div>
+                </div>
+              </div>
+              <div class="time">${time}</div>
+            </div>`
+      item.innerHTML = rawHTML;
+      messages.appendChild(item);
+      scrollWindow();
+      const currentAvatar = "{{ currentUser.avatar }}"
+      const currentId = "{{ currentUser.id }}"
+      const currentAccount = "{{ currentUser.account }}"
+      const currentName = "{{ currentUser.name }}"
+      const viewUserId = "{{ viewUser.id }}"
+      socket.emit('private-chat', input.value, currentId, currentAvatar, viewUserId);
+      input.value = ''
+    }
+  })
+
+  //接收他人送出訊息
+  socket.on('private chat message', function (msg, currentId, currentAvatar) {
+    const userId = "{{ currentUser.id }}"
+    if (Number(userId) !== Number(currentId)) {
+      var item = document.createElement('li');
+      let rawHTML = "";
+      let time = new Date().toLocaleTimeString()
+      item.classList.add('list-group-item')
+      rawHTML += `<div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="${currentAvatar}" alt="">
+                  </a>
+                </div>
+                <div class="text-area">
+                  <div class="text"> 
+                    ${msg}
+                    </div>
+                </div>
+              </div>
+              <div class="time">${time}</div>
+            </div>`
+      item.innerHTML = rawHTML;
+      messages.appendChild(item);
+      scrollWindow();
+    }
+  });
+
+  //接收私人訊息小紅燈通知
+  socket.on('noteHer', function () {
+    var item = document.createElement('span');
+    let rawHTML = "";
+    redDot += 1
+    item.classList.add('bubble')
+    rawHTML +=
+      `${redDot}`
+    item.innerHTML = rawHTML;
+    priNote.appendChild(item);
+    scrollWindow();
+  })
+
+
+  //捲至最底
+  function scrollWindow() {
+    let h = document.querySelector('.chat');
+    h.scrollTo(0, h.scrollHeight);
+  }
+
+</script>

@@ -1,0 +1,366 @@
+<link rel="stylesheet" href="/stylesheets/showPage.css">
+
+
+<div class="wrap d-flex">
+  <div class="row col-md-12  justify-content-center" style="margin:0">
+    {{!-- 左側欄位 --}}
+    <div class="left-side col-md-2">
+      <div class="setting-logo">
+        <img
+          src="https://media.cakeresume.com/image/upload/s--yvVYN9sa--/c_pad,fl_png8,h_200,w_200/v1548316744/ribjsyna9cm9tm4pkv63.png"
+          alt="" style="max-width: 30px;max-height: 30px;">
+      </div>
+    
+      <div style="text-align: left">
+        <ul class="list-group">
+    
+          <a href="/tweets">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas  fa-fw fa-home mr-4"></i>
+                首頁
+              </div>
+            </li>
+          </a>
+    
+          <a href="/subscribe/{{user.id}}">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas fa-fw fa-fh fa-bell mr-4">
+                  {{!-- 若有通知 --}}
+                  {{!-- <span class="bubble">1</span> --}}
+                  {{!-- 若有通知 --}}
+                </i>
+                通知
+              </div>
+            </li>
+          </a>
+    
+          <a href="/messages">
+            <li class="list-group-item active">
+              <div class="d-flex">
+                <i class="fas  fa-fw  fa-fh fa-comments mr-4">
+                  {{!-- 若有通知 --}}
+                  {{!-- <span class="bubble">10</span> --}}
+                  {{!-- 若有通知 --}}
+                </i>
+                公開聊天室
+              </div>
+            </li>
+          </a>
+    
+    
+          <a href="/messages/{{user.id}}">
+            <li class="list-group-item">
+              <div class="d-flex">
+                <i class="fas fa-fw fa-fh fa-envelope mr-4" id="priNote">
+                  {{!-- 若有通知 --}}
+                  {{!-- 應該在這 --}}
+                  {{!-- 若有通知 --}}
+                </i>
+                私人訊息
+              </div>
+            </li>
+          </a>
+    
+          <a href="/users/{{user.id}}/tweets">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas  fa-fw fa-user mr-4"></i>個人資料</div>
+            </li>
+          </a>
+    
+          <a href="/users/{{user.id}}/setting">
+            <li class="list-group-item">
+              <div class="d-flex"><i class="fas  fa-fw fa-cog mr-4"></i>設定</div>
+            </li>
+          </a>
+        </ul>
+    
+        <div class="">
+          <button type="summit" class="btn tweet-button" data-toggle='modal' data-target="#add-tweet">推文
+          </button>
+        </div>
+    
+    
+        <a href="/logout">
+          <div class="logout-button">
+            <i class="fas fa-arrow-alt-circle-left"></i>
+            登出
+          </div>
+        </a>
+    
+      </div>
+    </div>
+    {{!-- 中間主欄位 --}}
+    <div class="middle-side col-md-4" style="padding:0; height:100%;">
+      <div class="text-title" id="user-count">上線使用者</div>
+
+      <hr style="margin:0; padding:0">
+
+      <ul class="list-group" id="onlineUserList">
+        {{!-- 使用者A開始 --}}
+        {{!-- <li class="online-user list-group-item">
+          <div class="avatar">
+            <a href="">
+              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+          <div class="name-account">
+            <a href="" class="d-flex">
+              <div class="name">Apple</div>
+              <div class="account">@apple</div>
+            </a>
+          </div>
+        </li>
+        <hr style="margin:0; padding:0"> --}}
+        {{!-- 使用者A結束 --}}
+
+        {{!-- 使用者B開始 --}}
+        {{!-- <li class="online-user list-group-item">
+          <div class="avatar">
+            <a href="">
+              <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            </a>
+          </div>
+          <div class="name-account">
+            <a href="" class="d-flex">
+              <div class="name">Apple</div>
+              <div class="account">@apple</div>
+            </a>
+          </div>
+        </li>
+        <hr style="margin:0; padding:0"> --}}
+        {{!-- 使用者B結束 --}}
+      </ul>
+
+
+
+    </div>
+
+    {{!-- 右側欄位 --}}
+    <div class="right-side col-md-5" style="padding:0; height:100%;">
+      <div class="text-title">公開聊天室</div>
+      <div class="chat">
+        <ul class="list-group" id="messages">
+          {{!-- 上線 --}}
+          {{!-- <li class="list-group-item">
+            <div class="log">
+              Esther Howard 上線
+            </div>
+          </li> --}}
+          {{!-- 上線 --}}
+
+          {{!-- 離線 --}}
+          {{!-- <li class="list-group-item">
+            <div class="log">
+              Ralph Edwards 離線
+            </div>
+          </li> --}}
+          {{!-- 離線 --}}
+
+          {{#each msg}}
+
+          {{#if selfMsg}}
+          {{!-- 自己的訊息 --}}
+          <li class="list-group-item-myself">
+            <div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text">{{this.content}}</div>
+                </div>
+              </div>
+              <div class="time">{{time this.createdAt}}</div>
+            </div>
+          </li>
+          {{!-- 自己的訊息 --}}
+          {{else}}
+          {{!-- 他人訊息 --}}
+          <li class="list-group-item">
+            <div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="{{this.User.avatar}}" alt="">
+                  </a>
+                </div>
+                <div class="text-area">
+                  <div class="text">{{this.content}}</div>
+                </div>
+              </div>
+              <div class="time">{{time this.createdAt}}</div>
+          </li>
+          {{!-- 他人訊息 --}}
+          {{/if}}
+          {{/each}}
+
+        </ul>
+      </div>
+
+
+      {{!-- 輸入欄位 --}}
+      <div class="type-area">
+        {{!-- //TODO:要改API傳 --}}
+        <form action="" method="" id="form" style="display: contents;">
+          <div class="input-area">
+            <input type="text" class="input-chat" id="input" placeholder="輸入訊息..." ng-trim="false">
+          </div>
+          <div class="send-chat">
+            <button class="btn">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+  <input type="hidden" value= "{{currentUser.id}}">
+
+
+
+{{!-- add-tweet Modal --}}
+<div class="modal fade" id="add-tweet" tabindex="-1" role="dialog" aria-labelledby="add-tweet" aria-hidden="true">
+
+  {{> add-tweet currentUser=currentUser}}
+
+</div>
+{{!-- add-tweet Modal --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  var socket = io();
+
+  var messages = document.getElementById('messages');
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+
+  //登入傳當前使用者資料
+  window.addEventListener('load', function sendUser() {
+    const currentId = "{{currentUser.id}}"
+    const currentName = "{{currentUser.name}}"
+    const currentAvatar = "{{currentUser.avatar}}"
+    const currentAccount = "{{ currentUser.account }}"
+    socket.emit('send user', currentName, currentAccount, currentAvatar, currentId)
+    socket.emit('onlineUser')
+    scrollWindow();
+  })
+
+  //登入通知
+  socket.on('new user msg', function (currentName, currentAccount, currentAvatar, currentId) {
+    var item = document.createElement('li');
+    let rawHTML = "";
+    item.classList.add('list-group-item')
+    rawHTML += `<div class="log">
+              ${currentName} 上線
+            </div>`
+    item.innerHTML = rawHTML;
+    messages.appendChild(item);
+    scrollWindow();
+  })
+
+  //線上使用者更新
+  socket.on('online user', function (onlineUser) {
+    const userCount = document.querySelector('#user-count')
+    userCount.innerHTML = `上線使用者(${onlineUser.length})`
+    const onlineUserList = document.querySelector('#onlineUserList')
+    let onlineHTML = ""
+    onlineUserList.innerHTML = onlineHTML
+    const item2 = document.createElement('li')
+    item2.classList.add('list-group')
+    for (let i = 0; i < onlineUser.length; i++) {
+      onlineHTML += `<a href="/messages/${onlineUser[i].currentId}">
+      <li class="online-user list-group-item">
+        <div class="avatar">
+          <img src=${onlineUser[i].currentAvatar} alt=""> 
+        </div>
+        <div class="name-account d-flex">
+            <div class="name">${onlineUser[i].currentName}</div>
+            <div class="account">@${onlineUser[i].currentAccount}</div>
+        </div>
+        </li>
+        </a>
+      <hr style="margin:0; padding:0">`
+    }
+    item2.innerHTML = onlineHTML
+    onlineUserList.appendChild(item2);
+  })
+
+
+
+  //本人送出訊息
+  form.addEventListener('submit', function (e) {
+    e.preventDefault()
+    if (input.value) {
+      var item = document.createElement('li');
+      let rawHTML = "";
+      let time = new Date().toLocaleTimeString();
+      item.classList.add("list-group-item-myself")
+      let msg = input.value
+      rawHTML += `<div class="user-information">
+              <div class="current-user">
+                <div class="text-area">
+                  <div class="text">${msg}</div>
+                </div>
+              </div>
+              <div class="time">${time}</div>
+            </div>`
+      item.innerHTML = rawHTML;
+      messages.appendChild(item);
+      scrollWindow();
+      const currentAvatar = "{{ currentUser.avatar }}"
+      const currentId = "{{ currentUser.id }}"
+      socket.emit('chat message', input.value, currentId, currentAvatar);
+      input.value = ''
+    }
+  })
+
+  //接收他人送出訊息
+  socket.on('chat message', function (msg, currentId, currentAvatar) {
+    const userId = "{{ currentUser.id }}"
+    if (Number(userId) !== Number(currentId)) {
+      var item = document.createElement('li');
+      let rawHTML = "";
+      let time = new Date().toLocaleTimeString()
+      item.classList.add('list-group-item')
+      rawHTML += `<div class="information">
+              <div class="other-user">
+                <div class="avatar">
+                  <a href="">
+                    <img src="${currentAvatar}" alt="">
+                  </a>
+                </div>
+                <div class="text-area">
+                  <div class="text"> 
+                    ${msg}
+                    </div>
+                </div>
+              </div>
+              <div class="time">${time}</div>
+            </div>`
+      item.innerHTML = rawHTML;
+      messages.appendChild(item);
+      scrollWindow();
+    }
+  });
+
+  //下線通知
+  socket.on('user offline', function (currentName) {
+    var item = document.createElement('li');
+    let rawHTML = "";
+    item.classList.add('list-group-item')
+    rawHTML += `<div class="log">
+              ${currentName} 已下線
+            </div>`
+    item.innerHTML = rawHTML;
+    messages.appendChild(item);
+    scrollWindow();
+  })
+
+  //捲至最底
+  function scrollWindow() {
+    let h = document.querySelector('.chat');
+    h.scrollTo(0, h.scrollHeight);
+  }
+
+</script>

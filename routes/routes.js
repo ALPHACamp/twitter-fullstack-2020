@@ -5,10 +5,13 @@ const passport = require('../config/passport')
 const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
+const messageController = require('../controllers/messageController')
+const subscribeController = require('../controllers/subscribeController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 const multipleUpload = upload.fields([{ name: 'avatar' }, { name: 'cover' }])
+
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -37,7 +40,10 @@ const authenticatedAdmin = (req, res, next) => {
   res.redirect('/admin/signin')
 }
 
+
+
 //如果使用者訪問首頁，就導向 /tweets 的頁面
+// router.get('/', authenticated, (req, res) => res.render('public-chat', { currentUser: req.user }))
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 //使用者顯示特定使用者頁面(使用者所有貼文)
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
@@ -113,6 +119,19 @@ router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 
 //使用者編輯個人資料(edit)
 router.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserEdit)
+
+//即時通訊(公開聊天)
+router.get('/messages', authenticated, messageController.publicPage);
+
+//即時通訊(私人聊天)
+router.get('/messages/:id', authenticated, messageController.privatePage)
+
+//訂閱通知頁面
+router.get('/subscribe/:id', authenticated, subscribeController.subscribe)
+// //新增訂閱
+router.post('/subscribe/:id', authenticated, subscribeController.subscription)
+//取消訂閱
+router.delete('/subscribe/:id', authenticated, subscribeController.removeSubscribe)
 
 //註冊
 router.get('/signup', userController.signUpPage)
