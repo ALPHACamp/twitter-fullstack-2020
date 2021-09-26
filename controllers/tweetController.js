@@ -31,7 +31,7 @@ const tweetController = {
     })
   },
   getTweet: (req, res) => {
-    return Tweet.findByPk(req.params.id, {
+    Tweet.findByPk(req.params.id, {
       include: [
         Reply,
         Like,
@@ -40,7 +40,8 @@ const tweetController = {
     }).then(tweet => {
       const tweetUser = tweet.dataValues.User.dataValues
       const tweetRepliesCount = tweet.dataValues.Replies.length
-      const tweetLikesCount = tweet.dataValues.Likes.length
+      const tweetLikesCount = tweet.dataValues.Likes ?
+        tweet.dataValues.Likes.length : fales
       const isLiked = helpers.getUser(req).LikedTweets ?
         helpers.getUser(req).LikedTweets.map(d => d.id).includes(tweet.dataValues.id) : false
       const whereQuery = {}
