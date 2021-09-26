@@ -3,6 +3,7 @@ const app = express()
 const { Server } = require("socket.io")
 const db = require('../models')
 const User = db.User
+const PublicChat = db.PublicChat
 const helpers = require('../_helpers')
 
 
@@ -31,6 +32,13 @@ module.exports = {
             nest: true,
             where: { publicRoom: 1 }
           })
+          const historyPublicChats = await PublicChat.findAll({
+            raw: true,
+            nest: true,
+            order: [['createdAt']],
+            include: [User]
+          })     
+          io.emit(`historyPublicChats-${userId}`, historyPublicChats)
           io.emit('publicRoomUsers', publicRoomUsers)
         } catch (err) {
           console.log(err)
@@ -76,16 +84,25 @@ module.exports = {
 
 
       // 公開聊天室的行為
-      socket.on('chat message', (userMsg) => {
-        if (userMsg.behavior === 'enter-public'){
-          // 廣播上線資訊給大家
-          io.emit('chat message', userMsg)
-        }
+      socket.on('chat message', async (userMsg) => {
+        try {
+          if (userMsg.behavior === 'enter-public') {
+            // 廣播上線資訊給大家
+            io.emit('chat message', userMsg)
+          }
 
-        if (userMsg.behavior === 'public-chat'){
-          // 廣播新訊息給大家
-          io.emit('chat message', userMsg);
+          if (userMsg.behavior === 'public-chat') {
+            await PublicChat.create({
+              UserId: userMsg.senderId,
+              message: userMsg.senderMsg
+            })
+            // 廣播新訊息給大家
+            io.emit('chat message', userMsg);
+          }
+        } catch (err) {
+          console.log(err)
         }
+        
       });
 
       // socket.on('disconnect', () => {

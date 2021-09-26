@@ -89,6 +89,34 @@
 
     // 收來自chat message的廣播
     socket.on("chat message", addMsgToBox);
+    socket.on(`historyPublicChats-${userId}`, addHistoryMsgToBox);
+
+    function addHistoryMsgToBox(historyPublicChats) {
+      // 如果這則訊息的說話者是我
+      historyPublicChats.forEach(userMsg => {
+        if (userMsg.UserId.toString() === userId) {
+          let newBubble = document.createElement('div')
+
+          newBubble.className = 'my-chat d-flex justify-content-end my-2 justify-content-end'
+          newBubble.innerHTML = `<div class="chat-content">
+          <p class="p-3">${userMsg.message}</p>
+        </div>`
+          messages.appendChild(newBubble);
+        } else {
+          // 如果這則訊息的說話者是別人
+          let newBubble = document.createElement('div')
+
+          newBubble.className = 'other-chat d-inline-flex align-items-end my-2'
+          newBubble.innerHTML = `<img class="rounded-circle" src="${userMsg.User.avatar}"
+                alt="avatar" title="avatar" width="50px" height="50px">
+                <div class="chat-content ms-3">
+                  <p class='p-3'>${userMsg.message}</p>
+                </div>`
+          messages.appendChild(newBubble);
+        }
+      })
+      scrollable.scrollTo(0, scrollable.scrollHeight)
+    }
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
