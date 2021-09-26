@@ -303,7 +303,7 @@
     item.classList.add('list-group')
     for (let i = 0; i < msgInBox.length; i++) {
       msgHTML += `
-       <a href="/messages/${msgInBox[i].User.id}">
+       <a href="/messages/${msgInBox[i].toId}">
       <li class="message list-group-item">
           <div class="avatar">
               <img src="${msgInBox[i].User.avatar}" alt="">

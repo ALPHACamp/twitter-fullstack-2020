@@ -10,6 +10,7 @@ const Message = db.Message
 const User = db.User
 const { Op } = require("sequelize")
 const sequelize = require('sequelize')
+const { QueryTypes } = require('sequelize');
 
 const messageController = {
   publicPage: (req, res) => {
@@ -50,12 +51,12 @@ const messageController = {
       order: [['createdAt', 'ASC']],
     })
     const viewUser = await User.findOne({
-      where: { id: viewUserId},
+      where: { id: viewUserId },
       attributes: ['name', 'account'],
-      raw:true,
-      nest:true
+      raw: true,
+      nest: true
     })
-    console.log('viewUser==========', viewUser) 
+    console.log('viewUser==========', viewUser)
     msg = await msgs.map(d => ({
       ...d.dataValues,
       User: d.User.dataValues,
@@ -64,34 +65,37 @@ const messageController = {
     return res.render('private-chat', { roomName, currentUser, msg, viewUserId, viewUser })
   },
 
-  getPrivateInbox: (currentId, res, cb) => {
+  getPrivateInbox: async (currentId, res, cb) => {
     console.log('資料庫前條件', currentId)
     const toId = currentId
-    return Message.findAll({
-      where: {
-        [Op.or]: [
-          { UserId: currentId },
-          { toId: currentId }
-        ]
-      },
-      include: [User],
-      order: sequelize.col('createdAt'),
-      group: ['roomName'],
+
+    // const rawData = await sequelize.query("SELECT * FROM `Message` ORDER BY `createdAt` DESC", { type: sequelize.QueryTypes.SELECT, raw: true, nest: true })
+    const datas = await Message.findAll({
+      include: [
+        { model: User, attributes: ['id', 'avatar', 'name', 'account'] },
+      ],
+      // order: sequelize.query('select from Message order by createdAt desc', {
+      //   type: sequelize.QueryTypes.SELECT
+      // }),
+      group:['roomName'],
       raw: true,
       nest: true
     })
-      .then(datas => {
-        const data = datas.map(d => ({
-          ...d,
-          content: d.content.length > 12 ? d.content.substring(0, 12) + '...' : d.content
-        }))
-        console.log(datas)
-        // const msg = data.filter(d => {
-        //   return Number(d.toId) === Number(toId)
-        // })
-        // console.log('整理後', msg)
-        return data
-      })
+    // console.log('rawData', rawData)
+
+    const data = await datas.map(d => ({
+      ...d,
+      content: d.content.length > 12 ? d.content.substring(0, 12) + '...' : d.content,
+      // toUserName:,
+      // toUserAccount:,
+      // toUserAvatar: ,
+    }))
+    console.log('整理前',data)
+    const msg = await data.filter(d => {
+      return (Number(d.toId) === Number(toId) || Number(d.UserId) === Number(toId))
+    })
+    console.log('整理後', msg)
+    return msg
   }
 
   // savePrivateMsg: (user) => {
