@@ -1527,13 +1527,13 @@ color: #657786;
 
 .invalid-feedback#reply-tweet{
   position:absolute;
-  top:382px;
+  top:170px;
   left:420px;
 }
 
 .invalid-feedback#add-tweet{
 position: absolute;
-top: 219px;
+top: 170px;
 left:400px
 }
 
@@ -1720,6 +1720,12 @@ color: #657786;
 }
 
 .type-area {
+  position: relative;
+  max-width: 673px;
+  /* height: 55px; */
+}
+
+.right-side .type-area {
   position: relative;
   max-width: 673px;
   height: 55px;

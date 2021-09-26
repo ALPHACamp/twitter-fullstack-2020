@@ -103,8 +103,6 @@ const messageController = {
   getPrivateInbox: async (currentId, res, cb) => {
     console.log('資料庫前條件', currentId)
     const toId = currentId
-
-    // const rawData = await sequelize.query("SELECT * FROM `Message` ORDER BY `createdAt` DESC", { type: sequelize.QueryTypes.SELECT, raw: true, nest: true })
     const datas = await Message.findAll({
       include: [
         { model: User, attributes: ['id', 'avatar', 'name', 'account'] },
@@ -116,7 +114,7 @@ const messageController = {
       raw: true,
       nest: true
     })
-    // console.log('rawData', rawData)
+    console.log('rawData', datas)
 
     const data = await datas.map(d => ({
       ...d,
