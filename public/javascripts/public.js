@@ -20,8 +20,8 @@ socket.emit('login')
 
 //監聽來自server端的事件名稱 onlineUsers
 socket.on('onlineUsers', (onlineUsers) => {
+  let rawHtml = ''
   onlineUsers.forEach(data => {
-    let rawHtml = ''
     rawHtml = `
       <div class="row justify-content-start align-items-center px-2 py-1 rounded hovercard"
                 style="border: 1px solid rgba(0, 0, 0, 0.1); margin-bottom: 3px;"
