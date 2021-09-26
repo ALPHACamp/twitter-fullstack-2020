@@ -6,6 +6,7 @@ const userController = require('../controllers/userController')
 const tweetController = require('../controllers/tweetController')
 const adminController = require('../controllers/adminController')
 const messageController = require('../controllers/messageController')
+const subscribeController = require('../controllers/subscribeController')
 
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
@@ -126,9 +127,11 @@ router.get('/messages', authenticated, messageController.publicPage);
 router.get('/messages/:id', authenticated, messageController.privatePage)
 
 //訂閱通知頁面
-// router.get('/subscribe/:id', authenticated, messageController.subscribe)
+router.get('/subscribe/:id', authenticated, subscribeController.subscribe)
 // //新增訂閱
-// router.post('/subscribe/:id', authenticated, messageController.subscription)
+router.post('/subscribe/:id', authenticated, subscribeController.subscription)
+//取消訂閱
+router.delete('/subscribe/:id', authenticated, subscribeController.removeSubscribe)
 
 //註冊
 router.get('/signup', userController.signUpPage)

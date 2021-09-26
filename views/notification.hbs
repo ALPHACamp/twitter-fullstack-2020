@@ -50,7 +50,7 @@
           </a>
 
 
-          <a href="/messages/{{user.id}}">
+          <a href="/messages/{{currentUser.id}}">
             <li class="list-group-item">
               <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-envelope mr-4">
@@ -63,13 +63,13 @@
             </li>
           </a>
 
-          <a href="/users/{{user.id}}/tweets">
+          <a href="/users/{{currentUser.id}}/tweets">
             <li class="list-group-item">
               <div class="d-flex"><i class="fas  fa-fw fa-user mr-4"></i>個人資料</div>
             </li>
           </a>
 
-          <a href="/users/{{user.id}}/setting">
+          <a href="/users/{{currentUser.id}}/setting">
             <li class="list-group-item">
               <div class="d-flex"><i class="fas  fa-fw fa-cog mr-4"></i>設定</div>
             </li>
@@ -104,14 +104,15 @@
       <hr style="margin:0; padding:0">
 
       {{!-- 含內容的通知 --}}
+      {{#each InfluencerData}}
       <div class="notification-content">
         <div class="avatar">
           <a href="">
-            <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
+            <img src="{{this.avatar}}" alt="">
           </a>
         </div>
         <div class="notification-title">
-          "使用者"/"你的貼文"有新的"推文通知"/"新的回覆"
+          <h7>"{{this.name}}的貼文"有新的"推文通知"/"新的回覆"</h7>
         </div>
         <div class="notification-text">
           內容12312312312312312312332131231231211111111111111111111111111111111111111111111111111111111111
@@ -119,9 +120,9 @@
       </div>
       <hr>
       {{!-- 含內容的通知 --}}
-
+    {{/each}}
       {{!-- 不含內容的通知 --}}
-      <div class="notification-nocontent">
+      <div class="notification-nocontent" id="form">
         <div class="avatar">
           <a href="">
             <img src="https://loremflickr.com/320/240/boy/?lock=23" alt="">
@@ -212,3 +213,16 @@
 
 </div>
 {{!-- add-tweet Modal --}}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
+<script>
+  var socket = io();
+
+  var form = document.getElementById('form');
+
+//有人推文
+  {{!-- socket.on('somebodySendTweet', (tweet) => {
+    console.log("有人寫了===========", tweet)
+  }) --}}
+
+</script>
