@@ -101,6 +101,7 @@ subscription: async (req, res) => {
       return res.redirect('back')
 
     } else {
+      console.log('++++++訂閱')
       await Subscribe.create({
         fansId,
         InfluencerId
@@ -117,6 +118,7 @@ subscription: async (req, res) => {
  //取消訂閱
  removeSubscribe:(req, res) => {
   const currentUserId = helpers.getUser(req).id
+  console.log('訂閱------')
   return Subscribe.destroy({
     where:{
       fansId: currentUserId,

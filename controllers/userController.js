@@ -10,6 +10,7 @@ const Reply = db.Reply
 const Like = db.Like
 const Followship = db.Followship
 
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signUp')
@@ -349,6 +350,7 @@ const userController = {
         order: [[sequelize.col('count'), 'DESC']],
         limit: 10, raw: true, nest: true
       }),
+      
     ]).then(([user, users]) => {
       //整理某使用者的所有推文 & 每則推文的留言數和讚數 & 登入中使用者是否有按讚
       const usersFollower = user.Followers.map(d => ({
