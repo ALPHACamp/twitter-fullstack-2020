@@ -20,12 +20,27 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Reply);
     User.hasMany(models.Tweet);
     User.hasMany(models.Like);
-    User.hasMany(models.Message);
     //self-referential super-many-to-many
     User.hasMany(models.Followship, { as: 'FollowerLinks', foreignKey: 'followerId' });
     User.hasMany(models.Followship, { as: 'FollowingLinks', foreignKey: 'followingId' });
+
+
     //self-referential super-many-to-many
-    User.hasMany(models.Message, { as: 'toIdUser', foreignKey: 'toId' });
+    User.hasMany(models.Message, { as: 'messageReceiveLinks', foreignKey: 'userId' });
+    User.hasMany(models.Message, { as: 'messageSendLinks', foreignKey: 'toId' });
+
+    //User和Room多對多
+    User.belongsToMany(Message, {
+      through: models.Room,
+      foreignKey: 'userId',
+      as: 'messageReceive'
+    });
+    User.belongsToMany(Message, {
+      through: models.Room,
+      foreignKey: 'toId',
+      as: 'messageSend'
+    });
+
 
     User.belongsToMany(User, {
       through: models.Followship,
