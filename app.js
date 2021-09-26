@@ -15,11 +15,6 @@ const helpers = require('./_helpers');
 const app = express()
 const port = process.env.PORT || 3000
 
-
-app.use(express.static('public'))
-
-
-
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(methodOverride('_method'))
@@ -29,19 +24,19 @@ app.engine('handlebars', handlebars({
 }))
 app.set('view engine', 'handlebars')
 
-// app.get('/', (req, res) => res.send('Hello World!'))
-
-
+app.use('/upload', express.static(__dirname + '/upload'))
+app.use(express.static(__dirname + '/public'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+app.use(methodOverride('_method'))
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
-  res.locals.user = req.user
+  res.locals.user = helpers.getUser(req)
   res.locals.url = req.url
   next()
 })
@@ -50,6 +45,6 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
 module.exports = app
