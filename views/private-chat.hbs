@@ -319,15 +319,15 @@
     item.classList.add('list-group')
     for (let i = 0; i < msgInBox.length; i++) {
       msgHTML += `
-       <a href="/messages/">
+       <a href="/messages/${msgInBox[i].userId}">
       <li class="message list-group-item">
           <div class="avatar">
-              <img src="" alt="">
+              <img src="${msgInBox[i].userAvatar}" alt="">
           </div>
           <div class="name-account-message col-md-12">
             <div class="name-account col-md-12">
-                <div class="name">名字放這</div>
-                <div class="account">@帳號</div>
+                <div class="name">${msgInBox[i].userName}</div>
+                <div class="account">@${msgInBox[i].userAccount}</div>
               <div class="time">
                 ${time}
               </div>

@@ -51,7 +51,8 @@ const messageController = {
     return Message.create({
       roomId: Number(roomName),
       content: user.msg,
-      sendId: Number(user.id)
+      sendId: Number(user.id),
+      toId: Number(viewUserId)
     })
   },
 
@@ -124,22 +125,59 @@ const messageController = {
     //   },
     //   include: [{ model: Message, attributes: {include: [[sequelize.fn('MAX', sequelize.col('createdAt'))]]} }]
     // })
-    const test = await Message.findAll({
-      attributes: ['content', 'roomId', [sequelize.fn('max', sequelize.col('createdAt')), 'msgTime']],
+    const currentUserId = currentId
+    const msgBoxes = await Message.findAll({
+      attributes: ['sendId','toId','content', 'roomId', [sequelize.fn('max', sequelize.col('createdAt')), 'msgTime']],
       // include: [Room],
       group: ['roomId'],
-      order: [[sequelize.col('msgTime'), 'DESC']],
+      // order: [[sequelize.col('msgTime'), 'ASC']],
       raw: true,
       nest: true
     })
 
     const user = await User.findAll({
+      attributes: [ 'id', 'account', 'avatar', 'name'],
       raw:true,
       nest:true
     })
 
-    console.log('測試結果===', user)
-    return test
+    const msgBox = await msgBoxes.map(d => ({
+      ...d,
+      userName: user.filter(j => { 
+        if (d.sendId !== currentUserId){
+          return j.id === d.sendId
+        } else {
+          return j.id === d.stoId
+        }
+      })[0].name,
+      userAccount: user.filter(j => {
+        if (d.sendId !== currentUserId) {
+          return j.id === d.sendId
+        } else {
+          return j.id === d.stoId
+        }
+      })[0].account,
+      userAvatar: user.filter(j => {
+        if (d.sendId !== currentUserId) {
+          return j.id === d.sendId
+        } else {
+          return j.id === d.stoId
+        }
+      })[0].avatar,
+      userId: user.filter(j => {
+        if (d.sendId !== currentUserId) {
+          return j.id === d.sendId
+        } else {
+          return j.id === d.stoId
+        }
+      })[0].id,
+    }))
+
+
+
+    // console.log('測試結果1===', msgBox)
+    // console.log('測試結果2===', msgBox.User)
+    return msgBox
 
   }
   ,
