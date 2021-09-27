@@ -69,11 +69,11 @@ const userController = {
     res.redirect('/signin')
   },
 
-
   getUserTweets: (req, res) => {
     userService.getUserTweets(req, res, data => {
       return res.render('userSelf', data)
     })
+      .catch(err => console.log(err))
   },
 
   getUserSelfReply: async (req, res) => {
@@ -121,6 +121,15 @@ const userController = {
 
   getUserSelfLike: async (req, res) => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
+
+    const users = await User.findAll({
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ],
+      where: { role: "user" }
+    })
+
     const likes = await Like.findAll({
       where: { UserId: req.params.id },
       include: [User, { model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }] }],
@@ -162,7 +171,7 @@ const userController = {
       where: { followerId: req.params.id }
     })
 
-    return res.render('userSelfLike', { data, tweets, tweetUser,followersCount, followingsCount, topUsers })
+    return res.render('userSelfLike', { BASE_URL, data, tweets, tweetUser, followersCount, followingsCount, topUsers })
   },
 
   getUserSetting: (req, res) => {
@@ -291,28 +300,49 @@ const userController = {
         req.flash('error_messages', 'You already followed this user')
         return res.redirect('/tweets')
       } else {
-        Followship.create({
-          followerId,
-          followingId
+        return Promise.all([
+          User.findByPk(followerId)
+            .then(user => {
+              user.increment('followingCount', { by: 1 })
+            }),
+          User.findByPk(followingId)
+            .then(user => {
+              user.increment('followerCount', { by: 1 })
+            }),
+          Followship.create({
+            followerId,
+            followingId
+          })
+        ]).then(() => {
+          return res.redirect('back')
         })
-        return res.redirect('back')
       }
     })
   },
 
   removeFollowing: (req, res) => {
+    const followerId = helpers.getUser(req).id
+    const followingId = req.params.userId
     return Followship.findOne({
       where: {
-        followerId: helpers.getUser(req).id,
-        followingId: req.params.userId
+        followerId,
+        followingId
       }
-    })
-      .then((followship) => {
+    }).then(followship => {
+      return Promise.all([
+        User.findByPk(followerId)
+          .then(user => {
+            user.decrement('followingCount', { by: 1 })
+          }),
+        User.findByPk(followingId)
+          .then(user => {
+            user.decrement('followerCount', { by: 1 })
+          }),
         followship.destroy()
-          .then((followship) => {
-            return res.redirect('back')
-          })
+      ]).then((followship) => {
+        return res.redirect('back')
       })
+    })
   },
 
   getFollowers: (req, res) => {
@@ -342,7 +372,7 @@ const userController = {
         where: { Userid: req.params.id }
       })
     ]).then(([followers, usersdata, tweetUser, tweetCount]) => {
-      console.log(tweetUser)
+
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
@@ -386,7 +416,6 @@ const userController = {
       })
     ]).then(([followings, usersdata, tweetUser, tweetCount]) => {
 
-      console.log("==========================", tweetUser)
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,

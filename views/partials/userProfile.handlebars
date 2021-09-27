@@ -61,12 +61,12 @@
 <div class="d-flex m-3">
   <div class="replies me-5 d-flex">
     <a class="repliesAmount fw-bolder me-2" href="/users/{{tweetUser.id}}/followings"
-      style="text-decoration: none; color:black">{{followingsCount}}
+      style="text-decoration: none; color:black">{{tweetUser.followingCount}}
       個<span class="color-gray">跟隨中</span></a>
   </div>
   <div class="likes d-flex">
     <a class="likesAmount fw-bolder me-2" href="/users/{{tweetUser.id}}/followers"
-      style="text-decoration: none; color:black">{{followersCount}}
+      style="text-decoration: none; color:black">{{tweetUser.followerCount}}
       位<span class="color-gray">跟隨者</span></a>
   </div>
 </div>
