@@ -29,12 +29,8 @@ const tweetService = {
       UserId: helpers.getUser(req).id,
       description: req.body.description
     })
-      .then((tweet) => {
-        // io.on('connection', (socket) => {
-        //   console.log('QQ')
-        //  socket.emit('somebodySendTweet', "tweet")
-        // })
-        callback({ status: 'success', message: 'tweet was successfully created' })
+      .then((tweet) => { 
+        callback(tweet,{ status: 'success', message: 'tweet was successfully created' })
       })
   },
 

@@ -127,7 +127,7 @@ router.get('/messages', authenticated, messageController.publicPage);
 router.get('/messages/:id', authenticated, messageController.privatePage)
 
 //訂閱通知頁面
-router.get('/subscribe/:id', authenticated, subscribeController.subscribe)
+router.get('/subscribe', authenticated, subscribeController.subscribe)
 // //新增訂閱
 router.post('/subscribe/:id', authenticated, subscribeController.subscription)
 //取消訂閱
