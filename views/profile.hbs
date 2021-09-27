@@ -63,7 +63,7 @@
       <!--end::list of 推文-->
       <!--start::comment-->
       {{#if isComment}}
-      {{#each profile.Replies}}
+      {{#each reply}}
       <div class="col-12 flex-direction-column">
         <div class="post">
           <div class="post-card1">
@@ -74,8 +74,8 @@
             </div>
           </div>
           <div class="post-card2">
-            <h5 class="d-inline-block profile-nav-header post-title">{{../profile.name}}&nbsp;<span
-                class="post-sub-info">@{{../profile.account}}
+            <h5 class="d-inline-block profile-nav-header post-title">{{this.User.name}}&nbsp;<span
+                class="post-sub-info">@{{this.User.account}}
                 &#x2027; {{moment this.createdAt}}</span></h5>
             <a href="/tweets/{{this.TweetId}}">
               <p>{{this.Tweet.description}}</p>
