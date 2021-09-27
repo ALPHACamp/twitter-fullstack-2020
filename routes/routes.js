@@ -93,9 +93,9 @@ router.post(
 )
 
 // FollowerShip
-router.post('/followships', auth.authenticatedGeneral, userController.follow)
-router.delete('/followships/:id', auth.authenticatedGeneral, userController.unFollow)
-router.get('followships/top', auth.authenticatedGeneral)
+router.post('/follow/:id', auth.authenticatedGeneral, userController.follow)
+router.delete('/follow/:id', auth.authenticatedGeneral, userController.unFollow)
+router.get('follow/top', auth.authenticatedGeneral)
 
 // Like
 router.post('/tweets/:id/like', auth.authenticatedGeneral)

@@ -663,9 +663,6 @@ svg {
   color: #ffffff;
 }
 
-#sidebar-right {
-}
-
 #sidebar-right .popular {
   margin: 15px 0px 0px 30px;
   width: 350px;
@@ -1575,4 +1572,313 @@ svg {
   font-size: 15px;
   line-height: 15px;
   color: #ff6600;
+}
+
+/* 個人區塊 */
+.personal-info-wrap {
+  position: relative;
+  width: auto;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+}
+
+.cover {
+  object-fit: cover;
+  width: 100%;
+  height:200px; 
+}
+
+.personal-avatar img {
+  position: absolute;
+  top: 124px;
+  left: 14px;
+  border-radius: 50%;
+  border: 4px solid #FFFFFF; 
+}
+
+.personal-info {
+  margin: 69px 15px 0px;
+}
+
+.personal-info .personal-name {
+  display: flex;
+  flex-direction: column;
+/*文字 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 19px;
+  color: #1C1C1C;
+}
+
+.personal-info .personal-descript {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+}
+
+.personal-info .follower-nav {
+  display: flex;
+  margin: 10px 0px;
+  /*文字 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+}
+
+
+/* 導覽列 */
+#main-content .list-group {
+  all: initial;
+  display: flex;
+  background: #FFFFFF;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+#main-content .list-group .list-group-item {
+  all: initial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 54px;
+  cursor: pointer;
+}
+
+#main-content .list-group .list-group-item:hover {
+  color: #FF6600;
+}
+
+#main-content .list-group .list-group-item.active {
+  color: #FF6600;
+  border-bottom: 2px solid #FF6600;
+}
+
+#main-content .list-group .list-group-item {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 22px;
+  text-align: center;
+  color: #657786;
+}
+
+/* bootstrap調整 */
+#main-content {
+  position: relative;
+  padding:0px 1px 1px 1px;
+  min-width: 600px;
+  background: #E6ECF0;
+  display: flex;
+  flex-direction: column;
+}
+
+#main-content .tweet-body {
+  display: flex;
+  flex-direction:column;
+}
+
+#main-content .tweet-body .card-tweets {
+  margin-top: 1px;
+  min-height:136px;
+  display:flex;
+  background: #FFFFFF;
+}
+
+#main-content .tweet-body .card-tweets .card-header {
+  padding:0px;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: none;
+}
+
+/* 編輯個人資料 modal */
+.button-white {
+  cursor: pointer;
+  border: 1px solid #FF6600;
+  border-radius: 100px;
+  padding: 10px 15px;
+  background-color: rgba(255,255,255,0);
+/*   文字 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #FF6600;
+}
+
+.input-form-group {
+  position: relative;
+  text-align:center;
+  margin: 0px auto 42px;
+}
+
+.label-title {
+  position: absolute;
+  margin: 5px 0px 4px 10px;
+/*   文字 */
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 15px;
+  color: #657786;
+}
+
+.input-name {
+  width: 570px;
+  height: 54px;
+  padding: 24px 0px 0px 15px;
+  outline: none;
+  border: none;
+  background: #F5F8FA;
+  border-bottom: 2px #657786 solid;
+  border-radius: 4px 4px 4px 4px;
+}
+
+.input-name:focus,
+.input-textarea:focus {
+  border-bottom: 2px #50B5FF solid;
+}
+
+.input-textarea {
+  width: 570px;
+  height: 150px;
+  padding: 24px 0px 0px 15px;
+  outline: none;
+  border: none;
+  background: #F5F8FA;
+  border-bottom: 2px #657786 solid;
+  border-radius: 4px 4px 4px 4px;
+}
+
+.icon-close {
+  margin-right: 44px;
+  padding-bottom:2px;
+}
+
+.icon-close svg{
+  fill: #657786;
+}
+
+.icon-close:hover svg {
+    fill: #FF6600;
+}
+
+#cover-placeholder {
+  object-fit: cover;
+  width:100%;
+  height:200px;
+  opacity: 0.5;
+  background: #999999;
+}
+
+.personal-info-title {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 19px;
+  color: #1C1C1C;
+}
+
+.save-button {
+  all:initial;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 66px;
+  height: 28px;
+  background: #FF6600;
+  border-radius: 100px;
+  outline: none;
+/*   文字 */
+/*   padding: 5px; */
+  text-align: center;
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+#avatar-placeholder {
+  object-fit: cover;
+  position: absolute;
+  top: 140px;
+  left: 15px;
+  width:120px;
+  height:120px;
+  opacity:0.5;
+  border-radius: 50%;
+  border: 4px solid #FFFFFF;
+  z-index:2;
+  background: #999999;
+}
+
+.avatar-background{
+  position: absolute;
+  top: 140px;
+  left: 15px;
+  width:120px;
+  height:120px;
+  background: white;
+  border-radius: 50%;
+  border: 4px solid #FFFFFF;
+  z-index:1;
+}
+
+.cover-img-label svg,
+.avatar-img-label svg {
+  fill: white;
+}
+
+.cover-img-label:hover svg,
+.avatar-img-label:hover svg {
+  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+}
+
+.cover-img-label {
+  cursor: pointer;
+  position: absolute;
+  top: 88px;
+  left: 288px;
+  width: 24px;
+  height: 24px;
+  
+}
+
+.avatar-img-label {
+  cursor: pointer;
+  position: absolute;
+  top: 186px;
+  left: 63px;
+  width: 24px;
+  height: 24px;
+  z-index: 2;
+}
+
+.img-input {
+  opacity: 0;
+}
+
+/* 個人頁面結束 */
+
+button:focus {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
 }

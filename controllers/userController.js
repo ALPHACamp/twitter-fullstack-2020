@@ -54,9 +54,6 @@ const userController = {
   signin: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.locals.url = req.url
-    console.log('=============================')
-    console.log(req.url)
-    console.log('=============================')
     res.redirect('/tweets')
   },
 
@@ -91,7 +88,7 @@ const userController = {
         .Followings.map((item) => item.id)
         .includes(user.id)
 
-      return res.render('user/userTweets', {
+      return res.render('userTweets', {
         users: thisUser,
         currentUserId: currentUserId,
       })
