@@ -69,10 +69,10 @@ const userController = {
     res.redirect('/signin')
   },
 
-
   getUserTweets: (req, res) => {
     userService.getUserTweets(req, res, data => {
       return res.render('userSelf', data)
+
     })
   },
 
@@ -121,6 +121,15 @@ const userController = {
 
   getUserSelfLike: async (req, res) => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
+
+    const users = await User.findAll({
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ],
+      where: { role: "user" }
+    })
+
     const likes = await Like.findAll({
       where: { UserId: req.params.id },
       include: [User, { model: Tweet, include: [User, Reply, { model: User, as: 'LikedUsers' }] }],
@@ -162,7 +171,7 @@ const userController = {
       where: { followerId: req.params.id }
     })
 
-    return res.render('userSelfLike', { data, tweets, tweetUser,followersCount, followingsCount, topUsers })
+    return res.render('userSelfLike', { data, tweets, tweetUser, followersCount, followingsCount, topUsers })
   },
 
   getUserSetting: (req, res) => {
@@ -386,7 +395,6 @@ const userController = {
       })
     ]).then(([followings, usersdata, tweetUser, tweetCount]) => {
 
-      console.log("==========================", tweetUser)
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
