@@ -667,14 +667,14 @@ svg {
   margin: 15px 0px 0px 30px;
   width: 350px;
   height: 756px;
-  background: #E6ECF0;
+  background: #e6ecf0;
   border-radius: 14px;
   display: flex;
   flex-direction: column;
   position: sticky;
   top: 15px;
   z-index: -1;
-  overflow:hidden;
+  overflow: hidden;
 }
 
 #sidebar-right .popular .popular-top {
@@ -1292,8 +1292,11 @@ svg {
 
 /* AdminTweetList */
 .admin-tweet-main-content {
+  width: 65%;
   display: flex;
   flex-direction: column;
+  margin-right: 0px;
+  border-left: 1px solid #e6ecf0;
 }
 
 .admin-tweet-main-content .header {
@@ -1581,13 +1584,13 @@ svg {
   min-height: 300px;
   display: flex;
   flex-direction: column;
-  background: #FFFFFF;
+  background: #ffffff;
 }
 
 .cover {
   object-fit: cover;
   width: 100%;
-  height:200px; 
+  height: 200px;
 }
 
 .personal-avatar img {
@@ -1595,7 +1598,7 @@ svg {
   top: 124px;
   left: 14px;
   border-radius: 50%;
-  border: 4px solid #FFFFFF; 
+  border: 4px solid #ffffff;
 }
 
 .personal-info {
@@ -1605,12 +1608,12 @@ svg {
 .personal-info .personal-name {
   display: flex;
   flex-direction: column;
-/*文字 */
+  /*文字 */
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: 900;
   font-size: 19px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .personal-info .personal-descript {
@@ -1634,13 +1637,12 @@ svg {
   color: #000000;
 }
 
-
 /* 導覽列 */
 #main-content .list-group {
   all: initial;
   display: flex;
-  background: #FFFFFF;
-  border-bottom: 1px solid #E6ECF0;
+  background: #ffffff;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 #main-content .list-group .list-group-item {
@@ -1654,12 +1656,12 @@ svg {
 }
 
 #main-content .list-group .list-group-item:hover {
-  color: #FF6600;
+  color: #ff6600;
 }
 
 #main-content .list-group .list-group-item.active {
-  color: #FF6600;
-  border-bottom: 2px solid #FF6600;
+  color: #ff6600;
+  border-bottom: 2px solid #ff6600;
 }
 
 #main-content .list-group .list-group-item {
@@ -1675,59 +1677,59 @@ svg {
 /* bootstrap調整 */
 #main-content {
   position: relative;
-  padding:0px 1px 1px 1px;
+  padding: 0px 1px 1px 1px;
   min-width: 600px;
-  background: #E6ECF0;
+  background: #e6ecf0;
   display: flex;
   flex-direction: column;
 }
 
 #main-content .tweet-body {
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
 }
 
 #main-content .tweet-body .card-tweets {
   margin-top: 1px;
-  min-height:136px;
-  display:flex;
-  background: #FFFFFF;
+  min-height: 136px;
+  display: flex;
+  background: #ffffff;
 }
 
 #main-content .tweet-body .card-tweets .card-header {
-  padding:0px;
+  padding: 0px;
   display: flex;
   flex-direction: column;
-  background: #FFFFFF;
+  background: #ffffff;
   border: none;
 }
 
 /* 編輯個人資料 modal */
 .button-white {
   cursor: pointer;
-  border: 1px solid #FF6600;
+  border: 1px solid #ff6600;
   border-radius: 100px;
   padding: 10px 15px;
-  background-color: rgba(255,255,255,0);
-/*   文字 */
+  background-color: rgba(255, 255, 255, 0);
+  /*   文字 */
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
   font-size: 15px;
   line-height: 15px;
-  color: #FF6600;
+  color: #ff6600;
 }
 
 .input-form-group {
   position: relative;
-  text-align:center;
+  text-align: center;
   margin: 0px auto 42px;
 }
 
 .label-title {
   position: absolute;
   margin: 5px 0px 4px 10px;
-/*   文字 */
+  /*   文字 */
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: bold;
@@ -1742,14 +1744,14 @@ svg {
   padding: 24px 0px 0px 15px;
   outline: none;
   border: none;
-  background: #F5F8FA;
+  background: #f5f8fa;
   border-bottom: 2px #657786 solid;
   border-radius: 4px 4px 4px 4px;
 }
 
 .input-name:focus,
 .input-textarea:focus {
-  border-bottom: 2px #50B5FF solid;
+  border-bottom: 2px #50b5ff solid;
 }
 
 .input-textarea {
@@ -1758,28 +1760,28 @@ svg {
   padding: 24px 0px 0px 15px;
   outline: none;
   border: none;
-  background: #F5F8FA;
+  background: #f5f8fa;
   border-bottom: 2px #657786 solid;
   border-radius: 4px 4px 4px 4px;
 }
 
 .icon-close {
   margin-right: 44px;
-  padding-bottom:2px;
+  padding-bottom: 2px;
 }
 
-.icon-close svg{
+.icon-close svg {
   fill: #657786;
 }
 
 .icon-close:hover svg {
-    fill: #FF6600;
+  fill: #ff6600;
 }
 
 #cover-placeholder {
   object-fit: cover;
-  width:100%;
-  height:200px;
+  width: 100%;
+  height: 200px;
   opacity: 0.5;
   background: #999999;
 }
@@ -1789,28 +1791,28 @@ svg {
   font-style: normal;
   font-weight: bold;
   font-size: 19px;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .save-button {
-  all:initial;
+  all: initial;
   position: absolute;
   top: 15px;
   right: 15px;
   width: 66px;
   height: 28px;
-  background: #FF6600;
+  background: #ff6600;
   border-radius: 100px;
   outline: none;
-/*   文字 */
-/*   padding: 5px; */
+  /*   文字 */
+  /*   padding: 5px; */
   text-align: center;
   font-family: Noto Sans TC;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 #avatar-placeholder {
@@ -1818,25 +1820,25 @@ svg {
   position: absolute;
   top: 140px;
   left: 15px;
-  width:120px;
-  height:120px;
-  opacity:0.5;
+  width: 120px;
+  height: 120px;
+  opacity: 0.5;
   border-radius: 50%;
-  border: 4px solid #FFFFFF;
-  z-index:2;
+  border: 4px solid #ffffff;
+  z-index: 2;
   background: #999999;
 }
 
-.avatar-background{
+.avatar-background {
   position: absolute;
   top: 140px;
   left: 15px;
-  width:120px;
-  height:120px;
+  width: 120px;
+  height: 120px;
   background: white;
   border-radius: 50%;
-  border: 4px solid #FFFFFF;
-  z-index:1;
+  border: 4px solid #ffffff;
+  z-index: 1;
 }
 
 .cover-img-label svg,
@@ -1846,7 +1848,7 @@ svg {
 
 .cover-img-label:hover svg,
 .avatar-img-label:hover svg {
-  filter: drop-shadow( 3px 3px 2px rgba(0, 0, 0, .7));
+  filter: drop-shadow(3px 3px 2px rgba(0, 0, 0, 0.7));
 }
 
 .cover-img-label {
@@ -1856,7 +1858,6 @@ svg {
   left: 288px;
   width: 24px;
   height: 24px;
-  
 }
 
 .avatar-img-label {
@@ -1874,6 +1875,140 @@ svg {
 }
 
 /* 個人頁面結束 */
+
+/* Admin/user */
+
+.admin-tweet-main-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-tweet-main-content .header {
+  background: #ffffff;
+  padding-left: 15px;
+  height: 55px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #e6ecf0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.admin-tweet-main-content .header .headerItem span {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 26px;
+  color: #1c1c1c;
+}
+
+/* 卡片區塊 */
+.admin-tweet-container {
+  display: flex;
+  justify-content: center;
+}
+
+.admin-tweet-container .row {
+  margin: 15px 15px 0px 15px;
+  padding: 0px;
+  width: 1025px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.admin-tweet-container .row::after {
+  content: '';
+  flex-grow: 1;
+}
+
+.admin-tweet-container .col-3 {
+  max-width: 245px;
+  margin: 0px 0px 15px 0px;
+  padding: 0px;
+}
+
+.admin-tweet-container .card {
+  position: relative;
+  max-width: 245px;
+  min-height: 314px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-tweet-container .card img {
+  object-fit: cover;
+}
+
+.admin-tweet-container .card .user-avatar img {
+  object-fit: cover;
+  border-radius: 50px;
+  border: 4px solid #ffffff;
+}
+
+.admin-tweet-container .card .user-avatar {
+  position: absolute;
+  top: 68px;
+  left: 72px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.admin-tweet-container .card .user-avatar .user-name {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 22px;
+  text-align: center;
+  color: #1c1c1c;
+}
+
+.admin-tweet-container .card .user-avatar .user-account {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 22px;
+  color: #657786;
+}
+
+.admin-tweet-container .card .card-body {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  text-align: center;
+  margin-top: 80px;
+}
+
+.admin-tweet-container .card .card-body .reply-nav {
+  /*   display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.admin-tweet-container .card .card-body .reply-nav .icon-reply svg,
+.admin-tweet-container .card .card-body .reply-nav .icon-like svg {
+  fill: #657786;
+}
+
+.admin-tweet-container .card .card-body .reply-nav .icon-reply {
+  margin-right: 17px;
+}
+
+.admin-tweet-container .card .card-body .reply-nav {
+  margin-bottom: 15px;
+}
+.admin-tweet-container .card .card-body .follow-nav {
+  font-family: Noto Sans TC;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 20px;
+  color: #000000;
+}
+
+/* Admin/user end*/
 
 button:focus {
   outline: none;
