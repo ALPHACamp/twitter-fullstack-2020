@@ -97,6 +97,29 @@ const userController = {
       })
     })
   },
+  getPopularUser: (req, res, next) => {
+    return User.findAll({
+      include: [{ model: User, as: 'Followers' }]
+    }).then((users) => {
+      users = users.map((user) => ({
+        ...user.dataValues,
+        FollowerCount: user.Followers.length,
+        isFollowed: helpers
+          .getUser(req)
+          .Followings.map((d) => d.id)
+          .includes(user.id)
+      }))
+      users = users.filter(
+        (user) =>
+          user.role === 'user' && user.name !== helpers.getUser(req).name
+      )
+      users = users
+        .sort((a, b) => b.FollowerCount - a.FollowerCount)
+        .slice(0, 6)
+      res.locals.recommendedList = users
+      return next()
+    })
+  },
 
   editAccount: (req, res) => {
     return res.render('setting')
