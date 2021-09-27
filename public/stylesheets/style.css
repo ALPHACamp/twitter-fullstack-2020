@@ -2008,6 +2008,11 @@ svg {
   color: #000000;
 }
 
+.admin-tweet-container .card .card-body .follow-nav .following-count {
+  border: 1px red solid;
+  cursor: pointer;
+}
+
 /* Admin/user end*/
 
 button:focus {

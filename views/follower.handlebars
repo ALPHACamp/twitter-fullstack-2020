@@ -10,48 +10,24 @@
         <div class="headerItem"><span>{{results.name}}</span><p class="tweet-count">{{results.Tweets.length}} 推文</p></div>
       </div>
       <div class="follower-tag list-group">
-        <div class="follower list-group-item active" data-toggle="list">
-          <span class="follower-word" href="user/:id/followers">
+        <div class="follower list-group-item active" data-toggle="list" href="#follower">
+          <span class="follower-word">
             跟隨者
           </span>
         </div>
-        <div class="following list-group-item" data-toggle="list">
-          <span class="following-word" href="user/:id/followings">
+        <a href="/users/{{user.id}}/followings">
+        <div class="following list-group-item" data-toggle="list" href="">
+          <span class="following-word">
             正在跟隨
           </span>
         </div>
+        </a>
       </div>
-      <div class="tweet-body">
-        {{#each results.Followers}} 
-        <div class="card-tweets">
-          <img class="card-avatar" src="{{this.avatar}}" alt="avatar" width="50" height="50">
-          <div class="card-warp">
-            <div class="card-header">
-              <span class="card-name">{{this.name}}</span><span class="card-account">@{{this.account}}</span>
-              <div class="follow-button">
-              {{#ifCond ../user.id this.id}}
-              {{else}}
-                {{#if this.isFollowed}}
-                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-                    <button type="submit" class="following-button">正在跟隨</button>
-                  </form>
-                {{else}}
-                  <form action="/followships" method="POST">
-                    <button class="tofollow-button" name="id" value="{{this.id}}">跟隨</button>
-                  </form>
-                {{/if}}
-              {{/ifCond}}    
-              </div>
-            </div>
-            <div class="card-content">
-              {{this.introduction}}
-            </div>
-          </div>
-        </div>
-        {{/each}}
 
-       
-      </div>
+    <div class="tab-content" id="nav-tabContent">
+      <div class="tab-pane fade show active" id="follower">{{>follower}}</div>
+      <div class="tab-pane fade" id="following">{{>following}}</div>
     </div>
+  </div>
 
     {{> sideBarRight}}

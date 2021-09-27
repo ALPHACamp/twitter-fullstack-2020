@@ -1,0 +1,31 @@
+      
+        {{#each results.Followings}} 
+      <div class="tweet-body">
+        <div class="card-tweets">
+          <img class="card-avatar" src="{{this.avatar}}" alt="avatar" width="50" height="50">
+          <div class="card-warp">
+            <div class="card-header">
+              <span class="card-name">{{this.name}}</span><span class="card-account">@{{this.account}}</span>
+              <div class="follow-button">
+              {{#ifCond ../user.id this.id}}
+              {{else}}
+                {{#if this.isFollowed}}
+                  <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="following-button">正在跟隨</button>
+                  </form>
+                {{else}}
+                  <form action="/followships" method="POST">
+                    <button class="tofollow-button" name="id" value="{{this.id}}">跟隨</button>
+                  </form>
+                {{/if}}
+              {{/ifCond}}    
+              </div>
+            </div>
+            <div class="card-content">
+              {{this.introduction}}
+            </div>
+          </div>
+        </div>
+      </div>
+        {{/each}}
+        

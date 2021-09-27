@@ -172,14 +172,18 @@
       <div class='personal-descript'>
         {{user.introduction}}
       </div>
-      <div class='follower-nav'>
+      <div class='follower-nav'>       
         <div class='following-count' style='margin-right:20px;'>
-          <span>39 個</span>
-          <span style='color: #657786;'>跟隨中</span>
+          <a href="/users/{{user.id}}/followers">
+            <span style='cursor:pointer;'>39 個</span>
+            <span style='color: #657786; cursor:pointer;'>跟隨中</span>
+          </a>
         </div>
         <div class='follower-count'>
-          <span>59 位</span>
-          <span style='color: #657786;'>跟隨者</span>
+          <a href="/users/{{user.id}}/followings">
+            <span style='cursor:pointer;'>59 位</span>
+            <span style='color: #657786; cursor:pointer;'>跟隨者</span>
+          </a>
         </div>
       </div>
     </div>

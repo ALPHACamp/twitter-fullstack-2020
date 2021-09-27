@@ -187,7 +187,7 @@ const userController = {
       results.Followers.sort(
         (a, b) => b.Followship.createdAt - a.Followship.createdAt
       )
-      return res.render('user/follower', {
+      return res.render('follower', {
         results
       })
     })
@@ -209,7 +209,7 @@ const userController = {
       results.Followings.sort(
         (a, b) => b.Followship.createdAt - a.Followship.createdAt
       )
-      return res.render('user/following', {
+      return res.render('following', {
         results
       })
     })
