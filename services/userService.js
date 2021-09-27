@@ -14,7 +14,7 @@ const helpers = require('../_helpers')
 const userService = {
   getUserTweets: (req, res, callback) => {
     const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
-    const currentUser = helpers.getUser(req)
+    const currentUser = helpers.getUser(req).id
     return Promise.all([
       Tweet.findAll({
         where: { UserId: req.params.id },
@@ -43,12 +43,19 @@ const userService = {
         ...tweet.dataValues,
         isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
       }))
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
       return callback({
         tweets: data,
         tweetUser: tweetUser.toJSON(),
         followersCount,
         followingsCount,
-        topUsers: users,
+        topUsers,
         currentUser,
         BASE_URL
       })
@@ -86,13 +93,13 @@ const userService = {
     const files = Object.assign({}, req.files)
 
     if (!name.trim('')) {
-      return callback({ status: error, message: '請輸入有效名稱！'})
+      return callback({ status: error, message: '請輸入有效名稱！' })
     } else if (name.trim('').length > 50) {
-      return callback({ status: error, message: '名稱不得超過50字！'})
+      return callback({ status: error, message: '名稱不得超過50字！' })
     }
 
     if (description.length > 160) {
-      return callback({ status: error, message: '自我介紹不得超過160字！'})
+      return callback({ status: error, message: '自我介紹不得超過160字！' })
     }
 
     imgur.setClientID(IMGUR_CLIENT_ID)
@@ -108,7 +115,7 @@ const userService = {
           })
         })
       })
-      callback({status: success, message: "Your profile was successfully updated!"})
+      callback({ status: success, message: "Your profile was successfully updated!" })
       res.redirect('back')
     } else if (files.avatar && !files.cover) {
       imgur.upload(files.avatar[0].path, async (err, avaImg) => {
@@ -118,7 +125,7 @@ const userService = {
           description: req.body.description
         })
       })
-      callback({status: success, message: "Your profile was successfully updated!"})
+      callback({ status: success, message: "Your profile was successfully updated!" })
       res.redirect('back')
     } else if (!files.avatar && files.cover) {
       imgur.upload(files.cover[0].path, async (err, covImg) => {
@@ -128,14 +135,14 @@ const userService = {
           description: req.body.description
         })
       })
-      callback({status: success, message: "Your profile was successfully updated!"})
+      callback({ status: success, message: "Your profile was successfully updated!" })
       res.redirect('back')
     } else {
       await user.update({
         name: req.body.name,
         description: req.body.description
       })
-      callback({status: success, message: "Your profile was successfully updated!"})
+      callback({ status: success, message: "Your profile was successfully updated!" })
       res.redirect('back')
     }
   },
@@ -145,7 +152,7 @@ const userService = {
     const followingId = req.body.id
 
     if (Number(followerId) === Number(followingId)) {
-      callback({ status: 'error', message: 'You can\'t follow yourself!'})
+      callback({ status: 'error', message: 'You can\'t follow yourself!' })
       return res.end()
     }
 
