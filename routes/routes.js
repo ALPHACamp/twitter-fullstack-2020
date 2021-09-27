@@ -17,7 +17,11 @@ router.post(
   adminController.signin
 )
 router.get('/admin/tweets', auth.authenticatedAdmin, adminController.getTweets)
-router.delete('/admin/tweets/:id', auth.authenticatedAdmin)
+router.delete(
+  '/admin/tweets/:id',
+  auth.authenticatedAdmin,
+  adminController.deleteTweet
+)
 router.get('/admin/users', auth.authenticatedAdmin, adminController.getUsers)
 
 //User
