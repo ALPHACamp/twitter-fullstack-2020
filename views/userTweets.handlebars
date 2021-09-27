@@ -37,12 +37,24 @@
     </div>
     <!-- modal test   -->
     <div style='position:absolute; right:15px; top:210px;'>
+      {{#ifCond user.id users.id}}
       <button
         type='button'
         class='button-white'
         data-toggle='modal'
         data-target='#exampleModal'
       >編輯個人資料</button>
+      {{else}}
+        {{#if users.isFollowed}} 
+      <form action="/followships/{{users.id}}?_method=DELETE" method="POST"> 
+      <button class='followed'>正在跟隨</button>
+      </form> 
+        {{else}}
+      <form action="/followships" method="POST">
+        <button class="tofollow-button" name="id" value="{{users.id}}">跟隨</button>
+      </form> 
+        {{/if}}
+      {{/ifCond}}
     </div>
     <div
       class='modal fade'
@@ -87,7 +99,7 @@
               <div class='form-group'>
                 <img
                   id='cover-placeholder'
-                  src='https://images.unsplash.com/photo-1417325384643-aac51acc9e5d?q=75&fm=jpg'
+                  src='{{users.cover}}'
                   alt='cover'
                 />
                 <label class='cover-img-label' for='image'>
@@ -118,7 +130,7 @@
               <div class='form-group'>
                 <img
                   id='avatar-placeholder'
-                  src='https://randomuser.me/api/portraits/women/17.jpg'
+                  src='{{users.avatar}}'
                   alt='avatar'
                 />
                 <div class='avatar-background'></div>
@@ -164,24 +176,24 @@
 
     <div class='personal-info'>
       <div class='personal-name'>
-        <span>{{user.name}}</span>
+        <span>{{users.name}}</span>
         <span
           style='color:#657786; font-weight:500; font-size:15px;'
-        >@{{user.account}}</span>
+        >@{{users.account}}</span>
       </div>
       <div class='personal-descript'>
-        {{user.introduction}}
+        {{users.introduction}}
       </div>
       <div class='follower-nav'>       
         <div class='following-count' style='margin-right:20px;'>
-          <a href="/users/{{user.id}}/followers">
-            <span style='cursor:pointer;'>39 個</span>
+          <a href="/users/{{users.id}}/followers">
+            <span style='cursor:pointer;'>{{users.Followings.length}} 個</span>
             <span style='color: #657786; cursor:pointer;'>跟隨中</span>
           </a>
         </div>
         <div class='follower-count'>
-          <a href="/users/{{user.id}}/followings">
-            <span style='cursor:pointer;'>59 位</span>
+          <a href="/users/{{users.id}}/followings">
+            <span style='cursor:pointer;'>{{users.Followers.length}} 位</span>
             <span style='color: #657786; cursor:pointer;'>跟隨者</span>
           </a>
         </div>

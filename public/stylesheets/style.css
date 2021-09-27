@@ -1981,12 +1981,6 @@ svg {
   margin-top: 80px;
 }
 
-.admin-tweet-container .card .card-body .reply-nav {
-  /*   display: flex;
-  justify-content: center;
-  align-items: center; */
-}
-
 .admin-tweet-container .card .card-body .reply-nav .icon-reply svg,
 .admin-tweet-container .card .card-body .reply-nav .icon-like svg {
   fill: #657786;
