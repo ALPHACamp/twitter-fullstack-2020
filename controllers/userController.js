@@ -73,7 +73,9 @@ const userController = {
     userService.getUserTweets(req, res, data => {
       return res.render('userSelf', data)
 
+      return res.render('userSelf', { tweets: data, tweetUser, topUsers, theUser: helpers.getUser(req).id })
     })
+      .catch(err => console.log(err))
   },
 
   getUserSelfReply: async (req, res) => {
@@ -300,28 +302,49 @@ const userController = {
         req.flash('error_messages', 'You already followed this user')
         return res.redirect('/tweets')
       } else {
-        Followship.create({
-          followerId,
-          followingId
+        return Promise.all([
+          User.findByPk(followerId)
+            .then(user => {
+              user.increment('followingCount', { by: 1 })
+            }),
+          User.findByPk(followingId)
+            .then(user => {
+              user.increment('followerCount', { by: 1 })
+            }),
+          Followship.create({
+            followerId,
+            followingId
+          })
+        ]).then(() => {
+          return res.redirect('back')
         })
-        return res.redirect('back')
       }
     })
   },
 
   removeFollowing: (req, res) => {
+    const followerId = helpers.getUser(req).id
+    const followingId = req.params.userId
     return Followship.findOne({
       where: {
-        followerId: helpers.getUser(req).id,
-        followingId: req.params.userId
+        followerId,
+        followingId
       }
-    })
-      .then((followship) => {
+    }).then(followship => {
+      return Promise.all([
+        User.findByPk(followerId)
+          .then(user => {
+            user.decrement('followingCount', { by: 1 })
+          }),
+        User.findByPk(followingId)
+          .then(user => {
+            user.decrement('followerCount', { by: 1 })
+          }),
         followship.destroy()
-          .then((followship) => {
-            return res.redirect('back')
-          })
+      ]).then((followship) => {
+        return res.redirect('back')
       })
+    })
   },
 
   getFollowers: (req, res) => {
@@ -351,7 +374,7 @@ const userController = {
         where: { Userid: req.params.id }
       })
     ]).then(([followers, usersdata, tweetUser, tweetCount]) => {
-      console.log(tweetUser)
+
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,

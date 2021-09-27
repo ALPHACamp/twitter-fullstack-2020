@@ -30,7 +30,12 @@ const tweetController = {
       }),
     ]).then(([tweets, users]) => {
 
-      const topUsers = helpers.getTopUsers(req, users)
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+      })).sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
 
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
@@ -75,29 +80,13 @@ const tweetController = {
           { model: Reply, include: [User] },
           { model: User, as: 'LikedUsers' }
         ],
-        order: [
-          ['Replies', 'createdAt', 'DESC'],
-        ]
-      }),
-      User.findAll({
-        include: [
-          Tweet,
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ],
-        where: { role: "user" }
-      }),
-    ]).then(([tweet, users]) => {
-      
-      const topUsers = users.map(user => ({
-        ...user.dataValues,
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
-      }))
-        .sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
+        order: [['Replies', 'createdAt', 'DESC']]
+      })
+      const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
+      return res.render('tweet', { tweet: tweet.toJSON(), isLiked })
 
-      return res.render('tweet', { tweet: tweet.toJSON(),  topUsers})}
+
+      return res.render('tweet', { tweet: tweet.toJSON(), isLiked, topUsers})}
     )
   },
 }
