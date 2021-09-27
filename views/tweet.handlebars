@@ -9,13 +9,16 @@
           </a> </div>
         <div class="headerItem"><span>推文</span></div>
       </div>
+      <div class="reply">
       <div class="post">
         <div class="postHead">
           <a href="/users/{{tweet.User.id}}/tweets">
           <img class="postAvatar" src="{{tweet.User.avatar}}" alt="" width="50" height="50">
-          <div class="headItem"><span class="card-name">{{tweet.User.name}}</span> <span class="card-account">@{{tweet.User.account}}</span>
-          </div>
           </a>
+          <div class="headItem">
+            <span class="card-name">{{tweet.User.name}}</span> 
+            <span class="card-account">@{{tweet.User.account}}</span>
+          </div>
         </div>
         <div class="postContent">
           <p>{{tweet.description}}</p>
@@ -62,6 +65,7 @@
 
           </div>
         </div>
+      </div>
       </div>
       {{#each tweet.Replies}}
       <div class="tweet-body">
