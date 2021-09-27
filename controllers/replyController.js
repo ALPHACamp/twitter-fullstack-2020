@@ -3,11 +3,13 @@ const Tweet = db.Tweet
 const Reply = db.Reply
 const User = db.User
 
-
+const helpers = require('../_helpers')
 
 const replyController = {
-  postReply: async(req, res) =>{
-    const {comment, TweetId, UserId} = req.body
+  postReply: async (req, res) =>{
+    const currentUserId = helpers.getUser(req).id
+    const { comment, TweetId } = req.body
+
     if (!comment.trim()) {
       req.flash('error_messages', '回覆不能空白！')
       return res.redirect('back')
@@ -15,9 +17,9 @@ const replyController = {
     await Reply.create({
       comment: comment,
       TweetId: TweetId,
-      UserId: UserId
+      UserId: currentUserId
     })
-    return res.redirect(`/tweets/${TweetId}/replies`)
+    return res.redirect('back')
   }
 }
 

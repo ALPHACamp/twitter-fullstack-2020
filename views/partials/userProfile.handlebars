@@ -1,3 +1,16 @@
+<script>
+  function getUserData() {
+    axios.get('{{ BASE_URL }}/api/users/{{user.id}}')
+      .then(res => {
+        name.value = res.data.name
+        description.value = res.data.description
+        avatar.setAttribute("src", res.data.avatar)
+        cover.setAttribute("src", res.data.cover)
+      }
+      )
+  }
+</script>
+
 <div class="title border d-flex">
   <a href="/tweets" class="arrow me-3 d-flex align-items-center btn">
     <i class="fas fa-arrow-left fs-4"></i>
@@ -18,7 +31,8 @@
     {{#ifCond user.id tweetUser.id}}
     <div class="d-grid gap-2 col-2 round">
       <button type="button" class="orange btn text-white round" data-bs-toggle="modal" data-bs-dismiss="backdrop"
-        data-bs-target="#userProfileSetting">編輯個人資料</button>
+      onclick="getUserData()"
+        data-bs-target="#userProfileEdit">編輯個人資料</button>
     </div>
     {{#if isFollowed}}
     <form action="/followships/{{user.id}}?_method=DELETE" method="POST" style="margin-left: 10px;" class="text-center">

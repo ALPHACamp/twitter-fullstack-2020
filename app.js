@@ -8,19 +8,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const session = require('express-session')
-const passport = require('./config/passport')
 const methodOverride = require('method-override')
 const helpers = require('./_helpers');
 
 const app = express()
 const port = process.env.PORT || 3000
 
-// use helpers.getUser(req) to replace req.user
-// use helpers.ensureAuthenticated(req) to replace req.isAuthenticated()
-
-app.use(express.static('public'))
-
-
+const passport = require('./config/passport')
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -31,14 +25,14 @@ app.engine('handlebars', handlebars({
 }))
 app.set('view engine', 'handlebars')
 
-// app.get('/', (req, res) => res.send('Hello World!'))
-
-
+app.use('/upload', express.static(__dirname + '/upload'))
+app.use(express.static(__dirname + '/public'))
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }))
 
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
+app.use(methodOverride('_method'))
 
 app.use((req, res, next) => {
   res.locals.success_messages = req.flash('success_messages')
@@ -52,6 +46,6 @@ app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
 
-require('./routes')(app, passport)
+require('./routes')(app)
 
 module.exports = app

@@ -12,6 +12,8 @@ const Like = db.Like
 const Followship = db.Followship
 const helpers = require('../_helpers')
 
+const userService = require('../services/userService')
+
 const userController = {
   signUpPage: (req, res) => {
     return res.render('signup')
@@ -67,41 +69,9 @@ const userController = {
     res.redirect('/signin')
   },
 
-
-  getUserTweets: async (req, res) => {
-    // const currentUser = helpers.getUser(req)
-    return Promise.all([
-      Tweet.findAll({
-        where: { UserId: req.params.id },
-        include: [User, Reply, { model: User, as: 'LikedUsers' }],
-        order: [['createdAt', 'DESC']]
-      }),
-      User.findOne({
-        where: { id: req.params.id },
-        include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ]
-      }),
-      User.findAll({
-        include: [
-          { model: User, as: 'Followings' },
-          { model: User, as: 'Followers' }
-        ],
-        where: { role: "user" },
-      }),
-    ]).then(([tweets, tweetUser, users]) => {
-      const data = tweets.map(tweet => ({
-        ...tweet.dataValues,
-        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id), // 推文是否被喜歡過
-      }))
-
-      const topUsers = users.map(user => ({
-        ...user.dataValues,
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
-      })).sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
+  getUserTweets: (req, res) => {
+    userService.getUserTweets(req, res, data => {
+      return res.render('userSelf', data)
 
       return res.render('userSelf', { tweets: data, tweetUser, topUsers, theUser: helpers.getUser(req).id })
     })
@@ -109,6 +79,7 @@ const userController = {
   },
 
   getUserSelfReply: async (req, res) => {
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
     const users = await User.findAll({
       include: [
         { model: User, as: 'Followings' },
@@ -151,6 +122,8 @@ const userController = {
   },
 
   getUserSelfLike: async (req, res) => {
+    const BASE_URL = process.env.BASE_URL || 'http://localhost:3000'
+
     const users = await User.findAll({
       include: [
         { model: User, as: 'Followings' },
@@ -413,7 +386,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userFollowship', { data, topUsers, theUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "follower" })
+      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "follower" })
     })
   },
 
@@ -445,7 +418,6 @@ const userController = {
       })
     ]).then(([followings, usersdata, tweetUser, tweetCount]) => {
 
-
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
@@ -457,7 +429,7 @@ const userController = {
       }))
 
       const topUsers = users.sort((a, b) => b.followerCount - a.followerCount).slice(0, 10)
-      res.render('userFollowship', { data, topUsers, theUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "following" })
+      res.render('userFollowship', { data, topUsers, currentUser: helpers.getUser(req).id, tweetUser, tweetCount, renderType: "following" })
     })
   }
 }

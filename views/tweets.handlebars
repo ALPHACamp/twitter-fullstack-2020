@@ -38,7 +38,7 @@
             <div class="d-flex">
               <a href="/users/{{this.User.id}}/tweets" class="name m-2 btn">{{this.userName}}</a>
               <div class="tag m-2 mt-2 pt-1">@{{this.userAccount}}</div>
-              <div class="time m-2 mt-2 pt-1" title="{{momentFormat this.createdAt}}" >
+              <div class="time m-2 mt-2 pt-1" title="{{momentFormat this.createdAt}}">
                 {{moment this.createdAt}}
               </div>
             </div>
@@ -55,11 +55,11 @@
               <div class="like d-flex">
                 <span class="likeIcon me-2">
                   {{#if isLiked}}
-                    <form action="/like/{{this.id}}?_method=DELETE" method="POST">
-                      <button type="submit" class="btn">
-                        <i class="fas fa-heart"></i>
-                      </button>
-                    </form>
+                  <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                    <button type="submit" class="btn">
+                      <i class="fas fa-heart"></i>
+                    </button>
+                  </form>
                   {{else}}
                   <form action="/like/{{this.id}}" method="POST">
                     <button type="submit" class="btn">
@@ -81,4 +81,4 @@
 
   {{>popular}}
 
-  </div>
+</div>

@@ -7,9 +7,12 @@ const Like = db.Like
 const Followship = db.Followship
 
 const helpers = require('../_helpers')
+const { Op } = require("sequelize")
+const sequelize = require('sequelize')
 
-const tweetController = {
-  // 首頁
+const express = require('express')
+
+const tweetService = {
   getTweets: (req, res) => {
     return Promise.all([
       Tweet.findAll({
@@ -17,7 +20,7 @@ const tweetController = {
           { model: User, as: 'LikedUsers' }
         ],
         order: [
-          ['createdAt', 'DESC']
+          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
         ]
       }),
       User.findAll({
@@ -30,12 +33,7 @@ const tweetController = {
       }),
     ]).then(([tweets, users]) => {
 
-      const topUsers = users.map(user => ({
-        ...user.dataValues,
-        followerCount: user.Followers.length,
-        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
-      })).sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
+      const topUsers = helpers.getTopUsers(req, users)
 
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
@@ -47,7 +45,7 @@ const tweetController = {
         isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
       }))
 
-      return res.render('tweets', {
+      return callback({
         tweets: data,
         topUsers,
         currentUser: helpers.getUser(req).id
@@ -70,25 +68,7 @@ const tweetController = {
       UserId: helpers.getUser(req).id
     })
     res.redirect('/tweets')
-  },
-
-  getTweet: (req, res) => {
-    return Promise.all([
-      Tweet.findByPk(req.params.id, {
-        include: [
-          User,
-          { model: Reply, include: [User] },
-          { model: User, as: 'LikedUsers' }
-        ],
-        order: [['Replies', 'createdAt', 'DESC']]
-      })
-      const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-      return res.render('tweet', { tweet: tweet.toJSON(), isLiked })
-
-
-      return res.render('tweet', { tweet: tweet.toJSON(), isLiked, topUsers})}
-    )
-  },
+  }
 }
 
-module.exports = tweetController
+module.exports = tweetService
