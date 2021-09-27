@@ -46,13 +46,14 @@ const tweetController = {
         userAccount: tweet.User.account,
         isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
       }))
+      console.log(data)
 
-      return res.render('tweets', {
+      return res.render('index', {
         tweets: data,
         topUsers,
         currentUser: helpers.getUser(req).id
       })
-    })
+    }).catch(error => (console.log(error)))
   },
 
   postTweet: async (req, res) => {
