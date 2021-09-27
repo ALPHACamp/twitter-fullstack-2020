@@ -26,6 +26,7 @@ const messageController = require('./controllers/messageController')
 const messageControllerApi = require('./controllers/api/messageController')
 const { sendMsg } = require('./controllers/messageController')
 const { join } = require('path')
+const tweetService = require('./services/tweetService')
 
 
 app.engine('hbs', exhbs({ defaultLayout: 'main', helpers: require('./config/handlebars-helpers'), extname: '.hbs' }))
@@ -51,6 +52,7 @@ io.on('connection', (socket) => {
       const user = { id: currentId, msg: msg }
       messageController.sendMsg(user)
       io.emit('chat message', msg, currentId, currentAvatar);
+      socket.broadcast.emit('noteEveryOne')
     });
 
 
@@ -88,12 +90,14 @@ io.on('connection', (socket) => {
       io.emit('renderMsgBox', msgInbox)
     })
   })
+
  
-  //
-  // socket.on('somefollowship')
+  //有人送出推文
+  // tweetService.postTweets()
 
 });
 
+let notification = io.of('//subscribe')
 
 
 

@@ -23,12 +23,12 @@
             </li>
           </a>
 
-          <a href="/subscribe/{{user.id}}">
+          <a href="/subscribe">
             <li class="list-group-item">
               <div class="d-flex">
                 <i class="fas fa-fw fa-fh fa-bell mr-4">
                   {{!-- 若有通知 --}}
-                  {{!-- <span class="bubble">1</span> --}}
+                      {{!-- 應該在這 --}}
                   {{!-- 若有通知 --}}
                 </i>
                 通知
@@ -39,9 +39,9 @@
           <a href="/messages">
             <li class="list-group-item">
               <div class="d-flex">
-                <i class="fas  fa-fw  fa-fh fa-comments mr-4">
+                <i class="fas  fa-fw  fa-fh fa-comments mr-4" id="priNote">
                   {{!-- 若有通知 --}}
-                  {{!-- <span class="bubble">10</span> --}}
+                      {{!-- 應該在這 --}}
                   {{!-- 若有通知 --}}
                 </i>
                 公開聊天室
@@ -265,4 +265,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.min.js"></script>
 <script>
   var socket = io();
+  const priNote = document.getElementById("priNote");
+  let redDot = 0 //通知數量計數
+
+//接收公眾訊息小紅燈通知
+  socket.on('noteEveryOne', function () {
+  var item = document.createElement('span');
+    let rawHTML = "";
+    redDot += 1
+    item.classList.add('bubble')
+    rawHTML +=
+      `${redDot}`
+    item.innerHTML = rawHTML;
+    priNote.appendChild(item);
+  })
+
 </script>
