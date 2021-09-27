@@ -54,9 +54,6 @@ const userController = {
   signin: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.locals.url = req.url
-    console.log('=============================')
-    console.log(req.url)
-    console.log('=============================')
     res.redirect('/tweets')
   },
 
@@ -91,7 +88,7 @@ const userController = {
         .Followings.map((item) => item.id)
         .includes(user.id)
 
-      return res.render('user/userTweets', {
+      return res.render('userTweets', {
         users: thisUser,
         currentUserId: currentUserId
       })
@@ -213,7 +210,7 @@ const userController = {
       results.Followers.sort(
         (a, b) => b.Followship.createdAt - a.Followship.createdAt
       )
-      return res.render('user/follower', {
+      return res.render('follower', {
         results
       })
     })
@@ -235,7 +232,7 @@ const userController = {
       results.Followings.sort(
         (a, b) => b.Followship.createdAt - a.Followship.createdAt
       )
-      return res.render('user/following', {
+      return res.render('following', {
         results
       })
     })
@@ -346,7 +343,7 @@ const userController = {
         .Followings.map((item) => item.id)
         .includes(thisUser.id)
 
-      return res.render('user/reply', {
+      return res.render('reply', {
         users: thisUser,
         currentUserId: currentUserId
       })

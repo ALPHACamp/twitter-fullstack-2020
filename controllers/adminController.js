@@ -55,6 +55,10 @@ const adminController = {
     return res.render('admin/signin')
   },
 
+  getUsers: (req, res) => {
+    return res.render('admin/users')
+  },
+
   signin: (req, res) => {
     req.flash('success_messages', '成功登入！')
     res.redirect('/admin/tweets')
