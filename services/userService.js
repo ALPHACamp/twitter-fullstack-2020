@@ -43,13 +43,12 @@ const userService = {
         ...tweet.dataValues,
         isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id),
       }))
-      const topUsers = helpers.getTopUsers(req, users)
       return callback({
         tweets: data,
         tweetUser: tweetUser.toJSON(),
         followersCount,
         followingsCount,
-        topUsers,
+        topUsers: users,
         currentUser,
         BASE_URL
       })
