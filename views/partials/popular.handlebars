@@ -26,7 +26,7 @@
             <button type="submit" class="btn orange text-white round">取消跟隨</button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}" method="POST">
+          <form action="/followships/" method="POST">
             <input type="hidden" name="id" value={{this.id}}>
             <button type="submit" class="btn followButton round">跟隨</button>
           </form>
