@@ -31,22 +31,22 @@
       {{#each tweets}}
       <div class="tweet border">
         <div class="d-flex">
-          <a href="/user/{{this.User.id}}/tweets" class="avatar m-2">
+          <a href="/users/{{this.User.id}}/tweets" class="avatar m-2">
             <img src="{{noImage this.User.avatar}}" alt="" class="rounded-circle userImage">
           </a>
           <div class="">
             <div class="d-flex">
-              <a href="/user/{{this.User.id}}/tweets" class="name m-2 btn">{{this.userName}}</a>
+              <a href="/users/{{this.User.id}}/tweets" class="name m-2 btn">{{this.userName}}</a>
               <div class="tag m-2 mt-2 pt-1">@{{this.userAccount}}</div>
               <div class="time m-2 mt-2 pt-1" title="{{momentFormat this.createdAt}}" >
                 {{moment this.createdAt}}
               </div>
             </div>
-            <a href="/tweets/{{this.id}}" class="tweetContent m-2 btn">
+            <a href="/tweets/{{this.id}}/replies" class="tweetContent m-2 btn">
               <p>{{this.description}}</p>
             </a>
             <div class="d-flex mb-2 align-items-center">
-              <a href="/tweets/{{this.id}}" class="comment d-flex me-2 btn">
+              <a href="/tweets/{{this.id}}/replies" class="comment d-flex me-2 btn">
                 <span class="commentIcon me-2">
                   <i class="far fa-comment"></i>
                 </span>

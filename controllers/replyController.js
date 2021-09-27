@@ -17,7 +17,7 @@ const replyController = {
       TweetId: TweetId,
       UserId: UserId
     })
-    return res.redirect(`tweets/${TweetId}`)
+    return res.redirect(`/tweets/${TweetId}/replies`)
   }
 }
 

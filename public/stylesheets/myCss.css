@@ -116,7 +116,6 @@
 }
 
 .userSidebar {
-  position: absolute;
   width: 235px;
   height: 1196px;
   left: 103px;
@@ -131,5 +130,5 @@
   position: inherit;
   width: 235px;
   height: 60px;
-  top: 1140px;
+  top: 850px;
 }

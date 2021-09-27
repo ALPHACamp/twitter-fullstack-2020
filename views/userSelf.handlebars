@@ -11,13 +11,13 @@
     
     <ul class="nav nav-tabs">
       <li class="nav-item">
-        <a class="nav-link text-secondary active" href="/user/{{tweetUser.id}}/tweets">推文</a>
+        <a class="nav-link text-secondary active" href="/users/{{tweetUser.id}}/tweets">推文</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/replies">推文與回覆</a>
+        <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/replies">推文與回覆</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-secondary" href="/user/{{tweetUser.id}}/likes">喜歡的內容</a>
+        <a class="nav-link text-secondary" href="/users/{{tweetUser.id}}/likes">喜歡的內容</a>
       </li>
     </ul>
 
@@ -33,11 +33,11 @@
             <div class="tag m-2">@{{this.User.account}}</div>
             <div class="time m-2">{{moment this.createdAt}}</div>
           </div>
-          <a href="/tweets/{{this.id}}" class="tweetContent m-2 btn">
+          <a href="/tweets/{{this.id}}/replies" class="tweetContent m-2 btn">
             <p>{{this.description}}</p>
           </a>
           <div class="d-flex mb-2">
-            <a href="/tweets/{{this.id}}" class="comment d-flex me-2 btn">
+            <a href="/tweets/{{this.id}}/replies" class="comment d-flex me-2 btn">
               <span class="commentIcon me-2">
                 <i class="far fa-comment"></i>
               </span>

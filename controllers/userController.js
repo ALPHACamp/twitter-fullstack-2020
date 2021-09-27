@@ -96,7 +96,7 @@ const userController = {
     ]).then(([tweets, followersCount, followingsCount, tweetUser, users]) => {
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
-        isLiked: tweet.LikedUsers.map(d => d.id).includes(req.user.id), // 推文是否被喜歡過
+        isLiked: tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id), // 推文是否被喜歡過
       }))
 
       const topUsers = helpers.getTopUsers(req, users)
@@ -133,7 +133,7 @@ const userController = {
     const topUsers = await users.map(user => ({
       ...user.dataValues,
       followerCount: user.Followers.length,
-      isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+      isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
     }))
       .sort((a, b) => b.followerCount - a.followerCount)
       .slice(0, 10)
@@ -149,6 +149,13 @@ const userController = {
   },
 
   getUserSelfLike: async (req, res) => {
+    const users = await User.findAll({
+      include: [
+        { model: User, as: 'Followings' },
+        { model: User, as: 'Followers' }
+      ],
+      where: { role: "user" }
+    })
 
     const likes = await Like.findAll({
       where: { UserId: req.params.id },
@@ -163,7 +170,6 @@ const userController = {
     const tweetUser = await User.findByPk(
       req.params.id
     )
-
     const data = likes.map(like => ({
       id: like.Tweet.id,
       avatar: like.Tweet.User.avatar,
@@ -173,19 +179,26 @@ const userController = {
       description: like.Tweet.description,
       RepliesLength: like.Tweet.Replies.length,
       LikedUsersLength: like.Tweet.LikedUsers.length,
-      isLiked: req.user.LikedTweets.map(d => d.id).includes(like.TweetId)
+      isLiked: like.Tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
     }))
 
     const topUsers =
       users.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id)
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
       }))
         .sort((a, b) => b.followerCount - a.followerCount)
         .slice(0, 10)
 
-    return res.render('userSelfLike', { data, tweets, tweetUser, topUsers })
+    const followersCount = await Followship.count({
+      where: { followingId: req.params.id }
+    })
+    const followingsCount = await Followship.count({
+      where: { followerId: req.params.id }
+    })
+
+    return res.render('userSelfLike', { data, tweets, tweetUser,followersCount, followingsCount, topUsers })
   },
 
   getUserSetting: (req, res) => {
@@ -271,7 +284,7 @@ const userController = {
       .then(tweet => {
         tweet.increment('likeCount', { by: 1 })
         Like.create({
-          UserId: req.user.id,
+          UserId: helpers.getUser(req).id,
           TweetId: req.params.tweetId
         })
       }).then(() => {
@@ -284,7 +297,7 @@ const userController = {
         tweet.decrement('likeCount', { by: 1 })
         Like.destroy({
           where: {
-            UserId: req.user.id,
+            UserId: helpers.getUser(req).id,
             TweetId: req.params.tweetId
           }
         })
@@ -369,7 +382,7 @@ const userController = {
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
       }))
 
       const data = followers.map(d => ({
@@ -413,7 +426,7 @@ const userController = {
       const users = usersdata.map(user => ({
         ...user.dataValues,
         followerCount: user.Followers.length,
-        isFollowed: req.user.Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id) //登入使用者是否已追蹤該名user
       }))
 
       const data = followings.map(d => ({
