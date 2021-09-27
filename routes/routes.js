@@ -48,7 +48,7 @@ router.post('/tweets', tweetController.postTweet)
 // 取得特定貼文資料
 router.get('/tweets/:id', tweetController.getTweet)
 // Reply 回覆
-router.post('/replies', authenticated, replyController.postReply)
+router.post('/tweets/:id/replies', authenticated, replyController.postReply)
 
 // User's Profile
 router.get('/users/:id/tweets', authenticated, userController.getUserTweets)
