@@ -17,7 +17,7 @@ const tweetController = {
           { model: User, as: 'LikedUsers' }
         ],
         order: [
-          ['createdAt', 'DESC'], // Sorts by createdAt in descending order
+          ['createdAt', 'DESC']
         ]
       }),
       User.findAll({
@@ -66,23 +66,39 @@ const tweetController = {
     })
     res.redirect('/tweets')
   },
-  getTweet: async (req, res) => {
-    try {
-      const tweet = await Tweet.findByPk(
-        req.params.id, {
+
+  getTweet: (req, res) => {
+    return Promise.all([
+      Tweet.findByPk(req.params.id, {
         include: [
           User,
           { model: Reply, include: [User] },
           { model: User, as: 'LikedUsers' }
         ],
-        order: [['Replies', 'createdAt', 'DESC']]
-      })
-      const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-      return res.render('tweet', { tweet: tweet.toJSON(), isLiked})
+        order: [
+          ['Replies', 'createdAt', 'DESC'],
+        ]
+      }),
+      User.findAll({
+        include: [
+          Tweet,
+          { model: User, as: 'Followings' },
+          { model: User, as: 'Followers' }
+        ],
+        where: { role: "user" }
+      }),
+    ]).then(([tweet, users]) => {
+      
+      const topUsers = users.map(user => ({
+        ...user.dataValues,
+        followerCount: user.Followers.length,
+        isFollowed: helpers.getUser(req).Followings.map(d => d.id).includes(user.id)
+      }))
+        .sort((a, b) => b.followerCount - a.followerCount)
+        .slice(0, 10)
 
-    } catch (e) {
-      console.log(e.message)
-    }
+      return res.render('tweet', { tweet: tweet.toJSON(),  topUsers})}
+    )
   },
 }
 
