@@ -92,8 +92,8 @@ io.on('connection', (socket) => {
   })
 
  
-  //有人送出推文
-  // tweetService.postTweets()
+  //
+  // socket.on('somefollowship')
 
 });
 
