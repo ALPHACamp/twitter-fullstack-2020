@@ -64,7 +64,7 @@ router.post('/like/:tweetId', authenticated, userController.addLike)
 router.delete('/like/:tweetId', authenticated, userController.removeLike)
 
 // Follow
-router.post('/followships/:userId', authenticated, userController.addFollowing)
+router.post('/followships/', authenticated, userController.addFollowing)
 router.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
 // setting & edit
