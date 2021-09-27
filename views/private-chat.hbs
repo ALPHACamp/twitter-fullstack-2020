@@ -49,7 +49,7 @@
       <a href="/messages">
         <li class="list-group-item">
           <div class="d-flex">
-            <i class="fas  fa-fw  fa-fh fa-comments mr-4">
+            <i class="fas  fa-fw  fa-fh fa-comments mr-4" id="pubNote">
               {{!-- 若有通知 --}}
               {{!-- <span class="bubble">10</span> --}}
               {{!-- 若有通知 --}}
@@ -306,7 +306,9 @@
   var form = document.getElementById('form');
   var input = document.getElementById('input');
   const priNote = document.getElementById("priNote");
+  const pubNote = document.getElementById("pubNote");
   let redDot = 0
+  let publicRedDot = 0 //通知數量計數
 
 
   //使用者最後訊息更新
@@ -427,6 +429,18 @@
     priNote.appendChild(item);
     scrollWindow();
   })
+
+  //接收公眾訊息小紅燈通知
+    socket.on('noteEveryOne', function () {
+      var item = document.createElement('span');
+      let rawHTML = "";
+      publicRedDot += 1
+      item.classList.add('bubble')
+      rawHTML +=
+        `${publicRedDot}`
+      item.innerHTML = rawHTML;
+      pubNote.appendChild(item);
+    })
 
 
   //捲至最底
