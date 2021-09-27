@@ -19,7 +19,7 @@
                 <img src="{{profile.avatar}}" alt="avatar-img" />
               </div>
             </div>
-            <form action="/tweets" method="POST">
+            <form action="/tweets" method="POST" novalidate>
               <div class="validate-text">{{tweet_message}}</div>
 
               <div class="profile-textarea-container">
@@ -27,7 +27,7 @@
                 <textarea
                   name="description"
                   class="form-control form-control-lg"
-                  id="post"
+                  id="tweettextarea"
                   placeholder="有什麼新鮮事?"
                   rows="3"
                   maxlength="140"
