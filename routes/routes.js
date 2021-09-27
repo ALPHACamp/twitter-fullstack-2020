@@ -68,7 +68,7 @@ router.post('/followships/', authenticated, userController.addFollowing)
 router.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
 // setting & edit
-router.get('/setting', authenticated, userController.getUserSetting)
+router.get('/users/:id/setting', authenticated, userController.getUserSetting)
 router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 router.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserProfile)
 

@@ -98,10 +98,6 @@ const userService = {
       return callback({ status: error, message: '名稱不得超過50字！' })
     }
 
-    if (description.length > 160) {
-      return callback({ status: error, message: '自我介紹不得超過160字！' })
-    }
-
     imgur.setClientID(IMGUR_CLIENT_ID)
 
     if (files.avatar && files.cover) {
@@ -125,7 +121,7 @@ const userService = {
           description: req.body.description
         })
       })
-      callback({ status: success, message: "Your profile was successfully updated!" })
+      callback({ status: 'success', message: "Your profile was successfully updated!" })
       res.redirect('back')
     } else if (!files.avatar && files.cover) {
       imgur.upload(files.cover[0].path, async (err, covImg) => {
@@ -135,14 +131,14 @@ const userService = {
           description: req.body.description
         })
       })
-      callback({ status: success, message: "Your profile was successfully updated!" })
+      callback({ status: 'success', message: "Your profile was successfully updated!" })
       res.redirect('back')
     } else {
       await user.update({
         name: req.body.name,
         description: req.body.description
       })
-      callback({ status: success, message: "Your profile was successfully updated!" })
+      callback({ status: 'success', message: "Your profile was successfully updated!" })
       res.redirect('back')
     }
   },
