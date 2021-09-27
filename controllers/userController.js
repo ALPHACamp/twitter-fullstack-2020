@@ -35,7 +35,7 @@ const userController = {
                   req.body.password,
                   bcrypt.genSaltSync(10),
                   null
-                ),
+                )
               }).then((user) => {
                 req.flash('success_messages', '成功註冊帳號！')
                 return res.redirect('/signin')
@@ -68,12 +68,12 @@ const userController = {
       include: [
         {
           model: Tweet,
-          include: [Reply, { model: User, as: 'LikedUsers' }],
+          include: [Reply, { model: User, as: 'LikedUsers' }]
         },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
+        { model: User, as: 'Followings' }
       ],
-      order: [[Tweet, 'createdAt', 'DESC']],
+      order: [[Tweet, 'createdAt', 'DESC']]
     }).then((user) => {
       const thisUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
@@ -90,7 +90,7 @@ const userController = {
 
       return res.render('userTweets', {
         users: thisUser,
-        currentUserId: currentUserId,
+        currentUserId: currentUserId
       })
     })
   },
@@ -160,7 +160,7 @@ const userController = {
             name,
             password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
             email: newEmail,
-            account: newAccount,
+            account: newAccount
           })
         )
         .then(() => {
@@ -172,7 +172,7 @@ const userController = {
 
   getUserFollowers: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: [Tweet, { model: User, as: 'Followers' }],
+      include: [Tweet, { model: User, as: 'Followers' }]
     }).then((user) => {
       user.update({ followerCount: user.Followers.length })
       const results = user.toJSON()
@@ -181,20 +181,20 @@ const userController = {
         isFollowed: helpers
           .getUser(req)
           .Followings.map((d) => d.id)
-          .includes(user.id),
+          .includes(user.id)
       }))
       results.tweetCount = user.Tweets.length
       results.Followers.sort(
         (a, b) => b.Followship.createdAt - a.Followship.createdAt
       )
-      return res.render('follower', {
-        results,
+      return res.render('user/follower', {
+        results
       })
     })
   },
   getUserFollowings: (req, res) => {
     return User.findByPk(req.params.id, {
-      include: [Tweet, { model: User, as: 'Followings' }],
+      include: [Tweet, { model: User, as: 'Followings' }]
     }).then((user) => {
       user.update({ followingCount: user.Followings.length })
       const results = user.toJSON()
@@ -203,14 +203,14 @@ const userController = {
         isFollowed: helpers
           .getUser(req)
           .Followings.map((d) => d.id)
-          .includes(user.id),
+          .includes(user.id)
       }))
       results.tweetCount = user.Tweets.length
       results.Followings.sort(
         (a, b) => b.Followship.createdAt - a.Followship.createdAt
       )
-      return res.render('following', {
-        results,
+      return res.render('user/following', {
+        results
       })
     })
   },
@@ -220,11 +220,11 @@ const userController = {
     const currentUserId = helpers.getUser(req).id
     if (Number(followTargetId) === currentUserId) {
       req.flash('error_messages', '不能追蹤自己！')
-      return res.redirect(200,'back')
+      return res.redirect(200, 'back')
     } else {
       return Followship.create({
         followerId: currentUserId,
-        followingId: followTargetId,
+        followingId: followTargetId
       }).then(() => {
         return res.redirect('back')
       })
@@ -237,8 +237,8 @@ const userController = {
     return Followship.findOne({
       where: {
         followerId: currentUserId,
-        followingId: followTargetId,
-      },
+        followingId: followTargetId
+      }
     })
       .then((favorite) => {
         favorite.destroy().then(() => {
@@ -260,14 +260,14 @@ const userController = {
           include: [
             {
               model: Tweet,
-              include: [Reply, Like, User],
-            },
-          ],
+              include: [Reply, Like, User]
+            }
+          ]
         },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
+        { model: User, as: 'Followings' }
       ],
-      order: [[Like, 'createdAt', 'DESC']],
+      order: [[Like, 'createdAt', 'DESC']]
     }).then((user) => {
       const thisUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
@@ -284,7 +284,7 @@ const userController = {
 
       return res.render('user/like', {
         users: thisUser,
-        currentUserId: currentUserId,
+        currentUserId: currentUserId
       })
     })
   },
@@ -298,14 +298,14 @@ const userController = {
           include: [
             {
               model: Tweet,
-              include: [Reply, Like, User],
-            },
-          ],
+              include: [Reply, Like, User]
+            }
+          ]
         },
         { model: User, as: 'Followers' },
-        { model: User, as: 'Followings' },
+        { model: User, as: 'Followings' }
       ],
-      order: [[Reply, 'createdAt', 'DESC']],
+      order: [[Reply, 'createdAt', 'DESC']]
     }).then((user) => {
       const thisUser = user.toJSON()
       const currentUserId = helpers.getUser(req).id
@@ -322,10 +322,10 @@ const userController = {
 
       return res.render('reply', {
         users: thisUser,
-        currentUserId: currentUserId,
+        currentUserId: currentUserId
       })
     })
-  },
+  }
 }
 
 module.exports = userController

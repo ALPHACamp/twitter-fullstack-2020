@@ -14,8 +14,8 @@
         </div>
         <div class="feature-link mr-3">
           {{#ifCond user.id users.id}}
-          <button type="button" class="button profile-button" data-toggle="modal"
-                  data-target="#editUser">編輯個人資訊</button>
+          <button type="button" class="button profile-button" data-toggle="modal" data-id="{{user.id}}"  
+                  data-target="#userModal">編輯個人資訊</button>
           {{else}}
           {{#if users.isFollowed}}
           <form action="/followships/{{users.id}}?_method=DELETE" method="POST">
