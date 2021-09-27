@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="createReply">
-        <form action="/replies" method="POST">
+        <form action="/tweets/{{tweet.id}}/replies" method="POST">
           <div class="d-flex">
             <a href="" class="avatar m-2">
               <img src="{{noImage user.image}}" alt="" class="rounded-circle userImage">

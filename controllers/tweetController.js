@@ -77,9 +77,8 @@ const tweetController = {
         ],
         order: [['Replies', 'createdAt', 'DESC']]
       })
-
       const isLiked = tweet.LikedUsers.map(d => d.id).includes(helpers.getUser(req).id)
-      return res.render('tweet', { tweet: tweet.toJSON(), isLiked })
+      return res.render('tweet', { tweet: tweet.toJSON(), isLiked})
 
     } catch (e) {
       console.log(e.message)
