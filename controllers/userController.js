@@ -72,8 +72,6 @@ const userController = {
   getUserTweets: (req, res) => {
     userService.getUserTweets(req, res, data => {
       return res.render('userSelf', data)
-
-      return res.render('userSelf', { tweets: data, tweetUser, topUsers, theUser: helpers.getUser(req).id })
     })
       .catch(err => console.log(err))
   },
@@ -173,7 +171,7 @@ const userController = {
       where: { followerId: req.params.id }
     })
 
-    return res.render('userSelfLike', { data, tweets, tweetUser, followersCount, followingsCount, topUsers })
+    return res.render('userSelfLike', { BASE_URL, data, tweets, tweetUser, followersCount, followingsCount, topUsers })
   },
 
   getUserSetting: (req, res) => {

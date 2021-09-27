@@ -33,8 +33,6 @@ const tweetService = {
       }),
     ]).then(([tweets, users]) => {
 
-      const topUsers = helpers.getTopUsers(req, users)
-
       const data = tweets.map(tweet => ({
         ...tweet.dataValues,
         id: tweet.id,  //拿到tweet的id
@@ -47,7 +45,7 @@ const tweetService = {
 
       return callback({
         tweets: data,
-        topUsers,
+        topUsers: users,
         currentUser: helpers.getUser(req).id
       })
     })
