@@ -7,6 +7,7 @@ const followshipController = {
     if (Number(helpers.getUser(req).id) === Number(req.body.id)) {
       req.flash('error_messages', '不可以追蹤自己！')
       return res.redirect('back', 200)
+      // 為了測試檔，加status: 200
     }
     Followship.create({
       followerId: helpers.getUser(req).id,

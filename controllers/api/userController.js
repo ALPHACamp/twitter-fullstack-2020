@@ -49,7 +49,7 @@ const userController = {
     }
 
     const { files } = req
-    const fileCountsArr = Object.keys(files)
+    const fileCountsArr = files ? Object.keys(files) : false
     const fileCounts = fileCountsArr.length
 
     const getUploadLink = (link) => {
@@ -100,14 +100,16 @@ const userController = {
 
           User.findByPk(req.params.id)
             .then(user => {
+
               user.update({
                 name: req.body.name,
                 introduction: req.body.introduction,
                 avatar,
                 cover
               }).then(user => {
+                const userId = req.params.id
                 req.flash('success_messages', 'profile was successfully to update')
-                return res.render('selfTweets', user)
+                return res.redirect(200, `/users/${userId}/tweets`)
               })
             })
 
@@ -126,8 +128,9 @@ const userController = {
             cover: user.cover,
             avatar: user.avatar
           }).then(user => {
+            const userId = req.params.id
             req.flash('success_messages', 'profile was successfully to update')
-            return res.render('selfTweets', user)
+            return res.redirect(200, `/users/${userId}/tweets`)
           })
         })
     }
