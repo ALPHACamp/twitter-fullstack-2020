@@ -256,13 +256,18 @@ const userController = {
     Tweet.findByPk(req.params.tweetId)
       .then(tweet => {
         tweet.increment('likeCount', { by: 1 })
-        Like.create({
-          UserId: helpers.getUser(req).id,
-          TweetId: req.params.tweetId
+        Like.findOrCreate({
+          where: {
+            UserId: helpers.getUser(req).id,
+            TweetId: req.params.id
+          }
         })
       }).then(() => {
         return res.redirect('back')
-      })
+      }).catch (() =>
+        req.flash('error_messages', 'You can not like twice!'),
+        res.redirect('back')
+      )
   },
   removeLike: (req, res) => {
     Tweet.findByPk(req.params.tweetId)
@@ -276,7 +281,10 @@ const userController = {
         })
       }).then(() => {
         return res.redirect('back')
-      })
+      }).catch(() =>
+        req.flash('error_messages', 'You can not unlike twice!'),
+        res.redirect('back')
+      )
   },
 
   // Followship

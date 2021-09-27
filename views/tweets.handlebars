@@ -55,13 +55,13 @@
               <div class="like d-flex">
                 <span class="likeIcon me-2">
                   {{#if isLiked}}
-                  <form action="/like/{{this.id}}?_method=DELETE" method="POST">
+                  <form action="/tweets/{{this.id}}/unlike" method="POST">
                     <button type="submit" class="btn">
                       <i class="fas fa-heart"></i>
                     </button>
                   </form>
                   {{else}}
-                  <form action="/like/{{this.id}}" method="POST">
+                  <form action="/tweets/{{this.id}}/like" method="POST">
                     <button type="submit" class="btn">
                       <i class="far fa-heart"></i>
                     </button>

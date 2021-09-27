@@ -99,13 +99,13 @@
         </button>
 
         {{#if isLiked}}
-        <form action="/like/{{tweet.id}}?_method=DELETE" method="POST">
+        <form action="/tweets/{{tweet.id}}/unlike" method="POST">
           <button type="submit" class="btn">
             <i class="fas fa-heart fs-3 "></i>
           </button>
         </form>
         {{else}}
-        <form action="/like/{{tweet.id}}" method="POST">
+        <form action="/tweets/{{tweet.id}}/like" method="POST">
           <button type="submit" class="btn">
             <i class="far fa-heart fs-3"></i>
           </button>
