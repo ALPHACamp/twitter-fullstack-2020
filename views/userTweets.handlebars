@@ -186,13 +186,13 @@
   </div>
     <div class="list-group">
       <a class="list-group-item active" data-toggle="list" href="#tweets">推文</a>
-      <a class="list-group-item" data-toggle="list">推文與回覆</a>
-      <a class="list-group-item" data-toggle="list">喜歡的內容 </a>
+      <a class="list-group-item" data-toggle="list" href="#reply">推文與回覆</a>
+      <a class="list-group-item" data-toggle="list" href="#like">喜歡的內容 </a>
     </div>
     <div class="tab-content" id="nav-tabContent">
       <div class="tab-pane fade show active" id="tweets">{{>tweets}}</div>
-      <div class="tab-pane fade" id="reply">2</div>
-      <div class="tab-pane fade" id="like">3</div>
+      <div class="tab-pane fade" id="reply">{{>reply}}</div>
+      <div class="tab-pane fade" id="like"></div>
     </div>
     
 
