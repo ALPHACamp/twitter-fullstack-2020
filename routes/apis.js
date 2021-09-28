@@ -8,6 +8,8 @@ const upload = multer({ dest: 'temp/' })
 const tweetController = require('../controllers/api/tweetController.js')
 const userController = require('../controllers/api/userController.js')
 
+const helpers = require('../_helpers')
+
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
     if (!(helpers.getUser(req).role === "admin")) {

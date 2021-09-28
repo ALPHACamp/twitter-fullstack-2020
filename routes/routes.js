@@ -44,9 +44,9 @@ router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, tweetController.getTweets)
 
 // 新增推文
-router.post('/tweets', tweetController.postTweet)
+router.post('/tweets', authenticated, tweetController.postTweet)
 // 取得特定貼文資料
-router.get('/tweets/:id', tweetController.getTweet)
+router.get('/tweets/:id', authenticated, tweetController.getTweet)
 
 // 回覆
 router.get('/tweets/:id/replies', authenticated, tweetController.getTweet)
@@ -60,15 +60,15 @@ router.get('/users/:id/followers', authenticated, userController.getFollowers)
 router.get('/users/:id/followings', authenticated, userController.getFollowings)
 
 // Like
-router.post('/like/:tweetId', authenticated, userController.addLike)
-router.delete('/like/:tweetId', authenticated, userController.removeLike)
+router.post('/tweets/:id/like', authenticated, userController.addLike)
+router.post('/tweets/:id/unlike', authenticated, userController.removeLike)
 
 // Follow
 router.post('/followships/', authenticated, userController.addFollowing)
 router.delete('/followships/:userId', authenticated, userController.removeFollowing)
 
 // setting & edit
-router.get('/setting', authenticated, userController.getUserSetting)
+router.get('/users/:id/setting', authenticated, userController.getUserSetting)
 router.put('/users/:id/setting', authenticated, userController.putUserSetting)
 router.put('/users/:id/edit', authenticated, multipleUpload, userController.putUserProfile)
 

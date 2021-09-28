@@ -252,31 +252,44 @@ const userController = {
   },
 
   // Like
-  addLike: (req, res) => {
-    Tweet.findByPk(req.params.tweetId)
-      .then(tweet => {
-        tweet.increment('likeCount', { by: 1 })
-        Like.create({
-          UserId: helpers.getUser(req).id,
-          TweetId: req.params.tweetId
-        })
-      }).then(() => {
-        return res.redirect('back')
+  addLike: async (req, res) => {
+
+    try {
+      const currentUserId = helpers.getUser(req).id
+      await Like.findOrCreate({
+        where: {
+          UserId: currentUserId,
+          TweetId: req.params.id
+        }
       })
+        .then((like) => {
+          return res.redirect('back')
+        })
+    } catch (error) {
+      console.log(error)
+      res.render('/index', { Error })
+    }
   },
-  removeLike: (req, res) => {
-    Tweet.findByPk(req.params.tweetId)
-      .then(tweet => {
-        tweet.decrement('likeCount', { by: 1 })
-        Like.destroy({
-          where: {
-            UserId: helpers.getUser(req).id,
-            TweetId: req.params.tweetId
-          }
-        })
-      }).then(() => {
-        return res.redirect('back')
+
+  removeLike: async (req, res) => {
+    try {
+      const currentUserId = helpers.getUser(req).id
+      await Like.findOne({
+        where: {
+          UserId: currentUserId,
+          TweetId: req.params.id
+        }
       })
+        .then(like => {
+          like.destroy()
+            .then(tweet => {
+              return res.redirect('back')
+            })
+        })
+    } catch (error) {
+      console.log(error)
+      res.render('/index', { Error })
+    }
   },
 
   // Followship
