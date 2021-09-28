@@ -1,9 +1,10 @@
 const tweets = document.querySelector('.tweet-reply-axios')
+const tweetReplyModal = document.querySelector('#tweetReplyModal')
+const replyValidForm = document.querySelector('.reply-valid-form')
 const tweetReplyModalAvatar = document.querySelector('#tweet-reply-modal-avatar')
 const tweetReplyModalDescription = document.querySelector('#tweet-reply-modal-description')
 const tweetReplyModalName = document.querySelector('#tweet-reply-modal-name')
 const tweetReplyModalAccount = document.querySelector('#tweet-reply-modal-account')
-const tweetReplyModalReply = document.querySelector('#tweet-reply-modal-reply')
 
 tweets.addEventListener('click', function onIconClicked(event) {
   const baseURL = event.target.dataset.url
@@ -12,6 +13,7 @@ tweets.addEventListener('click', function onIconClicked(event) {
     axios.get(`${baseURL}/api/tweets/${tweetId}/replies`)
       .then(tweet => {
         const tweetModal = tweet.data.tweetModal
+
         tweetReplyModalAvatar.innerHTML = `
               <a href="/users/${tweetModal.UserId}/tweets">
             <img class="rounded-circle" src="${tweetModal.User.avatar}" alt="avatar" title="avatar" width="50px" height="50px">
@@ -29,19 +31,8 @@ tweets.addEventListener('click', function onIconClicked(event) {
               <span class="reply-to">回覆給</span>
               <span class="reply-account">&nbsp;${tweetModal.User.account}</span>
             `
-        tweetReplyModalReply.innerHTML = `
-              <form class="needs-validation" action="/tweets/${tweetModal.id}/replies" method="POST" novalidate>
-              <textarea class="form-control tweet-modal-textarea w-100" id="comment" name="comment" rows="9"
-              placeholder="推你的回覆" required></textarea>
-              <div class="tweet-modal-textarea-feedback invalid-feedback">
-              內文不可以空白
-              </div>
-              <button type="submit" class="btn rounded-pill fw-bolder common-button tweet-modal-tweet-btn"
-              onclick="return(confirm('確認回覆了嗎？'))">
-              回覆
-              </button>
-              </form>
-            `
+        // 因先前用innerHTML整個FORM架構被置換，雖然ID CLASS內容沒改變，但監聽器卻失效，故改變想法只更換需要更換的內容嘗試
+        replyValidForm.action = `/tweets/${tweetModal.id}/replies`
       })
 
   }
