@@ -8,6 +8,7 @@ const tweetsRouter = require("./modules/tweets");
 const followshipRouter = require("./modules/followships");
 const homeRouter = require("./modules/home");
 const helpers = require("../_helpers");
+const apis = require('./modules/apis');
 
 const authenticated = (req, res, next) => {
   if (process.env.NODE_ENV === "test") {
@@ -47,10 +48,12 @@ const authenticatedAdmin = (req, res, next) => {
   }
 };
 
+
 router.use("/", homeRouter);
 router.use("/users", authenticated, usersRouter);
 router.use("/admin", authenticatedAdmin, adminRouter);
 router.use("/tweets", authenticated, tweetsRouter);
 router.use("/followships", authenticated, followshipRouter);
+router.use("/api", apis)
 
 module.exports = router;

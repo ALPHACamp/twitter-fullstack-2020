@@ -1,9 +1,6 @@
 const db = require("../models");
 const { Op } = require("sequelize");
-const moment = require("moment");
 const { Reply, User, Tweet, Like, Followship } = db;
-const multer = require("multer");
-const fs = require("fs");
 const imgur = require("imgur-node-api");
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
@@ -23,7 +20,7 @@ const profileController = {
         attributes: ["id", "avatar"],
         raw: true,
       });
-      //get selfInformation
+      // get selfInformation
       const Profile = await User.findByPk(req.params.id, {
         include: [
           { model: User, as: "Followers", attributes: ["id"] },
