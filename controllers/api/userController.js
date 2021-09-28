@@ -1,3 +1,4 @@
+const fs = require('fs')
 const db = require('../../models')
 const { User, Tweet, Reply, Like } = db
 const helpers = require('../../_helpers')
@@ -13,7 +14,7 @@ let userController = {
       return res.status(200).json({ status: 'error' })
     } else {
       User.findByPk(req.params.id, {
-        attributes: ['cover', 'avatar', 'name', 'introduction']
+        attributes: ['cover', 'avatar', 'name', 'introduction'],
       }).then((user) => {
         const { cover, avatar, name, introduction } = user
         return res.status(200).json({ cover, avatar, name, introduction })
@@ -45,7 +46,7 @@ let userController = {
             user.update({
               name: name,
               introduction: introduction,
-              cover: files ? img.data.link : user.cover
+              cover: files ? img.data.link : user.cover,
             })
           })
         })
@@ -56,7 +57,7 @@ let userController = {
             user.update({
               name: name,
               introduction: introduction,
-              avatar: files ? img.data.link : user.avatar
+              avatar: files ? img.data.link : user.avatar,
             })
           })
         })
@@ -64,14 +65,14 @@ let userController = {
         await User.findByPk(req.params.id).then((user) => {
           user.update({
             name: name,
-            introduction: introduction
+            introduction: introduction,
           })
         })
       }
       req.flash('success_messages', '個人資料成功更新')
       res.redirect(`/users/${req.params.id}/tweets`)
     }
-  }
+  },
 }
 
 module.exports = userController

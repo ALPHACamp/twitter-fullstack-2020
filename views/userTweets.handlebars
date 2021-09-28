@@ -93,8 +93,8 @@
             </div>
           </div>
 
-          <div class='modal-body' style='padding: 0px;'>
-            <form action='' method='POST' enctype='multipart/form-date'>
+          <div class='modal-body' style='padding: 0px; margin:0px auto 0px;'>
+            <form action='/users/{{user.id}}?_method=PUT' method='POST' enctype='multipart/form-date'>
               <!--      cover form -->
               <div class='form-group'>
                 <img
@@ -255,7 +255,7 @@
             </div>
           </div>
           <form action='/tweets' method='POST'>
-            <div class='modal-body' style="margin:15px 0px 0px 15px; ">
+            <div class='modal-body' style="margin:15px auto 15px; ">
               <img
                 src='{{user.avatar}}'
                 alt='avatar'
