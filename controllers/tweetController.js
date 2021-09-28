@@ -85,7 +85,7 @@ const tweetController = {
       const tweetReplies = tweetJson.Replies.map(reply => ({
         ...reply
       }))
-
+      // tweetReplies = tweetReplies.sort((a, b) => b.id - a.id)
       res.render('tweet', {status: (200), tweetReplies, tweet: tweetJson, popularUser })
     } catch (err) {
       res.status(302);
